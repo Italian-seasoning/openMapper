@@ -74,4 +74,9 @@ Add a line when you touch a shared file: stream, file, what.
 * B (round 2) · `src/app.rs`: `U` toggles the ruler; the Select tool's empty-ground press goes to the editor while the ruler is on; `ed.paste(&self.lib)`.
 * B (round 2) · `src/ui.rs`: the properties panel is in a `ScrollArea`; an object hanging on another (`[attachObj]`) is shown through `selection::any_object` / `any_object_mut` (no X / Y, a "Hangs on" row); a road's properties end with `ui_edit::rows_section`; Controls row for `U`.
 * B (round 2) · `src/main.rs`: `mod rows`.
-
+* A · `src/main.rs`: `mod sample`, `mod ui_guide`, `mod ui_newmap`.
+* A · `src/ui.rs`: the New map dialog moved to `src/ui_newmap.rs` (`UiState::new_map` is a `NewMapForm`; `Action::NewMap` carries `options`), `Action::Guide` and Help menu "Getting started".
+* A · `src/install.rs`: `Prefs::guide_off`.
+* A · `src/app.rs`: `new_map` takes the options (base ground, left-hand traffic, sample → `App::sample`), the New map dialog drawn from here (both screens), `App::guide` window and its "Show me" requests, `Action::Guide`, Play ticks the guide's test drive; `OPENMAPPER_DEMO=SAMPLE:<name>` (with `OPENMAPPER_LHT` keeping left) makes a sample map and saves it, `OPENMAPPER_NEWMAP` opens the dialog, `OPENMAPPER_GUIDE` the guide.
+* A · `src/ui_timetable.rs`: `add_depot` is `pub(crate)` (the sample uses it).
+* A · `src/doc/save.rs`: the timetable's and the traffic's files are planned as `safe::Op`s (`timetable::plan`, `traffic::plan`) and committed with the map's own, all or nothing (`saved` marks them done afterwards); the separate `extra` backup list for them is gone (their ops are backed up like the rest).

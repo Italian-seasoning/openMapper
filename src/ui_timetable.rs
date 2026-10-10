@@ -1023,7 +1023,7 @@ impl TimetableUi {
 const DEPOT: &str = "openMapper";
 
 /// A depot for a map without one, and the tours without buses take theirs from it.
-fn add_depot(doc: &mut Document) {
+pub(crate) fn add_depot(doc: &mut Document) {
     let name = doc.traffic.unique_name(DEPOT);
     doc.traffic.groups.push(crate::traffic::stock_depot(&name));
     doc.traffic.touch(crate::traffic::File::AiLists);

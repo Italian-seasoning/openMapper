@@ -12,6 +12,7 @@ use std::path::Path;
 
 use omsi_timetable::{BusStopEntry, Line, StnLink, StnLinkEntry, TimetableData, Track, TrackEntry, Trip};
 
+use crate::doc::safe::Op;
 use crate::doc::{Document, TileKey};
 
 /// Days a tour runs on: bits 0-6 Monday…Sunday, 7 public holidays, 8 school holidays,
@@ -360,29 +361,26 @@ pub fn track_name(t: &Track) -> String {
     t.path.file_stem().map(|s| s.to_string_lossy().into_owned()).unwrap_or_default()
 }
 
-/// Write what changed into the map's `TTData`.
-pub fn save(doc: &mut Document) -> std::io::Result<()> {
-    let order = doc.order.clone();
-    save_to(&mut doc.timetable, &doc.dir, &order)
-}
-
-/// Write what changed into `map_dir/TTData`; `order` is the map's tile list as saved.
-pub fn save_to(tt: &mut Timetable, map_dir: &Path, order: &[TileKey]) -> std::io::Result<()> {
-    let dir = map_dir.join("TTData");
+/// What saving the timetable writes and takes away in the map folder `map_dir` (`order`:
+/// the tile list as saved): only what changed. The map's save carries it out with its own
+/// files, all or nothing; `saved` then marks it done.
+pub fn plan(tt: &mut Timetable, map_dir: &Path, order: &[TileKey]) -> Vec<Op> {
+    let mut ops = Vec::new();
     if !tt.dirty {
         tt.order = order.to_vec();
-        return Ok(());
+        return ops;
     }
     tt.renumber_tiles(order);
-    std::fs::create_dir_all(&dir)?;
-    for f in std::mem::take(&mut tt.removed) {
-        if let Some(p) = find_file(&dir, &f) {
-            std::fs::remove_file(p)?;
+    let dir = map_dir.join("TTData");
+    for f in &tt.removed {
+        if let Some(p) = find_file(&dir, f) {
+            ops.push(Op::Remove(p));
         }
     }
-    let changed = std::mem::take(&mut tt.changed);
-    let mut written = 0;
-    for f in &changed {
+    // (a file there in another case is written under its own name: on a disk that ignores
+    // case, writing the new name and removing the old would remove both)
+    let at = |name: &str| find_file(&dir, &name.to_lowercase()).unwrap_or_else(|| dir.join(name));
+    for f in &tt.changed {
         let (stem, ext) = f.rsplit_once('.').unwrap_or((f.as_str(), ""));
         let text = match ext {
             "ttl" => tt.lines.iter().find(|l| key(&l.name) == stem).map(|l| (l.name.clone(), line_text(l))),
@@ -390,36 +388,40 @@ pub fn save_to(tt: &mut Timetable, map_dir: &Path, order: &[TileKey]) -> std::io
             "ttr" => tt.tracks.iter().find(|t| key(&track_name(t)) == stem).map(|t| (track_name(t), track_text(t))),
             _ => None,
         };
-        let Some((name, text)) = text else { continue };
-        // (a file of another case is replaced, not kept beside it)
-        if let Some(old) = find_file(&dir, f) {
-            std::fs::remove_file(old)?;
+        if let Some((name, text)) = text {
+            ops.push(Op::Write(at(&format!("{name}.{ext}")), encode(&text)));
         }
-        std::fs::write(dir.join(format!("{name}.{ext}")), encode(&text))?;
-        written += 1;
     }
-    if std::mem::take(&mut tt.stops_changed) || !dir.join("Busstops.cfg").is_file() {
-        write_named(&dir, "Busstops.cfg", &busstops_text(&tt.stops))?;
-        written += 1;
+    if tt.stops_changed || !dir.join("Busstops.cfg").is_file() {
+        ops.push(Op::Write(at("Busstops.cfg"), encode(&busstops_text(&tt.stops))));
     }
-    if std::mem::take(&mut tt.links_changed) {
-        write_named(&dir, "StnLinks.cfg", &stnlinks_text(&tt.links, &tt.stops))?;
-        written += 1;
+    if tt.links_changed {
+        ops.push(Op::Write(at("StnLinks.cfg"), encode(&stnlinks_text(&tt.links, &tt.stops))));
     }
-    tt.dirty = false;
-    log::info!("timetable: {written} file(s) written to {}", dir.display());
-    Ok(())
+    ops
 }
 
+/// The planned files were written.
+pub fn saved(tt: &mut Timetable) {
+    tt.removed.clear();
+    tt.changed.clear();
+    tt.stops_changed = false;
+    tt.links_changed = false;
+    tt.dirty = false;
+}
+
+/// Write what changed into `map_dir/TTData` by itself (all or nothing).
+#[cfg(test)]
+pub fn save_to(tt: &mut Timetable, map_dir: &Path, order: &[TileKey]) -> anyhow::Result<()> {
+    let ops = plan(tt, map_dir, order);
+    crate::doc::safe::commit(&ops)?;
+    saved(tt);
+    Ok(())
+}
 
 /// A file of the folder by its lower-case name.
 fn find_file(dir: &Path, lower: &str) -> Option<std::path::PathBuf> {
     std::fs::read_dir(dir).ok()?.flatten().map(|e| e.path()).find(|p| p.file_name().map(|n| n.to_string_lossy().to_lowercase() == lower).unwrap_or(false))
-}
-
-fn write_named(dir: &Path, name: &str, text: &str) -> std::io::Result<()> {
-    let p = find_file(dir, &name.to_lowercase()).unwrap_or_else(|| dir.join(name));
-    std::fs::write(p, encode(text))
 }
 
 /// The text as OMSI 2 writes TTData: Windows-1252 with CR LF; text that code page cannot
@@ -638,4 +640,4 @@ pub fn clock(minutes: f32) -> String {
 
 
 #[cfg(test)]
-mod tests;
+pub(crate) mod tests;
