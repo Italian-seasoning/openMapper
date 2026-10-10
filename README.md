@@ -25,6 +25,10 @@ experienced map makers.
 * **Open any map**: OMSI 2's own (saved as a copy into the content folder) and mod maps.
 * **New map** from OMSI 2's own template (`template/NewMap`): it's ready to drive right away.
 * **Test drive**: saves and launches openOMSI on this map.
+* **Map picture** (`picture.jpg`, shown where maps are chosen) taken from the view, and the
+  view the map opens with (`[mapcam]`), both in the map's properties.
+* **Favourites and recently used** at the top of the catalogue: right-click an entry to star
+  it.
 * **Overview map** in the corner of the view (`M`): tiles, roads, tracks and the camera;
   click or drag on it to move there, double-click for a larger one.
 * **Asset import**: drop onto the window or use the button —
@@ -35,7 +39,7 @@ experienced map makers.
     `_rr`, `_mm`, `_aa` …, the way openOMSI finds them).
 * **PBR** in the viewport: normal, roughness, metalness and AO maps are found by
   openOMSI's rules (`omsi-texture`) and drawn with the same derivative-based tangent frame.
-* Undo / redo for every action, two languages (English / Russian).
+* Undo / redo for every action, two languages (English / Russian), interface size 80–150 % (View menu).
 
 ## Controls
 
@@ -71,6 +75,8 @@ that the written tiles read back through openOMSI's own parser.
 ```bash
 cargo run --release
 ```
+
+`tools/package-macos.sh` makes `openMapper.app` and a zip of it in `target/package`.
 
 `openmapper path/to/global.cfg` opens a map straight away. `OPENMAPPER_SHOT=out.png` saves
 a picture of the window and exits (for checks without a person at the screen).

@@ -38,7 +38,17 @@ pub enum Action {
     Import,
     ChooseOmsi,
     SetLang(Lang),
+    /// The interface's zoom (1 = as the system has it).
+    SetScale(f32),
     FocusSelection,
+    /// Star a catalogue entry or take its star away.
+    ToggleFavourite(String),
+    /// A catalogue entry was chosen (for the recently used list).
+    UsedAsset(String),
+    /// The 3D view becomes the map's picture (`picture.jpg`).
+    MapPicture,
+    /// The map opens with the camera as it is now (`[mapcam]`).
+    SetMapCamera,
     /// Move the camera over this point (the overview map).
     LookAt(glam::DVec2),
     AddGroundTexture(String),
@@ -65,6 +75,11 @@ pub struct UiState {
     pub status_help: Option<String>,
     pub welcome_pick: Option<PathBuf>,
     pub minimap: crate::ui_minimap::Minimap,
+    /// The preferences' starred and recently used assets, for the catalogue.
+    pub favourites: Vec<String>,
+    pub recent_assets: Vec<String>,
+    /// The map's `picture.jpg` as shown in the map's properties, with its file time.
+    map_picture: Option<(PathBuf, Option<std::time::SystemTime>, Option<egui::TextureHandle>)>,
 }
 
 impl Default for UiState {
@@ -82,6 +97,9 @@ impl Default for UiState {
             status_help: None,
             welcome_pick: None,
             minimap: crate::ui_minimap::Minimap::new(),
+            favourites: Vec::new(),
+            recent_assets: Vec::new(),
+            map_picture: None,
         }
     }
 }
@@ -244,6 +262,14 @@ fn lang_menu(ui: &mut egui::Ui, actions: &mut Vec<Action>) {
         for (l, n) in [(Lang::En, "English"), (Lang::Ru, "Русский")] {
             if radio(ui, i18n::get() == l, n).clicked() {
                 actions.push(Action::SetLang(l));
+            }
+        }
+    });
+    ui.menu_button(tr("Interface size", "Размер интерфейса"), |ui| {
+        let now = ui.ctx().zoom_factor();
+        for z in [0.8f32, 0.9, 1.0, 1.1, 1.25, 1.5] {
+            if radio(ui, (now - z).abs() < 0.01, format!("{:.0} %", z * 100.0)).clicked() {
+                actions.push(Action::SetScale(z));
             }
         }
     });
@@ -730,9 +756,9 @@ fn tool_panel(
 ) {
     section(ui, ed.tool.label());
     Frame::new().inner_margin(Margin::same(8)).show(ui, |ui| match ed.tool {
-        Tool::Roads => catalogue(ui, st, ed, lib, thumbs, wanted, Kind::Spline),
-        Tool::Objects => catalogue(ui, st, ed, lib, thumbs, wanted, Kind::Object),
-        Tool::Logic => logic_panel(ui, st, ed, lib, thumbs, wanted),
+        Tool::Roads => catalogue(ui, st, ed, lib, thumbs, wanted, Kind::Spline, actions),
+        Tool::Objects => catalogue(ui, st, ed, lib, thumbs, wanted, Kind::Object, actions),
+        Tool::Logic => logic_panel(ui, st, ed, lib, thumbs, wanted, actions),
         Tool::Terrain => terrain_panel(ui, st, ed),
         Tool::Paint => paint_panel(ui, st, ed, swatches, wanted_swatches, actions),
         Tool::Tiles => {
@@ -761,12 +787,12 @@ fn tool_panel(
     });
 }
 
-fn catalogue(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Library, thumbs: &HashMap<String, Option<Thumb>>, wanted: &mut Vec<(String, bool)>, kind: Kind) {
-    catalogue_of(ui, st, ed, lib, thumbs, wanted, kind, None)
+fn catalogue(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Library, thumbs: &HashMap<String, Option<Thumb>>, wanted: &mut Vec<(String, bool)>, kind: Kind, actions: &mut Vec<Action>) {
+    catalogue_of(ui, st, ed, lib, thumbs, wanted, kind, None, actions)
 }
 
 /// The Logic tool: what the game uses but does not show, a tab for each kind.
-fn logic_panel(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Library, thumbs: &HashMap<String, Option<Thumb>>, wanted: &mut Vec<(String, bool)>) {
+fn logic_panel(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Library, thumbs: &HashMap<String, Option<Thumb>>, wanted: &mut Vec<(String, bool)>, actions: &mut Vec<Action>) {
     ui.horizontal_wrapped(|ui| {
         ui.spacing_mut().item_spacing = Vec2::new(4.0, 4.0);
         for m in LogicMode::ALL {
@@ -813,12 +839,12 @@ fn logic_panel(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Libra
     check(ui, &mut ed.show_lanes, tr("Show the AI's lanes in the other tools too", "Показывать полосы ИИ и в других инструментах"));
     ui.add_space(4.0);
     let kind = if ed.logic == LogicMode::Paths { Kind::Spline } else { Kind::Object };
-    catalogue_of(ui, st, ed, lib, thumbs, wanted, kind, Some(ed.logic));
+    catalogue_of(ui, st, ed, lib, thumbs, wanted, kind, Some(ed.logic), actions);
 }
 
 /// The asset list (with a Logic tab: only what belongs to it, and no category choice).
 #[allow(clippy::too_many_arguments)]
-fn catalogue_of(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Library, thumbs: &HashMap<String, Option<Thumb>>, wanted: &mut Vec<(String, bool)>, kind: Kind, logic: Option<LogicMode>) {
+fn catalogue_of(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Library, thumbs: &HashMap<String, Option<Thumb>>, wanted: &mut Vec<(String, bool)>, kind: Kind, logic: Option<LogicMode>, actions: &mut Vec<Action>) {
     let belongs = |a: &crate::library::Asset| -> bool {
         match logic {
             None => true,
@@ -905,6 +931,10 @@ fn catalogue_of(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Libr
                 }
             }
             ui.painter().text(rect.min + Vec2::new(h + 6.0, 12.0), egui::Align2::LEFT_CENTER, &a.name, egui::FontId::proportional(13.0), Color32::from_gray(230));
+            let starred = st.favourites.iter().any(|f| f.eq_ignore_ascii_case(&a.rel));
+            if starred {
+                icons::paint(ui.painter(), Icon::Star, rect.right_center() - Vec2::new(14.0, 0.0), 15.0, ACCENT);
+            }
             let mut sub = a.category.label().to_string();
             if searching && !a.dir.is_empty() {
                 sub = format!("{} · {}", a.dir, sub);
@@ -914,9 +944,17 @@ fn catalogue_of(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Libr
             }
             ui.painter().text(rect.min + Vec2::new(h + 6.0, 28.0), egui::Align2::LEFT_CENTER, sub, egui::FontId::proportional(11.0), TEXT_DIM);
             if resp.hovered() {
-                st.status_help = Some(a.rel.clone());
+                st.status_help = Some(format!("{} · {}", a.rel, tr("right-click: star it", "правый клик — в избранное")));
             }
+            resp.context_menu(|ui| {
+                let text = if starred { tr("Remove from favourites", "Убрать из избранного") } else { tr("Add to favourites", "Добавить в избранное") };
+                if ui.button(icons::labelled(Icon::Star, text)).clicked() {
+                    actions.push(Action::ToggleFavourite(a.rel.clone()));
+                    ui.close();
+                }
+            });
             if resp.clicked() {
+                actions.push(Action::UsedAsset(a.rel.clone()));
                 if logic == Some(LogicMode::Paths) {
                     ed.set_path_type(a.rel.clone());
                 } else if kind == Kind::Spline {
@@ -939,6 +977,19 @@ fn catalogue_of(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Libr
                     row(ui, a, i, st, ed);
                 }
                 return;
+            }
+            // starred and lately used ones first, among what the filter shows
+            for (title, icon, list) in [(tr("Favourites", "Избранное"), Icon::Star, &st.favourites.clone()), (tr("Recently used", "Недавние"), Icon::History, &st.recent_assets.clone())] {
+                let picked: Vec<&crate::library::Asset> = list.iter().filter_map(|r| items.iter().find(|a| a.rel.eq_ignore_ascii_case(r)).copied()).take(12).collect();
+                if picked.is_empty() {
+                    continue;
+                }
+                let head = icons::labelled(icon, &format!("{title}   ({})", picked.len()));
+                egui::CollapsingHeader::new(head).icon(group_icon).id_salt(("cat-pinned", kind == Kind::Spline, title)).default_open(true).show(ui, |ui| {
+                    for (i, a) in picked.iter().enumerate() {
+                        row(ui, a, i, st, ed);
+                    }
+                });
             }
             // the folders as they are on disk: the first level, then what lies below it
             let mut tree: std::collections::BTreeMap<String, std::collections::BTreeMap<String, Vec<&crate::library::Asset>>> = std::collections::BTreeMap::new();
@@ -1094,7 +1145,7 @@ fn prop_row(ui: &mut egui::Ui, name: &str, add: impl FnOnce(&mut egui::Ui)) {
 
 fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Library, actions: &mut Vec<Action>) {
     let Some(sel) = ed.selected else {
-        map_properties(ui, ed);
+        map_properties(ui, st, ed, actions);
         return;
     };
     section(ui, tr("Properties", "Свойства"));
@@ -1287,7 +1338,7 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
 }
 
 /// With nothing selected the right panel shows the map's own settings.
-fn map_properties(ui: &mut egui::Ui, ed: &mut Editor) {
+fn map_properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, actions: &mut Vec<Action>) {
     section(ui, tr("Map", "Карта"));
     let Some(doc) = ed.doc.as_mut() else { return };
     let before = (doc.global.friendly_name.clone(), doc.global.description.clone(), doc.global.left_hand_traffic);
@@ -1312,6 +1363,38 @@ fn map_properties(ui: &mut egui::Ui, ed: &mut Editor) {
         if doc.global.entry_points.is_empty() {
             ui.add_space(6.0);
             ui.label(RichText::new(tr("No start point yet: place one (Objects > Bus stops > Entrypoint) so the bus has somewhere to appear in openOMSI.", "Нет точки старта: поставьте её (Объекты > Остановки > Entrypoint), чтобы автобусу было где появиться в openOMSI.")).small().color(Color32::from_rgb(230, 170, 100)));
+        }
+        ui.add_space(8.0);
+        ui.label(RichText::new(tr("Picture", "Картинка")).color(TEXT_DIM));
+        let path = doc.dir.join("picture.jpg");
+        let path = if path.is_file() { path } else { doc.source.as_ref().map(|s| s.join("picture.jpg")).unwrap_or(path) };
+        let time = std::fs::metadata(&path).and_then(|m| m.modified()).ok();
+        if st.map_picture.as_ref().map(|(p, t, _)| *p != path || *t != time).unwrap_or(true) {
+            let tex = image::open(&path).ok().map(|img| {
+                let img = img.to_rgba8();
+                let ci = egui::ColorImage::from_rgba_unmultiplied([img.width() as usize, img.height() as usize], img.as_raw());
+                ui.ctx().load_texture("map picture", ci, egui::TextureOptions::LINEAR)
+            });
+            st.map_picture = Some((path, time, tex));
+        }
+        match st.map_picture.as_ref().and_then(|(_, _, t)| t.as_ref()) {
+            Some(t) => {
+                let w = ui.available_width();
+                ui.add(egui::Image::new((t.id(), Vec2::new(w, w * 280.0 / 370.0))));
+            }
+            None => {
+                ui.label(RichText::new(tr("None yet: openOMSI shows it where maps are chosen.", "Пока нет: openOMSI показывает её при выборе карты.")).small().color(TEXT_DIM));
+            }
+        }
+        let r = ui.button(icons::labelled(Icon::Visible, tr("Take it from this view", "Снять с этого вида")));
+        help(st, &r, tr("The middle of the 3D view, as it is now, becomes the map's picture.", "Середина 3D-вида, как он сейчас, станет картинкой карты."));
+        if r.clicked() {
+            actions.push(Action::MapPicture);
+        }
+        let r = ui.button(icons::labelled(Icon::Flag, tr("Open the map with this view", "Открывать карту с этого вида")));
+        help(st, &r, tr("The camera as it is now is where the map opens (here and in OMSI 2's editor).", "Карта будет открываться с камерой, как сейчас (здесь и в редакторе OMSI 2)."));
+        if r.clicked() {
+            actions.push(Action::SetMapCamera);
         }
         ui.add_space(6.0);
         ui.label(RichText::new(format!("{}:\n{}", tr("Saved to", "Сохраняется в"), doc.dir.display())).small().color(TEXT_DIM));
@@ -1397,6 +1480,7 @@ fn controls(ctx: &egui::Context, st: &mut UiState) {
             ("Esc", tr("stop / deselect", "отмена / снять выбор")),
             ("[ ]  Shift+wheel", tr("brush size", "размер кисти")),
             ("G", tr("tile grid on / off", "сетка тайлов")),
+            ("M", tr("overview map on / off", "обзорная карта")),
             ("Ctrl+Z / Ctrl+Shift+Z", tr("undo / redo", "отменить / повторить")),
             ("Ctrl+S", tr("save", "сохранить")),
             ("F5", tr("test drive in openOMSI", "тест-драйв в openOMSI")),
