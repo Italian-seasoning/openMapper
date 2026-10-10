@@ -57,6 +57,8 @@ pub enum Action {
     /// Move the camera over this point (the overview map).
     LookAt(glam::DVec2),
     AddGroundTexture(String),
+    /// Open or close the Lines window.
+    Timetable,
     /// Do it without asking about unsaved changes.
     Force(Box<Action>),
     Quit,
@@ -623,6 +625,9 @@ fn menu_bar(root: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, can_undo: bo
                 }
                 if menu_item(ui, Some(Icon::Layers), tr("Ground textures…", "Текстуры земли…"), "", true) {
                     ed.set_tool(Tool::Paint);
+                }
+                if menu_item(ui, Some(Icon::Bus), tr("Lines and timetable…", "Линии и расписание…"), "L", true) {
+                    actions.push(Action::Timetable);
                 }
                 ui.separator();
                 if menu_item(ui, Some(Icon::Play), tr("Test drive in openOMSI", "Тест-драйв в openOMSI"), "F5", game_found) {

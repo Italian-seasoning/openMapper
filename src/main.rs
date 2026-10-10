@@ -23,9 +23,11 @@ mod render;
 mod reshape;
 mod roads;
 mod selection;
+mod timetable;
 mod ui;
 mod ui_edit;
 mod ui_minimap;
+mod ui_timetable;
 
 fn main() {
     env_logger::Builder::from_env(env_logger::Env::default().default_filter_or("info,wgpu_core=warn,wgpu_hal=warn,naga=warn")).init();

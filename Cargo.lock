@@ -2309,6 +2309,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "omsi-timetable"
+version = "0.1.0"
+source = "git+https://github.com/openOMSI-org/openOMSI?rev=c4738ed6f43f11b4c06ead299af7ac74280d5c5b#c4738ed6f43f11b4c06ead299af7ac74280d5c5b"
+dependencies = [
+ "log",
+ "omsi-cfg",
+]
+
+[[package]]
 name = "once_cell"
 version = "1.21.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2340,6 +2349,7 @@ dependencies = [
  "omsi-o3d",
  "omsi-scenery",
  "omsi-texture",
+ "omsi-timetable",
  "pollster",
  "rfd",
  "serde",
@@ -3175,7 +3185,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "32497e9a4c7b38532efcdebeef879707aa9f794296a4f0244f6f69e9bc8574bd"
 dependencies = [
  "fastrand",
- "getrandom 0.4.3",
+ "getrandom 0.3.4",
  "once_cell",
  "rustix 1.1.5",
  "windows-sys 0.61.2",
