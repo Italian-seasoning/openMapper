@@ -2474,3 +2474,104 @@ pub fn asset_hint(a: &Asset) -> &'static str {
         ""
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::selection::tests::{add_object, add_spline, flat_map};
+
+    fn editor() -> Editor {
+        let mut doc = flat_map(1);
+        add_object(&mut doc, (0, 0), 1, 100.0, 100.0);
+        add_object(&mut doc, (0, 0), 2, 110.0, 100.0);
+        add_spline(&mut doc, (0, 0), 3, 50.0, 50.0, 0.0, 30.0, 0, 0);
+        let mut ed = Editor::default();
+        ed.open(doc);
+        ed
+    }
+
+    #[test]
+    fn shift_click_adds_and_takes_away() {
+        let mut ed = editor();
+        ed.select(Some(Sel::Object((0, 0), 1)));
+        ed.toggle_selected(Sel::Spline((0, 0), 3));
+        assert_eq!(ed.selection().len(), 2);
+        assert_eq!(ed.selected, Some(Sel::Spline((0, 0), 3)), "the one added shows in the properties");
+        ed.toggle_selected(Sel::Spline((0, 0), 3));
+        assert_eq!(ed.selection(), vec![Sel::Object((0, 0), 1)]);
+        // nothing selected: what `also` held does not count
+        ed.toggle_selected(Sel::Object((0, 0), 2));
+        ed.selected = None;
+        assert!(ed.selection().is_empty());
+        ed.toggle_selected(Sel::Object((0, 0), 1));
+        assert_eq!(ed.selection(), vec![Sel::Object((0, 0), 1)]);
+    }
+
+    #[test]
+    fn a_selection_turns_deletes_and_comes_back_in_single_steps() {
+        let mut ed = editor();
+        ed.select_all();
+        assert_eq!(ed.selection().len(), 3);
+        ed.rotate(90.0);
+        let doc = ed.doc.as_ref().unwrap();
+        assert!((doc.spline((0, 0), 3).unwrap().heading - 90.0).abs() < 1e-9);
+        assert!((doc.object((0, 0), 1).unwrap().rot[0] - 90.0).abs() < 1e-9);
+        ed.delete_selected();
+        let doc = ed.doc.as_ref().unwrap();
+        assert!(doc.tiles[&(0, 0)].tile.objects.is_empty() && doc.tiles[&(0, 0)].tile.splines.is_empty());
+        let d = ed.doc.as_mut().unwrap();
+        ed.history.undo(d);
+        assert_eq!(ed.doc.as_ref().unwrap().tiles[&(0, 0)].tile.objects.len(), 2);
+        let d = ed.doc.as_mut().unwrap();
+        ed.history.undo(d);
+        let doc = ed.doc.as_ref().unwrap();
+        assert_eq!(doc.spline((0, 0), 3).unwrap().heading, 0.0);
+    }
+
+    #[test]
+    fn copy_paste_and_duplicate_make_new_things_round_the_cursor() {
+        let mut ed = editor();
+        let lib = Library::default();
+        ed.set_selection(vec![Sel::Object((0, 0), 1), Sel::Object((0, 0), 2)]);
+        assert_eq!(ed.copy(&lib), 2);
+        ed.cursor = Some(DVec3::new(200.0, 200.0, 0.0));
+        ed.paste();
+        let pasted = ed.selection();
+        assert_eq!(pasted.len(), 2);
+        let doc = ed.doc.as_ref().unwrap();
+        let xs: Vec<f64> = pasted.iter().map(|s| match *s { Sel::Object(k, id) => doc.object(k, id).unwrap().pos[0], _ => 0.0 }).collect();
+        assert_eq!(xs, vec![195.0, 205.0], "kept 10 m apart round the cursor");
+        ed.duplicate(&lib);
+        assert_eq!(ed.doc.as_ref().unwrap().tiles[&(0, 0)].tile.objects.len(), 6);
+        // one undo takes the duplicate away again
+        let d = ed.doc.as_mut().unwrap();
+        ed.history.undo(d);
+        assert_eq!(ed.doc.as_ref().unwrap().tiles[&(0, 0)].tile.objects.len(), 4);
+    }
+
+    #[test]
+    fn snapping_rounds_to_the_grid_and_to_whole_steps() {
+        let mut ed = Editor::default();
+        assert_eq!(ed.snap_point(DVec2::new(1.26, 3.74)), DVec2::new(1.26, 3.74));
+        ed.snap_grid = true;
+        ed.grid_step = 0.5;
+        assert_eq!(ed.snap_point(DVec2::new(1.26, 3.74)), DVec2::new(1.5, 3.5));
+        assert_eq!(ed.snap_heading(52.0), 52.0);
+        ed.snap_angle = true;
+        assert_eq!(ed.snap_heading(52.0), 45.0);
+        assert_eq!(ed.snap_heading(358.0), 0.0);
+    }
+
+    #[test]
+    fn numbers_in_the_properties_move_an_object_over_into_the_next_tile() {
+        let mut doc = flat_map(2);
+        add_object(&mut doc, (0, 0), 1, 100.0, 100.0);
+        let mut ed = Editor::default();
+        ed.open(doc);
+        ed.select(Some(Sel::Object((0, 0), 1)));
+        ed.put_object((0, 0), 1, DVec2::new(350.0, 20.0));
+        assert_eq!(ed.selected, Some(Sel::Object((1, 0), 1)));
+        let o = ed.doc.as_ref().unwrap().object((1, 0), 1).unwrap();
+        assert!((o.pos[0] - 50.0).abs() < 1e-9 && (o.pos[1] - 20.0).abs() < 1e-9);
+    }
+}
