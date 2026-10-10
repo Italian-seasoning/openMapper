@@ -49,6 +49,26 @@ experienced map makers.
   (or `openmapper --import file`) installs it.
 * **Descriptions in several languages** (`global_<LANG>.dsc`) in the map's properties, and
   **holidays and school holidays** (`Holidays.txt`) in the Lines window.
+* **Satellite and terrain** (Map menu or `I`): a map of the world in the window (drag, wheel, search a
+  place by name), "Place the map here" and a click put the map's middle tile there (north turned
+  by any angle); a `[worldcoordinates]` map lies on the Earth by itself. Then imagery for all tiles,
+  the selected one, or each new tile by itself, and the terrain heights with it or on their own
+  (relative to the middle tile, raised, smoothed; one undo step; the tiles' shared edges match).
+  Each tile's picture is cut from the source exactly to the tile at the source's own detail (up to
+  4096 px), so tiles meet without a seam, and lies on the ground in the 3D view; the overlay is on
+  or off and as opaque as wanted, as a whole (also View menu) and per tile (also in the Tiles tool).
+  The sources and how sharp they are at the map's place are listed, the sharpest picked: Esri World
+  Imagery (no key), official orthophotos with no key (Berlin, Brandenburg, NRW, Bavaria, Lower
+  Saxony, the Netherlands, Switzerland, Austria, France, New York State), and with the user's own
+  key Google (Map Tiles API), Mapbox or MapTiler; any XYZ, WMTS or WMS server can be added. Heights
+  come from the AWS Terrain Tiles (Terrarium), place search from OpenStreetMap's Nominatim. Each
+  source's attribution is shown. Downloads are cached in `~/.openomsi/cache/openmapper/tiles`
+  and never fetched twice; the map keeps its pictures in `openMapper/` in its folder (the game
+  ignores it), left out of shared exports unless asked for.
+* **Own pictures** on tiles (a scan, a screenshot, an old plan), no place on the Earth needed:
+  "Load image file…" for a tile (or drop the picture on the window with the Tiles tool and a tile
+  clicked), or one picture over a rectangle of tiles, cut into their pieces; turned (90° steps or
+  any angle), mirrored, moved and scaled by eye with the 3D view following.
 * **Open any map**: OMSI 2's own (saved as a copy into the content folder) and mod maps.
 * **New map** from OMSI 2's own template (`template/NewMap`): size, keep right or left, base
   ground, and "Start with a sample": a ring road with stops, a start point, line 1 both ways,
@@ -92,7 +112,7 @@ experienced map makers.
   or left drag on empty ground (Select tool) moves the map.
 * **Trackpad:** two fingers move the map, pinch zooms, twist turns; Option + two fingers or
   Option + drag turns and tilts.
-* **Keyboard:** `W A S D` / arrows move, `Q / E` turn, `1–7` tools, `M` overview map, `L` lines, `T` traffic, `R` turn object, `Del`,
+* **Keyboard:** `W A S D` / arrows move, `Q / E` turn, `1–7` tools, `M` overview map, `L` lines, `T` traffic, `I` satellite and terrain, `R` turn object, `Del`,
   `F` go to selection, `[ ]` brush size, `G` tile grid, `Ctrl+Z`, `Ctrl+Shift+Z`, `Ctrl+S`,
   `Ctrl+C / X / V / D` copy, cut, paste, duplicate, `Ctrl+A` select all, `U` ruler, `F5` test drive.
 

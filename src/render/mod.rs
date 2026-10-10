@@ -20,6 +20,7 @@ use crate::gpu::{Gpu, DEPTH};
 
 mod build;
 mod cull;
+pub mod imagery;
 pub mod profile;
 pub mod quality;
 
@@ -182,6 +183,10 @@ struct GpuTile {
     walls: Option<(wgpu::Buffer, wgpu::Buffer, u32)>,
     /// What its uniform holds now.
     uniform_now: [f32; 8],
+    /// Its paint masks' and ground cut's views (the bind group is made again with them
+    /// when its imagery changes) and the imagery's revision bound.
+    views: [wgpu::TextureView; 3],
+    imagery_rev: u64,
     /// Its box relative to the render anchor.
     bbox: Aabb,
 }
@@ -338,6 +343,8 @@ pub struct Renderer {
     ground_key: String,
     linear: wgpu::Sampler,
     mask_sampler: wgpu::Sampler,
+    /// Pictures over single tiles' ground (`src/geo`).
+    pub imagery: imagery::Imagery,
     white: wgpu::TextureView,
     flat_normal: wgpu::TextureView,
     default_orm: wgpu::TextureView,
@@ -467,6 +474,23 @@ fn upload_image(device: &wgpu::Device, queue: &wgpu::Queue, img: &omsi_texture::
     tex.create_view(&Default::default())
 }
 
+/// A tile's bind group: its uniform, paint masks, ground cut and imagery.
+fn tile_bind(device: &wgpu::Device, layout: &wgpu::BindGroupLayout, uniform: &wgpu::Buffer, views: &[wgpu::TextureView; 3], mask_sampler: &wgpu::Sampler, imagery: &imagery::Imagery, k: TileKey) -> wgpu::BindGroup {
+    device.create_bind_group(&wgpu::BindGroupDescriptor {
+        label: Some("tile"),
+        layout,
+        entries: &[
+            wgpu::BindGroupEntry { binding: 0, resource: uniform.as_entire_binding() },
+            wgpu::BindGroupEntry { binding: 1, resource: wgpu::BindingResource::TextureView(&views[0]) },
+            wgpu::BindGroupEntry { binding: 2, resource: wgpu::BindingResource::TextureView(&views[1]) },
+            wgpu::BindGroupEntry { binding: 3, resource: wgpu::BindingResource::Sampler(mask_sampler) },
+            wgpu::BindGroupEntry { binding: 4, resource: wgpu::BindingResource::TextureView(&views[2]) },
+            wgpu::BindGroupEntry { binding: 5, resource: wgpu::BindingResource::TextureView(imagery.view(k).0) },
+            wgpu::BindGroupEntry { binding: 6, resource: wgpu::BindingResource::Sampler(&imagery.sampler) },
+        ],
+    })
+}
+
 fn upload_mesh(device: &wgpu::Device, m: &MeshData) -> GpuMesh {
     let verts: Vec<MeshVertex> = (0..m.positions.len())
         .map(|i| MeshVertex {
@@ -564,7 +588,7 @@ impl Renderer {
         let (shadow_globals, shadow_globals_bind) = mk_globals(&no_shadow);
         let tile_layout = device.create_bind_group_layout(&wgpu::BindGroupLayoutDescriptor {
             label: Some("tile"),
-            entries: &[uniform_entry(0), texture_entry(1, wgpu::TextureViewDimension::D2), texture_entry(2, wgpu::TextureViewDimension::D2), sampler_entry(3), texture_entry(4, wgpu::TextureViewDimension::D2)],
+            entries: &[uniform_entry(0), texture_entry(1, wgpu::TextureViewDimension::D2), texture_entry(2, wgpu::TextureViewDimension::D2), sampler_entry(3), texture_entry(4, wgpu::TextureViewDimension::D2), texture_entry(5, wgpu::TextureViewDimension::D2), sampler_entry(6)],
         });
         let ground_layout = device.create_bind_group_layout(&wgpu::BindGroupLayoutDescriptor {
             label: Some("ground"),
@@ -774,6 +798,7 @@ impl Renderer {
             ground_key: String::new(),
             linear,
             mask_sampler,
+            imagery: imagery::Imagery::new(gpu),
             white,
             flat_normal,
             default_orm,
@@ -1009,23 +1034,19 @@ impl Renderer {
                 let cv = cut.create_view(&Default::default());
                 let va = masks[0].create_view(&Default::default());
                 let vb2 = masks[1].create_view(&Default::default());
-                let bind = device.create_bind_group(&wgpu::BindGroupDescriptor {
-                    label: Some("tile"),
-                    layout: &self.tile_layout,
-                    entries: &[
-                        wgpu::BindGroupEntry { binding: 0, resource: uniform.as_entire_binding() },
-                        wgpu::BindGroupEntry { binding: 1, resource: wgpu::BindingResource::TextureView(&va) },
-                        wgpu::BindGroupEntry { binding: 2, resource: wgpu::BindingResource::TextureView(&vb2) },
-                        wgpu::BindGroupEntry { binding: 3, resource: wgpu::BindingResource::Sampler(&self.mask_sampler) },
-                        wgpu::BindGroupEntry { binding: 4, resource: wgpu::BindingResource::TextureView(&cv) },
-                    ],
-                });
-                self.tiles.insert(k, GpuTile { vb, uniform, masks, cut, cut_key: 0, bind, terrain_rev: 0, mask_rev: 0, walls: None, uniform_now: [f32::NAN; 8], bbox: Aabb::ALL });
+                let views = [va, vb2, cv];
+                let bind = tile_bind(device, &self.tile_layout, &uniform, &views, &self.mask_sampler, &self.imagery, k);
+                let imagery_rev = self.imagery.view(k).1;
+                self.tiles.insert(k, GpuTile { vb, uniform, masks, cut, cut_key: 0, bind, terrain_rev: 0, mask_rev: 0, walls: None, uniform_now: [f32::NAN; 8], views, imagery_rev, bbox: Aabb::ALL });
             }
             let gt = self.tiles.get_mut(&k).unwrap();
+            if gt.imagery_rev != self.imagery.view(k).1 {
+                gt.imagery_rev = self.imagery.view(k).1;
+                gt.bind = tile_bind(device, &self.tile_layout, &gt.uniform, &gt.views, &self.mask_sampler, &self.imagery, k);
+            }
             let o = tile_origin(k) - anchor.truncate();
             let selected = extras.highlight_tile == Some(k);
-            let u = TileUniform { origin: [o.x as f32, o.y as f32, 0.0, 0.0], flags: [if selected { 1.0 } else { 0.0 }, 0.0, 0.0, 0.0] };
+            let u = TileUniform { origin: [o.x as f32, o.y as f32, 0.0, 0.0], flags: [if selected { 1.0 } else { 0.0 }, self.imagery.opacity(k), 0.0, 0.0] };
             let now: [f32; 8] = bytemuck::cast(u);
             if bytemuck::cast::<_, [u32; 8]>(now) != bytemuck::cast::<_, [u32; 8]>(gt.uniform_now) {
                 gt.uniform_now = now;

@@ -92,6 +92,8 @@ pub struct App {
     tt: crate::ui_timetable::TimetableUi,
     /// The Traffic and AI window.
     traffic: crate::ui_traffic::TrafficUi,
+    /// The Satellite and terrain window and the overlay on the ground.
+    geo: crate::ui_geo::GeoUi,
     /// Getting started.
     guide: crate::ui_guide::Guide,
     /// The next frame's view becomes the map's picture (`picture.jpg`).
@@ -123,6 +125,7 @@ impl App {
             frames: 0,
             tt: crate::ui_timetable::TimetableUi::new(),
             traffic: Default::default(),
+            geo: Default::default(),
             guide: Default::default(),
             picture: false,
             shot: std::env::var_os("OPENMAPPER_SHOT").map(|p| (PathBuf::from(p), std::env::var("OPENMAPPER_SHOT_FRAMES").ok().and_then(|n| n.parse().ok()).unwrap_or(90))),
@@ -252,6 +255,10 @@ impl App {
         // OPENMAPPER_GUIDE: Getting started open
         if std::env::var_os("OPENMAPPER_GUIDE").is_some() {
             self.guide.open = true;
+        }
+        // OPENMAPPER_GEO=lat,lon[,load][,hide]: placed there, the Satellite and terrain window open
+        if let Ok(a) = std::env::var("OPENMAPPER_GEO") {
+            self.geo.scripted(&mut self.ed, &self.prefs, &a);
         }
         // OPENMAPPER_TRAFFIC=day|groups|lists: the Traffic and AI window open on that tab
         if let Ok(t) = std::env::var("OPENMAPPER_TRAFFIC") {
@@ -601,6 +608,7 @@ impl App {
             }
             Action::Timetable => self.tt.open = !self.tt.open,
             Action::Traffic => self.traffic.open = !self.traffic.open,
+            Action::Geo => self.geo.open = !self.geo.open,
             Action::Guide => self.guide.open = !self.guide.open,
             Action::Export => self.export(),
             Action::ToggleFavourite(rel) => {
@@ -686,6 +694,7 @@ impl App {
             Some(KeyCode::KeyM) if !ctrl => self.ui.minimap.open = !self.ui.minimap.open,
             Some(KeyCode::KeyL) if !ctrl => self.tt.open = !self.tt.open,
             Some(KeyCode::KeyT) if !ctrl => self.traffic.open = !self.traffic.open,
+            Some(KeyCode::KeyI) if !ctrl => self.geo.open = !self.geo.open,
             Some(KeyCode::BracketLeft) => self.ed.brush_radius = (self.ed.brush_radius / 1.2).max(3.0),
             Some(KeyCode::BracketRight) => self.ed.brush_radius = (self.ed.brush_radius * 1.2).min(150.0),
             Some(KeyCode::Delete) | Some(KeyCode::Backspace) => self.ed.delete_selected(),
@@ -789,6 +798,7 @@ impl App {
             self.ui.minimap.open = false;
         }
         let mut guide: Vec<crate::ui_guide::Go> = Vec::new();
+        self.geo.fill_bridge(&mut self.ui.geo, &self.ed);
         let full = g.egui_ctx.run_ui(raw, |ui| {
             let ctx = ui.ctx().clone();
             if self.ed.doc.is_none() {
@@ -822,6 +832,10 @@ impl App {
             if self.ed.doc.is_some() {
                 self.tt.window(&ctx, &mut self.ed, self.roots.as_ref(), &mut actions);
                 self.traffic.window(&ctx, &mut self.ed, self.roots.as_ref());
+                self.geo.window(&ctx, &mut self.ed, &mut self.prefs);
+                if let Some(p) = self.geo.look.take() {
+                    actions.push(Action::LookAt(p));
+                }
                 guide = self.guide.window(&ctx, &self.ed, &self.lib, &self.prefs, self.game.is_some());
             }
             crate::ui_newmap::dialog(&ctx, &mut self.ui.new_map, &self.texture_files, &self.swatches, &mut wanted_swatches, &mut actions);
@@ -840,6 +854,7 @@ impl App {
                 self.mouse.over_ui = true;
             }
         }
+        self.geo.take_bridge(&mut self.ui.geo, &mut self.ed, &self.prefs);
         g.egui_state.handle_platform_output(&g.window, full.platform_output.clone());
         self.load_swatches(&g.egui_ctx, wanted_swatches);
 
@@ -871,6 +886,7 @@ impl App {
                 let mut extras = self.ed.extras(&self.cam, assets);
                 self.tt.overlay(&self.ed, &self.cam, &mut extras);
                 g.renderer.profile.add("extras", crate::render::profile::ms(t_x));
+                self.geo.feed(&mut g.renderer.imagery, &g.gpu, &self.ed);
                 g.renderer.sync(&g.gpu, doc, assets, &extras, &self.cam);
                 let ppp = full.pixels_per_point;
                 let (w, h) = (g.gpu.config.width as f32, g.gpu.config.height as f32);
@@ -965,7 +981,8 @@ impl App {
                 }
             }
             if let Some((path, at)) = &self.shot {
-                if self.frames >= *at && self.assets.as_ref().map(|a| a.pending == 0).unwrap_or(true) || self.frames >= at * 6 {
+                // (a running imagery load is waited for: it ends by itself)
+                if !self.geo.busy() && (self.frames >= *at && self.assets.as_ref().map(|a| a.pending == 0).unwrap_or(true) || self.frames >= at * 6) {
                     match save_shot(&g.gpu, &frame.texture, path) {
                         Ok(()) => log::info!("screenshot: {}", path.display()),
                         Err(e) => log::error!("screenshot: {e}"),
@@ -1533,7 +1550,10 @@ impl ApplicationHandler for App {
                 }
             }
             WindowEvent::DroppedFile(p) => {
-                self.import(vec![p]);
+                // (a picture dropped with the Tiles tool on: the clicked tile's own picture)
+                if self.ed.tool != Tool::Tiles || !self.geo.drop_picture(&p, &mut self.ed) {
+                    self.import(vec![p]);
+                }
             }
             _ => {}
         }

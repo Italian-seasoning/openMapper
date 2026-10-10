@@ -3,7 +3,7 @@
 struct TileU {
     // world position of the tile's south-west corner, w: number of painted layers
     origin: vec4<f32>,
-    // 1: the tile is selected (tiles tool)
+    // x 1: the tile is selected (tiles tool); y: how much its imagery covers the ground
     flags: vec4<f32>,
 };
 
@@ -19,6 +19,10 @@ struct Ground {
 @group(1) @binding(3) var mask_sampler: sampler;
 // where the ground is cut away under roads and junctions (alpha 0; row 0 is the south edge)
 @group(1) @binding(4) var cut: texture_2d<f32>;
+// satellite imagery or the user's own picture over the tile (row 0 the north edge; clear
+// where there is none; src/render/imagery.rs)
+@group(1) @binding(5) var imagery: texture_2d<f32>;
+@group(1) @binding(6) var imagery_sampler: sampler;
 
 @group(2) @binding(0) var<uniform> ground: Ground;
 @group(2) @binding(1) var tex: texture_2d_array<f32>;
@@ -75,6 +79,8 @@ fn fs(i: VsOut) -> @location(0) vec4<f32> {
             c = mix(c, layer(k, uv), masks[k - 1]);
         }
     }
+    let sat = textureSample(imagery, imagery_sampler, muv);
+    c = mix(c, sat.rgb, sat.a * tile.flags.y);
     // (the walls down a hole's rim stand where the ground is cut, and their normals lie
     // flat: the ground's own always point up)
     if (keep < 0.5 && abs(i.normal.z) > 0.05) {

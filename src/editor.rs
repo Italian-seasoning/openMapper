@@ -271,6 +271,8 @@ pub struct Editor {
     ghost_pos: Option<(DVec3, f64)>,
     // tiles
     hover_tile: Option<TileKey>,
+    /// The tile clicked last with the Tiles tool (its overlay shown in the panel).
+    pub picked_tile: Option<TileKey>,
     drag: Drag,
     pub toasts: Vec<Toast>,
     pub show_grid: bool,
@@ -357,6 +359,7 @@ impl Default for Editor {
             align_to_road: true,
             ghost_pos: None,
             hover_tile: None,
+            picked_tile: None,
             drag: Drag::None,
             toasts: Vec::new(),
             show_grid: true,
@@ -1649,6 +1652,7 @@ impl Editor {
         let Some(k) = self.hover_tile else { return };
         let Some(doc) = self.doc.as_mut() else { return };
         if doc.tiles.contains_key(&k) {
+            self.picked_tile = Some(k);
             self.toast(tr("Right-click a tile to remove it", "Правый клик по тайлу — удалить его"));
             return;
         }
@@ -1662,6 +1666,7 @@ impl Editor {
         self.history.touch_global(doc);
         doc.add_tile(k);
         self.history.commit();
+        self.picked_tile = Some(k);
     }
 
     fn remove_tile(&mut self, k: TileKey) {

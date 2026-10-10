@@ -35,7 +35,9 @@ rfd = "0.15"
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 zip = { version = "8.6", default-features = false, features = ["deflate"] }
-image = { version = "0.25", default-features = false, features = ["png", "jpeg"] }
+image = { version = "0.25", default-features = false, features = ["png", "jpeg", "tiff", "bmp", "webp"] }
+# satellite imagery, terrain heights and place search (src/geo): a small blocking client
+ureq = { version = "3.4", default-features = false, features = ["rustls"] }
 
 [profile.dev]
 opt-level = 1

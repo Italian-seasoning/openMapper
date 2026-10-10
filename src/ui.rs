@@ -66,6 +66,8 @@ pub enum Action {
     RestoreBackup(PathBuf),
     /// Open or close the Traffic and AI window.
     Traffic,
+    /// Open or close the Satellite and terrain window.
+    Geo,
     /// View > Graphics quality.
     SetGraphics(crate::render::quality::Quality),
     /// Open or close the Getting started guide.
@@ -101,6 +103,8 @@ pub struct UiState {
     pub recent_assets: Vec<String>,
     /// The map's `picture.jpg` as shown in the map's properties, with its file time.
     map_picture: Option<(PathBuf, Option<std::time::SystemTime>, Option<egui::TextureHandle>)>,
+    /// The satellite overlay as the View menu and the Tiles tool show it.
+    pub geo: crate::ui_geo::Bridge,
 }
 
 impl Default for UiState {
@@ -123,6 +127,7 @@ impl Default for UiState {
             favourites: Vec::new(),
             recent_assets: Vec::new(),
             map_picture: None,
+            geo: Default::default(),
         }
     }
 }
@@ -594,6 +599,7 @@ fn menu_bar(root: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, can_undo: bo
                 check(ui, &mut ed.show_technical, icons::labelled(icon, tr("What the game does not show", "То, чего не видно в игре")));
                 check(ui, &mut ed.show_lanes, icons::labelled(Icon::Route, tr("AI lanes", "Полосы ИИ")));
                 check(ui, &mut st.minimap.open, icons::labelled(Icon::Map, tr("Overview map (M)", "Обзорная карта (M)")));
+                crate::ui_geo::view_menu(ui, &mut st.geo);
                 if menu_item(ui, Some(Icon::Focus), tr("Go to selection", "К выделенному"), "F", ed.selected.is_some()) {
                     actions.push(Action::FocusSelection);
                 }
@@ -632,6 +638,9 @@ fn menu_bar(root: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, can_undo: bo
                 }
                 if menu_item(ui, Some(Icon::Traffic), tr("Traffic and AI…", "Трафик и ИИ…"), "T", true) {
                     actions.push(Action::Traffic);
+                }
+                if menu_item(ui, Some(Icon::Layers), tr("Satellite and terrain…", "Спутник и рельеф…"), "I", true) {
+                    actions.push(Action::Geo);
                 }
                 ui.separator();
                 if menu_item(ui, Some(Icon::Play), tr("Test drive in openOMSI", "Тест-драйв в openOMSI"), "F5", game_found) {
@@ -775,7 +784,7 @@ fn tool_hint(ed: &Editor) -> &'static str {
         Tool::Logic if ed.logic == LogicMode::Parking && ed.parking_row => tr("Click the start of a row, then its end · R turns the cars · right-click: cancel", "Клик — начало ряда, потом его конец · R — повернуть машины · правый клик — отмена"),
         Tool::Logic => tr("Choose what to place in the list on the left, then click in the view · R / Shift+R turn", "Выберите, что ставить, в списке слева, потом клик в окне · R / Shift+R — поворот"),
         Tool::Terrain | Tool::Paint => tr("Hold the left button and drag · [ ] or Shift+wheel: brush size", "Зажмите левую кнопку и ведите · [ ] или Shift+колесо — размер кисти"),
-        Tool::Tiles => tr("Click beside the map to add a tile · right-click a tile to remove it", "Клик рядом с картой — добавить тайл · правый клик по тайлу — удалить"),
+        Tool::Tiles => tr("Click beside the map to add a tile · click a tile for its overlay · right-click a tile to remove it", "Клик рядом с картой — добавить тайл · клик по тайлу — его подложка · правый клик по тайлу — удалить"),
     }
 }
 
@@ -812,6 +821,7 @@ fn tool_panel(
                 ui.label(format!("{:.2} km²", n as f64 * crate::doc::tile_size().powi(2) / 1e6));
                 ui.end_row();
             });
+            crate::ui_geo::tiles_panel(ui, &mut st.geo);
         }
         Tool::Select => {
             ui.label(RichText::new(tr("Click an object or a road in the view to see and change it on the right.", "Кликните объект или дорогу в окне вида — свойства появятся справа.")).color(TEXT_DIM));

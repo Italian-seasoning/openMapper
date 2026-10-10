@@ -203,6 +203,7 @@ pub fn plan(doc: &Document, roots: &Roots) -> Plan {
     let mut c = Collector { roots, plan: Plan::default(), seen: BTreeSet::new() };
     // the map's own folder, all of it
     c.pack_dir(&doc.dir);
+    crate::geo::export_filter(&doc.dir, &mut c.plan.files);
     for t in doc.tiles.values() {
         for o in t.tile.objects.iter().chain(t.tile.attach_objects.iter()) {
             c.file(&o.file, true);
