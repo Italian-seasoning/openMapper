@@ -622,12 +622,12 @@ fn menu_bar(root: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, can_undo: bo
                 ui.separator();
                 lang_menu(ui, actions);
                 ui.menu_button(tr("Camera", "Камера"), |ui| {
-                    let fly = prefs.camera == "fly";
-                    if radio(ui, !fly, tr("Map editor: right button turns round the cursor, drag moves the map", "Редактор карт: правая кнопка вращает вокруг курсора, перетаскивание двигает карту")).clicked() {
-                        actions.push(Action::SetCamera("map".into()));
-                    }
-                    if radio(ui, fly, tr("Fly: right button looks round, W A S D fly (like Unity, Unreal)", "Полёт: правая кнопка оглядывает, W A S D летят (как в Unity, Unreal)")).clicked() {
+                    let unity = prefs.camera != "map";
+                    if radio(ui, unity, tr("Unity: right button looks round and W A S D fly, middle pans, Alt orbits", "Unity: правая кнопка оглядывает и W A S D летят, средняя двигает, Alt вращает")).clicked() {
                         actions.push(Action::SetCamera("fly".into()));
+                    }
+                    if radio(ui, !unity, tr("Map editor: right button turns round the cursor, drag moves the map", "Редактор карт: правая кнопка вращает вокруг курсора, перетаскивание двигает карту")).clicked() {
+                        actions.push(Action::SetCamera("map".into()));
                     }
                 });
                 ui.menu_button(tr("Graphics quality", "Качество графики"), |ui| {
@@ -807,7 +807,7 @@ fn status_bar(root: &mut egui::Ui, help_line: Option<String>, ed: &mut Editor, s
 fn tool_hint(ed: &Editor) -> &'static str {
     match ed.tool {
         Tool::Select if ed.single_spline().is_some() => tr("Drag a white dot: an end moves (joined roads follow), the middle bends the road · drag the road to move it · Shift+click: add to the selection", "Тяните белую точку: конец двигается (соседние дороги следуют), середина изгибает дорогу · тянуть дорогу: сдвиг · Shift+клик: добавить к выделению"),
-        Tool::Select => tr("Click to select, Shift+click to add · Shift+drag on empty ground: box · drag the selection to move it, empty ground to move the map · Ctrl+C / X / V / D · right button: turn round the cursor · middle: move · wheel: zoom · F: focus", "Клик: выбрать, Shift+клик: добавить · Shift+тянуть по пустой земле: рамка · тянуть выделенное: сдвиг, пустую землю: двигать карту · Ctrl+C / X / V / D · ПКМ: вращать вокруг курсора · средняя: двигать · колесо: зум · F: к выделенному"),
+        Tool::Select => tr("Click to select, Shift+click to add · drag on nothing: box · drag the selection to move it · Ctrl+C / X / V / D · right button: look + W A S D fly · middle: pan · Alt: orbit · wheel: zoom · F: focus", "Клик: выбрать, Shift+клик: добавить · тянуть по пустому месту: рамка · тянуть выделенное: сдвиг · Ctrl+C / X / V / D · ПКМ: обзор + полёт WASD · средняя: сдвиг · Alt: орбита · колесо: зум · F: к выделенному"),
         Tool::Roads if ed.road_type.is_none() => tr("Choose a road type in the list on the left", "Выберите тип дороги в списке слева"),
         Tool::Roads => tr("Click where the road starts, click again where it goes (it keeps going) · white dots: road ends to join · right-click / Esc: stop", "Клик: начало дороги, ещё клик: куда она идёт (дальше продолжается) · белые точки: концы для стыковки · правый клик / Esc: стоп"),
         Tool::Objects if ed.object_type.is_none() => tr("Choose an object in the list on the left", "Выберите объект в списке слева"),
@@ -1662,11 +1662,12 @@ fn controls(ctx: &egui::Context, st: &mut UiState) {
     egui::Window::new(tr("Controls", "Управление")).open(&mut open).collapsible(false).resizable(false).show(ctx, |ui| {
         let rows: &[(&str, &str)] = &[
             (tr("Mouse", "Мышь"), ""),
-            (tr("Right drag", "Правая кнопка"), tr("turn and tilt round the point under the cursor (View > Camera > Fly: look round, W A S D fly)", "вращать и наклонять вокруг точки под курсором (Вид > Камера > Полёт: оглядываться, W A S D летят)")),
-            (tr("Middle drag", "Средняя кнопка"), tr("move the map: the ground grabbed stays under the cursor", "двигать карту: схваченная земля остаётся под курсором")),
+            (tr("Right button held", "Правая кнопка зажата"), tr("look round; W A S D fly, Q / E down / up, Shift faster, wheel: speed", "оглядываться; W A S D: полёт, Q / E: вниз / вверх, Shift: быстрее, колесо: скорость")),
+            (tr("Middle drag", "Средняя кнопка"), tr("pan", "сдвиг вида")),
+            (tr("Alt + left / right / middle drag", "Alt + левая / правая / средняя"), tr("orbit / zoom / pan (as in Unity)", "орбита / зум / сдвиг (как в Unity)")),
+            (tr("Left drag on nothing", "Левая по пустому месту"), tr("select with a box", "выделить рамкой")),
             (tr("Alt + left drag", "Alt + левая кнопка"), tr("orbit round the point under the cursor", "орбита вокруг точки под курсором")),
             (tr("Wheel", "Колесо"), tr("move towards the cursor", "приближение к курсору")),
-            (tr("Left drag on empty ground", "Левая кнопка по пустой земле"), tr("move the map (Select tool)", "двигать карту (инструмент «Выбор»)")),
             (tr("Trackpad", "Трекпад"), ""),
             (tr("Two fingers", "Два пальца"), tr("pan", "сдвиг вида")),
             (tr("Pinch / twist", "Щипок / поворот"), tr("zoom / turn", "зум / поворот")),

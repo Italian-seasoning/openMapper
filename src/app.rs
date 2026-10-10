@@ -53,6 +53,10 @@ struct Mouse {
 
 #[derive(Default)]
 struct Keys {
+    /// The arrow keys: up, left, down, right (they move over the map in any camera style).
+    arrows: [bool; 4],
+    /// How long the flying keys have been held (s).
+    fly_held: f64,
     w: bool,
     a: bool,
     s: bool,
@@ -689,10 +693,14 @@ impl App {
 
     fn key(&mut self, code: Option<KeyCode>, logical: &Key, pressed: bool, el: &ActiveEventLoop) {
         match code {
-            Some(KeyCode::KeyW) | Some(KeyCode::ArrowUp) => self.keys.w = pressed,
-            Some(KeyCode::KeyA) | Some(KeyCode::ArrowLeft) => self.keys.a = pressed,
-            Some(KeyCode::KeyS) | Some(KeyCode::ArrowDown) => self.keys.s = pressed,
-            Some(KeyCode::KeyD) | Some(KeyCode::ArrowRight) => self.keys.d = pressed,
+            Some(KeyCode::KeyW) => self.keys.w = pressed,
+            Some(KeyCode::KeyA) => self.keys.a = pressed,
+            Some(KeyCode::KeyS) => self.keys.s = pressed,
+            Some(KeyCode::KeyD) => self.keys.d = pressed,
+            Some(KeyCode::ArrowUp) => self.keys.arrows[0] = pressed,
+            Some(KeyCode::ArrowLeft) => self.keys.arrows[1] = pressed,
+            Some(KeyCode::ArrowDown) => self.keys.arrows[2] = pressed,
+            Some(KeyCode::ArrowRight) => self.keys.arrows[3] = pressed,
             Some(KeyCode::KeyQ) => self.keys.q = pressed,
             Some(KeyCode::KeyE) => self.keys.e = pressed,
             _ => {}
@@ -757,8 +765,9 @@ impl App {
     }
 
     /// The camera moves like a fly-through (Unity / Unreal) rather than over a map.
+    /// The camera works as Unity's scene view (the default), else as a map editor's.
     fn fly_style(&self) -> bool {
-        self.prefs.camera == "fly"
+        self.prefs.camera != "map"
     }
 
     /// What a drag of the map holds: the point under the cursor, else where the cursor's ray
@@ -793,14 +802,24 @@ impl App {
         let fwd = (self.keys.w as i32 - self.keys.s as i32) as f64;
         let side = (self.keys.d as i32 - self.keys.a as i32) as f64;
         let turn = (self.keys.e as i32 - self.keys.q as i32) as f64;
+        let ar = self.keys.arrows;
+        let (afwd, aside) = ((ar[0] as i32 - ar[2] as i32) as f64, (ar[3] as i32 - ar[1] as i32) as f64);
         let typing = self.gfx.as_ref().map(|g| g.egui_ctx.egui_wants_keyboard_input()).unwrap_or(false);
-        if !typing && !self.keys.ctrl && (fwd != 0.0 || side != 0.0 || turn != 0.0) {
-            // (the right button held: flying, Q down and E up; else over the map, Q E turn)
-            if self.mouse.right && self.fly_style() {
-                self.cam.fly(fwd, side, turn, self.keys.shift, dt);
+        let keys_on = !typing && !self.keys.ctrl;
+        if keys_on && self.fly_style() {
+            // Unity: W A S D / Q E fly only while the right button is held; the arrows move
+            if self.mouse.right && (fwd != 0.0 || side != 0.0 || turn != 0.0) {
+                self.keys.fly_held += dt;
+                self.cam.fly(fwd, side, turn, self.keys.shift, dt, self.keys.fly_held);
             } else {
-                self.cam.drive(fwd, side, turn, self.keys.shift, dt);
+                self.keys.fly_held = 0.0;
             }
+            if afwd != 0.0 || aside != 0.0 {
+                self.cam.fly(afwd, aside, 0.0, self.keys.shift, dt, 0.0);
+            }
+        } else if keys_on && (fwd != 0.0 || side != 0.0 || turn != 0.0 || afwd != 0.0 || aside != 0.0) {
+            // (map style: over the map, Q E turn)
+            self.cam.drive((fwd + afwd).clamp(-1.0, 1.0), (side + aside).clamp(-1.0, 1.0), turn, self.keys.shift, dt);
         }
         if let Some(doc) = &self.ed.doc {
             let h = doc.ground(self.cam.wanted_eye().truncate());
@@ -1477,8 +1496,9 @@ impl ApplicationHandler for App {
                 self.ed.ctrl_held = self.keys.ctrl;
                 self.ed.shift_held = self.keys.shift;
                 let alt = m.state().alt_key();
-                // (Alt / Option goes down: the camera will orbit round the point under the cursor)
-                if alt && !self.keys.alt && !self.mouse.over_ui {
+                // (Alt / Option goes down: the camera will orbit round the point under the cursor;
+                // Unity orbits round the point looked at)
+                if alt && !self.keys.alt && !self.mouse.over_ui && !self.fly_style() {
                     if let Some(c) = self.ed.cursor {
                         self.cam.set_pivot(c);
                     }
@@ -1505,19 +1525,24 @@ impl ApplicationHandler for App {
                     b[1] = p;
                 }
                 let h = self.view.height().max(1.0);
+                let unity = self.fly_style();
                 if self.mouse.right {
-                    // (map style: the view turns round the point the button went down on, the
-                    // map following the hand; fly style: the eye looks round)
-                    if self.fly_style() {
+                    // (Unity: the eye looks round, Alt + right drag zooms; map style: the view
+                    // turns round the point the button went down on, the map following the hand)
+                    if unity && self.keys.alt {
+                        self.cam.dolly((dx - dy) * 0.02);
+                    } else if unity {
                         self.cam.look_pixels(dx, dy);
                     } else {
                         self.cam.orbit_pixels(-dx, dy);
                     }
                     self.mouse.right_moved += dx.abs() + dy.abs();
                 } else if self.mouse.alt_orbit {
-                    self.cam.orbit_pixels(-dx, dy);
+                    self.cam.orbit_pixels(if unity { dx } else { -dx }, dy);
                 }
-                if self.mouse.middle || self.mouse.grab {
+                if self.mouse.middle && unity {
+                    self.cam.pan_screen(dx, dy, h);
+                } else if self.mouse.middle || self.mouse.grab {
                     match (self.mouse.grab_anchor, self.view_ray()) {
                         (Some(a), Some((o, d))) => self.cam.grab(a, o, d),
                         _ => self.cam.pan_pixels(dx, dy, h),
@@ -1536,7 +1561,8 @@ impl ApplicationHandler for App {
                             if self.keys.alt {
                                 // Option + drag: turn the camera
                                 self.mouse.alt_orbit = true;
-                            } else if self.ed.tool == Tool::Select && self.ed.hover.is_none() && self.ed.ruler.is_none() && (self.keys.shift || self.keys.ctrl) {
+                            } else if self.ed.tool == Tool::Select && self.ed.hover.is_none() && self.ed.ruler.is_none() && (self.keys.shift || self.keys.ctrl || self.fly_style()) {
+                                // (Unity: a drag on nothing draws a selection box)
                                 // Shift / Ctrl + drag on empty ground: a selection box
                                 self.ed.select_box = Some([self.mouse.pos, self.mouse.pos]);
                             } else if self.ed.tool == Tool::Select && self.ed.hover.is_none() && self.ed.ruler.is_none() {
@@ -1606,6 +1632,11 @@ impl ApplicationHandler for App {
                         self.ed.toast(format!("{} {:.0} m/s", tr("Flying speed", "Скорость полёта"), self.cam.fly_speed));
                         return;
                     }
+                    MouseScrollDelta::LineDelta(_, y) if self.fly_style() && !self.keys.ctrl && !(self.keys.shift && (matches!(self.ed.tool, Tool::Terrain | Tool::Paint) || (self.ed.tool == Tool::Objects && self.ed.plant_brush))) => {
+                        // Unity: the wheel moves towards the point looked at, at once
+                        self.cam.dolly(y);
+                        return;
+                    }
                     MouseScrollDelta::LineDelta(_, y) => y,
                     // a trackpad: two fingers move the map (Option + two fingers turn it),
                     // pinching zooms
@@ -1613,6 +1644,10 @@ impl ApplicationHandler for App {
                         let (dx, dy) = (p.x as f32 / scale, p.y as f32 / scale);
                         if self.keys.alt {
                             self.cam.orbit_pixels(-dx, -dy);
+                        } else if self.fly_style() && !self.keys.ctrl && !self.keys.shift {
+                            // Unity on a trackpad: two fingers up and down zoom, sideways pan
+                            self.cam.dolly(dy * 0.04);
+                            self.cam.pan_screen(dx, 0.0, self.view.height().max(1.0));
                         } else if self.keys.ctrl {
                             self.ed.rotate(dy as f64 * 0.5);
                         } else if self.keys.shift && (matches!(self.ed.tool, Tool::Terrain | Tool::Paint) || (self.ed.tool == Tool::Objects && self.ed.plant_brush)) {
@@ -1642,7 +1677,11 @@ impl ApplicationHandler for App {
             }
             WindowEvent::PinchGesture { delta, .. } => {
                 if !self.mouse.over_ui {
-                    self.cam.zoom(delta as f32 * 9.0, self.ed.cursor);
+                    if self.fly_style() {
+                        self.cam.dolly(delta as f32 * 9.0);
+                    } else {
+                        self.cam.zoom(delta as f32 * 9.0, self.ed.cursor);
+                    }
                 }
             }
             WindowEvent::RotationGesture { delta, .. } => {

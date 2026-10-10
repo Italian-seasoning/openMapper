@@ -106,10 +106,12 @@ impl Camera {
         self.snap();
     }
 
-    /// Fly (right button held): `fwd`, `side`, `up` in -1..1, per second; `fast` with Shift.
-    pub fn fly(&mut self, fwd: f64, side: f64, up: f64, fast: bool, dt: f64) {
+    /// Fly (right button held): `fwd`, `side`, `up` in -1..1, per second; `fast` with Shift;
+    /// `held`: seconds the keys have been held (the speed builds up, as in Unity).
+    pub fn fly(&mut self, fwd: f64, side: f64, up: f64, fast: bool, dt: f64, held: f64) {
         let (f, r, _) = self.axes();
-        let m = (f * fwd + r * side + DVec3::Z * up) * self.fly_speed * if fast { 3.0 } else { 1.0 } * dt;
+        let accel = 1.0 + (held * 1.5).min(3.0);
+        let m = (f * fwd + r * side + DVec3::Z * up) * self.fly_speed * accel * if fast { 3.0 } else { 1.0 } * dt;
         self.target += m;
         self.snap();
     }
@@ -217,6 +219,21 @@ impl Camera {
         let m = DVec2::new(m.x, m.y).clamp_length_max(self.distance * 2.0 + 50.0);
         self.target.x += m.x;
         self.target.y += m.y;
+        self.snap();
+    }
+
+    /// Pan in the screen's plane by pixels (the middle button, as in Unity: what is under
+    /// the cursor at the pivot's distance follows the hand).
+    pub fn pan_screen(&mut self, dx: f32, dy: f32, h: f32) {
+        let scale = self.distance * (self.fov_y as f64 / 2.0).tan() * 2.0 / h as f64;
+        let (_, r, u) = self.axes();
+        self.target += (-r * dx as f64 + u * dy as f64) * scale;
+        self.snap();
+    }
+
+    /// Dolly towards the pivot (the wheel, Alt + right drag), at once.
+    pub fn dolly(&mut self, steps: f32) {
+        self.distance = (self.distance * (0.85f64).powf(steps as f64)).clamp(0.5, 8000.0);
         self.snap();
     }
 
