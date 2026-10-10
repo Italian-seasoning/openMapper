@@ -24,6 +24,7 @@ mod place;
 mod render;
 mod reshape;
 mod roads;
+mod roundabout;
 mod rows;
 mod selection;
 mod timetable;

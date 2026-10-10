@@ -210,6 +210,10 @@ pub struct Editor {
     pub straight_lock: bool,
     /// The road drawn is planned again this frame.
     pub replan: bool,
+    /// The Roads tool builds roundabouts: a click on the centre, then on the ring (or a
+    /// drag out to it).
+    pub roundabout: bool,
+    ring_centre: Option<DVec3>,
     /// Roads keep their height (bridges, embankments): an even gradient from end to end,
     /// the ground left as it is.
     pub keep_height: bool,
@@ -303,6 +307,8 @@ impl Default for Editor {
             typed_text: Default::default(),
             straight_lock: false,
             replan: false,
+            roundabout: false,
+            ring_centre: None,
             keep_height: false,
             snap_grid: false,
             grid_step: 1.0,
@@ -421,6 +427,7 @@ impl Editor {
         self.drag = Drag::None;
         self.reshape = None;
         self.select_box = None;
+        self.ring_centre = None;
         if let Some(doc) = &mut self.doc {
             self.history.commit();
             let _ = doc;
@@ -730,6 +737,7 @@ impl Editor {
                 self.flatten_to = self.cursor.map(|c| c.z as f32);
                 self.drag = Drag::Brush;
             }
+            Tool::Roads if self.roundabout && !self.drawing_paths() => self.ring_click(assets),
             Tool::Roads => self.road_click(assets, lib),
             Tool::Objects if self.tool == Tool::Logic && self.logic == LogicMode::Parking && self.parking_row => self.parking_click(assets, lib),
             Tool::Objects => self.place_object(lib, shift),
@@ -741,6 +749,10 @@ impl Editor {
     /// The left button let go; `dragged`: the mouse moved since it went down (a road is
     /// built by dragging from its start to its end, as well as by two clicks).
     pub fn left_release(&mut self, assets: &mut Assets, lib: &Library, dragged: bool) {
+        if self.acts_as() == Tool::Roads && self.roundabout && dragged && self.ring_centre.is_some() {
+            self.ring_click(assets);
+            return;
+        }
         if self.acts_as() == Tool::Roads && dragged && self.road_start.is_some() && self.road_plan.is_some() {
             self.road_click(assets, lib);
         }
@@ -756,6 +768,9 @@ impl Editor {
             return;
         }
         match self.acts_as() {
+            Tool::Roads if self.ring_centre.is_some() => {
+                self.ring_centre = None;
+            }
             Tool::Roads if self.road_start.is_some() => {
                 self.road_start = None;
                 self.road_plan = None;
@@ -1703,6 +1718,15 @@ impl Editor {
                 }
             }
             Tool::Roads => {
+                // a roundabout being laid out: its ring
+                if let (Some((c, r)), Some(rel)) = (self.ring_radius(), &self.road_type) {
+                    for sg in crate::roundabout::ring(c.truncate(), r, doc.global.left_hand_traffic) {
+                        let mut s = piece_spline(rel, &sg, &[(c.z, 0.0), (c.z, 0.0)], 0, DVec2::ZERO);
+                        s.pos[2] += 0.05;
+                        x.ghost_splines.push((rel.clone(), s, [0.35, 0.85, 0.45, 0.3]));
+                    }
+                    disc(&mut x.overlay, cam, c, w * 3.0, GREEN);
+                }
                 if let Some(rel) = &self.road_type {
                     if let Some((segs, z0, z1, _)) = &self.road_plan {
                         let pieces = roads::split(segs, 50.0);
@@ -2568,6 +2592,97 @@ impl Editor {
         if self.acts_as() == Tool::Roads && self.road_start.is_some() {
             self.plan_road(assets);
             self.road_click(assets, lib);
+        }
+    }
+
+    // ------------------------------------------------------------ roundabouts
+
+    /// The ring's radius for the cursor now (None: no centre yet).
+    fn ring_radius(&self) -> Option<(DVec3, f64)> {
+        let c = self.ring_centre?;
+        let r = (self.cursor?.truncate() - c.truncate()).length();
+        Some((c, r.max(crate::roundabout::MIN_RADIUS)))
+    }
+
+    /// The ring goes the way traffic goes round: anticlockwise where it keeps right, unless
+    /// the road type's lanes run backwards.
+    fn ring_clockwise(&self, assets: &mut Assets, rel: &str) -> bool {
+        let left = self.doc.as_ref().map(|d| d.global.left_hand_traffic).unwrap_or(false);
+        let backwards = assets.spline(rel).map(|m| {
+            let streets: Vec<i32> = m.def.paths.iter().filter(|p| p.kind == 0).map(|p| p.direction).collect();
+            !streets.is_empty() && streets.iter().all(|d| *d == 1)
+        });
+        left != backwards.unwrap_or(false)
+    }
+
+    fn ring_click(&mut self, assets: &mut Assets) {
+        let Some(c) = self.cursor else { return };
+        if self.ring_centre.is_none() {
+            self.ring_centre = Some(c);
+            return;
+        }
+        let Some((centre, r)) = self.ring_radius() else { return };
+        self.ring_centre = None;
+        self.build_roundabout(assets, centre, r);
+    }
+
+    /// Build a roundabout of the chosen road type: the ring, the roads inside it cut back
+    /// to its edge, junctions where they meet it.
+    pub fn build_roundabout(&mut self, assets: &mut Assets, centre: DVec3, r: f64) {
+        let Some(rel) = self.road_type.clone() else {
+            self.toast(tr("Pick a road type in the catalogue first", "Сначала выберите тип дороги в каталоге"));
+            return;
+        };
+        let Some(model) = assets.spline(&rel) else { return };
+        let two_way = {
+            let dirs: Vec<i32> = model.def.paths.iter().filter(|p| p.kind == 0).map(|p| p.direction).collect();
+            dirs.contains(&2) || (dirs.contains(&0) && dirs.contains(&1))
+        };
+        let half = model.half_width as f64;
+        let clockwise = self.ring_clockwise(assets, &rel);
+        let segs = crate::roundabout::ring(centre.truncate(), r, clockwise);
+        let Some(doc) = self.doc.as_ref() else { return };
+        let z = doc.ground(segs[0].start);
+        // (the roads one sees that come into the circle: they are cut back to it)
+        let mut inside: Vec<(TileKey, i64)> = Vec::new();
+        for (k, t) in &doc.tiles {
+            let org = tile_origin(*k);
+            for s in t.tile.splines.iter().filter(|s| !s.deleted) {
+                if !assets.spline(&s.file).map(|m| m.joinable()).unwrap_or(false) {
+                    continue;
+                }
+                let c = omsi_geometry::SplineCurve::from_map(s, org);
+                let n = (s.length / 2.0).ceil().max(2.0) as usize;
+                if (0..=n).any(|i| (c.point_at(s.length * i as f64 / n as f64).truncate() - centre.truncate()).length() < r) {
+                    inside.push((*k, s.id));
+                }
+            }
+        }
+        let Some(made) = self.build_road(&rel, &segs, z, z, Anchor::default(), None, half) else { return };
+        let Some(doc) = self.doc.as_mut() else { return };
+        // the ring closes on itself
+        let (first, last) = (made[0], *made.last().unwrap());
+        if let Some(s) = doc.tiles.get_mut(&first.0).and_then(|t| t.tile.splines.iter_mut().find(|s| s.id == first.1)) {
+            s.prev_id = last.1;
+        }
+        if let Some(s) = doc.tiles.get_mut(&last.0).and_then(|t| t.tile.splines.iter_mut().find(|s| s.id == last.1)) {
+            s.next_id = first.1;
+        }
+        // (cut a metre inside the ring's centre line, so each road still crosses it there)
+        crate::roundabout::clear_inside(doc, &inside, centre.truncate(), r - 1.0);
+        // openMapper's junctions inside go with the roads they joined
+        let gone: Vec<(TileKey, i64)> = doc.tiles.iter().flat_map(|(k, t)| t.tile.objects.iter().filter(|o| is_own_junction(&o.file) && (tile_origin(*k) + DVec2::new(o.pos[0], o.pos[1]) - centre.truncate()).length() < r - 1.0).map(move |o| (*k, o.id))).collect();
+        for (k, id) in gone {
+            doc.delete_object(k, id);
+        }
+        for k in made.iter().map(|m| m.0).collect::<Vec<_>>() {
+            doc.tiles.get_mut(&k).map(|t| t.touch_content());
+        }
+        let n = if self.auto_junctions { self.make_junctions(assets, &made, half, None, None) } else { 0 };
+        self.history.commit();
+        self.toast(format!("{} {n}", tr("Roundabout built; roads joined to it:", "Кольцо построено; дорог присоединено:")));
+        if two_way {
+            self.error(tr("This road type carries traffic both ways: pick a one-way road for a proper roundabout", "Этот тип дороги — двустороннее движение: для настоящего кольца выберите одностороннюю дорогу"));
         }
     }
 

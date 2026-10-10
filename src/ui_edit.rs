@@ -274,6 +274,8 @@ pub fn rows_section(ui: &mut egui::Ui, ed: &mut Editor, lib: &Library) {
 
 /// The Roads tool's options for roads that keep their height.
 pub fn road_options(ui: &mut egui::Ui, ed: &mut Editor) {
+    let r = check(ui, &mut ed.roundabout, tr("Roundabout: click the centre, then the ring", "Кольцо: клик в центр, потом по кольцу"));
+    r.on_hover_text(tr("A one-way ring of the chosen road type (pick a one-way road); roads inside are cut back to it and joined with junctions", "Одностороннее кольцо выбранного типа дороги (выберите одностороннюю); дороги внутри обрезаются по кольцу и соединяются перекрёстками"));
     let r = check(ui, &mut ed.keep_height, tr("Keep the height (bridge, embankment)", "Держать высоту (мост, насыпь)"));
     r.on_hover_text(tr("An even gradient from end to end, the ground left as it is; the rise to the end can be typed while drawing. Pillars: select the road and put them along it as objects.", "Ровный уклон от начала до конца, земля не меняется; подъём к концу можно ввести при рисовании. Опоры: выберите дорогу и расставьте их вдоль неё как объекты."));
 }
