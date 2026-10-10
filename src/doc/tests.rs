@@ -267,3 +267,20 @@ fn removing_a_tile_lets_go_of_links_into_it() {
     assert_eq!(s.next_id, 0);
     assert_ne!(doc.tiles[&(0, 0)].content_rev, rev, "the view builds the tile again");
 }
+
+/// The descriptions in other languages come back from an autosave too.
+#[test]
+fn an_autosave_keeps_the_descriptions() {
+    let _map = one_map();
+    let roots = scratch("recover-dsc");
+    let mut doc = sample_map(&roots);
+    save(&mut doc).unwrap();
+    doc.descriptions.set("ENG", "Round trip".into(), "In English".into());
+    autosave::write(&doc, &roots.content).unwrap();
+    drop(doc);
+    let meta = autosave::pending(&roots.content).unwrap();
+    let back = autosave::restore(&roots, &meta).unwrap();
+    assert_eq!(back.descriptions.langs.get("ENG").map(|l| l.1.as_str()), Some("In English"));
+    assert!(back.is_dirty() && back.descriptions.dirty);
+    let _ = std::fs::remove_dir_all(&roots.content);
+}
