@@ -189,6 +189,8 @@ pub struct Editor {
     move_from: Vec<Origin>,
     /// A reshape being dragged: its plan, or why it cannot be.
     reshape: Option<Result<reshape::Plan, &'static str>>,
+    /// Half the width of the road being reshaped (the ground is brought to it; 0: left).
+    reshape_half: f64,
     // snapping
     pub snap_grid: bool,
     pub grid_step: f64,
@@ -262,6 +264,7 @@ impl Default for Editor {
             clip: None,
             move_from: Vec::new(),
             reshape: None,
+            reshape_half: 4.0,
             snap_grid: false,
             grid_step: 1.0,
             snap_angle: false,
@@ -583,6 +586,8 @@ impl Editor {
                 let joined = self.helper_anchors(assets);
                 let locked = |q: DVec2| joined.iter().any(|j| (j.truncate() - q).length() < 0.6);
                 let Some(doc) = self.doc.as_ref() else { return };
+                // (0: not a road one sees, such as an AI path; the ground stays)
+                self.reshape_half = doc.spline(k, id).and_then(|s| assets.spline(&s.file)).filter(|m| m.joinable()).map(|m| m.half_width as f64).unwrap_or(0.0);
                 let ground = |q: DVec2| doc.ground(q);
                 self.reshape = Some(match h {
                     Handle::Start | Handle::End => reshape::drag_end(doc, k, id, h == Handle::End, p, &ground, &locked),
@@ -1767,7 +1772,28 @@ impl Editor {
                     self.history.touch_tile(doc, t);
                 }
                 self.history.touch_global(doc);
+                // the ground follows the new shape, as it does a new road (the tiles it may
+                // reach are kept first)
+                let curves: Vec<omsi_geometry::SplineCurve> = reshape::preview(doc, &plan).iter().map(|s| omsi_geometry::SplineCurve::from_map(s, DVec2::ZERO)).collect();
+                let follow = self.follow_ground && self.reshape_half > 0.0;
+                if follow {
+                    let reach = self.reshape_half + 12.0;
+                    for c in &curves {
+                        for i in 0..=8 {
+                            let p = c.point_at(c.length * i as f64 / 8.0).truncate();
+                            for d in [DVec2::new(-reach, -reach), DVec2::new(reach, -reach), DVec2::new(-reach, reach), DVec2::new(reach, reach)] {
+                                let t = tile_of(p + d);
+                                if doc.tiles.contains_key(&t) {
+                                    self.history.touch_tile(doc, t);
+                                }
+                            }
+                        }
+                    }
+                }
                 reshape::apply(doc, &plan);
+                if follow {
+                    conform_ground(doc, &curves, self.reshape_half);
+                }
                 self.history.commit();
                 self.select(Some(Sel::Spline(k, id)));
             }

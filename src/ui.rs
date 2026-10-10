@@ -1263,7 +1263,9 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
         ed.delete_selected();
         return;
     }
-    let Some(doc) = ed.doc.as_mut() else { return };
+    if ed.doc.is_none() {
+        return;
+    }
     match sel {
         Sel::Object(k, id) => {
             if let Some((x, y)) = new_pos {
