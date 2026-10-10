@@ -12,6 +12,7 @@ mod descriptions;
 mod doc;
 mod draw;
 mod export;
+mod geo;
 mod editor;
 mod gpu;
 mod history;
