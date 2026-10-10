@@ -191,8 +191,9 @@ impl App {
 
     fn open_map(&mut self, cfg: &Path) {
         let Some(roots) = &self.roots else { return };
-        // (what was open is saved or its changes were dropped)
-        if self.ed.doc.is_some() {
+        // (what was open is saved or its changes were dropped; an autosave of an earlier
+        // session still offered is not this map's)
+        if self.ed.doc.is_some() && self.recover.is_none() {
             crate::doc::autosave::clear(&roots.content);
         }
         match Document::load(roots, cfg, |_| {}) {
@@ -271,7 +272,7 @@ impl App {
 
     fn new_map(&mut self, folder: &str, friendly: &str, size: i32, options: &crate::ui_newmap::NewMapOptions) {
         let Some(roots) = &self.roots else { return };
-        if self.ed.doc.is_some() {
+        if self.ed.doc.is_some() && self.recover.is_none() {
             crate::doc::autosave::clear(&roots.content);
         }
         let mut folder = folder.to_string();
@@ -348,7 +349,7 @@ impl App {
         match crate::doc::save(doc) {
             Ok(()) => {
                 omsi_cfg::content_changed();
-                if let Some(r) = &self.roots {
+                if let (Some(r), None) = (&self.roots, &self.recover) {
                     crate::doc::autosave::clear(&r.content);
                 }
                 self.autosave.reset();
@@ -497,7 +498,7 @@ impl App {
                 }
             }
             Action::Close => {
-                if let Some(r) = &self.roots {
+                if let (Some(r), None) = (&self.roots, &self.recover) {
                     crate::doc::autosave::clear(&r.content);
                 }
                 self.ed.doc = None;
@@ -1004,8 +1005,9 @@ impl App {
         for a in actions {
             self.do_action(a, el);
         }
-        // the changes kept every few minutes (not in the middle of an edit)
-        let editing = self.mouse.left || self.ed.history.is_open();
+        // the changes kept every few minutes (not in the middle of an edit, nor while an
+        // earlier session's autosave is still offered: there is one, it would be written over)
+        let editing = self.mouse.left || self.ed.history.is_open() || self.recover.is_some();
         self.autosave.tick(self.ed.doc.as_ref(), self.roots.as_ref().map(|r| r.content.as_path()), editing);
     }
 
