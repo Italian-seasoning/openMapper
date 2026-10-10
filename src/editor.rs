@@ -477,6 +477,11 @@ impl Editor {
         self.select(None);
         self.hover = None;
         self.cancel();
+        // (what was kept by IDCode belongs to the map that was open)
+        self.junction_options.clear();
+        self.pending_rebuild.clear();
+        self.pending_options.clear();
+        self.pending_arms.clear();
         self.paint_layer = if doc.global.ground_textures.len() > 1 { 1 } else { 0 };
         self.session_first_id = doc.global.next_id_code;
         self.doc = Some(doc);
@@ -3617,5 +3622,15 @@ mod tests {
         ed.history.commit();
         let (k, id) = made[0];
         assert_eq!(ed.doc.as_ref().unwrap().spline(k, id).unwrap().prev_id, 0);
+    }
+
+    /// The junction options shown in the properties are those of the map open: another
+    /// map's junction of the same IDCode does not show (and get made again with) them.
+    #[test]
+    fn junction_options_are_not_carried_over_to_another_map() {
+        let mut ed = editor();
+        ed.junction_options.insert(5, crate::junction::Options { lights: true, ..Default::default() });
+        ed.open(flat_map(1));
+        assert!(ed.junction_options.is_empty());
     }
 }
