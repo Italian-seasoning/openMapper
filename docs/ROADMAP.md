@@ -102,3 +102,12 @@ Add a line when you touch a shared file: stream, file, what.
 * C · `src/install.rs`: `Prefs::graphics` ("low" / "medium" / "high", empty: high).
 * C · `src/ui.rs`: `Action::SetGraphics(render::quality::Quality)`, View > Graphics quality.
 * C · `src/app.rs`: the renderer made with the quality from the settings (`Renderer::new(&gpu, quality)`, `OPENMAPPER_GRAPHICS` overrides for checks); `Action::SetGraphics` makes the renderer again (thumbnails freed); `OPENMAPPER_PROFILE=gpu` times the view on a picture of its own (`Renderer::time_gpu`).
+* Geodata · `Cargo.toml`: `ureq` 3 (rustls, no other features) for imagery, heights and place search; `image` also reads TIFF, BMP and WebP (own pictures).
+* Geodata · `src/main.rs`: `mod geo`, `mod ui_geo`.
+* Geodata · `src/install.rs`: `Prefs::geo` (`geo::sources::GeoPrefs`: the user's own tile servers and keys).
+* Geodata · `src/render/mod.rs`: `pub mod imagery`, `Renderer::imagery` (per-tile textures with mipmaps); the tile bind group has the tile's imagery at binding 5 and its sampler at 6 (`tile_bind`, made again when the tile's imagery changes: `GpuTile::{views, imagery_rev}`), its opacity is `TileUniform::flags[1]`. A new renderer (graphics quality) starts empty: `Imagery::epoch` changes and `ui_geo` uploads again from disk.
+* Geodata · `src/render/terrain.wgsl`: bindings 5 and 6 of group 1, the imagery mixed into the ground's colour by its alpha times `tile.flags.y`.
+* Geodata · `src/ui.rs`: `Action::Geo`, Map menu "Satellite and terrain…" (key `I`), `UiState::geo` (`ui_geo::Bridge`), View menu `ui_geo::view_menu`, the Tiles panel ends with `ui_geo::tiles_panel`; the Tiles hint mentions clicking a tile.
+* Geodata · `src/app.rs`: `App::geo` (`ui_geo::GeoUi`): `fill_bridge` before the interface, `window` after the Traffic window (its `look` becomes `Action::LookAt`), `take_bridge` after it, `feed` before `Renderer::sync`; key `I`, `Action::Geo`; a picture dropped with the Tiles tool on goes to `geo.drop_picture` first; the screenshot waits while `geo.busy()`; `OPENMAPPER_GEO=lat,lon[,load][,hide][,picture=<file>[,turn=<deg>]]`.
+* Geodata · `src/editor.rs`: `Editor::picked_tile` (the tile clicked or added last with the Tiles tool).
+* Geodata · `src/export.rs`: `plan` calls `geo::export_filter` (the map's `openMapper/imagery` stays out of shared zips unless the map's geo.json says `export_imagery`).

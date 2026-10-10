@@ -773,7 +773,7 @@ impl GeoUi {
         self.bake_pieces(&id, true);
         self.touch();
         self.open = true;
-        ed.toast(tr("The picture is on the tiles: line it up in Satellite and terrain → Own pictures.", "Картинка на тайлах: подгоните её в «Спутник и рельеф» → «Свои картинки»."));
+        ed.toast(tr("The picture is on the tiles: line it up in Satellite and terrain, Own pictures.", "Картинка на тайлах: подгоните её в «Спутник и рельеф», «Свои картинки»."));
     }
 
     fn picture_image(&mut self, id: &str) -> Option<Arc<image::RgbaImage>> {
@@ -1103,7 +1103,7 @@ impl GeoUi {
                     self.touch();
                 }
                 let note = match (m, self.probe.as_ref().and_then(|p| p.results.get(&s.name))) {
-                    (Some(m), _) => format!("≈ {:.0} {}", m * 100.0, tr("cm a pixel here", "см на пиксель здесь")),
+                    (Some(m), _) => format!("~{:.0} {}", m * 100.0, tr("cm a pixel here", "см на пиксель здесь")),
                     (None, Some(Err(e))) => e.clone(),
                     (None, None) if here.is_some() => tr("checking…", "проверка…").into(),
                     _ => s.note(),
@@ -1161,7 +1161,7 @@ impl GeoUi {
             ui.end_row();
         });
         if let Some((z, m)) = self.detail {
-            ui.label(RichText::new(format!("{} z{z}, ≈ {:.0} {}", tr("Loaded at", "Загружено с"), m * 100.0, tr("cm a pixel", "см на пиксель"))).color(TEXT_DIM));
+            ui.label(RichText::new(format!("{} z{z}, ~{:.0} {}", tr("Loaded at", "Загружено с"), m * 100.0, tr("cm a pixel", "см на пиксель"))).color(TEXT_DIM));
         }
         let mut c = false;
         c |= crate::ui::check(ui, &mut self.file.with_terrain, tr("Also load terrain heights", "Загружать и высоты рельефа")).changed();
@@ -1376,15 +1376,15 @@ impl GeoUi {
         let before = fit;
         let mut remove = false;
         ui.horizontal_wrapped(|ui| {
-            if ui.button("⟲ 90°").clicked() {
+            if ui.button(tr("Turn left 90°", "Влево на 90°")).clicked() {
                 fit.rotation = ((fit.rotation - 90.0 + 180.0).rem_euclid(360.0)) - 180.0;
             }
-            if ui.button("⟳ 90°").clicked() {
+            if ui.button(tr("Turn right 90°", "Вправо на 90°")).clicked() {
                 fit.rotation = ((fit.rotation + 90.0 + 180.0).rem_euclid(360.0)) - 180.0;
             }
             ui.add(egui::DragValue::new(&mut fit.rotation).speed(0.1).range(-180.0..=180.0).suffix("°"));
-            ui.checkbox(&mut fit.flip_x, tr("flip ↔", "отразить ↔"));
-            ui.checkbox(&mut fit.flip_y, tr("flip ↕", "отразить ↕"));
+            ui.checkbox(&mut fit.flip_x, tr("mirror left-right", "отразить слева направо"));
+            ui.checkbox(&mut fit.flip_y, tr("mirror top-bottom", "отразить сверху вниз"));
         });
         let (_, w, h, _) = Picture { fit, ..self.file.pictures[&id].clone() }.frame(ts());
         ui.horizontal_wrapped(|ui| {
