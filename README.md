@@ -24,6 +24,11 @@ experienced map makers.
 | Snapping | - | status bar: `Grid` (0.5–10 m) for placing, moving, road ends and reshaping; `15°` for headings |
 | Roads | 2 | click the start, then the end: the arc builds itself. A road continues smoothly from a road end it starts at, joins another end with an S-curve or bend (biarc), is cut into OMSI splines and linked with its neighbours. It can shape the ground under itself. |
 | Junctions | - | automatic: a road drawn into another's middle or across it cuts both and fills the gap with a junction object of its own (asphalt plate, `[path]` lanes for straight on, right and left, footpaths round the corners), written as ordinary OMSI content into `Sceneryobjects\openMapper\<map>` |
+| Plants | 3 | Objects tool: "Plant brush" sows the chosen tree (or a mix: right-click entries, "Add to the plant mix") with a spacing and random turns; "Clear" takes trees away |
+| Lining up | 3 | buildings face the nearest road with their front at a set distance from its edge (Shift: put freely); junction and crossing pieces (spline helpers) click onto the road ends near them |
+| AI paths | 4 | Game logic > AI paths > "Edit existing": pick a path, drag its ends and middle, Ctrl+click on it adds a point, Del deletes it; lanes are drawn thin with small arrows |
+| Road types | - | Roads tool > "Road types and junctions…": a road maker (lanes each way, lane width, middle strip, footways, kerb, textures) writing an ordinary OMSI spline, and per road type how its junctions are made (corners, lights, zebras, or no junction at all). Tracks branch off one another as switches and cross roads on the level |
+| PBR maker | - | an object's "Create PBR" (or Tools > PBR maps for a picture): normal, roughness, metal and occlusion maps made from a texture with a live preview, written as openOMSI reads them (`_nn`, `_orm`); then "Configure PBR" to tune them again or delete them |
 | Objects | 3 | catalogue as the installation's folder tree with thumbnails; classes read from the files themselves (roads, tracks, footpaths, decoration, technical AI/helper splines; trees, stops, junction pieces, technical helpers), search, turning towards the nearest road |
 | Game logic | 4 | start points (`[entrypoint]`), bus stops, car parks (one by one or in a row along the kerb), AI paths for cars and people drawn like roads and snapped to lane ends, sound sources and other editor-only helpers |
 | Terrain | 5 | raise / lower / smooth / flatten brush |
@@ -108,13 +113,15 @@ experienced map makers.
 
 ## Controls
 
-* **Mouse:** right drag turns and tilts the camera, wheel zooms toward the cursor, middle drag
-  or left drag on empty ground (Select tool) moves the map.
+* **Mouse:** right drag turns and tilts round the point under the cursor, wheel zooms toward
+  the cursor, middle drag or left drag on empty ground (Select tool) moves the map, holding
+  the ground grabbed under the cursor. View > Camera > Fly switches to Unity / Unreal style
+  (right button looks round, `W A S D` fly).
 * **Trackpad:** two fingers move the map, pinch zooms, twist turns; Option + two fingers or
   Option + drag turns and tilts.
 * **Keyboard:** `W A S D` / arrows move, `Q / E` turn, `1–7` tools, `M` overview map, `L` lines, `T` traffic, `I` satellite and terrain, `R` turn object, `Del`,
   `F` go to selection, `[ ]` brush size, `G` tile grid, `Ctrl+Z`, `Ctrl+Shift+Z`, `Ctrl+S`,
-  `Ctrl+C / X / V / D` copy, cut, paste, duplicate, `Ctrl+A` select all, `U` ruler, `F5` test drive.
+  `Ctrl+C / X / V / D` copy, cut, paste, duplicate, `Ctrl+A` select all, `U` ruler, `Home` look straight down, `F5` test drive.
 
 ## How it's built
 
