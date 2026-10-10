@@ -248,6 +248,10 @@ pub struct Editor {
     pub show_technical: bool,
     /// The AI's lanes are drawn as arrows (always with the Logic tool).
     pub show_lanes: bool,
+    /// A window picks things on the map (the Lines window its stops): a click only notes
+    /// what is under the cursor and where, nothing is selected or moved.
+    pub pick_mode: bool,
+    pub picked: Option<(Option<Sel>, Option<DVec3>)>,
 }
 
 impl Default for Editor {
@@ -303,6 +307,8 @@ impl Default for Editor {
             parking_start: None,
             show_technical: true,
             show_lanes: false,
+            pick_mode: false,
+            picked: None,
         }
     }
 }
@@ -602,6 +608,10 @@ impl Editor {
 
     pub fn left_press(&mut self, assets: &mut Assets, lib: &Library, shift: bool) {
         if self.doc.is_none() {
+            return;
+        }
+        if self.pick_mode && self.tool == Tool::Select {
+            self.picked = Some((self.hover, self.cursor));
             return;
         }
         match self.acts_as() {

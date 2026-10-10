@@ -26,6 +26,9 @@ const WARN: Color32 = Color32::from_rgb(230, 170, 100);
 const GOOD: Color32 = Color32::from_rgb(120, 200, 130);
 const ROUTE: [f32; 4] = [0.25, 0.75, 1.0, 0.95];
 
+/// How near a click must be to a stop to pick it (m).
+const PICK_REACH: f64 = 12.0;
+
 /// An average bus with its stops: what a trip's time is guessed from (km/h).
 const BUS_SPEED: f64 = 22.0;
 
@@ -322,6 +325,7 @@ impl TimetableUi {
         }
         if !self.open {
             self.picking = false;
+            ed.pick_mode = false;
             return;
         }
         {
@@ -353,25 +357,34 @@ impl TimetableUi {
         self.open = open;
         if !open {
             self.picking = false;
+            ed.pick_mode = false;
         }
         self.update_shown(ed);
     }
 
-    /// While picking, a stop clicked on the map (selected with the Select tool) joins the trip.
+    /// While picking, a click on the map (the editor's pick mode: nothing is selected or
+    /// moved) adds the stop under the cursor, or the one nearest it, to the trip.
     fn pick_from_view(&mut self, ed: &mut Editor) {
+        ed.pick_mode = self.picking;
         if !self.picking {
+            ed.picked = None;
             return;
         }
         if ed.tool != Tool::Select {
             ed.set_tool(Tool::Select);
         }
-        let Some(Sel::Object(_, id)) = ed.selected else { return };
+        let Some((hit, at)) = ed.picked.take() else { return };
         let Some(trip) = self.trip.clone() else { return };
-        ed.select(None);
-        if !self.stops.iter().any(|s| s.id == id) {
-            ed.toast(tr("That is not a bus stop", "Это не остановка"));
+        let hit = match hit {
+            Some(Sel::Object(_, id)) if self.stops.iter().any(|s| s.id == id) => Some(id),
+            _ => at.and_then(|p| {
+                self.stops.iter().map(|s| (s.id, (s.pos - p).truncate().length())).filter(|(_, d)| *d < PICK_REACH).min_by(|a, b| a.1.total_cmp(&b.1)).map(|(id, _)| id)
+            }),
+        };
+        let Some(id) = hit else {
+            ed.toast(tr("No bus stop there: click one of the orange marks", "Здесь нет остановки: кликните по оранжевой метке"));
             return;
-        }
+        };
         let Some(doc) = ed.doc.as_mut() else { return };
         let terminus = self.stop_name(&doc.timetable, id);
         if let Some(t) = doc.timetable.trip_mut(&trip) {
