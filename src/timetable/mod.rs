@@ -1,0 +1,555 @@
+//! The map's timetable (`TTData`): bus stops, station links, trips, tracks and lines, read
+//! with openOMSI's own `omsi-timetable` and written back in OMSI 2's formats.
+//!
+//! Only what was changed is written: a stock map's files stay as they are until a line,
+//! trip or tour of it is edited.
+
+pub mod network;
+pub mod route;
+
+use std::collections::BTreeSet;
+use std::path::Path;
+
+use omsi_timetable::{BusStopEntry, Line, StnLink, StnLinkEntry, TimetableData, Track, TrackEntry, Trip};
+
+use crate::doc::{Document, TileKey};
+
+/// Days a tour runs on: bits 0-6 Monday…Sunday, 7 public holidays, 8 school holidays,
+/// 9 school days. 1023: every day.
+pub const ALL_DAYS: i32 = 1023;
+
+#[derive(Debug, Clone, Default)]
+pub struct Timetable {
+    pub stops: Vec<BusStopEntry>,
+    pub links: Vec<StnLink>,
+    pub trips: Vec<Trip>,
+    pub tracks: Vec<Track>,
+    pub lines: Vec<Line>,
+    /// The tiles in the order the files' tile indices count them (global.cfg's `[map]` list
+    /// when they were read or last written).
+    pub order: Vec<TileKey>,
+    /// Changed since read or saved.
+    pub dirty: bool,
+    /// Files to write (lower-case names) and to take away on the next save.
+    changed: BTreeSet<String>,
+    removed: BTreeSet<String>,
+    /// The stop list and the station links are written again.
+    stops_changed: bool,
+    links_changed: bool,
+    /// Trips whose route is to be found again (their stops changed).
+    pub reroute: BTreeSet<String>,
+}
+
+fn key(name: &str) -> String {
+    name.to_lowercase()
+}
+
+impl Timetable {
+    /// Read `TTData` of the map folder `dir`; `order` is global.cfg's tile list.
+    pub fn load(dir: &Path, order: &[TileKey]) -> Timetable {
+        let d = TimetableData::load(dir);
+        for e in &d.errors {
+            log::warn!("timetable: {e}");
+        }
+        let n = (d.lines.len(), d.trips.len(), d.tracks.len(), d.bus_stops.len());
+        if n != (0, 0, 0, 0) {
+            log::info!("timetable: {} lines, {} trips, {} tracks, {} stops", n.0, n.1, n.2, n.3);
+        }
+        Timetable { stops: d.bus_stops, links: d.stn_links, trips: d.trips, tracks: d.tracks, lines: d.lines, order: order.to_vec(), ..Default::default() }
+    }
+
+    pub fn is_empty(&self) -> bool {
+        self.lines.is_empty() && self.trips.is_empty()
+    }
+
+    pub fn trip(&self, name: &str) -> Option<&Trip> {
+        self.trips.iter().find(|t| t.name.eq_ignore_ascii_case(name))
+    }
+
+    pub fn trip_mut(&mut self, name: &str) -> Option<&mut Trip> {
+        self.trips.iter_mut().find(|t| t.name.eq_ignore_ascii_case(name))
+    }
+
+    pub fn track(&self, name: &str) -> Option<&Track> {
+        self.tracks.iter().find(|t| track_name(t).eq_ignore_ascii_case(name))
+    }
+
+    /// The track a trip runs on: the one its `[trip]` names, else the one named like it
+    /// (as openOMSI looks for it).
+    pub fn track_of(&self, trip: &Trip) -> Option<&Track> {
+        let n = trip.display_name.trim();
+        self.track(if n.is_empty() { &trip.name } else { n }).or_else(|| self.track(&trip.name))
+    }
+
+    /// The name stop object `id` has in the timetable.
+    pub fn stop_name(&self, id: i64) -> Option<&str> {
+        self.stops.iter().find(|s| s.object_id == id).map(|s| s.name.trim())
+    }
+
+    pub fn touch_line(&mut self, name: &str) {
+        self.changed.insert(key(&format!("{name}.ttl")));
+        self.removed.remove(&key(&format!("{name}.ttl")));
+        self.dirty = true;
+    }
+
+    pub fn touch_trip(&mut self, name: &str) {
+        self.changed.insert(key(&format!("{name}.ttp")));
+        self.removed.remove(&key(&format!("{name}.ttp")));
+        self.dirty = true;
+    }
+
+    pub fn touch_stops(&mut self) {
+        self.stops_changed = true;
+        self.dirty = true;
+    }
+
+    /// A trip's stops changed: its route is found again.
+    pub fn touch_route(&mut self, name: &str) {
+        self.touch_trip(name);
+        self.reroute.insert(key(name));
+    }
+
+    /// A new line (its name made unique).
+    pub fn add_line(&mut self, name: &str) -> String {
+        let name = self.unique(name, |t, n| t.lines.iter().any(|l| l.name.eq_ignore_ascii_case(n)));
+        self.lines.push(Line { name: name.clone(), user_allowed: true, priority: 1, ..Default::default() });
+        self.touch_line(&name);
+        name
+    }
+
+    pub fn rename_line(&mut self, old: &str, new: &str) -> Option<String> {
+        let new = new.trim();
+        if new.is_empty() || !valid_file_name(new) {
+            return None;
+        }
+        if !old.eq_ignore_ascii_case(new) && self.lines.iter().any(|l| l.name.eq_ignore_ascii_case(new)) {
+            return None;
+        }
+        let l = self.lines.iter_mut().find(|l| l.name == old)?;
+        l.name = new.to_string();
+        self.removed.insert(key(&format!("{old}.ttl")));
+        self.changed.remove(&key(&format!("{old}.ttl")));
+        self.touch_line(new);
+        // the trips that show it as their line number
+        let trips: Vec<String> = self.trips.iter().filter(|t| t.line.trim() == old).map(|t| t.name.clone()).collect();
+        for t in trips {
+            if let Some(t) = self.trip_mut(&t) {
+                t.line = new.to_string();
+            }
+            self.touch_trip(&t);
+        }
+        Some(new.to_string())
+    }
+
+    /// Take a line away, and the trips no other line runs.
+    pub fn delete_line(&mut self, name: &str) {
+        let Some(i) = self.lines.iter().position(|l| l.name == name) else { return };
+        let l = self.lines.remove(i);
+        self.removed.insert(key(&format!("{name}.ttl")));
+        self.changed.remove(&key(&format!("{name}.ttl")));
+        let mut trips: BTreeSet<String> = l.tours.iter().flat_map(|t| t.trips.iter().map(|x| x.trip.clone())).collect();
+        trips.extend(self.trips.iter().filter(|t| t.line.trim() == name).map(|t| t.name.clone()));
+        for t in trips {
+            if !self.lines.iter().any(|l| l.tours.iter().any(|to| to.trips.iter().any(|x| x.trip.eq_ignore_ascii_case(&t)))) {
+                self.delete_trip(&t);
+            }
+        }
+        self.dirty = true;
+    }
+
+    /// A new trip of a line, its stops `stops`.
+    pub fn add_trip(&mut self, line: &str, name: &str, stops: Vec<i64>) -> String {
+        let name = self.unique(name, |t, n| t.trips.iter().any(|x| x.name.eq_ignore_ascii_case(n)));
+        let terminus = stops.last().and_then(|id| self.stop_name(*id)).unwrap_or_default().to_string();
+        self.trips.push(Trip {
+            name: name.clone(),
+            terminus,
+            line: line.to_string(),
+            stations: stops,
+            profiles: vec![omsi_timetable::TripProfile { name: "standard".into(), factor: 10.0, ..Default::default() }],
+            ..Default::default()
+        });
+        self.touch_route(&name);
+        name
+    }
+
+    pub fn rename_trip(&mut self, old: &str, new: &str) -> Option<String> {
+        let new = new.trim();
+        if new.is_empty() || !valid_file_name(new) {
+            return None;
+        }
+        if !old.eq_ignore_ascii_case(new) && self.trip(new).is_some() {
+            return None;
+        }
+        self.trip_mut(old)?.name = new.to_string();
+        for ext in ["ttp", "ttr"] {
+            self.removed.insert(key(&format!("{old}.{ext}")));
+            self.changed.remove(&key(&format!("{old}.{ext}")));
+        }
+        if let Some(t) = self.tracks.iter_mut().find(|t| track_name(t).eq_ignore_ascii_case(old)) {
+            t.path = format!("{new}.ttr").into();
+            self.changed.insert(key(&format!("{new}.ttr")));
+        }
+        for l in &mut self.lines {
+            let mut hit = false;
+            for t in l.tours.iter_mut().flat_map(|t| t.trips.iter_mut()) {
+                if t.trip.eq_ignore_ascii_case(old) {
+                    t.trip = new.to_string();
+                    hit = true;
+                }
+            }
+            if hit {
+                self.changed.insert(key(&format!("{}.ttl", l.name)));
+            }
+        }
+        self.touch_trip(new);
+        Some(new.to_string())
+    }
+
+    /// Take a trip away, its track and the departures of it.
+    pub fn delete_trip(&mut self, name: &str) {
+        self.trips.retain(|t| !t.name.eq_ignore_ascii_case(name));
+        self.tracks.retain(|t| !track_name(t).eq_ignore_ascii_case(name));
+        for ext in ["ttp", "ttr"] {
+            self.removed.insert(key(&format!("{name}.{ext}")));
+            self.changed.remove(&key(&format!("{name}.{ext}")));
+        }
+        let mut touched = Vec::new();
+        for l in &mut self.lines {
+            let before: usize = l.tours.iter().map(|t| t.trips.len()).sum();
+            for t in &mut l.tours {
+                t.trips.retain(|x| !x.trip.eq_ignore_ascii_case(name));
+            }
+            if l.tours.iter().map(|t| t.trips.len()).sum::<usize>() != before {
+                touched.push(l.name.clone());
+            }
+        }
+        for l in touched {
+            self.touch_line(&l);
+        }
+        self.reroute.remove(&key(name));
+        self.dirty = true;
+    }
+
+    /// The route found for a trip: its track (`<trip>.ttr`) and the station links between
+    /// its stops (`StnLinks.cfg`, which OMSI 2 drives a bus trip by).
+    pub fn set_route(&mut self, trip: &str, track: Vec<TrackEntry>, links: Vec<StnLink>) {
+        match self.tracks.iter_mut().find(|t| track_name(t).eq_ignore_ascii_case(trip)) {
+            Some(t) => t.entries = track,
+            None => self.tracks.push(Track { path: format!("{trip}.ttr").into(), entries: track }),
+        }
+        self.changed.insert(key(&format!("{trip}.ttr")));
+        self.removed.remove(&key(&format!("{trip}.ttr")));
+        for l in links {
+            self.links.retain(|x| !(x.from_id == l.from_id && x.to_id == l.to_id));
+            self.links.push(l);
+        }
+        self.links_changed = true;
+        self.dirty = true;
+    }
+
+    /// The stop list brought in line with the map's stop objects (`ids`: every object that is a
+    /// stop, by tile): names and tiles follow the objects, new stops are added. True when
+    /// anything changed.
+    pub fn sync_stops(&mut self, doc: &Document, ids: &[(TileKey, i64)]) -> bool {
+        let mut changed = false;
+        for &(k, id) in ids {
+            let Some(o) = doc.object(k, id) else { continue };
+            let Some(tile) = doc.order.iter().position(|t| *t == k) else { continue };
+            let name = o.extra.first().map(|s| s.trim().to_string()).unwrap_or_default();
+            let offset = o.extra.get(3).and_then(|s| s.trim().parse::<f64>().ok()).unwrap_or(0.0);
+            match self.stops.iter_mut().find(|s| s.object_id == id) {
+                Some(s) => {
+                    if s.name.trim() != name || s.group != tile as i32 || s.params[0] != offset {
+                        s.name = name;
+                        s.group = tile as i32;
+                        s.params[0] = offset;
+                        changed = true;
+                    }
+                }
+                None => {
+                    self.stops.push(BusStopEntry { name, group: tile as i32, object_id: id, params: [offset, 0.0, 0.0] });
+                    changed = true;
+                }
+            }
+        }
+        if changed {
+            self.touch_stops();
+        }
+        changed
+    }
+
+    /// `base`, or `base 2`, `base 3`… when `taken` says that is used.
+    fn unique(&self, base: &str, taken: impl Fn(&Timetable, &str) -> bool) -> String {
+        let base = base.trim();
+        let base = if base.is_empty() { "1" } else { base };
+        if !taken(self, base) {
+            return base.to_string();
+        }
+        (2..).map(|i| format!("{base} {i}")).find(|n| !taken(self, n)).unwrap()
+    }
+
+    /// The tile indices made to count in `order` (tiles were added or taken away since
+    /// the files were read): every file that holds one is written again.
+    fn renumber_tiles(&mut self, order: &[TileKey]) {
+        if self.order.is_empty() || self.order == order {
+            self.order = order.to_vec();
+            return;
+        }
+        let map = |i: f64| -> f64 {
+            self.order.get(i as usize).and_then(|k| order.iter().position(|o| o == k)).map(|n| n as f64).unwrap_or(i)
+        };
+        for s in &mut self.stops {
+            s.group = map(s.group as f64) as i32;
+        }
+        for l in &mut self.links {
+            for e in &mut l.entries {
+                e.values[2] = map(e.values[2]);
+            }
+        }
+        let names: Vec<String> = self.tracks.iter().map(track_name).collect();
+        for t in &mut self.tracks {
+            for e in &mut t.entries {
+                if e.values.len() > 2 {
+                    e.values[2] = map(e.values[2]);
+                }
+            }
+        }
+        for n in names {
+            self.changed.insert(key(&format!("{n}.ttr")));
+        }
+        self.stops_changed = true;
+        self.links_changed = true;
+        self.order = order.to_vec();
+    }
+}
+
+/// Where stop object `id` stands (world).
+pub fn stop_world(doc: &Document, files: &mut network::Files, id: i64) -> Option<glam::DVec3> {
+    let (k, o) = doc.tiles.iter().find_map(|(k, t)| t.tile.objects.iter().find(|o| o.id == id).map(|o| (*k, o)))?;
+    let abs = files.get(&o.file).map(|f| f.abs_height).unwrap_or(false);
+    Some(doc.object_world(k, o, abs))
+}
+
+/// A name a file can have on every system.
+pub fn valid_file_name(n: &str) -> bool {
+    !n.chars().any(|c| matches!(c, '/' | '\\' | ':' | '*' | '?' | '"' | '<' | '>' | '|') || c.is_control()) && n.trim() == n && !n.ends_with('.')
+}
+
+pub fn track_name(t: &Track) -> String {
+    t.path.file_stem().map(|s| s.to_string_lossy().into_owned()).unwrap_or_default()
+}
+
+/// Write what changed into the map's `TTData`.
+pub fn save(doc: &mut Document) -> std::io::Result<()> {
+    let order = doc.order.clone();
+    save_to(&mut doc.timetable, &doc.dir, &order)
+}
+
+/// Write what changed into `map_dir/TTData`; `order` is the map's tile list as saved.
+pub fn save_to(tt: &mut Timetable, map_dir: &Path, order: &[TileKey]) -> std::io::Result<()> {
+    let dir = map_dir.join("TTData");
+    if !tt.dirty {
+        tt.order = order.to_vec();
+        return Ok(());
+    }
+    tt.renumber_tiles(order);
+    std::fs::create_dir_all(&dir)?;
+    for f in std::mem::take(&mut tt.removed) {
+        if let Some(p) = find_file(&dir, &f) {
+            std::fs::remove_file(p)?;
+        }
+    }
+    let changed = std::mem::take(&mut tt.changed);
+    let mut written = 0;
+    for f in &changed {
+        let (stem, ext) = f.rsplit_once('.').unwrap_or((f.as_str(), ""));
+        let text = match ext {
+            "ttl" => tt.lines.iter().find(|l| key(&l.name) == stem).map(|l| (l.name.clone(), line_text(l))),
+            "ttp" => tt.trips.iter().find(|t| key(&t.name) == stem).map(|t| (t.name.clone(), trip_text(t))),
+            "ttr" => tt.tracks.iter().find(|t| key(&track_name(t)) == stem).map(|t| (track_name(t), track_text(t))),
+            _ => None,
+        };
+        let Some((name, text)) = text else { continue };
+        // (a file of another case is replaced, not kept beside it)
+        if let Some(old) = find_file(&dir, f) {
+            std::fs::remove_file(old)?;
+        }
+        std::fs::write(dir.join(format!("{name}.{ext}")), encode(&text))?;
+        written += 1;
+    }
+    if std::mem::take(&mut tt.stops_changed) || !dir.join("Busstops.cfg").is_file() {
+        write_named(&dir, "Busstops.cfg", &busstops_text(&tt.stops))?;
+        written += 1;
+    }
+    if std::mem::take(&mut tt.links_changed) {
+        write_named(&dir, "StnLinks.cfg", &stnlinks_text(&tt.links, &tt.stops))?;
+        written += 1;
+    }
+    tt.dirty = false;
+    log::info!("timetable: {written} file(s) written to {}", dir.display());
+    Ok(())
+}
+
+/// A file of the folder by its lower-case name.
+fn find_file(dir: &Path, lower: &str) -> Option<std::path::PathBuf> {
+    std::fs::read_dir(dir).ok()?.flatten().map(|e| e.path()).find(|p| p.file_name().map(|n| n.to_string_lossy().to_lowercase() == lower).unwrap_or(false))
+}
+
+fn write_named(dir: &Path, name: &str, text: &str) -> std::io::Result<()> {
+    let p = find_file(dir, &name.to_lowercase()).unwrap_or_else(|| dir.join(name));
+    std::fs::write(p, encode(text))
+}
+
+/// The text as OMSI 2 writes TTData: Windows-1252 with CR LF; text that code page cannot
+/// hold (Cyrillic stop names) as UTF-16 with a byte order mark, which openOMSI reads too.
+pub fn encode(text: &str) -> Vec<u8> {
+    let crlf = text.replace("\r\n", "\n").replace('\n', "\r\n");
+    let (bytes, _, lossy) = omsi_cfg::codepage::CodePage::Windows1252.encoding().encode(&crlf);
+    if !lossy {
+        return bytes.into_owned();
+    }
+    let mut out = vec![0xFF, 0xFE];
+    for u in crlf.encode_utf16() {
+        out.extend_from_slice(&u.to_le_bytes());
+    }
+    out
+}
+
+fn header(kind: &str) -> String {
+    let rule = "-".repeat(kind.len() + 2);
+    format!("{rule}\n{kind}\n{rule}\n\nCreated with openMapper {}\n\n", env!("CARGO_PKG_VERSION"))
+}
+
+/// A number as OMSI writes the fractional ones in TTData (ten decimals).
+fn f10(v: f64) -> String {
+    format!("{v:.10}")
+}
+
+/// An id or index kept whole.
+fn int(v: f64) -> String {
+    format!("{}", v.round() as i64)
+}
+
+pub fn busstops_text(stops: &[BusStopEntry]) -> String {
+    let mut o = header("Time Table BusStopList File");
+    for s in stops {
+        o.push_str(&format!("[busstop]\n{}\n{}\n{}\n{}\n{}\n{}\n\n\n", s.name.trim(), s.group, s.object_id, f10(s.params[0]), int(s.params[1]), int(s.params[2])));
+    }
+    o
+}
+
+pub fn stnlinks_text(links: &[StnLink], stops: &[BusStopEntry]) -> String {
+    let name = |id: i64| stops.iter().find(|s| s.object_id == id).map(|s| s.name.trim().to_string()).unwrap_or_else(|| id.to_string());
+    let mut o = header("Time Table StnLinkList File");
+    for l in links {
+        o.push_str(&format!("{} ==> {}\n\n[StnLink]\n{}\n{}\n{}\n", name(l.from_id), name(l.to_id), f10(l.length), l.from_id, l.to_id));
+        for (i, p) in l.params.iter().enumerate() {
+            // (the last two: a flag and the index of the last entry)
+            o.push_str(&if i < 4 { f10(*p) } else { int(*p) });
+            o.push('\n');
+        }
+        o.push('\n');
+        for (i, e) in l.entries.iter().enumerate() {
+            o.push_str(&stnlink_entry_text(i, e));
+        }
+    }
+    o
+}
+
+fn stnlink_entry_text(i: usize, e: &StnLinkEntry) -> String {
+    let v = &e.values;
+    format!("   {i}:\n[StnLink_entry]\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n\n", int(v[0]), int(v[1]), int(v[2]), f10(v[3]), int(v[4]), int(v[5]), int(v[6]))
+}
+
+pub fn trip_text(t: &Trip) -> String {
+    let mut o = header("Time Table Trip File");
+    o.push_str(&format!("[trip]\n{}\n{}\n{}\n\n", t.display_name, t.terminus, t.line));
+    if t.train_reverse {
+        o.push_str("[trainreverse]\n\n");
+    }
+    o.push_str(".........................\n        Stations\n.........................\n\n");
+    for s in &t.stations {
+        o.push_str(&format!("[station_typ2]\n{s}\n\n"));
+    }
+    for s in &t.stations_legacy {
+        o.push_str("[station]\n");
+        for l in s {
+            o.push_str(l);
+            o.push('\n');
+        }
+        o.push('\n');
+    }
+    o.push_str("\n.........................\n        Profiles\n.........................\n\n");
+    for p in &t.profiles {
+        o.push_str(&format!("[profile]\n{}\n{:.3}\n\n", p.name, p.factor));
+        for (i, v) in &p.man_arr_time {
+            o.push_str(&format!("[profile_man_arr_time]\n{i}\n{v:.3}\n"));
+        }
+        for (i, v) in &p.man_dep_time {
+            o.push_str(&format!("[profile_man_dep_time]\n{i}\n{v:.3}\n"));
+        }
+        for (i, v) in &p.other_stopping {
+            o.push_str(&format!("[profile_otherstopping]\n{i}\n{v}\n"));
+        }
+        o.push('\n');
+    }
+    o
+}
+
+pub fn track_text(t: &Track) -> String {
+    let mut o = header("Time Table Track File");
+    for (i, e) in t.entries.iter().enumerate() {
+        o.push_str(&format!("   {i}:\n[track_entry]\n"));
+        for (k, v) in e.values.iter().enumerate() {
+            // id, path, tile, internal number: whole; then the length and the rest
+            o.push_str(&if k == 4 { f10(*v) } else if v.fract() == 0.0 { int(*v) } else { f10(*v) });
+            o.push('\n');
+        }
+        o.push('\n');
+    }
+    o
+}
+
+pub fn line_text(l: &Line) -> String {
+    let mut o = header("Time Table Line File");
+    if l.user_allowed {
+        o.push_str("[userallowed]\n\n");
+    }
+    o.push_str(&format!("[priority]\n{}\n", l.priority));
+    for t in &l.tours {
+        o.push_str("------------------------------------\n\n");
+        o.push_str(&format!("[newtour]\n{}\n{}\n{}\n\n------------------------------------\n\n", t.number, t.ai_group, t.extra));
+        for tr in &t.trips {
+            let secs = (tr.departure as f64 * 60.0).round() as i64;
+            o.push_str(&format!("  Dep.: {}:{}:{}\n", secs / 3600, secs / 60 % 60, secs % 60));
+            o.push_str(&format!("[addtrip]\n{}\n{}\n{:.3}\n\n", tr.trip, tr.profile, tr.departure));
+        }
+    }
+    o
+}
+
+/// Minutes after midnight as "h:mm" (past midnight: 24:10 …).
+pub fn clock(minutes: f32) -> String {
+    let m = minutes.round().max(0.0) as i64;
+    format!("{}:{:02}", m / 60, m % 60)
+}
+
+/// "h:mm" (or "h") as minutes after midnight.
+pub fn parse_clock(s: &str) -> Option<f32> {
+    let s = s.trim();
+    let (h, m) = match s.split_once(':') {
+        Some((h, m)) => (h.trim().parse::<u32>().ok()?, m.trim().parse::<u32>().ok()?),
+        None => (s.parse::<u32>().ok()?, 0),
+    };
+    (m < 60 && h < 48).then_some((h * 60 + m) as f32)
+}
+
+/// The depot groups of the map's `ailists.cfg` (a tour's buses come from one).
+pub fn depot_groups(map_dir: &Path) -> Vec<String> {
+    let p = omsi_cfg::resolve_path(map_dir, "ailists.cfg");
+    omsi_map::AiLists::load(&p).map(|l| l.groups.iter().filter(|g| g.is_depot).map(|g| g.name.clone()).collect()).unwrap_or_default()
+}
+
+#[cfg(test)]
+mod tests;

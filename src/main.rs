@@ -20,6 +20,7 @@ mod library;
 mod place;
 mod render;
 mod roads;
+mod timetable;
 mod ui;
 mod ui_minimap;
 

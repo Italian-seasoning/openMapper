@@ -137,6 +137,8 @@ pub struct Document {
     /// The map was never saved (made in openMapper).
     pub fresh: bool,
     pub global_rev: u64,
+    /// Lines, trips and tours (`TTData`).
+    pub timetable: crate::timetable::Timetable,
 }
 
 impl Document {
@@ -173,6 +175,7 @@ impl Document {
             global_dirty: true,
             fresh: true,
             global_rev: next_rev(),
+            timetable: Default::default(),
         };
         let half = size / 2;
         for y in -half..=(size - 1 - half) {
@@ -240,6 +243,7 @@ impl Document {
             log::info!("{}: {} of {} tiles listed in global.cfg have no file (left out)", src_dir.display(), missing, global.tiles.len());
         }
         let order = global.raw_tiles.clone();
+        let timetable = crate::timetable::Timetable::load(&src_dir, &order);
         progress(1.0);
         Ok(Document {
             global,
@@ -250,6 +254,7 @@ impl Document {
             global_dirty: !in_content,
             fresh: false,
             global_rev: next_rev(),
+            timetable,
         })
     }
 
@@ -262,7 +267,7 @@ impl Document {
     }
 
     pub fn is_dirty(&self) -> bool {
-        self.global_dirty || self.tiles.values().any(|t| t.dirty)
+        self.global_dirty || self.timetable.dirty || self.tiles.values().any(|t| t.dirty)
     }
 
     /// A fresh IDCode for a new object or spline.
