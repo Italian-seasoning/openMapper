@@ -22,7 +22,7 @@ const BG_DARK: Color32 = Color32::from_rgb(27, 28, 30);
 const BG_FIELD: Color32 = Color32::from_rgb(22, 23, 25);
 const BORDER: Color32 = Color32::from_rgb(18, 18, 20);
 const HEADER: Color32 = Color32::from_rgb(45, 46, 50);
-const TEXT_DIM: Color32 = Color32::from_rgb(140, 143, 150);
+pub(crate) const TEXT_DIM: Color32 = Color32::from_rgb(140, 143, 150);
 const SELECT: Color32 = Color32::from_rgb(64, 86, 122);
 
 /// What the interface asks the application to do.
@@ -39,6 +39,11 @@ pub enum Action {
     ChooseOmsi,
     SetLang(Lang),
     FocusSelection,
+    Copy,
+    Cut,
+    Paste,
+    Duplicate,
+    SelectAll,
     /// Move the camera over this point (the overview map).
     LookAt(glam::DVec2),
     AddGroundTexture(String),
@@ -175,7 +180,7 @@ fn tool_button(ui: &mut egui::Ui, icon: Icon, on: bool, enabled: bool) -> egui::
 }
 
 /// A check box drawn with Material Symbols' own boxes (egui's are drawn with lines).
-fn check(ui: &mut egui::Ui, on: &mut bool, text: impl Into<egui::WidgetText>) -> egui::Response {
+pub(crate) fn check(ui: &mut egui::Ui, on: &mut bool, text: impl Into<egui::WidgetText>) -> egui::Response {
     let galley = text.into().into_galley(ui, Some(egui::TextWrapMode::Extend), f32::INFINITY, egui::TextStyle::Button);
     let (icon, gap) = (18.0, 6.0);
     let size = Vec2::new(icon + gap + galley.size().x, galley.size().y.max(icon + 2.0));
@@ -217,7 +222,7 @@ fn combo_icon(ui: &egui::Ui, rect: egui::Rect, vis: &egui::style::WidgetVisuals,
     icons::paint(ui.painter(), Icon::ExpandMore, rect.center(), 18.0, vis.fg_stroke.color);
 }
 
-fn section(ui: &mut egui::Ui, title: &str) {
+pub(crate) fn section(ui: &mut egui::Ui, title: &str) {
     Frame::new().fill(HEADER).inner_margin(Margin::symmetric(8, 4)).show(ui, |ui| {
         ui.set_width(ui.available_width());
         ui.label(RichText::new(title.to_uppercase()).small().strong().color(Color32::from_gray(190)));
@@ -542,11 +547,28 @@ fn menu_bar(root: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, can_undo: bo
                     actions.push(Action::Redo);
                 }
                 ui.separator();
+                let any = ed.selected.is_some();
+                if menu_item(ui, None, tr("Cut", "Вырезать"), "Ctrl+X", any) {
+                    actions.push(Action::Cut);
+                }
+                if menu_item(ui, Some(Icon::Copy), tr("Copy", "Копировать"), "Ctrl+C", any) {
+                    actions.push(Action::Copy);
+                }
+                if menu_item(ui, Some(Icon::Paste), tr("Paste", "Вставить"), "Ctrl+V", ed.clip.is_some()) {
+                    actions.push(Action::Paste);
+                }
+                if menu_item(ui, None, tr("Duplicate", "Дублировать"), "Ctrl+D", any) {
+                    actions.push(Action::Duplicate);
+                }
+                if menu_item(ui, Some(Icon::SelectAll), tr("Select all", "Выбрать всё"), "Ctrl+A", true) {
+                    actions.push(Action::SelectAll);
+                }
+                ui.separator();
                 if menu_item(ui, Some(Icon::Delete), tr("Delete", "Удалить"), "Del", ed.selected.is_some()) {
                     ed.delete_selected();
                 }
                 if menu_item(ui, None, tr("Deselect", "Снять выделение"), "Esc", ed.selected.is_some()) {
-                    ed.selected = None;
+                    ed.select(None);
                 }
             });
             ui.menu_button(tr("View", "Вид"), |ui| {
@@ -689,6 +711,10 @@ fn status_bar(root: &mut egui::Ui, help_line: Option<String>, ed: &mut Editor, s
                     let t = crate::doc::tile_of(c.truncate());
                     ui.label(RichText::new(format!("X {:>8.1}   Y {:>8.1}   Z {:>6.1}   {} {},{}", c.x, c.y, c.z, tr("tile", "тайл"), t.0, t.1)).small().monospace().color(TEXT_DIM));
                 }
+                if ed.doc.is_some() {
+                    ui.separator();
+                    crate::ui_edit::snap_controls(ui, ed);
+                }
             });
         });
     });
@@ -696,7 +722,8 @@ fn status_bar(root: &mut egui::Ui, help_line: Option<String>, ed: &mut Editor, s
 
 fn tool_hint(ed: &Editor) -> &'static str {
     match ed.tool {
-        Tool::Select => tr("Click to select · drag an object to move it, empty ground to move the map · right button: look + WASD/QE fly · middle: pan · Alt+drag: orbit · wheel: zoom · F: focus", "Клик — выбрать · тянуть объект — сдвиг, пустую землю — двигать карту · ПКМ — обзор + полёт WASD/QE · СКМ — сдвиг · Alt+тянуть — орбита · колесо — зум · F — к выделенному"),
+        Tool::Select if ed.single_spline().is_some() => tr("Drag a white dot: an end moves (joined roads follow), the middle bends the road · drag the road to move it · Shift+click: add to the selection", "Тяните белую точку: конец двигается (соседние дороги следуют), середина изгибает дорогу · тянуть дорогу — сдвиг · Shift+клик — добавить к выделению"),
+        Tool::Select => tr("Click to select, Shift+click to add · Shift+drag on empty ground: box · drag the selection to move it, empty ground to move the map · Ctrl+C / X / V / D · right button: look + WASD/QE fly · wheel: zoom · F: focus", "Клик — выбрать, Shift+клик — добавить · Shift+тянуть по пустой земле — рамка · тянуть выделенное — сдвиг, пустую землю — двигать карту · Ctrl+C / X / V / D · ПКМ — обзор + полёт WASD/QE · колесо — зум · F — к выделенному"),
         Tool::Roads if ed.road_type.is_none() => tr("Choose a road type in the list on the left", "Выберите тип дороги в списке слева"),
         Tool::Roads => tr("Click where the road starts, click again where it goes (it keeps going) · white dots: road ends to join · right-click / Esc: stop", "Клик — начало дороги, ещё клик — куда она идёт (дальше продолжается) · белые точки — концы для стыковки · правый клик / Esc — стоп"),
         Tool::Objects if ed.object_type.is_none() => tr("Choose an object in the list on the left", "Выберите объект в списке слева"),
@@ -1081,7 +1108,7 @@ fn paint_panel(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, swatches: &
 
 // ---------------------------------------------------------------------------- right panel
 
-fn prop_row(ui: &mut egui::Ui, name: &str, add: impl FnOnce(&mut egui::Ui)) {
+pub(crate) fn prop_row(ui: &mut egui::Ui, name: &str, add: impl FnOnce(&mut egui::Ui)) {
     ui.label(RichText::new(name).color(TEXT_DIM));
     add(ui);
     ui.end_row();
@@ -1092,12 +1119,18 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
         map_properties(ui, ed);
         return;
     };
+    if ed.selection().len() > 1 {
+        crate::ui_edit::group_properties(ui, ed, lib);
+        return;
+    }
     section(ui, tr("Properties", "Свойства"));
     let mut delete = false;
     let mut changed_labels: Option<Vec<String>> = None;
     let mut new_rot: Option<f64> = None;
     let mut new_lift: Option<f64> = None;
     let mut new_name: Option<String> = None;
+    let mut new_pos: Option<(f64, f64)> = None;
+    let mut ends = crate::ui_edit::EndsEdit::default();
     let mut spline_change: Option<(Option<String>, Option<bool>)> = None;
     let Some(doc) = ed.doc.as_ref() else { return };
     Frame::new().inner_margin(Margin::same(8)).show(ui, |ui| {
@@ -1120,7 +1153,15 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
                         ui.label(format!("{}, {}", k.0, k.1));
                     });
                     prop_row(ui, "X / Y", |ui| {
-                        ui.label(format!("{:.2} / {:.2}", o.pos[0], o.pos[1]));
+                        // (tile-local, as the map file keeps it; past the edge it goes over)
+                        let (mut x, mut y) = (o.pos[0], o.pos[1]);
+                        ui.horizontal(|ui| {
+                            let a = ui.add(egui::DragValue::new(&mut x).speed(0.05).max_decimals(2));
+                            let b = ui.add(egui::DragValue::new(&mut y).speed(0.05).max_decimals(2));
+                            if a.changed() || b.changed() {
+                                new_pos = Some((x, y));
+                            }
+                        });
                     });
                     prop_row(ui, tr("Direction", "Направление"), |ui| {
                         let mut h = o.rot[0];
@@ -1184,9 +1225,6 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
                     prop_row(ui, tr("Radius", "Радиус"), |ui| {
                         ui.label(if s.radius == 0.0 { tr("straight", "прямая").to_string() } else { format!("{:.0} m {}", s.radius.abs(), if s.radius > 0.0 { tr("right", "вправо") } else { tr("left", "влево") }) });
                     });
-                    prop_row(ui, tr("Gradient", "Уклон"), |ui| {
-                        ui.label(format!("{:.1} %", s.grad_start));
-                    });
                     prop_row(ui, tr("Linked", "Связи"), |ui| {
                         ui.label(format!("{} / {}", if s.prev_id != 0 { tr("start", "начало") } else { "—" }, if s.next_id != 0 { tr("end", "конец") } else { "—" }));
                     });
@@ -1197,6 +1235,7 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
                         }
                     });
                 });
+                ends = crate::ui_edit::spline_ends(ui, doc, k, id);
                 if let Some(rt) = &ed.road_type {
                     if !rt.eq_ignore_ascii_case(&s.file) {
                         let n = lib.find(rt).map(|a| a.name.clone()).unwrap_or_else(|| rt.clone());
@@ -1227,7 +1266,10 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
     let Some(doc) = ed.doc.as_mut() else { return };
     match sel {
         Sel::Object(k, id) => {
-            if new_rot.is_some() || new_lift.is_some() || changed_labels.is_some() || new_name.is_some() {
+            if let Some((x, y)) = new_pos {
+                let o = crate::doc::tile_origin(k);
+                ed.put_object(k, id, glam::DVec2::new(o.x + x, o.y + y));
+            } else if new_rot.is_some() || new_lift.is_some() || changed_labels.is_some() || new_name.is_some() {
                 if !ed.history.is_open() {
                     ed.history.begin(tr("Edit object", "Изменение объекта"));
                 }
@@ -1261,6 +1303,8 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
             }
         }
         Sel::Spline(k, id) => {
+            crate::ui_edit::apply_ends(ed, ui.ctx(), k, id, ends);
+            let Some(doc) = ed.doc.as_mut() else { return };
             if let Some((file, mirror)) = spline_change {
                 ed.history.begin(tr("Edit road", "Изменение дороги"));
                 ed.history.touch_tile(doc, k);
@@ -1388,6 +1432,10 @@ fn controls(ctx: &egui::Context, st: &mut UiState) {
             ("1 – 7", tr("tools", "инструменты")),
             ("R / Shift+R, Ctrl+wheel", tr("turn the object", "повернуть объект")),
             ("Del", tr("delete the selection", "удалить выбранное")),
+            ("Shift+click", tr("add to / take from the selection", "добавить к выделению / убрать из него")),
+            (tr("Shift / Ctrl + drag on empty ground", "Shift / Ctrl + тянуть по пустой земле"), tr("select with a box (Shift adds)", "выделить рамкой (Shift — добавить)")),
+            ("Ctrl+C / X / V", tr("copy / cut / paste at the cursor", "копировать / вырезать / вставить у курсора")),
+            ("Ctrl+D / Ctrl+A", tr("duplicate / select all", "дублировать / выбрать всё")),
             ("F", tr("go to the selection", "перейти к выбранному")),
             ("Esc", tr("stop / deselect", "отмена / снять выбор")),
             ("[ ]  Shift+wheel", tr("brush size", "размер кисти")),

@@ -115,7 +115,7 @@ pub fn mask_size(g: &GroundTex) -> usize {
 }
 
 /// What the editor has selected.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum Sel {
     Object(TileKey, i64),
     Spline(TileKey, i64),

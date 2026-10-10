@@ -6,6 +6,7 @@
 mod app;
 mod assets;
 mod camera;
+mod clipboard;
 mod doc;
 mod editor;
 mod gpu;
@@ -19,8 +20,11 @@ mod lanes;
 mod library;
 mod place;
 mod render;
+mod reshape;
 mod roads;
+mod selection;
 mod ui;
+mod ui_edit;
 mod ui_minimap;
 
 fn main() {
