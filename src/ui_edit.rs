@@ -32,6 +32,18 @@ pub fn snap_controls(ui: &mut egui::Ui, ed: &mut Editor) {
         }
     });
     check(ui, &mut ed.snap_grid, RichText::new(tr("Grid", "Сетка")).small()).on_hover_text(tr("Snap positions to the grid", "Привязка положения к сетке"));
+    ui.separator();
+    // the ruler: what it measures, then its switch (right to left)
+    if let Some((a, b)) = ed.ruler_line() {
+        let d = b - a;
+        let flat = d.truncate().length();
+        let grade = if flat > 0.01 { format!("{:+.1} %", d.z / flat * 100.0) } else { "—".into() };
+        ui.label(RichText::new(format!("{:.2} m · Δh {:+.2} m · {grade}", flat, d.z)).small().monospace().color(Color32::from_rgb(255, 216, 51)));
+    }
+    let mut on = ed.ruler.is_some();
+    if check(ui, &mut on, RichText::new(tr("Ruler", "Линейка")).small()).on_hover_text(tr("Click two points to measure the distance and gradient between them (U) · right-click: off", "Клик по двум точкам — расстояние и уклон между ними (U) · правый клик — выключить")).changed() {
+        ed.toggle_ruler();
+    }
 }
 
 /// The right panel with more than one thing selected.
@@ -104,6 +116,7 @@ pub fn group_properties(ui: &mut egui::Ui, ed: &mut Editor, lib: &Library) {
             }
         });
     });
+    rows_section(ui, ed, lib);
 }
 
 /// What was changed at a road's ends this frame.
@@ -156,4 +169,105 @@ pub fn apply_ends(ed: &mut Editor, ctx: &egui::Context, k: TileKey, id: i64, e: 
         Some((at_end, z, g)) => ed.set_spline_end(k, id, at_end, z, g),
         None => ed.end_panel_step_if_idle(ctx),
     }
+}
+
+/// Objects along the selected road(s): the rows on a road selected alone, and new rows of the
+/// object chosen in the catalogue.
+pub fn rows_section(ui: &mut egui::Ui, ed: &mut Editor, lib: &Library) {
+    let sels = ed.selection();
+    if !sels.iter().any(|s| matches!(s, Sel::Spline(..))) {
+        return;
+    }
+    section(ui, tr("Objects along the road", "Объекты вдоль дороги"));
+    egui::Frame::new().inner_margin(Margin::same(8)).show(ui, |ui| {
+        let name_of = |f: &str| lib.find(f).map(|a| a.name.clone()).unwrap_or_else(|| f.rsplit('\\').next().unwrap_or(f).to_string());
+        // the rows already on a road selected alone
+        if let (Some((k, id)), Some(doc)) = (ed.single_spline(), ed.doc.as_ref()) {
+            let rows: Vec<(usize, omsi_map::SplineAttachment)> = crate::rows::rows_on(doc, k, id).into_iter().filter_map(|r| doc.tiles.get(&k).and_then(|t| t.tile.spline_attachments.get(r)).map(|a| (r, a.clone()))).collect();
+            let mut edit: Option<(usize, omsi_map::SplineAttachment)> = None;
+            let mut remove: Option<usize> = None;
+            let new_type = ed.object_type.clone();
+            for (r, a) in &rows {
+                let mut b = a.clone();
+                ui.label(RichText::new(name_of(&a.file)).strong());
+                egui::Grid::new(("row", *r)).num_columns(2).spacing(Vec2::new(6.0, 4.0)).show(ui, |ui| {
+                    prop_row(ui, tr("Every", "Шаг"), |ui| {
+                        let mut i = b.interval;
+                        if ui.add(egui::DragValue::new(&mut i).speed(0.1).range(0.5..=500.0).suffix(" m")).changed() {
+                            crate::rows::set_interval(&mut b, i);
+                        }
+                    });
+                    prop_row(ui, tr("Beside", "Сбоку"), |ui| {
+                        ui.add(egui::DragValue::new(&mut b.offset[0]).speed(0.05).suffix(" m"));
+                    });
+                    prop_row(ui, tr("Height", "Высота"), |ui| {
+                        ui.add(egui::DragValue::new(&mut b.offset[1]).speed(0.02).suffix(" m"));
+                    });
+                    prop_row(ui, tr("Turn", "Поворот"), |ui| {
+                        ui.add(egui::DragValue::new(&mut b.rot[0]).speed(1.0).suffix("°"));
+                    });
+                });
+                ui.horizontal(|ui| {
+                    if let Some(t) = &new_type {
+                        if !t.eq_ignore_ascii_case(&a.file) && ui.button(icons::labelled(Icon::Swap, &format!("{} «{}»", tr("Replace with", "Заменить на"), name_of(t)))).clicked() {
+                            b.file = t.clone();
+                        }
+                    }
+                    if ui.button(icons::labelled(Icon::Delete, tr("Remove", "Убрать"))).clicked() {
+                        remove = Some(*r);
+                    }
+                });
+                if b != *a {
+                    edit = Some((*r, b));
+                }
+                ui.add_space(4.0);
+            }
+            if let Some(r) = remove {
+                ed.remove_row(k, r);
+            } else if let Some((r, b)) = edit {
+                ed.edit_row(k, r, |a| *a = b);
+            } else {
+                ed.end_panel_step_if_idle(ui.ctx());
+            }
+            if !rows.is_empty() {
+                ui.separator();
+            }
+        }
+        // a new row
+        match &ed.object_type {
+            Some(t) => ui.label(format!("{} {}", tr("Object:", "Объект:"), name_of(t))),
+            None => ui.label(RichText::new(tr("Pick an object (a lamp, a tree, a bollard) in the Objects tool's catalogue", "Выберите объект (фонарь, дерево, столбик) в каталоге инструмента «Объекты»")).small().color(TEXT_DIM)),
+        };
+        let p = &mut ed.row_params;
+        egui::Grid::new("new row").num_columns(2).spacing(Vec2::new(6.0, 4.0)).show(ui, |ui| {
+            prop_row(ui, tr("Every", "Шаг"), |ui| {
+                ui.add(egui::DragValue::new(&mut p.interval).speed(0.1).range(0.5..=500.0).suffix(" m"));
+            });
+            prop_row(ui, tr("Beside", "Сбоку"), |ui| {
+                ui.add(egui::DragValue::new(&mut p.offset).speed(0.05).suffix(" m")).on_hover_text(tr("Right of the road's direction; negative: left", "Справа по направлению дороги; меньше нуля — слева"));
+            });
+            prop_row(ui, tr("Free at start / end", "Отступ в начале / конце"), |ui| {
+                ui.horizontal(|ui| {
+                    ui.add(egui::DragValue::new(&mut p.margin_start).speed(0.1).range(0.0..=1000.0).suffix(" m"));
+                    ui.add(egui::DragValue::new(&mut p.margin_end).speed(0.1).range(0.0..=1000.0).suffix(" m"));
+                });
+            });
+            prop_row(ui, tr("Height", "Высота"), |ui| {
+                ui.add(egui::DragValue::new(&mut p.height).speed(0.02).suffix(" m"));
+            });
+            prop_row(ui, tr("Turn", "Поворот"), |ui| {
+                ui.add(egui::DragValue::new(&mut p.turn).speed(1.0).range(-360.0..=360.0).suffix("°"));
+            });
+        });
+        check(ui, &mut p.both, tr("Both sides", "С обеих сторон"));
+        check(ui, &mut p.tilt, tr("Lean with the road", "Наклон вместе с дорогой"));
+        ui.horizontal_wrapped(|ui| {
+            if ui.add_enabled(ed.object_type.is_some(), egui::Button::new(icons::labelled(Icon::Add, tr("Place along the road", "Расставить вдоль дороги")))).clicked() {
+                ed.place_rows();
+            }
+            if ed.selection().len() > 1 && ui.button(tr("Remove all rows", "Убрать все ряды")).clicked() {
+                ed.remove_rows_of_selection();
+            }
+        });
+    });
 }

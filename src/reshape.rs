@@ -140,15 +140,79 @@ fn ends_of(s: &MapSpline, k: TileKey) -> Ends {
 pub fn drag_end(doc: &Document, k: TileKey, id: i64, at_end: bool, p: DVec2, ground: &dyn Fn(DVec2) -> f64, locked: &dyn Fn(DVec2) -> bool) -> Result<Plan, &'static str> {
     let s = doc.spline(k, id).ok_or("gone")?;
     let e = ends_of(s, k);
+    let old = if at_end { e.b } else { e.a };
+    let link = if at_end { s.next_id } else { s.prev_id };
+    if link == 0 && locked(old.truncate()) {
+        return Err(crate::i18n::tr("This end belongs to a junction: select the junction and move it, the road follows", "Этот конец принадлежит перекрёстку: выберите перекрёсток и двигайте его, дорога последует"));
+    }
+    end_to(doc, k, id, at_end, p, None, ground(p) + (old.z - ground(old.truncate())), locked)
+}
+
+/// Carry a road's end along with what it is joined to (a junction moved or turned): to
+/// `p`, arriving there heading `arrive` (the way along the road towards that end), its height
+/// changed by `dz`.
+pub fn carry_end(doc: &Document, k: TileKey, id: i64, at_end: bool, p: DVec2, arrive: f64, dz: f64, locked: &dyn Fn(DVec2) -> bool) -> Result<Plan, &'static str> {
+    let s = doc.spline(k, id).ok_or("gone")?;
+    let e = ends_of(s, k);
+    let old = if at_end { e.b } else { e.a };
+    // (the height above the ground is not kept: the junction's plate sets it)
+    end_to(doc, k, id, at_end, p, Some(arrive), old.z + dz, locked).or_else(|e| through_neighbour(doc, k, id, at_end, p, arrive, old.z + dz).ok_or(e))
+}
+
+/// A road too short to bend to where its end must go: it and the road before it are
+/// shaped again as one, from that road's far end, the joint between them sliding along.
+fn through_neighbour(doc: &Document, k: TileKey, id: i64, at_end: bool, p: DVec2, arrive: f64, zp: f64) -> Option<Plan> {
+    let s = doc.spline(k, id)?;
+    let link = if at_end { s.prev_id } else { s.next_id };
+    let (nk, n) = doc.find_spline(link)?;
+    let ne = ends_of(n, nk);
+    let n_at_start = if n.prev_id == id { true } else if n.next_id == id { false } else { return None };
+    // the stretch runs from the neighbour's far end, through the joint, to `p`
+    let (g, hg, gg) = if n_at_start { (ne.b, roads::norm_deg(ne.hb + 180.0), -ne.gb) } else { (ne.a, ne.ha, ne.ga) };
+    let segs = fit(End { pos: g.truncate(), heading: Some(hg) }, End { pos: p, heading: Some(arrive) })?;
+    let total = roads::total_length(&segs);
+    let at = total * n.length / (n.length + s.length).max(0.01);
+    let (first, second) = cut(&segs, at);
+    if first.is_empty() || second.is_empty() {
+        return None;
+    }
+    let zj = g.z + (zp - g.z) * at / total.max(0.01);
+    let gj = (zp - g.z) / total.max(0.01) * 100.0;
+    let theirs = Piece { key: nk, id: n.id, segs: first, z0: g.z, z1: zj, g0: Some(gg), g1: Some(gj) };
+    let mine = Piece { key: k, id, segs: second, z0: zj, z1: zp, g0: Some(gj), g1: Some(gj) };
+    // (each the way it runs: the neighbour's own direction leads into the joint unless it
+    // starts there; this one leaves the joint when its end is the one carried)
+    Some(Plan { pieces: vec![if n_at_start { theirs.reversed() } else { theirs }, if at_end { mine } else { mine.reversed() }] })
+}
+
+/// Arcs cut in two `at` metres along them.
+fn cut(segs: &[Seg], at: f64) -> (Vec<Seg>, Vec<Seg>) {
+    let (mut a, mut b) = (Vec::new(), Vec::new());
+    let mut acc = 0.0;
+    for sg in segs {
+        let (s0, s1) = (acc, acc + sg.length);
+        if s1 <= at + 1e-9 {
+            a.push(*sg);
+        } else if s0 >= at - 1e-9 {
+            b.push(*sg);
+        } else {
+            a.push(sg.piece(0.0, at - s0));
+            b.push(sg.piece(at - s0, sg.length));
+        }
+        acc = s1;
+    }
+    (a, b)
+}
+
+/// The end moved to `p` at height `zp` (arriving with heading `arrive`, when given).
+fn end_to(doc: &Document, k: TileKey, id: i64, at_end: bool, p: DVec2, arrive: Option<f64>, zp: f64, locked: &dyn Fn(DVec2) -> bool) -> Result<Plan, &'static str> {
+    let s = doc.spline(k, id).ok_or("gone")?;
+    let e = ends_of(s, k);
     // the stretch runs from the end that stays to the one dragged
     let (f, hf, gf, old) = if at_end { (e.a, e.ha, e.ga, e.b) } else { (e.b, roads::norm_deg(e.hb + 180.0), -e.gb, e.a) };
     let link = if at_end { s.next_id } else { s.prev_id };
-    if link == 0 && locked(old.truncate()) {
-        return Err(crate::i18n::tr("This end belongs to a junction", "Этот конец принадлежит перекрёстку"));
-    }
     let too_sharp = crate::i18n::tr("That bend is too sharp", "Слишком крутой поворот");
-    let zp = ground(p) + (old.z - ground(old.truncate()));
-    let segs = fit(End { pos: f.truncate(), heading: Some(hf) }, End { pos: p, heading: None }).ok_or(too_sharp)?;
+    let segs = fit(End { pos: f.truncate(), heading: Some(hf) }, End { pos: p, heading: arrive }).ok_or(too_sharp)?;
     let hp = segs.last().unwrap().end_heading();
     let gp = (zp - f.z) / roads::total_length(&segs).max(0.1) * 100.0;
     let mine = Piece { key: k, id, segs, z0: f.z, z1: zp, g0: Some(gf), g1: Some(gp) };
@@ -433,6 +497,25 @@ mod tests {
         assert!(angle_off(c1.heading_at(c1.length), c2.heading_at(c2.length) + 180.0) < 1e-6);
         assert_eq!(doc.find_spline(last2).unwrap().1.next_id, last1, "end to end, as before");
         assert_eq!(doc.find_spline(last1).unwrap().1.next_id, last2);
+    }
+
+    #[test]
+    fn a_short_road_carried_far_bends_with_the_one_before_it() {
+        let mut doc = flat_map(1);
+        // 1 runs north 60 m into 2, 10 m long, whose end a junction holds
+        add_spline(&mut doc, (0, 0), 1, 100.0, 30.0, 0.0, 60.0, 0, 2);
+        add_spline(&mut doc, (0, 0), 2, 100.0, 90.0, 0.0, 10.0, 1, 0);
+        // the junction goes 9 m east: 2 alone cannot bend that far and arrive heading north
+        let p = DVec2::new(109.0, 100.0);
+        let plan = carry_end(&doc, (0, 0), 2, true, p, 0.0, 0.0, &|_| false).unwrap();
+        assert_eq!(plan.pieces.len(), 2);
+        apply(&mut doc, &plan);
+        let (_, c2, _) = span(&doc, 2);
+        assert!((c2.end_point().truncate() - p).length() < 1e-6);
+        assert!(angle_off(c2.heading_at(c2.length), 0.0) < 2.0);
+        let (c1, _, _) = span(&doc, 1);
+        assert!((c1.point_at(0.0).truncate() - DVec2::new(100.0, 30.0)).length() < 1e-6, "the far end stays");
+        assert!(c1.heading_at(0.0).abs() < 1e-6);
     }
 
     #[test]

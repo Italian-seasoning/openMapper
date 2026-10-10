@@ -64,3 +64,7 @@ Add a line when you touch a shared file: stream, file, what.
 * A · `src/history.rs`: `Step::traffic`, `Snapshot::traffic`.
 * A · `src/ui.rs`: `Action::Traffic`; Map menu "Traffic and AI…" (key `T`).
 * A · `src/app.rs`: `App::traffic` (the Traffic and AI window) drawn after the Lines window, `Action::Traffic` and key `T`; `OPENMAPPER_TRAFFIC=day|groups|lists` opens it on a tab; `Action::Force` drops the traffic's changes too.
+* B (round 2) · `src/app.rs`: `U` toggles the ruler; the Select tool's empty-ground press goes to the editor while the ruler is on; `ed.paste(&self.lib)`.
+* B (round 2) · `src/ui.rs`: the properties panel is in a `ScrollArea`; an object hanging on another (`[attachObj]`) is shown through `selection::any_object` / `any_object_mut` (no X / Y, a "Hangs on" row); a road's properties end with `ui_edit::rows_section`; Controls row for `U`.
+* B (round 2) · `src/main.rs`: `mod rows`.
+
