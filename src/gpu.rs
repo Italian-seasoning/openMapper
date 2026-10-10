@@ -5,7 +5,6 @@ use std::sync::Arc;
 use winit::window::Window;
 
 pub const DEPTH: wgpu::TextureFormat = wgpu::TextureFormat::Depth32Float;
-pub const SAMPLES: u32 = 4;
 
 pub struct Gpu {
     pub surface: wgpu::Surface<'static>,
@@ -18,6 +17,8 @@ pub struct Gpu {
     pub scene_format: wgpu::TextureFormat,
     pub depth: wgpu::TextureView,
     pub msaa: wgpu::TextureView,
+    /// Samples a pixel of the 3D view (1: no edge smoothing, drawn straight into the frame).
+    pub samples: u32,
 }
 
 impl Gpu {
@@ -58,8 +59,8 @@ impl Gpu {
             view_formats: if scene_format != format { vec![scene_format] } else { vec![] },
         };
         surface.configure(&device, &config);
-        let (depth, msaa) = targets(&device, &config);
-        Ok(Gpu { surface, device, queue, config, scene_format, adapter_name: format!("{} ({:?})", info.name, info.backend), depth, msaa })
+        let (depth, msaa) = targets(&device, &config, 4);
+        Ok(Gpu { surface, device, queue, config, scene_format, adapter_name: format!("{} ({:?})", info.name, info.backend), depth, msaa, samples: 4 })
     }
 
     pub fn resize(&mut self, w: u32, h: u32) {
@@ -69,19 +70,27 @@ impl Gpu {
         self.config.width = w;
         self.config.height = h;
         self.surface.configure(&self.device, &self.config);
-        let (d, m) = targets(&self.device, &self.config);
+        let (d, m) = targets(&self.device, &self.config, self.samples);
+        self.depth = d;
+        self.msaa = m;
+    }
+
+    /// Change the samples a pixel (the renderer is made again after it).
+    pub fn set_samples(&mut self, n: u32) {
+        self.samples = n;
+        let (d, m) = targets(&self.device, &self.config, n);
         self.depth = d;
         self.msaa = m;
     }
 }
 
-fn targets(device: &wgpu::Device, c: &wgpu::SurfaceConfiguration) -> (wgpu::TextureView, wgpu::TextureView) {
+fn targets(device: &wgpu::Device, c: &wgpu::SurfaceConfiguration, samples: u32) -> (wgpu::TextureView, wgpu::TextureView) {
     let size = wgpu::Extent3d { width: c.width, height: c.height, depth_or_array_layers: 1 };
     let depth = device.create_texture(&wgpu::TextureDescriptor {
         label: Some("depth"),
         size,
         mip_level_count: 1,
-        sample_count: SAMPLES,
+        sample_count: samples,
         dimension: wgpu::TextureDimension::D2,
         format: DEPTH,
         usage: wgpu::TextureUsages::RENDER_ATTACHMENT,
@@ -91,7 +100,7 @@ fn targets(device: &wgpu::Device, c: &wgpu::SurfaceConfiguration) -> (wgpu::Text
         label: Some("msaa"),
         size,
         mip_level_count: 1,
-        sample_count: SAMPLES,
+        sample_count: samples,
         dimension: wgpu::TextureDimension::D2,
         format: c.format.add_srgb_suffix(),
         usage: wgpu::TextureUsages::RENDER_ATTACHMENT,

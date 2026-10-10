@@ -66,6 +66,8 @@ pub enum Action {
     RestoreBackup(PathBuf),
     /// Open or close the Traffic and AI window.
     Traffic,
+    /// View > Graphics quality.
+    SetGraphics(crate::render::quality::Quality),
     /// Open or close the Getting started guide.
     Guide,
     /// Save the map and pack it into a .zip to share.
@@ -597,6 +599,14 @@ fn menu_bar(root: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, can_undo: bo
                 }
                 ui.separator();
                 lang_menu(ui, actions);
+                ui.menu_button(tr("Graphics quality", "Качество графики"), |ui| {
+                    let now = crate::render::quality::Quality::from_code(&prefs.graphics);
+                    for q in crate::render::quality::Quality::ALL {
+                        if radio(ui, now == q, q.label()).clicked() {
+                            actions.push(Action::SetGraphics(q));
+                        }
+                    }
+                });
             });
             ui.menu_button(tr("Tools", "Инструменты"), |ui| {
                 for t in Tool::ALL {

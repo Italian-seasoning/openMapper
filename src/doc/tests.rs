@@ -137,17 +137,23 @@ fn an_autosave_brings_the_changes_back() {
     t.tile.objects.push(MapObject { file: "Sceneryobjects\\x.sco".into(), id: 55, pos: [1.0, 2.0, 0.0], ..Default::default() });
     t.touch_content();
     doc.add_tile((2, 0));
+    let line = doc.timetable.add_line("99");
+    doc.traffic.parked.push("Vehicles\\Car\\x.ovh".into());
+    doc.traffic.restored();
     autosave::write(&doc, &roots.content).unwrap();
     drop(doc);
     let meta = autosave::pending(&roots.content).unwrap();
     let back = autosave::restore(&roots, &meta).unwrap();
     assert!(back.object((1, 0), 55).is_some());
     assert!(back.tiles.contains_key(&(2, 0)));
+    assert!(back.timetable.lines.iter().any(|l| l.name == line) && back.timetable.dirty);
+    assert!(back.traffic.parked.iter().any(|p| p.ends_with("x.ovh")) && back.traffic.dirty);
     assert!(back.is_dirty() && back.tiles[&(1, 0)].dirty && !back.tiles[&(0, 0)].dirty);
     assert_eq!(back.dir, roots.content.join("maps").join("Roundtrip"));
     // the map itself was not touched by the autosave
     let on_disk = Document::load(&roots, &back.dir.join("global.cfg"), |_| {}).unwrap();
     assert!(on_disk.object((1, 0), 55).is_none());
+    assert!(on_disk.timetable.lines.is_empty() && on_disk.traffic.parked.is_empty());
     let _ = std::fs::remove_dir_all(&roots.content);
 }
 
