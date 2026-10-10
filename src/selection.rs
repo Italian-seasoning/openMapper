@@ -189,7 +189,11 @@ pub fn delete(doc: &mut Document, hist: &mut History, sels: &[Sel]) {
         match *s {
             Sel::Object(k, id) => {
                 hist.touch_tile(doc, k);
-                doc.delete_object(k, id);
+                if doc.object(k, id).is_some() {
+                    doc.delete_object(k, id);
+                } else {
+                    delete_attached(doc, k, id);
+                }
             }
             Sel::Spline(k, id) => {
                 touch_spline(hist, doc, k, id);
@@ -265,6 +269,33 @@ pub fn carry_plans(doc: &Document, arms: &[Arm], pivot: DVec2, deg: f64, delta: 
             Some(crate::reshape::carry_end(doc, k, id, at_end, to, roads::norm_deg(a.out + deg + 180.0), dz, locked))
         })
         .collect()
+}
+
+/// An object of a tile, or one hanging on another (`[attachObj]`).
+pub fn any_object(doc: &Document, k: TileKey, id: i64) -> Option<&omsi_map::MapObject> {
+    doc.object(k, id).or_else(|| doc.tiles.get(&k)?.tile.attach_objects.iter().find(|o| o.id == id))
+}
+
+pub fn any_object_mut(doc: &mut Document, k: TileKey, id: i64) -> Option<&mut omsi_map::MapObject> {
+    let t = doc.tiles.get_mut(&k)?;
+    if t.tile.objects.iter().any(|o| o.id == id) {
+        return t.tile.objects.iter_mut().find(|o| o.id == id);
+    }
+    t.tile.attach_objects.iter_mut().find(|o| o.id == id)
+}
+
+/// Take away an object hanging on another, and whatever hangs on it in turn.
+fn delete_attached(doc: &mut Document, k: TileKey, id: i64) {
+    let Some(t) = doc.tiles.get_mut(&k) else { return };
+    let mut gone = vec![id];
+    let mut i = 0;
+    while i < gone.len() {
+        let p = gone[i];
+        gone.extend(t.tile.attach_objects.iter().filter(|o| o.parent_id == Some(p)).map(|o| o.id));
+        i += 1;
+    }
+    t.tile.attach_objects.retain(|o| !gone.contains(&o.id));
+    t.touch_content();
 }
 
 /// Where a world point appears in a view of `w` × `h` points (None: behind the eye).
@@ -402,6 +433,22 @@ pub mod tests {
         hist.undo(&mut doc);
         assert!(doc.object((0, 0), 1).is_some() && doc.spline((0, 0), 2).is_some());
         assert_eq!(doc.spline((0, 0), 3).unwrap().prev_id, 2);
+    }
+
+    #[test]
+    fn deleting_a_hanging_object_takes_what_hangs_on_it() {
+        let mut doc = flat_map(1);
+        add_object(&mut doc, (0, 0), 1, 10.0, 10.0);
+        let t = doc.tiles.get_mut(&(0, 0)).unwrap();
+        t.tile.attach_objects.push(MapObject { file: "sign.sco".into(), id: 6, parent_id: Some(1), ..Default::default() });
+        t.tile.attach_objects.push(MapObject { file: "plate.sco".into(), id: 7, parent_id: Some(6), ..Default::default() });
+        assert!(any_object(&doc, (0, 0), 6).is_some());
+        let mut hist = History::default();
+        hist.begin("t");
+        delete(&mut doc, &mut hist, &[Sel::Object((0, 0), 6)]);
+        hist.commit();
+        assert!(doc.object((0, 0), 1).is_some());
+        assert!(doc.tiles[&(0, 0)].tile.attach_objects.is_empty());
     }
 
     #[test]

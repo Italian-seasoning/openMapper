@@ -22,6 +22,7 @@ mod place;
 mod render;
 mod reshape;
 mod roads;
+mod rows;
 mod selection;
 mod timetable;
 mod ui;

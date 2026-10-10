@@ -199,6 +199,8 @@ pub struct Editor {
     move_delta: DVec2,
     /// How those ends would follow, shown while dragging.
     carry_preview: Vec<reshape::Plan>,
+    /// How objects are put along roads.
+    pub row_params: crate::rows::RowParams,
     // snapping
     pub snap_grid: bool,
     pub grid_step: f64,
@@ -277,6 +279,7 @@ impl Default for Editor {
             move_arms: Vec::new(),
             move_delta: DVec2::ZERO,
             carry_preview: Vec::new(),
+            row_params: Default::default(),
             snap_grid: false,
             grid_step: 1.0,
             snap_angle: false,
@@ -472,6 +475,49 @@ impl Editor {
                     // a tree or a marker: its sphere
                     let oc = c.as_dvec3();
                     let tca = oc.dot(d);
+                    (tca > 0.0).then_some(tca)
+                } else {
+                    model.parts.iter().filter_map(|p| omsi_geometry::ray_mesh(ov, dv, &p.mesh, &m)).map(|t| t as f64).reduce(f64::min)
+                };
+                if let Some(t) = hit {
+                    if t < gdist + 2.0 && best.map(|b| t < b.0).unwrap_or(true) {
+                        best = Some((t, Sel::Object(*k, ob.id)));
+                    }
+                }
+            }
+        }
+        // what hangs on objects and rows (signs on posts, lamps on masts), placed as they are drawn
+        // (only near where the ray meets the ground: rows are worked out along their roads)
+        let near = |k: &TileKey| ground.map(|g| (tile_origin(*k) + DVec2::splat(tile_size() * 0.5) - g.truncate()).length() < tile_size() * 1.5).unwrap_or(false);
+        for (k, t) in &doc.tiles {
+            if t.tile.attach_objects.is_empty() || !near(k) {
+                continue;
+            }
+            let mut parents: std::collections::HashMap<i64, (crate::place::Pose, std::sync::Arc<crate::assets::ObjectModel>)> = std::collections::HashMap::new();
+            for ob in &t.tile.objects {
+                let Some(model) = assets.object(&ob.file) else { continue };
+                parents.insert(ob.id, (crate::place::Pose::of_object(doc.object_world(*k, ob, model.abs_height), ob.rot), model));
+            }
+            for a in t.tile.spline_attachments.iter().filter(|a| a.repeater.is_none()) {
+                let Some(model) = assets.object(&a.file) else { continue };
+                let objs = crate::place::row_objects(a, &t.tile.splines, tile_origin(*k));
+                if let Some(first) = objs.iter().min_by_key(|o| o.index) {
+                    parents.entry(a.id).or_insert((first.pose, model));
+                }
+            }
+            for ob in &t.tile.attach_objects {
+                let Some(model) = assets.object(&ob.file) else { continue };
+                let Some((parent, pmodel)) = ob.parent_id.and_then(|p| parents.get(&p)).cloned() else { continue };
+                let attach = pmodel.attachments.get(ob.attach_index).copied().unwrap_or(glam::Mat4::IDENTITY);
+                let pose = parent.attached(&attach, omsi_geometry::map_rotation(ob.rot));
+                parents.insert(ob.id, (pose, model.clone()));
+                let m = pose.matrix_from(o);
+                let c = m.transform_point3(model.centre());
+                if !omsi_geometry::ray_near_sphere(ov, dv, c, model.radius().max(0.5)) {
+                    continue;
+                }
+                let hit = if model.parts.is_empty() {
+                    let tca = c.as_dvec3().dot(d);
                     (tca > 0.0).then_some(tca)
                 } else {
                     model.parts.iter().filter_map(|p| omsi_geometry::ray_mesh(ov, dv, &p.mesh, &m)).map(|t| t as f64).reduce(f64::min)
@@ -2215,6 +2261,69 @@ impl Editor {
         let roads: Vec<(TileKey, i64)> = self.selection().iter().filter_map(|s| if let Sel::Spline(k, id) = s { Some((*k, *id)) } else { None }).collect();
         let known = self.known_half.clone();
         self.ground_to(&roads, &|f| known.get(&f.to_lowercase()).copied().unwrap_or(0.0));
+    }
+
+    // ------------------------------------------------------------ objects along roads
+
+    /// Put the object type chosen in the catalogue along the selected roads.
+    pub fn place_rows(&mut self) {
+        let Some(file) = self.object_type.clone() else {
+            self.toast(tr("Pick an object in the Objects tool's catalogue first", "Сначала выберите объект в каталоге инструмента «Объекты»"));
+            return;
+        };
+        let sels = self.selection();
+        let Some(doc) = self.doc.as_mut() else { return };
+        let chains = crate::rows::chains(doc, &sels);
+        let rows: Vec<_> = chains.iter().flat_map(|c| crate::rows::plan(doc, c, &file, &self.row_params)).collect();
+        if rows.is_empty() {
+            self.toast(tr("The road is too short for that", "Дорога для этого слишком короткая"));
+            return;
+        }
+        self.history.begin(tr("Objects along the road", "Объекты вдоль дороги"));
+        for (k, _, _) in &rows {
+            self.history.touch_tile(doc, *k);
+        }
+        self.history.touch_global(doc);
+        let n = crate::rows::add(doc, rows);
+        self.history.commit();
+        self.toast(format!("{} {n}", tr("Rows of objects added:", "Добавлено рядов объектов:")));
+    }
+
+    /// Change a row (the road's properties): one step while a number is dragged.
+    pub fn edit_row(&mut self, k: TileKey, row: usize, f: impl FnOnce(&mut omsi_map::SplineAttachment)) {
+        self.begin_panel_step(tr("Edit row of objects", "Изменение ряда объектов"));
+        let Some(doc) = self.doc.as_mut() else { return };
+        self.history.touch_tile(doc, k);
+        if let Some(t) = doc.tiles.get_mut(&k) {
+            if let Some(a) = t.tile.spline_attachments.get_mut(row) {
+                f(a);
+                t.touch_content();
+            }
+        }
+    }
+
+    pub fn remove_row(&mut self, k: TileKey, row: usize) {
+        let Some(doc) = self.doc.as_mut() else { return };
+        self.history.begin(tr("Remove row of objects", "Удаление ряда объектов"));
+        self.history.touch_tile(doc, k);
+        crate::rows::remove(doc, k, row);
+        self.history.commit();
+    }
+
+    /// Take every row off the selected roads.
+    pub fn remove_rows_of_selection(&mut self) {
+        let sels = self.selection();
+        let Some(doc) = self.doc.as_mut() else { return };
+        self.history.begin(tr("Remove rows of objects", "Удаление рядов объектов"));
+        for s in &sels {
+            let Sel::Spline(k, id) = *s else { continue };
+            self.history.touch_tile(doc, k);
+            // (from the last: the places of the others stay)
+            for r in crate::rows::rows_on(doc, k, id).into_iter().rev() {
+                crate::rows::remove(doc, k, r);
+            }
+        }
+        self.history.commit();
     }
 
     // ------------------------------------------------------------ snapping
