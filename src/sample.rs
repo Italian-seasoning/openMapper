@@ -187,11 +187,14 @@ mod tests {
             assert!(tt.lines[0].tours[0].trips.len() > 50);
             assert_eq!(doc.global.entry_points.len(), 1);
             assert!(doc.traffic.depots().any(|d| d.name == tt.lines[0].tours[0].ai_group));
-            let out = roots.content.join(if left { "left" } else { "right" });
-            std::fs::create_dir_all(&out).unwrap();
-            crate::timetable::save_to(&mut doc.timetable, &out, &doc.order.clone()).unwrap();
-            let back = omsi_timetable::TimetableData::load(&out);
+            // the whole map saved: its timetable and traffic with it
+            doc.dir = roots.content.join("maps").join(if left { "left" } else { "right" });
+            crate::doc::save(doc).unwrap();
+            assert!(!doc.is_dirty());
+            let back = omsi_timetable::TimetableData::load(&doc.dir);
             assert_eq!((back.lines.len(), back.trips.len(), back.tracks.len(), back.bus_stops.len()), (1, 2, 2, 4));
+            let ai = omsi_map::AiLists::load(&doc.dir.join("ailists.cfg")).unwrap();
+            assert!(ai.groups.iter().any(|g| g.is_depot) && ai.groups.iter().any(|g| g.name == "NormalCars"));
         }
         let _ = std::fs::remove_dir_all(&roots.content);
     }

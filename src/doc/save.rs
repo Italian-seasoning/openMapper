@@ -37,11 +37,14 @@ fn header() -> String {
     format!("File created with openMapper {}\n\n", env!("CARGO_PKG_VERSION"))
 }
 
+/// Save the map into its folder. Nothing is written unless all of it can be: the files
+/// go under temporary names first, and what they replace is kept in a backup of this save
+/// (see `safe`).
 pub fn save(doc: &mut Document) -> anyhow::Result<()> {
     std::fs::create_dir_all(&doc.dir)?;
     // a map of the installation (or the template) is copied over first: its timetables,
     // AI lists, light maps and chrono folders come along
-    if let Some(src) = doc.source.take() {
+    if let Some(src) = doc.source.clone() {
         if src != doc.dir {
             copy_missing(&src, &doc.dir)?;
             // the template's own tile is not one of ours
@@ -53,42 +56,69 @@ pub fn save(doc: &mut Document) -> anyhow::Result<()> {
                 }
             }
         }
+        // (only once it is all there: a copy cut short is finished on the next save)
+        doc.source = None;
     }
     doc.fresh = false;
-    let map_tex = doc.dir.join("texture").join("map");
-    std::fs::create_dir_all(&map_tex)?;
     doc.sync_mask_slots();
-    let ground = doc.global.ground_textures.clone();
-    for (k, t) in doc.tiles.iter_mut() {
-        if !t.dirty {
+    let (mut ops, written) = plan(doc, &doc.dir, false);
+    // the timetable's and the traffic's files go with the map's, all or nothing
+    let (dir, order) = (doc.dir.clone(), doc.order.clone());
+    ops.extend(crate::timetable::plan(&mut doc.timetable, &dir, &order));
+    ops.extend(crate::traffic::plan(&doc.traffic, &dir));
+    let kept = super::safe::backup(&doc.dir, &ops, &[]).map_err(|e| anyhow::anyhow!("{}: {e}", crate::i18n::tr("could not keep a backup, nothing was saved", "не удалось сделать резервную копию, ничего не сохранено")))?;
+    super::safe::commit(&ops)?;
+    if let Some(b) = kept {
+        log::info!("the files this save replaced are kept in {}", b.display());
+    }
+    for k in written {
+        if let Some(t) = doc.tiles.get_mut(&k) {
+            t.tile.version = 14;
+            t.tile.has_terrain = true;
+            t.dirty = false;
+        }
+    }
+    doc.global_dirty = false;
+    crate::timetable::saved(&mut doc.timetable);
+    crate::traffic::saved(&mut doc.traffic);
+    Ok(())
+}
+
+/// What saving the map into `dir` writes and removes, and the tiles that it writes. The
+/// changed tiles only (`all`: every tile); an autosave keeps the files it would remove.
+pub fn plan(doc: &Document, dir: &Path, all: bool) -> (Vec<super::safe::Op>, Vec<TileKey>) {
+    use super::safe::Op;
+    let mut ops = Vec::new();
+    let mut written = Vec::new();
+    let map_tex = dir.join("texture").join("map");
+    for (k, t) in doc.tiles.iter() {
+        if !t.dirty && !all {
             continue;
         }
         let file = tile_file(*k);
-        t.tile.version = 14;
-        t.tile.has_terrain = true;
         let mut own = t.tile.clone();
+        own.version = 14;
+        own.has_terrain = true;
         super::unfit_from_world_grid(&mut own, k.1);
-        std::fs::write(doc.dir.join(&file), utf16(&tile_text(&own)))?;
-        std::fs::write(doc.dir.join(format!("{file}.terrain")), t.terrain.to_bytes())?;
+        ops.push(Op::Write(dir.join(&file), utf16(&tile_text(&own))));
+        ops.push(Op::Write(dir.join(format!("{file}.terrain")), t.terrain.to_bytes()));
         // a light map of the old ground would put the old shadows on the new one
-        let _ = std::fs::remove_file(doc.dir.join(format!("{file}.LM.bmp")));
-        let _ = std::fs::remove_file(doc.dir.join(format!("{file}.prt")));
-        for (li, g) in ground.iter().enumerate().skip(1) {
+        ops.push(Op::Remove(dir.join(format!("{file}.LM.bmp"))));
+        ops.push(Op::Remove(dir.join(format!("{file}.prt"))));
+        for (li, g) in doc.global.ground_textures.iter().enumerate().skip(1) {
             let p = map_tex.join(format!("{file}.{li}.dds"));
             match t.masks.get(li).and_then(|m| m.as_ref()) {
-                Some(m) if m.iter().any(|&a| a > 0) => std::fs::write(&p, super::dds::alpha8(mask_size(g), m))?,
-                _ => {
-                    let _ = std::fs::remove_file(&p);
-                }
+                Some(m) if m.iter().any(|&a| a > 0) => ops.push(Op::Write(p, super::dds::alpha8(mask_size(g), m))),
+                _ => ops.push(Op::Remove(p)),
             }
         }
-        t.dirty = false;
+        written.push(*k);
     }
-    std::fs::write(doc.dir.join("global.cfg"), utf16(&global_text(doc)))?;
-    doc.global_dirty = false;
-    crate::timetable::save(doc)?;
-    crate::traffic::save(doc)?;
-    Ok(())
+    // (last: the tile list that names the tiles)
+    ops.push(Op::Write(dir.join("global.cfg"), utf16(&global_text(doc))));
+    // (only what is there to remove)
+    ops.retain(|o| !matches!(o, Op::Remove(p) if !p.exists()));
+    (ops, written)
 }
 
 pub fn tile_file(k: TileKey) -> String {
@@ -201,9 +231,14 @@ fn global_text(doc: &Document) -> String {
     if !g.scen_obj_list.is_empty() {
         kw(&mut s, "scenObjList", &g.scen_obj_list);
     }
+    // every entry of the list stays, also those of tiles that have no file (maps ship such,
+    // Berlin-Spandau 40): start points, repeaters and timetables name tiles by their place
+    // in it, and a [worldcoordinates] map's grid is measured over all its rows
     for k in &doc.order {
         if doc.tiles.contains_key(k) {
             kw(&mut s, "map", &[k.0.to_string(), k.1.to_string(), tile_file(*k)]);
+        } else if let Some(t) = g.tiles.iter().find(|t| (t.x, t.y) == *k) {
+            kw(&mut s, "map", &[k.0.to_string(), k.1.to_string(), t.file.clone()]);
         }
     }
     s

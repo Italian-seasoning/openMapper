@@ -85,6 +85,9 @@ pub struct App {
     frames: u64,
     /// `OPENMAPPER_SHOT=file.png`: save the window's picture after that many frames and end.
     shot: Option<(PathBuf, u64)>,
+    autosave: crate::doc::autosave::Timer,
+    /// An autosave left by a session that did not end normally, offered back.
+    recover: Option<crate::doc::autosave::Meta>,
     /// The Lines window.
     tt: crate::ui_timetable::TimetableUi,
     /// The Traffic and AI window.
@@ -123,6 +126,8 @@ impl App {
             guide: Default::default(),
             picture: false,
             shot: std::env::var_os("OPENMAPPER_SHOT").map(|p| (PathBuf::from(p), std::env::var("OPENMAPPER_SHOT_FRAMES").ok().and_then(|n| n.parse().ok()).unwrap_or(90))),
+            autosave: Default::default(),
+            recover: None,
         };
         app.setup_roots();
         // OPENMAPPER_NEWMAP: the New map dialog open at the start (checks without a person at the screen)
@@ -147,6 +152,7 @@ impl App {
         self.texture_files = ground_texture_files(&roots);
         self.ed.content_dir = Some(roots.content.clone());
         self.ed.asphalt = crate::junction::asphalt_texture(&roots.omsi);
+        self.recover = crate::doc::autosave::pending(&roots.content);
         if let Some(g) = &mut self.gfx {
             g.renderer.roots = vec![roots.content.clone(), roots.omsi.clone()];
         }
@@ -180,6 +186,10 @@ impl App {
 
     fn open_map(&mut self, cfg: &Path) {
         let Some(roots) = &self.roots else { return };
+        // (what was open is saved or its changes were dropped)
+        if self.ed.doc.is_some() {
+            crate::doc::autosave::clear(&roots.content);
+        }
         match Document::load(roots, cfg, |_| {}) {
             Ok(doc) => {
                 self.prefs.push_recent(cfg);
@@ -228,6 +238,11 @@ impl App {
             self.cam.yaw = v[3];
             self.cam.pitch = v[4];
         }
+        // OPENMAPPER_CHECK=1: the map check open from the start
+        if std::env::var_os("OPENMAPPER_CHECK").is_some() {
+            self.ui.check.open = true;
+            self.ui.check.issues = None;
+        }
         // OPENMAPPER_TIMETABLE=<line>: the Lines window open on that line (checks without a person at the screen)
         if let Ok(l) = std::env::var("OPENMAPPER_TIMETABLE") {
             self.tt.open_at(&l);
@@ -247,6 +262,9 @@ impl App {
 
     fn new_map(&mut self, folder: &str, friendly: &str, size: i32, options: &crate::ui_newmap::NewMapOptions) {
         let Some(roots) = &self.roots else { return };
+        if self.ed.doc.is_some() {
+            crate::doc::autosave::clear(&roots.content);
+        }
         let mut folder = folder.to_string();
         // (a folder of that name may be there already)
         let base = folder.clone();
@@ -302,6 +320,10 @@ impl App {
         match crate::doc::save(doc) {
             Ok(()) => {
                 omsi_cfg::content_changed();
+                if let Some(r) = &self.roots {
+                    crate::doc::autosave::clear(&r.content);
+                }
+                self.autosave.reset();
                 let cfg = doc.dir.join("global.cfg");
                 let dir = doc.dir.display().to_string();
                 let has_start = !doc.global.entry_points.is_empty();
@@ -316,9 +338,25 @@ impl App {
                 true
             }
             Err(e) => {
-                self.ed.error(format!("{}: {e}", tr("Could not save", "Не удалось сохранить")));
+                self.ed.error(format!("{}: {e}", tr("Could not save (the changes are still here, nothing is lost)", "Не удалось сохранить (изменения остались здесь, ничего не потеряно)")));
                 false
             }
+        }
+    }
+
+    /// Bring an autosave's changes back (or drop them).
+    fn recover_autosave(&mut self, yes: bool, meta: &crate::doc::autosave::Meta) {
+        let Some(roots) = &self.roots else { return };
+        if !yes {
+            crate::doc::autosave::clear(&roots.content);
+            return;
+        }
+        match crate::doc::autosave::restore(roots, meta) {
+            Ok(doc) => {
+                self.after_open(doc);
+                self.ed.toast(tr("The unsaved changes are back. Save to keep them.", "Несохранённые изменения возвращены. Сохраните, чтобы оставить их."));
+            }
+            Err(e) => self.ed.error(format!("{}: {e}", tr("Could not restore the changes", "Не удалось вернуть изменения"))),
         }
     }
 
@@ -374,7 +412,7 @@ impl App {
 
     fn do_action(&mut self, a: Action, el: &ActiveEventLoop) {
         let dirty = self.ed.doc.as_ref().map(|d| d.is_dirty()).unwrap_or(false);
-        let guarded = matches!(a, Action::Close | Action::Open(_) | Action::OpenDialog | Action::NewMap { .. } | Action::Quit);
+        let guarded = matches!(a, Action::Close | Action::Open(_) | Action::OpenDialog | Action::NewMap { .. } | Action::Quit | Action::RestoreBackup(_));
         if guarded && dirty {
             self.ui.confirm = Some(a);
             return;
@@ -407,7 +445,27 @@ impl App {
             Action::Save => {
                 self.save();
             }
+            Action::RestoreBackup(b) => {
+                let Some(dir) = self.ed.doc.as_ref().map(|d| d.dir.clone()) else { return };
+                match crate::doc::safe::restore(&dir, &b) {
+                    Ok(n) => {
+                        omsi_cfg::content_changed();
+                        if let Some(d) = self.ed.doc.as_mut() {
+                            // (what is on disk now is what gets opened)
+                            d.global_dirty = false;
+                            d.timetable.dirty = false;
+                            d.tiles.values_mut().for_each(|t| t.dirty = false);
+                        }
+                        self.open_map(&dir.join("global.cfg"));
+                        self.ed.toast(format!("{} ({n})", tr("The map is back as it was before that save", "Карта возвращена к виду до того сохранения")));
+                    }
+                    Err(e) => self.ed.error(format!("{}: {e}", tr("Could not go back", "Не удалось вернуть"))),
+                }
+            }
             Action::Close => {
+                if let Some(r) = &self.roots {
+                    crate::doc::autosave::clear(&r.content);
+                }
                 self.ed.doc = None;
                 self.ed.history.clear();
                 if let Some(r) = &self.roots {
@@ -475,7 +533,7 @@ impl App {
                 self.ed.copy(&self.lib);
             }
             Action::Cut => self.ed.cut(&self.lib),
-            Action::Paste => self.ed.paste(),
+            Action::Paste => self.ed.paste(&self.lib),
             Action::Duplicate => self.ed.duplicate(&self.lib),
             Action::SelectAll => self.ed.select_all(),
             Action::FocusSelection => {
@@ -570,6 +628,7 @@ impl App {
             Some(KeyCode::Digit6) => self.ed.set_tool(Tool::Paint),
             Some(KeyCode::Digit7) => self.ed.set_tool(Tool::Tiles),
             Some(KeyCode::KeyR) if !ctrl => self.ed.rotate(if shift { -15.0 } else { 15.0 }),
+            Some(KeyCode::KeyU) if !ctrl => self.ed.toggle_ruler(),
             Some(KeyCode::KeyG) if !ctrl => self.ed.show_grid = !self.ed.show_grid,
             Some(KeyCode::KeyM) if !ctrl => self.ui.minimap.open = !self.ui.minimap.open,
             Some(KeyCode::KeyL) if !ctrl => self.tt.open = !self.tt.open,
@@ -633,6 +692,9 @@ impl App {
             let h = doc.ground(self.cam.wanted_eye().truncate());
             self.cam.keep_above(h);
         }
+        if crate::render::profile::orbit() {
+            self.cam.yaw += dt * 12.0;
+        }
         let cam_moving = self.cam.is_moving();
         self.cam.update(dt);
         // the Roads tool starts with an ordinary two-lane road, so the first click builds
@@ -642,6 +704,7 @@ impl App {
             self.ed.road_type = pick.map(|a| a.rel.clone());
         }
         // the editor
+        let t_ed = Instant::now();
         self.ed.cursor_in_view = !self.mouse.over_ui;
         if self.ed.doc.is_some() && (self.mouse.moved || cam_moving || self.mouse.left || self.assets.as_ref().map(|a| a.pending > 0).unwrap_or(false)) {
             if let (Some((o, d)), Some(assets)) = (self.view_ray(), self.assets.as_mut()) {
@@ -656,6 +719,8 @@ impl App {
         }
 
         let Some(mut g) = self.gfx.take() else { return };
+        g.renderer.profile.add("editor", crate::render::profile::ms(t_ed));
+        let t_ui = Instant::now();
         // the interface
         let raw = g.egui_state.take_egui_input(&g.window);
         let mut actions: Vec<Action> = Vec::new();
@@ -664,6 +729,7 @@ impl App {
         let loading = self.assets.as_ref().map(|a| a.pending).unwrap_or(0);
         let mut view: Option<(egui::Rect, bool)> = None;
         let gpu_name = g.gpu.adapter_name.clone();
+        let mut recover_answer = None;
         // (the overview map stays out of the map's picture)
         let minimap_open = self.ui.minimap.open;
         if self.picture {
@@ -706,6 +772,9 @@ impl App {
             }
             crate::ui_newmap::dialog(&ctx, &mut self.ui.new_map, &self.texture_files, &self.swatches, &mut wanted_swatches, &mut actions);
             ui::confirm_unsaved(&ctx, &mut self.ui, &mut actions);
+            if let Some(m) = &self.recover {
+                recover_answer = crate::doc::autosave::offer(&ctx, m);
+            }
         });
         match view {
             Some((rect, hovered)) => {
@@ -725,6 +794,8 @@ impl App {
         for (id, delta) in &full.textures_delta.set {
             g.egui_renderer.update_texture(&g.gpu.device, &g.gpu.queue, *id, delta);
         }
+        g.renderer.profile.add("ui", crate::render::profile::ms(t_ui));
+        let t_acquire = Instant::now();
         // draw
         let frame = match g.gpu.surface.get_current_texture() {
             wgpu::CurrentSurfaceTexture::Success(f) | wgpu::CurrentSurfaceTexture::Suboptimal(f) => Some(f),
@@ -735,14 +806,17 @@ impl App {
             }
             _ => None,
         };
+        g.renderer.profile.add("acquire", crate::render::profile::ms(t_acquire));
         if let Some(frame) = frame {
             let view = frame.texture.create_view(&Default::default());
             let scene_view = frame.texture.create_view(&wgpu::TextureViewDescriptor { format: Some(g.gpu.scene_format), ..Default::default() });
             let mut enc = g.gpu.device.create_command_encoder(&wgpu::CommandEncoderDescriptor { label: Some("frame") });
             g.renderer.time += dt as f32;
             if let (Some(doc), Some(assets)) = (&self.ed.doc, self.assets.as_mut()) {
+                let t_x = Instant::now();
                 let mut extras = self.ed.extras(&self.cam, assets);
                 self.tt.overlay(&self.ed, &self.cam, &mut extras);
+                g.renderer.profile.add("extras", crate::render::profile::ms(t_x));
                 g.renderer.sync(&g.gpu, doc, assets, &extras, &self.cam);
                 let ppp = full.pixels_per_point;
                 let (w, h) = (g.gpu.config.width as f32, g.gpu.config.height as f32);
@@ -786,7 +860,12 @@ impl App {
             for id in &full.textures_delta.free {
                 g.egui_renderer.free_texture(id);
             }
+            let t_submit = Instant::now();
             g.gpu.queue.submit(extra.into_iter().chain([enc.finish()]));
+            g.renderer.profile.add("submit", crate::render::profile::ms(t_submit));
+            g.renderer.profile.add("frame cpu", crate::render::profile::ms(now));
+            g.renderer.profile.add("frame interval", dt as f32 * 1000.0);
+            g.renderer.profile.end_frame();
             self.frames += 1;
             if self.frames == 3 {
                 if let Ok(d) = std::env::var("OPENMAPPER_DEMO") {
@@ -865,9 +944,17 @@ impl App {
                 }
             }
         }
+        if let Some(yes) = recover_answer {
+            if let Some(meta) = self.recover.take() {
+                self.recover_autosave(yes, &meta);
+            }
+        }
         for a in actions {
             self.do_action(a, el);
         }
+        // the changes kept every few minutes (not in the middle of an edit)
+        let editing = self.mouse.left || self.ed.history.is_open();
+        self.autosave.tick(self.ed.doc.as_ref(), self.roots.as_ref().map(|r| r.content.as_path()), editing);
     }
 
     /// A scripted session (`OPENMAPPER_DEMO=<map name>`): a new map with roads, objects and
@@ -1289,10 +1376,10 @@ impl ApplicationHandler for App {
                             if self.keys.alt {
                                 // Option + drag: turn the camera
                                 self.mouse.alt_orbit = true;
-                            } else if self.ed.tool == Tool::Select && self.ed.hover.is_none() && (self.keys.shift || self.keys.ctrl) {
+                            } else if self.ed.tool == Tool::Select && self.ed.hover.is_none() && self.ed.ruler.is_none() && (self.keys.shift || self.keys.ctrl) {
                                 // Shift / Ctrl + drag on empty ground: a selection box
                                 self.ed.select_box = Some([self.mouse.pos, self.mouse.pos]);
-                            } else if self.ed.tool == Tool::Select && self.ed.hover.is_none() {
+                            } else if self.ed.tool == Tool::Select && self.ed.hover.is_none() && self.ed.ruler.is_none() {
                                 // drag the map by its empty ground
                                 self.mouse.grab = true;
                                 self.ed.select(None);
@@ -1391,14 +1478,27 @@ impl ApplicationHandler for App {
         }
     }
 
-    fn about_to_wait(&mut self, _el: &ActiveEventLoop) {
+    fn about_to_wait(&mut self, el: &ActiveEventLoop) {
         if let Some(g) = &self.gfx {
             g.window.request_redraw();
+        }
+        // (a hidden window gets no redraws: the screenshot and profiling runs go on anyway)
+        if self.shot.is_some() || crate::render::profile::enabled() {
+            if self.last.elapsed().as_millis() > 250 {
+                self.frame(el);
+            }
+            // (a timer, so the event loop wakes even when the system lets it sleep)
+            el.set_control_flow(ControlFlow::WaitUntil(Instant::now() + std::time::Duration::from_millis(5)));
         }
     }
 
     fn exiting(&mut self, _el: &ActiveEventLoop) {
         let _ = self.quit;
+        // (a normal end: the changes were saved or dropped when asked; an autosave still
+        // offered and not answered stays for the next start)
+        if let (Some(r), None) = (&self.roots, &self.recover) {
+            crate::doc::autosave::clear(&r.content);
+        }
         self.prefs.save();
     }
 }

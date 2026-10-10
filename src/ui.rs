@@ -59,6 +59,9 @@ pub enum Action {
     AddGroundTexture(String),
     /// Open or close the Lines window.
     Timetable,
+    /// Put the map's folder back as it was before the save kept in this backup (and the
+    /// later ones), then open it again.
+    RestoreBackup(PathBuf),
     /// Open or close the Traffic and AI window.
     Traffic,
     /// Open or close the Getting started guide.
@@ -84,6 +87,9 @@ pub struct UiState {
     pub status_help: Option<String>,
     pub welcome_pick: Option<PathBuf>,
     pub minimap: crate::ui_minimap::Minimap,
+    pub check: crate::check::Checker,
+    /// The window of the map's earlier versions (backups of its saves).
+    pub versions_open: bool,
     /// The preferences' starred and recently used assets, for the catalogue.
     pub favourites: Vec<String>,
     pub recent_assets: Vec<String>,
@@ -106,6 +112,8 @@ impl Default for UiState {
             status_help: None,
             welcome_pick: None,
             minimap: crate::ui_minimap::Minimap::new(),
+            check: Default::default(),
+            versions_open: false,
             favourites: Vec::new(),
             recent_assets: Vec::new(),
             map_picture: None,
@@ -466,7 +474,10 @@ pub fn editor(root: &mut egui::Ui, st: &mut UiState, u: EditorUi, actions: &mut 
         tool_panel(ui, st, ed, lib, thumbs, wanted, swatches, wanted_swatches, actions);
     });
     egui::Panel::right("properties").resizable(true).default_size(270.0).size_range(220.0..=420.0).frame(panel_frame()).show(root, |ui| {
-        properties(ui, st, ed, lib, actions);
+        // (a road's rows of objects can make it long)
+        egui::ScrollArea::vertical().id_salt("properties scroll").auto_shrink([false, false]).show(ui, |ui| {
+            properties(ui, st, ed, lib, actions);
+        });
     });
     let mut view = (egui::Rect::NOTHING, false);
     egui::CentralPanel::default().frame(Frame::NONE).show(root, |ui| {
@@ -484,6 +495,10 @@ pub fn editor(root: &mut egui::Ui, st: &mut UiState, u: EditorUi, actions: &mut 
     texture_picker(&ctx, st, texture_files, swatches, wanted_swatches, actions);
     controls(&ctx, st);
     about(&ctx, st);
+    st.check.window(&ctx, ed, lib, actions);
+    if let Some(doc) = &ed.doc {
+        crate::doc::safe::versions_window(&ctx, &mut st.versions_open, &doc.dir, actions);
+    }
     view
 }
 
@@ -516,6 +531,9 @@ fn menu_bar(root: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, can_undo: bo
                 }
                 if menu_item(ui, Some(Icon::Import), tr("Import assets…", "Импорт ассетов…"), "", true) {
                     actions.push(Action::Import);
+                }
+                if menu_item(ui, Some(Icon::History), tr("Earlier versions…", "Прошлые версии…"), "", true) {
+                    st.versions_open = true;
                 }
                 ui.separator();
                 if menu_item(ui, None, tr("Close map", "Закрыть карту"), "", true) {
@@ -587,6 +605,10 @@ fn menu_bar(root: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, can_undo: bo
                 }
                 if menu_item(ui, Some(Icon::Layers), tr("Ground textures…", "Текстуры земли…"), "", true) {
                     ed.set_tool(Tool::Paint);
+                }
+                if menu_item(ui, Some(Icon::CheckCircle), tr("Check map…", "Проверить карту…"), "", true) {
+                    st.check.open = true;
+                    st.check.issues = None;
                 }
                 if menu_item(ui, Some(Icon::Bus), tr("Lines and timetable…", "Линии и расписание…"), "L", true) {
                     actions.push(Action::Timetable);
@@ -1165,7 +1187,7 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
     Frame::new().inner_margin(Margin::same(8)).show(ui, |ui| {
         match sel {
             Sel::Object(k, id) => {
-                let Some(o) = doc.object(k, id) else { return };
+                let Some(o) = crate::selection::any_object(doc, k, id) else { return };
                 let a = lib.find(&o.file);
                 let name = a.map(|a| a.name.clone()).unwrap_or_else(|| o.file.rsplit('\\').next().unwrap_or("").to_string());
                 ui.label(RichText::new(name).strong().color(Color32::WHITE));
@@ -1181,7 +1203,12 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
                     prop_row(ui, tr("Tile", "Тайл"), |ui| {
                         ui.label(format!("{}, {}", k.0, k.1));
                     });
-                    prop_row(ui, "X / Y", |ui| {
+                    if let Some(p) = o.parent_id {
+                        prop_row(ui, tr("Hangs on", "Висит на"), |ui| {
+                            ui.label(format!("ID {p} · {} {}", tr("point", "точка"), o.attach_index));
+                        });
+                    }
+                    if o.parent_id.is_none() { prop_row(ui, "X / Y", |ui| {
                         // (tile-local, as the map file keeps it; past the edge it goes over)
                         let (mut x, mut y) = (o.pos[0], o.pos[1]);
                         ui.horizontal(|ui| {
@@ -1191,14 +1218,14 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
                                 new_pos = Some((x, y));
                             }
                         });
-                    });
+                    }); }
                     prop_row(ui, tr("Direction", "Направление"), |ui| {
                         let mut h = o.rot[0];
                         if ui.add(egui::DragValue::new(&mut h).range(-360.0..=720.0).speed(1.0).suffix("°")).changed() {
                             new_rot = Some(h.rem_euclid(360.0));
                         }
                     });
-                    if !a.map(|a| a.abs_height).unwrap_or(false) {
+                    if !a.map(|a| a.abs_height).unwrap_or(false) && o.parent_id.is_none() {
                         prop_row(ui, tr("Above ground", "Над землёй"), |ui| {
                             let mut z = o.pos[2];
                             if ui.add(egui::DragValue::new(&mut z).range(-20.0..=50.0).speed(0.05).suffix(" m")).changed() {
@@ -1305,7 +1332,7 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
                 let Some(doc) = ed.doc.as_mut() else { return };
                 ed.history.touch_tile(doc, k);
                 ed.history.touch_global(doc);
-                if let Some(o) = doc.object_mut(k, id) {
+                if let Some(o) = crate::selection::any_object_mut(doc, k, id) {
                     if let Some(h) = new_rot {
                         o.rot[0] = h;
                     }
@@ -1334,6 +1361,7 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
         }
         Sel::Spline(k, id) => {
             crate::ui_edit::apply_ends(ed, ui.ctx(), k, id, ends);
+            crate::ui_edit::rows_section(ui, ed, lib);
             let Some(doc) = ed.doc.as_mut() else { return };
             if let Some((file, mirror)) = spline_change {
                 ed.history.begin(tr("Edit road", "Изменение дороги"));
@@ -1498,6 +1526,7 @@ fn controls(ctx: &egui::Context, st: &mut UiState) {
             (tr("Shift / Ctrl + drag on empty ground", "Shift / Ctrl + тянуть по пустой земле"), tr("select with a box (Shift adds)", "выделить рамкой (Shift — добавить)")),
             ("Ctrl+C / X / V", tr("copy / cut / paste at the cursor", "копировать / вырезать / вставить у курсора")),
             ("Ctrl+D / Ctrl+A", tr("duplicate / select all", "дублировать / выбрать всё")),
+            ("U", tr("ruler: click two points (distance, height, gradient)", "линейка: клик по двум точкам (расстояние, высота, уклон)")),
             ("F", tr("go to the selection", "перейти к выбранному")),
             ("Esc", tr("stop / deselect", "отмена / снять выбор")),
             ("[ ]  Shift+wheel", tr("brush size", "размер кисти")),

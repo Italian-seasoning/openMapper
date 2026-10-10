@@ -1,7 +1,11 @@
 //! The map being edited: `global.cfg`, its tiles (objects, splines, ground) and their
 //! painting masks, read with openOMSI's own readers and written back in OMSI's format.
 
+pub mod autosave;
+pub mod safe;
 mod save;
+#[cfg(test)]
+mod tests;
 pub mod dds;
 
 use std::collections::BTreeMap;
@@ -192,52 +196,59 @@ impl Document {
     /// Read a map. One of the installation is saved to the content folder (the original
     /// stays as it is).
     pub fn load(roots: &crate::install::Roots, cfg: &Path, mut progress: impl FnMut(f32)) -> anyhow::Result<Document> {
+        let started = std::time::Instant::now();
         let global = GlobalCfg::load(cfg).map_err(|e| anyhow::anyhow!("{e}"))?;
         omsi_map::configure_grid(&global);
         let src_dir = cfg.parent().unwrap_or(Path::new(".")).to_path_buf();
         let folder = src_dir.file_name().map(|f| f.to_string_lossy().to_string()).unwrap_or_else(|| "Map".into());
         let in_content = src_dir.starts_with(&roots.content);
         let dir = if in_content { src_dir.clone() } else { roots.content.join("maps").join(&folder) };
-        let mut tiles = BTreeMap::new();
-        let n = global.tiles.len().max(1);
-        let mut missing = 0;
         // the chrono folders active today, as the game picks them
         let chrono_dirs = omsi_map::active_chrono_dirs(&src_dir, today_code());
-        for (i, t) in global.tiles.iter().enumerate() {
-            progress(i as f32 / n as f32);
-            let path = src_dir.join(&t.file);
-            let tile = match Tile::load(&path) {
-                Ok(t) => t,
-                Err(e) => {
-                    // (maps list tiles they do not ship: Berlin-Spandau 369, 329 of them there)
-                    log::debug!("{e}");
-                    missing += 1;
-                    continue;
-                }
-            };
-            let mut tile = tile;
-            // (a [worldcoordinates] tile is scaled onto the map's grid, as the game does; it
-            // is scaled back when saved)
-            tile.fit_to_world_grid(t.y);
-            let chrono: Vec<Tile> = chrono_dirs.iter().filter_map(|c| {
-                let p = omsi_cfg::resolve_path(c, &t.file);
-                omsi_cfg::vfs::is_file(&p).then(|| Tile::load(&p).ok()).flatten()
-            }).collect();
-            let terrain_path = src_dir.join(format!("{}.terrain", t.file));
-            let terrain = Terrain::load(&terrain_path).ok().filter(|t| t.samples() == TERRAIN_SAMPLES).unwrap_or_else(Terrain::flat);
-            let mut masks = Vec::new();
-            for (li, g) in global.ground_textures.iter().enumerate() {
-                if li == 0 {
-                    masks.push(None);
-                    continue;
-                }
-                let p = src_dir.join("texture").join("map").join(format!("{}.{}.dds", t.file, li));
-                masks.push(load_mask(&p, mask_size(g)));
+        // (the tiles are read side by side: a big map has hundreds)
+        let n = global.tiles.len();
+        let next = AtomicU64::new(0);
+        let done = AtomicU64::new(0);
+        let threads = std::thread::available_parallelism().map(|n| n.get()).unwrap_or(4).clamp(1, 8);
+        let read: Vec<(usize, Option<TileDoc>)> = std::thread::scope(|sc| {
+            let workers: Vec<_> = (0..threads)
+                .map(|_| {
+                    sc.spawn(|| {
+                        let mut out = Vec::new();
+                        loop {
+                            let i = next.fetch_add(1, Ordering::Relaxed) as usize;
+                            let Some(t) = global.tiles.get(i) else { break };
+                            // (a tile that makes the reader panic is left out like a missing one)
+                            let tile = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| load_tile(&src_dir, &global, &chrono_dirs, t))).unwrap_or_else(|_| {
+                                log::warn!("{}: could not be read", t.file);
+                                None
+                            });
+                            out.push((i, tile));
+                            done.fetch_add(1, Ordering::Relaxed);
+                        }
+                        out
+                    })
+                })
+                .collect();
+            // (the caller's progress, from this thread)
+            while workers.iter().any(|w| !w.is_finished()) {
+                progress(done.load(Ordering::Relaxed) as f32 / n.max(1) as f32);
+                std::thread::sleep(std::time::Duration::from_millis(5));
             }
-            tiles.insert(
-                (t.x, t.y),
-                TileDoc { tile, chrono, terrain, masks, terrain_rev: next_rev(), mask_rev: next_rev(), content_rev: next_rev(), dirty: false },
-            );
+            workers.into_iter().flat_map(|w| w.join().unwrap_or_default()).collect()
+        });
+        let mut tiles = BTreeMap::new();
+        let mut missing = 0;
+        let mut read = read;
+        read.sort_by_key(|r| r.0);
+        for (i, t) in read {
+            match t {
+                Some(t) => {
+                    let e = &global.tiles[i];
+                    tiles.insert((e.x, e.y), t);
+                }
+                None => missing += 1,
+            }
         }
         if !chrono_dirs.is_empty() {
             log::info!("chrono: {} folder(s) active today", chrono_dirs.len());
@@ -249,6 +260,7 @@ impl Document {
         let timetable = crate::timetable::Timetable::load(&src_dir, &order);
         let traffic = crate::traffic::Traffic::load(&src_dir);
         progress(1.0);
+        crate::render::profile::log_time(&format!("read {} tiles", tiles.len()), started);
         Ok(Document {
             global,
             tiles,
@@ -594,6 +606,41 @@ impl Document {
     }
 }
 
+/// One tile of the map with its ground, painting and chrono patches (None: no file).
+fn load_tile(src_dir: &Path, global: &GlobalCfg, chrono_dirs: &[PathBuf], t: &omsi_map::MapTileRef) -> Option<TileDoc> {
+    let path = src_dir.join(&t.file);
+    let mut tile = match Tile::load(&path) {
+        Ok(t) => t,
+        Err(e) => {
+            // (maps list tiles they do not ship: Berlin-Spandau 369, 329 of them there)
+            log::debug!("{e}");
+            return None;
+        }
+    };
+    // (a [worldcoordinates] tile is scaled onto the map's grid, as the game does; it is
+    // scaled back when saved)
+    tile.fit_to_world_grid(t.y);
+    let chrono: Vec<Tile> = chrono_dirs
+        .iter()
+        .filter_map(|c| {
+            let p = omsi_cfg::resolve_path(c, &t.file);
+            omsi_cfg::vfs::is_file(&p).then(|| Tile::load(&p).ok()).flatten()
+        })
+        .collect();
+    let terrain_path = src_dir.join(format!("{}.terrain", t.file));
+    let terrain = Terrain::load(&terrain_path).ok().filter(|t| t.samples() == TERRAIN_SAMPLES).unwrap_or_else(Terrain::flat);
+    let mut masks = Vec::new();
+    for (li, g) in global.ground_textures.iter().enumerate() {
+        if li == 0 {
+            masks.push(None);
+            continue;
+        }
+        let p = src_dir.join("texture").join("map").join(format!("{}.{}.dds", t.file, li));
+        masks.push(load_mask(&p, mask_size(g)));
+    }
+    Some(TileDoc { tile, chrono, terrain, masks, terrain_rev: next_rev(), mask_rev: next_rev(), content_rev: next_rev(), dirty: false })
+}
+
 /// A painting mask from its `.dds` (or any picture), as alpha texels of `size` × `size`.
 fn load_mask(p: &Path, size: usize) -> Option<Vec<u8>> {
     if !p.is_file() {
@@ -642,9 +689,22 @@ pub fn unfit_from_world_grid(t: &mut Tile, ty: i32) {
     }
 }
 
+/// The map's grid is global (`omsi_map::configure_grid`): tests that read or make a map
+/// hold this, one map at a time.
+#[cfg(test)]
+pub fn one_map() -> std::sync::MutexGuard<'static, ()> {
+    static MAP: std::sync::Mutex<()> = std::sync::Mutex::new(());
+    MAP.lock().unwrap_or_else(|e| e.into_inner())
+}
+
 /// Today as OMSI's date code (YYYYMMDD).
 pub fn today_code() -> i32 {
     let days = std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).map(|d| d.as_secs() / 86_400).unwrap_or(0) as i64;
+    civil(days)
+}
+
+/// A day (since 1970-01-01) as YYYYMMDD.
+pub fn civil(days: i64) -> i32 {
     // (civil date from days since 1970-01-01, H. Hinnant's algorithm)
     let z = days + 719_468;
     let era = z.div_euclid(146_097);

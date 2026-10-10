@@ -15,6 +15,9 @@ experienced map makers.
 | --- | --- | --- |
 | Select | 1 | click an object or road · `Shift`+click adds or takes away · `Shift`/`Ctrl` + drag on empty ground selects with a box · drag the selection to move it all · `R` turns it round its middle · `Del` deletes it · `Ctrl+C / X / V / D` copy, cut, paste at the cursor, duplicate (links inside the copy kept, rows of objects and things hanging on them come along) · several selected: move, raise and turn by numbers, give every road one type |
 | Road shape | — | select a road: drag its end dots to move an end (a road joined there follows, tangent at the joint, its far end kept; an end at a junction stays), drag the middle dot to bend it. Heights and gradients at both ends in the properties, the joined road following |
+| Junction moves | — | a junction (or any piece with spline helpers) moved, turned or raised carries the ends of its roads along, tangent, the road before a short arm bending with it; the ground follows its plate |
+| Objects along a road | — | select a road or a chain: put the object chosen in the catalogue every so many metres beside it (one or both sides, margins, height, turn, leaning), as OMSI spline attachment rows that follow the road; the road's properties list its rows to change or remove |
+| Ruler | U | status bar: click two points for the distance, the height between them and the gradient |
 | Snapping | — | status bar: `Grid` (0.5–10 m) for placing, moving, road ends and reshaping; `15°` for headings |
 | Roads | 2 | click the start, then the end: the arc builds itself. A road continues smoothly from a road end it starts at, joins another end with an S-curve or bend (biarc), is cut into OMSI splines and linked with its neighbours. It can shape the ground under itself. |
 | Junctions | — | automatic: a road drawn into another's middle or across it cuts both and fills the gap with a junction object of its own (asphalt plate, `[path]` lanes for straight on, right and left, footpaths round the corners), written as ordinary OMSI content into `Sceneryobjects\openMapper\<map>` |
@@ -39,6 +42,18 @@ experienced map makers.
 * **Open any map**: OMSI 2's own (saved as a copy into the content folder) and mod maps.
 * **New map** from OMSI 2's own template (`template/NewMap`): it's ready to drive right away.
 * **Test drive**: saves and launches openOMSI on this map.
+* **Map check** (Map > Check map…): missing objects, roads and textures, road ends lying on
+  one another but not joined, links to splines that are gone, bus stops with no lane near,
+  start points away from a road, IDCodes used twice, a too low NextIDCode, objects off their
+  tile, tiles without a file or ground. Every issue is explained, a click flies there, many
+  are put right with one more click (and can be undone). `openmapper --check path/to/global.cfg`
+  prints the same without a window.
+* **Safe saving**: every file is written under a temporary name and put in place only once
+  all of them are written, so a full disk or a crash leaves the map as it was. The files a save
+  replaces are kept (the last 10 saves, in `<content>/openMapper/backups/<map>`); File > Earlier
+  versions… puts the map back as it was before any of them. The changes are autosaved every
+  3 minutes to `<content>/openMapper/autosave` (never into the map) and offered back at the next
+  start if openMapper ended without saving.
 * **Map picture** (`picture.jpg`, shown where maps are chosen) taken from the view, and the
   view the map opens with (`[mapcam]`), both in the map's properties.
 * **Favourites and recently used** at the top of the catalogue: right-click an entry to star
@@ -63,7 +78,7 @@ experienced map makers.
   Option + drag turns and tilts.
 * **Keyboard:** `W A S D` / arrows move, `Q / E` turn, `1–7` tools, `M` overview map, `L` lines, `T` traffic, `R` turn object, `Del`,
   `F` go to selection, `[ ]` brush size, `G` tile grid, `Ctrl+Z`, `Ctrl+Shift+Z`, `Ctrl+S`,
-  `Ctrl+C / X / V / D` copy, cut, paste, duplicate, `Ctrl+A` select all, `F5` test drive.
+  `Ctrl+C / X / V / D` copy, cut, paste, duplicate, `Ctrl+A` select all, `U` ruler, `F5` test drive.
 
 ## How it's built
 
@@ -94,6 +109,13 @@ cargo run --release
 
 `openmapper path/to/global.cfg` opens a map straight away. `OPENMAPPER_SHOT=out.png` saves
 a picture of the window and exits (for checks without a person at the screen).
+`OPENMAPPER_PROFILE=1` logs how long reading the map and each part of a frame take (every few
+seconds, with the draw calls), `OPENMAPPER_PROFILE=orbit` also turns the camera round by
+itself. On Berlin-Spandau (329 tiles, 2486 splines, 29 450 objects, Apple M4) a frame takes
+about 13 ms where it took 36 ms: what is out of view or too small to see is left out, a tile's
+splines are drawn as one mesh per material, the objects' instances stay on the GPU and the
+selection only tints a few of them, and an edit builds only its own tile again. The tiles are
+read side by side, several at a time.
 
 ## License
 
