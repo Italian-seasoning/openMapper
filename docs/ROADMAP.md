@@ -34,3 +34,6 @@ pieces of code go into new files.
 ## Hooks log
 
 Add a line when you touch a shared file: stream, file, what.
+* D · `src/ui.rs`: `Action::LookAt(DVec2)`, `UiState::minimap`, `Status::cam`, View menu "Overview map", minimap drawn in the central panel; welcome list maps a recent installation map to its content copy.
+* D · `src/app.rs`: `Status::cam` filled, `Action::LookAt` handled, key `M` toggles the overview map.
+* D · `src/main.rs`: `mod ui_minimap`.
