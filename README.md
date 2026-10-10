@@ -30,6 +30,12 @@ experienced map makers.
   named), "Make the way back" turns a trip round, departures fill themselves from a first and a
   last time with a break, and a map without a depot gets one so AI buses drive the tours. The
   files of a stock map stay as they are until its timetable is edited.
+* **Traffic and AI** (Map menu or `T`): the road and passenger density over the day as a
+  curve with draggable points, car groups and depots of `ailists.cfg` with vehicles picked
+  from the installation, which groups drive about on their own, parked cars and people. A group
+  the map lacks can be copied from OMSI 2's own maps.
+* Timetable and traffic edits are part of undo / redo; trips have times at each stop, spread
+  by distance or fixed by hand.
 * **Open any map**: OMSI 2's own (saved as a copy into the content folder) and mod maps.
 * **New map** from OMSI 2's own template (`template/NewMap`): it's ready to drive right away.
 * **Test drive**: saves and launches openOMSI on this map.
@@ -55,7 +61,7 @@ experienced map makers.
   or left drag on empty ground (Select tool) moves the map.
 * **Trackpad:** two fingers move the map, pinch zooms, twist turns; Option + two fingers or
   Option + drag turns and tilts.
-* **Keyboard:** `W A S D` / arrows move, `Q / E` turn, `1–7` tools, `M` overview map, `R` turn object, `Del`,
+* **Keyboard:** `W A S D` / arrows move, `Q / E` turn, `1–7` tools, `M` overview map, `L` lines, `T` traffic, `R` turn object, `Del`,
   `F` go to selection, `[ ]` brush size, `G` tile grid, `Ctrl+Z`, `Ctrl+Shift+Z`, `Ctrl+S`,
   `Ctrl+C / X / V / D` copy, cut, paste, duplicate, `Ctrl+A` select all, `F5` test drive.
 
