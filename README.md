@@ -115,7 +115,7 @@ itself. On Berlin-Spandau (329 tiles, 2486 splines, 29 450 objects, Apple M4) a 
 about 13 ms where it took 36 ms: what is out of view or too small to see is left out, a tile's
 splines are drawn as one mesh per material, the objects' instances stay on the GPU and the
 selection only tints a few of them, and an edit builds only its own tile again. The tiles are
-read in parallel (0.45 s → 0.11 s).
+read side by side, several at a time.
 
 ## License
 
