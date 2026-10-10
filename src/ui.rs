@@ -63,6 +63,7 @@ pub struct UiState {
     pub status_help: Option<String>,
     pub welcome_pick: Option<PathBuf>,
     pub minimap: crate::ui_minimap::Minimap,
+    pub check: crate::check::Checker,
 }
 
 impl Default for UiState {
@@ -80,6 +81,7 @@ impl Default for UiState {
             status_help: None,
             welcome_pick: None,
             minimap: crate::ui_minimap::Minimap::new(),
+            check: Default::default(),
         }
     }
 }
@@ -489,6 +491,7 @@ pub fn editor(root: &mut egui::Ui, st: &mut UiState, u: EditorUi, actions: &mut 
     texture_picker(&ctx, st, texture_files, swatches, wanted_swatches, actions);
     controls(&ctx, st);
     about(&ctx, st);
+    st.check.window(&ctx, ed, lib, actions);
     view
 }
 
@@ -575,6 +578,10 @@ fn menu_bar(root: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, can_undo: bo
                 }
                 if menu_item(ui, Some(Icon::Layers), tr("Ground textures…", "Текстуры земли…"), "", true) {
                     ed.set_tool(Tool::Paint);
+                }
+                if menu_item(ui, Some(Icon::CheckCircle), tr("Check map…", "Проверить карту…"), "", true) {
+                    st.check.open = true;
+                    st.check.issues = None;
                 }
                 ui.separator();
                 if menu_item(ui, Some(Icon::Play), tr("Test drive in openOMSI", "Тест-драйв в openOMSI"), "F5", game_found) {

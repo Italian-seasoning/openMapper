@@ -229,6 +229,7 @@ struct Run {
 }
 
 /// An instance waiting to be put in a batch: its bounding radius and what selects it.
+#[derive(Clone)]
 struct Pending {
     inst: Instance,
     radius: f32,
@@ -350,6 +351,12 @@ pub struct Renderer {
     cached_scene: Vec<Instance>,
     scene_buf: Option<wgpu::Buffer>,
     scene_by_sel: HashMap<Sel, Vec<u32>>,
+    /// Each tile's object instances (by what they were made from).
+    tile_groups: HashMap<TileKey, (u64, Groups)>,
+    /// Counts up when models have come in since the tiles last looked.
+    asset_epoch: u64,
+    assets_seen: (usize, usize),
+    assets_seen_at: std::time::Instant,
     tinted: Vec<(Sel, [f32; 4])>,
     /// The splines' and ghosts' instances as last sent.
     dyn_last: Vec<Instance>,
@@ -771,6 +778,10 @@ impl Renderer {
             cached_scene: Vec::new(),
             scene_buf: None,
             scene_by_sel: HashMap::new(),
+            tile_groups: HashMap::new(),
+            asset_epoch: 0,
+            assets_seen: (0, 0),
+            assets_seen_at: std::time::Instant::now(),
             tinted: Vec::new(),
             dyn_last: Vec::new(),
             blank: Instance::new(Mat4::IDENTITY, [0.0; 4]),
@@ -804,6 +815,7 @@ impl Renderer {
         self.ground_key.clear();
         self.ground_bind = None;
         self.scene_key = 0;
+        self.tile_groups.clear();
     }
 
     /// Forget loaded models (files changed on disk).
@@ -813,6 +825,7 @@ impl Renderer {
         self.splines.clear();
         self.chunks.clear();
         self.scene_key = 0;
+        self.tile_groups.clear();
     }
 
     fn globals_for(&self, cam: &Camera, aspect: f32, extras: &FrameExtras, anchor: DVec3) -> Globals {
@@ -928,6 +941,7 @@ impl Renderer {
                     self.splines.clear();
         self.chunks.clear();
                     self.scene_key = 0;
+        self.tile_groups.clear();
                 }
             }
             self.anchor_for = doc.global_rev;
@@ -1042,16 +1056,28 @@ impl Renderer {
         let disp: Vec<(TileKey, Arc<omsi_map::Tile>)> = self.display.iter().map(|(k, v)| (*k, v.1.clone())).collect();
         // objects: instance lists are made again when anything about them changed (not
         // when only the selection or the hover moves: those just tint a few instances)
+        // (while models come in, the tiles look again a few times a second, not each frame)
+        let assets_now = (assets.objects.len(), assets.pending);
+        if assets_now != self.assets_seen && (assets.pending == 0 || self.assets_seen_at.elapsed().as_millis() > 400) {
+            self.assets_seen = assets_now;
+            self.assets_seen_at = std::time::Instant::now();
+            self.asset_epoch += 1;
+        }
         let mut key_parts: Vec<u64> = doc.tiles.values().flat_map(|t| [t.content_rev, t.terrain_rev]).collect();
         key_parts.push(extras.show_technical as u64);
-        key_parts.push(self.models.len() as u64);
-        key_parts.push(assets.objects.len() as u64);
-        key_parts.push(assets.pending as u64);
+        key_parts.push(self.asset_epoch);
         let key = hash_of(&key_parts);
         if key != self.scene_key {
             self.scene_key = key;
-            let mut groups: Groups = HashMap::new();
+            // each tile's instances are kept, and made again only when it changed
+            self.tile_groups.retain(|k, _| doc.tiles.contains_key(k));
             for (k, t) in &disp {
+                let Some(td) = doc.tiles.get(k) else { continue };
+                let tkey = hash_of(&[td.content_rev, td.terrain_rev, extras.show_technical as u64, self.asset_epoch]);
+                if self.tile_groups.get(k).map(|g| g.0 == tkey).unwrap_or(false) {
+                    continue;
+                }
+                let mut groups: Groups = HashMap::new();
                 // what [attachObj] records may hang on: (pose, model) by IDCode
                 let mut parents: HashMap<i64, (Pose, Arc<ObjectModel>)> = HashMap::new();
                 for o in &t.objects {
@@ -1097,6 +1123,14 @@ impl Renderer {
                     let pose = parent.attached(&attach, omsi_geometry::map_rotation(o.rot));
                     push_object(&mut groups, &rel_key, &model, o.extra.first(), pose.matrix_from(anchor), [0.0; 4], Some(Sel::Object(*k, o.id)));
                     parents.insert(o.id, (pose, model));
+                }
+                self.tile_groups.insert(*k, (tkey, groups));
+            }
+            let mut groups: Groups = HashMap::new();
+            for (_, g) in self.tile_groups.values() {
+                for (model, (tree, list)) in g {
+                    let e = groups.entry(model.clone()).or_insert_with(|| (*tree, Vec::new()));
+                    e.1.extend(list.iter().cloned());
                 }
             }
             let (instances, batches, by_sel) = flatten(groups, 0);

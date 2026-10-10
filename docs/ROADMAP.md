@@ -37,3 +37,8 @@ Add a line when you touch a shared file: stream, file, what.
 * D · `src/ui.rs`: `Action::LookAt(DVec2)`, `UiState::minimap`, `Status::cam`, View menu "Overview map", minimap drawn in the central panel; welcome list maps a recent installation map to its content copy.
 * D · `src/app.rs`: `Status::cam` filled, `Action::LookAt` handled, key `M` toggles the overview map.
 * D · `src/main.rs`: `mod ui_minimap`.
+
+* C, `src/main.rs`: `mod check;` and `openmapper --check path/to/global.cfg` (checks a map without a window).
+* C, `src/ui.rs`: `UiState::check` (the map check window), Map > Check map…, the window drawn at the end of `editor()`.
+* C, `src/app.rs`: `OPENMAPPER_PROFILE` timings round the editor, the interface, acquiring the frame and submitting it; the camera turning by itself with `OPENMAPPER_PROFILE=orbit`; screenshot and profiling runs go on when the window gets no redraws; `OPENMAPPER_CHECK=1` opens the map check.
+* C, `src/gpu.rs`: no vsync while profiling.

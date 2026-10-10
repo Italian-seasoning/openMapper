@@ -207,6 +207,11 @@ impl App {
             self.cam.yaw = v[3];
             self.cam.pitch = v[4];
         }
+        // OPENMAPPER_CHECK=1: the map check open from the start
+        if std::env::var_os("OPENMAPPER_CHECK").is_some() {
+            self.ui.check.open = true;
+            self.ui.check.issues = None;
+        }
         // OPENMAPPER_TOOL=logic (checks without a person at the screen)
         if std::env::var("OPENMAPPER_TOOL").map(|t| t == "logic").unwrap_or(false) {
             self.ed.set_tool(Tool::Logic);
@@ -1224,8 +1229,12 @@ impl ApplicationHandler for App {
             g.window.request_redraw();
         }
         // (a hidden window gets no redraws: the screenshot and profiling runs go on anyway)
-        if (self.shot.is_some() || crate::render::profile::enabled()) && self.last.elapsed().as_millis() > 250 {
-            self.frame(el);
+        if self.shot.is_some() || crate::render::profile::enabled() {
+            if self.last.elapsed().as_millis() > 250 {
+                self.frame(el);
+            }
+            // (a timer, so the event loop wakes even when the system lets it sleep)
+            el.set_control_flow(ControlFlow::WaitUntil(Instant::now() + std::time::Duration::from_millis(5)));
         }
     }
 
