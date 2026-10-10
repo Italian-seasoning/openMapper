@@ -806,8 +806,7 @@ impl Editor {
 
     pub fn delete_selected(&mut self) {
         let sels = self.selection();
-        let Some(doc) = self.doc.as_mut() else { return };
-        if sels.is_empty() {
+        if self.doc.is_none() || sels.is_empty() {
             return;
         }
         self.history.begin(match sels[..] {
