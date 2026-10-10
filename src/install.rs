@@ -64,6 +64,10 @@ pub struct Prefs {
     /// The interface's zoom (0: not chosen, as 1).
     #[serde(default)]
     pub ui_scale: f32,
+    /// How the mouse moves the camera: "map" (the default, like map editors and city
+    /// builders) or "fly" (like Unity / Unreal: right button looks round, W A S D fly).
+    #[serde(default)]
+    pub camera: String,
     /// Graphics quality: "low", "medium", "high" (empty: high).
     #[serde(default)]
     pub graphics: String,

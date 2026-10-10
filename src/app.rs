@@ -45,6 +45,8 @@ struct Mouse {
     grab: bool,
     /// Left button with Option / Alt held: turns the camera (for a trackpad).
     alt_orbit: bool,
+    /// The world point a drag of the map holds under the cursor.
+    grab_anchor: Option<DVec3>,
     over_ui: bool,
     moved: bool,
 }
@@ -575,6 +577,10 @@ impl App {
                     g.renderer.roots = roots;
                 }
             }
+            Action::SetCamera(c) => {
+                self.prefs.camera = c;
+                self.prefs.save();
+            }
             Action::SetScale(z) => {
                 self.prefs.ui_scale = z;
                 self.prefs.save();
@@ -691,6 +697,10 @@ impl App {
             Some(KeyCode::KeyU) if !ctrl => self.ed.toggle_ruler(),
             Some(KeyCode::Enter) | Some(KeyCode::NumpadEnter) => actions.push(Action::BuildRoad),
             Some(KeyCode::KeyG) if !ctrl => self.ed.show_grid = !self.ed.show_grid,
+            Some(KeyCode::Home) => {
+                self.cam.yaw = (self.cam.yaw / 360.0).round() * 360.0;
+                self.cam.pitch = 89.0;
+            }
             Some(KeyCode::KeyM) if !ctrl => self.ui.minimap.open = !self.ui.minimap.open,
             Some(KeyCode::KeyL) if !ctrl => self.tt.open = !self.tt.open,
             Some(KeyCode::KeyT) if !ctrl => self.traffic.open = !self.traffic.open,
@@ -719,6 +729,21 @@ impl App {
         self.ed.selected.is_some()
     }
 
+    /// The camera moves like a fly-through (Unity / Unreal) rather than over a map.
+    fn fly_style(&self) -> bool {
+        self.prefs.camera == "fly"
+    }
+
+    /// What a drag of the map holds: the point under the cursor, else where the cursor's ray
+    /// meets the level of the point looked at.
+    fn grab_point(&self) -> Option<DVec3> {
+        // (the cursor's own ray at the cursor point's level: several trackpad moves come
+        // within one frame, before the cursor point is found again)
+        let (o, d) = self.view_ray()?;
+        let z = self.ed.cursor.map(|c| c.z).unwrap_or(self.cam.target.z);
+        (d.z.abs() > 1e-3 && (z - o.z) / d.z > 0.0).then(|| o + d * ((z - o.z) / d.z))
+    }
+
     fn view_ray(&self) -> Option<(DVec3, DVec3)> {
         let v = self.view;
         if !v.is_positive() {
@@ -744,7 +769,7 @@ impl App {
         let typing = self.gfx.as_ref().map(|g| g.egui_ctx.egui_wants_keyboard_input()).unwrap_or(false);
         if !typing && !self.keys.ctrl && (fwd != 0.0 || side != 0.0 || turn != 0.0) {
             // (the right button held: flying, Q down and E up; else over the map, Q E turn)
-            if self.mouse.right {
+            if self.mouse.right && self.fly_style() {
                 self.cam.fly(fwd, side, turn, self.keys.shift, dt);
             } else {
                 self.cam.drive(fwd, side, turn, self.keys.shift, dt);
@@ -1434,13 +1459,22 @@ impl ApplicationHandler for App {
                 }
                 let h = self.view.height().max(1.0);
                 if self.mouse.right {
-                    self.cam.look_pixels(dx, dy);
+                    // (map style: the view turns round the point the button went down on, the
+                    // map following the hand; fly style: the eye looks round)
+                    if self.fly_style() {
+                        self.cam.look_pixels(dx, dy);
+                    } else {
+                        self.cam.orbit_pixels(-dx, dy);
+                    }
                     self.mouse.right_moved += dx.abs() + dy.abs();
                 } else if self.mouse.alt_orbit {
-                    self.cam.orbit_pixels(dx, dy);
+                    self.cam.orbit_pixels(-dx, dy);
                 }
                 if self.mouse.middle || self.mouse.grab {
-                    self.cam.pan_pixels(dx, dy, h);
+                    match (self.mouse.grab_anchor, self.view_ray()) {
+                        (Some(a), Some((o, d))) => self.cam.grab(a, o, d),
+                        _ => self.cam.pan_pixels(dx, dy, h),
+                    }
                 }
             }
             WindowEvent::MouseInput { state, button, .. } => {
@@ -1461,6 +1495,7 @@ impl ApplicationHandler for App {
                             } else if self.ed.tool == Tool::Select && self.ed.hover.is_none() && self.ed.ruler.is_none() {
                                 // drag the map by its empty ground
                                 self.mouse.grab = true;
+                                self.mouse.grab_anchor = self.grab_point();
                                 self.ed.select(None);
                             } else {
                                 self.mouse.left = true;
@@ -1487,12 +1522,18 @@ impl ApplicationHandler for App {
                             self.mouse.left = false;
                             self.mouse.grab = false;
                             self.mouse.alt_orbit = false;
+                            self.mouse.grab_anchor = None;
                         }
                     }
                     MouseButton::Right => {
                         if pressed && !over_ui {
                             self.mouse.right = true;
                             self.mouse.right_moved = 0.0;
+                            if !self.fly_style() {
+                                if let Some(c) = self.grab_point() {
+                                    self.cam.set_pivot(c);
+                                }
+                            }
                         } else if !pressed && self.mouse.right {
                             self.mouse.right = false;
                             if self.mouse.right_moved < 5.0 {
@@ -1500,7 +1541,10 @@ impl ApplicationHandler for App {
                             }
                         }
                     }
-                    MouseButton::Middle => self.mouse.middle = pressed && !over_ui,
+                    MouseButton::Middle => {
+                        self.mouse.middle = pressed && !over_ui;
+                        self.mouse.grab_anchor = if self.mouse.middle { self.grab_point() } else { None };
+                    }
                     _ => {}
                 }
             }
@@ -1510,7 +1554,7 @@ impl ApplicationHandler for App {
                 }
                 let steps = match delta {
                     // (flying: the wheel sets the speed)
-                    MouseScrollDelta::LineDelta(_, y) if self.mouse.right => {
+                    MouseScrollDelta::LineDelta(_, y) if self.mouse.right && self.fly_style() => {
                         self.cam.fly_faster(y);
                         self.ed.toast(format!("{} {:.0} m/s", tr("Flying speed", "Скорость полёта"), self.cam.fly_speed));
                         return;
@@ -1527,7 +1571,16 @@ impl ApplicationHandler for App {
                         } else if self.keys.shift && matches!(self.ed.tool, Tool::Terrain | Tool::Paint) {
                             self.ed.brush_radius = (self.ed.brush_radius * 1.01f32.powf(dy)).clamp(3.0, 150.0);
                         } else {
-                            self.cam.pan_pixels(-dx, -dy, self.view.height().max(1.0));
+                            // (the ground under the cursor moves with the fingers)
+                            let v = self.view;
+                            let (px, py) = (self.mouse.pos.0 - v.min.x, self.mouse.pos.1 - v.min.y);
+                            match self.grab_point() {
+                                Some(a) if v.is_positive() => {
+                                    let (o, d) = self.cam.ray(px + dx, py + dy, v.width(), v.height());
+                                    self.cam.grab(a, o, d);
+                                }
+                                _ => self.cam.pan_pixels(-dx, -dy, v.height().max(1.0)),
+                            }
                         }
                         return;
                     }

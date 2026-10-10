@@ -202,6 +202,24 @@ impl Camera {
         self.snap();
     }
 
+    /// Drag the map by a point of it: `anchor` (world) is put back under the ray of the
+    /// cursor, sliding over the level of the anchor, so the ground grabbed stays exactly
+    /// under the hand however far or tilted the view is.
+    pub fn grab(&mut self, anchor: DVec3, o: DVec3, d: DVec3) {
+        // (a ray nearly level with the anchor's plane would throw the map to the horizon)
+        if d.z.abs() < 0.02 || (anchor.z - o.z) / d.z <= 0.0 {
+            return;
+        }
+        let t = (anchor.z - o.z) / d.z;
+        let hit = o + d * t;
+        let m = anchor - hit;
+        // (far towards the horizon one pixel is kilometres: keep a step sane)
+        let m = DVec2::new(m.x, m.y).clamp_length_max(self.distance * 2.0 + 50.0);
+        self.target.x += m.x;
+        self.target.y += m.y;
+        self.snap();
+    }
+
     /// Orbit round the pivot by screen pixels (Alt + left button, Option + two fingers).
     pub fn orbit_pixels(&mut self, dx: f32, dy: f32) {
         // (yaw is kept unwrapped so the smoothing never spins the long way round)
@@ -260,5 +278,25 @@ mod tests {
         c.fly(1.0, 0.0, 0.0, false, 1.0);
         let d = c.wanted_eye() - eye;
         assert!(d.y > 29.0 && d.x.abs() < 1e-6 && d.z.abs() < 1e-6, "{d:?}");
+    }
+
+    #[test]
+    fn a_grabbed_point_stays_under_the_cursor() {
+        let mut c = Camera::default();
+        c.pitch = 35.0;
+        c.snap();
+        let (w, h) = (1200.0, 800.0);
+        let hit = |c: &Camera, px: f32, py: f32| {
+            let (o, d) = c.ray(px, py, w, h);
+            o + d * (-o.z / d.z)
+        };
+        let anchor = hit(&c, 500.0, 500.0);
+        // the hand moves the cursor in steps, as a drag does
+        for i in 1..=10 {
+            let (o, d) = c.ray(500.0 + i as f32 * 30.0, 500.0 - i as f32 * 12.0, w, h);
+            c.grab(anchor, o, d);
+        }
+        let now = hit(&c, 800.0, 380.0);
+        assert!((now - anchor).truncate().length() < 0.05, "{now:?} vs {anchor:?}");
     }
 }
