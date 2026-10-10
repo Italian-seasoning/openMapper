@@ -1539,6 +1539,7 @@ fn controls(ctx: &egui::Context, st: &mut UiState) {
             (tr("Shift / Ctrl + drag on empty ground", "Shift / Ctrl + тянуть по пустой земле"), tr("select with a box (Shift adds)", "выделить рамкой (Shift — добавить)")),
             ("Ctrl+C / X / V", tr("copy / cut / paste at the cursor", "копировать / вырезать / вставить у курсора")),
             ("Ctrl+D / Ctrl+A", tr("duplicate / select all", "дублировать / выбрать всё")),
+            ("U", tr("ruler: click two points (distance, height, gradient)", "линейка: клик по двум точкам (расстояние, высота, уклон)")),
             ("F", tr("go to the selection", "перейти к выбранному")),
             ("Esc", tr("stop / deselect", "отмена / снять выбор")),
             ("[ ]  Shift+wheel", tr("brush size", "размер кисти")),

@@ -244,15 +244,26 @@ pub fn free_end_at(doc: &Document, p: DVec2) -> Option<(TileKey, i64, bool)> {
 
 /// The road ends an object holds: those lying at its helper points.
 pub fn arms_of(doc: &Document, points: &[(DVec3, f64)]) -> Vec<Arm> {
-    points
-        .iter()
-        .filter_map(|(p, out)| {
-            let (k, id, at_end) = free_end_at(doc, p.truncate())?;
-            let s = doc.spline(k, id)?;
-            let c = omsi_geometry::SplineCurve::from_map(s, tile_origin(k));
-            Some(Arm { pos: if at_end { c.end_point() } else { c.point_at(0.0) }, out: *out })
-        })
-        .collect()
+    let mut out: Vec<(i64, bool, Arm, f64)> = Vec::new();
+    for (p, h) in points {
+        let Some((k, id, at_end)) = free_end_at(doc, p.truncate()) else { continue };
+        let Some(s) = doc.spline(k, id) else { continue };
+        let c = omsi_geometry::SplineCurve::from_map(s, tile_origin(k));
+        // (a helper is written for each way along a road: the one pointing the way the road
+        // leaves the junction is kept)
+        let away = if at_end { c.heading_at(s.length) + 180.0 } else { c.heading_at(0.0) };
+        let miss = (roads::norm_deg(away - h + 180.0) - 180.0).abs();
+        let arm = Arm { pos: if at_end { c.end_point() } else { c.point_at(0.0) }, out: *h };
+        match out.iter_mut().find(|o| o.0 == id && o.1 == at_end) {
+            Some(o) if miss < o.3 => {
+                o.2 = arm;
+                o.3 = miss;
+            }
+            Some(_) => {}
+            None => out.push((id, at_end, arm, miss)),
+        }
+    }
+    out.into_iter().map(|o| o.2).collect()
 }
 
 /// The plans that carry arms along when what holds them is turned by `deg` round `pivot`,

@@ -32,6 +32,18 @@ pub fn snap_controls(ui: &mut egui::Ui, ed: &mut Editor) {
         }
     });
     check(ui, &mut ed.snap_grid, RichText::new(tr("Grid", "Сетка")).small()).on_hover_text(tr("Snap positions to the grid", "Привязка положения к сетке"));
+    ui.separator();
+    // the ruler: what it measures, then its switch (right to left)
+    if let Some((a, b)) = ed.ruler_line() {
+        let d = b - a;
+        let flat = d.truncate().length();
+        let grade = if flat > 0.01 { format!("{:+.1} %", d.z / flat * 100.0) } else { "—".into() };
+        ui.label(RichText::new(format!("{:.2} m · Δh {:+.2} m · {grade}", flat, d.z)).small().monospace().color(Color32::from_rgb(255, 216, 51)));
+    }
+    let mut on = ed.ruler.is_some();
+    if check(ui, &mut on, RichText::new(tr("Ruler", "Линейка")).small()).on_hover_text(tr("Click two points to measure the distance and gradient between them (U) · right-click: off", "Клик по двум точкам — расстояние и уклон между ними (U) · правый клик — выключить")).changed() {
+        ed.toggle_ruler();
+    }
 }
 
 /// The right panel with more than one thing selected.

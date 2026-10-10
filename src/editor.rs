@@ -201,6 +201,8 @@ pub struct Editor {
     carry_preview: Vec<reshape::Plan>,
     /// How objects are put along roads.
     pub row_params: crate::rows::RowParams,
+    /// The ruler, when on: its first point and, once clicked, its second.
+    pub ruler: Option<(Option<DVec3>, Option<DVec3>)>,
     // snapping
     pub snap_grid: bool,
     pub grid_step: f64,
@@ -280,6 +282,7 @@ impl Default for Editor {
             move_delta: DVec2::ZERO,
             carry_preview: Vec::new(),
             row_params: Default::default(),
+            ruler: None,
             snap_grid: false,
             grid_step: 1.0,
             snap_angle: false,
@@ -671,6 +674,14 @@ impl Editor {
         if self.doc.is_none() {
             return;
         }
+        // the ruler takes the clicks while it is on: from one point to the next
+        if let (Some(r), Some(c)) = (&mut self.ruler, self.cursor) {
+            *r = match *r {
+                (Some(a), None) => (Some(a), Some(c)),
+                _ => (Some(c), None),
+            };
+            return;
+        }
         match self.acts_as() {
             Tool::Select => self.select_press(shift),
             Tool::Terrain | Tool::Paint => {
@@ -699,6 +710,10 @@ impl Editor {
     }
 
     pub fn right_click(&mut self) {
+        if self.ruler.is_some() {
+            self.ruler = None;
+            return;
+        }
         match self.acts_as() {
             Tool::Roads if self.road_start.is_some() => {
                 self.road_start = None;
@@ -1724,6 +1739,13 @@ impl Editor {
             _ => {}
         }
         self.selection_extras(&mut x, cam, w);
+        if let Some((a, b)) = self.ruler_line() {
+            let lift = DVec3::Z * 0.5;
+            line(&mut x.overlay, cam, a + lift, b + lift, w, [1.0, 0.85, 0.2, 1.0]);
+            for p in [a, b] {
+                disc(&mut x.overlay, cam, p + lift, w * 2.5, [1.0, 0.85, 0.2, 1.0]);
+            }
+        }
         x
     }
 }
@@ -2324,6 +2346,19 @@ impl Editor {
             }
         }
         self.history.commit();
+    }
+
+    // ------------------------------------------------------------ ruler
+
+    /// The ruler on or off.
+    pub fn toggle_ruler(&mut self) {
+        self.ruler = if self.ruler.is_some() { None } else { Some((None, None)) };
+    }
+
+    /// What the ruler measures: from its first point to its second (or the cursor).
+    pub fn ruler_line(&self) -> Option<(DVec3, DVec3)> {
+        let (Some(a), b) = self.ruler? else { return None };
+        Some((a, b.or(self.cursor)?))
     }
 
     // ------------------------------------------------------------ snapping

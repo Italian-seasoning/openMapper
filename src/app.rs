@@ -517,6 +517,7 @@ impl App {
             Some(KeyCode::Digit6) => self.ed.set_tool(Tool::Paint),
             Some(KeyCode::Digit7) => self.ed.set_tool(Tool::Tiles),
             Some(KeyCode::KeyR) if !ctrl => self.ed.rotate(if shift { -15.0 } else { 15.0 }),
+            Some(KeyCode::KeyU) if !ctrl => self.ed.toggle_ruler(),
             Some(KeyCode::KeyG) if !ctrl => self.ed.show_grid = !self.ed.show_grid,
             Some(KeyCode::KeyM) if !ctrl => self.ui.minimap.open = !self.ui.minimap.open,
             Some(KeyCode::KeyL) if !ctrl => self.tt.open = !self.tt.open,
@@ -1203,10 +1204,10 @@ impl ApplicationHandler for App {
                             if self.keys.alt {
                                 // Option + drag: turn the camera
                                 self.mouse.alt_orbit = true;
-                            } else if self.ed.tool == Tool::Select && self.ed.hover.is_none() && (self.keys.shift || self.keys.ctrl) {
+                            } else if self.ed.tool == Tool::Select && self.ed.hover.is_none() && self.ed.ruler.is_none() && (self.keys.shift || self.keys.ctrl) {
                                 // Shift / Ctrl + drag on empty ground: a selection box
                                 self.ed.select_box = Some([self.mouse.pos, self.mouse.pos]);
-                            } else if self.ed.tool == Tool::Select && self.ed.hover.is_none() {
+                            } else if self.ed.tool == Tool::Select && self.ed.hover.is_none() && self.ed.ruler.is_none() {
                                 // drag the map by its empty ground
                                 self.mouse.grab = true;
                                 self.ed.select(None);
