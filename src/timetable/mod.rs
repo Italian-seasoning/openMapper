@@ -102,6 +102,27 @@ impl Timetable {
         self.reroute.insert(key(name));
     }
 
+    /// Put back as it was (undo, redo) in place of `replaced`: every file of it is written
+    /// again on the next save, and those only `replaced` had are taken away.
+    pub fn restored(&mut self, replaced: &Timetable) {
+        let names = |t: &Timetable| -> BTreeSet<String> {
+            t.lines.iter().map(|l| key(&format!("{}.ttl", l.name))).chain(t.trips.iter().map(|x| key(&format!("{}.ttp", x.name)))).chain(t.tracks.iter().map(|x| key(&format!("{}.ttr", track_name(x))))).collect()
+        };
+        let mine = names(self);
+        self.removed = names(replaced).difference(&mine).cloned().chain(replaced.removed.iter().cloned()).filter(|n| !mine.contains(n)).collect();
+        self.changed = mine;
+        self.stops_changed = true;
+        self.links_changed = true;
+        self.reroute.clear();
+        self.dirty = true;
+    }
+
+    /// The same lines, trips, tours and stops (what the Lines window edits; not the routes
+    /// found for them or what is still to be saved).
+    pub fn same_content(&self, o: &Timetable) -> bool {
+        self.lines == o.lines && self.trips == o.trips && self.stops == o.stops && self.new_depot == o.new_depot
+    }
+
     /// A new line (its name made unique).
     pub fn add_line(&mut self, name: &str) -> String {
         let name = self.unique(name, |t, n| t.lines.iter().any(|l| l.name.eq_ignore_ascii_case(n)));

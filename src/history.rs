@@ -1,5 +1,5 @@
-//! Undo and redo: every edit keeps the tiles it changed (and the global settings) as they
-//! were before it, and stepping back swaps them in again.
+//! Undo and redo: every edit keeps the tiles it changed (and the global settings, the
+//! timetable) as they were before it, and stepping back swaps them in again.
 
 use std::collections::BTreeMap;
 
@@ -13,7 +13,21 @@ struct Step {
     /// Each tile before the edit (None: it did not exist).
     tiles: BTreeMap<TileKey, Option<TileDoc>>,
     global: Option<(GlobalCfg, Vec<TileKey>)>,
+    timetable: Option<crate::timetable::Timetable>,
+    /// When it was made (edits of one kind in quick succession are one step).
+    at: std::time::Instant,
 }
+
+/// What a window's edit changed, as it was before (see `History::push_snapshot`).
+#[derive(Default)]
+pub struct Snapshot {
+    pub global: Option<(GlobalCfg, Vec<TileKey>)>,
+    pub timetable: Option<crate::timetable::Timetable>,
+}
+
+/// Snapshots of one kind closer together than this make one step (typing a name, dragging
+/// a value).
+const MERGE: std::time::Duration = std::time::Duration::from_millis(1500);
 
 #[derive(Default)]
 pub struct History {
@@ -28,7 +42,7 @@ impl History {
     /// Start an edit (ends one still open).
     pub fn begin(&mut self, label: &str) {
         self.commit();
-        self.open = Some(Step { label: label.to_string(), tiles: BTreeMap::new(), global: None });
+        self.open = Some(Step { label: label.to_string(), tiles: BTreeMap::new(), global: None, timetable: None, at: std::time::Instant::now() });
     }
 
     pub fn is_open(&self) -> bool {
@@ -54,7 +68,7 @@ impl History {
     /// Close the open edit (nothing kept: it is dropped).
     pub fn commit(&mut self) {
         if let Some(s) = self.open.take() {
-            if s.tiles.is_empty() && s.global.is_none() {
+            if s.tiles.is_empty() && s.global.is_none() && s.timetable.is_none() {
                 return;
             }
             self.undo.push(s);
@@ -63,6 +77,27 @@ impl History {
             }
             self.redo.clear();
         }
+    }
+
+    /// A finished edit of a window, given as the state before it: one undo step, or part of
+    /// the last one when that was of the same kind a moment ago.
+    pub fn push_snapshot(&mut self, label: &str, before: Snapshot) {
+        self.commit();
+        if let Some(last) = self.undo.last_mut() {
+            let same = last.label == label && last.tiles.is_empty() && last.global.is_some() == before.global.is_some() && last.timetable.is_some() == before.timetable.is_some();
+            if same && self.redo.is_empty() && last.at.elapsed() < MERGE {
+                last.at = std::time::Instant::now();
+                return;
+            }
+        }
+        if before.global.is_none() && before.timetable.is_none() {
+            return;
+        }
+        self.undo.push(Step { label: label.to_string(), tiles: BTreeMap::new(), global: before.global, timetable: before.timetable, at: std::time::Instant::now() });
+        if self.undo.len() > LIMIT {
+            self.undo.remove(0);
+        }
+        self.redo.clear();
     }
 
     pub fn can_undo(&self) -> bool {
@@ -102,7 +137,7 @@ impl History {
 
 /// Put a step's state into the document; returns the state it replaced (the opposite step).
 fn apply(doc: &mut Document, s: Step) -> Step {
-    let mut back = Step { label: s.label.clone(), tiles: BTreeMap::new(), global: None };
+    let mut back = Step { label: s.label.clone(), tiles: BTreeMap::new(), global: None, timetable: None, at: s.at };
     for (k, t) in s.tiles {
         let now = match t {
             Some(mut t) => {
@@ -120,6 +155,11 @@ fn apply(doc: &mut Document, s: Step) -> Step {
     if let Some((g, order)) = s.global {
         back.global = Some((std::mem::replace(&mut doc.global, g), std::mem::replace(&mut doc.order, order)));
         doc.global_rev = next_rev();
+    }
+    if let Some(t) = s.timetable {
+        let old = std::mem::replace(&mut doc.timetable, t);
+        doc.timetable.restored(&old);
+        back.timetable = Some(old);
     }
     doc.global_dirty = true;
     back

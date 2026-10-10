@@ -357,3 +357,38 @@ fn spandau_bus_trips_route() {
     eprintln!("Spandau: {found} of {n} bus trips routed, {close} within 10 % of OMSI's length");
     assert!(found * 10 >= n * 7, "{found} of {n}");
 }
+
+/// Undo and redo take the timetable back and forth; quick edits of one kind are one step,
+/// and the files of what undo took away go on the next save.
+#[test]
+fn timetable_edits_undo_and_redo() {
+    let Some(root) = omsi_root() else { return };
+    let _map = one_map();
+    let roots = crate::install::Roots::new(root.clone());
+    let mut doc = Document::new_map(&roots, "tt-undo", "tt-undo", 1);
+    let mut h = crate::history::History::default();
+    let snap = |doc: &Document| crate::history::Snapshot { timetable: Some(doc.timetable.clone()), ..Default::default() };
+    let before = snap(&doc);
+    doc.timetable.add_line("5");
+    h.push_snapshot("tt", before);
+    // a second edit straight after: the same step
+    let before = snap(&doc);
+    doc.timetable.add_trip("5", "5_A", vec![1, 2]);
+    h.push_snapshot("tt", before);
+    assert!(h.can_undo());
+    h.undo(&mut doc);
+    assert!(doc.timetable.lines.is_empty() && doc.timetable.trips.is_empty());
+    assert!(!h.can_undo());
+    let out = scratch("undo");
+    // what undo took away is not written; a file of it there before is taken away
+    std::fs::write(out.join("TTData").join("5.ttl"), b"x").unwrap();
+    save_to(&mut doc.timetable, &out, &[]).unwrap();
+    assert!(!out.join("TTData").join("5.ttl").exists());
+    h.redo(&mut doc);
+    assert_eq!(doc.timetable.lines.len(), 1);
+    assert_eq!(doc.timetable.trips[0].stations, vec![1, 2]);
+    save_to(&mut doc.timetable, &out, &[]).unwrap();
+    let back = TimetableData::load(&out);
+    assert_eq!((back.lines.len(), back.trips.len()), (1, 1));
+    let _ = std::fs::remove_dir_all(&out);
+}

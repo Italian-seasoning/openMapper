@@ -344,6 +344,8 @@ impl TimetableUi {
             self.select_line(tt, l);
             self.tour = tt.lines.iter().find(|l| Some(&l.name) == self.line.as_ref()).filter(|l| !l.tours.is_empty()).map(|_| 0);
         }
+        // (what it was before this frame's edits, for undo)
+        let before = ed.doc.as_ref().unwrap().timetable.clone();
         self.pick_from_view(ed);
         let mut open = self.open;
         egui::Window::new(icons::labelled(Icon::Bus, tr("Lines and timetable", "Линии и расписание")))
@@ -358,6 +360,9 @@ impl TimetableUi {
         if !open {
             self.picking = false;
             ed.pick_mode = false;
+        }
+        if !before.same_content(&ed.doc.as_ref().unwrap().timetable) {
+            ed.history.push_snapshot(tr("Edit timetable", "Правка расписания"), crate::history::Snapshot { timetable: Some(before), ..Default::default() });
         }
         self.update_shown(ed);
     }
