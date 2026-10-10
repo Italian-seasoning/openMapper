@@ -43,6 +43,18 @@ experienced map makers.
 * **Open any map**: OMSI 2's own (saved as a copy into the content folder) and mod maps.
 * **New map** from OMSI 2's own template (`template/NewMap`): it's ready to drive right away.
 * **Test drive**: saves and launches openOMSI on this map.
+* **Map check** (Map > Check map…): missing objects, roads and textures, road ends lying on
+  one another but not joined, links to splines that are gone, bus stops with no lane near,
+  start points away from a road, IDCodes used twice, a too low NextIDCode, objects off their
+  tile, tiles without a file or ground. Every issue is explained, a click flies there, many
+  are put right with one more click (and can be undone). `openmapper --check path/to/global.cfg`
+  prints the same without a window.
+* **Safe saving**: every file is written under a temporary name and put in place only once
+  all of them are written, so a full disk or a crash leaves the map as it was. The files a save
+  replaces are kept (the last 10 saves, in `<content>/openMapper/backups/<map>`); File > Earlier
+  versions… puts the map back as it was before any of them. The changes are autosaved every
+  3 minutes to `<content>/openMapper/autosave` (never into the map) and offered back at the next
+  start if openMapper ended without saving.
 * **Map picture** (`picture.jpg`, shown where maps are chosen) taken from the view, and the
   view the map opens with (`[mapcam]`), both in the map's properties.
 * **Favourites and recently used** at the top of the catalogue: right-click an entry to star
@@ -98,6 +110,13 @@ cargo run --release
 
 `openmapper path/to/global.cfg` opens a map straight away. `OPENMAPPER_SHOT=out.png` saves
 a picture of the window and exits (for checks without a person at the screen).
+`OPENMAPPER_PROFILE=1` logs how long reading the map and each part of a frame take (every few
+seconds, with the draw calls), `OPENMAPPER_PROFILE=orbit` also turns the camera round by
+itself. On Berlin-Spandau (329 tiles, 2486 splines, 29 450 objects, Apple M4) a frame takes
+about 13 ms where it took 36 ms: what is out of view or too small to see is left out, a tile's
+splines are drawn as one mesh per material, the objects' instances stay on the GPU and the
+selection only tints a few of them, and an edit builds only its own tile again. The tiles are
+read side by side, several at a time.
 
 ## License
 

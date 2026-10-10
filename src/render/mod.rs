@@ -18,6 +18,11 @@ use crate::doc::{tile_origin, tile_size, Document, Sel, TileKey};
 use crate::place::Pose;
 use crate::gpu::{Gpu, DEPTH, SAMPLES};
 
+mod cull;
+pub mod profile;
+
+use cull::{Aabb, Frustum};
+
 const COMMON: &str = include_str!("common.wgsl");
 
 #[repr(C)]
@@ -66,6 +71,10 @@ pub struct Instance {
     tint: [f32; 4],
     params: [f32; 4],
 }
+
+/// Tints of what is selected and what is under the mouse.
+const SELECTED: [f32; 4] = [0.96, 0.50, 0.19, 0.45];
+const HOVERED: [f32; 4] = [1.0, 1.0, 1.0, 0.2];
 
 /// Surface codes of the depth pull (see mesh.wgsl).
 const SURF_SPLINE: f32 = 1.0;
@@ -171,6 +180,10 @@ struct GpuTile {
     /// The ground's walls down from the rims of its holes to the roads' edges (vertices,
     /// indices, index count; openOMSI's `terrain_hole_walls`).
     walls: Option<(wgpu::Buffer, wgpu::Buffer, u32)>,
+    /// What its uniform holds now.
+    uniform_now: [f32; 8],
+    /// Its box relative to the render anchor.
+    bbox: Aabb,
 }
 
 /// Texels a side of a tile's ground cut (openOMSI's surface raster).
@@ -204,6 +217,48 @@ struct Batch {
     tree: bool,
     first: u32,
     count: u32,
+    /// The batch's instances by place on the map (a tile's worth each), so what lies out of
+    /// view or too far off for its size can be left out.
+    runs: Vec<Run>,
+}
+
+struct Run {
+    first: u32,
+    count: u32,
+    bounds: Aabb,
+    /// The largest of its instances (m).
+    radius: f32,
+}
+
+/// An instance waiting to be put in a batch: its bounding radius and what selects it.
+#[derive(Clone)]
+struct Pending {
+    inst: Instance,
+    radius: f32,
+    sel: Option<Sel>,
+}
+
+type Groups = HashMap<String, (bool, Vec<Pending>)>;
+
+impl Batch {
+    /// One batch that is always drawn whole (the ghosts).
+    fn whole(model: String, tree: bool, first: u32, count: u32) -> Batch {
+        Batch { model, tree, first, count, runs: vec![Run { first, count, bounds: Aabb::ALL, radius: 1e6 }] }
+    }
+
+    /// The instance ranges worth drawing (neighbouring runs drawn as one).
+    fn visible(&self, f: &Frustum, eye: Vec3, out: &mut Vec<std::ops::Range<u32>>) {
+        out.clear();
+        for r in &self.runs {
+            if !f.sees(&r.bounds) || !cull::near_enough(&r.bounds, r.radius, eye) {
+                continue;
+            }
+            match out.last_mut() {
+                Some(last) if last.end == r.first => last.end = r.first + r.count,
+                _ => out.push(r.first..r.first + r.count),
+            }
+        }
+    }
 }
 
 struct SplineEntry {
@@ -213,6 +268,8 @@ struct SplineEntry {
     /// ground cut; whether it cuts the ground, and whether it carries traffic.
     cpu: Option<Arc<MeshData>>,
     bounds: [f32; 4],
+    /// Its box relative to the render anchor.
+    bbox: Aabb,
     cuts: bool,
     drivable: bool,
     /// Not seen in the game (an AI path, `[onlyeditor]`): casts no shadow.
@@ -224,6 +281,20 @@ struct SplineEntry {
     /// The same with the heights of the road's edge (world), for the ground's walls.
     rims: Vec<Vec<DVec3>>,
     materials: Vec<Material>,
+    instance: u32,
+    /// Drawn as part of its tile's chunk (then it has no mesh of its own on the GPU).
+    in_chunk: bool,
+}
+
+/// A tile's splines in one mesh, a draw per material: thousands of splines become a few
+/// hundred draws. The selected and hovered spline (tinted) and the technical ones (no
+/// shadow) stay out and are drawn on their own.
+struct Chunk {
+    /// The splines in it (IDCode, revision hash).
+    members: HashMap<i64, u64>,
+    mesh: Option<GpuMesh>,
+    materials: Vec<Material>,
+    bbox: Aabb,
     instance: u32,
 }
 
@@ -277,7 +348,24 @@ pub struct Renderer {
     tree_mesh: GpuMesh,
     marker: GpuMesh,
     instances: Option<wgpu::Buffer>,
+    /// The map's object instances (their own buffer: sent when the map changes, a few of
+    /// them when the selection's tint does).
     cached_scene: Vec<Instance>,
+    scene_buf: Option<wgpu::Buffer>,
+    scene_by_sel: HashMap<Sel, Vec<u32>>,
+    /// Each tile's object instances (by what they were made from).
+    tile_groups: HashMap<TileKey, (u64, Groups)>,
+    /// Counts up when models have come in since the tiles last looked.
+    asset_epoch: u64,
+    assets_seen: (usize, usize),
+    assets_seen_at: std::time::Instant,
+    tinted: Vec<(Sel, [f32; 4])>,
+    /// The splines' and ghosts' instances as last sent.
+    dyn_last: Vec<Instance>,
+    blank: Instance,
+    /// Materials may be missing (new things to draw, textures still coming).
+    warm_pending: bool,
+    warm_seen_pending: usize,
     /// The point everything is drawn relative to (a tile corner of the map).
     anchor: DVec3,
     anchor_for: u64,
@@ -289,11 +377,14 @@ pub struct Renderer {
     ghost_batches: Vec<Batch>,
     scene_key: u64,
     splines: HashMap<(TileKey, i64), SplineEntry>,
+    chunks: HashMap<TileKey, Chunk>,
     ghost_spline_meshes: Vec<(u64, Option<GpuMesh>, Vec<Material>, u32)>,
     /// Thumbnails of the catalogue by asset path (lower case); None: tried, nothing to show.
     pub thumbs: HashMap<String, Option<Thumb>>,
     thumb_depth: wgpu::TextureView,
     pub time: f32,
+    /// Timings for `OPENMAPPER_PROFILE`.
+    pub profile: profile::Profile,
 }
 
 fn shader(device: &wgpu::Device, name: &str, src: &str) -> wgpu::ShaderModule {
@@ -687,6 +778,17 @@ impl Renderer {
             marker,
             instances: None,
             cached_scene: Vec::new(),
+            scene_buf: None,
+            scene_by_sel: HashMap::new(),
+            tile_groups: HashMap::new(),
+            asset_epoch: 0,
+            assets_seen: (0, 0),
+            assets_seen_at: std::time::Instant::now(),
+            tinted: Vec::new(),
+            dyn_last: Vec::new(),
+            blank: Instance::new(Mat4::IDENTITY, [0.0; 4]),
+            warm_pending: true,
+            warm_seen_pending: 0,
             anchor: DVec3::ZERO,
             anchor_for: 0,
             display: HashMap::new(),
@@ -695,22 +797,27 @@ impl Renderer {
             ghost_batches: Vec::new(),
             scene_key: 0,
             splines: HashMap::new(),
+            chunks: HashMap::new(),
             ghost_spline_meshes: Vec::new(),
             thumbs: HashMap::new(),
             thumb_depth,
             time: 0.0,
+            profile: Default::default(),
         }
     }
 
     /// Forget the map (another one is opened).
     pub fn reset_map(&mut self) {
+        self.profile.opened = Some(std::time::Instant::now());
         self.tiles.clear();
         self.splines.clear();
+        self.chunks.clear();
         self.display.clear();
         self.anchor = DVec3::ZERO;
         self.ground_key.clear();
         self.ground_bind = None;
         self.scene_key = 0;
+        self.tile_groups.clear();
     }
 
     /// Forget loaded models (files changed on disk).
@@ -718,7 +825,9 @@ impl Renderer {
         self.models.clear();
         self.materials.clear();
         self.splines.clear();
+        self.chunks.clear();
         self.scene_key = 0;
+        self.tile_groups.clear();
     }
 
     fn globals_for(&self, cam: &Camera, aspect: f32, extras: &FrameExtras, anchor: DVec3) -> Globals {
@@ -832,13 +941,17 @@ impl Renderer {
                     self.anchor = DVec3::new(o.x, o.y, 0.0);
                     self.tiles.clear();
                     self.splines.clear();
+        self.chunks.clear();
                     self.scene_key = 0;
+        self.tile_groups.clear();
                 }
             }
             self.anchor_for = doc.global_rev;
         }
         let anchor = self.anchor;
+        let t_sync = std::time::Instant::now();
         self.sync_ground(gpu, doc, assets);
+        let mut t = std::time::Instant::now();
         // tiles
         self.tiles.retain(|k, _| doc.tiles.contains_key(k));
         let keys: Vec<TileKey> = doc.tiles.keys().copied().collect();
@@ -890,15 +1003,24 @@ impl Renderer {
                         wgpu::BindGroupEntry { binding: 4, resource: wgpu::BindingResource::TextureView(&cv) },
                     ],
                 });
-                self.tiles.insert(k, GpuTile { vb, uniform, masks, cut, cut_key: 0, bind, terrain_rev: 0, mask_rev: 0, walls: None });
+                self.tiles.insert(k, GpuTile { vb, uniform, masks, cut, cut_key: 0, bind, terrain_rev: 0, mask_rev: 0, walls: None, uniform_now: [f32::NAN; 8], bbox: Aabb::ALL });
             }
             let gt = self.tiles.get_mut(&k).unwrap();
             let o = tile_origin(k) - anchor.truncate();
             let selected = extras.highlight_tile == Some(k);
-            queue.write_buffer(&gt.uniform, 0, bytemuck::bytes_of(&TileUniform { origin: [o.x as f32, o.y as f32, 0.0, 0.0], flags: [if selected { 1.0 } else { 0.0 }, 0.0, 0.0, 0.0] }));
+            let u = TileUniform { origin: [o.x as f32, o.y as f32, 0.0, 0.0], flags: [if selected { 1.0 } else { 0.0 }, 0.0, 0.0, 0.0] };
+            let now: [f32; 8] = bytemuck::cast(u);
+            if bytemuck::cast::<_, [u32; 8]>(now) != bytemuck::cast::<_, [u32; 8]>(gt.uniform_now) {
+                gt.uniform_now = now;
+                queue.write_buffer(&gt.uniform, 0, bytemuck::bytes_of(&u));
+            }
             if gt.terrain_rev != t.terrain_rev {
                 gt.terrain_rev = t.terrain_rev;
-                queue.write_buffer(&gt.vb, 0, bytemuck::cast_slice(&terrain_vertices(doc, k)));
+                let verts = terrain_vertices(doc, k);
+                let (zl, zh) = verts.iter().fold((f32::MAX, f32::MIN), |(l, h), v| (l.min(v.pos[2]), h.max(v.pos[2])));
+                let ts = tile_size() as f32;
+                gt.bbox = Aabb { lo: Vec3::new(o.x as f32, o.y as f32, zl - 10.0), hi: Vec3::new(o.x as f32 + ts, o.y as f32 + ts, zh + 10.0) };
+                queue.write_buffer(&gt.vb, 0, bytemuck::cast_slice(&verts));
             }
             if gt.mask_rev != t.mask_rev {
                 gt.mask_rev = t.mask_rev;
@@ -924,6 +1046,8 @@ impl Renderer {
             }
         }
 
+        self.profile.add("sync.tiles", profile::ms(t));
+        t = std::time::Instant::now();
         // every tile as the game shows it (chrono patches laid over)
         self.display.retain(|k, _| doc.tiles.contains_key(k));
         for (k, t) in &doc.tiles {
@@ -932,29 +1056,30 @@ impl Renderer {
             }
         }
         let disp: Vec<(TileKey, Arc<omsi_map::Tile>)> = self.display.iter().map(|(k, v)| (*k, v.1.clone())).collect();
-        // objects: instance lists are made again when anything about them changed
+        // objects: instance lists are made again when anything about them changed (not
+        // when only the selection or the hover moves: those just tint a few instances)
+        // (while models come in, the tiles look again a few times a second, not each frame)
+        let assets_now = (assets.objects.len(), assets.pending);
+        if assets_now != self.assets_seen && (assets.pending == 0 || self.assets_seen_at.elapsed().as_millis() > 400) {
+            self.assets_seen = assets_now;
+            self.assets_seen_at = std::time::Instant::now();
+            self.asset_epoch += 1;
+        }
         let mut key_parts: Vec<u64> = doc.tiles.values().flat_map(|t| [t.content_rev, t.terrain_rev]).collect();
-        key_parts.push(hash_of(&format!("{:?}{:?}{}", extras.selected, extras.hover, extras.show_technical)));
-        // (in any order: the set's own order changes from frame to frame)
-        key_parts.push(extras.selected_more.iter().map(hash_of).fold(extras.selected_more.len() as u64, |a, h| a ^ h));
-        key_parts.push(self.models.len() as u64);
-        key_parts.push(assets.objects.len() as u64);
-        key_parts.push(assets.pending as u64);
+        key_parts.push(extras.show_technical as u64);
+        key_parts.push(self.asset_epoch);
         let key = hash_of(&key_parts);
         if key != self.scene_key {
             self.scene_key = key;
-            let mut instances: Vec<Instance> = Vec::new();
-            let mut groups: HashMap<String, (bool, Vec<Instance>)> = HashMap::new();
+            // each tile's instances are kept, and made again only when it changed
+            self.tile_groups.retain(|k, _| doc.tiles.contains_key(k));
             for (k, t) in &disp {
-                let tint_of = |sel: Option<Sel>| {
-                    if extras.selected == sel || sel.map(|s| extras.selected_more.contains(&s)).unwrap_or(false) {
-                        [0.96, 0.50, 0.19, 0.45]
-                    } else if extras.hover == sel {
-                        [1.0, 1.0, 1.0, 0.18]
-                    } else {
-                        [0.0; 4]
-                    }
-                };
+                let Some(td) = doc.tiles.get(k) else { continue };
+                let tkey = hash_of(&[td.content_rev, td.terrain_rev, extras.show_technical as u64, self.asset_epoch]);
+                if self.tile_groups.get(k).map(|g| g.0 == tkey).unwrap_or(false) {
+                    continue;
+                }
+                let mut groups: Groups = HashMap::new();
                 // what [attachObj] records may hang on: (pose, model) by IDCode
                 let mut parents: HashMap<i64, (Pose, Arc<ObjectModel>)> = HashMap::new();
                 for o in &t.objects {
@@ -971,7 +1096,7 @@ impl Renderer {
                     let edge = tile_size() + 1e-3;
                     let inside = (-1e-3..=edge).contains(&o.pos[0]) && (-1e-3..=edge).contains(&o.pos[1]);
                     if model.abs_height || inside {
-                        push_object(&mut groups, &rel_key, &model, o.extra.first(), pose.matrix_from(anchor), tint_of(Some(Sel::Object(*k, o.id))));
+                        push_object(&mut groups, &rel_key, &model, o.extra.first(), pose.matrix_from(anchor), [0.0; 4], Some(Sel::Object(*k, o.id)));
                     }
                     parents.insert(o.id, (pose, model));
                 }
@@ -987,7 +1112,7 @@ impl Renderer {
                         if a.repeater.is_none() && Some(ro.index) == first {
                             parents.entry(a.id).or_insert((ro.pose, model.clone()));
                         }
-                        push_object(&mut groups, &rel_key, &model, a.strings.first(), ro.pose.matrix_from(anchor), [0.0; 4]);
+                        push_object(&mut groups, &rel_key, &model, a.strings.first(), ro.pose.matrix_from(anchor), [0.0; 4], None);
                     }
                 }
                 // objects hanging on others (signs on posts, lamps on masts)
@@ -998,41 +1123,90 @@ impl Renderer {
                     self.model(device, &rel_key, &model);
                     let attach = pmodel.attachments.get(o.attach_index).copied().unwrap_or(Mat4::IDENTITY);
                     let pose = parent.attached(&attach, omsi_geometry::map_rotation(o.rot));
-                    push_object(&mut groups, &rel_key, &model, o.extra.first(), pose.matrix_from(anchor), tint_of(Some(Sel::Object(*k, o.id))));
+                    push_object(&mut groups, &rel_key, &model, o.extra.first(), pose.matrix_from(anchor), [0.0; 4], Some(Sel::Object(*k, o.id)));
                     parents.insert(o.id, (pose, model));
                 }
+                self.tile_groups.insert(*k, (tkey, groups));
             }
-            self.batches.clear();
-            let mut sorted: Vec<_> = groups.into_iter().collect();
-            sorted.sort_by(|a, b| a.0.cmp(&b.0));
-            for (model, (tree, list)) in sorted {
-                self.batches.push(Batch { model, tree, first: instances.len() as u32, count: list.len() as u32 });
-                instances.extend(list);
+            let mut groups: Groups = HashMap::new();
+            for (_, g) in self.tile_groups.values() {
+                for (model, (tree, list)) in g {
+                    let e = groups.entry(model.clone()).or_insert_with(|| (*tree, Vec::new()));
+                    e.1.extend(list.iter().cloned());
+                }
             }
+            let (instances, batches, by_sel) = flatten(groups, 0);
+            self.batches = batches;
+            self.scene_by_sel = by_sel;
             self.cached_scene = instances;
+            self.tinted.clear();
+            self.warm_pending = true;
+            // (one instance at least: a buffer may not be empty)
+            let bytes: &[u8] = if self.cached_scene.is_empty() { bytemuck::bytes_of(&self.blank) } else { bytemuck::cast_slice(&self.cached_scene) };
+            let fits = self.scene_buf.as_ref().map(|b| b.size() >= bytes.len() as u64).unwrap_or(false);
+            if !fits {
+                self.scene_buf = Some(device.create_buffer(&wgpu::BufferDescriptor { label: Some("scene instances"), size: (bytes.len() as u64 * 5 / 4).max(4096), usage: wgpu::BufferUsages::VERTEX | wgpu::BufferUsages::COPY_DST, mapped_at_creation: false }));
+            }
+            queue.write_buffer(self.scene_buf.as_ref().unwrap(), 0, bytes);
+        }
+        // the selected and the hovered object: their instances tinted in place
+        let mut want: Vec<(Sel, [f32; 4])> = Vec::new();
+        if let Some(s) = extras.selected {
+            want.push((s, SELECTED));
+        }
+        let mut more: Vec<Sel> = extras.selected_more.iter().copied().filter(|s| Some(*s) != extras.selected).collect();
+        more.sort_by_key(|s| format!("{s:?}"));
+        want.extend(more.into_iter().map(|s| (s, SELECTED)));
+        if let Some(s) = extras.hover.filter(|h| Some(*h) != extras.selected && !extras.selected_more.contains(h)) {
+            want.push((s, HOVERED));
+        }
+        if want != self.tinted {
+            let old = std::mem::take(&mut self.tinted);
+            let size = std::mem::size_of::<Instance>() as u64;
+            let set = |sel: Sel, tint: [f32; 4], scene: &mut Vec<Instance>| {
+                for &i in self.scene_by_sel.get(&sel).into_iter().flatten() {
+                    let inst = &mut scene[i as usize];
+                    inst.tint = tint;
+                    if let Some(b) = &self.scene_buf {
+                        queue.write_buffer(b, i as u64 * size, bytemuck::bytes_of(inst));
+                    }
+                }
+            };
+            for (s, _) in &old {
+                set(*s, [0.0; 4], &mut self.cached_scene);
+            }
+            for (s, t) in &want {
+                set(*s, *t, &mut self.cached_scene);
+            }
+            self.tinted = want;
         }
         let _ = cam;
+        self.profile.add("sync.objects", profile::ms(t));
+        t = std::time::Instant::now();
 
         // splines
         let mut alive: Vec<(TileKey, i64)> = Vec::new();
+        let mut complete = assets.pending == 0;
         let start = std::time::Instant::now();
         let mut spline_instances: Vec<Instance> = Vec::new();
         for (k, t) in &disp {
             let org = tile_origin(*k);
+            let corner = Vec3::new((org.x - anchor.x) as f32, (org.y - anchor.y) as f32, 0.0);
             for s in t.splines.iter().filter(|s| !s.deleted && !s.file.trim().is_empty()) {
                 alive.push((*k, s.id));
                 let h = spline_hash(s, org);
                 let sel = Some(Sel::Spline(*k, s.id));
                 let tint = if extras.selected == sel || extras.selected_more.contains(&Sel::Spline(*k, s.id)) {
-                    [0.96, 0.50, 0.19, 0.45]
+                    SELECTED
                 } else if extras.hover == sel {
-                    [1.0, 1.0, 1.0, 0.2]
+                    HOVERED
                 } else {
                     [0.0; 4]
                 };
                 let entry_ok = self.splines.get(&(*k, s.id)).map(|e| e.hash == h).unwrap_or(false);
                 if !entry_ok {
                     if start.elapsed().as_millis() > 25 {
+                        complete = false;
                         continue;
                     }
                     let Some(model) = assets.spline(&s.file) else { continue };
@@ -1055,14 +1229,18 @@ impl Renderer {
                         Some(m) => omsi_geometry::spline_hole_outlines(def, &SplineCurve::from_map(s, org), s.mirror, m).into_iter().filter(|r| !omsi_geometry::outline_crosses_itself(r)).collect(),
                         None => Vec::new(),
                     };
-                    let bounds = mesh.as_ref().map(|m| m.positions.iter().fold([f32::MAX, f32::MAX, f32::MIN, f32::MIN], |b, p| [b[0].min(p.x), b[1].min(p.y), b[2].max(p.x), b[3].max(p.y)])).unwrap_or([0.0; 4]);
-                    let gpu = mesh.as_ref().map(|m| upload_mesh(device, m));
-                    self.splines.insert((*k, s.id), SplineEntry { hash: h, mesh: gpu, cpu: mesh.map(Arc::new), bounds, cuts, drivable, technical: def.only_editor || !def.profiles.iter().any(|p| p.points.len() >= 2), hidden: false, outlines, rims, materials: model.materials.clone(), instance: 0 });
+                    let mut bbox = Aabb::EMPTY;
+                    for p in mesh.iter().flat_map(|m| m.positions.iter()) {
+                        bbox.add_sphere(*p + corner, 0.0);
+                    }
+                    let bounds = if bbox.is_empty() { [0.0; 4] } else { [bbox.lo.x - corner.x, bbox.lo.y - corner.y, bbox.hi.x - corner.x, bbox.hi.y - corner.y] };
+                    self.splines.insert((*k, s.id), SplineEntry { hash: h, mesh: None, cpu: mesh.map(Arc::new), bounds, bbox, cuts, drivable, technical: def.only_editor || !def.profiles.iter().any(|p| p.points.len() >= 2), hidden: false, outlines, rims, materials: model.materials.clone(), instance: 0, in_chunk: false });
+                    self.warm_pending = true;
                 }
                 if let Some(e) = self.splines.get_mut(&(*k, s.id)) {
                     e.hidden = e.technical && !extras.show_technical;
                     e.instance = spline_instances.len() as u32;
-                    spline_instances.push(Instance::new(Mat4::from_translation(Vec3::new((org.x - anchor.x) as f32, (org.y - anchor.y) as f32, 0.0)), tint).surface(SURF_SPLINE));
+                    spline_instances.push(Instance::new(Mat4::from_translation(corner), tint).surface(SURF_SPLINE));
                 }
             }
         }
@@ -1070,21 +1248,32 @@ impl Renderer {
             let set: std::collections::HashSet<_> = alive.into_iter().collect();
             self.splines.retain(|k, _| set.contains(k));
         }
+        self.sync_chunks(device, &disp, extras, &mut spline_instances, anchor);
 
-        self.cut_ground(gpu, doc, assets, &disp);
+        self.profile.add("sync.splines", profile::ms(t));
+        t = std::time::Instant::now();
+        complete &= self.cut_ground(gpu, doc, assets, &disp);
+        if complete {
+            self.profile.ready();
+        }
+        self.profile.add("sync.cut", profile::ms(t));
+        t = std::time::Instant::now();
 
         // ghosts: objects about to be placed and roads being drawn
-        let mut ghost_groups: HashMap<String, (bool, Vec<Instance>)> = HashMap::new();
+        let mut ghost_groups: Groups = HashMap::new();
         for g in &extras.ghosts {
             let key = g.rel.to_lowercase();
             if let Some(model) = assets.object(&g.rel) {
                 self.model(device, &key, &model);
-                push_object(&mut ghost_groups, &key, &model, None, object_matrix(g.world - anchor, g.rot), g.tint);
+                push_object(&mut ghost_groups, &key, &model, None, object_matrix(g.world - anchor, g.rot), g.tint, None);
             } else if assets.object_failed(&g.rel) {
-                ghost_groups.entry("\u{0}marker".into()).or_default().1.push(Instance::new(object_matrix(g.world - anchor, g.rot), g.tint));
+                ghost_groups.entry("\u{0}marker".into()).or_default().1.push(Pending { inst: Instance::new(object_matrix(g.world - anchor, g.rot), g.tint), radius: 2.0, sel: None });
             }
         }
-        self.ghost_spline_meshes.retain(|_| false);
+        if !self.ghost_spline_meshes.is_empty() || !extras.ghost_splines.is_empty() || !ghost_groups.is_empty() {
+            self.warm_pending = true;
+        }
+        self.ghost_spline_meshes.clear();
         let mut ghost_spline_instances = Vec::new();
         for (rel, s, tint) in &extras.ghost_splines {
             let Some(model) = assets.spline(rel) else { continue };
@@ -1096,32 +1285,30 @@ impl Renderer {
             self.ghost_spline_meshes.push((0, mesh.map(|m| upload_mesh(device, &m)), model.materials.clone(), 0));
         }
 
-        // one instance buffer: scene objects, splines, ghosts
-        let mut all = self.cached_scene.clone();
-        let spline_base = all.len() as u32;
-        all.extend(spline_instances);
-        for e in self.splines.values_mut() {
-            e.instance += spline_base;
-        }
+        // what changes from frame to frame (splines, ghosts) in a buffer of its own: the
+        // map's objects stay where they are
+        let mut all = spline_instances;
         let ghost_spline_base = all.len() as u32;
         for (i, g) in self.ghost_spline_meshes.iter_mut().enumerate() {
             g.3 = ghost_spline_base + i as u32;
         }
         all.extend(ghost_spline_instances);
-        self.ghost_batches.clear();
-        for (model, (tree, list)) in ghost_groups {
-            self.ghost_batches.push(Batch { model, tree, first: all.len() as u32, count: list.len() as u32 });
-            all.extend(list);
-        }
+        let (ghosts, ghost_batches, _) = flatten(ghost_groups, all.len() as u32);
+        self.ghost_batches = ghost_batches.into_iter().map(|b| Batch::whole(b.model, b.tree, b.first, b.count)).collect();
+        all.extend(ghosts);
         if all.is_empty() {
-            all.push(Instance::new(Mat4::IDENTITY, [0.0; 4]));
+            all.push(self.blank);
         }
-        let bytes: &[u8] = bytemuck::cast_slice(&all);
-        let fits = self.instances.as_ref().map(|b| b.size() >= bytes.len() as u64).unwrap_or(false);
-        if !fits {
-            self.instances = Some(device.create_buffer(&wgpu::BufferDescriptor { label: Some("instances"), size: (bytes.len() as u64 * 3 / 2).max(4096), usage: wgpu::BufferUsages::VERTEX | wgpu::BufferUsages::COPY_DST, mapped_at_creation: false }));
+        // (unchanged since the last frame: nothing to send)
+        if bytemuck::cast_slice::<Instance, u8>(&all) != bytemuck::cast_slice::<Instance, u8>(&self.dyn_last) {
+            let bytes: &[u8] = bytemuck::cast_slice(&all);
+            let fits = self.instances.as_ref().map(|b| b.size() >= bytes.len() as u64).unwrap_or(false);
+            if !fits {
+                self.instances = Some(device.create_buffer(&wgpu::BufferDescriptor { label: Some("instances"), size: (bytes.len() as u64 * 3 / 2).max(4096), usage: wgpu::BufferUsages::VERTEX | wgpu::BufferUsages::COPY_DST, mapped_at_creation: false }));
+            }
+            queue.write_buffer(self.instances.as_ref().unwrap(), 0, bytes);
+            self.dyn_last = all;
         }
-        queue.write_buffer(self.instances.as_ref().unwrap(), 0, bytes);
 
         // overlay
         if extras.overlay.is_empty() {
@@ -1131,12 +1318,71 @@ impl Renderer {
             let b = device.create_buffer_init(&wgpu::util::BufferInitDescriptor { label: Some("overlay"), contents: bytemuck::cast_slice(&verts), usage: wgpu::BufferUsages::VERTEX });
             self.overlay_buf = Some((b, extras.overlay.len() as u32));
         }
-        // materials of everything that will be drawn
-        self.warm_materials(device, queue, assets);
+        self.profile.add("sync.upload", profile::ms(t));
+        t = std::time::Instant::now();
+        // materials of everything that will be drawn (when something new is there to draw)
+        if self.warm_pending || assets.pending != self.warm_seen_pending {
+            self.warm_seen_pending = assets.pending;
+            self.warm_pending = self.warm_materials(device, queue, assets);
+        }
+        self.profile.add("sync.materials", profile::ms(t));
+        self.profile.add("sync", profile::ms(t_sync));
     }
 
     /// The ground cut of the tiles whose roads, surfaces or ground changed (a few per frame).
-    fn cut_ground(&mut self, gpu: &Gpu, doc: &Document, assets: &mut Assets, disp: &[(TileKey, Arc<omsi_map::Tile>)]) {
+    /// Bring the tiles' spline chunks up to date: one whose splines changed is made again at
+    /// once (an old one would show the old roads); new ones and ones with splines to add a
+    /// few per frame, those splines drawn on their own until then.
+    fn sync_chunks(&mut self, device: &wgpu::Device, disp: &[(TileKey, Arc<omsi_map::Tile>)], extras: &FrameExtras, instances: &mut Vec<Instance>, anchor: DVec3) {
+        let start = std::time::Instant::now();
+        let keep: std::collections::HashSet<TileKey> = disp.iter().map(|d| d.0).collect();
+        self.chunks.retain(|k, _| keep.contains(k));
+        for (k, t) in disp {
+            let org = tile_origin(*k);
+            // what belongs in it
+            let mut members: HashMap<i64, u64> = HashMap::new();
+            for s in t.splines.iter().filter(|s| !s.deleted) {
+                let Some(e) = self.splines.get(&(*k, s.id)) else { continue };
+                let sel = Some(Sel::Spline(*k, s.id));
+                if e.cpu.is_none() || e.technical || extras.selected == sel || extras.hover == sel || extras.selected_more.contains(&Sel::Spline(*k, s.id)) {
+                    continue;
+                }
+                members.insert(s.id, e.hash);
+            }
+            // (stale: a spline in it changed or went; else only new ones came, which can wait)
+            let (stale, grown) = match self.chunks.get(k) {
+                Some(c) => (c.members.iter().any(|(id, h)| members.get(id) != Some(h)), members.len() > c.members.len()),
+                None => (false, !members.is_empty()),
+            };
+            let build = stale || (grown && start.elapsed().as_millis() < 8);
+            if build {
+                let mut ids: Vec<i64> = members.keys().copied().collect();
+                ids.sort_unstable();
+                let parts: Vec<(&MeshData, &[Material], Aabb)> = ids.iter().filter_map(|id| self.splines.get(&(*k, *id))).filter_map(|e| e.cpu.as_deref().map(|m| (m, e.materials.as_slice(), e.bbox))).collect();
+                let (mesh, materials, bbox) = merge_meshes(&parts);
+                let mesh = (!mesh.indices.is_empty()).then(|| upload_mesh(device, &mesh));
+                self.chunks.insert(*k, Chunk { members, mesh, materials, bbox, instance: 0 });
+            }
+            let chunk = self.chunks.get_mut(k);
+            let members = chunk.as_ref().map(|c| &c.members);
+            for s in t.splines.iter().filter(|s| !s.deleted) {
+                let Some(e) = self.splines.get_mut(&(*k, s.id)) else { continue };
+                e.in_chunk = members.map(|m| m.get(&s.id) == Some(&e.hash)).unwrap_or(false);
+                if e.in_chunk {
+                    e.mesh = None;
+                } else if e.mesh.is_none() {
+                    e.mesh = e.cpu.as_deref().map(|m| upload_mesh(device, m));
+                }
+            }
+            if let Some(c) = chunk {
+                c.instance = instances.len() as u32;
+                instances.push(Instance::new(Mat4::from_translation(Vec3::new((org.x - anchor.x) as f32, (org.y - anchor.y) as f32, 0.0)), [0.0; 4]).surface(SURF_SPLINE));
+            }
+        }
+    }
+
+    /// Whether every tile's cut is up to date.
+    fn cut_ground(&mut self, gpu: &Gpu, doc: &Document, assets: &mut Assets, disp: &[(TileKey, Arc<omsi_map::Tile>)]) -> bool {
         let start = std::time::Instant::now();
         let ts = tile_size();
         let by_key: HashMap<TileKey, &Arc<omsi_map::Tile>> = disp.iter().map(|(k, t)| (*k, t)).collect();
@@ -1165,7 +1411,7 @@ impl Renderer {
                 continue;
             }
             if start.elapsed().as_millis() > 12 {
-                break;
+                return false;
             }
             let (x0, y0) = (key.0 as f64 * ts, key.1 as f64 * ts);
             let (x1, y1) = (x0 + ts, y0 + ts);
@@ -1244,9 +1490,11 @@ impl Renderer {
                 wgpu::Extent3d { width: CUT as u32, height: CUT as u32, depth_or_array_layers: 1 },
             );
         }
+        true
     }
 
-    fn warm_materials(&mut self, device: &wgpu::Device, queue: &wgpu::Queue, assets: &mut Assets) {
+    /// Whether some are still missing.
+    fn warm_materials(&mut self, device: &wgpu::Device, queue: &wgpu::Queue, assets: &mut Assets) -> bool {
         let mut mats: Vec<Material> = Vec::new();
         mats.push(marker_material());
         for b in self.batches.iter().chain(self.ghost_batches.iter()) {
@@ -1262,17 +1510,25 @@ impl Renderer {
         for e in self.splines.values() {
             mats.extend(e.materials.iter().cloned());
         }
+        for c in self.chunks.values() {
+            mats.extend(c.materials.iter().cloned());
+        }
         for g in &self.ghost_spline_meshes {
             mats.extend(g.2.iter().cloned());
         }
         let start = std::time::Instant::now();
+        let mut seen = std::collections::HashSet::new();
+        let mut missing = false;
         for m in mats {
             // (uploading textures is spread over frames)
             if start.elapsed().as_millis() > 20 {
-                break;
+                return true;
             }
-            let _ = self.material(device, queue, assets, &m);
+            if seen.insert(mat_key(&m)) {
+                missing |= self.material(device, queue, assets, &m).is_none();
+            }
         }
+        missing && assets.pending > 0
     }
 
     fn sync_ground(&mut self, gpu: &Gpu, doc: &Document, assets: &mut Assets) {
@@ -1353,10 +1609,8 @@ impl Renderer {
         let _ = &self.zero_mask;
     }
 
-    /// Draw the map into the frame.
-    /// `vp`: the 3D view's rectangle in pixels (x, y, width, height).
     /// The sun's shadow map: the roads and objects round the camera seen from the sun.
-    fn draw_shadows(&self, gpu: &Gpu, encoder: &mut wgpu::CommandEncoder, gl: &Globals) {
+    fn draw_shadows(&self, gpu: &Gpu, encoder: &mut wgpu::CommandEncoder, gl: &Globals, eye: Vec3) -> u32 {
         let mut sg = *gl;
         sg.view_proj = gl.light_vp;
         // (the eye far off towards the sun: the roads' pull towards it is then a slight bias)
@@ -1371,51 +1625,59 @@ impl Renderer {
             occlusion_query_set: None,
             multiview_mask: None,
         });
-        let Some(inst) = &self.instances else { return };
+        let (Some(dynamic), Some(scene)) = (&self.instances, &self.scene_buf) else { return 0 };
+        let f = Frustum::new(Mat4::from_cols_array_2d(&gl.light_vp) * Mat4::from_translation(-Vec4::from(gl.origin).truncate()));
+        let mut calls = 0;
         pass.set_pipeline(&self.shadow_pipeline);
         pass.set_bind_group(0, &self.shadow_globals_bind, &[]);
-        pass.set_vertex_buffer(1, inst.slice(..));
-        let draw = |pass: &mut wgpu::RenderPass, mesh: &GpuMesh, mats: &[Material], range: std::ops::Range<u32>| {
-            pass.set_vertex_buffer(0, mesh.vb.slice(..));
-            pass.set_index_buffer(mesh.ib.slice(..), wgpu::IndexFormat::Uint32);
-            for &(first, count, slot) in &mesh.ranges {
-                let Some(m) = mats.get(slot as usize) else { continue };
-                if m.alpha == Alpha::Blend {
-                    continue;
-                }
-                let Some(bg) = self.materials.get(&mat_key(m)) else { continue };
-                pass.set_bind_group(1, bg, &[]);
-                pass.draw_indexed(first..first + count, 0, range.clone());
-            }
-        };
-        for e in self.splines.values().filter(|e| !e.technical) {
-            if let Some(mesh) = &e.mesh {
-                draw(&mut pass, mesh, &e.materials, e.instance..e.instance + 1);
+        pass.set_vertex_buffer(1, dynamic.slice(..));
+        for c in self.chunks.values().filter(|c| f.sees(&c.bbox)) {
+            if let Some(mesh) = &c.mesh {
+                calls += draw_mesh(&mut pass, &self.materials, mesh, &c.materials, Some(false), &[c.instance..c.instance + 1]);
             }
         }
+        for e in self.splines.values().filter(|e| !e.technical && !e.in_chunk && f.sees(&e.bbox)) {
+            if let Some(mesh) = &e.mesh {
+                calls += draw_mesh(&mut pass, &self.materials, mesh, &e.materials, Some(false), &[e.instance..e.instance + 1]);
+            }
+        }
+        pass.set_vertex_buffer(1, scene.slice(..));
+        let mut ranges = Vec::new();
         for b in &self.batches {
-            let range = b.first..b.first + b.count;
             if b.model == "\u{0}marker" {
+                continue;
+            }
+            b.visible(&f, eye, &mut ranges);
+            if ranges.is_empty() {
                 continue;
             }
             if b.tree {
                 let tex = b.model.strip_prefix("tree:").map(PathBuf::from);
                 let m = Material { texture: tex, color: [1.0; 4], alpha: Alpha::Test };
-                draw(&mut pass, &self.tree_mesh, std::slice::from_ref(&m), range);
+                calls += draw_mesh(&mut pass, &self.materials, &self.tree_mesh, std::slice::from_ref(&m), Some(false), &ranges);
                 continue;
             }
             let Some(Some(model)) = self.models.get(&b.model).filter(|m| m.as_ref().map(|m| !m.technical).unwrap_or(false)) else { continue };
             for (mesh, mats) in &model.parts {
-                draw(&mut pass, mesh, mats, range.clone());
+                calls += draw_mesh(&mut pass, &self.materials, mesh, mats, Some(false), &ranges);
             }
         }
+        calls
     }
 
+    /// Draw the map into the frame.
+    /// `vp`: the 3D view's rectangle in pixels (x, y, width, height).
     pub fn draw(&mut self, gpu: &Gpu, encoder: &mut wgpu::CommandEncoder, target: &wgpu::TextureView, cam: &Camera, extras: &FrameExtras, vp: [f32; 4]) {
         let aspect = vp[2] / vp[3].max(1.0);
         let gl = self.globals_for(cam, aspect, extras, self.anchor);
         gpu.queue.write_buffer(&self.globals, 0, bytemuck::bytes_of(&gl));
-        self.draw_shadows(gpu, encoder, &gl);
+        let t = std::time::Instant::now();
+        let origin = Vec4::from(gl.origin).truncate();
+        let eye = origin + Vec4::from(gl.eye).truncate();
+        let shadow_calls = self.draw_shadows(gpu, encoder, &gl, eye);
+        self.profile.count("shadow draws", shadow_calls);
+        let f = Frustum::new(Mat4::from_cols_array_2d(&gl.view_proj) * Mat4::from_translation(-origin));
+        let mut calls = 0u32;
         let mut pass = encoder.begin_render_pass(&wgpu::RenderPassDescriptor {
             label: Some("scene"),
             color_attachments: &[Some(wgpu::RenderPassColorAttachment {
@@ -1440,51 +1702,63 @@ impl Renderer {
             pass.set_pipeline(&self.terrain_pipeline);
             pass.set_bind_group(2, ground, &[]);
             pass.set_index_buffer(self.terrain_index.slice(..), wgpu::IndexFormat::Uint32);
-            for t in self.tiles.values() {
+            for t in self.tiles.values().filter(|t| f.sees(&t.bbox)) {
                 pass.set_bind_group(1, &t.bind, &[]);
                 pass.set_vertex_buffer(0, t.vb.slice(..));
                 pass.draw_indexed(0..self.terrain_index_count, 0, 0..1);
+                calls += 1;
             }
-            for t in self.tiles.values() {
+            for t in self.tiles.values().filter(|t| f.sees(&t.bbox)) {
                 if let Some((vb, ib, n)) = &t.walls {
                     pass.set_bind_group(1, &t.bind, &[]);
                     pass.set_vertex_buffer(0, vb.slice(..));
                     pass.set_index_buffer(ib.slice(..), wgpu::IndexFormat::Uint32);
                     pass.draw_indexed(0..*n, 0, 0..1);
+                    calls += 1;
                 }
             }
         }
-        let Some(inst) = &self.instances else { return };
+        let (Some(dynamic), Some(scene)) = (&self.instances, &self.scene_buf) else { return };
+        // what is in view, the same for both layers
+        let mut splines: Vec<(&GpuMesh, &Vec<Material>, u32)> = self.chunks.values().filter(|c| f.sees(&c.bbox)).filter_map(|c| c.mesh.as_ref().map(|m| (m, &c.materials, c.instance))).collect();
+        splines.extend(self.splines.values().filter(|e| !e.hidden && !e.in_chunk && f.sees(&e.bbox)).filter_map(|e| e.mesh.as_ref().map(|m| (m, &e.materials, e.instance))));
+        let mut visible: Vec<(&Batch, Vec<std::ops::Range<u32>>, bool)> = Vec::new();
+        for b in &self.batches {
+            let mut ranges = Vec::new();
+            b.visible(&f, eye, &mut ranges);
+            if !ranges.is_empty() {
+                visible.push((b, ranges, false));
+            }
+        }
+        for b in &self.ghost_batches {
+            visible.push((b, vec![b.first..b.first + b.count], true));
+        }
+        let mut instances_drawn = 0;
+        let mut spline_calls = 0;
+        for (_, r, _) in &visible {
+            instances_drawn += r.iter().map(|r| r.len() as u32).sum::<u32>();
+        }
         for blend in [false, true] {
             // splines
             pass.set_pipeline(if blend { &self.spline_blend } else { &self.spline_opaque });
-            pass.set_vertex_buffer(1, inst.slice(..));
-            let entries: Vec<(&GpuMesh, &Vec<Material>, u32)> = self.splines.values().filter(|e| !e.hidden).filter_map(|e| e.mesh.as_ref().map(|m| (m, &e.materials, e.instance))).collect();
-            for (mesh, mats, inst_i) in entries {
-                pass.set_vertex_buffer(0, mesh.vb.slice(..));
-                pass.set_index_buffer(mesh.ib.slice(..), wgpu::IndexFormat::Uint32);
-                for &(first, count, slot) in &mesh.ranges {
-                    let Some(m) = mats.get(slot as usize) else { continue };
-                    if (m.alpha == Alpha::Blend) != blend {
-                        continue;
-                    }
-                    let Some(bg) = self.materials.get(&mat_key(m)) else { continue };
-                    pass.set_bind_group(1, bg, &[]);
-                    pass.draw_indexed(first..first + count, 0, inst_i..inst_i + 1);
-                }
+            pass.set_vertex_buffer(1, dynamic.slice(..));
+            for &(mesh, mats, i) in &splines {
+                let n = draw_mesh(&mut pass, &self.materials, mesh, mats, Some(blend), &[i..i + 1]);
+                calls += n;
+                spline_calls += n;
             }
             // objects
             pass.set_pipeline(if blend { &self.mesh_blend } else { &self.mesh_opaque });
-            for b in self.batches.iter().chain(self.ghost_batches.iter()) {
-                let range = b.first..b.first + b.count;
+            let mut bound_dynamic = true;
+            for (b, ranges, ghost) in &visible {
+                if *ghost != bound_dynamic {
+                    pass.set_vertex_buffer(1, if *ghost { dynamic.slice(..) } else { scene.slice(..) });
+                    bound_dynamic = *ghost;
+                }
                 if b.model == "\u{0}marker" {
                     if !blend {
-                        if let Some(bg) = self.materials.get(&mat_key(&marker_material())) {
-                            pass.set_bind_group(1, bg, &[]);
-                            pass.set_vertex_buffer(0, self.marker.vb.slice(..));
-                            pass.set_index_buffer(self.marker.ib.slice(..), wgpu::IndexFormat::Uint32);
-                            pass.draw_indexed(0..self.marker.ranges[0].1, 0, range.clone());
-                        }
+                        let m = marker_material();
+                        calls += draw_mesh(&mut pass, &self.materials, &self.marker, std::slice::from_ref(&m), None, ranges);
                     }
                     continue;
                 }
@@ -1493,28 +1767,13 @@ impl Renderer {
                     if !blend {
                         let tex = b.model.strip_prefix("tree:").map(PathBuf::from);
                         let m = Material { texture: tex, color: [1.0; 4], alpha: Alpha::Test };
-                        if let Some(bg) = self.materials.get(&mat_key(&m)) {
-                            pass.set_bind_group(1, bg, &[]);
-                            pass.set_vertex_buffer(0, self.tree_mesh.vb.slice(..));
-                            pass.set_index_buffer(self.tree_mesh.ib.slice(..), wgpu::IndexFormat::Uint32);
-                            pass.draw_indexed(0..self.tree_mesh.ranges[0].1, 0, range.clone());
-                        }
+                        calls += draw_mesh(&mut pass, &self.materials, &self.tree_mesh, std::slice::from_ref(&m), None, ranges);
                     }
                     continue;
                 }
                 let Some(Some(model)) = self.models.get(&b.model) else { continue };
                 for (mesh, mats) in &model.parts {
-                    pass.set_vertex_buffer(0, mesh.vb.slice(..));
-                    pass.set_index_buffer(mesh.ib.slice(..), wgpu::IndexFormat::Uint32);
-                    for &(first, count, slot) in &mesh.ranges {
-                        let Some(m) = mats.get(slot as usize) else { continue };
-                        if (m.alpha == Alpha::Blend) != blend {
-                            continue;
-                        }
-                        let Some(bg) = self.materials.get(&mat_key(m)) else { continue };
-                        pass.set_bind_group(1, bg, &[]);
-                        pass.draw_indexed(first..first + count, 0, range.clone());
-                    }
+                    calls += draw_mesh(&mut pass, &self.materials, mesh, mats, Some(blend), ranges);
                 }
             }
             if !blend {
@@ -1525,17 +1784,10 @@ impl Renderer {
         // the road being drawn, see-through over the ground
         if !self.ghost_spline_meshes.is_empty() {
             pass.set_pipeline(&self.ghost_pipeline);
-            pass.set_vertex_buffer(1, inst.slice(..));
+            pass.set_vertex_buffer(1, dynamic.slice(..));
             for g in &self.ghost_spline_meshes {
                 let Some(mesh) = &g.1 else { continue };
-                pass.set_vertex_buffer(0, mesh.vb.slice(..));
-                pass.set_index_buffer(mesh.ib.slice(..), wgpu::IndexFormat::Uint32);
-                for &(first, count, slot) in &mesh.ranges {
-                    let Some(m) = g.2.get(slot as usize) else { continue };
-                    let Some(bg) = self.materials.get(&mat_key(m)) else { continue };
-                    pass.set_bind_group(1, bg, &[]);
-                    pass.draw_indexed(first..first + count, 0, g.3..g.3 + 1);
-                }
+                calls += draw_mesh(&mut pass, &self.materials, mesh, &g.2, None, &[g.3..g.3 + 1]);
             }
         }
         if let Some((b, n)) = &self.overlay_buf {
@@ -1543,6 +1795,11 @@ impl Renderer {
             pass.set_vertex_buffer(0, b.slice(..));
             pass.draw(0..*n, 0..1);
         }
+        drop(pass);
+        self.profile.count("draws", calls);
+        self.profile.count("instances drawn", instances_drawn);
+        self.profile.count("spline draws", spline_calls);
+        self.profile.add("draw", profile::ms(t));
     }
 
     /// Render up to `budget` pictures for the catalogue (objects whose model and textures
@@ -1673,6 +1930,68 @@ impl Renderer {
     }
 }
 
+/// Draw a mesh's parts whose material is ready (`blend`: only the blended ones, or only the
+/// others; None: all), once for each range of instances. Returns the draw calls made.
+fn draw_mesh(pass: &mut wgpu::RenderPass, materials: &HashMap<MatKey, wgpu::BindGroup>, mesh: &GpuMesh, mats: &[Material], blend: Option<bool>, ranges: &[std::ops::Range<u32>]) -> u32 {
+    let mut calls = 0;
+    let mut bound = false;
+    for &(first, count, slot) in &mesh.ranges {
+        let Some(m) = mats.get(slot as usize) else { continue };
+        if blend.map(|b| (m.alpha == Alpha::Blend) != b).unwrap_or(false) {
+            continue;
+        }
+        let Some(bg) = materials.get(&mat_key(m)) else { continue };
+        if !bound {
+            pass.set_vertex_buffer(0, mesh.vb.slice(..));
+            pass.set_index_buffer(mesh.ib.slice(..), wgpu::IndexFormat::Uint32);
+            bound = true;
+        }
+        pass.set_bind_group(1, bg, &[]);
+        for r in ranges {
+            pass.draw_indexed(first..first + count, 0, r.clone());
+            calls += 1;
+        }
+    }
+    calls
+}
+
+/// Meshes (in the same frame) as one, its triangles grouped by material.
+fn merge_meshes(parts: &[(&MeshData, &[Material], Aabb)]) -> (MeshData, Vec<Material>, Aabb) {
+    let mut out = MeshData::default();
+    let mut materials: Vec<Material> = Vec::new();
+    let mut keys: Vec<MatKey> = Vec::new();
+    let mut by_mat: Vec<Vec<u32>> = Vec::new();
+    let mut bbox = Aabb::EMPTY;
+    for (m, mats, b) in parts {
+        bbox.lo = bbox.lo.min(b.lo);
+        bbox.hi = bbox.hi.max(b.hi);
+        let base = out.positions.len() as u32;
+        out.positions.extend_from_slice(&m.positions);
+        out.normals.extend((0..m.positions.len()).map(|i| m.normals.get(i).copied().unwrap_or(Vec3::Z)));
+        out.uvs.extend((0..m.positions.len()).map(|i| m.uvs.get(i).copied().unwrap_or(glam::Vec2::ZERO)));
+        for &(first, count, slot) in &m.ranges {
+            let Some(mat) = mats.get(slot as usize) else { continue };
+            let key = mat_key(mat);
+            let i = match keys.iter().position(|k| *k == key) {
+                Some(i) => i,
+                None => {
+                    keys.push(key);
+                    materials.push(mat.clone());
+                    by_mat.push(Vec::new());
+                    keys.len() - 1
+                }
+            };
+            let Some(tris) = m.indices.get(first as usize..(first + count) as usize) else { continue };
+            by_mat[i].extend(tris.iter().map(|v| v + base));
+        }
+    }
+    for (slot, tris) in by_mat.into_iter().enumerate() {
+        out.ranges.push((out.indices.len() as u32, tris.len() as u32, slot as u32));
+        out.indices.extend(tris);
+    }
+    (out, materials, bbox)
+}
+
 fn mat_key(m: &Material) -> MatKey {
     MatKey {
         texture: m.texture.clone(),
@@ -1711,28 +2030,78 @@ fn marker_mesh() -> MeshData {
     m
 }
 
-fn push_object(groups: &mut HashMap<String, (bool, Vec<Instance>)>, key: &str, model: &Arc<ObjectModel>, label: Option<&String>, m: Mat4, tint: [f32; 4]) {
+fn push_object(groups: &mut Groups, key: &str, model: &Arc<ObjectModel>, label: Option<&String>, m: Mat4, tint: [f32; 4], sel: Option<Sel>) {
+    if !m.is_finite() {
+        return;
+    }
+    let scale = m.x_axis.truncate().length().max(m.y_axis.truncate().length()).max(m.z_axis.truncate().length());
     if let Some((dirs, tex, h, r)) = &model.tree {
         // a tree's texture may be named by its first label
         let name = label.filter(|l| !l.trim().is_empty()).unwrap_or(tex);
         let refs: Vec<&std::path::Path> = dirs.iter().map(PathBuf::as_path).collect();
         if let Some(p) = omsi_texture::find_texture(name, &refs) {
-            let scale = Mat4::from_scale(Vec3::new(h * r, h * r, *h));
-            groups.entry(format!("tree:{}", p.display())).or_insert_with(|| (true, Vec::new())).1.push(Instance::new(m * scale, tint));
+            let card = Mat4::from_scale(Vec3::new(h * r, h * r, *h));
+            let radius = h * r.max(1.0) * scale;
+            groups.entry(format!("tree:{}", p.display())).or_insert_with(|| (true, Vec::new())).1.push(Pending { inst: Instance::new(m * card, tint), radius, sel });
         }
     }
     if model.parts.is_empty() {
         if model.tree.is_none() {
-            groups.entry("\u{0}marker".into()).or_default().1.push(Instance::new(m, tint));
+            groups.entry("\u{0}marker".into()).or_default().1.push(Pending { inst: Instance::new(m, tint), radius: 2.0 * scale, sel });
         }
         return;
     }
     let inst = Instance::new(m, tint);
-    groups.entry(key.to_string()).or_default().1.push(if model.surface { inst.surface(SURF_OBJECT) } else { inst });
+    let radius = (model.centre().length() + model.radius()) * scale;
+    groups.entry(key.to_string()).or_default().1.push(Pending { inst: if model.surface { inst.surface(SURF_OBJECT) } else { inst }, radius, sel });
+}
+
+/// Batches (one per model, in a fixed order) from the instances gathered, numbered from
+/// `base`; each batch's instances sorted by tile into runs. Also where each selectable
+/// object's instances went.
+fn flatten(groups: Groups, base: u32) -> (Vec<Instance>, Vec<Batch>, HashMap<Sel, Vec<u32>>) {
+    let mut instances = Vec::new();
+    let mut batches = Vec::new();
+    let mut by_sel: HashMap<Sel, Vec<u32>> = HashMap::new();
+    let mut sorted: Vec<_> = groups.into_iter().collect();
+    sorted.sort_by(|a, b| a.0.cmp(&b.0));
+    let ts = tile_size() as f32;
+    let cell = |p: &Pending| ((p.inst.m[3][0] / ts).floor() as i32, (p.inst.m[3][1] / ts).floor() as i32);
+    for (model, (tree, mut list)) in sorted {
+        list.sort_by_key(cell);
+        let first = base + instances.len() as u32;
+        let mut runs: Vec<Run> = Vec::new();
+        let mut last = None;
+        for p in list {
+            let i = base + instances.len() as u32;
+            let c = cell(&p);
+            if last != Some(c) {
+                runs.push(Run { first: i, count: 0, bounds: Aabb::EMPTY, radius: 0.0 });
+                last = Some(c);
+            }
+            let r = runs.last_mut().unwrap();
+            r.count += 1;
+            r.radius = r.radius.max(p.radius);
+            r.bounds.add_sphere(Vec3::new(p.inst.m[3][0], p.inst.m[3][1], p.inst.m[3][2]), p.radius);
+            if let Some(s) = p.sel {
+                by_sel.entry(s).or_default().push(i);
+            }
+            instances.push(p.inst);
+        }
+        let count = base + instances.len() as u32 - first;
+        batches.push(Batch { model, tree, first, count, runs });
+    }
+    (instances, batches, by_sel)
 }
 
 /// A spline's mesh, positions relative to `origin` (a tile's corner).
 pub fn build_spline(model: &SplineModel, s: &MapSpline, origin: DVec2) -> Option<MeshData> {
+    // (a broken record - no length, one of thousands of kilometres, a number that is no
+    // number - is left out rather than built)
+    let sane = |v: f64| v.is_finite() && v.abs() < 1e7;
+    if !(s.length > 0.0 && s.length < 20_000.0) || !s.pos.iter().chain([&s.heading, &s.radius, &s.grad_start, &s.grad_end]).all(|v| sane(*v)) {
+        return None;
+    }
     let curve = SplineCurve::from_map(s, origin);
     let m = omsi_geometry::build_spline_mesh(&model.def, &curve, s.mirror, DVec3::new(origin.x, origin.y, 0.0));
     (!m.is_empty()).then_some(m)

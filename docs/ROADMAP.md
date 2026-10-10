@@ -55,6 +55,13 @@ Add a line when you touch a shared file: stream, file, what.
 * A · `src/main.rs`: `mod ui_timetable`.
 * A · `src/ui.rs`: `Action::Timetable`; Map menu "Lines and timetable…" (key `L`).
 * A · `src/app.rs`: `App::tt` (the Lines window): drawn after `ui::editor`, its route laid into the frame's extras after `Editor::extras`, `before_save` in `App::save`, `Action::Timetable` and key `L` toggle it; `OPENMAPPER_TIMETABLE=<line>[:tours]` opens it on a line, and with `OPENMAPPER_DEMO` adds stops and a line to the demo map (checks without a person at the screen); `Action::Force` also drops the timetable's changes.
+* C · `src/main.rs`: `mod check;` and `openmapper --check path/to/global.cfg` (checks a map without a window).
+* C · `src/ui.rs`: `UiState::check` (the map check window), Map > Check map…, the window drawn at the end of `editor()`.
+* C · `src/app.rs`: `OPENMAPPER_PROFILE` timings round the editor, the interface, acquiring the frame and submitting it; the camera turning by itself with `OPENMAPPER_PROFILE=orbit`; screenshot and profiling runs go on when the window gets no redraws; `OPENMAPPER_CHECK=1` opens the map check.
+* C · `src/gpu.rs`: no vsync while profiling.
+* C · `src/ui.rs`: `Action::RestoreBackup(PathBuf)`, File > Earlier versions… (`UiState::versions_open`, the window is `doc::safe::versions_window`).
+* C · `src/app.rs`: autosave (`App::autosave`, ticked after the frame's actions, not while the left button is down or an edit is open), the offer at start (`App::recover`, `doc::autosave::offer`), the autosave cleared on save, close, opening or making another map and a normal quit; `Action::RestoreBackup` handled (guarded like Open); the save error says the changes are still there.
+* C · `src/timetable/tests.rs`: `one_map()` takes the crate-wide `doc::one_map()` lock (the grid is global: Spandau's tests and the round trips of other maps must not run at once).
 * A · `src/editor.rs`: `Editor::{pick_mode, picked}`: with pick mode on, a left click with the Select tool only notes what is under the cursor and where (the Lines window picks stops so: nothing is selected or dragged).
 * A · `src/history.rs`: `Step::{timetable, at}`, `Snapshot` and `History::push_snapshot` (a window's edit given as the state before it; edits of one kind within 1.5 s are one step); `apply` swaps the timetable too (`Timetable::restored` has every file written again).
 * A · `src/main.rs`: `mod traffic`, `mod ui_traffic`.
