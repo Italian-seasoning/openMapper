@@ -92,6 +92,9 @@ pub struct Lane {
     /// Against the way the path lets traffic go: OMSI's buses drive a route so where it
     /// must (helper paths laid the wrong way), the route search only as a last resort.
     pub against: bool,
+    /// A spline's path (an object's paths that start together branch off, they are no lanes
+    /// side by side).
+    pub spline: bool,
 }
 
 impl Lane {
@@ -150,7 +153,7 @@ pub struct Network {
     pub missing_files: usize,
 }
 
-fn lane_of(key: PathKey, mut pts: Vec<DVec3>, file_length: f64, internal: usize, reversed: bool, against: bool) -> Lane {
+fn lane_of(key: PathKey, mut pts: Vec<DVec3>, file_length: f64, internal: usize, (reversed, against): (bool, bool), spline: bool) -> Lane {
     if reversed {
         pts.reverse();
     }
@@ -162,7 +165,7 @@ fn lane_of(key: PathKey, mut pts: Vec<DVec3>, file_length: f64, internal: usize,
         }
         along.push(acc);
     }
-    Lane { key, pts, along, file_length, internal, next: Vec::new(), side: Vec::new(), against }
+    Lane { key, pts, along, file_length, internal, next: Vec::new(), side: Vec::new(), against, spline }
 }
 
 impl Network {
@@ -190,7 +193,7 @@ impl Network {
                             (1, true) => 0,
                             (d, _) => d,
                         };
-                        net.add(PathKey { tile: *k, id: s.id, path: pi }, pts, s.length, internal + pi, dir);
+                        net.add(PathKey { tile: *k, id: s.id, path: pi }, pts, s.length, internal + pi, dir, true);
                     }
                 }
                 internal += info.paths.len();
@@ -235,7 +238,7 @@ impl Network {
                             pose.pos + pose.rot.transform_vector3(Vec3::new(q.x as f32, q.y as f32, q.z as f32)).as_dvec3()
                         })
                         .collect();
-                    net.add(PathKey { tile: *k, id: o.id, path: pi }, pts, c.length, internal + pi, p.direction);
+                    net.add(PathKey { tile: *k, id: o.id, path: pi }, pts, c.length, internal + pi, p.direction, false);
                 }
                 internal += info.paths.len();
             }
@@ -244,7 +247,7 @@ impl Network {
         net
     }
 
-    fn add(&mut self, key: PathKey, pts: Vec<DVec3>, file_length: f64, internal: usize, direction: i32) {
+    fn add(&mut self, key: PathKey, pts: Vec<DVec3>, file_length: f64, internal: usize, direction: i32, spline: bool) {
         if pts.len() < 2 {
             return;
         }
@@ -256,7 +259,7 @@ impl Network {
         };
         for &(rev, against) in ways {
             self.by_key.entry(key).or_default().push(self.lanes.len());
-            self.lanes.push(lane_of(key, pts.clone(), file_length, internal, rev, against));
+            self.lanes.push(lane_of(key, pts.clone(), file_length, internal, (rev, against), spline));
         }
     }
 
@@ -294,7 +297,7 @@ impl Network {
         // lane changes: the other paths of the same spline that start beside it, going the
         // same way
         let mut by_spline: HashMap<(TileKey, i64), Vec<usize>> = HashMap::new();
-        for (i, l) in self.lanes.iter().enumerate() {
+        for (i, l) in self.lanes.iter().enumerate().filter(|(_, l)| l.spline) {
             by_spline.entry((l.key.tile, l.key.id)).or_default().push(i);
         }
         let mut side = vec![Vec::new(); self.lanes.len()];

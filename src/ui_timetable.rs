@@ -141,6 +141,50 @@ impl TimetableUi {
         self.tours_tab = tab == "tours";
     }
 
+    /// The demo map's line (`OPENMAPPER_DEMO` with `OPENMAPPER_TIMETABLE`): stops on both
+    /// sides of its roads, a line there and back through the junction, a tour.
+    pub fn demo(&mut self, ed: &mut Editor, roots: Option<&Roots>) {
+        let Some(doc) = ed.doc.as_mut() else { return };
+        let mut ids = Vec::new();
+        for (x, y, name) in [(-150.0, 13.0, "Westend"), (-60.0, 13.0, "Mitte"), (87.0, 150.0, "Nordpark"), (73.0, 140.0, "Nordpark"), (-60.0, 27.0, "Mitte"), (-170.0, 27.0, "Westend")] {
+            let id = doc.new_id();
+            let k = crate::doc::tile_of(glam::DVec2::new(x, y));
+            let org = crate::doc::tile_origin(k);
+            let Some(t) = doc.tiles.get_mut(&k) else { continue };
+            t.tile.objects.push(omsi_map::MapObject {
+                file: "Sceneryobjects\\Generic\\bus_stop.sco".into(),
+                id,
+                pos: [x - org.x, y - org.y, 0.0],
+                flag: 7,
+                extra: vec![name.into(), "0".into(), "0".into(), "10".into()],
+                ..Default::default()
+            });
+            t.touch_content();
+            ids.push(id);
+        }
+        let tt = &mut doc.timetable;
+        let line = tt.add_line("1");
+        let there = tt.add_trip(&line, "1_Westend-Nordpark", ids[..3].to_vec());
+        let back = tt.add_trip(&line, "1_Nordpark-Westend", ids[3..].to_vec());
+        for (t, term) in [(&there, "Nordpark"), (&back, "Westend")] {
+            tt.trip_mut(t).unwrap().terminus = term.into();
+        }
+        let l = tt.lines.iter_mut().find(|l| l.name == line).unwrap();
+        let mut trips = Vec::new();
+        for k in 0..6 {
+            trips.push(TourTrip { trip: if k % 2 == 0 { there.clone() } else { back.clone() }, profile: 0, departure: 6.0 * 60.0 + k as f32 * 15.0 });
+        }
+        l.tours.push(Tour { number: "1".into(), ai_group: String::new(), extra: ALL_DAYS.to_string(), trips });
+        if self.ensure_net(doc, roots) {
+            self.reroute(doc);
+        }
+        for t in [&there, &back] {
+            log::info!("demo: trip {t}: {:?}", self.problems.get(&lower(t)).map(|p| format!("{p:?}")).unwrap_or_else(|| "route found".into()));
+        }
+        self.map = Some(doc.dir.clone());
+        self.select_line(&doc.timetable, Some(line));
+    }
+
     /// The car lanes and stops of the map, read again when its tiles changed (at most
     /// once a second while they keep changing).
     fn ensure_net(&mut self, doc: &Document, roots: Option<&Roots>) -> bool {
@@ -487,9 +531,11 @@ impl TimetableUi {
                 let src = doc.timetable.trip(self.trip.as_ref().unwrap()).unwrap().clone();
                 let mut stops = src.stations.clone();
                 stops.reverse();
+                let terminus = stops.last().map(|id| self.stop_name(&doc.timetable, *id)).unwrap_or_default();
                 let name = doc.timetable.add_trip(&line, &format!("{}_back", src.name), stops);
                 if let Some(t) = doc.timetable.trip_mut(&name) {
                     t.profiles = src.profiles.clone();
+                    t.terminus = terminus;
                 }
                 self.select_trip(Some(name));
             }

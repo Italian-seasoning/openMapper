@@ -112,6 +112,16 @@ fn only_what_changed_is_written() {
     let _ = std::fs::remove_dir_all(&out);
 }
 
+/// A tour without a depot (a new map's ailists.cfg has none) keeps its days.
+#[test]
+fn a_tour_without_depot_reads_back() {
+    let mut tt = Timetable::default();
+    let line = tt.add_line("3");
+    tt.lines[0].tours.push(omsi_timetable::Tour { number: "1".into(), ai_group: String::new(), extra: "799".into(), trips: vec![omsi_timetable::TourTrip { trip: "3_A".into(), profile: 0, departure: 400.0 }] });
+    let back = omsi_timetable::Line::parse(&omsi_cfg::CfgFile::from_str(format!("{line}.ttl"), &line_text(&tt.lines[0])));
+    assert_eq!(back.tours, tt.lines[0].tours);
+}
+
 #[test]
 fn text_that_1252_cannot_hold_is_utf16() {
     assert_eq!(encode("Bf. Zoo\n"), b"Bf. Zoo\r\n".to_vec());

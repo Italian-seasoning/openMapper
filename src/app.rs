@@ -682,6 +682,11 @@ impl App {
                         self.demo_join();
                     } else {
                         self.demo(&d);
+                        // OPENMAPPER_TIMETABLE with the demo: stops and a line on its roads
+                        if std::env::var_os("OPENMAPPER_TIMETABLE").is_some() {
+                            self.tt.demo(&mut self.ed, self.roots.as_ref());
+                            self.save();
+                        }
                     }
                 }
             }

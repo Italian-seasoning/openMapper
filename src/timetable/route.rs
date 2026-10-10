@@ -212,7 +212,7 @@ struct Reach {
 fn search(net: &Network, from: usize, along: f64, max: f64) -> HashMap<usize, Reach> {
     let mut best: HashMap<usize, Reach> = HashMap::new();
     let mut heap = BinaryHeap::new();
-    let mut offer = |best: &mut HashMap<usize, Reach>, heap: &mut BinaryHeap<Node>, l: usize, r: Reach| {
+    let offer = |best: &mut HashMap<usize, Reach>, heap: &mut BinaryHeap<Node>, l: usize, r: Reach| {
         if best.get(&l).map(|b| r.cost < b.cost).unwrap_or(true) {
             best.insert(l, r);
             heap.push(Node(r.cost, l));

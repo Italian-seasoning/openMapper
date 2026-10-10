@@ -40,3 +40,6 @@ Add a line when you touch a shared file: stream, file, what.
 * A · `src/main.rs`: `mod timetable`.
 * A · `src/doc/mod.rs`: `Document::timetable` (read with the map in `load`, empty in `new_map`), counted in `is_dirty`.
 * A · `src/doc/save.rs`: `crate::timetable::save(doc)` after `global.cfg` (writes only the changed TTData files).
+* A · `src/main.rs`: `mod ui_timetable`.
+* A · `src/ui.rs`: `Action::Timetable`; Map menu "Lines and timetable…" (key `L`).
+* A · `src/app.rs`: `App::tt` (the Lines window): drawn after `ui::editor`, its route laid into the frame's extras after `Editor::extras`, `before_save` in `App::save`, `Action::Timetable` and key `L` toggle it; `OPENMAPPER_TIMETABLE=<line>[:tours]` opens it on a line, and with `OPENMAPPER_DEMO` adds stops and a line to the demo map (checks without a person at the screen).
