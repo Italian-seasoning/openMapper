@@ -59,6 +59,9 @@ pub enum Action {
     AddGroundTexture(String),
     /// Open or close the Lines window.
     Timetable,
+    /// Put the map's folder back as it was before the save kept in this backup (and the
+    /// later ones), then open it again.
+    RestoreBackup(PathBuf),
     /// Do it without asking about unsaved changes.
     Force(Box<Action>),
     Quit,
@@ -81,6 +84,8 @@ pub struct UiState {
     pub welcome_pick: Option<PathBuf>,
     pub minimap: crate::ui_minimap::Minimap,
     pub check: crate::check::Checker,
+    /// The window of the map's earlier versions (backups of its saves).
+    pub versions_open: bool,
     /// The preferences' starred and recently used assets, for the catalogue.
     pub favourites: Vec<String>,
     pub recent_assets: Vec<String>,
@@ -104,6 +109,7 @@ impl Default for UiState {
             welcome_pick: None,
             minimap: crate::ui_minimap::Minimap::new(),
             check: Default::default(),
+            versions_open: false,
             favourites: Vec::new(),
             recent_assets: Vec::new(),
             map_picture: None,
@@ -525,6 +531,9 @@ pub fn editor(root: &mut egui::Ui, st: &mut UiState, u: EditorUi, actions: &mut 
     controls(&ctx, st);
     about(&ctx, st);
     st.check.window(&ctx, ed, lib, actions);
+    if let Some(doc) = &ed.doc {
+        crate::doc::safe::versions_window(&ctx, &mut st.versions_open, &doc.dir, actions);
+    }
     view
 }
 
@@ -557,6 +566,9 @@ fn menu_bar(root: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, can_undo: bo
                 }
                 if menu_item(ui, Some(Icon::Import), tr("Import assets…", "Импорт ассетов…"), "", true) {
                     actions.push(Action::Import);
+                }
+                if menu_item(ui, Some(Icon::History), tr("Earlier versions…", "Прошлые версии…"), "", true) {
+                    st.versions_open = true;
                 }
                 ui.separator();
                 if menu_item(ui, None, tr("Close map", "Закрыть карту"), "", true) {

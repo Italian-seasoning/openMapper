@@ -1,0 +1,225 @@
+//! Autosave: every few minutes the changed tiles and the global settings go into a folder of
+//! their own (never into the map). Saving, closing or quitting normally clears it; found at
+//! the next start, it means openMapper ended without saving, and the changes are offered
+//! back.
+
+use std::path::{Path, PathBuf};
+use std::time::{Duration, Instant};
+
+use serde::{Deserialize, Serialize};
+
+use super::{Document, TileKey};
+use crate::i18n::tr;
+
+/// How often the changes are kept (`OPENMAPPER_AUTOSAVE=<seconds>` for checks).
+fn every() -> Duration {
+    Duration::from_secs(std::env::var("OPENMAPPER_AUTOSAVE").ok().and_then(|s| s.parse().ok()).unwrap_or(180))
+}
+
+const META: &str = "autosave.json";
+
+/// What an autosave is of.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct Meta {
+    /// The map's name, for the question.
+    pub name: String,
+    /// The map's own folder (where it is saved to).
+    pub dir: PathBuf,
+    /// Where it was read from when that is another (the installation's copy, the template).
+    pub source: Option<PathBuf>,
+    pub fresh: bool,
+    /// The tiles kept (the changed ones).
+    pub tiles: Vec<TileKey>,
+    /// Seconds since 1970.
+    pub time: u64,
+}
+
+impl Meta {
+    /// How long ago, in words.
+    pub fn age(&self) -> String {
+        let now = std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).map(|d| d.as_secs()).unwrap_or(0);
+        let min = now.saturating_sub(self.time) / 60;
+        match min {
+            0 => tr("just now", "только что").to_string(),
+            m if m < 120 => format!("{m} {}", tr("min ago", "мин назад")),
+            m => format!("{} {}", m / 60, tr("h ago", "ч назад")),
+        }
+    }
+}
+
+/// The autosave folder of a content folder.
+pub fn dir(content: &Path) -> PathBuf {
+    content.join("openMapper").join("autosave")
+}
+
+/// Keep the map's changes (the changed tiles, the global settings). The folder is written
+/// beside the old one and takes its place whole, so one cut short leaves the last.
+pub fn write(doc: &Document, content: &Path) -> anyhow::Result<()> {
+    let target = dir(content);
+    let fresh_dir = target.with_extension("new");
+    let _ = std::fs::remove_dir_all(&fresh_dir);
+    std::fs::create_dir_all(&fresh_dir)?;
+    let (ops, tiles) = super::save::plan(doc, &fresh_dir, false);
+    let ops: Vec<_> = ops.into_iter().filter(|o| matches!(o, super::safe::Op::Write(..))).collect();
+    super::safe::commit(&ops)?;
+    let meta = Meta {
+        name: doc.display_name().to_string(),
+        dir: doc.dir.clone(),
+        source: doc.source.clone(),
+        fresh: doc.fresh,
+        tiles,
+        time: std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).map(|d| d.as_secs()).unwrap_or(0),
+    };
+    super::safe::write_atomic(&fresh_dir.join(META), serde_json::to_string_pretty(&meta)?.as_bytes())?;
+    let _ = std::fs::remove_dir_all(&target);
+    std::fs::rename(&fresh_dir, &target)?;
+    Ok(())
+}
+
+/// The autosave left by a session that did not end normally.
+pub fn pending(content: &Path) -> Option<Meta> {
+    let s = std::fs::read_to_string(dir(content).join(META)).ok()?;
+    serde_json::from_str(&s).ok()
+}
+
+/// Nothing to keep any more (saved, or the changes were dropped).
+pub fn clear(content: &Path) {
+    let d = dir(content);
+    if d.exists() {
+        if let Err(e) = std::fs::remove_dir_all(&d) {
+            log::warn!("{}: {e}", d.display());
+        }
+    }
+}
+
+/// The map with the autosaved changes laid over it: read from its folder (or where it came
+/// from), then the kept global settings and tiles put in, marked as not saved yet.
+pub fn restore(roots: &crate::install::Roots, meta: &Meta) -> anyhow::Result<Document> {
+    let saved = dir(&roots.content);
+    let base = [meta.dir.join("global.cfg"), meta.source.clone().unwrap_or_default().join("global.cfg")].into_iter().find(|p| p.is_file() && !meta.fresh);
+    let mut doc = match &base {
+        Some(cfg) => Document::load(roots, cfg, |_| {})?,
+        // (a map never saved: all of it is in the autosave)
+        None => Document::load(roots, &saved.join("global.cfg"), |_| {})?,
+    };
+    let global = omsi_map::GlobalCfg::load(&saved.join("global.cfg")).map_err(|e| anyhow::anyhow!("{e}"))?;
+    omsi_map::configure_grid(&global);
+    let listed: std::collections::HashSet<TileKey> = global.tiles.iter().map(|t| (t.x, t.y)).collect();
+    for t in global.tiles.iter().filter(|t| meta.tiles.contains(&(t.x, t.y))) {
+        let Some(mut td) = super::load_tile(&saved, &global, &[], t) else { continue };
+        if let Some(old) = doc.tiles.get(&(t.x, t.y)) {
+            td.chrono = old.chrono.clone();
+        }
+        td.dirty = true;
+        doc.tiles.insert((t.x, t.y), td);
+    }
+    doc.tiles.retain(|k, _| listed.contains(k));
+    doc.order = global.raw_tiles.clone();
+    doc.global = global;
+    doc.global_dirty = true;
+    doc.global_rev = super::next_rev();
+    doc.dir = meta.dir.clone();
+    doc.source = meta.source.clone().or(doc.source.take()).filter(|s| *s != meta.dir);
+    doc.fresh = meta.fresh;
+    doc.sync_mask_slots();
+    Ok(doc)
+}
+
+/// When to autosave next.
+pub struct Timer {
+    last: Instant,
+}
+
+impl Default for Timer {
+    fn default() -> Self {
+        Timer { last: Instant::now() }
+    }
+}
+
+impl Timer {
+    /// Autosave the map if it has changes and the time has come (not in the middle of an
+    /// edit). Errors go to the log and are tried again later.
+    pub fn tick(&mut self, doc: Option<&Document>, content: Option<&Path>, editing: bool) {
+        let (Some(doc), Some(content)) = (doc, content) else { return };
+        if editing || self.last.elapsed() < every() || !doc.is_dirty() {
+            return;
+        }
+        self.last = Instant::now();
+        let t = Instant::now();
+        match write(doc, content) {
+            Ok(()) => log::info!("autosave: {} ({:.0} ms)", dir(content).display(), t.elapsed().as_secs_f32() * 1000.0),
+            Err(e) => log::warn!("autosave: {e}"),
+        }
+    }
+
+    /// Start counting again (just saved).
+    pub fn reset(&mut self) {
+        self.last = Instant::now();
+    }
+}
+
+/// The question at start when an autosave was left behind: Some(true) restore, Some(false)
+/// drop it.
+pub fn offer(ctx: &egui::Context, meta: &Meta) -> Option<bool> {
+    let mut answer = None;
+    egui::Window::new(tr("Unsaved changes found", "Найдены несохранённые изменения")).collapsible(false).resizable(false).anchor(egui::Align2::CENTER_CENTER, egui::Vec2::ZERO).show(ctx, |ui| {
+        ui.set_width(380.0);
+        ui.label(format!(
+            "{} «{}» ({}).",
+            tr("openMapper was closed without saving the map", "openMapper был закрыт, не сохранив карту"),
+            meta.name,
+            meta.age()
+        ));
+        ui.label(egui::RichText::new(tr("The changes kept by the autosave can be brought back. The map itself was not changed.", "Изменения, сохранённые автосохранением, можно вернуть. Сама карта не изменялась.")).small().color(egui::Color32::GRAY));
+        ui.add_space(8.0);
+        ui.horizontal(|ui| {
+            if ui.button(tr("Restore the changes", "Вернуть изменения")).clicked() {
+                answer = Some(true);
+            }
+            if ui.button(tr("Drop them", "Отбросить")).clicked() {
+                answer = Some(false);
+            }
+        });
+    });
+    answer
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn an_autosave_holds_the_changed_tiles() {
+        let _map = crate::doc::one_map();
+        let content = std::env::temp_dir().join(format!("openmapper-test-autosave-{}", std::process::id()));
+        let _ = std::fs::remove_dir_all(&content);
+        let mut doc = Document {
+            global: Default::default(),
+            tiles: Default::default(),
+            order: Vec::new(),
+            dir: content.join("maps").join("M"),
+            source: None,
+            global_dirty: true,
+            fresh: false,
+            global_rev: 0,
+            timetable: Default::default(),
+        };
+        doc.global.name = "M".into();
+        for k in [(0, 0), (1, 0)] {
+            doc.add_tile(k);
+        }
+        doc.tiles.get_mut(&(1, 0)).unwrap().dirty = false;
+        doc.tiles.get_mut(&(0, 0)).unwrap().tile.objects.push(omsi_map::MapObject { file: "Sceneryobjects\\x.sco".into(), id: 3, pos: [5.0, 6.0, 0.0], ..Default::default() });
+        write(&doc, &content).unwrap();
+        let meta = pending(&content).unwrap();
+        assert_eq!(meta.tiles, vec![(0, 0)]);
+        let d = dir(&content);
+        assert!(d.join("tile_0_0.map").is_file() && !d.join("tile_1_0.map").exists() && d.join("global.cfg").is_file());
+        // the tile reads back with what was on it
+        let t = omsi_map::Tile::load(&d.join("tile_0_0.map")).unwrap();
+        assert_eq!(t.objects.len(), 1);
+        clear(&content);
+        assert!(pending(&content).is_none());
+        let _ = std::fs::remove_dir_all(&content);
+    }
+}

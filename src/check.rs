@@ -115,7 +115,7 @@ impl Kind {
             Kind::DuplicateId => tr("Two things on the map share one IDCode: links, timetables and start points may pick the wrong one.", "Две вещи на карте с одним IDCode: связи, расписания и точки старта могут указать не на ту."),
             Kind::NextId => tr("The counter for new IDCodes is below codes already used, so new objects would get codes twice. \"Fix\" raises it.", "Счётчик новых IDCode ниже уже занятых, новые объекты получат повторные коды. «Исправить» поднимет его."),
             Kind::OutsideTile => tr("An object standing on the ground lies outside its own tile. The game does not show it. Move it a little or put it again.", "Объект, стоящий на земле, лежит вне своего тайла. Игра его не покажет. Сдвиньте его или поставьте заново."),
-            Kind::TileMissing => tr("global.cfg lists tiles whose file is not there. They are left out; saving drops them from the list.", "В global.cfg указаны тайлы без файла. Они пропущены; при сохранении они уйдут из списка."),
+            Kind::TileMissing => tr("global.cfg lists tiles whose file is not there. The game leaves them out; they stay listed, as start points and timetables count tiles by their place in the list.", "В global.cfg указаны тайлы без файла. Игра их пропускает; они остаются в списке, ведь точки старта и расписания считают тайлы по месту в нём."),
             Kind::NoGround => tr("A tile has no height file: its ground is flat. Saving writes one.", "У тайла нет файла высот: земля плоская. Сохранение запишет его."),
         }
     }
@@ -909,6 +909,7 @@ mod tests {
 
     #[test]
     fn join_links_both_ends_and_undoes() {
+        let _map = crate::doc::one_map();
         let mut doc = doc_with(&[(0, 0)]);
         let t = doc.tiles.get_mut(&(0, 0)).unwrap();
         for id in [1, 2] {
@@ -928,6 +929,7 @@ mod tests {
 
     #[test]
     fn an_object_goes_over_to_the_tile_it_stands_on() {
+        let _map = crate::doc::one_map();
         let mut doc = doc_with(&[(0, 0), (1, 0)]);
         let ts = tile_size();
         doc.tiles.get_mut(&(0, 0)).unwrap().tile.objects.push(omsi_map::MapObject { id: 5, pos: [ts + 10.0, 20.0, 0.0], ..Default::default() });

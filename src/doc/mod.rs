@@ -1,7 +1,11 @@
 //! The map being edited: `global.cfg`, its tiles (objects, splines, ground) and their
 //! painting masks, read with openOMSI's own readers and written back in OMSI's format.
 
+pub mod autosave;
+pub mod safe;
 mod save;
+#[cfg(test)]
+mod tests;
 pub mod dds;
 
 use std::collections::BTreeMap;
@@ -680,9 +684,22 @@ pub fn unfit_from_world_grid(t: &mut Tile, ty: i32) {
     }
 }
 
+/// The map's grid is global (`omsi_map::configure_grid`): tests that read or make a map
+/// hold this, one map at a time.
+#[cfg(test)]
+pub fn one_map() -> std::sync::MutexGuard<'static, ()> {
+    static MAP: std::sync::Mutex<()> = std::sync::Mutex::new(());
+    MAP.lock().unwrap_or_else(|e| e.into_inner())
+}
+
 /// Today as OMSI's date code (YYYYMMDD).
 pub fn today_code() -> i32 {
     let days = std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).map(|d| d.as_secs() / 86_400).unwrap_or(0) as i64;
+    civil(days)
+}
+
+/// A day (since 1970-01-01) as YYYYMMDD.
+pub fn civil(days: i64) -> i32 {
     // (civil date from days since 1970-01-01, H. Hinnant's algorithm)
     let z = days + 719_468;
     let era = z.div_euclid(146_097);

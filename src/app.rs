@@ -85,6 +85,9 @@ pub struct App {
     frames: u64,
     /// `OPENMAPPER_SHOT=file.png`: save the window's picture after that many frames and end.
     shot: Option<(PathBuf, u64)>,
+    autosave: crate::doc::autosave::Timer,
+    /// An autosave left by a session that did not end normally, offered back.
+    recover: Option<crate::doc::autosave::Meta>,
     /// The Lines window.
     tt: crate::ui_timetable::TimetableUi,
     /// The next frame's view becomes the map's picture (`picture.jpg`).
@@ -117,6 +120,8 @@ impl App {
             tt: crate::ui_timetable::TimetableUi::new(),
             picture: false,
             shot: std::env::var_os("OPENMAPPER_SHOT").map(|p| (PathBuf::from(p), std::env::var("OPENMAPPER_SHOT_FRAMES").ok().and_then(|n| n.parse().ok()).unwrap_or(90))),
+            autosave: Default::default(),
+            recover: None,
         };
         app.setup_roots();
         app
@@ -137,6 +142,7 @@ impl App {
         self.texture_files = ground_texture_files(&roots);
         self.ed.content_dir = Some(roots.content.clone());
         self.ed.asphalt = crate::junction::asphalt_texture(&roots.omsi);
+        self.recover = crate::doc::autosave::pending(&roots.content);
         if let Some(g) = &mut self.gfx {
             g.renderer.roots = vec![roots.content.clone(), roots.omsi.clone()];
         }
@@ -170,6 +176,10 @@ impl App {
 
     fn open_map(&mut self, cfg: &Path) {
         let Some(roots) = &self.roots else { return };
+        // (what was open is saved or its changes were dropped)
+        if self.ed.doc.is_some() {
+            crate::doc::autosave::clear(&roots.content);
+        }
         match Document::load(roots, cfg, |_| {}) {
             Ok(doc) => {
                 self.prefs.push_recent(cfg);
@@ -238,6 +248,9 @@ impl App {
 
     fn new_map(&mut self, folder: &str, friendly: &str, size: i32) {
         let Some(roots) = &self.roots else { return };
+        if self.ed.doc.is_some() {
+            crate::doc::autosave::clear(&roots.content);
+        }
         let mut folder = folder.to_string();
         // (a folder of that name may be there already)
         let base = folder.clone();
@@ -260,6 +273,10 @@ impl App {
         match crate::doc::save(doc) {
             Ok(()) => {
                 omsi_cfg::content_changed();
+                if let Some(r) = &self.roots {
+                    crate::doc::autosave::clear(&r.content);
+                }
+                self.autosave.reset();
                 let cfg = doc.dir.join("global.cfg");
                 let dir = doc.dir.display().to_string();
                 let has_start = !doc.global.entry_points.is_empty();
@@ -274,9 +291,25 @@ impl App {
                 true
             }
             Err(e) => {
-                self.ed.error(format!("{}: {e}", tr("Could not save", "Не удалось сохранить")));
+                self.ed.error(format!("{}: {e}", tr("Could not save (the changes are still here, nothing is lost)", "Не удалось сохранить (изменения остались здесь, ничего не потеряно)")));
                 false
             }
+        }
+    }
+
+    /// Bring an autosave's changes back (or drop them).
+    fn recover_autosave(&mut self, yes: bool, meta: &crate::doc::autosave::Meta) {
+        let Some(roots) = &self.roots else { return };
+        if !yes {
+            crate::doc::autosave::clear(&roots.content);
+            return;
+        }
+        match crate::doc::autosave::restore(roots, meta) {
+            Ok(doc) => {
+                self.after_open(doc);
+                self.ed.toast(tr("The unsaved changes are back. Save to keep them.", "Несохранённые изменения возвращены. Сохраните, чтобы оставить их."));
+            }
+            Err(e) => self.ed.error(format!("{}: {e}", tr("Could not restore the changes", "Не удалось вернуть изменения"))),
         }
     }
 
@@ -332,7 +365,7 @@ impl App {
 
     fn do_action(&mut self, a: Action, el: &ActiveEventLoop) {
         let dirty = self.ed.doc.as_ref().map(|d| d.is_dirty()).unwrap_or(false);
-        let guarded = matches!(a, Action::Close | Action::Open(_) | Action::OpenDialog | Action::NewMap { .. } | Action::Quit);
+        let guarded = matches!(a, Action::Close | Action::Open(_) | Action::OpenDialog | Action::NewMap { .. } | Action::Quit | Action::RestoreBackup(_));
         if guarded && dirty {
             self.ui.confirm = Some(a);
             return;
@@ -364,7 +397,27 @@ impl App {
             Action::Save => {
                 self.save();
             }
+            Action::RestoreBackup(b) => {
+                let Some(dir) = self.ed.doc.as_ref().map(|d| d.dir.clone()) else { return };
+                match crate::doc::safe::restore(&dir, &b) {
+                    Ok(n) => {
+                        omsi_cfg::content_changed();
+                        if let Some(d) = self.ed.doc.as_mut() {
+                            // (what is on disk now is what gets opened)
+                            d.global_dirty = false;
+                            d.timetable.dirty = false;
+                            d.tiles.values_mut().for_each(|t| t.dirty = false);
+                        }
+                        self.open_map(&dir.join("global.cfg"));
+                        self.ed.toast(format!("{} ({n})", tr("The map is back as it was before that save", "Карта возвращена к виду до того сохранения")));
+                    }
+                    Err(e) => self.ed.error(format!("{}: {e}", tr("Could not go back", "Не удалось вернуть"))),
+                }
+            }
             Action::Close => {
+                if let Some(r) = &self.roots {
+                    crate::doc::autosave::clear(&r.content);
+                }
                 self.ed.doc = None;
                 self.ed.history.clear();
                 if let Some(r) = &self.roots {
@@ -621,6 +674,7 @@ impl App {
         let loading = self.assets.as_ref().map(|a| a.pending).unwrap_or(0);
         let mut view: Option<(egui::Rect, bool)> = None;
         let gpu_name = g.gpu.adapter_name.clone();
+        let mut recover_answer = None;
         // (the overview map stays out of the map's picture)
         let minimap_open = self.ui.minimap.open;
         if self.picture {
@@ -659,6 +713,9 @@ impl App {
                 self.tt.window(&ctx, &mut self.ed, self.roots.as_ref(), &mut actions);
             }
             ui::confirm_unsaved(&ctx, &mut self.ui, &mut actions);
+            if let Some(m) = &self.recover {
+                recover_answer = crate::doc::autosave::offer(&ctx, m);
+            }
         });
         match view {
             Some((rect, hovered)) => {
@@ -800,9 +857,17 @@ impl App {
         };
         g.window.set_title(&title);
         self.gfx = Some(g);
+        if let Some(yes) = recover_answer {
+            if let Some(meta) = self.recover.take() {
+                self.recover_autosave(yes, &meta);
+            }
+        }
         for a in actions {
             self.do_action(a, el);
         }
+        // the changes kept every few minutes (not in the middle of an edit)
+        let editing = self.mouse.left || self.ed.history.is_open();
+        self.autosave.tick(self.ed.doc.as_ref(), self.roots.as_ref().map(|r| r.content.as_path()), editing);
     }
 
     /// A scripted session (`OPENMAPPER_DEMO=<map name>`): a new map with roads, objects and
@@ -1342,6 +1407,11 @@ impl ApplicationHandler for App {
 
     fn exiting(&mut self, _el: &ActiveEventLoop) {
         let _ = self.quit;
+        // (a normal end: the changes were saved or dropped when asked; an autosave still
+        // offered and not answered stays for the next start)
+        if let (Some(r), None) = (&self.roots, &self.recover) {
+            crate::doc::autosave::clear(&r.content);
+        }
         self.prefs.save();
     }
 }
