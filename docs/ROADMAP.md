@@ -84,3 +84,7 @@ Add a line when you touch a shared file: stream, file, what.
 * A · `src/ui.rs`: `Action::Export`, File menu "Export map for sharing…".
 * A · `src/app.rs`: `App::export` (saves, asks where, packs; toasts what went in and what is missing).
 * A · `src/check.rs` (C): `missing_textures` is `pub(crate)` (the export test checks the imported map with it).
+* A · `src/doc/mod.rs`, `src/doc/save.rs` (C): `Document::descriptions` (`global_<LANG>.dsc`, new `src/descriptions.rs`), read with the map, counted in `is_dirty`, planned with the save's ops; `descriptions: Default::default()` in the tests' and autosave's `Document` literals (`src/doc/tests.rs`, `src/doc/autosave.rs`, `src/check.rs`, `src/selection.rs`).
+* A · `src/ui.rs`: `map_properties` shows `descriptions::editor` (a language picker above the description) in place of the plain description field.
+* A · `src/history.rs`: `Snapshot::descriptions`.
+* A · `src/main.rs`: `mod descriptions`.

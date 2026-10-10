@@ -1409,8 +1409,7 @@ fn map_properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, actions:
             });
         });
         ui.add_space(4.0);
-        ui.label(RichText::new(tr("Description", "Описание")).color(TEXT_DIM));
-        ui.add(egui::TextEdit::multiline(&mut doc.global.description).desired_rows(4).desired_width(f32::INFINITY));
+        crate::descriptions::editor(ui, doc, &mut ed.history);
         if doc.global.entry_points.is_empty() {
             ui.add_space(6.0);
             ui.label(RichText::new(tr("No start point yet: place one (Objects > Bus stops > Entrypoint) so the bus has somewhere to appear in openOMSI.", "Нет точки старта: поставьте её (Объекты > Остановки > Entrypoint), чтобы автобусу было где появиться в openOMSI.")).small().color(Color32::from_rgb(230, 170, 100)));

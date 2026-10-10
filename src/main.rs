@@ -8,6 +8,7 @@ mod assets;
 mod camera;
 mod check;
 mod clipboard;
+mod descriptions;
 mod doc;
 mod export;
 mod editor;

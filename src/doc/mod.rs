@@ -145,6 +145,8 @@ pub struct Document {
     pub timetable: crate::timetable::Timetable,
     /// AI groups, unscheduled traffic, parked cars and people.
     pub traffic: crate::traffic::Traffic,
+    /// The name and description in other languages (`global_<LANG>.dsc`).
+    pub descriptions: crate::descriptions::Descriptions,
 }
 
 impl Document {
@@ -178,6 +180,7 @@ impl Document {
             order: Vec::new(),
             dir: roots.content.join("maps").join(folder),
             traffic: crate::traffic::Traffic::load(&template),
+            descriptions: Default::default(),
             source: Some(template),
             global_dirty: true,
             fresh: true,
@@ -259,6 +262,7 @@ impl Document {
         let order = global.raw_tiles.clone();
         let timetable = crate::timetable::Timetable::load(&src_dir, &order);
         let traffic = crate::traffic::Traffic::load(&src_dir);
+        let descriptions = crate::descriptions::Descriptions::load(&src_dir);
         progress(1.0);
         crate::render::profile::log_time(&format!("read {} tiles", tiles.len()), started);
         Ok(Document {
@@ -272,6 +276,7 @@ impl Document {
             global_rev: next_rev(),
             timetable,
             traffic,
+            descriptions,
         })
     }
 
@@ -284,7 +289,7 @@ impl Document {
     }
 
     pub fn is_dirty(&self) -> bool {
-        self.global_dirty || self.timetable.dirty || self.traffic.dirty || self.tiles.values().any(|t| t.dirty)
+        self.global_dirty || self.timetable.dirty || self.traffic.dirty || self.descriptions.dirty || self.tiles.values().any(|t| t.dirty)
     }
 
     /// A fresh IDCode for a new object or spline.

@@ -447,6 +447,7 @@ impl App {
                     d.global_dirty = false;
                     d.timetable.dirty = false;
                     d.traffic.dirty = false;
+                    d.descriptions.dirty = false;
                     for t in d.tiles.values_mut() {
                         t.dirty = false;
                     }
