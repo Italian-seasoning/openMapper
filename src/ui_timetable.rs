@@ -65,7 +65,6 @@ pub struct TimetableUi {
     routed: HashMap<String, u64>,
     /// What went wrong finding a trip's route.
     problems: HashMap<String, Vec<Problem>>,
-    depots: Option<Vec<String>>,
     /// The map the state belongs to.
     map: Option<std::path::PathBuf>,
     want_line: Option<String>,
@@ -182,10 +181,7 @@ impl TimetableUi {
             trips.push(TourTrip { trip: if k % 2 == 0 { there.clone() } else { back.clone() }, profile: 0, departure: 6.0 * 60.0 + k as f32 * 15.0 });
         }
         l.tours.push(Tour { number: "1".into(), ai_group: String::new(), extra: ALL_DAYS.to_string(), trips });
-        if self.files.has_roots() || roots.is_some() {
-            add_depot(tt);
-            self.depots = Some(vec![DEPOT.to_string()]);
-        }
+        add_depot(doc);
         if self.ensure_net(doc, roots) {
             self.reroute(doc);
         }
@@ -336,11 +332,6 @@ impl TimetableUi {
             let doc = ed.doc.as_ref().unwrap();
             self.ensure_net(doc, roots);
         }
-        if self.depots.is_none() {
-            let doc = ed.doc.as_ref().unwrap();
-            let src = doc.source.clone().unwrap_or_else(|| doc.dir.clone());
-            self.depots = Some(timetable::depot_groups(&src));
-        }
         self.reroute(ed.doc.as_mut().unwrap());
         if let Some(w) = self.want_line.take() {
             let tt = &ed.doc.as_ref().unwrap().timetable;
@@ -350,6 +341,7 @@ impl TimetableUi {
         }
         // (what it was before this frame's edits, for undo)
         let before = ed.doc.as_ref().unwrap().timetable.clone();
+        let traffic_before = ed.doc.as_ref().unwrap().traffic.clone();
         self.pick_from_view(ed);
         let mut open = self.open;
         egui::Window::new(icons::labelled(Icon::Bus, tr("Lines and timetable", "Линии и расписание")))
@@ -365,8 +357,10 @@ impl TimetableUi {
             self.picking = false;
             ed.pick_mode = false;
         }
-        if !before.same_content(&ed.doc.as_ref().unwrap().timetable) {
-            ed.history.push_snapshot(tr("Edit timetable", "Правка расписания"), crate::history::Snapshot { timetable: Some(before), ..Default::default() });
+        let doc = ed.doc.as_ref().unwrap();
+        if !before.same_content(&doc.timetable) {
+            let traffic = (traffic_before != doc.traffic).then_some(traffic_before);
+            ed.history.push_snapshot(tr("Edit timetable", "Правка расписания"), crate::history::Snapshot { timetable: Some(before), traffic, ..Default::default() });
         }
         self.update_shown(ed);
     }
@@ -828,7 +822,13 @@ impl TimetableUi {
     }
 
     fn tours_panel(&mut self, ui: &mut egui::Ui, doc: &mut Document, li: usize, trips: &[String]) {
-        let depots = self.depots.clone().unwrap_or_default();
+        let depots: Vec<String> = doc.traffic.depots().map(|d| d.name.clone()).collect();
+        if depots.is_empty() {
+            ui.label(RichText::new(tr("The map has no depot (ailists.cfg): only you drive these tours, no AI buses.", "У карты нет депо (ailists.cfg): выпуски водите только вы, автобусов ИИ не будет.")).small().color(WARN));
+            if self.files.exists(crate::traffic::DEPOT_BUS) && ui.button(icons::labelled(Icon::Bus, tr("Add a depot with OMSI 2's MAN buses", "Добавить депо с автобусами MAN из OMSI 2"))).on_hover_text(tr("Its buses run the tours (Map > Traffic and AI shows it)", "Его автобусы ездят по выпускам (Карта > Трафик и ИИ)")).clicked() {
+                add_depot(doc);
+            }
+        }
         let tt = &mut doc.timetable;
         let line = tt.lines[li].name.clone();
         let n = tt.lines[li].tours.len();
@@ -847,13 +847,6 @@ impl TimetableUi {
                 tt.touch_line(&line);
             }
         });
-        if depots.is_empty() {
-            ui.label(RichText::new(tr("The map has no depot (ailists.cfg): only you drive these tours, no AI buses.", "У карты нет депо (ailists.cfg): выпуски водите только вы, автобусов ИИ не будет.")).small().color(WARN));
-            if self.files.exists(timetable::DEPOT_BUS) && ui.button(icons::labelled(Icon::Bus, tr("Add a depot with OMSI 2's MAN buses", "Добавить депо с автобусами MAN из OMSI 2"))).on_hover_text(tr("Written into the map's ailists.cfg when it is saved; the tours take their buses from it", "Запишется в ailists.cfg карты при сохранении; выпуски берут автобусы оттуда")).clicked() {
-                add_depot(tt);
-                self.depots = Some(vec![DEPOT.to_string()]);
-            }
-        }
         let Some(ti) = self.tour.filter(|i| *i < n) else {
             if n > 0 {
                 ui.label(RichText::new(tr("Pick a tour to see its departures.", "Выберите выпуск, чтобы увидеть отправления.")).color(TEXT_DIM));
@@ -1023,12 +1016,15 @@ impl TimetableUi {
 const DEPOT: &str = "openMapper";
 
 /// A depot for a map without one, and the tours without buses take theirs from it.
-fn add_depot(tt: &mut Timetable) {
-    tt.new_depot = Some(timetable::depot_block(DEPOT));
+fn add_depot(doc: &mut Document) {
+    let name = doc.traffic.unique_name(DEPOT);
+    doc.traffic.groups.push(crate::traffic::stock_depot(&name));
+    doc.traffic.touch(crate::traffic::File::AiLists);
+    let tt = &mut doc.timetable;
     let mut touched = Vec::new();
     for l in &mut tt.lines {
         for t in l.tours.iter_mut().filter(|t| t.ai_group.trim().is_empty()) {
-            t.ai_group = DEPOT.to_string();
+            t.ai_group = name.clone();
             touched.push(l.name.clone());
         }
     }

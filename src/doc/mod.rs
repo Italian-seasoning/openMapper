@@ -139,6 +139,8 @@ pub struct Document {
     pub global_rev: u64,
     /// Lines, trips and tours (`TTData`).
     pub timetable: crate::timetable::Timetable,
+    /// AI groups, unscheduled traffic, parked cars and people.
+    pub traffic: crate::traffic::Traffic,
 }
 
 impl Document {
@@ -171,6 +173,7 @@ impl Document {
             tiles: BTreeMap::new(),
             order: Vec::new(),
             dir: roots.content.join("maps").join(folder),
+            traffic: crate::traffic::Traffic::load(&template),
             source: Some(template),
             global_dirty: true,
             fresh: true,
@@ -244,6 +247,7 @@ impl Document {
         }
         let order = global.raw_tiles.clone();
         let timetable = crate::timetable::Timetable::load(&src_dir, &order);
+        let traffic = crate::traffic::Traffic::load(&src_dir);
         progress(1.0);
         Ok(Document {
             global,
@@ -255,6 +259,7 @@ impl Document {
             fresh: false,
             global_rev: next_rev(),
             timetable,
+            traffic,
         })
     }
 
@@ -267,7 +272,7 @@ impl Document {
     }
 
     pub fn is_dirty(&self) -> bool {
-        self.global_dirty || self.timetable.dirty || self.tiles.values().any(|t| t.dirty)
+        self.global_dirty || self.timetable.dirty || self.traffic.dirty || self.tiles.values().any(|t| t.dirty)
     }
 
     /// A fresh IDCode for a new object or spline.

@@ -57,3 +57,10 @@ Add a line when you touch a shared file: stream, file, what.
 * A · `src/app.rs`: `App::tt` (the Lines window): drawn after `ui::editor`, its route laid into the frame's extras after `Editor::extras`, `before_save` in `App::save`, `Action::Timetable` and key `L` toggle it; `OPENMAPPER_TIMETABLE=<line>[:tours]` opens it on a line, and with `OPENMAPPER_DEMO` adds stops and a line to the demo map (checks without a person at the screen); `Action::Force` also drops the timetable's changes.
 * A · `src/editor.rs`: `Editor::{pick_mode, picked}`: with pick mode on, a left click with the Select tool only notes what is under the cursor and where (the Lines window picks stops so: nothing is selected or dragged).
 * A · `src/history.rs`: `Step::{timetable, at}`, `Snapshot` and `History::push_snapshot` (a window's edit given as the state before it; edits of one kind within 1.5 s are one step); `apply` swaps the timetable too (`Timetable::restored` has every file written again).
+* A · `src/main.rs`: `mod traffic`, `mod ui_traffic`.
+* A · `src/doc/mod.rs`: `Document::traffic` (`ailists.cfg`, unscheduled traffic, parked cars, people; read in `load`, from the template in `new_map`), counted in `is_dirty`.
+* A · `src/doc/save.rs`: `crate::traffic::save(doc)` after the timetable's (only the changed files).
+* A · `src/selection.rs` (tests' `flat_map`): `traffic: Default::default()`.
+* A · `src/history.rs`: `Step::traffic`, `Snapshot::traffic`.
+* A · `src/ui.rs`: `Action::Traffic`; Map menu "Traffic and AI…" (key `T`).
+* A · `src/app.rs`: `App::traffic` (the Traffic and AI window) drawn after the Lines window, `Action::Traffic` and key `T`; `OPENMAPPER_TRAFFIC=day|groups|lists` opens it on a tab; `Action::Force` drops the traffic's changes too.

@@ -14,6 +14,7 @@ struct Step {
     tiles: BTreeMap<TileKey, Option<TileDoc>>,
     global: Option<(GlobalCfg, Vec<TileKey>)>,
     timetable: Option<crate::timetable::Timetable>,
+    traffic: Option<crate::traffic::Traffic>,
     /// When it was made (edits of one kind in quick succession are one step).
     at: std::time::Instant,
 }
@@ -23,6 +24,7 @@ struct Step {
 pub struct Snapshot {
     pub global: Option<(GlobalCfg, Vec<TileKey>)>,
     pub timetable: Option<crate::timetable::Timetable>,
+    pub traffic: Option<crate::traffic::Traffic>,
 }
 
 /// Snapshots of one kind closer together than this make one step (typing a name, dragging
@@ -42,7 +44,7 @@ impl History {
     /// Start an edit (ends one still open).
     pub fn begin(&mut self, label: &str) {
         self.commit();
-        self.open = Some(Step { label: label.to_string(), tiles: BTreeMap::new(), global: None, timetable: None, at: std::time::Instant::now() });
+        self.open = Some(Step { label: label.to_string(), tiles: BTreeMap::new(), global: None, timetable: None, traffic: None, at: std::time::Instant::now() });
     }
 
     pub fn is_open(&self) -> bool {
@@ -68,7 +70,7 @@ impl History {
     /// Close the open edit (nothing kept: it is dropped).
     pub fn commit(&mut self) {
         if let Some(s) = self.open.take() {
-            if s.tiles.is_empty() && s.global.is_none() && s.timetable.is_none() {
+            if s.tiles.is_empty() && s.global.is_none() && s.timetable.is_none() && s.traffic.is_none() {
                 return;
             }
             self.undo.push(s);
@@ -84,16 +86,16 @@ impl History {
     pub fn push_snapshot(&mut self, label: &str, before: Snapshot) {
         self.commit();
         if let Some(last) = self.undo.last_mut() {
-            let same = last.label == label && last.tiles.is_empty() && last.global.is_some() == before.global.is_some() && last.timetable.is_some() == before.timetable.is_some();
+            let same = last.label == label && last.tiles.is_empty() && last.global.is_some() == before.global.is_some() && last.timetable.is_some() == before.timetable.is_some() && last.traffic.is_some() == before.traffic.is_some();
             if same && self.redo.is_empty() && last.at.elapsed() < MERGE {
                 last.at = std::time::Instant::now();
                 return;
             }
         }
-        if before.global.is_none() && before.timetable.is_none() {
+        if before.global.is_none() && before.timetable.is_none() && before.traffic.is_none() {
             return;
         }
-        self.undo.push(Step { label: label.to_string(), tiles: BTreeMap::new(), global: before.global, timetable: before.timetable, at: std::time::Instant::now() });
+        self.undo.push(Step { label: label.to_string(), tiles: BTreeMap::new(), global: before.global, timetable: before.timetable, traffic: before.traffic, at: std::time::Instant::now() });
         if self.undo.len() > LIMIT {
             self.undo.remove(0);
         }
@@ -137,7 +139,7 @@ impl History {
 
 /// Put a step's state into the document; returns the state it replaced (the opposite step).
 fn apply(doc: &mut Document, s: Step) -> Step {
-    let mut back = Step { label: s.label.clone(), tiles: BTreeMap::new(), global: None, timetable: None, at: s.at };
+    let mut back = Step { label: s.label.clone(), tiles: BTreeMap::new(), global: None, timetable: None, traffic: None, at: s.at };
     for (k, t) in s.tiles {
         let now = match t {
             Some(mut t) => {
@@ -160,6 +162,10 @@ fn apply(doc: &mut Document, s: Step) -> Step {
         let old = std::mem::replace(&mut doc.timetable, t);
         doc.timetable.restored(&old);
         back.timetable = Some(old);
+    }
+    if let Some(t) = s.traffic {
+        back.traffic = Some(std::mem::replace(&mut doc.traffic, t));
+        doc.traffic.restored();
     }
     doc.global_dirty = true;
     back
