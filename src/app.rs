@@ -326,6 +326,7 @@ impl App {
                 if let Some(d) = self.ed.doc.as_mut() {
                     // the user chose to drop the changes
                     d.global_dirty = false;
+                    d.timetable.dirty = false;
                     for t in d.tiles.values_mut() {
                         t.dirty = false;
                     }
