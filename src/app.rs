@@ -540,6 +540,11 @@ impl App {
             Action::Paste => self.ed.paste(&self.lib),
             Action::Duplicate => self.ed.duplicate(&self.lib),
             Action::SelectAll => self.ed.select_all(),
+            Action::BuildRoad => {
+                if let Some(assets) = self.assets.as_mut() {
+                    self.ed.confirm_road(assets, &self.lib);
+                }
+            }
             Action::FocusSelection => {
                 if let (Some(sel), Some(doc)) = (self.ed.selected, &self.ed.doc) {
                     let p = match sel {
@@ -633,6 +638,7 @@ impl App {
             Some(KeyCode::Digit7) => self.ed.set_tool(Tool::Tiles),
             Some(KeyCode::KeyR) if !ctrl => self.ed.rotate(if shift { -15.0 } else { 15.0 }),
             Some(KeyCode::KeyU) if !ctrl => self.ed.toggle_ruler(),
+            Some(KeyCode::Enter) | Some(KeyCode::NumpadEnter) => actions.push(Action::BuildRoad),
             Some(KeyCode::KeyG) if !ctrl => self.ed.show_grid = !self.ed.show_grid,
             Some(KeyCode::KeyM) if !ctrl => self.ui.minimap.open = !self.ui.minimap.open,
             Some(KeyCode::KeyL) if !ctrl => self.tt.open = !self.tt.open,
@@ -769,6 +775,7 @@ impl App {
                 ));
             }
             crate::ui_edit::paint_box(&ctx, &self.ed);
+            crate::ui_edit::road_entry(&ctx, &mut self.ed, self.view, &mut actions);
             if self.ed.doc.is_some() {
                 self.tt.window(&ctx, &mut self.ed, self.roots.as_ref(), &mut actions);
                 self.traffic.window(&ctx, &mut self.ed, self.roots.as_ref());
@@ -1328,6 +1335,9 @@ impl ApplicationHandler for App {
             }
             WindowEvent::ModifiersChanged(m) => {
                 self.keys.shift = m.state().shift_key();
+                // (Shift while drawing a road: a straight)
+                self.ed.straight_lock = self.keys.shift;
+                self.ed.replan = true;
                 self.keys.ctrl = m.state().control_key() || m.state().super_key();
                 let alt = m.state().alt_key();
                 // (Alt / Option goes down: the camera will orbit round the point under the cursor)

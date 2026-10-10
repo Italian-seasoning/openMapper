@@ -199,8 +199,24 @@ pub struct Editor {
     move_delta: DVec2,
     /// How those ends would follow, shown while dragging.
     carry_preview: Vec<reshape::Plan>,
+    /// openMapper's junctions whose arms changed: their plates are made again before the
+    /// open history step is closed (the next tick, which has the models).
+    pending_rebuild: Vec<i64>,
     /// How objects are put along roads.
     pub row_params: crate::rows::RowParams,
+    /// Numbers typed while a road is drawn: length, radius, heading, rise (m) at its end.
+    pub typed_text: [String; 4],
+    /// Shift held while drawing: a straight.
+    pub straight_lock: bool,
+    /// The road drawn is planned again this frame.
+    pub replan: bool,
+    /// The Roads tool builds roundabouts: a click on the centre, then on the ring (or a
+    /// drag out to it).
+    pub roundabout: bool,
+    ring_centre: Option<DVec3>,
+    /// Roads keep their height (bridges, embankments): an even gradient from end to end,
+    /// the ground left as it is.
+    pub keep_height: bool,
     /// The ruler, when on: its first point and, once clicked, its second.
     pub ruler: Option<(Option<DVec3>, Option<DVec3>)>,
     // snapping
@@ -285,8 +301,15 @@ impl Default for Editor {
             move_arms: Vec::new(),
             move_delta: DVec2::ZERO,
             carry_preview: Vec::new(),
+            pending_rebuild: Vec::new(),
             row_params: Default::default(),
             ruler: None,
+            typed_text: Default::default(),
+            straight_lock: false,
+            replan: false,
+            roundabout: false,
+            ring_centre: None,
+            keep_height: false,
             snap_grid: false,
             grid_step: 1.0,
             snap_angle: false,
@@ -404,6 +427,7 @@ impl Editor {
         self.drag = Drag::None;
         self.reshape = None;
         self.select_box = None;
+        self.ring_centre = None;
         if let Some(doc) = &mut self.doc {
             self.history.commit();
             let _ = doc;
@@ -569,7 +593,7 @@ impl Editor {
     // ---------------------------------------------------------------- per frame
 
     /// Mouse moved or the view changed: update the cursor and what the tool shows.
-    pub fn hover_ray(&mut self, assets: &mut Assets, lib: &Library, o: DVec3, d: DVec3) {
+    pub fn hover_ray(&mut self, assets: &mut Assets, _lib: &Library, o: DVec3, d: DVec3) {
         if self.doc.is_none() {
             return;
         }
@@ -588,18 +612,18 @@ impl Editor {
             Tool::Tiles => {
                 self.hover_tile = g.map(|p| tile_of(p.truncate()));
             }
-            Tool::Roads => self.plan_road(assets, lib),
+            Tool::Roads => self.plan_road(assets),
             Tool::Objects => self.plan_object(assets),
             _ => {}
         }
     }
 
     /// The cursor at a ground point (scripted use: the demo and tests).
-    pub fn hover_point(&mut self, assets: &mut Assets, lib: &Library, p: DVec3) {
+    pub fn hover_point(&mut self, assets: &mut Assets, _lib: &Library, p: DVec3) {
         self.cursor = Some(p);
         self.cursor_in_view = true;
         match self.acts_as() {
-            Tool::Roads => self.plan_road(assets, lib),
+            Tool::Roads => self.plan_road(assets),
             Tool::Objects => self.plan_object(assets),
             Tool::Tiles => self.hover_tile = Some(tile_of(p.truncate())),
             _ => {}
@@ -609,6 +633,19 @@ impl Editor {
     /// Continuous work while a button is held (brushes, dragging).
     pub fn tick(&mut self, assets: &mut Assets, dt: f64, held: bool) {
         self.learn(assets);
+        // (an undo in between closed the step: the plates are as they were)
+        if !self.pending_rebuild.is_empty() && self.drag == Drag::None {
+            if self.history.is_open() {
+                self.rebuild_pending(assets);
+                self.history.commit();
+            }
+            self.pending_rebuild.clear();
+        }
+        // (numbers typed or Shift changed: the road drawn follows at once)
+        if self.replan && self.acts_as() == Tool::Roads {
+            self.plan_road(assets);
+        }
+        self.replan = false;
         if !held {
             match std::mem::replace(&mut self.drag, Drag::None) {
                 Drag::None => {}
@@ -621,6 +658,7 @@ impl Editor {
                         let arms = std::mem::take(&mut self.move_arms);
                         self.carry(&arms, DVec2::ZERO, 0.0, self.move_delta, 0.0);
                         self.ground_to_selection();
+                        self.rebuild_pending(assets);
                     }
                     self.carry_preview.clear();
                     self.history.commit();
@@ -699,6 +737,7 @@ impl Editor {
                 self.flatten_to = self.cursor.map(|c| c.z as f32);
                 self.drag = Drag::Brush;
             }
+            Tool::Roads if self.roundabout && !self.drawing_paths() => self.ring_click(assets),
             Tool::Roads => self.road_click(assets, lib),
             Tool::Objects if self.tool == Tool::Logic && self.logic == LogicMode::Parking && self.parking_row => self.parking_click(assets, lib),
             Tool::Objects => self.place_object(lib, shift),
@@ -710,6 +749,10 @@ impl Editor {
     /// The left button let go; `dragged`: the mouse moved since it went down (a road is
     /// built by dragging from its start to its end, as well as by two clicks).
     pub fn left_release(&mut self, assets: &mut Assets, lib: &Library, dragged: bool) {
+        if self.acts_as() == Tool::Roads && self.roundabout && dragged && self.ring_centre.is_some() {
+            self.ring_click(assets);
+            return;
+        }
         if self.acts_as() == Tool::Roads && dragged && self.road_start.is_some() && self.road_plan.is_some() {
             self.road_click(assets, lib);
         }
@@ -725,6 +768,9 @@ impl Editor {
             return;
         }
         match self.acts_as() {
+            Tool::Roads if self.ring_centre.is_some() => {
+                self.ring_centre = None;
+            }
             Tool::Roads if self.road_start.is_some() => {
                 self.road_start = None;
                 self.road_plan = None;
@@ -768,15 +814,14 @@ impl Editor {
                 self.set_selection(now);
                 self.carry(&arms, pivot, deg, DVec2::ZERO, 0.0);
                 self.ground_to_selection();
-                self.history.commit();
+                self.finish_step();
             }
         }
     }
 
     pub fn delete_selected(&mut self) {
         let sels = self.selection();
-        let Some(doc) = self.doc.as_mut() else { return };
-        if sels.is_empty() {
+        if self.doc.is_none() || sels.is_empty() {
             return;
         }
         self.history.begin(match sels[..] {
@@ -784,8 +829,12 @@ impl Editor {
             [Sel::Spline(..)] => tr("Delete road", "Удаление дороги"),
             _ => tr("Delete selection", "Удаление выделенного"),
         });
+        // the junctions that lose an arm are made again with the rest (two left: a joint)
+        let hit = self.junctions_at_ends(&sels);
+        let Some(doc) = self.doc.as_mut() else { return };
         selection::delete(doc, &mut self.history, &sels);
-        self.history.commit();
+        self.pending_rebuild.extend(hit);
+        self.finish_step();
         self.select(None);
     }
 
@@ -1057,7 +1106,7 @@ impl Editor {
         })
     }
 
-    fn plan_road(&mut self, assets: &mut Assets, _lib: &Library) {
+    fn plan_road(&mut self, assets: &mut Assets) {
         self.road_plan = None;
         let Some(c) = self.cursor else { return };
         // (an end pulls the cursor only from close by: aimed at a road a little way from its
@@ -1090,9 +1139,24 @@ impl Editor {
             let d = (target - start.pos.truncate()).normalize_or_zero();
             start.pos += DVec3::new(d.x, d.y, 0.0) * hw;
         }
-        let Some(segs) = roads::plan(&start, fixed, target, end_anchor.as_ref()) else { return };
+        let typed = self.typed();
         let z0 = start.pos.z;
-        let z1 = snap.map(|a| a.pos.z).unwrap_or(c.z);
+        // numbers typed or the straight lock: the road is drawn by them, not to what the
+        // cursor is near
+        if (typed.any() || self.straight_lock) && !self.drawing_paths() {
+            let Some(segs) = crate::draw::plan(start.pos.truncate(), fixed.then_some(start.heading), self.snap_point(c.truncate()), &typed, self.straight_lock) else { return };
+            self.road_snap = None;
+            let end = segs.last().unwrap().end();
+            let z1 = if self.keep_height { z0 + self.typed_rise() } else { self.doc.as_ref().map(|d| d.ground(end)).unwrap_or(c.z) };
+            self.road_plan = Some((segs, z0, z1, None));
+            return;
+        }
+        let Some(segs) = roads::plan(&start, fixed, target, end_anchor.as_ref()) else { return };
+        let z1 = match snap {
+            Some(a) => a.pos.z,
+            None if self.keep_height => z0 + self.typed_rise(),
+            None => c.z,
+        };
         self.road_plan = Some((segs, z0, z1, snap));
     }
 
@@ -1189,7 +1253,7 @@ impl Editor {
         }
         self.history.touch_global(doc);
         let _ = total;
-        let profile = road_profile(doc, &pieces, z0, z1);
+        let profile = if self.keep_height { even_profile(&pieces, z0, z1) } else { road_profile(doc, &pieces, z0, z1) };
         let mut made: Vec<(TileKey, i64)> = Vec::new();
         let ids: Vec<i64> = pieces.iter().map(|_| doc.new_id()).collect();
         let mut curves = Vec::new();
@@ -1250,7 +1314,7 @@ impl Editor {
                 }
             }
         }
-        if self.follow_ground && !(self.tool == Tool::Logic) {
+        if self.follow_ground && !self.keep_height && !(self.tool == Tool::Logic) {
             conform_ground(doc, &curves, half);
         }
         // (the step stays open: the caller may cut the road it joined, in the same step)
@@ -1654,12 +1718,21 @@ impl Editor {
                 }
             }
             Tool::Roads => {
+                // a roundabout being laid out: its ring
+                if let (Some((c, r)), Some(rel)) = (self.ring_radius(), &self.road_type) {
+                    for sg in crate::roundabout::ring(c.truncate(), r, doc.global.left_hand_traffic) {
+                        let mut s = piece_spline(rel, &sg, &[(c.z, 0.0), (c.z, 0.0)], 0, DVec2::ZERO);
+                        s.pos[2] += 0.05;
+                        x.ghost_splines.push((rel.clone(), s, [0.35, 0.85, 0.45, 0.3]));
+                    }
+                    disc(&mut x.overlay, cam, c, w * 3.0, GREEN);
+                }
                 if let Some(rel) = &self.road_type {
                     if let Some((segs, z0, z1, _)) = &self.road_plan {
                         let pieces = roads::split(segs, 50.0);
                         let total = roads::total_length(&pieces).max(0.1);
                         let _ = total;
-                        let profile = road_profile(doc, &pieces, *z0, *z1);
+                        let profile = if self.keep_height { even_profile(&pieces, *z0, *z1) } else { road_profile(doc, &pieces, *z0, *z1) };
                         for (i, p) in pieces.iter().enumerate() {
                             let mut s = piece_spline(rel, p, &profile, i, DVec2::ZERO);
                             s.pos[2] += 0.02;
@@ -1758,6 +1831,12 @@ impl Editor {
         }
         x
     }
+}
+
+/// A junction openMapper made (and can make again): `Sceneryobjects\openMapper\<map>\junction_<id>.sco`.
+pub fn is_own_junction(file: &str) -> bool {
+    let f = file.to_lowercase();
+    f.contains("\\openmapper\\") && f.contains("junction_")
 }
 
 /// A heading to the nearest whole 15 degrees.
@@ -2018,7 +2097,7 @@ impl Editor {
         self.set_selection(now);
         self.carry(&arms, DVec2::ZERO, 0.0, delta, 0.0);
         self.ground_to_selection();
-        self.history.commit();
+        self.finish_step();
     }
 
     /// Put the object selected at a world position (the numbers in the properties).
@@ -2034,6 +2113,8 @@ impl Editor {
             }
         }
         self.carry(&arms, DVec2::ZERO, 0.0, to - o.pos, 0.0);
+        // (a number dragged moves the plate as it is: it is not made again every frame)
+        self.pending_rebuild.clear();
     }
 
     /// Raise (or lower) the selection by `dz` metres: objects above their ground, splines'
@@ -2080,7 +2161,7 @@ impl Editor {
         self.history.touch_global(doc);
         sync_entry_points(doc);
         self.carry(&arms, DVec2::ZERO, 0.0, DVec2::ZERO, dz);
-        self.history.commit();
+        self.finish_step();
     }
 
     /// Give every selected spline another type.
@@ -2145,6 +2226,23 @@ impl Editor {
                 Sel::Spline(k, id) => {
                     if let Some(sp) = doc.spline(k, id) {
                         splines.push(sp.file.clone());
+                        // (and the junctions at its ends, which a delete makes again)
+                        let c = omsi_geometry::SplineCurve::from_map(sp, tile_origin(k));
+                        let ends = [c.point_at(0.0).truncate(), c.end_point().truncate()];
+                        for (jk, t) in &doc.tiles {
+                            for o in t.tile.objects.iter().filter(|o| is_own_junction(&o.file)) {
+                                let key = o.file.to_lowercase();
+                                if self.known_helpers.contains_key(&key) {
+                                    continue;
+                                }
+                                let at = tile_origin(*jk) + DVec2::new(o.pos[0], o.pos[1]);
+                                if ends.iter().any(|e| (*e - at).length() < 80.0) {
+                                    if let Some(m) = assets.object(&o.file) {
+                                        self.known_helpers.insert(key, (m.abs_height, m.helpers.iter().map(|h| h.0).collect()));
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -2215,8 +2313,118 @@ impl Editor {
                 conform_disc(doc, centre, r, &ends);
             }
         }
+        if delta.length() > 1e-6 || deg.abs() > 1e-9 || dz.abs() > 1e-9 {
+            for (sel, _) in groups {
+                if let Sel::Object(_, id) = *sel {
+                    if self.doc.as_ref().and_then(|d| d.tiles.values().find_map(|t| t.tile.objects.iter().find(|o| o.id == id))).map(|o| is_own_junction(&o.file)).unwrap_or(false) {
+                        self.pending_rebuild.push(id);
+                    }
+                }
+            }
+        }
         if failed > 0 {
             self.error(format!("{} {failed}", tr("Roads that could not follow the junction (too sharp a bend):", "Дороги, которые не смогли последовать за перекрёстком (слишком крутой изгиб):")));
+        }
+    }
+
+    /// Close the open step, unless junction plates are still to be made again in it (the
+    /// next tick does that and closes it).
+    fn finish_step(&mut self) {
+        if self.pending_rebuild.is_empty() {
+            self.history.commit();
+        }
+    }
+
+    /// openMapper's junctions (known ones) holding an end of a spline in `sels`, not
+    /// themselves among them.
+    fn junctions_at_ends(&self, sels: &[Sel]) -> Vec<i64> {
+        let Some(doc) = self.doc.as_ref() else { return Vec::new() };
+        let mut ends: Vec<DVec2> = Vec::new();
+        for s in sels {
+            if let Sel::Spline(k, id) = *s {
+                if let Some(sp) = doc.spline(k, id) {
+                    let c = omsi_geometry::SplineCurve::from_map(sp, tile_origin(k));
+                    ends.extend([c.point_at(0.0).truncate(), c.end_point().truncate()]);
+                }
+            }
+        }
+        let mut out = Vec::new();
+        for (k, t) in &doc.tiles {
+            for o in t.tile.objects.iter().filter(|o| is_own_junction(&o.file) && !sels.contains(&Sel::Object(*k, o.id))) {
+                let Some((abs, h)) = self.known_helpers.get(&o.file.to_lowercase()) else { continue };
+                let pts = selection::helper_points(doc, *k, o.id, *abs, h);
+                if pts.iter().any(|(p, _)| ends.iter().any(|e| (*e - p.truncate()).length() < 0.6)) {
+                    out.push(o.id);
+                }
+            }
+        }
+        out
+    }
+
+    /// Make the queued junctions' plates again for the arms they have now.
+    fn rebuild_pending(&mut self, assets: &mut Assets) {
+        let ids = std::mem::take(&mut self.pending_rebuild);
+        for id in ids {
+            self.rebuild_junction(assets, id);
+        }
+    }
+
+    /// One of openMapper's junctions made again in place for the roads now ending at its
+    /// helper points: three or more, a new plate; two, a smooth joint between them; fewer,
+    /// nothing. Inside an open history step.
+    fn rebuild_junction(&mut self, assets: &mut Assets, id: i64) {
+        let Some(content) = self.content_dir.clone() else { return };
+        let asphalt = self.asphalt.clone();
+        let was_selected = self.selection().iter().any(|s| matches!(s, Sel::Object(_, x) if *x == id));
+        let Some(doc) = self.doc.as_mut() else { return };
+        let Some((jk, o)) = doc.tiles.iter().find_map(|(k, t)| t.tile.objects.iter().find(|o| o.id == id).map(|o| (*k, o.clone()))) else { return };
+        let Some(model) = assets.object(&o.file) else { return };
+        let helpers: Vec<[f32; 4]> = model.helpers.iter().map(|h| h.0).collect();
+        let pts = selection::helper_points(doc, jk, id, model.abs_height, &helpers);
+        let mut arms: Vec<crate::junction::Arm> = Vec::new();
+        for a in selection::arms_of(doc, &pts) {
+            if let Some((k, sid, at_end)) = selection::free_end_at(doc, a.pos.truncate()) {
+                if !arms.iter().any(|x| x.id == sid && x.at_end == at_end) {
+                    arms.push(crate::junction::Arm { key: k, id: sid, at_end });
+                }
+            }
+        }
+        let centre = doc.object_world(jk, &o, model.abs_height);
+        self.history.touch_tile(doc, jk);
+        for a in &arms {
+            self.history.touch_tile(doc, a.key);
+        }
+        self.history.touch_global(doc);
+        doc.delete_object(jk, id);
+        match arms.len() {
+            n if n >= 3 => match crate::junction::make(doc, assets, &content, asphalt.as_deref(), centre, &arms) {
+                Ok(new) => {
+                    if was_selected {
+                        let k = doc.tiles.iter().find(|(_, t)| t.tile.objects.iter().any(|o| o.id == new)).map(|(k, _)| *k).unwrap_or(jk);
+                        let v: Vec<Sel> = self.selection().into_iter().map(|s| if s == Sel::Object(jk, id) { Sel::Object(k, new) } else { s }).collect();
+                        self.set_selection(v);
+                    }
+                }
+                Err(e) => {
+                    // (the plate as it was, rather than none)
+                    log::warn!("junction: {e}");
+                    if let Some(t) = doc.tiles.get_mut(&jk) {
+                        t.tile.objects.push(o);
+                        t.touch_content();
+                    }
+                }
+            },
+            2 => {
+                join_arms(doc, &arms[0], &arms[1]);
+                if was_selected {
+                    self.select(None);
+                }
+            }
+            _ => {
+                if was_selected {
+                    self.select(None);
+                }
+            }
         }
     }
 
@@ -2356,6 +2564,126 @@ impl Editor {
             }
         }
         self.history.commit();
+    }
+
+    // ------------------------------------------------------------ drawing by numbers
+
+    /// The numbers typed for the road being drawn.
+    pub fn typed(&self) -> crate::draw::Typed {
+        let t = &self.typed_text;
+        crate::draw::Typed { length: crate::draw::parse(&t[0]).filter(|v| *v > 0.0), radius: crate::draw::parse(&t[1]), heading: crate::draw::parse(&t[2]).map(roads::norm_deg) }
+    }
+
+    /// How much a road that keeps its height climbs to its end (m).
+    pub fn typed_rise(&self) -> f64 {
+        crate::draw::parse(&self.typed_text[3]).unwrap_or(0.0)
+    }
+
+    /// The road being drawn, as it would be built: length, radius of its last arc (0:
+    /// straight), heading at its end, rise.
+    pub fn road_plan_facts(&self) -> Option<(f64, f64, f64, f64)> {
+        let (segs, z0, z1, _) = self.road_plan.as_ref()?;
+        let last = segs.last()?;
+        Some((roads::total_length(segs), last.radius, roads::norm_deg(last.end_heading()), z1 - z0))
+    }
+
+    /// Build the road drawn so far (Enter).
+    pub fn confirm_road(&mut self, assets: &mut Assets, lib: &Library) {
+        if self.acts_as() == Tool::Roads && self.road_start.is_some() {
+            self.plan_road(assets);
+            self.road_click(assets, lib);
+        }
+    }
+
+    // ------------------------------------------------------------ roundabouts
+
+    /// The ring's radius for the cursor now (None: no centre yet).
+    fn ring_radius(&self) -> Option<(DVec3, f64)> {
+        let c = self.ring_centre?;
+        let r = (self.cursor?.truncate() - c.truncate()).length();
+        Some((c, r.max(crate::roundabout::MIN_RADIUS)))
+    }
+
+    /// The ring goes the way traffic goes round: anticlockwise where it keeps right, unless
+    /// the road type's lanes run backwards.
+    fn ring_clockwise(&self, assets: &mut Assets, rel: &str) -> bool {
+        let left = self.doc.as_ref().map(|d| d.global.left_hand_traffic).unwrap_or(false);
+        let backwards = assets.spline(rel).map(|m| {
+            let streets: Vec<i32> = m.def.paths.iter().filter(|p| p.kind == 0).map(|p| p.direction).collect();
+            !streets.is_empty() && streets.iter().all(|d| *d == 1)
+        });
+        left != backwards.unwrap_or(false)
+    }
+
+    fn ring_click(&mut self, assets: &mut Assets) {
+        let Some(c) = self.cursor else { return };
+        if self.ring_centre.is_none() {
+            self.ring_centre = Some(c);
+            return;
+        }
+        let Some((centre, r)) = self.ring_radius() else { return };
+        self.ring_centre = None;
+        self.build_roundabout(assets, centre, r);
+    }
+
+    /// Build a roundabout of the chosen road type: the ring, the roads inside it cut back
+    /// to its edge, junctions where they meet it.
+    pub fn build_roundabout(&mut self, assets: &mut Assets, centre: DVec3, r: f64) {
+        let Some(rel) = self.road_type.clone() else {
+            self.toast(tr("Pick a road type in the catalogue first", "Сначала выберите тип дороги в каталоге"));
+            return;
+        };
+        let Some(model) = assets.spline(&rel) else { return };
+        let two_way = {
+            let dirs: Vec<i32> = model.def.paths.iter().filter(|p| p.kind == 0).map(|p| p.direction).collect();
+            dirs.contains(&2) || (dirs.contains(&0) && dirs.contains(&1))
+        };
+        let half = model.half_width as f64;
+        let clockwise = self.ring_clockwise(assets, &rel);
+        let segs = crate::roundabout::ring(centre.truncate(), r, clockwise);
+        let Some(doc) = self.doc.as_ref() else { return };
+        let z = doc.ground(segs[0].start);
+        // (the roads one sees that come into the circle: they are cut back to it)
+        let mut inside: Vec<(TileKey, i64)> = Vec::new();
+        for (k, t) in &doc.tiles {
+            let org = tile_origin(*k);
+            for s in t.tile.splines.iter().filter(|s| !s.deleted) {
+                if !assets.spline(&s.file).map(|m| m.joinable()).unwrap_or(false) {
+                    continue;
+                }
+                let c = omsi_geometry::SplineCurve::from_map(s, org);
+                let n = (s.length / 2.0).ceil().max(2.0) as usize;
+                if (0..=n).any(|i| (c.point_at(s.length * i as f64 / n as f64).truncate() - centre.truncate()).length() < r) {
+                    inside.push((*k, s.id));
+                }
+            }
+        }
+        let Some(made) = self.build_road(&rel, &segs, z, z, Anchor::default(), None, half) else { return };
+        let Some(doc) = self.doc.as_mut() else { return };
+        // the ring closes on itself
+        let (first, last) = (made[0], *made.last().unwrap());
+        if let Some(s) = doc.tiles.get_mut(&first.0).and_then(|t| t.tile.splines.iter_mut().find(|s| s.id == first.1)) {
+            s.prev_id = last.1;
+        }
+        if let Some(s) = doc.tiles.get_mut(&last.0).and_then(|t| t.tile.splines.iter_mut().find(|s| s.id == last.1)) {
+            s.next_id = first.1;
+        }
+        // (cut a metre inside the ring's centre line, so each road still crosses it there)
+        crate::roundabout::clear_inside(doc, &inside, centre.truncate(), r - 1.0);
+        // openMapper's junctions inside go with the roads they joined
+        let gone: Vec<(TileKey, i64)> = doc.tiles.iter().flat_map(|(k, t)| t.tile.objects.iter().filter(|o| is_own_junction(&o.file) && (tile_origin(*k) + DVec2::new(o.pos[0], o.pos[1]) - centre.truncate()).length() < r - 1.0).map(move |o| (*k, o.id))).collect();
+        for (k, id) in gone {
+            doc.delete_object(k, id);
+        }
+        for k in made.iter().map(|m| m.0).collect::<Vec<_>>() {
+            doc.tiles.get_mut(&k).map(|t| t.touch_content());
+        }
+        let n = if self.auto_junctions { self.make_junctions(assets, &made, half, None, None) } else { 0 };
+        self.history.commit();
+        self.toast(format!("{} {n}", tr("Roundabout built; roads joined to it:", "Кольцо построено; дорог присоединено:")));
+        if two_way {
+            self.error(tr("This road type carries traffic both ways: pick a one-way road for a proper roundabout", "Этот тип дороги — двустороннее движение: для настоящего кольца выберите одностороннюю дорогу"));
+        }
     }
 
     // ------------------------------------------------------------ ruler
@@ -2586,6 +2914,19 @@ fn set_world_sample(doc: &mut Document, hist: &mut History, gx: i64, gy: i64, n:
 /// The heights of a planned road at the joints of its pieces, (height, gradient %): the
 /// ground's, smoothed along the road (so it climbs hills instead of cutting through them),
 /// from `z0` at the start to `z1` at the end, no steeper than 10 %.
+/// An even climb from `z0` to `z1` (a road that keeps its height: a bridge, an embankment).
+fn even_profile(pieces: &[Seg], z0: f64, z1: f64) -> Vec<(f64, f64)> {
+    let total = roads::total_length(pieces).max(0.1);
+    let g = (z1 - z0) / total * 100.0;
+    let mut acc = 0.0;
+    let mut out = vec![(z0, g)];
+    for p in pieces {
+        acc += p.length;
+        out.push((z0 + (z1 - z0) * acc / total, g));
+    }
+    out
+}
+
 fn road_profile(doc: &Document, pieces: &[Seg], z0: f64, z1: f64) -> Vec<(f64, f64)> {
     let mut nodes = vec![0.0];
     for p in pieces {
@@ -2977,6 +3318,25 @@ mod tests {
         let doc = ed.doc.as_ref().unwrap();
         let c1 = omsi_geometry::SplineCurve::from_map(doc.spline((0, 0), 1).unwrap(), DVec2::ZERO);
         assert!((c1.end_point().z - 1.5).abs() < 1e-9 && c1.point_at(0.0).z.abs() < 1e-9);
+    }
+
+    #[test]
+    fn deleting_an_arm_queues_its_junction_to_be_made_again() {
+        let mut doc = flat_map(1);
+        let file = "Sceneryobjects\\openMapper\\T\\junction_1.sco";
+        doc.tiles.get_mut(&(0, 0)).unwrap().tile.objects.push(omsi_map::MapObject { file: file.into(), id: 1, pos: [150.0, 150.0, 0.0], ..Default::default() });
+        add_spline(&mut doc, (0, 0), 3, 150.0, 160.0, 0.0, 40.0, 0, 0);
+        let mut ed = Editor::default();
+        ed.known_helpers.insert(file.to_lowercase(), (true, vec![[0.0, 10.0, 0.0, 0.0]]));
+        ed.open(doc);
+        assert!(is_own_junction(file) && !is_own_junction("Sceneryobjects\\Kreuz_MC\\x.sco"));
+        assert_eq!(ed.junctions_at_ends(&[Sel::Spline((0, 0), 3)]), vec![1]);
+        // (the junction deleted with it is not made again)
+        assert!(ed.junctions_at_ends(&[Sel::Spline((0, 0), 3), Sel::Object((0, 0), 1)]).is_empty());
+        ed.select(Some(Sel::Spline((0, 0), 3)));
+        ed.delete_selected();
+        assert_eq!(ed.pending_rebuild, vec![1]);
+        assert!(ed.history.is_open(), "the step stays open for the plate");
     }
 
     #[test]
