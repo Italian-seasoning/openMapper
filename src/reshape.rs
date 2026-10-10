@@ -140,15 +140,34 @@ fn ends_of(s: &MapSpline, k: TileKey) -> Ends {
 pub fn drag_end(doc: &Document, k: TileKey, id: i64, at_end: bool, p: DVec2, ground: &dyn Fn(DVec2) -> f64, locked: &dyn Fn(DVec2) -> bool) -> Result<Plan, &'static str> {
     let s = doc.spline(k, id).ok_or("gone")?;
     let e = ends_of(s, k);
+    let old = if at_end { e.b } else { e.a };
+    let link = if at_end { s.next_id } else { s.prev_id };
+    if link == 0 && locked(old.truncate()) {
+        return Err(crate::i18n::tr("This end belongs to a junction: select the junction and move it, the road follows", "Этот конец принадлежит перекрёстку: выберите перекрёсток и двигайте его, дорога последует"));
+    }
+    end_to(doc, k, id, at_end, p, None, ground(p) + (old.z - ground(old.truncate())), locked)
+}
+
+/// Carry a road's end along with what it is joined to (a junction moved or turned): to
+/// `p`, arriving there heading `arrive` (the way along the road towards that end), its height
+/// changed by `dz`.
+pub fn carry_end(doc: &Document, k: TileKey, id: i64, at_end: bool, p: DVec2, arrive: f64, dz: f64, locked: &dyn Fn(DVec2) -> bool) -> Result<Plan, &'static str> {
+    let s = doc.spline(k, id).ok_or("gone")?;
+    let e = ends_of(s, k);
+    let old = if at_end { e.b } else { e.a };
+    // (the height above the ground is not kept: the junction's plate sets it)
+    end_to(doc, k, id, at_end, p, Some(arrive), old.z + dz, locked)
+}
+
+/// The end moved to `p` at height `zp` (arriving with heading `arrive`, when given).
+fn end_to(doc: &Document, k: TileKey, id: i64, at_end: bool, p: DVec2, arrive: Option<f64>, zp: f64, locked: &dyn Fn(DVec2) -> bool) -> Result<Plan, &'static str> {
+    let s = doc.spline(k, id).ok_or("gone")?;
+    let e = ends_of(s, k);
     // the stretch runs from the end that stays to the one dragged
     let (f, hf, gf, old) = if at_end { (e.a, e.ha, e.ga, e.b) } else { (e.b, roads::norm_deg(e.hb + 180.0), -e.gb, e.a) };
     let link = if at_end { s.next_id } else { s.prev_id };
-    if link == 0 && locked(old.truncate()) {
-        return Err(crate::i18n::tr("This end belongs to a junction", "Этот конец принадлежит перекрёстку"));
-    }
     let too_sharp = crate::i18n::tr("That bend is too sharp", "Слишком крутой поворот");
-    let zp = ground(p) + (old.z - ground(old.truncate()));
-    let segs = fit(End { pos: f.truncate(), heading: Some(hf) }, End { pos: p, heading: None }).ok_or(too_sharp)?;
+    let segs = fit(End { pos: f.truncate(), heading: Some(hf) }, End { pos: p, heading: arrive }).ok_or(too_sharp)?;
     let hp = segs.last().unwrap().end_heading();
     let gp = (zp - f.z) / roads::total_length(&segs).max(0.1) * 100.0;
     let mine = Piece { key: k, id, segs, z0: f.z, z1: zp, g0: Some(gf), g1: Some(gp) };

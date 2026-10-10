@@ -189,8 +189,16 @@ pub struct Editor {
     move_from: Vec<Origin>,
     /// A reshape being dragged: its plan, or why it cannot be.
     reshape: Option<Result<reshape::Plan, &'static str>>,
-    /// Half the width of the road being reshaped (the ground is brought to it; 0: left).
-    reshape_half: f64,
+    /// What the editor has learnt of the types it edits (models load in the background):
+    /// objects' absolute height and spline helpers, splines' half widths (0: not a road one
+    /// sees, the ground is left as it is).
+    known_helpers: std::collections::HashMap<String, (bool, Vec<[f32; 4]>)>,
+    known_half: std::collections::HashMap<String, f64>,
+    /// The road ends the junctions being moved hold, and how far the move has gone.
+    move_arms: Vec<(Sel, Vec<selection::Arm>)>,
+    move_delta: DVec2,
+    /// How those ends would follow, shown while dragging.
+    carry_preview: Vec<reshape::Plan>,
     // snapping
     pub snap_grid: bool,
     pub grid_step: f64,
@@ -264,7 +272,11 @@ impl Default for Editor {
             clip: None,
             move_from: Vec::new(),
             reshape: None,
-            reshape_half: 4.0,
+            known_helpers: Default::default(),
+            known_half: Default::default(),
+            move_arms: Vec::new(),
+            move_delta: DVec2::ZERO,
+            carry_preview: Vec::new(),
             snap_grid: false,
             grid_step: 1.0,
             snap_angle: false,
@@ -541,6 +553,7 @@ impl Editor {
 
     /// Continuous work while a button is held (brushes, dragging).
     pub fn tick(&mut self, assets: &mut Assets, dt: f64, held: bool) {
+        self.learn(assets);
         if !held {
             match std::mem::replace(&mut self.drag, Drag::None) {
                 Drag::None => {}
@@ -550,7 +563,11 @@ impl Editor {
                         if let Some(doc) = self.doc.as_mut() {
                             selection::unlink_outside(doc, &mut self.history, &sels);
                         }
+                        let arms = std::mem::take(&mut self.move_arms);
+                        self.carry(&arms, DVec2::ZERO, 0.0, self.move_delta, 0.0);
+                        self.ground_to_selection();
                     }
+                    self.carry_preview.clear();
                     self.history.commit();
                 }
                 Drag::Reshape(k, id, _) => self.finish_reshape(k, id),
@@ -573,12 +590,18 @@ impl Editor {
                     }
                     self.history.begin(tr("Move", "Перемещение"));
                     self.drag = Drag::Move { grab, started: true };
+                    self.move_arms = self.arms_for(&self.selection());
                 }
                 // (the grid holds the first one's place; the rest keep their distances)
                 let first = self.move_from[0].pos;
                 let delta = self.snap_point(first + raw) - first;
                 let Some(doc) = self.doc.as_mut() else { return };
                 let now = selection::transform(doc, &mut self.history, &self.move_from, DVec2::ZERO, 0.0, delta);
+                // (the roads a junction holds follow when it is let go; meanwhile their new shape
+                // is shown)
+                let all: Vec<selection::Arm> = self.move_arms.iter().flat_map(|g| g.1.iter().copied()).collect();
+                self.carry_preview = selection::carry_plans(doc, &all, DVec2::ZERO, 0.0, delta, 0.0, &|_| false).into_iter().flatten().collect();
+                self.move_delta = delta;
                 self.set_selection(now);
             }
             Drag::Reshape(k, id, h) => {
@@ -586,8 +609,6 @@ impl Editor {
                 let joined = self.helper_anchors(assets);
                 let locked = |q: DVec2| joined.iter().any(|j| (j.truncate() - q).length() < 0.6);
                 let Some(doc) = self.doc.as_ref() else { return };
-                // (0: not a road one sees, such as an AI path; the ground stays)
-                self.reshape_half = doc.spline(k, id).and_then(|s| assets.spline(&s.file)).filter(|m| m.joinable()).map(|m| m.half_width as f64).unwrap_or(0.0);
                 let ground = |q: DVec2| doc.ground(q);
                 self.reshape = Some(match h {
                     Handle::Start | Handle::End => reshape::drag_end(doc, k, id, h == Handle::End, p, &ground, &locked),
@@ -661,6 +682,7 @@ impl Editor {
             Tool::Objects => self.place_heading = self.snap_heading(roads::norm_deg(self.place_heading + deg)),
             _ => {
                 let sels = self.selection();
+                let arms = self.arms_for(&sels);
                 let Some(doc) = self.doc.as_mut() else { return };
                 let Some(pivot) = selection::centre(doc, &sels) else { return };
                 let from: Vec<Origin> = sels.iter().filter_map(|s| selection::origin_of(doc, *s)).collect();
@@ -672,8 +694,10 @@ impl Editor {
                 self.history.begin(if sels.len() > 1 { tr("Rotate selection", "Поворот выделенного") } else { tr("Rotate", "Поворот") });
                 let now = selection::transform(doc, &mut self.history, &from, pivot, deg, DVec2::ZERO);
                 selection::unlink_outside(doc, &mut self.history, &now);
-                self.history.commit();
                 self.set_selection(now);
+                self.carry(&arms, pivot, deg, DVec2::ZERO, 0.0);
+                self.ground_to_selection();
+                self.history.commit();
             }
         }
     }
@@ -1766,34 +1790,8 @@ impl Editor {
     fn finish_reshape(&mut self, k: TileKey, id: i64) {
         match self.reshape.take() {
             Some(Ok(plan)) => {
-                let Some(doc) = self.doc.as_mut() else { return };
                 self.history.begin(tr("Reshape road", "Изменение формы дороги"));
-                for t in reshape::tiles_of(doc, &plan) {
-                    self.history.touch_tile(doc, t);
-                }
-                self.history.touch_global(doc);
-                // the ground follows the new shape, as it does a new road (the tiles it may
-                // reach are kept first)
-                let curves: Vec<omsi_geometry::SplineCurve> = reshape::preview(doc, &plan).iter().map(|s| omsi_geometry::SplineCurve::from_map(s, DVec2::ZERO)).collect();
-                let follow = self.follow_ground && self.reshape_half > 0.0;
-                if follow {
-                    let reach = self.reshape_half + 12.0;
-                    for c in &curves {
-                        for i in 0..=8 {
-                            let p = c.point_at(c.length * i as f64 / 8.0).truncate();
-                            for d in [DVec2::new(-reach, -reach), DVec2::new(reach, -reach), DVec2::new(-reach, reach), DVec2::new(reach, reach)] {
-                                let t = tile_of(p + d);
-                                if doc.tiles.contains_key(&t) {
-                                    self.history.touch_tile(doc, t);
-                                }
-                            }
-                        }
-                    }
-                }
-                reshape::apply(doc, &plan);
-                if follow {
-                    conform_ground(doc, &curves, self.reshape_half);
-                }
+                self.apply_plan(&plan);
                 self.history.commit();
                 self.select(Some(Sel::Spline(k, id)));
             }
@@ -1858,7 +1856,7 @@ impl Editor {
     }
 
     /// Paste what was copied round the cursor (without one, a little beside where it was).
-    pub fn paste(&mut self) {
+    pub fn paste(&mut self, lib: &Library) {
         let Some(clip) = self.clip.clone() else {
             self.toast(tr("Nothing copied yet", "Ещё ничего не скопировано"));
             return;
@@ -1867,7 +1865,7 @@ impl Editor {
             Some(c) => self.snap_point(c.truncate()),
             None => clip.at.truncate() + DVec2::splat(5.0),
         };
-        self.paste_clip(&clip, at, tr("Paste", "Вставка"));
+        self.paste_clip(&clip, at, tr("Paste", "Вставка"), lib);
     }
 
     /// Copy the selection and put the copy down beside it (the clipboard stays as it was).
@@ -1879,10 +1877,10 @@ impl Editor {
         }
         let step = if self.snap_grid { self.grid_step.max(1.0) * (4.0 / self.grid_step.max(1.0)).ceil() } else { 4.0 };
         let at = clip.at.truncate() + DVec2::splat(step);
-        self.paste_clip(&clip, at, tr("Duplicate", "Дублирование"));
+        self.paste_clip(&clip, at, tr("Duplicate", "Дублирование"), lib);
     }
 
-    fn paste_clip(&mut self, clip: &crate::clipboard::Clip, at: DVec2, label: &str) {
+    fn paste_clip(&mut self, clip: &crate::clipboard::Clip, at: DVec2, label: &str, lib: &Library) {
         let Some(doc) = self.doc.as_mut() else { return };
         let tiles = crate::clipboard::tiles_touched(doc, clip, at);
         if tiles.is_empty() {
@@ -1896,6 +1894,9 @@ impl Editor {
         self.history.touch_global(doc);
         let at = DVec3::new(at.x, at.y, doc.ground(at));
         let got = crate::clipboard::paste(doc, clip, at);
+        // the ground comes to the roads pasted (the catalogue knows their widths)
+        let roads: Vec<(TileKey, i64)> = got.iter().filter_map(|s| if let Sel::Spline(k, id) = s { Some((*k, *id)) } else { None }).collect();
+        self.ground_to(&roads, &|f| lib.find(f).filter(|a| matches!(a.category, crate::library::Category::Roads | crate::library::Category::Tracks)).map(|a| a.half_width as f64).unwrap_or(0.0));
         self.history.commit();
         let n = got.len();
         if n < clip.len() {
@@ -1927,6 +1928,7 @@ impl Editor {
     /// Move the selection by `delta` (m), as one step.
     pub fn move_selection_by(&mut self, delta: DVec2) {
         let sels = self.selection();
+        let arms = self.arms_for(&sels);
         let Some(doc) = self.doc.as_mut() else { return };
         let from: Vec<Origin> = sels.iter().filter_map(|s| selection::origin_of(doc, *s)).collect();
         if from.is_empty() || delta.length() < 1e-6 {
@@ -1935,14 +1937,17 @@ impl Editor {
         self.history.begin(tr("Move", "Перемещение"));
         let now = selection::transform(doc, &mut self.history, &from, DVec2::ZERO, 0.0, delta);
         selection::unlink_outside(doc, &mut self.history, &now);
-        self.history.commit();
         self.set_selection(now);
+        self.carry(&arms, DVec2::ZERO, 0.0, delta, 0.0);
+        self.ground_to_selection();
+        self.history.commit();
     }
 
     /// Put the object selected at a world position (the numbers in the properties).
     pub fn put_object(&mut self, k: TileKey, id: i64, to: DVec2) {
         let Some(o) = self.doc.as_ref().and_then(|d| selection::origin_of(d, Sel::Object(k, id))) else { return };
         self.begin_panel_step(tr("Edit object", "Изменение объекта"));
+        let arms = self.arms_for(&[Sel::Object(k, id)]);
         let Some(doc) = self.doc.as_mut() else { return };
         let now = selection::transform(doc, &mut self.history, &[o], DVec2::ZERO, 0.0, to - o.pos);
         if let Some(s) = now.first() {
@@ -1950,12 +1955,14 @@ impl Editor {
                 self.selected = Some(*s);
             }
         }
+        self.carry(&arms, DVec2::ZERO, 0.0, to - o.pos, 0.0);
     }
 
     /// Raise (or lower) the selection by `dz` metres: objects above their ground, splines'
     /// heights.
     pub fn raise_selection(&mut self, dz: f64) {
         let sels = self.selection();
+        let arms = self.arms_for(&sels);
         let Some(doc) = self.doc.as_mut() else { return };
         if sels.is_empty() || dz.abs() < 1e-9 {
             return;
@@ -1979,8 +1986,22 @@ impl Editor {
                 }
             }
         }
+        // a road joined from outside the selection meets it again: its end there comes up too
+        let ids: Vec<i64> = sels.iter().filter_map(|s| if let Sel::Spline(_, id) = s { Some(*id) } else { None }).collect();
+        for s in &sels {
+            let Sel::Spline(k, id) = *s else { continue };
+            let Some(sp) = doc.spline(k, id).cloned() else { continue };
+            let c = omsi_geometry::SplineCurve::from_map(&sp, tile_origin(k));
+            for (at_end, link, z) in [(false, sp.prev_id, c.point_at(0.0).z), (true, sp.next_id, c.end_point().z)] {
+                if link != 0 && !ids.contains(&link) {
+                    selection::touch_spline(&mut self.history, doc, k, id);
+                    reshape::set_end(doc, k, id, at_end, Some(z), None);
+                }
+            }
+        }
         self.history.touch_global(doc);
         sync_entry_points(doc);
+        self.carry(&arms, DVec2::ZERO, 0.0, DVec2::ZERO, dz);
         self.history.commit();
     }
 
@@ -2010,6 +2031,190 @@ impl Editor {
         let Some(doc) = self.doc.as_mut() else { return };
         selection::touch_spline(&mut self.history, doc, k, id);
         reshape::set_end(doc, k, id, at_end, z, g);
+    }
+
+    // ------------------------------------------------------------ junctions and ground
+
+    /// Learn the types of what is selected, as their models come in.
+    fn learn(&mut self, assets: &mut Assets) {
+        let Some(doc) = self.doc.as_ref() else { return };
+        let sels = self.selection();
+        if sels.len() > 5000 {
+            return;
+        }
+        let mut splines: Vec<String> = Vec::new();
+        for s in &sels {
+            match *s {
+                Sel::Object(k, id) => {
+                    let Some(o) = doc.object(k, id) else { continue };
+                    let key = o.file.to_lowercase();
+                    if !self.known_helpers.contains_key(&key) {
+                        if let Some(m) = assets.object(&o.file) {
+                            self.known_helpers.insert(key.clone(), (m.abs_height, m.helpers.iter().map(|h| h.0).collect()));
+                        }
+                    }
+                    // (and the roads it holds)
+                    if let Some((abs, h)) = self.known_helpers.get(&key).filter(|h| !h.1.is_empty()) {
+                        for a in selection::arms_of(doc, &selection::helper_points(doc, k, id, *abs, h)) {
+                            if let Some((ak, aid, _)) = selection::free_end_at(doc, a.pos.truncate()) {
+                                if let Some(sp) = doc.spline(ak, aid) {
+                                    splines.push(sp.file.clone());
+                                }
+                            }
+                        }
+                    }
+                }
+                Sel::Spline(k, id) => {
+                    if let Some(sp) = doc.spline(k, id) {
+                        splines.push(sp.file.clone());
+                    }
+                }
+            }
+        }
+        for f in splines {
+            let key = f.to_lowercase();
+            if !self.known_half.contains_key(&key) {
+                if let Some(m) = assets.spline(&f) {
+                    self.known_half.insert(key, if m.joinable() { m.half_width as f64 } else { 0.0 });
+                }
+            }
+        }
+    }
+
+    /// Half the width of a spline type the ground is brought to (0: left alone).
+    fn half_of(&self, file: &str) -> f64 {
+        self.known_half.get(&file.to_lowercase()).copied().unwrap_or(0.0)
+    }
+
+    /// The road ends the selected junctions hold (not those of roads selected with them,
+    /// which move along).
+    fn arms_for(&self, sels: &[Sel]) -> Vec<(Sel, Vec<selection::Arm>)> {
+        let Some(doc) = self.doc.as_ref() else { return Vec::new() };
+        let ids: Vec<i64> = sels.iter().filter_map(|s| if let Sel::Spline(_, id) = s { Some(*id) } else { None }).collect();
+        let mut out = Vec::new();
+        for s in sels {
+            let Sel::Object(k, id) = *s else { continue };
+            let Some(o) = doc.object(k, id) else { continue };
+            let Some((abs, h)) = self.known_helpers.get(&o.file.to_lowercase()).filter(|h| !h.1.is_empty()) else { continue };
+            let arms: Vec<selection::Arm> = selection::arms_of(doc, &selection::helper_points(doc, k, id, *abs, h))
+                .into_iter()
+                .filter(|a| selection::free_end_at(doc, a.pos.truncate()).map(|e| !ids.contains(&e.1)).unwrap_or(false))
+                .collect();
+            if !arms.is_empty() {
+                out.push((*s, arms));
+            }
+        }
+        out
+    }
+
+    /// The roads junctions hold follow them (turned by `deg` round `pivot`, shifted by
+    /// `delta`, raised by `dz`), and the ground comes to the junctions' plates. Inside an open
+    /// history step.
+    fn carry(&mut self, groups: &[(Sel, Vec<selection::Arm>)], pivot: DVec2, deg: f64, delta: DVec2, dz: f64) {
+        let mut failed = 0;
+        for (_, arms) in groups {
+            for a in arms {
+                // (one at a time against the map as it now is: two arms may be one road)
+                let plan = self.doc.as_ref().and_then(|d| selection::carry_plans(d, &[*a], pivot, deg, delta, dz, &|_| false).pop());
+                match plan {
+                    Some(Ok(p)) => self.apply_plan(&p),
+                    Some(Err(_)) => failed += 1,
+                    None => {}
+                }
+            }
+        }
+        if self.follow_ground && (delta.length() > 1e-6 || deg.abs() > 1e-9 || dz.abs() > 1e-9) {
+            for (sel, arms) in groups {
+                let Sel::Object(_, id) = *sel else { continue };
+                let Some(doc) = self.doc.as_mut() else { return };
+                let Some((k, o)) = doc.tiles.iter().find_map(|(k, t)| t.tile.objects.iter().find(|o| o.id == id).map(|o| (*k, o.clone()))) else { continue };
+                let abs = self.known_helpers.get(&o.file.to_lowercase()).map(|h| h.0).unwrap_or(false);
+                let centre = doc.object_world(k, &o, abs);
+                let ends: Vec<DVec3> = arms.iter().map(|a| (selection::turn_point(a.pos.truncate(), pivot, deg) + delta).extend(a.pos.z + dz)).collect();
+                let r = ends.iter().map(|e| (e.truncate() - centre.truncate()).length()).fold(3.0, f64::max) * 1.05;
+                self.touch_around(&[centre.truncate()], r + 9.0);
+                let Some(doc) = self.doc.as_mut() else { return };
+                conform_disc(doc, centre, r, &ends);
+            }
+        }
+        if failed > 0 {
+            self.error(format!("{} {failed}", tr("Roads that could not follow the junction (too sharp a bend):", "Дороги, которые не смогли последовать за перекрёстком (слишком крутой изгиб):")));
+        }
+    }
+
+    /// Keep every tile within `reach` of the points before the ground there changes.
+    fn touch_around(&mut self, pts: &[DVec2], reach: f64) {
+        let Some(doc) = self.doc.as_ref() else { return };
+        let mut keys: Vec<TileKey> = Vec::new();
+        for p in pts {
+            let (a, b) = (tile_of(*p - DVec2::splat(reach)), tile_of(*p + DVec2::splat(reach)));
+            for x in a.0..=b.0 {
+                for y in a.1..=b.1 {
+                    if doc.tiles.contains_key(&(x, y)) && !keys.contains(&(x, y)) {
+                        keys.push((x, y));
+                    }
+                }
+            }
+        }
+        for k in keys {
+            self.history.touch_tile(doc, k);
+        }
+    }
+
+    /// Put a reshape into the map, the ground following it. Inside an open history step.
+    fn apply_plan(&mut self, plan: &reshape::Plan) {
+        let Some(doc) = self.doc.as_ref() else { return };
+        for t in reshape::tiles_of(doc, plan) {
+            self.history.touch_tile(doc, t);
+        }
+        self.history.touch_global(doc);
+        let half = plan.pieces.first().and_then(|p| doc.spline(p.key, p.id)).map(|s| self.half_of(&s.file)).unwrap_or(0.0);
+        let curves: Vec<omsi_geometry::SplineCurve> = reshape::preview(doc, plan).iter().map(|s| omsi_geometry::SplineCurve::from_map(s, DVec2::ZERO)).collect();
+        let follow = self.follow_ground && half > 0.0;
+        if follow {
+            let pts: Vec<DVec2> = curves.iter().flat_map(|c| (0..=8).map(move |i| c.point_at(c.length * i as f64 / 8.0).truncate())).collect();
+            self.touch_around(&pts, half + 12.0);
+        }
+        let Some(doc) = self.doc.as_mut() else { return };
+        reshape::apply(doc, plan);
+        if follow {
+            conform_ground(doc, &curves, half);
+        }
+    }
+
+    /// Bring the ground to roads ("Shape the ground" on), each type with its own width
+    /// (`half`: 0 leaves one alone). Inside an open history step.
+    fn ground_to(&mut self, splines: &[(TileKey, i64)], half: &dyn Fn(&str) -> f64) {
+        if !self.follow_ground {
+            return;
+        }
+        let Some(doc) = self.doc.as_ref() else { return };
+        let mut groups: Vec<(f64, Vec<omsi_geometry::SplineCurve>)> = Vec::new();
+        for (k, id) in splines {
+            let Some(s) = doc.spline(*k, *id) else { continue };
+            let h = half(&s.file);
+            if h <= 0.0 {
+                continue;
+            }
+            let c = omsi_geometry::SplineCurve::from_map(s, tile_origin(*k));
+            match groups.iter_mut().find(|g| (g.0 - h).abs() < 1e-6) {
+                Some(g) => g.1.push(c),
+                None => groups.push((h, vec![c])),
+            }
+        }
+        for (h, curves) in groups {
+            let pts: Vec<DVec2> = curves.iter().flat_map(|c| (0..=8).map(move |i| c.point_at(c.length * i as f64 / 8.0).truncate())).collect();
+            self.touch_around(&pts, h + 12.0);
+            let Some(doc) = self.doc.as_mut() else { return };
+            conform_ground(doc, &curves, h);
+        }
+    }
+
+    /// The ground to the selected roads (after they moved or turned).
+    fn ground_to_selection(&mut self) {
+        let roads: Vec<(TileKey, i64)> = self.selection().iter().filter_map(|s| if let Sel::Spline(k, id) = s { Some((*k, *id)) } else { None }).collect();
+        let known = self.known_half.clone();
+        self.ground_to(&roads, &|f| known.get(&f.to_lowercase()).copied().unwrap_or(0.0));
     }
 
     // ------------------------------------------------------------ snapping
@@ -2059,6 +2264,13 @@ impl Editor {
                 let on = self.hover_handle == Some(h) || matches!(self.drag, Drag::Reshape(_, _, d) if d == h);
                 let r = if h == Handle::Mid { w * 2.5 } else { w * 3.5 };
                 disc(&mut x.overlay, cam, p + DVec3::Z * 0.3, r, if on { GREEN } else { WHITE });
+            }
+        }
+        for plan in &self.carry_preview {
+            for mut s in reshape::preview(doc, plan) {
+                s.pos[2] += 0.03;
+                let file = s.file.clone();
+                x.ghost_splines.push((file, s, [0.35, 0.85, 0.45, 0.35]));
             }
         }
         match &self.reshape {
@@ -2535,7 +2747,7 @@ mod tests {
         ed.set_selection(vec![Sel::Object((0, 0), 1), Sel::Object((0, 0), 2)]);
         assert_eq!(ed.copy(&lib), 2);
         ed.cursor = Some(DVec3::new(200.0, 200.0, 0.0));
-        ed.paste();
+        ed.paste(&lib);
         let pasted = ed.selection();
         assert_eq!(pasted.len(), 2);
         let doc = ed.doc.as_ref().unwrap();
@@ -2547,6 +2759,70 @@ mod tests {
         let d = ed.doc.as_mut().unwrap();
         ed.history.undo(d);
         assert_eq!(ed.doc.as_ref().unwrap().tiles[&(0, 0)].tile.objects.len(), 4);
+    }
+
+    /// A junction at (150, 150) holding, 10 m north of it, the start of a road running on north.
+    fn junction_editor() -> Editor {
+        let mut doc = flat_map(1);
+        add_object(&mut doc, (0, 0), 1, 150.0, 150.0);
+        add_spline(&mut doc, (0, 0), 3, 150.0, 160.0, 0.0, 40.0, 0, 0);
+        let mut ed = Editor::default();
+        ed.known_helpers.insert("sceneryobjects\\x.sco".into(), (false, vec![[0.0, 10.0, 0.0, 0.0]]));
+        ed.open(doc);
+        ed.select(Some(Sel::Object((0, 0), 1)));
+        ed
+    }
+
+    fn start_of(ed: &Editor, id: i64) -> (DVec2, f64) {
+        let (k, s) = ed.doc.as_ref().unwrap().find_spline(id).unwrap();
+        let c = omsi_geometry::SplineCurve::from_map(s, tile_origin(k));
+        (c.point_at(0.0).truncate(), roads::norm_deg(c.heading_at(0.0)))
+    }
+
+    #[test]
+    fn a_moved_junction_carries_its_roads_ends_along() {
+        let mut ed = junction_editor();
+        ed.follow_ground = false;
+        ed.move_selection_by(DVec2::new(5.0, 0.0));
+        let (p, h) = start_of(&ed, 3);
+        assert!((p - DVec2::new(155.0, 160.0)).length() < 1e-6, "{p:?}");
+        assert!(h < 1e-6 || h > 360.0 - 1e-6, "leaves the junction northwards: {h}");
+        // the far end stays
+        let s = ed.doc.as_ref().unwrap().spline((0, 0), 3).unwrap().clone();
+        let mut cur = s;
+        while cur.next_id != 0 {
+            cur = ed.doc.as_ref().unwrap().find_spline(cur.next_id).unwrap().1.clone();
+        }
+        let c = omsi_geometry::SplineCurve::from_map(&cur, DVec2::ZERO);
+        assert!((c.end_point().truncate() - DVec2::new(150.0, 200.0)).length() < 1e-6);
+        // and one undo puts it all back
+        let d = ed.doc.as_mut().unwrap();
+        ed.history.undo(d);
+        assert!((start_of(&ed, 3).0 - DVec2::new(150.0, 160.0)).length() < 1e-9);
+    }
+
+    #[test]
+    fn a_turned_junction_turns_its_roads_ends() {
+        let mut ed = junction_editor();
+        ed.follow_ground = false;
+        ed.rotate(90.0);
+        let (p, h) = start_of(&ed, 3);
+        assert!((p - DVec2::new(160.0, 150.0)).length() < 1e-6, "{p:?}");
+        assert!((h - 90.0).abs() < 1e-6, "{h}");
+    }
+
+    #[test]
+    fn raising_a_road_brings_the_neighbour_joined_outside_with_it() {
+        let mut doc = flat_map(1);
+        add_spline(&mut doc, (0, 0), 1, 100.0, 50.0, 0.0, 50.0, 0, 2);
+        add_spline(&mut doc, (0, 0), 2, 100.0, 100.0, 0.0, 50.0, 1, 0);
+        let mut ed = Editor::default();
+        ed.open(doc);
+        ed.select(Some(Sel::Spline((0, 0), 2)));
+        ed.raise_selection(1.5);
+        let doc = ed.doc.as_ref().unwrap();
+        let c1 = omsi_geometry::SplineCurve::from_map(doc.spline((0, 0), 1).unwrap(), DVec2::ZERO);
+        assert!((c1.end_point().z - 1.5).abs() < 1e-9 && c1.point_at(0.0).z.abs() < 1e-9);
     }
 
     #[test]

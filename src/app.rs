@@ -424,7 +424,7 @@ impl App {
                 self.ed.copy(&self.lib);
             }
             Action::Cut => self.ed.cut(&self.lib),
-            Action::Paste => self.ed.paste(),
+            Action::Paste => self.ed.paste(&self.lib),
             Action::Duplicate => self.ed.duplicate(&self.lib),
             Action::SelectAll => self.ed.select_all(),
             Action::FocusSelection => {
