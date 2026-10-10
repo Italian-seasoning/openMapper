@@ -628,7 +628,15 @@ impl Document {
     pub fn delete_object(&mut self, k: TileKey, id: i64) {
         let Some(t) = self.tiles.get_mut(&k) else { return };
         t.tile.objects.retain(|o| o.id != id);
-        t.tile.attach_objects.retain(|o| o.parent_id != Some(id));
+        // (and what hangs on those, in turn)
+        let mut gone = vec![id];
+        let mut i = 0;
+        while i < gone.len() {
+            let p = gone[i];
+            gone.extend(t.tile.attach_objects.iter().filter(|o| o.parent_id == Some(p)).map(|o| o.id));
+            i += 1;
+        }
+        t.tile.attach_objects.retain(|o| !gone[1..].contains(&o.id));
         t.touch_content();
         self.global.entry_points.retain(|e| e.object_id != id);
         self.global_dirty = true;

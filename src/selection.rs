@@ -518,4 +518,19 @@ pub mod tests {
         assert_eq!(ids((1, 0)), vec![6, 7]);
         assert_eq!(ids((0, 0)), vec![8]);
     }
+
+    /// An object deleted takes what hangs on it and what hangs on that.
+    #[test]
+    fn deleting_an_object_takes_everything_hanging_on_it() {
+        let mut doc = flat_map(1);
+        add_object(&mut doc, (0, 0), 1, 10.0, 10.0);
+        let t = doc.tiles.get_mut(&(0, 0)).unwrap();
+        t.tile.attach_objects.push(MapObject { file: "sign.sco".into(), id: 6, parent_id: Some(1), ..Default::default() });
+        t.tile.attach_objects.push(MapObject { file: "plate.sco".into(), id: 7, parent_id: Some(6), ..Default::default() });
+        let mut hist = History::default();
+        hist.begin("t");
+        delete(&mut doc, &mut hist, &[Sel::Object((0, 0), 1)]);
+        hist.commit();
+        assert!(doc.tiles[&(0, 0)].tile.attach_objects.is_empty());
+    }
 }
