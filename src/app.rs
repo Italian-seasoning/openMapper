@@ -617,6 +617,7 @@ impl App {
                     let p = self.cam.target.truncate();
                     let k = crate::doc::tile_of(p);
                     let l = p - tile_origin(k);
+                    self.ed.history.push_snapshot(tr("Map camera", "Камера карты"), crate::history::Snapshot { global: Some((doc.global.clone(), doc.order.clone())), ..Default::default() });
                     doc.global.map_cam = vec![k.0 as f64, k.1 as f64, l.x, self.cam.target.z, l.y, self.cam.yaw, self.cam.pitch, self.cam.distance / 4.0];
                     doc.global_dirty = true;
                     self.ed.toast(tr("The map opens with this view from now on.", "Теперь карта открывается с этого вида."));
