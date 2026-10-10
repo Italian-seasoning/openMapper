@@ -470,7 +470,7 @@ impl GeoUi {
 
     /// The imagery sources usable here, finest first (with their detail when probed).
     fn ranked(&self, prefs: &GeoPrefs, lat: f64) -> Vec<(Source, Option<f64>)> {
-        let mut v: Vec<(Source, Option<f64>, u8)> = prefs
+        let mut v: Vec<(Source, Option<f64>)> = prefs
             .all()
             .into_iter()
             .filter(|s| !s.is_terrain() && prefs.usable(s))
@@ -480,7 +480,7 @@ impl GeoUi {
                     Some(Ok(None)) => None,
                     Some(Ok(Some(z))) => {
                         let m = s.metres_per_pixel(lat, z);
-                        Some((s, Some(m), 0))
+                        Some((s, Some(m)))
                     }
                     _ => {
                         if let Some(p) = &self.probe {
@@ -488,15 +488,13 @@ impl GeoUi {
                                 return None;
                             }
                         }
-                        Some((s, None, 1))
+                        Some((s, None))
                     }
                 }
             })
             .collect();
-        let rank = |s: &Source| if s.ortho { 0 } else if s.kind == Kind::Google { 1 } else if s.name.starts_with("Mapbox") { 2 } else if s.name.starts_with("MapTiler") { 3 } else if s.name == sources::ESRI { 4 } else { 5 };
-        // (by the detail, a centimetre either way the same; then officials, keyed, Esri)
-        v.sort_by(|a, b| a.2.cmp(&b.2).then(((a.1.unwrap_or(9.0) * 100.0).round() as i64).cmp(&((b.1.unwrap_or(9.0) * 100.0).round() as i64))).then(rank(&a.0).cmp(&rank(&b.0))));
-        v.into_iter().map(|(s, m, _)| (s, m)).collect()
+        sources::rank(&mut v);
+        v
     }
 
     /// The imagery source to load from: the chosen one, else the finest here.
@@ -615,7 +613,14 @@ impl GeoUi {
             return;
         }
         let (lat, _) = geo.lat_lon(tile_origin(tiles[0].0));
-        let src = if imagery { self.source(prefs, lat) } else { None };
+        // (the sharpest here unless one is chosen: the load finds it out itself when the
+        // detail of every source is not known yet)
+        let chosen = prefs.all().into_iter().find(|s| s.name == self.file.source && prefs.usable(s));
+        let src: Option<(Vec<Source>, u8)> = match (imagery, chosen) {
+            (false, _) => None,
+            (true, Some(s)) => Some((vec![s], self.file.zoom)),
+            (true, None) => Some((self.ranked(prefs, lat).into_iter().map(|r| r.0).collect(), 0)),
+        };
         let terr = if terrain { prefs.all().into_iter().find(|s| s.name == sources::TERRARIUM) } else { None };
         let anchor = self.anchor_tile(ed);
         let spec = job::Spec {
@@ -623,7 +628,7 @@ impl GeoUi {
             geo,
             ts: ts(),
             tiles,
-            imagery: src.map(|s| (s, self.file.zoom, self.file.size)),
+            imagery: src.map(|(s, z)| (s, z, self.file.size)),
             terrain: terr.map(|s| (s, self.file.terrain.clone(), anchor)),
             prefs: prefs.clone(),
         };
@@ -1443,12 +1448,24 @@ impl GeoUi {
         }
     }
 
-    /// `OPENMAPPER_GEO=lat,lon[,load][,hide]` (checks without a person at the screen): the
-    /// map placed with its orange tile there, the window open (unless `hide`), and with
-    /// `load` imagery and heights loaded for every tile.
+    /// `OPENMAPPER_GEO=lat,lon[,load][,hide][,picture=<file>[,turn=<deg>]]` (checks without a
+    /// person at the screen): the map placed with its orange tile there, the window open
+    /// (unless `hide`), with `load` imagery and heights loaded for every tile, with
+    /// `picture` that file laid over all tiles.
     pub fn scripted(&mut self, ed: &mut Editor, prefs: &Prefs, arg: &str) {
         self.follow(ed);
         let parts: Vec<&str> = arg.split(',').map(str::trim).collect();
+        if let Some(p) = parts.iter().find_map(|p| p.strip_prefix("picture=")) {
+            let keys: Vec<TileKey> = ed.doc.as_ref().map(|d| d.tiles.keys().copied().collect()).unwrap_or_default();
+            let r = keys.iter().fold([i32::MAX, i32::MAX, i32::MIN, i32::MIN], |r, k| [r[0].min(k.0), r[1].min(k.1), r[2].max(k.0), r[3].max(k.1)]);
+            self.own_picture(ed, Path::new(p), r);
+            if let (Some(t), Some(id)) = (parts.iter().find_map(|p| p.strip_prefix("turn=")).and_then(|t| t.parse::<f64>().ok()), self.pic_sel.clone()) {
+                if let Some(pic) = self.file.pictures.get_mut(&id) {
+                    pic.fit.rotation = t;
+                }
+                self.bake_pieces(&id, true);
+            }
+        }
         let (Some(la), Some(lo)) = (parts.first().and_then(|v| v.parse::<f64>().ok()), parts.get(1).and_then(|v| v.parse::<f64>().ok())) else { return };
         if !omsi_map::world_coordinates() {
             let t = self.anchor_tile(ed);

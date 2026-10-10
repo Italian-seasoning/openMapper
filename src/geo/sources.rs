@@ -204,6 +204,29 @@ impl Source {
     }
 }
 
+/// Sources in the order to prefer them at a place, given each one's detail there (m a
+/// pixel; None: not known yet, those last): the finest first, a centimetre either way
+/// counting the same, then official orthophotos, Google, Mapbox, MapTiler, Esri, the user's.
+pub fn rank(v: &mut [(Source, Option<f64>)]) {
+    let pref = |s: &Source| {
+        if s.ortho {
+            0
+        } else if s.kind == Kind::Google {
+            1
+        } else if s.name.starts_with("Mapbox") {
+            2
+        } else if s.name.starts_with("MapTiler") {
+            3
+        } else if s.name == ESRI {
+            4
+        } else {
+            5
+        }
+    };
+    let cm = |m: Option<f64>| m.map(|m| (m * 100.0).round() as i64).unwrap_or(i64::MAX);
+    v.sort_by(|a, b| cm(a.1).cmp(&cm(b.1)).then(pref(&a.0).cmp(&pref(&b.0))));
+}
+
 /// A Google Map Tiles API session (`createSession`'s answer).
 #[derive(Debug, Clone, PartialEq)]
 pub struct GoogleSession {

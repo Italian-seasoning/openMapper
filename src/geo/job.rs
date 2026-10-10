@@ -21,9 +21,9 @@ pub struct Spec {
     pub ts: f64,
     /// The tiles and their terrain cells.
     pub tiles: Vec<(TileKey, usize)>,
-    /// Imagery: the source, the zoom (0: the finest it has there) and the picture's edge
-    /// (0: the source's own detail).
-    pub imagery: Option<(Source, u8, u32)>,
+    /// Imagery: the source (several: the sharpest of them there), the zoom (0: the finest
+    /// it has there) and the picture's edge (0: the source's own detail).
+    pub imagery: Option<(Vec<Source>, u8, u32)>,
     /// Heights: the source, the options and the tile whose mean is taken off.
     pub terrain: Option<(Source, TerrainOpts, TileKey)>,
     pub prefs: GeoPrefs,
@@ -63,14 +63,46 @@ pub fn start(spec: Spec) -> Job {
     job
 }
 
+/// The sharpest of `srcs` at (lat, lon) and its finest zoom there (each asked at once).
+fn best(srcs: &[Source], prefs: &GeoPrefs, lat: f64, lon: f64) -> Result<(Source, u8), String> {
+    let found: Vec<Result<Option<u8>, String>> = std::thread::scope(|s| {
+        let hs: Vec<_> = srcs.iter().map(|src| s.spawn(move || fetch::finest_zoom(src, prefs, lat, lon))).collect();
+        hs.into_iter().map(|h| h.join().unwrap_or_else(|_| Err("?".into()))).collect()
+    });
+    let mut v: Vec<(Source, Option<f64>)> = Vec::new();
+    let mut zooms = std::collections::HashMap::new();
+    let mut err = None;
+    for (src, r) in srcs.iter().zip(found) {
+        match r {
+            Ok(Some(z)) => {
+                zooms.insert(src.name.clone(), z);
+                v.push((src.clone(), Some(src.metres_per_pixel(lat, z))));
+            }
+            Ok(None) => {}
+            Err(e) => err = Some(e),
+        }
+    }
+    super::sources::rank(&mut v);
+    match v.into_iter().next() {
+        Some((s, _)) => {
+            let z = zooms[&s.name];
+            Ok((s, z))
+        }
+        None => Err(err.unwrap_or_else(|| tr("No source has imagery here", "Здесь нет снимков ни у одного источника").into())),
+    }
+}
+
 fn run(spec: &Spec, tx: &Sender<Msg>, cancel: &AtomicBool, done: &AtomicUsize) -> Result<(), String> {
     let mid = spec.tiles.first().map(|t| crate::doc::tile_origin(t.0) + DVec2::splat(spec.ts * 0.5)).unwrap_or_default();
     let (lat, lon) = spec.geo.lat_lon(mid);
     // the zoom and the picture's size, the same for every tile (one source, one zoom: the
     // tiles meet without a seam)
     let img = match &spec.imagery {
-        Some((src, z, size)) => {
-            let z = if *z > 0 { *z } else { fetch::finest_zoom(src, &spec.prefs, lat, lon)?.unwrap_or_else(|| src.useful_zoom(lat).min(17)) };
+        Some((srcs, z, size)) => {
+            let (src, z) = match (srcs.as_slice(), *z) {
+                ([one], z) if z > 0 => (one.clone(), z),
+                _ => best(srcs, &spec.prefs, lat, lon)?,
+            };
             let mpp = src.metres_per_pixel(lat, z);
             let size = if *size > 0 { *size } else { imagery::image_size(spec.ts, mpp) };
             let _ = tx.send(Msg::Zoom(z, mpp));
@@ -78,6 +110,7 @@ fn run(spec: &Spec, tx: &Sender<Msg>, cancel: &AtomicBool, done: &AtomicUsize) -
         }
         None => None,
     };
+    let img = img.as_ref().map(|(s, z, size)| (s, *z, *size));
     let terrain = match &spec.terrain {
         Some((src, opts, anchor)) => {
             let cells = spec.tiles.first().map(|t| t.1).unwrap_or(60);
