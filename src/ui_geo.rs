@@ -72,7 +72,7 @@ pub fn tiles_panel(ui: &mut egui::Ui, b: &mut Bridge) {
         return;
     };
     let k = t.key;
-    ui.label(format!("{} {}, {} — {}", tr("Tile", "Тайл"), k.0, k.1, t.what));
+    ui.label(format!("{} {}, {}: {}", tr("Tile", "Тайл"), k.0, k.1, t.what));
     let mut vis = t.visible;
     if crate::ui::check(ui, &mut vis, tr("Show the overlay", "Показывать подложку")).changed() {
         b.requests.push(Request::Visible(k, vis));
@@ -1117,7 +1117,7 @@ impl GeoUi {
         }
         ui.add_space(4.0);
         if world {
-            ui.label(RichText::new(tr("This map has world coordinates ([worldcoordinates]): it lies on the Earth by itself, its tiles are Web Mercator tiles.", "У этой карты мировые координаты ([worldcoordinates]): она сама лежит на Земле, её тайлы — тайлы Web Mercator.")).color(TEXT_DIM));
+            ui.label(RichText::new(tr("This map has world coordinates ([worldcoordinates]): it lies on the Earth by itself, its tiles are Web Mercator tiles.", "У этой карты мировые координаты ([worldcoordinates]): она сама лежит на Земле, её тайлы: тайлы Web Mercator.")).color(TEXT_DIM));
         } else {
             ui.horizontal_wrapped(|ui| {
                 let label = if self.placing { tr("Click on the map where the orange tile goes…", "Кликните на карте, где будет оранжевый тайл…") } else { tr("Place the map here", "Разместить карту здесь") };
@@ -1140,7 +1140,7 @@ impl GeoUi {
             });
             match &self.file.anchor {
                 Some(a) => {
-                    ui.label(RichText::new(format!("{} {}, {}: {:.6}°, {:.6}° · {}", tr("Orange tile", "Оранжевый тайл"), a.tile[0], a.tile[1], a.lat, a.lon, tr("click the map to fly there in the view", "клик по карте — перелёт туда в окне вида"))).color(TEXT_DIM));
+                    ui.label(RichText::new(format!("{} {}, {}: {:.6}°, {:.6}° · {}", tr("Orange tile", "Оранжевый тайл"), a.tile[0], a.tile[1], a.lat, a.lon, tr("click the map to fly there in the view", "клик по карте: перелёт туда в окне вида"))).color(TEXT_DIM));
                 }
                 None => {
                     ui.label(RichText::new(tr("1. Find the place.  2. Press \"Place the map here\" and click on the map: the orange tile (the map's middle) goes there.", "1. Найдите место.  2. Нажмите «Разместить карту здесь» и кликните на карте: туда встанет оранжевый тайл (середина карты).")).color(TEXT_DIM));
@@ -1287,7 +1287,7 @@ impl GeoUi {
         }
         ui.collapsing(tr("Terrain heights", "Высоты рельефа"), |ui| {
             let t = &mut self.file.terrain;
-            let mut c = crate::ui::check(ui, &mut t.relative, tr("Relative: the orange tile's mean height is 0 m", "Относительные: средняя высота оранжевого тайла — 0 м")).changed();
+            let mut c = crate::ui::check(ui, &mut t.relative, tr("Relative: the orange tile's mean height is 0 m", "Относительные: средняя высота оранжевого тайла: 0 м")).changed();
             ui.horizontal(|ui| {
                 ui.label(tr("Raise everything by", "Поднять всё на"));
                 c |= ui.add(egui::DragValue::new(&mut t.offset).speed(0.5).suffix(" m")).changed();
@@ -1445,7 +1445,7 @@ impl GeoUi {
                 });
                 ui.end_row();
             });
-            ui.label(RichText::new(tr("{z} {x} {y} are filled in; a WMS gets {bbox} (EPSG:3857) and {width} {height}; {key} is your key.", "Подставляются {z} {x} {y}; WMS получает {bbox} (EPSG:3857) и {width} {height}; {key} — ваш ключ.")).small().color(TEXT_DIM));
+            ui.label(RichText::new(tr("{z} {x} {y} are filled in; a WMS gets {bbox} (EPSG:3857) and {width} {height}; {key} is your key.", "Подставляются {z} {x} {y}; WMS получает {bbox} (EPSG:3857) и {width} {height}; {key}: ваш ключ.")).small().color(TEXT_DIM));
             let ok = !c.name.trim().is_empty() && c.url.starts_with("http") && (c.url.contains("{z}") || c.url.contains("{bbox}"));
             if ui.add_enabled(ok, egui::Button::new(icons::labelled(Icon::Add, tr("Add", "Добавить")))).clicked() {
                 let mut s = c.clone();

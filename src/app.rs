@@ -996,7 +996,7 @@ impl App {
             frame.present();
         }
         let title = match &self.ed.doc {
-            Some(d) => format!("{}{} — openMapper", if d.is_dirty() { "• " } else { "" }, d.display_name()),
+            Some(d) => format!("{}{} - openMapper", if d.is_dirty() { "• " } else { "" }, d.display_name()),
             None => "openMapper".to_string(),
         };
         g.window.set_title(&title);

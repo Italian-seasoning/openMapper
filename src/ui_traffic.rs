@@ -449,7 +449,7 @@ impl TrafficUi {
             egui::Grid::new(("list", what)).num_columns(2).spacing(Vec2::new(10.0, 2.0)).show(ui, |ui| {
                 for r in rows.iter_mut() {
                     ui.label(c.name_of(&r.0)).on_hover_text(&r.0);
-                    changed |= ui.add(egui::DragValue::new(&mut r.1).range(0..=50).prefix("× ")).on_hover_text(tr("How often it is listed (0 takes it out)", "Сколько раз в списке (0 — убрать)")).changed();
+                    changed |= ui.add(egui::DragValue::new(&mut r.1).range(0..=50).prefix("× ")).on_hover_text(tr("How often it is listed (0 takes it out)", "Сколько раз в списке (0: убрать)")).changed();
                     ui.end_row();
                 }
             });
@@ -472,7 +472,7 @@ impl TrafficUi {
 
 /// The two curves over the day, drawn and edited.
 fn day_panel(ui: &mut egui::Ui, doc: &mut Document) {
-    hint(ui, tr("How busy the map is at each hour: the road traffic, and the passengers at the stops. 1 is normal; the game goes along the line between the points.", "Насколько оживлена карта в каждый час: машины на дорогах и пассажиры на остановках. 1 — обычно; игра идёт по линии между точками."));
+    hint(ui, tr("How busy the map is at each hour: the road traffic, and the passengers at the stops. 1 is normal; the game goes along the line between the points.", "Насколько оживлена карта в каждый час: машины на дорогах и пассажиры на остановках. 1: обычно; игра идёт по линии между точками."));
     let g = &mut doc.global;
     if plot(ui, &mut g.traffic_density_road, &mut g.traffic_density_passenger) {
         g.traffic_density_road.sort_by(|a, b| a.0.total_cmp(&b.0));

@@ -119,7 +119,7 @@ impl Kind {
             Kind::UnlinkedEnds => tr("Two road ends lie on one another but are not joined. Traffic still finds its way (the game joins lanes by their ends), but rows of lamps and posts and the road's texture do not run on across, and the editor does not treat them as one road. \"Join\" links them.", "Два конца дорог лежат друг на друге, но не соединены. Транспорт проедет (игра соединяет полосы по концам), но ряды фонарей и столбиков и текстура дороги не продолжаются через стык, а редактор не считает их одной дорогой. «Соединить» свяжет их."),
             Kind::BrokenLink => tr("A spline says it goes on into another one that no longer exists. \"Fix\" forgets that link.", "Сплайн ссылается на продолжение, которого больше нет. «Исправить» уберёт эту ссылку."),
             Kind::StopOffRoad => tr("A bus stop belongs to the lane it stands beside (within about 25 m). This one has none near, so buses cannot stop at it. Move it next to the road.", "Остановка относится к полосе, у которой стоит (не дальше примерно 25 м). У этой рядом полосы нет, автобус не сможет у неё остановиться. Передвиньте её к дороге."),
-            Kind::EntryOffRoad => tr("A start point is where the bus appears. This one is away from any lane: fine in a depot yard, otherwise the bus starts off the road.", "Точка старта — где появляется автобус. Эта далеко от полос: в парке это нормально, иначе автобус окажется вне дороги."),
+            Kind::EntryOffRoad => tr("A start point is where the bus appears. This one is away from any lane: fine in a depot yard, otherwise the bus starts off the road.", "Точка старта: где появляется автобус. Эта далеко от полос: в парке это нормально, иначе автобус окажется вне дороги."),
             Kind::EntryLost => tr("A start point refers to an object that was deleted. \"Fix\" removes the start point.", "Точка старта ссылается на удалённый объект. «Исправить» удалит точку старта."),
             Kind::NoEntry => tr("There is nowhere for the bus to appear. Place a start point (Objects > Bus stops > entrypoint) on a road.", "Автобусу негде появиться. Поставьте точку старта (Объекты > Остановки > entrypoint) на дорогу."),
             Kind::DuplicateId => tr("Two things on the map share one IDCode: links, timetables and start points may pick the wrong one.", "Две вещи на карте с одним IDCode: связи, расписания и точки старта могут указать не на ту."),
@@ -457,7 +457,7 @@ fn run(s: Snapshot, roots: Vec<PathBuf>) -> Vec<Issue> {
                     out.push(issue(
                         Severity::Info,
                         Kind::UnlinkedEnds,
-                        format!("{} {} — {}", tr("splines", "сплайны"), sp.id, o.id),
+                        format!("{} {} / {}", tr("splines", "сплайны"), sp.id, o.id),
                         format!("{}, {:.2} m {}", short(&sp.file), (p - q).truncate().length(), tr("apart", "между ними")),
                         Some(p.truncate()),
                         Some(Sel::Spline(sp.tile, sp.id)),
@@ -880,7 +880,7 @@ impl Checker {
                                     let text = RichText::new(full.clone());
                                     let text = if done { text.strikethrough().color(Color32::DARK_GRAY) } else { text };
                                     let r = ui.add(egui::Label::new(text).sense(egui::Sense::click()).truncate());
-                                    let hint = if it.at.is_some() { format!("{full}\n{}", tr("Click to fly there", "Клик — перелететь туда")) } else { full };
+                                    let hint = if it.at.is_some() { format!("{full}\n{}", tr("Click to fly there", "Клик: перелететь туда")) } else { full };
                                     let r = r.on_hover_text(hint);
                                     if let (Some(at), true) = (it.at, r.clicked()) {
                                         actions.push(Action::LookAt(at));

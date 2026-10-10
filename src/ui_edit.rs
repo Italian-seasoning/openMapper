@@ -37,11 +37,11 @@ pub fn snap_controls(ui: &mut egui::Ui, ed: &mut Editor) {
     if let Some((a, b)) = ed.ruler_line() {
         let d = b - a;
         let flat = d.truncate().length();
-        let grade = if flat > 0.01 { format!("{:+.1} %", d.z / flat * 100.0) } else { "—".into() };
+        let grade = if flat > 0.01 { format!("{:+.1} %", d.z / flat * 100.0) } else { "-".into() };
         ui.label(RichText::new(format!("{:.2} m · Δh {:+.2} m · {grade}", flat, d.z)).small().monospace().color(Color32::from_rgb(255, 216, 51)));
     }
     let mut on = ed.ruler.is_some();
-    if check(ui, &mut on, RichText::new(tr("Ruler", "Линейка")).small()).on_hover_text(tr("Click two points to measure the distance and gradient between them (U) · right-click: off", "Клик по двум точкам — расстояние и уклон между ними (U) · правый клик — выключить")).changed() {
+    if check(ui, &mut on, RichText::new(tr("Ruler", "Линейка")).small()).on_hover_text(tr("Click two points to measure the distance and gradient between them (U) · right-click: off", "Клик по двум точкам: расстояние и уклон между ними (U) · правый клик: выключить")).changed() {
         ed.toggle_ruler();
     }
 }
@@ -153,7 +153,7 @@ pub fn spline_ends(ui: &mut egui::Ui, doc: &crate::doc::Document, k: TileKey, id
             });
         }
     });
-    if ui.button(tr("Even slope end to end", "Ровный уклон от начала до конца")).on_hover_text(tr("Both gradients to the straight climb between the ends' heights", "Оба уклона — по прямой между высотами концов")).clicked() {
+    if ui.button(tr("Even slope end to end", "Ровный уклон от начала до конца")).on_hover_text(tr("Both gradients to the straight climb between the ends' heights", "Оба уклона: по прямой между высотами концов")).clicked() {
         out.even = Some((z1 - z0) / s.length.max(0.1) * 100.0);
     }
     out
@@ -244,7 +244,7 @@ pub fn rows_section(ui: &mut egui::Ui, ed: &mut Editor, lib: &Library) {
                 ui.add(egui::DragValue::new(&mut p.interval).speed(0.1).range(0.5..=500.0).suffix(" m"));
             });
             prop_row(ui, tr("Beside", "Сбоку"), |ui| {
-                ui.add(egui::DragValue::new(&mut p.offset).speed(0.05).suffix(" m")).on_hover_text(tr("Right of the road's direction; negative: left", "Справа по направлению дороги; меньше нуля — слева"));
+                ui.add(egui::DragValue::new(&mut p.offset).speed(0.05).suffix(" m")).on_hover_text(tr("Right of the road's direction; negative: left", "Справа по направлению дороги; меньше нуля: слева"));
             });
             prop_row(ui, tr("Free at start / end", "Отступ в начале / конце"), |ui| {
                 ui.horizontal(|ui| {
@@ -318,7 +318,7 @@ pub fn road_entry(ctx: &egui::Context, ed: &mut Editor, view: egui::Rect, action
                     ed.typed_text = Default::default();
                     ed.replan = true;
                 }
-                ui.label(RichText::new(tr("Shift: straight · Enter: build", "Shift — прямая · Enter — построить")).small().color(TEXT_DIM));
+                ui.label(RichText::new(tr("Shift: straight · Enter: build", "Shift: прямая · Enter: построить")).small().color(TEXT_DIM));
                 if enter {
                     actions.push(crate::ui::Action::BuildRoad);
                 }
@@ -374,7 +374,7 @@ pub fn junction_section(ui: &mut egui::Ui, ed: &mut Editor, k: TileKey, id: i64)
                     apply = true;
                 }
             }
-            ui.label(RichText::new(tr("The main road is the pair of roads most in line; red-yellow 2 s, yellow 3 s, 2 s all red between", "Главная — пара дорог, лежащих ближе всего к одной линии; красный с жёлтым 2 с, жёлтый 3 с, между фазами 2 с всем красный")).small().color(TEXT_DIM));
+            ui.label(RichText::new(tr("The main road is the pair of roads most in line; red-yellow 2 s, yellow 3 s, 2 s all red between", "Главная: пара дорог, лежащих ближе всего к одной линии; красный с жёлтым 2 с, жёлтый 3 с, между фазами 2 с всем красный")).small().color(TEXT_DIM));
         }
         ui.add_space(4.0);
         ui.label(RichText::new(tr("Zebra crossings", "Пешеходные переходы")).strong());

@@ -14,16 +14,16 @@ experienced map makers.
 | Tool | Key | What it does |
 | --- | --- | --- |
 | Select | 1 | click an object or road · `Shift`+click adds or takes away · `Shift`/`Ctrl` + drag on empty ground selects with a box · drag the selection to move it all · `R` turns it round its middle · `Del` deletes it · `Ctrl+C / X / V / D` copy, cut, paste at the cursor, duplicate (links inside the copy kept, rows of objects and things hanging on them come along) · several selected: move, raise and turn by numbers, give every road one type |
-| Road shape | — | select a road: drag its end dots to move an end (a road joined there follows, tangent at the joint, its far end kept; an end at a junction stays), drag the middle dot to bend it. Heights and gradients at both ends in the properties, the joined road following |
-| Roundabouts | — | Roads tool option: click the centre, then the ring (or drag out to it). A one-way ring of the chosen road type, anticlockwise where traffic keeps right and clockwise where it keeps left; the roads that ran into the circle are cut back and joined to the ring with junctions |
-| Drawing by numbers | — | while a road is drawn: type its length, radius or heading in the fields at the view's corner (empty ones follow the cursor), `Shift` draws a straight, `Enter` builds it. "Keep the height" draws bridges and embankments: an even gradient, a rise typed for the end, the ground left alone (pillars: objects along the road) |
-| Junction lights and crossings | — | select one of openMapper's junctions: "Traffic lights" writes OMSI's light program into it (main road and side roads, greens editable) with the installation's own signal heads on poles bound to it, the AI stopping at red; zebra crossings per road, with a footway across. A road drawn into a plate, or a road end dropped on one, becomes another arm of it |
-| Junction moves | — | a junction (or any piece with spline helpers) moved, turned or raised carries the ends of its roads along, tangent, the road before a short arm bending with it; the ground follows its plate; openMapper's own junction plates are made again for their roads, and deleting an arm leaves the others joined (two left: a smooth joint) |
-| Objects along a road | — | select a road or a chain: put the object chosen in the catalogue every so many metres beside it (one or both sides, margins, height, turn, leaning), as OMSI spline attachment rows that follow the road; the road's properties list its rows to change or remove |
+| Road shape | - | select a road: drag its end dots to move an end (a road joined there follows, tangent at the joint, its far end kept; an end at a junction stays), drag the middle dot to bend it. Heights and gradients at both ends in the properties, the joined road following |
+| Roundabouts | - | Roads tool option: click the centre, then the ring (or drag out to it). A one-way ring of the chosen road type, anticlockwise where traffic keeps right and clockwise where it keeps left; the roads that ran into the circle are cut back and joined to the ring with junctions |
+| Drawing by numbers | - | while a road is drawn: type its length, radius or heading in the fields at the view's corner (empty ones follow the cursor), `Shift` draws a straight, `Enter` builds it. "Keep the height" draws bridges and embankments: an even gradient, a rise typed for the end, the ground left alone (pillars: objects along the road) |
+| Junction lights and crossings | - | select one of openMapper's junctions: "Traffic lights" writes OMSI's light program into it (main road and side roads, greens editable) with the installation's own signal heads on poles bound to it, the AI stopping at red; zebra crossings per road, with a footway across. A road drawn into a plate, or a road end dropped on one, becomes another arm of it |
+| Junction moves | - | a junction (or any piece with spline helpers) moved, turned or raised carries the ends of its roads along, tangent, the road before a short arm bending with it; the ground follows its plate; openMapper's own junction plates are made again for their roads, and deleting an arm leaves the others joined (two left: a smooth joint) |
+| Objects along a road | - | select a road or a chain: put the object chosen in the catalogue every so many metres beside it (one or both sides, margins, height, turn, leaning), as OMSI spline attachment rows that follow the road; the road's properties list its rows to change or remove |
 | Ruler | U | status bar: click two points for the distance, the height between them and the gradient |
-| Snapping | — | status bar: `Grid` (0.5–10 m) for placing, moving, road ends and reshaping; `15°` for headings |
+| Snapping | - | status bar: `Grid` (0.5–10 m) for placing, moving, road ends and reshaping; `15°` for headings |
 | Roads | 2 | click the start, then the end: the arc builds itself. A road continues smoothly from a road end it starts at, joins another end with an S-curve or bend (biarc), is cut into OMSI splines and linked with its neighbours. It can shape the ground under itself. |
-| Junctions | — | automatic: a road drawn into another's middle or across it cuts both and fills the gap with a junction object of its own (asphalt plate, `[path]` lanes for straight on, right and left, footpaths round the corners), written as ordinary OMSI content into `Sceneryobjects\openMapper\<map>` |
+| Junctions | - | automatic: a road drawn into another's middle or across it cuts both and fills the gap with a junction object of its own (asphalt plate, `[path]` lanes for straight on, right and left, footpaths round the corners), written as ordinary OMSI content into `Sceneryobjects\openMapper\<map>` |
 | Objects | 3 | catalogue as the installation's folder tree with thumbnails; classes read from the files themselves (roads, tracks, footpaths, decoration, technical AI/helper splines; trees, stops, junction pieces, technical helpers), search, turning towards the nearest road |
 | Game logic | 4 | start points (`[entrypoint]`), bus stops, car parks (one by one or in a row along the kerb), AI paths for cars and people drawn like roads and snapped to lane ends, sound sources and other editor-only helpers |
 | Terrain | 5 | raise / lower / smooth / flatten brush |
@@ -74,7 +74,7 @@ experienced map makers.
   ground, and "Start with a sample": a ring road with stops, a start point, line 1 both ways,
   a tour from 06:00 to 22:00, a depot and AI traffic, so it can be driven in service at once.
 * **Getting started** (Help menu, opens by itself for a new map): a checklist that ticks
-  itself as the map grows — road, stop, start point, line, tour, buses, saved, test drive —
+  itself as the map grows (road, stop, start point, line, tour, buses, saved, test drive),
   with a "Show me" for each step.
 * **Test drive**: saves and launches openOMSI on this map.
 * **Map check** (Map > Check map…): missing objects, roads and textures, road ends lying on
@@ -96,7 +96,7 @@ experienced map makers.
   it.
 * **Overview map** in the corner of the view (`M`): tiles, roads, tracks and the camera;
   click or drag on it to move there, double-click for a larger one.
-* **Asset import**: drop onto the window or use the button —
+* **Asset import**: drop onto the window or use the button:
   * a mod (a folder or `.zip` laid out like OMSI 2) is merged into the content folder;
   * a folder of `.sco` / `.sli` files becomes a folder under `Sceneryobjects` / `Splines`;
   * a 3D model (`.obj` from Blender and others, `.x`, `.o3d`) becomes a new object: a `.sco` is

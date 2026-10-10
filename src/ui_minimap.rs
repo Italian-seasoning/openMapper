@@ -138,7 +138,7 @@ impl Minimap {
         painter.add(Shape::convex_polygon(vec![at, at + fwd * reach + side_v, at + fwd * reach - side_v], Color32::from_rgba_unmultiplied(232, 120, 40, 50), Stroke::new(1.0, accent)));
         painter.circle_filled(at, 3.5, accent);
         painter.rect_stroke(rect.expand(4.0), CornerRadius::same(3), Stroke::new(1.0, Color32::from_rgb(60, 62, 68)), egui::StrokeKind::Inside);
-        let resp = resp.on_hover_text(tr("Overview: click or drag to move there · double-click: larger / smaller · M: hide", "Обзор: клик или перетаскивание — переместиться · двойной клик — крупнее / мельче · M — скрыть"));
+        let resp = resp.on_hover_text(tr("Overview: click or drag to move there · double-click: larger / smaller · M: hide", "Обзор: клик или перетаскивание: переместиться · двойной клик: крупнее / мельче · M: скрыть"));
         if resp.double_clicked() {
             self.large = !self.large;
             return None;

@@ -436,7 +436,7 @@ pub fn welcome(root: &mut egui::Ui, st: &mut UiState, prefs: &Prefs, omsi: Optio
                         });
                     });
                     ui.add_space(4.0);
-                    ui.label(RichText::new(tr("Double-click a map to open it. Maps of OMSI 2 are saved as a copy into openOMSI's content folder; the original stays untouched.", "Двойной клик — открыть карту. Карты OMSI 2 сохраняются копией в папку контента openOMSI; оригинал не меняется.")).small().color(TEXT_DIM));
+                    ui.label(RichText::new(tr("Double-click a map to open it. Maps of OMSI 2 are saved as a copy into openOMSI's content folder; the original stays untouched.", "Двойной клик: открыть карту. Карты OMSI 2 сохраняются копией в папку контента openOMSI; оригинал не меняется.")).small().color(TEXT_DIM));
                 });
             });
         });
@@ -681,7 +681,7 @@ fn toolbar(root: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, can_undo: boo
             if dirty {
                 ui.painter().circle_filled(r.rect.right_top() + Vec2::new(-6.0, 6.0), 3.0, ACCENT);
             }
-            help(st, &r, if dirty { tr("Save (Ctrl+S) — there are unsaved changes", "Сохранить (Ctrl+S) — есть несохранённые изменения") } else { tr("Save (Ctrl+S)", "Сохранить (Ctrl+S)") });
+            help(st, &r, if dirty { tr("Save (Ctrl+S): there are unsaved changes", "Сохранить (Ctrl+S): есть несохранённые изменения") } else { tr("Save (Ctrl+S)", "Сохранить (Ctrl+S)") });
             if r.clicked() {
                 actions.push(Action::Save);
             }
@@ -774,17 +774,17 @@ fn status_bar(root: &mut egui::Ui, help_line: Option<String>, ed: &mut Editor, s
 
 fn tool_hint(ed: &Editor) -> &'static str {
     match ed.tool {
-        Tool::Select if ed.single_spline().is_some() => tr("Drag a white dot: an end moves (joined roads follow), the middle bends the road · drag the road to move it · Shift+click: add to the selection", "Тяните белую точку: конец двигается (соседние дороги следуют), середина изгибает дорогу · тянуть дорогу — сдвиг · Shift+клик — добавить к выделению"),
-        Tool::Select => tr("Click to select, Shift+click to add · Shift+drag on empty ground: box · drag the selection to move it, empty ground to move the map · Ctrl+C / X / V / D · right button: look + WASD/QE fly · wheel: zoom · F: focus", "Клик — выбрать, Shift+клик — добавить · Shift+тянуть по пустой земле — рамка · тянуть выделенное — сдвиг, пустую землю — двигать карту · Ctrl+C / X / V / D · ПКМ — обзор + полёт WASD/QE · колесо — зум · F — к выделенному"),
+        Tool::Select if ed.single_spline().is_some() => tr("Drag a white dot: an end moves (joined roads follow), the middle bends the road · drag the road to move it · Shift+click: add to the selection", "Тяните белую точку: конец двигается (соседние дороги следуют), середина изгибает дорогу · тянуть дорогу: сдвиг · Shift+клик: добавить к выделению"),
+        Tool::Select => tr("Click to select, Shift+click to add · Shift+drag on empty ground: box · drag the selection to move it, empty ground to move the map · Ctrl+C / X / V / D · right button: look + WASD/QE fly · wheel: zoom · F: focus", "Клик: выбрать, Shift+клик: добавить · Shift+тянуть по пустой земле: рамка · тянуть выделенное: сдвиг, пустую землю: двигать карту · Ctrl+C / X / V / D · ПКМ: обзор + полёт WASD/QE · колесо: зум · F: к выделенному"),
         Tool::Roads if ed.road_type.is_none() => tr("Choose a road type in the list on the left", "Выберите тип дороги в списке слева"),
-        Tool::Roads => tr("Click where the road starts, click again where it goes (it keeps going) · white dots: road ends to join · right-click / Esc: stop", "Клик — начало дороги, ещё клик — куда она идёт (дальше продолжается) · белые точки — концы для стыковки · правый клик / Esc — стоп"),
+        Tool::Roads => tr("Click where the road starts, click again where it goes (it keeps going) · white dots: road ends to join · right-click / Esc: stop", "Клик: начало дороги, ещё клик: куда она идёт (дальше продолжается) · белые точки: концы для стыковки · правый клик / Esc: стоп"),
         Tool::Objects if ed.object_type.is_none() => tr("Choose an object in the list on the left", "Выберите объект в списке слева"),
-        Tool::Objects => tr("Click to place · R / Shift+R turn · right-click puts the object away", "Клик — поставить · R / Shift+R — поворот · правый клик — убрать объект"),
-        Tool::Logic if ed.logic == LogicMode::Paths => tr("Click where the path starts, click where it goes (it keeps going) · it snaps to lane ends and along lanes · right-click / Esc: stop", "Клик — начало пути, ещё клик — куда он идёт (дальше продолжается) · прилипает к концам и вдоль полос · правый клик / Esc — стоп"),
-        Tool::Logic if ed.logic == LogicMode::Parking && ed.parking_row => tr("Click the start of a row, then its end · R turns the cars · right-click: cancel", "Клик — начало ряда, потом его конец · R — повернуть машины · правый клик — отмена"),
-        Tool::Logic => tr("Choose what to place in the list on the left, then click in the view · R / Shift+R turn", "Выберите, что ставить, в списке слева, потом клик в окне · R / Shift+R — поворот"),
-        Tool::Terrain | Tool::Paint => tr("Hold the left button and drag · [ ] or Shift+wheel: brush size", "Зажмите левую кнопку и ведите · [ ] или Shift+колесо — размер кисти"),
-        Tool::Tiles => tr("Click beside the map to add a tile · click a tile for its overlay · right-click a tile to remove it", "Клик рядом с картой — добавить тайл · клик по тайлу — его подложка · правый клик по тайлу — удалить"),
+        Tool::Objects => tr("Click to place · R / Shift+R turn · right-click puts the object away", "Клик: поставить · R / Shift+R: поворот · правый клик: убрать объект"),
+        Tool::Logic if ed.logic == LogicMode::Paths => tr("Click where the path starts, click where it goes (it keeps going) · it snaps to lane ends and along lanes · right-click / Esc: stop", "Клик: начало пути, ещё клик: куда он идёт (дальше продолжается) · прилипает к концам и вдоль полос · правый клик / Esc: стоп"),
+        Tool::Logic if ed.logic == LogicMode::Parking && ed.parking_row => tr("Click the start of a row, then its end · R turns the cars · right-click: cancel", "Клик: начало ряда, потом его конец · R: повернуть машины · правый клик: отмена"),
+        Tool::Logic => tr("Choose what to place in the list on the left, then click in the view · R / Shift+R turn", "Выберите, что ставить, в списке слева, потом клик в окне · R / Shift+R: поворот"),
+        Tool::Terrain | Tool::Paint => tr("Hold the left button and drag · [ ] or Shift+wheel: brush size", "Зажмите левую кнопку и ведите · [ ] или Shift+колесо: размер кисти"),
+        Tool::Tiles => tr("Click beside the map to add a tile · click a tile for its overlay · right-click a tile to remove it", "Клик рядом с картой: добавить тайл · клик по тайлу: его подложка · правый клик по тайлу: удалить"),
     }
 }
 
@@ -811,7 +811,7 @@ fn tool_panel(
         Tool::Paint => paint_panel(ui, st, ed, swatches, wanted_swatches, actions),
         Tool::Tiles => {
             let n = ed.doc.as_ref().map(|d| d.tiles.len()).unwrap_or(0);
-            ui.label(tr("Click beside the map to add a 300 × 300 m tile. Right-click a tile to remove it.", "Клик рядом с картой — добавить тайл 300 × 300 м. Правый клик по тайлу — удалить."));
+            ui.label(tr("Click beside the map to add a 300 × 300 m tile. Right-click a tile to remove it.", "Клик рядом с картой: добавить тайл 300 × 300 м. Правый клик по тайлу: удалить."));
             ui.add_space(6.0);
             egui::Grid::new("tiles").num_columns(2).show(ui, |ui| {
                 ui.label(RichText::new(tr("Tiles", "Тайлов")).color(TEXT_DIM));
@@ -824,7 +824,7 @@ fn tool_panel(
             crate::ui_geo::tiles_panel(ui, &mut st.geo);
         }
         Tool::Select => {
-            ui.label(RichText::new(tr("Click an object or a road in the view to see and change it on the right.", "Кликните объект или дорогу в окне вида — свойства появятся справа.")).color(TEXT_DIM));
+            ui.label(RichText::new(tr("Click an object or a road in the view to see and change it on the right.", "Кликните объект или дорогу в окне вида: свойства появятся справа.")).color(TEXT_DIM));
             ui.add_space(8.0);
             ui.label(RichText::new(tr("Tools", "Инструменты")).strong());
             for t in Tool::ALL.iter().skip(1) {
@@ -994,7 +994,7 @@ fn catalogue_of(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Libr
             }
             ui.painter().text(rect.min + Vec2::new(h + 6.0, 28.0), egui::Align2::LEFT_CENTER, sub, egui::FontId::proportional(11.0), TEXT_DIM);
             if resp.hovered() {
-                st.status_help = Some(format!("{} · {}", a.rel, tr("right-click: star it", "правый клик — в избранное")));
+                st.status_help = Some(format!("{} · {}", a.rel, tr("right-click: star it", "правый клик: в избранное")));
             }
             resp.context_menu(|ui| {
                 let text = if starred { tr("Remove from favourites", "Убрать из избранного") } else { tr("Add to favourites", "Добавить в избранное") };
@@ -1046,7 +1046,7 @@ fn catalogue_of(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Libr
             for a in &items {
                 let (top, rest) = match a.dir.split_once('\\') {
                     Some((t, r)) => (t.to_string(), r.to_string()),
-                    None => (if a.dir.is_empty() { "—".to_string() } else { a.dir.clone() }, String::new()),
+                    None => (if a.dir.is_empty() { "-".to_string() } else { a.dir.clone() }, String::new()),
                 };
                 tree.entry(top).or_default().entry(rest).or_default().push(a);
             }
@@ -1223,7 +1223,7 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
                 ui.add_space(4.0);
                 egui::Grid::new("obj").num_columns(2).spacing(Vec2::new(8.0, 5.0)).show(ui, |ui| {
                     prop_row(ui, tr("Type", "Тип"), |ui| {
-                        ui.label(a.map(|a| a.category.label()).unwrap_or("—"));
+                        ui.label(a.map(|a| a.category.label()).unwrap_or("-"));
                     });
                     prop_row(ui, "ID", |ui| {
                         ui.label(id.to_string());
@@ -1310,7 +1310,7 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
                         ui.label(if s.radius == 0.0 { tr("straight", "прямая").to_string() } else { format!("{:.0} m {}", s.radius.abs(), if s.radius > 0.0 { tr("right", "вправо") } else { tr("left", "влево") }) });
                     });
                     prop_row(ui, tr("Linked", "Связи"), |ui| {
-                        ui.label(format!("{} / {}", if s.prev_id != 0 { tr("start", "начало") } else { "—" }, if s.next_id != 0 { tr("end", "конец") } else { "—" }));
+                        ui.label(format!("{} / {}", if s.prev_id != 0 { tr("start", "начало") } else { "-" }, if s.next_id != 0 { tr("end", "конец") } else { "-" }));
                     });
                     prop_row(ui, tr("Mirrored", "Зеркально"), |ui| {
                         let mut m = s.mirror;
@@ -1535,7 +1535,7 @@ fn controls(ctx: &egui::Context, st: &mut UiState) {
     egui::Window::new(tr("Controls", "Управление")).open(&mut open).collapsible(false).resizable(false).show(ctx, |ui| {
         let rows: &[(&str, &str)] = &[
             (tr("Mouse", "Мышь"), ""),
-            (tr("Right button held", "Правая кнопка зажата"), tr("look round; W A S D fly, Q / E down / up, wheel: speed", "обзор; W A S D — полёт, Q / E — вниз / вверх, колесо — скорость")),
+            (tr("Right button held", "Правая кнопка зажата"), tr("look round; W A S D fly, Q / E down / up, wheel: speed", "обзор; W A S D: полёт, Q / E: вниз / вверх, колесо: скорость")),
             (tr("Middle drag", "Средняя кнопка"), tr("pan", "сдвиг вида")),
             (tr("Alt + left drag", "Alt + левая кнопка"), tr("orbit round the point under the cursor", "орбита вокруг точки под курсором")),
             (tr("Wheel", "Колесо"), tr("move towards the cursor", "приближение к курсору")),
@@ -1545,13 +1545,13 @@ fn controls(ctx: &egui::Context, st: &mut UiState) {
             (tr("Pinch / twist", "Щипок / поворот"), tr("zoom / turn", "зум / поворот")),
             (tr("Option + two fingers or drag", "Option + два пальца или drag"), tr("orbit round the point under the cursor", "орбита вокруг точки под курсором")),
             (tr("Keyboard", "Клавиатура"), ""),
-            (tr("W A S D / arrow keys", "W A S D / стрелки"), tr("move over the map (Shift: faster)", "двигаться по карте (Shift — быстрее)")),
+            (tr("W A S D / arrow keys", "W A S D / стрелки"), tr("move over the map (Shift: faster)", "двигаться по карте (Shift: быстрее)")),
             ("Q / E", tr("turn the camera", "поворачивать камеру")),
             ("1 – 7", tr("tools", "инструменты")),
             ("R / Shift+R, Ctrl+wheel", tr("turn the object", "повернуть объект")),
             ("Del", tr("delete the selection", "удалить выбранное")),
             ("Shift+click", tr("add to / take from the selection", "добавить к выделению / убрать из него")),
-            (tr("Shift / Ctrl + drag on empty ground", "Shift / Ctrl + тянуть по пустой земле"), tr("select with a box (Shift adds)", "выделить рамкой (Shift — добавить)")),
+            (tr("Shift / Ctrl + drag on empty ground", "Shift / Ctrl + тянуть по пустой земле"), tr("select with a box (Shift adds)", "выделить рамкой (Shift: добавить)")),
             ("Ctrl+C / X / V", tr("copy / cut / paste at the cursor", "копировать / вырезать / вставить у курсора")),
             ("Ctrl+D / Ctrl+A", tr("duplicate / select all", "дублировать / выбрать всё")),
             ("U", tr("ruler: click two points (distance, height, gradient)", "линейка: клик по двум точкам (расстояние, высота, уклон)")),

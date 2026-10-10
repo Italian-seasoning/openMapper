@@ -20,7 +20,7 @@ fn sample_map(roots: &Roots) -> Document {
     omsi_map::set_tile_size(omsi_map::TILE_SIZE);
     let mut global = GlobalCfg::default();
     global.name = "Roundtrip".into();
-    global.friendly_name = "Round trip — Тест".into();
+    global.friendly_name = "Round trip: Тест".into();
     global.description = "two lines\nof text".into();
     global.next_id_code = 100;
     global.ground_textures = vec![

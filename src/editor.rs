@@ -148,8 +148,8 @@ impl LogicMode {
         match self {
             LogicMode::Start => tr("Where the bus appears when a drive starts. Put it on a road or in the depot, facing the way to drive.", "Где появляется автобус в начале поездки. Ставьте на дорогу или в депо, лицом по ходу движения."),
             LogicMode::Stops => tr("Where passengers wait. Put it beside the road at the kerb; name it on the right.", "Где ждут пассажиры. Ставьте у бордюра; имя задаётся справа."),
-            LogicMode::Parking => tr("Where parked cars stand. Click for one; with a row on, click the start and end of a row along the kerb.", "Где стоят припаркованные машины. Клик — одно место; с рядом — клик в начале и в конце ряда вдоль бордюра."),
-            LogicMode::Paths => tr("Lanes the AI's cars or people follow. Draw like a road: it snaps to lane ends (green: joined, red: dead end) and along lanes. A car path runs the way you draw it.", "Полосы, по которым едут машины ИИ или идут люди. Рисуется как дорога: прилипает к концам полос (зелёные — соединены, красные — тупик) и вдоль полос. Путь машин идёт в ту сторону, куда вы его рисуете."),
+            LogicMode::Parking => tr("Where parked cars stand. Click for one; with a row on, click the start and end of a row along the kerb.", "Где стоят припаркованные машины. Клик: одно место; с рядом: клик в начале и в конце ряда вдоль бордюра."),
+            LogicMode::Paths => tr("Lanes the AI's cars or people follow. Draw like a road: it snaps to lane ends (green: joined, red: dead end) and along lanes. A car path runs the way you draw it.", "Полосы, по которым едут машины ИИ или идут люди. Рисуется как дорога: прилипает к концам полос (зелёные: соединены, красные: тупик) и вдоль полос. Путь машин идёт в ту сторону, куда вы его рисуете."),
             LogicMode::Other => tr("Sound sources, help arrows and other helpers the game does not show.", "Источники звука, стрелки-подсказки и прочие помощники, которых не видно в игре."),
         }
     }
@@ -1653,7 +1653,7 @@ impl Editor {
         let Some(doc) = self.doc.as_mut() else { return };
         if doc.tiles.contains_key(&k) {
             self.picked_tile = Some(k);
-            self.toast(tr("Right-click a tile to remove it", "Правый клик по тайлу — удалить его"));
+            self.toast(tr("Right-click a tile to remove it", "Правый клик по тайлу: удалить его"));
             return;
         }
         let near = doc.tiles.is_empty() || [(-1, 0), (1, 0), (0, -1), (0, 1)].iter().any(|(dx, dy)| doc.tiles.contains_key(&(k.0 + dx, k.1 + dy)));
@@ -2823,7 +2823,7 @@ impl Editor {
         self.history.commit();
         self.toast(format!("{} {n}", tr("Roundabout built; roads joined to it:", "Кольцо построено; дорог присоединено:")));
         if two_way {
-            self.error(tr("This road type carries traffic both ways: pick a one-way road for a proper roundabout", "Этот тип дороги — двустороннее движение: для настоящего кольца выберите одностороннюю дорогу"));
+            self.error(tr("This road type carries traffic both ways: pick a one-way road for a proper roundabout", "У этого типа дороги движение в обе стороны: для настоящего кольца выберите одностороннюю дорогу"));
         }
     }
 

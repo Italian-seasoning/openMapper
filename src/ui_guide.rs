@@ -125,13 +125,13 @@ impl Guide {
         let s = self.state.clone();
         let saved = !doc.fresh && !doc.is_dirty();
         let steps: [(bool, &str, &str, Option<Go>); 9] = [
-            (s.tiles, tr("Ground", "Земля"), tr("The map's tiles: 300 m squares. Add more beside them with the Tiles tool.", "Тайлы карты — квадраты по 300 м. Новые добавляются инструментом «Тайлы»."), Some(Go::Tool(Tool::Tiles))),
-            (s.road, tr("A road", "Дорога"), tr("Roads tool: click where it starts, then where it ends. Click on a road's end to go on from it.", "Инструмент «Дороги»: клик в начале, затем в конце. Клик по концу дороги — продолжить её."), Some(Go::Tool(Tool::Roads))),
-            (s.stop_on_road, tr("A bus stop by the road", "Остановка у дороги"), tr("Game logic > Bus stops: put one at the kerb, on the side the doors open. Name it on the right.", "Служебное > Остановки: у бордюра, со стороны дверей. Имя — справа."), Some(match s.stop_off_road.filter(|_| s.stops > 0 && !s.stop_on_road) {
+            (s.tiles, tr("Ground", "Земля"), tr("The map's tiles: 300 m squares. Add more beside them with the Tiles tool.", "Тайлы карты: квадраты по 300 м. Новые добавляются инструментом «Тайлы»."), Some(Go::Tool(Tool::Tiles))),
+            (s.road, tr("A road", "Дорога"), tr("Roads tool: click where it starts, then where it ends. Click on a road's end to go on from it.", "Инструмент «Дороги»: клик в начале, затем в конце. Клик по концу дороги: продолжить её."), Some(Go::Tool(Tool::Roads))),
+            (s.stop_on_road, tr("A bus stop by the road", "Остановка у дороги"), tr("Game logic > Bus stops: put one at the kerb, on the side the doors open. Name it on the right.", "Служебное > Остановки: у бордюра, со стороны дверей. Имя: справа."), Some(match s.stop_off_road.filter(|_| s.stops > 0 && !s.stop_on_road) {
                 Some(p) => Go::LookAt(p),
                 None => Go::Logic(LogicMode::Stops),
             })),
-            (s.start, tr("A start point", "Точка старта"), tr("Game logic > Start points: where your bus appears, on a road, facing the way to drive.", "Служебное > Точки старта: где появится автобус — на дороге, лицом по ходу."), Some(Go::Logic(LogicMode::Start))),
+            (s.start, tr("A start point", "Точка старта"), tr("Game logic > Start points: where your bus appears, on a road, facing the way to drive.", "Служебное > Точки старта: где появится автобус: на дороге, лицом по ходу."), Some(Go::Logic(LogicMode::Start))),
             (s.routed, tr("A line with a trip", "Линия с рейсом"), tr("Lines window: New line, New trip, then click the stops in order. The way is found along the roads.", "Окно «Линии»: новая линия, новый рейс, затем кликайте остановки по порядку. Путь найдётся по дорогам."), Some(Go::Lines)),
             (s.tour, tr("A tour with departures", "Выпуск с отправлениями"), tr("Lines window > Tours and times: New tour, then Fill from … to … .", "Окно «Линии» > Выпуски и время: новый выпуск, затем «Заполнить с … до …»."), Some(Go::Lines)),
             (s.depot, tr("Buses for the tours", "Автобусы для выпусков"), tr("A depot the tours take their buses from (Tours: Add a depot, or Traffic and AI).", "Депо, из которого выпуски берут автобусы (Выпуски: «Добавить депо» или «Трафик и ИИ»)."), Some(Go::Traffic)),
