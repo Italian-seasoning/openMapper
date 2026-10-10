@@ -1355,27 +1355,33 @@ impl Editor {
             t.touch_content();
             made.push((k, ids[i]));
         }
-        // link the ends to what they meet
-        let link = |doc: &mut Document, at: Option<(TileKey, i64, bool)>, mine: i64| {
+        // link the ends to what they meet (whether it is still there with that end free: a
+        // one-sided link would point at nothing)
+        let link = |doc: &mut Document, at: Option<(TileKey, i64, bool)>, mine: i64| -> bool {
+            let mut linked = false;
             if let Some((k, id, at_end)) = at {
                 if let Some(t) = doc.tiles.get_mut(&k) {
-                    if let Some(s) = t.tile.splines.iter_mut().find(|s| s.id == id) {
+                    if let Some(s) = t.tile.splines.iter_mut().find(|s| s.id == id && !s.deleted) {
                         if at_end && s.next_id == 0 {
                             s.next_id = mine;
+                            linked = true;
                         } else if !at_end && s.prev_id == 0 {
                             s.prev_id = mine;
+                            linked = true;
                         }
                     }
                     t.touch_content();
                 }
             }
+            linked
         };
         if let Some((k, id, _)) = start.spline {
             let first = made[0];
-            link(doc, start.spline, first.1);
-            if let Some(t) = doc.tiles.get_mut(&first.0) {
-                if let Some(s) = t.tile.splines.iter_mut().find(|s| s.id == first.1) {
-                    s.prev_id = id;
+            if link(doc, start.spline, first.1) {
+                if let Some(t) = doc.tiles.get_mut(&first.0) {
+                    if let Some(s) = t.tile.splines.iter_mut().find(|s| s.id == first.1) {
+                        s.prev_id = id;
+                    }
                 }
             }
             let _ = k;
@@ -1383,10 +1389,11 @@ impl Editor {
         if let Some(e) = end {
             if let Some((_, id, _)) = e.spline {
                 let last = *made.last().unwrap();
-                link(doc, e.spline, last.1);
-                if let Some(t) = doc.tiles.get_mut(&last.0) {
-                    if let Some(s) = t.tile.splines.iter_mut().find(|s| s.id == last.1) {
-                        s.next_id = id;
+                if link(doc, e.spline, last.1) {
+                    if let Some(t) = doc.tiles.get_mut(&last.0) {
+                        if let Some(s) = t.tile.splines.iter_mut().find(|s| s.id == last.1) {
+                            s.next_id = id;
+                        }
                     }
                 }
             }
@@ -3596,5 +3603,19 @@ mod tests {
         assert!(ed.road_start.is_none());
         ed.redo();
         assert!(ed.doc.as_ref().unwrap().spline((0, 0), 7).is_some());
+    }
+
+    /// A road drawn from an end that is gone meanwhile (deleted while drawing) starts free:
+    /// it is not linked to a spline that is not there.
+    #[test]
+    fn a_road_from_an_end_that_went_is_not_linked_to_it() {
+        let mut ed = editor();
+        ed.follow_ground = false;
+        let seg = roads::straight(DVec2::new(50.0, 130.0), DVec2::new(50.0, 160.0)).unwrap();
+        let start = Anchor { pos: DVec3::new(50.0, 130.0, 0.0), heading: 0.0, spline: Some(((0, 0), 99, true)), mid: None };
+        let made = ed.build_road("Splines\\road.sli", &[seg], 0.0, 0.0, start, None, 4.0).unwrap();
+        ed.history.commit();
+        let (k, id) = made[0];
+        assert_eq!(ed.doc.as_ref().unwrap().spline(k, id).unwrap().prev_id, 0);
     }
 }
