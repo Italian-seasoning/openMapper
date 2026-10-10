@@ -188,6 +188,10 @@ pub struct ImageryMeta {
     /// Some of it came from a lower zoom (the source has nothing finer there).
     #[serde(default)]
     pub coarser: bool,
+    /// The picture is kept in the map's folder. Google's terms allow no lasting copy: its
+    /// pictures are made again from the tile cache each time the map is opened.
+    #[serde(default = "yes")]
+    pub kept: bool,
 }
 
 /// Terrain loading options.

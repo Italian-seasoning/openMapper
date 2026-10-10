@@ -227,7 +227,7 @@ fn sidecar_round_trip() {
     let _ = std::fs::remove_dir_all(&dir);
     let mut f = GeoFile { anchor: Some(Anchor { rotation: 3.5, ..spandau() }), source: sources::ESRI.into(), zoom: 19, ..Default::default() };
     f.tile_mut((2, -1)).opacity = 0.4;
-    f.tile_mut((2, -1)).imagery = Some(ImageryMeta { source: sources::ESRI.into(), zoom: 19, stamp: 7, coarser: true });
+    f.tile_mut((2, -1)).imagery = Some(ImageryMeta { source: sources::ESRI.into(), zoom: 19, stamp: 7, coarser: true, kept: true });
     f.tile_mut((0, 0)).visible = false;
     f.terrain.base = Some(31.25);
     f.save(&dir).unwrap();

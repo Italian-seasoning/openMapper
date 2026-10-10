@@ -30,8 +30,8 @@ pub struct Spec {
 }
 
 pub enum Msg {
-    /// A tile's imagery is written.
-    Image(TileKey, ImageryMeta),
+    /// A tile's imagery is written (or, not to be kept, given with it).
+    Image(TileKey, ImageryMeta, Option<image::RgbaImage>),
     /// A tile's new heights (offsets applied).
     Heights(TileKey, Vec<f32>),
     /// The height `relative` takes off, fixed now.
@@ -139,8 +139,17 @@ fn run(spec: &Spec, tx: &Sender<Msg>, cancel: &AtomicBool, done: &AtomicUsize) -
             if let Some((src, z, size)) = &img {
                 let fetch = |z: u8, x: u32, y: u32| fetch::tile(src, &spec.prefs, z, x, y);
                 let (pic, coarser) = imagery::build(&spec.geo, k, spec.ts, *z, *size, &fetch, cancel)?;
-                imagery::save_jpeg(&pic, &super::imagery_path(&spec.dir, k))?;
-                let _ = tx.send(Msg::Image(k, ImageryMeta { source: src.name.clone(), zoom: *z, stamp: spec.geo.stamp(), coarser }));
+                let kept = src.kind != super::sources::Kind::Google;
+                let path = super::imagery_path(&spec.dir, k);
+                let memory = if kept {
+                    imagery::save_jpeg(&pic, &path)?;
+                    None
+                } else {
+                    // (an older file of this tile must not stand for it)
+                    let _ = std::fs::remove_file(&path);
+                    Some(image::DynamicImage::ImageRgb8(pic).to_rgba8())
+                };
+                let _ = tx.send(Msg::Image(k, ImageryMeta { source: src.name.clone(), zoom: *z, stamp: spec.geo.stamp(), coarser, kept }, memory));
             }
             if let Some((src, opts, z, base)) = &terrain {
                 let fetch = |z: u8, x: u32, y: u32| fetch::tile(src, &spec.prefs, z, x, y);
