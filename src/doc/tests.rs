@@ -227,3 +227,29 @@ fn installed_maps_survive_a_save() {
     }
     let _ = std::fs::remove_dir_all(&roots.content);
 }
+
+/// A map whose tiles have names of their own keeps them: a tile not edited is not written,
+/// so global.cfg must still name the file it is in.
+#[test]
+fn tiles_keep_their_own_file_names() {
+    let _map = one_map();
+    let roots = scratch("names");
+    let dir = roots.content.join("maps").join("Names");
+    std::fs::create_dir_all(&dir).unwrap();
+    let cfg = "[name]\nNames\n\n[NextIDCode]\n50\n\n[map]\n0\n0\nkachel_a.map\n\n[map]\n1\n0\nkachel_b.map\n";
+    std::fs::write(dir.join("global.cfg"), cfg).unwrap();
+    let tile = "[version]\n14\n\n[terrain]\n\n[object]\n0\nSceneryobjects\\x.sco\n7\n10\n20\n0\n0\n0\n0\n0\n\n";
+    std::fs::write(dir.join("kachel_a.map"), tile).unwrap();
+    std::fs::write(dir.join("kachel_b.map"), tile.replace("\n7\n", "\n8\n")).unwrap();
+    let mut doc = Document::load(&roots, &dir.join("global.cfg"), |_| {}).unwrap();
+    assert_eq!(doc.tiles.len(), 2);
+    let t = doc.tiles.get_mut(&(0, 0)).unwrap();
+    t.tile.objects[0].pos[0] = 30.0;
+    t.touch_content();
+    save(&mut doc).unwrap();
+    let back = Document::load(&roots, &dir.join("global.cfg"), |_| {}).unwrap();
+    assert_eq!(back.tiles.len(), 2, "the tile not edited is still found");
+    assert!(back.object((1, 0), 8).is_some());
+    assert_eq!(back.object((0, 0), 7).map(|o| o.pos[0]), Some(30.0));
+    let _ = std::fs::remove_dir_all(&roots.content);
+}

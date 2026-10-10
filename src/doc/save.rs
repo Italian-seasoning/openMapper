@@ -97,7 +97,7 @@ pub fn plan(doc: &Document, dir: &Path, all: bool) -> (Vec<super::safe::Op>, Vec
         if !t.dirty && !all {
             continue;
         }
-        let file = tile_file(*k);
+        let file = file_of(doc, *k);
         let mut own = t.tile.clone();
         own.version = 14;
         own.has_terrain = true;
@@ -125,6 +125,12 @@ pub fn plan(doc: &Document, dir: &Path, all: bool) -> (Vec<super::safe::Op>, Vec
 
 pub fn tile_file(k: TileKey) -> String {
     format!("tile_{}_{}.map", k.0, k.1)
+}
+
+/// The file a tile is kept in: the one global.cfg named when the map was read (a tile not
+/// edited is not written again, and chrono folders name it so), else `tile_x_y.map`.
+fn file_of(doc: &Document, k: TileKey) -> String {
+    doc.global.tiles.iter().find(|t| (t.x, t.y) == k).map(|t| t.file.clone()).unwrap_or_else(|| tile_file(k))
 }
 
 /// Copy a folder's files that are not at the destination yet.
@@ -238,7 +244,7 @@ fn global_text(doc: &Document) -> String {
     // in it, and a [worldcoordinates] map's grid is measured over all its rows
     for k in &doc.order {
         if doc.tiles.contains_key(k) {
-            kw(&mut s, "map", &[k.0.to_string(), k.1.to_string(), tile_file(*k)]);
+            kw(&mut s, "map", &[k.0.to_string(), k.1.to_string(), file_of(doc, *k)]);
         } else if let Some(t) = g.tiles.iter().find(|t| (t.x, t.y) == *k) {
             kw(&mut s, "map", &[k.0.to_string(), k.1.to_string(), t.file.clone()]);
         }
