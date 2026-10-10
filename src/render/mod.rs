@@ -18,6 +18,7 @@ use crate::doc::{tile_origin, tile_size, Document, Sel, TileKey};
 use crate::place::Pose;
 use crate::gpu::{Gpu, DEPTH, SAMPLES};
 
+mod build;
 mod cull;
 pub mod profile;
 
@@ -369,6 +370,8 @@ pub struct Renderer {
     /// The point everything is drawn relative to (a tile corner of the map).
     anchor: DVec3,
     anchor_for: u64,
+    /// The anchor is set (0, 0 is one too: a new map lies round the origin).
+    anchored: bool,
     /// Each tile with its chrono patches laid over, by content revision.
     display: HashMap<TileKey, (u64, Arc<omsi_map::Tile>)>,
     /// Folders ground textures are looked for in besides the map's own.
@@ -378,6 +381,8 @@ pub struct Renderer {
     scene_key: u64,
     splines: HashMap<(TileKey, i64), SplineEntry>,
     chunks: HashMap<TileKey, Chunk>,
+    /// Builds the splines' meshes off the main thread.
+    builder: build::Builder,
     ghost_spline_meshes: Vec<(u64, Option<GpuMesh>, Vec<Material>, u32)>,
     /// Thumbnails of the catalogue by asset path (lower case); None: tried, nothing to show.
     pub thumbs: HashMap<String, Option<Thumb>>,
@@ -791,6 +796,7 @@ impl Renderer {
             warm_seen_pending: 0,
             anchor: DVec3::ZERO,
             anchor_for: 0,
+            anchored: false,
             display: HashMap::new(),
             roots: Vec::new(),
             batches: Vec::new(),
@@ -798,6 +804,7 @@ impl Renderer {
             scene_key: 0,
             splines: HashMap::new(),
             chunks: HashMap::new(),
+            builder: build::Builder::new(),
             ghost_spline_meshes: Vec::new(),
             thumbs: HashMap::new(),
             thumb_depth,
@@ -812,8 +819,10 @@ impl Renderer {
         self.tiles.clear();
         self.splines.clear();
         self.chunks.clear();
+        self.builder.reset();
         self.display.clear();
         self.anchor = DVec3::ZERO;
+        self.anchored = false;
         self.ground_key.clear();
         self.ground_bind = None;
         self.scene_key = 0;
@@ -826,6 +835,7 @@ impl Renderer {
         self.materials.clear();
         self.splines.clear();
         self.chunks.clear();
+        self.builder.reset();
         self.scene_key = 0;
         self.tile_groups.clear();
     }
@@ -933,17 +943,19 @@ impl Renderer {
         let device = &gpu.device;
         let queue = &gpu.queue;
         // the map's anchor: a tile corner in its middle (everything on the GPU is relative to it)
-        if self.anchor_for != doc.global_rev || self.anchor == DVec3::ZERO {
+        if self.anchor_for != doc.global_rev || !self.anchored {
             let keys: Vec<TileKey> = doc.tiles.keys().copied().collect();
             if let Some(mid) = keys.get(keys.len() / 2) {
                 let o = tile_origin(*mid);
-                if self.anchor == DVec3::ZERO || (DVec3::new(o.x, o.y, 0.0) - self.anchor).length() > 20_000.0 {
+                if !self.anchored || (DVec3::new(o.x, o.y, 0.0) - self.anchor).length() > 20_000.0 {
+                    self.anchored = true;
                     self.anchor = DVec3::new(o.x, o.y, 0.0);
                     self.tiles.clear();
                     self.splines.clear();
-        self.chunks.clear();
+                    self.chunks.clear();
+                    self.builder.reset();
                     self.scene_key = 0;
-        self.tile_groups.clear();
+                    self.tile_groups.clear();
                 }
             }
             self.anchor_for = doc.global_rev;
@@ -1187,6 +1199,10 @@ impl Renderer {
         // splines
         let mut alive: Vec<(TileKey, i64)> = Vec::new();
         let mut complete = assets.pending == 0;
+        for (key, e) in self.builder.take() {
+            self.splines.insert(key, e);
+            self.warm_pending = true;
+        }
         let start = std::time::Instant::now();
         let mut spline_instances: Vec<Instance> = Vec::new();
         for (k, t) in &disp {
@@ -1205,37 +1221,18 @@ impl Renderer {
                 };
                 let entry_ok = self.splines.get(&(*k, s.id)).map(|e| e.hash == h).unwrap_or(false);
                 if !entry_ok {
-                    if start.elapsed().as_millis() > 25 {
-                        complete = false;
-                        continue;
-                    }
                     let Some(model) = assets.spline(&s.file) else { continue };
-                    let mesh = build_spline(&model, s, org);
-                    let def = &model.def;
-                    // (a blended layer and wires overhead cut no ground; see openOMSI's cut_terrain)
-                    let overlay = !model.materials.is_empty() && model.materials.iter().all(|m| m.alpha == Alpha::Blend);
-                    let lowest = def.profiles.iter().flat_map(|p| p.points.iter()).map(|q| q.z).fold(f32::MAX, f32::min);
-                    let drivable = def.paths.iter().any(|p| p.kind == 0 || p.kind == 1);
-                    // (only one hanging wholly overhead stays out, unless it is a road or has
-                    // height profiles: openOMSI's `cuts_terrain`)
-                    let cuts = !overlay && (lowest < 2.0 || !def.height_profiles.is_empty() || drivable);
-                    let mode = s.terrain_align.map(|v| v as u8).or(s.terrain_align_flag.then_some(1));
-                    let rims: Vec<Vec<DVec3>> = match mode {
-                        Some(m) => omsi_geometry::spline_hole_rims(def, &SplineCurve::from_map(s, org), s.mirror, m).into_iter().filter(|r| !omsi_geometry::outline_crosses_itself(&r.iter().map(|v| v.truncate()).collect::<Vec<_>>())).collect(),
-                        None => Vec::new(),
-                    };
-                    let outlines = match mode {
-                        // (an outline crossing itself cuts no hole, as in Omsi.exe and openOMSI)
-                        Some(m) => omsi_geometry::spline_hole_outlines(def, &SplineCurve::from_map(s, org), s.mirror, m).into_iter().filter(|r| !omsi_geometry::outline_crosses_itself(r)).collect(),
-                        None => Vec::new(),
-                    };
-                    let mut bbox = Aabb::EMPTY;
-                    for p in mesh.iter().flat_map(|m| m.positions.iter()) {
-                        bbox.add_sphere(*p + corner, 0.0);
+                    // (what is being edited is built at once, so it follows the mouse; the
+                    // rest on the builder's threads)
+                    let editing = extras.selected == sel || extras.selected_more.contains(&Sel::Spline(*k, s.id));
+                    if editing && start.elapsed().as_millis() < 25 {
+                        self.builder.forget(&(*k, s.id));
+                        self.splines.insert((*k, s.id), build::make_entry(&model, s, org, corner, h));
+                        self.warm_pending = true;
+                    } else {
+                        self.builder.request((*k, s.id), h, model, s, org, corner);
+                        complete = false;
                     }
-                    let bounds = if bbox.is_empty() { [0.0; 4] } else { [bbox.lo.x - corner.x, bbox.lo.y - corner.y, bbox.hi.x - corner.x, bbox.hi.y - corner.y] };
-                    self.splines.insert((*k, s.id), SplineEntry { hash: h, mesh: None, cpu: mesh.map(Arc::new), bounds, bbox, cuts, drivable, technical: def.only_editor || !def.profiles.iter().any(|p| p.points.len() >= 2), hidden: false, outlines, rims, materials: model.materials.clone(), instance: 0, in_chunk: false });
-                    self.warm_pending = true;
                 }
                 if let Some(e) = self.splines.get_mut(&(*k, s.id)) {
                     e.hidden = e.technical && !extras.show_technical;
@@ -1248,6 +1245,8 @@ impl Renderer {
             let set: std::collections::HashSet<_> = alive.into_iter().collect();
             self.splines.retain(|k, _| set.contains(k));
         }
+        complete &= self.builder.busy() == 0;
+        self.profile.count("splines building", self.builder.busy() as u32);
         self.sync_chunks(device, &disp, extras, &mut spline_instances, anchor);
 
         self.profile.add("sync.splines", profile::ms(t));
@@ -1329,7 +1328,6 @@ impl Renderer {
         self.profile.add("sync", profile::ms(t_sync));
     }
 
-    /// The ground cut of the tiles whose roads, surfaces or ground changed (a few per frame).
     /// Bring the tiles' spline chunks up to date: one whose splines changed is made again at
     /// once (an old one would show the old roads); new ones and ones with splines to add a
     /// few per frame, those splines drawn on their own until then.
@@ -1381,10 +1379,12 @@ impl Renderer {
         }
     }
 
-    /// Whether every tile's cut is up to date.
+    /// The ground cut of the tiles whose roads, surfaces or ground changed, made on the
+    /// builder's threads. Whether every tile's cut is up to date.
     fn cut_ground(&mut self, gpu: &Gpu, doc: &Document, assets: &mut Assets, disp: &[(TileKey, Arc<omsi_map::Tile>)]) -> bool {
-        let start = std::time::Instant::now();
         let ts = tile_size();
+        let mut complete = true;
+        let start = std::time::Instant::now();
         let by_key: HashMap<TileKey, &Arc<omsi_map::Tile>> = disp.iter().map(|(k, t)| (*k, t)).collect();
         let keys: Vec<TileKey> = self.tiles.keys().copied().collect();
         for key in keys {
@@ -1410,17 +1410,16 @@ impl Renderer {
             if self.tiles.get(&key).map(|g| g.cut_key == h).unwrap_or(true) {
                 continue;
             }
-            if start.elapsed().as_millis() > 12 {
-                return false;
+            complete = false;
+            // (what is asked for is gathered here: a few milliseconds' worth a frame)
+            if self.builder.cut_pending(key) || start.elapsed().as_millis() > 4 {
+                continue;
             }
+            // what the cut is made of (on the builder's threads)
             let (x0, y0) = (key.0 as f64 * ts, key.1 as f64 * ts);
             let (x1, y1) = (x0 + ts, y0 + ts);
             let outside = |b: [f64; 4]| b[2] < x0 || b[0] > x1 || b[3] < y0 || b[1] > y1;
-            let mut surf = omsi_geometry::TileSurface::new(CUT);
-            let mut any = false;
-            // the holes' rims, tile-local, with their heights
-            let corner = DVec3::new(x0, y0, 0.0);
-            let mut rims: Vec<Vec<DVec3>> = Vec::new();
+            let mut input = build::CutInput { key, hash: h, splines: Vec::new(), objects: Vec::new(), terrain: doc.tiles.get(&key).map(|t| t.terrain.clone()) };
             for dy in -1..=1 {
                 for dx in -1..=1 {
                     let n = (key.0 + dx, key.1 + dy);
@@ -1433,12 +1432,7 @@ impl Renderer {
                         if !e.cuts || outside(b) {
                             continue;
                         }
-                        surf.rasterize_kind(m, &Mat4::IDENTITY, DVec3::new(org.x, org.y, 0.0), key.0, key.1, e.drivable);
-                        any |= !e.outlines.is_empty() || omsi_geometry::road_cut();
-                        for ring in &e.outlines {
-                            surf.add_outline(ring, key.0, key.1);
-                        }
-                        rims.extend(e.rims.iter().map(|r| r.iter().map(|v| *v - corner).collect()));
+                        input.splines.push((m.clone(), org, e.drivable, e.outlines.clone(), e.rims.clone()));
                     }
                     // surface objects (junction plates, car parks) and [terrainhole] cutters
                     for o in &t.objects {
@@ -1451,46 +1445,30 @@ impl Renderer {
                         if outside([pose.pos.x - r, pose.pos.y - r, pose.pos.x + r, pose.pos.y + r]) {
                             continue;
                         }
-                        for hm in &model.holes {
-                            surf.rasterize_hole(hm, &pose.rot, pose.pos, key.0, key.1);
-                            for rim in omsi_geometry::hole_mesh_rims(hm, &pose.rot, pose.pos) {
-                                let ring: Vec<DVec2> = rim.iter().map(|v| v.truncate()).collect();
-                                if !omsi_geometry::outline_crosses_itself(&ring) {
-                                    surf.add_outline(&ring, key.0, key.1);
-                                    rims.push(rim.iter().map(|v| *v - corner).collect());
-                                }
-                            }
-                            any = true;
-                        }
-                        if model.surface {
-                            for p in &model.parts {
-                                surf.rasterize_kind(&p.mesh, &pose.rot, pose.pos, key.0, key.1, true);
-                            }
-                            any |= omsi_geometry::road_cut();
-                        }
+                        input.objects.push((model, pose));
                     }
                 }
             }
-            let walls = doc.tiles.get(&key).map(|t| omsi_geometry::terrain_hole_walls(&rims, &t.terrain)).filter(|m| !m.indices.is_empty()).map(|m| {
+            self.builder.request_cut(input);
+        }
+        // the cuts that are done
+        for (key, h, cut) in self.builder.take_cuts() {
+            let Some(g) = self.tiles.get_mut(&key) else { continue };
+            g.walls = cut.walls.map(|m| {
                 let verts: Vec<TerrainVertex> = m.positions.iter().zip(&m.normals).map(|(p, n)| TerrainVertex { pos: p.to_array(), normal: n.to_array() }).collect();
                 let vb = gpu.device.create_buffer_init(&wgpu::util::BufferInitDescriptor { label: Some("walls vb"), contents: bytemuck::cast_slice(&verts), usage: wgpu::BufferUsages::VERTEX });
                 let ib = gpu.device.create_buffer_init(&wgpu::util::BufferInitDescriptor { label: Some("walls ib"), contents: bytemuck::cast_slice(&m.indices), usage: wgpu::BufferUsages::INDEX });
                 (vb, ib, m.indices.len() as u32)
             });
-            self.tiles.get_mut(&key).unwrap().walls = walls;
-            let terrain = doc.tiles.get(&key).map(|t| t.terrain.clone());
-            let terrain_at = move |x: f32, y: f32| terrain.as_ref().map(|t| t.sample(x, y)).unwrap_or(0.0);
-            let rgba = if any && surf.cuts_anything(&terrain_at, FLUSH) { surf.mask_image(&terrain_at, FLUSH) } else { vec![255u8; CUT * CUT * 4] };
-            let g = self.tiles.get_mut(&key).unwrap();
             g.cut_key = h;
             gpu.queue.write_texture(
                 wgpu::TexelCopyTextureInfo { texture: &g.cut, mip_level: 0, origin: wgpu::Origin3d::ZERO, aspect: wgpu::TextureAspect::All },
-                &rgba,
+                &cut.rgba,
                 wgpu::TexelCopyBufferLayout { offset: 0, bytes_per_row: Some(4 * CUT as u32), rows_per_image: Some(CUT as u32) },
                 wgpu::Extent3d { width: CUT as u32, height: CUT as u32, depth_or_array_layers: 1 },
             );
         }
-        true
+        complete
     }
 
     /// Whether some are still missing.
