@@ -96,6 +96,8 @@ pub struct App {
     guide: crate::ui_guide::Guide,
     /// The next frame's view becomes the map's picture (`picture.jpg`).
     picture: bool,
+    /// An action the user allowed to drop unsaved changes is being carried out.
+    unguarded: bool,
 }
 
 impl App {
@@ -125,6 +127,7 @@ impl App {
             traffic: Default::default(),
             guide: Default::default(),
             picture: false,
+            unguarded: false,
             shot: std::env::var_os("OPENMAPPER_SHOT").map(|p| (PathBuf::from(p), std::env::var("OPENMAPPER_SHOT_FRAMES").ok().and_then(|n| n.parse().ok()).unwrap_or(90))),
             autosave: Default::default(),
             recover: None,
@@ -443,23 +446,23 @@ impl App {
     fn do_action(&mut self, a: Action, el: &ActiveEventLoop) {
         let dirty = self.ed.doc.as_ref().map(|d| d.is_dirty()).unwrap_or(false);
         let guarded = matches!(a, Action::Close | Action::Open(_) | Action::OpenDialog | Action::NewMap { .. } | Action::Quit | Action::RestoreBackup(_));
-        if guarded && dirty {
+        if guarded && dirty && !self.unguarded {
             self.ui.confirm = Some(a);
             return;
         }
         match a {
             Action::Force(inner) => {
-                if let Some(d) = self.ed.doc.as_mut() {
-                    // the user chose to drop the changes
-                    d.global_dirty = false;
-                    d.timetable.dirty = false;
-                    d.traffic.dirty = false;
-                    d.descriptions.dirty = false;
-                    for t in d.tiles.values_mut() {
-                        t.dirty = false;
-                    }
-                }
+                // the user chose to drop the changes: not asked again. (The map keeps them,
+                // marked as changes, until it is really replaced: a file dialog cancelled or a
+                // map that does not open leaves it as it was.)
+                self.unguarded = true;
                 self.do_action(*inner, el);
+                self.unguarded = false;
+            }
+            Action::SaveThen(inner) => {
+                if self.save() {
+                    self.do_action(Action::Force(inner), el);
+                }
             }
             Action::NewMap { folder, friendly, size, options } => self.new_map(&folder, &friendly, size, &options),
             Action::Open(p) => self.open_map(&p),

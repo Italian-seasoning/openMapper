@@ -74,6 +74,8 @@ pub enum Action {
     Export,
     /// Do it without asking about unsaved changes.
     Force(Box<Action>),
+    /// Save, then do it; nothing more if the save fails.
+    SaveThen(Box<Action>),
     Quit,
 }
 
@@ -1585,6 +1587,7 @@ pub fn confirm_unsaved(ctx: &egui::Context, st: &mut UiState, actions: &mut Vec<
         return;
     }
     let mut decided: Option<bool> = None;
+    let mut save = false;
     egui::Window::new(tr("Unsaved changes", "Несохранённые изменения")).collapsible(false).resizable(false).anchor(egui::Align2::CENTER_CENTER, Vec2::ZERO).show(ctx, |ui| {
         ui.set_width(330.0);
         ui.horizontal(|ui| {
@@ -1600,7 +1603,7 @@ pub fn confirm_unsaved(ctx: &egui::Context, st: &mut UiState, actions: &mut Vec<
                 decided = Some(true);
             }
             if ui.button(icons::labelled(Icon::Save, tr("Save", "Сохранить"))).clicked() {
-                actions.push(Action::Save);
+                save = true;
                 decided = Some(true);
             }
         });
@@ -1608,7 +1611,8 @@ pub fn confirm_unsaved(ctx: &egui::Context, st: &mut UiState, actions: &mut Vec<
     match decided {
         Some(true) => {
             if let Some(a) = st.confirm.take() {
-                actions.push(Action::Force(Box::new(a)));
+                // (a save that fails keeps the map open with its changes)
+                actions.push(if save { Action::SaveThen(Box::new(a)) } else { Action::Force(Box::new(a)) });
             }
         }
         Some(false) => st.confirm = None,
