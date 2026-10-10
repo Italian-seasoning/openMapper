@@ -290,6 +290,9 @@ impl TrafficUi {
                 }
             }
         });
+        if on {
+            group_curves(ui, &mut doc.traffic, name);
+        }
         ui.add_space(4.0);
         hint(ui, tr("A vehicle with more weight comes along more often.", "Машина с большим весом встречается чаще."));
         let cat = self.catalogue.as_ref();
@@ -482,6 +485,49 @@ fn day_panel(ui: &mut egui::Ui, doc: &mut Document) {
             curve_table(ui, k, title, color, curve);
         }
     });
+}
+
+/// A group's own curves over the day, by days of the week (`unsched_trafficdens.txt`).
+fn group_curves(ui: &mut egui::Ui, t: &mut crate::traffic::Traffic, name: &str) {
+    let Some(gi) = t.density.iter().position(|g| g.name.eq_ignore_ascii_case(name)) else { return };
+    let before = t.density[gi].densities.clone();
+    let g = &mut t.density[gi];
+    egui::CollapsingHeader::new(icons::labelled(Icon::Schedule, tr("Its own traffic over the day", "Свой трафик по времени суток"))).id_salt(("group curves", name.to_lowercase())).default_open(!g.densities.is_empty()).show(ui, |ui| {
+        hint(ui, tr("Without one the group follows the map's road traffic. A curve can be for some days of the week only.", "Без неё группа следует трафику карты. Кривая может быть только для некоторых дней недели."));
+        let mut remove = None;
+        for (k, (mask, curve)) in g.densities.iter_mut().enumerate() {
+            ui.horizontal(|ui| {
+                ui.label(tr("Days:", "Дни:"));
+                // 0: every day, else +1 weekdays, +2 Saturday, +4 Sunday
+                for (bit, label) in [(1, tr("Mo–Fr", "Пн–Пт")), (2, tr("Sa", "Сб")), (4, tr("Su", "Вс"))] {
+                    let on = *mask == 0 || *mask & bit != 0;
+                    if check(ui, on, label) {
+                        let m = if *mask == 0 { 7 } else { *mask };
+                        let m = m ^ bit;
+                        // (at least one kind of day)
+                        if m != 0 {
+                            *mask = if m == 7 { 0 } else { m };
+                        }
+                    }
+                }
+                if small_button(ui, Icon::Delete, tr("Take this curve out", "Убрать эту кривую")) {
+                    remove = Some(k);
+                }
+            });
+            curve_table(ui, 10 + k, tr("Traffic", "Трафик"), ROAD, curve);
+            ui.separator();
+        }
+        if let Some(k) = remove {
+            g.densities.remove(k);
+        }
+        if ui.button(icons::labelled(Icon::Add, tr("A curve", "Кривая"))).clicked() {
+            let free = if g.densities.is_empty() { 0 } else { 2 };
+            g.densities.push((free, TOWN.to_vec()));
+        }
+    });
+    if t.density[gi].densities != before {
+        t.touch(File::Density);
+    }
 }
 
 /// One curve's points as a table, with typical days to start from.

@@ -247,6 +247,10 @@ impl App {
         if let Ok(l) = std::env::var("OPENMAPPER_TIMETABLE") {
             self.tt.open_at(&l);
         }
+        // OPENMAPPER_GUIDE: Getting started open
+        if std::env::var_os("OPENMAPPER_GUIDE").is_some() {
+            self.guide.open = true;
+        }
         // OPENMAPPER_TRAFFIC=day|groups|lists: the Traffic and AI window open on that tab
         if let Ok(t) = std::env::var("OPENMAPPER_TRAFFIC") {
             self.traffic.open_at(&t);
