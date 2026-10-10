@@ -57,13 +57,14 @@ impl Frustum {
     }
 }
 
-/// How far (in multiples of its radius) a thing is still drawn: at that distance it is about
-/// two pixels across in a full-HD view.
+/// How far (in multiples of its radius) a thing is still drawn at the highest quality: at
+/// that distance it is about two pixels across in a full-HD view.
 pub const LOD_RADII: f32 = 600.0;
 
-/// Whether things of radius `r` in box `b` are worth drawing seen from `eye`.
-pub fn near_enough(b: &Aabb, r: f32, eye: Vec3) -> bool {
-    b.distance(eye) <= r * LOD_RADII + 50.0
+/// Whether things of radius `r` in box `b` are worth drawing seen from `eye`, drawn out to
+/// `radii` times their radius.
+pub fn near_enough(b: &Aabb, r: f32, eye: Vec3, radii: f32) -> bool {
+    b.distance(eye) <= r * radii + 50.0
 }
 
 #[cfg(test)]
@@ -95,7 +96,7 @@ mod tests {
     #[test]
     fn small_things_far_off_are_left_out() {
         let b = Aabb { lo: Vec3::new(1000.0, 0.0, 0.0), hi: Vec3::new(1001.0, 1.0, 1.0) };
-        assert!(!near_enough(&b, 0.5, Vec3::ZERO));
-        assert!(near_enough(&b, 10.0, Vec3::ZERO));
+        assert!(!near_enough(&b, 0.5, Vec3::ZERO, LOD_RADII));
+        assert!(near_enough(&b, 10.0, Vec3::ZERO, LOD_RADII));
     }
 }

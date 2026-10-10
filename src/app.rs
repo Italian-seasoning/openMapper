@@ -155,8 +155,10 @@ impl App {
     fn init_gfx(&mut self, el: &ActiveEventLoop) -> anyhow::Result<()> {
         let attrs = Window::default_attributes().with_title("openMapper").with_inner_size(winit::dpi::LogicalSize::new(1440.0, 900.0)).with_min_inner_size(winit::dpi::LogicalSize::new(900.0, 600.0));
         let window = Arc::new(el.create_window(attrs)?);
-        let gpu = Gpu::new(window.clone())?;
-        let mut renderer = Renderer::new(&gpu);
+        let mut gpu = Gpu::new(window.clone())?;
+        let quality = crate::render::quality::Quality::from_code(&self.prefs.graphics);
+        gpu.set_samples(quality.samples());
+        let mut renderer = Renderer::new(&gpu, quality);
         if let Some(r) = &self.roots {
             renderer.roots = vec![r.content.clone(), r.omsi.clone()];
         }
@@ -479,6 +481,21 @@ impl App {
                     self.lib.start_scan(r);
                 }
             }
+            Action::SetGraphics(q) => {
+                self.prefs.graphics = q.code().to_string();
+                self.prefs.save();
+                // (edge smoothing is built into the renderer's pipelines: it is made again,
+                // and fills itself in from the loaded models within a few frames)
+                if let Some(g) = &mut self.gfx {
+                    for t in g.renderer.thumbs.values().flatten() {
+                        g.egui_renderer.free_texture(&t.id);
+                    }
+                    g.gpu.set_samples(q.samples());
+                    let roots = std::mem::take(&mut g.renderer.roots);
+                    g.renderer = Renderer::new(&g.gpu, q);
+                    g.renderer.roots = roots;
+                }
+            }
             Action::SetScale(z) => {
                 self.prefs.ui_scale = z;
                 self.prefs.save();
@@ -778,6 +795,9 @@ impl App {
                 let y0 = (v.min.y * ppp).clamp(0.0, h - 1.0);
                 let vp = [x0, y0, (v.width() * ppp).min(w - x0).max(1.0), (v.height() * ppp).min(h - y0).max(1.0)];
                 g.renderer.draw(&g.gpu, &mut enc, &scene_view, &self.cam, &extras, vp);
+                if crate::render::profile::gpu() {
+                    g.renderer.time_gpu(&g.gpu, &self.cam, &extras, vp);
+                }
             } else {
                 // the start screen: a calm backdrop
                 let _ = enc.begin_render_pass(&wgpu::RenderPassDescriptor {
@@ -816,6 +836,7 @@ impl App {
             let t_submit = Instant::now();
             g.gpu.queue.submit(extra.into_iter().chain([enc.finish()]));
             g.renderer.profile.add("submit", crate::render::profile::ms(t_submit));
+
             g.renderer.profile.add("frame cpu", crate::render::profile::ms(now));
             g.renderer.profile.add("frame interval", dt as f32 * 1000.0);
             g.renderer.profile.end_frame();

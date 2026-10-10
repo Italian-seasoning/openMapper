@@ -61,6 +61,9 @@ pub struct Prefs {
     /// The interface's zoom (0: not chosen, as 1).
     #[serde(default)]
     pub ui_scale: f32,
+    /// Graphics quality: "low", "medium", "high" (empty: high).
+    #[serde(default)]
+    pub graphics: String,
 }
 
 impl Prefs {

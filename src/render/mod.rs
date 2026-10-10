@@ -16,11 +16,12 @@ use crate::assets::{Alpha, Assets, Material, ObjectModel, SplineModel};
 use crate::camera::Camera;
 use crate::doc::{tile_origin, tile_size, Document, Sel, TileKey};
 use crate::place::Pose;
-use crate::gpu::{Gpu, DEPTH, SAMPLES};
+use crate::gpu::{Gpu, DEPTH};
 
 mod build;
 mod cull;
 pub mod profile;
+pub mod quality;
 
 use cull::{Aabb, Frustum};
 
@@ -47,8 +48,6 @@ struct Globals {
     light_c: [f32; 4],
 }
 
-/// Texels a side of the sun's shadow map.
-const SHADOW: u32 = 4096;
 
 #[repr(C)]
 #[derive(Clone, Copy, Pod, Zeroable)]
@@ -248,10 +247,10 @@ impl Batch {
     }
 
     /// The instance ranges worth drawing (neighbouring runs drawn as one).
-    fn visible(&self, f: &Frustum, eye: Vec3, out: &mut Vec<std::ops::Range<u32>>) {
+    fn visible(&self, f: &Frustum, eye: Vec3, far: f32, radii: f32, out: &mut Vec<std::ops::Range<u32>>) {
         out.clear();
         for r in &self.runs {
-            if !f.sees(&r.bounds) || !cull::near_enough(&r.bounds, r.radius, eye) {
+            if !f.sees(&r.bounds) || !cull::near_enough(&r.bounds, r.radius, eye, radii) || r.bounds.distance(eye) > far {
                 continue;
             }
             match out.last_mut() {
@@ -390,6 +389,8 @@ pub struct Renderer {
     pub time: f32,
     /// Timings for `OPENMAPPER_PROFILE`.
     pub profile: profile::Profile,
+    pub quality: quality::Quality,
+    gpu_target: Option<wgpu::Texture>,
 }
 
 fn shader(device: &wgpu::Device, name: &str, src: &str) -> wgpu::ShaderModule {
@@ -507,8 +508,9 @@ pub fn object_matrix(world: DVec3, rot: [f64; 3]) -> Mat4 {
 }
 
 impl Renderer {
-    pub fn new(gpu: &Gpu) -> Renderer {
+    pub fn new(gpu: &Gpu, quality: quality::Quality) -> Renderer {
         let device = &gpu.device;
+        let samples = gpu.samples;
         let queue = &gpu.queue;
         let globals_layout = device.create_bind_group_layout(&wgpu::BindGroupLayoutDescriptor {
             label: Some("globals"),
@@ -532,7 +534,7 @@ impl Renderer {
                 })
                 .create_view(&Default::default())
         };
-        let shadow_view = depth_texture("shadow map", SHADOW);
+        let shadow_view = depth_texture("shadow map", quality.shadow_size().max(1));
         // (bound where no shadow is wanted: thumbnails, and the shadow pass itself)
         let no_shadow = depth_texture("no shadow", 1);
         let compare = device.create_sampler(&wgpu::SamplerDescriptor {
@@ -604,7 +606,7 @@ impl Renderer {
             },
             primitive: wgpu::PrimitiveState { cull_mode: None, ..Default::default() },
             depth_stencil: depth(true, 0),
-            multisample: wgpu::MultisampleState { count: SAMPLES, ..Default::default() },
+            multisample: wgpu::MultisampleState { count: samples, ..Default::default() },
             fragment: Some(wgpu::FragmentState { module: &terrain_sh, entry_point: Some("fs"), compilation_options: Default::default(), targets: &[Some(format.into())] }),
             multiview_mask: None,
             cache: None,
@@ -641,8 +643,8 @@ impl Renderer {
             cache: None,
         });
         let thumb_fmt = wgpu::TextureFormat::Rgba8UnormSrgb;
-        let mesh_opaque = mesh_pipeline("mesh", format, SAMPLES, None, true, 0);
-        let mesh_blend = mesh_pipeline("mesh blend", format, SAMPLES, blend_alpha, false, 0);
+        let mesh_opaque = mesh_pipeline("mesh", format, samples, None, true, 0);
+        let mesh_blend = mesh_pipeline("mesh blend", format, samples, blend_alpha, false, 0);
         // the road being drawn: over everything (the ground is shaped to it only once built)
         let ghost_pipeline = device.create_render_pipeline(&wgpu::RenderPipelineDescriptor {
             label: Some("ghost"),
@@ -650,13 +652,13 @@ impl Renderer {
             vertex: wgpu::VertexState { module: &mesh_sh, entry_point: Some("vs"), compilation_options: Default::default(), buffers: &mesh_layouts() },
             primitive: wgpu::PrimitiveState { cull_mode: None, ..Default::default() },
             depth_stencil: Some(wgpu::DepthStencilState { format: DEPTH, depth_write_enabled: Some(false), depth_compare: Some(wgpu::CompareFunction::Always), stencil: Default::default(), bias: Default::default() }),
-            multisample: wgpu::MultisampleState { count: SAMPLES, ..Default::default() },
+            multisample: wgpu::MultisampleState { count: samples, ..Default::default() },
             fragment: Some(wgpu::FragmentState { module: &mesh_sh, entry_point: Some("fs"), compilation_options: Default::default(), targets: &[Some(wgpu::ColorTargetState { format, blend: blend_alpha, write_mask: wgpu::ColorWrites::ALL })] }),
             multiview_mask: None,
             cache: None,
         });
-        let spline_opaque = mesh_pipeline("spline", format, SAMPLES, None, true, 0);
-        let spline_blend = mesh_pipeline("spline blend", format, SAMPLES, blend_alpha, false, 0);
+        let spline_opaque = mesh_pipeline("spline", format, samples, None, true, 0);
+        let spline_blend = mesh_pipeline("spline blend", format, samples, blend_alpha, false, 0);
         let thumb_opaque = mesh_pipeline("thumb", thumb_fmt, 1, None, true, 0);
         let thumb_blend = mesh_pipeline("thumb blend", thumb_fmt, 1, blend_alpha, false, 0);
         let sky = |fmt: wgpu::TextureFormat, samples: u32| {
@@ -672,7 +674,7 @@ impl Renderer {
                 cache: None,
             })
         };
-        let sky_pipeline = sky(format, SAMPLES);
+        let sky_pipeline = sky(format, samples);
         let thumb_sky = sky(thumb_fmt, 1);
         let overlay_pipeline = device.create_render_pipeline(&wgpu::RenderPipelineDescriptor {
             label: Some("overlay"),
@@ -685,7 +687,7 @@ impl Renderer {
             },
             primitive: wgpu::PrimitiveState { cull_mode: None, ..Default::default() },
             depth_stencil: Some(wgpu::DepthStencilState { format: DEPTH, depth_write_enabled: Some(false), depth_compare: Some(wgpu::CompareFunction::Always), stencil: Default::default(), bias: Default::default() }),
-            multisample: wgpu::MultisampleState { count: SAMPLES, ..Default::default() },
+            multisample: wgpu::MultisampleState { count: samples, ..Default::default() },
             fragment: Some(wgpu::FragmentState { module: &overlay_sh, entry_point: Some("fs"), compilation_options: Default::default(), targets: &[Some(wgpu::ColorTargetState { format, blend: blend_alpha, write_mask: wgpu::ColorWrites::ALL })] }),
             multiview_mask: None,
             cache: None,
@@ -810,6 +812,8 @@ impl Renderer {
             thumb_depth,
             time: 0.0,
             profile: Default::default(),
+            quality,
+            gpu_target: None,
         }
     }
 
@@ -847,7 +851,7 @@ impl Renderer {
         let sun = sun_dir();
         let (n, f) = cam.near_far();
         let _ = n;
-        let light = light_view(cam);
+        let light = light_view(cam, self.quality.shadow_size().max(1), self.quality.shadow_reach().max(40.0));
         let brush = extras.brush.map(|b| [(b.centre.x - anchor.x) as f32, (b.centre.y - anchor.y) as f32, b.radius, 1.0]).unwrap_or([0.0; 4]);
         let ht = extras.highlight_tile.map(|t| [t.0 as f32, t.1 as f32]).unwrap_or([1e9, 1e9]);
         Globals {
@@ -861,12 +865,13 @@ impl Renderer {
             sun_color: [0.70, 0.70, 0.677, 1.0],
             sky_top: [0.30, 0.50, 0.86, 1.0],
             sky_horizon: [0.66, 0.77, 0.92, 1.0],
-            fog: [0.62, 0.74, 0.92, 1.0 / (f * 0.55)],
+            // (thick enough by the view's reach that its end is not a hard edge)
+            fog: [0.62, 0.74, 0.92, (1.0 / (f * 0.55)).max(1.6 / self.quality.view_distance())],
             brush,
             brush_color: extras.brush.map(|b| b.color).unwrap_or([1.0; 4]),
             grid: [tile_size() as f32, if extras.grid { 1.0 } else { 0.0 }, ht[0], ht[1]],
             light_vp: light.0.to_cols_array_2d(),
-            shadow: [1.0, light.1, 0.0, 0.0],
+            shadow: [if self.quality.shadow_size() > 0 { 1.0 } else { 0.0 }, light.1, 0.0, 0.0],
             light_b: [0.135, 0.154, 0.174, 0.0],
             light_c: [0.396, 0.396, 0.416, 0.0],
         }
@@ -1625,7 +1630,8 @@ impl Renderer {
             if b.model == "\u{0}marker" {
                 continue;
             }
-            b.visible(&f, eye, &mut ranges);
+            // (what casts a shadow is cut off sooner: a small one's shadow is less than it)
+            b.visible(&f, eye, f32::INFINITY, self.quality.detail() * 0.5, &mut ranges);
             if ranges.is_empty() {
                 continue;
             }
@@ -1652,17 +1658,20 @@ impl Renderer {
         let t = std::time::Instant::now();
         let origin = Vec4::from(gl.origin).truncate();
         let eye = origin + Vec4::from(gl.eye).truncate();
-        let shadow_calls = self.draw_shadows(gpu, encoder, &gl, eye);
+        let shadow_calls = if self.quality.shadow_size() > 0 { self.draw_shadows(gpu, encoder, &gl, eye) } else { 0 };
+        let far = self.quality.view_distance();
+        let in_reach = |b: &Aabb| b.distance(eye) <= far;
         self.profile.count("shadow draws", shadow_calls);
         let f = Frustum::new(Mat4::from_cols_array_2d(&gl.view_proj) * Mat4::from_translation(-origin));
         let mut calls = 0u32;
         let mut pass = encoder.begin_render_pass(&wgpu::RenderPassDescriptor {
             label: Some("scene"),
             color_attachments: &[Some(wgpu::RenderPassColorAttachment {
-                view: &gpu.msaa,
+                // (without edge smoothing straight into the frame)
+                view: if gpu.samples > 1 { &gpu.msaa } else { target },
                 depth_slice: None,
-                resolve_target: Some(target),
-                ops: wgpu::Operations { load: wgpu::LoadOp::Clear(wgpu::Color { r: 0.6, g: 0.7, b: 0.8, a: 1.0 }), store: wgpu::StoreOp::Discard },
+                resolve_target: (gpu.samples > 1).then_some(target),
+                ops: wgpu::Operations { load: wgpu::LoadOp::Clear(wgpu::Color { r: 0.6, g: 0.7, b: 0.8, a: 1.0 }), store: if gpu.samples > 1 { wgpu::StoreOp::Discard } else { wgpu::StoreOp::Store } },
             })],
             depth_stencil_attachment: Some(wgpu::RenderPassDepthStencilAttachment {
                 view: &gpu.depth,
@@ -1680,13 +1689,13 @@ impl Renderer {
             pass.set_pipeline(&self.terrain_pipeline);
             pass.set_bind_group(2, ground, &[]);
             pass.set_index_buffer(self.terrain_index.slice(..), wgpu::IndexFormat::Uint32);
-            for t in self.tiles.values().filter(|t| f.sees(&t.bbox)) {
+            for t in self.tiles.values().filter(|t| f.sees(&t.bbox) && in_reach(&t.bbox)) {
                 pass.set_bind_group(1, &t.bind, &[]);
                 pass.set_vertex_buffer(0, t.vb.slice(..));
                 pass.draw_indexed(0..self.terrain_index_count, 0, 0..1);
                 calls += 1;
             }
-            for t in self.tiles.values().filter(|t| f.sees(&t.bbox)) {
+            for t in self.tiles.values().filter(|t| f.sees(&t.bbox) && in_reach(&t.bbox)) {
                 if let Some((vb, ib, n)) = &t.walls {
                     pass.set_bind_group(1, &t.bind, &[]);
                     pass.set_vertex_buffer(0, vb.slice(..));
@@ -1698,12 +1707,12 @@ impl Renderer {
         }
         let (Some(dynamic), Some(scene)) = (&self.instances, &self.scene_buf) else { return };
         // what is in view, the same for both layers
-        let mut splines: Vec<(&GpuMesh, &Vec<Material>, u32)> = self.chunks.values().filter(|c| f.sees(&c.bbox)).filter_map(|c| c.mesh.as_ref().map(|m| (m, &c.materials, c.instance))).collect();
-        splines.extend(self.splines.values().filter(|e| !e.hidden && !e.in_chunk && f.sees(&e.bbox)).filter_map(|e| e.mesh.as_ref().map(|m| (m, &e.materials, e.instance))));
+        let mut splines: Vec<(&GpuMesh, &Vec<Material>, u32)> = self.chunks.values().filter(|c| f.sees(&c.bbox) && in_reach(&c.bbox)).filter_map(|c| c.mesh.as_ref().map(|m| (m, &c.materials, c.instance))).collect();
+        splines.extend(self.splines.values().filter(|e| !e.hidden && !e.in_chunk && f.sees(&e.bbox) && in_reach(&e.bbox)).filter_map(|e| e.mesh.as_ref().map(|m| (m, &e.materials, e.instance))));
         let mut visible: Vec<(&Batch, Vec<std::ops::Range<u32>>, bool)> = Vec::new();
         for b in &self.batches {
             let mut ranges = Vec::new();
-            b.visible(&f, eye, &mut ranges);
+            b.visible(&f, eye, far, self.quality.detail(), &mut ranges);
             if !ranges.is_empty() {
                 visible.push((b, ranges, false));
             }
@@ -1778,6 +1787,32 @@ impl Renderer {
         self.profile.count("instances drawn", instances_drawn);
         self.profile.count("spline draws", spline_calls);
         self.profile.add("draw", profile::ms(t));
+    }
+
+    /// The GPU's time for the view, drawn once more into a picture of its own and waited
+    /// for (`OPENMAPPER_PROFILE=gpu`).
+    pub fn time_gpu(&mut self, gpu: &Gpu, cam: &Camera, extras: &FrameExtras, vp: [f32; 4]) {
+        let (w, h) = (gpu.config.width, gpu.config.height);
+        if self.gpu_target.as_ref().map(|t| (t.width(), t.height()) != (w, h)).unwrap_or(true) {
+            self.gpu_target = Some(gpu.device.create_texture(&wgpu::TextureDescriptor {
+                label: Some("gpu timing"),
+                size: wgpu::Extent3d { width: w, height: h, depth_or_array_layers: 1 },
+                mip_level_count: 1,
+                sample_count: 1,
+                dimension: wgpu::TextureDimension::D2,
+                format: gpu.scene_format,
+                usage: wgpu::TextureUsages::RENDER_ATTACHMENT,
+                view_formats: &[],
+            }));
+        }
+        let view = self.gpu_target.as_ref().unwrap().create_view(&Default::default());
+        let _ = gpu.device.poll(wgpu::PollType::wait_indefinitely());
+        let t = std::time::Instant::now();
+        let mut enc = gpu.device.create_command_encoder(&Default::default());
+        self.draw(gpu, &mut enc, &view, cam, extras, vp);
+        gpu.queue.submit([enc.finish()]);
+        let _ = gpu.device.poll(wgpu::PollType::wait_indefinitely());
+        self.profile.add("gpu view", profile::ms(t));
     }
 
     /// Render up to `budget` pictures for the catalogue (objects whose model and textures
@@ -2137,14 +2172,14 @@ fn sun_dir() -> Vec3 {
 /// The sun's view of the scene round where the camera looks (relative to the render origin),
 /// and the size of a shadow map texel there (m). The window follows the camera in whole
 /// texels, so the shadows' edges do not crawl as it moves.
-fn light_view(cam: &Camera) -> (Mat4, f32) {
+fn light_view(cam: &Camera, size: u32, reach: f32) -> (Mat4, f32) {
     let sun = sun_dir();
     let centre = (cam.smooth_target_now() - cam.origin()).as_vec3();
-    let half = (cam.smooth_distance_now() as f32 * 1.4).clamp(40.0, 2500.0);
+    let half = (cam.smooth_distance_now() as f32 * 1.4).clamp(40.0, reach);
     let up = if sun.z.abs() > 0.99 { Vec3::Y } else { Vec3::Z };
     let view = Mat4::look_at_rh(sun, Vec3::ZERO, up);
     let c = view.transform_point3(centre);
-    let texel = 2.0 * half / SHADOW as f32;
+    let texel = 2.0 * half / size as f32;
     let (x, y) = ((c.x / texel).round() * texel, (c.y / texel).round() * texel);
     // (deep enough for anything standing up to a few hundred metres above the ground)
     let depth = half * 2.0 + 600.0;

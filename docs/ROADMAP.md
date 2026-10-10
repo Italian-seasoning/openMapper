@@ -76,3 +76,7 @@ Add a line when you touch a shared file: stream, file, what.
 * B (round 2) · `src/main.rs`: `mod rows`.
 
 * C · `src/install.rs`: `Prefs::save` writes through `doc::safe::write_atomic` (a warning in the log when it fails).
+* C · `src/gpu.rs`: `SAMPLES` went; `Gpu::samples` and `Gpu::set_samples` (MSAA chosen by the graphics quality; 1 draws the view straight into the frame).
+* C · `src/install.rs`: `Prefs::graphics` ("low" / "medium" / "high", empty: high).
+* C · `src/ui.rs`: `Action::SetGraphics(render::quality::Quality)`, View > Graphics quality.
+* C · `src/app.rs`: the renderer made with the quality from the settings (`Renderer::new(&gpu, quality)`, `OPENMAPPER_GRAPHICS` overrides for checks); `Action::SetGraphics` makes the renderer again (thumbnails freed); `OPENMAPPER_PROFILE=gpu` times the view on a picture of its own (`Renderer::time_gpu`).
