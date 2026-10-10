@@ -189,7 +189,11 @@ pub fn delete(doc: &mut Document, hist: &mut History, sels: &[Sel]) {
         match *s {
             Sel::Object(k, id) => {
                 hist.touch_tile(doc, k);
-                doc.delete_object(k, id);
+                if doc.object(k, id).is_some() {
+                    doc.delete_object(k, id);
+                } else {
+                    delete_attached(doc, k, id);
+                }
             }
             Sel::Spline(k, id) => {
                 touch_spline(hist, doc, k, id);
@@ -197,6 +201,112 @@ pub fn delete(doc: &mut Document, hist: &mut History, sels: &[Sel]) {
             }
         }
     }
+}
+
+/// A road end held by a junction (or any object with `[splinehelper]` points): where it
+/// is and the heading out of the junction there.
+#[derive(Debug, Clone, Copy)]
+pub struct Arm {
+    pub pos: DVec3,
+    pub out: f64,
+}
+
+/// The world points of an object's spline helpers (`helpers`: x, y, z, heading out in its
+/// frame), with their headings out.
+pub fn helper_points(doc: &Document, k: TileKey, id: i64, abs: bool, helpers: &[[f32; 4]]) -> Vec<(DVec3, f64)> {
+    let Some(o) = doc.object(k, id) else { return Vec::new() };
+    let world = doc.object_world(k, o, abs);
+    let m = crate::render::object_matrix(DVec3::ZERO, o.rot);
+    helpers.iter().map(|h| (world + m.transform_point3(glam::Vec3::new(h[0], h[1], h[2])).as_dvec3(), roads::norm_deg(h[3] as f64 + o.rot[0]))).collect()
+}
+
+/// The free spline end (not linked on) nearest `p` within 0.6 m: (tile, spline, at its end).
+pub fn free_end_at(doc: &Document, p: DVec2) -> Option<(TileKey, i64, bool)> {
+    let mut best: Option<(f64, (TileKey, i64, bool))> = None;
+    for (k, t) in &doc.tiles {
+        let org = tile_origin(*k);
+        for s in t.tile.splines.iter().filter(|s| !s.deleted && (s.prev_id == 0 || s.next_id == 0)) {
+            let start = DVec2::new(org.x + s.pos[0], org.y + s.pos[1]);
+            if (start - p).length() > s.length + 1.0 {
+                continue;
+            }
+            let c = omsi_geometry::SplineCurve::from_map(s, org);
+            for (free, q, at_end) in [(s.prev_id == 0, c.point_at(0.0), false), (s.next_id == 0, c.end_point(), true)] {
+                let d = (q.truncate() - p).length();
+                if free && d < 0.6 && best.map(|b| d < b.0).unwrap_or(true) {
+                    best = Some((d, (*k, s.id, at_end)));
+                }
+            }
+        }
+    }
+    best.map(|b| b.1)
+}
+
+/// The road ends an object holds: those lying at its helper points.
+pub fn arms_of(doc: &Document, points: &[(DVec3, f64)]) -> Vec<Arm> {
+    let mut out: Vec<(i64, bool, Arm, f64)> = Vec::new();
+    for (p, h) in points {
+        let Some((k, id, at_end)) = free_end_at(doc, p.truncate()) else { continue };
+        let Some(s) = doc.spline(k, id) else { continue };
+        let c = omsi_geometry::SplineCurve::from_map(s, tile_origin(k));
+        // (a helper is written for each way along a road: the one pointing the way the road
+        // leaves the junction is kept)
+        let away = if at_end { c.heading_at(s.length) + 180.0 } else { c.heading_at(0.0) };
+        let miss = (roads::norm_deg(away - h + 180.0) - 180.0).abs();
+        let arm = Arm { pos: if at_end { c.end_point() } else { c.point_at(0.0) }, out: *h };
+        match out.iter_mut().find(|o| o.0 == id && o.1 == at_end) {
+            Some(o) if miss < o.3 => {
+                o.2 = arm;
+                o.3 = miss;
+            }
+            Some(_) => {}
+            None => out.push((id, at_end, arm, miss)),
+        }
+    }
+    out.into_iter().map(|o| o.2).collect()
+}
+
+/// The plans that carry arms along when what holds them is turned by `deg` round `pivot`,
+/// shifted by `delta` and raised by `dz`; arms that cannot follow give their reason.
+pub fn carry_plans(doc: &Document, arms: &[Arm], pivot: DVec2, deg: f64, delta: DVec2, dz: f64, locked: &dyn Fn(DVec2) -> bool) -> Vec<Result<crate::reshape::Plan, &'static str>> {
+    arms.iter()
+        .filter_map(|a| {
+            let (k, id, at_end) = free_end_at(doc, a.pos.truncate())?;
+            let to = turn_point(a.pos.truncate(), pivot, deg) + delta;
+            if (to - a.pos.truncate()).length() < 1e-6 && deg.abs() < 1e-9 && dz.abs() < 1e-9 {
+                return None;
+            }
+            // (along the road towards the junction: against the way out of it)
+            Some(crate::reshape::carry_end(doc, k, id, at_end, to, roads::norm_deg(a.out + deg + 180.0), dz, locked))
+        })
+        .collect()
+}
+
+/// An object of a tile, or one hanging on another (`[attachObj]`).
+pub fn any_object(doc: &Document, k: TileKey, id: i64) -> Option<&omsi_map::MapObject> {
+    doc.object(k, id).or_else(|| doc.tiles.get(&k)?.tile.attach_objects.iter().find(|o| o.id == id))
+}
+
+pub fn any_object_mut(doc: &mut Document, k: TileKey, id: i64) -> Option<&mut omsi_map::MapObject> {
+    let t = doc.tiles.get_mut(&k)?;
+    if t.tile.objects.iter().any(|o| o.id == id) {
+        return t.tile.objects.iter_mut().find(|o| o.id == id);
+    }
+    t.tile.attach_objects.iter_mut().find(|o| o.id == id)
+}
+
+/// Take away an object hanging on another, and whatever hangs on it in turn.
+fn delete_attached(doc: &mut Document, k: TileKey, id: i64) {
+    let Some(t) = doc.tiles.get_mut(&k) else { return };
+    let mut gone = vec![id];
+    let mut i = 0;
+    while i < gone.len() {
+        let p = gone[i];
+        gone.extend(t.tile.attach_objects.iter().filter(|o| o.parent_id == Some(p)).map(|o| o.id));
+        i += 1;
+    }
+    t.tile.attach_objects.retain(|o| !gone.contains(&o.id));
+    t.touch_content();
 }
 
 /// Where a world point appears in a view of `w` × `h` points (None: behind the eye).
@@ -256,6 +366,7 @@ pub mod tests {
             fresh: true,
             global_rev: 0,
             timetable: Default::default(),
+            traffic: Default::default(),
         };
         for x in 0..n {
             doc.tiles.insert((x, 0), TileDoc::new_flat(0.0));
@@ -334,6 +445,22 @@ pub mod tests {
         hist.undo(&mut doc);
         assert!(doc.object((0, 0), 1).is_some() && doc.spline((0, 0), 2).is_some());
         assert_eq!(doc.spline((0, 0), 3).unwrap().prev_id, 2);
+    }
+
+    #[test]
+    fn deleting_a_hanging_object_takes_what_hangs_on_it() {
+        let mut doc = flat_map(1);
+        add_object(&mut doc, (0, 0), 1, 10.0, 10.0);
+        let t = doc.tiles.get_mut(&(0, 0)).unwrap();
+        t.tile.attach_objects.push(MapObject { file: "sign.sco".into(), id: 6, parent_id: Some(1), ..Default::default() });
+        t.tile.attach_objects.push(MapObject { file: "plate.sco".into(), id: 7, parent_id: Some(6), ..Default::default() });
+        assert!(any_object(&doc, (0, 0), 6).is_some());
+        let mut hist = History::default();
+        hist.begin("t");
+        delete(&mut doc, &mut hist, &[Sel::Object((0, 0), 6)]);
+        hist.commit();
+        assert!(doc.object((0, 0), 1).is_some());
+        assert!(doc.tiles[&(0, 0)].tile.attach_objects.is_empty());
     }
 
     #[test]

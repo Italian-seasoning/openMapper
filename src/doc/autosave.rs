@@ -203,6 +203,7 @@ mod tests {
             fresh: false,
             global_rev: 0,
             timetable: Default::default(),
+            traffic: Default::default(),
         };
         doc.global.name = "M".into();
         for k in [(0, 0), (1, 0)] {

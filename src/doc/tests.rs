@@ -37,6 +37,7 @@ fn sample_map(roots: &Roots) -> Document {
         fresh: false,
         global_rev: next_rev(),
         timetable: Default::default(),
+        traffic: Default::default(),
     };
     for k in [(0, 0), (1, 0), (0, -1)] {
         doc.add_tile(k);

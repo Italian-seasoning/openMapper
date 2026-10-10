@@ -62,4 +62,16 @@ Add a line when you touch a shared file: stream, file, what.
 * C · `src/ui.rs`: `Action::RestoreBackup(PathBuf)`, File > Earlier versions… (`UiState::versions_open`, the window is `doc::safe::versions_window`).
 * C · `src/app.rs`: autosave (`App::autosave`, ticked after the frame's actions, not while the left button is down or an edit is open), the offer at start (`App::recover`, `doc::autosave::offer`), the autosave cleared on save, close, opening or making another map and a normal quit; `Action::RestoreBackup` handled (guarded like Open); the save error says the changes are still there.
 * C · `src/timetable/tests.rs`: `one_map()` takes the crate-wide `doc::one_map()` lock (the grid is global: Spandau's tests and the round trips of other maps must not run at once).
+* A · `src/editor.rs`: `Editor::{pick_mode, picked}`: with pick mode on, a left click with the Select tool only notes what is under the cursor and where (the Lines window picks stops so: nothing is selected or dragged).
+* A · `src/history.rs`: `Step::{timetable, at}`, `Snapshot` and `History::push_snapshot` (a window's edit given as the state before it; edits of one kind within 1.5 s are one step); `apply` swaps the timetable too (`Timetable::restored` has every file written again).
+* A · `src/main.rs`: `mod traffic`, `mod ui_traffic`.
+* A · `src/doc/mod.rs`: `Document::traffic` (`ailists.cfg`, unscheduled traffic, parked cars, people; read in `load`, from the template in `new_map`), counted in `is_dirty`.
+* A · `src/doc/save.rs`: `crate::traffic::save(doc)` after the timetable's (only the changed files).
+* A · `src/selection.rs` (tests' `flat_map`): `traffic: Default::default()`.
+* A · `src/history.rs`: `Step::traffic`, `Snapshot::traffic`.
+* A · `src/ui.rs`: `Action::Traffic`; Map menu "Traffic and AI…" (key `T`).
+* A · `src/app.rs`: `App::traffic` (the Traffic and AI window) drawn after the Lines window, `Action::Traffic` and key `T`; `OPENMAPPER_TRAFFIC=day|groups|lists` opens it on a tab; `Action::Force` drops the traffic's changes too.
+* B (round 2) · `src/app.rs`: `U` toggles the ruler; the Select tool's empty-ground press goes to the editor while the ruler is on; `ed.paste(&self.lib)`.
+* B (round 2) · `src/ui.rs`: the properties panel is in a `ScrollArea`; an object hanging on another (`[attachObj]`) is shown through `selection::any_object` / `any_object_mut` (no X / Y, a "Hangs on" row); a road's properties end with `ui_edit::rows_section`; Controls row for `U`.
+* B (round 2) · `src/main.rs`: `mod rows`.
 

@@ -38,9 +38,6 @@ pub struct Timetable {
     links_changed: bool,
     /// Trips whose route is to be found again (their stops changed).
     pub reroute: BTreeSet<String>,
-    /// A depot group to add to the map's `ailists.cfg` on the next save (its buses run the
-    /// tours that name it).
-    pub new_depot: Option<String>,
 }
 
 fn key(name: &str) -> String {
@@ -100,6 +97,27 @@ impl Timetable {
     pub fn touch_route(&mut self, name: &str) {
         self.touch_trip(name);
         self.reroute.insert(key(name));
+    }
+
+    /// Put back as it was (undo, redo) in place of `replaced`: every file of it is written
+    /// again on the next save, and those only `replaced` had are taken away.
+    pub fn restored(&mut self, replaced: &Timetable) {
+        let names = |t: &Timetable| -> BTreeSet<String> {
+            t.lines.iter().map(|l| key(&format!("{}.ttl", l.name))).chain(t.trips.iter().map(|x| key(&format!("{}.ttp", x.name)))).chain(t.tracks.iter().map(|x| key(&format!("{}.ttr", track_name(x))))).collect()
+        };
+        let mine = names(self);
+        self.removed = names(replaced).difference(&mine).cloned().chain(replaced.removed.iter().cloned()).filter(|n| !mine.contains(n)).collect();
+        self.changed = mine;
+        self.stops_changed = true;
+        self.links_changed = true;
+        self.reroute.clear();
+        self.dirty = true;
+    }
+
+    /// The same lines, trips, tours and stops (what the Lines window edits; not the routes
+    /// found for them or what is still to be saved).
+    pub fn same_content(&self, o: &Timetable) -> bool {
+        self.lines == o.lines && self.trips == o.trips && self.stops == o.stops
     }
 
     /// A new line (its name made unique).
@@ -388,56 +406,11 @@ pub fn save_to(tt: &mut Timetable, map_dir: &Path, order: &[TileKey]) -> std::io
         write_named(&dir, "StnLinks.cfg", &stnlinks_text(&tt.links, &tt.stops))?;
         written += 1;
     }
-    if let Some(block) = tt.new_depot.take() {
-        add_to_ailists(map_dir, &block)?;
-        written += 1;
-    }
     tt.dirty = false;
     log::info!("timetable: {written} file(s) written to {}", dir.display());
     Ok(())
 }
 
-/// The depot group openMapper offers a map without one: OMSI 2's own MAN city bus with the
-/// Grundorf depot's livery and fleet numbers.
-pub const DEPOT_BUS: &str = "Vehicles\\MAN_NL_NG\\MAN_GN92_main.bus";
-
-pub fn depot_block(name: &str) -> String {
-    let mut o = format!("\n[aigroup_depot]\n{name}\nGrundorf\n\n[aigroup_depot_typgroup_2]\n{DEPOT_BUS}\n");
-    for n in 1..=6 {
-        o.push_str(&format!("{}\tGRN-V {}\n", 2530 + n, 30 + n));
-    }
-    o.push_str("[end]\n");
-    o
-}
-
-/// `block` added at the end of the map's `ailists.cfg`, in the file's own encoding.
-fn add_to_ailists(map_dir: &Path, block: &str) -> std::io::Result<()> {
-    let p = find_file(map_dir, "ailists.cfg").unwrap_or_else(|| map_dir.join("ailists.cfg"));
-    let old = std::fs::read(&p).unwrap_or_default();
-    let utf16 = old.starts_with(&[0xFF, 0xFE]);
-    let mut text = omsi_cfg::decode_text(&old);
-    if !text.is_empty() && !text.ends_with('\n') {
-        text.push_str("\r\n");
-    }
-    // (a group of the old format runs to the next [end]: openOMSI would take the depot
-    // into it)
-    let lower = text.to_lowercase();
-    let last_group = ["[aigroup]", "[aigroup_2]"].iter().filter_map(|k| lower.rfind(k)).max();
-    if last_group.is_some_and(|g| !lower[g..].contains("[end]")) {
-        text.push_str("[end]\r\n");
-    }
-    text.push_str(&block.replace('\n', "\r\n"));
-    let bytes = if utf16 {
-        let mut b = vec![0xFF, 0xFE];
-        for u in text.encode_utf16() {
-            b.extend_from_slice(&u.to_le_bytes());
-        }
-        b
-    } else {
-        encode(&text)
-    };
-    std::fs::write(p, bytes)
-}
 
 /// A file of the folder by its lower-case name.
 fn find_file(dir: &Path, lower: &str) -> Option<std::path::PathBuf> {
@@ -577,17 +550,92 @@ pub fn line_text(l: &Line) -> String {
     o
 }
 
+/// When a trip is at each of its stops (minutes after it leaves): (arrival, departure, the
+/// profile fixes it), as openOMSI reckons them: the first stop at 0, the last at the
+/// profile's time, the fixed ones as given and the others spread between them by the
+/// distance along the route (`legs`: metres from each stop to the next; a missing leg
+/// counts 500 m, as there).
+pub fn stop_times(n: usize, legs: &[f64], p: &omsi_timetable::TripProfile) -> Vec<(f32, f32, bool)> {
+    let duration = if p.factor > 0.0 { p.factor } else { 10.0 };
+    let mut arr: Vec<Option<f32>> = vec![None; n];
+    let mut dep: Vec<Option<f32>> = vec![None; n];
+    for &(i, m) in &p.man_arr_time {
+        if let Some(a) = usize::try_from(i).ok().and_then(|i| arr.get_mut(i)) {
+            *a = Some(m);
+        }
+    }
+    for &(i, m) in &p.man_dep_time {
+        if let Some(d) = usize::try_from(i).ok().and_then(|i| dep.get_mut(i)) {
+            *d = Some(m);
+        }
+    }
+    let fixed: Vec<bool> = (0..n).map(|i| arr[i].is_some() || dep[i].is_some()).collect();
+    if n > 0 && !fixed[0] {
+        dep[0] = Some(0.0);
+    }
+    if n > 1 && !fixed[n - 1] {
+        arr[n - 1] = Some(duration);
+    }
+    let mut along = vec![0.0f64; n];
+    for i in 1..n {
+        along[i] = along[i - 1] + legs.get(i - 1).copied().filter(|l| *l > 0.0).unwrap_or(500.0).max(1.0);
+    }
+    let timed: Vec<usize> = (0..n).filter(|&i| arr[i].is_some() || dep[i].is_some()).collect();
+    let mut out = Vec::with_capacity(n);
+    let mut last = 0.0f32;
+    for i in 0..n {
+        let (a, d) = match (arr[i], dep[i]) {
+            (Some(a), Some(d)) => (a, d.max(a)),
+            (Some(a), None) => (a, a),
+            (None, Some(d)) => (d, d),
+            (None, None) => {
+                let p = timed.iter().rev().find(|&&k| k < i).copied();
+                let q = timed.iter().find(|&&k| k > i).copied();
+                let t = match (p, q) {
+                    (Some(p), Some(q)) => {
+                        let t0 = dep[p].or(arr[p]).unwrap_or(0.0);
+                        let t1 = arr[q].or(dep[q]).unwrap_or(t0);
+                        let span = along[q] - along[p];
+                        if span > 0.0 { t0 + (t1 - t0) * ((along[i] - along[p]) / span) as f32 } else { t0 }
+                    }
+                    (Some(p), None) => dep[p].or(arr[p]).unwrap_or(0.0),
+                    (None, Some(q)) => arr[q].or(dep[q]).unwrap_or(0.0),
+                    (None, None) => 0.0,
+                };
+                (t, t)
+            }
+        };
+        let a = a.max(last);
+        let d = d.max(a);
+        last = d;
+        out.push((a, d, fixed[i]));
+    }
+    out
+}
+
+/// Fix stop `i`'s time in a trip's profile (minutes after it leaves; the last stop its
+/// arrival, the others their departure), or let it follow the distance again (None).
+pub fn set_stop_time(p: &mut omsi_timetable::TripProfile, n: usize, i: usize, m: Option<f32>) {
+    let k = i as i32;
+    p.man_arr_time.retain(|x| x.0 != k);
+    p.man_dep_time.retain(|x| x.0 != k);
+    if let Some(m) = m {
+        if i + 1 == n {
+            p.man_arr_time.push((k, m));
+            p.man_arr_time.sort_by_key(|x| x.0);
+        } else {
+            p.man_dep_time.push((k, m));
+            p.man_dep_time.sort_by_key(|x| x.0);
+        }
+    }
+}
+
 /// Minutes after midnight as "h:mm" (past midnight: 24:10 …).
 pub fn clock(minutes: f32) -> String {
     let m = minutes.round().max(0.0) as i64;
     format!("{}:{:02}", m / 60, m % 60)
 }
 
-/// The depot groups of the map's `ailists.cfg` (a tour's buses come from one).
-pub fn depot_groups(map_dir: &Path) -> Vec<String> {
-    let p = omsi_cfg::resolve_path(map_dir, "ailists.cfg");
-    omsi_map::AiLists::load(&p).map(|l| l.groups.iter().filter(|g| g.is_depot).map(|g| g.name.clone()).collect()).unwrap_or_default()
-}
 
 #[cfg(test)]
 mod tests;

@@ -121,24 +121,6 @@ fn a_tour_without_depot_reads_back() {
     assert_eq!(back.tours, tt.lines[0].tours);
 }
 
-/// A depot added to a map's ailists.cfg is one openOMSI reads.
-#[test]
-fn a_depot_reads_back() {
-    let out = scratch("depot");
-    // (the template's group of the old format, without its [end])
-    std::fs::write(out.join("ailists.cfg"), encode("[aigroup]\nCars\n2\n0\n1\nSpandau\n\n")).unwrap();
-    let mut tt = Timetable { dirty: true, new_depot: Some(depot_block("Depot")), ..Default::default() };
-    save_to(&mut tt, &out, &[]).unwrap();
-    let l = omsi_map::AiLists::load(&out.join("ailists.cfg")).unwrap();
-    let d = l.groups.iter().find(|g| g.is_depot).unwrap();
-    assert_eq!((d.name.as_str(), d.hof.as_deref()), ("Depot", Some("Grundorf")));
-    assert_eq!(d.typgroups[0].file, DEPOT_BUS);
-    assert_eq!(d.typgroups[0].entries.len(), 6);
-    assert!(l.groups.iter().any(|g| g.name == "Cars"));
-    assert_eq!(depot_groups(&out), vec!["Depot".to_string()]);
-    let _ = std::fs::remove_dir_all(&out);
-}
-
 #[test]
 fn text_that_1252_cannot_hold_is_utf16() {
     assert_eq!(encode("Bf. Zoo\n"), b"Bf. Zoo\r\n".to_vec());
@@ -154,6 +136,23 @@ fn lengths_as_omsi_writes_them() {
     assert_eq!(route::sig3(271.6), 272.0);
     assert_eq!(route::sig3(2.2834), 2.28);
     assert_eq!(route::sig3(0.0), 0.0);
+}
+
+/// The times at the stops follow the distance between the fixed ones.
+#[test]
+fn stop_times_spread_by_distance() {
+    let mut p = omsi_timetable::TripProfile { name: "standard".into(), factor: 8.0, ..Default::default() };
+    let t = stop_times(3, &[100.0, 300.0], &p);
+    assert_eq!(t.iter().map(|x| (x.0, x.1)).collect::<Vec<_>>(), vec![(0.0, 0.0), (2.0, 2.0), (8.0, 8.0)]);
+    set_stop_time(&mut p, 4, 1, Some(5.0));
+    let t = stop_times(4, &[100.0, 100.0, 100.0], &p);
+    assert_eq!(t.iter().map(|x| x.1).collect::<Vec<_>>(), vec![0.0, 5.0, 6.5, 8.0]);
+    assert!(t[1].2 && !t[2].2);
+    assert_eq!(p.man_dep_time, vec![(1, 5.0)]);
+    set_stop_time(&mut p, 4, 3, Some(9.0));
+    assert_eq!(p.man_arr_time, vec![(3, 9.0)]);
+    set_stop_time(&mut p, 4, 1, None);
+    assert!(p.man_dep_time.is_empty());
 }
 
 #[test]
@@ -355,4 +354,39 @@ fn spandau_bus_trips_route() {
     }
     eprintln!("Spandau: {found} of {n} bus trips routed, {close} within 10 % of OMSI's length");
     assert!(found * 10 >= n * 7, "{found} of {n}");
+}
+
+/// Undo and redo take the timetable back and forth; quick edits of one kind are one step,
+/// and the files of what undo took away go on the next save.
+#[test]
+fn timetable_edits_undo_and_redo() {
+    let Some(root) = omsi_root() else { return };
+    let _map = one_map();
+    let roots = crate::install::Roots::new(root.clone());
+    let mut doc = Document::new_map(&roots, "tt-undo", "tt-undo", 1);
+    let mut h = crate::history::History::default();
+    let snap = |doc: &Document| crate::history::Snapshot { timetable: Some(doc.timetable.clone()), ..Default::default() };
+    let before = snap(&doc);
+    doc.timetable.add_line("5");
+    h.push_snapshot("tt", before);
+    // a second edit straight after: the same step
+    let before = snap(&doc);
+    doc.timetable.add_trip("5", "5_A", vec![1, 2]);
+    h.push_snapshot("tt", before);
+    assert!(h.can_undo());
+    h.undo(&mut doc);
+    assert!(doc.timetable.lines.is_empty() && doc.timetable.trips.is_empty());
+    assert!(!h.can_undo());
+    let out = scratch("undo");
+    // what undo took away is not written; a file of it there before is taken away
+    std::fs::write(out.join("TTData").join("5.ttl"), b"x").unwrap();
+    save_to(&mut doc.timetable, &out, &[]).unwrap();
+    assert!(!out.join("TTData").join("5.ttl").exists());
+    h.redo(&mut doc);
+    assert_eq!(doc.timetable.lines.len(), 1);
+    assert_eq!(doc.timetable.trips[0].stations, vec![1, 2]);
+    save_to(&mut doc.timetable, &out, &[]).unwrap();
+    let back = TimetableData::load(&out);
+    assert_eq!((back.lines.len(), back.trips.len()), (1, 1));
+    let _ = std::fs::remove_dir_all(&out);
 }

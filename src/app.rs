@@ -90,6 +90,8 @@ pub struct App {
     recover: Option<crate::doc::autosave::Meta>,
     /// The Lines window.
     tt: crate::ui_timetable::TimetableUi,
+    /// The Traffic and AI window.
+    traffic: crate::ui_traffic::TrafficUi,
     /// The next frame's view becomes the map's picture (`picture.jpg`).
     picture: bool,
 }
@@ -118,6 +120,7 @@ impl App {
             view: egui::Rect::NOTHING,
             frames: 0,
             tt: crate::ui_timetable::TimetableUi::new(),
+            traffic: Default::default(),
             picture: false,
             shot: std::env::var_os("OPENMAPPER_SHOT").map(|p| (PathBuf::from(p), std::env::var("OPENMAPPER_SHOT_FRAMES").ok().and_then(|n| n.parse().ok()).unwrap_or(90))),
             autosave: Default::default(),
@@ -236,6 +239,10 @@ impl App {
         // OPENMAPPER_TIMETABLE=<line>: the Lines window open on that line (checks without a person at the screen)
         if let Ok(l) = std::env::var("OPENMAPPER_TIMETABLE") {
             self.tt.open_at(&l);
+        }
+        // OPENMAPPER_TRAFFIC=day|groups|lists: the Traffic and AI window open on that tab
+        if let Ok(t) = std::env::var("OPENMAPPER_TRAFFIC") {
+            self.traffic.open_at(&t);
         }
         // OPENMAPPER_TOOL=roads|objects|logic (checks without a person at the screen)
         match std::env::var("OPENMAPPER_TOOL").as_deref() {
@@ -376,6 +383,7 @@ impl App {
                     // the user chose to drop the changes
                     d.global_dirty = false;
                     d.timetable.dirty = false;
+                    d.traffic.dirty = false;
                     for t in d.tiles.values_mut() {
                         t.dirty = false;
                     }
@@ -482,7 +490,7 @@ impl App {
                 self.ed.copy(&self.lib);
             }
             Action::Cut => self.ed.cut(&self.lib),
-            Action::Paste => self.ed.paste(),
+            Action::Paste => self.ed.paste(&self.lib),
             Action::Duplicate => self.ed.duplicate(&self.lib),
             Action::SelectAll => self.ed.select_all(),
             Action::FocusSelection => {
@@ -498,6 +506,7 @@ impl App {
                 }
             }
             Action::Timetable => self.tt.open = !self.tt.open,
+            Action::Traffic => self.traffic.open = !self.traffic.open,
             Action::ToggleFavourite(rel) => {
                 self.prefs.toggle_favourite(&rel);
                 self.ui.favourites = self.prefs.favourites.clone();
@@ -575,9 +584,11 @@ impl App {
             Some(KeyCode::Digit6) => self.ed.set_tool(Tool::Paint),
             Some(KeyCode::Digit7) => self.ed.set_tool(Tool::Tiles),
             Some(KeyCode::KeyR) if !ctrl => self.ed.rotate(if shift { -15.0 } else { 15.0 }),
+            Some(KeyCode::KeyU) if !ctrl => self.ed.toggle_ruler(),
             Some(KeyCode::KeyG) if !ctrl => self.ed.show_grid = !self.ed.show_grid,
             Some(KeyCode::KeyM) if !ctrl => self.ui.minimap.open = !self.ui.minimap.open,
             Some(KeyCode::KeyL) if !ctrl => self.tt.open = !self.tt.open,
+            Some(KeyCode::KeyT) if !ctrl => self.traffic.open = !self.traffic.open,
             Some(KeyCode::BracketLeft) => self.ed.brush_radius = (self.ed.brush_radius / 1.2).max(3.0),
             Some(KeyCode::BracketRight) => self.ed.brush_radius = (self.ed.brush_radius * 1.2).min(150.0),
             Some(KeyCode::Delete) | Some(KeyCode::Backspace) => self.ed.delete_selected(),
@@ -711,6 +722,7 @@ impl App {
             crate::ui_edit::paint_box(&ctx, &self.ed);
             if self.ed.doc.is_some() {
                 self.tt.window(&ctx, &mut self.ed, self.roots.as_ref(), &mut actions);
+                self.traffic.window(&ctx, &mut self.ed, self.roots.as_ref());
             }
             ui::confirm_unsaved(&ctx, &mut self.ui, &mut actions);
             if let Some(m) = &self.recover {
@@ -1289,10 +1301,10 @@ impl ApplicationHandler for App {
                             if self.keys.alt {
                                 // Option + drag: turn the camera
                                 self.mouse.alt_orbit = true;
-                            } else if self.ed.tool == Tool::Select && self.ed.hover.is_none() && (self.keys.shift || self.keys.ctrl) {
+                            } else if self.ed.tool == Tool::Select && self.ed.hover.is_none() && self.ed.ruler.is_none() && (self.keys.shift || self.keys.ctrl) {
                                 // Shift / Ctrl + drag on empty ground: a selection box
                                 self.ed.select_box = Some([self.mouse.pos, self.mouse.pos]);
-                            } else if self.ed.tool == Tool::Select && self.ed.hover.is_none() {
+                            } else if self.ed.tool == Tool::Select && self.ed.hover.is_none() && self.ed.ruler.is_none() {
                                 // drag the map by its empty ground
                                 self.mouse.grab = true;
                                 self.ed.select(None);

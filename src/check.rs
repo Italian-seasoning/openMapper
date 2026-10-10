@@ -899,6 +899,7 @@ mod tests {
             fresh: false,
             global_rev: 0,
             timetable: Default::default(),
+            traffic: Default::default(),
         };
         for k in tiles {
             doc.tiles.insert(*k, crate::doc::TileDoc::new_flat(0.0));

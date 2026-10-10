@@ -15,6 +15,9 @@ experienced map makers.
 | --- | --- | --- |
 | Select | 1 | click an object or road · `Shift`+click adds or takes away · `Shift`/`Ctrl` + drag on empty ground selects with a box · drag the selection to move it all · `R` turns it round its middle · `Del` deletes it · `Ctrl+C / X / V / D` copy, cut, paste at the cursor, duplicate (links inside the copy kept, rows of objects and things hanging on them come along) · several selected: move, raise and turn by numbers, give every road one type |
 | Road shape | — | select a road: drag its end dots to move an end (a road joined there follows, tangent at the joint, its far end kept; an end at a junction stays), drag the middle dot to bend it. Heights and gradients at both ends in the properties, the joined road following |
+| Junction moves | — | a junction (or any piece with spline helpers) moved, turned or raised carries the ends of its roads along, tangent, the road before a short arm bending with it; the ground follows its plate |
+| Objects along a road | — | select a road or a chain: put the object chosen in the catalogue every so many metres beside it (one or both sides, margins, height, turn, leaning), as OMSI spline attachment rows that follow the road; the road's properties list its rows to change or remove |
+| Ruler | U | status bar: click two points for the distance, the height between them and the gradient |
 | Snapping | — | status bar: `Grid` (0.5–10 m) for placing, moving, road ends and reshaping; `15°` for headings |
 | Roads | 2 | click the start, then the end: the arc builds itself. A road continues smoothly from a road end it starts at, joins another end with an S-curve or bend (biarc), is cut into OMSI splines and linked with its neighbours. It can shape the ground under itself. |
 | Junctions | — | automatic: a road drawn into another's middle or across it cuts both and fills the gap with a junction object of its own (asphalt plate, `[path]` lanes for straight on, right and left, footpaths round the corners), written as ordinary OMSI content into `Sceneryobjects\openMapper\<map>` |
@@ -30,6 +33,12 @@ experienced map makers.
   named), "Make the way back" turns a trip round, departures fill themselves from a first and a
   last time with a break, and a map without a depot gets one so AI buses drive the tours. The
   files of a stock map stay as they are until its timetable is edited.
+* **Traffic and AI** (Map menu or `T`): the road and passenger density over the day as a
+  curve with draggable points, car groups and depots of `ailists.cfg` with vehicles picked
+  from the installation, which groups drive about on their own, parked cars and people. A group
+  the map lacks can be copied from OMSI 2's own maps.
+* Timetable and traffic edits are part of undo / redo; trips have times at each stop, spread
+  by distance or fixed by hand.
 * **Open any map**: OMSI 2's own (saved as a copy into the content folder) and mod maps.
 * **New map** from OMSI 2's own template (`template/NewMap`): it's ready to drive right away.
 * **Test drive**: saves and launches openOMSI on this map.
@@ -55,9 +64,9 @@ experienced map makers.
   or left drag on empty ground (Select tool) moves the map.
 * **Trackpad:** two fingers move the map, pinch zooms, twist turns; Option + two fingers or
   Option + drag turns and tilts.
-* **Keyboard:** `W A S D` / arrows move, `Q / E` turn, `1–7` tools, `M` overview map, `R` turn object, `Del`,
+* **Keyboard:** `W A S D` / arrows move, `Q / E` turn, `1–7` tools, `M` overview map, `L` lines, `T` traffic, `R` turn object, `Del`,
   `F` go to selection, `[ ]` brush size, `G` tile grid, `Ctrl+Z`, `Ctrl+Shift+Z`, `Ctrl+S`,
-  `Ctrl+C / X / V / D` copy, cut, paste, duplicate, `Ctrl+A` select all, `F5` test drive.
+  `Ctrl+C / X / V / D` copy, cut, paste, duplicate, `Ctrl+A` select all, `U` ruler, `F5` test drive.
 
 ## How it's built
 
