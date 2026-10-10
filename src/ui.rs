@@ -39,6 +39,8 @@ pub enum Action {
     ChooseOmsi,
     SetLang(Lang),
     FocusSelection,
+    /// Move the camera over this point (the overview map).
+    LookAt(glam::DVec2),
     AddGroundTexture(String),
     /// Do it without asking about unsaved changes.
     Force(Box<Action>),
@@ -60,6 +62,7 @@ pub struct UiState {
     /// Help for what the mouse is over, shown in the status bar.
     pub status_help: Option<String>,
     pub welcome_pick: Option<PathBuf>,
+    pub minimap: crate::ui_minimap::Minimap,
 }
 
 impl Default for UiState {
@@ -76,6 +79,7 @@ impl Default for UiState {
             confirm: None,
             status_help: None,
             welcome_pick: None,
+            minimap: crate::ui_minimap::Minimap::new(),
         }
     }
 }
@@ -86,6 +90,7 @@ pub struct Status {
     pub cursor: Option<glam::DVec3>,
     pub loading: usize,
     pub gpu: String,
+    pub cam: Option<crate::ui_minimap::CamView>,
 }
 
 pub fn style(ctx: &egui::Context) {
@@ -314,7 +319,16 @@ pub fn welcome(root: &mut egui::Ui, st: &mut UiState, prefs: &Prefs, omsi: Optio
                             Frame::new().fill(BG_FIELD).stroke(Stroke::new(1.0, BORDER)).show(ui, |ui| {
                                 ui.set_width(ui.available_width());
                                 egui::ScrollArea::vertical().min_scrolled_height(300.0).max_height(300.0).auto_shrink([false, false]).show(ui, |ui| {
-                                    let recent: Vec<PathBuf> = prefs.recent.iter().map(PathBuf::from).filter(|p| p.is_file()).collect();
+                                    // a recent map of the installation that was since saved opens
+                                    // as its copy in the content folder, so it is listed once
+                                    let folder_of = |p: &std::path::Path| p.parent().and_then(|d| d.file_name()).map(|f| f.to_string_lossy().to_lowercase());
+                                    let mut recent: Vec<PathBuf> = Vec::new();
+                                    for p in prefs.recent.iter().map(PathBuf::from).filter(|p| p.is_file()) {
+                                        let p = st.maps.iter().find(|m| m.in_content && folder_of(&m.cfg) == folder_of(&p) && !p.starts_with(m.cfg.parent().unwrap_or(&m.cfg))).map(|m| m.cfg.clone()).unwrap_or(p);
+                                        if !recent.contains(&p) {
+                                            recent.push(p);
+                                        }
+                                    }
                                     let mut rows: Vec<(String, PathBuf, &str)> = Vec::new();
                                     for p in &recent {
                                         let name = st.maps.iter().find(|m| m.cfg == *p).map(|m| m.name.clone()).unwrap_or_else(|| p.parent().and_then(|d| d.file_name()).map(|f| f.to_string_lossy().to_string()).unwrap_or_default());
@@ -464,6 +478,11 @@ pub fn editor(root: &mut egui::Ui, st: &mut UiState, u: EditorUi, actions: &mut 
         let resp = ui.interact(rect, Id::new("viewport"), Sense::hover());
         view = (rect, resp.contains_pointer());
         ui.painter().rect_stroke(rect, CornerRadius::ZERO, Stroke::new(1.0, BORDER), egui::StrokeKind::Inside);
+        if let (Some(doc), Some(cam)) = (&ed.doc, status.cam) {
+            if let Some(p) = st.minimap.show(ui, rect, doc, lib, cam) {
+                actions.push(Action::LookAt(p));
+            }
+        }
     });
     let ctx = root.ctx().clone();
     new_map_dialog(&ctx, st, actions);
@@ -535,6 +554,7 @@ fn menu_bar(root: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, can_undo: bo
                 let icon = if ed.show_technical { Icon::Visible } else { Icon::Hidden };
                 check(ui, &mut ed.show_technical, icons::labelled(icon, tr("What the game does not show", "То, чего не видно в игре")));
                 check(ui, &mut ed.show_lanes, icons::labelled(Icon::Route, tr("AI lanes", "Полосы ИИ")));
+                check(ui, &mut st.minimap.open, icons::labelled(Icon::Map, tr("Overview map (M)", "Обзорная карта (M)")));
                 if menu_item(ui, Some(Icon::Focus), tr("Go to selection", "К выделенному"), "F", ed.selected.is_some()) {
                     actions.push(Action::FocusSelection);
                 }

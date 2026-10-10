@@ -405,6 +405,11 @@ impl App {
                     }
                 }
             }
+            Action::LookAt(p) => {
+                if let Some(doc) = &self.ed.doc {
+                    self.cam.target = DVec3::new(p.x, p.y, doc.ground(p));
+                }
+            }
             Action::AddGroundTexture(rel) => {
                 if let Some(doc) = self.ed.doc.as_mut() {
                     self.ed.history.begin(tr("Add ground texture", "Добавление текстуры земли"));
@@ -454,6 +459,7 @@ impl App {
             Some(KeyCode::Digit7) => self.ed.set_tool(Tool::Tiles),
             Some(KeyCode::KeyR) if !ctrl => self.ed.rotate(if shift { -15.0 } else { 15.0 }),
             Some(KeyCode::KeyG) if !ctrl => self.ed.show_grid = !self.ed.show_grid,
+            Some(KeyCode::KeyM) if !ctrl => self.ui.minimap.open = !self.ui.minimap.open,
             Some(KeyCode::BracketLeft) => self.ed.brush_radius = (self.ed.brush_radius / 1.2).max(3.0),
             Some(KeyCode::BracketRight) => self.ed.brush_radius = (self.ed.brush_radius * 1.2).min(150.0),
             Some(KeyCode::Delete) | Some(KeyCode::Backspace) => self.ed.delete_selected(),
@@ -567,7 +573,7 @@ impl App {
                         game_found: self.game.is_some(),
                         texture_files: &self.texture_files,
                         prefs: &self.prefs,
-                        status: ui::Status { cursor, loading, gpu: gpu_name.clone() },
+                        status: ui::Status { cursor, loading, gpu: gpu_name.clone(), cam: Some(crate::ui_minimap::CamView { target: self.cam.target, yaw: self.cam.yaw, distance: self.cam.distance }) },
                     },
                     &mut actions,
                 ));

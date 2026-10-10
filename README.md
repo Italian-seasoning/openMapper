@@ -17,13 +17,16 @@ experienced map makers.
 | Roads | 2 | click the start, then the end: the arc builds itself. A road continues smoothly from a road end it starts at, joins another end with an S-curve or bend (biarc), is cut into OMSI splines and linked with its neighbours. It can shape the ground under itself. |
 | Junctions | — | automatic: a road drawn into another's middle or across it cuts both and fills the gap with a junction object of its own (asphalt plate, `[path]` lanes for straight on, right and left, footpaths round the corners), written as ordinary OMSI content into `Sceneryobjects\openMapper\<map>` |
 | Objects | 3 | catalogue as the installation's folder tree with thumbnails; classes read from the files themselves (roads, tracks, footpaths, decoration, technical AI/helper splines; trees, stops, junction pieces, technical helpers), search, turning towards the nearest road |
-| Terrain | 4 | raise / lower / smooth / flatten brush |
-| Paint | 5 | painting with the map's ground textures (OMSI `[groundtex]` masks) |
-| Tiles | 6 | add a 300 × 300 m tile next to the map, remove one with right-click |
+| Game logic | 4 | start points (`[entrypoint]`), bus stops, car parks (one by one or in a row along the kerb), AI paths for cars and people drawn like roads and snapped to lane ends, sound sources and other editor-only helpers |
+| Terrain | 5 | raise / lower / smooth / flatten brush |
+| Paint | 6 | painting with the map's ground textures (OMSI `[groundtex]` masks) |
+| Tiles | 7 | add a 300 × 300 m tile next to the map, remove one with right-click |
 
 * **Open any map**: OMSI 2's own (saved as a copy into the content folder) and mod maps.
 * **New map** from OMSI 2's own template (`template/NewMap`): it's ready to drive right away.
 * **Test drive**: saves and launches openOMSI on this map.
+* **Overview map** in the corner of the view (`M`): tiles, roads, tracks and the camera;
+  click or drag on it to move there, double-click for a larger one.
 * **Asset import**: drop onto the window or use the button —
   * a mod (a folder or `.zip` laid out like OMSI 2) is merged into the content folder;
   * a folder of `.sco` / `.sli` files becomes a folder under `Sceneryobjects` / `Splines`;
@@ -40,7 +43,7 @@ experienced map makers.
   or left drag on empty ground (Select tool) moves the map.
 * **Trackpad:** two fingers move the map, pinch zooms, twist turns; Option + two fingers or
   Option + drag turns and tilts.
-* **Keyboard:** `W A S D` / arrows move, `Q / E` turn, `1–6` tools, `R` turn object, `Del`,
+* **Keyboard:** `W A S D` / arrows move, `Q / E` turn, `1–7` tools, `M` overview map, `R` turn object, `Del`,
   `F` go to selection, `[ ]` brush size, `G` tile grid, `Ctrl+Z`, `Ctrl+Shift+Z`, `Ctrl+S`,
   `F5` test drive.
 
