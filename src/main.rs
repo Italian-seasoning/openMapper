@@ -8,6 +8,7 @@ mod assets;
 mod camera;
 mod clipboard;
 mod doc;
+mod draw;
 mod editor;
 mod gpu;
 mod history;

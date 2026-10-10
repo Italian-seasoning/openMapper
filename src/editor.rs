@@ -201,6 +201,15 @@ pub struct Editor {
     carry_preview: Vec<reshape::Plan>,
     /// How objects are put along roads.
     pub row_params: crate::rows::RowParams,
+    /// Numbers typed while a road is drawn: length, radius, heading, rise (m) at its end.
+    pub typed_text: [String; 4],
+    /// Shift held while drawing: a straight.
+    pub straight_lock: bool,
+    /// The road drawn is planned again this frame.
+    pub replan: bool,
+    /// Roads keep their height (bridges, embankments): an even gradient from end to end,
+    /// the ground left as it is.
+    pub keep_height: bool,
     /// The ruler, when on: its first point and, once clicked, its second.
     pub ruler: Option<(Option<DVec3>, Option<DVec3>)>,
     // snapping
@@ -287,6 +296,10 @@ impl Default for Editor {
             carry_preview: Vec::new(),
             row_params: Default::default(),
             ruler: None,
+            typed_text: Default::default(),
+            straight_lock: false,
+            replan: false,
+            keep_height: false,
             snap_grid: false,
             grid_step: 1.0,
             snap_angle: false,
@@ -569,7 +582,7 @@ impl Editor {
     // ---------------------------------------------------------------- per frame
 
     /// Mouse moved or the view changed: update the cursor and what the tool shows.
-    pub fn hover_ray(&mut self, assets: &mut Assets, lib: &Library, o: DVec3, d: DVec3) {
+    pub fn hover_ray(&mut self, assets: &mut Assets, _lib: &Library, o: DVec3, d: DVec3) {
         if self.doc.is_none() {
             return;
         }
@@ -588,18 +601,18 @@ impl Editor {
             Tool::Tiles => {
                 self.hover_tile = g.map(|p| tile_of(p.truncate()));
             }
-            Tool::Roads => self.plan_road(assets, lib),
+            Tool::Roads => self.plan_road(assets),
             Tool::Objects => self.plan_object(assets),
             _ => {}
         }
     }
 
     /// The cursor at a ground point (scripted use: the demo and tests).
-    pub fn hover_point(&mut self, assets: &mut Assets, lib: &Library, p: DVec3) {
+    pub fn hover_point(&mut self, assets: &mut Assets, _lib: &Library, p: DVec3) {
         self.cursor = Some(p);
         self.cursor_in_view = true;
         match self.acts_as() {
-            Tool::Roads => self.plan_road(assets, lib),
+            Tool::Roads => self.plan_road(assets),
             Tool::Objects => self.plan_object(assets),
             Tool::Tiles => self.hover_tile = Some(tile_of(p.truncate())),
             _ => {}
@@ -609,6 +622,11 @@ impl Editor {
     /// Continuous work while a button is held (brushes, dragging).
     pub fn tick(&mut self, assets: &mut Assets, dt: f64, held: bool) {
         self.learn(assets);
+        // (numbers typed or Shift changed: the road drawn follows at once)
+        if self.replan && self.acts_as() == Tool::Roads {
+            self.plan_road(assets);
+        }
+        self.replan = false;
         if !held {
             match std::mem::replace(&mut self.drag, Drag::None) {
                 Drag::None => {}
@@ -1057,7 +1075,7 @@ impl Editor {
         })
     }
 
-    fn plan_road(&mut self, assets: &mut Assets, _lib: &Library) {
+    fn plan_road(&mut self, assets: &mut Assets) {
         self.road_plan = None;
         let Some(c) = self.cursor else { return };
         // (an end pulls the cursor only from close by: aimed at a road a little way from its
@@ -1090,9 +1108,24 @@ impl Editor {
             let d = (target - start.pos.truncate()).normalize_or_zero();
             start.pos += DVec3::new(d.x, d.y, 0.0) * hw;
         }
-        let Some(segs) = roads::plan(&start, fixed, target, end_anchor.as_ref()) else { return };
+        let typed = self.typed();
         let z0 = start.pos.z;
-        let z1 = snap.map(|a| a.pos.z).unwrap_or(c.z);
+        // numbers typed or the straight lock: the road is drawn by them, not to what the
+        // cursor is near
+        if (typed.any() || self.straight_lock) && !self.drawing_paths() {
+            let Some(segs) = crate::draw::plan(start.pos.truncate(), fixed.then_some(start.heading), self.snap_point(c.truncate()), &typed, self.straight_lock) else { return };
+            self.road_snap = None;
+            let end = segs.last().unwrap().end();
+            let z1 = if self.keep_height { z0 + self.typed_rise() } else { self.doc.as_ref().map(|d| d.ground(end)).unwrap_or(c.z) };
+            self.road_plan = Some((segs, z0, z1, None));
+            return;
+        }
+        let Some(segs) = roads::plan(&start, fixed, target, end_anchor.as_ref()) else { return };
+        let z1 = match snap {
+            Some(a) => a.pos.z,
+            None if self.keep_height => z0 + self.typed_rise(),
+            None => c.z,
+        };
         self.road_plan = Some((segs, z0, z1, snap));
     }
 
@@ -1189,7 +1222,7 @@ impl Editor {
         }
         self.history.touch_global(doc);
         let _ = total;
-        let profile = road_profile(doc, &pieces, z0, z1);
+        let profile = if self.keep_height { even_profile(&pieces, z0, z1) } else { road_profile(doc, &pieces, z0, z1) };
         let mut made: Vec<(TileKey, i64)> = Vec::new();
         let ids: Vec<i64> = pieces.iter().map(|_| doc.new_id()).collect();
         let mut curves = Vec::new();
@@ -1250,7 +1283,7 @@ impl Editor {
                 }
             }
         }
-        if self.follow_ground && !(self.tool == Tool::Logic) {
+        if self.follow_ground && !self.keep_height && !(self.tool == Tool::Logic) {
             conform_ground(doc, &curves, half);
         }
         // (the step stays open: the caller may cut the road it joined, in the same step)
@@ -1659,7 +1692,7 @@ impl Editor {
                         let pieces = roads::split(segs, 50.0);
                         let total = roads::total_length(&pieces).max(0.1);
                         let _ = total;
-                        let profile = road_profile(doc, &pieces, *z0, *z1);
+                        let profile = if self.keep_height { even_profile(&pieces, *z0, *z1) } else { road_profile(doc, &pieces, *z0, *z1) };
                         for (i, p) in pieces.iter().enumerate() {
                             let mut s = piece_spline(rel, p, &profile, i, DVec2::ZERO);
                             s.pos[2] += 0.02;
@@ -2358,6 +2391,35 @@ impl Editor {
         self.history.commit();
     }
 
+    // ------------------------------------------------------------ drawing by numbers
+
+    /// The numbers typed for the road being drawn.
+    pub fn typed(&self) -> crate::draw::Typed {
+        let t = &self.typed_text;
+        crate::draw::Typed { length: crate::draw::parse(&t[0]).filter(|v| *v > 0.0), radius: crate::draw::parse(&t[1]), heading: crate::draw::parse(&t[2]).map(roads::norm_deg) }
+    }
+
+    /// How much a road that keeps its height climbs to its end (m).
+    pub fn typed_rise(&self) -> f64 {
+        crate::draw::parse(&self.typed_text[3]).unwrap_or(0.0)
+    }
+
+    /// The road being drawn, as it would be built: length, radius of its last arc (0:
+    /// straight), heading at its end, rise.
+    pub fn road_plan_facts(&self) -> Option<(f64, f64, f64, f64)> {
+        let (segs, z0, z1, _) = self.road_plan.as_ref()?;
+        let last = segs.last()?;
+        Some((roads::total_length(segs), last.radius, roads::norm_deg(last.end_heading()), z1 - z0))
+    }
+
+    /// Build the road drawn so far (Enter).
+    pub fn confirm_road(&mut self, assets: &mut Assets, lib: &Library) {
+        if self.acts_as() == Tool::Roads && self.road_start.is_some() {
+            self.plan_road(assets);
+            self.road_click(assets, lib);
+        }
+    }
+
     // ------------------------------------------------------------ ruler
 
     /// The ruler on or off.
@@ -2586,6 +2648,19 @@ fn set_world_sample(doc: &mut Document, hist: &mut History, gx: i64, gy: i64, n:
 /// The heights of a planned road at the joints of its pieces, (height, gradient %): the
 /// ground's, smoothed along the road (so it climbs hills instead of cutting through them),
 /// from `z0` at the start to `z1` at the end, no steeper than 10 %.
+/// An even climb from `z0` to `z1` (a road that keeps its height: a bridge, an embankment).
+fn even_profile(pieces: &[Seg], z0: f64, z1: f64) -> Vec<(f64, f64)> {
+    let total = roads::total_length(pieces).max(0.1);
+    let g = (z1 - z0) / total * 100.0;
+    let mut acc = 0.0;
+    let mut out = vec![(z0, g)];
+    for p in pieces {
+        acc += p.length;
+        out.push((z0 + (z1 - z0) * acc / total, g));
+    }
+    out
+}
+
 fn road_profile(doc: &Document, pieces: &[Seg], z0: f64, z1: f64) -> Vec<(f64, f64)> {
     let mut nodes = vec![0.0];
     for p in pieces {

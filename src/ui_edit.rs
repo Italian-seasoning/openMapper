@@ -271,3 +271,56 @@ pub fn rows_section(ui: &mut egui::Ui, ed: &mut Editor, lib: &Library) {
         });
     });
 }
+
+/// The Roads tool's options for roads that keep their height.
+pub fn road_options(ui: &mut egui::Ui, ed: &mut Editor) {
+    let r = check(ui, &mut ed.keep_height, tr("Keep the height (bridge, embankment)", "Держать высоту (мост, насыпь)"));
+    r.on_hover_text(tr("An even gradient from end to end, the ground left as it is; the rise to the end can be typed while drawing. Pillars: select the road and put them along it as objects.", "Ровный уклон от начала до конца, земля не меняется; подъём к концу можно ввести при рисовании. Опоры: выберите дорогу и расставьте их вдоль неё как объекты."));
+}
+
+/// Numbers for the road being drawn, in the view's corner: what is typed is kept to, what is
+/// left empty follows the cursor (its value shown greyed).
+pub fn road_entry(ctx: &egui::Context, ed: &mut Editor, view: egui::Rect, actions: &mut Vec<crate::ui::Action>) {
+    if !ed.road_start_active() || ed.drawing_paths() || !view.is_positive() {
+        return;
+    }
+    let facts = ed.road_plan_facts();
+    egui::Area::new(egui::Id::new("road entry")).fixed_pos(view.left_bottom() + Vec2::new(10.0, -46.0)).order(egui::Order::Foreground).show(ctx, |ui| {
+        egui::Frame::new().fill(Color32::from_rgba_unmultiplied(27, 28, 30, 235)).corner_radius(CornerRadius::same(4)).inner_margin(Margin::symmetric(8, 5)).stroke(Stroke::new(1.0, Color32::from_gray(60))).show(ui, |ui| {
+            ui.horizontal(|ui| {
+                let shown = |v: Option<f64>, unit: &str| v.map(|v| format!("{v:.1}{unit}")).unwrap_or_default();
+                let (len, rad, head, rise) = match facts {
+                    Some((l, r, h, z)) => (Some(l), Some(r.abs()), Some(h), Some(z)),
+                    None => (None, None, None, None),
+                };
+                let mut fields: Vec<(usize, &str, String)> = vec![
+                    (0, tr("Length", "Длина"), shown(len, " m")),
+                    (1, tr("Radius", "Радиус"), if rad == Some(0.0) { tr("straight", "прямая").to_string() } else { shown(rad, " m") }),
+                    (2, tr("Heading", "Курс"), shown(head, "°")),
+                ];
+                if ed.keep_height {
+                    fields.push((3, tr("Rise", "Подъём"), shown(rise, " m")));
+                }
+                let mut enter = false;
+                for (i, name, hint) in fields {
+                    ui.label(RichText::new(name).small().color(TEXT_DIM));
+                    let r = ui.add(egui::TextEdit::singleline(&mut ed.typed_text[i]).desired_width(58.0).hint_text(hint));
+                    if r.changed() {
+                        ed.replan = true;
+                    }
+                    if r.lost_focus() && ui.input(|i| i.key_pressed(egui::Key::Enter)) {
+                        enter = true;
+                    }
+                }
+                if ed.typed_text.iter().any(|t| !t.is_empty()) && ui.small_button(tr("Clear", "Сброс")).clicked() {
+                    ed.typed_text = Default::default();
+                    ed.replan = true;
+                }
+                ui.label(RichText::new(tr("Shift: straight · Enter: build", "Shift — прямая · Enter — построить")).small().color(TEXT_DIM));
+                if enter {
+                    actions.push(crate::ui::Action::BuildRoad);
+                }
+            });
+        });
+    });
+}
