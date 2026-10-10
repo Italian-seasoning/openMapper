@@ -169,7 +169,14 @@ pub fn remove(doc: &mut Document, k: TileKey, row: usize) {
         return;
     }
     let a = t.tile.spline_attachments.remove(row);
-    t.tile.attach_objects.retain(|o| o.parent_id != Some(a.id));
+    let mut gone = vec![a.id];
+    let mut i = 0;
+    while i < gone.len() {
+        let p = gone[i];
+        gone.extend(t.tile.attach_objects.iter().filter(|o| o.parent_id == Some(p)).map(|o| o.id));
+        i += 1;
+    }
+    t.tile.attach_objects.retain(|o| !gone.contains(&o.id));
     t.touch_content();
 }
 

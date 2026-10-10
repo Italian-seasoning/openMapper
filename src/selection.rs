@@ -533,4 +533,18 @@ pub mod tests {
         hist.commit();
         assert!(doc.tiles[&(0, 0)].tile.attach_objects.is_empty());
     }
+
+    /// A road deleted takes its rows of objects and what hangs on them (lamps on masts).
+    #[test]
+    fn deleting_a_road_takes_what_hangs_on_its_rows() {
+        let mut doc = flat_map(1);
+        add_spline(&mut doc, (0, 0), 2, 50.0, 50.0, 0.0, 20.0, 0, 0);
+        let t = doc.tiles.get_mut(&(0, 0)).unwrap();
+        t.tile.spline_attachments.push(omsi_map::SplineAttachment { file: "mast.sco".into(), id: 5, spline_index: 0, interval: 10.0, range: 20.0, ..Default::default() });
+        t.tile.attach_objects.push(MapObject { file: "lamp.sco".into(), id: 6, parent_id: Some(5), ..Default::default() });
+        t.tile.attach_objects.push(MapObject { file: "bulb.sco".into(), id: 7, parent_id: Some(6), ..Default::default() });
+        doc.delete_spline((0, 0), 2);
+        let t = &doc.tiles[&(0, 0)].tile;
+        assert!(t.spline_attachments.is_empty() && t.attach_objects.is_empty());
+    }
 }

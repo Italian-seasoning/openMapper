@@ -466,6 +466,15 @@ impl Document {
         let Some(t) = self.tiles.get_mut(&k) else { return };
         let Some(idx) = t.tile.splines.iter().position(|s| s.id == id) else { return };
         let s = t.tile.splines.remove(idx);
+        // its rows, and what hangs on their objects
+        let mut gone: Vec<i64> = t.tile.spline_attachments.iter().filter(|a| a.spline_index == idx as i32).map(|a| a.id).collect();
+        let mut i = 0;
+        while i < gone.len() {
+            let p = gone[i];
+            gone.extend(t.tile.attach_objects.iter().filter(|o| o.parent_id == Some(p)).map(|o| o.id));
+            i += 1;
+        }
+        t.tile.attach_objects.retain(|o| !gone.contains(&o.id));
         t.tile.spline_attachments.retain(|a| a.spline_index != idx as i32);
         for a in &mut t.tile.spline_attachments {
             if a.spline_index > idx as i32 {
