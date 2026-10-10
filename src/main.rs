@@ -24,6 +24,7 @@ mod junction;
 mod lanes;
 mod library;
 mod place;
+mod plants;
 mod render;
 mod reshape;
 mod roads;

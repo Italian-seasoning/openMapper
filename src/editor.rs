@@ -272,6 +272,22 @@ pub struct Editor {
     pub object_type: Option<String>,
     pub place_heading: f64,
     pub align_to_road: bool,
+    /// Aligned to a road, the object's front is put at the roadside, this far (m) from the
+    /// road's edge (else it is only turned).
+    pub align_front: bool,
+    pub road_setback: f64,
+    /// The road point an aligned object was set against (for the guide line).
+    align_guide: Option<(DVec3, DVec3)>,
+    /// Shift is held (places an object freely, not aligned).
+    pub shift_held: bool,
+    /// The Objects tool sows plants with a brush (or clears them).
+    pub plant_brush: bool,
+    pub plant_erase: bool,
+    /// Plants no nearer to one another (m).
+    pub plant_spacing: f64,
+    /// What the brush sows, picked at random (empty: the catalogue's choice).
+    pub plant_mix: Vec<String>,
+    plant_rng: crate::plants::Rng,
     ghost_pos: Option<(DVec3, f64)>,
     // tiles
     hover_tile: Option<TileKey>,
@@ -363,6 +379,15 @@ impl Default for Editor {
             object_type: None,
             place_heading: 0.0,
             align_to_road: true,
+            align_front: true,
+            road_setback: 2.0,
+            align_guide: None,
+            shift_held: false,
+            plant_brush: false,
+            plant_erase: false,
+            plant_spacing: 6.0,
+            plant_mix: Vec::new(),
+            plant_rng: crate::plants::Rng::new(0x5eed),
             ghost_pos: None,
             hover_tile: None,
             picked_tile: None,
@@ -717,6 +742,7 @@ impl Editor {
             Drag::Brush => match self.tool {
                 Tool::Terrain => self.brush_terrain(assets, c.truncate(), dt),
                 Tool::Paint => self.brush_paint(c.truncate(), dt),
+                Tool::Objects => self.brush_plants(assets, c.truncate(), dt),
                 _ => {}
             },
             Drag::Move { grab, started } => {
@@ -789,6 +815,10 @@ impl Editor {
             Tool::Roads if self.roundabout && !self.drawing_paths() => self.ring_click(assets),
             Tool::Roads => self.road_click(assets, lib),
             Tool::Objects if self.tool == Tool::Logic && self.logic == LogicMode::Parking && self.parking_row => self.parking_click(assets, lib),
+            Tool::Objects if self.tool == Tool::Objects && self.plant_brush => {
+                self.history.begin(if self.plant_erase { tr("Clear plants", "Убрать растения") } else { tr("Plant", "Посадка") });
+                self.drag = Drag::Brush;
+            }
             Tool::Objects => self.place_object(lib, shift),
             Tool::Tiles => self.tile_click(),
             Tool::Logic => {}
@@ -897,6 +927,10 @@ impl Editor {
 
     fn plan_object(&mut self, assets: &mut Assets) {
         self.ghost_pos = None;
+        self.align_guide = None;
+        if self.tool == Tool::Objects && self.plant_brush {
+            return;
+        }
         let (Some(c), Some(rel)) = (self.cursor, self.object_type.clone()) else { return };
         let mut heading = self.place_heading;
         let mut pos = c;
@@ -904,10 +938,25 @@ impl Editor {
             let q = self.snap_point(c.truncate());
             pos = DVec3::new(q.x, q.y, self.doc.as_ref().map(|d| d.ground(q)).unwrap_or(c.z));
         }
-        if self.align_to_road {
-            if let Some((h, _)) = self.nearest_spline_heading(c.truncate(), 18.0) {
-                // stand along the road; the user's turns are added
+        // (Shift held: put it down freely)
+        let model = assets.object(&rel);
+        let free = self.shift_held || model.as_ref().map(|m| m.tree.is_some() || m.technical).unwrap_or(false);
+        if self.align_to_road && !free {
+            // its depth decides how far from a road it still belongs to it
+            let depth = model.as_ref().map(|m| (m.hi.y - m.lo.y) as f64).unwrap_or(10.0);
+            if let Some((q, h, n, hw)) = self.nearest_road(assets, c.truncate(), depth + 25.0) {
+                // stand facing the road; the user's turns are added
                 heading = roads::norm_deg(h + self.place_heading);
+                if self.align_front && self.place_heading.rem_euclid(360.0) < 1e-6 {
+                    // the front (+y) at the setback from the road's edge
+                    let front = model.as_ref().map(|m| m.hi.y as f64).unwrap_or(0.0);
+                    let at = q + n * (hw + self.road_setback + front);
+                    // (along the road the cursor decides; across it the setback)
+                    pos = DVec3::new(at.x, at.y, self.doc.as_ref().map(|d| d.ground(at)).unwrap_or(c.z));
+                    let edge = q + n * hw;
+                    let z = self.doc.as_ref().map(|d| d.ground(edge)).unwrap_or(c.z);
+                    self.align_guide = Some((DVec3::new(edge.x, edge.y, z), pos));
+                }
             }
         }
         if let Some(m) = assets.object(&rel) {
@@ -918,9 +967,11 @@ impl Editor {
         self.ghost_pos = Some((pos, self.snap_heading(heading)));
     }
 
-    fn nearest_spline_heading(&self, p: DVec2, within: f64) -> Option<(f64, f64)> {
+    /// The visible road nearest to `p` within `within` m: the point on its centre line, the
+    /// heading that faces it, the unit way from the road towards `p`, and its half width.
+    fn nearest_road(&self, assets: &mut Assets, p: DVec2, within: f64) -> Option<(DVec2, f64, DVec2, f64)> {
         let doc = self.doc.as_ref()?;
-        let mut best: Option<(f64, f64)> = None;
+        let mut best: Option<(DVec2, f64, DVec2, f64, f64)> = None;
         for (k, t) in &doc.tiles {
             let org = tile_origin(*k);
             for s in t.tile.splines.iter().filter(|s| !s.deleted) {
@@ -928,28 +979,31 @@ impl Editor {
                 if (start - p).length() > s.length + within {
                     continue;
                 }
+                let Some(m) = assets.spline(&s.file) else { continue };
+                if !m.joinable() {
+                    continue;
+                }
+                let hw = m.half_width as f64;
                 let c = omsi_geometry::SplineCurve::from_map(s, org);
-                let n = (s.length / 2.0).ceil().max(2.0) as usize;
+                let n = (s.length / 1.0).ceil().max(2.0) as usize;
                 for i in 0..=n {
                     let at = s.length * i as f64 / n as f64;
                     let q = c.point_at(at).truncate();
                     let d = (q - p).length();
-                    if d < within && best.map(|b| d < b.1).unwrap_or(true) {
-                        let mut h = c.heading_at(at);
+                    if d < within + hw && best.map(|b| d < b.4).unwrap_or(true) {
+                        let h = c.heading_at(at);
+                        let right = roads::right(h);
+                        let side = if (p - q).dot(right) > 0.0 { 1.0 } else { -1.0 };
                         // face the road: the object's front (+y) towards the centre line
-                        let side = (p - q).dot(roads::right(h));
-                        if side > 0.0 {
-                            h += 270.0;
-                        } else {
-                            h += 90.0;
-                        }
-                        best = Some((roads::norm_deg(h), d));
+                        let face = roads::norm_deg(h + if side > 0.0 { 270.0 } else { 90.0 });
+                        best = Some((q, face, right * side, hw, d));
                     }
                 }
             }
         }
-        best
+        best.map(|b| (b.0, b.1, b.2, b.3))
     }
+
 
     fn place_object(&mut self, lib: &Library, keep: bool) {
         let _ = keep;
@@ -1594,6 +1648,25 @@ impl Editor {
         }
     }
 
+    /// The plant brush held over `c` for `dt` seconds.
+    fn brush_plants(&mut self, assets: &mut Assets, c: DVec2, dt: f64) {
+        let mix: Vec<String> = if self.plant_mix.is_empty() { self.object_type.iter().cloned().collect() } else { self.plant_mix.clone() };
+        let r = self.brush_radius as f64;
+        let Some(doc) = self.doc.as_mut() else { return };
+        if self.plant_erase {
+            crate::plants::clear(doc, &mut self.history, assets, c, r, &mix);
+            return;
+        }
+        if mix.is_empty() {
+            self.toast(tr("Pick a tree in the catalogue (or add some to the mix) first", "Сначала выберите дерево в каталоге (или добавьте в смесь)"));
+            return;
+        }
+        // (about as many tries a second as the circle holds plants: it fills in a moment)
+        let room = std::f64::consts::PI * r * r / (self.plant_spacing * self.plant_spacing);
+        let tries = (room * dt * 3.0).ceil().clamp(1.0, 200.0) as usize;
+        crate::plants::sow(doc, &mut self.history, assets, c, r, self.plant_spacing, &mix, &mut self.plant_rng, tries);
+    }
+
     fn brush_paint(&mut self, c: DVec2, dt: f64) {
         let Some(doc) = self.doc.as_mut() else { return };
         doc.sync_mask_slots();
@@ -1805,6 +1878,12 @@ impl Editor {
             }
         }
         match self.acts_as() {
+            Tool::Objects if self.tool == Tool::Objects && self.plant_brush && self.cursor_in_view => {
+                if let Some(c) = self.cursor {
+                    let color = if self.plant_erase { [1.0, 0.4, 0.4, 1.0] } else { [0.45, 0.9, 0.45, 1.0] };
+                    x.brush = Some(Brush { centre: c.truncate(), radius: self.brush_radius, color });
+                }
+            }
             Tool::Terrain | Tool::Paint if self.cursor_in_view => {
                 if let Some(c) = self.cursor {
                     let color = match (self.tool, self.terrain_mode, self.paint_erase) {
@@ -1887,6 +1966,11 @@ impl Editor {
                         // an arrow for the front
                         let d = roads::dir(h);
                         line(&mut x.overlay, cam, p + DVec3::Z * 0.3, p + DVec3::new(d.x * 6.0, d.y * 6.0, 0.3), w, GREEN);
+                        // set against a road: the road's edge it keeps its distance from
+                        if let Some((edge, at)) = self.align_guide {
+                            line(&mut x.overlay, cam, edge + DVec3::Z * 0.3, at + DVec3::Z * 0.3, w * 0.5, WHITE);
+                            disc(&mut x.overlay, cam, edge + DVec3::Z * 0.3, w * 1.5, WHITE);
+                        }
                     }
                 }
             }

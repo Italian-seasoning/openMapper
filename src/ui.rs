@@ -790,6 +790,7 @@ fn tool_hint(ed: &Editor) -> &'static str {
         Tool::Roads if ed.road_type.is_none() => tr("Choose a road type in the list on the left", "Выберите тип дороги в списке слева"),
         Tool::Roads => tr("Click where the road starts, click again where it goes (it keeps going) · white dots: road ends to join · right-click / Esc: stop", "Клик: начало дороги, ещё клик: куда она идёт (дальше продолжается) · белые точки: концы для стыковки · правый клик / Esc: стоп"),
         Tool::Objects if ed.object_type.is_none() => tr("Choose an object in the list on the left", "Выберите объект в списке слева"),
+        Tool::Objects if ed.plant_brush => tr("Hold the left button and paint · [ ] or Shift+wheel: brush size", "Зажмите левую кнопку и ведите · [ ] или Shift+колесо: размер кисти"),
         Tool::Objects => tr("Click to place · R / Shift+R turn · right-click puts the object away", "Клик: поставить · R / Shift+R: поворот · правый клик: убрать объект"),
         Tool::Logic if ed.logic == LogicMode::Paths && ed.path_edit => tr("Click a path to pick it · drag its dots to move an end or bend it · Ctrl+click on it: add a point · Del: delete", "Клик по пути: выбрать · тяните кружки: двигать конец или изгибать · Ctrl+клик: добавить точку · Del: удалить"),
         Tool::Logic if ed.logic == LogicMode::Paths => tr("Click where the path starts, click where it goes (it keeps going) · it snaps to lane ends and along lanes · right-click / Esc: stop", "Клик: начало пути, ещё клик: куда он идёт (дальше продолжается) · прилипает к концам и вдоль полос · правый клик / Esc: стоп"),
@@ -964,7 +965,52 @@ fn catalogue_of(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Libr
             ui.label(RichText::new(current.unwrap_or_else(|| tr("nothing chosen", "ничего не выбрано").to_string())).strong().color(Color32::WHITE));
         });
     } else {
-        check(ui, &mut ed.align_to_road, tr("Turn towards the nearest road", "Разворачивать к ближайшей дороге"));
+        check(ui, &mut ed.align_to_road, tr("Line up with the nearest road (Shift: put it freely)", "Выравнивать по ближайшей дороге (Shift: ставить свободно)"));
+        if ed.align_to_road {
+            ui.horizontal(|ui| {
+                ui.add_space(18.0);
+                check(ui, &mut ed.align_front, tr("Front at the roadside, back", "Фасадом к дороге, отступ"));
+                ui.add_enabled(ed.align_front, egui::DragValue::new(&mut ed.road_setback).range(0.0..=30.0).speed(0.1).suffix(" m"));
+            });
+        }
+        // the plant brush
+        check(ui, &mut ed.plant_brush, icons::labelled(Icon::Tree, tr("Plant brush: sow trees by painting", "Кисть растений: сажать деревья кистью")));
+        if ed.plant_brush {
+            ui.horizontal(|ui| {
+                ui.add_space(18.0);
+                if radio(ui, !ed.plant_erase, tr("Sow", "Сажать")).clicked() {
+                    ed.plant_erase = false;
+                }
+                if radio(ui, ed.plant_erase, tr("Clear", "Убирать")).clicked() {
+                    ed.plant_erase = true;
+                }
+            });
+            egui::Grid::new("plants").num_columns(2).spacing(Vec2::new(8.0, 4.0)).show(ui, |ui| {
+                ui.label(tr("Size", "Размер"));
+                ui.add(egui::Slider::new(&mut ed.brush_radius, 3.0..=150.0).suffix(" m"));
+                ui.end_row();
+                ui.label(tr("Apart", "Расстояние"));
+                ui.add(egui::Slider::new(&mut ed.plant_spacing, 1.0..=40.0).suffix(" m"));
+                ui.end_row();
+            });
+            if ed.plant_mix.is_empty() {
+                ui.label(RichText::new(tr("Sows the object chosen below. Right-click entries: \"Add to the plant mix\" to sow several at random. Clearing takes trees and the mix's objects.", "Сажает объект, выбранный ниже. Правый клик по пунктам: «Добавить в смесь», чтобы сажать несколько вперемешку. Кисть «Убирать» убирает деревья и объекты смеси.")).small().color(TEXT_DIM));
+            } else {
+                ui.label(RichText::new(tr("Mix (picked at random):", "Смесь (вперемешку):")).small().color(TEXT_DIM));
+                let mut drop = None;
+                for (i, rel) in ed.plant_mix.iter().enumerate() {
+                    ui.horizontal(|ui| {
+                        ui.label(RichText::new(lib.find(rel).map(|a| a.name.clone()).unwrap_or_else(|| rel.clone())).small());
+                        if ui.small_button("×").clicked() {
+                            drop = Some(i);
+                        }
+                    });
+                }
+                if let Some(i) = drop {
+                    ed.plant_mix.remove(i);
+                }
+            }
+        }
     }
     let selected = if logic == Some(LogicMode::Paths) { ed.path_type.clone() } else if kind == Kind::Spline { ed.road_type.clone() } else { ed.object_type.clone() };
     let items: Vec<&crate::library::Asset> = lib.filter(kind, *cat, &st.search).filter(|a| belongs(a)).collect();
@@ -1022,6 +1068,19 @@ fn catalogue_of(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Libr
                 st.status_help = Some(format!("{} · {}", a.rel, tr("right-click: star it", "правый клик: в избранное")));
             }
             resp.context_menu(|ui| {
+                if kind == Kind::Object && logic.is_none() {
+                    let in_mix = ed.plant_mix.iter().any(|m| m.eq_ignore_ascii_case(&a.rel));
+                    let text = if in_mix { tr("Take out of the plant mix", "Убрать из смеси растений") } else { tr("Add to the plant mix", "Добавить в смесь растений") };
+                    if ui.button(icons::labelled(Icon::Tree, text)).clicked() {
+                        if in_mix {
+                            ed.plant_mix.retain(|m| !m.eq_ignore_ascii_case(&a.rel));
+                        } else {
+                            ed.plant_mix.push(a.rel.clone());
+                            ed.plant_brush = true;
+                        }
+                        ui.close();
+                    }
+                }
                 let text = if starred { tr("Remove from favourites", "Убрать из избранного") } else { tr("Add to favourites", "Добавить в избранное") };
                 if ui.button(icons::labelled(Icon::Star, text)).clicked() {
                     actions.push(Action::ToggleFavourite(a.rel.clone()));

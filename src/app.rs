@@ -1430,6 +1430,7 @@ impl ApplicationHandler for App {
                 self.ed.replan = true;
                 self.keys.ctrl = m.state().control_key() || m.state().super_key();
                 self.ed.ctrl_held = self.keys.ctrl;
+                self.ed.shift_held = self.keys.shift;
                 let alt = m.state().alt_key();
                 // (Alt / Option goes down: the camera will orbit round the point under the cursor)
                 if alt && !self.keys.alt && !self.mouse.over_ui {
@@ -1569,7 +1570,7 @@ impl ApplicationHandler for App {
                             self.cam.orbit_pixels(-dx, -dy);
                         } else if self.keys.ctrl {
                             self.ed.rotate(dy as f64 * 0.5);
-                        } else if self.keys.shift && matches!(self.ed.tool, Tool::Terrain | Tool::Paint) {
+                        } else if self.keys.shift && (matches!(self.ed.tool, Tool::Terrain | Tool::Paint) || (self.ed.tool == Tool::Objects && self.ed.plant_brush)) {
                             self.ed.brush_radius = (self.ed.brush_radius * 1.01f32.powf(dy)).clamp(3.0, 150.0);
                         } else {
                             // (the ground under the cursor moves with the fingers)
@@ -1588,7 +1589,7 @@ impl ApplicationHandler for App {
                 };
                 if self.keys.ctrl {
                     self.ed.rotate(steps as f64 * 15.0);
-                } else if self.keys.shift && matches!(self.ed.tool, Tool::Terrain | Tool::Paint) {
+                } else if self.keys.shift && (matches!(self.ed.tool, Tool::Terrain | Tool::Paint) || (self.ed.tool == Tool::Objects && self.ed.plant_brush)) {
                     self.ed.brush_radius = (self.ed.brush_radius * 1.1f32.powf(steps)).clamp(3.0, 150.0);
                 } else {
                     self.cam.zoom(steps, self.ed.cursor);
