@@ -57,6 +57,15 @@ pub enum Icon {
     RadioOff,
     ChevronRight,
     ExpandMore,
+    Star,
+    History,
+    Schedule,
+    Warning,
+    Error,
+    CheckCircle,
+    Copy,
+    Paste,
+    SelectAll,
 }
 
 impl Icon {
@@ -111,6 +120,15 @@ impl Icon {
             Icon::RadioOff => 0xe836,
             Icon::ChevronRight => 0xe5cc,
             Icon::ExpandMore => 0xe5cf,
+            Icon::Star => 0xf09a,
+            Icon::History => 0xe8b3,
+            Icon::Schedule => 0xefd6,
+            Icon::Warning => 0xf083,
+            Icon::Error => 0xf8b6,
+            Icon::CheckCircle => 0xf0be,
+            Icon::Copy => 0xe14d,
+            Icon::Paste => 0xe14f,
+            Icon::SelectAll => 0xe162,
         };
         char::from_u32(cp).unwrap_or('?')
     }
