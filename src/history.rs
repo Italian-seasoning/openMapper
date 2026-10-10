@@ -132,6 +132,11 @@ impl History {
         }
     }
 
+    /// The object files the tiles kept for undo and redo name (what a step can bring back).
+    pub fn object_files(&self) -> impl Iterator<Item = &str> {
+        self.undo.iter().chain(&self.redo).chain(&self.open).flat_map(|s| s.tiles.values().flatten()).flat_map(|t| t.tile.objects.iter().map(|o| o.file.as_str()))
+    }
+
     pub fn clear(&mut self) {
         self.undo.clear();
         self.redo.clear();

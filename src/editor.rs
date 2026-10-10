@@ -2469,7 +2469,7 @@ impl Editor {
     }
 
     /// After a save: the junction files of this map that nothing uses any more (not a tile,
-    /// and not one made in this session, which undo may still bring back) are deleted.
+    /// not a tile undo or redo may bring back, and not one made in this session) are deleted.
     /// Returns how many went.
     pub fn clean_junction_files(&self) -> usize {
         let (Some(doc), Some(content)) = (self.doc.as_ref(), self.content_dir.as_ref()) else { return 0 };
@@ -2477,8 +2477,11 @@ impl Editor {
             .tiles
             .values()
             .flat_map(|t| t.tile.objects.iter().chain(t.chrono.iter().flat_map(|c| c.objects.iter())))
-            .filter(|o| is_own_junction(&o.file))
-            .map(|o| o.file.to_lowercase())
+            .map(|o| o.file.as_str())
+            // (and those undo or redo can bring back)
+            .chain(self.history.object_files())
+            .filter(|f| is_own_junction(f))
+            .map(|f| f.to_lowercase())
             .collect();
         let folder: String = doc.dir.file_name().map(|f| f.to_string_lossy().to_string()).unwrap_or_else(|| "map".into()).chars().map(|c| if c.is_alphanumeric() || c == '-' || c == '_' { c } else { '_' }).collect();
         let dir = omsi_cfg::resolve_path(content, &format!("Sceneryobjects\\openMapper\\{folder}"));
@@ -3496,5 +3499,31 @@ mod tests {
         assert_eq!(ed.selected, Some(Sel::Object((1, 0), 1)));
         let o = ed.doc.as_ref().unwrap().object((1, 0), 1).unwrap();
         assert!((o.pos[0] - 50.0).abs() < 1e-9 && (o.pos[1] - 20.0).abs() < 1e-9);
+    }
+
+    /// A junction of an earlier session deleted, then the map saved: its files stay while
+    /// undo can still bring it back.
+    #[test]
+    fn junction_files_undo_can_bring_back_are_kept() {
+        let content = std::env::temp_dir().join(format!("openmapper-test-jfiles-{}", std::process::id()));
+        let mut doc = flat_map(1);
+        doc.dir = content.join("maps").join("J");
+        let file = "Sceneryobjects\\openMapper\\J\\junction_5.sco";
+        doc.tiles.get_mut(&(0, 0)).unwrap().tile.objects.push(omsi_map::MapObject { file: file.into(), id: 5, pos: [150.0, 150.0, 0.0], ..Default::default() });
+        let dir = content.join("Sceneryobjects").join("openMapper").join("J");
+        std::fs::create_dir_all(dir.join("model")).unwrap();
+        std::fs::write(dir.join("junction_5.sco"), "x").unwrap();
+        let mut ed = Editor::default();
+        ed.content_dir = Some(content.clone());
+        ed.open(doc);
+        ed.select(Some(Sel::Object((0, 0), 5)));
+        ed.delete_selected();
+        ed.history.commit();
+        assert_eq!(ed.clean_junction_files(), 0);
+        assert!(dir.join("junction_5.sco").exists());
+        // (nothing can bring it back any more: it goes)
+        ed.history.clear();
+        assert_eq!(ed.clean_junction_files(), 1);
+        let _ = std::fs::remove_dir_all(&content);
     }
 }
