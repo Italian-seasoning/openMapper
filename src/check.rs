@@ -642,7 +642,7 @@ pub fn apply(ed: &mut Editor, fix: &Fix) -> bool {
                         // (a start point names its object's tile)
                         crate::editor::sync_entry_points(doc);
                         if ed.selected == Some(Sel::Object(*from, *id)) {
-                            ed.selected = Some(Sel::Object(to, *id));
+                            ed.select(Some(Sel::Object(to, *id)));
                         }
                         true
                     } else {
@@ -794,7 +794,7 @@ impl Checker {
                                     if r.clicked() {
                                         actions.push(Action::LookAt(at));
                                         if it.sel.is_some() {
-                                            ed.selected = it.sel;
+                                            ed.select(it.sel);
                                         }
                                     }
                                 }
@@ -898,6 +898,7 @@ mod tests {
             global_dirty: false,
             fresh: false,
             global_rev: 0,
+            timetable: Default::default(),
         };
         for k in tiles {
             doc.tiles.insert(*k, crate::doc::TileDoc::new_flat(0.0));

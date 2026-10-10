@@ -85,6 +85,10 @@ pub struct App {
     frames: u64,
     /// `OPENMAPPER_SHOT=file.png`: save the window's picture after that many frames and end.
     shot: Option<(PathBuf, u64)>,
+    /// The Lines window.
+    tt: crate::ui_timetable::TimetableUi,
+    /// The next frame's view becomes the map's picture (`picture.jpg`).
+    picture: bool,
 }
 
 impl App {
@@ -110,6 +114,8 @@ impl App {
             quit: false,
             view: egui::Rect::NOTHING,
             frames: 0,
+            tt: crate::ui_timetable::TimetableUi::new(),
+            picture: false,
             shot: std::env::var_os("OPENMAPPER_SHOT").map(|p| (PathBuf::from(p), std::env::var("OPENMAPPER_SHOT_FRAMES").ok().and_then(|n| n.parse().ok()).unwrap_or(90))),
         };
         app.setup_roots();
@@ -126,6 +132,8 @@ impl App {
         self.assets = Some(Assets::new(roots.omsi.clone(), roots.content.clone()));
         self.lib.start_scan(&roots);
         self.ui.maps = install::list_maps(&roots);
+        self.ui.favourites = self.prefs.favourites.clone();
+        self.ui.recent_assets = self.prefs.recent_assets.clone();
         self.texture_files = ground_texture_files(&roots);
         self.ed.content_dir = Some(roots.content.clone());
         self.ed.asphalt = crate::junction::asphalt_texture(&roots.omsi);
@@ -145,6 +153,9 @@ impl App {
         }
         let egui_ctx = egui::Context::default();
         ui::style(&egui_ctx);
+        if self.prefs.ui_scale > 0.0 {
+            egui_ctx.set_zoom_factor(self.prefs.ui_scale.clamp(0.5, 2.0));
+        }
         let egui_state = egui_winit::State::new(egui_ctx.clone(), egui::ViewportId::ROOT, &window, Some(window.scale_factor() as f32), None, Some(gpu.device.limits().max_texture_dimension_2d as usize));
         let egui_renderer = egui_wgpu::Renderer::new(&gpu.device, gpu.config.format, egui_wgpu::RendererOptions { msaa_samples: 1, depth_stencil_format: None, dithering: true, predictable_texture_filtering: false });
         log::info!("graphics: {}", gpu.adapter_name);
@@ -212,9 +223,16 @@ impl App {
             self.ui.check.open = true;
             self.ui.check.issues = None;
         }
-        // OPENMAPPER_TOOL=logic (checks without a person at the screen)
-        if std::env::var("OPENMAPPER_TOOL").map(|t| t == "logic").unwrap_or(false) {
-            self.ed.set_tool(Tool::Logic);
+        // OPENMAPPER_TIMETABLE=<line>: the Lines window open on that line (checks without a person at the screen)
+        if let Ok(l) = std::env::var("OPENMAPPER_TIMETABLE") {
+            self.tt.open_at(&l);
+        }
+        // OPENMAPPER_TOOL=roads|objects|logic (checks without a person at the screen)
+        match std::env::var("OPENMAPPER_TOOL").as_deref() {
+            Ok("roads") => self.ed.set_tool(Tool::Roads),
+            Ok("objects") => self.ed.set_tool(Tool::Objects),
+            Ok("logic") => self.ed.set_tool(Tool::Logic),
+            _ => {}
         }
     }
 
@@ -238,6 +256,7 @@ impl App {
         let Some(doc) = self.ed.doc.as_mut() else { return false };
         self.ed.history.commit();
         crate::editor::sync_entry_points(doc);
+        self.tt.before_save(doc, self.roots.as_ref());
         match crate::doc::save(doc) {
             Ok(()) => {
                 omsi_cfg::content_changed();
@@ -323,6 +342,7 @@ impl App {
                 if let Some(d) = self.ed.doc.as_mut() {
                     // the user chose to drop the changes
                     d.global_dirty = false;
+                    d.timetable.dirty = false;
                     for t in d.tiles.values_mut() {
                         t.dirty = false;
                     }
@@ -359,13 +379,13 @@ impl App {
             Action::Undo => {
                 if let Some(d) = self.ed.doc.as_mut() {
                     self.ed.history.undo(d);
-                    self.ed.selected = None;
+                    self.ed.select(None);
                 }
             }
             Action::Redo => {
                 if let Some(d) = self.ed.doc.as_mut() {
                     self.ed.history.redo(d);
-                    self.ed.selected = None;
+                    self.ed.select(None);
                 }
             }
             Action::Import => {
@@ -398,6 +418,20 @@ impl App {
                     self.lib.start_scan(r);
                 }
             }
+            Action::SetScale(z) => {
+                self.prefs.ui_scale = z;
+                self.prefs.save();
+                if let Some(g) = &self.gfx {
+                    g.egui_ctx.set_zoom_factor(z);
+                }
+            }
+            Action::Copy => {
+                self.ed.copy(&self.lib);
+            }
+            Action::Cut => self.ed.cut(&self.lib),
+            Action::Paste => self.ed.paste(),
+            Action::Duplicate => self.ed.duplicate(&self.lib),
+            Action::SelectAll => self.ed.select_all(),
             Action::FocusSelection => {
                 if let (Some(sel), Some(doc)) = (self.ed.selected, &self.ed.doc) {
                     let p = match sel {
@@ -408,6 +442,26 @@ impl App {
                         self.cam.target = p;
                         self.cam.distance = self.cam.distance.min(120.0);
                     }
+                }
+            }
+            Action::Timetable => self.tt.open = !self.tt.open,
+            Action::ToggleFavourite(rel) => {
+                self.prefs.toggle_favourite(&rel);
+                self.ui.favourites = self.prefs.favourites.clone();
+            }
+            Action::UsedAsset(rel) => {
+                self.prefs.push_recent_asset(&rel);
+                self.ui.recent_assets = self.prefs.recent_assets.clone();
+            }
+            Action::MapPicture => self.picture = true,
+            Action::SetMapCamera => {
+                if let Some(doc) = self.ed.doc.as_mut() {
+                    let p = self.cam.target.truncate();
+                    let k = crate::doc::tile_of(p);
+                    let l = p - tile_origin(k);
+                    doc.global.map_cam = vec![k.0 as f64, k.1 as f64, l.x, self.cam.target.z, l.y, self.cam.yaw, self.cam.pitch, self.cam.distance / 4.0];
+                    doc.global_dirty = true;
+                    self.ed.toast(tr("The map opens with this view from now on.", "Теперь карта открывается с этого вида."));
                 }
             }
             Action::LookAt(p) => {
@@ -455,6 +509,11 @@ impl App {
             Some(KeyCode::KeyZ) if ctrl => actions.push(Action::Undo),
             Some(KeyCode::KeyY) if ctrl => actions.push(Action::Redo),
             Some(KeyCode::KeyS) if ctrl => actions.push(Action::Save),
+            Some(KeyCode::KeyC) if ctrl => actions.push(Action::Copy),
+            Some(KeyCode::KeyX) if ctrl => actions.push(Action::Cut),
+            Some(KeyCode::KeyV) if ctrl => actions.push(Action::Paste),
+            Some(KeyCode::KeyD) if ctrl => actions.push(Action::Duplicate),
+            Some(KeyCode::KeyA) if ctrl => actions.push(Action::SelectAll),
             Some(KeyCode::Digit1) => self.ed.set_tool(Tool::Select),
             Some(KeyCode::Digit2) => self.ed.set_tool(Tool::Roads),
             Some(KeyCode::Digit3) => self.ed.set_tool(Tool::Objects),
@@ -465,6 +524,7 @@ impl App {
             Some(KeyCode::KeyR) if !ctrl => self.ed.rotate(if shift { -15.0 } else { 15.0 }),
             Some(KeyCode::KeyG) if !ctrl => self.ed.show_grid = !self.ed.show_grid,
             Some(KeyCode::KeyM) if !ctrl => self.ui.minimap.open = !self.ui.minimap.open,
+            Some(KeyCode::KeyL) if !ctrl => self.tt.open = !self.tt.open,
             Some(KeyCode::BracketLeft) => self.ed.brush_radius = (self.ed.brush_radius / 1.2).max(3.0),
             Some(KeyCode::BracketRight) => self.ed.brush_radius = (self.ed.brush_radius * 1.2).min(150.0),
             Some(KeyCode::Delete) | Some(KeyCode::Backspace) => self.ed.delete_selected(),
@@ -561,6 +621,11 @@ impl App {
         let loading = self.assets.as_ref().map(|a| a.pending).unwrap_or(0);
         let mut view: Option<(egui::Rect, bool)> = None;
         let gpu_name = g.gpu.adapter_name.clone();
+        // (the overview map stays out of the map's picture)
+        let minimap_open = self.ui.minimap.open;
+        if self.picture {
+            self.ui.minimap.open = false;
+        }
         let full = g.egui_ctx.run_ui(raw, |ui| {
             let ctx = ui.ctx().clone();
             if self.ed.doc.is_none() {
@@ -588,6 +653,10 @@ impl App {
                     },
                     &mut actions,
                 ));
+            }
+            crate::ui_edit::paint_box(&ctx, &self.ed);
+            if self.ed.doc.is_some() {
+                self.tt.window(&ctx, &mut self.ed, self.roots.as_ref(), &mut actions);
             }
             ui::confirm_unsaved(&ctx, &mut self.ui, &mut actions);
         });
@@ -629,7 +698,8 @@ impl App {
             g.renderer.time += dt as f32;
             if let (Some(doc), Some(assets)) = (&self.ed.doc, self.assets.as_mut()) {
                 let t_x = Instant::now();
-                let extras = self.ed.extras(&self.cam, assets);
+                let mut extras = self.ed.extras(&self.cam, assets);
+                self.tt.overlay(&self.ed, &self.cam, &mut extras);
                 g.renderer.profile.add("extras", crate::render::profile::ms(t_x));
                 g.renderer.sync(&g.gpu, doc, assets, &extras, &self.cam);
                 let ppp = full.pixels_per_point;
@@ -689,6 +759,25 @@ impl App {
                         self.demo_join();
                     } else {
                         self.demo(&d);
+                        // OPENMAPPER_TIMETABLE with the demo: stops and a line on its roads
+                        if std::env::var_os("OPENMAPPER_TIMETABLE").is_some() {
+                            self.tt.demo(&mut self.ed, self.roots.as_ref());
+                            self.save();
+                        }
+                    }
+                }
+            }
+            if self.picture {
+                self.picture = false;
+                self.ui.minimap.open = minimap_open;
+                let ppp = full.pixels_per_point;
+                let v = self.view;
+                let crop = [(v.min.x * ppp) as u32, (v.min.y * ppp) as u32, (v.width() * ppp) as u32, (v.height() * ppp) as u32];
+                if let Some(doc) = &self.ed.doc {
+                    let path = doc.dir.join("picture.jpg");
+                    match read_frame(&g.gpu, &frame.texture).and_then(|img| save_map_picture(img, crop, &path)) {
+                        Ok(()) => self.ed.toast(tr("The map's picture is taken: openOMSI shows it where maps are chosen.", "Картинка карты снята: openOMSI показывает её при выборе карты.")),
+                        Err(e) => self.ed.error(format!("{}: {e}", tr("Could not save the picture", "Не удалось сохранить картинку"))),
                     }
                 }
             }
@@ -1109,6 +1198,9 @@ impl ApplicationHandler for App {
                 let (dx, dy) = (p.0 - self.mouse.pos.0, p.1 - self.mouse.pos.1);
                 self.mouse.pos = p;
                 self.mouse.moved = true;
+                if let Some(b) = &mut self.ed.select_box {
+                    b[1] = p;
+                }
                 let h = self.view.height().max(1.0);
                 if self.mouse.right {
                     self.cam.look_pixels(dx, dy);
@@ -1132,10 +1224,13 @@ impl ApplicationHandler for App {
                             if self.keys.alt {
                                 // Option + drag: turn the camera
                                 self.mouse.alt_orbit = true;
+                            } else if self.ed.tool == Tool::Select && self.ed.hover.is_none() && (self.keys.shift || self.keys.ctrl) {
+                                // Shift / Ctrl + drag on empty ground: a selection box
+                                self.ed.select_box = Some([self.mouse.pos, self.mouse.pos]);
                             } else if self.ed.tool == Tool::Select && self.ed.hover.is_none() {
                                 // drag the map by its empty ground
                                 self.mouse.grab = true;
-                                self.ed.selected = None;
+                                self.ed.select(None);
                             } else {
                                 self.mouse.left = true;
                                 self.mouse.press = self.mouse.pos;
@@ -1144,6 +1239,13 @@ impl ApplicationHandler for App {
                                 }
                             }
                         } else if !pressed {
+                            if self.ed.select_box.is_some() {
+                                let v = self.view;
+                                if let Some(assets) = self.assets.as_mut() {
+                                    self.ed.finish_box(assets, &self.cam, (v.min.x, v.min.y, v.width(), v.height()), self.keys.shift);
+                                }
+                                self.ed.select_box = None;
+                            }
                             if self.mouse.left {
                                 let (dx, dy) = (self.mouse.pos.0 - self.mouse.press.0, self.mouse.pos.1 - self.mouse.press.1);
                                 let dragged = dx * dx + dy * dy > 12.0 * 12.0;
@@ -1246,6 +1348,28 @@ impl ApplicationHandler for App {
 
 /// Write the window's picture to a PNG (the screenshot mode).
 fn save_shot(gpu: &Gpu, tex: &wgpu::Texture, path: &Path) -> anyhow::Result<()> {
+    read_frame(gpu, tex)?.save(path)?;
+    Ok(())
+}
+
+/// OMSI's map picture: 370 × 280, the middle of the view cut to that shape.
+fn save_map_picture(img: image::RgbaImage, crop: [u32; 4], path: &Path) -> anyhow::Result<()> {
+    let (w, h) = (crop[2].min(img.width().saturating_sub(crop[0])), crop[3].min(img.height().saturating_sub(crop[1])));
+    anyhow::ensure!(w > 8 && h > 8, "the view is too small");
+    let (pw, ph) = (370u32, 280u32);
+    let (cw, ch) = if w * ph > h * pw { (h * pw / ph, h) } else { (w, w * ph / pw) };
+    let (x, y) = (crop[0] + (w - cw) / 2, crop[1] + (h - ch) / 2);
+    let cut = image::imageops::crop_imm(&img, x, y, cw, ch).to_image();
+    let small = image::imageops::resize(&cut, pw, ph, image::imageops::FilterType::Triangle);
+    if let Some(dir) = path.parent() {
+        std::fs::create_dir_all(dir)?;
+    }
+    image::DynamicImage::ImageRgba8(small).to_rgb8().save_with_format(path, image::ImageFormat::Jpeg)?;
+    Ok(())
+}
+
+/// The window's picture as it was drawn.
+fn read_frame(gpu: &Gpu, tex: &wgpu::Texture) -> anyhow::Result<image::RgbaImage> {
     let (w, h) = (tex.width(), tex.height());
     let row = (w * 4).div_ceil(256) * 256;
     let buf = gpu.device.create_buffer(&wgpu::BufferDescriptor { label: Some("shot"), size: (row * h) as u64, usage: wgpu::BufferUsages::COPY_DST | wgpu::BufferUsages::MAP_READ, mapped_at_creation: false });
@@ -1270,6 +1394,19 @@ fn save_shot(gpu: &Gpu, tex: &wgpu::Texture, path: &Path) -> anyhow::Result<()> 
             img.put_pixel(x, y, image::Rgba(px));
         }
     }
-    img.save(path)?;
-    Ok(())
+    Ok(img)
+}
+
+#[cfg(test)]
+mod tests {
+    #[test]
+    fn map_picture_is_omsi_sized() {
+        let dir = std::env::temp_dir().join(format!("openmapper-picture-{}", std::process::id()));
+        let path = dir.join("picture.jpg");
+        let img = image::RgbaImage::from_pixel(1600, 900, image::Rgba([40, 120, 60, 255]));
+        super::save_map_picture(img, [200, 50, 1200, 800], &path).unwrap();
+        let back = image::open(&path).unwrap();
+        assert_eq!((back.width(), back.height()), (370, 280));
+        let _ = std::fs::remove_dir_all(dir);
+    }
 }

@@ -86,6 +86,7 @@ pub fn save(doc: &mut Document) -> anyhow::Result<()> {
     }
     std::fs::write(doc.dir.join("global.cfg"), utf16(&global_text(doc)))?;
     doc.global_dirty = false;
+    crate::timetable::save(doc)?;
     Ok(())
 }
 

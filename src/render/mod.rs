@@ -153,6 +153,8 @@ pub struct FrameExtras {
     /// Splines being drawn: (type, curve in world coordinates).
     pub ghost_splines: Vec<(String, MapSpline, [f32; 4])>,
     pub selected: Option<Sel>,
+    /// Selected together with `selected`.
+    pub selected_more: std::collections::HashSet<Sel>,
     pub hover: Option<Sel>,
     pub highlight_tile: Option<TileKey>,
     /// Draw what the game does not show (start points, car parks, AI paths, helpers).
@@ -1152,7 +1154,10 @@ impl Renderer {
         if let Some(s) = extras.selected {
             want.push((s, SELECTED));
         }
-        if let Some(s) = extras.hover.filter(|h| Some(*h) != extras.selected) {
+        let mut more: Vec<Sel> = extras.selected_more.iter().copied().filter(|s| Some(*s) != extras.selected).collect();
+        more.sort_by_key(|s| format!("{s:?}"));
+        want.extend(more.into_iter().map(|s| (s, SELECTED)));
+        if let Some(s) = extras.hover.filter(|h| Some(*h) != extras.selected && !extras.selected_more.contains(h)) {
             want.push((s, HOVERED));
         }
         if want != self.tinted {
@@ -1191,7 +1196,7 @@ impl Renderer {
                 alive.push((*k, s.id));
                 let h = spline_hash(s, org);
                 let sel = Some(Sel::Spline(*k, s.id));
-                let tint = if extras.selected == sel {
+                let tint = if extras.selected == sel || extras.selected_more.contains(&Sel::Spline(*k, s.id)) {
                     SELECTED
                 } else if extras.hover == sel {
                     HOVERED
@@ -1339,7 +1344,7 @@ impl Renderer {
             for s in t.splines.iter().filter(|s| !s.deleted) {
                 let Some(e) = self.splines.get(&(*k, s.id)) else { continue };
                 let sel = Some(Sel::Spline(*k, s.id));
-                if e.cpu.is_none() || e.technical || extras.selected == sel || extras.hover == sel {
+                if e.cpu.is_none() || e.technical || extras.selected == sel || extras.hover == sel || extras.selected_more.contains(&Sel::Spline(*k, s.id)) {
                     continue;
                 }
                 members.insert(s.id, e.hash);

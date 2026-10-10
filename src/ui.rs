@@ -22,7 +22,7 @@ const BG_DARK: Color32 = Color32::from_rgb(27, 28, 30);
 const BG_FIELD: Color32 = Color32::from_rgb(22, 23, 25);
 const BORDER: Color32 = Color32::from_rgb(18, 18, 20);
 const HEADER: Color32 = Color32::from_rgb(45, 46, 50);
-const TEXT_DIM: Color32 = Color32::from_rgb(140, 143, 150);
+pub(crate) const TEXT_DIM: Color32 = Color32::from_rgb(140, 143, 150);
 const SELECT: Color32 = Color32::from_rgb(64, 86, 122);
 
 /// What the interface asks the application to do.
@@ -38,10 +38,27 @@ pub enum Action {
     Import,
     ChooseOmsi,
     SetLang(Lang),
+    /// The interface's zoom (1 = as the system has it).
+    SetScale(f32),
     FocusSelection,
+    /// Star a catalogue entry or take its star away.
+    ToggleFavourite(String),
+    /// A catalogue entry was chosen (for the recently used list).
+    UsedAsset(String),
+    /// The 3D view becomes the map's picture (`picture.jpg`).
+    MapPicture,
+    /// The map opens with the camera as it is now (`[mapcam]`).
+    SetMapCamera,
+    Copy,
+    Cut,
+    Paste,
+    Duplicate,
+    SelectAll,
     /// Move the camera over this point (the overview map).
     LookAt(glam::DVec2),
     AddGroundTexture(String),
+    /// Open or close the Lines window.
+    Timetable,
     /// Do it without asking about unsaved changes.
     Force(Box<Action>),
     Quit,
@@ -64,6 +81,11 @@ pub struct UiState {
     pub welcome_pick: Option<PathBuf>,
     pub minimap: crate::ui_minimap::Minimap,
     pub check: crate::check::Checker,
+    /// The preferences' starred and recently used assets, for the catalogue.
+    pub favourites: Vec<String>,
+    pub recent_assets: Vec<String>,
+    /// The map's `picture.jpg` as shown in the map's properties, with its file time.
+    map_picture: Option<(PathBuf, Option<std::time::SystemTime>, Option<egui::TextureHandle>)>,
 }
 
 impl Default for UiState {
@@ -82,6 +104,9 @@ impl Default for UiState {
             welcome_pick: None,
             minimap: crate::ui_minimap::Minimap::new(),
             check: Default::default(),
+            favourites: Vec::new(),
+            recent_assets: Vec::new(),
+            map_picture: None,
         }
     }
 }
@@ -177,7 +202,7 @@ fn tool_button(ui: &mut egui::Ui, icon: Icon, on: bool, enabled: bool) -> egui::
 }
 
 /// A check box drawn with Material Symbols' own boxes (egui's are drawn with lines).
-fn check(ui: &mut egui::Ui, on: &mut bool, text: impl Into<egui::WidgetText>) -> egui::Response {
+pub(crate) fn check(ui: &mut egui::Ui, on: &mut bool, text: impl Into<egui::WidgetText>) -> egui::Response {
     let galley = text.into().into_galley(ui, Some(egui::TextWrapMode::Extend), f32::INFINITY, egui::TextStyle::Button);
     let (icon, gap) = (18.0, 6.0);
     let size = Vec2::new(icon + gap + galley.size().x, galley.size().y.max(icon + 2.0));
@@ -219,7 +244,7 @@ fn combo_icon(ui: &egui::Ui, rect: egui::Rect, vis: &egui::style::WidgetVisuals,
     icons::paint(ui.painter(), Icon::ExpandMore, rect.center(), 18.0, vis.fg_stroke.color);
 }
 
-fn section(ui: &mut egui::Ui, title: &str) {
+pub(crate) fn section(ui: &mut egui::Ui, title: &str) {
     Frame::new().fill(HEADER).inner_margin(Margin::symmetric(8, 4)).show(ui, |ui| {
         ui.set_width(ui.available_width());
         ui.label(RichText::new(title.to_uppercase()).small().strong().color(Color32::from_gray(190)));
@@ -244,6 +269,14 @@ fn lang_menu(ui: &mut egui::Ui, actions: &mut Vec<Action>) {
         for (l, n) in [(Lang::En, "English"), (Lang::Ru, "Русский")] {
             if radio(ui, i18n::get() == l, n).clicked() {
                 actions.push(Action::SetLang(l));
+            }
+        }
+    });
+    ui.menu_button(tr("Interface size", "Размер интерфейса"), |ui| {
+        let now = ui.ctx().zoom_factor();
+        for z in [0.8f32, 0.9, 1.0, 1.1, 1.25, 1.5] {
+            if radio(ui, (now - z).abs() < 0.01, format!("{:.0} %", z * 100.0)).clicked() {
+                actions.push(Action::SetScale(z));
             }
         }
     });
@@ -545,11 +578,28 @@ fn menu_bar(root: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, can_undo: bo
                     actions.push(Action::Redo);
                 }
                 ui.separator();
+                let any = ed.selected.is_some();
+                if menu_item(ui, None, tr("Cut", "Вырезать"), "Ctrl+X", any) {
+                    actions.push(Action::Cut);
+                }
+                if menu_item(ui, Some(Icon::Copy), tr("Copy", "Копировать"), "Ctrl+C", any) {
+                    actions.push(Action::Copy);
+                }
+                if menu_item(ui, Some(Icon::Paste), tr("Paste", "Вставить"), "Ctrl+V", ed.clip.is_some()) {
+                    actions.push(Action::Paste);
+                }
+                if menu_item(ui, None, tr("Duplicate", "Дублировать"), "Ctrl+D", any) {
+                    actions.push(Action::Duplicate);
+                }
+                if menu_item(ui, Some(Icon::SelectAll), tr("Select all", "Выбрать всё"), "Ctrl+A", true) {
+                    actions.push(Action::SelectAll);
+                }
+                ui.separator();
                 if menu_item(ui, Some(Icon::Delete), tr("Delete", "Удалить"), "Del", ed.selected.is_some()) {
                     ed.delete_selected();
                 }
                 if menu_item(ui, None, tr("Deselect", "Снять выделение"), "Esc", ed.selected.is_some()) {
-                    ed.selected = None;
+                    ed.select(None);
                 }
             });
             ui.menu_button(tr("View", "Вид"), |ui| {
@@ -582,6 +632,9 @@ fn menu_bar(root: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, can_undo: bo
                 if menu_item(ui, Some(Icon::CheckCircle), tr("Check map…", "Проверить карту…"), "", true) {
                     st.check.open = true;
                     st.check.issues = None;
+                }
+                if menu_item(ui, Some(Icon::Bus), tr("Lines and timetable…", "Линии и расписание…"), "L", true) {
+                    actions.push(Action::Timetable);
                 }
                 ui.separator();
                 if menu_item(ui, Some(Icon::Play), tr("Test drive in openOMSI", "Тест-драйв в openOMSI"), "F5", game_found) {
@@ -677,7 +730,7 @@ fn status_bar(root: &mut egui::Ui, help_line: Option<String>, ed: &mut Editor, s
                 (Some(t), None) => (t.text.clone(), if t.error { Color32::from_rgb(240, 120, 100) } else { Color32::from_rgb(150, 210, 140) }),
                 (None, None) => (tool_hint(ed).to_string(), TEXT_DIM),
             };
-            ui.label(RichText::new(text).small().color(color));
+            // (the facts on the right first; the help gets what is left, cut short)
             ui.with_layout(Layout::right_to_left(Align::Center), |ui| {
                 ui.label(RichText::new(&status.gpu).small().color(Color32::from_gray(95)));
                 ui.separator();
@@ -696,6 +749,15 @@ fn status_bar(root: &mut egui::Ui, help_line: Option<String>, ed: &mut Editor, s
                     let t = crate::doc::tile_of(c.truncate());
                     ui.label(RichText::new(format!("X {:>8.1}   Y {:>8.1}   Z {:>6.1}   {} {},{}", c.x, c.y, c.z, tr("tile", "тайл"), t.0, t.1)).small().monospace().color(TEXT_DIM));
                 }
+                if ed.doc.is_some() {
+                    ui.separator();
+                    crate::ui_edit::snap_controls(ui, ed);
+                }
+                ui.separator();
+                ui.with_layout(Layout::left_to_right(Align::Center), |ui| {
+                    let r = ui.add(egui::Label::new(RichText::new(&text).small().color(color)).truncate());
+                    r.on_hover_text(&text);
+                });
             });
         });
     });
@@ -703,7 +765,8 @@ fn status_bar(root: &mut egui::Ui, help_line: Option<String>, ed: &mut Editor, s
 
 fn tool_hint(ed: &Editor) -> &'static str {
     match ed.tool {
-        Tool::Select => tr("Click to select · drag an object to move it, empty ground to move the map · right button: look + WASD/QE fly · middle: pan · Alt+drag: orbit · wheel: zoom · F: focus", "Клик — выбрать · тянуть объект — сдвиг, пустую землю — двигать карту · ПКМ — обзор + полёт WASD/QE · СКМ — сдвиг · Alt+тянуть — орбита · колесо — зум · F — к выделенному"),
+        Tool::Select if ed.single_spline().is_some() => tr("Drag a white dot: an end moves (joined roads follow), the middle bends the road · drag the road to move it · Shift+click: add to the selection", "Тяните белую точку: конец двигается (соседние дороги следуют), середина изгибает дорогу · тянуть дорогу — сдвиг · Shift+клик — добавить к выделению"),
+        Tool::Select => tr("Click to select, Shift+click to add · Shift+drag on empty ground: box · drag the selection to move it, empty ground to move the map · Ctrl+C / X / V / D · right button: look + WASD/QE fly · wheel: zoom · F: focus", "Клик — выбрать, Shift+клик — добавить · Shift+тянуть по пустой земле — рамка · тянуть выделенное — сдвиг, пустую землю — двигать карту · Ctrl+C / X / V / D · ПКМ — обзор + полёт WASD/QE · колесо — зум · F — к выделенному"),
         Tool::Roads if ed.road_type.is_none() => tr("Choose a road type in the list on the left", "Выберите тип дороги в списке слева"),
         Tool::Roads => tr("Click where the road starts, click again where it goes (it keeps going) · white dots: road ends to join · right-click / Esc: stop", "Клик — начало дороги, ещё клик — куда она идёт (дальше продолжается) · белые точки — концы для стыковки · правый клик / Esc — стоп"),
         Tool::Objects if ed.object_type.is_none() => tr("Choose an object in the list on the left", "Выберите объект в списке слева"),
@@ -732,9 +795,9 @@ fn tool_panel(
 ) {
     section(ui, ed.tool.label());
     Frame::new().inner_margin(Margin::same(8)).show(ui, |ui| match ed.tool {
-        Tool::Roads => catalogue(ui, st, ed, lib, thumbs, wanted, Kind::Spline),
-        Tool::Objects => catalogue(ui, st, ed, lib, thumbs, wanted, Kind::Object),
-        Tool::Logic => logic_panel(ui, st, ed, lib, thumbs, wanted),
+        Tool::Roads => catalogue(ui, st, ed, lib, thumbs, wanted, Kind::Spline, actions),
+        Tool::Objects => catalogue(ui, st, ed, lib, thumbs, wanted, Kind::Object, actions),
+        Tool::Logic => logic_panel(ui, st, ed, lib, thumbs, wanted, actions),
         Tool::Terrain => terrain_panel(ui, st, ed),
         Tool::Paint => paint_panel(ui, st, ed, swatches, wanted_swatches, actions),
         Tool::Tiles => {
@@ -763,12 +826,12 @@ fn tool_panel(
     });
 }
 
-fn catalogue(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Library, thumbs: &HashMap<String, Option<Thumb>>, wanted: &mut Vec<(String, bool)>, kind: Kind) {
-    catalogue_of(ui, st, ed, lib, thumbs, wanted, kind, None)
+fn catalogue(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Library, thumbs: &HashMap<String, Option<Thumb>>, wanted: &mut Vec<(String, bool)>, kind: Kind, actions: &mut Vec<Action>) {
+    catalogue_of(ui, st, ed, lib, thumbs, wanted, kind, None, actions)
 }
 
 /// The Logic tool: what the game uses but does not show, a tab for each kind.
-fn logic_panel(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Library, thumbs: &HashMap<String, Option<Thumb>>, wanted: &mut Vec<(String, bool)>) {
+fn logic_panel(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Library, thumbs: &HashMap<String, Option<Thumb>>, wanted: &mut Vec<(String, bool)>, actions: &mut Vec<Action>) {
     ui.horizontal_wrapped(|ui| {
         ui.spacing_mut().item_spacing = Vec2::new(4.0, 4.0);
         for m in LogicMode::ALL {
@@ -815,12 +878,12 @@ fn logic_panel(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Libra
     check(ui, &mut ed.show_lanes, tr("Show the AI's lanes in the other tools too", "Показывать полосы ИИ и в других инструментах"));
     ui.add_space(4.0);
     let kind = if ed.logic == LogicMode::Paths { Kind::Spline } else { Kind::Object };
-    catalogue_of(ui, st, ed, lib, thumbs, wanted, kind, Some(ed.logic));
+    catalogue_of(ui, st, ed, lib, thumbs, wanted, kind, Some(ed.logic), actions);
 }
 
 /// The asset list (with a Logic tab: only what belongs to it, and no category choice).
 #[allow(clippy::too_many_arguments)]
-fn catalogue_of(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Library, thumbs: &HashMap<String, Option<Thumb>>, wanted: &mut Vec<(String, bool)>, kind: Kind, logic: Option<LogicMode>) {
+fn catalogue_of(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Library, thumbs: &HashMap<String, Option<Thumb>>, wanted: &mut Vec<(String, bool)>, kind: Kind, logic: Option<LogicMode>, actions: &mut Vec<Action>) {
     let belongs = |a: &crate::library::Asset| -> bool {
         match logic {
             None => true,
@@ -907,6 +970,10 @@ fn catalogue_of(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Libr
                 }
             }
             ui.painter().text(rect.min + Vec2::new(h + 6.0, 12.0), egui::Align2::LEFT_CENTER, &a.name, egui::FontId::proportional(13.0), Color32::from_gray(230));
+            let starred = st.favourites.iter().any(|f| f.eq_ignore_ascii_case(&a.rel));
+            if starred {
+                icons::paint(ui.painter(), Icon::Star, rect.right_center() - Vec2::new(14.0, 0.0), 15.0, ACCENT);
+            }
             let mut sub = a.category.label().to_string();
             if searching && !a.dir.is_empty() {
                 sub = format!("{} · {}", a.dir, sub);
@@ -916,9 +983,17 @@ fn catalogue_of(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Libr
             }
             ui.painter().text(rect.min + Vec2::new(h + 6.0, 28.0), egui::Align2::LEFT_CENTER, sub, egui::FontId::proportional(11.0), TEXT_DIM);
             if resp.hovered() {
-                st.status_help = Some(a.rel.clone());
+                st.status_help = Some(format!("{} · {}", a.rel, tr("right-click: star it", "правый клик — в избранное")));
             }
+            resp.context_menu(|ui| {
+                let text = if starred { tr("Remove from favourites", "Убрать из избранного") } else { tr("Add to favourites", "Добавить в избранное") };
+                if ui.button(icons::labelled(Icon::Star, text)).clicked() {
+                    actions.push(Action::ToggleFavourite(a.rel.clone()));
+                    ui.close();
+                }
+            });
             if resp.clicked() {
+                actions.push(Action::UsedAsset(a.rel.clone()));
                 if logic == Some(LogicMode::Paths) {
                     ed.set_path_type(a.rel.clone());
                 } else if kind == Kind::Spline {
@@ -941,6 +1016,19 @@ fn catalogue_of(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Libr
                     row(ui, a, i, st, ed);
                 }
                 return;
+            }
+            // starred and lately used ones first, among what the filter shows
+            for (title, icon, list) in [(tr("Favourites", "Избранное"), Icon::Star, &st.favourites.clone()), (tr("Recently used", "Недавние"), Icon::History, &st.recent_assets.clone())] {
+                let picked: Vec<&crate::library::Asset> = list.iter().filter_map(|r| items.iter().find(|a| a.rel.eq_ignore_ascii_case(r)).copied()).take(12).collect();
+                if picked.is_empty() {
+                    continue;
+                }
+                let head = icons::labelled(icon, &format!("{title}   ({})", picked.len()));
+                egui::CollapsingHeader::new(head).icon(group_icon).id_salt(("cat-pinned", kind == Kind::Spline, title)).default_open(true).show(ui, |ui| {
+                    for (i, a) in picked.iter().enumerate() {
+                        row(ui, a, i, st, ed);
+                    }
+                });
             }
             // the folders as they are on disk: the first level, then what lies below it
             let mut tree: std::collections::BTreeMap<String, std::collections::BTreeMap<String, Vec<&crate::library::Asset>>> = std::collections::BTreeMap::new();
@@ -1088,7 +1176,7 @@ fn paint_panel(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, swatches: &
 
 // ---------------------------------------------------------------------------- right panel
 
-fn prop_row(ui: &mut egui::Ui, name: &str, add: impl FnOnce(&mut egui::Ui)) {
+pub(crate) fn prop_row(ui: &mut egui::Ui, name: &str, add: impl FnOnce(&mut egui::Ui)) {
     ui.label(RichText::new(name).color(TEXT_DIM));
     add(ui);
     ui.end_row();
@@ -1096,15 +1184,21 @@ fn prop_row(ui: &mut egui::Ui, name: &str, add: impl FnOnce(&mut egui::Ui)) {
 
 fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Library, actions: &mut Vec<Action>) {
     let Some(sel) = ed.selected else {
-        map_properties(ui, ed);
+        map_properties(ui, st, ed, actions);
         return;
     };
+    if ed.selection().len() > 1 {
+        crate::ui_edit::group_properties(ui, ed, lib);
+        return;
+    }
     section(ui, tr("Properties", "Свойства"));
     let mut delete = false;
     let mut changed_labels: Option<Vec<String>> = None;
     let mut new_rot: Option<f64> = None;
     let mut new_lift: Option<f64> = None;
     let mut new_name: Option<String> = None;
+    let mut new_pos: Option<(f64, f64)> = None;
+    let mut ends = crate::ui_edit::EndsEdit::default();
     let mut spline_change: Option<(Option<String>, Option<bool>)> = None;
     let Some(doc) = ed.doc.as_ref() else { return };
     Frame::new().inner_margin(Margin::same(8)).show(ui, |ui| {
@@ -1127,7 +1221,15 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
                         ui.label(format!("{}, {}", k.0, k.1));
                     });
                     prop_row(ui, "X / Y", |ui| {
-                        ui.label(format!("{:.2} / {:.2}", o.pos[0], o.pos[1]));
+                        // (tile-local, as the map file keeps it; past the edge it goes over)
+                        let (mut x, mut y) = (o.pos[0], o.pos[1]);
+                        ui.horizontal(|ui| {
+                            let a = ui.add(egui::DragValue::new(&mut x).speed(0.05).max_decimals(2));
+                            let b = ui.add(egui::DragValue::new(&mut y).speed(0.05).max_decimals(2));
+                            if a.changed() || b.changed() {
+                                new_pos = Some((x, y));
+                            }
+                        });
                     });
                     prop_row(ui, tr("Direction", "Направление"), |ui| {
                         let mut h = o.rot[0];
@@ -1191,9 +1293,6 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
                     prop_row(ui, tr("Radius", "Радиус"), |ui| {
                         ui.label(if s.radius == 0.0 { tr("straight", "прямая").to_string() } else { format!("{:.0} m {}", s.radius.abs(), if s.radius > 0.0 { tr("right", "вправо") } else { tr("left", "влево") }) });
                     });
-                    prop_row(ui, tr("Gradient", "Уклон"), |ui| {
-                        ui.label(format!("{:.1} %", s.grad_start));
-                    });
                     prop_row(ui, tr("Linked", "Связи"), |ui| {
                         ui.label(format!("{} / {}", if s.prev_id != 0 { tr("start", "начало") } else { "—" }, if s.next_id != 0 { tr("end", "конец") } else { "—" }));
                     });
@@ -1204,6 +1303,7 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
                         }
                     });
                 });
+                ends = crate::ui_edit::spline_ends(ui, doc, k, id);
                 if let Some(rt) = &ed.road_type {
                     if !rt.eq_ignore_ascii_case(&s.file) {
                         let n = lib.find(rt).map(|a| a.name.clone()).unwrap_or_else(|| rt.clone());
@@ -1231,13 +1331,17 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
         ed.delete_selected();
         return;
     }
-    let Some(doc) = ed.doc.as_mut() else { return };
+    if ed.doc.is_none() {
+        return;
+    }
     match sel {
         Sel::Object(k, id) => {
-            if new_rot.is_some() || new_lift.is_some() || changed_labels.is_some() || new_name.is_some() {
-                if !ed.history.is_open() {
-                    ed.history.begin(tr("Edit object", "Изменение объекта"));
-                }
+            if let Some((x, y)) = new_pos {
+                let o = crate::doc::tile_origin(k);
+                ed.put_object(k, id, glam::DVec2::new(o.x + x, o.y + y));
+            } else if new_rot.is_some() || new_lift.is_some() || changed_labels.is_some() || new_name.is_some() {
+                ed.begin_panel_step(tr("Edit object", "Изменение объекта"));
+                let Some(doc) = ed.doc.as_mut() else { return };
                 ed.history.touch_tile(doc, k);
                 ed.history.touch_global(doc);
                 if let Some(o) = doc.object_mut(k, id) {
@@ -1263,11 +1367,13 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
                     t.touch_content();
                 }
                 crate::editor::sync_entry_points(doc);
-            } else if ed.history.is_open() && !ui.ctx().egui_is_using_pointer() && !ui.ctx().egui_wants_keyboard_input() {
-                ed.history.commit();
+            } else {
+                ed.end_panel_step_if_idle(ui.ctx());
             }
         }
         Sel::Spline(k, id) => {
+            crate::ui_edit::apply_ends(ed, ui.ctx(), k, id, ends);
+            let Some(doc) = ed.doc.as_mut() else { return };
             if let Some((file, mirror)) = spline_change {
                 ed.history.begin(tr("Edit road", "Изменение дороги"));
                 ed.history.touch_tile(doc, k);
@@ -1289,7 +1395,7 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
 }
 
 /// With nothing selected the right panel shows the map's own settings.
-fn map_properties(ui: &mut egui::Ui, ed: &mut Editor) {
+fn map_properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, actions: &mut Vec<Action>) {
     section(ui, tr("Map", "Карта"));
     let Some(doc) = ed.doc.as_mut() else { return };
     let before = (doc.global.friendly_name.clone(), doc.global.description.clone(), doc.global.left_hand_traffic);
@@ -1314,6 +1420,38 @@ fn map_properties(ui: &mut egui::Ui, ed: &mut Editor) {
         if doc.global.entry_points.is_empty() {
             ui.add_space(6.0);
             ui.label(RichText::new(tr("No start point yet: place one (Objects > Bus stops > Entrypoint) so the bus has somewhere to appear in openOMSI.", "Нет точки старта: поставьте её (Объекты > Остановки > Entrypoint), чтобы автобусу было где появиться в openOMSI.")).small().color(Color32::from_rgb(230, 170, 100)));
+        }
+        ui.add_space(8.0);
+        ui.label(RichText::new(tr("Picture", "Картинка")).color(TEXT_DIM));
+        let path = doc.dir.join("picture.jpg");
+        let path = if path.is_file() { path } else { doc.source.as_ref().map(|s| s.join("picture.jpg")).unwrap_or(path) };
+        let time = std::fs::metadata(&path).and_then(|m| m.modified()).ok();
+        if st.map_picture.as_ref().map(|(p, t, _)| *p != path || *t != time).unwrap_or(true) {
+            let tex = image::open(&path).ok().map(|img| {
+                let img = img.to_rgba8();
+                let ci = egui::ColorImage::from_rgba_unmultiplied([img.width() as usize, img.height() as usize], img.as_raw());
+                ui.ctx().load_texture("map picture", ci, egui::TextureOptions::LINEAR)
+            });
+            st.map_picture = Some((path, time, tex));
+        }
+        match st.map_picture.as_ref().and_then(|(_, _, t)| t.as_ref()) {
+            Some(t) => {
+                let w = ui.available_width();
+                ui.add(egui::Image::new((t.id(), Vec2::new(w, w * 280.0 / 370.0))));
+            }
+            None => {
+                ui.label(RichText::new(tr("None yet: openOMSI shows it where maps are chosen.", "Пока нет: openOMSI показывает её при выборе карты.")).small().color(TEXT_DIM));
+            }
+        }
+        let r = ui.button(icons::labelled(Icon::Visible, tr("Take it from this view", "Снять с этого вида")));
+        help(st, &r, tr("The middle of the 3D view, as it is now, becomes the map's picture.", "Середина 3D-вида, как он сейчас, станет картинкой карты."));
+        if r.clicked() {
+            actions.push(Action::MapPicture);
+        }
+        let r = ui.button(icons::labelled(Icon::Flag, tr("Open the map with this view", "Открывать карту с этого вида")));
+        help(st, &r, tr("The camera as it is now is where the map opens (here and in OMSI 2's editor).", "Карта будет открываться с камерой, как сейчас (здесь и в редакторе OMSI 2)."));
+        if r.clicked() {
+            actions.push(Action::SetMapCamera);
         }
         ui.add_space(6.0);
         ui.label(RichText::new(format!("{}:\n{}", tr("Saved to", "Сохраняется в"), doc.dir.display())).small().color(TEXT_DIM));
@@ -1395,10 +1533,15 @@ fn controls(ctx: &egui::Context, st: &mut UiState) {
             ("1 – 7", tr("tools", "инструменты")),
             ("R / Shift+R, Ctrl+wheel", tr("turn the object", "повернуть объект")),
             ("Del", tr("delete the selection", "удалить выбранное")),
+            ("Shift+click", tr("add to / take from the selection", "добавить к выделению / убрать из него")),
+            (tr("Shift / Ctrl + drag on empty ground", "Shift / Ctrl + тянуть по пустой земле"), tr("select with a box (Shift adds)", "выделить рамкой (Shift — добавить)")),
+            ("Ctrl+C / X / V", tr("copy / cut / paste at the cursor", "копировать / вырезать / вставить у курсора")),
+            ("Ctrl+D / Ctrl+A", tr("duplicate / select all", "дублировать / выбрать всё")),
             ("F", tr("go to the selection", "перейти к выбранному")),
             ("Esc", tr("stop / deselect", "отмена / снять выбор")),
             ("[ ]  Shift+wheel", tr("brush size", "размер кисти")),
             ("G", tr("tile grid on / off", "сетка тайлов")),
+            ("M", tr("overview map on / off", "обзорная карта")),
             ("Ctrl+Z / Ctrl+Shift+Z", tr("undo / redo", "отменить / повторить")),
             ("Ctrl+S", tr("save", "сохранить")),
             ("F5", tr("test drive in openOMSI", "тест-драйв в openOMSI")),

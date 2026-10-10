@@ -17,6 +17,7 @@ omsi-model = { git = "https://github.com/openOMSI-org/openOMSI", rev = "c4738ed6
 omsi-o3d = { git = "https://github.com/openOMSI-org/openOMSI", rev = "c4738ed6f43f11b4c06ead299af7ac74280d5c5b" }
 omsi-geometry = { git = "https://github.com/openOMSI-org/openOMSI", rev = "c4738ed6f43f11b4c06ead299af7ac74280d5c5b" }
 omsi-texture = { git = "https://github.com/openOMSI-org/openOMSI", rev = "c4738ed6f43f11b4c06ead299af7ac74280d5c5b" }
+omsi-timetable = { git = "https://github.com/openOMSI-org/openOMSI", rev = "c4738ed6f43f11b4c06ead299af7ac74280d5c5b" }
 
 wgpu = { version = "29", default-features = false, features = ["std", "parking_lot", "metal", "vulkan", "dx12", "gles", "wgsl"] }
 winit = "0.30"

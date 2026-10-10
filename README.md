@@ -13,7 +13,9 @@ experienced map makers.
 
 | Tool | Key | What it does |
 | --- | --- | --- |
-| Select | 1 | click an object or road · drag to move · `R` turn · `Del` delete |
+| Select | 1 | click an object or road · `Shift`+click adds or takes away · `Shift`/`Ctrl` + drag on empty ground selects with a box · drag the selection to move it all · `R` turns it round its middle · `Del` deletes it · `Ctrl+C / X / V / D` copy, cut, paste at the cursor, duplicate (links inside the copy kept, rows of objects and things hanging on them come along) · several selected: move, raise and turn by numbers, give every road one type |
+| Road shape | — | select a road: drag its end dots to move an end (a road joined there follows, tangent at the joint, its far end kept; an end at a junction stays), drag the middle dot to bend it. Heights and gradients at both ends in the properties, the joined road following |
+| Snapping | — | status bar: `Grid` (0.5–10 m) for placing, moving, road ends and reshaping; `15°` for headings |
 | Roads | 2 | click the start, then the end: the arc builds itself. A road continues smoothly from a road end it starts at, joins another end with an S-curve or bend (biarc), is cut into OMSI splines and linked with its neighbours. It can shape the ground under itself. |
 | Junctions | — | automatic: a road drawn into another's middle or across it cuts both and fills the gap with a junction object of its own (asphalt plate, `[path]` lanes for straight on, right and left, footpaths round the corners), written as ordinary OMSI content into `Sceneryobjects\openMapper\<map>` |
 | Objects | 3 | catalogue as the installation's folder tree with thumbnails; classes read from the files themselves (roads, tracks, footpaths, decoration, technical AI/helper splines; trees, stops, junction pieces, technical helpers), search, turning towards the nearest road |
@@ -22,9 +24,19 @@ experienced map makers.
 | Paint | 6 | painting with the map's ground textures (OMSI `[groundtex]` masks) |
 | Tiles | 7 | add a 300 × 300 m tile next to the map, remove one with right-click |
 
+* **Lines and timetable** (Map menu or `L`): lines, their trips and tours, written as OMSI
+  2's `TTData` (`.ttl`, `.ttp`, `.ttr`, `StnLinks.cfg`, `Busstops.cfg`). Pick the stops on the
+  map or from a list; the route along the roads is found by itself (drawn blue, each problem
+  named), "Make the way back" turns a trip round, departures fill themselves from a first and a
+  last time with a break, and a map without a depot gets one so AI buses drive the tours. The
+  files of a stock map stay as they are until its timetable is edited.
 * **Open any map**: OMSI 2's own (saved as a copy into the content folder) and mod maps.
 * **New map** from OMSI 2's own template (`template/NewMap`): it's ready to drive right away.
 * **Test drive**: saves and launches openOMSI on this map.
+* **Map picture** (`picture.jpg`, shown where maps are chosen) taken from the view, and the
+  view the map opens with (`[mapcam]`), both in the map's properties.
+* **Favourites and recently used** at the top of the catalogue: right-click an entry to star
+  it.
 * **Overview map** in the corner of the view (`M`): tiles, roads, tracks and the camera;
   click or drag on it to move there, double-click for a larger one.
 * **Asset import**: drop onto the window or use the button —
@@ -35,7 +47,7 @@ experienced map makers.
     `_rr`, `_mm`, `_aa` …, the way openOMSI finds them).
 * **PBR** in the viewport: normal, roughness, metalness and AO maps are found by
   openOMSI's rules (`omsi-texture`) and drawn with the same derivative-based tangent frame.
-* Undo / redo for every action, two languages (English / Russian).
+* Undo / redo for every action, two languages (English / Russian), interface size 80–150 % (View menu).
 
 ## Controls
 
@@ -45,7 +57,7 @@ experienced map makers.
   Option + drag turns and tilts.
 * **Keyboard:** `W A S D` / arrows move, `Q / E` turn, `1–7` tools, `M` overview map, `R` turn object, `Del`,
   `F` go to selection, `[ ]` brush size, `G` tile grid, `Ctrl+Z`, `Ctrl+Shift+Z`, `Ctrl+S`,
-  `F5` test drive.
+  `Ctrl+C / X / V / D` copy, cut, paste, duplicate, `Ctrl+A` select all, `F5` test drive.
 
 ## How it's built
 
@@ -71,6 +83,8 @@ that the written tiles read back through openOMSI's own parser.
 ```bash
 cargo run --release
 ```
+
+`tools/package-macos.sh` makes `openMapper.app` and a zip of it in `target/package`.
 
 `openmapper path/to/global.cfg` opens a map straight away. `OPENMAPPER_SHOT=out.png` saves
 a picture of the window and exits (for checks without a person at the screen).

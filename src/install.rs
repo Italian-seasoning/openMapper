@@ -52,6 +52,15 @@ pub struct Prefs {
     /// Show the welcome hints.
     #[serde(default)]
     pub hints_seen: bool,
+    /// Catalogue entries marked with a star (relative paths).
+    #[serde(default)]
+    pub favourites: Vec<String>,
+    /// Catalogue entries chosen lately, newest first.
+    #[serde(default)]
+    pub recent_assets: Vec<String>,
+    /// The interface's zoom (0: not chosen, as 1).
+    #[serde(default)]
+    pub ui_scale: f32,
 }
 
 impl Prefs {
@@ -71,6 +80,26 @@ impl Prefs {
         if let Ok(s) = serde_json::to_string_pretty(self) {
             let _ = std::fs::write(Self::path(), s);
         }
+    }
+
+    /// Stars an asset or takes its star away.
+    pub fn toggle_favourite(&mut self, rel: &str) {
+        let before = self.favourites.len();
+        self.favourites.retain(|r| !r.eq_ignore_ascii_case(rel));
+        if self.favourites.len() == before {
+            self.favourites.push(rel.to_string());
+        }
+        self.save();
+    }
+
+    pub fn push_recent_asset(&mut self, rel: &str) {
+        if self.recent_assets.first().map(|r| r.eq_ignore_ascii_case(rel)).unwrap_or(false) {
+            return;
+        }
+        self.recent_assets.retain(|r| !r.eq_ignore_ascii_case(rel));
+        self.recent_assets.insert(0, rel.to_string());
+        self.recent_assets.truncate(24);
+        self.save();
     }
 
     pub fn push_recent(&mut self, cfg: &Path) {
