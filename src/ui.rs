@@ -1475,6 +1475,7 @@ fn controls(ctx: &egui::Context, st: &mut UiState) {
             ("Esc", tr("stop / deselect", "отмена / снять выбор")),
             ("[ ]  Shift+wheel", tr("brush size", "размер кисти")),
             ("G", tr("tile grid on / off", "сетка тайлов")),
+            ("M", tr("overview map on / off", "обзорная карта")),
             ("Ctrl+Z / Ctrl+Shift+Z", tr("undo / redo", "отменить / повторить")),
             ("Ctrl+S", tr("save", "сохранить")),
             ("F5", tr("test drive in openOMSI", "тест-драйв в openOMSI")),
