@@ -129,6 +129,8 @@ pub fn paste(doc: &mut Document, clip: &Clip, at: DVec3) -> Vec<Sel> {
         let p = at.truncate() + c.off.truncate();
         let mut o = c.o.clone();
         o.id = ids[&c.o.id];
+        // (a signal head copied with its junction takes its light program from the copy)
+        o.var_parent = o.var_parent.map(|p| ids.get(&p).copied().unwrap_or(p));
         o.pos[0] = p.x - org.x;
         o.pos[1] = p.y - org.y;
         if c.abs {
@@ -285,5 +287,20 @@ mod tests {
         let got = paste(&mut doc, &clip, clip.at + DVec3::new(0.0, 100.0, 3.0));
         let Sel::Spline(k, id) = got[0] else { panic!() };
         assert!((doc.spline(k, id).unwrap().pos[2] - 3.5).abs() < 1e-9);
+    }
+
+    /// A junction copied with its signal heads: the copies' lights follow the copied
+    /// junction, not the original (which would also take them away when it is deleted).
+    #[test]
+    fn signal_heads_pasted_with_their_junction_follow_the_copy() {
+        let mut doc = flat_map(1);
+        add_object(&mut doc, (0, 0), 1, 100.0, 100.0);
+        add_object(&mut doc, (0, 0), 2, 110.0, 100.0);
+        doc.tiles.get_mut(&(0, 0)).unwrap().tile.objects[1].var_parent = Some(1);
+        let clip = copy(&doc, &[Sel::Object((0, 0), 2), Sel::Object((0, 0), 1)], |_| false);
+        let got = paste(&mut doc, &clip, clip.at + DVec3::new(0.0, 50.0, 0.0));
+        let (Sel::Object(_, head), Sel::Object(_, junction)) = (got[0], got[1]) else { panic!() };
+        assert_eq!(doc.object((0, 0), head).unwrap().var_parent, Some(junction));
+        assert_eq!(crate::junction::children(&doc, 1), vec![((0, 0), 2)]);
     }
 }
