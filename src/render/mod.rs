@@ -1,0 +1,1802 @@
+//! Drawing the map: the ground of every tile (with its painted layers), the splines and the
+//! scenery objects with their materials and PBR maps, the sky, and the editor's overlays.
+//! Also renders the little pictures of the asset catalogue.
+
+use std::collections::HashMap;
+use std::path::PathBuf;
+use std::sync::Arc;
+
+use bytemuck::{Pod, Zeroable};
+use glam::{DVec2, DVec3, Mat4, Vec3, Vec4};
+use omsi_geometry::{MeshData, SplineCurve};
+use omsi_map::{MapSpline, TERRAIN_SAMPLES};
+use wgpu::util::DeviceExt;
+
+use crate::assets::{Alpha, Assets, Material, ObjectModel, SplineModel};
+use crate::camera::Camera;
+use crate::doc::{tile_origin, tile_size, Document, Sel, TileKey};
+use crate::place::Pose;
+use crate::gpu::{Gpu, DEPTH, SAMPLES};
+
+const COMMON: &str = include_str!("common.wgsl");
+
+#[repr(C)]
+#[derive(Clone, Copy, Pod, Zeroable)]
+struct Globals {
+    view_proj: [[f32; 4]; 4],
+    inv_view_proj: [[f32; 4]; 4],
+    origin: [f32; 4],
+    eye: [f32; 4],
+    sun_dir: [f32; 4],
+    sun_color: [f32; 4],
+    sky_top: [f32; 4],
+    sky_horizon: [f32; 4],
+    fog: [f32; 4],
+    brush: [f32; 4],
+    brush_color: [f32; 4],
+    grid: [f32; 4],
+    light_vp: [[f32; 4]; 4],
+    shadow: [f32; 4],
+    light_b: [f32; 4],
+    light_c: [f32; 4],
+}
+
+/// Texels a side of the sun's shadow map.
+const SHADOW: u32 = 4096;
+
+#[repr(C)]
+#[derive(Clone, Copy, Pod, Zeroable)]
+struct TerrainVertex {
+    pos: [f32; 3],
+    normal: [f32; 3],
+}
+
+#[repr(C)]
+#[derive(Clone, Copy, Pod, Zeroable)]
+struct MeshVertex {
+    pos: [f32; 3],
+    normal: [f32; 3],
+    uv: [f32; 2],
+}
+
+#[repr(C)]
+#[derive(Clone, Copy, Pod, Zeroable)]
+pub struct Instance {
+    m: [[f32; 4]; 4],
+    tint: [f32; 4],
+    params: [f32; 4],
+}
+
+/// Surface codes of the depth pull (see mesh.wgsl).
+const SURF_SPLINE: f32 = 1.0;
+const SURF_OBJECT: f32 = 1.25;
+
+impl Instance {
+    pub fn new(m: Mat4, tint: [f32; 4]) -> Instance {
+        Instance { m: m.to_cols_array_2d(), tint, params: [0.0; 4] }
+    }
+
+    pub fn surface(mut self, code: f32) -> Instance {
+        self.params[0] = code;
+        self
+    }
+}
+
+#[repr(C)]
+#[derive(Clone, Copy, Pod, Zeroable)]
+struct OverlayVertex {
+    pos: [f32; 3],
+    color: [f32; 4],
+}
+
+/// A point of the editor's overlay (world metres).
+#[derive(Clone, Copy)]
+pub struct OverlayPoint {
+    pub pos: DVec3,
+    pub color: [f32; 4],
+}
+
+#[repr(C)]
+#[derive(Clone, Copy, Pod, Zeroable)]
+struct MatUniform {
+    color: [f32; 4],
+    mode: [f32; 4],
+    pbr: [f32; 4],
+}
+
+#[repr(C)]
+#[derive(Clone, Copy, Pod, Zeroable)]
+struct TileUniform {
+    origin: [f32; 4],
+    flags: [f32; 4],
+}
+
+#[repr(C)]
+#[derive(Clone, Copy, Pod, Zeroable)]
+struct GroundUniform {
+    layers: [[f32; 4]; 9],
+    count: [f32; 4],
+}
+
+/// The brush circle drawn on the ground.
+#[derive(Clone, Copy)]
+pub struct Brush {
+    pub centre: DVec2,
+    pub radius: f32,
+    pub color: [f32; 4],
+}
+
+/// An object shown that is not (yet) on the map: what the tool is about to place.
+pub struct Ghost {
+    pub rel: String,
+    pub world: DVec3,
+    pub rot: [f64; 3],
+    pub tint: [f32; 4],
+}
+
+/// What a frame shows besides the map.
+#[derive(Default)]
+pub struct FrameExtras {
+    pub brush: Option<Brush>,
+    pub grid: bool,
+    pub overlay: Vec<OverlayPoint>,
+    pub ghosts: Vec<Ghost>,
+    /// Splines being drawn: (type, curve in world coordinates).
+    pub ghost_splines: Vec<(String, MapSpline, [f32; 4])>,
+    pub selected: Option<Sel>,
+    pub hover: Option<Sel>,
+    pub highlight_tile: Option<TileKey>,
+    /// Draw what the game does not show (start points, car parks, AI paths, helpers).
+    pub show_technical: bool,
+}
+
+struct GpuMesh {
+    vb: wgpu::Buffer,
+    ib: wgpu::Buffer,
+    ranges: Vec<(u32, u32, u32)>,
+}
+
+struct GpuTile {
+    vb: wgpu::Buffer,
+    uniform: wgpu::Buffer,
+    masks: [wgpu::Texture; 2],
+    /// Where the ground is cut away under roads (alpha 0), `CUT` texels a side.
+    cut: wgpu::Texture,
+    cut_key: u64,
+    bind: wgpu::BindGroup,
+    terrain_rev: u64,
+    mask_rev: u64,
+    /// The ground's walls down from the rims of its holes to the roads' edges (vertices,
+    /// indices, index count; openOMSI's `terrain_hole_walls`).
+    walls: Option<(wgpu::Buffer, wgpu::Buffer, u32)>,
+}
+
+/// Texels a side of a tile's ground cut (openOMSI's surface raster).
+const CUT: usize = 512;
+/// How near the ground a surface must lie for the ground under it to be cut (openOMSI's
+/// default `OMSI_SURFACE_FLUSH`).
+const FLUSH: f32 = 0.12;
+
+struct GpuTexture {
+    albedo: wgpu::TextureView,
+    normal: Option<wgpu::TextureView>,
+    orm: Option<wgpu::TextureView>,
+    flags: [f32; 4],
+}
+
+#[derive(Clone, PartialEq, Eq, Hash)]
+struct MatKey {
+    texture: Option<PathBuf>,
+    alpha: u8,
+    color: [u8; 4],
+}
+
+struct GpuModel {
+    parts: Vec<(GpuMesh, Vec<Material>)>,
+    /// Not seen in the game: casts no shadow.
+    technical: bool,
+}
+
+struct Batch {
+    model: String,
+    tree: bool,
+    first: u32,
+    count: u32,
+}
+
+struct SplineEntry {
+    hash: u64,
+    mesh: Option<GpuMesh>,
+    /// The mesh on the CPU (relative to its tile's corner) and its bounds there, for the
+    /// ground cut; whether it cuts the ground, and whether it carries traffic.
+    cpu: Option<Arc<MeshData>>,
+    bounds: [f32; 4],
+    cuts: bool,
+    drivable: bool,
+    /// Not seen in the game (an AI path, `[onlyeditor]`): casts no shadow.
+    technical: bool,
+    /// Left out of the view this frame (what the game does not show, hidden).
+    hidden: bool,
+    /// Its `[spline_terrain_align]` outlines (world x, y).
+    outlines: Vec<Vec<DVec2>>,
+    /// The same with the heights of the road's edge (world), for the ground's walls.
+    rims: Vec<Vec<DVec3>>,
+    materials: Vec<Material>,
+    instance: u32,
+}
+
+pub struct Thumb {
+    pub id: egui::TextureId,
+    _tex: wgpu::Texture,
+}
+
+pub const THUMB: u32 = 112;
+
+pub struct Renderer {
+    globals: wgpu::Buffer,
+    globals_bind: wgpu::BindGroup,
+    thumb_globals: wgpu::Buffer,
+    thumb_globals_bind: wgpu::BindGroup,
+    /// The sun's shadow map, and the globals the pass that draws it uses (its camera is
+    /// the sun; no shadow map bound while it is drawn into).
+    shadow_view: wgpu::TextureView,
+    shadow_globals: wgpu::Buffer,
+    shadow_globals_bind: wgpu::BindGroup,
+    shadow_pipeline: wgpu::RenderPipeline,
+    tile_layout: wgpu::BindGroupLayout,
+    ground_layout: wgpu::BindGroupLayout,
+    mat_layout: wgpu::BindGroupLayout,
+    terrain_pipeline: wgpu::RenderPipeline,
+    mesh_opaque: wgpu::RenderPipeline,
+    mesh_blend: wgpu::RenderPipeline,
+    spline_opaque: wgpu::RenderPipeline,
+    ghost_pipeline: wgpu::RenderPipeline,
+    spline_blend: wgpu::RenderPipeline,
+    thumb_opaque: wgpu::RenderPipeline,
+    thumb_blend: wgpu::RenderPipeline,
+    thumb_sky: wgpu::RenderPipeline,
+    sky_pipeline: wgpu::RenderPipeline,
+    overlay_pipeline: wgpu::RenderPipeline,
+    overlay_buf: Option<(wgpu::Buffer, u32)>,
+    terrain_index: wgpu::Buffer,
+    terrain_index_count: u32,
+    tiles: HashMap<TileKey, GpuTile>,
+    ground_bind: Option<wgpu::BindGroup>,
+    ground_key: String,
+    linear: wgpu::Sampler,
+    mask_sampler: wgpu::Sampler,
+    white: wgpu::TextureView,
+    flat_normal: wgpu::TextureView,
+    default_orm: wgpu::TextureView,
+    zero_mask: wgpu::TextureView,
+    textures: HashMap<PathBuf, GpuTexture>,
+    materials: HashMap<MatKey, wgpu::BindGroup>,
+    models: HashMap<String, Option<GpuModel>>,
+    tree_mesh: GpuMesh,
+    marker: GpuMesh,
+    instances: Option<wgpu::Buffer>,
+    cached_scene: Vec<Instance>,
+    /// The point everything is drawn relative to (a tile corner of the map).
+    anchor: DVec3,
+    anchor_for: u64,
+    /// Each tile with its chrono patches laid over, by content revision.
+    display: HashMap<TileKey, (u64, Arc<omsi_map::Tile>)>,
+    /// Folders ground textures are looked for in besides the map's own.
+    pub roots: Vec<PathBuf>,
+    batches: Vec<Batch>,
+    ghost_batches: Vec<Batch>,
+    scene_key: u64,
+    splines: HashMap<(TileKey, i64), SplineEntry>,
+    ghost_spline_meshes: Vec<(u64, Option<GpuMesh>, Vec<Material>, u32)>,
+    /// Thumbnails of the catalogue by asset path (lower case); None: tried, nothing to show.
+    pub thumbs: HashMap<String, Option<Thumb>>,
+    thumb_depth: wgpu::TextureView,
+    pub time: f32,
+}
+
+fn shader(device: &wgpu::Device, name: &str, src: &str) -> wgpu::ShaderModule {
+    device.create_shader_module(wgpu::ShaderModuleDescriptor { label: Some(name), source: wgpu::ShaderSource::Wgsl(format!("{COMMON}\n{src}").into()) })
+}
+
+fn texture_entry(binding: u32, dim: wgpu::TextureViewDimension) -> wgpu::BindGroupLayoutEntry {
+    wgpu::BindGroupLayoutEntry {
+        binding,
+        visibility: wgpu::ShaderStages::FRAGMENT,
+        ty: wgpu::BindingType::Texture { sample_type: wgpu::TextureSampleType::Float { filterable: true }, view_dimension: dim, multisampled: false },
+        count: None,
+    }
+}
+
+fn uniform_entry(binding: u32) -> wgpu::BindGroupLayoutEntry {
+    wgpu::BindGroupLayoutEntry {
+        binding,
+        visibility: wgpu::ShaderStages::VERTEX | wgpu::ShaderStages::FRAGMENT,
+        ty: wgpu::BindingType::Buffer { ty: wgpu::BufferBindingType::Uniform, has_dynamic_offset: false, min_binding_size: None },
+        count: None,
+    }
+}
+
+fn sampler_entry(binding: u32) -> wgpu::BindGroupLayoutEntry {
+    wgpu::BindGroupLayoutEntry { binding, visibility: wgpu::ShaderStages::FRAGMENT, ty: wgpu::BindingType::Sampler(wgpu::SamplerBindingType::Filtering), count: None }
+}
+
+fn solid_texture(device: &wgpu::Device, queue: &wgpu::Queue, rgba: [u8; 4], srgb: bool) -> wgpu::TextureView {
+    let t = device.create_texture_with_data(
+        queue,
+        &wgpu::TextureDescriptor {
+            label: Some("solid"),
+            size: wgpu::Extent3d { width: 1, height: 1, depth_or_array_layers: 1 },
+            mip_level_count: 1,
+            sample_count: 1,
+            dimension: wgpu::TextureDimension::D2,
+            format: if srgb { wgpu::TextureFormat::Rgba8UnormSrgb } else { wgpu::TextureFormat::Rgba8Unorm },
+            usage: wgpu::TextureUsages::TEXTURE_BINDING,
+            view_formats: &[],
+        },
+        wgpu::util::TextureDataOrder::LayerMajor,
+        &rgba,
+    );
+    t.create_view(&Default::default())
+}
+
+/// Upload a picture with its mip chain.
+fn upload_image(device: &wgpu::Device, queue: &wgpu::Queue, img: &omsi_texture::Image, srgb: bool) -> wgpu::TextureView {
+    let mut levels = vec![img.clone()];
+    while levels.last().map(|l| l.width > 1 || l.height > 1).unwrap_or(false) && levels.len() < 12 {
+        let next = crate::assets::half(levels.last().unwrap());
+        levels.push(next);
+    }
+    let format = if srgb { wgpu::TextureFormat::Rgba8UnormSrgb } else { wgpu::TextureFormat::Rgba8Unorm };
+    let tex = device.create_texture(&wgpu::TextureDescriptor {
+        label: Some("texture"),
+        size: wgpu::Extent3d { width: img.width, height: img.height, depth_or_array_layers: 1 },
+        mip_level_count: levels.len() as u32,
+        sample_count: 1,
+        dimension: wgpu::TextureDimension::D2,
+        format,
+        usage: wgpu::TextureUsages::TEXTURE_BINDING | wgpu::TextureUsages::COPY_DST,
+        view_formats: &[],
+    });
+    for (i, l) in levels.iter().enumerate() {
+        queue.write_texture(
+            wgpu::TexelCopyTextureInfo { texture: &tex, mip_level: i as u32, origin: wgpu::Origin3d::ZERO, aspect: wgpu::TextureAspect::All },
+            &l.rgba,
+            wgpu::TexelCopyBufferLayout { offset: 0, bytes_per_row: Some(4 * l.width), rows_per_image: Some(l.height) },
+            wgpu::Extent3d { width: l.width, height: l.height, depth_or_array_layers: 1 },
+        );
+    }
+    tex.create_view(&Default::default())
+}
+
+fn upload_mesh(device: &wgpu::Device, m: &MeshData) -> GpuMesh {
+    let verts: Vec<MeshVertex> = (0..m.positions.len())
+        .map(|i| MeshVertex {
+            pos: m.positions[i].to_array(),
+            normal: m.normals.get(i).copied().unwrap_or(Vec3::Z).to_array(),
+            uv: m.uvs.get(i).map(|u| u.to_array()).unwrap_or([0.0, 0.0]),
+        })
+        .collect();
+    let vb = device.create_buffer_init(&wgpu::util::BufferInitDescriptor { label: Some("mesh vb"), contents: bytemuck::cast_slice(&verts), usage: wgpu::BufferUsages::VERTEX });
+    let ib = device.create_buffer_init(&wgpu::util::BufferInitDescriptor { label: Some("mesh ib"), contents: bytemuck::cast_slice(&m.indices), usage: wgpu::BufferUsages::INDEX });
+    GpuMesh { vb, ib, ranges: m.ranges.clone() }
+}
+
+fn mesh_layouts() -> [wgpu::VertexBufferLayout<'static>; 2] {
+    const V: [wgpu::VertexAttribute; 3] = wgpu::vertex_attr_array![0 => Float32x3, 1 => Float32x3, 2 => Float32x2];
+    const I: [wgpu::VertexAttribute; 6] = wgpu::vertex_attr_array![3 => Float32x4, 4 => Float32x4, 5 => Float32x4, 6 => Float32x4, 7 => Float32x4, 8 => Float32x4];
+    [
+        wgpu::VertexBufferLayout { array_stride: std::mem::size_of::<MeshVertex>() as u64, step_mode: wgpu::VertexStepMode::Vertex, attributes: &V },
+        wgpu::VertexBufferLayout { array_stride: std::mem::size_of::<Instance>() as u64, step_mode: wgpu::VertexStepMode::Instance, attributes: &I },
+    ]
+}
+
+fn hash_of<T: std::hash::Hash>(v: &T) -> u64 {
+    use std::hash::Hasher;
+    let mut h = std::collections::hash_map::DefaultHasher::new();
+    v.hash(&mut h);
+    h.finish()
+}
+
+fn spline_hash(s: &MapSpline, origin: DVec2) -> u64 {
+    let nums = [s.pos[0], s.pos[1], s.pos[2], s.heading, s.length, s.radius, s.grad_start, s.grad_end, s.delta_h.unwrap_or(-1e9), s.cant_start, s.cant_end, s.skew_start, s.skew_end, s.tex_offset, origin.x, origin.y];
+    let bits: Vec<u64> = nums.iter().map(|v| v.to_bits()).collect();
+    hash_of(&(s.file.to_lowercase(), bits, s.mirror))
+}
+
+/// The matrix that puts a map object where it stands.
+pub fn object_matrix(world: DVec3, rot: [f64; 3]) -> Mat4 {
+    Mat4::from_translation(world.as_vec3()) * omsi_geometry::object_rotation(omsi_geometry::map_rotation(rot))
+}
+
+impl Renderer {
+    pub fn new(gpu: &Gpu) -> Renderer {
+        let device = &gpu.device;
+        let queue = &gpu.queue;
+        let globals_layout = device.create_bind_group_layout(&wgpu::BindGroupLayoutDescriptor {
+            label: Some("globals"),
+            entries: &[
+                uniform_entry(0),
+                wgpu::BindGroupLayoutEntry { binding: 1, visibility: wgpu::ShaderStages::FRAGMENT, ty: wgpu::BindingType::Texture { sample_type: wgpu::TextureSampleType::Depth, view_dimension: wgpu::TextureViewDimension::D2, multisampled: false }, count: None },
+                wgpu::BindGroupLayoutEntry { binding: 2, visibility: wgpu::ShaderStages::FRAGMENT, ty: wgpu::BindingType::Sampler(wgpu::SamplerBindingType::Comparison), count: None },
+            ],
+        });
+        let depth_texture = |label: &str, size: u32| {
+            device
+                .create_texture(&wgpu::TextureDescriptor {
+                    label: Some(label),
+                    size: wgpu::Extent3d { width: size, height: size, depth_or_array_layers: 1 },
+                    mip_level_count: 1,
+                    sample_count: 1,
+                    dimension: wgpu::TextureDimension::D2,
+                    format: DEPTH,
+                    usage: wgpu::TextureUsages::RENDER_ATTACHMENT | wgpu::TextureUsages::TEXTURE_BINDING,
+                    view_formats: &[],
+                })
+                .create_view(&Default::default())
+        };
+        let shadow_view = depth_texture("shadow map", SHADOW);
+        // (bound where no shadow is wanted: thumbnails, and the shadow pass itself)
+        let no_shadow = depth_texture("no shadow", 1);
+        let compare = device.create_sampler(&wgpu::SamplerDescriptor {
+            label: Some("shadow"),
+            address_mode_u: wgpu::AddressMode::ClampToEdge,
+            address_mode_v: wgpu::AddressMode::ClampToEdge,
+            mag_filter: wgpu::FilterMode::Linear,
+            min_filter: wgpu::FilterMode::Linear,
+            compare: Some(wgpu::CompareFunction::LessEqual),
+            ..Default::default()
+        });
+        let mk_globals = |shadow: &wgpu::TextureView| {
+            let b = device.create_buffer(&wgpu::BufferDescriptor { label: Some("globals"), size: std::mem::size_of::<Globals>() as u64, usage: wgpu::BufferUsages::UNIFORM | wgpu::BufferUsages::COPY_DST, mapped_at_creation: false });
+            let bg = device.create_bind_group(&wgpu::BindGroupDescriptor {
+                label: Some("globals"),
+                layout: &globals_layout,
+                entries: &[
+                    wgpu::BindGroupEntry { binding: 0, resource: b.as_entire_binding() },
+                    wgpu::BindGroupEntry { binding: 1, resource: wgpu::BindingResource::TextureView(shadow) },
+                    wgpu::BindGroupEntry { binding: 2, resource: wgpu::BindingResource::Sampler(&compare) },
+                ],
+            });
+            (b, bg)
+        };
+        let (globals, globals_bind) = mk_globals(&shadow_view);
+        let (thumb_globals, thumb_globals_bind) = mk_globals(&no_shadow);
+        let (shadow_globals, shadow_globals_bind) = mk_globals(&no_shadow);
+        let tile_layout = device.create_bind_group_layout(&wgpu::BindGroupLayoutDescriptor {
+            label: Some("tile"),
+            entries: &[uniform_entry(0), texture_entry(1, wgpu::TextureViewDimension::D2), texture_entry(2, wgpu::TextureViewDimension::D2), sampler_entry(3), texture_entry(4, wgpu::TextureViewDimension::D2)],
+        });
+        let ground_layout = device.create_bind_group_layout(&wgpu::BindGroupLayoutDescriptor {
+            label: Some("ground"),
+            entries: &[uniform_entry(0), texture_entry(1, wgpu::TextureViewDimension::D2Array), texture_entry(2, wgpu::TextureViewDimension::D2Array), sampler_entry(3)],
+        });
+        let mat_layout = device.create_bind_group_layout(&wgpu::BindGroupLayoutDescriptor {
+            label: Some("material"),
+            entries: &[uniform_entry(0), texture_entry(1, wgpu::TextureViewDimension::D2), texture_entry(2, wgpu::TextureViewDimension::D2), texture_entry(3, wgpu::TextureViewDimension::D2), sampler_entry(4)],
+        });
+        let format = gpu.scene_format;
+        let terrain_sh = shader(device, "terrain", include_str!("terrain.wgsl"));
+        let mesh_sh = shader(device, "mesh", include_str!("mesh.wgsl"));
+        let sky_sh = shader(device, "sky", include_str!("sky.wgsl"));
+        let overlay_sh = shader(device, "overlay", include_str!("overlay.wgsl"));
+
+        let terrain_layout = device.create_pipeline_layout(&wgpu::PipelineLayoutDescriptor { label: Some("terrain"), bind_group_layouts: &[Some(&globals_layout), Some(&tile_layout), Some(&ground_layout)], immediate_size: 0 });
+        let mesh_layout = device.create_pipeline_layout(&wgpu::PipelineLayoutDescriptor { label: Some("mesh"), bind_group_layouts: &[Some(&globals_layout), Some(&mat_layout)], immediate_size: 0 });
+        let global_only = device.create_pipeline_layout(&wgpu::PipelineLayoutDescriptor { label: Some("globals only"), bind_group_layouts: &[Some(&globals_layout)], immediate_size: 0 });
+
+        let depth = |write: bool, bias: i32| {
+            Some(wgpu::DepthStencilState {
+                format: DEPTH,
+                depth_write_enabled: Some(write),
+                // (reversed depth: nearer is greater, and a bias towards the eye is positive)
+                depth_compare: Some(wgpu::CompareFunction::GreaterEqual),
+                stencil: Default::default(),
+                bias: wgpu::DepthBiasState { constant: bias, slope_scale: if bias != 0 { 1.5 } else { 0.0 }, clamp: 0.0 },
+            })
+        };
+        let blend_alpha = Some(wgpu::BlendState::ALPHA_BLENDING);
+        let terrain_pipeline = device.create_render_pipeline(&wgpu::RenderPipelineDescriptor {
+            label: Some("terrain"),
+            layout: Some(&terrain_layout),
+            vertex: wgpu::VertexState {
+                module: &terrain_sh,
+                entry_point: Some("vs"),
+                compilation_options: Default::default(),
+                buffers: &[wgpu::VertexBufferLayout { array_stride: std::mem::size_of::<TerrainVertex>() as u64, step_mode: wgpu::VertexStepMode::Vertex, attributes: &wgpu::vertex_attr_array![0 => Float32x3, 1 => Float32x3] }],
+            },
+            primitive: wgpu::PrimitiveState { cull_mode: None, ..Default::default() },
+            depth_stencil: depth(true, 0),
+            multisample: wgpu::MultisampleState { count: SAMPLES, ..Default::default() },
+            fragment: Some(wgpu::FragmentState { module: &terrain_sh, entry_point: Some("fs"), compilation_options: Default::default(), targets: &[Some(format.into())] }),
+            multiview_mask: None,
+            cache: None,
+        });
+        let mesh_pipeline = |label: &str, fmt: wgpu::TextureFormat, samples: u32, blend: Option<wgpu::BlendState>, write: bool, bias: i32| {
+            device.create_render_pipeline(&wgpu::RenderPipelineDescriptor {
+                label: Some(label),
+                layout: Some(&mesh_layout),
+                vertex: wgpu::VertexState { module: &mesh_sh, entry_point: Some("vs"), compilation_options: Default::default(), buffers: &mesh_layouts() },
+                primitive: wgpu::PrimitiveState { cull_mode: None, ..Default::default() },
+                depth_stencil: depth(write, bias),
+                multisample: wgpu::MultisampleState { count: samples, alpha_to_coverage_enabled: false, ..Default::default() },
+                fragment: Some(wgpu::FragmentState { module: &mesh_sh, entry_point: Some("fs"), compilation_options: Default::default(), targets: &[Some(wgpu::ColorTargetState { format: fmt, blend, write_mask: wgpu::ColorWrites::ALL })] }),
+                multiview_mask: None,
+                cache: None,
+            })
+        };
+        // the sun's view: depth only, sloped faces pushed back against acne
+        let shadow_pipeline = device.create_render_pipeline(&wgpu::RenderPipelineDescriptor {
+            label: Some("shadow"),
+            layout: Some(&mesh_layout),
+            vertex: wgpu::VertexState { module: &mesh_sh, entry_point: Some("vs"), compilation_options: Default::default(), buffers: &mesh_layouts() },
+            primitive: wgpu::PrimitiveState { cull_mode: None, ..Default::default() },
+            depth_stencil: Some(wgpu::DepthStencilState {
+                format: DEPTH,
+                depth_write_enabled: Some(true),
+                depth_compare: Some(wgpu::CompareFunction::LessEqual),
+                stencil: Default::default(),
+                bias: wgpu::DepthBiasState { constant: 2, slope_scale: 2.0, clamp: 0.0 },
+            }),
+            multisample: Default::default(),
+            fragment: Some(wgpu::FragmentState { module: &mesh_sh, entry_point: Some("fs_shadow"), compilation_options: Default::default(), targets: &[] }),
+            multiview_mask: None,
+            cache: None,
+        });
+        let thumb_fmt = wgpu::TextureFormat::Rgba8UnormSrgb;
+        let mesh_opaque = mesh_pipeline("mesh", format, SAMPLES, None, true, 0);
+        let mesh_blend = mesh_pipeline("mesh blend", format, SAMPLES, blend_alpha, false, 0);
+        // the road being drawn: over everything (the ground is shaped to it only once built)
+        let ghost_pipeline = device.create_render_pipeline(&wgpu::RenderPipelineDescriptor {
+            label: Some("ghost"),
+            layout: Some(&mesh_layout),
+            vertex: wgpu::VertexState { module: &mesh_sh, entry_point: Some("vs"), compilation_options: Default::default(), buffers: &mesh_layouts() },
+            primitive: wgpu::PrimitiveState { cull_mode: None, ..Default::default() },
+            depth_stencil: Some(wgpu::DepthStencilState { format: DEPTH, depth_write_enabled: Some(false), depth_compare: Some(wgpu::CompareFunction::Always), stencil: Default::default(), bias: Default::default() }),
+            multisample: wgpu::MultisampleState { count: SAMPLES, ..Default::default() },
+            fragment: Some(wgpu::FragmentState { module: &mesh_sh, entry_point: Some("fs"), compilation_options: Default::default(), targets: &[Some(wgpu::ColorTargetState { format, blend: blend_alpha, write_mask: wgpu::ColorWrites::ALL })] }),
+            multiview_mask: None,
+            cache: None,
+        });
+        let spline_opaque = mesh_pipeline("spline", format, SAMPLES, None, true, 0);
+        let spline_blend = mesh_pipeline("spline blend", format, SAMPLES, blend_alpha, false, 0);
+        let thumb_opaque = mesh_pipeline("thumb", thumb_fmt, 1, None, true, 0);
+        let thumb_blend = mesh_pipeline("thumb blend", thumb_fmt, 1, blend_alpha, false, 0);
+        let sky = |fmt: wgpu::TextureFormat, samples: u32| {
+            device.create_render_pipeline(&wgpu::RenderPipelineDescriptor {
+                label: Some("sky"),
+                layout: Some(&global_only),
+                vertex: wgpu::VertexState { module: &sky_sh, entry_point: Some("vs"), compilation_options: Default::default(), buffers: &[] },
+                primitive: Default::default(),
+                depth_stencil: Some(wgpu::DepthStencilState { format: DEPTH, depth_write_enabled: Some(false), depth_compare: Some(wgpu::CompareFunction::GreaterEqual), stencil: Default::default(), bias: Default::default() }),
+                multisample: wgpu::MultisampleState { count: samples, ..Default::default() },
+                fragment: Some(wgpu::FragmentState { module: &sky_sh, entry_point: Some("fs"), compilation_options: Default::default(), targets: &[Some(fmt.into())] }),
+                multiview_mask: None,
+                cache: None,
+            })
+        };
+        let sky_pipeline = sky(format, SAMPLES);
+        let thumb_sky = sky(thumb_fmt, 1);
+        let overlay_pipeline = device.create_render_pipeline(&wgpu::RenderPipelineDescriptor {
+            label: Some("overlay"),
+            layout: Some(&global_only),
+            vertex: wgpu::VertexState {
+                module: &overlay_sh,
+                entry_point: Some("vs"),
+                compilation_options: Default::default(),
+                buffers: &[wgpu::VertexBufferLayout { array_stride: std::mem::size_of::<OverlayVertex>() as u64, step_mode: wgpu::VertexStepMode::Vertex, attributes: &wgpu::vertex_attr_array![0 => Float32x3, 1 => Float32x4] }],
+            },
+            primitive: wgpu::PrimitiveState { cull_mode: None, ..Default::default() },
+            depth_stencil: Some(wgpu::DepthStencilState { format: DEPTH, depth_write_enabled: Some(false), depth_compare: Some(wgpu::CompareFunction::Always), stencil: Default::default(), bias: Default::default() }),
+            multisample: wgpu::MultisampleState { count: SAMPLES, ..Default::default() },
+            fragment: Some(wgpu::FragmentState { module: &overlay_sh, entry_point: Some("fs"), compilation_options: Default::default(), targets: &[Some(wgpu::ColorTargetState { format, blend: blend_alpha, write_mask: wgpu::ColorWrites::ALL })] }),
+            multiview_mask: None,
+            cache: None,
+        });
+
+        // one index list serves every tile (61 × 61 samples, split as OMSI splits its cells)
+        let n = TERRAIN_SAMPLES as u32;
+        let mut idx: Vec<u32> = Vec::new();
+        for j in 0..n - 1 {
+            for i in 0..n - 1 {
+                let a = j * n + i;
+                let b = a + 1;
+                let c = a + n;
+                let d = c + 1;
+                idx.extend_from_slice(&[a, d, c, a, b, d]);
+            }
+        }
+        let terrain_index = device.create_buffer_init(&wgpu::util::BufferInitDescriptor { label: Some("terrain ib"), contents: bytemuck::cast_slice(&idx), usage: wgpu::BufferUsages::INDEX });
+        let linear = device.create_sampler(&wgpu::SamplerDescriptor {
+            label: Some("linear"),
+            address_mode_u: wgpu::AddressMode::Repeat,
+            address_mode_v: wgpu::AddressMode::Repeat,
+            address_mode_w: wgpu::AddressMode::Repeat,
+            mag_filter: wgpu::FilterMode::Linear,
+            min_filter: wgpu::FilterMode::Linear,
+            mipmap_filter: wgpu::MipmapFilterMode::Linear,
+            anisotropy_clamp: 8,
+            ..Default::default()
+        });
+        let mask_sampler = device.create_sampler(&wgpu::SamplerDescriptor {
+            label: Some("mask"),
+            address_mode_u: wgpu::AddressMode::ClampToEdge,
+            address_mode_v: wgpu::AddressMode::ClampToEdge,
+            mag_filter: wgpu::FilterMode::Linear,
+            min_filter: wgpu::FilterMode::Linear,
+            ..Default::default()
+        });
+        let white = solid_texture(device, queue, [255, 255, 255, 255], true);
+        let flat_normal = solid_texture(device, queue, [128, 128, 255, 255], false);
+        let default_orm = solid_texture(device, queue, [255, 200, 0, 255], false);
+        let zero_mask = solid_texture(device, queue, [0, 0, 0, 0], false);
+        let tree_mesh = upload_mesh(device, &crate::assets::tree_mesh());
+        let marker = upload_mesh(device, &marker_mesh());
+        let thumb_depth = device
+            .create_texture(&wgpu::TextureDescriptor {
+                label: Some("thumb depth"),
+                size: wgpu::Extent3d { width: THUMB, height: THUMB, depth_or_array_layers: 1 },
+                mip_level_count: 1,
+                sample_count: 1,
+                dimension: wgpu::TextureDimension::D2,
+                format: DEPTH,
+                usage: wgpu::TextureUsages::RENDER_ATTACHMENT,
+                view_formats: &[],
+            })
+            .create_view(&Default::default());
+        Renderer {
+            globals,
+            globals_bind,
+            thumb_globals,
+            thumb_globals_bind,
+            shadow_view,
+            shadow_globals,
+            shadow_globals_bind,
+            shadow_pipeline,
+            tile_layout,
+            ground_layout,
+            mat_layout,
+            terrain_pipeline,
+            mesh_opaque,
+            mesh_blend,
+            spline_opaque,
+            ghost_pipeline,
+            spline_blend,
+            thumb_opaque,
+            thumb_blend,
+            thumb_sky,
+            sky_pipeline,
+            overlay_pipeline,
+            overlay_buf: None,
+            terrain_index,
+            terrain_index_count: idx.len() as u32,
+            tiles: HashMap::new(),
+            ground_bind: None,
+            ground_key: String::new(),
+            linear,
+            mask_sampler,
+            white,
+            flat_normal,
+            default_orm,
+            zero_mask,
+            textures: HashMap::new(),
+            materials: HashMap::new(),
+            models: HashMap::new(),
+            tree_mesh,
+            marker,
+            instances: None,
+            cached_scene: Vec::new(),
+            anchor: DVec3::ZERO,
+            anchor_for: 0,
+            display: HashMap::new(),
+            roots: Vec::new(),
+            batches: Vec::new(),
+            ghost_batches: Vec::new(),
+            scene_key: 0,
+            splines: HashMap::new(),
+            ghost_spline_meshes: Vec::new(),
+            thumbs: HashMap::new(),
+            thumb_depth,
+            time: 0.0,
+        }
+    }
+
+    /// Forget the map (another one is opened).
+    pub fn reset_map(&mut self) {
+        self.tiles.clear();
+        self.splines.clear();
+        self.display.clear();
+        self.anchor = DVec3::ZERO;
+        self.ground_key.clear();
+        self.ground_bind = None;
+        self.scene_key = 0;
+    }
+
+    /// Forget loaded models (files changed on disk).
+    pub fn reset_models(&mut self) {
+        self.models.clear();
+        self.materials.clear();
+        self.splines.clear();
+        self.scene_key = 0;
+    }
+
+    fn globals_for(&self, cam: &Camera, aspect: f32, extras: &FrameExtras, anchor: DVec3) -> Globals {
+        let vp = cam.proj(aspect) * cam.view();
+        let o = cam.origin() - anchor;
+        let eye = cam.eye() - cam.origin();
+        let sun = sun_dir();
+        let (n, f) = cam.near_far();
+        let _ = n;
+        let light = light_view(cam);
+        let brush = extras.brush.map(|b| [(b.centre.x - anchor.x) as f32, (b.centre.y - anchor.y) as f32, b.radius, 1.0]).unwrap_or([0.0; 4]);
+        let ht = extras.highlight_tile.map(|t| [t.0 as f32, t.1 as f32]).unwrap_or([1e9, 1e9]);
+        Globals {
+            view_proj: vp.to_cols_array_2d(),
+            inv_view_proj: vp.inverse().to_cols_array_2d(),
+            origin: [o.x as f32, o.y as f32, o.z as f32, 0.0],
+            eye: [eye.x as f32, eye.y as f32, eye.z as f32, self.time],
+            sun_dir: [sun.x, sun.y, sun.z, 0.8],
+            // openOMSI's Vanilla+ by day (the stock envir.cfg with the sun 45 degrees up:
+            // A x 0.7, B x 0.5, C x 0.45, see omsi-sim's daylight.rs)
+            sun_color: [0.70, 0.70, 0.677, 1.0],
+            sky_top: [0.30, 0.50, 0.86, 1.0],
+            sky_horizon: [0.66, 0.77, 0.92, 1.0],
+            fog: [0.62, 0.74, 0.92, 1.0 / (f * 0.55)],
+            brush,
+            brush_color: extras.brush.map(|b| b.color).unwrap_or([1.0; 4]),
+            grid: [tile_size() as f32, if extras.grid { 1.0 } else { 0.0 }, ht[0], ht[1]],
+            light_vp: light.0.to_cols_array_2d(),
+            shadow: [1.0, light.1, 0.0, 0.0],
+            light_b: [0.135, 0.154, 0.174, 0.0],
+            light_c: [0.396, 0.396, 0.416, 0.0],
+        }
+    }
+
+    /// A material's bind group (None while its texture loads).
+    fn material(&mut self, device: &wgpu::Device, queue: &wgpu::Queue, assets: &mut Assets, m: &Material) -> Option<&wgpu::BindGroup> {
+        let key = MatKey {
+            texture: m.texture.clone(),
+            alpha: match m.alpha {
+                Alpha::Opaque => 0,
+                Alpha::Test => 1,
+                Alpha::Blend => 2,
+            },
+            color: m.color.map(|c| (c.clamp(0.0, 1.0) * 255.0) as u8),
+        };
+        if !self.materials.contains_key(&key) {
+            let mut flags = [0.0f32; 4];
+            let mut has_tex = 0.0;
+            if let Some(p) = &m.texture {
+                if !self.textures.contains_key(p) {
+                    let img = assets.texture(p)?;
+                    let albedo = upload_image(device, queue, &img.image, true);
+                    let normal = img.normal.as_ref().map(|n| upload_image(device, queue, n, false));
+                    let orm = img.orm.as_ref().map(|n| upload_image(device, queue, n, false));
+                    self.textures.insert(p.clone(), GpuTexture { albedo, normal, orm, flags: img.pbr_flags });
+                }
+                has_tex = 1.0;
+            }
+            let t = m.texture.as_ref().and_then(|p| self.textures.get(p));
+            if let Some(t) = t {
+                flags = t.flags;
+                if t.normal.is_none() {
+                    flags[0] = 0.0;
+                }
+                if t.orm.is_none() {
+                    flags[1] = 0.0;
+                    flags[2] = 0.0;
+                    flags[3] = 0.0;
+                }
+            }
+            let color = if has_tex > 0.0 { [1.0, 1.0, 1.0, m.color[3].max(0.0)] } else { [m.color[0], m.color[1], m.color[2], 1.0] };
+            let u = MatUniform { color, mode: [key.alpha as f32, has_tex, 1.0, 0.0], pbr: flags };
+            let buf = device.create_buffer_init(&wgpu::util::BufferInitDescriptor { label: Some("material"), contents: bytemuck::bytes_of(&u), usage: wgpu::BufferUsages::UNIFORM });
+            let albedo = t.map(|t| &t.albedo).unwrap_or(&self.white);
+            let normal = t.and_then(|t| t.normal.as_ref()).unwrap_or(&self.flat_normal);
+            let orm = t.and_then(|t| t.orm.as_ref()).unwrap_or(&self.default_orm);
+            let bg = device.create_bind_group(&wgpu::BindGroupDescriptor {
+                label: Some("material"),
+                layout: &self.mat_layout,
+                entries: &[
+                    wgpu::BindGroupEntry { binding: 0, resource: buf.as_entire_binding() },
+                    wgpu::BindGroupEntry { binding: 1, resource: wgpu::BindingResource::TextureView(albedo) },
+                    wgpu::BindGroupEntry { binding: 2, resource: wgpu::BindingResource::TextureView(normal) },
+                    wgpu::BindGroupEntry { binding: 3, resource: wgpu::BindingResource::TextureView(orm) },
+                    wgpu::BindGroupEntry { binding: 4, resource: wgpu::BindingResource::Sampler(&self.linear) },
+                ],
+            });
+            self.materials.insert(key.clone(), bg);
+        }
+        self.materials.get(&key)
+    }
+
+    fn model(&mut self, device: &wgpu::Device, key: &str, m: &ObjectModel) {
+        if self.models.contains_key(key) {
+            return;
+        }
+        let parts = m.parts.iter().map(|p| (upload_mesh(device, &p.mesh), p.materials.clone())).collect::<Vec<_>>();
+        self.models.insert(key.to_string(), Some(GpuModel { parts, technical: m.technical }));
+    }
+
+    /// Bring the GPU copy of the map up to date with the document.
+    pub fn sync(&mut self, gpu: &Gpu, doc: &Document, assets: &mut Assets, extras: &FrameExtras, cam: &Camera) {
+        let device = &gpu.device;
+        let queue = &gpu.queue;
+        // the map's anchor: a tile corner in its middle (everything on the GPU is relative to it)
+        if self.anchor_for != doc.global_rev || self.anchor == DVec3::ZERO {
+            let keys: Vec<TileKey> = doc.tiles.keys().copied().collect();
+            if let Some(mid) = keys.get(keys.len() / 2) {
+                let o = tile_origin(*mid);
+                if self.anchor == DVec3::ZERO || (DVec3::new(o.x, o.y, 0.0) - self.anchor).length() > 20_000.0 {
+                    self.anchor = DVec3::new(o.x, o.y, 0.0);
+                    self.tiles.clear();
+                    self.splines.clear();
+                    self.scene_key = 0;
+                }
+            }
+            self.anchor_for = doc.global_rev;
+        }
+        let anchor = self.anchor;
+        self.sync_ground(gpu, doc, assets);
+        // tiles
+        self.tiles.retain(|k, _| doc.tiles.contains_key(k));
+        let keys: Vec<TileKey> = doc.tiles.keys().copied().collect();
+        for k in keys {
+            let t = &doc.tiles[&k];
+            let need_new = !self.tiles.contains_key(&k);
+            if need_new {
+                let vb = device.create_buffer(&wgpu::BufferDescriptor { label: Some("tile vb"), size: (TERRAIN_SAMPLES * TERRAIN_SAMPLES * std::mem::size_of::<TerrainVertex>()) as u64, usage: wgpu::BufferUsages::VERTEX | wgpu::BufferUsages::COPY_DST, mapped_at_creation: false });
+                let uniform = device.create_buffer(&wgpu::BufferDescriptor { label: Some("tile u"), size: std::mem::size_of::<TileUniform>() as u64, usage: wgpu::BufferUsages::UNIFORM | wgpu::BufferUsages::COPY_DST, mapped_at_creation: false });
+                let mk = || {
+                    device.create_texture(&wgpu::TextureDescriptor {
+                        label: Some("mask"),
+                        size: wgpu::Extent3d { width: 256, height: 256, depth_or_array_layers: 1 },
+                        mip_level_count: 1,
+                        sample_count: 1,
+                        dimension: wgpu::TextureDimension::D2,
+                        format: wgpu::TextureFormat::Rgba8Unorm,
+                        usage: wgpu::TextureUsages::TEXTURE_BINDING | wgpu::TextureUsages::COPY_DST,
+                        view_formats: &[],
+                    })
+                };
+                let masks = [mk(), mk()];
+                let cut = device.create_texture_with_data(
+                    queue,
+                    &wgpu::TextureDescriptor {
+                        label: Some("cut"),
+                        size: wgpu::Extent3d { width: CUT as u32, height: CUT as u32, depth_or_array_layers: 1 },
+                        mip_level_count: 1,
+                        sample_count: 1,
+                        dimension: wgpu::TextureDimension::D2,
+                        format: wgpu::TextureFormat::Rgba8Unorm,
+                        usage: wgpu::TextureUsages::TEXTURE_BINDING | wgpu::TextureUsages::COPY_DST,
+                        view_formats: &[],
+                    },
+                    wgpu::util::TextureDataOrder::LayerMajor,
+                    &vec![255u8; CUT * CUT * 4],
+                );
+                let cv = cut.create_view(&Default::default());
+                let va = masks[0].create_view(&Default::default());
+                let vb2 = masks[1].create_view(&Default::default());
+                let bind = device.create_bind_group(&wgpu::BindGroupDescriptor {
+                    label: Some("tile"),
+                    layout: &self.tile_layout,
+                    entries: &[
+                        wgpu::BindGroupEntry { binding: 0, resource: uniform.as_entire_binding() },
+                        wgpu::BindGroupEntry { binding: 1, resource: wgpu::BindingResource::TextureView(&va) },
+                        wgpu::BindGroupEntry { binding: 2, resource: wgpu::BindingResource::TextureView(&vb2) },
+                        wgpu::BindGroupEntry { binding: 3, resource: wgpu::BindingResource::Sampler(&self.mask_sampler) },
+                        wgpu::BindGroupEntry { binding: 4, resource: wgpu::BindingResource::TextureView(&cv) },
+                    ],
+                });
+                self.tiles.insert(k, GpuTile { vb, uniform, masks, cut, cut_key: 0, bind, terrain_rev: 0, mask_rev: 0, walls: None });
+            }
+            let gt = self.tiles.get_mut(&k).unwrap();
+            let o = tile_origin(k) - anchor.truncate();
+            let selected = extras.highlight_tile == Some(k);
+            queue.write_buffer(&gt.uniform, 0, bytemuck::bytes_of(&TileUniform { origin: [o.x as f32, o.y as f32, 0.0, 0.0], flags: [if selected { 1.0 } else { 0.0 }, 0.0, 0.0, 0.0] }));
+            if gt.terrain_rev != t.terrain_rev {
+                gt.terrain_rev = t.terrain_rev;
+                queue.write_buffer(&gt.vb, 0, bytemuck::cast_slice(&terrain_vertices(doc, k)));
+            }
+            if gt.mask_rev != t.mask_rev {
+                gt.mask_rev = t.mask_rev;
+                for (half, tex) in gt.masks.iter().enumerate() {
+                    let mut data = vec![0u8; 256 * 256 * 4];
+                    for ch in 0..4 {
+                        let layer = 1 + half * 4 + ch;
+                        let (Some(Some(m)), Some(g)) = (t.masks.get(layer), doc.global.ground_textures.get(layer)) else { continue };
+                        let size = crate::doc::mask_size(g);
+                        for y in 0..256 {
+                            for x in 0..256 {
+                                data[(y * 256 + x) * 4 + ch] = m[(y * size / 256) * size + x * size / 256];
+                            }
+                        }
+                    }
+                    queue.write_texture(
+                        wgpu::TexelCopyTextureInfo { texture: tex, mip_level: 0, origin: wgpu::Origin3d::ZERO, aspect: wgpu::TextureAspect::All },
+                        &data,
+                        wgpu::TexelCopyBufferLayout { offset: 0, bytes_per_row: Some(256 * 4), rows_per_image: Some(256) },
+                        wgpu::Extent3d { width: 256, height: 256, depth_or_array_layers: 1 },
+                    );
+                }
+            }
+        }
+
+        // every tile as the game shows it (chrono patches laid over)
+        self.display.retain(|k, _| doc.tiles.contains_key(k));
+        for (k, t) in &doc.tiles {
+            if self.display.get(k).map(|d| d.0 != t.content_rev).unwrap_or(true) {
+                self.display.insert(*k, (t.content_rev, Arc::new(t.display(k.1).into_owned())));
+            }
+        }
+        let disp: Vec<(TileKey, Arc<omsi_map::Tile>)> = self.display.iter().map(|(k, v)| (*k, v.1.clone())).collect();
+        // objects: instance lists are made again when anything about them changed
+        let mut key_parts: Vec<u64> = doc.tiles.values().flat_map(|t| [t.content_rev, t.terrain_rev]).collect();
+        key_parts.push(hash_of(&format!("{:?}{:?}{}", extras.selected, extras.hover, extras.show_technical)));
+        key_parts.push(self.models.len() as u64);
+        key_parts.push(assets.objects.len() as u64);
+        key_parts.push(assets.pending as u64);
+        let key = hash_of(&key_parts);
+        if key != self.scene_key {
+            self.scene_key = key;
+            let mut instances: Vec<Instance> = Vec::new();
+            let mut groups: HashMap<String, (bool, Vec<Instance>)> = HashMap::new();
+            for (k, t) in &disp {
+                let tint_of = |sel: Option<Sel>| {
+                    if extras.selected == sel {
+                        [0.96, 0.50, 0.19, 0.45]
+                    } else if extras.hover == sel {
+                        [1.0, 1.0, 1.0, 0.18]
+                    } else {
+                        [0.0; 4]
+                    }
+                };
+                // what [attachObj] records may hang on: (pose, model) by IDCode
+                let mut parents: HashMap<i64, (Pose, Arc<ObjectModel>)> = HashMap::new();
+                for o in &t.objects {
+                    let rel_key = o.file.to_lowercase();
+                    let Some(model) = assets.object(&o.file) else { continue };
+                    if model.technical && !extras.show_technical {
+                        continue;
+                    }
+                    self.model(device, &rel_key, &model);
+                    let world = doc.object_world(*k, o, model.abs_height);
+                    let pose = Pose::of_object(world, o.rot);
+                    // (one standing on the ground outside its own tile is never seen in OMSI or
+                    // openOMSI: its height is looked for on that tile's ground only)
+                    let edge = tile_size() + 1e-3;
+                    let inside = (-1e-3..=edge).contains(&o.pos[0]) && (-1e-3..=edge).contains(&o.pos[1]);
+                    if model.abs_height || inside {
+                        push_object(&mut groups, &rel_key, &model, o.extra.first(), pose.matrix_from(anchor), tint_of(Some(Sel::Object(*k, o.id))));
+                    }
+                    parents.insert(o.id, (pose, model));
+                }
+                // the rows along the splines (lamps, posts, parking bays)
+                let org = tile_origin(*k);
+                for a in &t.spline_attachments {
+                    let Some(model) = assets.object(&a.file) else { continue };
+                    let rel_key = a.file.to_lowercase();
+                    self.model(device, &rel_key, &model);
+                    let objs = crate::place::row_objects(a, &t.splines, org);
+                    let first = objs.iter().map(|o| o.index).min();
+                    for ro in &objs {
+                        if a.repeater.is_none() && Some(ro.index) == first {
+                            parents.entry(a.id).or_insert((ro.pose, model.clone()));
+                        }
+                        push_object(&mut groups, &rel_key, &model, a.strings.first(), ro.pose.matrix_from(anchor), [0.0; 4]);
+                    }
+                }
+                // objects hanging on others (signs on posts, lamps on masts)
+                for o in &t.attach_objects {
+                    let Some(model) = assets.object(&o.file) else { continue };
+                    let Some((parent, pmodel)) = o.parent_id.and_then(|p| parents.get(&p)).cloned() else { continue };
+                    let rel_key = o.file.to_lowercase();
+                    self.model(device, &rel_key, &model);
+                    let attach = pmodel.attachments.get(o.attach_index).copied().unwrap_or(Mat4::IDENTITY);
+                    let pose = parent.attached(&attach, omsi_geometry::map_rotation(o.rot));
+                    push_object(&mut groups, &rel_key, &model, o.extra.first(), pose.matrix_from(anchor), tint_of(Some(Sel::Object(*k, o.id))));
+                    parents.insert(o.id, (pose, model));
+                }
+            }
+            self.batches.clear();
+            let mut sorted: Vec<_> = groups.into_iter().collect();
+            sorted.sort_by(|a, b| a.0.cmp(&b.0));
+            for (model, (tree, list)) in sorted {
+                self.batches.push(Batch { model, tree, first: instances.len() as u32, count: list.len() as u32 });
+                instances.extend(list);
+            }
+            self.cached_scene = instances;
+        }
+        let _ = cam;
+
+        // splines
+        let mut alive: Vec<(TileKey, i64)> = Vec::new();
+        let start = std::time::Instant::now();
+        let mut spline_instances: Vec<Instance> = Vec::new();
+        for (k, t) in &disp {
+            let org = tile_origin(*k);
+            for s in t.splines.iter().filter(|s| !s.deleted && !s.file.trim().is_empty()) {
+                alive.push((*k, s.id));
+                let h = spline_hash(s, org);
+                let sel = Some(Sel::Spline(*k, s.id));
+                let tint = if extras.selected == sel {
+                    [0.96, 0.50, 0.19, 0.45]
+                } else if extras.hover == sel {
+                    [1.0, 1.0, 1.0, 0.2]
+                } else {
+                    [0.0; 4]
+                };
+                let entry_ok = self.splines.get(&(*k, s.id)).map(|e| e.hash == h).unwrap_or(false);
+                if !entry_ok {
+                    if start.elapsed().as_millis() > 25 {
+                        continue;
+                    }
+                    let Some(model) = assets.spline(&s.file) else { continue };
+                    let mesh = build_spline(&model, s, org);
+                    let def = &model.def;
+                    // (a blended layer and wires overhead cut no ground; see openOMSI's cut_terrain)
+                    let overlay = !model.materials.is_empty() && model.materials.iter().all(|m| m.alpha == Alpha::Blend);
+                    let lowest = def.profiles.iter().flat_map(|p| p.points.iter()).map(|q| q.z).fold(f32::MAX, f32::min);
+                    let drivable = def.paths.iter().any(|p| p.kind == 0 || p.kind == 1);
+                    // (only one hanging wholly overhead stays out, unless it is a road or has
+                    // height profiles: openOMSI's `cuts_terrain`)
+                    let cuts = !overlay && (lowest < 2.0 || !def.height_profiles.is_empty() || drivable);
+                    let mode = s.terrain_align.map(|v| v as u8).or(s.terrain_align_flag.then_some(1));
+                    let rims: Vec<Vec<DVec3>> = match mode {
+                        Some(m) => omsi_geometry::spline_hole_rims(def, &SplineCurve::from_map(s, org), s.mirror, m).into_iter().filter(|r| !omsi_geometry::outline_crosses_itself(&r.iter().map(|v| v.truncate()).collect::<Vec<_>>())).collect(),
+                        None => Vec::new(),
+                    };
+                    let outlines = match mode {
+                        // (an outline crossing itself cuts no hole, as in Omsi.exe and openOMSI)
+                        Some(m) => omsi_geometry::spline_hole_outlines(def, &SplineCurve::from_map(s, org), s.mirror, m).into_iter().filter(|r| !omsi_geometry::outline_crosses_itself(r)).collect(),
+                        None => Vec::new(),
+                    };
+                    let bounds = mesh.as_ref().map(|m| m.positions.iter().fold([f32::MAX, f32::MAX, f32::MIN, f32::MIN], |b, p| [b[0].min(p.x), b[1].min(p.y), b[2].max(p.x), b[3].max(p.y)])).unwrap_or([0.0; 4]);
+                    let gpu = mesh.as_ref().map(|m| upload_mesh(device, m));
+                    self.splines.insert((*k, s.id), SplineEntry { hash: h, mesh: gpu, cpu: mesh.map(Arc::new), bounds, cuts, drivable, technical: def.only_editor || !def.profiles.iter().any(|p| p.points.len() >= 2), hidden: false, outlines, rims, materials: model.materials.clone(), instance: 0 });
+                }
+                if let Some(e) = self.splines.get_mut(&(*k, s.id)) {
+                    e.hidden = e.technical && !extras.show_technical;
+                    e.instance = spline_instances.len() as u32;
+                    spline_instances.push(Instance::new(Mat4::from_translation(Vec3::new((org.x - anchor.x) as f32, (org.y - anchor.y) as f32, 0.0)), tint).surface(SURF_SPLINE));
+                }
+            }
+        }
+        if self.splines.len() > alive.len() {
+            let set: std::collections::HashSet<_> = alive.into_iter().collect();
+            self.splines.retain(|k, _| set.contains(k));
+        }
+
+        self.cut_ground(gpu, doc, assets, &disp);
+
+        // ghosts: objects about to be placed and roads being drawn
+        let mut ghost_groups: HashMap<String, (bool, Vec<Instance>)> = HashMap::new();
+        for g in &extras.ghosts {
+            let key = g.rel.to_lowercase();
+            if let Some(model) = assets.object(&g.rel) {
+                self.model(device, &key, &model);
+                push_object(&mut ghost_groups, &key, &model, None, object_matrix(g.world - anchor, g.rot), g.tint);
+            } else if assets.object_failed(&g.rel) {
+                ghost_groups.entry("\u{0}marker".into()).or_default().1.push(Instance::new(object_matrix(g.world - anchor, g.rot), g.tint));
+            }
+        }
+        self.ghost_spline_meshes.retain(|_| false);
+        let mut ghost_spline_instances = Vec::new();
+        for (rel, s, tint) in &extras.ghost_splines {
+            let Some(model) = assets.spline(rel) else { continue };
+            let mut s = s.clone();
+            s.pos[0] -= anchor.x;
+            s.pos[1] -= anchor.y;
+            let mesh = build_spline(&model, &s, DVec2::ZERO);
+            ghost_spline_instances.push(Instance::new(Mat4::IDENTITY, *tint).surface(SURF_SPLINE));
+            self.ghost_spline_meshes.push((0, mesh.map(|m| upload_mesh(device, &m)), model.materials.clone(), 0));
+        }
+
+        // one instance buffer: scene objects, splines, ghosts
+        let mut all = self.cached_scene.clone();
+        let spline_base = all.len() as u32;
+        all.extend(spline_instances);
+        for e in self.splines.values_mut() {
+            e.instance += spline_base;
+        }
+        let ghost_spline_base = all.len() as u32;
+        for (i, g) in self.ghost_spline_meshes.iter_mut().enumerate() {
+            g.3 = ghost_spline_base + i as u32;
+        }
+        all.extend(ghost_spline_instances);
+        self.ghost_batches.clear();
+        for (model, (tree, list)) in ghost_groups {
+            self.ghost_batches.push(Batch { model, tree, first: all.len() as u32, count: list.len() as u32 });
+            all.extend(list);
+        }
+        if all.is_empty() {
+            all.push(Instance::new(Mat4::IDENTITY, [0.0; 4]));
+        }
+        let bytes: &[u8] = bytemuck::cast_slice(&all);
+        let fits = self.instances.as_ref().map(|b| b.size() >= bytes.len() as u64).unwrap_or(false);
+        if !fits {
+            self.instances = Some(device.create_buffer(&wgpu::BufferDescriptor { label: Some("instances"), size: (bytes.len() as u64 * 3 / 2).max(4096), usage: wgpu::BufferUsages::VERTEX | wgpu::BufferUsages::COPY_DST, mapped_at_creation: false }));
+        }
+        queue.write_buffer(self.instances.as_ref().unwrap(), 0, bytes);
+
+        // overlay
+        if extras.overlay.is_empty() {
+            self.overlay_buf = None;
+        } else {
+            let verts: Vec<OverlayVertex> = extras.overlay.iter().map(|p| OverlayVertex { pos: (p.pos - anchor).as_vec3().to_array(), color: p.color }).collect();
+            let b = device.create_buffer_init(&wgpu::util::BufferInitDescriptor { label: Some("overlay"), contents: bytemuck::cast_slice(&verts), usage: wgpu::BufferUsages::VERTEX });
+            self.overlay_buf = Some((b, extras.overlay.len() as u32));
+        }
+        // materials of everything that will be drawn
+        self.warm_materials(device, queue, assets);
+    }
+
+    /// The ground cut of the tiles whose roads, surfaces or ground changed (a few per frame).
+    fn cut_ground(&mut self, gpu: &Gpu, doc: &Document, assets: &mut Assets, disp: &[(TileKey, Arc<omsi_map::Tile>)]) {
+        let start = std::time::Instant::now();
+        let ts = tile_size();
+        let by_key: HashMap<TileKey, &Arc<omsi_map::Tile>> = disp.iter().map(|(k, t)| (*k, t)).collect();
+        let keys: Vec<TileKey> = self.tiles.keys().copied().collect();
+        for key in keys {
+            // what the cut depends on: this tile's and its neighbours' contents, its ground, and
+            // how many of their splines and objects are ready
+            let mut parts: Vec<u64> = Vec::new();
+            let mut ready = 0u64;
+            for dy in -1..=1 {
+                for dx in -1..=1 {
+                    let n = (key.0 + dx, key.1 + dy);
+                    if let Some(t) = doc.tiles.get(&n) {
+                        parts.push(t.content_rev);
+                    }
+                    if let Some(t) = by_key.get(&n) {
+                        ready += t.splines.iter().filter(|s| self.splines.get(&(n, s.id)).map(|e| e.cpu.is_some()).unwrap_or(false)).count() as u64;
+                    }
+                }
+            }
+            parts.push(doc.tiles.get(&key).map(|t| t.terrain_rev).unwrap_or(0));
+            parts.push(ready);
+            parts.push(assets.objects.len() as u64 - assets.pending.min(assets.objects.len()) as u64);
+            let h = hash_of(&parts);
+            if self.tiles.get(&key).map(|g| g.cut_key == h).unwrap_or(true) {
+                continue;
+            }
+            if start.elapsed().as_millis() > 12 {
+                break;
+            }
+            let (x0, y0) = (key.0 as f64 * ts, key.1 as f64 * ts);
+            let (x1, y1) = (x0 + ts, y0 + ts);
+            let outside = |b: [f64; 4]| b[2] < x0 || b[0] > x1 || b[3] < y0 || b[1] > y1;
+            let mut surf = omsi_geometry::TileSurface::new(CUT);
+            let mut any = false;
+            // the holes' rims, tile-local, with their heights
+            let corner = DVec3::new(x0, y0, 0.0);
+            let mut rims: Vec<Vec<DVec3>> = Vec::new();
+            for dy in -1..=1 {
+                for dx in -1..=1 {
+                    let n = (key.0 + dx, key.1 + dy);
+                    let Some(t) = by_key.get(&n) else { continue };
+                    let org = tile_origin(n);
+                    for s in t.splines.iter().filter(|s| !s.deleted) {
+                        let Some(e) = self.splines.get(&(n, s.id)) else { continue };
+                        let Some(m) = &e.cpu else { continue };
+                        let b = [org.x + e.bounds[0] as f64, org.y + e.bounds[1] as f64, org.x + e.bounds[2] as f64, org.y + e.bounds[3] as f64];
+                        if !e.cuts || outside(b) {
+                            continue;
+                        }
+                        surf.rasterize_kind(m, &Mat4::IDENTITY, DVec3::new(org.x, org.y, 0.0), key.0, key.1, e.drivable);
+                        any |= !e.outlines.is_empty() || omsi_geometry::road_cut();
+                        for ring in &e.outlines {
+                            surf.add_outline(ring, key.0, key.1);
+                        }
+                        rims.extend(e.rims.iter().map(|r| r.iter().map(|v| *v - corner).collect()));
+                    }
+                    // surface objects (junction plates, car parks) and [terrainhole] cutters
+                    for o in &t.objects {
+                        let Some(model) = assets.object(&o.file) else { continue };
+                        if !model.surface && model.holes.is_empty() {
+                            continue;
+                        }
+                        let pose = Pose::of_object(doc.object_world(n, o, model.abs_height), o.rot);
+                        let r = model.radius() as f64 + 5.0;
+                        if outside([pose.pos.x - r, pose.pos.y - r, pose.pos.x + r, pose.pos.y + r]) {
+                            continue;
+                        }
+                        for hm in &model.holes {
+                            surf.rasterize_hole(hm, &pose.rot, pose.pos, key.0, key.1);
+                            for rim in omsi_geometry::hole_mesh_rims(hm, &pose.rot, pose.pos) {
+                                let ring: Vec<DVec2> = rim.iter().map(|v| v.truncate()).collect();
+                                if !omsi_geometry::outline_crosses_itself(&ring) {
+                                    surf.add_outline(&ring, key.0, key.1);
+                                    rims.push(rim.iter().map(|v| *v - corner).collect());
+                                }
+                            }
+                            any = true;
+                        }
+                        if model.surface {
+                            for p in &model.parts {
+                                surf.rasterize_kind(&p.mesh, &pose.rot, pose.pos, key.0, key.1, true);
+                            }
+                            any |= omsi_geometry::road_cut();
+                        }
+                    }
+                }
+            }
+            let walls = doc.tiles.get(&key).map(|t| omsi_geometry::terrain_hole_walls(&rims, &t.terrain)).filter(|m| !m.indices.is_empty()).map(|m| {
+                let verts: Vec<TerrainVertex> = m.positions.iter().zip(&m.normals).map(|(p, n)| TerrainVertex { pos: p.to_array(), normal: n.to_array() }).collect();
+                let vb = gpu.device.create_buffer_init(&wgpu::util::BufferInitDescriptor { label: Some("walls vb"), contents: bytemuck::cast_slice(&verts), usage: wgpu::BufferUsages::VERTEX });
+                let ib = gpu.device.create_buffer_init(&wgpu::util::BufferInitDescriptor { label: Some("walls ib"), contents: bytemuck::cast_slice(&m.indices), usage: wgpu::BufferUsages::INDEX });
+                (vb, ib, m.indices.len() as u32)
+            });
+            self.tiles.get_mut(&key).unwrap().walls = walls;
+            let terrain = doc.tiles.get(&key).map(|t| t.terrain.clone());
+            let terrain_at = move |x: f32, y: f32| terrain.as_ref().map(|t| t.sample(x, y)).unwrap_or(0.0);
+            let rgba = if any && surf.cuts_anything(&terrain_at, FLUSH) { surf.mask_image(&terrain_at, FLUSH) } else { vec![255u8; CUT * CUT * 4] };
+            let g = self.tiles.get_mut(&key).unwrap();
+            g.cut_key = h;
+            gpu.queue.write_texture(
+                wgpu::TexelCopyTextureInfo { texture: &g.cut, mip_level: 0, origin: wgpu::Origin3d::ZERO, aspect: wgpu::TextureAspect::All },
+                &rgba,
+                wgpu::TexelCopyBufferLayout { offset: 0, bytes_per_row: Some(4 * CUT as u32), rows_per_image: Some(CUT as u32) },
+                wgpu::Extent3d { width: CUT as u32, height: CUT as u32, depth_or_array_layers: 1 },
+            );
+        }
+    }
+
+    fn warm_materials(&mut self, device: &wgpu::Device, queue: &wgpu::Queue, assets: &mut Assets) {
+        let mut mats: Vec<Material> = Vec::new();
+        mats.push(marker_material());
+        for b in self.batches.iter().chain(self.ghost_batches.iter()) {
+            if let Some(p) = b.model.strip_prefix("tree:") {
+                mats.push(Material { texture: Some(PathBuf::from(p)), color: [1.0; 4], alpha: Alpha::Test });
+            }
+            if let Some(Some(m)) = self.models.get(&b.model) {
+                for (_, ms) in &m.parts {
+                    mats.extend(ms.iter().cloned());
+                }
+            }
+        }
+        for e in self.splines.values() {
+            mats.extend(e.materials.iter().cloned());
+        }
+        for g in &self.ghost_spline_meshes {
+            mats.extend(g.2.iter().cloned());
+        }
+        let start = std::time::Instant::now();
+        for m in mats {
+            // (uploading textures is spread over frames)
+            if start.elapsed().as_millis() > 20 {
+                break;
+            }
+            let _ = self.material(device, queue, assets, &m);
+        }
+    }
+
+    fn sync_ground(&mut self, gpu: &Gpu, doc: &Document, assets: &mut Assets) {
+        let mut roots = vec![doc.dir.clone(), doc.source.clone().unwrap_or_default()];
+        roots.extend(self.roots.iter().cloned());
+        let find = |rel: &str| -> Option<PathBuf> {
+            for r in &roots {
+                if r.as_os_str().is_empty() {
+                    continue;
+                }
+                let p = omsi_cfg::resolve_path(r, rel);
+                if omsi_cfg::vfs::is_file(&p) {
+                    return Some(p);
+                }
+            }
+            None
+        };
+        let layers: Vec<_> = doc.global.ground_textures.iter().take(9).collect();
+        let mut key = String::new();
+        let mut imgs = Vec::new();
+        for g in &layers {
+            let a = find(&g.texture).and_then(|p| assets.texture(&p));
+            let d = find(&g.detail_texture).and_then(|p| assets.texture(&p));
+            key.push_str(&format!("{}|{}|{}|{}|{:?};", g.texture, g.detail_texture, a.is_some(), d.is_some(), g.params));
+            imgs.push((a, d, g.repeats(), g.detail_repeats()));
+        }
+        if key == self.ground_key && self.ground_bind.is_some() {
+            return;
+        }
+        self.ground_key = key;
+        let device = &gpu.device;
+        let queue = &gpu.queue;
+        let n = imgs.len().max(1) as u32;
+        let mk_array = |size: u32, pick: &dyn Fn(usize) -> Option<omsi_texture::Image>, fallback: [u8; 4]| {
+            let mips = (size as f32).log2() as u32 + 1;
+            let tex = device.create_texture(&wgpu::TextureDescriptor {
+                label: Some("ground"),
+                size: wgpu::Extent3d { width: size, height: size, depth_or_array_layers: n },
+                mip_level_count: mips,
+                sample_count: 1,
+                dimension: wgpu::TextureDimension::D2,
+                format: wgpu::TextureFormat::Rgba8UnormSrgb,
+                usage: wgpu::TextureUsages::TEXTURE_BINDING | wgpu::TextureUsages::COPY_DST,
+                view_formats: &[],
+            });
+            for layer in 0..n {
+                let img = pick(layer as usize).map(|i| resize(&i, size)).unwrap_or_else(|| omsi_texture::Image { width: size, height: size, rgba: fallback.iter().copied().cycle().take((size * size * 4) as usize).collect(), has_alpha: false });
+                let mut level = img;
+                for mip in 0..mips {
+                    queue.write_texture(
+                        wgpu::TexelCopyTextureInfo { texture: &tex, mip_level: mip, origin: wgpu::Origin3d { x: 0, y: 0, z: layer }, aspect: wgpu::TextureAspect::All },
+                        &level.rgba,
+                        wgpu::TexelCopyBufferLayout { offset: 0, bytes_per_row: Some(4 * level.width), rows_per_image: Some(level.height) },
+                        wgpu::Extent3d { width: level.width, height: level.height, depth_or_array_layers: 1 },
+                    );
+                    level = crate::assets::half(&level);
+                }
+            }
+            tex.create_view(&wgpu::TextureViewDescriptor { dimension: Some(wgpu::TextureViewDimension::D2Array), ..Default::default() })
+        };
+        let tex = mk_array(512, &|i| imgs.get(i).and_then(|x| x.0.as_ref()).map(|t| t.image.clone()), [96, 120, 70, 255]);
+        let det = mk_array(256, &|i| imgs.get(i).and_then(|x| x.1.as_ref()).map(|t| t.image.clone()), [255, 255, 255, 255]);
+        let mut u = GroundUniform { layers: [[1.0, 1.0, 0.0, 0.0]; 9], count: [imgs.len() as f32, 0.0, 0.0, 0.0] };
+        for (i, x) in imgs.iter().enumerate() {
+            u.layers[i] = [x.2, x.3, 0.0, 0.0];
+        }
+        let buf = device.create_buffer_init(&wgpu::util::BufferInitDescriptor { label: Some("ground"), contents: bytemuck::bytes_of(&u), usage: wgpu::BufferUsages::UNIFORM });
+        self.ground_bind = Some(device.create_bind_group(&wgpu::BindGroupDescriptor {
+            label: Some("ground"),
+            layout: &self.ground_layout,
+            entries: &[
+                wgpu::BindGroupEntry { binding: 0, resource: buf.as_entire_binding() },
+                wgpu::BindGroupEntry { binding: 1, resource: wgpu::BindingResource::TextureView(&tex) },
+                wgpu::BindGroupEntry { binding: 2, resource: wgpu::BindingResource::TextureView(&det) },
+                wgpu::BindGroupEntry { binding: 3, resource: wgpu::BindingResource::Sampler(&self.linear) },
+            ],
+        }));
+        let _ = &self.zero_mask;
+    }
+
+    /// Draw the map into the frame.
+    /// `vp`: the 3D view's rectangle in pixels (x, y, width, height).
+    /// The sun's shadow map: the roads and objects round the camera seen from the sun.
+    fn draw_shadows(&self, gpu: &Gpu, encoder: &mut wgpu::CommandEncoder, gl: &Globals) {
+        let mut sg = *gl;
+        sg.view_proj = gl.light_vp;
+        // (the eye far off towards the sun: the roads' pull towards it is then a slight bias)
+        let sun = sun_dir();
+        sg.eye = [sun.x * 1e5, sun.y * 1e5, sun.z * 1e5, gl.eye[3]];
+        gpu.queue.write_buffer(&self.shadow_globals, 0, bytemuck::bytes_of(&sg));
+        let mut pass = encoder.begin_render_pass(&wgpu::RenderPassDescriptor {
+            label: Some("shadow"),
+            color_attachments: &[],
+            depth_stencil_attachment: Some(wgpu::RenderPassDepthStencilAttachment { view: &self.shadow_view, depth_ops: Some(wgpu::Operations { load: wgpu::LoadOp::Clear(1.0), store: wgpu::StoreOp::Store }), stencil_ops: None }),
+            timestamp_writes: None,
+            occlusion_query_set: None,
+            multiview_mask: None,
+        });
+        let Some(inst) = &self.instances else { return };
+        pass.set_pipeline(&self.shadow_pipeline);
+        pass.set_bind_group(0, &self.shadow_globals_bind, &[]);
+        pass.set_vertex_buffer(1, inst.slice(..));
+        let draw = |pass: &mut wgpu::RenderPass, mesh: &GpuMesh, mats: &[Material], range: std::ops::Range<u32>| {
+            pass.set_vertex_buffer(0, mesh.vb.slice(..));
+            pass.set_index_buffer(mesh.ib.slice(..), wgpu::IndexFormat::Uint32);
+            for &(first, count, slot) in &mesh.ranges {
+                let Some(m) = mats.get(slot as usize) else { continue };
+                if m.alpha == Alpha::Blend {
+                    continue;
+                }
+                let Some(bg) = self.materials.get(&mat_key(m)) else { continue };
+                pass.set_bind_group(1, bg, &[]);
+                pass.draw_indexed(first..first + count, 0, range.clone());
+            }
+        };
+        for e in self.splines.values().filter(|e| !e.technical) {
+            if let Some(mesh) = &e.mesh {
+                draw(&mut pass, mesh, &e.materials, e.instance..e.instance + 1);
+            }
+        }
+        for b in &self.batches {
+            let range = b.first..b.first + b.count;
+            if b.model == "\u{0}marker" {
+                continue;
+            }
+            if b.tree {
+                let tex = b.model.strip_prefix("tree:").map(PathBuf::from);
+                let m = Material { texture: tex, color: [1.0; 4], alpha: Alpha::Test };
+                draw(&mut pass, &self.tree_mesh, std::slice::from_ref(&m), range);
+                continue;
+            }
+            let Some(Some(model)) = self.models.get(&b.model).filter(|m| m.as_ref().map(|m| !m.technical).unwrap_or(false)) else { continue };
+            for (mesh, mats) in &model.parts {
+                draw(&mut pass, mesh, mats, range.clone());
+            }
+        }
+    }
+
+    pub fn draw(&mut self, gpu: &Gpu, encoder: &mut wgpu::CommandEncoder, target: &wgpu::TextureView, cam: &Camera, extras: &FrameExtras, vp: [f32; 4]) {
+        let aspect = vp[2] / vp[3].max(1.0);
+        let gl = self.globals_for(cam, aspect, extras, self.anchor);
+        gpu.queue.write_buffer(&self.globals, 0, bytemuck::bytes_of(&gl));
+        self.draw_shadows(gpu, encoder, &gl);
+        let mut pass = encoder.begin_render_pass(&wgpu::RenderPassDescriptor {
+            label: Some("scene"),
+            color_attachments: &[Some(wgpu::RenderPassColorAttachment {
+                view: &gpu.msaa,
+                depth_slice: None,
+                resolve_target: Some(target),
+                ops: wgpu::Operations { load: wgpu::LoadOp::Clear(wgpu::Color { r: 0.6, g: 0.7, b: 0.8, a: 1.0 }), store: wgpu::StoreOp::Discard },
+            })],
+            depth_stencil_attachment: Some(wgpu::RenderPassDepthStencilAttachment {
+                view: &gpu.depth,
+                depth_ops: Some(wgpu::Operations { load: wgpu::LoadOp::Clear(0.0), store: wgpu::StoreOp::Discard }),
+                stencil_ops: None,
+            }),
+            timestamp_writes: None,
+            occlusion_query_set: None,
+            multiview_mask: None,
+        });
+        pass.set_viewport(vp[0], vp[1], vp[2], vp[3], 0.0, 1.0);
+        pass.set_bind_group(0, &self.globals_bind, &[]);
+        // ground
+        if let Some(ground) = &self.ground_bind {
+            pass.set_pipeline(&self.terrain_pipeline);
+            pass.set_bind_group(2, ground, &[]);
+            pass.set_index_buffer(self.terrain_index.slice(..), wgpu::IndexFormat::Uint32);
+            for t in self.tiles.values() {
+                pass.set_bind_group(1, &t.bind, &[]);
+                pass.set_vertex_buffer(0, t.vb.slice(..));
+                pass.draw_indexed(0..self.terrain_index_count, 0, 0..1);
+            }
+            for t in self.tiles.values() {
+                if let Some((vb, ib, n)) = &t.walls {
+                    pass.set_bind_group(1, &t.bind, &[]);
+                    pass.set_vertex_buffer(0, vb.slice(..));
+                    pass.set_index_buffer(ib.slice(..), wgpu::IndexFormat::Uint32);
+                    pass.draw_indexed(0..*n, 0, 0..1);
+                }
+            }
+        }
+        let Some(inst) = &self.instances else { return };
+        for blend in [false, true] {
+            // splines
+            pass.set_pipeline(if blend { &self.spline_blend } else { &self.spline_opaque });
+            pass.set_vertex_buffer(1, inst.slice(..));
+            let entries: Vec<(&GpuMesh, &Vec<Material>, u32)> = self.splines.values().filter(|e| !e.hidden).filter_map(|e| e.mesh.as_ref().map(|m| (m, &e.materials, e.instance))).collect();
+            for (mesh, mats, inst_i) in entries {
+                pass.set_vertex_buffer(0, mesh.vb.slice(..));
+                pass.set_index_buffer(mesh.ib.slice(..), wgpu::IndexFormat::Uint32);
+                for &(first, count, slot) in &mesh.ranges {
+                    let Some(m) = mats.get(slot as usize) else { continue };
+                    if (m.alpha == Alpha::Blend) != blend {
+                        continue;
+                    }
+                    let Some(bg) = self.materials.get(&mat_key(m)) else { continue };
+                    pass.set_bind_group(1, bg, &[]);
+                    pass.draw_indexed(first..first + count, 0, inst_i..inst_i + 1);
+                }
+            }
+            // objects
+            pass.set_pipeline(if blend { &self.mesh_blend } else { &self.mesh_opaque });
+            for b in self.batches.iter().chain(self.ghost_batches.iter()) {
+                let range = b.first..b.first + b.count;
+                if b.model == "\u{0}marker" {
+                    if !blend {
+                        if let Some(bg) = self.materials.get(&mat_key(&marker_material())) {
+                            pass.set_bind_group(1, bg, &[]);
+                            pass.set_vertex_buffer(0, self.marker.vb.slice(..));
+                            pass.set_index_buffer(self.marker.ib.slice(..), wgpu::IndexFormat::Uint32);
+                            pass.draw_indexed(0..self.marker.ranges[0].1, 0, range.clone());
+                        }
+                    }
+                    continue;
+                }
+                if b.tree {
+                    // (the tree's texture is the batch: "tree:<path>")
+                    if !blend {
+                        let tex = b.model.strip_prefix("tree:").map(PathBuf::from);
+                        let m = Material { texture: tex, color: [1.0; 4], alpha: Alpha::Test };
+                        if let Some(bg) = self.materials.get(&mat_key(&m)) {
+                            pass.set_bind_group(1, bg, &[]);
+                            pass.set_vertex_buffer(0, self.tree_mesh.vb.slice(..));
+                            pass.set_index_buffer(self.tree_mesh.ib.slice(..), wgpu::IndexFormat::Uint32);
+                            pass.draw_indexed(0..self.tree_mesh.ranges[0].1, 0, range.clone());
+                        }
+                    }
+                    continue;
+                }
+                let Some(Some(model)) = self.models.get(&b.model) else { continue };
+                for (mesh, mats) in &model.parts {
+                    pass.set_vertex_buffer(0, mesh.vb.slice(..));
+                    pass.set_index_buffer(mesh.ib.slice(..), wgpu::IndexFormat::Uint32);
+                    for &(first, count, slot) in &mesh.ranges {
+                        let Some(m) = mats.get(slot as usize) else { continue };
+                        if (m.alpha == Alpha::Blend) != blend {
+                            continue;
+                        }
+                        let Some(bg) = self.materials.get(&mat_key(m)) else { continue };
+                        pass.set_bind_group(1, bg, &[]);
+                        pass.draw_indexed(first..first + count, 0, range.clone());
+                    }
+                }
+            }
+            if !blend {
+                pass.set_pipeline(&self.sky_pipeline);
+                pass.draw(0..3, 0..1);
+            }
+        }
+        // the road being drawn, see-through over the ground
+        if !self.ghost_spline_meshes.is_empty() {
+            pass.set_pipeline(&self.ghost_pipeline);
+            pass.set_vertex_buffer(1, inst.slice(..));
+            for g in &self.ghost_spline_meshes {
+                let Some(mesh) = &g.1 else { continue };
+                pass.set_vertex_buffer(0, mesh.vb.slice(..));
+                pass.set_index_buffer(mesh.ib.slice(..), wgpu::IndexFormat::Uint32);
+                for &(first, count, slot) in &mesh.ranges {
+                    let Some(m) = g.2.get(slot as usize) else { continue };
+                    let Some(bg) = self.materials.get(&mat_key(m)) else { continue };
+                    pass.set_bind_group(1, bg, &[]);
+                    pass.draw_indexed(first..first + count, 0, g.3..g.3 + 1);
+                }
+            }
+        }
+        if let Some((b, n)) = &self.overlay_buf {
+            pass.set_pipeline(&self.overlay_pipeline);
+            pass.set_vertex_buffer(0, b.slice(..));
+            pass.draw(0..*n, 0..1);
+        }
+    }
+
+    /// Render up to `budget` pictures for the catalogue (objects whose model and textures
+    /// are there).
+    pub fn render_thumbs(&mut self, gpu: &Gpu, egui_r: &mut egui_wgpu::Renderer, assets: &mut Assets, wanted: &[(String, bool)], budget: usize) {
+        let mut done = 0;
+        for (rel, is_spline) in wanted {
+            if done >= budget {
+                break;
+            }
+            let key = rel.to_lowercase();
+            if self.thumbs.contains_key(&key) {
+                continue;
+            }
+            let device = &gpu.device;
+            let queue = &gpu.queue;
+            // what to draw: (meshes with materials, bounds)
+            let (parts, lo, hi): (Vec<(GpuMesh, Vec<Material>)>, Vec3, Vec3) = if *is_spline {
+                let Some(m) = assets.spline(rel) else {
+                    if matches!(assets.splines.get(&key), Some(crate::assets::Slot::Failed)) {
+                        self.thumbs.insert(key, None);
+                    }
+                    continue;
+                };
+                let s = MapSpline { file: rel.clone(), length: 14.0, heading: 0.0, ..Default::default() };
+                let Some(mesh) = build_spline(&m, &s, DVec2::ZERO) else {
+                    self.thumbs.insert(key, None);
+                    continue;
+                };
+                let (mut lo, mut hi) = (Vec3::splat(f32::MAX), Vec3::splat(f32::MIN));
+                for p in &mesh.positions {
+                    lo = lo.min(*p);
+                    hi = hi.max(*p);
+                }
+                (vec![(upload_mesh(device, &mesh), m.materials.clone())], lo, hi)
+            } else {
+                let Some(m) = assets.object(rel) else {
+                    if assets.object_failed(rel) {
+                        self.thumbs.insert(key, None);
+                    }
+                    continue;
+                };
+                if m.parts.is_empty() {
+                    self.thumbs.insert(key, None);
+                    continue;
+                }
+                (m.parts.iter().map(|p| (upload_mesh(device, &p.mesh), p.materials.clone())).collect(), m.lo, m.hi)
+            };
+            // every texture must be there before the picture is taken
+            let mut ready = true;
+            for (_, mats) in &parts {
+                for mat in mats {
+                    if self.material(device, queue, assets, mat).is_none() {
+                        ready = false;
+                    }
+                }
+            }
+            if !ready {
+                continue;
+            }
+            let tex = device.create_texture(&wgpu::TextureDescriptor {
+                label: Some("thumb"),
+                size: wgpu::Extent3d { width: THUMB, height: THUMB, depth_or_array_layers: 1 },
+                mip_level_count: 1,
+                sample_count: 1,
+                dimension: wgpu::TextureDimension::D2,
+                format: wgpu::TextureFormat::Rgba8UnormSrgb,
+                usage: wgpu::TextureUsages::RENDER_ATTACHMENT | wgpu::TextureUsages::TEXTURE_BINDING,
+                view_formats: &[],
+            });
+            let view = tex.create_view(&Default::default());
+            // a camera that frames the bounds from the front right, a little from above
+            let centre = (lo + hi) * 0.5;
+            let radius = ((hi - lo).length() * 0.5).max(0.5);
+            let mut cam = Camera::default();
+            let target = centre.as_dvec3();
+            cam.yaw = if *is_spline { 35.0 } else { 210.0 };
+            cam.pitch = if *is_spline { 38.0 } else { 22.0 };
+            cam.fov_y = 35f32.to_radians();
+            let dist = radius as f64 / (cam.fov_y as f64 * 0.5).sin() * 1.02;
+            cam.jump_to(target, dist);
+            cam.update(10.0);
+            let mut gl = self.globals_for(&cam, 1.0, &FrameExtras::default(), DVec3::ZERO);
+            gl.fog[3] = 0.0;
+            gl.shadow[0] = 0.0;
+            queue.write_buffer(&self.thumb_globals, 0, bytemuck::bytes_of(&gl));
+            let inst = device.create_buffer_init(&wgpu::util::BufferInitDescriptor { label: Some("thumb inst"), contents: bytemuck::bytes_of(&Instance::new(Mat4::IDENTITY, [0.0; 4])), usage: wgpu::BufferUsages::VERTEX });
+            let mut enc = device.create_command_encoder(&Default::default());
+            {
+                let mut pass = enc.begin_render_pass(&wgpu::RenderPassDescriptor {
+                    label: Some("thumb"),
+                    color_attachments: &[Some(wgpu::RenderPassColorAttachment {
+                        view: &view,
+                        depth_slice: None,
+                        resolve_target: None,
+                        ops: wgpu::Operations { load: wgpu::LoadOp::Clear(wgpu::Color::TRANSPARENT), store: wgpu::StoreOp::Store },
+                    })],
+                    depth_stencil_attachment: Some(wgpu::RenderPassDepthStencilAttachment { view: &self.thumb_depth, depth_ops: Some(wgpu::Operations { load: wgpu::LoadOp::Clear(0.0), store: wgpu::StoreOp::Discard }), stencil_ops: None }),
+                    timestamp_writes: None,
+                    occlusion_query_set: None,
+                    multiview_mask: None,
+                });
+                pass.set_bind_group(0, &self.thumb_globals_bind, &[]);
+                pass.set_vertex_buffer(1, inst.slice(..));
+                for blend in [false, true] {
+                    pass.set_pipeline(if blend { &self.thumb_blend } else { &self.thumb_opaque });
+                    for (mesh, mats) in &parts {
+                        pass.set_vertex_buffer(0, mesh.vb.slice(..));
+                        pass.set_index_buffer(mesh.ib.slice(..), wgpu::IndexFormat::Uint32);
+                        for &(first, count, slot) in &mesh.ranges {
+                            let Some(m) = mats.get(slot as usize) else { continue };
+                            if (m.alpha == Alpha::Blend) != blend {
+                                continue;
+                            }
+                            let Some(bg) = self.materials.get(&mat_key(m)) else { continue };
+                            pass.set_bind_group(1, bg, &[]);
+                            pass.draw_indexed(first..first + count, 0, 0..1);
+                        }
+                    }
+                }
+                let _ = &self.thumb_sky;
+            }
+            queue.submit([enc.finish()]);
+            let id = egui_r.register_native_texture(device, &view, wgpu::FilterMode::Linear);
+            self.thumbs.insert(key, Some(Thumb { id, _tex: tex }));
+            done += 1;
+        }
+    }
+}
+
+fn mat_key(m: &Material) -> MatKey {
+    MatKey {
+        texture: m.texture.clone(),
+        alpha: match m.alpha {
+            Alpha::Opaque => 0,
+            Alpha::Test => 1,
+            Alpha::Blend => 2,
+        },
+        color: m.color.map(|c| (c.clamp(0.0, 1.0) * 255.0) as u8),
+    }
+}
+
+fn marker_material() -> Material {
+    Material { texture: None, color: [0.95, 0.45, 0.2, 1.0], alpha: Alpha::Opaque }
+}
+
+/// A small upright diamond for objects that have nothing to draw.
+fn marker_mesh() -> MeshData {
+    let mut m = MeshData::default();
+    let top = Vec3::new(0.0, 0.0, 2.0);
+    let bottom = Vec3::new(0.0, 0.0, 0.0);
+    let mid = [Vec3::new(0.6, 0.0, 1.0), Vec3::new(0.0, 0.6, 1.0), Vec3::new(-0.6, 0.0, 1.0), Vec3::new(0.0, -0.6, 1.0)];
+    for i in 0..4 {
+        let a = mid[i];
+        let b = mid[(i + 1) % 4];
+        for tip in [top, bottom] {
+            let base = m.positions.len() as u32;
+            let n = (a - tip).cross(b - tip).normalize();
+            m.positions.extend([tip, a, b]);
+            m.normals.extend([n; 3]);
+            m.uvs.extend([glam::Vec2::ZERO; 3]);
+            m.indices.extend([base, base + 1, base + 2]);
+        }
+    }
+    m.ranges.push((0, m.indices.len() as u32, 0));
+    m
+}
+
+fn push_object(groups: &mut HashMap<String, (bool, Vec<Instance>)>, key: &str, model: &Arc<ObjectModel>, label: Option<&String>, m: Mat4, tint: [f32; 4]) {
+    if let Some((dirs, tex, h, r)) = &model.tree {
+        // a tree's texture may be named by its first label
+        let name = label.filter(|l| !l.trim().is_empty()).unwrap_or(tex);
+        let refs: Vec<&std::path::Path> = dirs.iter().map(PathBuf::as_path).collect();
+        if let Some(p) = omsi_texture::find_texture(name, &refs) {
+            let scale = Mat4::from_scale(Vec3::new(h * r, h * r, *h));
+            groups.entry(format!("tree:{}", p.display())).or_insert_with(|| (true, Vec::new())).1.push(Instance::new(m * scale, tint));
+        }
+    }
+    if model.parts.is_empty() {
+        if model.tree.is_none() {
+            groups.entry("\u{0}marker".into()).or_default().1.push(Instance::new(m, tint));
+        }
+        return;
+    }
+    let inst = Instance::new(m, tint);
+    groups.entry(key.to_string()).or_default().1.push(if model.surface { inst.surface(SURF_OBJECT) } else { inst });
+}
+
+/// A spline's mesh, positions relative to `origin` (a tile's corner).
+pub fn build_spline(model: &SplineModel, s: &MapSpline, origin: DVec2) -> Option<MeshData> {
+    let curve = SplineCurve::from_map(s, origin);
+    let m = omsi_geometry::build_spline_mesh(&model.def, &curve, s.mirror, DVec3::new(origin.x, origin.y, 0.0));
+    (!m.is_empty()).then_some(m)
+}
+
+/// Shrink or stretch a picture to `size` × `size`.
+fn resize(img: &omsi_texture::Image, size: u32) -> omsi_texture::Image {
+    let Some(buf) = image::RgbaImage::from_raw(img.width, img.height, img.rgba.clone()) else {
+        return img.clone();
+    };
+    let r = image::imageops::resize(&buf, size, size, image::imageops::FilterType::Triangle);
+    omsi_texture::Image { width: size, height: size, rgba: r.into_raw(), has_alpha: img.has_alpha }
+}
+
+/// The vertices of a tile's ground (tile-local positions; normals across the tile edges).
+fn terrain_vertices(doc: &Document, k: TileKey) -> Vec<TerrainVertex> {
+    let t = &doc.tiles[&k];
+    let n = TERRAIN_SAMPLES;
+    let cell = tile_size() as f32 / (n - 1) as f32;
+    let h = |i: i32, j: i32| -> f32 {
+        if i >= 0 && j >= 0 && (i as usize) < n && (j as usize) < n {
+            return t.terrain.height_at(i as usize, j as usize);
+        }
+        // across the edge: the neighbour's sample, else the nearest own one
+        let (dx, ix) = if i < 0 { (-1, i + n as i32 - 1) } else if i as usize >= n { (1, i - n as i32 + 1) } else { (0, i) };
+        let (dy, jy) = if j < 0 { (-1, j + n as i32 - 1) } else if j as usize >= n { (1, j - n as i32 + 1) } else { (0, j) };
+        if let Some(nb) = doc.tiles.get(&(k.0 + dx, k.1 + dy)) {
+            return nb.terrain.height_at(ix.clamp(0, n as i32 - 1) as usize, jy.clamp(0, n as i32 - 1) as usize);
+        }
+        t.terrain.height_at(i.clamp(0, n as i32 - 1) as usize, j.clamp(0, n as i32 - 1) as usize)
+    };
+    let mut out = Vec::with_capacity(n * n);
+    for j in 0..n as i32 {
+        for i in 0..n as i32 {
+            let z = h(i, j);
+            let dzdx = (h(i + 1, j) - h(i - 1, j)) / (2.0 * cell);
+            let dzdy = (h(i, j + 1) - h(i, j - 1)) / (2.0 * cell);
+            let nrm = Vec3::new(-dzdx, -dzdy, 1.0).normalize();
+            out.push(TerrainVertex { pos: [i as f32 * cell, j as f32 * cell, z], normal: nrm.to_array() });
+        }
+    }
+    out
+}
+
+#[allow(dead_code)]
+fn v4(v: Vec3, w: f32) -> Vec4 {
+    v.extend(w)
+}
+
+/// Towards the sun: high in the south-west of a summer afternoon.
+fn sun_dir() -> Vec3 {
+    Vec3::new(-0.42, -0.55, 0.72).normalize()
+}
+
+/// The sun's view of the scene round where the camera looks (relative to the render origin),
+/// and the size of a shadow map texel there (m). The window follows the camera in whole
+/// texels, so the shadows' edges do not crawl as it moves.
+fn light_view(cam: &Camera) -> (Mat4, f32) {
+    let sun = sun_dir();
+    let centre = (cam.smooth_target_now() - cam.origin()).as_vec3();
+    let half = (cam.smooth_distance_now() as f32 * 1.4).clamp(40.0, 2500.0);
+    let up = if sun.z.abs() > 0.99 { Vec3::Y } else { Vec3::Z };
+    let view = Mat4::look_at_rh(sun, Vec3::ZERO, up);
+    let c = view.transform_point3(centre);
+    let texel = 2.0 * half / SHADOW as f32;
+    let (x, y) = ((c.x / texel).round() * texel, (c.y / texel).round() * texel);
+    // (deep enough for anything standing up to a few hundred metres above the ground)
+    let depth = half * 2.0 + 600.0;
+    let proj = Mat4::orthographic_rh(x - half, x + half, y - half, y + half, -c.z - depth, -c.z + depth);
+    (proj * view, texel)
+}
