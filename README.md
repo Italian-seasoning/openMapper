@@ -41,6 +41,13 @@ experienced map makers.
   the map lacks can be copied from OMSI 2's own maps.
 * Timetable and traffic edits are part of undo / redo; trips have times at each stop, spread
   by distance or fixed by hand.
+* **Export map for sharing** (File menu, or `openmapper --export global.cfg out.zip`): a zip
+  laid out like OMSI 2 with the map and every file of the content folder it uses (generated
+  junctions, imported models with their textures and PBR maps, mod assets), never the
+  installation's own files; a `readme.txt` lists what it needs. Dropping the zip on openMapper
+  (or `openmapper --import file`) installs it.
+* **Descriptions in several languages** (`global_<LANG>.dsc`) in the map's properties, and
+  **holidays and school holidays** (`Holidays.txt`) in the Lines window.
 * **Open any map**: OMSI 2's own (saved as a copy into the content folder) and mod maps.
 * **New map** from OMSI 2's own template (`template/NewMap`): size, keep right or left, base
   ground, and "Start with a sample": a ring road with stops, a start point, line 1 both ways,
