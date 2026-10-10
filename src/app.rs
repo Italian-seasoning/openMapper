@@ -511,18 +511,8 @@ impl App {
                 self.play();
                 self.guide.driven = true;
             }
-            Action::Undo => {
-                if let Some(d) = self.ed.doc.as_mut() {
-                    self.ed.history.undo(d);
-                    self.ed.select(None);
-                }
-            }
-            Action::Redo => {
-                if let Some(d) = self.ed.doc.as_mut() {
-                    self.ed.history.redo(d);
-                    self.ed.select(None);
-                }
-            }
+            Action::Undo => self.ed.undo(),
+            Action::Redo => self.ed.redo(),
             Action::Import => {
                 let files = rfd::FileDialog::new().add_filter(tr("Mods and models", "Моды и модели"), &["zip", "obj", "x", "o3d", "sco", "sli"]).set_title(tr("Import assets", "Импорт ассетов")).pick_files();
                 if let Some(f) = files {

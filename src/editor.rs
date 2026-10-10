@@ -454,6 +454,24 @@ impl Editor {
         }
     }
 
+    /// Undo the last step. What the tool was in the middle of stops first: it may stand on
+    /// what the undo takes away (a road drawn on from the end of the one undone).
+    pub fn undo(&mut self) {
+        self.cancel();
+        if let Some(d) = self.doc.as_mut() {
+            self.history.undo(d);
+        }
+        self.select(None);
+    }
+
+    pub fn redo(&mut self) {
+        self.cancel();
+        if let Some(d) = self.doc.as_mut() {
+            self.history.redo(d);
+        }
+        self.select(None);
+    }
+
     pub fn open(&mut self, doc: Document) {
         self.history.clear();
         self.select(None);
@@ -3558,5 +3576,25 @@ mod tests {
         assert_eq!(ed.clean_junction_files(), 0);
         assert!(dir.join("junction_5.sco").exists());
         let _ = std::fs::remove_dir_all(&content);
+    }
+
+    /// Undo while drawing on from a road just built: the drawing stops (it went on from an
+    /// end the undo took away, and the next road would have been linked to a spline that
+    /// is not there).
+    #[test]
+    fn undo_stops_drawing_from_what_it_takes_away() {
+        let mut ed = editor();
+        ed.set_tool(Tool::Roads);
+        ed.history.begin("Build road");
+        let d = ed.doc.as_mut().unwrap();
+        ed.history.touch_tile(d, (0, 0));
+        add_spline(d, (0, 0), 7, 50.0, 100.0, 0.0, 30.0, 0, 0);
+        ed.history.commit();
+        ed.road_start = Some((Anchor { pos: DVec3::new(50.0, 130.0, 0.0), heading: 0.0, spline: Some(((0, 0), 7, true)), mid: None }, true));
+        ed.undo();
+        assert!(ed.doc.as_ref().unwrap().spline((0, 0), 7).is_none());
+        assert!(ed.road_start.is_none());
+        ed.redo();
+        assert!(ed.doc.as_ref().unwrap().spline((0, 0), 7).is_some());
     }
 }
