@@ -292,7 +292,7 @@ mod tests {
         c.pitch = 0.0;
         c.snap();
         let eye = c.wanted_eye();
-        c.fly(1.0, 0.0, 0.0, false, 1.0);
+        c.fly(1.0, 0.0, 0.0, false, 1.0, 0.0);
         let d = c.wanted_eye() - eye;
         assert!(d.y > 29.0 && d.x.abs() < 1e-6 && d.z.abs() < 1e-6, "{d:?}");
     }
