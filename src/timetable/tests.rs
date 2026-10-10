@@ -11,6 +11,13 @@ fn omsi_root() -> Option<std::path::PathBuf> {
     r
 }
 
+/// The map's grid is global (`omsi_map::configure_grid`): one map at a time.
+static MAP: std::sync::Mutex<()> = std::sync::Mutex::new(());
+
+fn one_map() -> std::sync::MutexGuard<'static, ()> {
+    MAP.lock().unwrap_or_else(|e| e.into_inner())
+}
+
 fn scratch(name: &str) -> std::path::PathBuf {
     let d = std::env::temp_dir().join(format!("openmapper-tt-{name}-{}", std::process::id()));
     let _ = std::fs::remove_dir_all(&d);
@@ -138,6 +145,7 @@ fn grundorf_routes_like_omsi() {
     if !cfg.is_file() {
         return;
     }
+    let _map = one_map();
     let roots = crate::install::Roots::new(root.clone());
     let doc = Document::load(&roots, &cfg, |_| {}).unwrap();
     let mut files = Files::new(vec![root.clone()]);
@@ -188,6 +196,7 @@ fn a_new_line_on_grundorf_saves_and_reads_back() {
     if !cfg.is_file() {
         return;
     }
+    let _map = one_map();
     let roots = crate::install::Roots::new(root.clone());
     let doc = Document::load(&roots, &cfg, |_| {}).unwrap();
     let mut files = Files::new(vec![root.clone()]);
@@ -245,6 +254,7 @@ fn a_new_map_routes_on_the_right() {
     if files.get(road).is_none() {
         return;
     }
+    let _map = one_map();
     let roots = crate::install::Roots::new(root.clone());
     let mut doc = Document::new_map(&roots, "tt-test", "tt-test", 1);
     let k = (0, 0);
@@ -280,4 +290,42 @@ fn a_new_map_routes_on_the_right() {
     let links = north.links(&net, &doc.order, &[10, 11]);
     assert_eq!(links.len(), 1);
     assert_eq!((links[0].length, links[0].params[2], links[0].params[3]), (80.0, 10.0, 40.0));
+}
+
+/// Berlin-Spandau's bus trips routed again: most find their way, about as long as OMSI's
+/// own station links say.
+#[test]
+fn spandau_bus_trips_route() {
+    let Some(root) = omsi_root() else { return };
+    let cfg = root.join("maps").join("Berlin-Spandau").join("global.cfg");
+    if !cfg.is_file() {
+        return;
+    }
+    let _map = one_map();
+    let roots = crate::install::Roots::new(root.clone());
+    let doc = Document::load(&roots, &cfg, |_| {}).unwrap();
+    let mut files = Files::new(vec![root.clone()]);
+    let net = Network::build(&doc, &mut files);
+    let tt = &doc.timetable;
+    let (mut n, mut found, mut close) = (0, 0, 0);
+    for t in tt.trips.iter().filter(|t| t.stations.len() >= 2) {
+        n += 1;
+        let pos: Vec<Option<DVec3>> = t.stations.iter().map(|id| stop_world(&doc, &mut files, *id)).collect();
+        let r = route::find(&net, &pos, doc.global.left_hand_traffic);
+        if !r.ok() {
+            eprintln!("{}: {:?}", t.name, r.problems);
+            continue;
+        }
+        found += 1;
+        let stock: Option<f64> = t.stations.windows(2).map(|w| tt.links.iter().find(|l| l.from_id == w[0] && l.to_id == w[1]).map(|l| l.length)).sum();
+        if let Some(s) = stock {
+            if (r.length() - s).abs() < s * 0.1 + 50.0 {
+                close += 1;
+            } else {
+                eprintln!("{}: {:.0} m, OMSI {:.0} m", t.name, r.length(), s);
+            }
+        }
+    }
+    eprintln!("Spandau: {found} of {n} bus trips routed, {close} within 10 % of OMSI's length");
+    assert!(found * 10 >= n * 7, "{found} of {n}");
 }

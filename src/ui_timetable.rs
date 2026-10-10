@@ -641,6 +641,11 @@ impl TimetableUi {
             }
             Some(r) if r.ok() => {
                 ui.label(RichText::new(format!("{} {:.2} {}", tr("Route found:", "Путь найден:"), r.length() / 1000.0, tr("km along the roads (blue in the view)", "км по дорогам (синим на карте)"))).color(GOOD));
+                for &leg in &r.against {
+                    let name_of = |i: usize| stations.get(i).map(|id| self.stop_name(tt, *id)).unwrap_or_default();
+                    let text = format!("«{}» – «{}»: {}", name_of(leg), name_of(leg + 1), tr("the way drives a one-way lane against its direction; is a path drawn the wrong way round?", "путь идёт по односторонней полосе против её направления; может, путь нарисован не в ту сторону?"));
+                    ui.label(coloured(icons::labelled(Icon::Warning, &text), WARN));
+                }
             }
             Some(r) => {
                 for p in &r.problems {

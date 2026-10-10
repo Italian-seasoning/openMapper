@@ -16,6 +16,11 @@ const REACH: f64 = 15.0;
 const WRONG_SIDE: f64 = 25.0;
 /// Lanes a stop is tried on.
 const CANDIDATES: usize = 4;
+/// What changing to the lane beside costs (m).
+const LANE_CHANGE: f64 = 15.0;
+/// What driving a path against its direction costs: so many times its length and more.
+const AGAINST_FACTOR: f64 = 4.0;
+const AGAINST: f64 = 150.0;
 
 /// Where a stop lies on a lane.
 #[derive(Debug, Clone, Copy)]
@@ -36,6 +41,9 @@ pub struct Route {
     pub legs: Vec<f64>,
     /// Problems: stops beside no road, legs without a way.
     pub problems: Vec<Problem>,
+    /// Legs that drive a one-way path against its direction (as OMSI's buses do, but a
+    /// sign the path was laid the wrong way).
+    pub against: Vec<usize>,
 }
 
 #[derive(Debug, Clone, PartialEq)]
@@ -64,9 +72,17 @@ impl Route {
             (Some(a), Some(b)) => (*a, *b),
             _ => return out,
         };
+        let mut carry = None;
         for (i, &l) in self.lanes.iter().enumerate() {
             let lane = &net.lanes[l];
-            let s0 = if i == first.0 { first.1.along } else { 0.0 };
+            // (a lane changed off at its start is not driven)
+            if i != last.0 && self.lanes.get(i + 1).map(|n| lane.side.contains(n)).unwrap_or(false) {
+                if i == first.0 {
+                    carry = Some(first.1.along);
+                }
+                continue;
+            }
+            let s0 = if i == first.0 { first.1.along } else { carry.take().unwrap_or(0.0) };
             let s1 = if i == last.0 { last.1.along } else { lane.length() };
             out.push(lane.point_at(s0));
             for (p, a) in lane.pts.iter().zip(&lane.along) {
@@ -142,7 +158,7 @@ pub fn candidates(net: &Network, p: DVec3, left_hand: bool) -> Vec<(StopOn, f64)
         if off > REACH {
             continue;
         }
-        let score = off + if right != left_hand { 0.0 } else { WRONG_SIDE };
+        let score = off + if right != left_hand { 0.0 } else { WRONG_SIDE } + if l.against { AGAINST } else { 0.0 };
         c.push((StopOn { lane: i, along, off }, score));
     }
     c.sort_by(|a, b| a.1.total_cmp(&b.1));
@@ -160,6 +176,15 @@ fn bounds(l: &Lane) -> (DVec3, DVec3) {
     (lo, hi)
 }
 
+/// What driving `len` metres of a lane costs the search.
+fn cost(l: &Lane, len: f64) -> f64 {
+    if l.against {
+        len * AGAINST_FACTOR + AGAINST
+    } else {
+        len
+    }
+}
+
 #[derive(PartialEq)]
 struct Node(f64, usize);
 impl Eq for Node {}
@@ -174,29 +199,52 @@ impl Ord for Node {
     }
 }
 
-/// The shortest ways from `from` (left at `along`) to the start of every lane within `max`
-/// metres: (distance to the lane's start, the lane before it).
-fn search(net: &Network, from: usize, along: f64, max: f64) -> HashMap<usize, (f64, usize)> {
-    let mut best: HashMap<usize, (f64, usize)> = HashMap::new();
+/// How a lane's start is reached: the cost, the lane before and the metres driven.
+#[derive(Clone, Copy)]
+struct Reach {
+    cost: f64,
+    prev: usize,
+    metres: f64,
+}
+
+/// The cheapest ways from `from` (left at `along`) to the start of every lane within `max`
+/// metres, on along the lanes or across to the lane beside.
+fn search(net: &Network, from: usize, along: f64, max: f64) -> HashMap<usize, Reach> {
+    let mut best: HashMap<usize, Reach> = HashMap::new();
     let mut heap = BinaryHeap::new();
-    let first = net.lanes[from].length() - along;
-    for &n in &net.lanes[from].next {
-        heap.push(Node(first, n));
-        best.entry(n).or_insert((first, from));
+    let mut offer = |best: &mut HashMap<usize, Reach>, heap: &mut BinaryHeap<Node>, l: usize, r: Reach| {
+        if best.get(&l).map(|b| r.cost < b.cost).unwrap_or(true) {
+            best.insert(l, r);
+            heap.push(Node(r.cost, l));
+        }
+    };
+    let a = &net.lanes[from];
+    let rest = a.length() - along;
+    for &n in &a.next {
+        offer(&mut best, &mut heap, n, Reach { cost: cost(a, rest), prev: from, metres: rest });
+    }
+    // (across at the stop: the lane beside, as if its start lay `along` back)
+    for &n in &a.side {
+        offer(&mut best, &mut heap, n, Reach { cost: LANE_CHANGE - along, prev: from, metres: -along });
     }
     let mut done: std::collections::HashSet<usize> = std::collections::HashSet::new();
-    while let Some(Node(d, l)) = heap.pop() {
+    while let Some(Node(_, l)) = heap.pop() {
         if !done.insert(l) {
             continue;
         }
-        let d2 = d + net.lanes[l].length();
-        if d2 > max {
+        let r = best[&l];
+        let lane = &net.lanes[l];
+        let m2 = r.metres + lane.length();
+        if m2 > max {
             continue;
         }
-        for &n in &net.lanes[l].next {
-            if best.get(&n).map(|b| d2 < b.0).unwrap_or(true) {
-                best.insert(n, (d2, l));
-                heap.push(Node(d2, n));
+        let c2 = r.cost + cost(lane, lane.length());
+        for &n in &lane.next {
+            offer(&mut best, &mut heap, n, Reach { cost: c2, prev: l, metres: m2 });
+        }
+        if !lane.against {
+            for &n in &lane.side {
+                offer(&mut best, &mut heap, n, Reach { cost: r.cost + LANE_CHANGE, prev: l, metres: r.metres });
             }
         }
     }
@@ -204,12 +252,12 @@ fn search(net: &Network, from: usize, along: f64, max: f64) -> HashMap<usize, (f
 }
 
 /// The lanes from `a` to `b` (both in) along a search from `a`.
-fn way(found: &HashMap<usize, (f64, usize)>, a: usize, b: usize) -> Vec<usize> {
+fn way(found: &HashMap<usize, Reach>, a: usize, b: usize) -> Vec<usize> {
     // (at least one step back: a way round the block onto the lane it started on)
     let mut out = vec![b];
     let mut at = b;
     loop {
-        let Some(&(_, prev)) = found.get(&at) else { break };
+        let Some(&Reach { prev, .. }) = found.get(&at) else { break };
         out.push(prev);
         at = prev;
         if at == a || out.len() > 100_000 {
@@ -252,13 +300,14 @@ pub fn find(net: &Network, positions: &[Option<DVec3>], left_hand: bool) -> Rout
             let Some((cost0, _, _)) = best[i - 1][pc] else { continue };
             let found = search(net, prev.0.lane, prev.0.along, max);
             for (cc, cur) in cands[i].iter().enumerate() {
+                let lane = &net.lanes[cur.0.lane];
                 let leg = if cur.0.lane == prev.0.lane && cur.0.along >= prev.0.along {
-                    Some((cur.0.along - prev.0.along, vec![cur.0.lane]))
+                    Some((cost(lane, cur.0.along - prev.0.along), cur.0.along - prev.0.along, vec![cur.0.lane]))
                 } else {
-                    found.get(&cur.0.lane).map(|(d, _)| (d + cur.0.along, way(&found, prev.0.lane, cur.0.lane)))
+                    found.get(&cur.0.lane).map(|r| (r.cost + cost(lane, cur.0.along), r.metres + cur.0.along, way(&found, prev.0.lane, cur.0.lane)))
                 };
-                let Some((len, w)) = leg else { continue };
-                let total = cost0 + len + cur.1;
+                let Some((c, len, w)) = leg else { continue };
+                let total = cost0 + c + cur.1;
                 if row[cc].map(|(c, _, _)| total < c).unwrap_or(true) {
                     row[cc] = Some((total, pc, len));
                     leg_ways.insert((pc, cc), w);
@@ -291,6 +340,9 @@ pub fn find(net: &Network, positions: &[Option<DVec3>], left_hand: bool) -> Rout
         // (the leg's way starts on the lane the last one ended on)
         r.lanes.extend(w.iter().skip(1));
         r.stops.push((r.lanes.len() - 1, cands[i][picks[i]].0));
+        if w.iter().any(|l| net.lanes[*l].against) {
+            r.against.push(i - 1);
+        }
     }
     r.legs = legs;
     r

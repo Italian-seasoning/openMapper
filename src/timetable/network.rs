@@ -19,6 +19,9 @@ const LINK: f64 = 1.5;
 /// How far the headings at a link may differ (degrees).
 const LINK_TURN: f64 = 40.0;
 
+/// How far apart two lanes of a spline may lie for a bus to change between them (m).
+const LANE_CHANGE_WIDTH: f64 = 5.0;
+
 /// What the timetable needs of a spline or object file.
 #[derive(Debug, Default)]
 pub struct FileInfo {
@@ -84,6 +87,11 @@ pub struct Lane {
     /// OMSI's number of the path among all paths of its tile (a cache the `.ttr` keeps).
     pub internal: usize,
     pub next: Vec<usize>,
+    /// The lanes beside it on the same spline going the same way (a lane change).
+    pub side: Vec<usize>,
+    /// Against the way the path lets traffic go: OMSI's buses drive a route so where it
+    /// must (helper paths laid the wrong way), the route search only as a last resort.
+    pub against: bool,
 }
 
 impl Lane {
@@ -142,7 +150,7 @@ pub struct Network {
     pub missing_files: usize,
 }
 
-fn lane_of(key: PathKey, mut pts: Vec<DVec3>, file_length: f64, internal: usize, reversed: bool) -> Lane {
+fn lane_of(key: PathKey, mut pts: Vec<DVec3>, file_length: f64, internal: usize, reversed: bool, against: bool) -> Lane {
     if reversed {
         pts.reverse();
     }
@@ -154,7 +162,7 @@ fn lane_of(key: PathKey, mut pts: Vec<DVec3>, file_length: f64, internal: usize,
         }
         along.push(acc);
     }
-    Lane { key, pts, along, file_length, internal, next: Vec::new() }
+    Lane { key, pts, along, file_length, internal, next: Vec::new(), side: Vec::new(), against }
 }
 
 impl Network {
@@ -240,14 +248,15 @@ impl Network {
         if pts.len() < 2 {
             return;
         }
-        let ways: &[bool] = match direction {
-            0 => &[false],
-            1 => &[true],
-            _ => &[false, true],
+        // (the way traffic goes first; a one-way path's other way after it)
+        let ways: &[(bool, bool)] = match direction {
+            0 => &[(false, false), (true, true)],
+            1 => &[(true, false), (false, true)],
+            _ => &[(false, false), (true, false)],
         };
-        for &rev in ways {
+        for &(rev, against) in ways {
             self.by_key.entry(key).or_default().push(self.lanes.len());
-            self.lanes.push(lane_of(key, pts.clone(), file_length, internal, rev));
+            self.lanes.push(lane_of(key, pts.clone(), file_length, internal, rev, against));
         }
     }
 
@@ -281,6 +290,26 @@ impl Network {
         }
         for (l, n) in self.lanes.iter_mut().zip(next) {
             l.next = n;
+        }
+        // lane changes: the other paths of the same spline that start beside it, going the
+        // same way
+        let mut by_spline: HashMap<(TileKey, i64), Vec<usize>> = HashMap::new();
+        for (i, l) in self.lanes.iter().enumerate() {
+            by_spline.entry((l.key.tile, l.key.id)).or_default().push(i);
+        }
+        let mut side = vec![Vec::new(); self.lanes.len()];
+        for list in by_spline.values() {
+            for &i in list {
+                for &j in list {
+                    let (a, b) = (&self.lanes[i], &self.lanes[j]);
+                    if a.key.path != b.key.path && a.against == b.against && a.heading_at_start().dot(b.heading_at_start()) > 0.9 && (a.pts[0] - b.pts[0]).truncate().length() <= LANE_CHANGE_WIDTH {
+                        side[i].push(j);
+                    }
+                }
+            }
+        }
+        for (l, s) in self.lanes.iter_mut().zip(side) {
+            l.side = s;
         }
     }
 }
