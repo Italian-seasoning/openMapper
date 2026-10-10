@@ -76,6 +76,8 @@ that the written tiles read back through openOMSI's own parser.
 cargo run --release
 ```
 
+`tools/package-macos.sh` makes `openMapper.app` and a zip of it in `target/package`.
+
 `openmapper path/to/global.cfg` opens a map straight away. `OPENMAPPER_SHOT=out.png` saves
 a picture of the window and exits (for checks without a person at the screen).
 
