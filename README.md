@@ -40,7 +40,12 @@ experienced map makers.
 * Timetable and traffic edits are part of undo / redo; trips have times at each stop, spread
   by distance or fixed by hand.
 * **Open any map**: OMSI 2's own (saved as a copy into the content folder) and mod maps.
-* **New map** from OMSI 2's own template (`template/NewMap`): it's ready to drive right away.
+* **New map** from OMSI 2's own template (`template/NewMap`): size, keep right or left, base
+  ground, and "Start with a sample": a ring road with stops, a start point, line 1 both ways,
+  a tour from 06:00 to 22:00, a depot and AI traffic, so it can be driven in service at once.
+* **Getting started** (Help menu, opens by itself for a new map): a checklist that ticks
+  itself as the map grows — road, stop, start point, line, tour, buses, saved, test drive —
+  with a "Show me" for each step.
 * **Test drive**: saves and launches openOMSI on this map.
 * **Map check** (Map > Check map…): missing objects, roads and textures, road ends lying on
   one another but not joined, links to splines that are gone, bus stops with no lane near,
