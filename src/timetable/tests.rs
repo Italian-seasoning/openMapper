@@ -178,3 +178,106 @@ fn grundorf_routes_like_omsi() {
     }
 }
 
+
+/// A line made the way the Lines window makes one, on Grundorf: its stops routed, saved
+/// next to the stock files and read back by openOMSI's reader, its track where line 76's runs.
+#[test]
+fn a_new_line_on_grundorf_saves_and_reads_back() {
+    let Some(root) = omsi_root() else { return };
+    let cfg = root.join("maps").join("Grundorf").join("global.cfg");
+    if !cfg.is_file() {
+        return;
+    }
+    let roots = crate::install::Roots::new(root.clone());
+    let doc = Document::load(&roots, &cfg, |_| {}).unwrap();
+    let mut files = Files::new(vec![root.clone()]);
+    let net = Network::build(&doc, &mut files);
+    let mut tt = doc.timetable.clone();
+    let out = scratch("newline");
+    // the stock files first, as a save of an installation map copies them
+    write_all(&tt, &out);
+    let stops = vec![108, 104, 129, 763];
+    let line = tt.add_line("99");
+    let trip = tt.add_trip(&line, "99_test", stops.clone());
+    let pos: Vec<Option<DVec3>> = stops.iter().map(|id| stop_world(&doc, &mut files, *id)).collect();
+    let r = route::find(&net, &pos, false);
+    assert!(r.ok(), "{:?}", r.problems);
+    tt.set_route(&trip, r.track(&net, &doc.order), r.links(&net, &doc.order, &stops));
+    tt.lines.iter_mut().find(|l| l.name == line).unwrap().tours.push(omsi_timetable::Tour {
+        number: "1".into(),
+        ai_group: "Busses".into(),
+        extra: ALL_DAYS.to_string(),
+        trips: vec![omsi_timetable::TourTrip { trip: trip.clone(), profile: 0, departure: 8.0 * 60.0 }],
+    });
+    let ids: Vec<(TileKey, i64)> = net.stops.iter().map(|s| (s.0, s.1)).collect();
+    tt.sync_stops(stop_entries(&doc, &ids));
+    save_to(&mut tt, &out, &doc.order).unwrap();
+    let back = TimetableData::load(&out);
+    assert!(back.errors.is_empty(), "{:?}", back.errors);
+    // the stock line is still there, the new one beside it
+    assert!(back.lines.iter().any(|l| l.name == "76"));
+    let l = back.lines.iter().find(|l| l.name == "99").unwrap();
+    assert_eq!(l.tours[0].trips[0].trip, "99_test");
+    assert_eq!(back.trip("99_test").unwrap().stations, stops);
+    // openOMSI drives a trip by the track named like it: the stock line's first lanes
+    let track = back.tracks.iter().find(|t| track_name(t) == "99_test").unwrap();
+    let stock = back.tracks.iter().find(|t| track_name(t) == "76_BH-Kk").unwrap();
+    let key = |e: &TrackEntry| (e.values[0], e.values[1], e.values[2], e.values[3]);
+    let n = track.entries.len();
+    assert!(n > 5);
+    assert_eq!(track.entries.iter().map(key).collect::<Vec<_>>(), stock.entries[..n].iter().map(key).collect::<Vec<_>>());
+    // and OMSI 2 by the station links
+    for w in stops.windows(2) {
+        assert!(back.stn_links.iter().any(|x| x.from_id == w[0] && x.to_id == w[1]), "link {w:?}");
+    }
+    assert!(back.bus_stops.iter().any(|s| s.object_id == 763 && s.name == "Elsterplatz"));
+    let _ = std::fs::remove_dir_all(&out);
+}
+
+/// On a map made in openMapper: a straight two-lane road of two linked splines with a stop
+/// on either side; the bus keeps right, so the way runs north past the east stops and south
+/// past the west ones.
+#[test]
+fn a_new_map_routes_on_the_right() {
+    let Some(root) = omsi_root() else { return };
+    let road = "Splines\\Marcel\\str_2spur_8m_sedan1.sli";
+    let mut files = Files::new(vec![root.clone()]);
+    if files.get(road).is_none() {
+        return;
+    }
+    let roots = crate::install::Roots::new(root.clone());
+    let mut doc = Document::new_map(&roots, "tt-test", "tt-test", 1);
+    let k = (0, 0);
+    let t = &mut doc.tiles.get_mut(&k).unwrap().tile;
+    let spline = |id: i64, y: f64, prev: i64, next: i64| omsi_map::MapSpline { file: road.into(), id, prev_id: prev, next_id: next, pos: [150.0, y, 0.0], heading: 0.0, length: 50.0, ..Default::default() };
+    t.splines.push(spline(1, 50.0, 0, 2));
+    t.splines.push(spline(2, 100.0, 1, 0));
+    let stop = |id: i64, x: f64, y: f64, name: &str| omsi_map::MapObject { file: "Sceneryobjects\\Generic\\bus_stop.sco".into(), id, pos: [x, y, 0.0], flag: 7, extra: vec![name.into(), "0".into(), "0".into(), "10".into()], ..Default::default() };
+    t.objects.push(stop(10, 156.0, 60.0, "South East"));
+    t.objects.push(stop(11, 156.0, 140.0, "North East"));
+    t.objects.push(stop(12, 144.0, 140.0, "North West"));
+    t.objects.push(stop(13, 144.0, 60.0, "South West"));
+    let net = Network::build(&doc, &mut files);
+    assert_eq!(net.stops.len(), 4);
+    let pos = |ids: &[i64], files: &mut Files| ids.iter().map(|id| stop_world(&doc, files, *id)).collect::<Vec<_>>();
+    let north = route::find(&net, &pos(&[10, 11], &mut files), false);
+    assert!(north.ok(), "{:?}", north.problems);
+    let lanes: Vec<(i64, usize)> = north.lanes.iter().map(|l| (net.lanes[*l].key.id, net.lanes[*l].key.path)).collect();
+    assert_eq!(lanes, vec![(1, 2), (2, 2)]);
+    assert!((north.length() - 80.0).abs() < 1.0, "{}", north.length());
+    let south = route::find(&net, &pos(&[12, 13], &mut files), false);
+    assert!(south.ok(), "{:?}", south.problems);
+    let lanes: Vec<(i64, usize)> = south.lanes.iter().map(|l| (net.lanes[*l].key.id, net.lanes[*l].key.path)).collect();
+    assert_eq!(lanes, vec![(2, 1), (1, 1)]);
+    // a stop off any road
+    let mut far = pos(&[10, 11], &mut files);
+    far.push(Some(DVec3::new(10.0, 10.0, 0.0)));
+    assert_eq!(route::find(&net, &far, false).problems, vec![route::Problem::NoRoad(2)]);
+    // the track names tile index 0 and OMSI's numbers of the paths: four a spline
+    let tr = north.track(&net, &doc.order);
+    assert_eq!(tr[0].values, vec![1.0, 2.0, 0.0, 2.0, 50.0, 0.0]);
+    assert_eq!(tr[1].values, vec![2.0, 2.0, 0.0, 6.0, 50.0, 0.0]);
+    let links = north.links(&net, &doc.order, &[10, 11]);
+    assert_eq!(links.len(), 1);
+    assert_eq!((links[0].length, links[0].params[2], links[0].params[3]), (80.0, 10.0, 40.0));
+}
