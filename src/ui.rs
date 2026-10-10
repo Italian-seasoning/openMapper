@@ -43,6 +43,10 @@ pub enum Action {
     ToggleFavourite(String),
     /// A catalogue entry was chosen (for the recently used list).
     UsedAsset(String),
+    /// The 3D view becomes the map's picture (`picture.jpg`).
+    MapPicture,
+    /// The map opens with the camera as it is now (`[mapcam]`).
+    SetMapCamera,
     /// Move the camera over this point (the overview map).
     LookAt(glam::DVec2),
     AddGroundTexture(String),
@@ -70,6 +74,8 @@ pub struct UiState {
     /// The preferences' starred and recently used assets, for the catalogue.
     pub favourites: Vec<String>,
     pub recent_assets: Vec<String>,
+    /// The map's `picture.jpg` as shown in the map's properties, with its file time.
+    map_picture: Option<(PathBuf, Option<std::time::SystemTime>, Option<egui::TextureHandle>)>,
 }
 
 impl Default for UiState {
@@ -89,6 +95,7 @@ impl Default for UiState {
             minimap: crate::ui_minimap::Minimap::new(),
             favourites: Vec::new(),
             recent_assets: Vec::new(),
+            map_picture: None,
         }
     }
 }
@@ -1123,7 +1130,7 @@ fn prop_row(ui: &mut egui::Ui, name: &str, add: impl FnOnce(&mut egui::Ui)) {
 
 fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Library, actions: &mut Vec<Action>) {
     let Some(sel) = ed.selected else {
-        map_properties(ui, ed);
+        map_properties(ui, st, ed, actions);
         return;
     };
     section(ui, tr("Properties", "Свойства"));
@@ -1316,7 +1323,7 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
 }
 
 /// With nothing selected the right panel shows the map's own settings.
-fn map_properties(ui: &mut egui::Ui, ed: &mut Editor) {
+fn map_properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, actions: &mut Vec<Action>) {
     section(ui, tr("Map", "Карта"));
     let Some(doc) = ed.doc.as_mut() else { return };
     let before = (doc.global.friendly_name.clone(), doc.global.description.clone(), doc.global.left_hand_traffic);
@@ -1341,6 +1348,38 @@ fn map_properties(ui: &mut egui::Ui, ed: &mut Editor) {
         if doc.global.entry_points.is_empty() {
             ui.add_space(6.0);
             ui.label(RichText::new(tr("No start point yet: place one (Objects > Bus stops > Entrypoint) so the bus has somewhere to appear in openOMSI.", "Нет точки старта: поставьте её (Объекты > Остановки > Entrypoint), чтобы автобусу было где появиться в openOMSI.")).small().color(Color32::from_rgb(230, 170, 100)));
+        }
+        ui.add_space(8.0);
+        ui.label(RichText::new(tr("Picture", "Картинка")).color(TEXT_DIM));
+        let path = doc.dir.join("picture.jpg");
+        let path = if path.is_file() { path } else { doc.source.as_ref().map(|s| s.join("picture.jpg")).unwrap_or(path) };
+        let time = std::fs::metadata(&path).and_then(|m| m.modified()).ok();
+        if st.map_picture.as_ref().map(|(p, t, _)| *p != path || *t != time).unwrap_or(true) {
+            let tex = image::open(&path).ok().map(|img| {
+                let img = img.to_rgba8();
+                let ci = egui::ColorImage::from_rgba_unmultiplied([img.width() as usize, img.height() as usize], img.as_raw());
+                ui.ctx().load_texture("map picture", ci, egui::TextureOptions::LINEAR)
+            });
+            st.map_picture = Some((path, time, tex));
+        }
+        match st.map_picture.as_ref().and_then(|(_, _, t)| t.as_ref()) {
+            Some(t) => {
+                let w = ui.available_width();
+                ui.add(egui::Image::new((t.id(), Vec2::new(w, w * 280.0 / 370.0))));
+            }
+            None => {
+                ui.label(RichText::new(tr("None yet: openOMSI shows it where maps are chosen.", "Пока нет: openOMSI показывает её при выборе карты.")).small().color(TEXT_DIM));
+            }
+        }
+        let r = ui.button(icons::labelled(Icon::Visible, tr("Take it from this view", "Снять с этого вида")));
+        help(st, &r, tr("The middle of the 3D view, as it is now, becomes the map's picture.", "Середина 3D-вида, как он сейчас, станет картинкой карты."));
+        if r.clicked() {
+            actions.push(Action::MapPicture);
+        }
+        let r = ui.button(icons::labelled(Icon::Flag, tr("Open the map with this view", "Открывать карту с этого вида")));
+        help(st, &r, tr("The camera as it is now is where the map opens (here and in OMSI 2's editor).", "Карта будет открываться с камерой, как сейчас (здесь и в редакторе OMSI 2)."));
+        if r.clicked() {
+            actions.push(Action::SetMapCamera);
         }
         ui.add_space(6.0);
         ui.label(RichText::new(format!("{}:\n{}", tr("Saved to", "Сохраняется в"), doc.dir.display())).small().color(TEXT_DIM));

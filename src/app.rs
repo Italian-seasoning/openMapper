@@ -85,6 +85,8 @@ pub struct App {
     frames: u64,
     /// `OPENMAPPER_SHOT=file.png`: save the window's picture after that many frames and end.
     shot: Option<(PathBuf, u64)>,
+    /// The next frame's view becomes the map's picture (`picture.jpg`).
+    picture: bool,
 }
 
 impl App {
@@ -110,6 +112,7 @@ impl App {
             quit: false,
             view: egui::Rect::NOTHING,
             frames: 0,
+            picture: false,
             shot: std::env::var_os("OPENMAPPER_SHOT").map(|p| (PathBuf::from(p), std::env::var("OPENMAPPER_SHOT_FRAMES").ok().and_then(|n| n.parse().ok()).unwrap_or(90))),
         };
         app.setup_roots();
@@ -418,6 +421,17 @@ impl App {
                 self.prefs.push_recent_asset(&rel);
                 self.ui.recent_assets = self.prefs.recent_assets.clone();
             }
+            Action::MapPicture => self.picture = true,
+            Action::SetMapCamera => {
+                if let Some(doc) = self.ed.doc.as_mut() {
+                    let p = self.cam.target.truncate();
+                    let k = crate::doc::tile_of(p);
+                    let l = p - tile_origin(k);
+                    doc.global.map_cam = vec![k.0 as f64, k.1 as f64, l.x, self.cam.target.z, l.y, self.cam.yaw, self.cam.pitch, self.cam.distance / 4.0];
+                    doc.global_dirty = true;
+                    self.ed.toast(tr("The map opens with this view from now on.", "Теперь карта открывается с этого вида."));
+                }
+            }
             Action::LookAt(p) => {
                 if let Some(doc) = &self.ed.doc {
                     self.cam.target = DVec3::new(p.x, p.y, doc.ground(p));
@@ -563,6 +577,11 @@ impl App {
         let loading = self.assets.as_ref().map(|a| a.pending).unwrap_or(0);
         let mut view: Option<(egui::Rect, bool)> = None;
         let gpu_name = g.gpu.adapter_name.clone();
+        // (the overview map stays out of the map's picture)
+        let minimap_open = self.ui.minimap.open;
+        if self.picture {
+            self.ui.minimap.open = false;
+        }
         let full = g.egui_ctx.run_ui(raw, |ui| {
             let ctx = ui.ctx().clone();
             if self.ed.doc.is_none() {
@@ -681,6 +700,20 @@ impl App {
                         self.demo_join();
                     } else {
                         self.demo(&d);
+                    }
+                }
+            }
+            if self.picture {
+                self.picture = false;
+                self.ui.minimap.open = minimap_open;
+                let ppp = full.pixels_per_point;
+                let v = self.view;
+                let crop = [(v.min.x * ppp) as u32, (v.min.y * ppp) as u32, (v.width() * ppp) as u32, (v.height() * ppp) as u32];
+                if let Some(doc) = &self.ed.doc {
+                    let path = doc.dir.join("picture.jpg");
+                    match read_frame(&g.gpu, &frame.texture).and_then(|img| save_map_picture(img, crop, &path)) {
+                        Ok(()) => self.ed.toast(tr("The map's picture is taken: openOMSI shows it where maps are chosen.", "Картинка карты снята: openOMSI показывает её при выборе карты.")),
+                        Err(e) => self.ed.error(format!("{}: {e}", tr("Could not save the picture", "Не удалось сохранить картинку"))),
                     }
                 }
             }
@@ -1230,6 +1263,28 @@ impl ApplicationHandler for App {
 
 /// Write the window's picture to a PNG (the screenshot mode).
 fn save_shot(gpu: &Gpu, tex: &wgpu::Texture, path: &Path) -> anyhow::Result<()> {
+    read_frame(gpu, tex)?.save(path)?;
+    Ok(())
+}
+
+/// OMSI's map picture: 370 × 280, the middle of the view cut to that shape.
+fn save_map_picture(img: image::RgbaImage, crop: [u32; 4], path: &Path) -> anyhow::Result<()> {
+    let (w, h) = (crop[2].min(img.width().saturating_sub(crop[0])), crop[3].min(img.height().saturating_sub(crop[1])));
+    anyhow::ensure!(w > 8 && h > 8, "the view is too small");
+    let (pw, ph) = (370u32, 280u32);
+    let (cw, ch) = if w * ph > h * pw { (h * pw / ph, h) } else { (w, w * ph / pw) };
+    let (x, y) = (crop[0] + (w - cw) / 2, crop[1] + (h - ch) / 2);
+    let cut = image::imageops::crop_imm(&img, x, y, cw, ch).to_image();
+    let small = image::imageops::resize(&cut, pw, ph, image::imageops::FilterType::Triangle);
+    if let Some(dir) = path.parent() {
+        std::fs::create_dir_all(dir)?;
+    }
+    image::DynamicImage::ImageRgba8(small).to_rgb8().save_with_format(path, image::ImageFormat::Jpeg)?;
+    Ok(())
+}
+
+/// The window's picture as it was drawn.
+fn read_frame(gpu: &Gpu, tex: &wgpu::Texture) -> anyhow::Result<image::RgbaImage> {
     let (w, h) = (tex.width(), tex.height());
     let row = (w * 4).div_ceil(256) * 256;
     let buf = gpu.device.create_buffer(&wgpu::BufferDescriptor { label: Some("shot"), size: (row * h) as u64, usage: wgpu::BufferUsages::COPY_DST | wgpu::BufferUsages::MAP_READ, mapped_at_creation: false });
@@ -1254,6 +1309,19 @@ fn save_shot(gpu: &Gpu, tex: &wgpu::Texture, path: &Path) -> anyhow::Result<()> 
             img.put_pixel(x, y, image::Rgba(px));
         }
     }
-    img.save(path)?;
-    Ok(())
+    Ok(img)
+}
+
+#[cfg(test)]
+mod tests {
+    #[test]
+    fn map_picture_is_omsi_sized() {
+        let dir = std::env::temp_dir().join(format!("openmapper-picture-{}", std::process::id()));
+        let path = dir.join("picture.jpg");
+        let img = image::RgbaImage::from_pixel(1600, 900, image::Rgba([40, 120, 60, 255]));
+        super::save_map_picture(img, [200, 50, 1200, 800], &path).unwrap();
+        let back = image::open(&path).unwrap();
+        assert_eq!((back.width(), back.height()), (370, 280));
+        let _ = std::fs::remove_dir_all(dir);
+    }
 }

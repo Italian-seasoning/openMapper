@@ -25,6 +25,8 @@ experienced map makers.
 * **Open any map**: OMSI 2's own (saved as a copy into the content folder) and mod maps.
 * **New map** from OMSI 2's own template (`template/NewMap`): it's ready to drive right away.
 * **Test drive**: saves and launches openOMSI on this map.
+* **Map picture** (`picture.jpg`, shown where maps are chosen) taken from the view, and the
+  view the map opens with (`[mapcam]`), both in the map's properties.
 * **Favourites and recently used** at the top of the catalogue: right-click an entry to star
   it.
 * **Overview map** in the corner of the view (`M`): tiles, roads, tracks and the camera;

@@ -40,3 +40,5 @@ Add a line when you touch a shared file: stream, file, what.
 * D · `src/ui.rs`: `Action::ToggleFavourite`, `Action::UsedAsset`, `UiState::{favourites, recent_assets}`; `catalogue`, `logic_panel`, `catalogue_of` take `actions`; favourites / recently used groups and a right-click menu in the catalogue.
 * D · `src/install.rs`: `Prefs::{favourites, recent_assets}`.
 * D · `src/app.rs`: `OPENMAPPER_TOOL` also takes `roads` and `objects`.
+* D · `src/ui.rs`: `Action::MapPicture`, `Action::SetMapCamera`; `map_properties` takes `st` and `actions` and shows the map's picture.
+* D · `src/app.rs`: `read_frame` (split from `save_shot`), `save_map_picture`, `[mapcam]` from the camera.
