@@ -279,6 +279,20 @@ struct SplineEntry {
     rims: Vec<Vec<DVec3>>,
     materials: Vec<Material>,
     instance: u32,
+    /// Drawn as part of its tile's chunk (then it has no mesh of its own on the GPU).
+    in_chunk: bool,
+}
+
+/// A tile's splines in one mesh, a draw per material: thousands of splines become a few
+/// hundred draws. The selected and hovered spline (tinted) and the technical ones (no
+/// shadow) stay out and are drawn on their own.
+struct Chunk {
+    /// The splines in it (IDCode, revision hash).
+    members: HashMap<i64, u64>,
+    mesh: Option<GpuMesh>,
+    materials: Vec<Material>,
+    bbox: Aabb,
+    instance: u32,
 }
 
 pub struct Thumb {
@@ -354,6 +368,7 @@ pub struct Renderer {
     ghost_batches: Vec<Batch>,
     scene_key: u64,
     splines: HashMap<(TileKey, i64), SplineEntry>,
+    chunks: HashMap<TileKey, Chunk>,
     ghost_spline_meshes: Vec<(u64, Option<GpuMesh>, Vec<Material>, u32)>,
     /// Thumbnails of the catalogue by asset path (lower case); None: tried, nothing to show.
     pub thumbs: HashMap<String, Option<Thumb>>,
@@ -769,6 +784,7 @@ impl Renderer {
             ghost_batches: Vec::new(),
             scene_key: 0,
             splines: HashMap::new(),
+            chunks: HashMap::new(),
             ghost_spline_meshes: Vec::new(),
             thumbs: HashMap::new(),
             thumb_depth,
@@ -782,6 +798,7 @@ impl Renderer {
         self.profile.opened = Some(std::time::Instant::now());
         self.tiles.clear();
         self.splines.clear();
+        self.chunks.clear();
         self.display.clear();
         self.anchor = DVec3::ZERO;
         self.ground_key.clear();
@@ -794,6 +811,7 @@ impl Renderer {
         self.models.clear();
         self.materials.clear();
         self.splines.clear();
+        self.chunks.clear();
         self.scene_key = 0;
     }
 
@@ -908,6 +926,7 @@ impl Renderer {
                     self.anchor = DVec3::new(o.x, o.y, 0.0);
                     self.tiles.clear();
                     self.splines.clear();
+        self.chunks.clear();
                     self.scene_key = 0;
                 }
             }
@@ -1176,8 +1195,7 @@ impl Renderer {
                         bbox.add_sphere(*p + corner, 0.0);
                     }
                     let bounds = if bbox.is_empty() { [0.0; 4] } else { [bbox.lo.x - corner.x, bbox.lo.y - corner.y, bbox.hi.x - corner.x, bbox.hi.y - corner.y] };
-                    let gpu = mesh.as_ref().map(|m| upload_mesh(device, m));
-                    self.splines.insert((*k, s.id), SplineEntry { hash: h, mesh: gpu, cpu: mesh.map(Arc::new), bounds, bbox, cuts, drivable, technical: def.only_editor || !def.profiles.iter().any(|p| p.points.len() >= 2), hidden: false, outlines, rims, materials: model.materials.clone(), instance: 0 });
+                    self.splines.insert((*k, s.id), SplineEntry { hash: h, mesh: None, cpu: mesh.map(Arc::new), bounds, bbox, cuts, drivable, technical: def.only_editor || !def.profiles.iter().any(|p| p.points.len() >= 2), hidden: false, outlines, rims, materials: model.materials.clone(), instance: 0, in_chunk: false });
                     self.warm_pending = true;
                 }
                 if let Some(e) = self.splines.get_mut(&(*k, s.id)) {
@@ -1191,6 +1209,7 @@ impl Renderer {
             let set: std::collections::HashSet<_> = alive.into_iter().collect();
             self.splines.retain(|k, _| set.contains(k));
         }
+        self.sync_chunks(device, &disp, extras, &mut spline_instances, anchor);
 
         self.profile.add("sync.splines", profile::ms(t));
         t = std::time::Instant::now();
@@ -1272,6 +1291,57 @@ impl Renderer {
     }
 
     /// The ground cut of the tiles whose roads, surfaces or ground changed (a few per frame).
+    /// Bring the tiles' spline chunks up to date: one whose splines changed is made again at
+    /// once (an old one would show the old roads); new ones and ones with splines to add a
+    /// few per frame, those splines drawn on their own until then.
+    fn sync_chunks(&mut self, device: &wgpu::Device, disp: &[(TileKey, Arc<omsi_map::Tile>)], extras: &FrameExtras, instances: &mut Vec<Instance>, anchor: DVec3) {
+        let start = std::time::Instant::now();
+        let keep: std::collections::HashSet<TileKey> = disp.iter().map(|d| d.0).collect();
+        self.chunks.retain(|k, _| keep.contains(k));
+        for (k, t) in disp {
+            let org = tile_origin(*k);
+            // what belongs in it
+            let mut members: HashMap<i64, u64> = HashMap::new();
+            for s in t.splines.iter().filter(|s| !s.deleted) {
+                let Some(e) = self.splines.get(&(*k, s.id)) else { continue };
+                let sel = Some(Sel::Spline(*k, s.id));
+                if e.cpu.is_none() || e.technical || extras.selected == sel || extras.hover == sel {
+                    continue;
+                }
+                members.insert(s.id, e.hash);
+            }
+            // (stale: a spline in it changed or went; else only new ones came, which can wait)
+            let (stale, grown) = match self.chunks.get(k) {
+                Some(c) => (c.members.iter().any(|(id, h)| members.get(id) != Some(h)), members.len() > c.members.len()),
+                None => (false, !members.is_empty()),
+            };
+            let build = stale || (grown && start.elapsed().as_millis() < 8);
+            if build {
+                let mut ids: Vec<i64> = members.keys().copied().collect();
+                ids.sort_unstable();
+                let parts: Vec<(&MeshData, &[Material], Aabb)> = ids.iter().filter_map(|id| self.splines.get(&(*k, *id))).filter_map(|e| e.cpu.as_deref().map(|m| (m, e.materials.as_slice(), e.bbox))).collect();
+                let (mesh, materials, bbox) = merge_meshes(&parts);
+                let mesh = (!mesh.indices.is_empty()).then(|| upload_mesh(device, &mesh));
+                self.chunks.insert(*k, Chunk { members, mesh, materials, bbox, instance: 0 });
+            }
+            let chunk = self.chunks.get_mut(k);
+            let members = chunk.as_ref().map(|c| &c.members);
+            for s in t.splines.iter().filter(|s| !s.deleted) {
+                let Some(e) = self.splines.get_mut(&(*k, s.id)) else { continue };
+                e.in_chunk = members.map(|m| m.get(&s.id) == Some(&e.hash)).unwrap_or(false);
+                if e.in_chunk {
+                    e.mesh = None;
+                } else if e.mesh.is_none() {
+                    e.mesh = e.cpu.as_deref().map(|m| upload_mesh(device, m));
+                }
+            }
+            if let Some(c) = chunk {
+                c.instance = instances.len() as u32;
+                instances.push(Instance::new(Mat4::from_translation(Vec3::new((org.x - anchor.x) as f32, (org.y - anchor.y) as f32, 0.0)), [0.0; 4]).surface(SURF_SPLINE));
+            }
+        }
+    }
+
     /// Whether every tile's cut is up to date.
     fn cut_ground(&mut self, gpu: &Gpu, doc: &Document, assets: &mut Assets, disp: &[(TileKey, Arc<omsi_map::Tile>)]) -> bool {
         let start = std::time::Instant::now();
@@ -1401,6 +1471,9 @@ impl Renderer {
         for e in self.splines.values() {
             mats.extend(e.materials.iter().cloned());
         }
+        for c in self.chunks.values() {
+            mats.extend(c.materials.iter().cloned());
+        }
         for g in &self.ghost_spline_meshes {
             mats.extend(g.2.iter().cloned());
         }
@@ -1519,7 +1592,12 @@ impl Renderer {
         pass.set_pipeline(&self.shadow_pipeline);
         pass.set_bind_group(0, &self.shadow_globals_bind, &[]);
         pass.set_vertex_buffer(1, dynamic.slice(..));
-        for e in self.splines.values().filter(|e| !e.technical && f.sees(&e.bbox)) {
+        for c in self.chunks.values().filter(|c| f.sees(&c.bbox)) {
+            if let Some(mesh) = &c.mesh {
+                calls += draw_mesh(&mut pass, &self.materials, mesh, &c.materials, Some(false), &[c.instance..c.instance + 1]);
+            }
+        }
+        for e in self.splines.values().filter(|e| !e.technical && !e.in_chunk && f.sees(&e.bbox)) {
             if let Some(mesh) = &e.mesh {
                 calls += draw_mesh(&mut pass, &self.materials, mesh, &e.materials, Some(false), &[e.instance..e.instance + 1]);
             }
@@ -1603,7 +1681,8 @@ impl Renderer {
         }
         let (Some(dynamic), Some(scene)) = (&self.instances, &self.scene_buf) else { return };
         // what is in view, the same for both layers
-        let splines: Vec<(&GpuMesh, &Vec<Material>, u32)> = self.splines.values().filter(|e| !e.hidden && f.sees(&e.bbox)).filter_map(|e| e.mesh.as_ref().map(|m| (m, &e.materials, e.instance))).collect();
+        let mut splines: Vec<(&GpuMesh, &Vec<Material>, u32)> = self.chunks.values().filter(|c| f.sees(&c.bbox)).filter_map(|c| c.mesh.as_ref().map(|m| (m, &c.materials, c.instance))).collect();
+        splines.extend(self.splines.values().filter(|e| !e.hidden && !e.in_chunk && f.sees(&e.bbox)).filter_map(|e| e.mesh.as_ref().map(|m| (m, &e.materials, e.instance))));
         let mut visible: Vec<(&Batch, Vec<std::ops::Range<u32>>, bool)> = Vec::new();
         for b in &self.batches {
             let mut ranges = Vec::new();
@@ -1616,6 +1695,7 @@ impl Renderer {
             visible.push((b, vec![b.first..b.first + b.count], true));
         }
         let mut instances_drawn = 0;
+        let mut spline_calls = 0;
         for (_, r, _) in &visible {
             instances_drawn += r.iter().map(|r| r.len() as u32).sum::<u32>();
         }
@@ -1624,7 +1704,9 @@ impl Renderer {
             pass.set_pipeline(if blend { &self.spline_blend } else { &self.spline_opaque });
             pass.set_vertex_buffer(1, dynamic.slice(..));
             for &(mesh, mats, i) in &splines {
-                calls += draw_mesh(&mut pass, &self.materials, mesh, mats, Some(blend), &[i..i + 1]);
+                let n = draw_mesh(&mut pass, &self.materials, mesh, mats, Some(blend), &[i..i + 1]);
+                calls += n;
+                spline_calls += n;
             }
             // objects
             pass.set_pipeline(if blend { &self.mesh_blend } else { &self.mesh_opaque });
@@ -1677,6 +1759,7 @@ impl Renderer {
         drop(pass);
         self.profile.count("draws", calls);
         self.profile.count("instances drawn", instances_drawn);
+        self.profile.count("spline draws", spline_calls);
         self.profile.add("draw", profile::ms(t));
     }
 
@@ -1831,6 +1914,43 @@ fn draw_mesh(pass: &mut wgpu::RenderPass, materials: &HashMap<MatKey, wgpu::Bind
         }
     }
     calls
+}
+
+/// Meshes (in the same frame) as one, its triangles grouped by material.
+fn merge_meshes(parts: &[(&MeshData, &[Material], Aabb)]) -> (MeshData, Vec<Material>, Aabb) {
+    let mut out = MeshData::default();
+    let mut materials: Vec<Material> = Vec::new();
+    let mut keys: Vec<MatKey> = Vec::new();
+    let mut by_mat: Vec<Vec<u32>> = Vec::new();
+    let mut bbox = Aabb::EMPTY;
+    for (m, mats, b) in parts {
+        bbox.lo = bbox.lo.min(b.lo);
+        bbox.hi = bbox.hi.max(b.hi);
+        let base = out.positions.len() as u32;
+        out.positions.extend_from_slice(&m.positions);
+        out.normals.extend((0..m.positions.len()).map(|i| m.normals.get(i).copied().unwrap_or(Vec3::Z)));
+        out.uvs.extend((0..m.positions.len()).map(|i| m.uvs.get(i).copied().unwrap_or(glam::Vec2::ZERO)));
+        for &(first, count, slot) in &m.ranges {
+            let Some(mat) = mats.get(slot as usize) else { continue };
+            let key = mat_key(mat);
+            let i = match keys.iter().position(|k| *k == key) {
+                Some(i) => i,
+                None => {
+                    keys.push(key);
+                    materials.push(mat.clone());
+                    by_mat.push(Vec::new());
+                    keys.len() - 1
+                }
+            };
+            let Some(tris) = m.indices.get(first as usize..(first + count) as usize) else { continue };
+            by_mat[i].extend(tris.iter().map(|v| v + base));
+        }
+    }
+    for (slot, tris) in by_mat.into_iter().enumerate() {
+        out.ranges.push((out.indices.len() as u32, tris.len() as u32, slot as u32));
+        out.indices.extend(tris);
+    }
+    (out, materials, bbox)
 }
 
 fn mat_key(m: &Material) -> MatKey {
