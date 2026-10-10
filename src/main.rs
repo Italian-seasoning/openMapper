@@ -23,6 +23,7 @@ mod install;
 mod junction;
 mod lanes;
 mod library;
+mod models;
 mod pbr_maker;
 mod place;
 mod plants;

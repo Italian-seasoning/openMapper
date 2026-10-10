@@ -3,7 +3,7 @@
 //! * a mod (a folder or a `.zip` laid out like OMSI 2: `Sceneryobjects`, `Splines`,
 //!   `Texture`, ...) is merged into openOMSI's content folder;
 //! * a folder of `.sco` or `.sli` files becomes a folder of `Sceneryobjects` / `Splines`;
-//! * a 3D model (`.obj`, `.x`, `.o3d`) becomes a new scenery object: the model goes into
+//! * a 3D model (`.obj`, `.gltf` / `.glb`, `.fbx`, `.x`, `.o3d`) becomes a new scenery object: the model goes into
 //!   `model\`, its textures and their PBR maps (`_nn`, `_orm`, ...) into `texture\`, and a
 //!   `.sco` is written for it. A Wavefront `.obj` (what Blender and most tools export) is
 //!   turned into a DirectX `.x` that OMSI 2 and openOMSI both read.
@@ -31,12 +31,12 @@ pub fn import(path: &Path, content: &Path) -> anyhow::Result<Report> {
     if path.is_file() {
         return match ext.as_str() {
             "zip" => import_zip(path, content),
-            "obj" | "x" | "o3d" => import_model(path, content),
+            "obj" | "x" | "o3d" | "gltf" | "glb" | "fbx" => import_model(path, content),
             "sco" | "sli" => {
                 let dir = path.parent().ok_or_else(|| anyhow::anyhow!("no folder"))?;
                 import_folder(dir, content)
             }
-            _ => anyhow::bail!("{}", tr("openMapper cannot import this kind of file (use a folder, .zip, .obj, .x or .o3d)", "Этот тип файла не импортируется (подходят папка, .zip, .obj, .x, .o3d)")),
+            _ => anyhow::bail!("{}", tr("openMapper cannot import this kind of file (use a folder, .zip, .obj, .gltf, .glb, .fbx, .x or .o3d)", "Этот тип файла не импортируется (подходят папка, .zip, .obj, .gltf, .glb, .fbx, .x, .o3d)")),
         };
     }
     import_folder(path, content)
@@ -201,10 +201,33 @@ fn import_model(path: &Path, content: &Path) -> anyhow::Result<Report> {
     let src_dir = path.parent().unwrap_or(Path::new("."));
     let ext = path.extension().map(|e| e.to_string_lossy().to_lowercase()).unwrap_or_default();
     let (mesh_name, textures): (String, Vec<String>) = if ext == "obj" {
-        let (x, tex) = obj_to_x(path)?;
+        let (mut x, tex) = obj_to_x(path)?;
+        // (a texture in a format OMSI does not read goes in as a png)
+        let mut tex2 = Vec::new();
+        for t in tex {
+            let name = Path::new(&t.replace('\\', "/")).file_name().map(|f| f.to_string_lossy().to_string()).unwrap_or_default();
+            let e = Path::new(&name).extension().map(|e| e.to_string_lossy().to_lowercase()).unwrap_or_default();
+            if !name.is_empty() && !omsi_texture::EXTENSIONS.contains(&e.as_str()) {
+                let src = [src_dir.join(t.replace('\\', "/")), src_dir.join(&name)].into_iter().find(|p| p.is_file());
+                if let Some(img) = crate::models::picture(None, src.as_deref()) {
+                    let png = format!("{}.png", Path::new(&name).file_stem().unwrap().to_string_lossy());
+                    img.save(tex_dir.join(&png))?;
+                    x = x.replace(&format!("\"{name}\""), &format!("\"{png}\""));
+                    continue;
+                }
+            }
+            tex2.push(t);
+        }
         let name = format!("{safe}.x");
         std::fs::write(model_dir.join(&name), x)?;
-        (name, tex)
+        (name, tex2)
+    } else if matches!(ext.as_str(), "gltf" | "glb" | "fbx") {
+        let m = if ext == "fbx" { crate::models::load_fbx(path)? } else { crate::models::load_gltf(path)? };
+        // (its textures, read out of the file or from beside it, go in as pngs)
+        let names = crate::models::save_textures(&m, &safe, &tex_dir)?;
+        let name = format!("{safe}.x");
+        std::fs::write(model_dir.join(&name), crate::models::write_x(&m, &names))?;
+        (name, names.into_iter().flatten().collect())
     } else {
         let name = path.file_name().unwrap().to_string_lossy().to_string();
         std::fs::copy(path, model_dir.join(&name))?;

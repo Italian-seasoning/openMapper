@@ -99,7 +99,7 @@ experienced map makers.
 * **Asset import**: drop onto the window or use the button:
   * a mod (a folder or `.zip` laid out like OMSI 2) is merged into the content folder;
   * a folder of `.sco` / `.sli` files becomes a folder under `Sceneryobjects` / `Splines`;
-  * a 3D model (`.obj` from Blender and others, `.x`, `.o3d`) becomes a new object: a `.sco` is
+  * a 3D model (`.obj`, `.gltf` / `.glb`, `.fbx` from Blender, 3ds Max, Maya and asset stores, `.x`, `.o3d`) becomes a new object, with every node's transform, its materials' colours and textures (embedded ones too; any picture format is turned into one OMSI reads), and their normal and roughness / metalness / occlusion maps as `_nn` / `_orm`: a `.sco` is
     written for it, the textures are copied, and so are their **PBR maps** (`_nn`, `_orm`,
     `_rr`, `_mm`, `_aa` …, the way openOMSI finds them).
 * **PBR** in the viewport: normal, roughness, metalness and AO maps are found by

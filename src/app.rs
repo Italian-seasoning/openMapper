@@ -542,7 +542,7 @@ impl App {
                 }
             }
             Action::Import => {
-                let files = rfd::FileDialog::new().add_filter(tr("Mods and models", "Моды и модели"), &["zip", "obj", "x", "o3d", "sco", "sli"]).set_title(tr("Import assets", "Импорт ассетов")).pick_files();
+                let files = rfd::FileDialog::new().add_filter(tr("Mods and models", "Моды и модели"), &["zip", "obj", "gltf", "glb", "fbx", "x", "o3d", "sco", "sli"]).set_title(tr("Import assets", "Импорт ассетов")).pick_files();
                 if let Some(f) = files {
                     self.import(f);
                 } else if let Some(d) = rfd::FileDialog::new().set_title(tr("…or choose a mod folder", "…или выберите папку мода")).pick_folder() {
