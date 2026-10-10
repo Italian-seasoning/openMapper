@@ -326,3 +326,70 @@ pub fn road_entry(ctx: &egui::Context, ed: &mut Editor, view: egui::Rect, action
         });
     });
 }
+
+/// The lights and crossings of one of openMapper's junctions (it is made again with them).
+pub fn junction_section(ui: &mut egui::Ui, ed: &mut Editor, k: TileKey, id: i64) {
+    let Some(doc) = ed.doc.as_ref() else { return };
+    let Some(o) = doc.object(k, id) else { return };
+    if !crate::editor::is_own_junction(&o.file) {
+        return;
+    }
+    let file = o.file.clone();
+    let arms = ed.junction_arms(k, id);
+    let opts = match ed.junction_options.get(&id) {
+        Some(o) => o.clone(),
+        None => {
+            let o = ed.content_dir.as_ref().map(|c| crate::junction::Options::read(&omsi_cfg::resolve_path(c, &file))).unwrap_or_default();
+            ed.junction_options.insert(id, o.clone());
+            o
+        }
+    };
+    section(ui, tr("Junction", "Перекрёсток"));
+    let mut new = opts.clone();
+    let mut apply = false;
+    egui::Frame::new().inner_margin(Margin::same(8)).show(ui, |ui| {
+        if check(ui, &mut new.lights, tr("Traffic lights", "Светофоры")).changed() {
+            apply = true;
+        }
+        if new.lights {
+            if arms.len() < 3 {
+                ui.label(RichText::new(tr("Lights need three roads or more", "Светофорам нужно не меньше трёх дорог")).small().color(TEXT_DIM));
+            }
+            // (the seconds are applied with the button: the plate is not made again while dragging)
+            let tid = egui::Id::new(("junction greens", id));
+            let mut g: (f64, f64) = ui.data_mut(|d| *d.get_temp_mut_or_insert_with(tid, || (opts.main_green, opts.side_green)));
+            egui::Grid::new(("greens", id)).num_columns(2).spacing(Vec2::new(6.0, 4.0)).show(ui, |ui| {
+                prop_row(ui, tr("Main road green", "Зелёный главной"), |ui| {
+                    ui.add(egui::DragValue::new(&mut g.0).speed(0.5).range(5.0..=120.0).suffix(" s"));
+                });
+                prop_row(ui, tr("Side roads green", "Зелёный второстепенных"), |ui| {
+                    ui.add(egui::DragValue::new(&mut g.1).speed(0.5).range(5.0..=120.0).suffix(" s"));
+                });
+            });
+            ui.data_mut(|d| d.insert_temp(tid, g));
+            if (g.0 - opts.main_green).abs() > 1e-6 || (g.1 - opts.side_green).abs() > 1e-6 {
+                if ui.button(tr("Apply", "Применить")).clicked() {
+                    new.main_green = g.0;
+                    new.side_green = g.1;
+                    apply = true;
+                }
+            }
+            ui.label(RichText::new(tr("The main road is the pair of roads most in line; red-yellow 2 s, yellow 3 s, 2 s all red between", "Главная — пара дорог, лежащих ближе всего к одной линии; красный с жёлтым 2 с, жёлтый 3 с, между фазами 2 с всем красный")).small().color(TEXT_DIM));
+        }
+        ui.add_space(4.0);
+        ui.label(RichText::new(tr("Zebra crossings", "Пешеходные переходы")).strong());
+        for (i, out) in arms.iter().enumerate() {
+            let mut on = new.crossing_at(*out);
+            if check(ui, &mut on, format!("{} {} ({:.0}°)", tr("Road", "Дорога"), i + 1, out)).changed() {
+                new.crossings.retain(|h| (crate::roads::norm_deg(h - out + 180.0) - 180.0).abs() >= 20.0);
+                if on {
+                    new.crossings.push(*out);
+                }
+                apply = true;
+            }
+        }
+    });
+    if apply && new != opts {
+        ed.set_junction_options(id, new);
+    }
+}

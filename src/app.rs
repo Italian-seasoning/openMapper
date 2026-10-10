@@ -336,6 +336,11 @@ impl App {
                     self.ui.maps = install::list_maps(r);
                 }
                 self.ed.toast(format!("{} {dir}", tr("Saved:", "Сохранено:")));
+                // (junction plates nothing uses any more, from earlier sessions)
+                let gone = self.ed.clean_junction_files();
+                if gone > 0 {
+                    log::info!("removed {gone} unused junction file(s)");
+                }
                 if !has_start {
                     self.ed.toast(tr("Tip: place a start point (Objects > Bus stops > entrypoint) so the bus has somewhere to appear", "Совет: поставьте точку старта (Объекты > Остановки > entrypoint), чтобы автобусу было где появиться"));
                 }

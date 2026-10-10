@@ -202,6 +202,19 @@ pub struct Editor {
     /// openMapper's junctions whose arms changed: their plates are made again before the
     /// open history step is closed (the next tick, which has the models).
     pending_rebuild: Vec<i64>,
+    /// New options for a junction being made again, and roads to add to it as arms.
+    pending_options: std::collections::HashMap<i64, crate::junction::Options>,
+    pending_arms: std::collections::HashMap<i64, Vec<crate::junction::Arm>>,
+    /// A road being drawn from or into a junction plate (its IDCode, centre, radius).
+    road_plate_start: Option<(i64, DVec3, f64)>,
+    road_plate_end: Option<(i64, DVec3, f64)>,
+    /// A road end being dragged onto a plate.
+    reshape_plate: Option<(i64, DVec3, f64)>,
+    /// The options of junctions shown in the properties (read from their files).
+    pub junction_options: std::collections::HashMap<i64, crate::junction::Options>,
+    /// The first IDCode of this session: junction files numbered from it on were made now,
+    /// and undo may still need them.
+    session_first_id: i64,
     /// How objects are put along roads.
     pub row_params: crate::rows::RowParams,
     /// Numbers typed while a road is drawn: length, radius, heading, rise (m) at its end.
@@ -302,6 +315,13 @@ impl Default for Editor {
             move_delta: DVec2::ZERO,
             carry_preview: Vec::new(),
             pending_rebuild: Vec::new(),
+            pending_options: Default::default(),
+            pending_arms: Default::default(),
+            road_plate_start: None,
+            road_plate_end: None,
+            reshape_plate: None,
+            junction_options: Default::default(),
+            session_first_id: i64::MAX,
             row_params: Default::default(),
             ruler: None,
             typed_text: Default::default(),
@@ -440,6 +460,7 @@ impl Editor {
         self.hover = None;
         self.cancel();
         self.paint_layer = if doc.global.ground_textures.len() > 1 { 1 } else { 0 };
+        self.session_first_id = doc.global.next_id_code;
         self.doc = Some(doc);
     }
 
@@ -640,6 +661,8 @@ impl Editor {
                 self.history.commit();
             }
             self.pending_rebuild.clear();
+            self.pending_options.clear();
+            self.pending_arms.clear();
         }
         // (numbers typed or Shift changed: the road drawn follows at once)
         if self.replan && self.acts_as() == Tool::Roads {
@@ -698,7 +721,12 @@ impl Editor {
                 self.set_selection(now);
             }
             Drag::Reshape(k, id, h) => {
-                let p = self.snap_point(c.truncate());
+                let mut p = self.snap_point(c.truncate());
+                // an end dropped on a junction plate goes to its centre and becomes an arm
+                self.reshape_plate = if h == Handle::Mid { None } else { self.plate_at(assets, c.truncate()) };
+                if let Some((_, centre, _)) = self.reshape_plate {
+                    p = centre.truncate();
+                }
                 let joined = self.helper_anchors(assets);
                 let locked = |q: DVec2| joined.iter().any(|j| (j.truncate() - q).length() < 0.6);
                 let Some(doc) = self.doc.as_ref() else { return };
@@ -829,6 +857,12 @@ impl Editor {
             [Sel::Spline(..)] => tr("Delete road", "Удаление дороги"),
             _ => tr("Delete selection", "Удаление выделенного"),
         });
+        // a junction's signal heads go with it
+        let mut sels = sels;
+        if let Some(doc) = self.doc.as_ref() {
+            let kids: Vec<Sel> = sels.iter().filter_map(|s| if let Sel::Object(_, id) = s { Some(*id) } else { None }).flat_map(|id| crate::junction::children(doc, id)).map(|(k, c)| Sel::Object(k, c)).collect();
+            sels.extend(kids.into_iter().filter(|k| !sels.contains(k)).collect::<Vec<_>>());
+        }
         // the junctions that lose an arm are made again with the rest (two left: a joint)
         let hit = self.junctions_at_ends(&sels);
         let Some(doc) = self.doc.as_mut() else { return };
@@ -1125,6 +1159,14 @@ impl Editor {
             target = start.pos.truncate() + roads::dir(snap_deg(roads::heading_of(d))) * d.length();
         }
         let mut end_anchor = snap;
+        // into a junction plate: to its centre (it is cut back to the edge and becomes an arm)
+        self.road_plate_end = None;
+        if snap.is_none() && !self.drawing_paths() {
+            if let Some(p) = self.plate_at(assets, c.truncate()) {
+                target = p.1.truncate();
+                self.road_plate_end = Some(p);
+            }
+        }
         // joining a road in its middle: the new road meets its edge, coming straight at it
         if let Some(a) = snap.filter(|a| a.mid.is_some() && !self.drawing_paths()) {
             let (_, _, _, hw) = a.mid.unwrap();
@@ -1153,6 +1195,7 @@ impl Editor {
         }
         let Some(segs) = roads::plan(&start, fixed, target, end_anchor.as_ref()) else { return };
         let z1 = match snap {
+            _ if self.road_plate_end.is_some() => self.road_plate_end.unwrap().1.z,
             Some(a) => a.pos.z,
             None if self.keep_height => z0 + self.typed_rise(),
             None => c.z,
@@ -1180,9 +1223,12 @@ impl Editor {
                 Some(a) if a.mid.is_some() && !self.drawing_paths() => self.road_start = Some((a, false)),
                 Some(a) => self.road_start = Some((a, true)),
                 None => {
+                    // from inside a junction plate: from its centre, as a new arm of it
+                    self.road_plate_start = self.plate_at(assets, c.truncate());
                     let q = self.snap_point(c.truncate());
                     let z = self.doc.as_ref().map(|d| d.ground(q)).unwrap_or(c.z);
-                    self.road_start = Some((Anchor { pos: DVec3::new(q.x, q.y, z), ..Default::default() }, false));
+                    let pos = self.road_plate_start.map(|p| p.1).unwrap_or(DVec3::new(q.x, q.y, z));
+                    self.road_start = Some((Anchor { pos, ..Default::default() }, false));
                 }
             }
             return;
@@ -1214,7 +1260,20 @@ impl Editor {
                     doc.split_spline(k, id, at);
                 }
             }
-            self.history.commit();
+            // a road from or into a junction plate: cut back to its edge, an arm of it
+            let plates = [(self.road_plate_start.take(), made.first().copied(), false), (self.road_plate_end.take(), made.last().copied(), true)];
+            for (plate, end, at_end) in plates {
+                let (Some((jid, _, r)), Some((k, sid))) = (plate, end) else { continue };
+                let Some(doc) = self.doc.as_mut() else { break };
+                if let Some(arm) = doc.trim(k, sid, at_end, r) {
+                    self.pending_arms.entry(jid).or_default().push(crate::junction::Arm { key: arm.0, id: arm.1, at_end: arm.2 });
+                    self.pending_rebuild.push(jid);
+                    if at_end {
+                        last = None;
+                    }
+                }
+            }
+            self.finish_step();
         }
         let made = if end.is_none() { last } else { made.and_then(|m| m.last().copied()) };
         let _ = lib;
@@ -1949,7 +2008,16 @@ impl Editor {
             Some(Ok(plan)) => {
                 self.history.begin(tr("Reshape road", "Изменение формы дороги"));
                 self.apply_plan(&plan);
-                self.history.commit();
+                if let Some((jid, centre, r)) = self.reshape_plate.take() {
+                    let doc = self.doc.as_mut().unwrap();
+                    if let Some(end) = selection::free_end_at(doc, centre.truncate()) {
+                        if let Some(arm) = doc.trim(end.0, end.1, end.2, r) {
+                            self.pending_arms.entry(jid).or_default().push(crate::junction::Arm { key: arm.0, id: arm.1, at_end: arm.2 });
+                            self.pending_rebuild.push(jid);
+                        }
+                    }
+                }
+                self.finish_step();
                 self.select(Some(Sel::Spline(k, id)));
             }
             Some(Err(e)) => self.error(e),
@@ -2361,6 +2429,62 @@ impl Editor {
         out
     }
 
+    /// openMapper's junction plate a point lies on: (its IDCode, centre, radius out to its
+    /// arms' ends).
+    fn plate_at(&self, assets: &mut Assets, p: DVec2) -> Option<(i64, DVec3, f64)> {
+        let doc = self.doc.as_ref()?;
+        for (k, t) in &doc.tiles {
+            for o in t.tile.objects.iter().filter(|o| is_own_junction(&o.file)) {
+                let at = tile_origin(*k) + DVec2::new(o.pos[0], o.pos[1]);
+                if (at - p).length() > 80.0 {
+                    continue;
+                }
+                let Some(m) = assets.object(&o.file) else { continue };
+                let r = m.helpers.iter().map(|h| DVec2::new(h.0[0] as f64, h.0[1] as f64).length()).fold(0.0, f64::max);
+                if r > 0.0 && (at - p).length() < r * 0.85 {
+                    return Some((o.id, doc.object_world(*k, o, m.abs_height), r));
+                }
+            }
+        }
+        None
+    }
+
+    /// The headings out of a junction of the roads it holds (its known helpers).
+    pub fn junction_arms(&self, k: TileKey, id: i64) -> Vec<f64> {
+        let Some(doc) = self.doc.as_ref() else { return Vec::new() };
+        let Some(o) = doc.object(k, id) else { return Vec::new() };
+        let Some((abs, h)) = self.known_helpers.get(&o.file.to_lowercase()) else { return Vec::new() };
+        selection::arms_of(doc, &selection::helper_points(doc, k, id, *abs, h)).iter().map(|a| a.out).collect()
+    }
+
+    /// Change a junction's lights and crossings: it is made again with them.
+    pub fn set_junction_options(&mut self, id: i64, opts: crate::junction::Options) {
+        if self.doc.is_none() {
+            return;
+        }
+        self.history.begin(tr("Edit junction", "Изменение перекрёстка"));
+        self.junction_options.insert(id, opts.clone());
+        self.pending_options.insert(id, opts);
+        self.pending_rebuild.push(id);
+    }
+
+    /// After a save: the junction files of this map that nothing uses any more (not a tile,
+    /// and not one made in this session, which undo may still bring back) are deleted.
+    /// Returns how many went.
+    pub fn clean_junction_files(&self) -> usize {
+        let (Some(doc), Some(content)) = (self.doc.as_ref(), self.content_dir.as_ref()) else { return 0 };
+        let used: std::collections::HashSet<String> = doc
+            .tiles
+            .values()
+            .flat_map(|t| t.tile.objects.iter().chain(t.chrono.iter().flat_map(|c| c.objects.iter())))
+            .filter(|o| is_own_junction(&o.file))
+            .map(|o| o.file.to_lowercase())
+            .collect();
+        let folder: String = doc.dir.file_name().map(|f| f.to_string_lossy().to_string()).unwrap_or_else(|| "map".into()).chars().map(|c| if c.is_alphanumeric() || c == '-' || c == '_' { c } else { '_' }).collect();
+        let dir = omsi_cfg::resolve_path(content, &format!("Sceneryobjects\\openMapper\\{folder}"));
+        crate::junction::remove_unused(&dir, &folder, &used, self.session_first_id)
+    }
+
     /// Make the queued junctions' plates again for the arms they have now.
     fn rebuild_pending(&mut self, assets: &mut Assets) {
         let ids = std::mem::take(&mut self.pending_rebuild);
@@ -2389,15 +2513,27 @@ impl Editor {
                 }
             }
         }
+        for a in self.pending_arms.remove(&id).unwrap_or_default() {
+            if doc.spline(a.key, a.id).is_some() && !arms.iter().any(|x| x.id == a.id && x.at_end == a.at_end) {
+                arms.push(a);
+            }
+        }
+        let opts = self.pending_options.remove(&id).unwrap_or_else(|| crate::junction::Options::read(&omsi_cfg::resolve_path(&content, &o.file)));
         let centre = doc.object_world(jk, &o, model.abs_height);
         self.history.touch_tile(doc, jk);
         for a in &arms {
             self.history.touch_tile(doc, a.key);
         }
         self.history.touch_global(doc);
+        // its signal heads go with it (new ones are put up for the new plate)
+        for (k, c) in crate::junction::children(doc, id) {
+            self.history.touch_tile(doc, k);
+            doc.delete_object(k, c);
+        }
         doc.delete_object(jk, id);
+        self.junction_options.remove(&id);
         match arms.len() {
-            n if n >= 3 => match crate::junction::make(doc, assets, &content, asphalt.as_deref(), centre, &arms) {
+            n if n >= 3 => match crate::junction::make_with(doc, assets, &content, asphalt.as_deref(), centre, &arms, &opts) {
                 Ok(new) => {
                     if was_selected {
                         let k = doc.tiles.iter().find(|(_, t)| t.tile.objects.iter().any(|o| o.id == new)).map(|(k, _)| *k).unwrap_or(jk);
