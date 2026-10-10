@@ -102,14 +102,102 @@ struct PathRec {
     width: f64,
     direction: i32,
     blinker: i32,
+    /// The light its traffic waits at (`[use_traffic_light]`), if any.
+    light: Option<usize>,
 }
+
+/// What a junction has besides its roads: traffic lights (a plan of two phases, the main
+/// road's and the side roads'), and zebra crossings on some of its arms. Kept in the
+/// junction's own `.sco` as a comment line, so it is made again with them.
+#[derive(Debug, Clone, PartialEq)]
+pub struct Options {
+    pub lights: bool,
+    /// Green for the main road and for the side roads (s).
+    pub main_green: f64,
+    pub side_green: f64,
+    /// The arms with a zebra crossing, by their heading out of the junction (degrees).
+    pub crossings: Vec<f64>,
+}
+
+impl Default for Options {
+    fn default() -> Self {
+        Options { lights: false, main_green: 30.0, side_green: 20.0, crossings: Vec::new() }
+    }
+}
+
+const OPTIONS_TAG: &str = "openMapper junction:";
+
+impl Options {
+    fn line(&self) -> String {
+        let c: Vec<String> = self.crossings.iter().map(|h| format!("{h:.1}")).collect();
+        format!("{OPTIONS_TAG} lights={} main={:.0} side={:.0} crossings={}", self.lights as i32, self.main_green, self.side_green, c.join(","))
+    }
+
+    /// The options written in a junction's `.sco` text (defaults when none are).
+    pub fn parse(sco: &str) -> Options {
+        let mut o = Options::default();
+        let Some(line) = sco.lines().find(|l| l.trim_start().starts_with(OPTIONS_TAG)) else { return o };
+        for kv in line.trim_start()[OPTIONS_TAG.len()..].split_whitespace() {
+            let Some((k, v)) = kv.split_once('=') else { continue };
+            match k {
+                "lights" => o.lights = v == "1",
+                "main" => o.main_green = v.parse().unwrap_or(o.main_green),
+                "side" => o.side_green = v.parse().unwrap_or(o.side_green),
+                "crossings" => o.crossings = v.split(',').filter_map(|x| x.parse().ok()).collect(),
+                _ => {}
+            }
+        }
+        o
+    }
+
+    /// Read them from a junction's `.sco` file.
+    pub fn read(path: &Path) -> Options {
+        std::fs::read(path).ok().map(|b| Options::parse(&omsi_cfg::decode_text(&b))).unwrap_or_default()
+    }
+
+    /// Whether the arm going out along `out` has a crossing.
+    pub fn crossing_at(&self, out: f64) -> bool {
+        self.crossings.iter().any(|h| (roads::norm_deg(h - out + 180.0) - 180.0).abs() < 20.0)
+    }
+}
+
+/// The two arms most nearly in line (the main road through the junction).
+fn main_road(outs: &[f64]) -> (usize, usize) {
+    let mut best = (0, 1, -1.0);
+    for i in 0..outs.len() {
+        for j in i + 1..outs.len() {
+            let d = (roads::norm_deg(outs[i] - outs[j] + 180.0) - 180.0).abs();
+            if d > best.2 {
+                best = (i, j, d);
+            }
+        }
+    }
+    (best.0, best.1)
+}
+
+/// The light program: light 0 the main road's, light 1 the side roads': red-yellow 2 s,
+/// green, yellow 3 s, then red, with 2 s of all red between them.
+fn light_program(o: &Options) -> String {
+    let (gm, gs) = (o.main_green.max(5.0), o.side_green.max(5.0));
+    let main_turn = 2.0 + gm + 3.0 + 2.0;
+    let cycle = main_turn + 2.0 + gs + 3.0 + 2.0;
+    let mut t = format!("[traffic_lights_group]\n{}\n\n", num(cycle));
+    let _ = write!(t, "[traffic_light]\nMain road\n\n[phase]\n3\n2\n\n[phase]\n6\n{}\n\n[phase]\n9\n3\n\n[phase]\n0\n0\n\n", num(gm));
+    let _ = write!(t, "[traffic_light]\nSide roads\n\n[phase]\n0\n{}\n\n[phase]\n3\n2\n\n[phase]\n6\n{}\n\n[phase]\n9\n3\n\n[phase]\n0\n0\n\n", num(main_turn), num(gs));
+    t
+}
+
+/// The signal heads and their poles of a junction with lights: one at each arm traffic
+/// comes in by, on its right (left where traffic keeps left), facing it.
+pub const LIGHT_HEAD: &str = "Sceneryobjects\\Verkehrszeichen_MC\\Ampel_Kfz_1.sco";
+pub const LIGHT_POLE: &str = "Sceneryobjects\\Verkehrszeichen_MC\\Mast_Ampel_klein_1.sco";
 
 fn signed_turn(from: f64, to: f64) -> f64 {
     (to - from + 540.0).rem_euclid(360.0) - 180.0
 }
 
 /// The ways through the junction.
-fn paths(lanes: &[LaneEnd], centre: DVec3) -> Vec<PathRec> {
+fn paths(lanes: &[LaneEnd], centre: DVec3, light_of: &[Option<usize>]) -> Vec<PathRec> {
     let mut out = Vec::new();
     let c2 = centre.truncate();
     let arms = lanes.iter().map(|l| l.arm).max().map(|m| m + 1).unwrap_or(0);
@@ -144,11 +232,13 @@ fn paths(lanes: &[LaneEnd], centre: DVec3) -> Vec<PathRec> {
                 let Some(segs) = segs else { continue };
                 let total: f64 = segs.iter().map(|s| s.length).sum::<f64>().max(0.01);
                 let mut acc = 0.0;
-                for s in segs {
+                for (n, s) in segs.into_iter().enumerate() {
                     let z0 = a.pos.z + (b.pos.z - a.pos.z) * acc / total - centre.z;
                     acc += s.length;
                     let z1 = a.pos.z + (b.pos.z - a.pos.z) * acc / total - centre.z;
-                    out.push(PathRec { seg: s, z0, z1, kind: 0, width: a.width.max(2.5), direction: 0, blinker });
+                    // (traffic waits where it comes in: the light is on the way's first piece)
+                    let light = if n == 0 { light_of.get(i).copied().flatten() } else { None };
+                    out.push(PathRec { seg: s, z0, z1, kind: 0, width: a.width.max(2.5), direction: 0, blinker, light });
                 }
             }
         }
@@ -182,7 +272,7 @@ fn paths(lanes: &[LaneEnd], centre: DVec3) -> Vec<PathRec> {
                 let pa = a.pos.truncate() - c2;
                 let pb = b.pos.truncate() - c2;
                 if let Some(s) = roads::straight(pa, pb) {
-                    out.push(PathRec { seg: s, z0: a.pos.z - centre.z, z1: b.pos.z - centre.z, kind: 1, width: a.width.max(1.5), direction: 2, blinker: 0 });
+                    out.push(PathRec { seg: s, z0: a.pos.z - centre.z, z1: b.pos.z - centre.z, kind: 1, width: a.width.max(1.5), direction: 2, blinker: 0, light: None });
                 }
             }
         }
@@ -541,9 +631,33 @@ fn num(v: f64) -> String {
 /// Write the junction object for the given arms around `centre` and put it on the map.
 /// Returns the object's IDCode.
 pub fn make(doc: &mut Document, assets: &mut Assets, content: &Path, asphalt: Option<&Path>, centre: DVec3, arms: &[Arm]) -> anyhow::Result<i64> {
+    make_with(doc, assets, content, asphalt, centre, arms, &Options::default())
+}
+
+/// The same with lights and crossings as `opts` says.
+pub fn make_with(doc: &mut Document, assets: &mut Assets, content: &Path, asphalt: Option<&Path>, centre: DVec3, arms: &[Arm], opts: &Options) -> anyhow::Result<i64> {
     let (_, lanes) = arm_ends(doc, assets, arms).ok_or_else(|| anyhow::anyhow!("a road of the junction is not loaded"))?;
     let geo: Vec<ArmGeo> = arms.iter().map(|a| arm_geometry(doc, assets, a)).collect::<Option<_>>().ok_or_else(|| anyhow::anyhow!("a road of the junction is not loaded"))?;
-    let recs = paths(&lanes, centre);
+    let outs: Vec<f64> = geo.iter().map(|g| g.out).collect();
+    let light_of: Vec<Option<usize>> = if opts.lights && arms.len() >= 3 {
+        let (a, b) = main_road(&outs);
+        (0..arms.len()).map(|i| Some(if i == a || i == b { 0 } else { 1 })).collect()
+    } else {
+        vec![None; arms.len()]
+    };
+    let mut recs = paths(&lanes, centre, &light_of);
+    // zebra crossings: a footway across each arm chosen, a step inside its end
+    let mut zebras: Vec<(DVec2, f64, f64, f64)> = Vec::new();
+    for g in geo.iter().filter(|g| opts.crossing_at(g.out)) {
+        let r = roads::right(g.out);
+        let mid = g.end.truncate() - roads::dir(g.out) * 2.0 - centre.truncate();
+        let (a, b) = (mid - r * (g.left_w + 0.5), mid + r * (g.right_w + 0.5));
+        if let Some(seg) = roads::straight(a, b) {
+            let z = g.end.z - centre.z;
+            recs.push(PathRec { seg, z0: z, z1: z, kind: 1, width: 3.0, direction: 2, blinker: 0, light: None });
+            zebras.push((mid, g.out, g.left_w, g.right_w));
+        }
+    }
     let id = doc.new_id();
     let folder: String = doc.dir.file_name().map(|f| f.to_string_lossy().to_string()).unwrap_or_else(|| "map".into()).chars().map(|c| if c.is_alphanumeric() || c == '-' || c == '_' { c } else { '_' }).collect();
     let sco_root = std::fs::read_dir(content)?.flatten().map(|e| e.path()).find(|p| p.is_dir() && p.file_name().map(|f| f.to_string_lossy().eq_ignore_ascii_case("sceneryobjects")).unwrap_or(false)).unwrap_or_else(|| content.join("Sceneryobjects"));
@@ -564,7 +678,28 @@ pub fn make(doc: &mut Document, assets: &mut Assets, content: &Path, asphalt: Op
         }
         None => (asphalt.map(Path::to_path_buf), 8.0),
     };
-    let mesh = junction_mesh(&geo, centre, core_tex, period);
+    let mut mesh = junction_mesh(&geo, centre, core_tex, period);
+    if !zebras.is_empty() {
+        let white = tex_dir.join("om_zebra_white.png");
+        if !white.exists() {
+            let _ = image::RgbaImage::from_pixel(8, 8, image::Rgba([235, 235, 230, 255])).save(&white);
+        }
+        let mat = mesh.material(Some(white));
+        let z = geo.iter().map(|g| g.end.z - centre.z).sum::<f64>() / geo.len().max(1) as f64 + 0.03;
+        for (mid, out, lw, rw) in &zebras {
+            let (d, r) = (roads::dir(*out), roads::right(*out));
+            // stripes 0.5 m wide, a metre apart, 3 m along the road
+            let mut x = -lw + 0.25;
+            while x < rw - 0.25 {
+                let c = *mid + r * x;
+                let q = [c - r * 0.25 - d * 1.5, c + r * 0.25 - d * 1.5, c + r * 0.25 + d * 1.5, c - r * 0.25 + d * 1.5].map(|p| DVec3::new(p.x, p.y, z));
+                let uv = [[0.0, 0.0], [1.0, 0.0], [1.0, 1.0]];
+                mesh.tri([q[0], q[1], q[2]], uv, DVec3::Z, mat);
+                mesh.tri([q[0], q[2], q[3]], [[0.0, 0.0], [1.0, 1.0], [0.0, 1.0]], DVec3::Z, mat);
+                x += 1.0;
+            }
+        }
+    }
     // every texture beside the object
     let mut names = Vec::new();
     for t in &mesh.textures {
@@ -582,7 +717,10 @@ pub fn make(doc: &mut Document, assets: &mut Assets, content: &Path, asphalt: Op
     let name = format!("junction_{id}");
     std::fs::write(dir.join("model").join(format!("{name}.x")), mesh_x(&mesh, &names))?;
     let mut sco = String::new();
-    let _ = write!(sco, "[friendlyname]\nJunction {id}\n\n[groups]\n1\nopenMapper\n\n[surface]\n\n[absheight]\n\n[mesh]\n{name}.x\n\n");
+    let _ = write!(sco, "{}\n\n[friendlyname]\nJunction {id}\n\n[groups]\n1\nopenMapper\n\n[surface]\n\n[absheight]\n\n[mesh]\n{name}.x\n\n", opts.line());
+    if light_of.iter().any(|l| l.is_some()) {
+        sco.push_str(&light_program(opts));
+    }
     // where roads join it (the editors snap to these)
     for (g, a) in geo.iter().zip(arms) {
         let file = doc.spline(a.key, a.id).map(|s| s.file.clone()).unwrap_or_default();
@@ -593,6 +731,9 @@ pub fn make(doc: &mut Document, assets: &mut Assets, content: &Path, asphalt: Op
         let s = &p.seg;
         let grad = if s.length > 0.01 { (p.z1 - p.z0) / s.length } else { 0.0 };
         let _ = write!(sco, "[path]\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n\n", num(s.start.x), num(s.start.y), num(p.z0), num(s.heading), num(s.radius), num(s.length), num(grad), num(grad), p.kind, num(p.width), p.direction, p.blinker);
+        if let Some(l) = p.light {
+            let _ = write!(sco, "[use_traffic_light]\n{l}\n\n");
+        }
     }
     std::fs::write(dir.join(format!("{name}.sco")), omsi_cfg::encode_text(&sco.replace('\n', "\r\n")))?;
     omsi_cfg::content_changed();
@@ -603,7 +744,63 @@ pub fn make(doc: &mut Document, assets: &mut Assets, content: &Path, asphalt: Op
     let t = doc.tiles.get_mut(&k).ok_or_else(|| anyhow::anyhow!("no tile"))?;
     t.tile.objects.push(MapObject { file: rel, id, pos: [centre.x - org.x, centre.y - org.y, centre.z], rot: [0.0; 3], ..Default::default() });
     t.touch_content();
+    // the signal heads, on poles, bound to the junction's lights by [varparent]
+    let left_hand = doc.global.left_hand_traffic;
+    for (i, g) in geo.iter().enumerate() {
+        let Some(light) = light_of[i] else { continue };
+        if !lanes.iter().any(|l| l.arm == i && l.kind == 0 && l.incoming) {
+            continue;
+        }
+        // (traffic coming in keeps to the left of the way out where it keeps right)
+        let side = if left_hand { roads::right(g.out) * (g.right_w + 1.2) } else { -roads::right(g.out) * (g.left_w + 1.2) };
+        let p = g.end.truncate() + side - roads::dir(g.out) * 1.0;
+        let hk = tile_of(p);
+        if !doc.tiles.contains_key(&hk) {
+            continue;
+        }
+        let org = tile_origin(hk);
+        for (file, z, extra) in [(LIGHT_POLE, 0.0, Vec::new()), (LIGHT_HEAD, 2.55, vec![light.to_string()])] {
+            let oid = doc.new_id();
+            let t = doc.tiles.get_mut(&hk).unwrap();
+            let flag = extra.len() as i32;
+            t.tile.objects.push(MapObject { file: file.to_string(), id: oid, pos: [p.x - org.x, p.y - org.y, z], rot: [g.out, 0.0, 0.0], flag, extra, var_parent: Some(id), ..Default::default() });
+            t.touch_content();
+        }
+    }
     Ok(id)
+}
+
+/// Delete the junction files (`junction_<id>.sco` and its `.x`) in `dir` whose object file
+/// (`Sceneryobjects\\openMapper\\<folder>\\junction_<id>.sco`, lower case) is not in `used`,
+/// leaving those numbered from `keep_from` on (made in this session: undo may need them).
+pub fn remove_unused(dir: &Path, folder: &str, used: &std::collections::HashSet<String>, keep_from: i64) -> usize {
+    let Ok(rd) = std::fs::read_dir(dir) else { return 0 };
+    let mut n = 0;
+    for e in rd.flatten() {
+        let name = e.file_name().to_string_lossy().to_string();
+        let lower = name.to_lowercase();
+        if !(lower.starts_with("junction_") && lower.ends_with(".sco")) {
+            continue;
+        }
+        let rel = format!("sceneryobjects\\openmapper\\{}\\{lower}", folder.to_lowercase());
+        let num: Option<i64> = lower["junction_".len()..lower.len() - 4].parse().ok();
+        if used.contains(&rel) || num.map(|n| n >= keep_from).unwrap_or(true) {
+            continue;
+        }
+        let stem = &name[..name.len() - 4];
+        let _ = std::fs::remove_file(e.path());
+        let _ = std::fs::remove_file(dir.join("model").join(format!("{stem}.x")));
+        n += 1;
+    }
+    if n > 0 {
+        omsi_cfg::content_changed();
+    }
+    n
+}
+
+/// The objects that belong to junction `id` (its signal heads and poles).
+pub fn children(doc: &Document, id: i64) -> Vec<(TileKey, i64)> {
+    doc.tiles.iter().flat_map(|(k, t)| t.tile.objects.iter().filter(|o| o.var_parent == Some(id)).map(move |o| (*k, o.id))).collect()
 }
 
 /// Where two polylines cross: (point, distance along a, distance along b).
@@ -653,6 +850,43 @@ pub fn asphalt_texture(omsi: &Path) -> Option<PathBuf> {
 
 #[cfg(test)]
 mod tests {
+    #[test]
+    fn options_are_read_back_from_the_line_written() {
+        let o = Options { lights: true, main_green: 42.0, side_green: 17.0, crossings: vec![90.0, 270.5] };
+        let text = format!("{}\r\n\r\n[friendlyname]\r\nJunction 1\r\n", o.line());
+        let back = Options::parse(&text);
+        assert_eq!(back.lights, true);
+        assert_eq!((back.main_green, back.side_green), (42.0, 17.0));
+        assert!(back.crossing_at(91.0) && back.crossing_at(270.0) && !back.crossing_at(0.0));
+        assert_eq!(Options::parse("[friendlyname]\nx"), Options::default());
+    }
+
+    #[test]
+    fn the_main_road_is_the_pair_most_in_line_and_its_light_comes_first() {
+        assert_eq!(main_road(&[0.5, 90.0, 270.0]), (1, 2));
+        let p = light_program(&Options { lights: true, main_green: 30.0, side_green: 20.0, crossings: vec![] });
+        // a cycle of both greens, their yellows, red-yellows and all-red times
+        assert!(p.starts_with("[traffic_lights_group]\n64\n"), "{p}");
+        assert_eq!(p.matches("[traffic_light]").count(), 2);
+    }
+
+    #[test]
+    fn only_junction_files_nothing_uses_from_before_are_removed() {
+        let dir = std::env::temp_dir().join(format!("om-gc-{}", std::process::id()));
+        std::fs::create_dir_all(dir.join("model")).unwrap();
+        for n in [5, 6, 50] {
+            std::fs::write(dir.join(format!("junction_{n}.sco")), "x").unwrap();
+            std::fs::write(dir.join("model").join(format!("junction_{n}.x")), "x").unwrap();
+        }
+        std::fs::write(dir.join("other.sco"), "x").unwrap();
+        let used: std::collections::HashSet<String> = ["sceneryobjects\\openmapper\\m\\junction_6.sco".to_string()].into();
+        // 5 unused and old: removed; 6 used; 50 made this session (from 40 on)
+        assert_eq!(remove_unused(&dir, "m", &used, 40), 1);
+        assert!(!dir.join("junction_5.sco").exists() && !dir.join("model/junction_5.x").exists());
+        assert!(dir.join("junction_6.sco").exists() && dir.join("junction_50.sco").exists() && dir.join("other.sco").exists());
+        let _ = std::fs::remove_dir_all(&dir);
+    }
+
     use super::*;
 
     #[test]

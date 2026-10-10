@@ -1332,6 +1332,7 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
     }
     match sel {
         Sel::Object(k, id) => {
+            crate::ui_edit::junction_section(ui, ed, k, id);
             if let Some((x, y)) = new_pos {
                 let o = crate::doc::tile_origin(k);
                 ed.put_object(k, id, glam::DVec2::new(o.x + x, o.y + y));

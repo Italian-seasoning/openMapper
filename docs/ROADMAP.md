@@ -93,3 +93,7 @@ Add a line when you touch a shared file: stream, file, what.
 * A · `src/history.rs`: `Snapshot::descriptions`.
 * A · `src/main.rs`: `mod descriptions`.
 * A · (no new shared hooks for Holidays.txt: it is part of the timetable, `Timetable::calendar`.)
+* B (round 4) · `src/junction.rs`: `Options` (lights, greens, crossings; kept as a comment line in the junction's `.sco`), `make_with` (light program, `[use_traffic_light]` on the first piece of each way in, signal heads and poles with `[varparent]`, zebra stripes and footways), `children`, `remove_unused`; `make` calls `make_with` with no options.
+* B (round 4) · `src/ui.rs`: an object's properties end with `ui_edit::junction_section` (for openMapper's junctions).
+* B (round 4) · `src/app.rs`: after a successful save, `ed.clean_junction_files()` deletes this map's junction files no tile uses that were made before this session.
+
