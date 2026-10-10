@@ -8,7 +8,10 @@ mod assets;
 mod camera;
 mod check;
 mod clipboard;
+mod descriptions;
 mod doc;
+mod draw;
+mod export;
 mod editor;
 mod gpu;
 mod history;
@@ -23,13 +26,17 @@ mod place;
 mod render;
 mod reshape;
 mod roads;
+mod roundabout;
 mod rows;
 mod selection;
 mod timetable;
 mod traffic;
 mod ui;
 mod ui_edit;
+mod sample;
+mod ui_guide;
 mod ui_minimap;
+mod ui_newmap;
 mod ui_timetable;
 mod ui_traffic;
 
@@ -43,6 +50,12 @@ fn main() {
             std::process::exit(2);
         };
         std::process::exit(check::cli(std::path::Path::new(cfg)));
+    }
+    // `openmapper --export path/to/global.cfg out.zip` / `--import file` (no window)
+    match (args.get(1).and_then(|a| a.to_str()), args.get(2), args.get(3)) {
+        (Some("--export"), Some(cfg), Some(out)) => std::process::exit(export::cli_export(std::path::Path::new(cfg), std::path::Path::new(out))),
+        (Some("--import"), Some(f), _) => std::process::exit(export::cli_import(std::path::Path::new(f))),
+        _ => {}
     }
     // `openmapper path/to/global.cfg` opens that map
     let open = std::env::args_os().nth(1).map(std::path::PathBuf::from).filter(|p| p.is_file());

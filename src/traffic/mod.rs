@@ -12,6 +12,7 @@ use omsi_cfg::CfgFile;
 use omsi_map::ailists::{AiTypGroup, AiVehicleEntry, UnschedGroup};
 use omsi_map::{AiGroup, DepotEntry};
 
+use crate::doc::safe::Op;
 use crate::timetable::encode;
 
 /// The files this module writes.
@@ -288,38 +289,43 @@ pub fn list_text(items: &[String]) -> String {
     items.iter().map(|s| format!("{s}\n")).collect()
 }
 
-/// Write what changed into the map folder.
-pub fn save_to(t: &mut Traffic, map_dir: &Path) -> std::io::Result<()> {
+/// What saving the traffic writes in the map folder: the changed files (the map's save
+/// carries it out with its own, all or nothing; `saved` then marks it done).
+pub fn plan(t: &Traffic, map_dir: &Path) -> Vec<Op> {
     if !t.dirty {
-        return Ok(());
+        return Vec::new();
     }
-    let changed = std::mem::take(&mut t.changed);
-    for f in &changed {
-        let text = match f {
-            File::AiLists => ailists_text(&t.groups),
-            File::VehGroups => vehgroups_text(&t.veh_groups),
-            File::Density => density_text(&t.density),
-            File::Parked => list_text(&t.parked),
-            File::Humans => list_text(&t.humans),
-            File::Drivers => list_text(&t.drivers),
-        };
-        let p = omsi_cfg::resolve_path(map_dir, f.name());
-        std::fs::write(p, encode(&text))?;
-    }
-    if changed.contains(&File::AiLists) {
-        t.legacy = false;
-    }
-    t.dirty = false;
-    if !changed.is_empty() {
-        log::info!("traffic: {} file(s) written to {}", changed.len(), map_dir.display());
-    }
-    Ok(())
+    t.changed
+        .iter()
+        .map(|f| {
+            let text = match f {
+                File::AiLists => ailists_text(&t.groups),
+                File::VehGroups => vehgroups_text(&t.veh_groups),
+                File::Density => density_text(&t.density),
+                File::Parked => list_text(&t.parked),
+                File::Humans => list_text(&t.humans),
+                File::Drivers => list_text(&t.drivers),
+            };
+            Op::Write(omsi_cfg::resolve_path(map_dir, f.name()), encode(&text))
+        })
+        .collect()
 }
 
-/// Write what changed into the map's folder.
-pub fn save(doc: &mut crate::doc::Document) -> std::io::Result<()> {
-    let dir = doc.dir.clone();
-    save_to(&mut doc.traffic, &dir)
+/// The planned files were written.
+pub fn saved(t: &mut Traffic) {
+    if t.changed.contains(&File::AiLists) {
+        t.legacy = false;
+    }
+    t.changed.clear();
+    t.dirty = false;
+}
+
+/// Write what changed into the map folder by itself (all or nothing).
+#[cfg(test)]
+pub fn save_to(t: &mut Traffic, map_dir: &Path) -> anyhow::Result<()> {
+    crate::doc::safe::commit(&plan(t, map_dir))?;
+    saved(t);
+    Ok(())
 }
 
 /// The car groups of OMSI 2's own maps (their vehicles are in the installation `omsi`).

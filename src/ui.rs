@@ -27,7 +27,7 @@ const SELECT: Color32 = Color32::from_rgb(64, 86, 122);
 
 /// What the interface asks the application to do.
 pub enum Action {
-    NewMap { folder: String, friendly: String, size: i32 },
+    NewMap { folder: String, friendly: String, size: i32, options: crate::ui_newmap::NewMapOptions },
     Open(PathBuf),
     OpenDialog,
     Save,
@@ -54,6 +54,8 @@ pub enum Action {
     Paste,
     Duplicate,
     SelectAll,
+    /// Build the road drawn so far.
+    BuildRoad,
     /// Move the camera over this point (the overview map).
     LookAt(glam::DVec2),
     AddGroundTexture(String),
@@ -66,6 +68,10 @@ pub enum Action {
     Traffic,
     /// View > Graphics quality.
     SetGraphics(crate::render::quality::Quality),
+    /// Open or close the Getting started guide.
+    Guide,
+    /// Save the map and pack it into a .zip to share.
+    Export,
     /// Do it without asking about unsaved changes.
     Force(Box<Action>),
     Quit,
@@ -76,7 +82,7 @@ pub struct UiState {
     pub search: String,
     pub object_cat: Option<Category>,
     pub spline_cat: Option<Category>,
-    pub new_map: Option<(String, i32)>,
+    pub new_map: Option<crate::ui_newmap::NewMapForm>,
     pub help_open: bool,
     pub about_open: bool,
     pub texture_picker: Option<String>,
@@ -299,7 +305,7 @@ pub fn welcome(root: &mut egui::Ui, st: &mut UiState, prefs: &Prefs, omsi: Optio
         egui::MenuBar::new().ui(ui, |ui| {
             ui.menu_button(tr("File", "Файл"), |ui| {
                 if menu_item(ui, Some(Icon::NewFile), tr("New map…", "Новая карта…"), "", omsi.is_some()) {
-                    st.new_map = Some((String::new(), 3));
+                    st.new_map = Some(Default::default());
                 }
                 if menu_item(ui, Some(Icon::Open), tr("Open map…", "Открыть карту…"), "", omsi.is_some()) {
                     actions.push(Action::OpenDialog);
@@ -413,7 +419,7 @@ pub fn welcome(root: &mut egui::Ui, st: &mut UiState, prefs: &Prefs, omsi: Optio
                                 }
                             }
                             if ui.add(egui::Button::new(icons::labelled(Icon::NewFile, tr("New map…", "Новая карта…"))).min_size(w)).clicked() {
-                                st.new_map = Some((String::new(), 3));
+                                st.new_map = Some(Default::default());
                             }
                             if ui.add(egui::Button::new(icons::labelled(Icon::Open, tr("Browse…", "Обзор…"))).min_size(w)).clicked() {
                                 actions.push(Action::OpenDialog);
@@ -430,48 +436,7 @@ pub fn welcome(root: &mut egui::Ui, st: &mut UiState, prefs: &Prefs, omsi: Optio
             });
         });
     });
-    new_map_dialog(root.ctx(), st, actions);
     about(root.ctx(), st);
-}
-
-fn new_map_dialog(ctx: &egui::Context, st: &mut UiState, actions: &mut Vec<Action>) {
-    let Some((name, size)) = &mut st.new_map else { return };
-    let mut close = false;
-    egui::Window::new(tr("New map", "Новая карта")).collapsible(false).resizable(false).anchor(egui::Align2::CENTER_CENTER, Vec2::ZERO).show(ctx, |ui| {
-        ui.set_width(340.0);
-        egui::Grid::new("new map").num_columns(2).spacing(Vec2::new(10.0, 8.0)).show(ui, |ui| {
-            ui.label(tr("Name:", "Название:"));
-            let r = ui.add(egui::TextEdit::singleline(name).hint_text(tr("My town", "Мой город")).desired_width(220.0));
-            if !r.has_focus() && name.is_empty() {
-                r.request_focus();
-            }
-            ui.end_row();
-            ui.label(tr("Size:", "Размер:"));
-            egui::ComboBox::from_id_salt("size").icon(combo_icon).selected_text(format!("{n} × {n} {}", tr("tiles", "тайлов"), n = size)).show_ui(ui, |ui| {
-                for n in [1, 3, 5] {
-                    ui.selectable_value(size, n, format!("{n} × {n} ({} × {} m)", n * 300, n * 300));
-                }
-            });
-            ui.end_row();
-        });
-        ui.label(RichText::new(tr("Flat ground from OMSI 2's own template. More tiles can be added later.", "Ровная земля из шаблона самой OMSI 2. Тайлы можно добавить позже.")).small().color(TEXT_DIM));
-        ui.separator();
-        ui.with_layout(Layout::right_to_left(Align::Center), |ui| {
-            if ui.button(tr("Cancel", "Отмена")).clicked() {
-                close = true;
-            }
-            let ok = !name.trim().is_empty();
-            if ui.add_enabled(ok, egui::Button::new(tr("Create", "Создать"))).clicked() || (ok && ui.input(|i| i.key_pressed(egui::Key::Enter))) {
-                let friendly = name.trim().to_string();
-                let folder: String = friendly.chars().map(|c| if c.is_alphanumeric() || c == ' ' || c == '-' || c == '_' { c } else { '_' }).collect::<String>().trim().to_string();
-                actions.push(Action::NewMap { folder, friendly, size: *size });
-                close = true;
-            }
-        });
-    });
-    if close {
-        st.new_map = None;
-    }
 }
 
 fn about(ctx: &egui::Context, st: &mut UiState) {
@@ -533,7 +498,6 @@ pub fn editor(root: &mut egui::Ui, st: &mut UiState, u: EditorUi, actions: &mut 
         }
     });
     let ctx = root.ctx().clone();
-    new_map_dialog(&ctx, st, actions);
     texture_picker(&ctx, st, texture_files, swatches, wanted_swatches, actions);
     controls(&ctx, st);
     about(&ctx, st);
@@ -550,7 +514,7 @@ fn menu_bar(root: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, can_undo: bo
         egui::MenuBar::new().ui(ui, |ui| {
             ui.menu_button(tr("File", "Файл"), |ui| {
                 if menu_item(ui, Some(Icon::NewFile), tr("New map…", "Новая карта…"), "", true) {
-                    st.new_map = Some((String::new(), 3));
+                    st.new_map = Some(Default::default());
                 }
                 if menu_item(ui, Some(Icon::Open), tr("Open map…", "Открыть карту…"), "", true) {
                     actions.push(Action::OpenDialog);
@@ -570,6 +534,9 @@ fn menu_bar(root: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, can_undo: bo
                 ui.separator();
                 if menu_item(ui, Some(Icon::Save), tr("Save", "Сохранить"), "Ctrl+S", true) {
                     actions.push(Action::Save);
+                }
+                if menu_item(ui, Some(Icon::Copy), tr("Export map for sharing…", "Экспорт карты для обмена…"), "", true) {
+                    actions.push(Action::Export);
                 }
                 if menu_item(ui, Some(Icon::Import), tr("Import assets…", "Импорт ассетов…"), "", true) {
                     actions.push(Action::Import);
@@ -672,6 +639,9 @@ fn menu_bar(root: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, can_undo: bo
                 }
             });
             ui.menu_button(tr("Help", "Справка"), |ui| {
+                if menu_item(ui, Some(Icon::CheckCircle), tr("Getting started", "С чего начать"), "", true) {
+                    actions.push(Action::Guide);
+                }
                 if menu_item(ui, Some(Icon::Help), tr("Controls", "Управление"), "", true) {
                     st.help_open = true;
                 }
@@ -690,7 +660,7 @@ fn toolbar(root: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, can_undo: boo
             let r = tool_button(ui, Icon::NewFile, false, true);
             help(st, &r, tr("New map", "Новая карта"));
             if r.clicked() {
-                st.new_map = Some((String::new(), 3));
+                st.new_map = Some(Default::default());
             }
             let r = tool_button(ui, Icon::Open, false, true);
             help(st, &r, tr("Open a map", "Открыть карту"));
@@ -950,6 +920,7 @@ fn catalogue_of(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Libr
     if logic.is_some() {
     } else if kind == Kind::Spline {
         check(ui, &mut ed.follow_ground, tr("Shape the ground under the road", "Подгонять землю под дорогу"));
+        crate::ui_edit::road_options(ui, ed);
         check(ui, &mut ed.auto_junctions, tr("Make junctions where roads meet", "Делать перекрёстки, где дороги встречаются"));
         check(ui, &mut ed.inherit_type, tr("Go on with the type of the road I start from", "Продолжать типом дороги, от которой начинаю"));
         let current = ed.road_type.as_deref().map(|r| lib.find(r).map(|a| a.name.clone()).unwrap_or_else(|| r.to_string()));
@@ -1371,6 +1342,7 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
     }
     match sel {
         Sel::Object(k, id) => {
+            crate::ui_edit::junction_section(ui, ed, k, id);
             if let Some((x, y)) = new_pos {
                 let o = crate::doc::tile_origin(k);
                 ed.put_object(k, id, glam::DVec2::new(o.x + x, o.y + y));
@@ -1451,8 +1423,7 @@ fn map_properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, actions:
             });
         });
         ui.add_space(4.0);
-        ui.label(RichText::new(tr("Description", "Описание")).color(TEXT_DIM));
-        ui.add(egui::TextEdit::multiline(&mut doc.global.description).desired_rows(4).desired_width(f32::INFINITY));
+        crate::descriptions::editor(ui, doc, &mut ed.history);
         if doc.global.entry_points.is_empty() {
             ui.add_space(6.0);
             ui.label(RichText::new(tr("No start point yet: place one (Objects > Bus stops > Entrypoint) so the bus has somewhere to appear in openOMSI.", "Нет точки старта: поставьте её (Объекты > Остановки > Entrypoint), чтобы автобусу было где появиться в openOMSI.")).small().color(Color32::from_rgb(230, 170, 100)));

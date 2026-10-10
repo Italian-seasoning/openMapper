@@ -74,6 +74,28 @@ Add a line when you touch a shared file: stream, file, what.
 * B (round 2) · `src/app.rs`: `U` toggles the ruler; the Select tool's empty-ground press goes to the editor while the ruler is on; `ed.paste(&self.lib)`.
 * B (round 2) · `src/ui.rs`: the properties panel is in a `ScrollArea`; an object hanging on another (`[attachObj]`) is shown through `selection::any_object` / `any_object_mut` (no X / Y, a "Hangs on" row); a road's properties end with `ui_edit::rows_section`; Controls row for `U`.
 * B (round 2) · `src/main.rs`: `mod rows`.
+* A · `src/main.rs`: `mod sample`, `mod ui_guide`, `mod ui_newmap`.
+* A · `src/ui.rs`: the New map dialog moved to `src/ui_newmap.rs` (`UiState::new_map` is a `NewMapForm`; `Action::NewMap` carries `options`), `Action::Guide` and Help menu "Getting started".
+* A · `src/install.rs`: `Prefs::guide_off`.
+* A · `src/app.rs`: `new_map` takes the options (base ground, left-hand traffic, sample → `App::sample`), the New map dialog drawn from here (both screens), `App::guide` window and its "Show me" requests, `Action::Guide`, Play ticks the guide's test drive; `OPENMAPPER_DEMO=SAMPLE:<name>` (with `OPENMAPPER_LHT` keeping left) makes a sample map and saves it, `OPENMAPPER_NEWMAP` opens the dialog, `OPENMAPPER_GUIDE` the guide.
+* A · `src/ui_timetable.rs`: `add_depot` is `pub(crate)` (the sample uses it).
+* A · `src/doc/save.rs`: the timetable's and the traffic's files are planned as `safe::Op`s (`timetable::plan`, `traffic::plan`) and committed with the map's own, all or nothing (`saved` marks them done afterwards); the separate `extra` backup list for them is gone (their ops are backed up like the rest).
+* B (round 3) · `src/ui.rs`: `Action::BuildRoad`; the Roads panel calls `ui_edit::road_options` (keep height).
+* B (round 3) · `src/app.rs`: Enter pushes `Action::BuildRoad` (handled with `ed.confirm_road`); Shift sets `ed.straight_lock` and `ed.replan`; `ui_edit::road_entry` drawn after `ui::editor`.
+* B (round 3) · `src/main.rs`: `mod draw`.
+* B (round 3) · `src/main.rs`: `mod roundabout`. Roads panel options (roundabout, keep height) come from `ui_edit::road_options`.
+* A · `src/main.rs`: `mod export`; `--export path/to/global.cfg out.zip` and `--import file` run without a window.
+* A · `src/ui.rs`: `Action::Export`, File menu "Export map for sharing…".
+* A · `src/app.rs`: `App::export` (saves, asks where, packs; toasts what went in and what is missing).
+* A · `src/check.rs` (C): `missing_textures` is `pub(crate)` (the export test checks the imported map with it).
+* A · `src/doc/mod.rs`, `src/doc/save.rs` (C): `Document::descriptions` (`global_<LANG>.dsc`, new `src/descriptions.rs`), read with the map, counted in `is_dirty`, planned with the save's ops; `descriptions: Default::default()` in the tests' and autosave's `Document` literals (`src/doc/tests.rs`, `src/doc/autosave.rs`, `src/check.rs`, `src/selection.rs`).
+* A · `src/ui.rs`: `map_properties` shows `descriptions::editor` (a language picker above the description) in place of the plain description field.
+* A · `src/history.rs`: `Snapshot::descriptions`.
+* A · `src/main.rs`: `mod descriptions`.
+* A · (no new shared hooks for Holidays.txt: it is part of the timetable, `Timetable::calendar`.)
+* B (round 4) · `src/junction.rs`: `Options` (lights, greens, crossings; kept as a comment line in the junction's `.sco`), `make_with` (light program, `[use_traffic_light]` on the first piece of each way in, signal heads and poles with `[varparent]`, zebra stripes and footways), `children`, `remove_unused`; `make` calls `make_with` with no options.
+* B (round 4) · `src/ui.rs`: an object's properties end with `ui_edit::junction_section` (for openMapper's junctions).
+* B (round 4) · `src/app.rs`: after a successful save, `ed.clean_junction_files()` deletes this map's junction files no tile uses that were made before this session.
 
 * C · `src/install.rs`: `Prefs::save` writes through `doc::safe::write_atomic` (a warning in the log when it fails).
 * C · `src/gpu.rs`: `SAMPLES` went; `Gpu::samples` and `Gpu::set_samples` (MSAA chosen by the graphics quality; 1 draws the view straight into the frame).

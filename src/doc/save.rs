@@ -61,18 +61,13 @@ pub fn save(doc: &mut Document) -> anyhow::Result<()> {
     }
     doc.fresh = false;
     doc.sync_mask_slots();
-    let (ops, written) = plan(doc, &doc.dir, false);
-    // (the timetable and the traffic write their own files: those they may change are kept
-    // whole)
-    let mut extra: Vec<&str> = Vec::new();
-    if doc.timetable.dirty {
-        extra.extend(["TTData", "ailists.cfg"]);
-    }
-    if doc.traffic.dirty {
-        extra.extend(["ailists.cfg", "unsched_vehgroups.txt", "unsched_trafficdens.txt", "parklist_p.txt", "humans.txt", "drivers.txt"]);
-    }
-    extra.dedup();
-    let kept = super::safe::backup(&doc.dir, &ops, &extra).map_err(|e| anyhow::anyhow!("{}: {e}", crate::i18n::tr("could not keep a backup, nothing was saved", "не удалось сделать резервную копию, ничего не сохранено")))?;
+    let (mut ops, written) = plan(doc, &doc.dir, false);
+    // the timetable's and the traffic's files go with the map's, all or nothing
+    let (dir, order) = (doc.dir.clone(), doc.order.clone());
+    ops.extend(crate::timetable::plan(&mut doc.timetable, &dir, &order));
+    ops.extend(crate::traffic::plan(&doc.traffic, &dir));
+    ops.extend(doc.descriptions.plan(&dir));
+    let kept = super::safe::backup(&doc.dir, &ops, &[]).map_err(|e| anyhow::anyhow!("{}: {e}", crate::i18n::tr("could not keep a backup, nothing was saved", "не удалось сделать резервную копию, ничего не сохранено")))?;
     super::safe::commit(&ops)?;
     if let Some(b) = kept {
         log::info!("the files this save replaced are kept in {}", b.display());
@@ -85,8 +80,9 @@ pub fn save(doc: &mut Document) -> anyhow::Result<()> {
         }
     }
     doc.global_dirty = false;
-    crate::timetable::save(doc)?;
-    crate::traffic::save(doc)?;
+    crate::timetable::saved(&mut doc.timetable);
+    crate::traffic::saved(&mut doc.traffic);
+    doc.descriptions.saved();
     Ok(())
 }
 

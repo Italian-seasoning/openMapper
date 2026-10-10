@@ -262,7 +262,7 @@ fn inspect(path: &Path, is_spline: bool, roots: &[PathBuf]) -> (Vec<String>, Vec
 }
 
 /// The textures a content file names that cannot be found.
-fn missing_textures(path: &Path, is_spline: bool, roots: &[PathBuf]) -> Vec<String> {
+pub(crate) fn missing_textures(path: &Path, is_spline: bool, roots: &[PathBuf]) -> Vec<String> {
     let (content, omsi) = match (roots.first(), roots.last()) {
         (Some(c), Some(o)) => (c.clone(), o.clone()),
         _ => return Vec::new(),
@@ -903,6 +903,7 @@ mod tests {
             global_rev: 0,
             timetable: Default::default(),
             traffic: Default::default(),
+            descriptions: Default::default(),
         };
         for k in tiles {
             doc.tiles.insert(*k, crate::doc::TileDoc::new_flat(0.0));

@@ -12,6 +12,7 @@ use std::path::Path;
 
 use omsi_timetable::{BusStopEntry, Line, StnLink, StnLinkEntry, TimetableData, Track, TrackEntry, Trip};
 
+use crate::doc::safe::Op;
 use crate::doc::{Document, TileKey};
 
 /// Days a tour runs on: bits 0-6 Monday…Sunday, 7 public holidays, 8 school holidays,
@@ -38,6 +39,9 @@ pub struct Timetable {
     links_changed: bool,
     /// Trips whose route is to be found again (their stops changed).
     pub reroute: BTreeSet<String>,
+    /// Public holidays and school holidays (`Holidays.txt`): which tours run on a day.
+    pub calendar: omsi_map::Calendar,
+    calendar_changed: bool,
 }
 
 fn key(name: &str) -> String {
@@ -55,7 +59,11 @@ impl Timetable {
         if n != (0, 0, 0, 0) {
             log::info!("timetable: {} lines, {} trips, {} tracks, {} stops", n.0, n.1, n.2, n.3);
         }
-        Timetable { stops: d.bus_stops, links: d.stn_links, trips: d.trips, tracks: d.tracks, lines: d.lines, order: order.to_vec(), ..Default::default() }
+        let mut calendar = omsi_map::Calendar::load(&omsi_cfg::resolve_path(dir, "Holidays.txt")).unwrap_or_default();
+        // (in the order of the days, as the Lines window lists them)
+        calendar.holidays.sort_by_key(|h| h.date);
+        calendar.ranges.sort_by_key(|r| r.start);
+        Timetable { stops: d.bus_stops, links: d.stn_links, trips: d.trips, tracks: d.tracks, lines: d.lines, order: order.to_vec(), calendar, ..Default::default() }
     }
 
     pub fn trip(&self, name: &str) -> Option<&Trip> {
@@ -110,14 +118,20 @@ impl Timetable {
         self.changed = mine;
         self.stops_changed = true;
         self.links_changed = true;
+        self.calendar_changed = true;
         self.reroute.clear();
+        self.dirty = true;
+    }
+
+    pub fn touch_calendar(&mut self) {
+        self.calendar_changed = true;
         self.dirty = true;
     }
 
     /// The same lines, trips, tours and stops (what the Lines window edits; not the routes
     /// found for them or what is still to be saved).
     pub fn same_content(&self, o: &Timetable) -> bool {
-        self.lines == o.lines && self.trips == o.trips && self.stops == o.stops
+        self.lines == o.lines && self.trips == o.trips && self.stops == o.stops && self.calendar == o.calendar
     }
 
     /// A new line (its name made unique).
@@ -360,29 +374,26 @@ pub fn track_name(t: &Track) -> String {
     t.path.file_stem().map(|s| s.to_string_lossy().into_owned()).unwrap_or_default()
 }
 
-/// Write what changed into the map's `TTData`.
-pub fn save(doc: &mut Document) -> std::io::Result<()> {
-    let order = doc.order.clone();
-    save_to(&mut doc.timetable, &doc.dir, &order)
-}
-
-/// Write what changed into `map_dir/TTData`; `order` is the map's tile list as saved.
-pub fn save_to(tt: &mut Timetable, map_dir: &Path, order: &[TileKey]) -> std::io::Result<()> {
-    let dir = map_dir.join("TTData");
+/// What saving the timetable writes and takes away in the map folder `map_dir` (`order`:
+/// the tile list as saved): only what changed. The map's save carries it out with its own
+/// files, all or nothing; `saved` then marks it done.
+pub fn plan(tt: &mut Timetable, map_dir: &Path, order: &[TileKey]) -> Vec<Op> {
+    let mut ops = Vec::new();
     if !tt.dirty {
         tt.order = order.to_vec();
-        return Ok(());
+        return ops;
     }
     tt.renumber_tiles(order);
-    std::fs::create_dir_all(&dir)?;
-    for f in std::mem::take(&mut tt.removed) {
-        if let Some(p) = find_file(&dir, &f) {
-            std::fs::remove_file(p)?;
+    let dir = map_dir.join("TTData");
+    for f in &tt.removed {
+        if let Some(p) = find_file(&dir, f) {
+            ops.push(Op::Remove(p));
         }
     }
-    let changed = std::mem::take(&mut tt.changed);
-    let mut written = 0;
-    for f in &changed {
+    // (a file there in another case is written under its own name: on a disk that ignores
+    // case, writing the new name and removing the old would remove both)
+    let at = |name: &str| find_file(&dir, &name.to_lowercase()).unwrap_or_else(|| dir.join(name));
+    for f in &tt.changed {
         let (stem, ext) = f.rsplit_once('.').unwrap_or((f.as_str(), ""));
         let text = match ext {
             "ttl" => tt.lines.iter().find(|l| key(&l.name) == stem).map(|l| (l.name.clone(), line_text(l))),
@@ -390,36 +401,45 @@ pub fn save_to(tt: &mut Timetable, map_dir: &Path, order: &[TileKey]) -> std::io
             "ttr" => tt.tracks.iter().find(|t| key(&track_name(t)) == stem).map(|t| (track_name(t), track_text(t))),
             _ => None,
         };
-        let Some((name, text)) = text else { continue };
-        // (a file of another case is replaced, not kept beside it)
-        if let Some(old) = find_file(&dir, f) {
-            std::fs::remove_file(old)?;
+        if let Some((name, text)) = text {
+            ops.push(Op::Write(at(&format!("{name}.{ext}")), encode(&text)));
         }
-        std::fs::write(dir.join(format!("{name}.{ext}")), encode(&text))?;
-        written += 1;
     }
-    if std::mem::take(&mut tt.stops_changed) || !dir.join("Busstops.cfg").is_file() {
-        write_named(&dir, "Busstops.cfg", &busstops_text(&tt.stops))?;
-        written += 1;
+    if tt.stops_changed || !dir.join("Busstops.cfg").is_file() {
+        ops.push(Op::Write(at("Busstops.cfg"), encode(&busstops_text(&tt.stops))));
     }
-    if std::mem::take(&mut tt.links_changed) {
-        write_named(&dir, "StnLinks.cfg", &stnlinks_text(&tt.links, &tt.stops))?;
-        written += 1;
+    if tt.links_changed {
+        ops.push(Op::Write(at("StnLinks.cfg"), encode(&stnlinks_text(&tt.links, &tt.stops))));
     }
-    tt.dirty = false;
-    log::info!("timetable: {written} file(s) written to {}", dir.display());
-    Ok(())
+    if tt.calendar_changed {
+        let p = find_file(map_dir, "holidays.txt").unwrap_or_else(|| map_dir.join("Holidays.txt"));
+        ops.push(Op::Write(p, encode(&holidays_text(&tt.calendar))));
+    }
+    ops
 }
 
+/// The planned files were written.
+pub fn saved(tt: &mut Timetable) {
+    tt.removed.clear();
+    tt.changed.clear();
+    tt.stops_changed = false;
+    tt.links_changed = false;
+    tt.calendar_changed = false;
+    tt.dirty = false;
+}
+
+/// Write what changed into `map_dir/TTData` by itself (all or nothing).
+#[cfg(test)]
+pub fn save_to(tt: &mut Timetable, map_dir: &Path, order: &[TileKey]) -> anyhow::Result<()> {
+    let ops = plan(tt, map_dir, order);
+    crate::doc::safe::commit(&ops)?;
+    saved(tt);
+    Ok(())
+}
 
 /// A file of the folder by its lower-case name.
 fn find_file(dir: &Path, lower: &str) -> Option<std::path::PathBuf> {
     std::fs::read_dir(dir).ok()?.flatten().map(|e| e.path()).find(|p| p.file_name().map(|n| n.to_string_lossy().to_lowercase() == lower).unwrap_or(false))
-}
-
-fn write_named(dir: &Path, name: &str, text: &str) -> std::io::Result<()> {
-    let p = find_file(dir, &name.to_lowercase()).unwrap_or_else(|| dir.join(name));
-    std::fs::write(p, encode(text))
 }
 
 /// The text as OMSI 2 writes TTData: Windows-1252 with CR LF; text that code page cannot
@@ -532,6 +552,31 @@ pub fn track_text(t: &Track) -> String {
     o
 }
 
+/// `Holidays.txt` as OMSI 2 has it: per year its school holidays (`[holidays]` first day,
+/// last day, name), then its public holidays (`[holiday]` day, name).
+pub fn holidays_text(c: &omsi_map::Calendar) -> String {
+    let mut years: BTreeSet<i32> = c.ranges.iter().map(|r| r.start / 10_000).chain(c.holidays.iter().map(|h| h.date / 10_000)).collect();
+    if years.is_empty() {
+        years.insert(0);
+    }
+    let mut o = String::new();
+    for y in years {
+        o.push_str(&format!("-----------------{y}------------------------------\n\n"));
+        let mut ranges: Vec<_> = c.ranges.iter().filter(|r| r.start / 10_000 == y).collect();
+        ranges.sort_by_key(|r| r.start);
+        for r in ranges {
+            o.push_str(&format!("[holidays]\n{}\n{}\n{}\n\n", r.start, r.end, r.name.trim()));
+        }
+        o.push_str("..............................\n\n");
+        let mut days: Vec<_> = c.holidays.iter().filter(|h| h.date / 10_000 == y).collect();
+        days.sort_by_key(|h| h.date);
+        for h in days {
+            o.push_str(&format!("[holiday]\n{}\n{}\n\n", h.date, h.name.trim()));
+        }
+    }
+    o
+}
+
 pub fn line_text(l: &Line) -> String {
     let mut o = header("Time Table Line File");
     if l.user_allowed {
@@ -638,4 +683,4 @@ pub fn clock(minutes: f32) -> String {
 
 
 #[cfg(test)]
-mod tests;
+pub(crate) mod tests;

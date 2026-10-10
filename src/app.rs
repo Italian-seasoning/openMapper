@@ -92,6 +92,8 @@ pub struct App {
     tt: crate::ui_timetable::TimetableUi,
     /// The Traffic and AI window.
     traffic: crate::ui_traffic::TrafficUi,
+    /// Getting started.
+    guide: crate::ui_guide::Guide,
     /// The next frame's view becomes the map's picture (`picture.jpg`).
     picture: bool,
 }
@@ -121,12 +123,17 @@ impl App {
             frames: 0,
             tt: crate::ui_timetable::TimetableUi::new(),
             traffic: Default::default(),
+            guide: Default::default(),
             picture: false,
             shot: std::env::var_os("OPENMAPPER_SHOT").map(|p| (PathBuf::from(p), std::env::var("OPENMAPPER_SHOT_FRAMES").ok().and_then(|n| n.parse().ok()).unwrap_or(90))),
             autosave: Default::default(),
             recover: None,
         };
         app.setup_roots();
+        // OPENMAPPER_NEWMAP: the New map dialog open at the start (checks without a person at the screen)
+        if std::env::var_os("OPENMAPPER_NEWMAP").is_some() {
+            app.ui.new_map = Some(Default::default());
+        }
         app
     }
 
@@ -242,6 +249,10 @@ impl App {
         if let Ok(l) = std::env::var("OPENMAPPER_TIMETABLE") {
             self.tt.open_at(&l);
         }
+        // OPENMAPPER_GUIDE: Getting started open
+        if std::env::var_os("OPENMAPPER_GUIDE").is_some() {
+            self.guide.open = true;
+        }
         // OPENMAPPER_TRAFFIC=day|groups|lists: the Traffic and AI window open on that tab
         if let Ok(t) = std::env::var("OPENMAPPER_TRAFFIC") {
             self.traffic.open_at(&t);
@@ -255,7 +266,7 @@ impl App {
         }
     }
 
-    fn new_map(&mut self, folder: &str, friendly: &str, size: i32) {
+    fn new_map(&mut self, folder: &str, friendly: &str, size: i32, options: &crate::ui_newmap::NewMapOptions) {
         let Some(roots) = &self.roots else { return };
         if self.ed.doc.is_some() {
             crate::doc::autosave::clear(&roots.content);
@@ -268,10 +279,62 @@ impl App {
             folder = format!("{base} {i}");
             i += 1;
         }
-        let doc = Document::new_map(roots, &folder, friendly, size);
+        let mut doc = Document::new_map(roots, &folder, friendly, size);
+        if let (Some(g), Some(base)) = (&options.ground, doc.global.ground_textures.first_mut()) {
+            base.texture = g.clone();
+        }
+        doc.global.left_hand_traffic = options.left_hand;
         self.after_open(doc);
         self.ed.set_tool(Tool::Roads);
-        self.ed.toast(tr("Your map is ready. Start with a road!", "Карта готова. Начните с дороги!"));
+        if options.sample {
+            self.sample();
+        } else {
+            self.ed.toast(tr("Your map is ready. Start with a road!", "Карта готова. Начните с дороги!"));
+        }
+        self.guide.map_made(&self.prefs);
+    }
+
+    /// Save the map and pack it into a .zip (`crate::export`) where the user says.
+    fn export(&mut self) {
+        if !self.save() {
+            return;
+        }
+        let (Some(doc), Some(roots)) = (&self.ed.doc, &self.roots) else { return };
+        let folder = doc.dir.file_name().map(|f| f.to_string_lossy().to_string()).unwrap_or_else(|| "map".into());
+        let Some(out) = rfd::FileDialog::new().add_filter("zip", &["zip"]).set_file_name(format!("{folder}.zip")).set_title(tr("Export the map for sharing", "Экспорт карты для обмена")).save_file() else { return };
+        match crate::export::export(doc, roots, &out) {
+            Ok((plan, bytes)) => {
+                self.ed.toast(format!("{} {} ({} {}, {:.1} MB)", tr("Exported:", "Экспортировано:"), out.display(), plan.files.len(), tr("files", "файлов"), bytes as f64 / 1e6));
+                if !plan.missing.is_empty() {
+                    self.ed.error(format!("{} {}", plan.missing.len(), tr("files the map names were not found: the readme lists them", "файлов, которые называет карта, не найдено: они перечислены в readme")));
+                }
+            }
+            Err(e) => self.ed.error(format!("{}: {e}", tr("Could not export", "Не удалось экспортировать"))),
+        }
+    }
+
+    /// The sample on the new map: a ring road with a bus line (`crate::sample`).
+    fn sample(&mut self) {
+        while self.lib.scanning {
+            self.lib.poll();
+            std::thread::sleep(std::time::Duration::from_millis(20));
+        }
+        let (Some(assets), Some(roots)) = (self.assets.as_mut(), self.roots.as_ref()) else { return };
+        let centre = self.ed.doc.as_ref().map(|d| {
+            let n = d.tiles.len().max(1) as f64;
+            d.tiles.keys().fold(DVec2::ZERO, |a, k| a + tile_origin(*k) + DVec2::splat(tile_size() * 0.5)) / n
+        });
+        let Some(centre) = centre else { return };
+        match crate::sample::build(&mut self.ed, assets, &self.lib, roots, centre) {
+            Ok(()) => {
+                self.ed.history.clear();
+                self.cam.jump_to(DVec3::new(centre.x, centre.y, 0.0), 380.0);
+                self.cam.yaw = 0.0;
+                self.cam.pitch = 50.0;
+                self.ed.toast(tr("A ring road with line 1 on it: save, then try it in openOMSI (F5).", "Кольцевая дорога с линией 1: сохраните и попробуйте в openOMSI (F5)."));
+            }
+            Err(e) => self.ed.error(format!("{}: {e}", tr("The sample could not be made", "Пример не получился"))),
+        }
     }
 
     fn save(&mut self) -> bool {
@@ -294,6 +357,11 @@ impl App {
                     self.ui.maps = install::list_maps(r);
                 }
                 self.ed.toast(format!("{} {dir}", tr("Saved:", "Сохранено:")));
+                // (junction plates nothing uses any more, from earlier sessions)
+                let gone = self.ed.clean_junction_files();
+                if gone > 0 {
+                    log::info!("removed {gone} unused junction file(s)");
+                }
                 if !has_start {
                     self.ed.toast(tr("Tip: place a start point (Objects > Bus stops > entrypoint) so the bus has somewhere to appear", "Совет: поставьте точку старта (Объекты > Остановки > entrypoint), чтобы автобусу было где появиться"));
                 }
@@ -386,13 +454,14 @@ impl App {
                     d.global_dirty = false;
                     d.timetable.dirty = false;
                     d.traffic.dirty = false;
+                    d.descriptions.dirty = false;
                     for t in d.tiles.values_mut() {
                         t.dirty = false;
                     }
                 }
                 self.do_action(*inner, el);
             }
-            Action::NewMap { folder, friendly, size } => self.new_map(&folder, &friendly, size),
+            Action::NewMap { folder, friendly, size, options } => self.new_map(&folder, &friendly, size, &options),
             Action::Open(p) => self.open_map(&p),
             Action::OpenDialog => {
                 let start = self.roots.as_ref().map(|r| r.content.join("maps"));
@@ -438,7 +507,10 @@ impl App {
                 self.quit = true;
                 el.exit();
             }
-            Action::Play => self.play(),
+            Action::Play => {
+                self.play();
+                self.guide.driven = true;
+            }
             Action::Undo => {
                 if let Some(d) = self.ed.doc.as_mut() {
                     self.ed.history.undo(d);
@@ -510,6 +582,11 @@ impl App {
             Action::Paste => self.ed.paste(&self.lib),
             Action::Duplicate => self.ed.duplicate(&self.lib),
             Action::SelectAll => self.ed.select_all(),
+            Action::BuildRoad => {
+                if let Some(assets) = self.assets.as_mut() {
+                    self.ed.confirm_road(assets, &self.lib);
+                }
+            }
             Action::FocusSelection => {
                 if let (Some(sel), Some(doc)) = (self.ed.selected, &self.ed.doc) {
                     let p = match sel {
@@ -524,6 +601,8 @@ impl App {
             }
             Action::Timetable => self.tt.open = !self.tt.open,
             Action::Traffic => self.traffic.open = !self.traffic.open,
+            Action::Guide => self.guide.open = !self.guide.open,
+            Action::Export => self.export(),
             Action::ToggleFavourite(rel) => {
                 self.prefs.toggle_favourite(&rel);
                 self.ui.favourites = self.prefs.favourites.clone();
@@ -602,6 +681,7 @@ impl App {
             Some(KeyCode::Digit7) => self.ed.set_tool(Tool::Tiles),
             Some(KeyCode::KeyR) if !ctrl => self.ed.rotate(if shift { -15.0 } else { 15.0 }),
             Some(KeyCode::KeyU) if !ctrl => self.ed.toggle_ruler(),
+            Some(KeyCode::Enter) | Some(KeyCode::NumpadEnter) => actions.push(Action::BuildRoad),
             Some(KeyCode::KeyG) if !ctrl => self.ed.show_grid = !self.ed.show_grid,
             Some(KeyCode::KeyM) if !ctrl => self.ui.minimap.open = !self.ui.minimap.open,
             Some(KeyCode::KeyL) if !ctrl => self.tt.open = !self.tt.open,
@@ -708,6 +788,7 @@ impl App {
         if self.picture {
             self.ui.minimap.open = false;
         }
+        let mut guide: Vec<crate::ui_guide::Go> = Vec::new();
         let full = g.egui_ctx.run_ui(raw, |ui| {
             let ctx = ui.ctx().clone();
             if self.ed.doc.is_none() {
@@ -737,10 +818,13 @@ impl App {
                 ));
             }
             crate::ui_edit::paint_box(&ctx, &self.ed);
+            crate::ui_edit::road_entry(&ctx, &mut self.ed, self.view, &mut actions);
             if self.ed.doc.is_some() {
                 self.tt.window(&ctx, &mut self.ed, self.roots.as_ref(), &mut actions);
                 self.traffic.window(&ctx, &mut self.ed, self.roots.as_ref());
+                guide = self.guide.window(&ctx, &self.ed, &self.lib, &self.prefs, self.game.is_some());
             }
+            crate::ui_newmap::dialog(&ctx, &mut self.ui.new_map, &self.texture_files, &self.swatches, &mut wanted_swatches, &mut actions);
             ui::confirm_unsaved(&ctx, &mut self.ui, &mut actions);
             if let Some(m) = &self.recover {
                 recover_answer = crate::doc::autosave::offer(&ctx, m);
@@ -845,6 +929,15 @@ impl App {
                 if let Ok(d) = std::env::var("OPENMAPPER_DEMO") {
                     if d == "T" {
                         self.demo_t();
+                    } else if d.starts_with("SAMPLE:") {
+                        // OPENMAPPER_DEMO=SAMPLE:<name>: a new map with the sample, saved
+                        let name = d.trim_start_matches("SAMPLE:").to_string();
+                        while self.lib.scanning {
+                            self.lib.poll();
+                            std::thread::sleep(std::time::Duration::from_millis(20));
+                        }
+                        self.new_map(&name, &name, 3, &crate::ui_newmap::NewMapOptions { sample: true, left_hand: std::env::var_os("OPENMAPPER_LHT").is_some(), ..Default::default() });
+                        self.save();
                     } else if d == "JOIN" {
                         self.demo_join();
                     } else {
@@ -890,6 +983,25 @@ impl App {
         };
         g.window.set_title(&title);
         self.gfx = Some(g);
+        for go in guide {
+            use crate::ui_guide::Go;
+            match go {
+                Go::Tool(t) => self.ed.set_tool(t),
+                Go::Logic(m) => {
+                    self.ed.set_tool(Tool::Logic);
+                    self.ed.set_logic(m);
+                }
+                Go::Lines => self.tt.open = true,
+                Go::Traffic => self.traffic.open = true,
+                Go::Save => actions.push(Action::Save),
+                Go::Play => actions.push(Action::Play),
+                Go::LookAt(p) => actions.push(Action::LookAt(p)),
+                Go::Auto(on) => {
+                    self.prefs.guide_off = !on;
+                    self.prefs.save();
+                }
+            }
+        }
         if let Some(yes) = recover_answer {
             if let Some(meta) = self.recover.take() {
                 self.recover_autosave(yes, &meta);
@@ -910,7 +1022,7 @@ impl App {
             self.lib.poll();
             std::thread::sleep(std::time::Duration::from_millis(20));
         }
-        self.new_map(name, name, 3);
+        self.new_map(name, name, 3, &Default::default());
         let Some(assets) = self.assets.as_mut() else { return };
         let road = self.lib.find("Splines\\Marcel\\str_2spur_8m_borkumer1.sli").map(|a| a.rel.clone()).or_else(|| self.lib.assets.iter().find(|a| a.category == crate::library::Category::Roads).map(|a| a.rel.clone()));
         self.ed.set_tool(Tool::Roads);
@@ -1020,7 +1132,7 @@ impl App {
             self.lib.poll();
             std::thread::sleep(std::time::Duration::from_millis(20));
         }
-        self.new_map("T check", "T check", 1);
+        self.new_map("T check", "T check", 1, &Default::default());
         if std::env::var_os("OPENMAPPER_HILL_AFTER").is_none() {
             self.demo_hill();
         }
@@ -1270,6 +1382,9 @@ impl ApplicationHandler for App {
             }
             WindowEvent::ModifiersChanged(m) => {
                 self.keys.shift = m.state().shift_key();
+                // (Shift while drawing a road: a straight)
+                self.ed.straight_lock = self.keys.shift;
+                self.ed.replan = true;
                 self.keys.ctrl = m.state().control_key() || m.state().super_key();
                 let alt = m.state().alt_key();
                 // (Alt / Option goes down: the camera will orbit round the point under the cursor)

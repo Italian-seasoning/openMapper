@@ -72,8 +72,6 @@ static EPOCH: std::sync::Mutex<u64> = std::sync::Mutex::new(0);
 pub struct Job {
     target: PathBuf,
     ops: Vec<super::safe::Op>,
-    timetable: Option<(crate::timetable::Timetable, Vec<TileKey>)>,
-    traffic: Option<crate::traffic::Traffic>,
     meta: Meta,
     epoch: u64,
 }
@@ -83,7 +81,19 @@ pub fn prepare(doc: &Document, content: &Path) -> Job {
     let target = dir(content);
     let fresh_dir = target.with_extension("new");
     let (ops, tiles) = super::save::plan(doc, &fresh_dir, false);
-    let ops = ops.into_iter().filter(|o| matches!(o, super::safe::Op::Write(..))).collect();
+    let mut ops: Vec<_> = ops.into_iter().filter(|o| matches!(o, super::safe::Op::Write(..))).collect();
+    // the timetable and the traffic through their own writers, every file of them (a copy
+    // marked as all changed: the map's own stays as it is)
+    if doc.timetable.dirty {
+        let mut tt = doc.timetable.clone();
+        tt.restored(&Default::default());
+        ops.extend(crate::timetable::plan(&mut tt, &fresh_dir, &doc.order).into_iter().filter(|o| matches!(o, super::safe::Op::Write(..))));
+    }
+    if doc.traffic.dirty {
+        let mut t = doc.traffic.clone();
+        t.restored();
+        ops.extend(crate::traffic::plan(&t, &fresh_dir).into_iter().filter(|o| matches!(o, super::safe::Op::Write(..))));
+    }
     let meta = Meta {
         name: doc.display_name().to_string(),
         dir: doc.dir.clone(),
@@ -97,8 +107,6 @@ pub fn prepare(doc: &Document, content: &Path) -> Job {
     Job {
         target,
         ops,
-        timetable: doc.timetable.dirty.then(|| (doc.timetable.clone(), doc.order.clone())),
-        traffic: doc.traffic.dirty.then(|| doc.traffic.clone()),
         meta,
         epoch: *EPOCH.lock().unwrap_or_else(|e| e.into_inner()),
     }
@@ -110,16 +118,6 @@ impl Job {
         let _ = std::fs::remove_dir_all(&fresh_dir);
         std::fs::create_dir_all(&fresh_dir)?;
         super::safe::commit(&self.ops)?;
-        // the timetable and the traffic through their own writers, every file of them (a
-        // copy marked as all changed: the map's own stays as it is)
-        if let Some((mut tt, order)) = self.timetable {
-            tt.restored(&Default::default());
-            crate::timetable::save_to(&mut tt, &fresh_dir, &order)?;
-        }
-        if let Some(mut t) = self.traffic {
-            t.restored();
-            crate::traffic::save_to(&mut t, &fresh_dir)?;
-        }
         super::safe::write_atomic(&fresh_dir.join(META), serde_json::to_string_pretty(&self.meta)?.as_bytes())?;
         // (saved or dropped since it was made ready: it is not wanted)
         let epoch = EPOCH.lock().unwrap_or_else(|e| e.into_inner());
@@ -281,6 +279,7 @@ mod tests {
             global_rev: 0,
             timetable: Default::default(),
             traffic: Default::default(),
+            descriptions: Default::default(),
         };
         doc.global.name = "M".into();
         for k in [(0, 0), (1, 0)] {
