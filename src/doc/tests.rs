@@ -253,3 +253,17 @@ fn tiles_keep_their_own_file_names() {
     assert_eq!(back.object((0, 0), 7).map(|o| o.pos[0]), Some(30.0));
     let _ = std::fs::remove_dir_all(&roots.content);
 }
+
+/// A road running on into a tile that is taken away ends there: its link to the spline
+/// that went is let go (so a road can be joined to that end again).
+#[test]
+fn removing_a_tile_lets_go_of_links_into_it() {
+    let _map = one_map();
+    let roots = scratch("unlink");
+    let mut doc = sample_map(&roots);
+    let rev = doc.tiles[&(0, 0)].content_rev;
+    doc.remove_tile((1, 0));
+    let s = doc.spline((0, 0), 9).unwrap();
+    assert_eq!(s.next_id, 0);
+    assert_ne!(doc.tiles[&(0, 0)].content_rev, rev, "the view builds the tile again");
+}

@@ -369,8 +369,22 @@ impl Document {
     /// Take a tile away. Its place in the `[map]` list goes too, and the numbers that name
     /// tiles by their place (entry points, attachment repeaters) follow.
     pub fn remove_tile(&mut self, k: TileKey) {
-        if self.tiles.remove(&k).is_none() {
-            return;
+        let Some(gone) = self.tiles.remove(&k) else { return };
+        // roads running on into it end where it was
+        let ids: std::collections::HashSet<i64> = gone.tile.splines.iter().map(|s| s.id).collect();
+        for t in self.tiles.values_mut() {
+            let mut hit = false;
+            for s in t.tile.splines.iter_mut() {
+                for l in [&mut s.prev_id, &mut s.next_id] {
+                    if *l != 0 && ids.contains(l) {
+                        *l = 0;
+                        hit = true;
+                    }
+                }
+            }
+            if hit {
+                t.touch_content();
+            }
         }
         let old = self.order.clone();
         self.order.retain(|o| *o != k);
