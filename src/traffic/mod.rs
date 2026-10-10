@@ -322,6 +322,22 @@ pub fn save(doc: &mut crate::doc::Document) -> std::io::Result<()> {
     save_to(&mut doc.traffic, &dir)
 }
 
+/// The car groups of OMSI 2's own maps (their vehicles are in the installation `omsi`).
+pub fn stock_groups(omsi: &Path) -> Vec<AiGroup> {
+    let mut out: Vec<AiGroup> = Vec::new();
+    for m in ["Grundorf", "Berlin-Spandau"] {
+        let p = omsi.join("maps").join(m).join("ailists.cfg");
+        if let Ok(l) = omsi_map::AiLists::load(&p) {
+            for g in l.groups.into_iter().filter(|g| !g.is_depot && !g.vehicles.is_empty()) {
+                if !out.iter().any(|o| o.name.eq_ignore_ascii_case(&g.name)) {
+                    out.push(g);
+                }
+            }
+        }
+    }
+    out
+}
+
 /// A new car group.
 pub fn car_group(name: &str) -> AiGroup {
     AiGroup { name: name.to_string(), ..Default::default() }

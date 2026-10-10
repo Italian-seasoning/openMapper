@@ -115,3 +115,11 @@ fn the_catalogue_finds_the_installations_vehicles() {
 fn traffic_bus() -> &'static str {
     DEPOT_BUS
 }
+
+#[test]
+fn stock_groups_are_found() {
+    let Some(root) = omsi_root() else { return };
+    let g = stock_groups(&root);
+    let cars = g.iter().find(|g| g.name == "NormalCars").unwrap();
+    assert!(cars.vehicles.len() > 5);
+}

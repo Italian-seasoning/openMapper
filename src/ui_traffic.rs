@@ -35,6 +35,9 @@ pub struct TrafficUi {
     group_name: String,
     filter: String,
     map: Option<std::path::PathBuf>,
+    /// The installation (for OMSI 2's own groups).
+    roots: Vec<std::path::PathBuf>,
+    stock: Option<Vec<omsi_map::AiGroup>>,
 }
 
 /// Typical days to start a curve from: (hour, factor).
@@ -106,6 +109,7 @@ impl TrafficUi {
                 let c = Catalogue::scan(&[r.content.clone(), r.omsi.clone()]);
                 log::info!("traffic: {} vehicles, {} parked cars, {} people ({:.0} ms)", c.vehicles.len(), c.parked.len(), c.humans.len(), t0.elapsed().as_secs_f64() * 1000.0);
                 self.catalogue = Some(c);
+                self.roots = vec![r.omsi.clone()];
             }
         }
         // (as it was before this frame's edits, for undo)
@@ -158,6 +162,20 @@ impl TrafficUi {
         if doc.traffic.legacy {
             hint(ui, tr("(This map's ailists.cfg is in OMSI 2's first format: it is written in the second one when changed.)", "(ailists.cfg этой карты в первом формате OMSI 2: при изменении он запишется во втором.)"));
         }
+        // groups the unscheduled traffic names that are not there (the new map template's
+        // NormalCars, Trucks…): no traffic drives
+        let missing: Vec<String> = doc.traffic.veh_groups.iter().filter(|(n, _)| !doc.traffic.groups.iter().any(|g| g.name.eq_ignore_ascii_case(n))).map(|(n, _)| n.clone()).collect();
+        for name in missing {
+            ui.horizontal_wrapped(|ui| {
+                ui.label(RichText::new(format!("«{name}» {}", tr("is to drive about, but there is no such group.", "должна ездить по дорогам, но такой группы нет."))).color(WARN));
+                if let Some(g) = self.stock_group(&name) {
+                    if ui.button(icons::labelled(Icon::Add, tr("Make it with OMSI 2's vehicles", "Создать с машинами OMSI 2"))).on_hover_text(tr("The group of that name from OMSI 2's own maps", "Группа с этим именем из карт OMSI 2")).clicked() {
+                        doc.traffic.groups.push(g);
+                        doc.traffic.touch(File::AiLists);
+                    }
+                }
+            });
+        }
         ui.add_space(4.0);
         ui.horizontal_top(|ui| {
             ui.vertical(|ui| {
@@ -201,6 +219,14 @@ impl TrafficUi {
                 }
             });
         });
+    }
+
+    /// A car group of OMSI 2's own maps by name (their vehicles are in the installation).
+    fn stock_group(&mut self, name: &str) -> Option<omsi_map::AiGroup> {
+        if self.stock.is_none() {
+            self.stock = Some(self.roots.iter().flat_map(|r| traffic::stock_groups(r)).collect());
+        }
+        self.stock.as_ref()?.iter().find(|g| g.name.eq_ignore_ascii_case(name)).cloned()
     }
 
     fn group_detail(&mut self, ui: &mut egui::Ui, doc: &mut Document, i: usize) {

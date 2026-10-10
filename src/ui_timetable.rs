@@ -182,6 +182,13 @@ impl TimetableUi {
         }
         l.tours.push(Tour { number: "1".into(), ai_group: String::new(), extra: ALL_DAYS.to_string(), trips });
         add_depot(doc);
+        // (and the cars the template's traffic names but does not have)
+        if let Some(r) = roots {
+            for g in crate::traffic::stock_groups(&r.omsi).into_iter().filter(|g| g.name == "NormalCars") {
+                doc.traffic.groups.push(g);
+                doc.traffic.touch(crate::traffic::File::AiLists);
+            }
+        }
         if self.ensure_net(doc, roots) {
             self.reroute(doc);
         }
