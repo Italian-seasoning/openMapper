@@ -78,6 +78,11 @@ pub enum Kind {
     OutsideTile,
     TileMissing,
     NoGround,
+    TripNoRoute,
+    TourEmpty,
+    TourNoDepot,
+    UnschedMissing,
+    StopUnused,
 }
 
 impl Kind {
@@ -97,6 +102,11 @@ impl Kind {
             Kind::OutsideTile => tr("Objects off their tile", "Объекты вне своего тайла"),
             Kind::TileMissing => tr("Tiles without a file", "Тайлы без файла"),
             Kind::NoGround => tr("Tiles without ground", "Тайлы без земли"),
+            Kind::TripNoRoute => tr("Trips without a way", "Рейсы без пути"),
+            Kind::TourEmpty => tr("Tours without departures", "Выходы без рейсов"),
+            Kind::TourNoDepot => tr("Tours without a depot", "Выходы без парка"),
+            Kind::UnschedMissing => tr("Traffic groups not in the AI lists", "Группы движения не в списке ИИ"),
+            Kind::StopUnused => tr("Stops no trip calls at", "Остановки без рейсов"),
         }
     }
 
@@ -117,6 +127,11 @@ impl Kind {
             Kind::OutsideTile => tr("An object standing on the ground lies outside its own tile. The game does not show it. Move it a little or put it again.", "Объект, стоящий на земле, лежит вне своего тайла. Игра его не покажет. Сдвиньте его или поставьте заново."),
             Kind::TileMissing => tr("global.cfg lists tiles whose file is not there. The game leaves them out; they stay listed, as start points and timetables count tiles by their place in the list.", "В global.cfg указаны тайлы без файла. Игра их пропускает; они остаются в списке, ведь точки старта и расписания считают тайлы по месту в нём."),
             Kind::NoGround => tr("A tile has no height file: its ground is flat. Saving writes one.", "У тайла нет файла высот: земля плоская. Сохранение запишет его."),
+            Kind::TripNoRoute => tr("No way along the roads was found through this trip's stops, so buses cannot drive it. Open it in Map > Lines and timetable to see where it breaks.", "Через остановки этого рейса не найден путь по дорогам, автобусы его не проедут. Откройте его в Карта > Линии и расписание, чтобы увидеть, где он рвётся."),
+            Kind::TourEmpty => tr("A tour (a bus's day on the line) has no trips, so no bus runs it.", "У выхода (дня автобуса на линии) нет рейсов, по нему никто не поедет."),
+            Kind::TourNoDepot => tr("A tour names no depot or group of the AI lists (or one that is not there): the game has no vehicle to send on it. Choose a depot for it in the Lines window.", "Выход не указывает парк или группу из списка ИИ (или указывает несуществующую): игре нечем его обслужить. Выберите парк в окне линий."),
+            Kind::UnschedMissing => tr("The unscheduled traffic names a group that the AI lists do not have: those cars never appear. Add the group in Map > Traffic and AI.", "Свободное движение указывает группу, которой нет в списке ИИ: эти машины не появятся. Добавьте группу в Карта > Движение и ИИ."),
+            Kind::StopUnused => tr("A stop of the timetable that no trip calls at. Nothing is wrong, it is only not used yet.", "Остановка расписания, на которой не останавливается ни один рейс. Ничего страшного, просто она пока не используется."),
         }
     }
 }
@@ -138,6 +153,8 @@ struct Snapshot {
     tiles: HashSet<TileKey>,
     /// Objects something hangs on (`[attachObj]`).
     parents: HashSet<i64>,
+    /// The map for the timetable's checks (routes are found on it).
+    tt_doc: Option<Document>,
 }
 
 /// What the catalogue says of a file.
@@ -238,6 +255,7 @@ fn snapshot(doc: &Document, lib: &Library) -> Snapshot {
         map_dir: src,
         tiles: present,
         parents: doc.tiles.values().flat_map(|t| t.tile.attach_objects.iter().filter_map(|a| a.parent_id)).collect(),
+        tt_doc: (!doc.timetable.lines.is_empty() || !doc.timetable.trips.is_empty() || !doc.traffic.veh_groups.is_empty()).then(|| doc.for_reading()),
     }
 }
 
@@ -550,6 +568,10 @@ fn run(s: Snapshot, roots: Vec<PathBuf>) -> Vec<Issue> {
         }
     }
 
+    if let Some(d) = &s.tt_doc {
+        timetable_issues(d, &roots, &mut out);
+    }
+
     // tiles
     for (x, y, file) in &s.listed_missing {
         out.push(issue(Severity::Info, Kind::TileMissing, file.clone(), format!("{} {x},{y}", tr("tile", "тайл")), Some(tile_origin((*x, *y)) + DVec2::splat(tile_size() / 2.0)), None, None));
@@ -559,6 +581,64 @@ fn run(s: Snapshot, roots: Vec<PathBuf>) -> Vec<Issue> {
     }
     out.sort_by(|a, b| a.severity.cmp(&b.severity).then(a.kind.cmp(&b.kind)));
     out
+}
+
+/// The timetable's and the traffic's issues, the trips' ways found as the Lines window
+/// finds them.
+fn timetable_issues(d: &Document, roots: &[PathBuf], out: &mut Vec<Issue>) {
+    let tt = &d.timetable;
+    let depots: HashSet<String> = d.traffic.depots().map(|g| g.name.to_lowercase()).collect();
+    let groups: HashSet<String> = d.traffic.groups.iter().map(|g| g.name.to_lowercase()).collect();
+    let mut files = crate::timetable::network::Files::new(roots.to_vec());
+    let place = |files: &mut crate::timetable::network::Files, id: i64| -> (Option<DVec2>, Option<Sel>) {
+        let p = crate::timetable::stop_world(d, files, id).map(|p| p.truncate());
+        let k = d.tiles.iter().find(|(_, t)| t.tile.objects.iter().any(|o| o.id == id)).map(|(k, _)| *k);
+        (p, k.map(|k| Sel::Object(k, id)))
+    };
+    let stop_name = |id: i64| tt.stop_name(id).map(str::to_string).unwrap_or_else(|| format!("#{id}"));
+    for line in &tt.lines {
+        for tour in &line.tours {
+            let label = format!("{} {} {}", line.name, tr("tour", "выход"), tour.number);
+            if tour.trips.is_empty() {
+                out.push(Issue { severity: Severity::Warning, kind: Kind::TourEmpty, title: label.clone(), detail: String::new(), at: None, sel: None, fix: None });
+            }
+            // (a bus's tour names a depot; a train's an ordinary group of the AI lists)
+            if tour.ai_group.trim().is_empty() || !(depots.contains(&tour.ai_group.to_lowercase()) || groups.contains(&tour.ai_group.to_lowercase())) {
+                let detail = if tour.ai_group.trim().is_empty() { tr("no depot named", "парк не указан").to_string() } else { format!("{} «{}»", tr("not in the AI lists:", "нет в списке ИИ:"), tour.ai_group) };
+                out.push(Issue { severity: Severity::Warning, kind: Kind::TourNoDepot, title: label, detail, at: None, sel: None, fix: None });
+            }
+        }
+    }
+    for (g, _) in &d.traffic.veh_groups {
+        if !groups.contains(&g.to_lowercase()) {
+            out.push(Issue { severity: Severity::Warning, kind: Kind::UnschedMissing, title: g.clone(), detail: String::new(), at: None, sel: None, fix: None });
+        }
+    }
+    let trips: Vec<_> = tt.trips.iter().filter(|t| t.stations.len() >= 2).collect();
+    if !trips.is_empty() {
+        let net = crate::timetable::network::Network::build(d, &mut files);
+        for trip in trips {
+            let pos: Vec<Option<DVec3>> = trip.stations.iter().map(|id| crate::timetable::stop_world(d, &mut files, *id)).collect();
+            let r = crate::timetable::route::find(&net, &pos, d.global.left_hand_traffic);
+            if r.ok() {
+                continue;
+            }
+            use crate::timetable::route::Problem;
+            let (i, detail) = match r.problems.first() {
+                Some(Problem::NoObject(i)) => (*i, format!("{} {}", tr("the stop has no object:", "у остановки нет объекта:"), stop_name(trip.stations[*i]))),
+                Some(Problem::NoRoad(i)) => (*i, format!("{} {}", tr("no road beside", "нет дороги у"), stop_name(trip.stations[*i]))),
+                Some(Problem::NoWay(i)) => (*i, format!("{} {} → {}", tr("no way", "нет пути"), stop_name(trip.stations[*i]), trip.stations.get(i + 1).map(|s| stop_name(*s)).unwrap_or_default())),
+                None => (0, tr("no way found", "путь не найден").to_string()),
+            };
+            let (at, sel) = trip.stations.get(i).map(|id| place(&mut files, *id)).unwrap_or((None, None));
+            out.push(Issue { severity: Severity::Warning, kind: Kind::TripNoRoute, title: trip.name.clone(), detail, at, sel, fix: None });
+        }
+    }
+    let used: HashSet<i64> = tt.trips.iter().flat_map(|t| t.stations.iter().copied()).collect();
+    for st in tt.stops.iter().filter(|st| !used.contains(&st.object_id)) {
+        let (at, sel) = place(&mut files, st.object_id);
+        out.push(Issue { severity: Severity::Info, kind: Kind::StopUnused, title: st.name.clone(), detail: String::new(), at, sel, fix: None });
+    }
 }
 
 fn times(n: usize) -> String {
@@ -888,7 +968,7 @@ mod tests {
     fn snap(splines: Vec<SplineRec>) -> Snapshot {
         let mut kinds = HashMap::new();
         kinds.insert("splines\\road.sli".to_string(), KindRec { cat: Category::Roads, half_width: 4.0, bus_stop: false, lanes: true, abs_height: false });
-        Snapshot { objects: Vec::new(), splines, chrono_lanes: Vec::new(), kinds, entries: Vec::new(), next_id: 100, listed_missing: Vec::new(), no_terrain: Vec::new(), ground: Vec::new(), map_dir: PathBuf::new(), tiles: HashSet::new(), parents: HashSet::new() }
+        Snapshot { objects: Vec::new(), splines, chrono_lanes: Vec::new(), kinds, entries: Vec::new(), next_id: 100, listed_missing: Vec::new(), no_terrain: Vec::new(), ground: Vec::new(), map_dir: PathBuf::new(), tiles: HashSet::new(), parents: HashSet::new(), tt_doc: None }
     }
 
     fn doc_with(tiles: &[TileKey]) -> Document {
@@ -945,6 +1025,20 @@ mod tests {
         assert!(d.object((0, 0), 5).is_none());
         let o = d.object((1, 0), 5).unwrap();
         assert!((o.pos[0] - 10.0).abs() < 1e-9 && (o.pos[1] - 20.0).abs() < 1e-9);
+    }
+
+    #[test]
+    fn tours_and_traffic_groups_are_checked() {
+        let mut d = doc_with(&[(0, 0)]);
+        let l = d.timetable.add_line("7");
+        let line = d.timetable.lines.iter_mut().find(|x| x.name == l).unwrap();
+        line.tours.push(omsi_timetable::Tour { number: "1".into(), ai_group: "Nowhere".into(), ..Default::default() });
+        d.traffic.veh_groups.push(("Cars".into(), 1));
+        let mut out = Vec::new();
+        timetable_issues(&d, &[], &mut out);
+        assert!(out.iter().any(|i| i.kind == Kind::TourEmpty));
+        assert!(out.iter().any(|i| i.kind == Kind::TourNoDepot && i.detail.contains("Nowhere")));
+        assert!(out.iter().any(|i| i.kind == Kind::UnschedMissing && i.title == "Cars"));
     }
 
     #[test]

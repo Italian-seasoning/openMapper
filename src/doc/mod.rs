@@ -280,6 +280,24 @@ impl Document {
         })
     }
 
+    /// A copy to read on another thread (the map check): the tiles without their painting
+    /// and chrono patches, which take room and are not looked at.
+    pub fn for_reading(&self) -> Document {
+        Document {
+            global: self.global.clone(),
+            tiles: self.tiles.iter().map(|(k, t)| (*k, TileDoc { tile: t.tile.clone(), terrain: t.terrain.clone(), masks: Vec::new(), chrono: Vec::new(), terrain_rev: t.terrain_rev, mask_rev: t.mask_rev, content_rev: t.content_rev, dirty: t.dirty })).collect(),
+            order: self.order.clone(),
+            dir: self.dir.clone(),
+            source: self.source.clone(),
+            global_dirty: self.global_dirty,
+            fresh: self.fresh,
+            global_rev: self.global_rev,
+            timetable: self.timetable.clone(),
+            traffic: self.traffic.clone(),
+            descriptions: Default::default(),
+        }
+    }
+
     pub fn display_name(&self) -> &str {
         if self.global.friendly_name.trim().is_empty() {
             &self.global.name
