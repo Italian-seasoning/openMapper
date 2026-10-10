@@ -1133,10 +1133,12 @@ impl Editor {
                 best = Some((d, a, (!file.trim().is_empty()).then(|| file.to_string())));
             }
         };
+        // (a track joins tracks, a road roads: rails and asphalt only cross)
+        let track = self.drawing_track(assets);
         for (k, t) in &doc.tiles {
             let org = tile_origin(*k);
             for s in t.tile.splines.iter().filter(|s| !s.deleted) {
-                if assets.spline(&s.file).map(|m| !m.joinable()).unwrap_or(true) {
+                if assets.spline(&s.file).map(|m| !m.joinable() || m.is_track() != track).unwrap_or(true) {
                     continue;
                 }
                 let c = omsi_geometry::SplineCurve::from_map(s, org);
@@ -1177,8 +1179,8 @@ impl Editor {
                 }
                 let Some(m) = assets.spline(&s.file) else { continue };
                 // (only roads one sees: not a fence, a footpath, or the invisible AI splines
-                // under a map's roads)
-                if !m.joinable() {
+                // under a map's roads; and of the family drawn)
+                if !m.joinable() || m.is_track() != track {
                     continue;
                 }
                 let hw = m.half_width as f64;
@@ -1199,6 +1201,18 @@ impl Editor {
             }
         }
         mid.map(|m| (m.1, Some(m.2)))
+    }
+
+    /// The type being drawn is a track (rails meet in switches, not junctions).
+    fn drawing_track(&self, assets: &mut Assets) -> bool {
+        !self.drawing_paths() && self.road_type.as_deref().and_then(|r| assets.spline(r)).map(|m| m.is_track()).unwrap_or(false)
+    }
+
+    /// The way a spline runs at a point in its middle (degrees).
+    fn heading_in(&self, mid: ((i32, i32), i64, f64, f64)) -> Option<f64> {
+        let (k, id, at, _) = mid;
+        let s = self.doc.as_ref()?.spline(k, id)?;
+        Some(omsi_geometry::SplineCurve::from_map(s, tile_origin(k)).heading_at(at))
     }
 
     /// The kind of lane the AI path type carries (0 cars, 1 people).
@@ -1265,8 +1279,28 @@ impl Editor {
                 self.road_plate_end = Some(p);
             }
         }
+        // tracks branch off and run into one another as switches: along the track, not
+        // across it
+        let track = self.drawing_track(assets);
+        let mut fixed = fixed;
+        if track {
+            if let Some(h) = start.mid.and_then(|m| self.heading_in(m)) {
+                // (the way along the track that leans towards where the new one goes)
+                let towards = target - start.pos.truncate();
+                start.heading = if roads::dir(h).dot(towards) >= 0.0 { h } else { roads::norm_deg(h + 180.0) };
+                fixed = true;
+            }
+            if let Some(a) = snap.filter(|a| a.mid.is_some()) {
+                if let Some(h) = self.heading_in(a.mid.unwrap()) {
+                    let towards = a.pos.truncate() - start.pos.truncate();
+                    let arrive = if roads::dir(h).dot(towards) >= 0.0 { h } else { roads::norm_deg(h + 180.0) };
+                    target = a.pos.truncate();
+                    end_anchor = Some(Anchor { pos: a.pos, heading: roads::norm_deg(arrive + 180.0), spline: None, mid: None });
+                }
+            }
+        }
         // joining a road in its middle: the new road meets its edge, coming straight at it
-        if let Some(a) = snap.filter(|a| a.mid.is_some() && !self.drawing_paths()) {
+        if let Some(a) = snap.filter(|a| a.mid.is_some() && !self.drawing_paths() && !track) {
             let (_, _, _, hw) = a.mid.unwrap();
             let from = start.pos.truncate();
             let d = (a.pos.truncate() - from).normalize_or_zero();
@@ -1275,7 +1309,7 @@ impl Editor {
             end_anchor = None;
         }
         // leaving a road from its middle: from its centre line (a junction) or its edge
-        if let (Some((_, _, _, hw)), false, false) = (start.mid, self.auto_junctions, self.drawing_paths()) {
+        if let (Some((_, _, _, hw)), false, false, false) = (start.mid, self.auto_junctions, self.drawing_paths(), track) {
             let d = (target - start.pos.truncate()).normalize_or_zero();
             start.pos += DVec3::new(d.x, d.y, 0.0) * hw;
         }
@@ -1345,7 +1379,19 @@ impl Editor {
         let made = self.build_road(&rel, &segs, z0, z1, start_link, end_link, half as f64);
         let mut last = made.as_ref().and_then(|m| m.last().copied());
         if let Some(made) = &made {
-            if self.auto_junctions && !self.drawing_paths() {
+            if self.drawing_track(assets) {
+                // a switch: the track met is cut where the new one leaves or joins it, so the
+                // rails' lanes have ends there for trains to choose between
+                let switched = !mids.is_empty();
+                if let Some(doc) = self.doc.as_mut() {
+                    for (k, id, at, _) in mids {
+                        doc.split_spline(k, id, at);
+                    }
+                }
+                if switched {
+                    self.toast(tr("Switch made", "Стрелка создана"));
+                }
+            } else if self.auto_junctions && !self.drawing_paths() {
                 let start_mid = start.mid.map(|m| (m, start.pos));
                 let end_mid = end.and_then(|e| e.mid.map(|m| (m, e.pos)));
                 let n = self.make_junctions(assets, made, half as f64, start_mid, end_mid);
@@ -1555,7 +1601,8 @@ impl Editor {
                             continue;
                         }
                         let Some(m) = assets.spline(&s2.file) else { continue };
-                        if !m.joinable() {
+                        // (a road over a track is a level crossing: both go on as they are)
+                        if !m.joinable() || m.is_track() {
                             continue;
                         }
                         let c2 = omsi_geometry::SplineCurve::from_map(s2, org);
@@ -3814,5 +3861,59 @@ mod tests {
         ed.junction_options.insert(5, crate::junction::Options { lights: true, ..Default::default() });
         ed.open(flat_map(1));
         assert!(ed.junction_options.is_empty());
+    }
+
+    /// The installation's spline, loaded (None without an OMSI 2 here).
+    fn installed_spline(rel: &str) -> Option<Assets> {
+        let omsi = crate::install::find_omsi_root(&Default::default())?;
+        let mut a = Assets::new(omsi, std::env::temp_dir().join("openmapper-test-empty-content"));
+        for _ in 0..500 {
+            if a.spline(rel).is_some() {
+                return Some(a);
+            }
+            if a.spline_failed(rel) {
+                return None;
+            }
+            a.poll();
+            std::thread::sleep(std::time::Duration::from_millis(10));
+        }
+        None
+    }
+
+    #[test]
+    fn a_track_drawn_from_a_track_branches_off_as_a_switch() {
+        let rail = "Splines\\Ruede\\rail_concrete_01.sli";
+        let Some(mut assets) = installed_spline(rail) else {
+            eprintln!("no OMSI 2 here: skipped");
+            return;
+        };
+        assert!(assets.spline(rail).unwrap().is_track());
+        let mut doc = flat_map(1);
+        add_spline(&mut doc, (0, 0), 3, 50.0, 50.0, 0.0, 100.0, 0, 0);
+        doc.tiles.get_mut(&(0, 0)).unwrap().tile.splines[0].file = rail.into();
+        let mut ed = Editor::default();
+        ed.open(doc);
+        ed.set_tool(Tool::Roads);
+        ed.road_type = Some(rail.into());
+        ed.inherit_type = false;
+        let lib = Library::default();
+        // start on the track's middle, go off to the north-east
+        ed.cursor = Some(DVec3::new(50.3, 100.0, 0.0));
+        ed.plan_road(&mut assets);
+        assert!(ed.road_snap.map(|a| a.mid.is_some()).unwrap_or(false), "the track's middle is a place to start");
+        ed.road_click(&mut assets, &lib);
+        ed.cursor = Some(DVec3::new(70.0, 160.0, 0.0));
+        ed.plan_road(&mut assets);
+        ed.road_click(&mut assets, &lib);
+        let doc = ed.doc.as_ref().unwrap();
+        let splines = &doc.tiles[&(0, 0)].tile.splines;
+        // the track is cut where the new one leaves it, and no junction plate was made
+        let old = doc.spline((0, 0), 3).unwrap();
+        assert!((old.length - 50.0).abs() < 0.5, "{}", old.length);
+        assert!(doc.tiles[&(0, 0)].tile.objects.is_empty());
+        // the branch leaves along the track (north), not across it
+        let branch = splines.iter().find(|s| s.id != 3 && s.id != old.next_id).unwrap();
+        assert!((branch.pos[0] - 50.0).abs() < 0.5 && (branch.pos[1] - 100.0).abs() < 0.5);
+        assert!(roads::norm_deg(branch.heading).min(360.0 - roads::norm_deg(branch.heading)) < 1.0, "{}", branch.heading);
     }
 }

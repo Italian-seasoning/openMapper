@@ -74,6 +74,12 @@ impl SplineModel {
     /// A road one can see and join: drawn (a profile, not `[onlyeditor]`), and either
     /// carrying a street lane or drawn across its centre line. The invisible AI splines that
     /// maps lay under their roads are not.
+    /// A track: rail lanes only (OMSI's path type 2). Tracks meet in switches and cross on
+    /// the level, never in a junction plate.
+    pub fn is_track(&self) -> bool {
+        !self.def.paths.is_empty() && self.def.paths.iter().all(|q| q.kind == 2)
+    }
+
     /// An AI path: lanes and nothing to see (`[onlyeditor]` or no drawn profile).
     pub fn is_ai_path(&self) -> bool {
         !self.def.paths.is_empty() && (self.def.only_editor || !self.def.profiles.iter().any(|p| p.points.len() >= 2))
