@@ -66,6 +66,8 @@ pub enum Action {
     Traffic,
     /// Open or close the Getting started guide.
     Guide,
+    /// Save the map and pack it into a .zip to share.
+    Export,
     /// Do it without asking about unsaved changes.
     Force(Box<Action>),
     Quit,
@@ -528,6 +530,9 @@ fn menu_bar(root: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, can_undo: bo
                 ui.separator();
                 if menu_item(ui, Some(Icon::Save), tr("Save", "Сохранить"), "Ctrl+S", true) {
                     actions.push(Action::Save);
+                }
+                if menu_item(ui, Some(Icon::Copy), tr("Export map for sharing…", "Экспорт карты для обмена…"), "", true) {
+                    actions.push(Action::Export);
                 }
                 if menu_item(ui, Some(Icon::Import), tr("Import assets…", "Импорт ассетов…"), "", true) {
                     actions.push(Action::Import);
