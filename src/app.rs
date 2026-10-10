@@ -95,6 +95,7 @@ pub struct App {
     /// The Traffic and AI window.
     traffic: crate::ui_traffic::TrafficUi,
     pbr: crate::ui_pbr::PbrWindow,
+    road_types: crate::ui_roads::RoadTypes,
     /// The Satellite and terrain window and the overlay on the ground.
     geo: crate::ui_geo::GeoUi,
     /// Getting started.
@@ -131,6 +132,7 @@ impl App {
             tt: crate::ui_timetable::TimetableUi::new(),
             traffic: Default::default(),
             pbr: Default::default(),
+            road_types: Default::default(),
             geo: Default::default(),
             guide: Default::default(),
             picture: false,
@@ -161,6 +163,7 @@ impl App {
         self.ui.recent_assets = self.prefs.recent_assets.clone();
         self.texture_files = ground_texture_files(&roots);
         self.ed.content_dir = Some(roots.content.clone());
+        self.ed.road_styles = crate::road_maker::Styles::load(&roots.content);
         self.ed.asphalt = crate::junction::asphalt_texture(&roots.omsi);
         self.recover = crate::doc::autosave::pending(&roots.content);
         if let Some(g) = &mut self.gfx {
@@ -590,6 +593,7 @@ impl App {
                     }
                 }
             }
+            Action::RoadTypes => self.road_types.open = !self.road_types.open,
             Action::PbrMaker => {
                 if let (Some(f), Some(r)) = (rfd::FileDialog::new().add_filter(tr("Pictures", "Картинки"), &["png", "jpg", "jpeg", "bmp", "tga", "dds"]).pick_file(), &self.roots) {
                     self.pbr.open_for(vec![f], r);
@@ -897,6 +901,7 @@ impl App {
                 self.tt.window(&ctx, &mut self.ed, self.roots.as_ref(), &mut actions);
                 self.traffic.window(&ctx, &mut self.ed, self.roots.as_ref());
                 self.pbr.window(&ctx, self.roots.as_ref(), &mut actions);
+                self.road_types.window(&ctx, &mut self.ed, &self.lib, self.roots.as_ref(), &mut actions);
                 self.geo.window(&ctx, &mut self.ed, &mut self.prefs);
                 if let Some(p) = self.geo.look.take() {
                     actions.push(Action::LookAt(p));

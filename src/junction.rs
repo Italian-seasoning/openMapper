@@ -628,12 +628,6 @@ fn num(v: f64) -> String {
     if s.is_empty() || s == "-0" { "0".into() } else { s.to_string() }
 }
 
-/// Write the junction object for the given arms around `centre` and put it on the map.
-/// Returns the object's IDCode.
-pub fn make(doc: &mut Document, assets: &mut Assets, content: &Path, asphalt: Option<&Path>, centre: DVec3, arms: &[Arm]) -> anyhow::Result<i64> {
-    make_with(doc, assets, content, asphalt, centre, arms, &Options::default())
-}
-
 /// The same with lights and crossings as `opts` says.
 pub fn make_with(doc: &mut Document, assets: &mut Assets, content: &Path, asphalt: Option<&Path>, centre: DVec3, arms: &[Arm], opts: &Options) -> anyhow::Result<i64> {
     let (_, lanes) = arm_ends(doc, assets, arms).ok_or_else(|| anyhow::anyhow!("a road of the junction is not loaded"))?;

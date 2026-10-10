@@ -260,6 +260,11 @@ pub struct Editor {
     pub follow_ground: bool,
     /// Where a new road meets or crosses another one, cut both and put a junction there.
     pub auto_junctions: bool,
+    /// A road drawn near another's end or middle, or a junction piece's helper, joins it
+    /// (off: roads are drawn exactly where clicked).
+    pub snap_roads: bool,
+    /// How junctions treat each road type (corners, lights, crossings by themselves).
+    pub road_styles: crate::road_maker::Styles,
     /// openOMSI's content folder (junction objects are written there) and the asphalt
     /// texture of their plates.
     pub content_dir: Option<std::path::PathBuf>,
@@ -371,6 +376,8 @@ impl Default for Editor {
             road_plan: None,
             follow_ground: true,
             auto_junctions: true,
+            snap_roads: true,
+            road_styles: Default::default(),
             content_dir: None,
             asphalt: None,
             road_snap: None,
@@ -964,6 +971,30 @@ impl Editor {
         // (Shift held: put it down freely)
         let model = assets.object(&rel);
         let free = self.shift_held || model.as_ref().map(|m| m.tree.is_some() || m.technical).unwrap_or(false);
+        // a junction or crossing piece (spline helpers) clicks onto the road ends near it:
+        // turned and moved so one of its helpers meets an end, facing along it
+        if let (true, false, Some(m)) = (self.align_to_road, free, model.as_ref().filter(|m| !m.helpers.is_empty())) {
+            let reach = m.radius() as f64 + 12.0;
+            let mut best: Option<(f64, DVec3, f64, DVec3)> = None;
+            for e in self.free_road_ends(assets, c.truncate(), reach) {
+                for (h, _) in &m.helpers {
+                    let turn = roads::norm_deg(e.heading + 180.0 - h[3] as f64);
+                    let off = object_matrix(DVec3::ZERO, [turn, 0.0, 0.0]).transform_point3(Vec3::new(h[0], h[1], h[2])).as_dvec3();
+                    let at = e.pos - DVec3::new(off.x, off.y, 0.0);
+                    let d = (at.truncate() - c.truncate()).length();
+                    if d < reach && best.map(|b| d < b.0).unwrap_or(true) {
+                        best = Some((d, at, turn, e.pos));
+                    }
+                }
+            }
+            if let Some((_, at, turn, end)) = best {
+                let z = self.doc.as_ref().map(|d| d.ground(at.truncate())).unwrap_or(c.z);
+                let pos = DVec3::new(at.x, at.y, z);
+                self.align_guide = Some((end, pos));
+                self.ghost_pos = Some((pos, roads::norm_deg(turn + self.place_heading)));
+                return;
+            }
+        }
         if self.align_to_road && !free {
             // its depth decides how far from a road it still belongs to it
             let depth = model.as_ref().map(|m| (m.hi.y - m.lo.y) as f64).unwrap_or(10.0);
@@ -988,6 +1019,32 @@ impl Editor {
             }
         }
         self.ghost_pos = Some((pos, self.snap_heading(heading)));
+    }
+
+    /// The free ends of visible roads within `within` m of `p` (as anchors: heading out of
+    /// the road).
+    fn free_road_ends(&self, assets: &mut Assets, p: DVec2, within: f64) -> Vec<Anchor> {
+        let Some(doc) = self.doc.as_ref() else { return Vec::new() };
+        let mut out = Vec::new();
+        for (k, t) in &doc.tiles {
+            let org = tile_origin(*k);
+            for s in t.tile.splines.iter().filter(|s| !s.deleted && (s.prev_id == 0 || s.next_id == 0)) {
+                if (DVec2::new(org.x + s.pos[0], org.y + s.pos[1]) - p).length() > s.length + within {
+                    continue;
+                }
+                if !assets.spline(&s.file).map(|m| m.joinable()).unwrap_or(false) {
+                    continue;
+                }
+                let c = omsi_geometry::SplineCurve::from_map(s, org);
+                if s.prev_id == 0 && (c.point_at(0.0).truncate() - p).length() < within {
+                    out.push(Anchor { pos: c.point_at(0.0), heading: roads::norm_deg(s.heading + 180.0), spline: Some((*k, s.id, false)), mid: None });
+                }
+                if s.next_id == 0 && (c.end_point().truncate() - p).length() < within {
+                    out.push(Anchor { pos: c.end_point(), heading: roads::norm_deg(c.heading_at(s.length)), spline: Some((*k, s.id, true)), mid: None });
+                }
+            }
+        }
+        out
     }
 
     /// The visible road nearest to `p` within `within` m: the point on its centre line, the
@@ -1257,7 +1314,7 @@ impl Editor {
         let Some(c) = self.cursor else { return };
         // (an end pulls the cursor only from close by: aimed at a road a little way from its
         // end, the road is joined there, not bent round to the end)
-        let found = if self.drawing_paths() { self.snap_lane(assets, c.truncate(), self.road_start.is_none()) } else { self.snap_anchor(assets, c.truncate(), 5.0) };
+        let found = if self.drawing_paths() { self.snap_lane(assets, c.truncate(), self.road_start.is_none()) } else if self.snap_roads { self.snap_anchor(assets, c.truncate(), 5.0) } else { None };
         self.road_snap_file = found.as_ref().and_then(|f| f.1.clone());
         let snap = found.map(|f| f.0);
         // (the start end itself is not a target)
@@ -1537,6 +1594,8 @@ impl Editor {
     fn make_junctions(&mut self, assets: &mut Assets, made: &[(TileKey, i64)], half: f64, start_mid: Option<(((i32, i32), i64, f64, f64), DVec3)>, end_mid: Option<(((i32, i32), i64, f64, f64), DVec3)>) -> usize {
         let (Some(content), asphalt) = (self.content_dir.clone(), self.asphalt.clone()) else { return 0 };
         let follow = self.follow_ground;
+        let styles = self.road_styles.clone();
+        let mine_style = self.road_type.as_deref().map(|r| styles.get(r)).unwrap_or_default();
         let Some(doc) = self.doc.as_mut() else { return 0 };
         let mut count = 0;
         // the new road's splines (their IDCodes change as they are cut)
@@ -1552,7 +1611,8 @@ impl Editor {
                 let h2 = doc.spline(nk, nid).map(|s| { let c = omsi_geometry::SplineCurve::from_map(s, tile_origin(nk)); c.heading_at(if at_end { s.length } else { 0.0 }) }).unwrap_or(h1 + 90.0);
                 h1 - h2
             };
-            let r = crate::junction::radius_at(&[hw, half], angle);
+            let other = doc.spline(k, id).map(|s| styles.get(&s.file)).unwrap_or_default();
+            let r = crate::junction::radius_at(&[hw, half], angle) * mine_style.corner.max(other.corner).clamp(0.5, 3.0);
             let (p, q) = doc.cut_at(k, id, at);
             let arms = [p.and_then(|p| doc.trim(p.0, p.1, p.2, r)), q.and_then(|q| doc.trim(q.0, q.1, q.2, r)), doc.trim(nk, nid, at_end, r)];
             log::debug!("T junction at {at:.1} on {id} (r {r:.1}): arms {:?}", arms);
@@ -1568,7 +1628,8 @@ impl Editor {
             }
             let arms: Vec<crate::junction::Arm> = arms.iter().flatten().map(|x| crate::junction::Arm { key: x.0, id: x.1, at_end: x.2 }).collect();
             if arms.len() >= 3 {
-                match crate::junction::make(doc, assets, &content, asphalt.as_deref(), centre, &arms) {
+                let opts = style_options(doc, &styles, &arms, centre);
+                match crate::junction::make_with(doc, assets, &content, asphalt.as_deref(), centre, &arms, &opts) {
                     Ok(_) => {
                         count += 1;
                         if follow {
@@ -1601,8 +1662,9 @@ impl Editor {
                             continue;
                         }
                         let Some(m) = assets.spline(&s2.file) else { continue };
-                        // (a road over a track is a level crossing: both go on as they are)
-                        if !m.joinable() || m.is_track() {
+                        // (a road over a track is a level crossing: both go on as they are; so is a
+                        // road whose style makes no junctions)
+                        if !m.joinable() || m.is_track() || !mine_style.junctions || !styles.get(&s2.file).junctions {
                             continue;
                         }
                         let c2 = omsi_geometry::SplineCurve::from_map(s2, org);
@@ -1635,7 +1697,8 @@ impl Editor {
                 let h2 = doc.spline(k2, id2).map(|s| omsi_geometry::SplineCurve::from_map(s, tile_origin(k2)).heading_at(a2)).unwrap_or(90.0);
                 h1 - h2
             };
-            let r = crate::junction::radius_at(&[half, hw2], angle);
+            let other = doc.spline(k2, id2).map(|s| styles.get(&s.file)).unwrap_or_default();
+            let r = crate::junction::radius_at(&[half, hw2], angle) * mine_style.corner.max(other.corner).clamp(0.5, 3.0);
             // both roads cut there (at a joint, the splines meeting there are the sides)
             let (p1, q1) = doc.cut_at(k1, id1, a1);
             for x in [p1, q1].iter().flatten() {
@@ -1649,7 +1712,8 @@ impl Editor {
             skip.push((id1, id2));
             let arms: Vec<crate::junction::Arm> = arms.iter().flatten().map(|x| crate::junction::Arm { key: x.0, id: x.1, at_end: x.2 }).collect();
             if arms.len() >= 3 {
-                match crate::junction::make(doc, assets, &content, asphalt.as_deref(), centre, &arms) {
+                let opts = style_options(doc, &styles, &arms, centre);
+                match crate::junction::make_with(doc, assets, &content, asphalt.as_deref(), centre, &arms, &opts) {
                     Ok(_) => {
                         count += 1;
                         if follow {
@@ -3169,6 +3233,17 @@ fn ring(out: &mut Vec<OverlayPoint>, cam: &crate::camera::Camera, c: DVec3, r: f
 
 /// Join two road ends that were cut back for a junction that turned out to have only these
 /// two (the others too short to keep): a smooth piece of the first one's road between them.
+/// A new junction's options from its roads' styles: lights if any road asks for them, a
+/// zebra on every arm if any road does.
+fn style_options(doc: &Document, styles: &crate::road_maker::Styles, arms: &[crate::junction::Arm], centre: DVec3) -> crate::junction::Options {
+    let st: Vec<crate::road_maker::JunctionStyle> = arms.iter().filter_map(|a| doc.spline(a.key, a.id)).map(|s| styles.get(&s.file)).collect();
+    let mut o = crate::junction::Options { lights: st.iter().any(|s| s.lights), ..Default::default() };
+    if st.iter().any(|s| s.crossings) {
+        o.crossings = arm_ends_world(doc, arms).iter().map(|e| roads::heading_of(e.truncate() - centre.truncate())).collect();
+    }
+    o
+}
+
 fn join_arms(doc: &mut Document, a: &crate::junction::Arm, b: &crate::junction::Arm) {
     let end = |arm: &crate::junction::Arm| -> Option<(DVec3, f64, String, f64)> {
         let s = doc.spline(arm.key, arm.id)?;

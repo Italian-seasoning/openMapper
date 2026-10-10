@@ -38,6 +38,8 @@ pub enum Action {
     Import,
     ChooseOmsi,
     SetLang(Lang),
+    /// The Road types window (road maker, junction styles).
+    RoadTypes,
     /// The PBR window on an object's textures.
     PbrForObject(String),
     /// The PBR window on a picture chosen from disk.
@@ -644,6 +646,9 @@ fn menu_bar(root: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, can_undo: bo
                     }
                 }
                 ui.separator();
+                if menu_item(ui, Some(Icon::Road), tr("Road types and junctions…", "Типы дорог и перекрёстки…"), "", true) {
+                    actions.push(Action::RoadTypes);
+                }
                 if menu_item(ui, Some(Icon::Layers), tr("PBR maps for a picture…", "PBR-карты для картинки…"), "", true) {
                     actions.push(Action::PbrMaker);
                 }
@@ -971,8 +976,12 @@ fn catalogue_of(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Libr
     });
     if logic.is_some() {
     } else if kind == Kind::Spline {
+        if ui.button(icons::labelled(Icon::Settings, tr("Road types and junctions…", "Типы дорог и перекрёстки…"))).clicked() {
+            actions.push(Action::RoadTypes);
+        }
         check(ui, &mut ed.follow_ground, tr("Shape the ground under the road", "Подгонять землю под дорогу"));
         crate::ui_edit::road_options(ui, ed);
+        check(ui, &mut ed.snap_roads, tr("Join road ends, roads and junction pieces near the cursor", "Пристыковывать к концам дорог, дорогам и деталям перекрёстков у курсора"));
         check(ui, &mut ed.auto_junctions, tr("Make junctions where roads meet", "Делать перекрёстки, где дороги встречаются"));
         check(ui, &mut ed.inherit_type, tr("Go on with the type of the road I start from", "Продолжать типом дороги, от которой начинаю"));
         let current = ed.road_type.as_deref().map(|r| lib.find(r).map(|a| a.name.clone()).unwrap_or_else(|| r.to_string()));
