@@ -337,6 +337,15 @@ pub struct GeoUi {
     google: Option<Receiver<Result<sources::Viewport, String>>>,
     google_line: Option<String>,
     uploads: Vec<(TileKey, Mips)>,
+    /// Pictures not kept on disk (Google's), made again at each opening.
+    memory: HashMap<TileKey, Arc<image::RgbaImage>>,
+    /// Tiles whose kept-nowhere imagery is to be made again.
+    rebuild: Vec<TileKey>,
+    /// Small copies for the overview map.
+    mini: HashMap<TileKey, egui::TextureHandle>,
+    mini_pending: Vec<(TileKey, egui::ColorImage)>,
+    /// Unloaded tiles beside loaded heights (their shared edge steps).
+    edges: Vec<TileKey>,
 }
 
 impl Default for GeoUi {
@@ -386,6 +395,11 @@ impl Default for GeoUi {
             google: None,
             google_line: None,
             uploads: Vec::new(),
+            memory: HashMap::new(),
+            rebuild: Vec::new(),
+            mini: HashMap::new(),
+            mini_pending: Vec::new(),
+            edges: Vec::new(),
         }
     }
 }
@@ -433,6 +447,16 @@ impl GeoUi {
         self.rect = None;
         self.detail = None;
         self.google_line = None;
+        self.memory.clear();
+        self.mini.clear();
+        self.mini_pending.clear();
+        self.edges.clear();
+        // (Google's pictures were never kept: made again from the tile cache, fetched again
+        // where it has run out)
+        self.rebuild = self.file.tiles.iter().filter(|(_, t)| t.imagery.as_ref().map(|m| !m.kept).unwrap_or(false) && t.own.is_none()).filter_map(|(n, _)| {
+            let (x, y) = n.split_once('_')?;
+            Some((x.parse().ok()?, y.parse().ok()?))
+        }).collect();
         if let Some(geo) = self.georef() {
             let (la, lo) = geo.lat_lon(self.middle(ed));
             self.map.look_at(la, lo, 15.0);
@@ -538,6 +562,7 @@ impl GeoUi {
         }
         match (&t.imagery, self.georef()) {
             (Some(m), Some(geo)) if m.stamp != geo.stamp() => format!("{} z{} ({})", m.source, m.zoom, tr("for an earlier placement", "для прежнего размещения")),
+            (Some(m), _) if !m.kept => format!("Google z{} ({})", m.zoom, tr("not kept with the map", "не хранится с картой")),
             (Some(m), _) => format!("{} z{}{}", m.source, m.zoom, if m.coarser { tr(", partly coarser", ", местами грубее") } else { "" }),
             (None, _) => tr("nothing", "ничего").into(),
         }
@@ -549,7 +574,7 @@ impl GeoUi {
         if t.own.is_some() {
             return Some(g::own_path(dir, k)).filter(|p| p.is_file());
         }
-        t.imagery.as_ref().map(|_| g::imagery_path(dir, k)).filter(|p| p.is_file())
+        t.imagery.as_ref().filter(|m| m.kept).map(|_| g::imagery_path(dir, k)).filter(|p| p.is_file())
     }
 
     // -------------------------------------------------------------- the main interface
@@ -600,6 +625,11 @@ impl GeoUi {
 
     /// Load imagery (`imagery`) and / or heights (`terrain`) for tiles.
     fn load(&mut self, ed: &mut Editor, prefs: &GeoPrefs, keys: Vec<TileKey>, imagery: bool, terrain: bool) {
+        self.load_with(ed, prefs, keys, imagery, None, terrain)
+    }
+
+    /// `from`: this source at this zoom (else the chosen or the sharpest one).
+    fn load_with(&mut self, ed: &mut Editor, prefs: &GeoPrefs, keys: Vec<TileKey>, imagery: bool, from: Option<(Source, u8)>, terrain: bool) {
         let (Some(geo), Some(doc), Some(dir)) = (self.georef(), ed.doc.as_ref(), self.dir.clone()) else {
             self.status = Some((tr("Place the map on the Earth first.", "Сначала разместите карту на Земле.").into(), true));
             return;
@@ -616,8 +646,10 @@ impl GeoUi {
         // (the sharpest here unless one is chosen: the load finds it out itself when the
         // detail of every source is not known yet)
         let chosen = prefs.all().into_iter().find(|s| s.name == self.file.source && prefs.usable(s));
+        let chosen = from.clone().map(|f| f.0).or(chosen);
         let src: Option<(Vec<Source>, u8)> = match (imagery, chosen) {
             (false, _) => None,
+            (true, Some(s)) if from.is_some() => Some((vec![s], from.as_ref().unwrap().1)),
             (true, Some(s)) => Some((vec![s], self.file.zoom)),
             (true, None) => Some((self.ranked(prefs, lat).into_iter().map(|r| r.0).collect(), 0)),
         };
@@ -661,11 +693,19 @@ impl GeoUi {
         let mut end = None;
         while let Ok(m) = j.rx.try_recv() {
             match m {
-                Msg::Image(k, meta) if mine => {
+                Msg::Image(k, meta, memory) if mine => {
                     let t = self.file.tile_mut(k);
                     t.imagery = Some(meta);
                     t.own = None;
                     self.shown.remove(&k);
+                    match memory {
+                        Some(m) => {
+                            self.memory.insert(k, Arc::new(m));
+                        }
+                        None => {
+                            self.memory.remove(&k);
+                        }
+                    }
                     self.save_at = Some(Instant::now());
                 }
                 Msg::Heights(k, h) => self.heights.push((k, h)),
@@ -685,6 +725,7 @@ impl GeoUi {
         if mine && !self.heights.is_empty() {
             if let Some(doc) = ed.doc.as_mut() {
                 ed.history.begin(tr("Load terrain heights", "Загрузка высот рельефа"));
+                let batch: BTreeSet<TileKey> = self.heights.iter().map(|h| h.0).collect();
                 for (k, h) in std::mem::take(&mut self.heights) {
                     let Some(t) = doc.tiles.get(&k) else { continue };
                     if t.terrain.heights.len() != h.len() {
@@ -698,6 +739,8 @@ impl GeoUi {
                 }
                 ed.history.commit();
                 self.touch();
+                // (tiles beside them left flat: their edge steps now)
+                self.edges = doc.tiles.keys().copied().filter(|n| !batch.contains(n) && self.file.tile(*n).terrain.is_none() && [(-1, 0), (1, 0), (0, -1), (0, 1)].iter().any(|(dx, dy)| batch.contains(&(n.0 + dx, n.1 + dy)))).collect();
             }
         }
         self.status = Some(match e {
@@ -872,30 +915,46 @@ impl GeoUi {
                 continue;
             }
             match m {
-                Some(m) => imagery.upload(gpu, k, &m, 0.0),
+                Some(m) => {
+                    imagery.upload(gpu, k, &m, 0.0);
+                    self.mini_pending.push((k, mini_of(&m)));
+                }
                 None => imagery.remove(k),
             }
         }
-        for (k, m) in self.uploads.drain(..) {
+        for (k, m) in std::mem::take(&mut self.uploads) {
             imagery.upload(gpu, k, &m, 0.0);
+            self.mini_pending.push((k, mini_of(&m)));
         }
         let max = self.gpu_side();
         for k in doc.tiles.keys() {
             let t = self.file.tile(*k);
             let want = self.picture_of(&dir, *k);
-            match want {
-                Some(p) => {
-                    let time = std::fs::metadata(&p).and_then(|m| m.modified()).ok();
-                    let now = (p.clone(), time);
-                    if self.shown.get(k) != Some(&now) && !self.loading.contains(k) {
-                        self.shown.insert(*k, now);
-                        self.loading.insert(*k);
-                        let _ = self.load_tx.send((dir.clone(), *k, p, max));
-                    }
+            if let (Some(m), true) = (self.memory.get(k), t.own.is_none()) {
+                // (held in memory only: put up once)
+                let now = (PathBuf::new(), None);
+                if self.shown.get(k) != Some(&now) {
+                    self.shown.insert(*k, now);
+                    let mips = Mips::of((**m).clone(), max);
+                    imagery.upload(gpu, *k, &mips, 0.0);
+                    self.mini_pending.push((*k, mini_of(&mips)));
                 }
-                None => {
-                    if self.shown.remove(k).is_some() {
-                        imagery.remove(*k);
+            } else {
+                match want {
+                    Some(p) => {
+                        let time = std::fs::metadata(&p).and_then(|m| m.modified()).ok();
+                        let now = (p.clone(), time);
+                        if self.shown.get(k) != Some(&now) && !self.loading.contains(k) {
+                            self.shown.insert(*k, now);
+                            self.loading.insert(*k);
+                            let _ = self.load_tx.send((dir.clone(), *k, p, max));
+                        }
+                    }
+                    None => {
+                        if self.shown.remove(k).is_some() {
+                            imagery.remove(*k);
+                            self.mini.remove(k);
+                        }
                     }
                 }
             }
@@ -942,6 +1001,18 @@ impl GeoUi {
             if let Ok(r) = rx.try_recv() {
                 self.google_line = r.ok().map(|v| v.copyright);
                 self.google = None;
+            }
+        }
+        for (k, img) in self.mini_pending.drain(..) {
+            self.mini.insert(k, ctx.load_texture(format!("geo mini {} {}", k.0, k.1), img, egui::TextureOptions::LINEAR));
+        }
+        if !self.rebuild.is_empty() && self.job.is_none() && self.georef().is_some() {
+            let keys = std::mem::take(&mut self.rebuild);
+            let z = keys.first().and_then(|k| self.file.tile(*k).imagery.map(|m| m.zoom)).unwrap_or(0);
+            let google = prefs.geo.all().into_iter().find(|s| s.kind == Kind::Google);
+            match (google, prefs.geo.key(sources::GOOGLE).is_some()) {
+                (Some(src), true) => self.load_with(ed, &prefs.geo, keys, true, Some((src, z)), false),
+                _ => self.status = Some((tr("Some tiles had Google imagery: enter your Google key to see it again (it is not kept with the map).", "У некоторых тайлов были снимки Google: введите ключ Google, чтобы снова их видеть (они не хранятся с картой).").into(), true)),
             }
         }
         self.confirm_dialog(ctx, ed, &prefs.geo);
@@ -1203,6 +1274,17 @@ impl GeoUi {
         for e in self.errors.iter().take(4) {
             ui.label(RichText::new(e).small().color(Color32::from_rgb(240, 150, 120)));
         }
+        if !self.edges.is_empty() {
+            ui.horizontal_wrapped(|ui| {
+                ui.colored_label(Color32::from_rgb(240, 190, 90), format!("{} {}", self.edges.len(), tr("tiles beside the loaded heights were not loaded: the ground steps at their edge.", "тайлов рядом с загруженными высотами не загружены: на их краю ступенька.")));
+                if ui.button(tr("Fit their edges", "Подогнать их края")).on_hover_text(tr("Their edge takes the loaded heights, fading out 60 m into the tile", "Их край берёт загруженные высоты, переходя на нет за 60 м вглубь тайла")).clicked() {
+                    self.fit_edges(ed);
+                }
+                if ui.small_button(tr("Leave them", "Оставить")).clicked() {
+                    self.edges.clear();
+                }
+            });
+        }
         ui.collapsing(tr("Terrain heights", "Высоты рельефа"), |ui| {
             let t = &mut self.file.terrain;
             let mut c = crate::ui::check(ui, &mut t.relative, tr("Relative: the orange tile's mean height is 0 m", "Относительные: средняя высота оранжевого тайла — 0 м")).changed();
@@ -1259,6 +1341,46 @@ impl GeoUi {
         });
         ui.separator();
         self.own_ui(ui, ed, &keys);
+    }
+
+    /// Bend the unloaded tiles beside loaded heights to meet them (one undo step).
+    fn fit_edges(&mut self, ed: &mut Editor) {
+        let Some(doc) = ed.doc.as_mut() else { return };
+        ed.history.begin(tr("Fit tile edges", "Подгонка краёв тайлов"));
+        for nk in std::mem::take(&mut self.edges) {
+            for (dx, dy) in [(-1, 0), (1, 0), (0, -1), (0, 1)] {
+                let lk = (nk.0 + dx, nk.1 + dy);
+                if self.file.tile(lk).terrain.is_none() {
+                    continue;
+                }
+                let (Some(l), Some(t)) = (doc.tiles.get(&lk), doc.tiles.get(&nk)) else { continue };
+                let n = t.terrain.samples();
+                if l.terrain.samples() != n {
+                    continue;
+                }
+                let loaded = l.terrain.heights.clone();
+                ed.history.touch_tile(doc, nk);
+                let t = doc.tiles.get_mut(&nk).unwrap();
+                // (12 samples: 60 m on a 300 m tile)
+                crate::geo::elevation::fit_edge(&mut t.terrain.heights, &loaded, n, (-dx, -dy), 12);
+                t.touch_terrain();
+            }
+        }
+        ed.history.commit();
+    }
+
+    /// The overview map's pictures: each tile's corner, its small copy and its opacity.
+    pub fn minimap_tiles(&self) -> Vec<(DVec2, egui::TextureId, f32)> {
+        if !self.file.overlay {
+            return Vec::new();
+        }
+        self.mini
+            .iter()
+            .filter_map(|(k, t)| {
+                let g = self.file.tile(*k);
+                g.visible.then(|| (tile_origin(*k), t.id(), (self.file.opacity * g.opacity).clamp(0.0, 1.0)))
+            })
+            .collect()
     }
 
     fn keys_ui(&mut self, ui: &mut egui::Ui, prefs: &mut Prefs) {
@@ -1480,6 +1602,12 @@ impl GeoUi {
         }
         self.touch();
     }
+}
+
+/// The overview map's copy of a picture: its mip level of at most 128 pixels.
+fn mini_of(m: &Mips) -> egui::ColorImage {
+    let l = m.0.iter().find(|l| l.width() <= 128).unwrap_or(m.0.last().unwrap());
+    egui::ColorImage::from_rgba_unmultiplied([l.width() as usize, l.height() as usize], l.as_raw())
 }
 
 impl Drop for GeoUi {

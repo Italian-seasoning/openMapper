@@ -1560,6 +1560,7 @@ fn controls(ctx: &egui::Context, st: &mut UiState) {
             ("[ ]  Shift+wheel", tr("brush size", "размер кисти")),
             ("G", tr("tile grid on / off", "сетка тайлов")),
             ("M", tr("overview map on / off", "обзорная карта")),
+            ("I", tr("satellite and terrain", "спутник и рельеф")),
             ("Ctrl+Z / Ctrl+Shift+Z", tr("undo / redo", "отменить / повторить")),
             ("Ctrl+S", tr("save", "сохранить")),
             ("F5", tr("test drive in openOMSI", "тест-драйв в openOMSI")),

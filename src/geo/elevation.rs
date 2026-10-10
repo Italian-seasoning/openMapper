@@ -72,3 +72,63 @@ pub fn mean(h: &[f32]) -> f32 {
     }
     (h.iter().map(|x| *x as f64).sum::<f64>() / h.len() as f64) as f32
 }
+
+/// Bend a neighbour's heights so its edge meets a loaded tile's: the shared samples take
+/// the loaded tile's, and the change fades out over `reach` samples into the neighbour.
+/// `d`: where the neighbour lies from the loaded tile ((1, 0): east); `n` samples a side.
+pub fn fit_edge(nb: &mut [f32], loaded: &[f32], n: usize, d: (i32, i32), reach: usize) {
+    let at = |x: usize, y: usize| y * n + x;
+    // (the shared sample i in both, and the neighbour's sample `depth` inwards from it)
+    let pos = |i: usize, depth: usize| -> (usize, usize, usize) {
+        let l = n - 1;
+        match d {
+            (1, _) => (at(l, i), at(0, i), at(depth, i)),
+            (-1, _) => (at(0, i), at(l, i), at(l - depth, i)),
+            (_, 1) => (at(i, l), at(i, 0), at(i, depth)),
+            _ => (at(i, 0), at(i, l), at(i, l - depth)),
+        }
+    };
+    let reach = reach.clamp(1, n - 1);
+    for i in 0..n {
+        let (from, edge, _) = pos(i, 0);
+        let delta = loaded[from] - nb[edge];
+        for depth in 0..reach {
+            let t = depth as f32 / reach as f32;
+            // (smooth: no kink where the fade ends)
+            let w = 1.0 - t * t * (3.0 - 2.0 * t);
+            nb[pos(i, depth).2] += delta * w;
+        }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn neighbour_edges_fitted() {
+        let n = 61;
+        let loaded: Vec<f32> = (0..n * n).map(|i| 30.0 + (i % n) as f32 * 0.1 + (i / n) as f32 * 0.05).collect();
+        for d in [(1, 0), (-1, 0), (0, 1), (0, -1)] {
+            let mut nb = vec![0.0f32; n * n];
+            fit_edge(&mut nb, &loaded, n, d, 12);
+            for i in 0..n {
+                let (l, e) = match d {
+                    (1, _) => (loaded[i * n + n - 1], nb[i * n]),
+                    (-1, _) => (loaded[i * n], nb[i * n + n - 1]),
+                    (_, 1) => (loaded[(n - 1) * n + i], nb[i]),
+                    _ => (loaded[i], nb[(n - 1) * n + i]),
+                };
+                assert_eq!(l, e, "{d:?} {i}");
+            }
+            // (past the reach the neighbour is as it was)
+            let far = match d {
+                (1, _) => nb[30 * n + 20],
+                (-1, _) => nb[30 * n + 40],
+                (_, 1) => nb[20 * n + 30],
+                _ => nb[40 * n + 30],
+            };
+            assert_eq!(far, 0.0, "{d:?}");
+        }
+    }
+}

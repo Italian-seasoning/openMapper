@@ -799,6 +799,7 @@ impl App {
         }
         let mut guide: Vec<crate::ui_guide::Go> = Vec::new();
         self.geo.fill_bridge(&mut self.ui.geo, &self.ed);
+        self.ui.minimap.imagery = self.geo.minimap_tiles();
         let full = g.egui_ctx.run_ui(raw, |ui| {
             let ctx = ui.ctx().clone();
             if self.ed.doc.is_none() {

@@ -31,6 +31,9 @@ pub struct Minimap {
     pub large: bool,
     key: u64,
     tiles: Vec<DVec2>,
+    /// Satellite or own pictures laid on tiles: a tile's corner, a small copy, its opacity
+    /// (`ui_geo::GeoUi::minimap_tiles`).
+    pub imagery: Vec<(DVec2, egui::TextureId, f32)>,
     lines: Vec<(Line, Vec<DVec2>)>,
     min: DVec2,
     max: DVec2,
@@ -111,6 +114,10 @@ impl Minimap {
         for &o in &self.tiles {
             let r = Rect::from_two_pos(to_screen(o), to_screen(o + DVec2::splat(ts)));
             painter.rect_filled(r.shrink(0.5), CornerRadius::ZERO, Color32::from_rgb(52, 62, 48));
+        }
+        for &(o, tex, a) in &self.imagery {
+            let r = Rect::from_two_pos(to_screen(o), to_screen(o + DVec2::splat(ts)));
+            painter.image(tex, r.shrink(0.5), Rect::from_min_max(Pos2::ZERO, Pos2::new(1.0, 1.0)), Color32::from_white_alpha((a * 255.0) as u8));
         }
         for (kind, pts) in &self.lines {
             let (w, c) = match kind {
