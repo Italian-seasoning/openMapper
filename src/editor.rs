@@ -2469,11 +2469,12 @@ impl Editor {
     }
 
     /// After a save: the junction files of this map that nothing uses any more (not a tile,
-    /// not a tile undo or redo may bring back, and not one made in this session) are deleted.
+    /// not a tile undo or redo may bring back, not an earlier version kept by a save, and not
+    /// one made in this session) are deleted.
     /// Returns how many went.
     pub fn clean_junction_files(&self) -> usize {
         let (Some(doc), Some(content)) = (self.doc.as_ref(), self.content_dir.as_ref()) else { return 0 };
-        let used: std::collections::HashSet<String> = doc
+        let mut used: std::collections::HashSet<String> = doc
             .tiles
             .values()
             .flat_map(|t| t.tile.objects.iter().chain(t.chrono.iter().flat_map(|c| c.objects.iter())))
@@ -2483,6 +2484,16 @@ impl Editor {
             .filter(|f| is_own_junction(f))
             .map(|f| f.to_lowercase())
             .collect();
+        // (and those the earlier versions kept by saves name: going back to one brings them back)
+        for b in crate::doc::safe::backups(&doc.dir) {
+            for e in std::fs::read_dir(&b).into_iter().flatten().flatten() {
+                if !e.file_name().to_string_lossy().to_lowercase().ends_with(".map") {
+                    continue;
+                }
+                let Ok(bytes) = std::fs::read(e.path()) else { continue };
+                used.extend(omsi_cfg::decode_text(&bytes).lines().map(str::trim).filter(|l| is_own_junction(l)).map(str::to_lowercase));
+            }
+        }
         let folder: String = doc.dir.file_name().map(|f| f.to_string_lossy().to_string()).unwrap_or_else(|| "map".into()).chars().map(|c| if c.is_alphanumeric() || c == '-' || c == '_' { c } else { '_' }).collect();
         let dir = omsi_cfg::resolve_path(content, &format!("Sceneryobjects\\openMapper\\{folder}"));
         crate::junction::remove_unused(&dir, &folder, &used, self.session_first_id)
@@ -3524,6 +3535,28 @@ mod tests {
         // (nothing can bring it back any more: it goes)
         ed.history.clear();
         assert_eq!(ed.clean_junction_files(), 1);
+        let _ = std::fs::remove_dir_all(&content);
+    }
+
+    /// A junction file an earlier version of the map (kept by a save) names stays: going
+    /// back to that version brings the junction back.
+    #[test]
+    fn junction_files_an_earlier_version_names_are_kept() {
+        let content = std::env::temp_dir().join(format!("openmapper-test-jbackup-{}", std::process::id()));
+        let mut doc = flat_map(1);
+        doc.dir = content.join("maps").join("J");
+        let dir = content.join("Sceneryobjects").join("openMapper").join("J");
+        std::fs::create_dir_all(dir.join("model")).unwrap();
+        std::fs::write(dir.join("junction_5.sco"), "x").unwrap();
+        std::fs::create_dir_all(&doc.dir).unwrap();
+        std::fs::write(doc.dir.join("tile_0_0.map"), "[object]\n0\nSceneryobjects\\openMapper\\J\\junction_5.sco\n5\n").unwrap();
+        // a save that replaced that tile keeps it in a backup
+        crate::doc::safe::backup(&doc.dir, &[crate::doc::safe::Op::Write(doc.dir.join("tile_0_0.map"), Vec::new())], &[]).unwrap();
+        let mut ed = Editor::default();
+        ed.content_dir = Some(content.clone());
+        ed.open(doc);
+        assert_eq!(ed.clean_junction_files(), 0);
+        assert!(dir.join("junction_5.sco").exists());
         let _ = std::fs::remove_dir_all(&content);
     }
 }
