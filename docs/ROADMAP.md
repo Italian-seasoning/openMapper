@@ -37,3 +37,6 @@ Add a line when you touch a shared file: stream, file, what.
 * D · `src/ui.rs`: `Action::LookAt(DVec2)`, `UiState::minimap`, `Status::cam`, View menu "Overview map", minimap drawn in the central panel; welcome list maps a recent installation map to its content copy.
 * D · `src/app.rs`: `Status::cam` filled, `Action::LookAt` handled, key `M` toggles the overview map.
 * D · `src/main.rs`: `mod ui_minimap`.
+* D · `src/ui.rs`: `Action::ToggleFavourite`, `Action::UsedAsset`, `UiState::{favourites, recent_assets}`; `catalogue`, `logic_panel`, `catalogue_of` take `actions`; favourites / recently used groups and a right-click menu in the catalogue.
+* D · `src/install.rs`: `Prefs::{favourites, recent_assets}`.
+* D · `src/app.rs`: `OPENMAPPER_TOOL` also takes `roads` and `objects`.

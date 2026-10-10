@@ -126,6 +126,8 @@ impl App {
         self.assets = Some(Assets::new(roots.omsi.clone(), roots.content.clone()));
         self.lib.start_scan(&roots);
         self.ui.maps = install::list_maps(&roots);
+        self.ui.favourites = self.prefs.favourites.clone();
+        self.ui.recent_assets = self.prefs.recent_assets.clone();
         self.texture_files = ground_texture_files(&roots);
         self.ed.content_dir = Some(roots.content.clone());
         self.ed.asphalt = crate::junction::asphalt_texture(&roots.omsi);
@@ -207,9 +209,12 @@ impl App {
             self.cam.yaw = v[3];
             self.cam.pitch = v[4];
         }
-        // OPENMAPPER_TOOL=logic (checks without a person at the screen)
-        if std::env::var("OPENMAPPER_TOOL").map(|t| t == "logic").unwrap_or(false) {
-            self.ed.set_tool(Tool::Logic);
+        // OPENMAPPER_TOOL=roads|objects|logic (checks without a person at the screen)
+        match std::env::var("OPENMAPPER_TOOL").as_deref() {
+            Ok("roads") => self.ed.set_tool(Tool::Roads),
+            Ok("objects") => self.ed.set_tool(Tool::Objects),
+            Ok("logic") => self.ed.set_tool(Tool::Logic),
+            _ => {}
         }
     }
 
@@ -404,6 +409,14 @@ impl App {
                         self.cam.distance = self.cam.distance.min(120.0);
                     }
                 }
+            }
+            Action::ToggleFavourite(rel) => {
+                self.prefs.toggle_favourite(&rel);
+                self.ui.favourites = self.prefs.favourites.clone();
+            }
+            Action::UsedAsset(rel) => {
+                self.prefs.push_recent_asset(&rel);
+                self.ui.recent_assets = self.prefs.recent_assets.clone();
             }
             Action::LookAt(p) => {
                 if let Some(doc) = &self.ed.doc {
