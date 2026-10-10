@@ -351,11 +351,11 @@ fn run(s: Snapshot, roots: Vec<PathBuf>) -> Vec<Issue> {
 
     // files: each missing one once, with how often and where it is first used
     let mut uses: HashMap<String, (bool, usize, DVec2, Sel)> = HashMap::new();
-    for o in &s.objects {
+    for o in s.objects.iter().filter(|o| !o.file.trim().is_empty()) {
         let e = uses.entry(o.file.to_lowercase()).or_insert((false, 0, o.world, Sel::Object(o.tile, o.id)));
         e.1 += 1;
     }
-    for sp in &s.splines {
+    for sp in s.splines.iter().filter(|x| !x.file.trim().is_empty()) {
         let e = uses.entry(sp.file.to_lowercase()).or_insert((true, 0, sp.ends[0].0.truncate(), Sel::Spline(sp.tile, sp.id)));
         e.1 += 1;
     }
@@ -527,7 +527,7 @@ fn run(s: Snapshot, roots: Vec<PathBuf>) -> Vec<Issue> {
     let mut dups: Vec<_> = ids.iter().filter(|(id, v)| **id > 0 && v.len() > 1).collect();
     dups.sort_by_key(|d| *d.0);
     for (id, v) in dups.iter().take(LIST) {
-        out.push(issue(Severity::Warning, Kind::DuplicateId, format!("IDCode {id}"), format!("{} {}", tr("used by", "у"), times(v.len())), Some(v[0].1), Some(v[0].0), None));
+        out.push(issue(Severity::Warning, Kind::DuplicateId, format!("IDCode {id}"), format!("{} {}", v.len(), tr("things have it", "объекта с ним")), Some(v[0].1), Some(v[0].0), None));
     }
     let max_id = ids.keys().copied().max().unwrap_or(0);
     if max_id >= s.next_id {

@@ -2031,6 +2031,9 @@ fn marker_mesh() -> MeshData {
 }
 
 fn push_object(groups: &mut Groups, key: &str, model: &Arc<ObjectModel>, label: Option<&String>, m: Mat4, tint: [f32; 4], sel: Option<Sel>) {
+    if !m.is_finite() {
+        return;
+    }
     let scale = m.x_axis.truncate().length().max(m.y_axis.truncate().length()).max(m.z_axis.truncate().length());
     if let Some((dirs, tex, h, r)) = &model.tree {
         // a tree's texture may be named by its first label
@@ -2093,6 +2096,12 @@ fn flatten(groups: Groups, base: u32) -> (Vec<Instance>, Vec<Batch>, HashMap<Sel
 
 /// A spline's mesh, positions relative to `origin` (a tile's corner).
 pub fn build_spline(model: &SplineModel, s: &MapSpline, origin: DVec2) -> Option<MeshData> {
+    // (a broken record - no length, one of thousands of kilometres, a number that is no
+    // number - is left out rather than built)
+    let sane = |v: f64| v.is_finite() && v.abs() < 1e7;
+    if !(s.length > 0.0 && s.length < 20_000.0) || !s.pos.iter().chain([&s.heading, &s.radius, &s.grad_start, &s.grad_end]).all(|v| sane(*v)) {
+        return None;
+    }
     let curve = SplineCurve::from_map(s, origin);
     let m = omsi_geometry::build_spline_mesh(&model.def, &curve, s.mirror, DVec3::new(origin.x, origin.y, 0.0));
     (!m.is_empty()).then_some(m)
