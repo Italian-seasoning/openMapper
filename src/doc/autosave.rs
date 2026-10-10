@@ -30,6 +30,11 @@ pub struct Meta {
     pub fresh: bool,
     /// The tiles kept (the changed ones).
     pub tiles: Vec<TileKey>,
+    /// The timetable (`TTData`) and the traffic files kept whole (they had changed).
+    #[serde(default)]
+    pub timetable: bool,
+    #[serde(default)]
+    pub traffic: bool,
     /// Seconds since 1970.
     pub time: u64,
 }
@@ -54,26 +59,77 @@ pub fn dir(content: &Path) -> PathBuf {
 
 /// Keep the map's changes (the changed tiles, the global settings). The folder is written
 /// beside the old one and takes its place whole, so one cut short leaves the last.
+#[cfg(test)]
 pub fn write(doc: &Document, content: &Path) -> anyhow::Result<()> {
+    prepare(doc, content).run()
+}
+
+/// Counts up whenever the autosave is cleared: one still being written then is dropped.
+static EPOCH: std::sync::Mutex<u64> = std::sync::Mutex::new(0);
+
+/// An autosave made ready on the main thread (what it writes, in memory), to be written
+/// on another.
+pub struct Job {
+    target: PathBuf,
+    ops: Vec<super::safe::Op>,
+    meta: Meta,
+    epoch: u64,
+}
+
+/// What an autosave of the map writes (the tiles' text is made here; nothing is written).
+pub fn prepare(doc: &Document, content: &Path) -> Job {
     let target = dir(content);
     let fresh_dir = target.with_extension("new");
-    let _ = std::fs::remove_dir_all(&fresh_dir);
-    std::fs::create_dir_all(&fresh_dir)?;
     let (ops, tiles) = super::save::plan(doc, &fresh_dir, false);
-    let ops: Vec<_> = ops.into_iter().filter(|o| matches!(o, super::safe::Op::Write(..))).collect();
-    super::safe::commit(&ops)?;
+    let mut ops: Vec<_> = ops.into_iter().filter(|o| matches!(o, super::safe::Op::Write(..))).collect();
+    // the timetable and the traffic through their own writers, every file of them (a copy
+    // marked as all changed: the map's own stays as it is)
+    if doc.timetable.dirty {
+        let mut tt = doc.timetable.clone();
+        tt.restored(&Default::default());
+        ops.extend(crate::timetable::plan(&mut tt, &fresh_dir, &doc.order).into_iter().filter(|o| matches!(o, super::safe::Op::Write(..))));
+    }
+    if doc.traffic.dirty {
+        let mut t = doc.traffic.clone();
+        t.restored();
+        ops.extend(crate::traffic::plan(&t, &fresh_dir).into_iter().filter(|o| matches!(o, super::safe::Op::Write(..))));
+    }
     let meta = Meta {
         name: doc.display_name().to_string(),
         dir: doc.dir.clone(),
         source: doc.source.clone(),
         fresh: doc.fresh,
         tiles,
+        timetable: doc.timetable.dirty,
+        traffic: doc.traffic.dirty,
         time: std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).map(|d| d.as_secs()).unwrap_or(0),
     };
-    super::safe::write_atomic(&fresh_dir.join(META), serde_json::to_string_pretty(&meta)?.as_bytes())?;
-    let _ = std::fs::remove_dir_all(&target);
-    std::fs::rename(&fresh_dir, &target)?;
-    Ok(())
+    Job {
+        target,
+        ops,
+        meta,
+        epoch: *EPOCH.lock().unwrap_or_else(|e| e.into_inner()),
+    }
+}
+
+impl Job {
+    pub fn run(self) -> anyhow::Result<()> {
+        let fresh_dir = self.target.with_extension("new");
+        let _ = std::fs::remove_dir_all(&fresh_dir);
+        std::fs::create_dir_all(&fresh_dir)?;
+        super::safe::commit(&self.ops)?;
+        super::safe::write_atomic(&fresh_dir.join(META), serde_json::to_string_pretty(&self.meta)?.as_bytes())?;
+        // (saved or dropped since it was made ready: it is not wanted)
+        let epoch = EPOCH.lock().unwrap_or_else(|e| e.into_inner());
+        if *epoch != self.epoch {
+            let _ = std::fs::remove_dir_all(&fresh_dir);
+            return Ok(());
+        }
+        let _ = std::fs::remove_dir_all(&self.target);
+        std::fs::rename(&fresh_dir, &self.target)?;
+        drop(epoch);
+        Ok(())
+    }
 }
 
 /// The autosave left by a session that did not end normally.
@@ -84,6 +140,8 @@ pub fn pending(content: &Path) -> Option<Meta> {
 
 /// Nothing to keep any more (saved, or the changes were dropped).
 pub fn clear(content: &Path) {
+    let mut epoch = EPOCH.lock().unwrap_or_else(|e| e.into_inner());
+    *epoch += 1;
     let d = dir(content);
     if d.exists() {
         if let Err(e) = std::fs::remove_dir_all(&d) {
@@ -122,17 +180,30 @@ pub fn restore(roots: &crate::install::Roots, meta: &Meta) -> anyhow::Result<Doc
     doc.source = meta.source.clone().or(doc.source.take()).filter(|s| *s != meta.dir);
     doc.fresh = meta.fresh;
     doc.sync_mask_slots();
+    if meta.timetable {
+        let mut tt = crate::timetable::Timetable::load(&saved, &doc.order);
+        // (written whole on the next save; what only the map's had goes)
+        tt.restored(&doc.timetable);
+        doc.timetable = tt;
+    }
+    if meta.traffic {
+        let mut t = crate::traffic::Traffic::load(&saved);
+        t.restored();
+        doc.traffic = t;
+    }
     Ok(doc)
 }
 
 /// When to autosave next.
 pub struct Timer {
     last: Instant,
+    /// The autosave being written (on a thread of its own).
+    running: Option<std::thread::JoinHandle<()>>,
 }
 
 impl Default for Timer {
     fn default() -> Self {
-        Timer { last: Instant::now() }
+        Timer { last: Instant::now(), running: None }
     }
 }
 
@@ -141,15 +212,19 @@ impl Timer {
     /// edit). Errors go to the log and are tried again later.
     pub fn tick(&mut self, doc: Option<&Document>, content: Option<&Path>, editing: bool) {
         let (Some(doc), Some(content)) = (doc, content) else { return };
-        if editing || self.last.elapsed() < every() || !doc.is_dirty() {
+        if editing || self.last.elapsed() < every() || !doc.is_dirty() || self.running.as_ref().map(|h| !h.is_finished()).unwrap_or(false) {
             return;
         }
         self.last = Instant::now();
         let t = Instant::now();
-        match write(doc, content) {
-            Ok(()) => log::info!("autosave: {} ({:.0} ms)", dir(content).display(), t.elapsed().as_secs_f32() * 1000.0),
+        let job = prepare(doc, content);
+        let made = t.elapsed().as_secs_f32() * 1000.0;
+        let at = dir(content);
+        // (the files are written off the main thread: a big map's do not hold the window)
+        self.running = Some(std::thread::spawn(move || match job.run() {
+            Ok(()) => log::info!("autosave: {} ({made:.0} ms to make ready, {:.0} ms in all)", at.display(), t.elapsed().as_secs_f32() * 1000.0),
             Err(e) => log::warn!("autosave: {e}"),
-        }
+        }));
     }
 
     /// Start counting again (just saved).

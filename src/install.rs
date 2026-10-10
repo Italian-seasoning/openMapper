@@ -64,6 +64,9 @@ pub struct Prefs {
     /// The interface's zoom (0: not chosen, as 1).
     #[serde(default)]
     pub ui_scale: f32,
+    /// Graphics quality: "low", "medium", "high" (empty: high).
+    #[serde(default)]
+    pub graphics: String,
 }
 
 impl Prefs {
@@ -81,7 +84,10 @@ impl Prefs {
     pub fn save(&self) {
         let _ = std::fs::create_dir_all(openomsi_data_dir());
         if let Ok(s) = serde_json::to_string_pretty(self) {
-            let _ = std::fs::write(Self::path(), s);
+            // (all or nothing: a crash while writing must not leave half a file)
+            if let Err(e) = crate::doc::safe::write_atomic(&Self::path(), s.as_bytes()) {
+                log::warn!("{}: {e}", Self::path().display());
+            }
         }
     }
 

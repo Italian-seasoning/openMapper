@@ -17,7 +17,13 @@ pub fn enabled() -> bool {
 
 /// The camera turns by itself (a repeatable load for the measurements).
 pub fn orbit() -> bool {
-    mode() == "orbit"
+    mode() == "orbit" || mode() == "gpu"
+}
+
+/// The GPU's time for the 3D view is measured on a picture of its own (the frames the
+/// screen shows wait for its refresh, so their times say little).
+pub fn gpu() -> bool {
+    mode() == "gpu"
 }
 
 /// Milliseconds since `t`.
