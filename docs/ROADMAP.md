@@ -64,3 +64,8 @@ Add a line when you touch a shared file: stream, file, what.
 * A · `src/history.rs`: `Step::traffic`, `Snapshot::traffic`.
 * A · `src/ui.rs`: `Action::Traffic`; Map menu "Traffic and AI…" (key `T`).
 * A · `src/app.rs`: `App::traffic` (the Traffic and AI window) drawn after the Lines window, `Action::Traffic` and key `T`; `OPENMAPPER_TRAFFIC=day|groups|lists` opens it on a tab; `Action::Force` drops the traffic's changes too.
+* A · `src/main.rs`: `mod sample`, `mod ui_guide`, `mod ui_newmap`.
+* A · `src/ui.rs`: the New map dialog moved to `src/ui_newmap.rs` (`UiState::new_map` is a `NewMapForm`; `Action::NewMap` carries `options`), `Action::Guide` and Help menu "Getting started".
+* A · `src/install.rs`: `Prefs::guide_off`.
+* A · `src/app.rs`: `new_map` takes the options (base ground, left-hand traffic, sample → `App::sample`), the New map dialog drawn from here (both screens), `App::guide` window and its "Show me" requests, `Action::Guide`, Play ticks the guide's test drive; `OPENMAPPER_DEMO=SAMPLE:<name>` (with `OPENMAPPER_LHT` keeping left) makes a sample map and saves it, `OPENMAPPER_NEWMAP` opens the dialog.
+* A · `src/ui_timetable.rs`: `add_depot` is `pub(crate)` (the sample uses it).

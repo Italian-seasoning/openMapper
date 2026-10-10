@@ -638,4 +638,4 @@ pub fn clock(minutes: f32) -> String {
 
 
 #[cfg(test)]
-mod tests;
+pub(crate) mod tests;

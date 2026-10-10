@@ -14,7 +14,7 @@ fn omsi_root() -> Option<std::path::PathBuf> {
 /// The map's grid is global (`omsi_map::configure_grid`): one map at a time.
 static MAP: std::sync::Mutex<()> = std::sync::Mutex::new(());
 
-fn one_map() -> std::sync::MutexGuard<'static, ()> {
+pub(crate) fn one_map() -> std::sync::MutexGuard<'static, ()> {
     MAP.lock().unwrap_or_else(|e| e.into_inner())
 }
 

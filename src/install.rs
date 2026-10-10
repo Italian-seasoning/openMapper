@@ -52,6 +52,9 @@ pub struct Prefs {
     /// Show the welcome hints.
     #[serde(default)]
     pub hints_seen: bool,
+    /// The Getting started guide does not open by itself for a new map.
+    #[serde(default)]
+    pub guide_off: bool,
     /// Catalogue entries marked with a star (relative paths).
     #[serde(default)]
     pub favourites: Vec<String>,

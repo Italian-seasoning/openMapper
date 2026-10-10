@@ -27,7 +27,10 @@ mod timetable;
 mod traffic;
 mod ui;
 mod ui_edit;
+mod sample;
+mod ui_guide;
 mod ui_minimap;
+mod ui_newmap;
 mod ui_timetable;
 mod ui_traffic;
 
