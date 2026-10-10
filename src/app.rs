@@ -292,6 +292,25 @@ impl App {
         self.guide.map_made(&self.prefs);
     }
 
+    /// Save the map and pack it into a .zip (`crate::export`) where the user says.
+    fn export(&mut self) {
+        if !self.save() {
+            return;
+        }
+        let (Some(doc), Some(roots)) = (&self.ed.doc, &self.roots) else { return };
+        let folder = doc.dir.file_name().map(|f| f.to_string_lossy().to_string()).unwrap_or_else(|| "map".into());
+        let Some(out) = rfd::FileDialog::new().add_filter("zip", &["zip"]).set_file_name(format!("{folder}.zip")).set_title(tr("Export the map for sharing", "Экспорт карты для обмена")).save_file() else { return };
+        match crate::export::export(doc, roots, &out) {
+            Ok((plan, bytes)) => {
+                self.ed.toast(format!("{} {} ({} {}, {:.1} MB)", tr("Exported:", "Экспортировано:"), out.display(), plan.files.len(), tr("files", "файлов"), bytes as f64 / 1e6));
+                if !plan.missing.is_empty() {
+                    self.ed.error(format!("{} {}", plan.missing.len(), tr("files the map names were not found: the readme lists them", "файлов, которые называет карта, не найдено: они перечислены в readme")));
+                }
+            }
+            Err(e) => self.ed.error(format!("{}: {e}", tr("Could not export", "Не удалось экспортировать"))),
+        }
+    }
+
     /// The sample on the new map: a ring road with a bus line (`crate::sample`).
     fn sample(&mut self) {
         while self.lib.scanning {
@@ -428,6 +447,7 @@ impl App {
                     d.global_dirty = false;
                     d.timetable.dirty = false;
                     d.traffic.dirty = false;
+                    d.descriptions.dirty = false;
                     for t in d.tiles.values_mut() {
                         t.dirty = false;
                     }
@@ -560,6 +580,7 @@ impl App {
             Action::Timetable => self.tt.open = !self.tt.open,
             Action::Traffic => self.traffic.open = !self.traffic.open,
             Action::Guide => self.guide.open = !self.guide.open,
+            Action::Export => self.export(),
             Action::ToggleFavourite(rel) => {
                 self.prefs.toggle_favourite(&rel);
                 self.ui.favourites = self.prefs.favourites.clone();

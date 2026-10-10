@@ -68,6 +68,8 @@ pub enum Action {
     Traffic,
     /// Open or close the Getting started guide.
     Guide,
+    /// Save the map and pack it into a .zip to share.
+    Export,
     /// Do it without asking about unsaved changes.
     Force(Box<Action>),
     Quit,
@@ -530,6 +532,9 @@ fn menu_bar(root: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, can_undo: bo
                 ui.separator();
                 if menu_item(ui, Some(Icon::Save), tr("Save", "Сохранить"), "Ctrl+S", true) {
                     actions.push(Action::Save);
+                }
+                if menu_item(ui, Some(Icon::Copy), tr("Export map for sharing…", "Экспорт карты для обмена…"), "", true) {
+                    actions.push(Action::Export);
                 }
                 if menu_item(ui, Some(Icon::Import), tr("Import assets…", "Импорт ассетов…"), "", true) {
                     actions.push(Action::Import);
@@ -1407,8 +1412,7 @@ fn map_properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, actions:
             });
         });
         ui.add_space(4.0);
-        ui.label(RichText::new(tr("Description", "Описание")).color(TEXT_DIM));
-        ui.add(egui::TextEdit::multiline(&mut doc.global.description).desired_rows(4).desired_width(f32::INFINITY));
+        crate::descriptions::editor(ui, doc, &mut ed.history);
         if doc.global.entry_points.is_empty() {
             ui.add_space(6.0);
             ui.label(RichText::new(tr("No start point yet: place one (Objects > Bus stops > Entrypoint) so the bus has somewhere to appear in openOMSI.", "Нет точки старта: поставьте её (Объекты > Остановки > Entrypoint), чтобы автобусу было где появиться в openOMSI.")).small().color(Color32::from_rgb(230, 170, 100)));

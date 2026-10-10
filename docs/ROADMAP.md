@@ -84,3 +84,12 @@ Add a line when you touch a shared file: stream, file, what.
 * B (round 3) · `src/app.rs`: Enter pushes `Action::BuildRoad` (handled with `ed.confirm_road`); Shift sets `ed.straight_lock` and `ed.replan`; `ui_edit::road_entry` drawn after `ui::editor`.
 * B (round 3) · `src/main.rs`: `mod draw`.
 * B (round 3) · `src/main.rs`: `mod roundabout`. Roads panel options (roundabout, keep height) come from `ui_edit::road_options`.
+* A · `src/main.rs`: `mod export`; `--export path/to/global.cfg out.zip` and `--import file` run without a window.
+* A · `src/ui.rs`: `Action::Export`, File menu "Export map for sharing…".
+* A · `src/app.rs`: `App::export` (saves, asks where, packs; toasts what went in and what is missing).
+* A · `src/check.rs` (C): `missing_textures` is `pub(crate)` (the export test checks the imported map with it).
+* A · `src/doc/mod.rs`, `src/doc/save.rs` (C): `Document::descriptions` (`global_<LANG>.dsc`, new `src/descriptions.rs`), read with the map, counted in `is_dirty`, planned with the save's ops; `descriptions: Default::default()` in the tests' and autosave's `Document` literals (`src/doc/tests.rs`, `src/doc/autosave.rs`, `src/check.rs`, `src/selection.rs`).
+* A · `src/ui.rs`: `map_properties` shows `descriptions::editor` (a language picker above the description) in place of the plain description field.
+* A · `src/history.rs`: `Snapshot::descriptions`.
+* A · `src/main.rs`: `mod descriptions`.
+* A · (no new shared hooks for Holidays.txt: it is part of the timetable, `Timetable::calendar`.)

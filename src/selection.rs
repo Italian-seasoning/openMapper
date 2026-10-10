@@ -367,6 +367,7 @@ pub mod tests {
             global_rev: 0,
             timetable: Default::default(),
             traffic: Default::default(),
+            descriptions: Default::default(),
         };
         for x in 0..n {
             doc.tiles.insert((x, 0), TileDoc::new_flat(0.0));

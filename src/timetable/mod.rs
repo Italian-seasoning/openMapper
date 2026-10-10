@@ -39,6 +39,9 @@ pub struct Timetable {
     links_changed: bool,
     /// Trips whose route is to be found again (their stops changed).
     pub reroute: BTreeSet<String>,
+    /// Public holidays and school holidays (`Holidays.txt`): which tours run on a day.
+    pub calendar: omsi_map::Calendar,
+    calendar_changed: bool,
 }
 
 fn key(name: &str) -> String {
@@ -56,7 +59,11 @@ impl Timetable {
         if n != (0, 0, 0, 0) {
             log::info!("timetable: {} lines, {} trips, {} tracks, {} stops", n.0, n.1, n.2, n.3);
         }
-        Timetable { stops: d.bus_stops, links: d.stn_links, trips: d.trips, tracks: d.tracks, lines: d.lines, order: order.to_vec(), ..Default::default() }
+        let mut calendar = omsi_map::Calendar::load(&omsi_cfg::resolve_path(dir, "Holidays.txt")).unwrap_or_default();
+        // (in the order of the days, as the Lines window lists them)
+        calendar.holidays.sort_by_key(|h| h.date);
+        calendar.ranges.sort_by_key(|r| r.start);
+        Timetable { stops: d.bus_stops, links: d.stn_links, trips: d.trips, tracks: d.tracks, lines: d.lines, order: order.to_vec(), calendar, ..Default::default() }
     }
 
     pub fn trip(&self, name: &str) -> Option<&Trip> {
@@ -111,14 +118,20 @@ impl Timetable {
         self.changed = mine;
         self.stops_changed = true;
         self.links_changed = true;
+        self.calendar_changed = true;
         self.reroute.clear();
+        self.dirty = true;
+    }
+
+    pub fn touch_calendar(&mut self) {
+        self.calendar_changed = true;
         self.dirty = true;
     }
 
     /// The same lines, trips, tours and stops (what the Lines window edits; not the routes
     /// found for them or what is still to be saved).
     pub fn same_content(&self, o: &Timetable) -> bool {
-        self.lines == o.lines && self.trips == o.trips && self.stops == o.stops
+        self.lines == o.lines && self.trips == o.trips && self.stops == o.stops && self.calendar == o.calendar
     }
 
     /// A new line (its name made unique).
@@ -398,6 +411,10 @@ pub fn plan(tt: &mut Timetable, map_dir: &Path, order: &[TileKey]) -> Vec<Op> {
     if tt.links_changed {
         ops.push(Op::Write(at("StnLinks.cfg"), encode(&stnlinks_text(&tt.links, &tt.stops))));
     }
+    if tt.calendar_changed {
+        let p = find_file(map_dir, "holidays.txt").unwrap_or_else(|| map_dir.join("Holidays.txt"));
+        ops.push(Op::Write(p, encode(&holidays_text(&tt.calendar))));
+    }
     ops
 }
 
@@ -407,6 +424,7 @@ pub fn saved(tt: &mut Timetable) {
     tt.changed.clear();
     tt.stops_changed = false;
     tt.links_changed = false;
+    tt.calendar_changed = false;
     tt.dirty = false;
 }
 
@@ -530,6 +548,31 @@ pub fn track_text(t: &Track) -> String {
             o.push('\n');
         }
         o.push('\n');
+    }
+    o
+}
+
+/// `Holidays.txt` as OMSI 2 has it: per year its school holidays (`[holidays]` first day,
+/// last day, name), then its public holidays (`[holiday]` day, name).
+pub fn holidays_text(c: &omsi_map::Calendar) -> String {
+    let mut years: BTreeSet<i32> = c.ranges.iter().map(|r| r.start / 10_000).chain(c.holidays.iter().map(|h| h.date / 10_000)).collect();
+    if years.is_empty() {
+        years.insert(0);
+    }
+    let mut o = String::new();
+    for y in years {
+        o.push_str(&format!("-----------------{y}------------------------------\n\n"));
+        let mut ranges: Vec<_> = c.ranges.iter().filter(|r| r.start / 10_000 == y).collect();
+        ranges.sort_by_key(|r| r.start);
+        for r in ranges {
+            o.push_str(&format!("[holidays]\n{}\n{}\n{}\n\n", r.start, r.end, r.name.trim()));
+        }
+        o.push_str("..............................\n\n");
+        let mut days: Vec<_> = c.holidays.iter().filter(|h| h.date / 10_000 == y).collect();
+        days.sort_by_key(|h| h.date);
+        for h in days {
+            o.push_str(&format!("[holiday]\n{}\n{}\n\n", h.date, h.name.trim()));
+        }
     }
     o
 }
