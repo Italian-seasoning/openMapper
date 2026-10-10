@@ -155,6 +155,30 @@ fn stop_times_spread_by_distance() {
     assert!(p.man_dep_time.is_empty());
 }
 
+/// Holidays.txt written and read back the same through openOMSI's reader; Grundorf's too.
+#[test]
+fn holidays_round_trip() {
+    let c = omsi_map::Calendar {
+        ranges: vec![omsi_map::HolidayRange { start: 20260720, end: 20260830, name: "Summer".into() }],
+        holidays: vec![omsi_map::Holiday { date: 20261225, name: "Christmas".into() }, omsi_map::Holiday { date: 20270101, name: "New Year".into() }],
+    };
+    let back = omsi_map::Calendar::parse(&omsi_cfg::CfgFile::from_str("Holidays.txt", &holidays_text(&c)));
+    assert_eq!(back, c);
+    if let Some(root) = omsi_root() {
+        let p = root.join("maps").join("Grundorf").join("Holidays.txt");
+        if let Ok(g) = omsi_map::Calendar::load(&p) {
+            let mut sorted = g.clone();
+            sorted.ranges.sort_by_key(|r| r.start);
+            sorted.holidays.sort_by_key(|h| h.date);
+            let mut again = omsi_map::Calendar::parse(&omsi_cfg::CfgFile::from_str("Holidays.txt", &holidays_text(&g)));
+            again.ranges.sort_by_key(|r| r.start);
+            again.holidays.sort_by_key(|h| h.date);
+            assert_eq!(again, sorted);
+            assert!(g.holidays.len() > 50);
+        }
+    }
+}
+
 #[test]
 fn clock_times() {
     assert_eq!(clock(247.0), "4:07");

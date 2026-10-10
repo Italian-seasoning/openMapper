@@ -73,6 +73,9 @@ pub struct TimetableUi {
     fill_from: (u32, u32),
     fill_to: (u32, u32),
     layover: u32,
+    /// The year the holidays are shown of.
+    holiday_year: i32,
+    holidays_open: bool,
 }
 
 fn lower(s: &str) -> String {
@@ -140,7 +143,8 @@ impl TimetableUi {
         self.open = true;
         let (l, tab) = line.split_once(':').unwrap_or((line, ""));
         self.want_line = Some(l.to_string());
-        self.tours_tab = tab == "tours";
+        self.tours_tab = tab == "tours" || tab == "holidays";
+        self.holidays_open = tab == "holidays";
     }
 
     /// The demo map's line (`OPENMAPPER_DEMO` with `OPENMAPPER_TIMETABLE`): stops on both
@@ -327,8 +331,8 @@ impl TimetableUi {
         };
         if self.map.as_ref() != Some(&dir) {
             // another map: start afresh
-            let (open, want_line, tours_tab) = (self.open, self.want_line.take(), self.tours_tab);
-            *self = TimetableUi { open, want_line, tours_tab, map: Some(dir), ..TimetableUi::new() };
+            let (open, want_line, tours_tab, holidays_open) = (self.open, self.want_line.take(), self.tours_tab, self.holidays_open);
+            *self = TimetableUi { open, want_line, tours_tab, holidays_open, map: Some(dir), ..TimetableUi::new() };
         }
         if !self.open {
             self.picking = false;
@@ -533,6 +537,8 @@ impl TimetableUi {
         let trips = line_trips(&doc.timetable, &doc.timetable.lines[li]);
         if self.tours_tab {
             ui.label(RichText::new(tr("A tour is one bus's day: the trips it drives, one after the other, and when each leaves.", "Выпуск — день одного автобуса: рейсы, которые он едет друг за другом, и время отправления каждого.")).small().color(TEXT_DIM));
+            self.holidays_panel(ui, &mut doc.timetable);
+            ui.add_space(4.0);
             self.tours_panel(ui, doc, li, &trips);
             return;
         }
@@ -826,6 +832,106 @@ impl TimetableUi {
     /// The stop's name on the map (without the timetable's).
     fn stop_name_raw(&self, id: &i64) -> String {
         self.stops.iter().find(|s| s.id == *id).map(|s| s.name.trim().to_string()).unwrap_or_default()
+    }
+
+    /// The public and school holidays (`Holidays.txt`): a tour's Holidays box and its
+    /// school day / school holiday choice look them up.
+    fn holidays_panel(&mut self, ui: &mut egui::Ui, tt: &mut Timetable) {
+        let before = tt.calendar.clone();
+        egui::CollapsingHeader::new(icons::labelled(Icon::Schedule, tr("Holidays and school holidays", "Праздники и каникулы"))).id_salt("tt holidays").default_open(self.holidays_open).show(ui, |ui| {
+            let c = &mut tt.calendar;
+            let mut years: Vec<i32> = c.ranges.iter().map(|r| r.start / 10_000).chain(c.holidays.iter().map(|h| h.date / 10_000)).collect();
+            years.sort();
+            years.dedup();
+            if self.holiday_year == 0 {
+                let now = crate::doc::today_code() / 10_000;
+                self.holiday_year = years.iter().copied().find(|y| *y == now).or(years.last().copied()).unwrap_or(now);
+            }
+            let y = &mut self.holiday_year;
+            ui.label(RichText::new(tr("On a public holiday only the tours with Holidays ticked run; school holidays pick the tours for school holidays or school days.", "В праздник ходят только выпуски с отметкой «Праздники»; каникулы выбирают выпуски для каникул или учебных дней.")).small().color(TEXT_DIM));
+            ui.horizontal(|ui| {
+                ui.label(tr("Year", "Год"));
+                ui.add(egui::DragValue::new(y).range(1900..=2200));
+                let cur = *y;
+                for k in years.iter().filter(|k| **k != cur).take(8) {
+                    if ui.small_button(k.to_string()).clicked() {
+                        *y = *k;
+                    }
+                }
+            });
+            let year = *y;
+            let date_edit = |ui: &mut egui::Ui, d: &mut i32| -> bool {
+                let (mut yy, mut mm, mut dd) = (*d / 10_000, *d / 100 % 100, *d % 100);
+                let mut ch = false;
+                ui.spacing_mut().item_spacing.x = 2.0;
+                ch |= ui.add(egui::DragValue::new(&mut dd).range(1..=31).custom_formatter(|v, _| format!("{:02}", v as i32))).changed();
+                ui.label(".");
+                ch |= ui.add(egui::DragValue::new(&mut mm).range(1..=12).custom_formatter(|v, _| format!("{:02}", v as i32))).changed();
+                ui.label(".");
+                ch |= ui.add(egui::DragValue::new(&mut yy).range(1900..=2200)).changed();
+                ui.spacing_mut().item_spacing.x = 8.0;
+                if ch {
+                    *d = yy * 10_000 + mm * 100 + dd;
+                }
+                ch
+            };
+            ui.label(RichText::new(tr("Public holidays", "Праздники")).strong());
+            let mut remove = None;
+            egui::Grid::new("tt public holidays").num_columns(3).spacing(Vec2::new(8.0, 3.0)).show(ui, |ui| {
+                for (i, h) in c.holidays.iter_mut().enumerate().filter(|(_, h)| h.date / 10_000 == year) {
+                    ui.horizontal(|ui| {
+                        date_edit(ui, &mut h.date);
+                    });
+                    ui.add_sized([160.0, 20.0], egui::TextEdit::singleline(&mut h.name));
+                    if small_button(ui, Icon::Delete, tr("Take out", "Убрать")) {
+                        remove = Some(i);
+                    }
+                    ui.end_row();
+                }
+            });
+            if let Some(i) = remove {
+                c.holidays.remove(i);
+            }
+            if ui.button(icons::labelled(Icon::Add, tr("Holiday", "Праздник"))).clicked() {
+                c.holidays.push(omsi_map::Holiday { date: year * 10_000 + 101, name: tr("Holiday", "Праздник").into() });
+            }
+            ui.add_space(4.0);
+            ui.label(RichText::new(tr("School holidays", "Каникулы")).strong());
+            let mut remove = None;
+            egui::Grid::new("tt school holidays").num_columns(4).spacing(Vec2::new(8.0, 3.0)).show(ui, |ui| {
+                for (i, r) in c.ranges.iter_mut().enumerate().filter(|(_, r)| r.start / 10_000 == year) {
+                    ui.horizontal(|ui| {
+                        date_edit(ui, &mut r.start);
+                        ui.label("–");
+                        date_edit(ui, &mut r.end);
+                    });
+                    ui.add_sized([120.0, 20.0], egui::TextEdit::singleline(&mut r.name));
+                    if small_button(ui, Icon::Delete, tr("Take out", "Убрать")) {
+                        remove = Some(i);
+                    }
+                    ui.end_row();
+                }
+            });
+            if let Some(i) = remove {
+                c.ranges.remove(i);
+            }
+            ui.horizontal(|ui| {
+                if ui.button(icons::labelled(Icon::Add, tr("School holidays", "Каникулы"))).clicked() {
+                    c.ranges.push(omsi_map::HolidayRange { start: year * 10_000 + 720, end: year * 10_000 + 831, name: tr("Summer", "Лето").into() });
+                }
+                if ui.button(icons::labelled(Icon::Copy, &format!("{} {}", tr("Copy to", "Копировать в"), year + 1))).on_hover_text(tr("The same days a year later (feasts that move, like Easter, are to be set by hand)", "Те же дни годом позже (переходящие, как Пасха, поправьте вручную)")).clicked() {
+                    let next = |d: i32| d + 10_000;
+                    let add_h: Vec<_> = c.holidays.iter().filter(|h| h.date / 10_000 == year && !c.holidays.iter().any(|x| x.date == next(h.date))).map(|h| omsi_map::Holiday { date: next(h.date), name: h.name.clone() }).collect();
+                    let add_r: Vec<_> = c.ranges.iter().filter(|r| r.start / 10_000 == year && !c.ranges.iter().any(|x| x.start == next(r.start))).map(|r| omsi_map::HolidayRange { start: next(r.start), end: next(r.end), name: r.name.clone() }).collect();
+                    c.holidays.extend(add_h);
+                    c.ranges.extend(add_r);
+                    self.holiday_year = year + 1;
+                }
+            });
+        });
+        if tt.calendar != before {
+            tt.touch_calendar();
+        }
     }
 
     fn tours_panel(&mut self, ui: &mut egui::Ui, doc: &mut Document, li: usize, trips: &[String]) {
