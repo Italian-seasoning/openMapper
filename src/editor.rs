@@ -221,6 +221,10 @@ pub struct Editor {
     pub typed_text: [String; 4],
     /// Shift held while drawing: a straight.
     pub straight_lock: bool,
+    /// The Logic tool's AI paths are being edited (picked, reshaped, split) rather than drawn.
+    pub path_edit: bool,
+    /// Ctrl / Cmd is held (a click on a selected AI path puts a point into it).
+    pub ctrl_held: bool,
     /// The road drawn is planned again this frame.
     pub replan: bool,
     /// The Roads tool builds roundabouts: a click on the centre, then on the ring (or a
@@ -328,6 +332,8 @@ impl Default for Editor {
             ruler: None,
             typed_text: Default::default(),
             straight_lock: false,
+            path_edit: false,
+            ctrl_held: false,
             replan: false,
             roundabout: false,
             ring_centre: None,
@@ -429,13 +435,19 @@ impl Editor {
 
     /// Drawing AI paths with the Logic tool.
     pub fn drawing_paths(&self) -> bool {
-        self.tool == Tool::Logic && self.logic == LogicMode::Paths
+        self.tool == Tool::Logic && self.logic == LogicMode::Paths && !self.path_edit
+    }
+
+    /// AI paths are edited: only they can be picked.
+    pub fn editing_paths(&self) -> bool {
+        self.tool == Tool::Logic && self.logic == LogicMode::Paths && self.path_edit
     }
 
     /// The tool the mouse works as: the Logic tool draws paths as roads are drawn and
     /// places everything else as objects are placed.
     fn acts_as(&self) -> Tool {
         match self.tool {
+            Tool::Logic if self.logic == LogicMode::Paths && self.path_edit => Tool::Select,
             Tool::Logic if self.logic == LogicMode::Paths => Tool::Roads,
             Tool::Logic => Tool::Objects,
             t => t,
@@ -518,7 +530,8 @@ impl Editor {
         let ov = glam::Vec3::ZERO;
         let dv = d.as_vec3();
         let gdist = ground.map(|g| (g - o).length()).unwrap_or(f64::MAX);
-        for (k, t) in &doc.tiles {
+        let paths_only = self.editing_paths();
+        for (k, t) in doc.tiles.iter().filter(|_| !paths_only) {
             for ob in &t.tile.objects {
                 let Some(model) = assets.object(&ob.file) else { continue };
                 let world = doc.object_world(*k, ob, model.abs_height);
@@ -546,7 +559,7 @@ impl Editor {
         // what hangs on objects and rows (signs on posts, lamps on masts), placed as they are drawn
         // (only near where the ray meets the ground: rows are worked out along their roads)
         let near = |k: &TileKey| ground.map(|g| (tile_origin(*k) + DVec2::splat(tile_size() * 0.5) - g.truncate()).length() < tile_size() * 1.5).unwrap_or(false);
-        for (k, t) in &doc.tiles {
+        for (k, t) in doc.tiles.iter().filter(|_| !paths_only) {
             if t.tile.attach_objects.is_empty() || !near(k) {
                 continue;
             }
@@ -599,7 +612,12 @@ impl Editor {
                 if (start - g.truncate()).length() > s.length + 30.0 {
                     continue;
                 }
-                let hw = assets.spline(&s.file).map(|m| m.half_width as f64).unwrap_or(3.0).max(1.5);
+                let model = assets.spline(&s.file);
+                if paths_only && !model.as_ref().map(|m| m.is_ai_path()).unwrap_or(false) {
+                    continue;
+                }
+                // (an AI path has no width of its own: a metre and a half either side)
+                let hw = if paths_only { 1.5 } else { model.map(|m| m.half_width as f64).unwrap_or(3.0).max(1.5) };
                 let c = omsi_geometry::SplineCurve::from_map(s, org);
                 let n = (s.length / 1.0).ceil().max(2.0) as usize;
                 for i in 0..=n {
@@ -1720,21 +1738,24 @@ impl Editor {
         let w = (cam.distance * 0.004).clamp(0.08, 6.0) as f32;
         x.show_technical = self.show_technical || self.tool == Tool::Logic;
         // the AI's lanes: arrows the way traffic goes, ends green where joined, red where not
+        // (thin and small: a lane is a line on the road, not a road of its own)
         if self.tool == Tool::Logic || self.show_lanes {
             let r = (cam.distance * 1.3).clamp(40.0, 500.0);
             let (lanes, ends) = crate::lanes::near(doc, assets, cam.target.truncate(), r);
+            let lw = (cam.distance * 0.0012).clamp(0.03, 1.2) as f32;
             for l in lanes.iter().filter(|l| l.kind != 2) {
                 let color = if l.kind == 0 { [1.0, 0.78, 0.2, 0.9] } else { [0.35, 0.8, 1.0, 0.9] };
-                let lift = DVec3::Z * 0.25;
+                let lift = DVec3::Z * 0.15;
                 for s in l.pts.windows(2) {
-                    line(&mut x.overlay, cam, s[0] + lift, s[1] + lift, w * 0.35, color);
+                    line(&mut x.overlay, cam, s[0] + lift, s[1] + lift, lw, color);
                 }
                 // a chevron every 8 m (both ways for a two-way lane)
                 let mut acc = 0.0;
                 for s in l.pts.windows(2) {
                     let seg = (s[1] - s[0]).length();
                     acc += seg;
-                    if acc < 8.0 || seg < 1e-3 {
+                    // (further apart when seen from far, so they do not merge into a band)
+                    if acc < (cam.distance * 0.06).clamp(6.0, 40.0) || seg < 1e-3 {
                         continue;
                     }
                     acc = 0.0;
@@ -1745,16 +1766,29 @@ impl Editor {
                             continue;
                         }
                         let f = if back { -d } else { d };
-                        let sz = (w as f64 * 4.0).max(0.8);
+                        let sz = (lw as f64 * 6.0).clamp(0.3, 4.0);
                         let tip = mid + DVec3::new(f.x, f.y, 0.0) * sz;
                         let side = DVec3::new(f.y, -f.x, 0.0) * sz * 0.6;
-                        line(&mut x.overlay, cam, tip, mid - side, w * 0.5, color);
-                        line(&mut x.overlay, cam, tip, mid + side, w * 0.5, color);
+                        line(&mut x.overlay, cam, tip, mid - side, lw, color);
+                        line(&mut x.overlay, cam, tip, mid + side, lw, color);
                     }
                 }
             }
             for e in ends.iter().filter(|e| e.kind != 2) {
-                disc(&mut x.overlay, cam, e.pos + DVec3::Z * 0.2, w * 1.6, if e.linked { [0.35, 0.85, 0.45, 0.95] } else { [0.95, 0.25, 0.2, 0.95] });
+                disc(&mut x.overlay, cam, e.pos + DVec3::Z * 0.2, lw * 2.5, if e.linked { [0.35, 0.85, 0.45, 0.95] } else { [0.95, 0.25, 0.2, 0.95] });
+            }
+        }
+        // an AI path has nothing to see: the picked and the hovered one drawn as lines
+        if self.editing_paths() {
+            for (sel, color) in self.selection().into_iter().map(|s| (s, ORANGE)).chain(self.hover.map(|h| (h, WHITE))) {
+                let Sel::Spline(k, id) = sel else { continue };
+                let Some(s) = doc.spline(k, id) else { continue };
+                let c = omsi_geometry::SplineCurve::from_map(s, tile_origin(k));
+                let n = (s.length / 1.0).ceil().max(2.0) as usize;
+                let pts: Vec<DVec3> = (0..=n).map(|i| c.point_at(s.length * i as f64 / n as f64) + DVec3::Z * 0.25).collect();
+                for p in pts.windows(2) {
+                    line(&mut x.overlay, cam, p[0], p[1], w * 0.6, color);
+                }
             }
         }
         // a row of car parks being laid out
@@ -1992,6 +2026,11 @@ impl Editor {
             self.toggle_selected(hit);
             return;
         }
+        // Ctrl + click on the AI path being edited: a new point there, to drag
+        if let (true, true, Sel::Spline(k, id), Some(c)) = (self.editing_paths(), self.ctrl_held, hit, self.cursor) {
+            self.split_path_at(k, id, c.truncate());
+            return;
+        }
         if !self.is_selected(hit) {
             self.select(Some(hit));
         }
@@ -2005,6 +2044,34 @@ impl Editor {
             self.move_from = sels.iter().filter_map(|s| selection::origin_of(doc, *s)).collect();
             self.drag = Drag::Move { grab: c.truncate(), started: false };
         }
+    }
+
+    /// A point put into an AI path where it is nearest to `p`: the spline is cut there, so
+    /// the joint becomes a grip that drags both pieces.
+    fn split_path_at(&mut self, k: TileKey, id: i64, p: DVec2) {
+        let Some(doc) = self.doc.as_ref() else { return };
+        let Some(s) = doc.spline(k, id) else { return };
+        let c = omsi_geometry::SplineCurve::from_map(s, tile_origin(k));
+        let n = (s.length / 0.5).ceil().max(2.0) as usize;
+        let at = (0..=n).map(|i| s.length * i as f64 / n as f64).min_by(|a, b| (c.point_at(*a).truncate() - p).length().total_cmp(&(c.point_at(*b).truncate() - p).length())).unwrap_or(s.length * 0.5);
+        // (a point right at an end would leave a piece too short to grab)
+        if at < 1.0 || at > s.length - 1.0 {
+            self.toast(tr("Too near the end: drag the end's dot instead", "Слишком близко к концу: тяните точку конца"));
+            return;
+        }
+        let next = doc.find_spline(s.next_id).map(|(nk, _)| nk);
+        self.history.begin(tr("Add a point to the path", "Точка в пути"));
+        let doc = self.doc.as_ref().unwrap();
+        self.history.touch_global(doc);
+        self.history.touch_tile(doc, k);
+        // (the path after it is linked to the new piece instead)
+        if let Some(nk) = next {
+            self.history.touch_tile(doc, nk);
+        }
+        self.doc.as_mut().unwrap().split_spline(k, id, at);
+        self.history.commit();
+        self.select(Some(Sel::Spline(k, id)));
+        self.toast(tr("Point added: drag the dot where the pieces meet", "Точка добавлена: тяните кружок на стыке"));
     }
 
     /// The button let go after dragging a grip: the new shape goes in.
@@ -2882,7 +2949,7 @@ impl Editor {
                 _ => {}
             }
         }
-        if self.tool == Tool::Select {
+        if self.acts_as() == Tool::Select {
             for (h, p) in self.handles() {
                 let on = self.hover_handle == Some(h) || matches!(self.drag, Drag::Reshape(_, _, d) if d == h);
                 let r = if h == Handle::Mid { w * 2.5 } else { w * 3.5 };
@@ -3504,5 +3571,29 @@ mod tests {
         assert_eq!(ed.selected, Some(Sel::Object((1, 0), 1)));
         let o = ed.doc.as_ref().unwrap().object((1, 0), 1).unwrap();
         assert!((o.pos[0] - 50.0).abs() < 1e-9 && (o.pos[1] - 20.0).abs() < 1e-9);
+    }
+
+    #[test]
+    fn a_point_put_into_an_ai_path_splits_it_and_undoes() {
+        let mut ed = editor();
+        ed.tool = Tool::Logic;
+        ed.logic = LogicMode::Paths;
+        ed.path_edit = true;
+        // the spline runs north from (50, 50) for 30 m
+        ed.split_path_at((0, 0), 3, DVec2::new(51.0, 62.0));
+        let doc = ed.doc.as_ref().unwrap();
+        let a = doc.spline((0, 0), 3).unwrap();
+        assert!((a.length - 12.0).abs() < 0.3, "{}", a.length);
+        let b = doc.spline((0, 0), a.next_id).unwrap();
+        assert_eq!(b.prev_id, 3);
+        assert!((a.length + b.length - 30.0).abs() < 1e-6);
+        // too near an end: nothing happens
+        ed.split_path_at((0, 0), 3, DVec2::new(50.0, 50.3));
+        assert_eq!(ed.doc.as_ref().unwrap().tiles[&(0, 0)].tile.splines.len(), 2);
+        let d = ed.doc.as_mut().unwrap();
+        ed.history.undo(d);
+        let doc = ed.doc.as_ref().unwrap();
+        assert_eq!(doc.tiles[&(0, 0)].tile.splines.len(), 1);
+        assert!((doc.spline((0, 0), 3).unwrap().length - 30.0).abs() < 1e-9);
     }
 }

@@ -791,6 +791,7 @@ fn tool_hint(ed: &Editor) -> &'static str {
         Tool::Roads => tr("Click where the road starts, click again where it goes (it keeps going) · white dots: road ends to join · right-click / Esc: stop", "Клик: начало дороги, ещё клик: куда она идёт (дальше продолжается) · белые точки: концы для стыковки · правый клик / Esc: стоп"),
         Tool::Objects if ed.object_type.is_none() => tr("Choose an object in the list on the left", "Выберите объект в списке слева"),
         Tool::Objects => tr("Click to place · R / Shift+R turn · right-click puts the object away", "Клик: поставить · R / Shift+R: поворот · правый клик: убрать объект"),
+        Tool::Logic if ed.logic == LogicMode::Paths && ed.path_edit => tr("Click a path to pick it · drag its dots to move an end or bend it · Ctrl+click on it: add a point · Del: delete", "Клик по пути: выбрать · тяните кружки: двигать конец или изгибать · Ctrl+клик: добавить точку · Del: удалить"),
         Tool::Logic if ed.logic == LogicMode::Paths => tr("Click where the path starts, click where it goes (it keeps going) · it snaps to lane ends and along lanes · right-click / Esc: stop", "Клик: начало пути, ещё клик: куда он идёт (дальше продолжается) · прилипает к концам и вдоль полос · правый клик / Esc: стоп"),
         Tool::Logic if ed.logic == LogicMode::Parking && ed.parking_row => tr("Click the start of a row, then its end · R turns the cars · right-click: cancel", "Клик: начало ряда, потом его конец · R: повернуть машины · правый клик: отмена"),
         Tool::Logic => tr("Choose what to place in the list on the left, then click in the view · R / Shift+R turn", "Выберите, что ставить, в списке слева, потом клик в окне · R / Shift+R: поворот"),
@@ -877,6 +878,19 @@ fn logic_panel(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Libra
             }
         }
         LogicMode::Paths => {
+            ui.horizontal(|ui| {
+                if ui.add(egui::Button::new(icons::labelled(Icon::Add, tr("Draw new", "Рисовать новые"))).selected(!ed.path_edit)).clicked() && ed.path_edit {
+                    ed.cancel();
+                    ed.path_edit = false;
+                }
+                if ui.add(egui::Button::new(icons::labelled(Icon::Select, tr("Edit existing", "Править готовые"))).selected(ed.path_edit)).clicked() && !ed.path_edit {
+                    ed.cancel();
+                    ed.path_edit = true;
+                }
+            });
+            if ed.path_edit {
+                ui.label(RichText::new(tr("Click a path to pick it, drag its dots to move an end or bend it, Ctrl+click on it to add a point, Del deletes it. Lanes of roads and junctions belong to their road type: change the road for them.", "Клик по пути: выбрать, тяните кружки: двигать конец или изгибать, Ctrl+клик по нему: добавить точку, Del: удалить. Полосы дорог и перекрёстков принадлежат типу дороги: меняйте саму дорогу.")).small().color(TEXT_DIM));
+            }
             // the two everyone needs, at the top
             ui.horizontal(|ui| {
                 for (icon, label, file) in [(Icon::Traffic, tr("Cars", "Машины"), "Splines\\Marcel\\invis_street.sli"), (Icon::Walk, tr("People", "Люди"), "Splines\\invis_sidewalk.sli")] {

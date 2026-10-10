@@ -1429,6 +1429,7 @@ impl ApplicationHandler for App {
                 self.ed.straight_lock = self.keys.shift;
                 self.ed.replan = true;
                 self.keys.ctrl = m.state().control_key() || m.state().super_key();
+                self.ed.ctrl_held = self.keys.ctrl;
                 let alt = m.state().alt_key();
                 // (Alt / Option goes down: the camera will orbit round the point under the cursor)
                 if alt && !self.keys.alt && !self.mouse.over_ui {

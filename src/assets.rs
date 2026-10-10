@@ -74,6 +74,11 @@ impl SplineModel {
     /// A road one can see and join: drawn (a profile, not `[onlyeditor]`), and either
     /// carrying a street lane or drawn across its centre line. The invisible AI splines that
     /// maps lay under their roads are not.
+    /// An AI path: lanes and nothing to see (`[onlyeditor]` or no drawn profile).
+    pub fn is_ai_path(&self) -> bool {
+        !self.def.paths.is_empty() && (self.def.only_editor || !self.def.profiles.iter().any(|p| p.points.len() >= 2))
+    }
+
     pub fn joinable(&self) -> bool {
         let drawn = !self.def.only_editor && self.def.profiles.iter().any(|p| p.points.len() >= 2);
         let across = self.def.profiles.iter().any(|p| p.points.iter().any(|q| q.x < -0.5) && p.points.iter().any(|q| q.x > 0.5))
