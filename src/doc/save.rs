@@ -64,6 +64,7 @@ pub fn save(doc: &mut Document) -> anyhow::Result<()> {
     let (mut ops, written) = plan(doc, &doc.dir, false);
     // the timetable's and the traffic's files go with the map's, all or nothing
     let (dir, order) = (doc.dir.clone(), doc.order.clone());
+    crate::timetable::follow_stop_tiles(doc);
     ops.extend(crate::timetable::plan(&mut doc.timetable, &dir, &order));
     ops.extend(crate::traffic::plan(&doc.traffic, &dir));
     ops.extend(doc.descriptions.plan(&dir));

@@ -284,3 +284,22 @@ fn an_autosave_keeps_the_descriptions() {
     assert!(back.is_dirty() && back.descriptions.dirty);
     let _ = std::fs::remove_dir_all(&roots.content);
 }
+
+/// A stop object moved over into another tile: the timetable's stop list names its new
+/// tile on the next save, also when nothing of the timetable was edited.
+#[test]
+fn a_stop_moved_into_another_tile_is_found_there() {
+    let _map = one_map();
+    let roots = scratch("stop-tile");
+    let mut doc = sample_map(&roots);
+    // (the linde, id 8, is the stop; tile (0, 0) is the first of the list)
+    doc.timetable.stops.push(omsi_timetable::BusStopEntry { name: "Linde".into(), group: 0, object_id: 8, params: [0.0; 3] });
+    doc.timetable.touch_stops();
+    save(&mut doc).unwrap();
+    crate::selection::place_object_at(&mut doc, (0, 0), 8, tile_origin((1, 0)) + glam::DVec2::new(5.0, 5.0));
+    save(&mut doc).unwrap();
+    let back = omsi_timetable::TimetableData::load(&doc.dir);
+    let at = doc.order.iter().position(|k| *k == (1, 0)).unwrap() as i32;
+    assert_eq!(back.bus_stops[0].group, at);
+    let _ = std::fs::remove_dir_all(&roots.content);
+}
