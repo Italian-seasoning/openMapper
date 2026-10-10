@@ -172,6 +172,10 @@ impl TimetableUi {
         for (t, term) in [(&there, "Nordpark"), (&back, "Westend")] {
             tt.trip_mut(t).unwrap().terminus = term.into();
         }
+        // (a time fixed at the middle stop)
+        if let Some(p) = tt.trip_mut(&there).and_then(|t| t.profiles.first_mut()) {
+            timetable::set_stop_time(p, 3, 1, Some(4.0));
+        }
         let l = tt.lines.iter_mut().find(|l| l.name == line).unwrap();
         let mut trips = Vec::new();
         for k in 0..6 {
@@ -693,7 +697,19 @@ impl TimetableUi {
                     tm.terminus = term;
                 }
             }
-            tm.stations = stations.clone();
+            // (times fixed at a stop stay with it where it moved to; a stop taken out
+            // takes its time along, and the last stop keeps none but the trip's time)
+            let old = std::mem::replace(&mut tm.stations, stations.clone());
+            let n = stations.len();
+            let remap = |list: &mut Vec<(i32, f32)>| {
+                *list = list.iter().filter_map(|&(i, m)| old.get(i as usize).and_then(|id| stations.iter().position(|x| x == id)).filter(|k| k + 1 < n).map(|k| (k as i32, m))).collect();
+                list.sort_by_key(|x| x.0);
+            };
+            for p in &mut tm.profiles {
+                remap(&mut p.man_dep_time);
+                p.man_arr_time.retain(|x| x.0 as usize + 1 != old.len());
+                remap(&mut p.man_arr_time);
+            }
             tt.touch_route(&name);
         }
 
@@ -743,6 +759,67 @@ impl TimetableUi {
                 }
             }
         });
+
+        // the times at the stops
+        if stations.len() >= 2 {
+            let legs: Vec<f64> = match shown.filter(|r| r.ok()) {
+                Some(r) => r.legs.clone(),
+                None => stations.windows(2).map(|w| tt.links.iter().find(|l| l.from_id == w[0] && l.to_id == w[1]).map(|l| l.length).unwrap_or(0.0)).collect(),
+            };
+            let mut p = t.profiles.first().cloned().unwrap_or_default();
+            p.factor = minutes(&t);
+            let n = stations.len();
+            let times = timetable::stop_times(n, &legs, &p);
+            let mut set: Option<(usize, Option<f32>)> = None;
+            let mut clear = false;
+            egui::CollapsingHeader::new(icons::labelled(Icon::Schedule, tr("Times at the stops", "Время на остановках"))).id_salt(("tt times", name.to_lowercase())).default_open(times.iter().skip(1).any(|t| t.2)).show(ui, |ui| {
+                ui.label(RichText::new(tr("Minutes after the trip leaves. They follow the distance between the stops; fix one to keep the bus to it (it waits there when early).", "Минуты от отправления рейса. Они следуют расстоянию между остановками; закрепите время, чтобы автобус его держал (если раньше — ждёт).")).small().color(TEXT_DIM));
+                egui::Grid::new(("tt stop times", name.to_lowercase())).num_columns(3).spacing(Vec2::new(10.0, 3.0)).show(ui, |ui| {
+                    for (i, (a, d, fixed)) in times.iter().enumerate() {
+                        let label = format!("{:>2}. {}", i + 1, self.stop_name(tt, stations[i]));
+                        ui.allocate_ui_with_layout(Vec2::new(190.0, 18.0), egui::Layout::left_to_right(egui::Align::Center), |ui| {
+                            ui.set_min_width(190.0);
+                            ui.add(egui::Label::new(label).truncate());
+                        });
+                        let shown_time = if i + 1 == n { *a } else { *d };
+                        if *fixed && i > 0 {
+                            let mut m = shown_time;
+                            if ui.add(egui::DragValue::new(&mut m).range(0.0..=600.0).speed(0.1).max_decimals(1).prefix("+").suffix(tr(" min", " мин"))).changed() {
+                                set = Some((i, Some(m)));
+                            }
+                        } else {
+                            ui.label(RichText::new(format!("+{}", mmss(shown_time))).color(if i == 0 { TEXT_DIM } else { Color32::from_gray(220) }));
+                        }
+                        if i > 0 && check(ui, *fixed, tr("fixed", "закреплено")) {
+                            set = Some((i, if *fixed { None } else { Some((shown_time * 2.0).round() / 2.0) }));
+                        }
+                        ui.end_row();
+                    }
+                });
+                if times.iter().skip(1).any(|t| t.2) && ui.button(tr("Spread all by distance", "Распределить по расстоянию")).clicked() {
+                    clear = true;
+                }
+            });
+            if set.is_some() || clear {
+                let tm = tt.trip_mut(&name).unwrap();
+                if tm.profiles.is_empty() {
+                    tm.profiles.push(omsi_timetable::TripProfile { name: "standard".into(), factor: minutes(&t), ..Default::default() });
+                }
+                let p = &mut tm.profiles[0];
+                if clear {
+                    p.man_arr_time.clear();
+                    p.man_dep_time.clear();
+                }
+                if let Some((i, m)) = set {
+                    timetable::set_stop_time(p, n, i, m);
+                    // (the last stop fixed is the trip's time too)
+                    if let (true, Some(m)) = (i + 1 == n, m) {
+                        p.factor = m;
+                    }
+                }
+                tt.touch_trip(&name);
+            }
+        }
     }
 
     /// The stop's name on the map (without the timetable's).
@@ -961,12 +1038,23 @@ fn add_depot(tt: &mut Timetable) {
     tt.dirty = true;
 }
 
+/// Minutes as m:ss.
+fn mmss(m: f32) -> String {
+    let s = (m * 60.0).round().max(0.0) as i64;
+    format!("{}:{:02}", s / 60, s % 60)
+}
+
 fn set_minutes(tt: &mut Timetable, trip: &str, m: f32) {
     let t = tt.trip_mut(trip).unwrap();
     if t.profiles.is_empty() {
         t.profiles.push(omsi_timetable::TripProfile { name: "standard".into(), ..Default::default() });
     }
     t.profiles[0].factor = m;
+    // (a time fixed at the last stop is the trip's time)
+    let last = t.stations.len() as i32 - 1;
+    for a in t.profiles[0].man_arr_time.iter_mut().filter(|a| a.0 == last) {
+        a.1 = m;
+    }
     tt.touch_trip(trip);
 }
 

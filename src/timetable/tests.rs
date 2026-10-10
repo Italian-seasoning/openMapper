@@ -157,6 +157,23 @@ fn lengths_as_omsi_writes_them() {
     assert_eq!(route::sig3(0.0), 0.0);
 }
 
+/// The times at the stops follow the distance between the fixed ones.
+#[test]
+fn stop_times_spread_by_distance() {
+    let mut p = omsi_timetable::TripProfile { name: "standard".into(), factor: 8.0, ..Default::default() };
+    let t = stop_times(3, &[100.0, 300.0], &p);
+    assert_eq!(t.iter().map(|x| (x.0, x.1)).collect::<Vec<_>>(), vec![(0.0, 0.0), (2.0, 2.0), (8.0, 8.0)]);
+    set_stop_time(&mut p, 4, 1, Some(5.0));
+    let t = stop_times(4, &[100.0, 100.0, 100.0], &p);
+    assert_eq!(t.iter().map(|x| x.1).collect::<Vec<_>>(), vec![0.0, 5.0, 6.5, 8.0]);
+    assert!(t[1].2 && !t[2].2);
+    assert_eq!(p.man_dep_time, vec![(1, 5.0)]);
+    set_stop_time(&mut p, 4, 3, Some(9.0));
+    assert_eq!(p.man_arr_time, vec![(3, 9.0)]);
+    set_stop_time(&mut p, 4, 1, None);
+    assert!(p.man_dep_time.is_empty());
+}
+
 #[test]
 fn clock_times() {
     assert_eq!(clock(247.0), "4:07");
