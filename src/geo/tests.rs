@@ -237,7 +237,7 @@ fn sidecar_round_trip() {
     // an older or hand-written file with fields missing reads with the defaults
     std::fs::write(GeoFile::path(&dir), r#"{"anchor":{"tile":[0,0],"lat":55.75,"lon":37.61}}"#).unwrap();
     let g = GeoFile::load(&dir);
-    assert_eq!(g.size, 2048);
+    assert_eq!(g.size, 0);
     assert!(g.overlay && g.auto_new && g.terrain.relative);
     // the imagery stays out of an export unless asked for
     let mut files = std::collections::BTreeMap::new();

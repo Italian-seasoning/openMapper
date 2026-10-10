@@ -34,6 +34,7 @@ mod timetable;
 mod traffic;
 mod ui;
 mod ui_edit;
+mod ui_geo;
 mod sample;
 mod ui_guide;
 mod ui_minimap;

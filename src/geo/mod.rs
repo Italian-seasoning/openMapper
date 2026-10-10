@@ -6,6 +6,8 @@
 pub mod elevation;
 pub mod fetch;
 pub mod imagery;
+pub mod job;
+pub mod own;
 pub mod sources;
 #[cfg(test)]
 mod tests;
@@ -156,11 +158,15 @@ pub struct TileGeo {
     /// The terrain heights were loaded (the source's name).
     #[serde(default)]
     pub terrain: Option<String>,
+    /// The user's own picture shown here (its id in [`GeoFile::pictures`]) in place of the
+    /// downloaded imagery.
+    #[serde(default)]
+    pub own: Option<String>,
 }
 
 impl Default for TileGeo {
     fn default() -> Self {
-        TileGeo { visible: true, opacity: 1.0, imagery: None, terrain: None }
+        TileGeo { visible: true, opacity: 1.0, imagery: None, terrain: None, own: None }
     }
 }
 
@@ -220,8 +226,8 @@ pub struct GeoFile {
     /// The zoom of the imagery (0: the finest the source has here).
     #[serde(default)]
     pub zoom: u8,
-    /// Edge of each tile's image (px).
-    #[serde(default = "size_default")]
+    /// Edge of each tile's image (px; 0: as fine as the source is there).
+    #[serde(default)]
     pub size: u32,
     /// Tiles added later get their imagery by themselves.
     #[serde(default = "yes")]
@@ -242,15 +248,14 @@ pub struct GeoFile {
     /// Per tile ("x_y").
     #[serde(default)]
     pub tiles: BTreeMap<String, TileGeo>,
-}
-
-fn size_default() -> u32 {
-    2048
+    /// The user's own pictures by id.
+    #[serde(default)]
+    pub pictures: BTreeMap<String, own::Picture>,
 }
 
 impl Default for GeoFile {
     fn default() -> Self {
-        GeoFile { anchor: None, source: String::new(), zoom: 0, size: 2048, auto_new: true, with_terrain: false, terrain: Default::default(), overlay: true, opacity: 1.0, export_imagery: false, tiles: BTreeMap::new() }
+        GeoFile { anchor: None, source: String::new(), zoom: 0, size: 0, auto_new: true, with_terrain: false, terrain: Default::default(), overlay: true, opacity: 1.0, export_imagery: false, tiles: BTreeMap::new(), pictures: BTreeMap::new() }
     }
 }
 
@@ -265,6 +270,11 @@ pub fn dir_of(map_dir: &Path) -> PathBuf {
 
 pub fn imagery_path(map_dir: &Path, k: TileKey) -> PathBuf {
     dir_of(map_dir).join("imagery").join(format!("tile_{}_{}.jpg", k.0, k.1))
+}
+
+/// A tile's piece of the user's own picture.
+pub fn own_path(map_dir: &Path, k: TileKey) -> PathBuf {
+    dir_of(map_dir).join("imagery").join(format!("tile_{}_{}.png", k.0, k.1))
 }
 
 impl GeoFile {

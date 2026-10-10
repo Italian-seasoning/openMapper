@@ -67,6 +67,9 @@ pub struct Prefs {
     /// Graphics quality: "low", "medium", "high" (empty: high).
     #[serde(default)]
     pub graphics: String,
+    /// Imagery sources added by the user and keys for those that need one.
+    #[serde(default)]
+    pub geo: crate::geo::sources::GeoPrefs,
 }
 
 impl Prefs {
