@@ -1216,7 +1216,8 @@ impl Editor {
             self.road_plan = Some((segs, z0, z1, None));
             return;
         }
-        let Some(segs) = roads::plan(&start, fixed, target, end_anchor.as_ref()) else { return };
+        // (a cursor on the plane far beyond the map, looking at the horizon: no road there)
+        let Some(segs) = roads::plan(&start, fixed, target, end_anchor.as_ref()).filter(|s| roads::total_length(s) <= crate::draw::MAX_LENGTH) else { return };
         let z1 = match snap {
             _ if self.road_plate_end.is_some() => self.road_plate_end.unwrap().1.z,
             Some(a) => a.pos.z,
@@ -2781,7 +2782,8 @@ impl Editor {
     fn ring_radius(&self) -> Option<(DVec3, f64)> {
         let c = self.ring_centre?;
         let r = (self.cursor?.truncate() - c.truncate()).length();
-        Some((c, r.max(crate::roundabout::MIN_RADIUS)))
+        // (nor a ring round half the world, the cursor looking at the horizon)
+        (r * std::f64::consts::TAU <= crate::draw::MAX_LENGTH).then_some((c, r.max(crate::roundabout::MIN_RADIUS)))
     }
 
     /// The ring goes the way traffic goes round: anticlockwise where it keeps right, unless
