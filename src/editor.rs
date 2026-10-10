@@ -2807,10 +2807,7 @@ impl Editor {
         // (cut a metre inside the ring's centre line, so each road still crosses it there)
         crate::roundabout::clear_inside(doc, &inside, centre.truncate(), r - 1.0);
         // openMapper's junctions inside go with the roads they joined
-        let gone: Vec<(TileKey, i64)> = doc.tiles.iter().flat_map(|(k, t)| t.tile.objects.iter().filter(|o| is_own_junction(&o.file) && (tile_origin(*k) + DVec2::new(o.pos[0], o.pos[1]) - centre.truncate()).length() < r - 1.0).map(move |o| (*k, o.id))).collect();
-        for (k, id) in gone {
-            doc.delete_object(k, id);
-        }
+        crate::roundabout::remove_junctions_inside(doc, centre.truncate(), r - 1.0);
         for k in made.iter().map(|m| m.0).collect::<Vec<_>>() {
             doc.tiles.get_mut(&k).map(|t| t.touch_content());
         }
