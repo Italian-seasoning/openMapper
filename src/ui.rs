@@ -38,6 +38,13 @@ pub enum Action {
     Import,
     ChooseOmsi,
     SetLang(Lang),
+    /// The PBR window on an object's textures.
+    PbrForObject(String),
+    /// The PBR window on a picture chosen from disk.
+    PbrMaker,
+    /// Content files changed (maps made, imported): read the catalogue and models again,
+    /// then say so.
+    ReloadContent(String),
     /// How the mouse moves the camera ("map" or "fly").
     SetCamera(String),
     /// The interface's zoom (1 = as the system has it).
@@ -103,6 +110,8 @@ pub struct UiState {
     /// The preferences' starred and recently used assets, for the catalogue.
     pub favourites: Vec<String>,
     pub recent_assets: Vec<String>,
+    /// The selected object's file and whether its textures' PBR maps were made here.
+    pub pbr_made: Option<(String, bool)>,
     /// The map's `picture.jpg` as shown in the map's properties, with its file time.
     map_picture: Option<(PathBuf, Option<std::time::SystemTime>, Option<egui::TextureHandle>)>,
     /// The satellite overlay as the View menu and the Tiles tool show it.
@@ -128,6 +137,7 @@ impl Default for UiState {
             versions_open: false,
             favourites: Vec::new(),
             recent_assets: Vec::new(),
+            pbr_made: None,
             map_picture: None,
             geo: Default::default(),
         }
@@ -630,6 +640,10 @@ fn menu_bar(root: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, can_undo: bo
                     if ui.add(egui::Button::new(icons::labelled(t.icon(), t.label())).shortcut_text(t.key()).selected(ed.tool == t)).clicked() {
                         ed.set_tool(t);
                     }
+                }
+                ui.separator();
+                if menu_item(ui, Some(Icon::Layers), tr("PBR maps for a picture…", "PBR-карты для картинки…"), "", true) {
+                    actions.push(Action::PbrMaker);
                 }
             });
             ui.menu_button(tr("Map", "Карта"), |ui| {
@@ -1304,6 +1318,14 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
                 let name = a.map(|a| a.name.clone()).unwrap_or_else(|| o.file.rsplit('\\').next().unwrap_or("").to_string());
                 ui.label(RichText::new(name).strong().color(Color32::WHITE));
                 ui.label(RichText::new(&o.file).small().color(TEXT_DIM));
+                // its textures' PBR maps: made here (Configure) or not yet (Create)
+                let made = st.pbr_made.as_ref().filter(|(rel, _)| rel.eq_ignore_ascii_case(&o.file)).map(|(_, m)| *m).unwrap_or(false);
+                let label = if made { tr("Configure PBR", "Настроить PBR") } else { tr("Create PBR", "Создать PBR") };
+                let r = ui.button(icons::labelled(Icon::Layers, label));
+                help(st, &r, tr("Normal, roughness, metal and shadow maps made from the object's textures, tuned and written as openOMSI reads them", "Карты нормалей, шероховатости, металла и теней из текстур объекта: настроить и записать так, как их читает openOMSI"));
+                if r.clicked() {
+                    actions.push(Action::PbrForObject(o.file.clone()));
+                }
                 ui.add_space(4.0);
                 egui::Grid::new("obj").num_columns(2).spacing(Vec2::new(8.0, 5.0)).show(ui, |ui| {
                     prop_row(ui, tr("Type", "Тип"), |ui| {

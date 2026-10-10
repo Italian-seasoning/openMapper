@@ -94,6 +94,7 @@ pub struct App {
     tt: crate::ui_timetable::TimetableUi,
     /// The Traffic and AI window.
     traffic: crate::ui_traffic::TrafficUi,
+    pbr: crate::ui_pbr::PbrWindow,
     /// The Satellite and terrain window and the overlay on the ground.
     geo: crate::ui_geo::GeoUi,
     /// Getting started.
@@ -127,6 +128,7 @@ impl App {
             frames: 0,
             tt: crate::ui_timetable::TimetableUi::new(),
             traffic: Default::default(),
+            pbr: Default::default(),
             geo: Default::default(),
             guide: Default::default(),
             picture: false,
@@ -417,6 +419,22 @@ impl App {
         }
     }
 
+    /// Content files changed on disk: the catalogue, models and pictures are read again.
+    fn reload_content(&mut self) {
+        let Some(roots) = &self.roots else { return };
+        omsi_cfg::content_changed();
+        self.lib.start_scan(roots);
+        if let Some(a) = &mut self.assets {
+            a.clear();
+        }
+        if let Some(g) = &mut self.gfx {
+            g.renderer.reset_models();
+            g.renderer.thumbs.clear();
+        }
+        self.texture_files = ground_texture_files(roots);
+        self.ui.pbr_made = None;
+    }
+
     fn import(&mut self, paths: Vec<PathBuf>) {
         let Some(roots) = &self.roots else { return };
         let mut placed = None;
@@ -432,16 +450,7 @@ impl App {
             }
         }
         // look again: the new things show in the catalogue
-        omsi_cfg::content_changed();
-        self.lib.start_scan(roots);
-        if let Some(a) = &mut self.assets {
-            a.clear();
-        }
-        if let Some(g) = &mut self.gfx {
-            g.renderer.reset_models();
-            g.renderer.thumbs.clear();
-        }
-        self.texture_files = ground_texture_files(roots);
+        self.reload_content();
         if let (Some(o), true) = (placed, self.ed.doc.is_some()) {
             self.ed.set_tool(Tool::Objects);
             self.ed.object_type = Some(o);
@@ -576,6 +585,25 @@ impl App {
                     g.renderer = Renderer::new(&g.gpu, q);
                     g.renderer.roots = roots;
                 }
+            }
+            Action::PbrForObject(rel) => {
+                if let (Some(a), Some(r)) = (self.assets.as_mut(), &self.roots) {
+                    let textures = object_textures(a, &rel);
+                    if textures.is_empty() {
+                        self.ed.toast(tr("This object has no textures to make PBR maps of", "У этого объекта нет текстур для PBR-карт"));
+                    } else {
+                        self.pbr.open_for(textures, r);
+                    }
+                }
+            }
+            Action::PbrMaker => {
+                if let (Some(f), Some(r)) = (rfd::FileDialog::new().add_filter(tr("Pictures", "Картинки"), &["png", "jpg", "jpeg", "bmp", "tga", "dds"]).pick_file(), &self.roots) {
+                    self.pbr.open_for(vec![f], r);
+                }
+            }
+            Action::ReloadContent(msg) => {
+                self.reload_content();
+                self.ed.toast(msg);
             }
             Action::SetCamera(c) => {
                 self.prefs.camera = c;
@@ -817,6 +845,21 @@ impl App {
         let mut view: Option<(egui::Rect, bool)> = None;
         let gpu_name = g.gpu.adapter_name.clone();
         let mut recover_answer = None;
+        // (the selected object's PBR state for its properties: looked up when it changes)
+        let sel_file = match (self.ed.selected, &self.ed.doc) {
+            (Some(Sel::Object(k, id)), Some(doc)) => crate::selection::any_object(doc, k, id).map(|o| o.file.clone()),
+            _ => None,
+        };
+        if let (Some(f), Some(a), Some(r)) = (sel_file, self.assets.as_mut(), &self.roots) {
+            if self.ui.pbr_made.as_ref().map(|(rel, _)| rel != &f).unwrap_or(true) {
+                let textures = object_textures(a, &f);
+                // (not loaded yet: asked again next frame)
+                if !textures.is_empty() {
+                    let made = textures.iter().any(|t| crate::ui_pbr::is_made(t, r));
+                    self.ui.pbr_made = Some((f, made));
+                }
+            }
+        }
         // (the overview map stays out of the map's picture)
         let minimap_open = self.ui.minimap.open;
         if self.picture {
@@ -858,6 +901,7 @@ impl App {
             if self.ed.doc.is_some() {
                 self.tt.window(&ctx, &mut self.ed, self.roots.as_ref(), &mut actions);
                 self.traffic.window(&ctx, &mut self.ed, self.roots.as_ref());
+                self.pbr.window(&ctx, self.roots.as_ref(), &mut actions);
                 self.geo.window(&ctx, &mut self.ed, &mut self.prefs);
                 if let Some(p) = self.geo.look.take() {
                     actions.push(Action::LookAt(p));
@@ -1641,6 +1685,18 @@ impl ApplicationHandler for App {
 }
 
 /// Write the window's picture to a PNG (the screenshot mode).
+/// The texture files an object's model is drawn with, each once.
+fn object_textures(assets: &mut Assets, rel: &str) -> Vec<PathBuf> {
+    let Some(m) = assets.object(rel) else { return Vec::new() };
+    let mut out: Vec<PathBuf> = Vec::new();
+    for t in m.parts.iter().flat_map(|p| p.materials.iter()).filter_map(|mat| mat.texture.clone()) {
+        if !out.contains(&t) {
+            out.push(t);
+        }
+    }
+    out
+}
+
 fn save_shot(gpu: &Gpu, tex: &wgpu::Texture, path: &Path) -> anyhow::Result<()> {
     read_frame(gpu, tex)?.save(path)?;
     Ok(())
