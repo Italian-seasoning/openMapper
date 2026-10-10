@@ -78,7 +78,10 @@ impl Prefs {
     pub fn save(&self) {
         let _ = std::fs::create_dir_all(openomsi_data_dir());
         if let Ok(s) = serde_json::to_string_pretty(self) {
-            let _ = std::fs::write(Self::path(), s);
+            // (all or nothing: a crash while writing must not leave half a file)
+            if let Err(e) = crate::doc::safe::write_atomic(&Self::path(), s.as_bytes()) {
+                log::warn!("{}: {e}", Self::path().display());
+            }
         }
     }
 

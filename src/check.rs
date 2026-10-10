@@ -784,25 +784,28 @@ impl Checker {
                         for n in group.clone() {
                             let it = &list[n];
                             let done = self.fixed.contains(&n);
-                            ui.horizontal(|ui| {
-                                ui.add_space(12.0);
-                                let text = RichText::new(format!("{}  {}", it.title, it.detail));
-                                let text = if done { text.strikethrough().color(Color32::DARK_GRAY) } else { text };
-                                let r = ui.add(egui::Label::new(text).sense(egui::Sense::click()).truncate());
-                                if let Some(at) = it.at {
-                                    let r = r.on_hover_text(tr("Click to fly there", "Клик — перелететь туда"));
-                                    if r.clicked() {
+                            // (the button first, at the right: the text gets what is left and is
+                            // cut short there, shown whole when the mouse is over it)
+                            let row = egui::vec2(ui.available_width(), ui.spacing().interact_size.y);
+                            ui.allocate_ui_with_layout(row, egui::Layout::right_to_left(egui::Align::Center), |ui| {
+                                if let (Some(f), false) = (&it.fix, done) {
+                                    let label = if matches!(f, Fix::Link(..)) { tr("Join", "Соединить") } else { tr("Fix", "Исправить") };
+                                    if ui.small_button(label).clicked() {
+                                        fix_now.push((n, f.clone()));
+                                    }
+                                }
+                                ui.with_layout(egui::Layout::left_to_right(egui::Align::Center), |ui| {
+                                    ui.add_space(12.0);
+                                    let full = format!("{}  {}", it.title, it.detail);
+                                    let text = RichText::new(full.clone());
+                                    let text = if done { text.strikethrough().color(Color32::DARK_GRAY) } else { text };
+                                    let r = ui.add(egui::Label::new(text).sense(egui::Sense::click()).truncate());
+                                    let hint = if it.at.is_some() { format!("{full}\n{}", tr("Click to fly there", "Клик — перелететь туда")) } else { full };
+                                    let r = r.on_hover_text(hint);
+                                    if let (Some(at), true) = (it.at, r.clicked()) {
                                         actions.push(Action::LookAt(at));
                                         if it.sel.is_some() {
                                             ed.select(it.sel);
-                                        }
-                                    }
-                                }
-                                ui.with_layout(egui::Layout::right_to_left(egui::Align::Center), |ui| {
-                                    if let (Some(f), false) = (&it.fix, done) {
-                                        let label = if matches!(f, Fix::Link(..)) { tr("Join", "Соединить") } else { tr("Fix", "Исправить") };
-                                        if ui.small_button(label).clicked() {
-                                            fix_now.push((n, f.clone()));
                                         }
                                     }
                                 });

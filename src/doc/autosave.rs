@@ -30,6 +30,11 @@ pub struct Meta {
     pub fresh: bool,
     /// The tiles kept (the changed ones).
     pub tiles: Vec<TileKey>,
+    /// The timetable (`TTData`) and the traffic files kept whole (they had changed).
+    #[serde(default)]
+    pub timetable: bool,
+    #[serde(default)]
+    pub traffic: bool,
     /// Seconds since 1970.
     pub time: u64,
 }
@@ -62,12 +67,26 @@ pub fn write(doc: &Document, content: &Path) -> anyhow::Result<()> {
     let (ops, tiles) = super::save::plan(doc, &fresh_dir, false);
     let ops: Vec<_> = ops.into_iter().filter(|o| matches!(o, super::safe::Op::Write(..))).collect();
     super::safe::commit(&ops)?;
+    // the timetable and the traffic through their own writers, every file of them (a
+    // copy marked as all changed: the map's own stays as it is)
+    if doc.timetable.dirty {
+        let mut tt = doc.timetable.clone();
+        tt.restored(&Default::default());
+        crate::timetable::save_to(&mut tt, &fresh_dir, &doc.order)?;
+    }
+    if doc.traffic.dirty {
+        let mut t = doc.traffic.clone();
+        t.restored();
+        crate::traffic::save_to(&mut t, &fresh_dir)?;
+    }
     let meta = Meta {
         name: doc.display_name().to_string(),
         dir: doc.dir.clone(),
         source: doc.source.clone(),
         fresh: doc.fresh,
         tiles,
+        timetable: doc.timetable.dirty,
+        traffic: doc.traffic.dirty,
         time: std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).map(|d| d.as_secs()).unwrap_or(0),
     };
     super::safe::write_atomic(&fresh_dir.join(META), serde_json::to_string_pretty(&meta)?.as_bytes())?;
@@ -122,6 +141,17 @@ pub fn restore(roots: &crate::install::Roots, meta: &Meta) -> anyhow::Result<Doc
     doc.source = meta.source.clone().or(doc.source.take()).filter(|s| *s != meta.dir);
     doc.fresh = meta.fresh;
     doc.sync_mask_slots();
+    if meta.timetable {
+        let mut tt = crate::timetable::Timetable::load(&saved, &doc.order);
+        // (written whole on the next save; what only the map's had goes)
+        tt.restored(&doc.timetable);
+        doc.timetable = tt;
+    }
+    if meta.traffic {
+        let mut t = crate::traffic::Traffic::load(&saved);
+        t.restored();
+        doc.traffic = t;
+    }
     Ok(doc)
 }
 
