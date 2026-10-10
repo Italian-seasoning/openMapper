@@ -1270,9 +1270,8 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
                 let o = crate::doc::tile_origin(k);
                 ed.put_object(k, id, glam::DVec2::new(o.x + x, o.y + y));
             } else if new_rot.is_some() || new_lift.is_some() || changed_labels.is_some() || new_name.is_some() {
-                if !ed.history.is_open() {
-                    ed.history.begin(tr("Edit object", "Изменение объекта"));
-                }
+                ed.begin_panel_step(tr("Edit object", "Изменение объекта"));
+                let Some(doc) = ed.doc.as_mut() else { return };
                 ed.history.touch_tile(doc, k);
                 ed.history.touch_global(doc);
                 if let Some(o) = doc.object_mut(k, id) {
@@ -1298,8 +1297,8 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
                     t.touch_content();
                 }
                 crate::editor::sync_entry_points(doc);
-            } else if ed.history.is_open() && !ui.ctx().egui_is_using_pointer() && !ui.ctx().egui_wants_keyboard_input() {
-                ed.history.commit();
+            } else {
+                ed.end_panel_step_if_idle(ui.ctx());
             }
         }
         Sel::Spline(k, id) => {

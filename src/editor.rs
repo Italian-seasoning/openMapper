@@ -193,6 +193,8 @@ pub struct Editor {
     pub snap_grid: bool,
     pub grid_step: f64,
     pub snap_angle: bool,
+    /// The open history step is the properties panel's.
+    panel_step: bool,
     pub cursor: Option<DVec3>,
     /// The cursor is over the 3D view (not over a panel).
     pub cursor_in_view: bool,
@@ -263,6 +265,7 @@ impl Default for Editor {
             snap_grid: false,
             grid_step: 1.0,
             snap_angle: false,
+            panel_step: false,
             cursor: None,
             cursor_in_view: false,
             terrain_mode: TerrainMode::Raise,
@@ -1719,6 +1722,11 @@ impl Editor {
 
     /// The left button down with the Select tool.
     fn select_press(&mut self, shift: bool) {
+        // (whatever the properties had open is done: the view's edit is a step of its own)
+        if self.panel_step {
+            self.panel_step = false;
+            self.history.commit();
+        }
         if let (Some(h), Some((k, id))) = (self.hover_handle, self.single_spline()) {
             self.drag = Drag::Reshape(k, id, h);
             self.reshape = None;
@@ -1872,6 +1880,24 @@ impl Editor {
 
     // ------------------------------------------------------------ numbers
 
+    /// A number in the properties changes: one step for as long as it is dragged or typed.
+    pub fn begin_panel_step(&mut self, label: &str) {
+        if !(self.panel_step && self.history.is_open()) {
+            self.history.begin(label);
+            self.panel_step = true;
+        }
+    }
+
+    /// The properties' step ends once no number is being dragged or typed (a step the view
+    /// opened, such as a move, is left alone).
+    pub fn end_panel_step_if_idle(&mut self, ctx: &egui::Context) {
+        if self.panel_step && self.drag == Drag::None && !ctx.egui_is_using_pointer() && !ctx.egui_wants_keyboard_input() {
+            self.panel_step = false;
+            self.history.commit();
+        }
+    }
+
+
     /// Move the selection by `delta` (m), as one step.
     pub fn move_selection_by(&mut self, delta: DVec2) {
         let sels = self.selection();
@@ -1889,11 +1915,9 @@ impl Editor {
 
     /// Put the object selected at a world position (the numbers in the properties).
     pub fn put_object(&mut self, k: TileKey, id: i64, to: DVec2) {
+        let Some(o) = self.doc.as_ref().and_then(|d| selection::origin_of(d, Sel::Object(k, id))) else { return };
+        self.begin_panel_step(tr("Edit object", "Изменение объекта"));
         let Some(doc) = self.doc.as_mut() else { return };
-        let Some(o) = selection::origin_of(doc, Sel::Object(k, id)) else { return };
-        if !self.history.is_open() {
-            self.history.begin(tr("Edit object", "Изменение объекта"));
-        }
         let now = selection::transform(doc, &mut self.history, &[o], DVec2::ZERO, 0.0, to - o.pos);
         if let Some(s) = now.first() {
             if self.selected == Some(Sel::Object(k, id)) {
@@ -1956,10 +1980,8 @@ impl Editor {
     /// Height and gradient at one end of a spline (the properties); the neighbour linked
     /// there follows. Kept open as one step while a number is dragged.
     pub fn set_spline_end(&mut self, k: TileKey, id: i64, at_end: bool, z: Option<f64>, g: Option<f64>) {
+        self.begin_panel_step(tr("Edit road", "Изменение дороги"));
         let Some(doc) = self.doc.as_mut() else { return };
-        if !self.history.is_open() {
-            self.history.begin(tr("Edit road", "Изменение дороги"));
-        }
         selection::touch_spline(&mut self.history, doc, k, id);
         reshape::set_end(doc, k, id, at_end, z, g);
     }

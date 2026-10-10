@@ -149,17 +149,11 @@ pub fn spline_ends(ui: &mut egui::Ui, doc: &crate::doc::Document, k: TileKey, id
 /// Put what `spline_ends` changed into the map (a dragged number is one step).
 pub fn apply_ends(ed: &mut Editor, ctx: &egui::Context, k: TileKey, id: i64, e: EndsEdit) {
     if let Some(g) = e.even {
-        ed.history.commit();
         ed.set_spline_end(k, id, false, None, Some(g));
         ed.set_spline_end(k, id, true, None, Some(g));
-        ed.history.commit();
     }
     match e.change {
         Some((at_end, z, g)) => ed.set_spline_end(k, id, at_end, z, g),
-        None => {
-            if ed.history.is_open() && !ctx.egui_is_using_pointer() && !ctx.egui_wants_keyboard_input() {
-                ed.history.commit();
-            }
-        }
+        None => ed.end_panel_step_if_idle(ctx),
     }
 }
