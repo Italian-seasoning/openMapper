@@ -85,6 +85,8 @@ pub struct App {
     frames: u64,
     /// `OPENMAPPER_SHOT=file.png`: save the window's picture after that many frames and end.
     shot: Option<(PathBuf, u64)>,
+    /// The Lines window.
+    tt: crate::ui_timetable::TimetableUi,
 }
 
 impl App {
@@ -110,6 +112,7 @@ impl App {
             quit: false,
             view: egui::Rect::NOTHING,
             frames: 0,
+            tt: crate::ui_timetable::TimetableUi::new(),
             shot: std::env::var_os("OPENMAPPER_SHOT").map(|p| (PathBuf::from(p), std::env::var("OPENMAPPER_SHOT_FRAMES").ok().and_then(|n| n.parse().ok()).unwrap_or(90))),
         };
         app.setup_roots();
@@ -207,6 +210,10 @@ impl App {
             self.cam.yaw = v[3];
             self.cam.pitch = v[4];
         }
+        // OPENMAPPER_TIMETABLE=<line>: the Lines window open on that line (checks without a person at the screen)
+        if let Ok(l) = std::env::var("OPENMAPPER_TIMETABLE") {
+            self.tt.open_at(&l);
+        }
         // OPENMAPPER_TOOL=logic (checks without a person at the screen)
         if std::env::var("OPENMAPPER_TOOL").map(|t| t == "logic").unwrap_or(false) {
             self.ed.set_tool(Tool::Logic);
@@ -233,6 +240,7 @@ impl App {
         let Some(doc) = self.ed.doc.as_mut() else { return false };
         self.ed.history.commit();
         crate::editor::sync_entry_points(doc);
+        self.tt.before_save(doc, self.roots.as_ref());
         match crate::doc::save(doc) {
             Ok(()) => {
                 omsi_cfg::content_changed();
@@ -405,6 +413,7 @@ impl App {
                     }
                 }
             }
+            Action::Timetable => self.tt.open = !self.tt.open,
             Action::LookAt(p) => {
                 if let Some(doc) = &self.ed.doc {
                     self.cam.target = DVec3::new(p.x, p.y, doc.ground(p));
@@ -460,6 +469,7 @@ impl App {
             Some(KeyCode::KeyR) if !ctrl => self.ed.rotate(if shift { -15.0 } else { 15.0 }),
             Some(KeyCode::KeyG) if !ctrl => self.ed.show_grid = !self.ed.show_grid,
             Some(KeyCode::KeyM) if !ctrl => self.ui.minimap.open = !self.ui.minimap.open,
+            Some(KeyCode::KeyL) if !ctrl => self.tt.open = !self.tt.open,
             Some(KeyCode::BracketLeft) => self.ed.brush_radius = (self.ed.brush_radius / 1.2).max(3.0),
             Some(KeyCode::BracketRight) => self.ed.brush_radius = (self.ed.brush_radius * 1.2).min(150.0),
             Some(KeyCode::Delete) | Some(KeyCode::Backspace) => self.ed.delete_selected(),
@@ -578,6 +588,9 @@ impl App {
                     &mut actions,
                 ));
             }
+            if self.ed.doc.is_some() {
+                self.tt.window(&ctx, &mut self.ed, self.roots.as_ref(), &mut actions);
+            }
             ui::confirm_unsaved(&ctx, &mut self.ui, &mut actions);
         });
         match view {
@@ -614,7 +627,8 @@ impl App {
             let mut enc = g.gpu.device.create_command_encoder(&wgpu::CommandEncoderDescriptor { label: Some("frame") });
             g.renderer.time += dt as f32;
             if let (Some(doc), Some(assets)) = (&self.ed.doc, self.assets.as_mut()) {
-                let extras = self.ed.extras(&self.cam, assets);
+                let mut extras = self.ed.extras(&self.cam, assets);
+                self.tt.overlay(&self.ed, &self.cam, &mut extras);
                 g.renderer.sync(&g.gpu, doc, assets, &extras, &self.cam);
                 let ppp = full.pixels_per_point;
                 let (w, h) = (g.gpu.config.width as f32, g.gpu.config.height as f32);

@@ -125,10 +125,7 @@ fn lengths_as_omsi_writes_them() {
 #[test]
 fn clock_times() {
     assert_eq!(clock(247.0), "4:07");
-    assert_eq!(parse_clock("4:07"), Some(247.0));
-    assert_eq!(parse_clock(" 23 "), Some(1380.0));
-    assert_eq!(parse_clock("25:30"), Some(1530.0));
-    assert_eq!(parse_clock("4:75"), None);
+    assert_eq!(clock(24.0 * 60.0 + 10.0), "24:10");
 }
 
 /// Grundorf's network as openMapper reads it names the paths of the stock tracks with

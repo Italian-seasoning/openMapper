@@ -58,10 +58,6 @@ impl Timetable {
         Timetable { stops: d.bus_stops, links: d.stn_links, trips: d.trips, tracks: d.tracks, lines: d.lines, order: order.to_vec(), ..Default::default() }
     }
 
-    pub fn is_empty(&self) -> bool {
-        self.lines.is_empty() && self.trips.is_empty()
-    }
-
     pub fn trip(&self, name: &str) -> Option<&Trip> {
         self.trips.iter().find(|t| t.name.eq_ignore_ascii_case(name))
     }
@@ -70,15 +66,9 @@ impl Timetable {
         self.trips.iter_mut().find(|t| t.name.eq_ignore_ascii_case(name))
     }
 
+    #[cfg(test)]
     pub fn track(&self, name: &str) -> Option<&Track> {
         self.tracks.iter().find(|t| track_name(t).eq_ignore_ascii_case(name))
-    }
-
-    /// The track a trip runs on: the one its `[trip]` names, else the one named like it
-    /// (as openOMSI looks for it).
-    pub fn track_of(&self, trip: &Trip) -> Option<&Track> {
-        let n = trip.display_name.trim();
-        self.track(if n.is_empty() { &trip.name } else { n }).or_else(|| self.track(&trip.name))
     }
 
     /// The name stop object `id` has in the timetable.
@@ -248,27 +238,22 @@ impl Timetable {
         self.dirty = true;
     }
 
-    /// The stop list brought in line with the map's stop objects (`ids`: every object that is a
-    /// stop, by tile): names and tiles follow the objects, new stops are added. True when
-    /// anything changed.
-    pub fn sync_stops(&mut self, doc: &Document, ids: &[(TileKey, i64)]) -> bool {
+    /// The stop list brought in line with the map's stop objects (`stop_entries`): names and
+    /// tiles follow the objects, new stops are added. True when anything changed.
+    pub fn sync_stops(&mut self, entries: Vec<BusStopEntry>) -> bool {
         let mut changed = false;
-        for &(k, id) in ids {
-            let Some(o) = doc.object(k, id) else { continue };
-            let Some(tile) = doc.order.iter().position(|t| *t == k) else { continue };
-            let name = o.extra.first().map(|s| s.trim().to_string()).unwrap_or_default();
-            let offset = o.extra.get(3).and_then(|s| s.trim().parse::<f64>().ok()).unwrap_or(0.0);
-            match self.stops.iter_mut().find(|s| s.object_id == id) {
+        for e in entries {
+            match self.stops.iter_mut().find(|s| s.object_id == e.object_id) {
                 Some(s) => {
-                    if s.name.trim() != name || s.group != tile as i32 || s.params[0] != offset {
-                        s.name = name;
-                        s.group = tile as i32;
-                        s.params[0] = offset;
+                    if s.name.trim() != e.name || s.group != e.group || s.params[0] != e.params[0] {
+                        s.name = e.name;
+                        s.group = e.group;
+                        s.params[0] = e.params[0];
                         changed = true;
                     }
                 }
                 None => {
-                    self.stops.push(BusStopEntry { name, group: tile as i32, object_id: id, params: [offset, 0.0, 0.0] });
+                    self.stops.push(e);
                     changed = true;
                 }
             }
@@ -322,6 +307,20 @@ impl Timetable {
         self.links_changed = true;
         self.order = order.to_vec();
     }
+}
+
+/// The `Busstops.cfg` entries of stop objects (tile, IDCode): the name is the object's
+/// first label, the number after the id its fourth (as OMSI's editor writes them).
+pub fn stop_entries(doc: &Document, ids: &[(TileKey, i64)]) -> Vec<BusStopEntry> {
+    ids.iter()
+        .filter_map(|&(k, id)| {
+            let o = doc.object(k, id)?;
+            let tile = doc.order.iter().position(|t| *t == k)?;
+            let name = o.extra.first().map(|s| s.trim().to_string()).unwrap_or_default();
+            let offset = o.extra.get(3).and_then(|s| s.trim().parse::<f64>().ok()).unwrap_or(0.0);
+            Some(BusStopEntry { name, group: tile as i32, object_id: id, params: [offset, 0.0, 0.0] })
+        })
+        .collect()
 }
 
 /// Where stop object `id` stands (world).
@@ -533,16 +532,6 @@ pub fn line_text(l: &Line) -> String {
 pub fn clock(minutes: f32) -> String {
     let m = minutes.round().max(0.0) as i64;
     format!("{}:{:02}", m / 60, m % 60)
-}
-
-/// "h:mm" (or "h") as minutes after midnight.
-pub fn parse_clock(s: &str) -> Option<f32> {
-    let s = s.trim();
-    let (h, m) = match s.split_once(':') {
-        Some((h, m)) => (h.trim().parse::<u32>().ok()?, m.trim().parse::<u32>().ok()?),
-        None => (s.parse::<u32>().ok()?, 0),
-    };
-    (m < 60 && h < 48).then_some((h * 60 + m) as f32)
 }
 
 /// The depot groups of the map's `ailists.cfg` (a tour's buses come from one).

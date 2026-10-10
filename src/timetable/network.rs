@@ -83,8 +83,6 @@ pub struct Lane {
     pub file_length: f64,
     /// OMSI's number of the path among all paths of its tile (a cache the `.ttr` keeps).
     pub internal: usize,
-    /// Against the way the path is laid out.
-    pub reversed: bool,
     pub next: Vec<usize>,
 }
 
@@ -156,7 +154,7 @@ fn lane_of(key: PathKey, mut pts: Vec<DVec3>, file_length: f64, internal: usize,
         }
         along.push(acc);
     }
-    Lane { key, pts, along, file_length, internal, reversed, next: Vec::new() }
+    Lane { key, pts, along, file_length, internal, next: Vec::new() }
 }
 
 impl Network {
@@ -284,10 +282,5 @@ impl Network {
         for (l, n) in self.lanes.iter_mut().zip(next) {
             l.next = n;
         }
-    }
-
-    /// The position of a stop object.
-    pub fn stop_pos(&self, id: i64) -> Option<DVec3> {
-        self.stops.iter().find(|s| s.1 == id).map(|s| s.2)
     }
 }
