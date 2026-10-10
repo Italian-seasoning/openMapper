@@ -11,7 +11,9 @@ use crate::history::History;
 use crate::i18n::tr;
 use crate::library::{Asset, Library};
 use crate::render::{object_matrix, Brush, FrameExtras, Ghost, OverlayPoint};
+use crate::reshape::{self, Handle};
 use crate::roads::{self, Anchor, Seg};
+use crate::selection::{self, Origin};
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum Tool {
@@ -158,16 +160,43 @@ impl LogicMode {
 enum Drag {
     None,
     Brush,
-    /// Moving the selected object: the offset from the grab point to its position.
-    Move(DVec2),
+    /// Moving the selection: where it was grabbed; started once the mouse has gone far
+    /// enough that it is not a click.
+    Move { grab: DVec2, started: bool },
+    /// Dragging a grip of the selected spline.
+    Reshape(TileKey, i64, Handle),
 }
+
+/// How far the mouse must go before a press on the selection moves it (m).
+const MOVE_THRESHOLD: f64 = 0.3;
 
 pub struct Editor {
     pub doc: Option<Document>,
     pub history: History,
     pub tool: Tool,
+    /// The selection: the one shown in the properties (None: nothing selected, whatever
+    /// `also` holds) and the others selected with it.
     pub selected: Option<Sel>,
+    pub also: Vec<Sel>,
     pub hover: Option<Sel>,
+    /// The grip of the selected spline under the cursor.
+    pub hover_handle: Option<Handle>,
+    /// The box being dragged out on the screen (window points: where it began, where it is).
+    pub select_box: Option<[(f32, f32); 2]>,
+    /// What was copied.
+    pub clip: Option<crate::clipboard::Clip>,
+    /// Where the selection stood when a move began.
+    move_from: Vec<Origin>,
+    /// A reshape being dragged: its plan, or why it cannot be.
+    reshape: Option<Result<reshape::Plan, &'static str>>,
+    /// Half the width of the road being reshaped (the ground is brought to it; 0: left).
+    reshape_half: f64,
+    // snapping
+    pub snap_grid: bool,
+    pub grid_step: f64,
+    pub snap_angle: bool,
+    /// The open history step is the properties panel's.
+    panel_step: bool,
     pub cursor: Option<DVec3>,
     /// The cursor is over the 3D view (not over a panel).
     pub cursor_in_view: bool,
@@ -228,7 +257,18 @@ impl Default for Editor {
             history: History::default(),
             tool: Tool::Select,
             selected: None,
+            also: Vec::new(),
             hover: None,
+            hover_handle: None,
+            select_box: None,
+            clip: None,
+            move_from: Vec::new(),
+            reshape: None,
+            reshape_half: 4.0,
+            snap_grid: false,
+            grid_step: 1.0,
+            snap_angle: false,
+            panel_step: false,
             cursor: None,
             cursor_in_view: false,
             terrain_mode: TerrainMode::Raise,
@@ -338,6 +378,8 @@ impl Editor {
         self.road_plan = None;
         self.parking_start = None;
         self.drag = Drag::None;
+        self.reshape = None;
+        self.select_box = None;
         if let Some(doc) = &mut self.doc {
             self.history.commit();
             let _ = doc;
@@ -346,7 +388,7 @@ impl Editor {
 
     pub fn open(&mut self, doc: Document) {
         self.history.clear();
-        self.selected = None;
+        self.select(None);
         self.hover = None;
         self.cancel();
         self.paint_layer = if doc.global.ground_textures.len() > 1 { 1 } else { 0 };
@@ -471,7 +513,9 @@ impl Editor {
         match self.acts_as() {
             Tool::Select => {
                 if self.drag == Drag::None {
-                    self.hover = self.pick(assets, o, d, g);
+                    // (a grip is as big on the screen however near the camera is)
+                    self.hover_handle = g.and_then(|g| self.handle_at(g.truncate(), ((g - o).length() * 0.012).clamp(1.0, 40.0)));
+                    self.hover = if self.hover_handle.is_some() { self.selected } else { self.pick(assets, o, d, g) };
                 }
             }
             Tool::Tiles => {
@@ -498,9 +542,19 @@ impl Editor {
     /// Continuous work while a button is held (brushes, dragging).
     pub fn tick(&mut self, assets: &mut Assets, dt: f64, held: bool) {
         if !held {
-            if self.drag != Drag::None {
-                self.drag = Drag::None;
-                self.history.commit();
+            match std::mem::replace(&mut self.drag, Drag::None) {
+                Drag::None => {}
+                Drag::Move { started, .. } => {
+                    if started {
+                        let sels = self.selection();
+                        if let Some(doc) = self.doc.as_mut() {
+                            selection::unlink_outside(doc, &mut self.history, &sels);
+                        }
+                    }
+                    self.history.commit();
+                }
+                Drag::Reshape(k, id, _) => self.finish_reshape(k, id),
+                Drag::Brush => self.history.commit(),
             }
             return;
         }
@@ -511,10 +565,34 @@ impl Editor {
                 Tool::Paint => self.brush_paint(c.truncate(), dt),
                 _ => {}
             },
-            Drag::Move(off) => {
-                if let Some(Sel::Object(k, id)) = self.selected {
-                    self.move_object(assets, k, id, c.truncate() + off);
+            Drag::Move { grab, started } => {
+                let raw = c.truncate() - grab;
+                if !started {
+                    if raw.length() < MOVE_THRESHOLD || self.move_from.is_empty() {
+                        return;
+                    }
+                    self.history.begin(tr("Move", "Перемещение"));
+                    self.drag = Drag::Move { grab, started: true };
                 }
+                // (the grid holds the first one's place; the rest keep their distances)
+                let first = self.move_from[0].pos;
+                let delta = self.snap_point(first + raw) - first;
+                let Some(doc) = self.doc.as_mut() else { return };
+                let now = selection::transform(doc, &mut self.history, &self.move_from, DVec2::ZERO, 0.0, delta);
+                self.set_selection(now);
+            }
+            Drag::Reshape(k, id, h) => {
+                let p = self.snap_point(c.truncate());
+                let joined = self.helper_anchors(assets);
+                let locked = |q: DVec2| joined.iter().any(|j| (j.truncate() - q).length() < 0.6);
+                let Some(doc) = self.doc.as_ref() else { return };
+                // (0: not a road one sees, such as an AI path; the ground stays)
+                self.reshape_half = doc.spline(k, id).and_then(|s| assets.spline(&s.file)).filter(|m| m.joinable()).map(|m| m.half_width as f64).unwrap_or(0.0);
+                let ground = |q: DVec2| doc.ground(q);
+                self.reshape = Some(match h {
+                    Handle::Start | Handle::End => reshape::drag_end(doc, k, id, h == Handle::End, p, &ground, &locked),
+                    Handle::Mid => reshape::drag_mid(doc, k, id, p, &locked),
+                });
             }
             Drag::None => {}
         }
@@ -527,17 +605,7 @@ impl Editor {
             return;
         }
         match self.acts_as() {
-            Tool::Select => {
-                self.selected = self.hover;
-                if let (Some(Sel::Object(k, id)), Some(c)) = (self.selected, self.cursor) {
-                    if let Some(o) = self.doc.as_ref().and_then(|d| d.object(k, id)) {
-                        let org = tile_origin(k);
-                        let pos = DVec2::new(org.x + o.pos[0], org.y + o.pos[1]);
-                        self.history.begin(tr("Move object", "Перемещение объекта"));
-                        self.drag = Drag::Move(pos - c.truncate());
-                    }
-                }
-            }
+            Tool::Select => self.select_press(shift),
             Tool::Terrain | Tool::Paint => {
                 self.history.begin(if self.tool == Tool::Terrain { tr("Shape terrain", "Рельеф") } else { tr("Paint ground", "Покраска") });
                 self.flatten_to = self.cursor.map(|c| c.z as f32);
@@ -582,52 +650,48 @@ impl Editor {
                 }
             }
             _ => {
-                self.selected = None;
+                self.select(None);
             }
         }
     }
 
-    /// Turn what is placed or selected (degrees).
+    /// Turn what is placed or selected (degrees): a selection turns round its middle.
     pub fn rotate(&mut self, deg: f64) {
         match self.acts_as() {
-            Tool::Objects => self.place_heading = roads::norm_deg(self.place_heading + deg),
+            Tool::Objects => self.place_heading = self.snap_heading(roads::norm_deg(self.place_heading + deg)),
             _ => {
-                if let Some(Sel::Object(k, id)) = self.selected {
-                    let Some(doc) = self.doc.as_mut() else { return };
-                    self.history.begin(tr("Rotate object", "Поворот объекта"));
-                    self.history.touch_tile(doc, k);
-                    if let Some(o) = doc.object_mut(k, id) {
-                        o.rot[0] = roads::norm_deg(o.rot[0] + deg);
-                    }
-                    doc.tiles.get_mut(&k).map(|t| t.touch_content());
-                    self.history.commit();
-                }
+                let sels = self.selection();
+                let Some(doc) = self.doc.as_mut() else { return };
+                let Some(pivot) = selection::centre(doc, &sels) else { return };
+                let from: Vec<Origin> = sels.iter().filter_map(|s| selection::origin_of(doc, *s)).collect();
+                // (one thing alone, with angle snapping on, comes to a whole step)
+                let deg = match (&from[..], self.snap_angle) {
+                    ([one], true) => snap_deg(one.heading + deg) - one.heading,
+                    _ => deg,
+                };
+                self.history.begin(if sels.len() > 1 { tr("Rotate selection", "Поворот выделенного") } else { tr("Rotate", "Поворот") });
+                let now = selection::transform(doc, &mut self.history, &from, pivot, deg, DVec2::ZERO);
+                selection::unlink_outside(doc, &mut self.history, &now);
+                self.history.commit();
+                self.set_selection(now);
             }
         }
     }
 
     pub fn delete_selected(&mut self) {
+        let sels = self.selection();
         let Some(doc) = self.doc.as_mut() else { return };
-        match self.selected.take() {
-            Some(Sel::Object(k, id)) => {
-                self.history.begin(tr("Delete object", "Удаление объекта"));
-                self.history.touch_tile(doc, k);
-                self.history.touch_global(doc);
-                doc.delete_object(k, id);
-                self.history.commit();
-            }
-            Some(Sel::Spline(k, id)) => {
-                self.history.begin(tr("Delete road", "Удаление дороги"));
-                // (its neighbours may lie in other tiles)
-                let keys: Vec<TileKey> = doc.tiles.keys().copied().collect();
-                for t in keys {
-                    self.history.touch_tile(doc, t);
-                }
-                doc.delete_spline(k, id);
-                self.history.commit();
-            }
-            None => {}
+        if sels.is_empty() {
+            return;
         }
+        self.history.begin(match sels[..] {
+            [Sel::Object(..)] => tr("Delete object", "Удаление объекта"),
+            [Sel::Spline(..)] => tr("Delete road", "Удаление дороги"),
+            _ => tr("Delete selection", "Удаление выделенного"),
+        });
+        selection::delete(doc, &mut self.history, &sels);
+        self.history.commit();
+        self.select(None);
     }
 
     // ---------------------------------------------------------------- objects
@@ -637,6 +701,10 @@ impl Editor {
         let (Some(c), Some(rel)) = (self.cursor, self.object_type.clone()) else { return };
         let mut heading = self.place_heading;
         let mut pos = c;
+        if self.snap_grid {
+            let q = self.snap_point(c.truncate());
+            pos = DVec3::new(q.x, q.y, self.doc.as_ref().map(|d| d.ground(q)).unwrap_or(c.z));
+        }
         if self.align_to_road {
             if let Some((h, _)) = self.nearest_spline_heading(c.truncate(), 18.0) {
                 // stand along the road; the user's turns are added
@@ -648,7 +716,7 @@ impl Editor {
                 pos.z = c.z;
             }
         }
-        self.ghost_pos = Some((pos, heading));
+        self.ghost_pos = Some((pos, self.snap_heading(heading)));
     }
 
     fn nearest_spline_heading(&self, p: DVec2, within: f64) -> Option<(f64, f64)> {
@@ -726,7 +794,7 @@ impl Editor {
             sync_entry_points(doc);
         }
         self.history.commit();
-        self.selected = Some(Sel::Object(k, id));
+        self.select(Some(Sel::Object(k, id)));
     }
 
     /// A car park click with rows on: the first click starts a row, the second fills it to
@@ -775,39 +843,6 @@ impl Editor {
         self.history.commit();
         let _ = lib;
         self.toast(format!("{} {placed}", tr("Car parks placed:", "Парковок поставлено:")));
-    }
-
-    fn move_object(&mut self, _assets: &mut Assets, k: TileKey, id: i64, to: DVec2) {
-        let Some(doc) = self.doc.as_mut() else { return };
-        let Some(o) = doc.object(k, id).cloned() else { return };
-        let nk = tile_of(to);
-        if !doc.tiles.contains_key(&nk) {
-            return;
-        }
-        self.history.touch_tile(doc, k);
-        self.history.touch_tile(doc, nk);
-        let org = tile_origin(nk);
-        if nk == k {
-            if let Some(o) = doc.object_mut(k, id) {
-                o.pos[0] = to.x - org.x;
-                o.pos[1] = to.y - org.y;
-            }
-            doc.tiles.get_mut(&k).unwrap().touch_content();
-        } else {
-            // into the next tile's file (things hanging on it stay behind: only plain objects move across)
-            let t = doc.tiles.get_mut(&k).unwrap();
-            t.tile.objects.retain(|x| x.id != id);
-            t.touch_content();
-            let mut o = o;
-            o.pos[0] = to.x - org.x;
-            o.pos[1] = to.y - org.y;
-            let t = doc.tiles.get_mut(&nk).unwrap();
-            t.tile.objects.push(o);
-            t.touch_content();
-            self.selected = Some(Sel::Object(nk, id));
-        }
-        self.history.touch_global(doc);
-        sync_entry_points(doc);
     }
 
     // ---------------------------------------------------------------- roads
@@ -939,7 +974,12 @@ impl Editor {
         let snap = snap.filter(|a| self.road_start.as_ref().map(|(s, _)| (s.pos - a.pos).length() > 1.0).unwrap_or(true));
         self.road_snap = snap;
         let Some((mut start, fixed)) = self.road_start else { return };
-        let mut target = c.truncate();
+        let mut target = if snap.is_some() { c.truncate() } else { self.snap_point(c.truncate()) };
+        // a straight from a free start: its heading to whole steps
+        if !fixed && snap.is_none() && self.snap_angle {
+            let d = target - start.pos.truncate();
+            target = start.pos.truncate() + roads::dir(snap_deg(roads::heading_of(d))) * d.length();
+        }
         let mut end_anchor = snap;
         // joining a road in its middle: the new road meets its edge, coming straight at it
         if let Some(a) = snap.filter(|a| a.mid.is_some() && !self.drawing_paths()) {
@@ -980,7 +1020,11 @@ impl Editor {
                 // (from the middle of a road the heading is free)
                 Some(a) if a.mid.is_some() && !self.drawing_paths() => self.road_start = Some((a, false)),
                 Some(a) => self.road_start = Some((a, true)),
-                None => self.road_start = Some((Anchor { pos: c, ..Default::default() }, false)),
+                None => {
+                    let q = self.snap_point(c.truncate());
+                    let z = self.doc.as_ref().map(|d| d.ground(q)).unwrap_or(c.z);
+                    self.road_start = Some((Anchor { pos: DVec3::new(q.x, q.y, z), ..Default::default() }, false));
+                }
             }
             return;
         }
@@ -1419,8 +1463,8 @@ impl Editor {
         self.history.touch_global(doc);
         doc.remove_tile(k);
         self.history.commit();
-        if matches!(self.selected, Some(Sel::Object(t, _)) | Some(Sel::Spline(t, _)) if t == k) {
-            self.selected = None;
+        if self.selection().iter().any(|s| matches!(s, Sel::Object(t, _) | Sel::Spline(t, _) if *t == k)) {
+            self.select(None);
         }
     }
 
@@ -1448,7 +1492,7 @@ impl Editor {
     }
 
     pub fn extras(&self, cam: &crate::camera::Camera, assets: &mut Assets) -> FrameExtras {
-        let mut x = FrameExtras { grid: self.show_grid, selected: self.selected, hover: self.hover, ..Default::default() };
+        let mut x = FrameExtras { grid: self.show_grid, selected: self.selected, selected_more: self.selection().into_iter().skip(1).collect(), hover: self.hover, ..Default::default() };
         let Some(doc) = self.doc.as_ref() else { return x };
         let w = (cam.distance * 0.004).clamp(0.08, 6.0) as f32;
         x.show_technical = self.show_technical || self.tool == Tool::Logic;
@@ -1609,19 +1653,441 @@ impl Editor {
             }
             _ => {}
         }
-        // the selected spline's centre line
-        if let Some(Sel::Spline(k, id)) = self.selected {
-            if let Some(s) = doc.spline(k, id) {
-                let c = omsi_geometry::SplineCurve::from_map(s, tile_origin(k));
-                let n = (s.length / 2.0).ceil().max(1.0) as usize;
-                for i in 0..n {
-                    let a = c.point_at(s.length * i as f64 / n as f64) + DVec3::Z * 0.2;
-                    let b = c.point_at(s.length * (i + 1) as f64 / n as f64) + DVec3::Z * 0.2;
-                    line(&mut x.overlay, cam, a, b, w, ORANGE);
+        self.selection_extras(&mut x, cam, w);
+        x
+    }
+}
+
+/// A heading to the nearest whole 15 degrees.
+pub fn snap_deg(h: f64) -> f64 {
+    roads::norm_deg((h / 15.0).round() * 15.0)
+}
+
+// -------------------------------------------------------------------- selection and editing
+
+impl Editor {
+    /// Everything selected, the one shown in the properties first.
+    pub fn selection(&self) -> Vec<Sel> {
+        let Some(p) = self.selected else { return Vec::new() };
+        let mut v = vec![p];
+        for s in &self.also {
+            if !v.contains(s) {
+                v.push(*s);
+            }
+        }
+        v
+    }
+
+    pub fn is_selected(&self, s: Sel) -> bool {
+        self.selected == Some(s) || (self.selected.is_some() && self.also.contains(&s))
+    }
+
+    /// Select one thing (or nothing).
+    pub fn select(&mut self, s: Option<Sel>) {
+        self.selected = s;
+        self.also.clear();
+    }
+
+    pub fn set_selection(&mut self, v: Vec<Sel>) {
+        let mut v = v.into_iter();
+        self.selected = v.next();
+        self.also = v.collect();
+    }
+
+    /// Shift-click: in the selection if it was not, out if it was.
+    pub fn toggle_selected(&mut self, s: Sel) {
+        let mut v = self.selection();
+        if let Some(i) = v.iter().position(|x| *x == s) {
+            v.remove(i);
+        } else {
+            v.insert(0, s);
+        }
+        self.set_selection(v);
+    }
+
+    /// The spline selected alone (its grips are shown).
+    pub fn single_spline(&self) -> Option<(TileKey, i64)> {
+        match (self.selected, self.also.iter().any(|s| Some(*s) != self.selected)) {
+            (Some(Sel::Spline(k, id)), false) => Some((k, id)),
+            _ => None,
+        }
+    }
+
+    /// Where the grips of the selected spline are.
+    fn handles(&self) -> Vec<(Handle, DVec3)> {
+        let (Some((k, id)), Some(doc)) = (self.single_spline(), self.doc.as_ref()) else { return Vec::new() };
+        let Some(s) = doc.spline(k, id) else { return Vec::new() };
+        let c = omsi_geometry::SplineCurve::from_map(s, tile_origin(k));
+        vec![(Handle::Start, c.point_at(0.0)), (Handle::End, c.end_point()), (Handle::Mid, c.point_at(s.length * 0.5))]
+    }
+
+    fn handle_at(&self, p: DVec2, r: f64) -> Option<Handle> {
+        self.handles().into_iter().map(|(h, q)| (h, (q.truncate() - p).length())).filter(|(_, d)| *d < r).min_by(|a, b| a.1.total_cmp(&b.1)).map(|(h, _)| h)
+    }
+
+    /// The left button down with the Select tool.
+    fn select_press(&mut self, shift: bool) {
+        // (whatever the properties had open is done: the view's edit is a step of its own)
+        if self.panel_step {
+            self.panel_step = false;
+            self.history.commit();
+        }
+        if let (Some(h), Some((k, id))) = (self.hover_handle, self.single_spline()) {
+            self.drag = Drag::Reshape(k, id, h);
+            self.reshape = None;
+            return;
+        }
+        let Some(hit) = self.hover else {
+            if !shift {
+                self.select(None);
+            }
+            return;
+        };
+        if shift {
+            self.toggle_selected(hit);
+            return;
+        }
+        if !self.is_selected(hit) {
+            self.select(Some(hit));
+        }
+        // a press on the selection may become a move of all of it
+        if let (Some(c), Some(doc)) = (self.cursor, self.doc.as_ref()) {
+            let mut sels = self.selection();
+            // (the one grabbed leads: the grid holds its place)
+            if let Some(i) = sels.iter().position(|s| *s == hit) {
+                sels.swap(0, i);
+            }
+            self.move_from = sels.iter().filter_map(|s| selection::origin_of(doc, *s)).collect();
+            self.drag = Drag::Move { grab: c.truncate(), started: false };
+        }
+    }
+
+    /// The button let go after dragging a grip: the new shape goes in.
+    fn finish_reshape(&mut self, k: TileKey, id: i64) {
+        match self.reshape.take() {
+            Some(Ok(plan)) => {
+                let Some(doc) = self.doc.as_mut() else { return };
+                self.history.begin(tr("Reshape road", "Изменение формы дороги"));
+                for t in reshape::tiles_of(doc, &plan) {
+                    self.history.touch_tile(doc, t);
+                }
+                self.history.touch_global(doc);
+                // the ground follows the new shape, as it does a new road (the tiles it may
+                // reach are kept first)
+                let curves: Vec<omsi_geometry::SplineCurve> = reshape::preview(doc, &plan).iter().map(|s| omsi_geometry::SplineCurve::from_map(s, DVec2::ZERO)).collect();
+                let follow = self.follow_ground && self.reshape_half > 0.0;
+                if follow {
+                    let reach = self.reshape_half + 12.0;
+                    for c in &curves {
+                        for i in 0..=8 {
+                            let p = c.point_at(c.length * i as f64 / 8.0).truncate();
+                            for d in [DVec2::new(-reach, -reach), DVec2::new(reach, -reach), DVec2::new(-reach, reach), DVec2::new(reach, reach)] {
+                                let t = tile_of(p + d);
+                                if doc.tiles.contains_key(&t) {
+                                    self.history.touch_tile(doc, t);
+                                }
+                            }
+                        }
+                    }
+                }
+                reshape::apply(doc, &plan);
+                if follow {
+                    conform_ground(doc, &curves, self.reshape_half);
+                }
+                self.history.commit();
+                self.select(Some(Sel::Spline(k, id)));
+            }
+            Some(Err(e)) => self.error(e),
+            None => {}
+        }
+    }
+
+    /// The box dragged on the screen is let go: what is inside it is selected (added to the
+    /// selection with `add`). `view`: the 3D view's corner and size in window points.
+    pub fn finish_box(&mut self, assets: &mut Assets, cam: &crate::camera::Camera, view: (f32, f32, f32, f32), add: bool) {
+        let Some([a, b]) = self.select_box.take() else { return };
+        let Some(doc) = self.doc.as_ref() else { return };
+        if (a.0 - b.0).abs() < 4.0 && (a.1 - b.1).abs() < 4.0 {
+            return;
+        }
+        let (vx, vy, w, h) = view;
+        let show_technical = self.show_technical || self.tool == Tool::Logic;
+        let found = selection::in_box(doc, cam, (a.0 - vx, a.1 - vy), (b.0 - vx, b.1 - vy), w, h, |f| assets.object(f).map(|m| m.technical && !show_technical).unwrap_or(false));
+        let mut v = if add { self.selection() } else { Vec::new() };
+        for s in found {
+            if !v.contains(&s) {
+                v.push(s);
+            }
+        }
+        let n = v.len();
+        self.set_selection(v);
+        if n > 0 {
+            self.toast(format!("{} {n}", tr("Selected:", "Выбрано:")));
+        }
+    }
+
+    /// Everything on the map (Ctrl+A).
+    pub fn select_all(&mut self) {
+        let Some(doc) = self.doc.as_ref() else { return };
+        let v: Vec<Sel> = doc
+            .tiles
+            .iter()
+            .flat_map(|(k, t)| t.tile.objects.iter().map(move |o| Sel::Object(*k, o.id)).chain(t.tile.splines.iter().filter(|s| !s.deleted).map(move |s| Sel::Spline(*k, s.id))))
+            .collect();
+        self.set_selection(v);
+    }
+
+    // ------------------------------------------------------------ clipboard
+
+    /// Copy the selection; returns how many things were copied.
+    pub fn copy(&mut self, lib: &Library) -> usize {
+        let Some(doc) = self.doc.as_ref() else { return 0 };
+        let clip = crate::clipboard::copy(doc, &self.selection(), |f| lib.find(f).map(|a| a.abs_height).unwrap_or(false));
+        let n = clip.len();
+        if n > 0 {
+            self.clip = Some(clip);
+            self.toast(format!("{} {n}", tr("Copied:", "Скопировано:")));
+        }
+        n
+    }
+
+    pub fn cut(&mut self, lib: &Library) {
+        if self.copy(lib) > 0 {
+            self.delete_selected();
+        }
+    }
+
+    /// Paste what was copied round the cursor (without one, a little beside where it was).
+    pub fn paste(&mut self) {
+        let Some(clip) = self.clip.clone() else {
+            self.toast(tr("Nothing copied yet", "Ещё ничего не скопировано"));
+            return;
+        };
+        let at = match self.cursor {
+            Some(c) => self.snap_point(c.truncate()),
+            None => clip.at.truncate() + DVec2::splat(5.0),
+        };
+        self.paste_clip(&clip, at, tr("Paste", "Вставка"));
+    }
+
+    /// Copy the selection and put the copy down beside it (the clipboard stays as it was).
+    pub fn duplicate(&mut self, lib: &Library) {
+        let Some(doc) = self.doc.as_ref() else { return };
+        let clip = crate::clipboard::copy(doc, &self.selection(), |f| lib.find(f).map(|a| a.abs_height).unwrap_or(false));
+        if clip.is_empty() {
+            return;
+        }
+        let step = if self.snap_grid { self.grid_step.max(1.0) * (4.0 / self.grid_step.max(1.0)).ceil() } else { 4.0 };
+        let at = clip.at.truncate() + DVec2::splat(step);
+        self.paste_clip(&clip, at, tr("Duplicate", "Дублирование"));
+    }
+
+    fn paste_clip(&mut self, clip: &crate::clipboard::Clip, at: DVec2, label: &str) {
+        let Some(doc) = self.doc.as_mut() else { return };
+        let tiles = crate::clipboard::tiles_touched(doc, clip, at);
+        if tiles.is_empty() {
+            self.error(tr("There is no tile here: add one with the Tiles tool", "Здесь нет тайла: добавьте его инструментом «Тайлы»"));
+            return;
+        }
+        self.history.begin(label);
+        for k in tiles {
+            self.history.touch_tile(doc, k);
+        }
+        self.history.touch_global(doc);
+        let at = DVec3::new(at.x, at.y, doc.ground(at));
+        let got = crate::clipboard::paste(doc, clip, at);
+        self.history.commit();
+        let n = got.len();
+        if n < clip.len() {
+            self.toast(format!("{} {n} / {}", tr("Pasted (the rest is off the map):", "Вставлено (остальное за картой):"), clip.len()));
+        }
+        self.set_selection(got);
+    }
+
+    // ------------------------------------------------------------ numbers
+
+    /// A number in the properties changes: one step for as long as it is dragged or typed.
+    pub fn begin_panel_step(&mut self, label: &str) {
+        if !(self.panel_step && self.history.is_open()) {
+            self.history.begin(label);
+            self.panel_step = true;
+        }
+    }
+
+    /// The properties' step ends once no number is being dragged or typed (a step the view
+    /// opened, such as a move, is left alone).
+    pub fn end_panel_step_if_idle(&mut self, ctx: &egui::Context) {
+        if self.panel_step && self.drag == Drag::None && !ctx.egui_is_using_pointer() && !ctx.egui_wants_keyboard_input() {
+            self.panel_step = false;
+            self.history.commit();
+        }
+    }
+
+
+    /// Move the selection by `delta` (m), as one step.
+    pub fn move_selection_by(&mut self, delta: DVec2) {
+        let sels = self.selection();
+        let Some(doc) = self.doc.as_mut() else { return };
+        let from: Vec<Origin> = sels.iter().filter_map(|s| selection::origin_of(doc, *s)).collect();
+        if from.is_empty() || delta.length() < 1e-6 {
+            return;
+        }
+        self.history.begin(tr("Move", "Перемещение"));
+        let now = selection::transform(doc, &mut self.history, &from, DVec2::ZERO, 0.0, delta);
+        selection::unlink_outside(doc, &mut self.history, &now);
+        self.history.commit();
+        self.set_selection(now);
+    }
+
+    /// Put the object selected at a world position (the numbers in the properties).
+    pub fn put_object(&mut self, k: TileKey, id: i64, to: DVec2) {
+        let Some(o) = self.doc.as_ref().and_then(|d| selection::origin_of(d, Sel::Object(k, id))) else { return };
+        self.begin_panel_step(tr("Edit object", "Изменение объекта"));
+        let Some(doc) = self.doc.as_mut() else { return };
+        let now = selection::transform(doc, &mut self.history, &[o], DVec2::ZERO, 0.0, to - o.pos);
+        if let Some(s) = now.first() {
+            if self.selected == Some(Sel::Object(k, id)) {
+                self.selected = Some(*s);
+            }
+        }
+    }
+
+    /// Raise (or lower) the selection by `dz` metres: objects above their ground, splines'
+    /// heights.
+    pub fn raise_selection(&mut self, dz: f64) {
+        let sels = self.selection();
+        let Some(doc) = self.doc.as_mut() else { return };
+        if sels.is_empty() || dz.abs() < 1e-9 {
+            return;
+        }
+        self.history.begin(tr("Change height", "Изменение высоты"));
+        for s in &sels {
+            match *s {
+                Sel::Object(k, id) => {
+                    self.history.touch_tile(doc, k);
+                    if let Some(o) = doc.object_mut(k, id) {
+                        o.pos[2] += dz;
+                    }
+                    doc.tiles.get_mut(&k).map(|t| t.touch_content());
+                }
+                Sel::Spline(k, id) => {
+                    self.history.touch_tile(doc, k);
+                    if let Some(sp) = doc.tiles.get_mut(&k).and_then(|t| t.tile.splines.iter_mut().find(|x| x.id == id)) {
+                        sp.pos[2] += dz;
+                    }
+                    doc.tiles.get_mut(&k).map(|t| t.touch_content());
                 }
             }
         }
-        x
+        self.history.touch_global(doc);
+        sync_entry_points(doc);
+        self.history.commit();
+    }
+
+    /// Give every selected spline another type.
+    pub fn retype_splines(&mut self, file: &str) {
+        let sels = self.selection();
+        let Some(doc) = self.doc.as_mut() else { return };
+        self.history.begin(tr("Change road type", "Смена типа дороги"));
+        for s in &sels {
+            if let Sel::Spline(k, id) = *s {
+                self.history.touch_tile(doc, k);
+                if let Some(t) = doc.tiles.get_mut(&k) {
+                    if let Some(sp) = t.tile.splines.iter_mut().find(|x| x.id == id) {
+                        sp.file = file.to_string();
+                    }
+                    t.touch_content();
+                }
+            }
+        }
+        self.history.commit();
+    }
+
+    /// Height and gradient at one end of a spline (the properties); the neighbour linked
+    /// there follows. Kept open as one step while a number is dragged.
+    pub fn set_spline_end(&mut self, k: TileKey, id: i64, at_end: bool, z: Option<f64>, g: Option<f64>) {
+        self.begin_panel_step(tr("Edit road", "Изменение дороги"));
+        let Some(doc) = self.doc.as_mut() else { return };
+        selection::touch_spline(&mut self.history, doc, k, id);
+        reshape::set_end(doc, k, id, at_end, z, g);
+    }
+
+    // ------------------------------------------------------------ snapping
+
+    /// A point to the grid, when the grid snaps.
+    pub fn snap_point(&self, p: DVec2) -> DVec2 {
+        if self.snap_grid && self.grid_step > 0.0 {
+            (p / self.grid_step).round() * self.grid_step
+        } else {
+            p
+        }
+    }
+
+    /// A heading to whole 15 degrees, when angles snap.
+    pub fn snap_heading(&self, h: f64) -> f64 {
+        if self.snap_angle { snap_deg(h) } else { h }
+    }
+
+    // ------------------------------------------------------------ drawing
+
+    /// The selection drawn over the view: splines' centre lines, a ring round each object
+    /// selected with others, the grips of a spline selected alone, a reshape's new shape.
+    fn selection_extras(&self, x: &mut FrameExtras, cam: &crate::camera::Camera, w: f32) {
+        let Some(doc) = self.doc.as_ref() else { return };
+        let sels = self.selection();
+        for s in &sels {
+            match *s {
+                Sel::Spline(k, id) => {
+                    let Some(s) = doc.spline(k, id) else { continue };
+                    let c = omsi_geometry::SplineCurve::from_map(s, tile_origin(k));
+                    let n = (s.length / 2.0).ceil().max(1.0) as usize;
+                    for i in 0..n {
+                        let a = c.point_at(s.length * i as f64 / n as f64) + DVec3::Z * 0.2;
+                        let b = c.point_at(s.length * (i + 1) as f64 / n as f64) + DVec3::Z * 0.2;
+                        line(&mut x.overlay, cam, a, b, w, ORANGE);
+                    }
+                }
+                Sel::Object(k, id) if sels.len() > 1 => {
+                    let Some(o) = doc.object(k, id) else { continue };
+                    ring(&mut x.overlay, cam, doc.object_world(k, o, false) + DVec3::Z * 0.2, w * 3.5, w * 0.5, ORANGE);
+                }
+                _ => {}
+            }
+        }
+        if self.tool == Tool::Select {
+            for (h, p) in self.handles() {
+                let on = self.hover_handle == Some(h) || matches!(self.drag, Drag::Reshape(_, _, d) if d == h);
+                let r = if h == Handle::Mid { w * 2.5 } else { w * 3.5 };
+                disc(&mut x.overlay, cam, p + DVec3::Z * 0.3, r, if on { GREEN } else { WHITE });
+            }
+        }
+        match &self.reshape {
+            Some(Ok(plan)) => {
+                for s in reshape::preview(doc, plan) {
+                    let mut s = s;
+                    s.pos[2] += 0.03;
+                    let file = s.file.clone();
+                    x.ghost_splines.push((file, s, [0.35, 0.85, 0.45, 0.35]));
+                }
+            }
+            Some(Err(_)) => {
+                if let Some(c) = self.cursor {
+                    disc(&mut x.overlay, cam, c, w * 3.0, [1.0, 0.3, 0.3, 0.9]);
+                }
+            }
+            None => {}
+        }
+    }
+}
+
+/// A ring on the ground.
+fn ring(out: &mut Vec<OverlayPoint>, cam: &crate::camera::Camera, c: DVec3, r: f32, width: f32, color: [f32; 4]) {
+    let n = 24;
+    for i in 0..n {
+        let a0 = i as f64 / n as f64 * std::f64::consts::TAU;
+        let a1 = (i + 1) as f64 / n as f64 * std::f64::consts::TAU;
+        let p = |a: f64| c + DVec3::new(a.cos(), a.sin(), 0.0) * r as f64;
+        line(out, cam, p(a0), p(a1), width, color);
     }
 }
 
@@ -2006,5 +2472,106 @@ pub fn asset_hint(a: &Asset) -> &'static str {
         tr("Bus stop: name it in the panel on the right", "Остановка: задайте имя в панели справа")
     } else {
         ""
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::selection::tests::{add_object, add_spline, flat_map};
+
+    fn editor() -> Editor {
+        let mut doc = flat_map(1);
+        add_object(&mut doc, (0, 0), 1, 100.0, 100.0);
+        add_object(&mut doc, (0, 0), 2, 110.0, 100.0);
+        add_spline(&mut doc, (0, 0), 3, 50.0, 50.0, 0.0, 30.0, 0, 0);
+        let mut ed = Editor::default();
+        ed.open(doc);
+        ed
+    }
+
+    #[test]
+    fn shift_click_adds_and_takes_away() {
+        let mut ed = editor();
+        ed.select(Some(Sel::Object((0, 0), 1)));
+        ed.toggle_selected(Sel::Spline((0, 0), 3));
+        assert_eq!(ed.selection().len(), 2);
+        assert_eq!(ed.selected, Some(Sel::Spline((0, 0), 3)), "the one added shows in the properties");
+        ed.toggle_selected(Sel::Spline((0, 0), 3));
+        assert_eq!(ed.selection(), vec![Sel::Object((0, 0), 1)]);
+        // nothing selected: what `also` held does not count
+        ed.toggle_selected(Sel::Object((0, 0), 2));
+        ed.selected = None;
+        assert!(ed.selection().is_empty());
+        ed.toggle_selected(Sel::Object((0, 0), 1));
+        assert_eq!(ed.selection(), vec![Sel::Object((0, 0), 1)]);
+    }
+
+    #[test]
+    fn a_selection_turns_deletes_and_comes_back_in_single_steps() {
+        let mut ed = editor();
+        ed.select_all();
+        assert_eq!(ed.selection().len(), 3);
+        ed.rotate(90.0);
+        let doc = ed.doc.as_ref().unwrap();
+        assert!((doc.spline((0, 0), 3).unwrap().heading - 90.0).abs() < 1e-9);
+        assert!((doc.object((0, 0), 1).unwrap().rot[0] - 90.0).abs() < 1e-9);
+        ed.delete_selected();
+        let doc = ed.doc.as_ref().unwrap();
+        assert!(doc.tiles[&(0, 0)].tile.objects.is_empty() && doc.tiles[&(0, 0)].tile.splines.is_empty());
+        let d = ed.doc.as_mut().unwrap();
+        ed.history.undo(d);
+        assert_eq!(ed.doc.as_ref().unwrap().tiles[&(0, 0)].tile.objects.len(), 2);
+        let d = ed.doc.as_mut().unwrap();
+        ed.history.undo(d);
+        let doc = ed.doc.as_ref().unwrap();
+        assert_eq!(doc.spline((0, 0), 3).unwrap().heading, 0.0);
+    }
+
+    #[test]
+    fn copy_paste_and_duplicate_make_new_things_round_the_cursor() {
+        let mut ed = editor();
+        let lib = Library::default();
+        ed.set_selection(vec![Sel::Object((0, 0), 1), Sel::Object((0, 0), 2)]);
+        assert_eq!(ed.copy(&lib), 2);
+        ed.cursor = Some(DVec3::new(200.0, 200.0, 0.0));
+        ed.paste();
+        let pasted = ed.selection();
+        assert_eq!(pasted.len(), 2);
+        let doc = ed.doc.as_ref().unwrap();
+        let xs: Vec<f64> = pasted.iter().map(|s| match *s { Sel::Object(k, id) => doc.object(k, id).unwrap().pos[0], _ => 0.0 }).collect();
+        assert_eq!(xs, vec![195.0, 205.0], "kept 10 m apart round the cursor");
+        ed.duplicate(&lib);
+        assert_eq!(ed.doc.as_ref().unwrap().tiles[&(0, 0)].tile.objects.len(), 6);
+        // one undo takes the duplicate away again
+        let d = ed.doc.as_mut().unwrap();
+        ed.history.undo(d);
+        assert_eq!(ed.doc.as_ref().unwrap().tiles[&(0, 0)].tile.objects.len(), 4);
+    }
+
+    #[test]
+    fn snapping_rounds_to_the_grid_and_to_whole_steps() {
+        let mut ed = Editor::default();
+        assert_eq!(ed.snap_point(DVec2::new(1.26, 3.74)), DVec2::new(1.26, 3.74));
+        ed.snap_grid = true;
+        ed.grid_step = 0.5;
+        assert_eq!(ed.snap_point(DVec2::new(1.26, 3.74)), DVec2::new(1.5, 3.5));
+        assert_eq!(ed.snap_heading(52.0), 52.0);
+        ed.snap_angle = true;
+        assert_eq!(ed.snap_heading(52.0), 45.0);
+        assert_eq!(ed.snap_heading(358.0), 0.0);
+    }
+
+    #[test]
+    fn numbers_in_the_properties_move_an_object_over_into_the_next_tile() {
+        let mut doc = flat_map(2);
+        add_object(&mut doc, (0, 0), 1, 100.0, 100.0);
+        let mut ed = Editor::default();
+        ed.open(doc);
+        ed.select(Some(Sel::Object((0, 0), 1)));
+        ed.put_object((0, 0), 1, DVec2::new(350.0, 20.0));
+        assert_eq!(ed.selected, Some(Sel::Object((1, 0), 1)));
+        let o = ed.doc.as_ref().unwrap().object((1, 0), 1).unwrap();
+        assert!((o.pos[0] - 50.0).abs() < 1e-9 && (o.pos[1] - 20.0).abs() < 1e-9);
     }
 }

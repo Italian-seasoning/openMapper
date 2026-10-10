@@ -144,6 +144,8 @@ pub struct FrameExtras {
     /// Splines being drawn: (type, curve in world coordinates).
     pub ghost_splines: Vec<(String, MapSpline, [f32; 4])>,
     pub selected: Option<Sel>,
+    /// Selected together with `selected`.
+    pub selected_more: std::collections::HashSet<Sel>,
     pub hover: Option<Sel>,
     pub highlight_tile: Option<TileKey>,
     /// Draw what the game does not show (start points, car parks, AI paths, helpers).
@@ -933,6 +935,8 @@ impl Renderer {
         // objects: instance lists are made again when anything about them changed
         let mut key_parts: Vec<u64> = doc.tiles.values().flat_map(|t| [t.content_rev, t.terrain_rev]).collect();
         key_parts.push(hash_of(&format!("{:?}{:?}{}", extras.selected, extras.hover, extras.show_technical)));
+        // (in any order: the set's own order changes from frame to frame)
+        key_parts.push(extras.selected_more.iter().map(hash_of).fold(extras.selected_more.len() as u64, |a, h| a ^ h));
         key_parts.push(self.models.len() as u64);
         key_parts.push(assets.objects.len() as u64);
         key_parts.push(assets.pending as u64);
@@ -943,7 +947,7 @@ impl Renderer {
             let mut groups: HashMap<String, (bool, Vec<Instance>)> = HashMap::new();
             for (k, t) in &disp {
                 let tint_of = |sel: Option<Sel>| {
-                    if extras.selected == sel {
+                    if extras.selected == sel || sel.map(|s| extras.selected_more.contains(&s)).unwrap_or(false) {
                         [0.96, 0.50, 0.19, 0.45]
                     } else if extras.hover == sel {
                         [1.0, 1.0, 1.0, 0.18]
@@ -1019,7 +1023,7 @@ impl Renderer {
                 alive.push((*k, s.id));
                 let h = spline_hash(s, org);
                 let sel = Some(Sel::Spline(*k, s.id));
-                let tint = if extras.selected == sel {
+                let tint = if extras.selected == sel || extras.selected_more.contains(&Sel::Spline(*k, s.id)) {
                     [0.96, 0.50, 0.19, 0.45]
                 } else if extras.hover == sel {
                     [1.0, 1.0, 1.0, 0.2]

@@ -365,13 +365,13 @@ impl App {
             Action::Undo => {
                 if let Some(d) = self.ed.doc.as_mut() {
                     self.ed.history.undo(d);
-                    self.ed.selected = None;
+                    self.ed.select(None);
                 }
             }
             Action::Redo => {
                 if let Some(d) = self.ed.doc.as_mut() {
                     self.ed.history.redo(d);
-                    self.ed.selected = None;
+                    self.ed.select(None);
                 }
             }
             Action::Import => {
@@ -411,6 +411,13 @@ impl App {
                     g.egui_ctx.set_zoom_factor(z);
                 }
             }
+            Action::Copy => {
+                self.ed.copy(&self.lib);
+            }
+            Action::Cut => self.ed.cut(&self.lib),
+            Action::Paste => self.ed.paste(),
+            Action::Duplicate => self.ed.duplicate(&self.lib),
+            Action::SelectAll => self.ed.select_all(),
             Action::FocusSelection => {
                 if let (Some(sel), Some(doc)) = (self.ed.selected, &self.ed.doc) {
                     let p = match sel {
@@ -487,6 +494,11 @@ impl App {
             Some(KeyCode::KeyZ) if ctrl => actions.push(Action::Undo),
             Some(KeyCode::KeyY) if ctrl => actions.push(Action::Redo),
             Some(KeyCode::KeyS) if ctrl => actions.push(Action::Save),
+            Some(KeyCode::KeyC) if ctrl => actions.push(Action::Copy),
+            Some(KeyCode::KeyX) if ctrl => actions.push(Action::Cut),
+            Some(KeyCode::KeyV) if ctrl => actions.push(Action::Paste),
+            Some(KeyCode::KeyD) if ctrl => actions.push(Action::Duplicate),
+            Some(KeyCode::KeyA) if ctrl => actions.push(Action::SelectAll),
             Some(KeyCode::Digit1) => self.ed.set_tool(Tool::Select),
             Some(KeyCode::Digit2) => self.ed.set_tool(Tool::Roads),
             Some(KeyCode::Digit3) => self.ed.set_tool(Tool::Objects),
@@ -620,6 +632,7 @@ impl App {
                     &mut actions,
                 ));
             }
+            crate::ui_edit::paint_box(&ctx, &self.ed);
             ui::confirm_unsaved(&ctx, &mut self.ui, &mut actions);
         });
         match view {
@@ -1144,6 +1157,9 @@ impl ApplicationHandler for App {
                 let (dx, dy) = (p.0 - self.mouse.pos.0, p.1 - self.mouse.pos.1);
                 self.mouse.pos = p;
                 self.mouse.moved = true;
+                if let Some(b) = &mut self.ed.select_box {
+                    b[1] = p;
+                }
                 let h = self.view.height().max(1.0);
                 if self.mouse.right {
                     self.cam.look_pixels(dx, dy);
@@ -1167,10 +1183,13 @@ impl ApplicationHandler for App {
                             if self.keys.alt {
                                 // Option + drag: turn the camera
                                 self.mouse.alt_orbit = true;
+                            } else if self.ed.tool == Tool::Select && self.ed.hover.is_none() && (self.keys.shift || self.keys.ctrl) {
+                                // Shift / Ctrl + drag on empty ground: a selection box
+                                self.ed.select_box = Some([self.mouse.pos, self.mouse.pos]);
                             } else if self.ed.tool == Tool::Select && self.ed.hover.is_none() {
                                 // drag the map by its empty ground
                                 self.mouse.grab = true;
-                                self.ed.selected = None;
+                                self.ed.select(None);
                             } else {
                                 self.mouse.left = true;
                                 self.mouse.press = self.mouse.pos;
@@ -1179,6 +1198,13 @@ impl ApplicationHandler for App {
                                 }
                             }
                         } else if !pressed {
+                            if self.ed.select_box.is_some() {
+                                let v = self.view;
+                                if let Some(assets) = self.assets.as_mut() {
+                                    self.ed.finish_box(assets, &self.cam, (v.min.x, v.min.y, v.width(), v.height()), self.keys.shift);
+                                }
+                                self.ed.select_box = None;
+                            }
                             if self.mouse.left {
                                 let (dx, dy) = (self.mouse.pos.0 - self.mouse.press.0, self.mouse.pos.1 - self.mouse.press.1);
                                 let dragged = dx * dx + dy * dy > 12.0 * 12.0;
