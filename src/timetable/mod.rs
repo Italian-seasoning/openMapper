@@ -38,6 +38,9 @@ pub struct Timetable {
     links_changed: bool,
     /// Trips whose route is to be found again (their stops changed).
     pub reroute: BTreeSet<String>,
+    /// A depot group to add to the map's `ailists.cfg` on the next save (its buses run the
+    /// tours that name it).
+    pub new_depot: Option<String>,
 }
 
 fn key(name: &str) -> String {
@@ -385,9 +388,55 @@ pub fn save_to(tt: &mut Timetable, map_dir: &Path, order: &[TileKey]) -> std::io
         write_named(&dir, "StnLinks.cfg", &stnlinks_text(&tt.links, &tt.stops))?;
         written += 1;
     }
+    if let Some(block) = tt.new_depot.take() {
+        add_to_ailists(map_dir, &block)?;
+        written += 1;
+    }
     tt.dirty = false;
     log::info!("timetable: {written} file(s) written to {}", dir.display());
     Ok(())
+}
+
+/// The depot group openMapper offers a map without one: OMSI 2's own MAN city bus with the
+/// Grundorf depot's livery and fleet numbers.
+pub const DEPOT_BUS: &str = "Vehicles\\MAN_NL_NG\\MAN_GN92_main.bus";
+
+pub fn depot_block(name: &str) -> String {
+    let mut o = format!("\n[aigroup_depot]\n{name}\nGrundorf\n\n[aigroup_depot_typgroup_2]\n{DEPOT_BUS}\n");
+    for n in 1..=6 {
+        o.push_str(&format!("{}\tGRN-V {}\n", 2530 + n, 30 + n));
+    }
+    o.push_str("[end]\n");
+    o
+}
+
+/// `block` added at the end of the map's `ailists.cfg`, in the file's own encoding.
+fn add_to_ailists(map_dir: &Path, block: &str) -> std::io::Result<()> {
+    let p = find_file(map_dir, "ailists.cfg").unwrap_or_else(|| map_dir.join("ailists.cfg"));
+    let old = std::fs::read(&p).unwrap_or_default();
+    let utf16 = old.starts_with(&[0xFF, 0xFE]);
+    let mut text = omsi_cfg::decode_text(&old);
+    if !text.is_empty() && !text.ends_with('\n') {
+        text.push_str("\r\n");
+    }
+    // (a group of the old format runs to the next [end]: openOMSI would take the depot
+    // into it)
+    let lower = text.to_lowercase();
+    let last_group = ["[aigroup]", "[aigroup_2]"].iter().filter_map(|k| lower.rfind(k)).max();
+    if last_group.is_some_and(|g| !lower[g..].contains("[end]")) {
+        text.push_str("[end]\r\n");
+    }
+    text.push_str(&block.replace('\n', "\r\n"));
+    let bytes = if utf16 {
+        let mut b = vec![0xFF, 0xFE];
+        for u in text.encode_utf16() {
+            b.extend_from_slice(&u.to_le_bytes());
+        }
+        b
+    } else {
+        encode(&text)
+    };
+    std::fs::write(p, bytes)
 }
 
 /// A file of the folder by its lower-case name.

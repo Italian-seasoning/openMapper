@@ -175,6 +175,10 @@ impl TimetableUi {
             trips.push(TourTrip { trip: if k % 2 == 0 { there.clone() } else { back.clone() }, profile: 0, departure: 6.0 * 60.0 + k as f32 * 15.0 });
         }
         l.tours.push(Tour { number: "1".into(), ai_group: String::new(), extra: ALL_DAYS.to_string(), trips });
+        if self.files.has_roots() || roots.is_some() {
+            add_depot(tt);
+            self.depots = Some(vec![DEPOT.to_string()]);
+        }
         if self.ensure_net(doc, roots) {
             self.reroute(doc);
         }
@@ -749,7 +753,11 @@ impl TimetableUi {
             }
         });
         if depots.is_empty() {
-            ui.label(RichText::new(tr("The map's ailists.cfg has no depot: only you drive these tours, no AI buses.", "В ailists.cfg карты нет депо: выпуски водите только вы, автобусов ИИ не будет.")).small().color(WARN));
+            ui.label(RichText::new(tr("The map has no depot (ailists.cfg): only you drive these tours, no AI buses.", "У карты нет депо (ailists.cfg): выпуски водите только вы, автобусов ИИ не будет.")).small().color(WARN));
+            if self.files.exists(timetable::DEPOT_BUS) && ui.button(icons::labelled(Icon::Bus, tr("Add a depot with OMSI 2's MAN buses", "Добавить депо с автобусами MAN из OMSI 2"))).on_hover_text(tr("Written into the map's ailists.cfg when it is saved; the tours take their buses from it", "Запишется в ailists.cfg карты при сохранении; выпуски берут автобусы оттуда")).clicked() {
+                add_depot(tt);
+                self.depots = Some(vec![DEPOT.to_string()]);
+            }
         }
         let Some(ti) = self.tour.filter(|i| *i < n) else {
             if n > 0 {
@@ -914,6 +922,25 @@ impl TimetableUi {
             tt.touch_line(&line);
         }
     }
+}
+
+/// The name of the depot group openMapper adds.
+const DEPOT: &str = "openMapper";
+
+/// A depot for a map without one, and the tours without buses take theirs from it.
+fn add_depot(tt: &mut Timetable) {
+    tt.new_depot = Some(timetable::depot_block(DEPOT));
+    let mut touched = Vec::new();
+    for l in &mut tt.lines {
+        for t in l.tours.iter_mut().filter(|t| t.ai_group.trim().is_empty()) {
+            t.ai_group = DEPOT.to_string();
+            touched.push(l.name.clone());
+        }
+    }
+    for l in touched {
+        tt.touch_line(&l);
+    }
+    tt.dirty = true;
 }
 
 fn set_minutes(tt: &mut Timetable, trip: &str, m: f32) {

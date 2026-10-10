@@ -46,6 +46,11 @@ impl Files {
         !self.roots.is_empty()
     }
 
+    /// The file is there (content folder or installation).
+    pub fn exists(&self, rel: &str) -> bool {
+        self.roots.iter().any(|r| omsi_cfg::vfs::exists(&omsi_cfg::resolve_path(r, rel)))
+    }
+
     pub fn get(&mut self, rel: &str) -> Option<Arc<FileInfo>> {
         let key = rel.to_lowercase();
         if let Some(c) = self.cache.get(&key) {

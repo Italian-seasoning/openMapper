@@ -122,6 +122,24 @@ fn a_tour_without_depot_reads_back() {
     assert_eq!(back.tours, tt.lines[0].tours);
 }
 
+/// A depot added to a map's ailists.cfg is one openOMSI reads.
+#[test]
+fn a_depot_reads_back() {
+    let out = scratch("depot");
+    // (the template's group of the old format, without its [end])
+    std::fs::write(out.join("ailists.cfg"), encode("[aigroup]\nCars\n2\n0\n1\nSpandau\n\n")).unwrap();
+    let mut tt = Timetable { dirty: true, new_depot: Some(depot_block("Depot")), ..Default::default() };
+    save_to(&mut tt, &out, &[]).unwrap();
+    let l = omsi_map::AiLists::load(&out.join("ailists.cfg")).unwrap();
+    let d = l.groups.iter().find(|g| g.is_depot).unwrap();
+    assert_eq!((d.name.as_str(), d.hof.as_deref()), ("Depot", Some("Grundorf")));
+    assert_eq!(d.typgroups[0].file, DEPOT_BUS);
+    assert_eq!(d.typgroups[0].entries.len(), 6);
+    assert!(l.groups.iter().any(|g| g.name == "Cars"));
+    assert_eq!(depot_groups(&out), vec!["Depot".to_string()]);
+    let _ = std::fs::remove_dir_all(&out);
+}
+
 #[test]
 fn text_that_1252_cannot_hold_is_utf16() {
     assert_eq!(encode("Bf. Zoo\n"), b"Bf. Zoo\r\n".to_vec());
