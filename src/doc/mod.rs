@@ -115,7 +115,7 @@ pub fn mask_size(g: &GroundTex) -> usize {
 }
 
 /// What the editor has selected.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum Sel {
     Object(TileKey, i64),
     Spline(TileKey, i64),
@@ -186,6 +186,7 @@ impl Document {
     /// Read a map. One of the installation is saved to the content folder (the original
     /// stays as it is).
     pub fn load(roots: &crate::install::Roots, cfg: &Path, mut progress: impl FnMut(f32)) -> anyhow::Result<Document> {
+        let started = std::time::Instant::now();
         let global = GlobalCfg::load(cfg).map_err(|e| anyhow::anyhow!("{e}"))?;
         omsi_map::configure_grid(&global);
         let src_dir = cfg.parent().unwrap_or(Path::new(".")).to_path_buf();
@@ -241,6 +242,7 @@ impl Document {
         }
         let order = global.raw_tiles.clone();
         progress(1.0);
+        crate::render::profile::log_time(&format!("read {} tiles", tiles.len()), started);
         Ok(Document {
             global,
             tiles,

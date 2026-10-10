@@ -519,6 +519,9 @@ impl App {
             let h = doc.ground(self.cam.wanted_eye().truncate());
             self.cam.keep_above(h);
         }
+        if crate::render::profile::orbit() {
+            self.cam.yaw += dt * 12.0;
+        }
         let cam_moving = self.cam.is_moving();
         self.cam.update(dt);
         // the Roads tool starts with an ordinary two-lane road, so the first click builds
@@ -528,6 +531,7 @@ impl App {
             self.ed.road_type = pick.map(|a| a.rel.clone());
         }
         // the editor
+        let t_ed = Instant::now();
         self.ed.cursor_in_view = !self.mouse.over_ui;
         if self.ed.doc.is_some() && (self.mouse.moved || cam_moving || self.mouse.left || self.assets.as_ref().map(|a| a.pending > 0).unwrap_or(false)) {
             if let (Some((o, d)), Some(assets)) = (self.view_ray(), self.assets.as_mut()) {
@@ -542,6 +546,8 @@ impl App {
         }
 
         let Some(mut g) = self.gfx.take() else { return };
+        g.renderer.profile.add("editor", crate::render::profile::ms(t_ed));
+        let t_ui = Instant::now();
         // the interface
         let raw = g.egui_state.take_egui_input(&g.window);
         let mut actions: Vec<Action> = Vec::new();
@@ -598,6 +604,8 @@ impl App {
         for (id, delta) in &full.textures_delta.set {
             g.egui_renderer.update_texture(&g.gpu.device, &g.gpu.queue, *id, delta);
         }
+        g.renderer.profile.add("ui", crate::render::profile::ms(t_ui));
+        let t_acquire = Instant::now();
         // draw
         let frame = match g.gpu.surface.get_current_texture() {
             wgpu::CurrentSurfaceTexture::Success(f) | wgpu::CurrentSurfaceTexture::Suboptimal(f) => Some(f),
@@ -608,13 +616,16 @@ impl App {
             }
             _ => None,
         };
+        g.renderer.profile.add("acquire", crate::render::profile::ms(t_acquire));
         if let Some(frame) = frame {
             let view = frame.texture.create_view(&Default::default());
             let scene_view = frame.texture.create_view(&wgpu::TextureViewDescriptor { format: Some(g.gpu.scene_format), ..Default::default() });
             let mut enc = g.gpu.device.create_command_encoder(&wgpu::CommandEncoderDescriptor { label: Some("frame") });
             g.renderer.time += dt as f32;
             if let (Some(doc), Some(assets)) = (&self.ed.doc, self.assets.as_mut()) {
+                let t_x = Instant::now();
                 let extras = self.ed.extras(&self.cam, assets);
+                g.renderer.profile.add("extras", crate::render::profile::ms(t_x));
                 g.renderer.sync(&g.gpu, doc, assets, &extras, &self.cam);
                 let ppp = full.pixels_per_point;
                 let (w, h) = (g.gpu.config.width as f32, g.gpu.config.height as f32);
@@ -658,7 +669,12 @@ impl App {
             for id in &full.textures_delta.free {
                 g.egui_renderer.free_texture(id);
             }
+            let t_submit = Instant::now();
             g.gpu.queue.submit(extra.into_iter().chain([enc.finish()]));
+            g.renderer.profile.add("submit", crate::render::profile::ms(t_submit));
+            g.renderer.profile.add("frame cpu", crate::render::profile::ms(now));
+            g.renderer.profile.add("frame interval", dt as f32 * 1000.0);
+            g.renderer.profile.end_frame();
             self.frames += 1;
             if self.frames == 3 {
                 if let Ok(d) = std::env::var("OPENMAPPER_DEMO") {
@@ -1203,9 +1219,13 @@ impl ApplicationHandler for App {
         }
     }
 
-    fn about_to_wait(&mut self, _el: &ActiveEventLoop) {
+    fn about_to_wait(&mut self, el: &ActiveEventLoop) {
         if let Some(g) = &self.gfx {
             g.window.request_redraw();
+        }
+        // (a hidden window gets no redraws: the screenshot and profiling runs go on anyway)
+        if (self.shot.is_some() || crate::render::profile::enabled()) && self.last.elapsed().as_millis() > 250 {
+            self.frame(el);
         }
     }
 
