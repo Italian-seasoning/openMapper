@@ -132,6 +132,11 @@ impl History {
         }
     }
 
+    /// The object files the tiles kept for undo and redo name (what a step can bring back).
+    pub fn object_files(&self) -> impl Iterator<Item = &str> {
+        self.undo.iter().chain(&self.redo).chain(&self.open).flat_map(|s| s.tiles.values().flatten()).flat_map(|t| t.tile.objects.iter().map(|o| o.file.as_str()))
+    }
+
     pub fn clear(&mut self) {
         self.undo.clear();
         self.redo.clear();
@@ -157,7 +162,10 @@ fn apply(doc: &mut Document, s: Step) -> Step {
         back.tiles.insert(k, now);
     }
     if let Some((g, order)) = s.global {
+        // (IDCodes given out stay given out: junction files are named by them)
+        let next = doc.global.next_id_code.max(g.next_id_code);
         back.global = Some((std::mem::replace(&mut doc.global, g), std::mem::replace(&mut doc.order, order)));
+        doc.global.next_id_code = next;
         doc.global_rev = next_rev();
     }
     if let Some(t) = s.timetable {
@@ -176,4 +184,26 @@ fn apply(doc: &mut Document, s: Step) -> Step {
     }
     doc.global_dirty = true;
     back
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    /// IDCodes handed out stay used after an undo: a junction made again would else get the
+    /// number of the one undone and write over its files (which a saved map may still name).
+    #[test]
+    fn undo_does_not_hand_out_an_idcode_again() {
+        let mut doc = crate::selection::tests::flat_map(1);
+        let mut h = History::default();
+        h.begin("t");
+        h.touch_tile(&doc, (0, 0));
+        h.touch_global(&doc);
+        let first = doc.new_id();
+        h.commit();
+        h.undo(&mut doc);
+        assert!(doc.new_id() > first);
+        h.redo(&mut doc);
+        assert!(doc.new_id() > first + 1);
+    }
 }

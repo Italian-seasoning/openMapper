@@ -80,15 +80,26 @@ pub fn place_object_at(doc: &mut Document, k: TileKey, id: i64, to: DVec2) -> Op
         o.pos[1] = to.y - org.y;
         doc.tiles.get_mut(&k)?.touch_content();
     } else {
-        // (what hangs on it stays in the old tile's file: only plain objects move across)
+        // (what hangs on it goes along: a hanging object's parent is looked for in its own
+        // tile)
         let t = doc.tiles.get_mut(&k)?;
         let i = t.tile.objects.iter().position(|x| x.id == id)?;
         let mut o = t.tile.objects.remove(i);
+        let mut kids = vec![id];
+        let mut j = 0;
+        while j < kids.len() {
+            let p = kids[j];
+            kids.extend(t.tile.attach_objects.iter().filter(|a| a.parent_id == Some(p)).map(|a| a.id));
+            j += 1;
+        }
+        let (hanging, stay): (Vec<_>, Vec<_>) = std::mem::take(&mut t.tile.attach_objects).into_iter().partition(|a| kids[1..].contains(&a.id));
+        t.tile.attach_objects = stay;
         t.touch_content();
         o.pos[0] = to.x - org.x;
         o.pos[1] = to.y - org.y;
         let t = doc.tiles.get_mut(&nk)?;
         t.tile.objects.push(o);
+        t.tile.attach_objects.extend(hanging);
         t.touch_content();
     }
     Some(Sel::Object(nk, id))
@@ -489,5 +500,51 @@ pub mod tests {
         assert!(got.contains(&Sel::Object((0, 0), 1)));
         assert!(got.contains(&Sel::Spline((0, 0), 3)));
         assert!(!got.contains(&Sel::Object((0, 0), 2)));
+    }
+
+    /// An object moved over into the next tile takes what hangs on it along: the game and
+    /// the view look for a hanging object's parent in its own tile.
+    #[test]
+    fn what_hangs_on_an_object_goes_with_it_into_the_next_tile() {
+        let mut doc = flat_map(2);
+        add_object(&mut doc, (0, 0), 1, 290.0, 10.0);
+        add_object(&mut doc, (0, 0), 2, 20.0, 10.0);
+        let t = doc.tiles.get_mut(&(0, 0)).unwrap();
+        t.tile.attach_objects.push(MapObject { file: "sign.sco".into(), id: 6, parent_id: Some(1), ..Default::default() });
+        t.tile.attach_objects.push(MapObject { file: "plate.sco".into(), id: 7, parent_id: Some(6), ..Default::default() });
+        t.tile.attach_objects.push(MapObject { file: "other.sco".into(), id: 8, parent_id: Some(2), ..Default::default() });
+        assert_eq!(place_object_at(&mut doc, (0, 0), 1, DVec2::new(310.0, 10.0)), Some(Sel::Object((1, 0), 1)));
+        let ids = |k: TileKey| doc.tiles[&k].tile.attach_objects.iter().map(|o| o.id).collect::<Vec<_>>();
+        assert_eq!(ids((1, 0)), vec![6, 7]);
+        assert_eq!(ids((0, 0)), vec![8]);
+    }
+
+    /// An object deleted takes what hangs on it and what hangs on that.
+    #[test]
+    fn deleting_an_object_takes_everything_hanging_on_it() {
+        let mut doc = flat_map(1);
+        add_object(&mut doc, (0, 0), 1, 10.0, 10.0);
+        let t = doc.tiles.get_mut(&(0, 0)).unwrap();
+        t.tile.attach_objects.push(MapObject { file: "sign.sco".into(), id: 6, parent_id: Some(1), ..Default::default() });
+        t.tile.attach_objects.push(MapObject { file: "plate.sco".into(), id: 7, parent_id: Some(6), ..Default::default() });
+        let mut hist = History::default();
+        hist.begin("t");
+        delete(&mut doc, &mut hist, &[Sel::Object((0, 0), 1)]);
+        hist.commit();
+        assert!(doc.tiles[&(0, 0)].tile.attach_objects.is_empty());
+    }
+
+    /// A road deleted takes its rows of objects and what hangs on them (lamps on masts).
+    #[test]
+    fn deleting_a_road_takes_what_hangs_on_its_rows() {
+        let mut doc = flat_map(1);
+        add_spline(&mut doc, (0, 0), 2, 50.0, 50.0, 0.0, 20.0, 0, 0);
+        let t = doc.tiles.get_mut(&(0, 0)).unwrap();
+        t.tile.spline_attachments.push(omsi_map::SplineAttachment { file: "mast.sco".into(), id: 5, spline_index: 0, interval: 10.0, range: 20.0, ..Default::default() });
+        t.tile.attach_objects.push(MapObject { file: "lamp.sco".into(), id: 6, parent_id: Some(5), ..Default::default() });
+        t.tile.attach_objects.push(MapObject { file: "bulb.sco".into(), id: 7, parent_id: Some(6), ..Default::default() });
+        doc.delete_spline((0, 0), 2);
+        let t = &doc.tiles[&(0, 0)].tile;
+        assert!(t.spline_attachments.is_empty() && t.attach_objects.is_empty());
     }
 }

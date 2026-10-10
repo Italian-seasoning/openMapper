@@ -227,3 +227,79 @@ fn installed_maps_survive_a_save() {
     }
     let _ = std::fs::remove_dir_all(&roots.content);
 }
+
+/// A map whose tiles have names of their own keeps them: a tile not edited is not written,
+/// so global.cfg must still name the file it is in.
+#[test]
+fn tiles_keep_their_own_file_names() {
+    let _map = one_map();
+    let roots = scratch("names");
+    let dir = roots.content.join("maps").join("Names");
+    std::fs::create_dir_all(&dir).unwrap();
+    let cfg = "[name]\nNames\n\n[NextIDCode]\n50\n\n[map]\n0\n0\nkachel_a.map\n\n[map]\n1\n0\nkachel_b.map\n";
+    std::fs::write(dir.join("global.cfg"), cfg).unwrap();
+    let tile = "[version]\n14\n\n[terrain]\n\n[object]\n0\nSceneryobjects\\x.sco\n7\n10\n20\n0\n0\n0\n0\n0\n\n";
+    std::fs::write(dir.join("kachel_a.map"), tile).unwrap();
+    std::fs::write(dir.join("kachel_b.map"), tile.replace("\n7\n", "\n8\n")).unwrap();
+    let mut doc = Document::load(&roots, &dir.join("global.cfg"), |_| {}).unwrap();
+    assert_eq!(doc.tiles.len(), 2);
+    let t = doc.tiles.get_mut(&(0, 0)).unwrap();
+    t.tile.objects[0].pos[0] = 30.0;
+    t.touch_content();
+    save(&mut doc).unwrap();
+    let back = Document::load(&roots, &dir.join("global.cfg"), |_| {}).unwrap();
+    assert_eq!(back.tiles.len(), 2, "the tile not edited is still found");
+    assert!(back.object((1, 0), 8).is_some());
+    assert_eq!(back.object((0, 0), 7).map(|o| o.pos[0]), Some(30.0));
+    let _ = std::fs::remove_dir_all(&roots.content);
+}
+
+/// A road running on into a tile that is taken away ends there: its link to the spline
+/// that went is let go (so a road can be joined to that end again).
+#[test]
+fn removing_a_tile_lets_go_of_links_into_it() {
+    let _map = one_map();
+    let roots = scratch("unlink");
+    let mut doc = sample_map(&roots);
+    let rev = doc.tiles[&(0, 0)].content_rev;
+    doc.remove_tile((1, 0));
+    let s = doc.spline((0, 0), 9).unwrap();
+    assert_eq!(s.next_id, 0);
+    assert_ne!(doc.tiles[&(0, 0)].content_rev, rev, "the view builds the tile again");
+}
+
+/// The descriptions in other languages come back from an autosave too.
+#[test]
+fn an_autosave_keeps_the_descriptions() {
+    let _map = one_map();
+    let roots = scratch("recover-dsc");
+    let mut doc = sample_map(&roots);
+    save(&mut doc).unwrap();
+    doc.descriptions.set("ENG", "Round trip".into(), "In English".into());
+    autosave::write(&doc, &roots.content).unwrap();
+    drop(doc);
+    let meta = autosave::pending(&roots.content).unwrap();
+    let back = autosave::restore(&roots, &meta).unwrap();
+    assert_eq!(back.descriptions.langs.get("ENG").map(|l| l.1.as_str()), Some("In English"));
+    assert!(back.is_dirty() && back.descriptions.dirty);
+    let _ = std::fs::remove_dir_all(&roots.content);
+}
+
+/// A stop object moved over into another tile: the timetable's stop list names its new
+/// tile on the next save, also when nothing of the timetable was edited.
+#[test]
+fn a_stop_moved_into_another_tile_is_found_there() {
+    let _map = one_map();
+    let roots = scratch("stop-tile");
+    let mut doc = sample_map(&roots);
+    // (the linde, id 8, is the stop; tile (0, 0) is the first of the list)
+    doc.timetable.stops.push(omsi_timetable::BusStopEntry { name: "Linde".into(), group: 0, object_id: 8, params: [0.0; 3] });
+    doc.timetable.touch_stops();
+    save(&mut doc).unwrap();
+    crate::selection::place_object_at(&mut doc, (0, 0), 8, tile_origin((1, 0)) + glam::DVec2::new(5.0, 5.0));
+    save(&mut doc).unwrap();
+    let back = omsi_timetable::TimetableData::load(&doc.dir);
+    let at = doc.order.iter().position(|k| *k == (1, 0)).unwrap() as i32;
+    assert_eq!(back.bus_stops[0].group, at);
+    let _ = std::fs::remove_dir_all(&roots.content);
+}

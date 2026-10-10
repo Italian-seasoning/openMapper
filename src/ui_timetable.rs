@@ -369,9 +369,11 @@ impl TimetableUi {
             ed.pick_mode = false;
         }
         let doc = ed.doc.as_ref().unwrap();
-        if !before.same_content(&doc.timetable) {
-            let traffic = (traffic_before != doc.traffic).then_some(traffic_before);
-            ed.history.push_snapshot(tr("Edit timetable", "Правка расписания"), crate::history::Snapshot { timetable: Some(before), traffic, ..Default::default() });
+        // (a depot added for tours that all name a group changes only the traffic: a step too)
+        let timetable = !before.same_content(&doc.timetable);
+        let traffic = (traffic_before != doc.traffic).then_some(traffic_before);
+        if timetable || traffic.is_some() {
+            ed.history.push_snapshot(tr("Edit timetable", "Правка расписания"), crate::history::Snapshot { timetable: timetable.then_some(before), traffic, ..Default::default() });
         }
         self.update_shown(ed);
     }

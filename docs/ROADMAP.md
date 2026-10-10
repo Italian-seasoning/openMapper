@@ -113,3 +113,6 @@ Add a line when you touch a shared file: stream, file, what.
 * Geodata · `src/export.rs`: `plan` calls `geo::export_filter` (the map's `openMapper/imagery` stays out of shared zips unless the map's geo.json says `export_imagery`).
 * Geodata (round 2) · `src/ui_minimap.rs`: `Minimap::imagery` (each tile's small picture, drawn over its square); `src/app.rs` fills it from `geo.minimap_tiles()` before the interface. `src/ui.rs`: Controls row for `I`.
 * Geodata (round 2) · Google-sourced pictures are never written (map folder, backups, exports): `ImageryMeta::kept` false, held in memory and made again from the tile cache (Google's max-age) when the map opens.
+* Review · `src/ui.rs`: `Action::SaveThen(Box<Action>)` (the unsaved-changes prompt's Save: the action follows only if the save worked); `src/app.rs`: `Action::Force` passes the guard by (`App::unguarded`) instead of clearing the dirty flags, `Action::Undo / Redo` call `Editor::undo / redo` (they stop the tool first).
+* Review · `src/doc/save.rs`: `crate::timetable::follow_stop_tiles(doc)` before the timetable's plan (a stop object moved into another tile).
+* Review · `src/history.rs`: `History::object_files` (the junction cleanup after a save keeps what undo and redo can bring back).

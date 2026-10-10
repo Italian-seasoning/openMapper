@@ -703,22 +703,15 @@ pub fn apply(ed: &mut Editor, fix: &Fix) -> bool {
         Fix::MoveToTile(from, id) => {
             let o = doc.object(*from, *id).cloned();
             match o {
-                Some(mut o) => {
+                Some(o) => {
                     let world = tile_origin(*from) + DVec2::new(o.pos[0], o.pos[1]);
                     let to = crate::doc::tile_of(world);
                     if to != *from && doc.tiles.contains_key(&to) {
                         ed.history.touch_global(doc);
                         ed.history.touch_tile(doc, *from);
                         ed.history.touch_tile(doc, to);
-                        let local = world - tile_origin(to);
-                        o.pos[0] = local.x;
-                        o.pos[1] = local.y;
-                        let a = doc.tiles.get_mut(from).unwrap();
-                        a.tile.objects.retain(|x| x.id != *id);
-                        a.touch_content();
-                        let b = doc.tiles.get_mut(&to).unwrap();
-                        b.tile.objects.push(o);
-                        b.touch_content();
+                        // (with what hangs on it)
+                        crate::selection::place_object_at(doc, *from, *id, world);
                         // (a start point names its object's tile)
                         crate::editor::sync_entry_points(doc);
                         if ed.selected == Some(Sel::Object(*from, *id)) {

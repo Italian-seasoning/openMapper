@@ -85,6 +85,8 @@ pub enum Action {
     Export,
     /// Do it without asking about unsaved changes.
     Force(Box<Action>),
+    /// Save, then do it; nothing more if the save fails.
+    SaveThen(Box<Action>),
     Quit,
 }
 
@@ -1249,6 +1251,11 @@ fn paint_panel(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, swatches: &
             ui.end_row();
         });
         if g.params[1] != before {
+            let now = g.params[1];
+            g.params[1] = before;
+            let was = (doc.global.clone(), doc.order.clone());
+            doc.global.ground_textures[ed.paint_layer].params[1] = now;
+            ed.history.push_snapshot(tr("Edit ground texture", "Правка текстуры земли"), crate::history::Snapshot { global: Some(was), ..Default::default() });
             doc.global_dirty = true;
             doc.global_rev = crate::doc::next_rev();
         }
@@ -1582,6 +1589,11 @@ fn map_properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, actions:
     let after = (doc.global.friendly_name.clone(), doc.global.description.clone(), doc.global.left_hand_traffic);
     if before != after {
         doc.global_dirty = true;
+        // (a step of its own: undoing an earlier edit of the global settings would else take
+        // this back too)
+        let mut g = doc.global.clone();
+        (g.friendly_name, g.description, g.left_hand_traffic) = before;
+        ed.history.push_snapshot(tr("Edit map", "Правка карты"), crate::history::Snapshot { global: Some((g, doc.order.clone())), ..Default::default() });
     }
 }
 
@@ -1693,6 +1705,7 @@ pub fn confirm_unsaved(ctx: &egui::Context, st: &mut UiState, actions: &mut Vec<
         return;
     }
     let mut decided: Option<bool> = None;
+    let mut save = false;
     egui::Window::new(tr("Unsaved changes", "Несохранённые изменения")).collapsible(false).resizable(false).anchor(egui::Align2::CENTER_CENTER, Vec2::ZERO).show(ctx, |ui| {
         ui.set_width(330.0);
         ui.horizontal(|ui| {
@@ -1708,7 +1721,7 @@ pub fn confirm_unsaved(ctx: &egui::Context, st: &mut UiState, actions: &mut Vec<
                 decided = Some(true);
             }
             if ui.button(icons::labelled(Icon::Save, tr("Save", "Сохранить"))).clicked() {
-                actions.push(Action::Save);
+                save = true;
                 decided = Some(true);
             }
         });
@@ -1716,7 +1729,8 @@ pub fn confirm_unsaved(ctx: &egui::Context, st: &mut UiState, actions: &mut Vec<
     match decided {
         Some(true) => {
             if let Some(a) = st.confirm.take() {
-                actions.push(Action::Force(Box::new(a)));
+                // (a save that fails keeps the map open with its changes)
+                actions.push(if save { Action::SaveThen(Box::new(a)) } else { Action::Force(Box::new(a)) });
             }
         }
         Some(false) => st.confirm = None,

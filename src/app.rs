@@ -101,6 +101,8 @@ pub struct App {
     guide: crate::ui_guide::Guide,
     /// The next frame's view becomes the map's picture (`picture.jpg`).
     picture: bool,
+    /// An action the user allowed to drop unsaved changes is being carried out.
+    unguarded: bool,
 }
 
 impl App {
@@ -132,6 +134,7 @@ impl App {
             geo: Default::default(),
             guide: Default::default(),
             picture: false,
+            unguarded: false,
             shot: std::env::var_os("OPENMAPPER_SHOT").map(|p| (PathBuf::from(p), std::env::var("OPENMAPPER_SHOT_FRAMES").ok().and_then(|n| n.parse().ok()).unwrap_or(90))),
             autosave: Default::default(),
             recover: None,
@@ -195,8 +198,9 @@ impl App {
 
     fn open_map(&mut self, cfg: &Path) {
         let Some(roots) = &self.roots else { return };
-        // (what was open is saved or its changes were dropped)
-        if self.ed.doc.is_some() {
+        // (what was open is saved or its changes were dropped; an autosave of an earlier
+        // session still offered is not this map's)
+        if self.ed.doc.is_some() && self.recover.is_none() {
             crate::doc::autosave::clear(&roots.content);
         }
         match Document::load(roots, cfg, |_| {}) {
@@ -279,7 +283,7 @@ impl App {
 
     fn new_map(&mut self, folder: &str, friendly: &str, size: i32, options: &crate::ui_newmap::NewMapOptions) {
         let Some(roots) = &self.roots else { return };
-        if self.ed.doc.is_some() {
+        if self.ed.doc.is_some() && self.recover.is_none() {
             crate::doc::autosave::clear(&roots.content);
         }
         let mut folder = folder.to_string();
@@ -356,7 +360,7 @@ impl App {
         match crate::doc::save(doc) {
             Ok(()) => {
                 omsi_cfg::content_changed();
-                if let Some(r) = &self.roots {
+                if let (Some(r), None) = (&self.roots, &self.recover) {
                     crate::doc::autosave::clear(&r.content);
                 }
                 self.autosave.reset();
@@ -461,23 +465,23 @@ impl App {
     fn do_action(&mut self, a: Action, el: &ActiveEventLoop) {
         let dirty = self.ed.doc.as_ref().map(|d| d.is_dirty()).unwrap_or(false);
         let guarded = matches!(a, Action::Close | Action::Open(_) | Action::OpenDialog | Action::NewMap { .. } | Action::Quit | Action::RestoreBackup(_));
-        if guarded && dirty {
+        if guarded && dirty && !self.unguarded {
             self.ui.confirm = Some(a);
             return;
         }
         match a {
             Action::Force(inner) => {
-                if let Some(d) = self.ed.doc.as_mut() {
-                    // the user chose to drop the changes
-                    d.global_dirty = false;
-                    d.timetable.dirty = false;
-                    d.traffic.dirty = false;
-                    d.descriptions.dirty = false;
-                    for t in d.tiles.values_mut() {
-                        t.dirty = false;
-                    }
-                }
+                // the user chose to drop the changes: not asked again. (The map keeps them,
+                // marked as changes, until it is really replaced: a file dialog cancelled or a
+                // map that does not open leaves it as it was.)
+                self.unguarded = true;
                 self.do_action(*inner, el);
+                self.unguarded = false;
+            }
+            Action::SaveThen(inner) => {
+                if self.save() {
+                    self.do_action(Action::Force(inner), el);
+                }
             }
             Action::NewMap { folder, friendly, size, options } => self.new_map(&folder, &friendly, size, &options),
             Action::Open(p) => self.open_map(&p),
@@ -512,7 +516,7 @@ impl App {
                 }
             }
             Action::Close => {
-                if let Some(r) = &self.roots {
+                if let (Some(r), None) = (&self.roots, &self.recover) {
                     crate::doc::autosave::clear(&r.content);
                 }
                 self.ed.doc = None;
@@ -529,18 +533,8 @@ impl App {
                 self.play();
                 self.guide.driven = true;
             }
-            Action::Undo => {
-                if let Some(d) = self.ed.doc.as_mut() {
-                    self.ed.history.undo(d);
-                    self.ed.select(None);
-                }
-            }
-            Action::Redo => {
-                if let Some(d) = self.ed.doc.as_mut() {
-                    self.ed.history.redo(d);
-                    self.ed.select(None);
-                }
-            }
+            Action::Undo => self.ed.undo(),
+            Action::Redo => self.ed.redo(),
             Action::Import => {
                 let files = rfd::FileDialog::new().add_filter(tr("Mods and models", "Моды и модели"), &["zip", "obj", "gltf", "glb", "fbx", "x", "o3d", "sco", "sli"]).set_title(tr("Import assets", "Импорт ассетов")).pick_files();
                 if let Some(f) = files {
@@ -659,6 +653,7 @@ impl App {
                     let p = self.cam.target.truncate();
                     let k = crate::doc::tile_of(p);
                     let l = p - tile_origin(k);
+                    self.ed.history.push_snapshot(tr("Map camera", "Камера карты"), crate::history::Snapshot { global: Some((doc.global.clone(), doc.order.clone())), ..Default::default() });
                     doc.global.map_cam = vec![k.0 as f64, k.1 as f64, l.x, self.cam.target.z, l.y, self.cam.yaw, self.cam.pitch, self.cam.distance / 4.0];
                     doc.global_dirty = true;
                     self.ed.toast(tr("The map opens with this view from now on.", "Теперь карта открывается с этого вида."));
@@ -1097,8 +1092,9 @@ impl App {
         for a in actions {
             self.do_action(a, el);
         }
-        // the changes kept every few minutes (not in the middle of an edit)
-        let editing = self.mouse.left || self.ed.history.is_open();
+        // the changes kept every few minutes (not in the middle of an edit, nor while an
+        // earlier session's autosave is still offered: there is one, it would be written over)
+        let editing = self.mouse.left || self.ed.history.is_open() || self.recover.is_some();
         self.autosave.tick(self.ed.doc.as_ref(), self.roots.as_ref().map(|r| r.content.as_path()), editing);
     }
 

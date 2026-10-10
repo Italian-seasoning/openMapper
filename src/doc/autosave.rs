@@ -35,6 +35,9 @@ pub struct Meta {
     pub timetable: bool,
     #[serde(default)]
     pub traffic: bool,
+    /// The descriptions in other languages, kept whole.
+    #[serde(default)]
+    pub descriptions: bool,
     /// Seconds since 1970.
     pub time: u64,
 }
@@ -94,6 +97,11 @@ pub fn prepare(doc: &Document, content: &Path) -> Job {
         t.restored();
         ops.extend(crate::traffic::plan(&t, &fresh_dir).into_iter().filter(|o| matches!(o, super::safe::Op::Write(..))));
     }
+    if doc.descriptions.dirty {
+        let mut d = doc.descriptions.clone();
+        d.restored(&Default::default());
+        ops.extend(d.plan(&fresh_dir).into_iter().filter(|o| matches!(o, super::safe::Op::Write(..))));
+    }
     let meta = Meta {
         name: doc.display_name().to_string(),
         dir: doc.dir.clone(),
@@ -102,6 +110,7 @@ pub fn prepare(doc: &Document, content: &Path) -> Job {
         tiles,
         timetable: doc.timetable.dirty,
         traffic: doc.traffic.dirty,
+        descriptions: doc.descriptions.dirty,
         time: std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).map(|d| d.as_secs()).unwrap_or(0),
     };
     Job {
@@ -190,6 +199,12 @@ pub fn restore(roots: &crate::install::Roots, meta: &Meta) -> anyhow::Result<Doc
         let mut t = crate::traffic::Traffic::load(&saved);
         t.restored();
         doc.traffic = t;
+    }
+    if meta.descriptions {
+        let mut d = crate::descriptions::Descriptions::load(&saved);
+        // (what only the map's had goes)
+        d.restored(&doc.descriptions);
+        doc.descriptions = d;
     }
     Ok(doc)
 }

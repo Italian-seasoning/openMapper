@@ -316,9 +316,7 @@ impl Timetable {
             self.order = order.to_vec();
             return;
         }
-        let map = |i: f64| -> f64 {
-            self.order.get(i as usize).and_then(|k| order.iter().position(|o| o == k)).map(|n| n as f64).unwrap_or(i)
-        };
+        let map = |i: f64| renumbered(&self.order, i, order);
         for s in &mut self.stops {
             s.group = map(s.group as f64) as i32;
         }
@@ -342,6 +340,38 @@ impl Timetable {
         self.links_changed = true;
         self.order = order.to_vec();
     }
+}
+
+/// Tile index `i` of files written with the tile list `old`, counted in `order`.
+fn renumbered(old: &[TileKey], i: f64, order: &[TileKey]) -> f64 {
+    old.get(i as usize).and_then(|k| order.iter().position(|o| o == k)).map(|n| n as f64).unwrap_or(i)
+}
+
+/// The stops' tiles as their objects stand now (one moved over into another tile names
+/// its new one), written on the next save.
+pub fn follow_stop_tiles(doc: &mut Document) {
+    if doc.timetable.stops.is_empty() {
+        return;
+    }
+    let mut at: std::collections::HashMap<i64, i32> = std::collections::HashMap::new();
+    for (i, k) in doc.order.iter().enumerate() {
+        if let Some(t) = doc.tiles.get(k) {
+            at.extend(t.tile.objects.iter().map(|o| (o.id, i as i32)));
+        }
+    }
+    let tt = &mut doc.timetable;
+    let moved = tt.stops.iter().any(|s| at.get(&s.object_id).is_some_and(|g| *g as f64 != renumbered(&tt.order, s.group as f64, &doc.order)));
+    if !moved {
+        return;
+    }
+    // (the indices counted in today's list first, then the moved ones set)
+    tt.renumber_tiles(&doc.order);
+    for s in &mut tt.stops {
+        if let Some(g) = at.get(&s.object_id) {
+            s.group = *g;
+        }
+    }
+    tt.touch_stops();
 }
 
 /// The `Busstops.cfg` entries of stop objects (tile, IDCode): the name is the object's
@@ -379,7 +409,10 @@ pub fn track_name(t: &Track) -> String {
 /// files, all or nothing; `saved` then marks it done.
 pub fn plan(tt: &mut Timetable, map_dir: &Path, order: &[TileKey]) -> Vec<Op> {
     let mut ops = Vec::new();
-    if !tt.dirty {
+    // (a tile taken away renumbers the files' tile indices even when nothing of the
+    // timetable was edited)
+    let held = !(tt.stops.is_empty() && tt.links.is_empty() && tt.tracks.is_empty());
+    if !tt.dirty && !(held && !tt.order.is_empty() && tt.order != order) {
         tt.order = order.to_vec();
         return ops;
     }

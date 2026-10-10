@@ -414,3 +414,19 @@ fn timetable_edits_undo_and_redo() {
     assert_eq!((back.lines.len(), back.trips.len()), (1, 1));
     let _ = std::fs::remove_dir_all(&out);
 }
+
+/// A tile taken away moves the ones after it up the `[map]` list: the stops' tile indices
+/// follow on the next save, also when nothing of the timetable was edited.
+#[test]
+fn removing_a_tile_renumbers_an_unchanged_timetable() {
+    let out = scratch("renumber");
+    let mut tt = Timetable::default();
+    tt.stops.push(BusStopEntry { name: "East".into(), group: 2, object_id: 5, params: [0.0; 3] });
+    tt.touch_stops();
+    save_to(&mut tt, &out, &[(0, 0), (1, 0), (2, 0)]).unwrap();
+    assert!(!tt.dirty);
+    save_to(&mut tt, &out, &[(0, 0), (2, 0)]).unwrap();
+    let back = TimetableData::load(&out);
+    assert_eq!(back.bus_stops[0].group, 1, "the stop's tile is now the second of the list");
+    let _ = std::fs::remove_dir_all(&out);
+}

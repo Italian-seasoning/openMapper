@@ -100,7 +100,9 @@ impl Descriptions {
     /// Put back as it was (undo, redo) in place of `replaced`.
     pub fn restored(&mut self, replaced: &Descriptions) {
         self.changed = self.langs.keys().cloned().collect();
-        self.removed = replaced.langs.keys().filter(|k| !self.langs.contains_key(*k)).cloned().collect();
+        // (and those still to be taken away, of either state: removed and not saved since)
+        let pending = std::mem::take(&mut self.removed);
+        self.removed = replaced.langs.keys().chain(&pending).chain(&replaced.removed).filter(|k| !self.langs.contains_key(*k)).cloned().collect();
         self.dirty = true;
     }
 
@@ -197,5 +199,24 @@ mod tests {
             assert_eq!(g.langs["ENG"].0, "Grundorf (Tutorial)");
             assert!(g.langs["ENG"].1.starts_with("Grundorf is a fictional village"));
         }
+    }
+
+    /// A language removed, then another edit, then that edit undone: the removed one's file
+    /// still goes on the next save.
+    #[test]
+    fn an_undo_keeps_a_language_removed_before() {
+        let dir = std::env::temp_dir().join(format!("openmapper-dsc-undo-{}", std::process::id()));
+        std::fs::create_dir_all(&dir).unwrap();
+        std::fs::write(dir.join("global_FRA.dsc"), utf16(&text("Ville", "x"))).unwrap();
+        let loaded = Descriptions::load(&dir);
+        let mut removed = loaded.clone();
+        removed.remove("FRA");
+        let mut edited = removed.clone();
+        edited.set("ENG", "Town".into(), "y".into());
+        let mut undone = removed.clone();
+        undone.restored(&edited);
+        crate::doc::safe::commit(&undone.plan(&dir)).unwrap();
+        assert!(Descriptions::load(&dir).langs.is_empty(), "{:?}", Descriptions::load(&dir).langs);
+        let _ = std::fs::remove_dir_all(&dir);
     }
 }

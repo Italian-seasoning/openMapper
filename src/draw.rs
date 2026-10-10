@@ -31,6 +31,14 @@ fn turn_rad(from: f64, to: f64, right: bool) -> f64 {
 /// The road from `p` towards `cursor`: `h` the heading it must leave with (going on from a
 /// road), `straight` the straight lock.
 pub fn plan(p: DVec2, h: Option<f64>, cursor: DVec2, t: &Typed, straight: bool) -> Option<Vec<Seg>> {
+    // (a number typed with a zero too many: no road longer than any map)
+    plan_any(p, h, cursor, t, straight).filter(|s| roads::total_length(s) <= MAX_LENGTH)
+}
+
+/// The longest road drawn at once (m).
+pub const MAX_LENGTH: f64 = 20_000.0;
+
+fn plan_any(p: DVec2, h: Option<f64>, cursor: DVec2, t: &Typed, straight: bool) -> Option<Vec<Seg>> {
     let to = cursor - p;
     let straight = straight || t.radius.map(|r| r.abs() < 1e-6).unwrap_or(false);
     match h {
@@ -170,5 +178,13 @@ mod tests {
         assert_eq!(parse(" 12,5 "), Some(12.5));
         assert_eq!(parse(""), None);
         assert_eq!(parse("x"), None);
+    }
+
+    /// A number typed with a zero too many does not plan a road of hundreds of kilometres
+    /// (split into 50 m pieces and shown every frame, it held the window).
+    #[test]
+    fn a_road_beyond_any_map_is_not_planned() {
+        assert!(plan(DVec2::ZERO, None, DVec2::new(30.0, 40.0), &Typed { length: Some(1e8), ..Default::default() }, false).is_none());
+        assert!(plan(DVec2::ZERO, Some(0.0), DVec2::new(30.0, 40.0), &Typed { radius: Some(1e7), heading: Some(90.0), ..Default::default() }, false).is_none());
     }
 }

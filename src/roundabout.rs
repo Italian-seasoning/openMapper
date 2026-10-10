@@ -79,6 +79,19 @@ pub fn clear_inside(doc: &mut Document, splines: &[(TileKey, i64)], c: DVec2, r:
     gone
 }
 
+/// Take away openMapper's junctions inside the circle (they went with the roads they
+/// joined), their signal heads with them. Returns how many junctions went.
+pub fn remove_junctions_inside(doc: &mut Document, c: DVec2, r: f64) -> usize {
+    let gone: Vec<(TileKey, i64)> = doc.tiles.iter().flat_map(|(k, t)| t.tile.objects.iter().filter(|o| crate::editor::is_own_junction(&o.file) && (tile_origin(*k) + DVec2::new(o.pos[0], o.pos[1]) - c).length() < r).map(move |o| (*k, o.id))).collect();
+    for &(k, id) in &gone {
+        for (ck, cid) in crate::junction::children(doc, id) {
+            doc.delete_object(ck, cid);
+        }
+        doc.delete_object(k, id);
+    }
+    gone.len()
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -110,5 +123,18 @@ mod tests {
         assert!((ends[1] - 131.0).abs() < 1e-6 && (ends[2] - 169.0).abs() < 1e-6, "{ends:?}");
         // the two sides no longer linked through the middle
         assert!(t.splines.iter().all(|s| s.prev_id == 0 && s.next_id == 0));
+    }
+
+    #[test]
+    fn a_junction_inside_goes_with_its_signal_heads() {
+        let mut doc = flat_map(1);
+        let t = doc.tiles.get_mut(&(0, 0)).unwrap();
+        t.tile.objects.push(omsi_map::MapObject { file: "Sceneryobjects\\openMapper\\T\\junction_1.sco".into(), id: 1, pos: [150.0, 150.0, 0.0], ..Default::default() });
+        // (a head stands at the plate's edge, it may be outside the circle)
+        t.tile.objects.push(omsi_map::MapObject { file: "Sceneryobjects\\x\\head.sco".into(), id: 2, pos: [150.0, 175.0, 0.0], var_parent: Some(1), ..Default::default() });
+        t.tile.objects.push(omsi_map::MapObject { file: "Sceneryobjects\\x\\tree.sco".into(), id: 3, pos: [150.0, 152.0, 0.0], ..Default::default() });
+        assert_eq!(remove_junctions_inside(&mut doc, DVec2::new(150.0, 150.0), 19.0), 1);
+        let ids: Vec<i64> = doc.tiles[&(0, 0)].tile.objects.iter().map(|o| o.id).collect();
+        assert_eq!(ids, vec![3]);
     }
 }

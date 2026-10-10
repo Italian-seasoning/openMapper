@@ -369,8 +369,22 @@ impl Document {
     /// Take a tile away. Its place in the `[map]` list goes too, and the numbers that name
     /// tiles by their place (entry points, attachment repeaters) follow.
     pub fn remove_tile(&mut self, k: TileKey) {
-        if self.tiles.remove(&k).is_none() {
-            return;
+        let Some(gone) = self.tiles.remove(&k) else { return };
+        // roads running on into it end where it was
+        let ids: std::collections::HashSet<i64> = gone.tile.splines.iter().map(|s| s.id).collect();
+        for t in self.tiles.values_mut() {
+            let mut hit = false;
+            for s in t.tile.splines.iter_mut() {
+                for l in [&mut s.prev_id, &mut s.next_id] {
+                    if *l != 0 && ids.contains(l) {
+                        *l = 0;
+                        hit = true;
+                    }
+                }
+            }
+            if hit {
+                t.touch_content();
+            }
         }
         let old = self.order.clone();
         self.order.retain(|o| *o != k);
@@ -452,6 +466,15 @@ impl Document {
         let Some(t) = self.tiles.get_mut(&k) else { return };
         let Some(idx) = t.tile.splines.iter().position(|s| s.id == id) else { return };
         let s = t.tile.splines.remove(idx);
+        // its rows, and what hangs on their objects
+        let mut gone: Vec<i64> = t.tile.spline_attachments.iter().filter(|a| a.spline_index == idx as i32).map(|a| a.id).collect();
+        let mut i = 0;
+        while i < gone.len() {
+            let p = gone[i];
+            gone.extend(t.tile.attach_objects.iter().filter(|o| o.parent_id == Some(p)).map(|o| o.id));
+            i += 1;
+        }
+        t.tile.attach_objects.retain(|o| !gone.contains(&o.id));
         t.tile.spline_attachments.retain(|a| a.spline_index != idx as i32);
         for a in &mut t.tile.spline_attachments {
             if a.spline_index > idx as i32 {
@@ -614,7 +637,15 @@ impl Document {
     pub fn delete_object(&mut self, k: TileKey, id: i64) {
         let Some(t) = self.tiles.get_mut(&k) else { return };
         t.tile.objects.retain(|o| o.id != id);
-        t.tile.attach_objects.retain(|o| o.parent_id != Some(id));
+        // (and what hangs on those, in turn)
+        let mut gone = vec![id];
+        let mut i = 0;
+        while i < gone.len() {
+            let p = gone[i];
+            gone.extend(t.tile.attach_objects.iter().filter(|o| o.parent_id == Some(p)).map(|o| o.id));
+            i += 1;
+        }
+        t.tile.attach_objects.retain(|o| !gone[1..].contains(&o.id));
         t.touch_content();
         self.global.entry_points.retain(|e| e.object_id != id);
         self.global_dirty = true;

@@ -494,11 +494,34 @@ impl Editor {
         }
     }
 
+    /// Undo the last step. What the tool was in the middle of stops first: it may stand on
+    /// what the undo takes away (a road drawn on from the end of the one undone).
+    pub fn undo(&mut self) {
+        self.cancel();
+        if let Some(d) = self.doc.as_mut() {
+            self.history.undo(d);
+        }
+        self.select(None);
+    }
+
+    pub fn redo(&mut self) {
+        self.cancel();
+        if let Some(d) = self.doc.as_mut() {
+            self.history.redo(d);
+        }
+        self.select(None);
+    }
+
     pub fn open(&mut self, doc: Document) {
         self.history.clear();
         self.select(None);
         self.hover = None;
         self.cancel();
+        // (what was kept by IDCode belongs to the map that was open)
+        self.junction_options.clear();
+        self.pending_rebuild.clear();
+        self.pending_options.clear();
+        self.pending_arms.clear();
         self.paint_layer = if doc.global.ground_textures.len() > 1 { 1 } else { 0 };
         self.session_first_id = doc.global.next_id_code;
         self.doc = Some(doc);
@@ -1268,7 +1291,8 @@ impl Editor {
             self.road_plan = Some((segs, z0, z1, None));
             return;
         }
-        let Some(segs) = roads::plan(&start, fixed, target, end_anchor.as_ref()) else { return };
+        // (a cursor on the plane far beyond the map, looking at the horizon: no road there)
+        let Some(segs) = roads::plan(&start, fixed, target, end_anchor.as_ref()).filter(|s| roads::total_length(s) <= crate::draw::MAX_LENGTH) else { return };
         let z1 = match snap {
             _ if self.road_plate_end.is_some() => self.road_plate_end.unwrap().1.z,
             Some(a) => a.pos.z,
@@ -1412,27 +1436,33 @@ impl Editor {
             t.touch_content();
             made.push((k, ids[i]));
         }
-        // link the ends to what they meet
-        let link = |doc: &mut Document, at: Option<(TileKey, i64, bool)>, mine: i64| {
+        // link the ends to what they meet (whether it is still there with that end free: a
+        // one-sided link would point at nothing)
+        let link = |doc: &mut Document, at: Option<(TileKey, i64, bool)>, mine: i64| -> bool {
+            let mut linked = false;
             if let Some((k, id, at_end)) = at {
                 if let Some(t) = doc.tiles.get_mut(&k) {
-                    if let Some(s) = t.tile.splines.iter_mut().find(|s| s.id == id) {
+                    if let Some(s) = t.tile.splines.iter_mut().find(|s| s.id == id && !s.deleted) {
                         if at_end && s.next_id == 0 {
                             s.next_id = mine;
+                            linked = true;
                         } else if !at_end && s.prev_id == 0 {
                             s.prev_id = mine;
+                            linked = true;
                         }
                     }
                     t.touch_content();
                 }
             }
+            linked
         };
         if let Some((k, id, _)) = start.spline {
             let first = made[0];
-            link(doc, start.spline, first.1);
-            if let Some(t) = doc.tiles.get_mut(&first.0) {
-                if let Some(s) = t.tile.splines.iter_mut().find(|s| s.id == first.1) {
-                    s.prev_id = id;
+            if link(doc, start.spline, first.1) {
+                if let Some(t) = doc.tiles.get_mut(&first.0) {
+                    if let Some(s) = t.tile.splines.iter_mut().find(|s| s.id == first.1) {
+                        s.prev_id = id;
+                    }
                 }
             }
             let _ = k;
@@ -1440,10 +1470,11 @@ impl Editor {
         if let Some(e) = end {
             if let Some((_, id, _)) = e.spline {
                 let last = *made.last().unwrap();
-                link(doc, e.spline, last.1);
-                if let Some(t) = doc.tiles.get_mut(&last.0) {
-                    if let Some(s) = t.tile.splines.iter_mut().find(|s| s.id == last.1) {
-                        s.next_id = id;
+                if link(doc, e.spline, last.1) {
+                    if let Some(t) = doc.tiles.get_mut(&last.0) {
+                        if let Some(s) = t.tile.splines.iter_mut().find(|s| s.id == last.1) {
+                            s.next_id = id;
+                        }
                     }
                 }
             }
@@ -2625,17 +2656,31 @@ impl Editor {
     }
 
     /// After a save: the junction files of this map that nothing uses any more (not a tile,
-    /// and not one made in this session, which undo may still bring back) are deleted.
+    /// not a tile undo or redo may bring back, not an earlier version kept by a save, and not
+    /// one made in this session) are deleted.
     /// Returns how many went.
     pub fn clean_junction_files(&self) -> usize {
         let (Some(doc), Some(content)) = (self.doc.as_ref(), self.content_dir.as_ref()) else { return 0 };
-        let used: std::collections::HashSet<String> = doc
+        let mut used: std::collections::HashSet<String> = doc
             .tiles
             .values()
             .flat_map(|t| t.tile.objects.iter().chain(t.chrono.iter().flat_map(|c| c.objects.iter())))
-            .filter(|o| is_own_junction(&o.file))
-            .map(|o| o.file.to_lowercase())
+            .map(|o| o.file.as_str())
+            // (and those undo or redo can bring back)
+            .chain(self.history.object_files())
+            .filter(|f| is_own_junction(f))
+            .map(|f| f.to_lowercase())
             .collect();
+        // (and those the earlier versions kept by saves name: going back to one brings them back)
+        for b in crate::doc::safe::backups(&doc.dir) {
+            for e in std::fs::read_dir(&b).into_iter().flatten().flatten() {
+                if !e.file_name().to_string_lossy().to_lowercase().ends_with(".map") {
+                    continue;
+                }
+                let Ok(bytes) = std::fs::read(e.path()) else { continue };
+                used.extend(omsi_cfg::decode_text(&bytes).lines().map(str::trim).filter(|l| is_own_junction(l)).map(str::to_lowercase));
+            }
+        }
         let folder: String = doc.dir.file_name().map(|f| f.to_string_lossy().to_string()).unwrap_or_else(|| "map".into()).chars().map(|c| if c.is_alphanumeric() || c == '-' || c == '_' { c } else { '_' }).collect();
         let dir = omsi_cfg::resolve_path(content, &format!("Sceneryobjects\\openMapper\\{folder}"));
         crate::junction::remove_unused(&dir, &folder, &used, self.session_first_id)
@@ -2893,7 +2938,8 @@ impl Editor {
     fn ring_radius(&self) -> Option<(DVec3, f64)> {
         let c = self.ring_centre?;
         let r = (self.cursor?.truncate() - c.truncate()).length();
-        Some((c, r.max(crate::roundabout::MIN_RADIUS)))
+        // (nor a ring round half the world, the cursor looking at the horizon)
+        (r * std::f64::consts::TAU <= crate::draw::MAX_LENGTH).then_some((c, r.max(crate::roundabout::MIN_RADIUS)))
     }
 
     /// The ring goes the way traffic goes round: anticlockwise where it keeps right, unless
@@ -2963,10 +3009,7 @@ impl Editor {
         // (cut a metre inside the ring's centre line, so each road still crosses it there)
         crate::roundabout::clear_inside(doc, &inside, centre.truncate(), r - 1.0);
         // openMapper's junctions inside go with the roads they joined
-        let gone: Vec<(TileKey, i64)> = doc.tiles.iter().flat_map(|(k, t)| t.tile.objects.iter().filter(|o| is_own_junction(&o.file) && (tile_origin(*k) + DVec2::new(o.pos[0], o.pos[1]) - centre.truncate()).length() < r - 1.0).map(move |o| (*k, o.id))).collect();
-        for (k, id) in gone {
-            doc.delete_object(k, id);
-        }
+        crate::roundabout::remove_junctions_inside(doc, centre.truncate(), r - 1.0);
         for k in made.iter().map(|m| m.0).collect::<Vec<_>>() {
             doc.tiles.get_mut(&k).map(|t| t.touch_content());
         }
@@ -3679,5 +3722,97 @@ mod tests {
         let doc = ed.doc.as_ref().unwrap();
         assert_eq!(doc.tiles[&(0, 0)].tile.splines.len(), 1);
         assert!((doc.spline((0, 0), 3).unwrap().length - 30.0).abs() < 1e-9);
+    }
+
+    /// A junction of an earlier session deleted, then the map saved: its files stay while
+    /// undo can still bring it back.
+    #[test]
+    fn junction_files_undo_can_bring_back_are_kept() {
+        let content = std::env::temp_dir().join(format!("openmapper-test-jfiles-{}", std::process::id()));
+        let mut doc = flat_map(1);
+        doc.dir = content.join("maps").join("J");
+        let file = "Sceneryobjects\\openMapper\\J\\junction_5.sco";
+        doc.tiles.get_mut(&(0, 0)).unwrap().tile.objects.push(omsi_map::MapObject { file: file.into(), id: 5, pos: [150.0, 150.0, 0.0], ..Default::default() });
+        let dir = content.join("Sceneryobjects").join("openMapper").join("J");
+        std::fs::create_dir_all(dir.join("model")).unwrap();
+        std::fs::write(dir.join("junction_5.sco"), "x").unwrap();
+        let mut ed = Editor::default();
+        ed.content_dir = Some(content.clone());
+        ed.open(doc);
+        ed.select(Some(Sel::Object((0, 0), 5)));
+        ed.delete_selected();
+        ed.history.commit();
+        assert_eq!(ed.clean_junction_files(), 0);
+        assert!(dir.join("junction_5.sco").exists());
+        // (nothing can bring it back any more: it goes)
+        ed.history.clear();
+        assert_eq!(ed.clean_junction_files(), 1);
+        let _ = std::fs::remove_dir_all(&content);
+    }
+
+    /// A junction file an earlier version of the map (kept by a save) names stays: going
+    /// back to that version brings the junction back.
+    #[test]
+    fn junction_files_an_earlier_version_names_are_kept() {
+        let content = std::env::temp_dir().join(format!("openmapper-test-jbackup-{}", std::process::id()));
+        let mut doc = flat_map(1);
+        doc.dir = content.join("maps").join("J");
+        let dir = content.join("Sceneryobjects").join("openMapper").join("J");
+        std::fs::create_dir_all(dir.join("model")).unwrap();
+        std::fs::write(dir.join("junction_5.sco"), "x").unwrap();
+        std::fs::create_dir_all(&doc.dir).unwrap();
+        std::fs::write(doc.dir.join("tile_0_0.map"), "[object]\n0\nSceneryobjects\\openMapper\\J\\junction_5.sco\n5\n").unwrap();
+        // a save that replaced that tile keeps it in a backup
+        crate::doc::safe::backup(&doc.dir, &[crate::doc::safe::Op::Write(doc.dir.join("tile_0_0.map"), Vec::new())], &[]).unwrap();
+        let mut ed = Editor::default();
+        ed.content_dir = Some(content.clone());
+        ed.open(doc);
+        assert_eq!(ed.clean_junction_files(), 0);
+        assert!(dir.join("junction_5.sco").exists());
+        let _ = std::fs::remove_dir_all(&content);
+    }
+
+    /// Undo while drawing on from a road just built: the drawing stops (it went on from an
+    /// end the undo took away, and the next road would have been linked to a spline that
+    /// is not there).
+    #[test]
+    fn undo_stops_drawing_from_what_it_takes_away() {
+        let mut ed = editor();
+        ed.set_tool(Tool::Roads);
+        ed.history.begin("Build road");
+        let d = ed.doc.as_mut().unwrap();
+        ed.history.touch_tile(d, (0, 0));
+        add_spline(d, (0, 0), 7, 50.0, 100.0, 0.0, 30.0, 0, 0);
+        ed.history.commit();
+        ed.road_start = Some((Anchor { pos: DVec3::new(50.0, 130.0, 0.0), heading: 0.0, spline: Some(((0, 0), 7, true)), mid: None }, true));
+        ed.undo();
+        assert!(ed.doc.as_ref().unwrap().spline((0, 0), 7).is_none());
+        assert!(ed.road_start.is_none());
+        ed.redo();
+        assert!(ed.doc.as_ref().unwrap().spline((0, 0), 7).is_some());
+    }
+
+    /// A road drawn from an end that is gone meanwhile (deleted while drawing) starts free:
+    /// it is not linked to a spline that is not there.
+    #[test]
+    fn a_road_from_an_end_that_went_is_not_linked_to_it() {
+        let mut ed = editor();
+        ed.follow_ground = false;
+        let seg = roads::straight(DVec2::new(50.0, 130.0), DVec2::new(50.0, 160.0)).unwrap();
+        let start = Anchor { pos: DVec3::new(50.0, 130.0, 0.0), heading: 0.0, spline: Some(((0, 0), 99, true)), mid: None };
+        let made = ed.build_road("Splines\\road.sli", &[seg], 0.0, 0.0, start, None, 4.0).unwrap();
+        ed.history.commit();
+        let (k, id) = made[0];
+        assert_eq!(ed.doc.as_ref().unwrap().spline(k, id).unwrap().prev_id, 0);
+    }
+
+    /// The junction options shown in the properties are those of the map open: another
+    /// map's junction of the same IDCode does not show (and get made again with) them.
+    #[test]
+    fn junction_options_are_not_carried_over_to_another_map() {
+        let mut ed = editor();
+        ed.junction_options.insert(5, crate::junction::Options { lights: true, ..Default::default() });
+        ed.open(flat_map(1));
+        assert!(ed.junction_options.is_empty());
     }
 }
