@@ -24,6 +24,12 @@ experienced map makers.
 | Paint | 6 | painting with the map's ground textures (OMSI `[groundtex]` masks) |
 | Tiles | 7 | add a 300 × 300 m tile next to the map, remove one with right-click |
 
+* **Lines and timetable** (Map menu or `L`): lines, their trips and tours, written as OMSI
+  2's `TTData` (`.ttl`, `.ttp`, `.ttr`, `StnLinks.cfg`, `Busstops.cfg`). Pick the stops on the
+  map or from a list; the route along the roads is found by itself (drawn blue, each problem
+  named), "Make the way back" turns a trip round, departures fill themselves from a first and a
+  last time with a break, and a map without a depot gets one so AI buses drive the tours. The
+  files of a stock map stay as they are until its timetable is edited.
 * **Open any map**: OMSI 2's own (saved as a copy into the content folder) and mod maps.
 * **New map** from OMSI 2's own template (`template/NewMap`): it's ready to drive right away.
 * **Test drive**: saves and launches openOMSI on this map.

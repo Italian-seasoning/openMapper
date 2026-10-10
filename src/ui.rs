@@ -723,7 +723,7 @@ fn status_bar(root: &mut egui::Ui, help_line: Option<String>, ed: &mut Editor, s
                 (Some(t), None) => (t.text.clone(), if t.error { Color32::from_rgb(240, 120, 100) } else { Color32::from_rgb(150, 210, 140) }),
                 (None, None) => (tool_hint(ed).to_string(), TEXT_DIM),
             };
-            ui.label(RichText::new(text).small().color(color));
+            // (the facts on the right first; the help gets what is left, cut short)
             ui.with_layout(Layout::right_to_left(Align::Center), |ui| {
                 ui.label(RichText::new(&status.gpu).small().color(Color32::from_gray(95)));
                 ui.separator();
@@ -746,6 +746,11 @@ fn status_bar(root: &mut egui::Ui, help_line: Option<String>, ed: &mut Editor, s
                     ui.separator();
                     crate::ui_edit::snap_controls(ui, ed);
                 }
+                ui.separator();
+                ui.with_layout(Layout::left_to_right(Align::Center), |ui| {
+                    let r = ui.add(egui::Label::new(RichText::new(&text).small().color(color)).truncate());
+                    r.on_hover_text(&text);
+                });
             });
         });
     });
