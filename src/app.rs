@@ -150,6 +150,9 @@ impl App {
         }
         let egui_ctx = egui::Context::default();
         ui::style(&egui_ctx);
+        if self.prefs.ui_scale > 0.0 {
+            egui_ctx.set_zoom_factor(self.prefs.ui_scale.clamp(0.5, 2.0));
+        }
         let egui_state = egui_winit::State::new(egui_ctx.clone(), egui::ViewportId::ROOT, &window, Some(window.scale_factor() as f32), None, Some(gpu.device.limits().max_texture_dimension_2d as usize));
         let egui_renderer = egui_wgpu::Renderer::new(&gpu.device, gpu.config.format, egui_wgpu::RendererOptions { msaa_samples: 1, depth_stencil_format: None, dithering: true, predictable_texture_filtering: false });
         log::info!("graphics: {}", gpu.adapter_name);
@@ -399,6 +402,13 @@ impl App {
                 if let Some(r) = &self.roots {
                     // (category names are in the language)
                     self.lib.start_scan(r);
+                }
+            }
+            Action::SetScale(z) => {
+                self.prefs.ui_scale = z;
+                self.prefs.save();
+                if let Some(g) = &self.gfx {
+                    g.egui_ctx.set_zoom_factor(z);
                 }
             }
             Action::FocusSelection => {

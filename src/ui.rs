@@ -38,6 +38,8 @@ pub enum Action {
     Import,
     ChooseOmsi,
     SetLang(Lang),
+    /// The interface's zoom (1 = as the system has it).
+    SetScale(f32),
     FocusSelection,
     /// Star a catalogue entry or take its star away.
     ToggleFavourite(String),
@@ -258,6 +260,14 @@ fn lang_menu(ui: &mut egui::Ui, actions: &mut Vec<Action>) {
         for (l, n) in [(Lang::En, "English"), (Lang::Ru, "Русский")] {
             if radio(ui, i18n::get() == l, n).clicked() {
                 actions.push(Action::SetLang(l));
+            }
+        }
+    });
+    ui.menu_button(tr("Interface size", "Размер интерфейса"), |ui| {
+        let now = ui.ctx().zoom_factor();
+        for z in [0.8f32, 0.9, 1.0, 1.1, 1.25, 1.5] {
+            if radio(ui, (now - z).abs() < 0.01, format!("{:.0} %", z * 100.0)).clicked() {
+                actions.push(Action::SetScale(z));
             }
         }
     });

@@ -39,7 +39,7 @@ experienced map makers.
     `_rr`, `_mm`, `_aa` …, the way openOMSI finds them).
 * **PBR** in the viewport: normal, roughness, metalness and AO maps are found by
   openOMSI's rules (`omsi-texture`) and drawn with the same derivative-based tangent frame.
-* Undo / redo for every action, two languages (English / Russian).
+* Undo / redo for every action, two languages (English / Russian), interface size 80–150 % (View menu).
 
 ## Controls
 

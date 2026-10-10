@@ -42,3 +42,4 @@ Add a line when you touch a shared file: stream, file, what.
 * D · `src/app.rs`: `OPENMAPPER_TOOL` also takes `roads` and `objects`.
 * D · `src/ui.rs`: `Action::MapPicture`, `Action::SetMapCamera`; `map_properties` takes `st` and `actions` and shows the map's picture.
 * D · `src/app.rs`: `read_frame` (split from `save_shot`), `save_map_picture`, `[mapcam]` from the camera.
+* D · `src/ui.rs`: `Action::SetScale`, "Interface size" in `lang_menu`; `src/install.rs`: `Prefs::ui_scale`; `src/app.rs`: zoom applied at start and on change.

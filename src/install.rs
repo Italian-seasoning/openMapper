@@ -58,6 +58,9 @@ pub struct Prefs {
     /// Catalogue entries chosen lately, newest first.
     #[serde(default)]
     pub recent_assets: Vec<String>,
+    /// The interface's zoom (0: not chosen, as 1).
+    #[serde(default)]
+    pub ui_scale: f32,
 }
 
 impl Prefs {
