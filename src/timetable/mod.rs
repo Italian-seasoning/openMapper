@@ -379,7 +379,10 @@ pub fn track_name(t: &Track) -> String {
 /// files, all or nothing; `saved` then marks it done.
 pub fn plan(tt: &mut Timetable, map_dir: &Path, order: &[TileKey]) -> Vec<Op> {
     let mut ops = Vec::new();
-    if !tt.dirty {
+    // (a tile taken away renumbers the files' tile indices even when nothing of the
+    // timetable was edited)
+    let held = !(tt.stops.is_empty() && tt.links.is_empty() && tt.tracks.is_empty());
+    if !tt.dirty && !(held && !tt.order.is_empty() && tt.order != order) {
         tt.order = order.to_vec();
         return ops;
     }
