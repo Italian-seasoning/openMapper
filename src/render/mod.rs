@@ -972,6 +972,39 @@ impl Renderer {
         self.models.insert(key.to_string(), Some(GpuModel { parts, technical: m.technical }));
     }
 
+    /// The model as an object with these labels shows it: one with text textures gets a
+    /// copy of its own per text, the text drawn into those slots. Returns the model's key.
+    fn model_with_labels(&mut self, device: &wgpu::Device, key: &str, m: &ObjectModel, labels: &[String]) -> String {
+        if m.texts.is_empty() || m.parts.iter().all(|p| p.texts.is_empty()) {
+            self.model(device, key, m);
+            return key.to_string();
+        }
+        let shown: Vec<&str> = m.texts.iter().map(|tt| crate::texts::label_of(tt).and_then(|i| labels.get(i)).map(String::as_str).unwrap_or("")).collect();
+        let key = format!("{key}\u{1}{}", shown.join("\u{1}"));
+        if !self.models.contains_key(&key) {
+            let parts = m
+                .parts
+                .iter()
+                .map(|p| {
+                    let mut mats = p.materials.clone();
+                    for &(slot, t) in &p.texts {
+                        if let Some(mat) = mats.get_mut(slot) {
+                            mat.texture = Some(crate::texts::path(&m.texts[t], shown[t]));
+                            // (the text's ground is clear: only the letters show)
+                            if mat.alpha == Alpha::Opaque {
+                                mat.alpha = Alpha::Blend;
+                            }
+                            mat.color[3] = 1.0;
+                        }
+                    }
+                    (upload_mesh(device, &p.mesh), mats)
+                })
+                .collect();
+            self.models.insert(key.clone(), Some(GpuModel { parts, technical: m.technical }));
+        }
+        key
+    }
+
     /// Bring the GPU copy of the map up to date with the document.
     pub fn sync(&mut self, gpu: &Gpu, doc: &Document, assets: &mut Assets, extras: &FrameExtras, cam: &Camera) {
         let device = &gpu.device;
@@ -1130,7 +1163,7 @@ impl Renderer {
                     if model.technical && !extras.show_technical {
                         continue;
                     }
-                    self.model(device, &rel_key, &model);
+                    let key = self.model_with_labels(device, &rel_key, &model, &o.extra);
                     let world = doc.object_world(*k, o, model.abs_height);
                     let pose = Pose::of_object(world, o.rot);
                     // (one standing on the ground outside its own tile is never seen in OMSI or
@@ -1138,7 +1171,7 @@ impl Renderer {
                     let edge = tile_size() + 1e-3;
                     let inside = (-1e-3..=edge).contains(&o.pos[0]) && (-1e-3..=edge).contains(&o.pos[1]);
                     if model.abs_height || inside {
-                        push_object(&mut groups, &rel_key, &model, o.extra.first(), pose.matrix_from(anchor), [0.0; 4], Some(Sel::Object(*k, o.id)));
+                        push_object(&mut groups, &key, &model, o.extra.first(), pose.matrix_from(anchor), [0.0; 4], Some(Sel::Object(*k, o.id)));
                     }
                     parents.insert(o.id, (pose, model));
                 }
@@ -1146,8 +1179,7 @@ impl Renderer {
                 let org = tile_origin(*k);
                 for a in &t.spline_attachments {
                     let Some(model) = assets.object(&a.file) else { continue };
-                    let rel_key = a.file.to_lowercase();
-                    self.model(device, &rel_key, &model);
+                    let rel_key = self.model_with_labels(device, &a.file.to_lowercase(), &model, &a.strings);
                     let objs = crate::place::row_objects(a, &t.splines, org);
                     let first = objs.iter().map(|o| o.index).min();
                     for ro in &objs {
@@ -1161,8 +1193,7 @@ impl Renderer {
                 for o in &t.attach_objects {
                     let Some(model) = assets.object(&o.file) else { continue };
                     let Some((parent, pmodel)) = o.parent_id.and_then(|p| parents.get(&p)).cloned() else { continue };
-                    let rel_key = o.file.to_lowercase();
-                    self.model(device, &rel_key, &model);
+                    let rel_key = self.model_with_labels(device, &o.file.to_lowercase(), &model, &o.extra);
                     let attach = pmodel.attachments.get(o.attach_index).copied().unwrap_or(Mat4::IDENTITY);
                     let pose = parent.attached(&attach, omsi_geometry::map_rotation(o.rot));
                     push_object(&mut groups, &rel_key, &model, o.extra.first(), pose.matrix_from(anchor), [0.0; 4], Some(Sel::Object(*k, o.id)));

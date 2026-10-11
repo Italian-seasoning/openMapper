@@ -168,6 +168,8 @@ pub struct ObjInfo {
     pub triangles: usize,
     /// Its textures' names and whether they have PBR maps.
     pub textures: Vec<(String, bool)>,
+    /// What its labels mean (empty: it reads none; an empty name: unnamed).
+    pub labels: Vec<String>,
 }
 
 /// Facts for the status bar.
@@ -1440,20 +1442,34 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
                     }
                 }
                 let mut labels = o.extra.clone();
-                if is_stop || !labels.is_empty() {
+                // (the model's names for its labels, once it is read)
+                let names: &[String] = st.obj_info.as_ref().filter(|i| i.file.eq_ignore_ascii_case(&o.file)).map(|i| i.labels.as_slice()).unwrap_or(&[]);
+                if is_stop || !labels.is_empty() || !names.is_empty() {
                     ui.add_space(6.0);
-                    ui.label(RichText::new(if is_stop { tr("Stop name", "Название остановки") } else { tr("Texts (labels)", "Тексты (labels)") }).strong());
-                    if labels.is_empty() {
+                    ui.label(RichText::new(if is_stop { tr("Stop name", "Название остановки") } else { tr("Texts", "Тексты") }).strong());
+                    if !is_stop && !names.is_empty() {
+                        ui.label(RichText::new(tr("Shown on the object (@ starts a new line)", "Видны на объекте (@ — новая строка)")).small().color(TEXT_DIM));
+                    }
+                    let n = if is_stop { 1 } else { labels.len().max(names.len()).max(1) };
+                    while labels.len() < n {
                         labels.push(String::new());
                     }
-                    let n = if is_stop { 1 } else { labels.len() };
                     let mut any = false;
-                    for l in labels.iter_mut().take(n) {
-                        if ui.add(egui::TextEdit::singleline(l).desired_width(f32::INFINITY)).changed() {
-                            any = true;
+                    egui::Grid::new("labels").num_columns(2).spacing(Vec2::new(8.0, 4.0)).show(ui, |ui| {
+                        for (i, l) in labels.iter_mut().take(n).enumerate() {
+                            let name = names.get(i).filter(|s| !s.is_empty()).cloned().unwrap_or_else(|| format!("{} {}", tr("Text", "Текст"), i + 1));
+                            ui.label(RichText::new(name).color(TEXT_DIM));
+                            if ui.add(egui::TextEdit::singleline(l).desired_width(f32::INFINITY)).changed() {
+                                any = true;
+                            }
+                            ui.end_row();
                         }
-                    }
+                    });
                     if any {
+                        // (trailing empty labels are not written)
+                        while labels.len() > 1 && labels.last().map(|l| l.is_empty()).unwrap_or(false) && labels.len() > o.extra.len() {
+                            labels.pop();
+                        }
                         changed_labels = Some(labels);
                     }
                 }

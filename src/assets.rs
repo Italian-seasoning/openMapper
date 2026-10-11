@@ -29,6 +29,8 @@ pub struct Material {
 pub struct Part {
     pub mesh: MeshData,
     pub materials: Vec<Material>,
+    /// Material slots showing one of the model's text textures: (slot, text texture).
+    pub texts: Vec<(usize, usize)>,
 }
 
 pub struct ObjectModel {
@@ -53,6 +55,11 @@ pub struct ObjectModel {
     /// Not seen in the game (`[onlyeditor]`, a start point, a car park, a help arrow,
     /// nothing to draw): the editor shows it as a marker that casts no shadow.
     pub technical: bool,
+    /// Its `[texttexture]`s (drawn from the object's labels).
+    pub texts: Vec<omsi_model::TextTexture>,
+    /// What its labels mean (`[stringvarnamelist]`; empty names where only a text texture
+    /// says a label is read). Empty: it reads no labels.
+    pub labels: Vec<String>,
 }
 
 impl ObjectModel {
@@ -280,7 +287,7 @@ fn find_tex(name: &str, dirs: &[PathBuf]) -> Option<PathBuf> {
     omsi_texture::find_texture(name, &refs)
 }
 
-fn load_object(path: &Path, omsi: &Path, content: &Path) -> Option<ObjectModel> {
+pub(crate) fn load_object(path: &Path, omsi: &Path, content: &Path) -> Option<ObjectModel> {
     let mut sco = SceneryObject::load(path).map_err(|e| log::debug!("{}: {e}", path.display())).ok()?;
     let sco_dir = path.parent()?.to_path_buf();
     let (model, model_dir) = match &sco.model_file {
@@ -323,14 +330,19 @@ fn load_object(path: &Path, omsi: &Path, content: &Path) -> Option<ObjectModel> 
         }
         // a material's settings by its texture and the how-many-th use of it
         let mut seen: HashMap<String, i32> = HashMap::new();
+        let mut texts = Vec::new();
         let materials = m
             .materials
             .iter()
-            .map(|mat| {
+            .enumerate()
+            .map(|(slot, mat)| {
                 let key = mat.texture.to_lowercase();
                 let n = seen.entry(key.clone()).or_insert(-1);
                 *n += 1;
                 let def = md.materials.iter().find(|d| d.texture.to_lowercase() == key && d.index == *n);
+                if let Some(t) = def.and_then(|d| d.use_text_texture).filter(|t| *t >= 0 && (*t as usize) < model.text_textures.len()) {
+                    texts.push((slot, t as usize));
+                }
                 let alpha = match def.map(|d| d.alpha).unwrap_or(0) {
                     1 => Alpha::Test,
                     2 => Alpha::Blend,
@@ -339,7 +351,7 @@ fn load_object(path: &Path, omsi: &Path, content: &Path) -> Option<ObjectModel> 
                 Material { texture: find_tex(&mat.texture, &dirs), color: mat.diffuse, alpha }
             })
             .collect();
-        parts.push(Part { mesh, materials });
+        parts.push(Part { mesh, materials, texts });
     }
     // a junction plate draped onto its `[crossing_heightdeformation]` field, as openOMSI
     // (and Omsi.exe, as it loads the type) does: its arms meet roads that do not lie at the
@@ -419,7 +431,8 @@ fn load_object(path: &Path, omsi: &Path, content: &Path) -> Option<ObjectModel> 
         }
     }
     let technical = sco.only_editor || sco.is_entry_point || sco.is_car_park || sco.is_help_arrow || (parts.is_empty() && tree.is_none());
-    Some(ObjectModel { parts, lo, hi, abs_height: sco.absolute_height(), tree, helpers, attachments, surface, holes, technical, paths: sco.paths.clone() })
+    let labels = crate::texts::label_names(&sco.scripts.stringvarlists, &model.text_textures);
+    Some(ObjectModel { parts, lo, hi, abs_height: sco.absolute_height(), tree, helpers, attachments, surface, holes, technical, paths: sco.paths.clone(), texts: model.text_textures.clone(), labels })
 }
 
 fn load_spline(path: &Path, omsi: &Path, content: &Path) -> Option<SplineModel> {
@@ -445,6 +458,9 @@ fn load_spline(path: &Path, omsi: &Path, content: &Path) -> Option<SplineModel> 
 }
 
 fn load_texture(path: &Path, omsi: &Path, content: &Path) -> Option<TextureImage> {
+    if crate::texts::is_text(path) {
+        return Some(TextureImage { image: crate::texts::draw(path, omsi, content)?, normal: None, orm: None, pbr_flags: [0.0; 4] });
+    }
     let image = shrink(omsi_texture::decode_file(path).map_err(|e| log::debug!("{e}")).ok()?);
     let mut files = omsi_texture::pbr::find(path);
     // (maps made here this session: the finder lists a folder once and would miss them)

@@ -180,7 +180,7 @@ impl App {
         let mut attrs = Window::default_attributes().with_title("openMapper").with_inner_size(winit::dpi::LogicalSize::new(1440.0, 900.0)).with_min_inner_size(winit::dpi::LogicalSize::new(900.0, 600.0));
         // (a screenshot run stays on top: a window under another gets no frames to take)
         if self.shot.is_some() {
-            attrs = attrs.with_window_level(winit::window::WindowLevel::AlwaysOnTop);
+            attrs = attrs.with_window_level(winit::window::WindowLevel::AlwaysOnTop).with_active(false);
         }
         let window = Arc::new(el.create_window(attrs)?);
         let mut gpu = Gpu::new(window.clone())?;
@@ -261,6 +261,18 @@ impl App {
             self.cam.jump_to(DVec3::new(v[0], v[1], h), v[2]);
             self.cam.yaw = v[3];
             self.cam.pitch = v[4];
+        }
+        // OPENMAPPER_SELECT=x,y: the object nearest there selected (checks of its properties)
+        if let (Some(v), Some(doc)) = (std::env::var("OPENMAPPER_SELECT").ok().map(|c| c.split(',').filter_map(|x| x.trim().parse::<f64>().ok()).collect::<Vec<_>>()).filter(|v| v.len() == 2), self.ed.doc.as_ref()) {
+            let at = DVec2::new(v[0], v[1]);
+            let best = doc
+                .tiles
+                .iter()
+                .flat_map(|(k, t)| t.tile.objects.iter().map(move |o| (*k, o.id, (crate::doc::tile_origin(*k) + DVec2::new(o.pos[0], o.pos[1]) - at).length())))
+                .min_by(|a, b| a.2.total_cmp(&b.2));
+            if let Some((k, id, _)) = best {
+                self.ed.select(Some(Sel::Object(k, id)));
+            }
         }
         // OPENMAPPER_CHECK=1: the map check open from the start
         if std::env::var_os("OPENMAPPER_CHECK").is_some() {
@@ -923,6 +935,7 @@ impl App {
                     size: (m.hi - m.lo).to_array(),
                     triangles: m.parts.iter().map(|p| p.mesh.indices.len() / 3).sum(),
                     textures: textures.iter().map(|t| (t.file_name().map(|n| n.to_string_lossy().to_string()).unwrap_or_default(), crate::ui_pbr::is_made(t, r) || !omsi_texture::pbr::find(t).is_empty())).collect(),
+                    labels: m.labels.clone(),
                 });
             }
         }
@@ -1534,6 +1547,10 @@ impl ApplicationHandler for App {
 
     fn window_event(&mut self, el: &ActiveEventLoop, _id: WindowId, event: WindowEvent) {
         let Some(g) = self.gfx.as_mut() else { return };
+        // (a screenshot run takes no input: keys typed into another window must not reach it)
+        if self.shot.is_some() && matches!(event, WindowEvent::KeyboardInput { .. } | WindowEvent::MouseInput { .. } | WindowEvent::MouseWheel { .. } | WindowEvent::CursorMoved { .. } | WindowEvent::Ime(_)) {
+            return;
+        }
         let resp = g.egui_state.on_window_event(&g.window, &event);
         let scale = g.window.scale_factor() as f32;
         match event {
