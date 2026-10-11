@@ -121,6 +121,8 @@ pub struct UiState {
     pub find: crate::ui_find::Find,
     /// The window of the map's earlier versions (backups of its saves).
     pub versions_open: bool,
+    /// The window of the edits made (undo and redo by a click).
+    pub history_open: bool,
     /// The preferences' starred and recently used assets, for the catalogue.
     pub favourites: Vec<String>,
     pub recent_assets: Vec<String>,
@@ -153,6 +155,7 @@ impl Default for UiState {
             check: Default::default(),
             find: Default::default(),
             versions_open: false,
+            history_open: false,
             favourites: Vec::new(),
             recent_assets: Vec::new(),
             pbr_made: None,
@@ -552,6 +555,7 @@ pub fn editor(root: &mut egui::Ui, st: &mut UiState, u: EditorUi, actions: &mut 
     about(&ctx, st);
     st.check.window(&ctx, ed, lib, actions);
     st.find.window(&ctx, ed, lib, actions);
+    history_window(&ctx, st, ed, actions);
     if let Some(doc) = &ed.doc {
         crate::doc::safe::versions_window(&ctx, &mut st.versions_open, &doc.dir, actions);
     }
@@ -626,6 +630,9 @@ fn menu_bar(root: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, can_undo: bo
                 }
                 if menu_item(ui, None, tr("Duplicate", "Дублировать"), "Ctrl+D", any) {
                     actions.push(Action::Duplicate);
+                }
+                if menu_item(ui, Some(Icon::History), tr("Edit history…", "История правок…"), "", true) {
+                    st.history_open = true;
                 }
                 if menu_item(ui, Some(Icon::Search), tr("Find in map…", "Поиск по карте…"), "Ctrl+F", true) {
                     st.find.show();
@@ -1354,6 +1361,36 @@ pub(crate) fn prop_row(ui: &mut egui::Ui, name: &str, add: impl FnOnce(&mut egui
     ui.label(RichText::new(name).color(TEXT_DIM));
     add(ui);
     ui.end_row();
+}
+
+/// The edits made this session: a click on one goes back (or forward) to just after it.
+fn history_window(ctx: &egui::Context, st: &mut UiState, ed: &Editor, actions: &mut Vec<Action>) {
+    if !st.history_open {
+        return;
+    }
+    let (undo, redo) = ed.history.steps();
+    let mut open = st.history_open;
+    egui::Window::new(icons::labelled(Icon::History, tr("Edit history", "История правок"))).id(egui::Id::new("edit history")).open(&mut open).default_pos([340.0, 120.0]).default_size([300.0, 380.0]).resizable(true).show(ctx, |ui| {
+        ui.label(RichText::new(tr("Click a step to go back to just after it", "Клик по шагу: вернуться к состоянию сразу после него")).small().color(TEXT_DIM));
+        ui.separator();
+        egui::ScrollArea::vertical().auto_shrink([false, false]).stick_to_bottom(true).show(ui, |ui| {
+            if ui.selectable_label(undo.is_empty(), RichText::new(tr("Opened", "Открыто")).italics()).clicked() {
+                actions.extend((0..undo.len()).map(|_| Action::Undo));
+            }
+            for (i, l) in undo.iter().enumerate() {
+                let last = i + 1 == undo.len();
+                if ui.selectable_label(last, *l).clicked() {
+                    actions.extend((0..undo.len() - i - 1).map(|_| Action::Undo));
+                }
+            }
+            for (i, l) in redo.iter().enumerate() {
+                if ui.selectable_label(false, RichText::new(*l).color(TEXT_DIM)).clicked() {
+                    actions.extend((0..i + 1).map(|_| Action::Redo));
+                }
+            }
+        });
+    });
+    st.history_open = open;
 }
 
 fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Library, actions: &mut Vec<Action>) {

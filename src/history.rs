@@ -117,6 +117,16 @@ impl History {
         !self.redo.is_empty()
     }
 
+    /// The steps undo goes back through (the latest last), and those redo brings again (the
+    /// next first).
+    pub fn steps(&self) -> (Vec<&str>, Vec<&str>) {
+        let mut undo: Vec<&str> = self.undo.iter().map(|s| s.label.as_str()).collect();
+        if let Some(o) = &self.open {
+            undo.push(o.label.as_str());
+        }
+        (undo, self.redo.iter().rev().map(|s| s.label.as_str()).collect())
+    }
+
     pub fn undo_label(&self) -> Option<&str> {
         self.undo.last().map(|s| s.label.as_str())
     }
