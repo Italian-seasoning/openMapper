@@ -16,7 +16,7 @@ experienced map makers.
 | Select | 1 | click an object or road · `Shift`+click adds or takes away · `Shift`/`Ctrl` + drag on empty ground selects with a box · drag the selection to move it all · `R` turns it round its middle · `Del` deletes it · `Ctrl+C / X / V / D` copy, cut, paste at the cursor, duplicate (links inside the copy kept, rows of objects and things hanging on them come along) · several selected: move, raise and turn by numbers, give every road one type |
 | Road shape | - | select a road: drag its end dots to move an end (a road joined there follows, tangent at the joint, its far end kept; an end at a junction stays), drag the middle dot to bend it. Heights and gradients at both ends in the properties, the joined road following |
 | Roundabouts | - | Roads tool option: click the centre, then the ring (or drag out to it). A one-way ring of the chosen road type, anticlockwise where traffic keeps right and clockwise where it keeps left; the roads that ran into the circle are cut back and joined to the ring with junctions |
-| Drawing by numbers | - | while a road is drawn: type its length, radius or heading in the fields at the view's corner (empty ones follow the cursor), `Shift` draws a straight, `Enter` builds it. "Keep the height" draws bridges and embankments: an even gradient, a rise typed for the end, the ground left alone (pillars: objects along the road) |
+| Drawing by numbers | - | each road is two clicks (going on from the end just built is an option); while a road is drawn: type its length, radius or heading in the fields at the view's corner (empty ones follow the cursor), `Shift` draws a straight, `Enter` builds it. "Keep the height" draws bridges and embankments: an even gradient, a rise typed for the end, the ground left alone (pillars: objects along the road) |
 | Junction lights and crossings | - | select one of openMapper's junctions: "Traffic lights" writes OMSI's light program into it (main road and side roads, greens editable) with the installation's own signal heads on poles bound to it, the AI stopping at red; zebra crossings per road, with a footway across. A road drawn into a plate, or a road end dropped on one, becomes another arm of it |
 | Junction moves | - | a junction (or any piece with spline helpers) moved, turned or raised carries the ends of its roads along, tangent, the road before a short arm bending with it; the ground follows its plate; openMapper's own junction plates are made again for their roads, and deleting an arm leaves the others joined (two left: a smooth joint) |
 | Objects along a road | - | select a road or a chain: put the object chosen in the catalogue every so many metres beside it (one or both sides, margins, height, turn, leaning), as OMSI spline attachment rows that follow the road; the road's properties list its rows to change or remove |
@@ -24,6 +24,8 @@ experienced map makers.
 | Snapping | - | status bar: `Grid` (0.5–10 m) for placing, moving, road ends and reshaping; `15°` for headings |
 | Roads | 2 | click the start, then the end: the arc builds itself. A road continues smoothly from a road end it starts at, joins another end with an S-curve or bend (biarc), is cut into OMSI splines and linked with its neighbours. It can shape the ground under itself. |
 | Junctions | - | automatic: a road drawn into another's middle or across it cuts both and fills the gap with a junction object of its own (asphalt plate, `[path]` lanes for straight on, right and left, footpaths round the corners), written as ordinary OMSI content into `Sceneryobjects\openMapper\<map>` |
+| Assets | B | a panel like Unity's Project window: folders of objects and splines, a grid of pictures with search, kind filter and size; an asset's facts, place or build with it, favourite, PBR, show in the file manager, delete (content folder only, into `openMapper\bin`); double-click to use, drag a picture into the view to place it |
+| Switches | 2 | a track drawn off or into another's middle lays OMSI 2's own EW190 switch (left or right, for its rail type): the main track is cut out under it, the new track joins its diverging heel |
 | Plants | 3 | Objects tool: "Plant brush" sows the chosen tree (or a mix: right-click entries, "Add to the plant mix") with a spacing and random turns; "Clear" takes trees away |
 | Lining up | 3 | buildings face the nearest road with their front at a set distance from its edge (Shift: put freely); junction and crossing pieces (spline helpers) click onto the road ends near them |
 | AI paths | 4 | Game logic > AI paths > "Edit existing": pick a path, drag its ends and middle, Ctrl+click on it adds a point, Del deletes it; lanes are drawn thin with small arrows |
@@ -113,13 +115,14 @@ experienced map makers.
 
 ## Controls
 
-* **Mouse:** right drag turns and tilts round the point under the cursor, wheel zooms toward
-  the cursor, middle drag or left drag on empty ground (Select tool) moves the map, holding
-  the ground grabbed under the cursor. View > Camera > Fly switches to Unity / Unreal style
-  (right button looks round, `W A S D` fly).
+* **Mouse (as in Unity's scene view):** hold the right button to look round and fly with
+  `W A S D` (`Q / E` down / up, `Shift` faster, the wheel sets the speed meanwhile), the wheel
+  zooms, the middle button pans, `Alt` + left / right / middle drag orbits / zooms / pans, a
+  left drag on nothing selects with a box. View > Camera > Map editor: right drag turns round
+  the cursor and dragging the ground moves the map.
 * **Trackpad:** two fingers move the map, pinch zooms, twist turns; Option + two fingers or
   Option + drag turns and tilts.
-* **Keyboard:** `W A S D` / arrows move, `Q / E` turn, `1–7` tools, `M` overview map, `L` lines, `T` traffic, `I` satellite and terrain, `R` turn object, `Del`,
+* **Keyboard:** `W A S D` / arrows move, `Q / E` turn, `1–7` tools, `M` overview map, `B` assets, `L` lines, `T` traffic, `I` satellite and terrain, `R` turn object, `Del`,
   `F` go to selection, `[ ]` brush size, `G` tile grid, `Ctrl+Z`, `Ctrl+Shift+Z`, `Ctrl+S`,
   `Ctrl+C / X / V / D` copy, cut, paste, duplicate, `Ctrl+A` select all, `U` ruler, `Home` look straight down, `F5` test drive.
 
