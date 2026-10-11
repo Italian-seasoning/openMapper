@@ -2693,6 +2693,40 @@ impl Editor {
 
     /// Raise (or lower) the selection by `dz` metres: objects above their ground, splines'
     /// heights.
+    /// The selected objects' headings: each a random one (`random`), or that of the one shown
+    /// in the properties.
+    pub fn turn_objects(&mut self, random: bool) {
+        let sels = self.selection();
+        let Some(doc) = self.doc.as_mut() else { return };
+        let first = match self.selected {
+            Some(Sel::Object(k, id)) => selection::any_object(doc, k, id).map(|o| o.rot[0]),
+            _ => None,
+        };
+        if !random && first.is_none() {
+            return;
+        }
+        self.history.begin(tr("Turn objects", "Поворот объектов"));
+        let seed = std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).map(|d| d.as_nanos() as u64).unwrap_or(0) ^ 0x9e37_79b9_7f4a_7c15;
+        for s in &sels {
+            let Sel::Object(k, id) = *s else { continue };
+            self.history.touch_tile(doc, k);
+            if let Some(o) = selection::any_object_mut(doc, k, id) {
+                o.rot[0] = if random {
+                    // (a hash of the IDCode: every object its own way)
+                    let mut x = (id as u64).wrapping_mul(0x2545_f491_4f6c_dd1d) ^ seed;
+                    x ^= x >> 33;
+                    x = x.wrapping_mul(0xff51_afd7_ed55_8ccd);
+                    x ^= x >> 33;
+                    (x % 36000) as f64 / 100.0
+                } else {
+                    first.unwrap_or(0.0)
+                };
+            }
+            doc.tiles.get_mut(&k).map(|t| t.touch_content());
+        }
+        self.history.commit();
+    }
+
     pub fn raise_selection(&mut self, dz: f64) {
         let sels = self.selection();
         let arms = self.arms_for(&sels);
@@ -4057,6 +4091,18 @@ mod tests {
         // and back with one undo
         ed.undo();
         assert_eq!(ed.doc.as_ref().unwrap().spline((0, 0), 1).unwrap().length, 30.0);
+    }
+
+    #[test]
+    fn objects_turn_at_random_or_alike() {
+        let mut ed = editor();
+        ed.set_selection(vec![Sel::Object((0, 0), 1), Sel::Object((0, 0), 2)]);
+        ed.doc.as_mut().unwrap().object_mut((0, 0), 1).unwrap().rot[0] = 33.0;
+        ed.turn_objects(false);
+        assert_eq!(ed.doc.as_ref().unwrap().object((0, 0), 2).unwrap().rot[0], 33.0);
+        ed.turn_objects(true);
+        let (a, b) = (ed.doc.as_ref().unwrap().object((0, 0), 1).unwrap().rot[0], ed.doc.as_ref().unwrap().object((0, 0), 2).unwrap().rot[0]);
+        assert!(a != b && (0.0..360.0).contains(&a) && (0.0..360.0).contains(&b));
     }
 
     #[test]

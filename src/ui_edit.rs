@@ -90,6 +90,17 @@ pub fn group_properties(ui: &mut egui::Ui, ed: &mut Editor, lib: &Library) {
             Some(2) => ed.rotate(v[3]),
             _ => {}
         }
+        if objects > 1 {
+            ui.add_space(4.0);
+            ui.horizontal_wrapped(|ui| {
+                if ui.button(tr("Random headings", "Случайные повороты")).on_hover_text(tr("Every selected object turned its own random way (trees, bushes, rocks)", "Каждый выбранный объект повёрнут случайно (деревья, кусты, камни)")).clicked() {
+                    ed.turn_objects(true);
+                }
+                if ui.add_enabled(matches!(ed.selected, Some(Sel::Object(..))), egui::Button::new(tr("All like this one", "Все как этот"))).on_hover_text(tr("Every selected object takes the heading of the one in the properties", "Все выбранные объекты получают поворот того, что в свойствах")).clicked() {
+                    ed.turn_objects(false);
+                }
+            });
+        }
         if splines > 0 {
             if let Some(rt) = ed.road_type.clone() {
                 let n = lib.find(&rt).map(|a| a.name.clone()).unwrap_or_else(|| rt.clone());
