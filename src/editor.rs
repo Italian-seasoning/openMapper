@@ -324,6 +324,8 @@ pub struct Editor {
     parking_start: Option<DVec3>,
     /// Things the game does not show are drawn in the view.
     pub show_technical: bool,
+    /// Layers hidden in the view, and so not picked either: trees, other objects, splines.
+    pub hide: [bool; 3],
     /// The AI's lanes are drawn as arrows (always with the Logic tool).
     pub show_lanes: bool,
     /// A window picks things on the map (the Lines window its stops): a click only notes
@@ -422,6 +424,7 @@ impl Default for Editor {
             parking_step: 5.5,
             parking_start: None,
             show_technical: true,
+            hide: [false; 3],
             show_lanes: false,
             pick_mode: false,
             picked: None,
@@ -610,9 +613,15 @@ impl Editor {
         let dv = d.as_vec3();
         let gdist = ground.map(|g| (g - o).length()).unwrap_or(f64::MAX);
         let paths_only = self.editing_paths();
+        // (what is not drawn is not picked)
+        let extras = FrameExtras { show_technical: self.show_technical || self.tool == Tool::Logic, hide: self.hide, ..Default::default() };
+        let unseen = |m: &crate::assets::ObjectModel| m.technical && !extras.show_technical || crate::render::hidden_layer(m, &extras);
         for (k, t) in doc.tiles.iter().filter(|_| !paths_only) {
             for ob in &t.tile.objects {
                 let Some(model) = assets.object(&ob.file) else { continue };
+                if unseen(&model) {
+                    continue;
+                }
                 let world = doc.object_world(*k, ob, model.abs_height);
                 let m = object_matrix(world - o, ob.rot);
                 let c = m.transform_point3(model.centre());
@@ -660,6 +669,9 @@ impl Editor {
                 let attach = pmodel.attachments.get(ob.attach_index).copied().unwrap_or(glam::Mat4::IDENTITY);
                 let pose = parent.attached(&attach, omsi_geometry::map_rotation(ob.rot));
                 parents.insert(ob.id, (pose, model.clone()));
+                if unseen(&model) {
+                    continue;
+                }
                 let m = pose.matrix_from(o);
                 let c = m.transform_point3(model.centre());
                 if !omsi_geometry::ray_near_sphere(ov, dv, c, model.radius().max(0.5)) {
@@ -684,7 +696,7 @@ impl Editor {
         // splines: the nearest centre line within its width from the ground point
         let g = ground?;
         let mut sbest: Option<(f64, Sel)> = None;
-        for (k, t) in &doc.tiles {
+        for (k, t) in doc.tiles.iter().filter(|_| !self.hide[2] || paths_only) {
             let org = tile_origin(*k);
             for s in t.tile.splines.iter().filter(|s| !s.deleted) {
                 let start = DVec2::new(org.x + s.pos[0], org.y + s.pos[1]);
@@ -2072,6 +2084,7 @@ impl Editor {
         let Some(doc) = self.doc.as_ref() else { return x };
         let w = (cam.distance * 0.004).clamp(0.08, 6.0) as f32;
         x.show_technical = self.show_technical || self.tool == Tool::Logic;
+        x.hide = self.hide;
         // the AI's lanes: arrows the way traffic goes, ends green where joined, red where not
         // (thin and small: a lane is a line on the road, not a road of its own)
         if self.tool == Tool::Logic || self.show_lanes {
@@ -2457,8 +2470,8 @@ impl Editor {
             return;
         }
         let (vx, vy, w, h) = view;
-        let show_technical = self.show_technical || self.tool == Tool::Logic;
-        let found = selection::in_box(doc, cam, (a.0 - vx, a.1 - vy), (b.0 - vx, b.1 - vy), w, h, |f| assets.object(f).map(|m| m.technical && !show_technical).unwrap_or(false));
+        let extras = FrameExtras { show_technical: self.show_technical || self.tool == Tool::Logic, hide: self.hide, ..Default::default() };
+        let found = selection::in_box(doc, cam, (a.0 - vx, a.1 - vy), (b.0 - vx, b.1 - vy), w, h, |f| assets.object(f).map(|m| m.technical && !extras.show_technical || crate::render::hidden_layer(&m, &extras)).unwrap_or(false), !self.hide[2]);
         let mut v = if add { self.selection() } else { Vec::new() };
         for s in found {
             if !v.contains(&s) {

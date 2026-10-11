@@ -334,7 +334,7 @@ pub fn project(cam: &crate::camera::Camera, p: DVec3, w: f32, h: f32) -> Option<
 /// The objects and splines inside a screen box (view points, `a` and `b` its corners). A
 /// spline is inside when its start, middle and end are; `skip` leaves out what the view
 /// does not show.
-pub fn in_box(doc: &Document, cam: &crate::camera::Camera, a: (f32, f32), b: (f32, f32), w: f32, h: f32, mut skip: impl FnMut(&str) -> bool) -> Vec<Sel> {
+pub fn in_box(doc: &Document, cam: &crate::camera::Camera, a: (f32, f32), b: (f32, f32), w: f32, h: f32, mut skip: impl FnMut(&str) -> bool, splines: bool) -> Vec<Sel> {
     let (x0, x1) = (a.0.min(b.0), a.0.max(b.0));
     let (y0, y1) = (a.1.min(b.1), a.1.max(b.1));
     let inside = |p: DVec3| project(cam, p, w, h).map(|(x, y)| x >= x0 && x <= x1 && y >= y0 && y <= y1).unwrap_or(false);
@@ -349,7 +349,7 @@ pub fn in_box(doc: &Document, cam: &crate::camera::Camera, a: (f32, f32), b: (f3
             }
         }
         let org = tile_origin(*k);
-        for s in t.tile.splines.iter().filter(|s| !s.deleted) {
+        for s in t.tile.splines.iter().filter(|s| splines && !s.deleted) {
             let c = omsi_geometry::SplineCurve::from_map(s, org);
             if [0.0, 0.5, 1.0].iter().all(|f| inside(c.point_at(s.length * f))) {
                 out.push(Sel::Spline(*k, s.id));
@@ -513,7 +513,7 @@ pub mod tests {
         add_object(&mut doc, (0, 0), 1, 150.0, 150.0);
         add_object(&mut doc, (0, 0), 2, 290.0, 10.0);
         add_spline(&mut doc, (0, 0), 3, 148.0, 148.0, 0.0, 4.0, 0, 0);
-        let got = in_box(&doc, &cam, (350.0, 250.0), (450.0, 350.0), w, h, |_| false);
+        let got = in_box(&doc, &cam, (350.0, 250.0), (450.0, 350.0), w, h, |_| false, true);
         assert!(got.contains(&Sel::Object((0, 0), 1)));
         assert!(got.contains(&Sel::Spline((0, 0), 3)));
         assert!(!got.contains(&Sel::Object((0, 0), 2)));

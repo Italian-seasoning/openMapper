@@ -277,6 +277,13 @@ impl App {
                 self.ed.select(Some(sel));
             }
         }
+        // OPENMAPPER_HIDE=trees,objects,splines,technical: those layers hidden
+        if let Ok(h) = std::env::var("OPENMAPPER_HIDE") {
+            self.ed.show_technical = !h.split(',').any(|x| x.trim() == "technical");
+            for (i, name) in ["trees", "objects", "splines"].iter().enumerate() {
+                self.ed.hide[i] = h.split(',').any(|x| x.trim() == *name);
+            }
+        }
         // OPENMAPPER_FIND=<text>: Find in map open with that typed
         if let Ok(q) = std::env::var("OPENMAPPER_FIND") {
             self.ui.find.show_with(&q);

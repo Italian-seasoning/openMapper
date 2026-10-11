@@ -76,6 +76,8 @@ experienced map makers.
   "Load image file…" for a tile (or drop the picture on the window with the Tiles tool and a tile
   clicked), or one picture over a rectangle of tiles, cut into their pieces; turned (90° steps or
   any angle), mirrored, moved and scaled by eye with the 3D view following.
+* **Layers** (View > Show): trees, other objects, roads and splines each hidden or shown;
+  what is hidden is not picked or box-selected either, handy in a dense town.
 * **Find in map** (Edit menu or `Ctrl+F`): every kind of object and spline the map uses,
   with how many, by name, file or IDCode; select them all, go from one to the next, or replace
   them all with the object (road type) chosen in the catalogue in one undo step.

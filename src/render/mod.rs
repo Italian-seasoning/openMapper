@@ -160,6 +160,8 @@ pub struct FrameExtras {
     pub highlight_tile: Option<TileKey>,
     /// Draw what the game does not show (start points, car parks, AI paths, helpers).
     pub show_technical: bool,
+    /// Layers left out of the view: trees, other objects, splines (View menu).
+    pub hide: [bool; 3],
 }
 
 struct GpuMesh {
@@ -311,6 +313,8 @@ pub struct Thumb {
 pub const THUMB: u32 = 112;
 
 pub struct Renderer {
+    /// The splines are left out of the view (FrameExtras::hide).
+    hide_splines: bool,
     globals: wgpu::Buffer,
     globals_bind: wgpu::BindGroup,
     thumb_globals: wgpu::Buffer,
@@ -768,6 +772,7 @@ impl Renderer {
             })
             .create_view(&Default::default());
         Renderer {
+            hide_splines: false,
             globals,
             globals_bind,
             thumb_globals,
@@ -969,7 +974,7 @@ impl Renderer {
             return;
         }
         let parts = m.parts.iter().map(|p| (upload_mesh(device, &p.mesh), p.materials.clone())).collect::<Vec<_>>();
-        self.models.insert(key.to_string(), Some(GpuModel { parts, technical: m.technical }));
+        self.models.insert(key.to_string(), Some(GpuModel { parts, technical: m.technical || m.editor_parts }));
     }
 
     /// The model as an object with these labels shows it: one with text textures gets a
@@ -1000,7 +1005,7 @@ impl Renderer {
                     (upload_mesh(device, &p.mesh), mats)
                 })
                 .collect();
-            self.models.insert(key.clone(), Some(GpuModel { parts, technical: m.technical }));
+            self.models.insert(key.clone(), Some(GpuModel { parts, technical: m.technical || m.editor_parts }));
         }
         key
     }
@@ -1142,6 +1147,8 @@ impl Renderer {
         }
         let mut key_parts: Vec<u64> = doc.tiles.values().flat_map(|t| [t.content_rev, t.terrain_rev]).collect();
         key_parts.push(extras.show_technical as u64);
+        key_parts.extend(extras.hide.map(|h| h as u64));
+        self.hide_splines = extras.hide[2];
         key_parts.push(self.asset_epoch);
         let key = hash_of(&key_parts);
         if key != self.scene_key {
@@ -1150,7 +1157,7 @@ impl Renderer {
             self.tile_groups.retain(|k, _| doc.tiles.contains_key(k));
             for (k, t) in &disp {
                 let Some(td) = doc.tiles.get(k) else { continue };
-                let tkey = hash_of(&[td.content_rev, td.terrain_rev, extras.show_technical as u64, self.asset_epoch]);
+                let tkey = hash_of(&[td.content_rev, td.terrain_rev, extras.show_technical as u64, self.asset_epoch, extras.hide[0] as u64, extras.hide[1] as u64]);
                 if self.tile_groups.get(k).map(|g| g.0 == tkey).unwrap_or(false) {
                     continue;
                 }
@@ -1160,7 +1167,7 @@ impl Renderer {
                 for o in &t.objects {
                     let rel_key = o.file.to_lowercase();
                     let Some(model) = assets.object(&o.file) else { continue };
-                    if model.technical && !extras.show_technical {
+                    if model.technical && !extras.show_technical || hidden_layer(&model, extras) {
                         continue;
                     }
                     let key = self.model_with_labels(device, &rel_key, &model, &o.extra);
@@ -1171,13 +1178,13 @@ impl Renderer {
                     let edge = tile_size() + 1e-3;
                     let inside = (-1e-3..=edge).contains(&o.pos[0]) && (-1e-3..=edge).contains(&o.pos[1]);
                     if model.abs_height || inside {
-                        push_object(&mut groups, &key, &model, o.extra.first(), pose.matrix_from(anchor), [0.0; 4], Some(Sel::Object(*k, o.id)));
+                        push_object(&mut groups, &key, &model, o.extra.first(), pose.matrix_from(anchor), [0.0; 4], Some(Sel::Object(*k, o.id)), extras.show_technical);
                     }
                     parents.insert(o.id, (pose, model));
                 }
                 // the rows along the splines (lamps, posts, parking bays)
                 let org = tile_origin(*k);
-                for a in &t.spline_attachments {
+                for a in t.spline_attachments.iter().filter(|_| !extras.hide[1]) {
                     let Some(model) = assets.object(&a.file) else { continue };
                     let rel_key = self.model_with_labels(device, &a.file.to_lowercase(), &model, &a.strings);
                     let objs = crate::place::row_objects(a, &t.splines, org);
@@ -1186,17 +1193,20 @@ impl Renderer {
                         if a.repeater.is_none() && Some(ro.index) == first {
                             parents.entry(a.id).or_insert((ro.pose, model.clone()));
                         }
-                        push_object(&mut groups, &rel_key, &model, a.strings.first(), ro.pose.matrix_from(anchor), [0.0; 4], None);
+                        push_object(&mut groups, &rel_key, &model, a.strings.first(), ro.pose.matrix_from(anchor), [0.0; 4], None, extras.show_technical);
                     }
                 }
                 // objects hanging on others (signs on posts, lamps on masts)
                 for o in &t.attach_objects {
                     let Some(model) = assets.object(&o.file) else { continue };
+                    if hidden_layer(&model, extras) {
+                        continue;
+                    }
                     let Some((parent, pmodel)) = o.parent_id.and_then(|p| parents.get(&p)).cloned() else { continue };
                     let rel_key = self.model_with_labels(device, &o.file.to_lowercase(), &model, &o.extra);
                     let attach = pmodel.attachments.get(o.attach_index).copied().unwrap_or(Mat4::IDENTITY);
                     let pose = parent.attached(&attach, omsi_geometry::map_rotation(o.rot));
-                    push_object(&mut groups, &rel_key, &model, o.extra.first(), pose.matrix_from(anchor), [0.0; 4], Some(Sel::Object(*k, o.id)));
+                    push_object(&mut groups, &rel_key, &model, o.extra.first(), pose.matrix_from(anchor), [0.0; 4], Some(Sel::Object(*k, o.id)), extras.show_technical);
                     parents.insert(o.id, (pose, model));
                 }
                 self.tile_groups.insert(*k, (tkey, groups));
@@ -1296,7 +1306,7 @@ impl Renderer {
                     }
                 }
                 if let Some(e) = self.splines.get_mut(&(*k, s.id)) {
-                    e.hidden = e.technical && !extras.show_technical;
+                    e.hidden = e.technical && !extras.show_technical || extras.hide[2];
                     e.instance = spline_instances.len() as u32;
                     spline_instances.push(Instance::new(Mat4::from_translation(corner), tint).surface(SURF_SPLINE));
                 }
@@ -1325,7 +1335,7 @@ impl Renderer {
             let key = g.rel.to_lowercase();
             if let Some(model) = assets.object(&g.rel) {
                 self.model(device, &key, &model);
-                push_object(&mut ghost_groups, &key, &model, None, object_matrix(g.world - anchor, g.rot), g.tint, None);
+                push_object(&mut ghost_groups, &key, &model, None, object_matrix(g.world - anchor, g.rot), g.tint, None, true);
             } else if assets.object_failed(&g.rel) {
                 ghost_groups.entry("\u{0}marker".into()).or_default().1.push(Pending { inst: Instance::new(object_matrix(g.world - anchor, g.rot), g.tint), radius: 2.0, sel: None });
             }
@@ -1670,12 +1680,12 @@ impl Renderer {
         pass.set_pipeline(&self.shadow_pipeline);
         pass.set_bind_group(0, &self.shadow_globals_bind, &[]);
         pass.set_vertex_buffer(1, dynamic.slice(..));
-        for c in self.chunks.values().filter(|c| f.sees(&c.bbox)) {
+        for c in self.chunks.values().filter(|c| !self.hide_splines && f.sees(&c.bbox)) {
             if let Some(mesh) = &c.mesh {
                 calls += draw_mesh(&mut pass, &self.materials, mesh, &c.materials, Some(false), &[c.instance..c.instance + 1]);
             }
         }
-        for e in self.splines.values().filter(|e| !e.technical && !e.in_chunk && f.sees(&e.bbox)) {
+        for e in self.splines.values().filter(|e| !e.technical && !e.hidden && !e.in_chunk && f.sees(&e.bbox)) {
             if let Some(mesh) = &e.mesh {
                 calls += draw_mesh(&mut pass, &self.materials, mesh, &e.materials, Some(false), &[e.instance..e.instance + 1]);
             }
@@ -1763,7 +1773,7 @@ impl Renderer {
         }
         let (Some(dynamic), Some(scene)) = (&self.instances, &self.scene_buf) else { return };
         // what is in view, the same for both layers
-        let mut splines: Vec<(&GpuMesh, &Vec<Material>, u32)> = self.chunks.values().filter(|c| f.sees(&c.bbox) && in_reach(&c.bbox)).filter_map(|c| c.mesh.as_ref().map(|m| (m, &c.materials, c.instance))).collect();
+        let mut splines: Vec<(&GpuMesh, &Vec<Material>, u32)> = self.chunks.values().filter(|c| !self.hide_splines && f.sees(&c.bbox) && in_reach(&c.bbox)).filter_map(|c| c.mesh.as_ref().map(|m| (m, &c.materials, c.instance))).collect();
         splines.extend(self.splines.values().filter(|e| !e.hidden && !e.in_chunk && f.sees(&e.bbox) && in_reach(&e.bbox)).filter_map(|e| e.mesh.as_ref().map(|m| (m, &e.materials, e.instance))));
         let mut visible: Vec<(&Batch, Vec<std::ops::Range<u32>>, bool)> = Vec::new();
         for b in &self.batches {
@@ -2145,7 +2155,14 @@ fn marker_mesh() -> MeshData {
     m
 }
 
-fn push_object(groups: &mut Groups, key: &str, model: &Arc<ObjectModel>, label: Option<&String>, m: Mat4, tint: [f32; 4], sel: Option<Sel>) {
+/// The object is in a layer left out of the view (trees, or the other objects; what the
+/// game does not show goes by its own switch).
+pub fn hidden_layer(model: &ObjectModel, extras: &FrameExtras) -> bool {
+    !model.technical && if model.tree.is_some() { extras.hide[0] } else { extras.hide[1] }
+}
+
+/// (`editor`: the meshes seen in the editor only are drawn too)
+fn push_object(groups: &mut Groups, key: &str, model: &Arc<ObjectModel>, label: Option<&String>, m: Mat4, tint: [f32; 4], sel: Option<Sel>, editor: bool) {
     if !m.is_finite() {
         return;
     }
@@ -2159,6 +2176,9 @@ fn push_object(groups: &mut Groups, key: &str, model: &Arc<ObjectModel>, label: 
             let radius = h * r.max(1.0) * scale;
             groups.entry(format!("tree:{}", p.display())).or_insert_with(|| (true, Vec::new())).1.push(Pending { inst: Instance::new(m * card, tint), radius, sel });
         }
+    }
+    if model.editor_parts && !editor && model.tree.is_some() {
+        return;
     }
     if model.parts.is_empty() {
         if model.tree.is_none() {

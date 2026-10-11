@@ -55,6 +55,9 @@ pub struct ObjectModel {
     /// Not seen in the game (`[onlyeditor]`, a start point, a car park, a help arrow,
     /// nothing to draw): the editor shows it as a marker that casts no shadow.
     pub technical: bool,
+    /// Its meshes are seen in the editor only (`[onlyeditor]`): a tree's helper box, while
+    /// its tree is seen in the game.
+    pub editor_parts: bool,
     /// Its `[texttexture]`s (drawn from the object's labels).
     pub texts: Vec<omsi_model::TextTexture>,
     /// What its labels mean (`[stringvarnamelist]`; empty names where only a text texture
@@ -430,9 +433,10 @@ pub(crate) fn load_object(path: &Path, omsi: &Path, content: &Path) -> Option<Ob
             }
         }
     }
-    let technical = sco.only_editor || sco.is_entry_point || sco.is_car_park || sco.is_help_arrow || (parts.is_empty() && tree.is_none());
+    // (a tree with an editor-only helper box is seen in the game: only the box is not)
+    let technical = (sco.only_editor && tree.is_none()) || sco.is_entry_point || sco.is_car_park || sco.is_help_arrow || (parts.is_empty() && tree.is_none());
     let labels = crate::texts::label_names(&sco.scripts.stringvarlists, &model.text_textures);
-    Some(ObjectModel { parts, lo, hi, abs_height: sco.absolute_height(), tree, helpers, attachments, surface, holes, technical, paths: sco.paths.clone(), texts: model.text_textures.clone(), labels })
+    Some(ObjectModel { parts, lo, hi, abs_height: sco.absolute_height(), tree, helpers, attachments, surface, holes, technical, editor_parts: sco.only_editor, paths: sco.paths.clone(), texts: model.text_textures.clone(), labels })
 }
 
 fn load_spline(path: &Path, omsi: &Path, content: &Path) -> Option<SplineModel> {

@@ -646,6 +646,15 @@ fn menu_bar(root: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, can_undo: bo
                 let icon = if ed.show_technical { Icon::Visible } else { Icon::Hidden };
                 check(ui, &mut ed.show_technical, icons::labelled(icon, tr("What the game does not show", "То, чего не видно в игре")));
                 check(ui, &mut ed.show_lanes, icons::labelled(Icon::Route, tr("AI lanes", "Полосы ИИ")));
+                ui.menu_button(icons::labelled(Icon::Layers, tr("Show", "Показывать")), |ui| {
+                    // (what is hidden cannot be clicked either: handy in a dense town)
+                    for (i, name, icon) in [(0, tr("Trees", "Деревья"), Icon::Tree), (1, tr("Objects", "Объекты"), Icon::Building), (2, tr("Roads and splines", "Дороги и сплайны"), Icon::Road)] {
+                        let mut on = !ed.hide[i];
+                        if check(ui, &mut on, icons::labelled(icon, name)).changed() {
+                            ed.hide[i] = !on;
+                        }
+                    }
+                });
                 check(ui, &mut st.minimap.open, icons::labelled(Icon::Map, tr("Overview map (M)", "Обзорная карта (M)")));
                 check(ui, &mut st.assets.open, icons::labelled(Icon::Objects, tr("Assets (B)", "Ассеты (B)")));
                 crate::ui_geo::view_menu(ui, &mut st.geo);
