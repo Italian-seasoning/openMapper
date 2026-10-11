@@ -34,7 +34,7 @@ experienced map makers.
 | PBR maker | - | an object's "Create PBR" (or Tools > PBR maps for a picture): normal, roughness, metal and occlusion maps made from a texture with a live preview, written as openOMSI reads them (`_nn`, `_orm`); then "Configure PBR" to tune them again or delete them |
 | Objects | 3 | catalogue as the installation's folder tree with thumbnails; classes read from the files themselves (roads, tracks, footpaths, decoration, technical AI/helper splines; trees, stops, junction pieces, technical helpers), search, turning towards the nearest road |
 | Game logic | 4 | start points (`[entrypoint]`), bus stops, car parks (one by one or in a row along the kerb), AI paths for cars and people drawn like roads and snapped to lane ends, sound sources and other editor-only helpers |
-| Terrain | 5 | raise / lower / smooth / flatten brush |
+| Terrain | 5 | raise / lower / smooth / flatten / roughen brush (rolls and dips of a natural field) |
 | Paint | 6 | painting with the map's ground textures (OMSI `[groundtex]` masks) |
 | Tiles | 7 | add a 300 × 300 m tile next to the map (or a whole ring of them round it with one button), remove one with right-click; a tile clicked gets water (OMSI's `[water]`, a surface at a height, seen where the ground lies below it: lower the ground for a lake or a river) |
 

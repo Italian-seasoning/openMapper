@@ -1273,6 +1273,7 @@ fn terrain_panel(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor) {
             TerrainMode::Smooth => tr("Softens bumps and edges", "Смягчает неровности и края"),
             TerrainMode::Raise => tr("Raises the ground under the brush", "Поднимает землю под кистью"),
             TerrainMode::Lower => tr("Lowers the ground under the brush", "Опускает землю под кистью"),
+            TerrainMode::Roughen => tr("Gives flat ground the rolls and dips of a natural field; hold longer for more", "Придаёт ровной земле бугры и впадины, как в поле; держите дольше: сильнее"),
         };
         help(st, &r, h);
     }

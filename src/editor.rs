@@ -75,16 +75,19 @@ pub enum TerrainMode {
     Lower,
     Smooth,
     Flatten,
+    /// Rolls and dips of the natural ground.
+    Roughen,
 }
 
 impl TerrainMode {
-    pub const ALL: [TerrainMode; 4] = [TerrainMode::Raise, TerrainMode::Lower, TerrainMode::Smooth, TerrainMode::Flatten];
+    pub const ALL: [TerrainMode; 5] = [TerrainMode::Raise, TerrainMode::Lower, TerrainMode::Smooth, TerrainMode::Flatten, TerrainMode::Roughen];
     pub fn label(self) -> &'static str {
         match self {
             TerrainMode::Raise => tr("Raise", "Поднять"),
             TerrainMode::Lower => tr("Lower", "Опустить"),
             TerrainMode::Smooth => tr("Smooth", "Сгладить"),
             TerrainMode::Flatten => tr("Flatten", "Выровнять"),
+            TerrainMode::Roughen => tr("Roughen", "Неровности"),
         }
     }
     pub fn icon(self) -> crate::icons::Icon {
@@ -94,6 +97,7 @@ impl TerrainMode {
             TerrainMode::Lower => Icon::Lower,
             TerrainMode::Smooth => Icon::Smooth,
             TerrainMode::Flatten => Icon::Flatten,
+            TerrainMode::Roughen => Icon::Terrain,
         }
     }
 }
@@ -1913,6 +1917,9 @@ impl Editor {
                         if k > 0.0 { h + (s / k - h) * (strength * 6.0 * dt * w).min(1.0) } else { h }
                     }
                     TerrainMode::Flatten => h + (flat - h) * (strength * 8.0 * dt * w).min(1.0),
+                    // (towards a fixed pattern of rolls, the same wherever the brush goes, so
+                    // holding it longer shapes them more and does not make noise of noise)
+                    TerrainMode::Roughen => h + rolls(p) * strength * 3.0 * dt * w,
                 };
                 changes.push((gx, gy, nh as f32));
             }
@@ -4059,6 +4066,28 @@ pub fn asset_hint(a: &Asset) -> &'static str {
     }
 }
 
+/// Rolls of the natural ground at `p`: smooth value noise of two sizes (about 40 m and
+/// 12 m across), between -1 and 1.
+fn rolls(p: DVec2) -> f64 {
+    let hash = |x: i64, y: i64| {
+        let mut h = (x as u64).wrapping_mul(0x9e37_79b9_7f4a_7c15) ^ (y as u64).wrapping_mul(0xc2b2_ae3d_27d4_eb4f);
+        h ^= h >> 31;
+        h = h.wrapping_mul(0xff51_afd7_ed55_8ccd);
+        h ^= h >> 33;
+        (h % 20_001) as f64 / 10_000.0 - 1.0
+    };
+    let noise = |q: DVec2| {
+        let (x0, y0) = (q.x.floor(), q.y.floor());
+        let (fx, fy) = (q.x - x0, q.y - y0);
+        let (sx, sy) = (fx * fx * (3.0 - 2.0 * fx), fy * fy * (3.0 - 2.0 * fy));
+        let (ix, iy) = (x0 as i64, y0 as i64);
+        let a = hash(ix, iy) + (hash(ix + 1, iy) - hash(ix, iy)) * sx;
+        let b = hash(ix, iy + 1) + (hash(ix + 1, iy + 1) - hash(ix, iy + 1)) * sx;
+        a + (b - a) * sy
+    };
+    noise(p / 40.0) * 0.7 + noise(p / 12.0 + DVec2::splat(17.3)) * 0.3
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -4106,6 +4135,19 @@ mod tests {
         ed.turn_objects(true);
         let (a, b) = (ed.doc.as_ref().unwrap().object((0, 0), 1).unwrap().rot[0], ed.doc.as_ref().unwrap().object((0, 0), 2).unwrap().rot[0]);
         assert!(a != b && (0.0..360.0).contains(&a) && (0.0..360.0).contains(&b));
+    }
+
+    #[test]
+    fn rolls_are_smooth_and_bounded() {
+        let mut last = rolls(DVec2::ZERO);
+        let (mut lo, mut hi) = (f64::MAX, f64::MIN);
+        for i in 1..2000 {
+            let v = rolls(DVec2::new(i as f64 * 0.5, i as f64 * 0.21));
+            assert!((-1.0..=1.0).contains(&v));
+            assert!((v - last).abs() < 0.2, "a step of half a metre stays small");
+            (lo, hi, last) = (lo.min(v), hi.max(v), v);
+        }
+        assert!(hi - lo > 0.6, "it does roll: {lo}..{hi}");
     }
 
     #[test]
