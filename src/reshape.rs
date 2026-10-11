@@ -356,6 +356,64 @@ pub fn set_end(doc: &mut Document, k: TileKey, id: i64, at_end: bool, z: Option<
     set_own_end(doc, nk, nid, !n_start, z, g.map(|g| if same { g } else { -g }));
 }
 
+/// The splines given, if they make one chain, in its order from one end, each with whether
+/// it runs that way (None: they branch, leave gaps, or close a ring).
+pub fn chain_order(doc: &Document, splines: &[(TileKey, i64)]) -> Option<Vec<(TileKey, i64, bool)>> {
+    let set: std::collections::HashSet<i64> = splines.iter().map(|s| s.1).collect();
+    let inside = |id: i64| id != 0 && set.contains(&id);
+    // an end of the chain: a spline with at most one neighbour inside
+    let (k0, first) = *splines.iter().find(|(k, id)| doc.spline(*k, *id).map(|s| !inside(s.prev_id) || !inside(s.next_id)).unwrap_or(false))?;
+    let s0 = doc.spline(k0, first)?;
+    // (it runs away from the chain's end when what follows it is inside)
+    let mut out = vec![(k0, first, !inside(s0.prev_id))];
+    let mut prev = first;
+    let mut next = if inside(s0.next_id) && !inside(s0.prev_id) { s0.next_id } else if inside(s0.prev_id) && !inside(s0.next_id) { s0.prev_id } else { 0 };
+    while next != 0 {
+        if out.iter().any(|o| o.1 == next) {
+            return None;
+        }
+        let (k, n) = doc.find_spline(next)?;
+        let forward = if n.prev_id == prev { true } else if n.next_id == prev { false } else { return None };
+        out.push((k, n.id, forward));
+        let after = if forward { n.next_id } else { n.prev_id };
+        prev = n.id;
+        next = if inside(after) { after } else { 0 };
+    }
+    (out.len() == splines.len()).then_some(out)
+}
+
+/// Heights along a chain (`chain_order`) as one even slope from the height at its first
+/// end to that at its last.
+pub fn even_chain(doc: &mut Document, chain: &[(TileKey, i64, bool)]) {
+    let ends: Vec<(f64, f64, f64)> = chain
+        .iter()
+        .filter_map(|(k, id, fwd)| {
+            let s = doc.spline(*k, *id)?;
+            let e = ends_of(s, *k);
+            Some(if *fwd { (e.a.z, e.b.z, s.length) } else { (e.b.z, e.a.z, s.length) })
+        })
+        .collect();
+    let (Some(first), Some(last)) = (ends.first(), ends.last()) else { return };
+    let total: f64 = ends.iter().map(|e| e.2).sum::<f64>().max(0.1);
+    let (z0, z1) = (first.0, last.1);
+    let g = (z1 - z0) / total * 100.0;
+    let mut at = 0.0;
+    for ((k, id, fwd), e) in chain.iter().zip(&ends) {
+        let (za, zb) = (z0 + (z1 - z0) * at / total, z0 + (z1 - z0) * (at + e.2) / total);
+        at += e.2;
+        let Some(t) = doc.tiles.get_mut(k) else { continue };
+        let Some(s) = t.tile.splines.iter_mut().find(|s| s.id == *id && !s.deleted) else { continue };
+        // (its own way: one running back climbs the other way)
+        let (zs, ze, gs) = if *fwd { (za, zb, g) } else { (zb, za, -g) };
+        s.is_h = true;
+        s.pos[2] = zs;
+        s.delta_h = Some(ze - zs);
+        s.grad_start = gs;
+        s.grad_end = gs;
+        t.touch_content();
+    }
+}
+
 /// Set a spline's cant (%, positive: its right side lower) at its end or start; the spline
 /// linked there takes the same banking at the joint.
 pub fn set_cant(doc: &mut Document, k: TileKey, id: i64, at_end: bool, cant: f64) {
@@ -414,6 +472,28 @@ mod tests {
     fn curve(doc: &Document, id: i64) -> SplineCurve {
         let (k, s) = doc.find_spline(id).unwrap();
         SplineCurve::from_map(s, tile_origin(k))
+    }
+
+    #[test]
+    fn a_chain_gets_one_even_slope() {
+        let mut doc = flat_map(1);
+        add_spline(&mut doc, (0, 0), 1, 10.0, 10.0, 0.0, 50.0, 0, 2);
+        // (the second runs back towards the first, the third on from it)
+        add_spline(&mut doc, (0, 0), 2, 10.0, 110.0, 180.0, 50.0, 3, 1);
+        add_spline(&mut doc, (0, 0), 3, 10.0, 110.0, 0.0, 100.0, 2, 0);
+        set_own_end(&mut doc, (0, 0), 3, true, Some(20.0), None);
+        let chain = chain_order(&doc, &[((0, 0), 2), ((0, 0), 3), ((0, 0), 1)]).unwrap();
+        // (from either end)
+        let order: Vec<(i64, bool)> = chain.iter().map(|c| (c.1, c.2)).collect();
+        assert!(order == vec![(1, true), (2, false), (3, true)] || order == vec![(3, false), (2, true), (1, false)], "{order:?}");
+        even_chain(&mut doc, &chain);
+        // 20 m over 200 m: 10 %, 5 m up at the first joint, 10 m at the second
+        let z = |id: i64, at: f64| curve(&doc, id).point_at(at).z;
+        assert!((z(1, 50.0) - 5.0).abs() < 1e-6 && (z(2, 0.0) - 10.0).abs() < 1e-6 && (z(2, 50.0) - 5.0).abs() < 1e-6 && (z(3, 100.0) - 20.0).abs() < 1e-6);
+        assert!((curve(&doc, 1).slope_at(25.0) - 0.1).abs() < 1e-6 && (curve(&doc, 2).slope_at(25.0) + 0.1).abs() < 1e-6);
+        // a branch is no chain
+        add_spline(&mut doc, (0, 0), 4, 10.0, 110.0, 90.0, 30.0, 2, 0);
+        assert!(chain_order(&doc, &[((0, 0), 4), ((0, 0), 2), ((0, 0), 3)]).is_none());
     }
 
     #[test]

@@ -99,6 +99,12 @@ pub fn group_properties(ui: &mut egui::Ui, ed: &mut Editor, lib: &Library) {
                 }
             }
         }
+        if splines > 1 {
+            ui.add_space(4.0);
+            if ui.button(tr("Even slope along them", "Ровный уклон вдоль них")).on_hover_text(tr("One chain of roads: from the height at one end to that at the other, evenly (a bridge, a ramp)", "Одна цепочка дорог: от высоты на одном конце до высоты на другом, равномерно (мост, пандус)")).clicked() {
+                ed.even_selected_chain();
+            }
+        }
         ui.add_space(8.0);
         ui.separator();
         ui.horizontal_wrapped(|ui| {

@@ -2687,6 +2687,23 @@ impl Editor {
         self.history.commit();
     }
 
+    /// The selected splines, one chain, given one even slope from the height at one end to
+    /// that at the other (a bridge, a ramp).
+    pub fn even_selected_chain(&mut self) {
+        let splines: Vec<(TileKey, i64)> = self.selection().into_iter().filter_map(|s| if let Sel::Spline(k, id) = s { Some((k, id)) } else { None }).collect();
+        let Some(doc) = self.doc.as_mut() else { return };
+        let Some(chain) = reshape::chain_order(doc, &splines) else {
+            self.error(tr("The selected roads are not one chain (they branch or leave gaps)", "Выбранные дороги не одна цепочка (ветвятся или с разрывами)"));
+            return;
+        };
+        self.history.begin(tr("Even slope", "Ровный уклон"));
+        for (k, _, _) in &chain {
+            self.history.touch_tile(doc, *k);
+        }
+        reshape::even_chain(doc, &chain);
+        self.history.commit();
+    }
+
     /// The selected splines copied alongside, `d` m to the right of the first's way
     /// (negative: left); the copies are selected.
     pub fn parallel_copy(&mut self, d: f64) {
