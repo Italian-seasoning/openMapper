@@ -38,6 +38,7 @@ mod switches;
 mod timetable;
 mod traffic;
 mod ui;
+mod ui_assets;
 mod ui_edit;
 mod ui_geo;
 mod sample;

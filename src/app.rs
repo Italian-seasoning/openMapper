@@ -598,6 +598,27 @@ impl App {
                 }
             }
             Action::RoadTypes => self.road_types.open = !self.road_types.open,
+            Action::PlaceAsset(rel) => {
+                self.ed.set_tool(Tool::Objects);
+                self.ed.object_type = Some(rel);
+                self.ed.place_heading = 0.0;
+                if let Some(a) = self.assets.as_mut() {
+                    self.ed.place_now(a, &self.lib);
+                }
+            }
+            Action::RevealAsset(rel) => {
+                if let Some(r) = &self.roots {
+                    reveal(&r.resolve(&rel));
+                }
+            }
+            Action::DeleteAsset(rel) => {
+                if let Some(r) = &self.roots {
+                    match bin_asset(&r.content, &rel) {
+                        Ok(()) => self.reload_content(),
+                        Err(e) => self.ed.error(e.to_string()),
+                    }
+                }
+            }
             Action::PbrForSpline(rel) => {
                 if let (Some(a), Some(r)) = (self.assets.as_mut(), &self.roots) {
                     let textures = spline_textures(a, &rel);
@@ -746,6 +767,7 @@ impl App {
                 self.cam.yaw = (self.cam.yaw / 360.0).round() * 360.0;
                 self.cam.pitch = 89.0;
             }
+            Some(KeyCode::KeyB) if !ctrl => self.ui.assets.open = !self.ui.assets.open,
             Some(KeyCode::KeyM) if !ctrl => self.ui.minimap.open = !self.ui.minimap.open,
             Some(KeyCode::KeyL) if !ctrl => self.tt.open = !self.tt.open,
             Some(KeyCode::KeyT) if !ctrl => self.traffic.open = !self.traffic.open,
@@ -1743,6 +1765,27 @@ impl ApplicationHandler for App {
 }
 
 /// Write the window's picture to a PNG (the screenshot mode).
+/// Show a file in the system's file manager.
+fn reveal(p: &Path) {
+    #[cfg(target_os = "macos")]
+    let _ = std::process::Command::new("open").arg("-R").arg(p).spawn();
+    #[cfg(target_os = "windows")]
+    let _ = std::process::Command::new("explorer").arg(format!("/select,{}", p.display())).spawn();
+    #[cfg(all(unix, not(target_os = "macos")))]
+    let _ = std::process::Command::new("xdg-open").arg(p.parent().unwrap_or(p)).spawn();
+}
+
+/// Move a content folder asset's file into `openMapper\bin` (same place below it), so it
+/// can be put back by hand. Only ever the content folder's own files.
+fn bin_asset(content: &Path, rel: &str) -> anyhow::Result<()> {
+    let p = omsi_cfg::resolve_path(content, rel);
+    anyhow::ensure!(p.starts_with(content) && p.is_file(), "{}", tr("Only assets of the content folder can be deleted", "Удалять можно только ассеты папки контента"));
+    let to = content.join("openMapper").join("bin").join(p.strip_prefix(content)?);
+    std::fs::create_dir_all(to.parent().unwrap())?;
+    std::fs::rename(&p, &to)?;
+    Ok(())
+}
+
 /// The texture files a road type is drawn with, each once.
 fn spline_textures(assets: &mut Assets, rel: &str) -> Vec<PathBuf> {
     let Some(m) = assets.spline(rel) else { return Vec::new() };

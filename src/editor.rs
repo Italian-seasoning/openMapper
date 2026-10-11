@@ -1092,6 +1092,12 @@ impl Editor {
     }
 
 
+    /// Place the object chosen at the cursor now (dropped from the asset browser).
+    pub fn place_now(&mut self, assets: &mut Assets, lib: &Library) {
+        self.plan_object(assets);
+        self.place_object(lib, false);
+    }
+
     fn place_object(&mut self, lib: &Library, keep: bool) {
         let _ = keep;
         let (Some((pos, heading)), Some(rel)) = (self.ghost_pos, self.object_type.clone()) else {

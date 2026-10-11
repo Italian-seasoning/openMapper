@@ -38,6 +38,12 @@ pub enum Action {
     Import,
     ChooseOmsi,
     SetLang(Lang),
+    /// Place this object at the cursor (a picture dropped from the asset browser).
+    PlaceAsset(String),
+    /// Show an asset's file in the system's file manager.
+    RevealAsset(String),
+    /// Move an asset of the content folder into openMapper's bin.
+    DeleteAsset(String),
     /// The Road types window (road maker, junction styles).
     RoadTypes,
     /// The PBR window on an object's textures.
@@ -110,6 +116,7 @@ pub struct UiState {
     pub status_help: Option<String>,
     pub welcome_pick: Option<PathBuf>,
     pub minimap: crate::ui_minimap::Minimap,
+    pub assets: crate::ui_assets::AssetBrowser,
     pub check: crate::check::Checker,
     /// The window of the map's earlier versions (backups of its saves).
     pub versions_open: bool,
@@ -141,6 +148,7 @@ impl Default for UiState {
             status_help: None,
             welcome_pick: None,
             minimap: crate::ui_minimap::Minimap::new(),
+            assets: Default::default(),
             check: Default::default(),
             versions_open: false,
             favourites: Vec::new(),
@@ -520,6 +528,8 @@ pub fn editor(root: &mut egui::Ui, st: &mut UiState, u: EditorUi, actions: &mut 
             properties(ui, st, ed, lib, actions);
         });
     });
+    let favourites = st.favourites.clone();
+    st.assets.panel(root, ed, lib, thumbs, wanted, &favourites, actions);
     let mut view = (egui::Rect::NOTHING, false);
     egui::CentralPanel::default().frame(Frame::NONE).show(root, |ui| {
         let rect = ui.max_rect();
@@ -629,6 +639,7 @@ fn menu_bar(root: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, can_undo: bo
                 check(ui, &mut ed.show_technical, icons::labelled(icon, tr("What the game does not show", "То, чего не видно в игре")));
                 check(ui, &mut ed.show_lanes, icons::labelled(Icon::Route, tr("AI lanes", "Полосы ИИ")));
                 check(ui, &mut st.minimap.open, icons::labelled(Icon::Map, tr("Overview map (M)", "Обзорная карта (M)")));
+                check(ui, &mut st.assets.open, icons::labelled(Icon::Objects, tr("Assets (B)", "Ассеты (B)")));
                 crate::ui_geo::view_menu(ui, &mut st.geo);
                 if menu_item(ui, Some(Icon::Focus), tr("Go to selection", "К выделенному"), "F", ed.selected.is_some()) {
                     actions.push(Action::FocusSelection);
@@ -760,6 +771,11 @@ fn toolbar(root: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, can_undo: boo
             help(st, &r, tr("Tile grid (G)", "Сетка тайлов (G)"));
             if r.clicked() {
                 ed.show_grid = !ed.show_grid;
+            }
+            let r = tool_button(ui, Icon::Objects, st.assets.open, true);
+            help(st, &r, tr("Assets: every object and road type, with pictures (B)", "Ассеты: все объекты и типы дорог с картинками (B)"));
+            if r.clicked() {
+                st.assets.open = !st.assets.open;
             }
             ui.with_layout(Layout::right_to_left(Align::Center), |ui| {
                 let r = ui.add_enabled(game_found, egui::Button::new(icons::labelled(Icon::Play, tr("Test drive", "Тест-драйв"))));
