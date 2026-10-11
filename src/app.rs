@@ -284,6 +284,10 @@ impl App {
                 self.ed.hide[i] = h.split(',').any(|x| x.trim() == *name);
             }
         }
+        // OPENMAPPER_HISTORY=1: the edit history open
+        if std::env::var_os("OPENMAPPER_HISTORY").is_some() {
+            self.ui.history_open = true;
+        }
         // OPENMAPPER_FIND=<text>: Find in map open with that typed
         if let Ok(q) = std::env::var("OPENMAPPER_FIND") {
             self.ui.find.show_with(&q);

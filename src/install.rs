@@ -82,13 +82,21 @@ impl Prefs {
     }
 
     pub fn load() -> Prefs {
-        std::fs::read_to_string(Self::path())
+        let mut p: Prefs = std::fs::read_to_string(Self::path())
             .ok()
             .and_then(|s| serde_json::from_str(&s).ok())
-            .unwrap_or_default()
+            .unwrap_or_default();
+        // (maps deleted or moved since are not offered)
+        p.recent.retain(|m| std::path::Path::new(m).is_file());
+        p
     }
 
     pub fn save(&self) {
+        // a screenshot run (checks without a person at the screen) leaves the settings of
+        // whoever uses openMapper alone: its maps are not theirs to see among the recent ones
+        if std::env::var_os("OPENMAPPER_SHOT").is_some() {
+            return;
+        }
         let _ = std::fs::create_dir_all(openomsi_data_dir());
         if let Ok(s) = serde_json::to_string_pretty(self) {
             // (all or nothing: a crash while writing must not leave half a file)
