@@ -79,6 +79,8 @@ const HOVERED: [f32; 4] = [1.0, 1.0, 1.0, 0.2];
 
 /// Surface codes of the depth pull (see mesh.wgsl).
 const SURF_SPLINE: f32 = 1.0;
+/// The IDCode a tile's water is kept under among the splines' meshes (no spline has it).
+const WATER: i64 = i64::MIN;
 const SURF_OBJECT: f32 = 1.25;
 
 impl Instance {
@@ -947,7 +949,8 @@ impl Renderer {
                     flags[3] = 0.0;
                 }
             }
-            let color = if has_tex > 0.0 { [1.0, 1.0, 1.0, m.color[3].max(0.0)] } else { [m.color[0], m.color[1], m.color[2], 1.0] };
+            // (a blended colour keeps its own opacity: the water without a picture)
+            let color = if has_tex > 0.0 { [1.0, 1.0, 1.0, m.color[3].max(0.0)] } else { [m.color[0], m.color[1], m.color[2], if key.alpha == 2 { m.color[3] } else { 1.0 }] };
             let u = MatUniform { color, mode: [key.alpha as f32, has_tex, 1.0, 0.0], pbr: flags };
             let buf = device.create_buffer_init(&wgpu::util::BufferInitDescriptor { label: Some("material"), contents: bytemuck::bytes_of(&u), usage: wgpu::BufferUsages::UNIFORM });
             let albedo = t.map(|t| &t.albedo).unwrap_or(&self.white);
@@ -1310,6 +1313,38 @@ impl Renderer {
                     e.instance = spline_instances.len() as u32;
                     spline_instances.push(Instance::new(Mat4::from_translation(corner), tint).surface(SURF_SPLINE));
                 }
+            }
+        }
+        // each tile's water: one quad at its four corner heights, blended over the ground
+        // (an ordinary instance, not a surface: openOMSI's reason, the banks must win)
+        let water_tex = ["texture/water.tga", "Texture/water.tga"].iter().map(|r| doc.dir.join(r)).chain(doc.source.iter().map(|s| s.join("texture").join("water.tga"))).find(|p| p.is_file());
+        for (k, td) in &doc.tiles {
+            let Some(w) = td.water else { continue };
+            let key = (*k, WATER);
+            alive.push(key);
+            let org = tile_origin(*k);
+            let corner = Vec3::new((org.x - anchor.x) as f32, (org.y - anchor.y) as f32, 0.0);
+            let h = hash_of(&(w.map(f32::to_bits), org.x.to_bits(), org.y.to_bits(), &water_tex));
+            if self.splines.get(&key).map(|e| e.hash != h).unwrap_or(true) {
+                let t = tile_size() as f32;
+                let mut m = MeshData::default();
+                for (i, (x, y)) in [(0.0, 0.0), (t, 0.0), (0.0, t), (t, t)].into_iter().enumerate() {
+                    m.positions.push(Vec3::new(x, y, w[i]));
+                    m.normals.push(Vec3::Z);
+                    m.uvs.push(glam::Vec2::new(x / 40.0, y / 40.0));
+                }
+                m.indices.extend_from_slice(&[0, 1, 2, 2, 1, 3]);
+                m.ranges.push((0, 6, 0));
+                let mut bbox = Aabb::EMPTY;
+                m.positions.iter().for_each(|p| bbox.add_sphere(*p + corner, 0.0));
+                let material = Material { texture: water_tex.clone(), color: [0.22, 0.38, 0.45, 0.72], alpha: Alpha::Blend };
+                let mesh = Some(upload_mesh(device, &m));
+                self.splines.insert(key, SplineEntry { hash: h, mesh, cpu: None, bounds: [0.0, 0.0, t, t], bbox, cuts: false, drivable: false, technical: true, hidden: false, outlines: Vec::new(), rims: Vec::new(), materials: vec![material], instance: 0, in_chunk: false });
+                self.warm_pending = true;
+            }
+            if let Some(e) = self.splines.get_mut(&key) {
+                e.instance = spline_instances.len() as u32;
+                spline_instances.push(Instance::new(Mat4::from_translation(corner), [0.0; 4]));
             }
         }
         if self.splines.len() > alive.len() {

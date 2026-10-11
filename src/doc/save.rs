@@ -102,9 +102,18 @@ pub fn plan(doc: &Document, dir: &Path, all: bool) -> (Vec<super::safe::Op>, Vec
         let mut own = t.tile.clone();
         own.version = 14;
         own.has_terrain = true;
+        own.has_water = t.water.is_some();
         super::unfit_from_world_grid(&mut own, k.1);
         ops.push(Op::Write(dir.join(&file), utf16(&tile_text(&own))));
         ops.push(Op::Write(dir.join(format!("{file}.terrain")), t.terrain.to_bytes()));
+        match t.water {
+            Some(w) => {
+                let mut b = 1u32.to_le_bytes().to_vec();
+                w.iter().for_each(|h| b.extend_from_slice(&h.to_le_bytes()));
+                ops.push(Op::Write(dir.join(format!("{file}.water")), b));
+            }
+            None => ops.push(Op::Remove(dir.join(format!("{file}.water")))),
+        }
         // a light map of the old ground would put the old shadows on the new one
         ops.push(Op::Remove(dir.join(format!("{file}.LM.bmp"))));
         ops.push(Op::Remove(dir.join(format!("{file}.prt"))));

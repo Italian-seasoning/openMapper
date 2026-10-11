@@ -920,6 +920,7 @@ fn tool_panel(
                 let added = ed.grow_map();
                 ed.toast(format!("{} {added}", tr("Tiles added:", "Тайлов добавлено:")));
             }
+            water_panel(ui, ed);
             crate::ui_geo::tiles_panel(ui, &mut st.geo);
         }
         Tool::Select => {
@@ -1372,6 +1373,27 @@ pub(crate) fn prop_row(ui: &mut egui::Ui, name: &str, add: impl FnOnce(&mut egui
     ui.label(RichText::new(name).color(TEXT_DIM));
     add(ui);
     ui.end_row();
+}
+
+/// The water of the tile clicked last (Tiles tool): on or off, and its height.
+fn water_panel(ui: &mut egui::Ui, ed: &mut Editor) {
+    let Some((k, water, lowest)) = ed.picked_tile.and_then(|k| ed.doc.as_ref()?.tiles.get(&k).map(|t| (k, t.water, t.terrain.heights.iter().copied().fold(f32::MAX, f32::min)))) else { return };
+    ui.add_space(10.0);
+    ui.label(RichText::new(format!("{} {}, {}: {}", tr("Tile", "Тайл"), k.0, k.1, tr("water", "вода"))).strong());
+    let mut on = water.is_some();
+    let mut level = water.map(|w| (w[0] + w[1] + w[2] + w[3]) / 4.0).unwrap_or(lowest + 1.0);
+    let mut change = false;
+    ui.horizontal(|ui| {
+        change |= check(ui, &mut on, tr("Water", "Вода")).on_hover_text(tr("A water surface over the whole tile: it shows where the ground lies below it (lower the ground with the Terrain tool for a lake or a river)", "Водная гладь на весь тайл: видна там, где земля ниже неё (опустите землю инструментом «Рельеф» для озера или реки)")).changed();
+        if on {
+            change |= ui.add(egui::DragValue::new(&mut level).speed(0.05).max_decimals(2).prefix(tr("at ", "на ")).suffix(" m")).changed();
+        }
+    });
+    if change {
+        ed.set_water(k, on.then_some(level));
+    } else {
+        ed.end_panel_step_if_idle(ui.ctx());
+    }
 }
 
 /// The edits made this session: a click on one goes back (or forward) to just after it.

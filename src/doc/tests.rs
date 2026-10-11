@@ -49,6 +49,7 @@ fn sample_map(roots: &Roots) -> Document {
     let mut mask = vec![0u8; n * n];
     mask[..n * 4].iter_mut().for_each(|a| *a = 200);
     t.masks = vec![None, Some(mask)];
+    t.water = Some([1.5, 1.5, 2.0, 2.25]);
     t.tile.objects.push(MapObject { file: "Sceneryobjects\\Generic\\entrypoint_bus.sco".into(), id: 7, pos: [120.0, 18.0, 0.0], rot: [90.0, 0.0, 0.0], flag: 1, extra: vec!["Start 1".into()], ..Default::default() });
     t.tile.objects.push(MapObject { file: "Sceneryobjects\\Bäume\\linde.sco".into(), id: 8, pos: [10.25, 299.5, 1.5], rot: [12.5, 0.0, 0.0], ..Default::default() });
     t.tile.splines.push(MapSpline { file: "Splines\\str_2spur.sli".into(), id: 9, next_id: 10, pos: [0.0, 150.0, 2.0], heading: 90.0, length: 300.0, ..Default::default() });
@@ -74,6 +75,7 @@ fn a_map_saved_reads_back_the_same() {
     assert_eq!(back.order, doc.order);
     for (k, t) in &doc.tiles {
         let b = &back.tiles[k];
+        assert_eq!(b.water, t.water, "{k:?}");
         assert_eq!(b.tile.objects.len(), t.tile.objects.len(), "{k:?}");
         for (x, y) in b.tile.objects.iter().zip(&t.tile.objects) {
             assert_eq!((&x.file, x.id, x.pos, x.rot), (&y.file, y.id, y.pos, y.rot));
@@ -221,6 +223,7 @@ fn installed_maps_survive_a_save() {
                 assert!((x.length - y.length).abs() < 1e-6 && (x.radius - y.radius).abs() < 1e-6 && (x.heading - y.heading).abs() < 1e-6, "{name:?} {k:?} spline {}: {:?} {:?}", y.id, (x.length, x.radius, x.heading), (y.length, y.radius, y.heading));
             }
             assert_eq!(b.terrain.heights, t.terrain.heights, "{name:?} {k:?}");
+            assert_eq!(b.water, t.water, "{name:?} {k:?}");
             assert_eq!(b.masks, t.masks, "{name:?} {k:?}");
         }
         eprintln!("{name:?}: {} tiles saved and read back", doc.tiles.len());

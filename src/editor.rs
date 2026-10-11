@@ -2037,6 +2037,18 @@ impl Editor {
         self.picked_tile = Some(k);
     }
 
+    /// A tile's water: on at a height (all four corners), or off. Kept open as one step
+    /// while the number is dragged.
+    pub fn set_water(&mut self, k: TileKey, level: Option<f32>) {
+        self.begin_panel_step(tr("Water", "Вода"));
+        let Some(doc) = self.doc.as_mut() else { return };
+        self.history.touch_tile(doc, k);
+        if let Some(t) = doc.tiles.get_mut(&k) {
+            t.water = level.map(|h| [h; 4]);
+            t.touch_content();
+        }
+    }
+
     /// A ring of new tiles round the whole map (corners too), in one step. How many.
     pub fn grow_map(&mut self) -> usize {
         let Some(doc) = self.doc.as_mut() else { return 0 };

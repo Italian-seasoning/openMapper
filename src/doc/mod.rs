@@ -53,6 +53,9 @@ pub struct TileDoc {
     /// The active chrono folders' patches of this tile, in order (read only: the game lays
     /// them over the tile, and so does the view; the tile itself is what is edited).
     pub chrono: Vec<Tile>,
+    /// Its water (`[water]` and `tile.map.water`): the surface's height at the corners
+    /// (0, 0), (300, 0), (0, 300), (300, 300).
+    pub water: Option<[f32; 4]>,
     /// Revisions of the ground, the paint and the contents.
     pub terrain_rev: u64,
     pub mask_rev: u64,
@@ -83,6 +86,7 @@ impl TileDoc {
         TileDoc {
             tile: Tile { version: 14, has_terrain: true, ..Default::default() },
             chrono: Vec::new(),
+            water: None,
             terrain,
             masks: Vec::new(),
             terrain_rev: next_rev(),
@@ -285,7 +289,7 @@ impl Document {
     pub fn for_reading(&self) -> Document {
         Document {
             global: self.global.clone(),
-            tiles: self.tiles.iter().map(|(k, t)| (*k, TileDoc { tile: t.tile.clone(), terrain: t.terrain.clone(), masks: Vec::new(), chrono: Vec::new(), terrain_rev: t.terrain_rev, mask_rev: t.mask_rev, content_rev: t.content_rev, dirty: t.dirty })).collect(),
+            tiles: self.tiles.iter().map(|(k, t)| (*k, TileDoc { tile: t.tile.clone(), terrain: t.terrain.clone(), masks: Vec::new(), chrono: Vec::new(), water: t.water, terrain_rev: t.terrain_rev, mask_rev: t.mask_rev, content_rev: t.content_rev, dirty: t.dirty })).collect(),
             order: self.order.clone(),
             dir: self.dir.clone(),
             source: self.source.clone(),
@@ -692,7 +696,13 @@ fn load_tile(src_dir: &Path, global: &GlobalCfg, chrono_dirs: &[PathBuf], t: &om
         let p = src_dir.join("texture").join("map").join(format!("{}.{}.dds", t.file, li));
         masks.push(load_mask(&p, mask_size(g)));
     }
-    Some(TileDoc { tile, chrono, terrain, masks, terrain_rev: next_rev(), mask_rev: next_rev(), content_rev: next_rev(), dirty: false })
+    // the water, as the game reads it: only a `[water]` tile has one; its corners start at
+    // -5 m and take the file's heights when it says it has one surface (openOMSI's stage)
+    let water = tile.has_water.then(|| match omsi_cfg::vfs::read(&src_dir.join(format!("{}.water", t.file))).ok().map(|b| omsi_map::terrain::Water::parse(&b)) {
+        Some(w) if w.count == 1 && w.values.len() >= 4 => [w.values[0], w.values[1], w.values[2], w.values[3]],
+        _ => [-5.0; 4],
+    });
+    Some(TileDoc { tile, chrono, water, terrain, masks, terrain_rev: next_rev(), mask_rev: next_rev(), content_rev: next_rev(), dirty: false })
 }
 
 /// A painting mask from its `.dds` (or any picture), as alpha texels of `size` × `size`.
