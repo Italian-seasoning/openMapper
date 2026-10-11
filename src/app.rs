@@ -277,6 +277,10 @@ impl App {
                 self.ed.select(Some(sel));
             }
         }
+        // OPENMAPPER_FIND=<text>: Find in map open with that typed
+        if let Ok(q) = std::env::var("OPENMAPPER_FIND") {
+            self.ui.find.show_with(&q);
+        }
         // OPENMAPPER_CHECK=1: the map check open from the start
         if std::env::var_os("OPENMAPPER_CHECK").is_some() {
             self.ui.check.open = true;
@@ -771,6 +775,7 @@ impl App {
             Some(KeyCode::KeyV) if ctrl => actions.push(Action::Paste),
             Some(KeyCode::KeyD) if ctrl => actions.push(Action::Duplicate),
             Some(KeyCode::KeyA) if ctrl => actions.push(Action::SelectAll),
+            Some(KeyCode::KeyF) if ctrl => self.ui.find.show(),
             Some(KeyCode::Digit1) => self.ed.set_tool(Tool::Select),
             Some(KeyCode::Digit2) => self.ed.set_tool(Tool::Roads),
             Some(KeyCode::Digit3) => self.ed.set_tool(Tool::Objects),

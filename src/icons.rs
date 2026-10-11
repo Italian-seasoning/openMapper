@@ -66,6 +66,7 @@ pub enum Icon {
     Copy,
     Paste,
     SelectAll,
+    Search,
 }
 
 impl Icon {
@@ -129,6 +130,7 @@ impl Icon {
             Icon::Copy => 0xe14d,
             Icon::Paste => 0xe14f,
             Icon::SelectAll => 0xe162,
+            Icon::Search => 0xef7a,
         };
         char::from_u32(cp).unwrap_or('?')
     }

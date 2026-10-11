@@ -118,6 +118,7 @@ pub struct UiState {
     pub minimap: crate::ui_minimap::Minimap,
     pub assets: crate::ui_assets::AssetBrowser,
     pub check: crate::check::Checker,
+    pub find: crate::ui_find::Find,
     /// The window of the map's earlier versions (backups of its saves).
     pub versions_open: bool,
     /// The preferences' starred and recently used assets, for the catalogue.
@@ -150,6 +151,7 @@ impl Default for UiState {
             minimap: crate::ui_minimap::Minimap::new(),
             assets: Default::default(),
             check: Default::default(),
+            find: Default::default(),
             versions_open: false,
             favourites: Vec::new(),
             recent_assets: Vec::new(),
@@ -549,6 +551,7 @@ pub fn editor(root: &mut egui::Ui, st: &mut UiState, u: EditorUi, actions: &mut 
     controls(&ctx, st);
     about(&ctx, st);
     st.check.window(&ctx, ed, lib, actions);
+    st.find.window(&ctx, ed, lib, actions);
     if let Some(doc) = &ed.doc {
         crate::doc::safe::versions_window(&ctx, &mut st.versions_open, &doc.dir, actions);
     }
@@ -623,6 +626,9 @@ fn menu_bar(root: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, can_undo: bo
                 }
                 if menu_item(ui, None, tr("Duplicate", "Дублировать"), "Ctrl+D", any) {
                     actions.push(Action::Duplicate);
+                }
+                if menu_item(ui, Some(Icon::Search), tr("Find in map…", "Поиск по карте…"), "Ctrl+F", true) {
+                    st.find.show();
                 }
                 if menu_item(ui, Some(Icon::SelectAll), tr("Select all", "Выбрать всё"), "Ctrl+A", true) {
                     actions.push(Action::SelectAll);

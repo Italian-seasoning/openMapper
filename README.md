@@ -76,6 +76,9 @@ experienced map makers.
   "Load image file…" for a tile (or drop the picture on the window with the Tiles tool and a tile
   clicked), or one picture over a rectangle of tiles, cut into their pieces; turned (90° steps or
   any angle), mirrored, moved and scaled by eye with the 3D view following.
+* **Find in map** (Edit menu or `Ctrl+F`): every kind of object and spline the map uses,
+  with how many, by name, file or IDCode; select them all, go from one to the next, or replace
+  them all with the object (road type) chosen in the catalogue in one undo step.
 * **Texts on objects**: street signs, stop plates and line numbers show their labels in the
   view, drawn with OMSI's `.oft` fonts as the game draws them (`[texttexture]`); an object's
   texts are listed by name in its properties (`@` starts a new line).
@@ -127,7 +130,7 @@ experienced map makers.
   Option + drag turns and tilts.
 * **Keyboard:** `W A S D` / arrows move, `Q / E` turn, `1–7` tools, `M` overview map, `B` assets, `L` lines, `T` traffic, `I` satellite and terrain, `R` turn object, `Del`,
   `F` go to selection, `[ ]` brush size, `G` tile grid, `Ctrl+Z`, `Ctrl+Shift+Z`, `Ctrl+S`,
-  `Ctrl+C / X / V / D` copy, cut, paste, duplicate, `Ctrl+A` select all, `U` ruler, `Home` look straight down, `F5` test drive.
+  `Ctrl+C / X / V / D` copy, cut, paste, duplicate, `Ctrl+A` select all, `Ctrl+F` find in map, `U` ruler, `Home` look straight down, `F5` test drive.
 
 ## How it's built
 

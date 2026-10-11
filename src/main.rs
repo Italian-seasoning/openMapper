@@ -41,6 +41,7 @@ mod traffic;
 mod ui;
 mod ui_assets;
 mod ui_edit;
+mod ui_find;
 mod ui_geo;
 mod sample;
 mod ui_guide;

@@ -2674,6 +2674,36 @@ impl Editor {
         self.history.commit();
     }
 
+    /// Every object (or spline) of the type `from` made one of `to`, in one step. How many.
+    pub fn replace_everywhere(&mut self, from: &str, to: &str, splines: bool) -> usize {
+        let Some(doc) = self.doc.as_mut() else { return 0 };
+        self.history.begin(if splines { tr("Change road type", "Смена типа дороги") } else { tr("Replace objects", "Замена объектов") });
+        let mut n = 0;
+        let keys: Vec<TileKey> = doc.tiles.keys().copied().collect();
+        for k in keys {
+            let t = &doc.tiles[&k];
+            let here = if splines { t.tile.splines.iter().filter(|s| !s.deleted && s.file.eq_ignore_ascii_case(from)).count() } else { t.tile.objects.iter().chain(t.tile.attach_objects.iter()).filter(|o| o.file.eq_ignore_ascii_case(from)).count() };
+            if here == 0 {
+                continue;
+            }
+            self.history.touch_tile(doc, k);
+            let t = doc.tiles.get_mut(&k).unwrap();
+            if splines {
+                for s in t.tile.splines.iter_mut().filter(|s| !s.deleted && s.file.eq_ignore_ascii_case(from)) {
+                    s.file = to.to_string();
+                }
+            } else {
+                for o in t.tile.objects.iter_mut().chain(t.tile.attach_objects.iter_mut()).filter(|o| o.file.eq_ignore_ascii_case(from)) {
+                    o.file = to.to_string();
+                }
+            }
+            t.touch_content();
+            n += here;
+        }
+        self.history.commit();
+        n
+    }
+
     /// Height and gradient at one end of a spline (the properties); the neighbour linked
     /// there follows. Kept open as one step while a number is dragged.
     pub fn set_spline_end(&mut self, k: TileKey, id: i64, at_end: bool, z: Option<f64>, g: Option<f64>) {
@@ -3901,6 +3931,17 @@ mod tests {
         // and back with one undo
         ed.undo();
         assert_eq!(ed.doc.as_ref().unwrap().spline((0, 0), 1).unwrap().length, 30.0);
+    }
+
+    #[test]
+    fn replacing_a_type_everywhere_is_one_step() {
+        let mut ed = editor();
+        let from = ed.doc.as_ref().unwrap().object((0, 0), 1).unwrap().file.clone();
+        let n = ed.replace_everywhere(&from.to_uppercase(), "Sceneryobjects\\x\\new.sco", false);
+        assert_eq!(n, 2);
+        assert_eq!(ed.doc.as_ref().unwrap().object((0, 0), 2).unwrap().file, "Sceneryobjects\\x\\new.sco");
+        ed.undo();
+        assert_eq!(ed.doc.as_ref().unwrap().object((0, 0), 2).unwrap().file, from);
     }
 
     #[test]
