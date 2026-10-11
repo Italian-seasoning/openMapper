@@ -304,7 +304,7 @@ struct ArmGeo {
     vdir: f64,
     /// The roadway's own texture and where its lane (no markings) lies: (texture, u of a
     /// lane's middle, the roadway's u range, metres per repeat along the road).
-    road_tex: Option<(PathBuf, f64, f64, f64)>,
+    road_tex: Option<(PathBuf, f64, f64, f64, f64, f64)>,
 }
 
 fn arm_geometry(doc: &Document, assets: &mut Assets, a: &Arm) -> Option<ArmGeo> {
@@ -374,7 +374,11 @@ fn arm_geometry(doc: &Document, assets: &mut Assets, a: &Arm) -> Option<ArmGeo> 
             }
         }
         let range = (pts.iter().map(|q| q.2).fold(f64::MIN, f64::max) - pts.iter().map(|q| q.2).fold(f64::MAX, f64::min)).abs();
-        Some((tex, u, range, 1.0 / vs))
+        let width = (pts.iter().map(|q| q.0).fold(f64::MIN, f64::max) - pts.iter().map(|q| q.0).fold(f64::MAX, f64::min)).abs().max(0.5);
+        // (a lane's width: the street lanes' own, else half the roadway)
+        let lane = model.def.paths.iter().filter(|p| p.kind == 0).map(|p| p.width as f64).fold(0.0, f64::max);
+        let lane = if lane > 1.5 { lane / 0.9 } else { width * 0.5 };
+        Some((tex, u, range, 1.0 / vs, width, lane))
     });
     Some(ArmGeo { end, out, right_w, left_w, right, left, v0, vdir, road_tex })
 }
@@ -601,21 +605,41 @@ fn mesh_x(m: &Mesh, names: &[String]) -> String {
     x
 }
 
-/// A plain stretch of a road's own asphalt (the middle of a lane, mirrored to and fro so
-/// it tiles without a seam): the junction's roadway, the same colour and grain as the roads.
-fn clean_asphalt(tex: &Path, u: f64, range: f64, out: &Path) -> Option<()> {
+/// A plain square of a road's own surface, `period` metres a side (what the texture spans
+/// along the road): `band_m` metres of a lane's middle (no markings), as wide as it is on
+/// the road, mirrored to and fro across so it tiles without a seam, and the texture's full
+/// length along. The junction's roadway, laid flat at the same scale, then has the roads'
+/// grain and colour, not a stretched smear.
+fn clean_asphalt(tex: &Path, u: f64, u_per_m: f64, period: f64, lane_m: f64, out: &Path) -> Option<()> {
     let img = omsi_texture::decode_file(tex).ok()?;
     let (w, h) = (img.width as usize, img.height as usize);
-    let band = (range * 0.08).max(0.01);
-    let size = 256usize;
+    let col = |uu: f64| -> f64 {
+        let sx = ((uu.rem_euclid(1.0) * w as f64) as usize).min(w - 1);
+        (0..h).step_by((h / 64).max(1)).map(|y| { let p = &img.rgba[(y * w + sx) * 4..][..3]; (p[0] as f64 + p[1] as f64 + p[2] as f64) / 765.0 }).sum::<f64>() / (h as f64 / (h / 64).max(1) as f64)
+    };
+    // painted lines at the lane's edges (brighter than its middle) stay out: a band of its
+    // middle, mirrored to and fro; joints or nothing there: the whole lane, repeated, so
+    // slabs keep their grid
+    let half_u = lane_m * 0.5 * u_per_m;
+    let mid = col(u);
+    let edge = (0..=6).map(|i| col(u - half_u + half_u * 0.08 * i as f64)).chain((0..=6).map(|i| col(u + half_u - half_u * 0.08 * i as f64))).fold(0.0, f64::max);
+    let painted = edge > mid + 0.12;
+    let (band_m, mirror) = if painted { ((lane_m * 0.5).clamp(0.8, 2.0), true) } else { (lane_m.clamp(1.0, 5.0), false) };
+    let band_u = (band_m * u_per_m).max(0.002);
+    let size = 512usize;
     let mut buf = image::RgbaImage::new(size as u32, size as u32);
     for y in 0..size {
+        let sy = (y * h / size).min(h - 1);
         for x in 0..size {
-            let f = x as f64 / size as f64;
-            let tri = 1.0 - (2.0 * f - 1.0).abs();
-            let uu = (u - band + 2.0 * band * tri).rem_euclid(1.0);
+            let m = x as f64 / size as f64 * period;
+            let t = if mirror {
+                let f = (m / band_m).rem_euclid(2.0);
+                if f < 1.0 { f } else { 2.0 - f }
+            } else {
+                (m / band_m).rem_euclid(1.0)
+            };
+            let uu = (u - band_u * 0.5 + band_u * t).rem_euclid(1.0);
             let sx = ((uu * w as f64) as usize).min(w - 1);
-            let sy = (y * h / size).min(h - 1);
             let p = &img.rgba[(sy * w + sx) * 4..][..4];
             buf.put_pixel(x as u32, y as u32, image::Rgba([p[0], p[1], p[2], 255]));
         }
@@ -663,11 +687,13 @@ pub fn make_with(doc: &mut Document, assets: &mut Assets, content: &Path, asphal
     // the roadway's texture: the roads' own asphalt, else the installation's
     let widest = geo.iter().filter(|g| g.road_tex.is_some()).max_by(|a, b| (a.left_w + a.right_w).total_cmp(&(b.left_w + b.right_w)));
     let (core_tex, period) = match widest.and_then(|g| g.road_tex.clone()) {
-        Some((tex, u, range, period)) => {
+        Some((tex, u, range, period, width, lane)) => {
             let stem = tex.file_stem().map(|s| s.to_string_lossy().to_string()).unwrap_or_else(|| "road".into());
-            let out = tex_dir.join(format!("om_{stem}_plain.png"));
+            let out = tex_dir.join(format!("om_{stem}_plain4.png"));
             if !out.exists() {
-                clean_asphalt(&tex, u, range, &out);
+                // (most of a lane: slabs and patches keep their size; the markings at its
+                // edges stay out)
+                clean_asphalt(&tex, u, range / width, period.clamp(2.0, 40.0), lane, &out);
             }
             (out.exists().then_some(out).or_else(|| asphalt.map(Path::to_path_buf)), period.clamp(2.0, 40.0))
         }
