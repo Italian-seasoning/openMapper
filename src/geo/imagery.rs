@@ -105,12 +105,6 @@ impl Mosaic {
         Ok(Mosaic { z, x0, y0, nx, ny, px, rgb, coarser })
     }
 
-    /// A mosaic of given pictures (tests).
-    #[cfg(test)]
-    pub fn from_parts(z: u8, x0: u32, y0: u32, nx: u32, ny: u32, px: u32, rgb: Vec<u8>) -> Mosaic {
-        Mosaic { z, x0, y0, nx, ny, px, rgb, coarser: false }
-    }
-
     /// Where a Web Mercator position falls, in the mosaic's pixels (pixel centres at .5).
     fn pixel(&self, m: DVec2) -> (f64, f64) {
         let s = (1u64 << self.z) as f64 * self.px as f64;
