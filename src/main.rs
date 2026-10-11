@@ -34,6 +34,7 @@ mod roads;
 mod roundabout;
 mod rows;
 mod selection;
+mod switches;
 mod timetable;
 mod traffic;
 mod ui;

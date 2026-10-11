@@ -375,11 +375,15 @@ fn load_object(path: &Path, omsi: &Path, content: &Path) -> Option<ObjectModel> 
         hi = Vec3::new(1.0, 1.0, 2.0);
     }
     let mut helpers = Vec::new();
+    // OMSI writes a helper's place as x, height, forward (Direct3D's y up); openMapper's
+    // junctions of before wrote x, forward, height and are read so still
+    let legacy = std::fs::read(path).map(|b| { let t = omsi_cfg::decode_text(&b); t.contains("openMapper junction:") && !t.contains("helpers=omsi") }).unwrap_or(false);
     for h in &sco.spline_helpers {
+        let (fwd, up) = if legacy { (h.y, h.z) } else { (h.z, h.y) };
         // both ends, each with the heading that leads out of the junction there
-        helpers.push(([h.x, h.y, h.z, h.heading + 180.0], h.spline.clone()));
+        helpers.push(([h.x, fwd, up, h.heading + 180.0], h.spline.clone()));
         let c = omsi_geometry::SplineCurve {
-            start: glam::DVec3::new(h.x as f64, h.y as f64, h.z as f64),
+            start: glam::DVec3::new(h.x as f64, fwd as f64, up as f64),
             heading_deg: h.heading as f64,
             length: h.length as f64,
             radius: h.radius as f64,

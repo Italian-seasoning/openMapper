@@ -208,6 +208,8 @@ pub struct Editor {
     /// A road being drawn from or into a junction plate (its IDCode, centre, radius).
     road_plate_start: Option<(i64, DVec3, f64)>,
     road_plate_end: Option<(i64, DVec3, f64)>,
+    /// Switches the track being drawn lays where it leaves or joins another track.
+    switch_plans: Vec<crate::switches::Plan>,
     /// A road end being dragged onto a plate.
     reshape_plate: Option<(i64, DVec3, f64)>,
     /// The options of junctions shown in the properties (read from their files).
@@ -349,6 +351,7 @@ impl Default for Editor {
             pending_arms: Default::default(),
             road_plate_start: None,
             road_plate_end: None,
+            switch_plans: Vec::new(),
             reshape_plate: None,
             junction_options: Default::default(),
             session_first_id: i64::MAX,
@@ -1269,6 +1272,20 @@ impl Editor {
         !self.drawing_paths() && self.road_type.as_deref().and_then(|r| assets.spline(r)).map(|m| m.is_track()).unwrap_or(false)
     }
 
+    /// A switch with its toe at `toe`, opening towards `heading`, its branch to the left or
+    /// right: the plan and its diverging heel (place, heading out of the switch). None while
+    /// the switch's model loads, or where the installation has none.
+    fn switch_plan(&self, assets: &mut Assets, toe: DVec3, heading: f64, left: bool) -> Option<(crate::switches::Plan, (DVec3, f64))> {
+        let track = self.road_type.as_deref()?;
+        let rel = crate::switches::object_for(track, left);
+        let model = assets.object(&rel)?;
+        let shape = crate::switches::Shape::of(&model)?;
+        let (mut pos, out) = shape.world(shape.branch, toe, heading);
+        pos.z = self.doc.as_ref().map(|d| d.ground(pos.truncate())).unwrap_or(toe.z);
+        let plan = crate::switches::Plan { rel, toe, heading, length: shape.length(), origin: shape.origin(toe, heading) };
+        Some((plan, (pos, out)))
+    }
+
     /// The way a spline runs at a point in its middle (degrees).
     fn heading_in(&self, mid: ((i32, i32), i64, f64, f64)) -> Option<f64> {
         let (k, id, at, _) = mid;
@@ -1344,19 +1361,42 @@ impl Editor {
         // across it
         let track = self.drawing_track(assets);
         let mut fixed = fixed;
+        self.switch_plans.clear();
         if track {
             if let Some(h) = start.mid.and_then(|m| self.heading_in(m)) {
-                // (the way along the track that leans towards where the new one goes)
+                // (the way along the track that leans towards where the new one goes, and the
+                // side it goes off to)
                 let towards = target - start.pos.truncate();
-                start.heading = if roads::dir(h).dot(towards) >= 0.0 { h } else { roads::norm_deg(h + 180.0) };
+                let travel = if roads::dir(h).dot(towards) >= 0.0 { h } else { roads::norm_deg(h + 180.0) };
+                let left = towards.dot(roads::right(travel)) < 0.0;
+                match self.switch_plan(assets, start.pos, travel, left) {
+                    // a switch: the new track leaves from its diverging heel
+                    Some((plan, (pos, heading))) => {
+                        start.pos = pos;
+                        start.heading = heading;
+                        self.switch_plans.push(plan);
+                    }
+                    None => start.heading = travel,
+                }
                 fixed = true;
             }
             if let Some(a) = snap.filter(|a| a.mid.is_some()) {
                 if let Some(h) = self.heading_in(a.mid.unwrap()) {
-                    let towards = a.pos.truncate() - start.pos.truncate();
-                    let arrive = if roads::dir(h).dot(towards) >= 0.0 { h } else { roads::norm_deg(h + 180.0) };
-                    target = a.pos.truncate();
-                    end_anchor = Some(Anchor { pos: a.pos, heading: roads::norm_deg(arrive + 180.0), spline: None, mid: None });
+                    // a switch whose heels face the new track: it arrives at the diverging one
+                    let from = start.pos.truncate() - a.pos.truncate();
+                    let open = if roads::dir(h).dot(from) >= 0.0 { h } else { roads::norm_deg(h + 180.0) };
+                    let left = from.dot(roads::right(open)) < 0.0;
+                    match self.switch_plan(assets, a.pos, open, left) {
+                        Some((plan, (pos, heading))) => {
+                            target = pos.truncate();
+                            end_anchor = Some(Anchor { pos, heading, spline: None, mid: None });
+                            self.switch_plans.push(plan);
+                        }
+                        None => {
+                            target = a.pos.truncate();
+                            end_anchor = Some(Anchor { pos: a.pos, heading: open, spline: None, mid: None });
+                        }
+                    }
                 }
             }
         }
@@ -1443,10 +1483,17 @@ impl Editor {
             if self.drawing_track(assets) {
                 // a switch: the track met is cut where the new one leaves or joins it, so the
                 // rails' lanes have ends there for trains to choose between
+                let plans = std::mem::take(&mut self.switch_plans);
                 let switched = !mids.is_empty();
                 if let Some(doc) = self.doc.as_mut() {
-                    for (k, id, at, _) in mids {
-                        doc.split_spline(k, id, at);
+                    if plans.is_empty() {
+                        for (k, id, at, _) in mids {
+                            doc.split_spline(k, id, at);
+                        }
+                    }
+                    // the switch objects, the main track taken out under them
+                    for p in &plans {
+                        crate::switches::lay(doc, p);
                     }
                 }
                 if switched {
@@ -2041,6 +2088,11 @@ impl Editor {
                 }
             }
             Tool::Roads => {
+                // the switches the track being drawn lays
+                for p in &self.switch_plans {
+                    let o = DVec3::new(p.origin.x, p.origin.y, doc.ground(p.origin.truncate()));
+                    x.ghosts.push(Ghost { rel: p.rel.clone(), world: o, rot: [p.heading, 0.0, 0.0], tint: [0.35, 0.85, 0.45, 0.4] });
+                }
                 // a roundabout being laid out: its ring
                 if let (Some((c, r)), Some(rel)) = (self.ring_radius(), &self.road_type) {
                     for sg in crate::roundabout::ring(c.truncate(), r, doc.global.left_hand_traffic) {
@@ -3960,15 +4012,24 @@ mod tests {
     }
 
     #[test]
-    fn a_track_drawn_from_a_track_branches_off_as_a_switch() {
+    fn a_track_drawn_from_a_track_lays_a_switch() {
         let rail = "Splines\\Ruede\\rail_concrete_01.sli";
         let Some(mut assets) = installed_spline(rail) else {
             eprintln!("no OMSI 2 here: skipped");
             return;
         };
-        assert!(assets.spline(rail).unwrap().is_track());
+        // (the switch's model loaded too: the plan waits for it)
+        let sw = crate::switches::object_for(rail, false);
+        for _ in 0..500 {
+            if assets.object(&sw).is_some() || assets.object_failed(&sw) {
+                break;
+            }
+            assets.poll();
+            std::thread::sleep(std::time::Duration::from_millis(10));
+        }
+        assert!(assets.object(&sw).is_some(), "{sw} is in the installation");
         let mut doc = flat_map(1);
-        add_spline(&mut doc, (0, 0), 3, 50.0, 50.0, 0.0, 100.0, 0, 0);
+        add_spline(&mut doc, (0, 0), 3, 50.0, 50.0, 0.0, 150.0, 0, 0);
         doc.tiles.get_mut(&(0, 0)).unwrap().tile.splines[0].file = rail.into();
         let mut ed = Editor::default();
         ed.open(doc);
@@ -3976,23 +4037,27 @@ mod tests {
         ed.road_type = Some(rail.into());
         ed.inherit_type = false;
         let lib = Library::default();
-        // start on the track's middle, go off to the north-east
+        // start on the track's middle, go off to the north-east (to the right)
         ed.cursor = Some(DVec3::new(50.3, 100.0, 0.0));
         ed.plan_road(&mut assets);
         assert!(ed.road_snap.map(|a| a.mid.is_some()).unwrap_or(false), "the track's middle is a place to start");
         ed.road_click(&mut assets, &lib);
-        ed.cursor = Some(DVec3::new(70.0, 160.0, 0.0));
+        ed.cursor = Some(DVec3::new(80.0, 180.0, 0.0));
         ed.plan_road(&mut assets);
+        assert_eq!(ed.switch_plans.len(), 1);
         ed.road_click(&mut assets, &lib);
         let doc = ed.doc.as_ref().unwrap();
-        let splines = &doc.tiles[&(0, 0)].tile.splines;
-        // the track is cut where the new one leaves it, and no junction plate was made
+        let t = &doc.tiles[&(0, 0)].tile;
+        // a right-hand switch at the toe, facing north
+        let o = t.objects.iter().find(|o| o.file.contains("EW190_R")).expect("a switch object");
+        assert!(o.rot[0].abs() < 1.0 || (o.rot[0] - 360.0).abs() < 1.0, "{}", o.rot[0]);
+        // the main track: up to the toe, then on again from the heels, 27 m on
         let old = doc.spline((0, 0), 3).unwrap();
         assert!((old.length - 50.0).abs() < 0.5, "{}", old.length);
-        assert!(doc.tiles[&(0, 0)].tile.objects.is_empty());
-        // the branch leaves along the track (north), not across it
-        let branch = splines.iter().find(|s| s.id != 3 && s.id != old.next_id).unwrap();
-        assert!((branch.pos[0] - 50.0).abs() < 0.5 && (branch.pos[1] - 100.0).abs() < 0.5);
-        assert!(roads::norm_deg(branch.heading).min(360.0 - roads::norm_deg(branch.heading)) < 1.0, "{}", branch.heading);
+        assert!(t.splines.iter().any(|s| (s.pos[1] - 127.0).abs() < 0.6 && s.pos[0].abs() - 50.0 < 0.1), "the track goes on from the straight heel");
+        // the branch leaves the diverging heel, a little right and turned a little right
+        let branch = t.splines.iter().find(|s| s.pos[0] > 51.0).expect("the new track");
+        assert!((branch.pos[0] - 51.82).abs() < 0.2 && (branch.pos[1] - 126.9).abs() < 0.3, "{:?}", branch.pos);
+        assert!((branch.heading - 6.34).abs() < 0.5, "{}", branch.heading);
     }
 }

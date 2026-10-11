@@ -130,7 +130,8 @@ const OPTIONS_TAG: &str = "openMapper junction:";
 impl Options {
     fn line(&self) -> String {
         let c: Vec<String> = self.crossings.iter().map(|h| format!("{h:.1}")).collect();
-        format!("{OPTIONS_TAG} lights={} main={:.0} side={:.0} crossings={}", self.lights as i32, self.main_green, self.side_green, c.join(","))
+        // (helpers=omsi: its spline helpers are in OMSI's order, x height forward)
+        format!("{OPTIONS_TAG} lights={} main={:.0} side={:.0} crossings={} helpers=omsi", self.lights as i32, self.main_green, self.side_green, c.join(","))
     }
 
     /// The options written in a junction's `.sco` text (defaults when none are).
@@ -719,7 +720,8 @@ pub fn make_with(doc: &mut Document, assets: &mut Assets, content: &Path, asphal
     for (g, a) in geo.iter().zip(arms) {
         let file = doc.spline(a.key, a.id).map(|s| s.file.clone()).unwrap_or_default();
         let p = g.end - centre;
-        let _ = write!(sco, "[splinehelper]\n{file}\n{}\n{}\n{}\n{}\n0.1\n0\n\n", num(p.x), num(p.y), num(p.z), num(roads::norm_deg(g.out + 180.0)));
+        // (OMSI's order: x, height, forward)
+        let _ = write!(sco, "[splinehelper]\n{file}\n{}\n{}\n{}\n{}\n0.1\n0\n\n", num(p.x), num(p.z), num(p.y), num(roads::norm_deg(g.out + 180.0)));
     }
     for p in &recs {
         let s = &p.seg;
