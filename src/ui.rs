@@ -1411,6 +1411,7 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
     let mut new_pos: Option<(f64, f64)> = None;
     let mut ends = crate::ui_edit::EndsEdit::default();
     let mut spline_change: Option<(Option<String>, Option<bool>)> = None;
+    let mut whole_road = false;
     let Some(doc) = ed.doc.as_ref() else { return };
     Frame::new().inner_margin(Margin::same(8)).show(ui, |ui| {
         match sel {
@@ -1605,6 +1606,11 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
                         }
                     });
                 });
+                if s.prev_id != 0 || s.next_id != 0 {
+                    if ui.small_button(tr("Select the whole road", "Выбрать всю дорогу")).on_hover_text(tr("Every piece linked on from this one (or double-click the road)", "Все куски, связанные с этим (или двойной клик по дороге)")).clicked() {
+                        whole_road = true;
+                    }
+                }
                 ends = crate::ui_edit::spline_ends(ui, doc, k, id);
                 if let Some(rt) = &ed.road_type {
                     if !rt.eq_ignore_ascii_case(&s.file) {
@@ -1675,6 +1681,10 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
             }
         }
         Sel::Spline(k, id) => {
+            if whole_road {
+                ed.select_chain(k, id);
+                return;
+            }
             crate::ui_edit::apply_ends(ed, ui.ctx(), k, id, ends);
             crate::ui_edit::parallel_section(ui, ed, lib);
             crate::ui_edit::rows_section(ui, ed, lib);
@@ -1849,6 +1859,7 @@ fn controls(ctx: &egui::Context, st: &mut UiState) {
             ("Ctrl+C / X / V", tr("copy / cut / paste at the cursor", "копировать / вырезать / вставить у курсора")),
             ("Ctrl+D / Ctrl+A", tr("duplicate / select all", "дублировать / выбрать всё")),
             ("Ctrl+F", tr("find in map", "поиск по карте")),
+            (tr("Double-click a road", "Двойной клик по дороге"), tr("select all of it", "выбрать её целиком")),
             ("U", tr("ruler: click two points (distance, height, gradient)", "линейка: клик по двум точкам (расстояние, высота, уклон)")),
             ("F", tr("go to the selection", "перейти к выбранному")),
             ("Esc", tr("stop / deselect", "отмена / снять выбор")),

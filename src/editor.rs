@@ -202,6 +202,8 @@ pub struct Editor {
     /// A length and radius typed for a road, put in at the next tick (where the junctions
     /// its neighbour may end at are known).
     pub shape_request: Option<(TileKey, i64, f64, f64)>,
+    /// The last click on something with Select, and when (a second soon on a road: its chain).
+    last_click: Option<(Sel, Instant)>,
     /// openMapper's junctions whose arms changed: their plates are made again before the
     /// open history step is closed (the next tick, which has the models).
     pending_rebuild: Vec<i64>,
@@ -354,6 +356,7 @@ impl Default for Editor {
             move_delta: DVec2::ZERO,
             carry_preview: Vec::new(),
             shape_request: None,
+            last_click: None,
             pending_rebuild: Vec::new(),
             pending_options: Default::default(),
             pending_arms: Default::default(),
@@ -2395,6 +2398,14 @@ impl Editor {
             self.split_path_at(k, id, c.truncate());
             return;
         }
+        // a double click on a road: the whole road, all its pieces up to where it branches or ends
+        let double = self.last_click.map(|(s, t)| s == hit && t.elapsed().as_millis() < 450).unwrap_or(false);
+        self.last_click = Some((hit, Instant::now()));
+        if let (true, Sel::Spline(k, id)) = (double, hit) {
+            self.last_click = None;
+            self.select_chain(k, id);
+            return;
+        }
         if !self.is_selected(hit) {
             self.select(Some(hit));
         }
@@ -2408,6 +2419,26 @@ impl Editor {
             self.move_from = sels.iter().filter_map(|s| selection::origin_of(doc, *s)).collect();
             self.drag = Drag::Move { grab: c.truncate(), started: false };
         }
+    }
+
+    /// The spline and every one linked on from it either way: the road it is a piece of.
+    pub fn select_chain(&mut self, k: TileKey, id: i64) {
+        let Some(doc) = self.doc.as_ref() else { return };
+        let mut v = vec![Sel::Spline(k, id)];
+        let mut seen = std::collections::HashSet::from([id]);
+        let mut todo = vec![id];
+        while let Some(cur) = todo.pop() {
+            let Some((_, s)) = doc.find_spline(cur) else { continue };
+            for n in [s.prev_id, s.next_id] {
+                if n != 0 && seen.len() < 5000 && seen.insert(n) {
+                    if let Some((nk, _)) = doc.find_spline(n) {
+                        v.push(Sel::Spline(nk, n));
+                        todo.push(n);
+                    }
+                }
+            }
+        }
+        self.set_selection(v);
     }
 
     /// A point put into an AI path where it is nearest to `p`: the spline is cut there, so
