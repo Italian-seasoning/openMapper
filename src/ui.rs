@@ -1514,10 +1514,34 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
                         ui.label(id.to_string());
                     });
                     prop_row(ui, tr("Length", "Длина"), |ui| {
-                        ui.label(format!("{:.1} m", s.length));
+                        let mut l = s.length;
+                        // (the range takes in what is there: a value pulled into it would count as typed)
+                        if ui.add(egui::DragValue::new(&mut l).speed(0.1).range(s.length.min(0.5)..=s.length.max(5000.0)).max_decimals(2).suffix(" m")).changed() && l != s.length {
+                            ed.shape_request = Some((k, id, l, s.radius));
+                        }
                     });
                     prop_row(ui, tr("Radius", "Радиус"), |ui| {
-                        ui.label(if s.radius == 0.0 { tr("straight", "прямая").to_string() } else { format!("{:.0} m {}", s.radius.abs(), if s.radius > 0.0 { tr("right", "вправо") } else { tr("left", "влево") }) });
+                        ui.horizontal(|ui| {
+                            let mut r = s.radius.abs();
+                            // (f64::signum gives 1 for 0: a straight is no side)
+                            let mut side = if s.radius == 0.0 { 0.0 } else { s.radius.signum() };
+                            let mut changed = false;
+                            if side != 0.0 {
+                                changed = ui.add(egui::DragValue::new(&mut r).speed(0.5).range(s.radius.abs().min(3.0)..=s.radius.abs().max(20000.0)).max_decimals(1).suffix(" m")).changed() && r != s.radius.abs();
+                            }
+                            egui::ComboBox::from_id_salt("bend").selected_text(if side > 0.0 { tr("right", "вправо") } else if side < 0.0 { tr("left", "влево") } else { tr("straight", "прямая") }).width(80.0).show_ui(ui, |ui| {
+                                for (v, name) in [(0.0, tr("straight", "прямая")), (-1.0, tr("left", "влево")), (1.0, tr("right", "вправо"))] {
+                                    if ui.selectable_value(&mut side, v, name).changed() {
+                                        changed = true;
+                                    }
+                                }
+                            });
+                            if changed {
+                                // (a straight made a bend starts gently: ten times its length)
+                                let r = if r == 0.0 { (s.length * 10.0).max(50.0) } else { r };
+                                ed.shape_request = Some((k, id, s.length, side * r));
+                            }
+                        });
                     });
                     prop_row(ui, tr("Linked", "Связи"), |ui| {
                         ui.label(format!("{} / {}", if s.prev_id != 0 { tr("start", "начало") } else { "-" }, if s.next_id != 0 { tr("end", "конец") } else { "-" }));

@@ -14,7 +14,7 @@ experienced map makers.
 | Tool | Key | What it does |
 | --- | --- | --- |
 | Select | 1 | click an object or road · `Shift`+click adds or takes away · `Shift`/`Ctrl` + drag on empty ground selects with a box · drag the selection to move it all · `R` turns it round its middle · `Del` deletes it · `Ctrl+C / X / V / D` copy, cut, paste at the cursor, duplicate (links inside the copy kept, rows of objects and things hanging on them come along) · several selected: move, raise and turn by numbers, give every road one type |
-| Road shape | - | select a road: drag its end dots to move an end (a road joined there follows, tangent at the joint, its far end kept; an end at a junction stays), drag the middle dot to bend it. Heights and gradients at both ends in the properties, the joined road following |
+| Road shape | - | select a road: drag its end dots to move an end (a road joined there follows, tangent at the joint, its far end kept; an end at a junction stays), drag the middle dot to bend it. Heights, gradients and cant (banking) at both ends in the properties, the joined road following; length and radius (straight, left, right) by numbers, the road joined at its end carried along, tangent |
 | Roundabouts | - | Roads tool option: click the centre, then the ring (or drag out to it). A one-way ring of the chosen road type, anticlockwise where traffic keeps right and clockwise where it keeps left; the roads that ran into the circle are cut back and joined to the ring with junctions |
 | Drawing by numbers | - | each road is two clicks (going on from the end just built is an option); while a road is drawn: type its length, radius or heading in the fields at the view's corner (empty ones follow the cursor), `Shift` draws a straight, `Enter` builds it. "Keep the height" draws bridges and embankments: an even gradient, a rise typed for the end, the ground left alone (pillars: objects along the road) |
 | Junction lights and crossings | - | select one of openMapper's junctions: "Traffic lights" writes OMSI's light program into it (main road and side roads, greens editable) with the installation's own signal heads on poles bound to it, the AI stopping at red; zebra crossings per road, with a footway across. A road drawn into a plate, or a road end dropped on one, becomes another arm of it |
@@ -76,6 +76,9 @@ experienced map makers.
   "Load image file…" for a tile (or drop the picture on the window with the Tiles tool and a tile
   clicked), or one picture over a rectangle of tiles, cut into their pieces; turned (90° steps or
   any angle), mirrored, moved and scaled by eye with the 3D view following.
+* **Texts on objects**: street signs, stop plates and line numbers show their labels in the
+  view, drawn with OMSI's `.oft` fonts as the game draws them (`[texttexture]`); an object's
+  texts are listed by name in its properties (`@` starts a new line).
 * **Open any map**: OMSI 2's own (saved as a copy into the content folder) and mod maps.
 * **New map** from OMSI 2's own template (`template/NewMap`): size, keep right or left, base
   ground, and "Start with a sample": a ring road with stops, a start point, line 1 both ways,

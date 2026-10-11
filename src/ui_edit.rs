@@ -126,6 +126,8 @@ pub struct EndsEdit {
     change: Option<(bool, Option<f64>, Option<f64>)>,
     /// Both gradients to this.
     even: Option<f64>,
+    /// (at the end rather than the start, new cant)
+    cant: Option<(bool, f64)>,
 }
 
 /// A road's heights and gradients at its two ends.
@@ -135,20 +137,26 @@ pub fn spline_ends(ui: &mut egui::Ui, doc: &crate::doc::Document, k: TileKey, id
     let c = omsi_geometry::SplineCurve::from_map(s, crate::doc::tile_origin(k));
     let (mut z0, mut z1) = (c.point_at(0.0).z, c.end_point().z);
     let (mut g0, mut g1) = (c.slope_at(0.0) * 100.0, c.slope_at(s.length) * 100.0);
+    let (mut c0, mut c1) = (s.cant_start, s.cant_end);
     ui.add_space(6.0);
     ui.label(RichText::new(tr("Ends (joined roads follow)", "Концы (соседние дороги следуют)")).strong());
-    egui::Grid::new("spline ends").num_columns(3).spacing(Vec2::new(6.0, 5.0)).show(ui, |ui| {
+    egui::Grid::new("spline ends").num_columns(4).spacing(Vec2::new(6.0, 5.0)).show(ui, |ui| {
         ui.label("");
         ui.label(RichText::new(tr("height", "высота")).small().color(TEXT_DIM));
         ui.label(RichText::new(tr("gradient", "уклон")).small().color(TEXT_DIM));
+        ui.label(RichText::new(tr("cant", "вираж")).small().color(TEXT_DIM)).on_hover_text(tr("Banking across the road, %: positive lowers its right side (into a right bend)", "Поперечный наклон, %: плюс опускает правую сторону (в правый поворот)"));
         ui.end_row();
-        for (at_end, z, g, name) in [(false, &mut z0, &mut g0, tr("Start", "Начало")), (true, &mut z1, &mut g1, tr("End", "Конец"))] {
+        for (at_end, z, g, cant, name) in [(false, &mut z0, &mut g0, &mut c0, tr("Start", "Начало")), (true, &mut z1, &mut g1, &mut c1, tr("End", "Конец"))] {
             prop_row(ui, name, |ui| {
                 if ui.add(egui::DragValue::new(z).speed(0.02).max_decimals(2).suffix(" m")).changed() {
                     out.change = Some((at_end, Some(*z), None));
                 }
-                if ui.add(egui::DragValue::new(g).speed(0.05).range(-40.0..=40.0).max_decimals(2).suffix(" %")).changed() {
+                let lim = g.abs().max(40.0);
+                if ui.add(egui::DragValue::new(g).speed(0.05).range(-lim..=lim).max_decimals(2).suffix(" %")).changed() {
                     out.change = Some((at_end, None, Some(*g)));
+                }
+                if ui.add(egui::DragValue::new(cant).speed(0.05).range(-100.0..=100.0).max_decimals(2).suffix(" %")).changed() {
+                    out.cant = Some((at_end, *cant));
                 }
             });
         }
@@ -164,6 +172,10 @@ pub fn apply_ends(ed: &mut Editor, ctx: &egui::Context, k: TileKey, id: i64, e: 
     if let Some(g) = e.even {
         ed.set_spline_end(k, id, false, None, Some(g));
         ed.set_spline_end(k, id, true, None, Some(g));
+    }
+    if let Some((at_end, c)) = e.cant {
+        ed.set_spline_cant(k, id, at_end, c);
+        return;
     }
     match e.change {
         Some((at_end, z, g)) => ed.set_spline_end(k, id, at_end, z, g),

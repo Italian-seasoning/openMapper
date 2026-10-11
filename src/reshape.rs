@@ -356,6 +356,31 @@ pub fn set_end(doc: &mut Document, k: TileKey, id: i64, at_end: bool, z: Option<
     set_own_end(doc, nk, nid, !n_start, z, g.map(|g| if same { g } else { -g }));
 }
 
+/// Set a spline's cant (%, positive: its right side lower) at its end or start; the spline
+/// linked there takes the same banking at the joint.
+pub fn set_cant(doc: &mut Document, k: TileKey, id: i64, at_end: bool, cant: f64) {
+    let Some(s) = doc.spline(k, id).cloned() else { return };
+    set_own_cant(doc, k, id, at_end, cant);
+    let link = if at_end { s.next_id } else { s.prev_id };
+    let Some((nk, n)) = doc.find_spline(link) else { return };
+    let n_start = if n.prev_id == id { true } else if n.next_id == id { false } else { return };
+    // (a neighbour running back has its right side on this one's left)
+    let same = at_end == n_start;
+    let nid = n.id;
+    set_own_cant(doc, nk, nid, !n_start, if same { cant } else { -cant });
+}
+
+fn set_own_cant(doc: &mut Document, k: TileKey, id: i64, at_end: bool, cant: f64) {
+    let Some(t) = doc.tiles.get_mut(&k) else { return };
+    let Some(s) = t.tile.splines.iter_mut().find(|s| s.id == id && !s.deleted) else { return };
+    if at_end {
+        s.cant_end = cant;
+    } else {
+        s.cant_start = cant;
+    }
+    t.touch_content();
+}
+
 fn set_own_end(doc: &mut Document, k: TileKey, id: i64, at_end: bool, z: Option<f64>, g: Option<f64>) {
     let Some(old) = doc.spline(k, id) else { return };
     let e = ends_of(old, k);
@@ -389,6 +414,17 @@ mod tests {
     fn curve(doc: &Document, id: i64) -> SplineCurve {
         let (k, s) = doc.find_spline(id).unwrap();
         SplineCurve::from_map(s, tile_origin(k))
+    }
+
+    #[test]
+    fn a_cant_carries_over_the_joint() {
+        let mut doc = flat_map(1);
+        add_spline(&mut doc, (0, 0), 1, 10.0, 10.0, 0.0, 50.0, 0, 2);
+        // (the second runs back towards the first)
+        add_spline(&mut doc, (0, 0), 2, 10.0, 110.0, 180.0, 50.0, 0, 1);
+        set_cant(&mut doc, (0, 0), 1, true, 4.0);
+        assert_eq!(doc.find_spline(1).unwrap().1.cant_end, 4.0);
+        assert_eq!(doc.find_spline(2).unwrap().1.cant_end, -4.0);
     }
 
     #[test]

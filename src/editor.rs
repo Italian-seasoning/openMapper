@@ -199,6 +199,9 @@ pub struct Editor {
     move_delta: DVec2,
     /// How those ends would follow, shown while dragging.
     carry_preview: Vec<reshape::Plan>,
+    /// A length and radius typed for a road, put in at the next tick (where the junctions
+    /// its neighbour may end at are known).
+    pub shape_request: Option<(TileKey, i64, f64, f64)>,
     /// openMapper's junctions whose arms changed: their plates are made again before the
     /// open history step is closed (the next tick, which has the models).
     pending_rebuild: Vec<i64>,
@@ -348,6 +351,7 @@ impl Default for Editor {
             move_arms: Vec::new(),
             move_delta: DVec2::ZERO,
             carry_preview: Vec::new(),
+            shape_request: None,
             pending_rebuild: Vec::new(),
             pending_options: Default::default(),
             pending_arms: Default::default(),
@@ -750,6 +754,9 @@ impl Editor {
     /// Continuous work while a button is held (brushes, dragging).
     pub fn tick(&mut self, assets: &mut Assets, dt: f64, held: bool) {
         self.learn(assets);
+        if let Some((k, id, length, radius)) = self.shape_request.take() {
+            self.set_spline_shape(assets, k, id, length, radius);
+        }
         // (an undo in between closed the step: the plates are as they were)
         if !self.pending_rebuild.is_empty() && self.drag == Drag::None {
             if self.history.is_open() {
@@ -2676,6 +2683,54 @@ impl Editor {
         reshape::set_end(doc, k, id, at_end, z, g);
     }
 
+    /// A road's length and radius by numbers: its start stays, the road joined at its end
+    /// follows, tangent, its far end kept.
+    fn set_spline_shape(&mut self, assets: &mut Assets, k: TileKey, id: i64, length: f64, radius: f64) {
+        let joined = self.helper_anchors(assets);
+        let locked = |q: DVec2| joined.iter().any(|j| (j.truncate() - q).length() < 0.6);
+        let Some(doc) = self.doc.as_ref() else { return };
+        let Some(s) = doc.spline(k, id).cloned() else { return };
+        let org = tile_origin(k);
+        let old = omsi_geometry::SplineCurve::from_map(&s, org);
+        let mut new = s.clone();
+        new.length = length;
+        new.radius = radius;
+        let c = omsi_geometry::SplineCurve::from_map(&new, org);
+        let p = c.end_point();
+        let mut plan = None;
+        if let Some((nk, n)) = doc.find_spline(s.next_id) {
+            let at_end = if n.prev_id == id { false } else if n.next_id == id { true } else { return };
+            match reshape::carry_end(doc, nk, n.id, at_end, p.truncate(), crate::roads::norm_deg(c.heading_at(length) + 180.0), p.z - old.end_point().z, &locked) {
+                Ok(pl) => plan = Some(pl),
+                Err(e) => {
+                    self.toast(e);
+                    return;
+                }
+            }
+        }
+        self.begin_panel_step(tr("Edit road", "Изменение дороги"));
+        let Some(doc) = self.doc.as_mut() else { return };
+        selection::touch_spline(&mut self.history, doc, k, id);
+        if let Some(t) = doc.tiles.get_mut(&k) {
+            if let Some(x) = t.tile.splines.iter_mut().find(|x| x.id == id && !x.deleted) {
+                x.length = length;
+                x.radius = radius;
+            }
+            t.touch_content();
+        }
+        if let Some(plan) = plan {
+            self.apply_plan(&plan);
+        }
+    }
+
+    /// A road's cant (%) at one end; the road joined there follows.
+    pub fn set_spline_cant(&mut self, k: TileKey, id: i64, at_end: bool, cant: f64) {
+        self.begin_panel_step(tr("Edit road", "Изменение дороги"));
+        let Some(doc) = self.doc.as_mut() else { return };
+        selection::touch_spline(&mut self.history, doc, k, id);
+        reshape::set_cant(doc, k, id, at_end, cant);
+    }
+
     // ------------------------------------------------------------ junctions and ground
 
     /// Learn the types of what is selected, as their models come in.
@@ -3824,6 +3879,28 @@ mod tests {
         let mut ed = Editor::default();
         ed.open(doc);
         ed
+    }
+
+    /// A road made longer by numbers: the road joined at its end starts where it now ends,
+    /// tangent, and still ends where it did.
+    #[test]
+    fn a_length_typed_carries_the_next_road() {
+        let mut doc = flat_map(1);
+        add_spline(&mut doc, (0, 0), 1, 50.0, 50.0, 0.0, 30.0, 0, 2);
+        add_spline(&mut doc, (0, 0), 2, 50.0, 80.0, 0.0, 60.0, 1, 0);
+        let mut ed = Editor::default();
+        ed.open(doc);
+        let mut assets = Assets::new(std::env::temp_dir().join("openmapper-no-omsi"), std::env::temp_dir().join("openmapper-no-content"));
+        ed.shape_request = Some(((0, 0), 1, 40.0, 0.0));
+        ed.tick(&mut assets, 0.016, false);
+        let doc = ed.doc.as_ref().unwrap();
+        assert_eq!(doc.spline((0, 0), 1).unwrap().length, 40.0);
+        let c = omsi_geometry::SplineCurve::from_map(doc.spline((0, 0), 2).unwrap(), DVec2::ZERO);
+        assert!((c.point_at(0.0).truncate() - DVec2::new(50.0, 90.0)).length() < 1e-6, "{:?}", c.point_at(0.0));
+        assert!((c.end_point().truncate() - DVec2::new(50.0, 140.0)).length() < 1e-3, "{:?}", c.end_point());
+        // and back with one undo
+        ed.undo();
+        assert_eq!(ed.doc.as_ref().unwrap().spline((0, 0), 1).unwrap().length, 30.0);
     }
 
     #[test]
