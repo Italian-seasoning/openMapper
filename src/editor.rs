@@ -2037,6 +2037,33 @@ impl Editor {
         self.picked_tile = Some(k);
     }
 
+    /// A ring of new tiles round the whole map (corners too), in one step. How many.
+    pub fn grow_map(&mut self) -> usize {
+        let Some(doc) = self.doc.as_mut() else { return 0 };
+        let mut new: Vec<TileKey> = Vec::new();
+        for k in doc.tiles.keys() {
+            for dx in -1..=1 {
+                for dy in -1..=1 {
+                    let n = (k.0 + dx, k.1 + dy);
+                    if !doc.tiles.contains_key(&n) && !new.contains(&n) {
+                        new.push(n);
+                    }
+                }
+            }
+        }
+        new.sort();
+        self.history.begin(tr("Add tiles", "Добавление тайлов"));
+        self.history.touch_global(doc);
+        // (side neighbours first: a corner tile takes its edges' heights from them)
+        new.sort_by_key(|k| std::cmp::Reverse([(-1, 0), (1, 0), (0, -1), (0, 1)].iter().filter(|(dx, dy)| doc.tiles.contains_key(&(k.0 + dx, k.1 + dy))).count()));
+        for k in &new {
+            self.history.touch_tile(doc, *k);
+            doc.add_tile(*k);
+        }
+        self.history.commit();
+        new.len()
+    }
+
     fn remove_tile(&mut self, k: TileKey) {
         let Some(doc) = self.doc.as_mut() else { return };
         if !doc.tiles.contains_key(&k) {
@@ -4018,6 +4045,16 @@ mod tests {
         // and back with one undo
         ed.undo();
         assert_eq!(ed.doc.as_ref().unwrap().spline((0, 0), 1).unwrap().length, 30.0);
+    }
+
+    #[test]
+    fn a_ring_of_tiles_is_one_step() {
+        let mut ed = editor();
+        assert_eq!(ed.grow_map(), 8);
+        assert_eq!(ed.doc.as_ref().unwrap().tiles.len(), 9);
+        assert_eq!(ed.grow_map(), 16);
+        ed.undo();
+        assert_eq!(ed.doc.as_ref().unwrap().tiles.len(), 9);
     }
 
     #[test]

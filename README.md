@@ -36,7 +36,7 @@ experienced map makers.
 | Game logic | 4 | start points (`[entrypoint]`), bus stops, car parks (one by one or in a row along the kerb), AI paths for cars and people drawn like roads and snapped to lane ends, sound sources and other editor-only helpers |
 | Terrain | 5 | raise / lower / smooth / flatten brush |
 | Paint | 6 | painting with the map's ground textures (OMSI `[groundtex]` masks) |
-| Tiles | 7 | add a 300 × 300 m tile next to the map, remove one with right-click |
+| Tiles | 7 | add a 300 × 300 m tile next to the map (or a whole ring of them round it with one button), remove one with right-click |
 
 * **Lines and timetable** (Map menu or `L`): lines, their trips and tours, written as OMSI
   2's `TTData` (`.ttl`, `.ttp`, `.ttr`, `StnLinks.cfg`, `Busstops.cfg`). Pick the stops on the

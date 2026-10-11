@@ -909,6 +909,11 @@ fn tool_panel(
                 ui.label(format!("{:.2} km²", n as f64 * crate::doc::tile_size().powi(2) / 1e6));
                 ui.end_row();
             });
+            ui.add_space(4.0);
+            if ui.button(icons::labelled(Icon::Add, tr("A ring of tiles round the map", "Кольцо тайлов вокруг карты"))).on_hover_text(tr("Every free place beside the map, corners too, gets a tile at the height of its neighbours", "Каждое свободное место рядом с картой, и углы тоже, получает тайл на высоте соседей")).clicked() {
+                let added = ed.grow_map();
+                ed.toast(format!("{} {added}", tr("Tiles added:", "Тайлов добавлено:")));
+            }
             crate::ui_geo::tiles_panel(ui, &mut st.geo);
         }
         Tool::Select => {
