@@ -1517,9 +1517,14 @@ impl Editor {
                             doc.split_spline(k, id, at);
                         }
                     }
-                    // the switch objects, the main track taken out under them
+                    // the switch objects, the main track taken out under them; where the main
+                    // track bends, it is brought round to the switch's straight heel again
                     for p in &plans {
-                        crate::switches::lay(doc, p);
+                        let Some(laid) = crate::switches::lay(doc, p) else { continue };
+                        if let (Some(r), Some(shape)) = (laid.rejoin, assets.object(&p.rel).and_then(|m| crate::switches::Shape::of(&m))) {
+                            let heel = shape.world(shape.straight, p.toe, p.heading);
+                            rejoin_track(doc, r, heel);
+                        }
                     }
                 }
                 if switched {
@@ -3522,6 +3527,60 @@ fn road_profile(doc: &Document, pieces: &[Seg], z0: f64, z1: f64) -> Vec<(f64, f
 
 /// Piece `i` of a planned road as a `[spline_h]` (its height a smooth cubic between the
 /// joints' heights and gradients), tile-local to `org`.
+/// Bring a track that goes on beyond a switch round to the switch's straight heel: where
+/// it bent away under the (straight) switch it is cut back a little more and joined to the
+/// heel by a pair of arcs, tangent at both ends. `end`: the track's spline and whether its
+/// end (else its start) is where it stops; `heel`: the heel's place and heading out.
+fn rejoin_track(doc: &mut Document, end: (TileKey, i64, bool), heel: (DVec3, f64)) {
+    let at = |doc: &Document, e: (TileKey, i64, bool)| -> Option<(DVec3, f64, String)> {
+        let s = doc.spline(e.0, e.1)?;
+        let c = omsi_geometry::SplineCurve::from_map(s, tile_origin(e.0));
+        // (the heading on along the track, away from the switch)
+        Some(if e.2 { (c.end_point(), roads::norm_deg(c.heading_at(s.length) + 180.0), s.file.clone()) } else { (c.point_at(0.0), s.heading, s.file.clone()) })
+    };
+    let Some((p, h, _)) = at(doc, end) else { return };
+    let off = (p.truncate() - heel.0.truncate()).length();
+    let turn = (roads::norm_deg(h - heel.1 + 180.0) - 180.0).abs();
+    if off < 0.05 && turn < 0.2 {
+        return;
+    }
+    // (room for the arcs to bring it round as gently as a track bends, some 300 m: an S of
+    // that radius moves sideways L² / 4R over its length L, and turns L / R)
+    const R: f64 = 300.0;
+    let room = (4.0 * R * off).sqrt() + R * turn.to_radians();
+    let Some(end) = doc.trim(end.0, end.1, end.2, room.clamp(10.0, 150.0)) else { return };
+    let Some((q, hq, file)) = at(doc, end) else { return };
+    let Some(segs) = roads::biarc(heel.0.truncate(), heel.1, q.truncate(), hq) else { return };
+    let pieces = roads::split(&segs, 50.0);
+    let profile = even_profile(&pieces, heel.0.z.max(q.z.min(heel.0.z + 5.0)), q.z);
+    let ids: Vec<i64> = pieces.iter().map(|_| doc.new_id()).collect();
+    for (i, piece) in pieces.iter().enumerate() {
+        let k = tile_of(piece.start);
+        let Some(t) = doc.tiles.get_mut(&k) else { continue };
+        let mut sp = piece_spline(&file, piece, &profile, i, tile_origin(k));
+        sp.id = ids[i];
+        sp.prev_id = if i > 0 { ids[i - 1] } else { 0 };
+        sp.next_id = if i + 1 < ids.len() { ids[i + 1] } else { 0 };
+        t.tile.splines.push(sp);
+        t.touch_content();
+    }
+    // the last piece runs on into the track
+    let last = *ids.last().unwrap();
+    if let Some((k, s)) = doc.find_spline(end.1).map(|(k, s)| (k, s.id)) {
+        if let Some(t) = doc.tiles.get_mut(&k) {
+            if let Some(sp) = t.tile.splines.iter_mut().find(|x| x.id == s) {
+                if end.2 { sp.next_id = last } else { sp.prev_id = last }
+            }
+            t.touch_content();
+        }
+        if let Some(pk) = doc.find_spline(last).map(|(k, _)| k) {
+            if let Some(sp) = doc.tiles.get_mut(&pk).and_then(|t| t.tile.splines.iter_mut().find(|x| x.id == last)) {
+                sp.next_id = s;
+            }
+        }
+    }
+}
+
 fn piece_spline(rel: &str, p: &Seg, profile: &[(f64, f64)], i: usize, org: DVec2) -> MapSpline {
     let (za, ga) = profile[i];
     let (zb, gb) = profile[i + 1];
@@ -4116,5 +4175,93 @@ mod tests {
         assert!(ed.best_switch(&mut assets, tracks[1], true).ends_with("EW190_L_Beton.sco"));
         assert!(ed.best_switch(&mut assets, tracks[2], true).ends_with("EW190_L_Klp_0_0.sco"));
         assert!(ed.best_switch(&mut assets, tracks[3], true).ends_with("EW190_L_Beton.sco"));
+    }
+
+    #[test]
+    fn a_road_into_another_makes_a_t_junction() {
+        let road_s = std::env::var("TJ_MAIN").unwrap_or("Splines\\Marcel\\str_2spur_8m_borkumer1.sli".into());
+        let road = road_s.as_str();
+        let Some(mut assets) = installed_spline(road) else { return };
+        let content = std::env::temp_dir().join(format!("om-tj-{}", std::process::id()));
+        std::fs::create_dir_all(&content).unwrap();
+        let mut doc = flat_map(1);
+        doc.dir = content.join("maps").join("TJ");
+        let mut ed = Editor::default();
+        ed.content_dir = Some(content.clone());
+        ed.open(doc);
+        ed.set_tool(Tool::Roads);
+        ed.road_type = Some(road.into());
+        let lib = Library::default();
+        let mut click = |ed: &mut Editor, a: &mut Assets, x: f64, y: f64| {
+            ed.cursor = Some(DVec3::new(x, y, 0.0));
+            ed.plan_road(a);
+            ed.road_click(a, &lib);
+            ed.tick(a, 0.0, false);
+        };
+        click(&mut ed, &mut assets, 60.0, 150.0);
+        click(&mut ed, &mut assets, 240.0, 150.0);
+        ed.right_click();
+        if let Ok(b) = std::env::var("TJ_BRANCH") {
+            while assets.spline(&b).is_none() && !assets.spline_failed(&b) { assets.poll(); std::thread::sleep(std::time::Duration::from_millis(10)); }
+            ed.road_type = Some(b);
+            ed.inherit_type = false;
+        }
+        click(&mut ed, &mut assets, 150.0, 260.0);
+        click(&mut ed, &mut assets, 150.0, 151.0);
+        ed.right_click();
+        for _ in 0..50 { assets.poll(); ed.tick(&mut assets, 0.0, false); std::thread::sleep(std::time::Duration::from_millis(10)); }
+        let doc = ed.doc.as_ref().unwrap();
+        let t = &doc.tiles[&(0, 0)].tile;
+        // one junction at the meeting point, three roads ending at its edge
+        let j: Vec<_> = t.objects.iter().filter(|o| o.file.contains("junction_")).collect();
+        assert_eq!(j.len(), 1);
+        let centre = DVec2::new(j[0].pos[0], j[0].pos[1]);
+        let ends = crate::selection::tests::free_ends_near(doc, centre, 25.0);
+        assert_eq!(ends, 3, "three arms");
+        let _ = std::fs::remove_dir_all(content);
+    }
+
+    #[test]
+    fn a_switch_on_a_bending_track_is_joined_again_gently() {
+        let rail = "Splines\\Ruede\\rail_concrete_01.sli";
+        let Some(mut assets) = installed_spline(rail) else { return };
+        let sw = crate::switches::object_for(rail, true);
+        for s in [sw.clone(), crate::switches::object_for(rail, false)] { for _ in 0..500 { if assets.object(&s).is_some() { break; } assets.poll(); std::thread::sleep(std::time::Duration::from_millis(10)); } }
+        let mut doc = flat_map(1);
+        add_spline(&mut doc, (0, 0), 3, 150.0, 30.0, 0.0, 200.0, 0, 0);
+        { let sp = &mut doc.tiles.get_mut(&(0, 0)).unwrap().tile.splines[0]; sp.file = rail.into(); sp.radius = -300.0; }
+        let mut ed = Editor::default();
+        ed.open(doc);
+        ed.set_tool(Tool::Roads);
+        ed.road_type = Some(rail.into());
+        ed.inherit_type = false;
+        let lib = Library::default();
+        let c = omsi_geometry::SplineCurve::from_map(ed.doc.as_ref().unwrap().spline((0,0),3).unwrap(), DVec2::ZERO);
+        let p = c.point_at(80.0);
+        ed.cursor = Some(p);
+        ed.plan_road(&mut assets);
+        ed.road_click(&mut assets, &lib);
+        ed.cursor = Some(DVec3::new(p.x + 20.0, p.y + 60.0, 0.0));
+        ed.plan_road(&mut assets);
+        ed.road_click(&mut assets, &lib);
+        let doc = ed.doc.as_ref().unwrap();
+        let t = &doc.tiles[&(0, 0)].tile;
+        let o = t.objects.iter().find(|o| o.file.contains("EW190_R")).expect("a switch");
+        // the main track goes on from the straight heel, tangent, and bends back to its own
+        // curve no tighter than a track should
+        let model = assets.object(&o.file).unwrap();
+        let shape = crate::switches::Shape::of(&model).unwrap();
+        let (heel, hh) = shape.world(shape.straight, DVec3::new(o.pos[0], o.pos[1], 0.0), o.rot[0]);
+        let first = t.splines.iter().find(|s| (DVec2::new(s.pos[0], s.pos[1]) - heel.truncate()).length() < 0.05).expect("a track from the heel");
+        assert!((roads::norm_deg(first.heading - hh + 180.0) - 180.0).abs() < 0.1);
+        let mut cur = first.clone();
+        for _ in 0..8 {
+            assert!(cur.radius == 0.0 || cur.radius.abs() >= 100.0, "{}", cur.radius);
+            let Some(n) = doc.spline((0, 0), cur.next_id) else { break };
+            if (n.radius + 300.0).abs() < 1e-6 {
+                break;
+            }
+            cur = n.clone();
+        }
     }
 }

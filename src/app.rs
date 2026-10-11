@@ -177,7 +177,11 @@ impl App {
     }
 
     fn init_gfx(&mut self, el: &ActiveEventLoop) -> anyhow::Result<()> {
-        let attrs = Window::default_attributes().with_title("openMapper").with_inner_size(winit::dpi::LogicalSize::new(1440.0, 900.0)).with_min_inner_size(winit::dpi::LogicalSize::new(900.0, 600.0));
+        let mut attrs = Window::default_attributes().with_title("openMapper").with_inner_size(winit::dpi::LogicalSize::new(1440.0, 900.0)).with_min_inner_size(winit::dpi::LogicalSize::new(900.0, 600.0));
+        // (a screenshot run stays on top: a window under another gets no frames to take)
+        if self.shot.is_some() {
+            attrs = attrs.with_window_level(winit::window::WindowLevel::AlwaysOnTop);
+        }
         let window = Arc::new(el.create_window(attrs)?);
         let mut gpu = Gpu::new(window.clone())?;
         let quality = crate::render::quality::Quality::from_code(&self.prefs.graphics);

@@ -153,9 +153,15 @@ fn spline_at(doc: &Document, p: DVec2, within: f64) -> Option<(TileKey, i64, f64
     best.map(|b| b.1)
 }
 
+/// A switch laid: the main track's end where it goes on beyond the heels (the spline, at
+/// its end or its start).
+pub struct Laid {
+    pub rejoin: Option<(TileKey, i64, bool)>,
+}
+
 /// Lay a switch: the main track is cut at the toe and taken away for the switch's length
-/// towards its heels, and the object put there. Returns its IDCode.
-pub fn lay(doc: &mut Document, plan: &Plan) -> Option<i64> {
+/// towards its heels, and the object put there.
+pub fn lay(doc: &mut Document, plan: &Plan) -> Option<Laid> {
     let (k, id, at) = spline_at(doc, plan.toe.truncate(), 0.75)?;
     let s = doc.spline(k, id)?.clone();
     let along = omsi_geometry::SplineCurve::from_map(&s, tile_origin(k)).heading_at(at);
@@ -163,14 +169,12 @@ pub fn lay(doc: &mut Document, plan: &Plan) -> Option<i64> {
     let (p, q) = doc.cut_at(k, id, at);
     // the side running on under the switch: taken off for its length
     let fwd = if forward_with_spline { q } else { p };
-    if let Some((fk, fid, f_end)) = fwd {
-        doc.trim(fk, fid, f_end, plan.length);
-    }
+    let rejoin = fwd.and_then(|(fk, fid, f_end)| doc.trim(fk, fid, f_end, plan.length));
     let ok = tile_of(plan.origin.truncate());
     let new = doc.new_id();
     let org = tile_origin(ok);
     let t = doc.tiles.get_mut(&ok)?;
     t.tile.objects.push(MapObject { file: plan.rel.clone(), id: new, pos: [plan.origin.x - org.x, plan.origin.y - org.y, 0.0], rot: [plan.heading, 0.0, 0.0], ..Default::default() });
     t.touch_content();
-    Some(new)
+    Some(Laid { rejoin })
 }

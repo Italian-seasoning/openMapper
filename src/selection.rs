@@ -365,6 +365,23 @@ pub mod tests {
     use crate::doc::TileDoc;
     use omsi_map::{MapObject, MapSpline};
 
+    /// Spline ends with nothing linked there within `r` of `c` (tests).
+    pub fn free_ends_near(doc: &Document, c: glam::DVec2, r: f64) -> usize {
+        let mut n = 0;
+        for (k, t) in &doc.tiles {
+            for s in t.tile.splines.iter().filter(|s| !s.deleted) {
+                let cv = omsi_geometry::SplineCurve::from_map(s, crate::doc::tile_origin(*k));
+                if s.prev_id == 0 && (cv.point_at(0.0).truncate() - c).length() < r {
+                    n += 1;
+                }
+                if s.next_id == 0 && (cv.end_point().truncate() - c).length() < r {
+                    n += 1;
+                }
+            }
+        }
+        n
+    }
+
     /// A map of `n` × 1 flat tiles from tile 0, 0 east, for tests.
     pub fn flat_map(n: i32) -> Document {
         let mut doc = Document {
