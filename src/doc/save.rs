@@ -11,7 +11,7 @@ use super::{mask_size, Document, TileKey};
 
 /// Text the way OMSI's editor writes it: UTF-16 little-endian with a byte order mark and
 /// CR LF line ends.
-fn utf16(text: &str) -> Vec<u8> {
+pub(crate) fn utf16(text: &str) -> Vec<u8> {
     let mut out = vec![0xFF, 0xFE];
     let crlf = text.replace("\r\n", "\n").replace('\n', "\r\n");
     for u in crlf.encode_utf16() {
@@ -253,7 +253,7 @@ fn global_text(doc: &Document) -> String {
     s
 }
 
-fn tile_text(t: &Tile) -> String {
+pub(crate) fn tile_text(t: &Tile) -> String {
     let mut s = header();
     s.push_str("[version]\n14\n\n[terrain]\n\n");
     if t.has_water {

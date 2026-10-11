@@ -3,7 +3,7 @@
 
 pub mod autosave;
 pub mod safe;
-mod save;
+pub(crate) mod save;
 #[cfg(test)]
 mod tests;
 pub mod dds;

@@ -49,6 +49,45 @@ impl Clip {
     }
 }
 
+impl Clip {
+    /// The clip as a tile of its own, laid round (0, 0) (a saved group: see `groups`).
+    pub fn to_tile(&self) -> omsi_map::Tile {
+        let mut t = omsi_map::Tile::default();
+        for c in &self.objects {
+            let mut o = c.o.clone();
+            o.pos = [c.off.x, c.off.y, if c.abs { c.off.z } else { o.pos[2] }];
+            t.objects.push(o);
+        }
+        for c in &self.splines {
+            let mut s = c.s.clone();
+            s.pos = [c.off.x, c.off.y, c.off.z];
+            let idx = t.splines.len() as i32;
+            t.splines.push(s);
+            for r in &c.rows {
+                t.spline_attachments.push(SplineAttachment { spline_index: idx, ..r.clone() });
+            }
+        }
+        t.attach_objects = self.attached.clone();
+        t
+    }
+
+    /// A clip from a tile `to_tile` made; `abs` tells an object type that stands at an
+    /// absolute height.
+    pub fn from_tile(t: &omsi_map::Tile, abs: impl Fn(&str) -> bool) -> Clip {
+        let mut clip = Clip::default();
+        for o in &t.objects {
+            let a = abs(&o.file);
+            clip.objects.push(ClipObject { o: o.clone(), off: DVec3::new(o.pos[0], o.pos[1], if a { o.pos[2] } else { 0.0 }), abs: a, entry: None });
+        }
+        for (i, s) in t.splines.iter().enumerate().filter(|(_, s)| !s.deleted) {
+            let rows = t.spline_attachments.iter().filter(|r| r.spline_index == i as i32).cloned().collect();
+            clip.splines.push(ClipSpline { s: s.clone(), off: DVec3::new(s.pos[0], s.pos[1], s.pos[2]), rows });
+        }
+        clip.attached = t.attach_objects.clone();
+        clip
+    }
+}
+
 /// Copy a selection; `abs` tells an object type that stands at an absolute height.
 pub fn copy(doc: &Document, sels: &[Sel], abs: impl Fn(&str) -> bool) -> Clip {
     let Some(mid) = crate::selection::centre(doc, sels) else { return Clip::default() };
@@ -264,6 +303,45 @@ mod tests {
         assert!(t.attach_objects.iter().any(|a| a.parent_id == Some(row.id) && a.file == "bulb.sco"));
         let ids: std::collections::BTreeSet<i64> = t.attach_objects.iter().map(|a| a.id).collect();
         assert_eq!(ids.len(), 4, "every hanging object has its own IDCode");
+    }
+
+    /// A clip kept as a tile file and read back pastes the same.
+    #[test]
+    fn a_clip_survives_a_tile_file() {
+        let make = || {
+            let mut doc = flat_map(1);
+            add_object(&mut doc, (0, 0), 1, 100.0, 100.0);
+            add_spline(&mut doc, (0, 0), 2, 90.0, 80.0, 0.0, 20.0, 0, 3);
+            add_spline(&mut doc, (0, 0), 3, 90.0, 100.0, 0.0, 20.0, 2, 0);
+            let t = doc.tiles.get_mut(&(0, 0)).unwrap();
+            t.tile.spline_attachments.push(SplineAttachment { file: "lamp.sco".into(), id: 5, spline_index: 1, interval: 10.0, range: 20.0, ..Default::default() });
+            t.tile.attach_objects.push(MapObject { file: "sign.sco".into(), id: 6, parent_id: Some(1), ..Default::default() });
+            doc
+        };
+        let mut doc = make();
+        let clip = copy(&doc, &[Sel::Object((0, 0), 1), Sel::Spline((0, 0), 2), Sel::Spline((0, 0), 3)], |_| false);
+        let dir = std::env::temp_dir().join(format!("openmapper-clip-{}", std::process::id()));
+        std::fs::create_dir_all(&dir).unwrap();
+        let f = dir.join("group.map");
+        std::fs::write(&f, crate::doc::save::utf16(&crate::doc::save::tile_text(&clip.to_tile()))).unwrap();
+        let back = Clip::from_tile(&omsi_map::Tile::load(&f).unwrap(), |_| false);
+        let _ = std::fs::remove_dir_all(&dir);
+        assert_eq!(back.len(), 3);
+        let at = DVec3::new(150.0, 150.0, 0.0);
+        let mut a = make();
+        let got_a = paste(&mut a, &clip, at);
+        let got_b = paste(&mut doc, &back, at);
+        assert_eq!(got_a.len(), got_b.len());
+        for (x, y) in got_a.iter().zip(&got_b) {
+            match (x, y) {
+                (Sel::Object(k, i), Sel::Object(l, j)) => assert!((a.object(*k, *i).unwrap().pos[0] - doc.object(*l, *j).unwrap().pos[0]).abs() < 1e-6),
+                (Sel::Spline(k, i), Sel::Spline(l, j)) => assert!(a.spline(*k, *i).unwrap().pos.iter().zip(doc.spline(*l, *j).unwrap().pos).all(|(p, q)| (p - q).abs() < 1e-6)),
+                _ => panic!(),
+            }
+        }
+        // the row and the sign came along
+        assert_eq!(doc.tiles[&(0, 0)].tile.spline_attachments.len(), 2);
+        assert_eq!(doc.tiles[&(0, 0)].tile.attach_objects.len(), 2);
     }
 
     #[test]

@@ -79,6 +79,9 @@ experienced map makers.
   any angle), mirrored, moved and scaled by eye with the 3D view following.
 * **Layers** (View > Show): trees, other objects, roads and splines each hidden or shown;
   what is hidden is not picked or box-selected either, handy in a dense town.
+* **Groups** (Edit menu): a selection kept under a name (a stop with its shelter and signs, a
+  crossing with its lights, rows and what hangs on them included), to put down again in any
+  map with `Ctrl+V`; kept as tile files in `<content>/openMapper/groups`.
 * **Find in map** (Edit menu or `Ctrl+F`): every kind of object and spline the map uses,
   with how many, by name, file or IDCode; select them all, go from one to the next, or replace
   them all with the object (road type) chosen in the catalogue in one undo step.

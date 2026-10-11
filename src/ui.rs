@@ -119,6 +119,7 @@ pub struct UiState {
     pub assets: crate::ui_assets::AssetBrowser,
     pub check: crate::check::Checker,
     pub find: crate::ui_find::Find,
+    pub groups: crate::ui_groups::Groups,
     /// The window of the map's earlier versions (backups of its saves).
     pub versions_open: bool,
     /// The window of the edits made (undo and redo by a click).
@@ -154,6 +155,7 @@ impl Default for UiState {
             assets: Default::default(),
             check: Default::default(),
             find: Default::default(),
+            groups: Default::default(),
             versions_open: false,
             history_open: false,
             favourites: Vec::new(),
@@ -555,6 +557,7 @@ pub fn editor(root: &mut egui::Ui, st: &mut UiState, u: EditorUi, actions: &mut 
     about(&ctx, st);
     st.check.window(&ctx, ed, lib, actions);
     st.find.window(&ctx, ed, lib, actions);
+    st.groups.window(&ctx, ed, lib);
     history_window(&ctx, st, ed, actions);
     if let Some(doc) = &ed.doc {
         crate::doc::safe::versions_window(&ctx, &mut st.versions_open, &doc.dir, actions);
@@ -633,6 +636,9 @@ fn menu_bar(root: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, can_undo: bo
                 }
                 if menu_item(ui, Some(Icon::History), tr("Edit history…", "История правок…"), "", true) {
                     st.history_open = true;
+                }
+                if menu_item(ui, Some(Icon::Objects), tr("Groups…", "Группы…"), "", true) {
+                    st.groups.open = true;
                 }
                 if menu_item(ui, Some(Icon::Search), tr("Find in map…", "Поиск по карте…"), "Ctrl+F", true) {
                     st.find.show();

@@ -284,6 +284,10 @@ impl App {
                 self.ed.hide[i] = h.split(',').any(|x| x.trim() == *name);
             }
         }
+        // OPENMAPPER_GROUPS=1: the groups open
+        if std::env::var_os("OPENMAPPER_GROUPS").is_some() {
+            self.ui.groups.open = true;
+        }
         // OPENMAPPER_HISTORY=1: the edit history open
         if std::env::var_os("OPENMAPPER_HISTORY").is_some() {
             self.ui.history_open = true;
