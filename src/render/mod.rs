@@ -862,6 +862,8 @@ impl Renderer {
     pub fn reset_models(&mut self) {
         self.models.clear();
         self.materials.clear();
+        // (a texture's PBR maps may have been made or taken away)
+        self.textures.clear();
         self.splines.clear();
         self.chunks.clear();
         self.builder.reset();
