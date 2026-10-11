@@ -269,6 +269,7 @@ fn removing_a_tile_lets_go_of_links_into_it() {
     let s = doc.spline((0, 0), 9).unwrap();
     assert_eq!(s.next_id, 0);
     assert_ne!(doc.tiles[&(0, 0)].content_rev, rev, "the view builds the tile again");
+    let _ = std::fs::remove_dir_all(&roots.content);
 }
 
 /// The descriptions in other languages come back from an autosave too.
