@@ -116,3 +116,10 @@ Add a line when you touch a shared file: stream, file, what.
 * Review · `src/ui.rs`: `Action::SaveThen(Box<Action>)` (the unsaved-changes prompt's Save: the action follows only if the save worked); `src/app.rs`: `Action::Force` passes the guard by (`App::unguarded`) instead of clearing the dirty flags, `Action::Undo / Redo` call `Editor::undo / redo` (they stop the tool first).
 * Review · `src/doc/save.rs`: `crate::timetable::follow_stop_tiles(doc)` before the timetable's plan (a stop object moved into another tile).
 * Review · `src/history.rs`: `History::object_files` (the junction cleanup after a save keeps what undo and redo can bring back).
+* D · `src/main.rs`: `mod texts`, `mod parallel`, `mod ui_find`, `mod ui_groups`; `Cargo.toml`: `omsi-content` (the `.oft` fonts).
+* D · `src/assets.rs`: `ObjectModel::{texts, labels, editor_parts}`, `Part::texts`; a text texture is asked for as a texture under a path `texts::path` makes, drawn by `texts::draw` in the loader; `load_object` is `pub(crate)`.
+* D · `src/render/mod.rs`: `Renderer::model_with_labels` (a model copy per text shown), `FrameExtras::hide` (trees, objects, splines), `hidden_layer`, `push_object(.., editor)`, the tiles' water kept among the spline meshes under the IDCode `WATER`.
+* D · `src/ui.rs`: `UiState::{find, groups, history_open}`, `ObjInfo::labels`; Edit menu "Edit history…", "Groups…", "Find in map…" (Ctrl+F); View > Show; the Tiles panel's water; a spline's length, radius and "Select the whole road".
+* D · `src/editor.rs`: `Editor::{shape_request, hide}`, `set_spline_cant`, `parallel_copy`, `replace_everywhere`, `even_selected_chain`, `select_chain` (a double click on a road), `grow_map`, `set_water`, `turn_objects`.
+* D · `src/doc/mod.rs`: `TileDoc::water` (read and written with the tile's `.water`); `doc::save` is `pub(crate)` (`tile_text` and `utf16` for groups).
+* D · `src/app.rs`: `OPENMAPPER_SELECT=x,y[,spline]`, `OPENMAPPER_HIDE`, `OPENMAPPER_FIND`, `OPENMAPPER_GROUPS`, `OPENMAPPER_HISTORY`; a screenshot run takes no input and does not take the focus; `Prefs::save` does nothing in one.
