@@ -263,6 +263,9 @@ pub struct Editor {
     /// A road drawn near another's end or middle, or a junction piece's helper, joins it
     /// (off: roads are drawn exactly where clicked).
     pub snap_roads: bool,
+    /// After a road is built the next one starts at its end (off: each road is drawn with
+    /// two fresh clicks).
+    pub keep_drawing: bool,
     /// How junctions treat each road type (corners, lights, crossings by themselves).
     pub road_styles: crate::road_maker::Styles,
     /// openOMSI's content folder (junction objects are written there) and the asphalt
@@ -377,6 +380,7 @@ impl Default for Editor {
             follow_ground: true,
             auto_junctions: true,
             snap_roads: true,
+            keep_drawing: false,
             road_styles: Default::default(),
             content_dir: None,
             asphalt: None,
@@ -1480,7 +1484,7 @@ impl Editor {
         let made = if end.is_none() { last } else { made.and_then(|m| m.last().copied()) };
         let _ = lib;
         match (made, end) {
-            (Some(last), None) => {
+            (Some(last), None) if self.keep_drawing => {
                 // go on from the end just made
                 let (k, id) = last;
                 let doc = self.doc.as_ref().unwrap();

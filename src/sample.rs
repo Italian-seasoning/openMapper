@@ -39,6 +39,8 @@ pub fn build(ed: &mut Editor, assets: &mut Assets, lib: &Library, roots: &Roots,
     }
     ed.set_tool(Tool::Roads);
     ed.road_type = Some(road);
+    // (the ring is drawn as one run of clicks, each road going on from the last)
+    let keep = std::mem::replace(&mut ed.keep_drawing, true);
     let mut click = |ed: &mut Editor, p: DVec2| {
         let z = ed.doc.as_ref().map(|d| d.ground(p)).unwrap_or(0.0);
         ed.hover_point(assets, lib, DVec3::new(p.x, p.y, z));
@@ -49,6 +51,7 @@ pub fn build(ed: &mut Editor, assets: &mut Assets, lib: &Library, roots: &Roots,
         click(ed, centre + DVec2::new(*x, *y));
     }
     ed.right_click();
+    ed.keep_drawing = keep;
     ed.set_tool(Tool::Select);
     let doc = ed.doc.as_mut().ok_or("no map")?;
     // the lanes of the ring
