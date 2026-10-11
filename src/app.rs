@@ -998,6 +998,7 @@ impl App {
                     &mut actions,
                 ));
             }
+            crate::ui_edit::paint_names(&ctx, &self.ed, &self.lib, &self.cam, self.view);
             crate::ui_edit::paint_box(&ctx, &self.ed);
             crate::ui_edit::road_entry(&ctx, &mut self.ed, self.view, &mut actions);
             if self.ed.doc.is_some() {

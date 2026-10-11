@@ -77,6 +77,8 @@ experienced map makers.
   "Load image file…" for a tile (or drop the picture on the window with the Tiles tool and a tile
   clicked), or one picture over a rectangle of tiles, cut into their pieces; turned (90° steps or
   any angle), mirrored, moved and scaled by eye with the 3D view following.
+* **Names in the view**: bus stops and start points near the camera carry their names over
+  them (View menu to switch off).
 * **Layers** (View > Show): trees, other objects, roads and splines each hidden or shown;
   what is hidden is not picked or box-selected either, handy in a dense town.
 * **Groups** (Edit menu): a selection kept under a name (a stop with its shelter and signs, a

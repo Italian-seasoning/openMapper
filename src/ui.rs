@@ -659,6 +659,7 @@ fn menu_bar(root: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, can_undo: bo
                 let icon = if ed.show_technical { Icon::Visible } else { Icon::Hidden };
                 check(ui, &mut ed.show_technical, icons::labelled(icon, tr("What the game does not show", "То, чего не видно в игре")));
                 check(ui, &mut ed.show_lanes, icons::labelled(Icon::Route, tr("AI lanes", "Полосы ИИ")));
+                check(ui, &mut ed.show_names, icons::labelled(Icon::Bus, tr("Names of stops and start points", "Названия остановок и точек старта")));
                 ui.menu_button(icons::labelled(Icon::Layers, tr("Show", "Показывать")), |ui| {
                     // (what is hidden cannot be clicked either: handy in a dense town)
                     for (i, name, icon) in [(0, tr("Trees", "Деревья"), Icon::Tree), (1, tr("Objects", "Объекты"), Icon::Building), (2, tr("Roads and splines", "Дороги и сплайны"), Icon::Road)] {

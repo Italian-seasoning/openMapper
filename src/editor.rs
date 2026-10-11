@@ -330,6 +330,8 @@ pub struct Editor {
     pub hide: [bool; 3],
     /// The AI's lanes are drawn as arrows (always with the Logic tool).
     pub show_lanes: bool,
+    /// The names of bus stops and start points float over them in the view.
+    pub show_names: bool,
     /// A window picks things on the map (the Lines window its stops): a click only notes
     /// what is under the cursor and where, nothing is selected or moved.
     pub pick_mode: bool,
@@ -429,6 +431,7 @@ impl Default for Editor {
             show_technical: true,
             hide: [false; 3],
             show_lanes: false,
+            show_names: true,
             pick_mode: false,
             picked: None,
         }

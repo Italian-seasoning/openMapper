@@ -3,7 +3,7 @@
 //! heights at its ends.
 
 use egui::{Color32, CornerRadius, Margin, RichText, Stroke, Vec2};
-use glam::DVec2;
+use glam::{DVec2, DVec3};
 
 use crate::doc::{Sel, TileKey};
 use crate::editor::Editor;
@@ -19,6 +19,65 @@ pub fn paint_box(ctx: &egui::Context, ed: &Editor) {
     let p = ctx.layer_painter(egui::LayerId::new(egui::Order::Foreground, egui::Id::new("select box")));
     p.rect_filled(r, CornerRadius::ZERO, Color32::from_rgba_unmultiplied(232, 122, 50, 28));
     p.rect_stroke(r, CornerRadius::ZERO, Stroke::new(1.0, ACCENT), egui::StrokeKind::Inside);
+}
+
+/// The names of the bus stops and start points near the camera, over them in the view.
+pub fn paint_names(ctx: &egui::Context, ed: &Editor, lib: &Library, cam: &crate::camera::Camera, view: egui::Rect) {
+    let Some(doc) = ed.doc.as_ref() else { return };
+    if !ed.show_names || !view.is_positive() {
+        return;
+    }
+    let eye = cam.eye();
+    const REACH: f64 = 450.0;
+    let mut names: Vec<(f64, DVec3, String, bool)> = Vec::new();
+    for (k, t) in &doc.tiles {
+        // (only tiles near the camera)
+        let mid = crate::doc::tile_origin(*k) + DVec2::splat(crate::doc::tile_size() * 0.5);
+        if (mid - eye.truncate()).length() > REACH + crate::doc::tile_size() {
+            continue;
+        }
+        for o in &t.tile.objects {
+            let Some(a) = lib.find(&o.file) else { continue };
+            let name = if a.is_bus_stop {
+                o.extra.first().map(|n| n.replace('@', " ")).unwrap_or_default()
+            } else if a.is_entry_point {
+                doc.global.entry_points.iter().find(|e| e.object_id == o.id).map(|e| e.name.clone()).unwrap_or_default()
+            } else {
+                continue;
+            };
+            if name.trim().is_empty() {
+                continue;
+            }
+            let p = doc.object_world(*k, o, a.abs_height) + DVec3::new(0.0, 0.0, 3.5);
+            let d = (p - eye).length();
+            if d < REACH {
+                names.push((d, p, name, a.is_bus_stop));
+            }
+        }
+    }
+    names.sort_by(|a, b| a.0.total_cmp(&b.0));
+    let painter = ctx.layer_painter(egui::LayerId::new(egui::Order::Background, egui::Id::new("names"))).with_clip_rect(view);
+    let font = egui::FontId::proportional(12.0);
+    // (nearest first; one that would lie over a nearer one is left out)
+    let mut taken: Vec<egui::Rect> = Vec::new();
+    for (d, p, name, stop) in names.into_iter().take(80) {
+        let Some((x, y)) = crate::selection::project(cam, p, view.width(), view.height()) else { continue };
+        let at = view.min + Vec2::new(x, y);
+        if !view.contains(at) {
+            continue;
+        }
+        // (fainter further off)
+        let alpha = (255.0 * (1.0 - (d / REACH) as f32 * 0.7)) as u8;
+        let galley = painter.layout_no_wrap(name, font.clone(), Color32::from_rgba_unmultiplied(255, 255, 255, alpha));
+        let r = egui::Rect::from_center_size(at - Vec2::new(0.0, galley.size().y * 0.5), galley.size() + Vec2::new(10.0, 4.0));
+        if taken.iter().any(|t| t.intersects(r)) {
+            continue;
+        }
+        taken.push(r);
+        let fill = if stop { Color32::from_rgba_unmultiplied(30, 70, 120, alpha / 4 * 3) } else { Color32::from_rgba_unmultiplied(120, 60, 20, alpha / 4 * 3) };
+        painter.rect_filled(r, CornerRadius::same(3), fill);
+        painter.galley(r.min + Vec2::new(5.0, 2.0), galley, Color32::WHITE);
+    }
 }
 
 /// Grid and angle snapping, in the status bar.
