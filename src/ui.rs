@@ -118,6 +118,8 @@ pub struct UiState {
     pub recent_assets: Vec<String>,
     /// The selected object's file and whether its textures' PBR maps were made here.
     pub pbr_made: Option<(String, bool)>,
+    /// The selected object's model, for its properties.
+    pub obj_info: Option<ObjInfo>,
     /// The map's `picture.jpg` as shown in the map's properties, with its file time.
     map_picture: Option<(PathBuf, Option<std::time::SystemTime>, Option<egui::TextureHandle>)>,
     /// The satellite overlay as the View menu and the Tiles tool show it.
@@ -144,10 +146,20 @@ impl Default for UiState {
             favourites: Vec::new(),
             recent_assets: Vec::new(),
             pbr_made: None,
+            obj_info: None,
             map_picture: None,
             geo: Default::default(),
         }
     }
+}
+
+/// What the properties show of a selected object's model.
+pub struct ObjInfo {
+    pub file: String,
+    pub size: [f32; 3],
+    pub triangles: usize,
+    /// Its textures' names and whether they have PBR maps.
+    pub textures: Vec<(String, bool)>,
 }
 
 /// Facts for the status bar.
@@ -1322,7 +1334,7 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
     section(ui, tr("Properties", "Свойства"));
     let mut delete = false;
     let mut changed_labels: Option<Vec<String>> = None;
-    let mut new_rot: Option<f64> = None;
+    let mut new_rot: Option<[f64; 3]> = None;
     let mut new_lift: Option<f64> = None;
     let mut new_name: Option<String> = None;
     let mut new_pos: Option<(f64, f64)> = None;
@@ -1361,22 +1373,33 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
                             ui.label(format!("ID {p} · {} {}", tr("point", "точка"), o.attach_index));
                         });
                     }
-                    if o.parent_id.is_none() { prop_row(ui, "X / Y", |ui| {
-                        // (tile-local, as the map file keeps it; past the edge it goes over)
-                        let (mut x, mut y) = (o.pos[0], o.pos[1]);
+                    if o.parent_id.is_none() { prop_row(ui, tr("Position", "Позиция"), |ui| {
+                        // (on the map, in metres; past a tile's edge it goes over to the next one)
+                        let org = crate::doc::tile_origin(k);
+                        let (mut x, mut y) = (o.pos[0] + org.x, o.pos[1] + org.y);
                         ui.horizontal(|ui| {
-                            let a = ui.add(egui::DragValue::new(&mut x).speed(0.05).max_decimals(2));
-                            let b = ui.add(egui::DragValue::new(&mut y).speed(0.05).max_decimals(2));
+                            let a = ui.add(egui::DragValue::new(&mut x).speed(0.05).max_decimals(2).prefix("X "));
+                            let b = ui.add(egui::DragValue::new(&mut y).speed(0.05).max_decimals(2).prefix("Y "));
                             if a.changed() || b.changed() {
-                                new_pos = Some((x, y));
+                                new_pos = Some((x - org.x, y - org.y));
                             }
                         });
                     }); }
-                    prop_row(ui, tr("Direction", "Направление"), |ui| {
-                        let mut h = o.rot[0];
-                        if ui.add(egui::DragValue::new(&mut h).range(-360.0..=720.0).speed(1.0).suffix("°")).changed() {
-                            new_rot = Some(h.rem_euclid(360.0));
-                        }
+                    prop_row(ui, tr("Rotation", "Поворот"), |ui| {
+                        let mut r = o.rot;
+                        ui.horizontal(|ui| {
+                            let a = ui.add(egui::DragValue::new(&mut r[0]).range(-360.0..=720.0).speed(1.0).suffix("°")).on_hover_text(tr("Direction (heading)", "Направление (курс)"));
+                            let b = ui.add(egui::DragValue::new(&mut r[1]).range(-90.0..=90.0).speed(0.25).suffix("°")).on_hover_text(tr("Tilt forward", "Наклон вперёд"));
+                            let c = ui.add(egui::DragValue::new(&mut r[2]).range(-90.0..=90.0).speed(0.25).suffix("°")).on_hover_text(tr("Bank to the side", "Крен вбок"));
+                            if (r[1] != 0.0 || r[2] != 0.0) && ui.small_button("↺").on_hover_text(tr("Stand it upright again", "Поставить ровно")).clicked() {
+                                r[1] = 0.0;
+                                r[2] = 0.0;
+                                new_rot = Some([r[0].rem_euclid(360.0), 0.0, 0.0]);
+                            }
+                            if a.changed() || b.changed() || c.changed() {
+                                new_rot = Some([r[0].rem_euclid(360.0), r[1], r[2]]);
+                            }
+                        });
                     });
                     if !a.map(|a| a.abs_height).unwrap_or(false) && o.parent_id.is_none() {
                         prop_row(ui, tr("Above ground", "Над землёй"), |ui| {
@@ -1416,6 +1439,29 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
                     if any {
                         changed_labels = Some(labels);
                     }
+                }
+                // the model: its size, and its textures with their PBR maps
+                if let Some(info) = st.obj_info.as_ref().filter(|i| i.file.eq_ignore_ascii_case(&o.file)) {
+                    ui.add_space(6.0);
+                    egui::CollapsingHeader::new(RichText::new(tr("Model", "Модель")).strong()).icon(group_icon).default_open(true).show(ui, |ui| {
+                        egui::Grid::new("model info").num_columns(2).spacing(Vec2::new(8.0, 4.0)).show(ui, |ui| {
+                            prop_row(ui, tr("Size", "Размер"), |ui| {
+                                ui.label(format!("{:.1} × {:.1} × {:.1} m", info.size[0], info.size[1], info.size[2]));
+                            });
+                            prop_row(ui, tr("Triangles", "Треугольники"), |ui| {
+                                ui.label(info.triangles.to_string());
+                            });
+                        });
+                        ui.label(RichText::new(tr("Textures", "Текстуры")).color(TEXT_DIM));
+                        for (name, pbr) in &info.textures {
+                            ui.horizontal(|ui| {
+                                ui.label(RichText::new(name).small());
+                                if *pbr {
+                                    ui.label(RichText::new("PBR").small().color(ACCENT));
+                                }
+                            });
+                        }
+                    });
                 }
             }
             Sel::Spline(k, id) => {
@@ -1493,8 +1539,8 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
                 ed.history.touch_tile(doc, k);
                 ed.history.touch_global(doc);
                 if let Some(o) = crate::selection::any_object_mut(doc, k, id) {
-                    if let Some(h) = new_rot {
-                        o.rot[0] = h;
+                    if let Some(r) = new_rot {
+                        o.rot = r;
                     }
                     if let Some(z) = new_lift {
                         o.pos[2] = z;

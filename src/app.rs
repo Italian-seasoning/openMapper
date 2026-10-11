@@ -885,8 +885,15 @@ impl App {
                 // (not loaded yet: asked again next frame)
                 if !textures.is_empty() {
                     let made = textures.iter().any(|t| crate::ui_pbr::is_made(t, r));
-                    self.ui.pbr_made = Some((f, made));
+                    self.ui.pbr_made = Some((f.clone(), made));
                 }
+                // (the model's size and textures for the properties)
+                self.ui.obj_info = if spline { None } else { a.object(&f) }.map(|m| crate::ui::ObjInfo {
+                    file: f.clone(),
+                    size: (m.hi - m.lo).to_array(),
+                    triangles: m.parts.iter().map(|p| p.mesh.indices.len() / 3).sum(),
+                    textures: textures.iter().map(|t| (t.file_name().map(|n| n.to_string_lossy().to_string()).unwrap_or_default(), crate::ui_pbr::is_made(t, r) || !omsi_texture::pbr::find(t).is_empty())).collect(),
+                });
             }
         }
         // (the overview map stays out of the map's picture)
