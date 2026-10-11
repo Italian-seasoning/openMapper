@@ -116,6 +116,7 @@ pub fn group_properties(ui: &mut egui::Ui, ed: &mut Editor, lib: &Library) {
             }
         });
     });
+    parallel_section(ui, ed, lib);
     rows_section(ui, ed, lib);
 }
 
@@ -181,6 +182,32 @@ pub fn apply_ends(ed: &mut Editor, ctx: &egui::Context, k: TileKey, id: i64, e: 
         Some((at_end, z, g)) => ed.set_spline_end(k, id, at_end, z, g),
         None => ed.end_panel_step_if_idle(ctx),
     }
+}
+
+/// A copy of the selected road(s) or track(s) alongside, at a distance.
+pub fn parallel_section(ui: &mut egui::Ui, ed: &mut Editor, lib: &Library) {
+    let sels = ed.selection();
+    let Some(Sel::Spline(k, id)) = sels.iter().find(|s| matches!(s, Sel::Spline(..))).copied() else { return };
+    egui::Frame::new().inner_margin(Margin::symmetric(8, 4)).show(ui, |ui| parallel_inner(ui, ed, lib, k, id));
+}
+
+fn parallel_inner(ui: &mut egui::Ui, ed: &mut Editor, lib: &Library, k: TileKey, id: i64) {
+    ui.label(RichText::new(tr("Parallel copy", "Параллельная копия")).strong()).on_hover_text(tr("A second track or the other carriageway: the selected splines copied alongside, bends kept exact, linked as they are", "Второй путь или встречная половина: выбранные сплайны копируются рядом, повороты точно, связи как у оригинала"));
+    // (the distance is kept between frames; at first the road's own width)
+    let key = egui::Id::new("parallel distance");
+    let width = ed.doc.as_ref().and_then(|d| d.spline(k, id)).and_then(|s| lib.find(&s.file)).map(|a| (a.half_width as f64 * 2.0 * 2.0).round() / 2.0).unwrap_or(4.0).max(3.0);
+    let mut dist: f64 = ui.data_mut(|d| *d.get_temp_mut_or_insert_with(key, || width));
+    ui.horizontal(|ui| {
+        ui.add(egui::DragValue::new(&mut dist).speed(0.05).range(0.5..=200.0).max_decimals(2).suffix(" m"));
+        if ui.button(tr("To the left", "Слева")).clicked() {
+            ed.parallel_copy(-dist);
+        }
+        if ui.button(tr("To the right", "Справа")).clicked() {
+            ed.parallel_copy(dist);
+        }
+    });
+    ui.label(RichText::new(tr("Left and right of the way the road runs (its arrows with AI lanes shown)", "Слева и справа по ходу дороги (её стрелки при показе полос ИИ)")).small().color(TEXT_DIM));
+    ui.data_mut(|d| d.insert_temp(key, dist));
 }
 
 /// Objects along the selected road(s): the rows on a road selected alone, and new rows of the

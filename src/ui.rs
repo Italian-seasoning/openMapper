@@ -1639,6 +1639,7 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
         }
         Sel::Spline(k, id) => {
             crate::ui_edit::apply_ends(ed, ui.ctx(), k, id, ends);
+            crate::ui_edit::parallel_section(ui, ed, lib);
             crate::ui_edit::rows_section(ui, ed, lib);
             let Some(doc) = ed.doc.as_mut() else { return };
             if let Some((file, mirror)) = spline_change {

@@ -2687,6 +2687,32 @@ impl Editor {
         self.history.commit();
     }
 
+    /// The selected splines copied alongside, `d` m to the right of the first's way
+    /// (negative: left); the copies are selected.
+    pub fn parallel_copy(&mut self, d: f64) {
+        let splines: Vec<(TileKey, i64)> = self.selection().into_iter().filter_map(|s| if let Sel::Spline(k, id) = s { Some((k, id)) } else { None }).collect();
+        let Some(doc) = self.doc.as_mut() else { return };
+        if splines.is_empty() {
+            return;
+        }
+        self.history.begin(tr("Parallel copy", "Параллельная копия"));
+        let keys: Vec<TileKey> = doc.tiles.keys().copied().collect();
+        for k in keys {
+            self.history.touch_tile(doc, k);
+        }
+        self.history.touch_global(doc);
+        match crate::parallel::copy(doc, &splines, d) {
+            Ok(made) => {
+                self.history.commit();
+                self.set_selection(made.into_iter().map(|(k, id)| Sel::Spline(k, id)).collect());
+            }
+            Err(e) => {
+                self.history.cancel();
+                self.error(e);
+            }
+        }
+    }
+
     /// Every object (or spline) of the type `from` made one of `to`, in one step. How many.
     pub fn replace_everywhere(&mut self, from: &str, to: &str, splines: bool) -> usize {
         let Some(doc) = self.doc.as_mut() else { return 0 };
@@ -4354,7 +4380,7 @@ mod tests {
         ed.set_tool(Tool::Roads);
         ed.road_type = Some(road.into());
         let lib = Library::default();
-        let mut click = |ed: &mut Editor, a: &mut Assets, x: f64, y: f64| {
+        let click = |ed: &mut Editor, a: &mut Assets, x: f64, y: f64| {
             ed.cursor = Some(DVec3::new(x, y, 0.0));
             ed.plan_road(a);
             ed.road_click(a, &lib);

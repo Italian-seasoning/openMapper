@@ -69,6 +69,11 @@ impl History {
         }
     }
 
+    /// Drop the open edit unkept (it changed nothing).
+    pub fn cancel(&mut self) {
+        self.open = None;
+    }
+
     /// Close the open edit (nothing kept: it is dropped).
     pub fn commit(&mut self) {
         if let Some(s) = self.open.take() {

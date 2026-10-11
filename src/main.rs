@@ -25,6 +25,7 @@ mod lanes;
 mod library;
 mod models;
 mod pbr_maker;
+mod parallel;
 mod place;
 mod plants;
 mod render;
