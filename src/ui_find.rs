@@ -28,6 +28,8 @@ pub struct Find {
     /// The map's groups, made again when its tiles change (the key says what they were made of).
     groups: Vec<Group>,
     key: u64,
+    /// When they were made (while a drag changes the map each frame, now and then only).
+    made: Option<std::time::Instant>,
     /// The group gone through with Next, and how far.
     walk: Option<(String, usize)>,
     focus: bool,
@@ -89,9 +91,12 @@ impl Find {
         }
         let Some(doc) = ed.doc.as_ref() else { return };
         let key = key_of(doc);
-        if key != self.key {
+        if key != self.key && self.made.map(|t| t.elapsed().as_millis() > 300).unwrap_or(true) {
             self.groups = gather(doc);
             self.key = key;
+            self.made = Some(std::time::Instant::now());
+        } else if key != self.key {
+            ctx.request_repaint_after(std::time::Duration::from_millis(320));
         }
         let name_of = |g: &Group| lib.find(&g.file).map(|a| a.name.clone()).filter(|n| !n.is_empty()).unwrap_or_else(|| g.file.rsplit(['\\', '/']).next().unwrap_or(&g.file).to_string());
         let mut open = self.open;
