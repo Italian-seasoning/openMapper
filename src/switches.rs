@@ -12,11 +12,56 @@ use crate::doc::{tile_of, tile_origin, Document, TileKey};
 use crate::render::object_matrix;
 use crate::roads;
 
-/// The switch object for a track type and a side.
+/// The stock switch for a track type and a side (when nothing better is known).
 pub fn object_for(track_file: &str, left: bool) -> String {
     let f = track_file.to_lowercase();
-    let kind = if f.contains("klein") || f.contains("klp") { "Klp" } else { "S49" };
-    format!("Sceneryobjects\\Railroad_RUE\\EW190_{}_{kind}_0_0.sco", if left { "L" } else { "R" })
+    let kind = if f.contains("klein") || f.contains("klp") { "Klp_0_0" } else if f.contains("concrete") || f.contains("beton") { "Beton" } else { "S49_0_0" };
+    format!("Sceneryobjects\\Railroad_RUE\\EW190_{}_{kind}.sco", if left { "L" } else { "R" })
+}
+
+/// A switch the installation or a mod offers: its file and the side its branch goes off to.
+#[derive(Debug, Clone)]
+pub struct Candidate {
+    pub rel: String,
+    pub left: bool,
+}
+
+/// Every turnout among the objects: three spline helpers, one of them off to a side (OMSI
+/// writes a helper's place as x, height, forward).
+pub fn catalogue(lib: &crate::library::Library) -> Vec<Candidate> {
+    lib.assets
+        .iter()
+        .filter(|a| a.kind == crate::library::Kind::Object && a.helpers.len() == 3)
+        .filter(|a| a.helpers.iter().any(|h| (roads::norm_deg(h.heading as f64) - 180.0).abs() < 30.0))
+        .filter_map(|a| {
+            let side = a.helpers.iter().max_by(|p, q| p.x.abs().total_cmp(&q.x.abs()))?;
+            (side.x.abs() > 0.5 && side.x.abs() < 6.0).then(|| Candidate { rel: a.rel.clone(), left: side.x < 0.0 })
+        })
+        .collect()
+}
+
+/// How well a switch fits a track: the textures they share (sleepers, rails, ballast), then
+/// what their names say (concrete or wooden sleepers, the small profile, a third rail).
+pub fn fit(track_file: &str, track_tex: &[String], switch_rel: &str, switch_tex: &[String]) -> i32 {
+    let shared = switch_tex.iter().filter(|t| track_tex.contains(t)).count() as i32;
+    let (t, s) = (track_file.to_lowercase(), switch_rel.to_lowercase());
+    let has = |x: &str, words: &[&str]| words.iter().any(|w| x.contains(w));
+    let mut score = shared * 10;
+    if has(&t, &["klein", "klp"]) == has(&s, &["klein", "klp"]) {
+        score += 4;
+    }
+    if has(&t, &["concrete", "beton"]) == has(&s, &["concrete", "beton"]) {
+        score += 3;
+    }
+    if has(&t, &["wood", "holz"]) && has(&s, &["s49", "wood", "holz"]) {
+        score += 2;
+    }
+    // (a third rail only where the track has one)
+    let third = has(&t, &["strom", "third"]);
+    if third == (s.contains("_1_1") || s.contains("_0_1") || s.contains("_1_0")) {
+        score += 2;
+    }
+    score
 }
 
 /// A switch's helpers in its own frame: (x, y, z, heading out).

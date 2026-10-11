@@ -830,6 +830,10 @@ impl App {
             a.poll();
         }
         self.lib.poll();
+        // (the switches on offer, once the library is read)
+        if !self.lib.scanning && self.ed.switch_catalogue.is_empty() && !self.lib.assets.is_empty() {
+            self.ed.switch_catalogue = crate::switches::catalogue(&self.lib);
+        }
         // camera
         let fwd = (self.keys.w as i32 - self.keys.s as i32) as f64;
         let side = (self.keys.d as i32 - self.keys.a as i32) as f64;

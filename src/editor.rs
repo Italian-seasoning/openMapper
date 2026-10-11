@@ -210,6 +210,8 @@ pub struct Editor {
     road_plate_end: Option<(i64, DVec3, f64)>,
     /// Switches the track being drawn lays where it leaves or joins another track.
     switch_plans: Vec<crate::switches::Plan>,
+    /// The turnouts the installation and the mods offer (filled when the library is read).
+    pub switch_catalogue: Vec<crate::switches::Candidate>,
     /// A road end being dragged onto a plate.
     reshape_plate: Option<(i64, DVec3, f64)>,
     /// The options of junctions shown in the properties (read from their files).
@@ -352,6 +354,7 @@ impl Default for Editor {
             road_plate_start: None,
             road_plate_end: None,
             switch_plans: Vec::new(),
+            switch_catalogue: Vec::new(),
             reshape_plate: None,
             junction_options: Default::default(),
             session_first_id: i64::MAX,
@@ -1283,13 +1286,30 @@ impl Editor {
     /// the switch's model loads, or where the installation has none.
     fn switch_plan(&self, assets: &mut Assets, toe: DVec3, heading: f64, left: bool) -> Option<(crate::switches::Plan, (DVec3, f64))> {
         let track = self.road_type.as_deref()?;
-        let rel = crate::switches::object_for(track, left);
+        let rel = self.best_switch(assets, track, left);
         let model = assets.object(&rel)?;
         let shape = crate::switches::Shape::of(&model)?;
         let (mut pos, out) = shape.world(shape.branch, toe, heading);
         pos.z = self.doc.as_ref().map(|d| d.ground(pos.truncate())).unwrap_or(toe.z);
         let plan = crate::switches::Plan { rel, toe, heading, length: shape.length(), origin: shape.origin(toe, heading) };
         Some((plan, (pos, out)))
+    }
+
+    /// The switch that looks most like the track (the one whose model shares the most of
+    /// its textures; while the models load, the stock one for its kind).
+    fn best_switch(&self, assets: &mut Assets, track: &str, left: bool) -> String {
+        let name = |p: &std::path::PathBuf| p.file_name().map(|f| f.to_string_lossy().to_lowercase()).unwrap_or_default();
+        let track_tex: Vec<String> = assets.spline(track).map(|m| m.materials.iter().filter_map(|t| t.texture.as_ref().map(name)).collect()).unwrap_or_default();
+        let mut best: Option<(i32, String)> = None;
+        for c in self.switch_catalogue.iter().filter(|c| c.left == left) {
+            let Some(m) = assets.object(&c.rel) else { continue };
+            let tex: Vec<String> = m.parts.iter().flat_map(|p| p.materials.iter()).filter_map(|t| t.texture.as_ref().map(name)).collect();
+            let score = crate::switches::fit(track, &track_tex, &c.rel, &tex);
+            if best.as_ref().map(|b| score > b.0).unwrap_or(true) {
+                best = Some((score, c.rel.clone()));
+            }
+        }
+        best.map(|b| b.1).unwrap_or_else(|| crate::switches::object_for(track, left))
     }
 
     /// The way a spline runs at a point in its middle (degrees).
@@ -4065,5 +4085,36 @@ mod tests {
         let branch = t.splines.iter().find(|s| s.pos[0] > 51.0).expect("the new track");
         assert!((branch.pos[0] - 51.82).abs() < 0.2 && (branch.pos[1] - 126.9).abs() < 0.3, "{:?}", branch.pos);
         assert!((branch.heading - 6.34).abs() < 0.5, "{}", branch.heading);
+    }
+
+    #[test]
+    fn each_track_gets_the_switch_that_looks_like_it() {
+        let Some(mut assets) = installed_spline("Splines\\Ruede\\rail_wood_S49.sli") else {
+            eprintln!("no OMSI 2 here: skipped");
+            return;
+        };
+        let tracks = ["Splines\\Ruede\\rail_wood_S49.sli", "Splines\\Ruede\\rail_concrete_S49.sli", "Splines\\Ruede\\rail_wood_S41_kleinprofil_0.sli", "Splines\\Ruede\\rail_concrete_01.sli"];
+        let names = ["Beton", "Klp_0_0", "Klp_0_1", "Klp_1_0", "Klp_1_1", "S49_0_0", "S49_0_1", "S49_1_0", "S49_1_1"];
+        let mut ed = Editor::default();
+        ed.switch_catalogue = names.iter().map(|n| crate::switches::Candidate { rel: format!("Sceneryobjects\\Railroad_RUE\\EW190_L_{n}.sco"), left: true }).collect();
+        // (everything loaded first)
+        for _ in 0..800 {
+            let mut all = true;
+            for c in ed.switch_catalogue.clone() {
+                all &= assets.object(&c.rel).is_some() || assets.object_failed(&c.rel);
+            }
+            for t in tracks {
+                all &= assets.spline(t).is_some() || assets.spline_failed(t);
+            }
+            if all {
+                break;
+            }
+            assets.poll();
+            std::thread::sleep(std::time::Duration::from_millis(10));
+        }
+        assert!(ed.best_switch(&mut assets, tracks[0], true).ends_with("EW190_L_S49_0_0.sco"));
+        assert!(ed.best_switch(&mut assets, tracks[1], true).ends_with("EW190_L_Beton.sco"));
+        assert!(ed.best_switch(&mut assets, tracks[2], true).ends_with("EW190_L_Klp_0_0.sco"));
+        assert!(ed.best_switch(&mut assets, tracks[3], true).ends_with("EW190_L_Beton.sco"));
     }
 }
