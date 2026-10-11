@@ -153,7 +153,7 @@ impl Assets {
                     Req::Object(k, p) => Resp::Object(k, load_object(&p, &omsi, &content).map(Arc::new)),
                     Req::Spline(k, p) => Resp::Spline(k, load_spline(&p, &omsi, &content).map(Arc::new)),
                     Req::Texture(p) => {
-                        let t = load_texture(&p).map(Arc::new);
+                        let t = load_texture(&p, &omsi, &content).map(Arc::new);
                         Resp::Texture(p, t)
                     }
                 };
@@ -251,6 +251,8 @@ impl Assets {
     pub fn clear(&mut self) {
         self.objects.retain(|_, s| matches!(s, Slot::Loading));
         self.splines.retain(|_, s| matches!(s, Slot::Loading));
+        // (pictures too: a texture's PBR maps may have been made or taken away)
+        self.textures.retain(|_, s| matches!(s, Slot::Loading));
     }
 }
 
@@ -433,9 +435,20 @@ fn load_spline(path: &Path, omsi: &Path, content: &Path) -> Option<SplineModel> 
     Some(SplineModel { def, materials, half_width })
 }
 
-fn load_texture(path: &Path) -> Option<TextureImage> {
+fn load_texture(path: &Path, omsi: &Path, content: &Path) -> Option<TextureImage> {
     let image = shrink(omsi_texture::decode_file(path).map_err(|e| log::debug!("{e}")).ok()?);
-    let files = omsi_texture::pbr::find(path);
+    let mut files = omsi_texture::pbr::find(path);
+    // (maps made here this session: the finder lists a folder once and would miss them)
+    let [nn, orm, _] = crate::pbr_maker::files(path, omsi, content);
+    if nn.is_file() && orm.is_file() {
+        files.normal = Some(nn.clone());
+        files.normal_gl = false;
+        files.normals = vec![(nn, false)];
+        files.packed = Some((orm, [0, 1, 2]));
+        files.rough = None;
+        files.metal = None;
+        files.ao = None;
+    }
     let (mut normal, mut orm, mut flags) = (None, None, [0.0; 4]);
     if !files.is_empty() {
         if let Some(set) = omsi_texture::pbr::load_set(&files) {

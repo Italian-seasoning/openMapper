@@ -42,6 +42,8 @@ pub enum Action {
     RoadTypes,
     /// The PBR window on an object's textures.
     PbrForObject(String),
+    /// The PBR window on a road type's textures.
+    PbrForSpline(String),
     /// The PBR window on a picture chosen from disk.
     PbrMaker,
     /// Content files changed (maps made, imported): read the catalogue and models again,
@@ -1421,6 +1423,12 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
                 let a = lib.find(&s.file);
                 ui.label(RichText::new(a.map(|a| a.name.clone()).unwrap_or_else(|| s.file.clone())).strong().color(Color32::WHITE));
                 ui.label(RichText::new(&s.file).small().color(TEXT_DIM));
+                let made = st.pbr_made.as_ref().filter(|(rel, _)| rel.eq_ignore_ascii_case(&s.file)).map(|(_, m)| *m).unwrap_or(false);
+                let r = ui.button(icons::labelled(Icon::Layers, if made { tr("Configure PBR", "Настроить PBR") } else { tr("Create PBR", "Создать PBR") }));
+                help(st, &r, tr("Normal, roughness, metal and shadow maps made from the road type's textures", "Карты нормалей, шероховатости, металла и теней из текстур типа дороги"));
+                if r.clicked() {
+                    actions.push(Action::PbrForSpline(s.file.clone()));
+                }
                 ui.add_space(4.0);
                 egui::Grid::new("spl").num_columns(2).spacing(Vec2::new(8.0, 5.0)).show(ui, |ui| {
                     prop_row(ui, "ID", |ui| {

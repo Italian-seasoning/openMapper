@@ -30,7 +30,7 @@ pub struct PbrParams {
 
 impl Default for PbrParams {
     fn default() -> Self {
-        PbrParams { bumps: 2.0, blur: 1.0, invert: false, rough: 0.8, rough_detail: 0.3, metal: 0.0, occlusion: 0.5 }
+        PbrParams { bumps: 3.0, blur: 1.5, invert: false, rough: 0.85, rough_detail: 0.25, metal: 0.0, occlusion: 0.35 }
     }
 }
 
@@ -81,7 +81,10 @@ fn blur(src: &[f32], w: usize, h: usize, r: usize) -> Vec<f32> {
 pub fn make(width: u32, height: u32, rgba: &[u8], p: &PbrParams) -> Maps {
     let (w, h) = (width as usize, height as usize);
     let raw: Vec<f32> = (0..w * h).map(|i| luma(rgba, i)).collect();
-    let mut hgt = blur(&raw, w, h, p.blur.round().max(0.0) as usize);
+    // (the blur and the strength are set for a 512 picture and follow its size, so the
+    // same settings look the same on any texture)
+    let res = w.max(h) as f32 / 512.0;
+    let mut hgt = blur(&raw, w, h, (p.blur * res).round().max(0.0) as usize);
     if p.invert {
         hgt.iter_mut().for_each(|v| *v = 1.0 - *v);
     }
@@ -90,8 +93,9 @@ pub fn make(width: u32, height: u32, rgba: &[u8], p: &PbrParams) -> Maps {
     let wide = blur(&hgt, w, h, (w.min(h) / 64).clamp(2, 12));
     let mut normal = vec![0u8; w * h * 4];
     let mut orm = vec![0u8; w * h * 4];
-    // (strength in texels: the same look whatever size the picture is)
-    let k = p.bumps * (w.max(h) as f32 / 256.0);
+    // (a height step of the whole brightness range across one texel of a 512 picture leans
+    // the surface by about 45 degrees at strength 1)
+    let k = p.bumps * res.max(0.25);
     for y in 0..h {
         for x in 0..w {
             let (xi, yi) = (x as isize, y as isize);
@@ -107,7 +111,7 @@ pub fn make(width: u32, height: u32, rgba: &[u8], p: &PbrParams) -> Maps {
             normal[i + 2] = ((n.z * 0.5 + 0.5) * 255.0).round() as u8;
             normal[i + 3] = 255;
             let cavity = (wide[y * w + x] - hgt[y * w + x]).max(0.0);
-            let ao = (1.0 - cavity * 4.0 * p.occlusion).clamp(0.0, 1.0);
+            let ao = (1.0 - cavity * 3.0 * p.occlusion).clamp(0.0, 1.0);
             let rough = (p.rough - (raw[y * w + x] - 0.5) * p.rough_detail).clamp(0.02, 1.0);
             orm[i] = (ao * 255.0).round() as u8;
             orm[i + 1] = (rough * 255.0).round() as u8;
@@ -187,7 +191,7 @@ mod tests {
     #[test]
     fn mortar_is_a_hollow_with_tilted_normals_and_shadow() {
         let n = 64;
-        let m = make(n, n, &bricks(n), &PbrParams { blur: 0.0, ..Default::default() });
+        let m = make(n, n, &bricks(n), &PbrParams { blur: 0.0, bumps: 8.0, ..Default::default() });
         let px = |buf: &[u8], x: u32, y: u32, c: usize| buf[((y * n + x) * 4) as usize + c];
         // flat in the middle of a brick: the normal points straight out
         assert!((px(&m.normal, 8, 8, 0) as i32 - 128).abs() <= 2 && (px(&m.normal, 8, 8, 1) as i32 - 128).abs() <= 2);
@@ -202,7 +206,8 @@ mod tests {
         assert!(px(&m.orm, 16, 8, 0) < px(&m.orm, 8, 8, 0));
         // no metal by default, the roughness near the base
         assert_eq!(px(&m.orm, 8, 8, 2), 0);
-        assert!((px(&m.orm, 8, 8, 1) as i32 - (0.8 * 255.0 - (200.0 / 255.0 - 0.5) * 0.3 * 255.0) as i32).abs() <= 2);
+        let d = PbrParams::default();
+        assert!((px(&m.orm, 8, 8, 1) as i32 - ((d.rough - (200.0 / 255.0 - 0.5) * d.rough_detail) * 255.0) as i32).abs() <= 2);
     }
 
     #[test]

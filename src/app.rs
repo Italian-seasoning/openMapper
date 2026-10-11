@@ -598,6 +598,16 @@ impl App {
                 }
             }
             Action::RoadTypes => self.road_types.open = !self.road_types.open,
+            Action::PbrForSpline(rel) => {
+                if let (Some(a), Some(r)) = (self.assets.as_mut(), &self.roots) {
+                    let textures = spline_textures(a, &rel);
+                    if textures.is_empty() {
+                        self.ed.toast(tr("This road type has no textures to make PBR maps of", "У этого типа дороги нет текстур для PBR-карт"));
+                    } else {
+                        self.pbr.open_for(textures, r);
+                    }
+                }
+            }
             Action::PbrMaker => {
                 if let (Some(f), Some(r)) = (rfd::FileDialog::new().add_filter(tr("Pictures", "Картинки"), &["png", "jpg", "jpeg", "bmp", "tga", "dds"]).pick_file(), &self.roots) {
                     self.pbr.open_for(vec![f], r);
@@ -865,12 +875,13 @@ impl App {
         let mut recover_answer = None;
         // (the selected object's PBR state for its properties: looked up when it changes)
         let sel_file = match (self.ed.selected, &self.ed.doc) {
-            (Some(Sel::Object(k, id)), Some(doc)) => crate::selection::any_object(doc, k, id).map(|o| o.file.clone()),
+            (Some(Sel::Object(k, id)), Some(doc)) => crate::selection::any_object(doc, k, id).map(|o| (o.file.clone(), false)),
+            (Some(Sel::Spline(k, id)), Some(doc)) => doc.spline(k, id).map(|s| (s.file.clone(), true)),
             _ => None,
         };
-        if let (Some(f), Some(a), Some(r)) = (sel_file, self.assets.as_mut(), &self.roots) {
+        if let (Some((f, spline)), Some(a), Some(r)) = (sel_file, self.assets.as_mut(), &self.roots) {
             if self.ui.pbr_made.as_ref().map(|(rel, _)| rel != &f).unwrap_or(true) {
-                let textures = object_textures(a, &f);
+                let textures = if spline { spline_textures(a, &f) } else { object_textures(a, &f) };
                 // (not loaded yet: asked again next frame)
                 if !textures.is_empty() {
                     let made = textures.iter().any(|t| crate::ui_pbr::is_made(t, r));
@@ -1725,6 +1736,18 @@ impl ApplicationHandler for App {
 }
 
 /// Write the window's picture to a PNG (the screenshot mode).
+/// The texture files a road type is drawn with, each once.
+fn spline_textures(assets: &mut Assets, rel: &str) -> Vec<PathBuf> {
+    let Some(m) = assets.spline(rel) else { return Vec::new() };
+    let mut out: Vec<PathBuf> = Vec::new();
+    for t in m.materials.iter().filter_map(|mat| mat.texture.clone()) {
+        if !out.contains(&t) {
+            out.push(t);
+        }
+    }
+    out
+}
+
 /// The texture files an object's model is drawn with, each once.
 fn object_textures(assets: &mut Assets, rel: &str) -> Vec<PathBuf> {
     let Some(m) = assets.object(rel) else { return Vec::new() };
