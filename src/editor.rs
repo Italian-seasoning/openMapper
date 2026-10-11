@@ -443,6 +443,15 @@ impl Editor {
             self.cancel();
             self.tool = t;
             self.sync_path_type();
+            self.leave_selection_for_paths();
+        }
+    }
+
+    /// The AI paths are worked on: what was selected (a building, say) is let go, so the
+    /// properties and the dots are the paths'.
+    fn leave_selection_for_paths(&mut self) {
+        if self.tool == Tool::Logic && self.logic == LogicMode::Paths {
+            self.select(None);
         }
     }
 
@@ -450,6 +459,7 @@ impl Editor {
         if self.logic != m {
             self.cancel();
             self.logic = m;
+            self.leave_selection_for_paths();
             self.object_type = None;
             self.ghost_pos = None;
             self.sync_path_type();
@@ -720,7 +730,7 @@ impl Editor {
                 self.hover_tile = g.map(|p| tile_of(p.truncate()));
             }
             Tool::Roads => self.plan_road(assets),
-            Tool::Objects => self.plan_object(assets),
+            Tool::Objects => self.plan_object(assets, _lib),
             _ => {}
         }
     }
@@ -731,7 +741,7 @@ impl Editor {
         self.cursor_in_view = true;
         match self.acts_as() {
             Tool::Roads => self.plan_road(assets),
-            Tool::Objects => self.plan_object(assets),
+            Tool::Objects => self.plan_object(assets, _lib),
             Tool::Tiles => self.hover_tile = Some(tile_of(p.truncate())),
             _ => {}
         }
@@ -965,7 +975,7 @@ impl Editor {
 
     // ---------------------------------------------------------------- objects
 
-    fn plan_object(&mut self, assets: &mut Assets) {
+    fn plan_object(&mut self, assets: &mut Assets, lib: &Library) {
         self.ghost_pos = None;
         self.align_guide = None;
         if self.tool == Tool::Objects && self.plant_brush {
@@ -977,6 +987,27 @@ impl Editor {
         if self.snap_grid {
             let q = self.snap_point(c.truncate());
             pos = DVec3::new(q.x, q.y, self.doc.as_ref().map(|d| d.ground(q)).unwrap_or(c.z));
+        }
+        // a start point, a car park or a bus stop stands in the traffic's way on its side of
+        // the road: a start point on the lane itself, a car park and a stop at the kerb
+        let (entry, park, stop) = lib.find(&rel).map(|a| (a.is_entry_point, a.is_car_park, a.is_bus_stop)).unwrap_or((false, false, false));
+        if self.align_to_road && !self.shift_held && (entry || park || stop) {
+            if let Some(doc) = self.doc.as_ref() {
+                let lht = doc.global.left_hand_traffic;
+                let (lanes, _) = crate::lanes::near(doc, assets, c.truncate(), 25.0);
+                let best = lanes.iter().filter(|l| l.kind == 0).filter_map(|l| l.nearest(c.truncate()).map(|n| (n, l.direction))).filter(|(n, _)| n.2 < 12.0).min_by(|a, b| a.0 .2.total_cmp(&b.0 .2));
+                if let Some(((q, h, _, _), dir)) = best {
+                    let flow = if dir == 1 { roads::norm_deg(h + 180.0) } else { h };
+                    // (the kerb: right of the traffic where it keeps right)
+                    let kerb = roads::right(flow) * if lht { -1.0 } else { 1.0 };
+                    let at = if entry { q.truncate() } else if park { q.truncate() + kerb * 2.6 } else { q.truncate() + kerb * 3.2 };
+                    let z = doc.ground(at);
+                    let pos = DVec3::new(at.x, at.y, z);
+                    self.align_guide = Some((DVec3::new(q.x, q.y, z), pos));
+                    self.ghost_pos = Some((pos, roads::norm_deg(flow + self.place_heading)));
+                    return;
+                }
+            }
         }
         // (Shift held: put it down freely)
         let model = assets.object(&rel);
@@ -1097,7 +1128,7 @@ impl Editor {
 
     /// Place the object chosen at the cursor now (dropped from the asset browser).
     pub fn place_now(&mut self, assets: &mut Assets, lib: &Library) {
-        self.plan_object(assets);
+        self.plan_object(assets, lib);
         self.place_object(lib, false);
     }
 
@@ -1143,7 +1174,7 @@ impl Editor {
             sync_entry_points(doc);
         }
         self.history.commit();
-        self.select(Some(Sel::Object(k, id)));
+        // (the tool goes on placing: nothing is selected)
     }
 
     /// A car park click with rows on: the first click starts a row, the second fills it to

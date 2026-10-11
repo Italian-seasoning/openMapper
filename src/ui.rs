@@ -938,6 +938,7 @@ fn logic_panel(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Libra
                 if ui.add(egui::Button::new(icons::labelled(Icon::Select, tr("Edit existing", "Править готовые"))).selected(ed.path_edit)).clicked() && !ed.path_edit {
                     ed.cancel();
                     ed.path_edit = true;
+                    ed.select(None);
                 }
             });
             if ed.path_edit {

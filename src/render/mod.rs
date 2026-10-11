@@ -1916,7 +1916,7 @@ impl Renderer {
             let target = centre.as_dvec3();
             // (three quarters from the front, from high enough that a flat roof still shows)
             cam.yaw = if *is_spline { 35.0 } else { 215.0 };
-            cam.pitch = if *is_spline { 38.0 } else { 32.0 };
+            cam.pitch = if *is_spline { 38.0 } else { 24.0 };
             cam.fov_y = 35f32.to_radians();
             let dist = radius as f64 / (cam.fov_y as f64 * 0.5).sin() * 1.02;
             cam.jump_to(target, dist);
@@ -1959,9 +1959,9 @@ impl Renderer {
             let left = Vec3::Z.cross(toward_eye).normalize_or(Vec3::X);
             let light = (toward_eye + Vec3::Z * 0.8 + left * 0.5).normalize();
             gl.sun_dir = [light.x, light.y, light.z, 1.0];
-            gl.sun_color = [1.25, 1.22, 1.17, 1.0];
-            gl.light_b = [0.30, 0.32, 0.36, 0.0];
-            gl.light_c = [0.70, 0.70, 0.74, 0.0];
+            gl.sun_color = [1.5, 1.47, 1.4, 1.0];
+            gl.light_b = [0.45, 0.47, 0.52, 0.0];
+            gl.light_c = [0.95, 0.95, 0.98, 0.0];
             queue.write_buffer(&self.thumb_globals, 0, bytemuck::bytes_of(&gl));
             let inst = device.create_buffer_init(&wgpu::util::BufferInitDescriptor { label: Some("thumb inst"), contents: bytemuck::bytes_of(&Instance::new(Mat4::IDENTITY, [0.0; 4])), usage: wgpu::BufferUsages::VERTEX });
             let mut enc = device.create_command_encoder(&Default::default());
