@@ -154,6 +154,12 @@ impl Collector<'_> {
                 }
                 None => (sco.model.clone(), dir.clone()),
             };
+            // (the fonts its texts are drawn in, when a mod brought them)
+            for tt in &model.text_textures {
+                for f in crate::texts::font_files(&tt.font, &self.roots.omsi, &self.roots.content) {
+                    self.absolute(&f);
+                }
+            }
             let mut dirs = crate::assets::texture_dirs(&self.roots.omsi, &self.roots.content, &model_dir);
             dirs.insert(0, omsi_cfg::resolve_path(&dir, "texture"));
             for md in &model.meshes {

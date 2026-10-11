@@ -147,6 +147,15 @@ pub fn has_font(name: &str, omsi: &Path, content: &Path) -> bool {
     atlas(name, omsi, content).is_some()
 }
 
+/// The files a font is made of: its `.oft` and its two pictures (empty: not installed).
+pub fn font_files(name: &str, omsi: &Path, content: &Path) -> Vec<PathBuf> {
+    let key = name.trim().to_lowercase();
+    let Ok(f) = fonts(omsi, content).lock() else { return Vec::new() };
+    let Some(font) = f.index.iter().find(|x| x.name.trim().to_lowercase() == key) else { return Vec::new() };
+    let dir = font.path.parent().map(Path::to_path_buf).unwrap_or_default();
+    vec![font.path.clone(), omsi_cfg::resolve_path(&dir, &font.alpha), omsi_cfg::resolve_path(&dir, &font.bitmap)]
+}
+
 /// The names of an object's labels, from its `[stringvarnamelist]` files, at least as many
 /// as its text textures read (those beyond the list unnamed).
 pub fn label_names(lists: &[PathBuf], texts: &[TextTexture]) -> Vec<String> {
