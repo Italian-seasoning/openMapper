@@ -239,6 +239,11 @@ impl Assets {
         any
     }
 
+    /// The picture could not be read (missing, cut short, a format nothing reads).
+    pub fn texture_failed(&self, path: &Path) -> bool {
+        matches!(self.textures.get(path), Some(Slot::Failed))
+    }
+
     pub fn spline_failed(&self, rel: &str) -> bool {
         matches!(self.splines.get(&rel.to_lowercase()), Some(Slot::Failed))
     }

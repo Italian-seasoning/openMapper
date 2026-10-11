@@ -389,7 +389,8 @@ pub fn junction_section(ui: &mut egui::Ui, ed: &mut Editor, k: TileKey, id: i64)
             }
         }
     });
-    if apply && new != opts {
+    let rebuild = ui.button(icons::labelled(Icon::Junction, tr("Build it again", "Построить заново"))).on_hover_text(tr("Makes the plate, its kerbs and lanes again for the roads as they are now", "Заново строит площадку, бордюры и полосы под дороги, как они сейчас")).clicked();
+    if (apply && new != opts) || rebuild {
         ed.set_junction_options(id, new);
     }
 }

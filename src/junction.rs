@@ -690,6 +690,10 @@ pub fn make_with(doc: &mut Document, assets: &mut Assets, content: &Path, asphal
         Some((tex, u, range, period, width, lane)) => {
             let stem = tex.file_stem().map(|s| s.to_string_lossy().to_string()).unwrap_or_else(|| "road".into());
             let out = tex_dir.join(format!("om_{stem}_plain4.png"));
+            // (one cut short, a full disk say, is made again)
+            if out.exists() && image::open(&out).is_err() {
+                let _ = std::fs::remove_file(&out);
+            }
             if !out.exists() {
                 // (most of a lane: slabs and patches keep their size; the markings at its
                 // edges stay out)

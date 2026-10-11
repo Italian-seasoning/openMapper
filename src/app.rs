@@ -1310,6 +1310,15 @@ impl App {
             click(&mut self.ed, assets, &self.lib, x, y);
         }
         self.ed.right_click();
+        // OPENMAPPER_BRANCH_ROAD: the branch of another road type
+        if let Some(b) = std::env::var("OPENMAPPER_BRANCH_ROAD").ok().and_then(|b| self.lib.find(&b).map(|a| a.rel.clone())) {
+            while assets.spline(&b).is_none() && !assets.spline_failed(&b) {
+                assets.poll();
+                std::thread::sleep(std::time::Duration::from_millis(10));
+            }
+            self.ed.road_type = Some(b);
+            self.ed.inherit_type = false;
+        }
         for (x, y) in branch {
             click(&mut self.ed, assets, &self.lib, x, y);
         }

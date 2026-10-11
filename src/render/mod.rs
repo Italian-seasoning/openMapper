@@ -918,7 +918,9 @@ impl Renderer {
         if !self.materials.contains_key(&key) {
             let mut flags = [0.0f32; 4];
             let mut has_tex = 0.0;
-            if let Some(p) = &m.texture {
+            // (a picture that cannot be read: the part is drawn in its colour, not left out)
+            let readable = m.texture.as_ref().filter(|p| !assets.texture_failed(p));
+            if let Some(p) = readable {
                 if !self.textures.contains_key(p) {
                     let img = assets.texture(p)?;
                     let albedo = upload_image(device, queue, &img.image, true);
@@ -928,7 +930,7 @@ impl Renderer {
                 }
                 has_tex = 1.0;
             }
-            let t = m.texture.as_ref().and_then(|p| self.textures.get(p));
+            let t = readable.and_then(|p| self.textures.get(p));
             if let Some(t) = t {
                 flags = t.flags;
                 if t.normal.is_none() {
