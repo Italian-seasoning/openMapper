@@ -1901,7 +1901,7 @@ impl Renderer {
                 sample_count: 1,
                 dimension: wgpu::TextureDimension::D2,
                 format: wgpu::TextureFormat::Rgba8UnormSrgb,
-                usage: wgpu::TextureUsages::RENDER_ATTACHMENT | wgpu::TextureUsages::TEXTURE_BINDING,
+                usage: wgpu::TextureUsages::RENDER_ATTACHMENT | wgpu::TextureUsages::TEXTURE_BINDING | wgpu::TextureUsages::COPY_SRC,
                 view_formats: &[],
             });
             let view = tex.create_view(&Default::default());
@@ -1910,15 +1910,54 @@ impl Renderer {
             let radius = ((hi - lo).length() * 0.5).max(0.5);
             let mut cam = Camera::default();
             let target = centre.as_dvec3();
-            cam.yaw = if *is_spline { 35.0 } else { 210.0 };
-            cam.pitch = if *is_spline { 38.0 } else { 22.0 };
+            // (three quarters from the front, from high enough that a flat roof still shows)
+            cam.yaw = if *is_spline { 35.0 } else { 215.0 };
+            cam.pitch = if *is_spline { 38.0 } else { 32.0 };
             cam.fov_y = 35f32.to_radians();
             let dist = radius as f64 / (cam.fov_y as f64 * 0.5).sin() * 1.02;
             cam.jump_to(target, dist);
             cam.update(10.0);
+            // (closer until its corners, as seen, fill the picture: a long low building is
+            // small inside the sphere round it)
+            let corners: Vec<Vec3> = (0..8).map(|i| Vec3::new(if i & 1 == 0 { lo.x } else { hi.x }, if i & 2 == 0 { lo.y } else { hi.y }, if i & 4 == 0 { lo.z } else { hi.z })).collect();
+            for _ in 0..4 {
+                let vp = cam.proj(1.0) * cam.view();
+                let o = cam.origin().as_vec3();
+                let (mut mn, mut mx) = (glam::Vec2::splat(f32::MAX), glam::Vec2::splat(f32::MIN));
+                for c in &corners {
+                    let p = vp * (*c - o).extend(1.0);
+                    if p.w <= 1e-4 {
+                        continue;
+                    }
+                    let q = glam::Vec2::new(p.x / p.w, p.y / p.w);
+                    mn = mn.min(q);
+                    mx = mx.max(q);
+                }
+                if mn.x > mx.x {
+                    break;
+                }
+                // centre what is seen, then fill 90 % of the picture
+                let mid = (mn + mx) * 0.5;
+                let span = (mx - mn).max_element().max(1e-3);
+                let (_, r, u) = { let f = (target - cam.eye()).normalize(); let r = f.cross(DVec3::Z).normalize_or(DVec3::X); (f, r, r.cross(f)) };
+                let half_h = cam.distance * (cam.fov_y as f64 * 0.5).tan();
+                let shifted = cam.target + r * (mid.x as f64 * half_h) + u * (mid.y as f64 * half_h);
+                let d = cam.distance * (span as f64 / 1.8);
+                cam.jump_to(shifted, d.max(0.3));
+                cam.update(10.0);
+            }
             let mut gl = self.globals_for(&cam, 1.0, &FrameExtras::default(), DVec3::ZERO);
             gl.fog[3] = 0.0;
             gl.shadow[0] = 0.0;
+            // (a studio light: the key light from over the camera's left shoulder, the shade
+            // filled well, so the side shown is lit whatever the map's sun does)
+            let toward_eye = (cam.eye() - target).as_vec3().normalize_or(Vec3::Z);
+            let left = Vec3::Z.cross(toward_eye).normalize_or(Vec3::X);
+            let light = (toward_eye + Vec3::Z * 0.8 + left * 0.5).normalize();
+            gl.sun_dir = [light.x, light.y, light.z, 1.0];
+            gl.sun_color = [1.25, 1.22, 1.17, 1.0];
+            gl.light_b = [0.30, 0.32, 0.36, 0.0];
+            gl.light_c = [0.70, 0.70, 0.74, 0.0];
             queue.write_buffer(&self.thumb_globals, 0, bytemuck::bytes_of(&gl));
             let inst = device.create_buffer_init(&wgpu::util::BufferInitDescriptor { label: Some("thumb inst"), contents: bytemuck::bytes_of(&Instance::new(Mat4::IDENTITY, [0.0; 4])), usage: wgpu::BufferUsages::VERTEX });
             let mut enc = device.create_command_encoder(&Default::default());
@@ -1957,6 +1996,13 @@ impl Renderer {
                 let _ = &self.thumb_sky;
             }
             queue.submit([enc.finish()]);
+            // OPENMAPPER_THUMBS=<folder>: the pictures saved too (checks without a person at the screen)
+            if let Some(dir) = std::env::var_os("OPENMAPPER_THUMBS") {
+                let name: String = key.chars().map(|c| if c.is_alphanumeric() { c } else { '_' }).collect();
+                if let Ok(img) = read_texture(gpu, &tex) {
+                    let _ = img.save(std::path::Path::new(&dir).join(format!("{name}.png")));
+                }
+            }
             let id = egui_r.register_native_texture(device, &view, wgpu::FilterMode::Linear);
             self.thumbs.insert(key, Some(Thumb { id, _tex: tex }));
             done += 1;
@@ -2186,6 +2232,33 @@ fn v4(v: Vec3, w: f32) -> Vec4 {
 }
 
 /// Towards the sun: high in the south-west of a summer afternoon.
+/// An RGBA8 texture read back from the GPU.
+fn read_texture(gpu: &Gpu, tex: &wgpu::Texture) -> anyhow::Result<image::RgbaImage> {
+    let (w, h) = (tex.width(), tex.height());
+    let row = (w * 4).div_ceil(256) * 256;
+    let buf = gpu.device.create_buffer(&wgpu::BufferDescriptor { label: Some("readback"), size: (row * h) as u64, usage: wgpu::BufferUsages::COPY_DST | wgpu::BufferUsages::MAP_READ, mapped_at_creation: false });
+    let mut enc = gpu.device.create_command_encoder(&Default::default());
+    enc.copy_texture_to_buffer(
+        wgpu::TexelCopyTextureInfo { texture: tex, mip_level: 0, origin: wgpu::Origin3d::ZERO, aspect: wgpu::TextureAspect::All },
+        wgpu::TexelCopyBufferInfo { buffer: &buf, layout: wgpu::TexelCopyBufferLayout { offset: 0, bytes_per_row: Some(row), rows_per_image: Some(h) } },
+        wgpu::Extent3d { width: w, height: h, depth_or_array_layers: 1 },
+    );
+    gpu.queue.submit([enc.finish()]);
+    let slice = buf.slice(..);
+    slice.map_async(wgpu::MapMode::Read, |_| {});
+    let _ = gpu.device.poll(wgpu::PollType::wait_indefinitely());
+    let data = slice.get_mapped_range();
+    let mut img = image::RgbaImage::new(w, h);
+    for y in 0..h {
+        let r = &data[(y * row) as usize..][..(w * 4) as usize];
+        for x in 0..w {
+            let p = &r[(x * 4) as usize..][..4];
+            img.put_pixel(x, y, image::Rgba([p[0], p[1], p[2], p[3]]));
+        }
+    }
+    Ok(img)
+}
+
 fn sun_dir() -> Vec3 {
     Vec3::new(-0.42, -0.55, 0.72).normalize()
 }
