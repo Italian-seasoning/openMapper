@@ -142,6 +142,11 @@ fn atlas(name: &str, omsi: &Path, content: &Path) -> Option<Arc<FontAtlas>> {
     a
 }
 
+/// Whether a font of this name is installed (its `.oft` found and its pictures read).
+pub fn has_font(name: &str, omsi: &Path, content: &Path) -> bool {
+    atlas(name, omsi, content).is_some()
+}
+
 /// The names of an object's labels, from its `[stringvarnamelist]` files, at least as many
 /// as its text textures read (those beyond the list unnamed).
 pub fn label_names(lists: &[PathBuf], texts: &[TextTexture]) -> Vec<String> {

@@ -317,6 +317,12 @@ pub(crate) fn missing_textures(path: &Path, is_spline: bool, roots: &[PathBuf]) 
     };
     let mut dirs = crate::assets::texture_dirs(&omsi, &content, &model_dir);
     dirs.insert(0, omsi_cfg::resolve_path(dir, "texture"));
+    // (a text on the object needs its font: without it the sign stays blank, in the game too)
+    for tt in model.text_textures.iter().filter(|t| crate::texts::label_of(t).is_some()) {
+        if !crate::texts::has_font(&tt.font, &omsi, &content) {
+            out.push(format!("{} {}", tr("font", "шрифт"), tt.font.trim()));
+        }
+    }
     for md in &model.meshes {
         let in_model = omsi_cfg::resolve_path(&omsi_cfg::resolve_path(&model_dir, "model"), &md.file);
         if !omsi_cfg::vfs::is_file(&in_model) && !omsi_cfg::vfs::is_file(&omsi_cfg::resolve_path(&model_dir, &md.file)) {
