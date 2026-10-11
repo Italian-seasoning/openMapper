@@ -1,6 +1,7 @@
 //! The asset library: every scenery object and spline type of the installation and the
 //! content folder, sorted into a few plain categories a beginner can find things in.
 
+use std::collections::HashMap;
 use std::path::{Path, PathBuf};
 use std::sync::mpsc;
 
@@ -113,6 +114,9 @@ pub struct Library {
     pub assets: Vec<Asset>,
     pub scanning: bool,
     rx: Option<mpsc::Receiver<ScanMsg>>,
+    /// Where each asset is in `assets`, by its lower-case path (`find` is asked many times
+    /// a frame).
+    index: HashMap<String, usize>,
 }
 
 impl Library {
@@ -122,6 +126,7 @@ impl Library {
         let dirs: Vec<(PathBuf, bool)> = vec![(roots.content.clone(), true), (roots.omsi.clone(), false)];
         std::thread::spawn(move || scan(dirs, tx));
         self.assets.clear();
+        self.index.clear();
         self.rx = Some(rx);
         self.scanning = true;
     }
@@ -135,7 +140,9 @@ impl Library {
                     ScanMsg::Found(v) => {
                         for a in v {
                             // the content folder's copy hides the installation's
-                            if !self.assets.iter().any(|b| b.rel.eq_ignore_ascii_case(&a.rel)) {
+                            let key = a.rel.to_lowercase();
+                            if !self.index.contains_key(&key) {
+                                self.index.insert(key, self.assets.len());
                                 self.assets.push(a);
                             }
                         }
@@ -144,6 +151,7 @@ impl Library {
                     ScanMsg::Done => {
                         self.scanning = false;
                         self.assets.sort_by(|a, b| a.name.to_lowercase().cmp(&b.name.to_lowercase()));
+                        self.index = self.assets.iter().enumerate().map(|(i, a)| (a.rel.to_lowercase(), i)).collect();
                         changed = true;
                     }
                 }
@@ -153,7 +161,7 @@ impl Library {
     }
 
     pub fn find(&self, rel: &str) -> Option<&Asset> {
-        self.assets.iter().find(|a| a.rel.eq_ignore_ascii_case(rel))
+        self.index.get(&rel.to_lowercase()).and_then(|&i| self.assets.get(i))
     }
 
     /// Assets of a kind and category matching a search (words in any order).
