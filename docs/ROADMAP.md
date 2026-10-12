@@ -125,3 +125,6 @@ Add a line when you touch a shared file: stream, file, what.
 * D · `src/app.rs`: `OPENMAPPER_SELECT=x,y[,spline]`, `OPENMAPPER_HIDE`, `OPENMAPPER_FIND`, `OPENMAPPER_GROUPS`, `OPENMAPPER_HISTORY`; a screenshot run takes no input and does not take the focus; `Prefs::save` does nothing in one.
 * D · `src/editor.rs`: `array` (copies in a row), `align_to_roads`, `replace_selected_objects`, `select_alike`; `camera::Camera::axes` is public (Alt + arrows nudge along the screen's nearest map axis).
 * D · `src/app.rs`: `snapshot` (View > Save a picture of the view, F12, into `~/Pictures/openMapper`), `OPENMAPPER_SNAPSHOT`; `ui::map_stats` in the map's properties.
+* D · `src/main.rs`: `mod ui_mapsettings`, `mod ui_calendar`; `src/ui.rs`: `Action::{MapSettings, Calendar}` (Map menu), `ObjInfo::{paths, attach_points}`; `src/app.rs`: `OPENMAPPER_SETTINGS[=calendar]`, `OPENMAPPER_LEVEL`.
+* D · `src/traffic/mod.rs`: `Traffic::{calendar, timezone, registrations, has}` with `File::{Holidays, TimeZone, Registrations}` (written with the map, undone with the traffic).
+* D · `src/editor.rs`: `set_rules`, `set_spline_extra` (skew, terrain align), `level_request` / `level_under_objects`, `attach_object`.
