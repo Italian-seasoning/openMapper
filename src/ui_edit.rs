@@ -186,6 +186,12 @@ pub fn group_properties(ui: &mut egui::Ui, ed: &mut Editor, lib: &Library) {
                 }
             }
         }
+        if splines > 0 {
+            ui.add_space(4.0);
+            if ui.button(tr("Reverse their direction", "Развернуть их направление")).on_hover_text(reverse_help()).clicked() {
+                ed.reverse_selected();
+            }
+        }
         if splines > 1 {
             ui.add_space(4.0);
             if ui.button(tr("Even slope along them", "Ровный уклон вдоль них")).on_hover_text(tr("One chain of roads: from the height at one end to that at the other, evenly (a bridge, a ramp)", "Одна цепочка дорог: от высоты на одном конце до высоты на другом, равномерно (мост, пандус)")).clicked() {
@@ -423,6 +429,10 @@ pub fn array_section(ui: &mut egui::Ui, ed: &mut Editor, lib: &Library) {
     if go {
         ed.array(lib, v[0] as usize, DVec2::new(v[1], v[2]), v[3]);
     }
+}
+
+pub(crate) fn reverse_help() -> &'static str {
+    tr("Each starts where it ended: the traffic on it goes the other way (a one-way street, a track's direction), the road itself stays where it is", "Каждый начинается там, где кончался: движение по нему идёт в обратную сторону (улица с односторонним движением, направление пути), сама дорога остаётся на месте")
 }
 
 /// A copy of the selected road(s) or track(s) alongside, at a distance.

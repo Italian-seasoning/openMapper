@@ -464,6 +464,32 @@ fn set_own_end(doc: &mut Document, k: TileKey, id: i64, at_end: bool, z: Option<
     t.touch_content();
 }
 
+/// A spline turned round: it starts where it ended and runs back along the same curve
+/// (heights, banking and the cut of its ends kept where they were; its links swapped).
+/// `tex` is where its textures start along it now.
+pub fn reversed(s: &MapSpline, org: DVec2, tex: f64) -> MapSpline {
+    let c = omsi_geometry::SplineCurve::from_map(s, org);
+    let end = c.end_point();
+    let mut r = s.clone();
+    r.pos = [end.x - org.x, end.y - org.y, end.z];
+    r.heading = (c.heading_at(s.length) + 180.0).rem_euclid(360.0);
+    r.radius = -s.radius;
+    r.grad_start = -s.grad_end;
+    r.grad_end = -s.grad_start;
+    r.delta_h = s.delta_h.map(|d| -d);
+    // (its right side is the old left: the banking changes sign; a skewed cut is the same
+    // line seen the other way round)
+    r.cant_start = -s.cant_end;
+    r.cant_end = -s.cant_start;
+    r.skew_start = s.skew_end;
+    r.skew_end = s.skew_start;
+    r.prev_id = s.next_id;
+    r.next_id = s.prev_id;
+    r.tex_offset = tex;
+    r.map_chain_offset = s.map_chain_offset.map(|_| tex);
+    r
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -687,5 +713,22 @@ mod tests {
         // (out to the right first, then round to the end: through the point pulled to)
         assert!(a.heading_at(0.0) > 10.0 && a.heading_at(0.0) < 90.0);
         assert!((a.end_point().truncate() - DVec2::new(110.0, 130.0)).length() < 1.0, "{:?}", a.end_point());
+    }
+
+    #[test]
+    fn a_reversed_spline_runs_back_along_the_same_curve() {
+        let s = MapSpline { id: 7, prev_id: 3, next_id: 9, pos: [10.0, 20.0, 5.0], heading: 30.0, length: 80.0, radius: 120.0, grad_start: 2.0, grad_end: -1.0, delta_h: Some(1.5), is_h: true, cant_start: 3.0, cant_end: 1.0, skew_start: 10.0, ..Default::default() };
+        let org = DVec2::new(300.0, 0.0);
+        let r = reversed(&s, org, 0.0);
+        let (a, b) = (SplineCurve::from_map(&s, org), SplineCurve::from_map(&r, org));
+        for i in 0..=8 {
+            let d = s.length * i as f64 / 8.0;
+            assert!((a.point_at(d) - b.point_at(s.length - d)).length() < 1e-6, "at {d}");
+            assert!((a.cant_at(d) + b.cant_at(s.length - d)).abs() < 1e-9);
+        }
+        assert_eq!((r.prev_id, r.next_id), (9, 3));
+        let back = reversed(&r, org, s.tex_offset);
+        assert!((back.heading - s.heading).abs() < 1e-9 && (back.pos[0] - s.pos[0]).abs() < 1e-9 && (back.pos[1] - s.pos[1]).abs() < 1e-9);
+        assert_eq!((back.radius, back.grad_start, back.cant_end, back.skew_start), (s.radius, s.grad_start, s.cant_end, s.skew_start));
     }
 }

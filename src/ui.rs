@@ -1504,6 +1504,7 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
     // ends held)
     let mut spline_extra: Option<(f64, f64, u8)> = None;
     let mut whole_road = false;
+    let mut reverse = false;
     let mut align_road = false;
     let mut alike = false;
     let mut replace_obj: Option<String> = None;
@@ -1732,6 +1733,9 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
                         }
                     });
                 });
+                if ui.small_button(tr("Reverse direction", "Развернуть направление")).on_hover_text(crate::ui_edit::reverse_help()).clicked() {
+                    reverse = true;
+                }
                 if s.prev_id != 0 || s.next_id != 0 {
                     if ui.small_button(tr("Select the whole road", "Выбрать всю дорогу")).on_hover_text(tr("Every piece linked on from this one (or double-click the road)", "Все куски, связанные с этим (или двойной клик по дороге)")).clicked() {
                         whole_road = true;
@@ -1861,6 +1865,10 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
         Sel::Spline(k, id) => {
             if whole_road {
                 ed.select_chain(k, id);
+                return;
+            }
+            if reverse {
+                ed.reverse_selected();
                 return;
             }
             crate::ui_edit::apply_ends(ed, ui.ctx(), k, id, ends);

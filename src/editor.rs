@@ -2942,6 +2942,47 @@ impl Editor {
         self.history.commit();
     }
 
+    /// The selected splines turned round (each starts where it ended), the traffic on them
+    /// going the other way: a one-way street, a track's direction.
+    pub fn reverse_selected(&mut self) {
+        let splines: Vec<(TileKey, i64)> = self.selection().into_iter().filter_map(|s| if let Sel::Spline(k, id) = s { Some((k, id)) } else { None }).collect();
+        let Some(doc) = self.doc.as_mut() else { return };
+        if splines.is_empty() {
+            return;
+        }
+        // (a row of objects is measured along its spline from the start: it would move)
+        let with_rows = splines.iter().any(|(k, id)| {
+            let Some(t) = doc.tiles.get(k) else { return false };
+            let idx = t.tile.splines.iter().position(|s| s.id == *id && !s.deleted);
+            idx.map(|i| t.tile.spline_attachments.iter().any(|a| a.spline_index == i as i32)).unwrap_or(false)
+        });
+        if with_rows {
+            self.error(tr("Remove the rows of objects along it first (they are measured from its start)", "Сначала уберите ряды объектов вдоль неё (они отмеряются от её начала)"));
+            return;
+        }
+        // the textures run on along a chain the new way
+        let mut tex: std::collections::HashMap<i64, f64> = Default::default();
+        if let Some(chain) = reshape::chain_order(doc, &splines) {
+            let mut at = 0.0;
+            for (k, id, _) in chain.iter().rev() {
+                tex.insert(*id, at);
+                at += doc.spline(*k, *id).map(|s| s.length).unwrap_or(0.0);
+            }
+        }
+        self.history.begin(tr("Reverse direction", "Разворот направления"));
+        for (k, id) in &splines {
+            self.history.touch_tile(doc, *k);
+            let org = tile_origin(*k);
+            let t = doc.tiles.get_mut(k).unwrap();
+            if let Some(s) = t.tile.splines.iter_mut().find(|s| s.id == *id && !s.deleted) {
+                let at = tex.get(id).copied().unwrap_or(s.tex_offset);
+                *s = reshape::reversed(s, org, at);
+                t.touch_content();
+            }
+        }
+        self.history.commit();
+    }
+
     /// The selected splines copied alongside, `d` m to the right of the first's way
     /// (negative: left); the copies are selected.
     pub fn parallel_copy(&mut self, d: f64) {
