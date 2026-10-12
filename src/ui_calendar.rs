@@ -1,6 +1,7 @@
 //! Calendar and place (Map menu), as OMSI 2's editor keeps them beside the map: where on
 //! earth it lies and its time zone (`timezone.txt`: the sun and the clocks), summer time,
-//! school and public holidays (`Holidays.txt`: the timetable's day types) and the number
+//! school and public holidays (`Holidays.txt`, kept with the timetable: its day types come
+//! from them; the Lines window shows the same) and the number
 //! plates of the AI's cars (`registrations.txt`).
 
 use egui::{Color32, RichText, Vec2};
@@ -118,7 +119,10 @@ impl CalendarWindow {
             self.count = 100;
         }
         let before = doc.traffic.clone();
-        let t = &mut doc.traffic;
+        // (the holidays are the timetable's: its day types come from them)
+        let tt_before = doc.timetable.calendar.clone();
+        let tt_whole = doc.timetable.clone();
+        let (t, cal) = (&mut doc.traffic, &mut doc.timetable.calendar);
         let mut touched: Vec<File> = Vec::new();
         let mut open = self.open;
         egui::Window::new(icons::labelled(Icon::Schedule, tr("Calendar and place", "Календарь и место"))).id(egui::Id::new("calendar window")).open(&mut open).default_pos([340.0, 100.0]).default_size([460.0, 520.0]).resizable(true).show(ctx, |ui| {
@@ -183,7 +187,7 @@ impl CalendarWindow {
                     });
                 }
                 Tab::Holidays => {
-                    let c = &mut t.calendar;
+                    let c = &mut *cal;
                     ui.horizontal(|ui| {
                         ui.label(tr("Year", "Год"));
                         ui.add(egui::DragValue::new(&mut self.year).range(1900..=2100));
@@ -200,12 +204,8 @@ impl CalendarWindow {
                         for i in idx {
                             let h = &mut c.holidays[i];
                             ui.horizontal(|ui| {
-                                if date_field(ui, &mut h.date) {
-                                    touched.push(File::Holidays);
-                                }
-                                if ui.add(egui::TextEdit::singleline(&mut h.name).desired_width(200.0)).changed() {
-                                    touched.push(File::Holidays);
-                                }
+                                date_field(ui, &mut h.date);
+                                ui.add(egui::TextEdit::singleline(&mut h.name).desired_width(200.0));
                                 if ui.small_button(icons::labelled(Icon::Delete, "")).clicked() {
                                     remove = Some(i);
                                 }
@@ -213,11 +213,9 @@ impl CalendarWindow {
                         }
                         if let Some(i) = remove {
                             c.holidays.remove(i);
-                            touched.push(File::Holidays);
                         }
                         if ui.button(icons::labelled(Icon::Add, tr("Add a holiday", "Добавить праздник"))).clicked() {
                             c.holidays.push(Holiday { date: y * 10_000 + 101, name: tr("Holiday", "Праздник").into() });
-                            touched.push(File::Holidays);
                         }
                         ui.add_space(8.0);
                         ui.label(RichText::new(tr("School holidays", "Школьные каникулы")).strong());
@@ -227,16 +225,11 @@ impl CalendarWindow {
                         for i in idx {
                             let r = &mut c.ranges[i];
                             ui.horizontal(|ui| {
-                                let a = date_field(ui, &mut r.start);
+                                date_field(ui, &mut r.start);
                                 ui.label("–");
                                 // (school holidays over New Year end in the next year)
-                                let b = date_field(ui, &mut r.end);
-                                if a || b {
-                                    touched.push(File::Holidays);
-                                }
-                                if ui.add(egui::TextEdit::singleline(&mut r.name).desired_width(120.0)).changed() {
-                                    touched.push(File::Holidays);
-                                }
+                                date_field(ui, &mut r.end);
+                                ui.add(egui::TextEdit::singleline(&mut r.name).desired_width(120.0));
                                 if ui.small_button(icons::labelled(Icon::Delete, "")).clicked() {
                                     remove = Some(i);
                                 }
@@ -247,11 +240,9 @@ impl CalendarWindow {
                         }
                         if let Some(i) = remove {
                             c.ranges.remove(i);
-                            touched.push(File::Holidays);
                         }
                         if ui.button(icons::labelled(Icon::Add, tr("Add school holidays", "Добавить каникулы"))).clicked() {
                             c.ranges.push(HolidayRange { start: y * 10_000 + 701, end: y * 10_000 + 831, name: tr("Summer", "Лето").into() });
-                            touched.push(File::Holidays);
                         }
                     });
                 }
@@ -283,8 +274,13 @@ impl CalendarWindow {
         for f in touched {
             doc.traffic.touch(f);
         }
-        if doc.traffic != before {
-            ed.history.push_snapshot(tr("Calendar and place", "Календарь и место"), crate::history::Snapshot { traffic: Some(before), ..Default::default() });
+        let calendar = doc.timetable.calendar != tt_before;
+        if calendar {
+            doc.timetable.touch_calendar();
+        }
+        let traffic = doc.traffic != before;
+        if traffic || calendar {
+            ed.history.push_snapshot(tr("Calendar and place", "Календарь и место"), crate::history::Snapshot { traffic: traffic.then_some(before), timetable: calendar.then_some(tt_whole), ..Default::default() });
         }
     }
 }
