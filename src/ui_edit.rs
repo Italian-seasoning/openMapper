@@ -274,6 +274,77 @@ pub fn apply_ends(ed: &mut Editor, ctx: &egui::Context, k: TileKey, id: i64, e: 
     }
 }
 
+/// The rule kinds OMSI 2's editor offers for a path, with whether they take a value.
+const RULES: [(&str, bool); 6] = [("speedlimit", true), ("trafficdensity", true), ("priority", true), ("trucks", true), ("no_cars", false), ("bus", false)];
+
+fn rule_name(kind: &str) -> &'static str {
+    match kind {
+        "speedlimit" => tr("Speed limit, km/h", "Ограничение скорости, км/ч"),
+        "trafficdensity" => tr("Traffic density ×", "Плотность трафика ×"),
+        "priority" => tr("Priority", "Приоритет"),
+        "trucks" => tr("Trucks (0: none)", "Грузовики (0: нет)"),
+        "no_cars" => tr("No cars", "Без легковых"),
+        "bus" => tr("Buses only", "Только автобусы"),
+        _ => tr("Other", "Другое"),
+    }
+}
+
+/// The rules of a road's (or an object's) paths, as OMSI 2's editor sets them: a speed
+/// limit, the traffic density, priority, trucks, cars and buses, each for one path.
+pub fn rules_section(ui: &mut egui::Ui, ed: &mut Editor, sel: Sel) {
+    let Some(doc) = ed.doc.as_ref() else { return };
+    let rules = match sel {
+        Sel::Object(k, id) => crate::selection::any_object(doc, k, id).map(|o| o.rules.clone()),
+        Sel::Spline(k, id) => doc.spline(k, id).map(|s| s.rules.clone()),
+    };
+    let Some(mut rules) = rules else { return };
+    let mut changed = false;
+    egui::Frame::new().inner_margin(Margin::symmetric(8, 2)).show(ui, |ui| {
+        egui::CollapsingHeader::new(RichText::new(format!("{} ({})", tr("Path rules", "Правила путей"), rules.iter().filter(|r| !r.kill).count())).strong()).id_salt("rules").show(ui, |ui| {
+            ui.label(RichText::new(tr("For the AI and the player on one path (lane) of it, counted from 0", "Для ИИ и игрока на одном пути (полосе), считая от 0")).small().color(TEXT_DIM));
+            let mut remove = None;
+            for (i, r) in rules.iter_mut().enumerate().filter(|(_, r)| !r.kill) {
+                ui.horizontal(|ui| {
+                    changed |= ui.add(egui::DragValue::new(&mut r.path_index).range(0..=64).prefix("#")).on_hover_text(tr("Path (lane) number", "Номер пути (полосы)")).changed();
+                    let before = r.kind.clone();
+                    egui::ComboBox::from_id_salt(("rule", i)).selected_text(rule_name(&r.kind)).width(104.0).show_ui(ui, |ui| {
+                        for (k, _) in RULES {
+                            ui.selectable_value(&mut r.kind, k.to_string(), rule_name(k));
+                        }
+                    });
+                    if r.kind != before {
+                        changed = true;
+                        r.value = match r.kind.as_str() {
+                            "speedlimit" => 50.0,
+                            "trafficdensity" => 1.0,
+                            _ => 0.0,
+                        };
+                    }
+                    if RULES.iter().any(|(k, v)| *k == r.kind && *v) || !RULES.iter().any(|(k, _)| *k == r.kind) {
+                        changed |= ui.add(egui::DragValue::new(&mut r.value).speed(0.1).max_decimals(2)).changed();
+                    }
+                    if ui.small_button(icons::labelled(Icon::Delete, "")).clicked() {
+                        remove = Some(i);
+                    }
+                });
+            }
+            if let Some(i) = remove {
+                rules.remove(i);
+                changed = true;
+            }
+            if ui.button(icons::labelled(Icon::Add, tr("Add a rule", "Добавить правило"))).clicked() {
+                rules.push(omsi_map::MapRule { path_index: 0, kind: "speedlimit".into(), value: 50.0, extra: 0.0, kill: false });
+                changed = true;
+            }
+        });
+    });
+    if changed {
+        ed.set_rules(sel, rules);
+    } else {
+        ed.end_panel_step_if_idle(ui.ctx());
+    }
+}
+
 /// Copies of the selection in a row: how many, the step between them and a turn each.
 pub fn array_section(ui: &mut egui::Ui, ed: &mut Editor, lib: &Library) {
     if ed.selection().is_empty() {

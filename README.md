@@ -86,6 +86,8 @@ experienced map makers.
 * **Groups** (Edit menu): a selection kept under a name (a stop with its shelter and signs, a
   crossing with its lights, rows and what hangs on them included), to put down again in any
   map with `Ctrl+V`; kept as tile files in `<content>/openMapper/groups`.
+* **Path rules** (a road's or an object's properties), as in OMSI 2's editor: a speed limit,
+  traffic density, priority, trucks, no cars or buses only, each for one path (lane).
 * **Map settings** (Map menu), as in OMSI 2's editor: money system, ticket pack, depot,
   years and year offset, repair time, real rail and the seasons of the year.
 * **Find in map** (Edit menu or `Ctrl+F`): every kind of object and spline the map uses,

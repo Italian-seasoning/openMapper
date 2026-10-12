@@ -2951,6 +2951,29 @@ impl Editor {
         n
     }
 
+    /// The rules of an object's or a spline's paths (one step while a number is dragged).
+    pub fn set_rules(&mut self, sel: Sel, rules: Vec<omsi_map::MapRule>) {
+        self.begin_panel_step(tr("Path rules", "Правила путей"));
+        let Some(doc) = self.doc.as_mut() else { return };
+        let k = match sel {
+            Sel::Object(k, _) | Sel::Spline(k, _) => k,
+        };
+        self.history.touch_tile(doc, k);
+        match sel {
+            Sel::Object(k, id) => {
+                if let Some(o) = selection::any_object_mut(doc, k, id) {
+                    o.rules = rules;
+                }
+            }
+            Sel::Spline(k, id) => {
+                if let Some(s) = doc.tiles.get_mut(&k).and_then(|t| t.tile.splines.iter_mut().find(|s| s.id == id && !s.deleted)) {
+                    s.rules = rules;
+                }
+            }
+        }
+        doc.tiles.get_mut(&k).map(|t| t.touch_content());
+    }
+
     /// The selected objects made ones of the type `file`, where they stand.
     pub fn replace_selected_objects(&mut self, file: &str) {
         let sels = self.selection();
@@ -4271,6 +4294,17 @@ mod tests {
             (lo, hi, last) = (lo.min(v), hi.max(v), v);
         }
         assert!(hi - lo > 0.6, "it does roll: {lo}..{hi}");
+    }
+
+    #[test]
+    fn path_rules_are_set_in_one_step() {
+        let mut ed = editor();
+        let r = omsi_map::MapRule { path_index: 1, kind: "speedlimit".into(), value: 30.0, extra: 0.0, kill: false };
+        ed.set_rules(Sel::Spline((0, 0), 3), vec![r.clone()]);
+        ed.set_rules(Sel::Spline((0, 0), 3), vec![omsi_map::MapRule { value: 40.0, ..r }]);
+        assert_eq!(ed.doc.as_ref().unwrap().spline((0, 0), 3).unwrap().rules[0].value, 40.0);
+        ed.undo();
+        assert!(ed.doc.as_ref().unwrap().spline((0, 0), 3).unwrap().rules.is_empty());
     }
 
     #[test]

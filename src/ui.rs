@@ -181,6 +181,8 @@ pub struct ObjInfo {
     pub textures: Vec<(String, bool)>,
     /// What its labels mean (empty: it reads none; an empty name: unnamed).
     pub labels: Vec<String>,
+    /// How many paths (lanes) it has.
+    pub paths: usize,
 }
 
 /// Facts for the status bar.
@@ -1699,6 +1701,14 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
             }
         });
     });
+    // (an object's rules only where it has paths, or rules already)
+    let has_paths = match sel {
+        Sel::Object(k, id) => {
+            let file = ed.doc.as_ref().and_then(|d| crate::selection::any_object(d, k, id)).map(|o| (o.file.clone(), !o.rules.is_empty()));
+            file.map(|(f, r)| r || st.obj_info.as_ref().filter(|i| i.file.eq_ignore_ascii_case(&f)).map(|i| i.paths > 0).unwrap_or(false)).unwrap_or(false)
+        }
+        Sel::Spline(..) => true,
+    };
     let _ = st;
     if alike {
         let n = ed.select_alike(sel);
@@ -1716,6 +1726,9 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
         Sel::Object(k, id) => {
             crate::ui_edit::junction_section(ui, ed, k, id);
             crate::ui_edit::array_section(ui, ed, lib);
+            if has_paths {
+                crate::ui_edit::rules_section(ui, ed, sel);
+            }
             if let Some(f) = replace_obj {
                 ed.replace_selected_objects(&f);
                 return;
@@ -1765,6 +1778,7 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
             }
             crate::ui_edit::apply_ends(ed, ui.ctx(), k, id, ends);
             crate::ui_edit::parallel_section(ui, ed, lib);
+            crate::ui_edit::rules_section(ui, ed, sel);
             crate::ui_edit::rows_section(ui, ed, lib);
             let Some(doc) = ed.doc.as_mut() else { return };
             if let Some((file, mirror)) = spline_change {

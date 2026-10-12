@@ -994,6 +994,7 @@ impl App {
                     triangles: m.parts.iter().map(|p| p.mesh.indices.len() / 3).sum(),
                     textures: textures.iter().map(|t| (t.file_name().map(|n| n.to_string_lossy().to_string()).unwrap_or_default(), crate::ui_pbr::is_made(t, r) || !omsi_texture::pbr::find(t).is_empty())).collect(),
                     labels: m.labels.clone(),
+                    paths: m.paths.len(),
                 });
             }
         }
