@@ -2621,6 +2621,44 @@ impl Editor {
         self.paste_clip(&clip, at, tr("Duplicate", "Дублирование"), lib);
     }
 
+    /// `n` copies of the selection in a row, each `step` (m) on from the one before and its
+    /// objects turned `turn` degrees more (a fence, a row of houses, an avenue), in one step.
+    /// All of them are selected.
+    pub fn array(&mut self, lib: &Library, n: usize, step: DVec2, turn: f64) {
+        let sels = self.selection();
+        let Some(doc) = self.doc.as_mut() else { return };
+        let clip = crate::clipboard::copy(doc, &sels, |f| lib.find(f).map(|a| a.abs_height).unwrap_or(false));
+        if clip.is_empty() || n == 0 || (step.length() < 0.01 && turn.abs() < 1e-6) {
+            return;
+        }
+        self.history.begin(tr("Copies in a row", "Копии в ряд"));
+        self.history.touch_global(doc);
+        let mut all = sels.clone();
+        let mut lost = 0;
+        for i in 1..=n.min(500) {
+            let at2 = clip.at.truncate() + step * i as f64;
+            for k in crate::clipboard::tiles_touched(doc, &clip, at2) {
+                self.history.touch_tile(doc, k);
+            }
+            let at = DVec3::new(at2.x, at2.y, doc.ground(at2));
+            let got = crate::clipboard::paste(doc, &clip, at);
+            lost += clip.len() - got.len();
+            for s in &got {
+                if let Sel::Object(k, id) = *s {
+                    if let Some(o) = doc.object_mut(k, id) {
+                        o.rot[0] = crate::roads::norm_deg(o.rot[0] + turn * i as f64);
+                    }
+                }
+            }
+            all.extend(got);
+        }
+        self.history.commit();
+        if lost > 0 {
+            self.toast(format!("{} {lost}", tr("Left out (off the map):", "Пропущено (за картой):")));
+        }
+        self.set_selection(all);
+    }
+
     fn paste_clip(&mut self, clip: &crate::clipboard::Clip, at: DVec2, label: &str, lib: &Library) {
         let Some(doc) = self.doc.as_mut() else { return };
         let tiles = crate::clipboard::tiles_touched(doc, clip, at);
@@ -4148,6 +4186,19 @@ mod tests {
             (lo, hi, last) = (lo.min(v), hi.max(v), v);
         }
         assert!(hi - lo > 0.6, "it does roll: {lo}..{hi}");
+    }
+
+    #[test]
+    fn copies_in_a_row_stand_a_step_apart() {
+        let mut ed = editor();
+        ed.select(Some(Sel::Object((0, 0), 1)));
+        ed.array(&Library::default(), 3, DVec2::new(10.0, 0.0), 90.0);
+        let doc = ed.doc.as_ref().unwrap();
+        let xs: Vec<(f64, f64)> = doc.tiles[&(0, 0)].tile.objects.iter().skip(2).map(|o| (o.pos[0], o.rot[0])).collect();
+        assert_eq!(xs, vec![(110.0, 90.0), (120.0, 180.0), (130.0, 270.0)]);
+        assert_eq!(ed.selection().len(), 4);
+        ed.undo();
+        assert_eq!(ed.doc.as_ref().unwrap().tiles[&(0, 0)].tile.objects.len(), 2);
     }
 
     #[test]

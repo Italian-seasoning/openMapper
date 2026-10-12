@@ -192,6 +192,7 @@ pub fn group_properties(ui: &mut egui::Ui, ed: &mut Editor, lib: &Library) {
             }
         });
     });
+    array_section(ui, ed, lib);
     parallel_section(ui, ed, lib);
     rows_section(ui, ed, lib);
 }
@@ -257,6 +258,39 @@ pub fn apply_ends(ed: &mut Editor, ctx: &egui::Context, k: TileKey, id: i64, e: 
     match e.change {
         Some((at_end, z, g)) => ed.set_spline_end(k, id, at_end, z, g),
         None => ed.end_panel_step_if_idle(ctx),
+    }
+}
+
+/// Copies of the selection in a row: how many, the step between them and a turn each.
+pub fn array_section(ui: &mut egui::Ui, ed: &mut Editor, lib: &Library) {
+    if ed.selection().is_empty() {
+        return;
+    }
+    let key = egui::Id::new("array numbers");
+    // (count, step x, step y, turn: kept between frames)
+    let mut v: [f64; 4] = ui.data_mut(|d| *d.get_temp_mut_or_insert_with(key, || [5.0, 10.0, 0.0, 0.0]));
+    let mut go = false;
+    egui::Frame::new().inner_margin(Margin::symmetric(8, 2)).show(ui, |ui| egui::CollapsingHeader::new(RichText::new(tr("Copies in a row", "Копии в ряд")).strong()).id_salt("array").show(ui, |ui| {
+        ui.label(RichText::new(tr("A fence, a row of houses, an avenue: the selection copied again and again, a step on each time", "Забор, ряд домов, аллея: выделение копируется снова и снова, каждый раз на шаг дальше")).small().color(TEXT_DIM));
+        egui::Grid::new("array").num_columns(2).spacing(Vec2::new(6.0, 5.0)).show(ui, |ui| {
+            prop_row(ui, tr("Copies", "Копий"), |ui| {
+                ui.add(egui::DragValue::new(&mut v[0]).speed(0.2).range(1.0..=200.0).max_decimals(0));
+            });
+            prop_row(ui, tr("Step", "Шаг"), |ui| {
+                ui.horizontal(|ui| {
+                    ui.add(egui::DragValue::new(&mut v[1]).speed(0.1).prefix("X ").suffix(" m"));
+                    ui.add(egui::DragValue::new(&mut v[2]).speed(0.1).prefix("Y ").suffix(" m"));
+                });
+            });
+            prop_row(ui, tr("Turn each", "Поворот каждой"), |ui| {
+                ui.add(egui::DragValue::new(&mut v[3]).speed(0.5).range(-180.0..=180.0).suffix("°"));
+            });
+        });
+        go = ui.button(icons::labelled(Icon::Copy, &format!("{} {}", tr("Make", "Сделать"), v[0] as usize))).clicked();
+    }));
+    ui.data_mut(|d| d.insert_temp(key, v));
+    if go {
+        ed.array(lib, v[0] as usize, DVec2::new(v[1], v[2]), v[3]);
     }
 }
 
