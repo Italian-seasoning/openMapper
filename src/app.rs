@@ -108,6 +108,7 @@ pub struct App {
     picture: bool,
     /// A full-size picture of the view is taken this frame (View menu, F12).
     snapshot: bool,
+    snapshot_done: bool,
     /// An action the user allowed to drop unsaved changes is being carried out.
     unguarded: bool,
 }
@@ -143,6 +144,7 @@ impl App {
             guide: Default::default(),
             picture: false,
             snapshot: false,
+            snapshot_done: false,
             unguarded: false,
             shot: std::env::var_os("OPENMAPPER_SHOT").map(|p| (PathBuf::from(p), std::env::var("OPENMAPPER_SHOT_FRAMES").ok().and_then(|n| n.parse().ok()).unwrap_or(90))),
             autosave: Default::default(),
@@ -1024,7 +1026,10 @@ impl App {
                     &mut actions,
                 ));
             }
-            crate::ui_edit::paint_names(&ctx, &self.ed, &self.lib, &self.cam, self.view);
+            // (the pictures taken of the view are clean of them)
+            if !self.picture && !self.snapshot {
+                crate::ui_edit::paint_names(&ctx, &self.ed, &self.lib, &self.cam, self.view);
+            }
             crate::ui_edit::paint_box(&ctx, &self.ed);
             crate::ui_edit::road_entry(&ctx, &mut self.ed, self.view, &mut actions);
             if self.ed.doc.is_some() {
@@ -1203,7 +1208,12 @@ impl App {
             }
             if let Some((path, at)) = &self.shot {
                 // (a running imagery load is waited for: it ends by itself)
-                if !self.geo.busy() && (self.frames >= *at && self.assets.as_ref().map(|a| a.pending == 0).unwrap_or(true) || self.frames >= at * 6) {
+                let ready = !self.geo.busy() && (self.frames >= *at && self.assets.as_ref().map(|a| a.pending == 0).unwrap_or(true) || self.frames >= at * 6);
+                // OPENMAPPER_SNAPSHOT=1: View > Save a picture of the view taken first (checks)
+                if ready && std::env::var_os("OPENMAPPER_SNAPSHOT").is_some() && !self.snapshot_done {
+                    self.snapshot_done = true;
+                    self.snapshot = true;
+                } else if ready {
                     match save_shot(&g.gpu, &frame.texture, path) {
                         Ok(()) => log::info!("screenshot: {}", path.display()),
                         Err(e) => log::error!("screenshot: {e}"),
