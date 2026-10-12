@@ -34,6 +34,8 @@ pub struct ChronoWindow {
     editing: Option<Edit>,
     /// A new scenario's name, as typed.
     new_name: String,
+    /// The patches of the scenario being edited (read again after each change).
+    contents: Option<Vec<(crate::doc::TileKey, String, omsi_map::Tile)>>,
 }
 
 struct Edit {
@@ -197,12 +199,12 @@ impl ChronoWindow {
         Ok(n)
     }
 
-    pub fn window(&mut self, ctx: &egui::Context, ed: &mut Editor) {
+    pub fn window(&mut self, ctx: &egui::Context, ed: &mut Editor, lib: &crate::library::Library, actions: &mut Vec<crate::ui::Action>) {
         if !self.open {
             self.list = None;
             return;
         }
-        let Some(doc) = ed.doc.as_mut() else { return };
+        let Some(doc) = ed.doc.as_ref() else { return };
         if self.date == 0 && self.editing.is_none() {
             self.date = crate::doc::today_code();
         }
@@ -211,6 +213,13 @@ impl ChronoWindow {
             scan(&omsi_cfg::resolve_path(&doc.chrono_root(), "Chrono"), &mut v);
             v
         });
+        // OPENMAPPER_CHRONO_EDIT=<n>: the properties of scenario n open (checks)
+        if self.editing.is_none() && self.contents.is_none() {
+            if let Some(s) = std::env::var("OPENMAPPER_CHRONO_EDIT").ok().and_then(|n| n.parse::<usize>().ok()).and_then(|n| list.get(n)) {
+                self.editing = Some(Edit { dir: s.dir.clone(), title: s.title.clone(), description: s.description.clone(), start: s.cfg.start_date, end: s.cfg.end_date, lines: s.cfg.deactivate_lines.clone() });
+                self.date = s.cfg.start_date.max(self.date.min(1));
+            }
+        }
         let mut date = self.date;
         let mut open = self.open;
         let lines: Vec<String> = doc.timetable.lines.iter().map(|l| l.name.clone()).collect();
@@ -221,6 +230,25 @@ impl ChronoWindow {
         let mut close_edit = false;
         let mut new_scenario: Option<String> = None;
         let mut change: Option<u8> = None;
+        let mut look: Option<glam::DVec2> = None;
+        let mut take: Option<(crate::doc::TileKey, String, crate::chrono_edit::Part, bool)> = None;
+        // the map's things a change names: their names and places
+        let mut map_names: std::collections::HashMap<i64, String> = std::collections::HashMap::new();
+        let mut map_places: std::collections::HashMap<i64, glam::DVec2> = std::collections::HashMap::new();
+        if self.editing.is_some() {
+            for (k, t) in &doc.tiles {
+                let org = crate::doc::tile_origin(*k);
+                for o in t.tile.objects.iter() {
+                    map_names.insert(o.id, lib.find(&o.file).map(|a| a.name.clone()).unwrap_or_else(|| o.file.clone()));
+                    map_places.insert(o.id, org + glam::DVec2::new(o.pos[0], o.pos[1]));
+                }
+                for sp in t.tile.splines.iter() {
+                    map_names.insert(sp.id, lib.find(&sp.file).map(|a| a.name.clone()).unwrap_or_else(|| sp.file.clone()));
+                    map_places.insert(sp.id, org + glam::DVec2::new(sp.pos[0], sp.pos[1]));
+                }
+            }
+        }
+        let doc_ref: &crate::doc::Document = doc;
         let n_sel = ed.selection().len();
         let catalogue = ed.object_type.clone();
         egui::Window::new(icons::labelled(Icon::History, tr("Chrono scenarios", "Хроно-сценарии"))).id(egui::Id::new("chrono")).open(&mut open).default_pos([330.0, 90.0]).default_size([500.0, 520.0]).resizable(true).show(ctx, |ui| {
@@ -310,6 +338,58 @@ impl ChronoWindow {
                     }
                 });
                 ui.label(RichText::new(tr("Written into the scenario at once (undo does not take it out of the scenario).", "Записывается в сценарий сразу (отмена не убирает это из сценария).")).small().color(TEXT_DIM));
+                // what the scenario has, tile by tile
+                let contents = self.contents.get_or_insert_with(|| crate::chrono_edit::patches(&e.dir, doc_ref));
+                let total: usize = contents.iter().map(|(_, _, t)| t.objects.len() + t.splines.iter().filter(|s| !s.deleted).count() + t.chrono_changes.len()).sum();
+                egui::CollapsingHeader::new(RichText::new(format!("{} ({total})", tr("What it changes", "Что он меняет"))).strong()).id_salt("chrono contents").default_open(std::env::var_os("OPENMAPPER_CHRONO_EDIT").is_some()).show(ui, |ui| {
+                    egui::ScrollArea::vertical().id_salt("chrono contents list").max_height(220.0).show(ui, |ui| {
+                        let name = |f: &str| lib.find(f).map(|a| a.name.clone()).unwrap_or_else(|| f.rsplit('\\').next().unwrap_or(f).to_string());
+                        for (k, file, t) in contents.iter() {
+                            ui.label(RichText::new(format!("{} {}, {} · {file}", tr("Tile", "Тайл"), k.0, k.1)).small().color(TEXT_DIM));
+                            let org = crate::doc::tile_origin(*k);
+                            let mut row = |ui: &mut egui::Ui, mark: &str, text: String, at: Option<glam::DVec2>, part: crate::chrono_edit::Part, back: bool| {
+                                ui.horizontal(|ui| {
+                                    ui.label(RichText::new(mark).monospace().color(ACCENT));
+                                    ui.label(text);
+                                    if let Some(p) = at {
+                                        if ui.small_button(icons::labelled(Icon::Focus, "")).on_hover_text(tr("Go there", "Перейти туда")).clicked() {
+                                            look = Some(p);
+                                        }
+                                    }
+                                    if back && ui.small_button(tr("into the map", "в карту")).on_hover_text(tr("Out of the scenario into the map itself: there on every day", "Из сценария в саму карту: будет во все дни")).clicked() {
+                                        take = Some((*k, file.clone(), part, true));
+                                    }
+                                    if ui.small_button(icons::labelled(Icon::Delete, "")).on_hover_text(tr("Take it out of the scenario", "Убрать из сценария")).clicked() {
+                                        take = Some((*k, file.clone(), part, false));
+                                    }
+                                });
+                            };
+                            for o in &t.objects {
+                                row(ui, "+", name(&o.file), Some(org + glam::DVec2::new(o.pos[0], o.pos[1])), crate::chrono_edit::Part::Object(o.id), true);
+                            }
+                            for (i, sp) in t.splines.iter().enumerate().filter(|(_, s)| !s.deleted) {
+                                let rows = t.spline_attachments.iter().any(|a| a.spline_index == i as i32);
+                                row(ui, "+", name(&sp.file), Some(org + glam::DVec2::new(sp.pos[0], sp.pos[1])), crate::chrono_edit::Part::Spline(sp.id), !rows);
+                            }
+                            for (i, c) in t.chrono_changes.iter().enumerate() {
+                                let what = map_names.get(&c.id).cloned().unwrap_or_else(|| format!("#{}", c.id));
+                                let (mark, text) = if c.delete {
+                                    ("-", what)
+                                } else if let Some(f) = &c.new_type {
+                                    (">", format!("{what} → {}", name(f)))
+                                } else if c.relabel.is_some() {
+                                    ("*", format!("{what}: {}", tr("new texts", "новые тексты")))
+                                } else {
+                                    ("*", format!("{what}: {} {}", c.rules.len(), tr("rules", "правил")))
+                                };
+                                row(ui, mark, text, map_places.get(&c.id).copied(), crate::chrono_edit::Part::Change(i), false);
+                            }
+                        }
+                        if contents.is_empty() {
+                            ui.label(RichText::new(tr("Nothing yet.", "Пока ничего.")).color(TEXT_DIM));
+                        }
+                    });
+                });
                 ui.horizontal(|ui| {
                     if ui.button(icons::labelled(Icon::Save, tr("Write the scenario", "Записать сценарий"))).clicked() {
                         write = true;
@@ -364,6 +444,7 @@ impl ChronoWindow {
         self.open = open;
         if let Some(e) = edit {
             self.editing = Some(e);
+            self.contents = None;
         }
         if close_edit {
             self.editing = None;
@@ -377,12 +458,36 @@ impl ChronoWindow {
             self.new_name.clear();
             write = true;
         }
+        if let Some(p) = look {
+            actions.push(crate::ui::Action::LookAt(p));
+        }
+        if let (Some((k, file, part, back)), Some(e)) = (take, &self.editing) {
+            // (what goes back into the map, as the patch has it, onto the map's grid)
+            let moved = self.contents.as_ref().and_then(|c| c.iter().find(|x| x.0 == k && x.1 == file)).map(|(_, _, t)| match part {
+                crate::chrono_edit::Part::Object(id) => (t.objects.iter().filter(|o| o.id == id).cloned().collect::<Vec<_>>(), t.attach_objects.iter().filter(|o| o.parent_id == Some(id)).cloned().collect::<Vec<_>>(), Vec::new()),
+                crate::chrono_edit::Part::Spline(id) => (Vec::new(), Vec::new(), t.splines.iter().filter(|s| s.id == id).cloned().collect()),
+                crate::chrono_edit::Part::Change(_) => (Vec::new(), Vec::new(), Vec::new()),
+            });
+            match crate::chrono_edit::take_out(&e.dir, &file, part) {
+                Ok(()) => {
+                    if let (true, Some((o, h, s))) = (back, moved) {
+                        ed.put_back(k, o, h, s);
+                    }
+                }
+                Err(err) => ed.error(format!("{err}")),
+            }
+            self.contents = None;
+            if let Some(doc) = ed.doc.as_mut() {
+                doc.show_chrono(self.date);
+            }
+        }
         if let (Some(c), Some(e)) = (change, &self.editing) {
             match self.apply(ed, c, e.dir.clone(), &root, catalogue.clone()) {
                 Ok(n) => ed.toast(format!("{} {n}", tr("Written into the scenario:", "Записано в сценарий:"))),
                 Err(err) => ed.error(format!("{}: {err}", tr("Could not write the scenario", "Не удалось записать сценарий"))),
             }
             self.list = None;
+            self.contents = None;
             if let Some(doc) = ed.doc.as_mut() {
                 doc.show_chrono(self.date);
             }

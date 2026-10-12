@@ -297,7 +297,7 @@ fn labels(s: &mut String, count: i32, extra: &[String]) {
     }
 }
 
-fn rules(s: &mut String, rules: &[MapRule]) {
+pub(crate) fn rules(s: &mut String, rules: &[MapRule]) {
     for r in rules {
         let _ = write!(
             s,
@@ -365,7 +365,7 @@ pub(crate) fn spline(s: &mut String, sp: &MapSpline) {
     rules(s, &sp.rules);
 }
 
-fn attachment(s: &mut String, a: &SplineAttachment) {
+pub(crate) fn attachment(s: &mut String, a: &SplineAttachment) {
     match a.repeater {
         Some((tile, first)) => {
             let _ = write!(s, "[splineAttachement_repeater]\n0\n{tile}\n{first}\n");

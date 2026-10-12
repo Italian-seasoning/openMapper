@@ -2986,6 +2986,23 @@ impl Editor {
         n
     }
 
+    /// Objects and splines a chrono scenario had, put into the map's tile `k` (they are the
+    /// map's again, from the first day on). Inside one step.
+    pub fn put_back(&mut self, k: TileKey, objects: Vec<MapObject>, hanging: Vec<MapObject>, splines: Vec<MapSpline>) {
+        let Some(doc) = self.doc.as_mut() else { return };
+        if !doc.tiles.contains_key(&k) {
+            return;
+        }
+        self.history.begin(tr("Back into the map", "Обратно в карту"));
+        self.history.touch_tile(doc, k);
+        let t = doc.tiles.get_mut(&k).unwrap();
+        t.tile.objects.extend(objects);
+        t.tile.attach_objects.extend(hanging);
+        t.tile.splines.extend(splines);
+        t.touch_content();
+        self.history.commit();
+    }
+
     /// The object `file` hung on point `at` of object `id` (`[attachObj]`); it is selected.
     pub fn attach_object(&mut self, k: TileKey, parent: i64, at: usize, file: &str) {
         let Some(doc) = self.doc.as_mut() else { return };

@@ -1076,7 +1076,7 @@ impl App {
                 self.road_types.window(&ctx, &mut self.ed, &self.lib, self.roots.as_ref(), &mut actions);
                 self.map_settings.window(&ctx, &mut self.ed, self.roots.as_ref());
                 self.calendar.window(&ctx, &mut self.ed);
-                self.chrono.window(&ctx, &mut self.ed);
+                self.chrono.window(&ctx, &mut self.ed, &self.lib, &mut actions);
                 self.signals.window(&ctx, &mut self.ed, &self.lib, self.roots.as_ref(), &mut actions);
                 self.geo.window(&ctx, &mut self.ed, &mut self.prefs);
                 if let Some(p) = self.geo.look.take() {
