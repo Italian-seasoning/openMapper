@@ -27,6 +27,7 @@ pub enum File {
     Holidays,
     TimeZone,
     Registrations,
+    SignalRoutes,
 }
 
 impl File {
@@ -41,6 +42,7 @@ impl File {
             File::Holidays => "Holidays.txt",
             File::TimeZone => "timezone.txt",
             File::Registrations => "registrations.txt",
+            File::SignalRoutes => "signalroutes.cfg",
         }
     }
 }
@@ -63,8 +65,10 @@ pub struct Traffic {
     pub timezone: omsi_map::TimeZone,
     /// The number plates the AI's cars carry (`registrations.txt`).
     pub registrations: Vec<String>,
-    /// Which of those three the map has (only they are written again on an undo).
-    pub has: [bool; 3],
+    /// The railway signals' routes: the track pieces each one protects (`signalroutes.cfg`).
+    pub signal_routes: Vec<omsi_map::ailists::SignalRoute>,
+    /// Which of those four the map has (only they are written again on an undo).
+    pub has: [bool; 4],
     /// The map has `unsched_vehgroups.txt`: without it the first group drives about.
     pub has_veh_groups: bool,
     /// The file was in OMSI 2's first format (`[ailist]`, `[aigroup]`): it is written in
@@ -106,6 +110,10 @@ impl Traffic {
             t.timezone = z;
             t.has[1] = true;
         }
+        if let Ok(f) = CfgFile::read(omsi_cfg::resolve_path(dir, "signalroutes.cfg")) {
+            t.signal_routes = omsi_map::ailists::parse_signalroutes(&f);
+            t.has[3] = true;
+        }
         let reg = omsi_cfg::resolve_path(dir, "registrations.txt");
         if reg.is_file() {
             t.registrations = list("registrations.txt");
@@ -119,6 +127,7 @@ impl Traffic {
             File::Holidays => self.has[0] = true,
             File::TimeZone => self.has[1] = true,
             File::Registrations => self.has[2] = true,
+            File::SignalRoutes => self.has[3] = true,
             _ => {}
         }
         self.changed.insert(f);
@@ -131,7 +140,7 @@ impl Traffic {
         if self.has_veh_groups {
             self.changed.extend([File::VehGroups, File::Density]);
         }
-        for (has, f) in self.has.into_iter().zip([File::Holidays, File::TimeZone, File::Registrations]) {
+        for (has, f) in self.has.into_iter().zip([File::Holidays, File::TimeZone, File::Registrations, File::SignalRoutes]) {
             if has {
                 self.changed.insert(f);
             }
@@ -383,6 +392,7 @@ pub fn plan(t: &Traffic, map_dir: &Path) -> Vec<Op> {
                 File::Holidays => holidays_text(&t.calendar),
                 File::TimeZone => timezone_text(&t.timezone),
                 File::Registrations => list_text(&t.registrations),
+                File::SignalRoutes => crate::signals::text(&t.signal_routes),
             };
             Op::Write(omsi_cfg::resolve_path(map_dir, f.name()), encode(&text))
         })

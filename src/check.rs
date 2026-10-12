@@ -83,6 +83,7 @@ pub enum Kind {
     TourNoDepot,
     UnschedMissing,
     StopUnused,
+    SignalRouteBroken,
 }
 
 impl Kind {
@@ -107,6 +108,7 @@ impl Kind {
             Kind::TourNoDepot => tr("Tours without a depot", "Выходы без парка"),
             Kind::UnschedMissing => tr("Traffic groups not in the AI lists", "Группы движения не в списке ИИ"),
             Kind::StopUnused => tr("Stops no trip calls at", "Остановки без рейсов"),
+            Kind::SignalRouteBroken => tr("Signal routes naming what is gone", "Маршруты сигналов с исчезнувшим"),
         }
     }
 
@@ -132,6 +134,7 @@ impl Kind {
             Kind::TourNoDepot => tr("A tour names no depot or group of the AI lists (or one that is not there): the game has no vehicle to send on it. Choose a depot for it in the Lines window.", "Выход не указывает парк или группу из списка ИИ (или указывает несуществующую): игре нечем его обслужить. Выберите парк в окне линий."),
             Kind::UnschedMissing => tr("The unscheduled traffic names a group that the AI lists do not have: those cars never appear. Add the group in Map > Traffic and AI.", "Свободное движение указывает группу, которой нет в списке ИИ: эти машины не появятся. Добавьте группу в Карта > Движение и ИИ."),
             Kind::StopUnused => tr("A stop of the timetable that no trip calls at. Nothing is wrong, it is only not used yet.", "Остановка расписания, на которой не останавливается ни один рейс. Ничего страшного, просто она пока не используется."),
+            Kind::SignalRouteBroken => tr("A signal route names a signal or track pieces no longer on the map: the signal may never clear. Open Map > Signal routes and take the track again, or delete the route.", "Маршрут сигнала указывает сигнал или участки пути, которых больше нет на карте: сигнал может так и не открыться. Откройте Карта > Маршруты сигналов и возьмите пути заново или удалите маршрут."),
         }
     }
 }
@@ -638,6 +641,17 @@ fn timetable_issues(d: &Document, roots: &[PathBuf], out: &mut Vec<Issue>) {
             };
             let (at, sel) = trip.stations.get(i).map(|id| place(&mut files, *id)).unwrap_or((None, None));
             out.push(Issue { severity: Severity::Warning, kind: Kind::TripNoRoute, title: trip.name.clone(), detail, at, sel, fix: None });
+        }
+    }
+    // signal routes: their signal and pieces on the map (or in a chrono folder's tile)
+    let ids: HashSet<i64> = d.tiles.values().flat_map(|t| t.tile.objects.iter().chain(&t.tile.attach_objects).map(|o| o.id).chain(t.tile.spline_attachments.iter().map(|a| a.id)).chain(t.tile.splines.iter().filter(|s| !s.deleted).map(|s| s.id)).chain(t.chrono.iter().flat_map(|c| c.objects.iter().map(|o| o.id).chain(c.splines.iter().map(|s| s.id))))).collect();
+    for (i, r) in d.traffic.signal_routes.iter().enumerate() {
+        // (a piece in a tile the map lists but does not ship is not looked for)
+        let shipped = |ti: i64| d.order.get(ti as usize).map(|k| d.tiles.contains_key(k)).unwrap_or(false);
+        let gone = std::iter::once(r.signal.0).chain(r.entries.iter().filter(|e| shipped(e[2])).map(|e| e[0])).filter(|id| !ids.contains(id)).count();
+        if gone > 0 {
+            let k = d.tiles.iter().find(|(_, t)| t.tile.objects.iter().any(|o| o.id == r.signal.0)).map(|(k, _)| *k);
+            out.push(Issue { severity: Severity::Warning, kind: Kind::SignalRouteBroken, title: format!("{} {i}", tr("Route", "Маршрут")), detail: format!("{gone} {}", tr("gone", "нет на карте")), at: None, sel: k.map(|k| Sel::Object(k, r.signal.0)), fix: None });
         }
     }
     let used: HashSet<i64> = tt.trips.iter().flat_map(|t| t.stations.iter().copied()).collect();

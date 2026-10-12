@@ -102,6 +102,7 @@ pub struct App {
     road_types: crate::ui_roads::RoadTypes,
     map_settings: crate::ui_mapsettings::MapSettings,
     calendar: crate::ui_calendar::CalendarWindow,
+    signals: crate::ui_signals::SignalWindow,
     /// The Satellite and terrain window and the overlay on the ground.
     geo: crate::ui_geo::GeoUi,
     /// Getting started.
@@ -144,6 +145,7 @@ impl App {
             road_types: Default::default(),
             map_settings: Default::default(),
             calendar: Default::default(),
+            signals: Default::default(),
             geo: Default::default(),
             guide: Default::default(),
             picture: false,
@@ -296,6 +298,7 @@ impl App {
         // OPENMAPPER_SETTINGS=1: the map settings open (=calendar: the calendar and place)
         match std::env::var("OPENMAPPER_SETTINGS").as_deref() {
             Ok("calendar") => self.calendar.open = true,
+            Ok("signals") => self.signals.open = true,
             Ok(_) => self.map_settings.open = true,
             Err(_) => {}
         }
@@ -421,6 +424,17 @@ impl App {
         self.ed.history.commit();
         crate::editor::sync_entry_points(doc);
         self.tt.before_save(doc, self.roots.as_ref());
+        // (the signal routes' pieces counted again among their tiles' paths: tiles change)
+        if let Some(r) = &self.roots {
+            if !doc.traffic.signal_routes.is_empty() {
+                let mut routes = std::mem::take(&mut doc.traffic.signal_routes);
+                let changed = crate::signals::reindex(&mut routes, doc, r);
+                doc.traffic.signal_routes = routes;
+                if changed {
+                    doc.traffic.touch(crate::traffic::File::SignalRoutes);
+                }
+            }
+        }
         match crate::doc::save(doc) {
             Ok(()) => {
                 omsi_cfg::content_changed();
@@ -747,6 +761,7 @@ impl App {
             Action::ViewPicture => self.snapshot = true,
             Action::MapSettings => self.map_settings.open = true,
             Action::Calendar => self.calendar.open = true,
+            Action::SignalRoutes => self.signals.open = true,
             Action::SetMapCamera => {
                 if let Some(doc) = self.ed.doc.as_mut() {
                     let p = self.cam.target.truncate();
@@ -1057,6 +1072,7 @@ impl App {
                 self.road_types.window(&ctx, &mut self.ed, &self.lib, self.roots.as_ref(), &mut actions);
                 self.map_settings.window(&ctx, &mut self.ed, self.roots.as_ref());
                 self.calendar.window(&ctx, &mut self.ed);
+                self.signals.window(&ctx, &mut self.ed, &self.lib, self.roots.as_ref(), &mut actions);
                 self.geo.window(&ctx, &mut self.ed, &mut self.prefs);
                 if let Some(p) = self.geo.look.take() {
                     actions.push(Action::LookAt(p));

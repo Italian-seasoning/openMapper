@@ -72,6 +72,8 @@ pub enum Action {
     MapSettings,
     /// The calendar and place window (holidays, time zone, summer time, number plates).
     Calendar,
+    /// The signal routes window (railway signals and the track they protect).
+    SignalRoutes,
     /// The map opens with the camera as it is now (`[mapcam]`).
     SetMapCamera,
     Copy,
@@ -732,6 +734,9 @@ fn menu_bar(root: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, can_undo: bo
                 }
                 if menu_item(ui, Some(Icon::Schedule), tr("Calendar and place…", "Календарь и место…"), "", true) {
                     actions.push(Action::Calendar);
+                }
+                if menu_item(ui, Some(Icon::Traffic), tr("Signal routes…", "Маршруты сигналов…"), "", true) {
+                    actions.push(Action::SignalRoutes);
                 }
                 if menu_item(ui, Some(Icon::Layers), tr("Ground textures…", "Текстуры земли…"), "", true) {
                     ed.set_tool(Tool::Paint);

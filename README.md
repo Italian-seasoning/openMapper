@@ -91,6 +91,12 @@ experienced map makers.
   it (signs on a post, a timetable on a stop).
 * **Path rules** (a road's or an object's properties), as in OMSI 2's editor: a speed limit,
   traffic density, priority, trucks, no cars or buses only, each for one path (lane).
+* **Signal routes** (Map menu), as OMSI 2's editor keeps them in `signalroutes.cfg`: for each
+  railway signal the track pieces it protects (taken from the tracks and switches selected in
+  the view), its distant signal, the next signal, its aspect and a speed limit; each piece's
+  place among its tile's paths is counted again on saving, as the game counts it (all 649
+  pieces of the stock maps come out the same). The map check names routes whose signal or
+  track is gone.
 * **Map settings** (Map menu), as in OMSI 2's editor: money system, ticket pack, depot,
   years and year offset, repair time, real rail and the seasons of the year.
 * **Calendar and place** (Map menu), the map's own files as OMSI 2's editor keeps them:
