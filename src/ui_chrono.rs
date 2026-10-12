@@ -585,6 +585,40 @@ mod tests {
         let _ = std::fs::remove_dir_all(&base);
     }
 
+    /// An object of Grundorf (read from the installation) taken away in one of its scenarios:
+    /// the change lands in the map's own copy, and the view as on that day has it gone.
+    #[test]
+    fn a_change_in_a_scenario_of_an_installation_map() {
+        let Some(omsi) = crate::install::find_omsi_root(&Default::default()) else { return };
+        let cfg = omsi.join("maps").join("Grundorf").join("global.cfg");
+        if !cfg.is_file() {
+            return;
+        }
+        let _map = crate::timetable::tests::one_map();
+        let content = std::env::temp_dir().join(format!("openmapper-chrono-e2e-{}", std::process::id()));
+        let _ = std::fs::remove_dir_all(&content);
+        let roots = crate::install::Roots { omsi: omsi.clone(), content: content.clone() };
+        let doc = crate::doc::Document::load(&roots, &cfg, |_| {}).unwrap();
+        let root = doc.chrono_root();
+        let scenario = std::fs::read_dir(root.join("Chrono")).unwrap().flatten().map(|e| e.path()).find(|p| p.is_dir()).unwrap();
+        let start = omsi_map::ailists::parse_chrono_cfg(&omsi_cfg::CfgFile::read(scenario.join("Chrono.cfg")).unwrap()).start_date;
+        let (k, id) = doc.tiles.iter().find_map(|(k, t)| t.tile.objects.first().map(|o| (*k, o.id))).unwrap();
+        let mut ed = Editor::default();
+        ed.open(doc);
+        ed.select(Some(Sel::Object(k, id)));
+        let mut w = ChronoWindow::default();
+        assert_eq!(w.apply(&mut ed, 1, scenario.clone(), &root, None).unwrap(), 1);
+        let own = content.join("maps").join("Grundorf").join("Chrono").join(scenario.file_name().unwrap());
+        assert!(own.join("Chrono.cfg").is_file(), "the scenarios came along");
+        let doc = ed.doc.as_mut().unwrap();
+        assert_eq!(doc.chrono_root(), doc.dir);
+        doc.show_chrono(start.max(19000101));
+        let shown = doc.tiles[&k].display(k.1);
+        assert!(!shown.objects.iter().any(|o| o.id == id), "gone from the scenario's day");
+        assert!(doc.tiles[&k].tile.objects.iter().any(|o| o.id == id), "still in the map");
+        let _ = std::fs::remove_dir_all(&content);
+    }
+
     #[test]
     fn a_chrono_cfg_keeps_what_it_does_not_set() {
         let old = "[startdate]\r\n19891114\r\n\r\n[enddate]\r\n19900929\r\n\r\n[ticketpack]\r\nTicketPacks\\X.otp\r\n\r\n[deactivate_lines]\r\n1\r\nRelais\r\n\r\n";
