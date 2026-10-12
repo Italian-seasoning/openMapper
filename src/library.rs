@@ -270,12 +270,14 @@ fn describe(root: &Path, path: &Path, kind: Kind, from_content: bool) -> Option<
             let has_mesh = !sco.model.meshes.is_empty() || sco.model_file.is_some() || sco.tree.is_some();
             a.category = if sco.is_bus_stop || sco.is_entry_point {
                 Category::Stops
+            } else if sco.tree.is_some() {
+                // (before what only the editor shows: a tree's helper box is `[onlyeditor]`,
+                // its tree is seen in the game)
+                Category::Trees
             } else if sco.only_editor || sco.is_help_arrow || sco.is_car_park || !has_mesh {
                 Category::Technical
             } else if !sco.spline_helpers.is_empty() || sco.is_traffic_light || !sco.traffic_lights.is_empty() {
                 Category::Junctions
-            } else if sco.tree.is_some() {
-                Category::Trees
             } else {
                 Category::Objects
             };
