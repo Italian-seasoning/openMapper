@@ -3395,7 +3395,7 @@ impl Editor {
             }
         }
         let folder: String = doc.dir.file_name().map(|f| f.to_string_lossy().to_string()).unwrap_or_else(|| "map".into()).chars().map(|c| if c.is_alphanumeric() || c == '-' || c == '_' { c } else { '_' }).collect();
-        let dir = omsi_cfg::resolve_path(content, &format!("Sceneryobjects\\openMapper\\{folder}"));
+        let dir = crate::doc::safe::own_path(content, &format!("Sceneryobjects\\openMapper\\{folder}"));
         crate::junction::remove_unused(&dir, &folder, &used, self.session_first_id)
     }
 

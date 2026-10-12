@@ -36,6 +36,10 @@ pub struct ChronoWindow {
     new_name: String,
     /// The one object selected and its texts as they are to read in the scenario.
     relabel: Option<(i64, Vec<String>)>,
+    /// The scenario whose own things are in the map being edited.
+    session: Option<crate::chrono_edit::Session>,
+    /// The check hook ran.
+    checked: bool,
     /// The patches of the scenario being edited (read again after each change).
     contents: Option<Vec<(crate::doc::TileKey, String, omsi_map::Tile)>>,
 }
@@ -98,7 +102,7 @@ fn scan(root: &Path, out: &mut Vec<Scenario>) {
     let mut dirs: Vec<PathBuf> = std::fs::read_dir(root).into_iter().flatten().flatten().map(|e| e.path()).filter(|p| p.is_dir()).collect();
     dirs.sort_by_key(|d| d.file_name().map(|n| n.to_string_lossy().to_uppercase()).unwrap_or_default());
     for d in dirs {
-        let cfg = omsi_cfg::resolve_path(&d, "Chrono.cfg");
+        let cfg = crate::doc::safe::own_path(&d, "Chrono.cfg");
         if let Ok(f) = omsi_cfg::CfgFile::read(&cfg) {
             let files: Vec<String> = std::fs::read_dir(&d).into_iter().flatten().flatten().map(|e| e.file_name().to_string_lossy().to_string()).collect();
             // (English, else whichever language it has)
@@ -135,11 +139,11 @@ fn own_dir(dir: &Path, root: &Path, map_dir: &Path, source: Option<&Path>) -> an
 fn write_scenario(e: &Edit, root: &Path, map_dir: &Path, source: Option<&Path>) -> anyhow::Result<PathBuf> {
     let dir = own_dir(&e.dir, root, map_dir, source)?;
     std::fs::create_dir_all(&dir)?;
-    let cfg = omsi_cfg::resolve_path(&dir, "Chrono.cfg");
+    let cfg = crate::doc::safe::own_path(&dir, "Chrono.cfg");
     let old = std::fs::read(&cfg).map(|b| omsi_cfg::decode_text(&b)).unwrap_or_default();
     crate::doc::safe::write_atomic(&cfg, &crate::timetable::encode(&chrono_cfg_text(&old, e.start, e.end, &e.lines)))?;
     if !e.title.is_empty() || !e.description.is_empty() {
-        let dsc = omsi_cfg::resolve_path(&dir, "Chrono_ENG.dsc");
+        let dsc = crate::doc::safe::own_path(&dir, "Chrono_ENG.dsc");
         crate::doc::safe::write_atomic(&dsc, &crate::timetable::encode(&crate::descriptions::text(&e.title, &e.description)))?;
     }
     Ok(dir)
@@ -154,6 +158,48 @@ fn date_text(d: i32) -> String {
 }
 
 impl ChronoWindow {
+    pub fn in_session(&self) -> bool {
+        self.session.is_some()
+    }
+
+    /// The scenario's own things out of the map and back into it (before a save, a test
+    /// drive, another map). Undo cannot reach across it.
+    pub fn end_session(&mut self, ed: &mut Editor) {
+        let Some(s) = self.session.take() else { return };
+        ed.history.commit();
+        let Some(doc) = ed.doc.as_mut() else { return };
+        match crate::chrono_edit::end(doc, s) {
+            Ok(n) => ed.toast(format!("{} {n}", tr("Back in the scenario:", "Снова в сценарии:"))),
+            Err(e) => ed.error(format!("{}: {e}", tr("Could not write the scenario", "Не удалось записать сценарий"))),
+        }
+        ed.history.clear();
+        ed.select(None);
+        if let Some(doc) = ed.doc.as_mut() {
+            doc.show_chrono(if self.date > 0 { self.date } else { crate::doc::today_code() });
+        }
+        self.contents = None;
+    }
+
+    /// Scenario `dir`'s own things into the map, to select, move and change as any others;
+    /// what is placed meanwhile is the scenario's too.
+    fn begin_session(&mut self, ed: &mut Editor, dir: &Path, root: &Path) {
+        self.end_session(ed);
+        ed.history.commit();
+        let Some(doc) = ed.doc.as_mut() else { return };
+        let own = match own_dir(dir, root, &doc.dir, doc.source.as_deref()) {
+            Ok(d) => d,
+            Err(e) => {
+                ed.error(format!("{e}"));
+                return;
+            }
+        };
+        let (s, n) = crate::chrono_edit::begin(doc, &own);
+        doc.show_chrono_without(self.date, Some(&own));
+        self.session = Some(s);
+        ed.history.clear();
+        ed.toast(format!("{} {n}. {}", tr("The scenario's things are on the map:", "Вещи сценария на карте:"), tr("what you place now is the scenario's too", "то, что вы ставите сейчас, тоже в сценарии")));
+    }
+
     /// A change of the selection made in scenario `dir` (0 appears, 1 is gone, 2 becomes
     /// `file`). How many things it touched.
     fn apply(&mut self, ed: &mut Editor, what: u8, dir: PathBuf, root: &Path, file: Option<String>) -> anyhow::Result<usize> {
@@ -198,6 +244,22 @@ impl ChronoWindow {
     }
 
     pub fn window(&mut self, ctx: &egui::Context, ed: &mut Editor, lib: &crate::library::Library, actions: &mut Vec<crate::ui::Action>) {
+        // (while a scenario's things are on the map, a bar says so, window open or not)
+        if let Some(s) = &self.session {
+            let name = s.dir.file_name().unwrap_or_default().to_string_lossy().to_string();
+            let mut done = false;
+            egui::Area::new(egui::Id::new("chrono session")).anchor(egui::Align2::CENTER_BOTTOM, egui::vec2(0.0, -40.0)).order(egui::Order::Foreground).show(ctx, |ui| {
+                egui::Frame::new().fill(Color32::from_rgba_unmultiplied(120, 60, 20, 235)).corner_radius(4).inner_margin(egui::Margin::symmetric(10, 5)).show(ui, |ui| {
+                    ui.horizontal(|ui| {
+                        ui.label(RichText::new(format!("{} «{name}»", tr("Editing the scenario", "Правка сценария"))).color(Color32::WHITE).strong());
+                        done = ui.button(tr("Done", "Готово")).clicked();
+                    });
+                });
+            });
+            if done {
+                self.end_session(ed);
+            }
+        }
         if !self.open {
             self.list = None;
             return;
@@ -208,7 +270,7 @@ impl ChronoWindow {
         }
         let list = self.list.get_or_insert_with(|| {
             let mut v = Vec::new();
-            scan(&omsi_cfg::resolve_path(&doc.chrono_root(), "Chrono"), &mut v);
+            scan(&crate::doc::safe::own_path(&doc.chrono_root(), "Chrono"), &mut v);
             v
         });
         // OPENMAPPER_CHRONO_EDIT=<n>: the properties of scenario n open (checks)
@@ -228,6 +290,7 @@ impl ChronoWindow {
         let mut close_edit = false;
         let mut new_scenario: Option<String> = None;
         let mut change: Option<u8> = None;
+        let mut session_toggle = false;
         let mut relabel: Option<(i64, Vec<String>)> = None;
         // (the texts of the one object selected, kept while it stays selected)
         let one = match ed.selection().as_slice() {
@@ -414,6 +477,15 @@ impl ChronoWindow {
                         }
                     });
                 });
+                ui.add_space(4.0);
+                if self.session.is_some() {
+                    ui.label(RichText::new(tr("Its own things are on the map: select, move, change and place as usual. The map's own things stay the map's.", "Его вещи на карте: выделяйте, двигайте, меняйте и ставьте как обычно. Вещи самой карты остаются в карте.")).color(ACCENT));
+                    if ui.button(icons::labelled(Icon::CheckCircle, tr("Done: back into the scenario", "Готово: обратно в сценарий"))).clicked() {
+                        session_toggle = true;
+                    }
+                } else if ui.button(icons::labelled(Icon::Objects, tr("Edit its own things on the map", "Править его вещи на карте"))).on_hover_text(tr("What it brings in is put on the map to work with as with anything else; Done writes it back (undo starts afresh)", "То, что он добавляет, ставится на карту, с ним работают как с любым другим; «Готово» записывает обратно (история отмены начинается заново)")).clicked() {
+                    session_toggle = true;
+                }
                 ui.horizontal(|ui| {
                     if ui.button(icons::labelled(Icon::Save, tr("Write the scenario", "Записать сценарий"))).clicked() {
                         write = true;
@@ -481,6 +553,22 @@ impl ChronoWindow {
             self.editing = Some(Edit { dir: root.join(&rel), title: name, description: String::new(), start: date, end: 0, lines: Vec::new() });
             self.new_name.clear();
             write = true;
+        }
+        if session_toggle {
+            if self.session.is_some() {
+                self.end_session(ed);
+            } else if let Some(e) = &self.editing {
+                let dir = e.dir.clone();
+                self.begin_session(ed, &dir, &root);
+            }
+        }
+        // OPENMAPPER_CHRONO_SESSION=1 with OPENMAPPER_CHRONO_EDIT: its things on the map (checks)
+        if self.session.is_none() && !self.checked && std::env::var_os("OPENMAPPER_CHRONO_SESSION").is_some() {
+            self.checked = true;
+            if let Some(e) = &self.editing {
+                let dir = e.dir.clone();
+                self.begin_session(ed, &dir, &root);
+            }
         }
         if let Some(p) = look {
             actions.push(crate::ui::Action::LookAt(p));
@@ -616,6 +704,46 @@ mod tests {
         let shown = doc.tiles[&k].display(k.1);
         assert!(!shown.objects.iter().any(|o| o.id == id), "gone from the scenario's day");
         assert!(doc.tiles[&k].tile.objects.iter().any(|o| o.id == id), "still in the map");
+        let _ = std::fs::remove_dir_all(&content);
+    }
+
+    /// Grundorf's road works scenario edited on the map: its barriers come onto the map, one
+    /// is moved, and afterwards they are the scenario's again (in the map's own copy), moved.
+    #[test]
+    fn a_scenarios_things_are_edited_on_the_map() {
+        let Some(omsi) = crate::install::find_omsi_root(&Default::default()) else { return };
+        let cfg = omsi.join("maps").join("Grundorf").join("global.cfg");
+        let scen = omsi.join("maps").join("Grundorf").join("Chrono").join("0100_BaustelleNordspitze");
+        if !scen.is_dir() {
+            return;
+        }
+        let _map = crate::timetable::tests::one_map();
+        let content = std::env::temp_dir().join(format!("openmapper-chrono-session-{}", std::process::id()));
+        let _ = std::fs::remove_dir_all(&content);
+        let roots = crate::install::Roots { omsi: omsi.clone(), content: content.clone() };
+        let doc = crate::doc::Document::load(&roots, &cfg, |_| {}).unwrap();
+        let root = doc.chrono_root();
+        let before: usize = doc.tiles.values().map(|t| t.tile.objects.len()).sum();
+        let mut ed = Editor::default();
+        ed.open(doc);
+        let mut w = ChronoWindow { date: 20000101, ..Default::default() };
+        w.begin_session(&mut ed, &scen, &root);
+        assert!(w.in_session());
+        let doc = ed.doc.as_mut().unwrap();
+        let during: usize = doc.tiles.values().map(|t| t.tile.objects.len()).sum();
+        assert!(during > before, "its things are on the map");
+        let theirs: std::collections::HashSet<i64> = omsi_map::Tile::load(&scen.join("tile_1_1.map")).unwrap().objects.iter().map(|o| o.id).collect();
+        let (k, o) = doc.tiles.iter_mut().find_map(|(k, t)| t.tile.objects.iter_mut().find(|o| theirs.contains(&o.id)).map(|o| (*k, o))).unwrap();
+        let id = o.id;
+        o.pos[0] += 1.5;
+        let x = o.pos[0];
+        w.end_session(&mut ed);
+        let doc = ed.doc.as_ref().unwrap();
+        assert_eq!(doc.tiles.values().map(|t| t.tile.objects.len()).sum::<usize>(), before, "the map as it was");
+        let own = content.join("maps").join("Grundorf").join("Chrono").join("0100_BaustelleNordspitze");
+        let file = doc.global.tiles.iter().find(|t| (t.x, t.y) == k).unwrap().file.clone();
+        let patch = omsi_map::Tile::load(&own.join(&file)).unwrap();
+        assert!((patch.objects.iter().find(|o| o.id == id).unwrap().pos[0] - x).abs() < 1e-6);
         let _ = std::fs::remove_dir_all(&content);
     }
 

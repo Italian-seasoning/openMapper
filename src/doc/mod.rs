@@ -286,7 +286,7 @@ impl Document {
 
     /// The folder its chrono scenarios are in (the saved copy's, else the one it was read from).
     pub fn chrono_root(&self) -> PathBuf {
-        let own = omsi_cfg::resolve_path(&self.dir, "Chrono");
+        let own = crate::doc::safe::own_path(&self.dir, "Chrono");
         if own.is_dir() {
             return self.dir.clone();
         }
@@ -296,7 +296,14 @@ impl Document {
     /// The map shown as on `date` (YYYYMMDD): every tile's patches of the chrono scenarios
     /// active then, as the game lays them over it. Nothing of the map itself changes.
     pub fn show_chrono(&mut self, date: i32) -> usize {
-        let dirs = omsi_map::active_chrono_dirs(&self.chrono_root(), date);
+        self.show_chrono_without(date, None)
+    }
+
+    /// The same without the scenario in folder `left_out` (its things are being edited in the
+    /// map itself: they would show twice).
+    pub fn show_chrono_without(&mut self, date: i32, left_out: Option<&Path>) -> usize {
+        let same = |a: &Path, b: &Path| a.canonicalize().ok().zip(b.canonicalize().ok()).map(|(a, b)| a == b).unwrap_or(a == b);
+        let dirs: Vec<PathBuf> = omsi_map::active_chrono_dirs(&self.chrono_root(), date).into_iter().filter(|d| left_out.map(|l| !same(d, l)).unwrap_or(true)).collect();
         let files: HashMap<TileKey, String> = self.global.tiles.iter().map(|t| ((t.x, t.y), t.file.clone())).collect();
         for (k, t) in self.tiles.iter_mut() {
             let patches = files.get(k).map(|f| chrono_patches(&dirs, f)).unwrap_or_default();

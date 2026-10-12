@@ -85,6 +85,24 @@ pub fn commit(ops: &[Op]) -> anyhow::Result<()> {
     Ok(())
 }
 
+/// `rel` (backslashes or slashes) inside `dir` itself, whatever the case of its parts; parts
+/// not there are taken as written. Unlike `omsi_cfg::resolve_path` it never leads into
+/// another content root: what is written through it lands in `dir` (a map's own copy in
+/// the content folder, never the installation's).
+pub fn own_path(dir: &Path, rel: &str) -> PathBuf {
+    let mut cur = dir.to_path_buf();
+    for comp in rel.split(['\\', '/']).filter(|c| !c.is_empty() && *c != ".") {
+        let exact = cur.join(comp);
+        if exact.exists() {
+            cur = exact;
+            continue;
+        }
+        let found = std::fs::read_dir(&cur).ok().and_then(|rd| rd.flatten().map(|e| e.path()).find(|p| p.file_name().map(|f| f.to_string_lossy().eq_ignore_ascii_case(comp)).unwrap_or(false)));
+        cur = found.unwrap_or(exact);
+    }
+    cur
+}
+
 /// A save's time as a folder name (UTC, sorts by time).
 pub fn stamp() -> String {
     let secs = std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).map(|d| d.as_secs()).unwrap_or(0);
@@ -254,6 +272,20 @@ fn pretty(stamp: &str) -> String {
 
 #[cfg(test)]
 mod tests {
+    /// A file found whatever its case, one not there taken as written, inside the folder.
+    #[test]
+    fn own_paths_stay_in_their_folder() {
+        let d = std::env::temp_dir().join(format!("openmapper-ownpath-{}", std::process::id()));
+        let _ = std::fs::remove_dir_all(&d);
+        std::fs::create_dir_all(d.join("Chrono").join("0100_A")).unwrap();
+        // (the file system's own case rules may keep the spelling asked for)
+        let same = |a: PathBuf, b: PathBuf| assert!(a.display().to_string().eq_ignore_ascii_case(&b.display().to_string()), "{} {}", a.display(), b.display());
+        same(own_path(&d, "chrono\\0100_a"), d.join("Chrono").join("0100_A"));
+        same(own_path(&d, "chrono/0100_a/tile_1_1.map"), d.join("Chrono").join("0100_A").join("tile_1_1.map"));
+        assert_eq!(own_path(&d, "Holidays.txt"), d.join("Holidays.txt"));
+        let _ = std::fs::remove_dir_all(&d);
+    }
+
     use super::*;
 
     fn scratch(name: &str) -> PathBuf {

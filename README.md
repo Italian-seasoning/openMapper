@@ -107,6 +107,9 @@ experienced map makers.
   editor does (`[selobject]`, `[delete]`, `[typ]`). What a scenario changes is listed tile by
   tile (what appears, goes, changes type, texts or rules), each to go to, take out of the
   scenario or put back into the map itself (every stock patch is written back unchanged).
+  "Edit its own things on the map" brings what a scenario adds onto the map to select, move
+  and change like anything else, what is placed meanwhile included; Done (or saving, a test
+  drive, another map) writes it back into the scenario.
 * **Map settings** (Map menu), as in OMSI 2's editor: money system, ticket pack, depot,
   years and year offset, repair time, real rail and the seasons of the year.
 * **Calendar and place** (Map menu), the map's own files as OMSI 2's editor keeps them:

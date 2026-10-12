@@ -94,7 +94,7 @@ pub enum Part {
 /// A patch without one thing (an object goes with what hangs on it). The file is removed
 /// when nothing is left in it and it brings no ground of its own.
 pub fn take_out(dir: &Path, file: &str, part: Part) -> anyhow::Result<()> {
-    let p = omsi_cfg::resolve_path(dir, file);
+    let p = crate::doc::safe::own_path(dir, file);
     let mut t = Tile::load(&p).map_err(|e| anyhow::anyhow!("{e}"))?;
     match part {
         Part::Object(id) => {
@@ -122,6 +122,157 @@ pub fn take_out(dir: &Path, file: &str, part: Part) -> anyhow::Result<()> {
     let text = patch_text(&t).ok_or_else(|| anyhow::anyhow!("{}: {}", p.display(), crate::i18n::tr("it has parts openMapper does not write", "в нём есть то, что openMapper не пишет")))?;
     crate::doc::safe::write_atomic(&p, &utf16(&text))?;
     Ok(())
+}
+
+/// A scenario's own things being edited in the map itself: the objects and splines it
+/// brings in are put into the map's tiles for as long as it lasts, then written back into
+/// the scenario's patches with whatever was placed meanwhile.
+pub struct Session {
+    pub dir: PathBuf,
+    /// Every IDCode the map had before (what is not among them at the end is the scenario's).
+    before: std::collections::HashSet<i64>,
+    /// The patches as they were (each tile's file name and contents in its own measure).
+    patches: Vec<(TileKey, String, Tile)>,
+}
+
+fn all_ids(doc: &Document) -> std::collections::HashSet<i64> {
+    doc.tiles.values().flat_map(|t| t.tile.objects.iter().chain(&t.tile.attach_objects).map(|o| o.id).chain(t.tile.splines.iter().map(|s| s.id))).collect()
+}
+
+/// Which splines of a patch stay in it while it is edited: those with rows along them (the
+/// rows count their spline by its place in the file).
+fn kept(t: &Tile) -> Vec<bool> {
+    (0..t.splines.len()).map(|i| t.spline_attachments.iter().any(|a| a.spline_index == i as i32)).collect()
+}
+
+/// Put scenario `dir`'s things (in the map's own folder) into the map. How many.
+pub fn begin(doc: &mut Document, dir: &Path) -> (Session, usize) {
+    let before = all_ids(doc);
+    let mut patches = Vec::new();
+    let mut n = 0;
+    for (k, file, _) in patches_of(dir, doc) {
+        let Ok(raw) = Tile::load(&crate::doc::safe::own_path(dir, &file)) else { continue };
+        let mut fitted = raw.clone();
+        fitted.fit_to_world_grid(k.1);
+        let keep = kept(&raw);
+        if let Some(t) = doc.tiles.get_mut(&k) {
+            n += fitted.objects.len() + fitted.attach_objects.len();
+            t.tile.objects.extend(fitted.objects.iter().cloned());
+            t.tile.attach_objects.extend(fitted.attach_objects.iter().cloned());
+            for (s, keep) in fitted.splines.iter().zip(&keep) {
+                if !keep && !s.deleted {
+                    t.tile.splines.push(s.clone());
+                    n += 1;
+                }
+            }
+            t.content_rev = crate::doc::next_rev();
+        }
+        patches.push((k, file, raw));
+    }
+    (Session { dir: dir.to_path_buf(), before, patches }, n)
+}
+
+/// Take the scenario's things (and what was placed meanwhile) out of the map again and write
+/// them into its patches. How many it has now.
+pub fn end(doc: &mut Document, s: Session) -> anyhow::Result<usize> {
+    let mut n = 0;
+    let mut gone: std::collections::HashSet<i64> = std::collections::HashSet::new();
+    let mut by_tile: Vec<(TileKey, Tile)> = Vec::new();
+    for (k, t) in doc.tiles.iter_mut() {
+        let mut mine = Tile::default();
+        let objects = std::mem::take(&mut t.tile.objects);
+        let (theirs, ours): (Vec<_>, Vec<_>) = objects.into_iter().partition(|o| s.before.contains(&o.id));
+        t.tile.objects = theirs;
+        mine.objects = ours;
+        let attach = std::mem::take(&mut t.tile.attach_objects);
+        let (theirs, ours): (Vec<_>, Vec<_>) = attach.into_iter().partition(|o| s.before.contains(&o.id));
+        t.tile.attach_objects = theirs;
+        mine.attach_objects = ours;
+        // (splines: rows of the map along them would lose their place: those stay where they are)
+        let splines = std::mem::take(&mut t.tile.splines);
+        let rows: std::collections::HashSet<usize> = t.tile.spline_attachments.iter().map(|a| a.spline_index.max(0) as usize).collect();
+        let mut keep = Vec::new();
+        for (i, sp) in splines.into_iter().enumerate() {
+            if s.before.contains(&sp.id) || rows.contains(&i) {
+                keep.push(sp);
+            } else if !sp.deleted {
+                mine.splines.push(sp);
+            }
+        }
+        t.tile.splines = keep;
+        if mine.objects.is_empty() && mine.attach_objects.is_empty() && mine.splines.is_empty() {
+            continue;
+        }
+        gone.extend(mine.objects.iter().chain(&mine.attach_objects).map(|o| o.id).chain(mine.splines.iter().map(|x| x.id)));
+        t.content_rev = crate::doc::next_rev();
+        crate::doc::unfit_from_world_grid(&mut mine, k.1);
+        by_tile.push((*k, mine));
+    }
+    // (the map's splines do not go on into the scenario's: the map alone has no such spline)
+    for t in doc.tiles.values_mut() {
+        for sp in t.tile.splines.iter_mut() {
+            if gone.contains(&sp.prev_id) {
+                sp.prev_id = 0;
+            }
+            if gone.contains(&sp.next_id) {
+                sp.next_id = 0;
+            }
+        }
+    }
+    // every patch the scenario had or now needs, written whole
+    let mut keys: Vec<TileKey> = s.patches.iter().map(|p| p.0).chain(by_tile.iter().map(|b| b.0)).collect();
+    keys.sort();
+    keys.dedup();
+    for k in keys {
+        let (file, mut patch) = match s.patches.iter().find(|p| p.0 == k) {
+            Some((_, f, raw)) => {
+                let mut t = raw.clone();
+                // what was put into the map comes out of it (it comes back below as it is now)
+                let keep = kept(raw);
+                let mut map_index: Vec<Option<i32>> = Vec::new();
+                let mut stay = Vec::new();
+                for (sp, k) in t.splines.iter().zip(&keep) {
+                    if *k || sp.deleted {
+                        map_index.push(Some(stay.len() as i32));
+                        stay.push(sp.clone());
+                    } else {
+                        map_index.push(None);
+                    }
+                }
+                t.splines = stay;
+                for a in t.spline_attachments.iter_mut() {
+                    a.spline_index = map_index.get(a.spline_index.max(0) as usize).copied().flatten().unwrap_or(a.spline_index);
+                }
+                t.objects.clear();
+                t.attach_objects.clear();
+                (f.clone(), t)
+            }
+            None => (doc.global.tiles.iter().find(|t| (t.x, t.y) == k).map(|t| t.file.clone()).unwrap_or_else(|| crate::doc::save::tile_file(k)), Tile { version: 14, ..Default::default() }),
+        };
+        if let Some((_, mine)) = by_tile.iter().find(|b| b.0 == k) {
+            n += mine.objects.len() + mine.attach_objects.len() + mine.splines.len();
+            patch.objects.extend(mine.objects.iter().cloned());
+            patch.attach_objects.extend(mine.attach_objects.iter().cloned());
+            patch.splines.extend(mine.splines.iter().cloned());
+        }
+        let p = crate::doc::safe::own_path(&s.dir, &file);
+        let empty = patch.objects.is_empty() && patch.splines.is_empty() && patch.attach_objects.is_empty() && patch.spline_attachments.is_empty() && patch.chrono_changes.is_empty();
+        if empty && !patch.has_terrain && !patch.has_water {
+            if p.is_file() {
+                std::fs::remove_file(&p)?;
+            }
+            continue;
+        }
+        let text = patch_text(&patch).ok_or_else(|| anyhow::anyhow!("{}: {}", p.display(), crate::i18n::tr("it has parts openMapper does not write", "в нём есть то, что openMapper не пишет")))?;
+        std::fs::create_dir_all(&s.dir)?;
+        crate::doc::safe::write_atomic(&p, &utf16(&text))?;
+    }
+    Ok(n)
+}
+
+/// The scenario folder's patches (file names, of which tiles), unread.
+fn patches_of(dir: &Path, doc: &Document) -> Vec<(TileKey, String, ())> {
+    patches(dir, doc).into_iter().map(|(k, f, _)| (k, f, ())).collect()
 }
 
 /// What a patch gets.
@@ -173,7 +324,7 @@ fn text(c: &Change) -> String {
 /// Add a change to the scenario folder `dir`'s patch of the tile kept in `file` (made when
 /// it has none: only its version, so the tile keeps the map's ground).
 pub fn write(dir: &Path, file: &str, c: &Change) -> anyhow::Result<PathBuf> {
-    let p = omsi_cfg::resolve_path(dir, file);
+    let p = crate::doc::safe::own_path(dir, file);
     let old = std::fs::read(&p).map(|b| omsi_cfg::decode_text(&b)).unwrap_or_default();
     let mut t = if old.trim().is_empty() { format!("{}[version]\n14\n\n", crate::doc::save::header()) } else { old.replace("\r\n", "\n") };
     if !t.ends_with("\n\n") {
@@ -222,6 +373,31 @@ mod tests {
         take_out(&dir, "t.map", Part::Spline(51)).unwrap();
         take_out(&dir, "t.map", Part::Change(0)).unwrap();
         assert!(!dir.join("t.map").exists(), "nothing left: the file goes");
+        let _ = std::fs::remove_dir_all(&dir);
+    }
+
+    /// A scenario's things edited in the map: one moved, one placed meanwhile, and both are
+    /// the scenario's again afterwards, the map as it was.
+    #[test]
+    fn a_session_puts_the_scenario_back_with_what_was_placed() {
+        let dir = std::env::temp_dir().join(format!("openmapper-session-{}", std::process::id()));
+        let _ = std::fs::remove_dir_all(&dir);
+        let mut doc = crate::selection::tests::flat_map(1);
+        crate::selection::tests::add_object(&mut doc, (0, 0), 1, 10.0, 10.0);
+        let mut add = Tile::default();
+        add.objects.push(MapObject { file: "a.sco".into(), id: 50, pos: [20.0, 20.0, 0.0], ..Default::default() });
+        write(&dir, "tile_0_0.map", &Change::Add(add)).unwrap();
+        write(&dir, "tile_0_0.map", &Change::Delete(vec![(1, false)])).unwrap();
+        let (s, n) = begin(&mut doc, &dir);
+        assert_eq!(n, 1);
+        let t = &mut doc.tiles.get_mut(&(0, 0)).unwrap().tile;
+        t.objects.iter_mut().find(|o| o.id == 50).unwrap().pos[0] = 30.0;
+        t.objects.push(MapObject { file: "b.sco".into(), id: 60, pos: [5.0, 5.0, 0.0], ..Default::default() });
+        assert_eq!(end(&mut doc, s).unwrap(), 2);
+        assert_eq!(doc.tiles[&(0, 0)].tile.objects.iter().map(|o| o.id).collect::<Vec<_>>(), vec![1]);
+        let patch = Tile::load(&dir.join("tile_0_0.map")).unwrap();
+        assert_eq!(patch.objects.iter().map(|o| (o.id, o.pos[0])).collect::<Vec<_>>(), vec![(50, 30.0), (60, 5.0)]);
+        assert_eq!(patch.chrono_changes.len(), 1, "its changes of the map stay");
         let _ = std::fs::remove_dir_all(&dir);
     }
 

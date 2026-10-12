@@ -423,6 +423,8 @@ impl App {
     }
 
     fn save(&mut self) -> bool {
+        // (a scenario's things being edited on the map are not the map's)
+        self.chrono.end_session(&mut self.ed);
         let Some(doc) = self.ed.doc.as_mut() else { return false };
         self.ed.history.commit();
         crate::editor::sync_entry_points(doc);
@@ -546,6 +548,9 @@ impl App {
     fn do_action(&mut self, a: Action, el: &ActiveEventLoop) {
         let dirty = self.ed.doc.as_ref().map(|d| d.is_dirty()).unwrap_or(false);
         let guarded = matches!(a, Action::Close | Action::Open(_) | Action::OpenDialog | Action::NewMap { .. } | Action::Quit | Action::RestoreBackup(_));
+        if guarded {
+            self.chrono.end_session(&mut self.ed);
+        }
         if guarded && dirty && !self.unguarded {
             self.ui.confirm = Some(a);
             return;
@@ -1301,7 +1306,7 @@ impl App {
         }
         // the changes kept every few minutes (not in the middle of an edit, nor while an
         // earlier session's autosave is still offered: there is one, it would be written over)
-        let editing = self.mouse.left || self.ed.history.is_open() || self.recover.is_some();
+        let editing = self.mouse.left || self.ed.history.is_open() || self.recover.is_some() || self.chrono.in_session();
         self.autosave.tick(self.ed.doc.as_ref(), self.roots.as_ref().map(|r| r.content.as_path()), editing);
     }
 

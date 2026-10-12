@@ -394,7 +394,7 @@ pub fn plan(t: &Traffic, map_dir: &Path) -> Vec<Op> {
                 File::Registrations => list_text(&t.registrations),
                 File::SignalRoutes => crate::signals::text(&t.signal_routes),
             };
-            Op::Write(omsi_cfg::resolve_path(map_dir, f.name()), encode(&text))
+            Op::Write(crate::doc::safe::own_path(map_dir, f.name()), encode(&text))
         })
         .collect()
 }
