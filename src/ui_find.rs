@@ -1,6 +1,7 @@
 //! Find in map (Edit menu, Ctrl+F): stops and start points by name, a point by its
-//! coordinates, and every kind of object and spline the map uses, by name, file or IDCode, with how many there are; select them all, go from one to the next, or
-//! put the catalogue's choice in their place.
+//! coordinates, and every kind of object and spline the map uses, by name, file or IDCode,
+//! with how many there are; select them all, go from one to the next, or put the
+//! catalogue's choice in their place.
 
 use std::collections::HashMap;
 
