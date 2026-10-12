@@ -2930,6 +2930,27 @@ impl Editor {
         }
     }
 
+    /// Every object (or spline) of the same type as `s` on the map, selected; `s` stays the
+    /// one in the properties. How many.
+    pub fn select_alike(&mut self, s: Sel) -> usize {
+        let Some(doc) = self.doc.as_ref() else { return 0 };
+        let file = match s {
+            Sel::Object(k, id) => selection::any_object(doc, k, id).map(|o| o.file.clone()),
+            Sel::Spline(k, id) => doc.spline(k, id).map(|x| x.file.clone()),
+        };
+        let Some(file) = file else { return 0 };
+        let mut v = vec![s];
+        for (k, t) in &doc.tiles {
+            match s {
+                Sel::Object(..) => v.extend(t.tile.objects.iter().chain(&t.tile.attach_objects).filter(|o| o.file.eq_ignore_ascii_case(&file)).map(|o| Sel::Object(*k, o.id)).filter(|x| *x != s)),
+                Sel::Spline(..) => v.extend(t.tile.splines.iter().filter(|x| !x.deleted && x.file.eq_ignore_ascii_case(&file)).map(|x| Sel::Spline(*k, x.id)).filter(|x| *x != s)),
+            }
+        }
+        let n = v.len();
+        self.set_selection(v);
+        n
+    }
+
     /// The selected objects made ones of the type `file`, where they stand.
     pub fn replace_selected_objects(&mut self, file: &str) {
         let sels = self.selection();
@@ -4250,6 +4271,14 @@ mod tests {
             (lo, hi, last) = (lo.min(v), hi.max(v), v);
         }
         assert!(hi - lo > 0.6, "it does roll: {lo}..{hi}");
+    }
+
+    #[test]
+    fn all_alike_are_selected() {
+        let mut ed = editor();
+        assert_eq!(ed.select_alike(Sel::Object((0, 0), 2)), 2);
+        assert_eq!(ed.selected, Some(Sel::Object((0, 0), 2)));
+        assert_eq!(ed.select_alike(Sel::Spline((0, 0), 3)), 1);
     }
 
     #[test]

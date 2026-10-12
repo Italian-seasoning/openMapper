@@ -1453,6 +1453,7 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
     let mut spline_change: Option<(Option<String>, Option<bool>)> = None;
     let mut whole_road = false;
     let mut align_road = false;
+    let mut alike = false;
     let mut replace_obj: Option<String> = None;
     let Some(doc) = ed.doc.as_ref() else { return };
     Frame::new().inner_margin(Margin::same(8)).show(ui, |ui| {
@@ -1681,9 +1682,12 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
         }
         ui.add_space(8.0);
         ui.separator();
-        ui.horizontal(|ui| {
+        ui.horizontal_wrapped(|ui| {
             if ui.button(icons::labelled(Icon::Focus, tr("Go to", "Перейти"))).clicked() {
                 actions.push(Action::FocusSelection);
+            }
+            if ui.button(icons::labelled(Icon::SelectAll, tr("All like it", "Все такие"))).on_hover_text(tr("Select every one of this type on the map", "Выбрать все такие на карте")).clicked() {
+                alike = true;
             }
             if ui.button(icons::labelled(Icon::Delete, tr("Delete", "Удалить"))).clicked() {
                 delete = true;
@@ -1691,6 +1695,11 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
         });
     });
     let _ = st;
+    if alike {
+        let n = ed.select_alike(sel);
+        ed.toast(format!("{} {n}", tr("Selected:", "Выбрано:")));
+        return;
+    }
     if delete {
         ed.delete_selected();
         return;
