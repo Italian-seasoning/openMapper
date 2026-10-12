@@ -24,6 +24,9 @@ pub enum File {
     Parked,
     Humans,
     Drivers,
+    Holidays,
+    TimeZone,
+    Registrations,
 }
 
 impl File {
@@ -35,6 +38,9 @@ impl File {
             File::Parked => "parklist_p.txt",
             File::Humans => "humans.txt",
             File::Drivers => "drivers.txt",
+            File::Holidays => "Holidays.txt",
+            File::TimeZone => "timezone.txt",
+            File::Registrations => "registrations.txt",
         }
     }
 }
@@ -51,6 +57,14 @@ pub struct Traffic {
     pub parked: Vec<String>,
     pub humans: Vec<String>,
     pub drivers: Vec<String>,
+    /// School holidays and public holidays (`Holidays.txt`).
+    pub calendar: omsi_map::Calendar,
+    /// The time zone, summer time and where on earth the map lies (`timezone.txt`).
+    pub timezone: omsi_map::TimeZone,
+    /// The number plates the AI's cars carry (`registrations.txt`).
+    pub registrations: Vec<String>,
+    /// Which of those three the map has (only they are written again on an undo).
+    pub has: [bool; 3],
     /// The map has `unsched_vehgroups.txt`: without it the first group drives about.
     pub has_veh_groups: bool,
     /// The file was in OMSI 2's first format (`[ailist]`, `[aigroup]`): it is written in
@@ -80,10 +94,33 @@ impl Traffic {
         t.parked = list("parklist_p.txt");
         t.humans = list("humans.txt");
         t.drivers = list("drivers.txt");
+        if let Ok(c) = omsi_map::Calendar::load(&omsi_cfg::resolve_path(dir, "Holidays.txt")) {
+            t.calendar = c;
+            t.has[0] = true;
+        }
+        if let Ok(mut z) = omsi_map::TimeZone::load(&omsi_cfg::resolve_path(dir, "timezone.txt")) {
+            // (the block's empty lines are not part of it)
+            while z.location.last().map(|l| l.trim().is_empty()).unwrap_or(false) {
+                z.location.pop();
+            }
+            t.timezone = z;
+            t.has[1] = true;
+        }
+        let reg = omsi_cfg::resolve_path(dir, "registrations.txt");
+        if reg.is_file() {
+            t.registrations = list("registrations.txt");
+            t.has[2] = true;
+        }
         t
     }
 
     pub fn touch(&mut self, f: File) {
+        match f {
+            File::Holidays => self.has[0] = true,
+            File::TimeZone => self.has[1] = true,
+            File::Registrations => self.has[2] = true,
+            _ => {}
+        }
         self.changed.insert(f);
         self.dirty = true;
     }
@@ -93,6 +130,11 @@ impl Traffic {
         self.changed = [File::AiLists, File::Parked, File::Humans, File::Drivers].into_iter().collect();
         if self.has_veh_groups {
             self.changed.extend([File::VehGroups, File::Density]);
+        }
+        for (has, f) in self.has.into_iter().zip([File::Holidays, File::TimeZone, File::Registrations]) {
+            if has {
+                self.changed.insert(f);
+            }
         }
         self.dirty = true;
     }
@@ -285,6 +327,39 @@ pub fn density_text(groups: &[UnschedGroup]) -> String {
     o
 }
 
+/// `Holidays.txt`: school holidays (`[holidays]`, from and to) and public holidays
+/// (`[holiday]`), by date, a line of dashes before each year as OMSI 2's maps have it.
+pub fn holidays_text(c: &omsi_map::Calendar) -> String {
+    let mut all: Vec<(i32, String)> = c.ranges.iter().map(|r| (r.start, format!("[holidays]\n{}\n{}\n{}\n\n", r.start, r.end, r.name))).collect();
+    all.extend(c.holidays.iter().map(|h| (h.date, format!("[holiday]\n{}\n{}\n\n", h.date, h.name))));
+    all.sort_by_key(|a| a.0);
+    let mut o = String::new();
+    let mut year = None;
+    for (d, text) in all {
+        if year != Some(d / 10_000) {
+            year = Some(d / 10_000);
+            o.push_str(&format!("-----------------{}------------------------------\n\n", d / 10_000));
+        }
+        o.push_str(&text);
+    }
+    o
+}
+
+/// `timezone.txt`: the hours from UTC, where the map lies (latitude, longitude) and its
+/// summer times.
+pub fn timezone_text(z: &omsi_map::TimeZone) -> String {
+    let mut o = format!("[timezone]\n{}\n\n", z.offset_hours);
+    if !z.location.is_empty() {
+        o.push_str("[location]\n");
+        z.location.iter().for_each(|l| o.push_str(&format!("{l}\n")));
+        o.push('\n');
+    }
+    for d in &z.dst {
+        o.push_str(&format!("[DST]\n{}\n{}\n{}\n{}\n{}\n\n", d.start, d.end, d.params[0], d.params[1], d.params[2]));
+    }
+    o
+}
+
 pub fn list_text(items: &[String]) -> String {
     items.iter().map(|s| format!("{s}\n")).collect()
 }
@@ -305,6 +380,9 @@ pub fn plan(t: &Traffic, map_dir: &Path) -> Vec<Op> {
                 File::Parked => list_text(&t.parked),
                 File::Humans => list_text(&t.humans),
                 File::Drivers => list_text(&t.drivers),
+                File::Holidays => holidays_text(&t.calendar),
+                File::TimeZone => timezone_text(&t.timezone),
+                File::Registrations => list_text(&t.registrations),
             };
             Op::Write(omsi_cfg::resolve_path(map_dir, f.name()), encode(&text))
         })

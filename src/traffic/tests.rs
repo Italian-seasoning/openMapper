@@ -39,6 +39,17 @@ fn stock_traffic_round_trips() {
         assert_eq!((back.veh_groups.clone(), back.has_veh_groups), (t.veh_groups.clone(), t.has_veh_groups), "{m}");
         assert_eq!(back.density, t.density, "{m}");
         assert_eq!((&back.parked, &back.humans, &back.drivers), (&t.parked, &t.humans, &t.drivers), "{m}");
+        // the calendar, the time zone and the number plates too (the holidays by date)
+        assert_eq!(back.has, t.has, "{m}");
+        let sorted = |c: &omsi_map::Calendar| {
+            let mut c = c.clone();
+            c.ranges.sort_by_key(|r| r.start);
+            c.holidays.sort_by_key(|h| h.date);
+            c
+        };
+        assert_eq!(sorted(&back.calendar), sorted(&t.calendar), "{m}: Holidays.txt");
+        assert_eq!(back.timezone, t.timezone, "{m}: timezone.txt");
+        assert_eq!(back.registrations, t.registrations, "{m}: registrations.txt");
         eprintln!("{m}: {} groups ({} depots), {} unscheduled, {} parked, {} people read back the same", t.groups.len(), t.depots().count(), t.veh_groups.len(), t.parked.len(), t.humans.len());
         let _ = std::fs::remove_dir_all(&out);
     }

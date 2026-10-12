@@ -47,6 +47,7 @@ mod ui_groups;
 mod ui_geo;
 mod sample;
 mod ui_guide;
+mod ui_calendar;
 mod ui_mapsettings;
 mod ui_minimap;
 mod ui_pbr;

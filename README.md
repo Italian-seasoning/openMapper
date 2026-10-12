@@ -90,6 +90,10 @@ experienced map makers.
   traffic density, priority, trucks, no cars or buses only, each for one path (lane).
 * **Map settings** (Map menu), as in OMSI 2's editor: money system, ticket pack, depot,
   years and year offset, repair time, real rail and the seasons of the year.
+* **Calendar and place** (Map menu), the map's own files as OMSI 2's editor keeps them:
+  where it lies and its time zone (the sun), summer time (EU rules filled in for a span of
+  years), public and school holidays by year (the timetable's day types) and the AI cars'
+  number plates (made from a pattern such as `B-XX 9999`).
 * **Find in map** (Edit menu or `Ctrl+F`): every kind of object and spline the map uses,
   with how many, by name, file or IDCode; select them all, go from one to the next, or replace
   them all with the object (road type) chosen in the catalogue in one undo step.

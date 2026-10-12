@@ -101,6 +101,7 @@ pub struct App {
     pbr: crate::ui_pbr::PbrWindow,
     road_types: crate::ui_roads::RoadTypes,
     map_settings: crate::ui_mapsettings::MapSettings,
+    calendar: crate::ui_calendar::CalendarWindow,
     /// The Satellite and terrain window and the overlay on the ground.
     geo: crate::ui_geo::GeoUi,
     /// Getting started.
@@ -142,6 +143,7 @@ impl App {
             pbr: Default::default(),
             road_types: Default::default(),
             map_settings: Default::default(),
+            calendar: Default::default(),
             geo: Default::default(),
             guide: Default::default(),
             picture: false,
@@ -291,9 +293,11 @@ impl App {
                 self.ed.hide[i] = h.split(',').any(|x| x.trim() == *name);
             }
         }
-        // OPENMAPPER_SETTINGS=1: the map settings open
-        if std::env::var_os("OPENMAPPER_SETTINGS").is_some() {
-            self.map_settings.open = true;
+        // OPENMAPPER_SETTINGS=1: the map settings open (=calendar: the calendar and place)
+        match std::env::var("OPENMAPPER_SETTINGS").as_deref() {
+            Ok("calendar") => self.calendar.open = true,
+            Ok(_) => self.map_settings.open = true,
+            Err(_) => {}
         }
         // OPENMAPPER_GROUPS=1: the groups open
         if std::env::var_os("OPENMAPPER_GROUPS").is_some() {
@@ -738,6 +742,7 @@ impl App {
             Action::MapPicture => self.picture = true,
             Action::ViewPicture => self.snapshot = true,
             Action::MapSettings => self.map_settings.open = true,
+            Action::Calendar => self.calendar.open = true,
             Action::SetMapCamera => {
                 if let Some(doc) = self.ed.doc.as_mut() {
                     let p = self.cam.target.truncate();
@@ -1046,6 +1051,7 @@ impl App {
                 self.pbr.window(&ctx, self.roots.as_ref(), &mut actions);
                 self.road_types.window(&ctx, &mut self.ed, &self.lib, self.roots.as_ref(), &mut actions);
                 self.map_settings.window(&ctx, &mut self.ed, self.roots.as_ref());
+                self.calendar.window(&ctx, &mut self.ed);
                 self.geo.window(&ctx, &mut self.ed, &mut self.prefs);
                 if let Some(p) = self.geo.look.take() {
                     actions.push(Action::LookAt(p));
