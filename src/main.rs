@@ -17,6 +17,7 @@ mod export;
 mod geo;
 mod editor;
 mod gpu;
+mod heightmap;
 mod history;
 mod i18n;
 mod icons;

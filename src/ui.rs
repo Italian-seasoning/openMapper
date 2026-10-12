@@ -19,7 +19,7 @@ use crate::render::Thumb;
 pub const ACCENT: Color32 = Color32::from_rgb(232, 122, 50);
 const BG: Color32 = Color32::from_rgb(36, 37, 40);
 const BG_DARK: Color32 = Color32::from_rgb(27, 28, 30);
-const BG_FIELD: Color32 = Color32::from_rgb(22, 23, 25);
+pub(crate) const BG_FIELD: Color32 = Color32::from_rgb(22, 23, 25);
 const BORDER: Color32 = Color32::from_rgb(18, 18, 20);
 const HEADER: Color32 = Color32::from_rgb(45, 46, 50);
 pub(crate) const TEXT_DIM: Color32 = Color32::from_rgb(140, 143, 150);
@@ -149,6 +149,8 @@ pub struct UiState {
     map_picture: Option<(PathBuf, Option<std::time::SystemTime>, Option<egui::TextureHandle>)>,
     /// The satellite overlay as the View menu and the Tiles tool show it.
     pub geo: crate::ui_geo::Bridge,
+    /// The Terrain tool's height map export and import.
+    pub heightmap: crate::heightmap::HeightMapUi,
 }
 
 impl Default for UiState {
@@ -178,6 +180,7 @@ impl Default for UiState {
             obj_info: None,
             map_picture: None,
             geo: Default::default(),
+            heightmap: Default::default(),
         }
     }
 }
@@ -1310,9 +1313,23 @@ fn terrain_panel(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor) {
         };
         help(st, &r, h);
     }
+    if ed.terrain_mode == TerrainMode::Flatten {
+        ui.horizontal(|ui| {
+            let mut fixed = ed.flatten_fixed.is_some();
+            let r = check(ui, &mut fixed, tr("To a height", "До высоты"));
+            help(st, &r, tr("Flatten to the height typed instead of the one where the drag starts (a level square, a platform)", "Выравнивать до введённой высоты, а не до высоты начала (ровная площадь, платформа)"));
+            if r.changed() {
+                ed.flatten_fixed = fixed.then(|| ed.cursor.map(|c| c.z as f32).unwrap_or(0.0));
+            }
+            if let Some(h) = &mut ed.flatten_fixed {
+                ui.add(egui::DragValue::new(h).speed(0.1).fixed_decimals(2).suffix(" m"));
+            }
+        });
+    }
     ui.add_space(6.0);
     ui.label(RichText::new(tr("Brush", "Кисть")).strong());
     brush_grid(ui, ed);
+    st.heightmap.panel(ui, ed);
 }
 
 fn paint_panel(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, swatches: &HashMap<String, egui::TextureHandle>, wanted: &mut Vec<String>, actions: &mut Vec<Action>) {

@@ -342,12 +342,24 @@ impl App {
         if let Ok(t) = std::env::var("OPENMAPPER_TRAFFIC") {
             self.traffic.open_at(&t);
         }
-        // OPENMAPPER_TOOL=roads|objects|logic (checks without a person at the screen)
+        // OPENMAPPER_TOOL=roads|objects|logic|terrain|paint (checks without a person at the screen)
         match std::env::var("OPENMAPPER_TOOL").as_deref() {
             Ok("roads") => self.ed.set_tool(Tool::Roads),
             Ok("objects") => self.ed.set_tool(Tool::Objects),
             Ok("logic") => self.ed.set_tool(Tool::Logic),
+            Ok("terrain") => self.ed.set_tool(Tool::Terrain),
+            Ok("paint") => self.ed.set_tool(Tool::Paint),
             _ => {}
+        }
+        // OPENMAPPER_HEIGHTMAP=<picture>[,apply]: the Terrain tool with that picture to import
+        // (laid on the map at once with `apply`)
+        if let Ok(a) = std::env::var("OPENMAPPER_HEIGHTMAP") {
+            let (file, apply) = a.strip_suffix(",apply").map(|f| (f, true)).unwrap_or((&a, false));
+            self.ed.set_tool(Tool::Terrain);
+            self.ui.heightmap.open(&mut self.ed, file.into());
+            if apply {
+                self.ui.heightmap.apply(&mut self.ed);
+            }
         }
     }
 

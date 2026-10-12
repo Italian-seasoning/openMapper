@@ -265,6 +265,8 @@ pub struct Editor {
     pub brush_radius: f32,
     pub brush_strength: f32,
     flatten_to: Option<f32>,
+    /// Flatten to this height rather than to where the drag starts.
+    pub flatten_fixed: Option<f32>,
     // paint
     pub paint_layer: usize,
     pub paint_erase: bool,
@@ -396,6 +398,7 @@ impl Default for Editor {
             brush_radius: 25.0,
             brush_strength: 0.5,
             flatten_to: None,
+            flatten_fixed: None,
             paint_layer: 1,
             paint_erase: false,
             road_type: None,
@@ -900,7 +903,7 @@ impl Editor {
             Tool::Select => self.select_press(shift),
             Tool::Terrain | Tool::Paint => {
                 self.history.begin(if self.tool == Tool::Terrain { tr("Shape terrain", "Рельеф") } else { tr("Paint ground", "Покраска") });
-                self.flatten_to = self.cursor.map(|c| c.z as f32);
+                self.flatten_to = self.flatten_fixed.or(self.cursor.map(|c| c.z as f32));
                 self.drag = Drag::Brush;
             }
             Tool::Roads if self.roundabout && !self.drawing_paths() => self.ring_click(assets),
