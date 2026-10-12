@@ -376,9 +376,9 @@ pub fn attach_section(ui: &mut egui::Ui, ed: &mut Editor, lib: &Library, k: Tile
                 let what = ed.object_type.as_ref().map(|o| lib.find(o).map(|a| a.name.clone()).unwrap_or_else(|| o.clone()));
                 let label = match &what {
                     Some(n) => format!("{} «{n}»", tr("Hang", "Повесить")),
-                    None => tr("Choose an object in the Objects catalogue", "Выберите объект в каталоге «Объекты»").to_string(),
+                    None => tr("Hang", "Повесить").to_string(),
                 };
-                add = ui.add_enabled(what.is_some(), egui::Button::new(icons::labelled(Icon::Add, &label))).clicked();
+                add = ui.add_enabled(what.is_some(), egui::Button::new(icons::labelled(Icon::Add, &label)).truncate()).on_disabled_hover_text(tr("Choose an object in the Objects catalogue first", "Сначала выберите объект в каталоге «Объекты»")).clicked();
             });
         });
     });
