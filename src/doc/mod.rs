@@ -793,9 +793,22 @@ pub fn unfit_from_world_grid(t: &mut Tile, ty: i32) {
 /// The map's grid is global (`omsi_map::configure_grid`): tests that read or make a map
 /// hold this, one map at a time.
 #[cfg(test)]
-pub fn one_map() -> std::sync::MutexGuard<'static, ()> {
+pub fn one_map() -> OneMap {
     static MAP: std::sync::Mutex<()> = std::sync::Mutex::new(());
-    MAP.lock().unwrap_or_else(|e| e.into_inner())
+    OneMap(MAP.lock().unwrap_or_else(|e| e.into_inner()))
+}
+
+#[cfg(test)]
+/// The hold on the map-wide grid; let go, the grid is the plain one again (a map in world
+/// coordinates read under it must not leave its tile size to the tests after it).
+pub struct OneMap(#[allow(dead_code)] std::sync::MutexGuard<'static, ()>);
+
+#[cfg(test)]
+impl Drop for OneMap {
+    fn drop(&mut self) {
+        omsi_map::set_world_coordinates(false);
+        omsi_map::set_tile_size(omsi_map::TILE_SIZE);
+    }
 }
 
 /// Today as OMSI's date code (YYYYMMDD).

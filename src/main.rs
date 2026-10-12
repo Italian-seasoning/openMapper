@@ -8,6 +8,7 @@ mod assets;
 mod camera;
 mod check;
 mod chrono_edit;
+mod chrono_tt;
 mod clipboard;
 mod descriptions;
 mod doc;

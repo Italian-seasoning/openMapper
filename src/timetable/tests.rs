@@ -13,7 +13,7 @@ fn omsi_root() -> Option<std::path::PathBuf> {
 
 /// The map's grid is global (`omsi_map::configure_grid`): one map at a time, for every
 /// test of the crate that reads or makes one.
-pub(crate) fn one_map() -> std::sync::MutexGuard<'static, ()> {
+pub(crate) fn one_map() -> crate::doc::OneMap {
     crate::doc::one_map()
 }
 

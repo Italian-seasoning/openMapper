@@ -76,6 +76,10 @@ pub enum Action {
     SignalRoutes,
     /// The chrono scenarios window (the map over the years).
     Chrono,
+    /// The Lines window opened.
+    OpenLines,
+    /// The Traffic and AI window opened.
+    OpenTraffic,
     /// The map opens with the camera as it is now (`[mapcam]`).
     SetMapCamera,
     Copy,

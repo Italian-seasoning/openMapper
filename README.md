@@ -109,7 +109,12 @@ experienced map makers.
   scenario or put back into the map itself (every stock patch is written back unchanged).
   "Edit its own things on the map" brings what a scenario adds onto the map to select, move
   and change like anything else, what is placed meanwhile included; Done (or saving, a test
-  drive, another map) writes it back into the scenario.
+  drive, another map) writes it back into the scenario. "Edit its timetable" puts the map's
+  timetable with the scenario's laid over it into the Lines window: lines, trips and tours
+  changed there are the scenario's, a line of the map taken away is taken off from its day,
+  and only what differs from the map's is kept in its `TTData`. "Edit its AI lists" does the
+  same for the Traffic window: vehicles and type groups added to a group or depot, and a
+  depot's own depot file, go into its `ailists_#upd.cfg`.
 * **Map settings** (Map menu), as in OMSI 2's editor: money system, ticket pack, depot,
   years and year offset, repair time, real rail and the seasons of the year.
 * **Calendar and place** (Map menu), the map's own files as OMSI 2's editor keeps them:

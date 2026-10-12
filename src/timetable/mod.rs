@@ -311,7 +311,7 @@ impl Timetable {
 
     /// The tile indices made to count in `order` (tiles were added or taken away since
     /// the files were read): every file that holds one is written again.
-    fn renumber_tiles(&mut self, order: &[TileKey]) {
+    pub(crate) fn renumber_tiles(&mut self, order: &[TileKey]) {
         if self.order.is_empty() || self.order == order {
             self.order = order.to_vec();
             return;

@@ -771,6 +771,8 @@ impl App {
             Action::Calendar => self.calendar.open = true,
             Action::SignalRoutes => self.signals.open = true,
             Action::Chrono => self.chrono.open = true,
+            Action::OpenLines => self.tt.open = true,
+            Action::OpenTraffic => self.traffic.open = true,
             Action::SetMapCamera => {
                 if let Some(doc) = self.ed.doc.as_mut() {
                     let p = self.cam.target.truncate();

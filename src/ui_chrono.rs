@@ -40,6 +40,10 @@ pub struct ChronoWindow {
     session: Option<crate::chrono_edit::Session>,
     /// The check hook ran.
     checked: bool,
+    /// The scenario whose timetable is in the Lines window being edited.
+    tt_session: Option<crate::chrono_tt::TtSession>,
+    /// The scenario whose AI lists are in the Traffic window being edited.
+    lists_session: Option<crate::chrono_tt::ListsSession>,
     /// The patches of the scenario being edited (read again after each change).
     contents: Option<Vec<(crate::doc::TileKey, String, omsi_map::Tile)>>,
 }
@@ -159,12 +163,39 @@ fn date_text(d: i32) -> String {
 
 impl ChronoWindow {
     pub fn in_session(&self) -> bool {
-        self.session.is_some()
+        self.session.is_some() || self.tt_session.is_some() || self.lists_session.is_some()
+    }
+
+    /// The scenario's AI lists written back and the map's put in their place again.
+    fn end_lists_session(&mut self, ed: &mut Editor) {
+        let Some(s) = self.lists_session.take() else { return };
+        ed.history.commit();
+        let Some(doc) = ed.doc.as_mut() else { return };
+        match crate::chrono_tt::end_lists(doc, s) {
+            Ok(n) => ed.toast(format!("{} {n}", tr("The scenario's AI lists are written, groups changed:", "Списки ИИ сценария записаны, групп изменено:"))),
+            Err(e) => ed.error(format!("{}: {e}", tr("Could not write the scenario", "Не удалось записать сценарий"))),
+        }
+        ed.history.clear();
+    }
+
+    /// The scenario's timetable written back and the map's put in its place again.
+    fn end_tt_session(&mut self, ed: &mut Editor) {
+        let Some(s) = self.tt_session.take() else { return };
+        ed.history.commit();
+        let Some(doc) = ed.doc.as_mut() else { return };
+        match crate::chrono_tt::end(doc, s) {
+            Ok(n) => ed.toast(format!("{} {n}", tr("The scenario's timetable is written, files:", "Расписание сценария записано, файлов:"))),
+            Err(e) => ed.error(format!("{}: {e}", tr("Could not write the scenario", "Не удалось записать сценарий"))),
+        }
+        ed.history.clear();
+        self.list = None;
     }
 
     /// The scenario's own things out of the map and back into it (before a save, a test
     /// drive, another map). Undo cannot reach across it.
     pub fn end_session(&mut self, ed: &mut Editor) {
+        self.end_tt_session(ed);
+        self.end_lists_session(ed);
         let Some(s) = self.session.take() else { return };
         ed.history.commit();
         let Some(doc) = ed.doc.as_mut() else { return };
@@ -245,8 +276,8 @@ impl ChronoWindow {
 
     pub fn window(&mut self, ctx: &egui::Context, ed: &mut Editor, lib: &crate::library::Library, actions: &mut Vec<crate::ui::Action>) {
         // (while a scenario's things are on the map, a bar says so, window open or not)
-        if let Some(s) = &self.session {
-            let name = s.dir.file_name().unwrap_or_default().to_string_lossy().to_string();
+        if let Some(dir) = self.session.as_ref().map(|s| s.dir.clone()).or_else(|| self.tt_session.as_ref().map(|s| s.dir.clone())).or_else(|| self.lists_session.as_ref().map(|s| s.dir.clone())) {
+            let name = dir.file_name().unwrap_or_default().to_string_lossy().to_string();
             let mut done = false;
             egui::Area::new(egui::Id::new("chrono session")).anchor(egui::Align2::CENTER_BOTTOM, egui::vec2(0.0, -40.0)).order(egui::Order::Foreground).show(ctx, |ui| {
                 egui::Frame::new().fill(Color32::from_rgba_unmultiplied(120, 60, 20, 235)).corner_radius(4).inner_margin(egui::Margin::symmetric(10, 5)).show(ui, |ui| {
@@ -291,6 +322,8 @@ impl ChronoWindow {
         let mut new_scenario: Option<String> = None;
         let mut change: Option<u8> = None;
         let mut session_toggle = false;
+        let mut tt_toggle = false;
+        let mut lists_toggle = false;
         let mut relabel: Option<(i64, Vec<String>)> = None;
         // (the texts of the one object selected, kept while it stays selected)
         let one = match ed.selection().as_slice() {
@@ -486,6 +519,32 @@ impl ChronoWindow {
                 } else if ui.button(icons::labelled(Icon::Objects, tr("Edit its own things on the map", "Править его вещи на карте"))).on_hover_text(tr("What it brings in is put on the map to work with as with anything else; Done writes it back (undo starts afresh)", "То, что он добавляет, ставится на карту, с ним работают как с любым другим; «Готово» записывает обратно (история отмены начинается заново)")).clicked() {
                     session_toggle = true;
                 }
+                if self.tt_session.is_some() {
+                    ui.label(RichText::new(tr("The Lines window shows its timetable (the map's with its own laid over): lines, trips and tours edited there are the scenario's; a line of the map taken away is taken off from its day.", "Окно линий показывает его расписание (карты с наложенным своим): правки линий, рейсов и выходов там — сценария; убранная линия карты снимается с его дня.")).color(ACCENT));
+                    ui.horizontal(|ui| {
+                        if ui.button(icons::labelled(Icon::CheckCircle, tr("Done with its timetable", "Готово с расписанием"))).clicked() {
+                            tt_toggle = true;
+                        }
+                        if ui.button(icons::labelled(Icon::Bus, tr("Lines window", "Окно линий"))).clicked() {
+                            actions.push(crate::ui::Action::OpenLines);
+                        }
+                    });
+                } else if ui.button(icons::labelled(Icon::Bus, tr("Edit its timetable", "Править его расписание"))).on_hover_text(tr("Its own lines, trips and tours in the Lines window; Done writes only what differs from the map's (undo starts afresh)", "Его линии, рейсы и выходы в окне линий; «Готово» записывает только отличия от карты (история отмены начинается заново)")).clicked() {
+                    tt_toggle = true;
+                }
+                if self.lists_session.is_some() {
+                    ui.label(RichText::new(tr("The Traffic window shows its AI lists (the map's with its own added): vehicles and type groups added there, and a depot's own depot file, are the scenario's from its day.", "Окно трафика показывает его списки ИИ (карты с добавленным своим): добавленные там машины и группы типов и свой файл депо — сценария с его дня.")).color(ACCENT));
+                    ui.horizontal(|ui| {
+                        if ui.button(icons::labelled(Icon::CheckCircle, tr("Done with its AI lists", "Готово со списками ИИ"))).clicked() {
+                            lists_toggle = true;
+                        }
+                        if ui.button(icons::labelled(Icon::Traffic, tr("Traffic window", "Окно трафика"))).clicked() {
+                            actions.push(crate::ui::Action::OpenTraffic);
+                        }
+                    });
+                } else if ui.button(icons::labelled(Icon::Traffic, tr("Edit its AI lists", "Править его списки ИИ"))).on_hover_text(tr("Vehicles it adds to the groups and depots (OMSI's ailists_#upd.cfg); taking one away is the map's own business", "Машины, которые он добавляет в группы и депо (ailists_#upd.cfg OMSI); убирать машины — дело самой карты")).clicked() {
+                    lists_toggle = true;
+                }
                 ui.horizontal(|ui| {
                     if ui.button(icons::labelled(Icon::Save, tr("Write the scenario", "Записать сценарий"))).clicked() {
                         write = true;
@@ -553,6 +612,42 @@ impl ChronoWindow {
             self.editing = Some(Edit { dir: root.join(&rel), title: name, description: String::new(), start: date, end: 0, lines: Vec::new() });
             self.new_name.clear();
             write = true;
+        }
+        if lists_toggle {
+            if self.lists_session.is_some() {
+                self.end_lists_session(ed);
+            } else if let Some(e) = &self.editing {
+                let dir = e.dir.clone();
+                ed.history.commit();
+                if let Some(doc) = ed.doc.as_mut() {
+                    match own_dir(&dir, &root, &doc.dir, doc.source.as_deref()) {
+                        Ok(own) => {
+                            self.lists_session = Some(crate::chrono_tt::begin_lists(doc, &own));
+                            ed.history.clear();
+                            actions.push(crate::ui::Action::OpenTraffic);
+                        }
+                        Err(err) => ed.error(format!("{err}")),
+                    }
+                }
+            }
+        }
+        if tt_toggle {
+            if self.tt_session.is_some() {
+                self.end_tt_session(ed);
+            } else if let Some(e) = &self.editing {
+                let dir = e.dir.clone();
+                ed.history.commit();
+                if let Some(doc) = ed.doc.as_mut() {
+                    match own_dir(&dir, &root, &doc.dir, doc.source.as_deref()) {
+                        Ok(own) => {
+                            self.tt_session = Some(crate::chrono_tt::begin(doc, &own));
+                            ed.history.clear();
+                            actions.push(crate::ui::Action::OpenLines);
+                        }
+                        Err(err) => ed.error(format!("{err}")),
+                    }
+                }
+            }
         }
         if session_toggle {
             if self.session.is_some() {
