@@ -106,6 +106,8 @@ pub struct App {
     guide: crate::ui_guide::Guide,
     /// The next frame's view becomes the map's picture (`picture.jpg`).
     picture: bool,
+    /// A full-size picture of the view is taken this frame (View menu, F12).
+    snapshot: bool,
     /// An action the user allowed to drop unsaved changes is being carried out.
     unguarded: bool,
 }
@@ -140,6 +142,7 @@ impl App {
             geo: Default::default(),
             guide: Default::default(),
             picture: false,
+            snapshot: false,
             unguarded: false,
             shot: std::env::var_os("OPENMAPPER_SHOT").map(|p| (PathBuf::from(p), std::env::var("OPENMAPPER_SHOT_FRAMES").ok().and_then(|n| n.parse().ok()).unwrap_or(90))),
             autosave: Default::default(),
@@ -725,6 +728,7 @@ impl App {
                 self.ui.recent_assets = self.prefs.recent_assets.clone();
             }
             Action::MapPicture => self.picture = true,
+            Action::ViewPicture => self.snapshot = true,
             Action::SetMapCamera => {
                 if let Some(doc) = self.ed.doc.as_mut() {
                     let p = self.cam.target.truncate();
@@ -836,6 +840,7 @@ impl App {
             Some(KeyCode::Delete) | Some(KeyCode::Backspace) => self.ed.delete_selected(),
             Some(KeyCode::KeyF) if !ctrl => actions.push(Action::FocusSelection),
             Some(KeyCode::F5) => actions.push(Action::Play),
+            Some(KeyCode::F12) => actions.push(Action::ViewPicture),
             _ => {}
         }
         if let Key::Named(NamedKey::Escape) = logical {
@@ -985,7 +990,7 @@ impl App {
         }
         // (the overview map stays out of the map's picture)
         let minimap_open = self.ui.minimap.open;
-        if self.picture {
+        if self.picture || self.snapshot {
             self.ui.minimap.open = false;
         }
         let mut guide: Vec<crate::ui_guide::Go> = Vec::new();
@@ -1173,6 +1178,27 @@ impl App {
                         Ok(()) => self.ed.toast(tr("The map's picture is taken: openOMSI shows it where maps are chosen.", "Картинка карты снята: openOMSI показывает её при выборе карты.")),
                         Err(e) => self.ed.error(format!("{}: {e}", tr("Could not save the picture", "Не удалось сохранить картинку"))),
                     }
+                }
+            }
+            if self.snapshot {
+                self.snapshot = false;
+                self.ui.minimap.open = minimap_open;
+                let ppp = full.pixels_per_point;
+                let v = self.view;
+                let crop = [(v.min.x * ppp) as u32, (v.min.y * ppp) as u32, (v.width() * ppp) as u32, (v.height() * ppp) as u32];
+                let name = self.ed.doc.as_ref().map(|d| d.dir.file_name().map(|f| f.to_string_lossy().to_string()).unwrap_or_default()).unwrap_or_default();
+                let dir = std::env::var_os("HOME").map(PathBuf::from).unwrap_or_default().join("Pictures").join("openMapper");
+                let path = dir.join(format!("{name} {}.png", crate::doc::safe::stamp()));
+                let done = read_frame(&g.gpu, &frame.texture).and_then(|img| {
+                    let (w, h) = (crop[2].min(img.width().saturating_sub(crop[0])), crop[3].min(img.height().saturating_sub(crop[1])));
+                    anyhow::ensure!(w > 8 && h > 8, "the view is too small");
+                    std::fs::create_dir_all(&dir)?;
+                    image::DynamicImage::ImageRgba8(image::imageops::crop_imm(&img, crop[0], crop[1], w, h).to_image()).to_rgb8().save(&path)?;
+                    Ok(())
+                });
+                match done {
+                    Ok(()) => self.ed.toast(format!("{} {}", tr("Picture saved:", "Картинка сохранена:"), path.display())),
+                    Err(e) => self.ed.error(format!("{}: {e}", tr("Could not save the picture", "Не удалось сохранить картинку"))),
                 }
             }
             if let Some((path, at)) = &self.shot {

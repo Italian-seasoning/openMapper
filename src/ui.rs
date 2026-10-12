@@ -66,6 +66,8 @@ pub enum Action {
     UsedAsset(String),
     /// The 3D view becomes the map's picture (`picture.jpg`).
     MapPicture,
+    /// A picture of the view, full size, into the Pictures folder.
+    ViewPicture,
     /// The map opens with the camera as it is now (`[mapcam]`).
     SetMapCamera,
     Copy,
@@ -674,6 +676,9 @@ fn menu_bar(root: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, can_undo: bo
                 crate::ui_geo::view_menu(ui, &mut st.geo);
                 if menu_item(ui, Some(Icon::Focus), tr("Go to selection", "К выделенному"), "F", ed.selected.is_some()) {
                     actions.push(Action::FocusSelection);
+                }
+                if menu_item(ui, Some(Icon::Save), tr("Save a picture of the view", "Сохранить картинку вида"), "F12", true) {
+                    actions.push(Action::ViewPicture);
                 }
                 ui.separator();
                 lang_menu(ui, actions);
@@ -1962,6 +1967,7 @@ fn controls(ctx: &egui::Context, st: &mut UiState) {
             ("Ctrl+C / X / V", tr("copy / cut / paste at the cursor", "копировать / вырезать / вставить у курсора")),
             ("Ctrl+D / Ctrl+A", tr("duplicate / select all", "дублировать / выбрать всё")),
             ("Ctrl+F", tr("find in map", "поиск по карте")),
+            ("F12", tr("save a picture of the view (Pictures/openMapper)", "сохранить картинку вида (Изображения/openMapper)")),
             (tr("Alt + arrows", "Alt + стрелки"), tr("move the selection a grid step (Shift: 10 cm)", "сдвинуть выделение на шаг сетки (Shift: 10 см)")),
             (tr("Alt + Page Up / Down", "Alt + Page Up / Down"), tr("selection up / down 10 cm (Shift: 1 m)", "выделение выше / ниже на 10 см (Shift: 1 м)")),
             (tr("Double-click a road", "Двойной клик по дороге"), tr("select all of it", "выбрать её целиком")),

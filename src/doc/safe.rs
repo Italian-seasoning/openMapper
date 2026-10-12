@@ -86,7 +86,7 @@ pub fn commit(ops: &[Op]) -> anyhow::Result<()> {
 }
 
 /// A save's time as a folder name (UTC, sorts by time).
-fn stamp() -> String {
+pub fn stamp() -> String {
     let secs = std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).map(|d| d.as_secs()).unwrap_or(0);
     let day = super::civil(secs as i64 / 86_400);
     let t = secs % 86_400;
