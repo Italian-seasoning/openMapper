@@ -123,3 +123,5 @@ Add a line when you touch a shared file: stream, file, what.
 * D · `src/editor.rs`: `Editor::{shape_request, hide}`, `set_spline_cant`, `parallel_copy`, `replace_everywhere`, `even_selected_chain`, `select_chain` (a double click on a road), `grow_map`, `set_water`, `turn_objects`.
 * D · `src/doc/mod.rs`: `TileDoc::water` (read and written with the tile's `.water`); `doc::save` is `pub(crate)` (`tile_text` and `utf16` for groups).
 * D · `src/app.rs`: `OPENMAPPER_SELECT=x,y[,spline]`, `OPENMAPPER_HIDE`, `OPENMAPPER_FIND`, `OPENMAPPER_GROUPS`, `OPENMAPPER_HISTORY`; a screenshot run takes no input and does not take the focus; `Prefs::save` does nothing in one.
+* D · `src/editor.rs`: `array` (copies in a row), `align_to_roads`, `replace_selected_objects`, `select_alike`; `camera::Camera::axes` is public (Alt + arrows nudge along the screen's nearest map axis).
+* D · `src/app.rs`: `snapshot` (View > Save a picture of the view, F12, into `~/Pictures/openMapper`), `OPENMAPPER_SNAPSHOT`; `ui::map_stats` in the map's properties.
