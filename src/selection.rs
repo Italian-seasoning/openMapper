@@ -384,6 +384,7 @@ pub mod tests {
 
     /// A map of `n` × 1 flat tiles from tile 0, 0 east, for tests.
     pub fn flat_map(n: i32) -> Document {
+        crate::doc::hold_map_for_test();
         let mut doc = Document {
             global: omsi_map::GlobalCfg { next_id_code: 100, ..Default::default() },
             tiles: Default::default(),

@@ -791,23 +791,46 @@ pub fn unfit_from_world_grid(t: &mut Tile, ty: i32) {
 }
 
 /// The map's grid is global (`omsi_map::configure_grid`): tests that read or make a map
-/// hold this, one map at a time.
+/// hold this, one map at a time (a thread holding it already gets it again).
 #[cfg(test)]
 pub fn one_map() -> OneMap {
     static MAP: std::sync::Mutex<()> = std::sync::Mutex::new(());
-    OneMap(MAP.lock().unwrap_or_else(|e| e.into_inner()))
+    if HELD.with(|h| h.get()) {
+        return OneMap(None);
+    }
+    let g = MAP.lock().unwrap_or_else(|e| e.into_inner());
+    HELD.with(|h| h.set(true));
+    OneMap(Some(g))
+}
+
+#[cfg(test)]
+thread_local! {
+    static HELD: std::cell::Cell<bool> = const { std::cell::Cell::new(false) };
+    static KEPT: std::cell::RefCell<Option<OneMap>> = const { std::cell::RefCell::new(None) };
+}
+
+/// The hold kept until the test's thread ends (for helpers that make a map to test on).
+#[cfg(test)]
+pub fn hold_map_for_test() {
+    if !HELD.with(|h| h.get()) {
+        let g = one_map();
+        KEPT.with(|k| *k.borrow_mut() = Some(g));
+    }
 }
 
 #[cfg(test)]
 /// The hold on the map-wide grid; let go, the grid is the plain one again (a map in world
 /// coordinates read under it must not leave its tile size to the tests after it).
-pub struct OneMap(#[allow(dead_code)] std::sync::MutexGuard<'static, ()>);
+pub struct OneMap(#[allow(dead_code)] Option<std::sync::MutexGuard<'static, ()>>);
 
 #[cfg(test)]
 impl Drop for OneMap {
     fn drop(&mut self) {
-        omsi_map::set_world_coordinates(false);
-        omsi_map::set_tile_size(omsi_map::TILE_SIZE);
+        if self.0.is_some() {
+            omsi_map::set_world_coordinates(false);
+            omsi_map::set_tile_size(omsi_map::TILE_SIZE);
+            let _ = HELD.try_with(|h| h.set(false));
+        }
     }
 }
 
