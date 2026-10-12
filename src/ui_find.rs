@@ -1,5 +1,5 @@
-//! Find in map (Edit menu, Ctrl+F): every kind of object and spline the map uses, by name,
-//! file or IDCode, with how many there are; select them all, go from one to the next, or
+//! Find in map (Edit menu, Ctrl+F): stops and start points by name, a point by its
+//! coordinates, and every kind of object and spline the map uses, by name, file or IDCode, with how many there are; select them all, go from one to the next, or
 //! put the catalogue's choice in their place.
 
 use std::collections::HashMap;
@@ -98,6 +98,26 @@ impl Find {
         } else if key != self.key {
             ctx.request_repaint_after(std::time::Duration::from_millis(320));
         }
+        // the named places (stops, start points) and where they are
+        let q = self.query.trim().to_lowercase();
+        let mut places: Vec<(String, &str, Sel, DVec2)> = Vec::new();
+        if q.chars().count() >= 2 && q.parse::<i64>().is_err() {
+            let at = |id: i64| self.groups.iter().flat_map(|g| g.at.iter()).find(|(s, _)| matches!(s, Sel::Object(_, i) if *i == id)).copied();
+            let named = doc.timetable.stops.iter().map(|s| (s.name.trim().to_string(), s.object_id, tr("stop", "остановка"))).chain(doc.global.entry_points.iter().map(|e| (e.name.trim().to_string(), e.object_id, tr("start point", "точка старта"))));
+            for (name, id, kind) in named {
+                let Some((sel, pos)) = at(id).filter(|_| name.to_lowercase().contains(&q)) else { continue };
+                // (a stop's two sides are one place)
+                if !places.iter().any(|p| p.0 == name && p.1 == kind && (p.3 - pos).length() < 60.0) {
+                    places.push((name, kind, sel, pos));
+                }
+            }
+        }
+        // a place by its coordinates
+        let point: Option<DVec2> = {
+            let v: Vec<f64> = q.split([',', ';', ' ']).filter(|x| !x.is_empty()).map(|x| x.parse::<f64>()).collect::<Result<_, _>>().unwrap_or_default();
+            (v.len() == 2).then(|| DVec2::new(v[0], v[1]))
+        };
+        let mut look: Option<DVec2> = None;
         let name_of = |g: &Group| lib.find(&g.file).map(|a| a.name.clone()).filter(|n| !n.is_empty()).unwrap_or_else(|| g.file.rsplit(['\\', '/']).next().unwrap_or(&g.file).to_string());
         let mut open = self.open;
         // (what to do once the window is drawn: the editor is borrowed by the list)
@@ -105,12 +125,34 @@ impl Find {
         let mut go: Option<(Sel, DVec2)> = None;
         let mut replace: Option<(String, bool, String)> = None;
         egui::Window::new(icons::labelled(Icon::Search, tr("Find in map", "Поиск по карте"))).id(egui::Id::new("find in map")).open(&mut open).default_pos([320.0, 100.0]).default_size([440.0, 480.0]).resizable(true).show(ctx, |ui| {
-            let r = ui.add(egui::TextEdit::singleline(&mut self.query).hint_text(tr("Name, file or IDCode", "Название, файл или IDCode")).desired_width(f32::INFINITY));
+            let r = ui.add(egui::TextEdit::singleline(&mut self.query).hint_text(tr("Name, file, IDCode, stop or x, y", "Название, файл, IDCode, остановка или x, y")).desired_width(f32::INFINITY));
             if self.focus {
                 r.request_focus();
                 self.focus = false;
             }
-            let q = self.query.trim().to_lowercase();
+            if let Some(p) = point {
+                ui.horizontal(|ui| {
+                    ui.label(format!("{} {:.1}, {:.1}", tr("The point", "Точка"), p.x, p.y));
+                    if ui.button(icons::labelled(Icon::Focus, tr("Go to", "Перейти"))).clicked() {
+                        look = Some(p);
+                    }
+                });
+                ui.separator();
+            }
+            if !places.is_empty() {
+                egui::ScrollArea::vertical().id_salt("places").max_height(150.0).show(ui, |ui| {
+                    for (name, kind, sel, p) in places.iter().take(50) {
+                        ui.horizontal(|ui| {
+                            ui.label(RichText::new(name).color(Color32::WHITE));
+                            ui.label(RichText::new(*kind).small().color(TEXT_DIM));
+                            if ui.small_button(icons::labelled(Icon::Focus, tr("Go to", "Перейти"))).clicked() {
+                                go = Some((*sel, *p));
+                            }
+                        });
+                    }
+                });
+                ui.separator();
+            }
             // an IDCode: straight to it
             if let Ok(id) = q.parse::<i64>() {
                 let hit = self.groups.iter().flat_map(|g| g.at.iter().map(move |a| (g, a))).find(|(_, (s, _))| match s {
@@ -175,6 +217,9 @@ impl Find {
         self.open = open;
         if let Some(v) = select {
             ed.set_selection(v);
+        }
+        if let Some(p) = look {
+            actions.push(Action::LookAt(p));
         }
         if let Some((s, p)) = go {
             ed.select(Some(s));
