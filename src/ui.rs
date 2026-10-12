@@ -151,6 +151,8 @@ pub struct UiState {
     pub geo: crate::ui_geo::Bridge,
     /// The Terrain tool's height map export and import.
     pub heightmap: crate::heightmap::HeightMapUi,
+    /// The Paint tool's rule by slope and height.
+    pub autopaint: crate::autopaint::Rule,
 }
 
 impl Default for UiState {
@@ -181,6 +183,7 @@ impl Default for UiState {
             map_picture: None,
             geo: Default::default(),
             heightmap: Default::default(),
+            autopaint: Default::default(),
         }
     }
 }
@@ -1396,6 +1399,7 @@ fn paint_panel(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, swatches: &
         ui.selectable_value(&mut ed.paint_erase, true, icons::labelled(Icon::Eraser, tr("Erase", "Стирать")));
     });
     brush_grid(ui, ed);
+    crate::autopaint::panel(ui, &mut st.autopaint, ed);
     let _ = actions;
     if let Some(i) = remove {
         let Some(doc) = ed.doc.as_mut() else { return };

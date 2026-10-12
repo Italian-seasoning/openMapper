@@ -5,6 +5,7 @@
 
 mod app;
 mod assets;
+mod autopaint;
 mod camera;
 mod check;
 mod chrono_edit;

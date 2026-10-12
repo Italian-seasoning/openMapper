@@ -361,6 +361,14 @@ impl App {
                 self.ui.heightmap.apply(&mut self.ed);
             }
         }
+        // OPENMAPPER_AUTOPAINT=<layer>: the Paint tool's rule by slope and height applied to that layer
+        if let Some(layer) = std::env::var("OPENMAPPER_AUTOPAINT").ok().and_then(|l| l.parse::<usize>().ok()) {
+            self.ed.set_tool(Tool::Paint);
+            self.ed.paint_layer = layer;
+            if let Some(doc) = self.ed.doc.as_mut() {
+                crate::autopaint::apply(doc, &mut self.ed.history, layer, &self.ui.autopaint);
+            }
+        }
     }
 
     fn new_map(&mut self, folder: &str, friendly: &str, size: i32, options: &crate::ui_newmap::NewMapOptions) {
