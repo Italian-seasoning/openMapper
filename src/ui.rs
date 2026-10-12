@@ -1430,7 +1430,7 @@ fn history_window(ctx: &egui::Context, st: &mut UiState, ed: &Editor, actions: &
 
 fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Library, actions: &mut Vec<Action>) {
     let Some(sel) = ed.selected else {
-        map_properties(ui, st, ed, actions);
+        map_properties(ui, st, ed, lib, actions);
         return;
     };
     if ed.selection().len() > 1 {
@@ -1753,7 +1753,25 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
 }
 
 /// With nothing selected the right panel shows the map's own settings.
-fn map_properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, actions: &mut Vec<Action>) {
+/// Area (km²), roads and tracks (km), objects and bus stops of a map.
+fn map_stats(doc: &crate::doc::Document, lib: &Library) -> [f64; 5] {
+    use crate::library::Category;
+    let mut v = [doc.tiles.len() as f64 * crate::doc::tile_size().powi(2) / 1e6, 0.0, 0.0, 0.0, 0.0];
+    for t in doc.tiles.values() {
+        for s in t.tile.splines.iter().filter(|s| !s.deleted) {
+            match lib.find(&s.file).map(|a| a.category) {
+                Some(Category::Roads) => v[1] += s.length / 1000.0,
+                Some(Category::Tracks) => v[2] += s.length / 1000.0,
+                _ => {}
+            }
+        }
+        v[3] += (t.tile.objects.len() + t.tile.attach_objects.len()) as f64;
+        v[4] += t.tile.objects.iter().filter(|o| lib.find(&o.file).map(|a| a.is_bus_stop).unwrap_or(false)).count() as f64;
+    }
+    v
+}
+
+fn map_properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Library, actions: &mut Vec<Action>) {
     section(ui, tr("Map", "Карта"));
     let Some(doc) = ed.doc.as_mut() else { return };
     let before = (doc.global.friendly_name.clone(), doc.global.description.clone(), doc.global.left_hand_traffic);
@@ -1770,6 +1788,32 @@ fn map_properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, actions:
             });
             prop_row(ui, tr("Start points", "Точки старта"), |ui| {
                 ui.label(doc.global.entry_points.len().to_string());
+            });
+            // what the map holds (worked out again only when a tile changed)
+            let key = doc.tiles.values().fold(lib.assets.len() as u64, |h, t| h.rotate_left(5) ^ t.content_rev);
+            let id = egui::Id::new("map stats");
+            let stats: Option<(u64, [f64; 5])> = ui.data(|d| d.get_temp(id));
+            let v = match stats {
+                Some((k, v)) if k == key => v,
+                _ => {
+                    let v = map_stats(doc, lib);
+                    ui.data_mut(|d| d.insert_temp(id, (key, v)));
+                    v
+                }
+            };
+            prop_row(ui, tr("Area", "Площадь"), |ui| {
+                ui.label(format!("{:.2} km² · {} {}", v[0], doc.tiles.len(), tr("tiles", "тайлов")));
+            });
+            prop_row(ui, tr("Roads", "Дороги"), |ui| {
+                ui.label(format!("{:.1} km", v[1]));
+            });
+            if v[2] > 0.0 {
+                prop_row(ui, tr("Tracks", "Пути"), |ui| {
+                    ui.label(format!("{:.1} km", v[2]));
+                });
+            }
+            prop_row(ui, tr("Objects", "Объекты"), |ui| {
+                ui.label(format!("{} · {} {}", v[3] as u64, v[4] as u64, tr("stops", "остановок")));
             });
         });
         ui.add_space(4.0);
