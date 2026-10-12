@@ -68,6 +68,8 @@ pub enum Action {
     MapPicture,
     /// A picture of the view, full size, into the Pictures folder.
     ViewPicture,
+    /// The map settings window (money, tickets, years, depot, seasons).
+    MapSettings,
     /// The map opens with the camera as it is now (`[mapcam]`).
     SetMapCamera,
     Copy,
@@ -718,6 +720,9 @@ fn menu_bar(root: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, can_undo: bo
                 if menu_item(ui, Some(Icon::Settings), tr("Map properties", "Свойства карты"), "", true) {
                     ed.selected = None;
                     ed.set_tool(Tool::Select);
+                }
+                if menu_item(ui, Some(Icon::Settings), tr("Map settings…", "Настройки карты…"), "", true) {
+                    actions.push(Action::MapSettings);
                 }
                 if menu_item(ui, Some(Icon::Layers), tr("Ground textures…", "Текстуры земли…"), "", true) {
                     ed.set_tool(Tool::Paint);
