@@ -128,3 +128,5 @@ Add a line when you touch a shared file: stream, file, what.
 * D · `src/main.rs`: `mod ui_mapsettings`, `mod ui_calendar`; `src/ui.rs`: `Action::{MapSettings, Calendar}` (Map menu), `ObjInfo::{paths, attach_points}`; `src/app.rs`: `OPENMAPPER_SETTINGS[=calendar]`, `OPENMAPPER_LEVEL`.
 * D · `src/traffic/mod.rs`: `Traffic::{calendar, timezone, registrations, has}` with `File::{Holidays, TimeZone, Registrations}` (written with the map, undone with the traffic).
 * D · `src/editor.rs`: `set_rules`, `set_spline_extra` (skew, terrain align), `level_request` / `level_under_objects`, `attach_object`.
+* D · `src/main.rs`: `mod signals`, `mod ui_signals`, `mod ui_chrono`, `mod chrono_edit`; `src/ui.rs`: `Action::{SignalRoutes, Chrono}` (Map menu); `src/app.rs`: signal pieces counted again before saving, `OPENMAPPER_SETTINGS=signals|chrono`.
+* D · `src/traffic/mod.rs`: `Traffic::signal_routes` with `File::SignalRoutes`; `src/doc/mod.rs`: `Document::{chrono_root, show_chrono}`; `src/doc/save.rs`: `object`, `spline`, `header`, `copy_missing` are `pub(crate)` (chrono patches); `src/check.rs`: `Kind::SignalRouteBroken`.
