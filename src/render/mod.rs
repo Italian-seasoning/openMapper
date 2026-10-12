@@ -20,6 +20,7 @@ use crate::gpu::{Gpu, DEPTH};
 
 mod build;
 mod cull;
+pub mod daylight;
 pub mod imagery;
 pub mod profile;
 pub mod quality;
@@ -315,6 +316,8 @@ pub struct Thumb {
 pub const THUMB: u32 = 112;
 
 pub struct Renderer {
+    /// The hour the view is lit at (View menu; None: openOMSI's plain day).
+    pub daytime: Option<daylight::Daytime>,
     /// The splines are left out of the view (FrameExtras::hide).
     hide_splines: bool,
     globals: wgpu::Buffer,
@@ -836,6 +839,7 @@ impl Renderer {
             batches: Vec::new(),
             ghost_batches: Vec::new(),
             scene_key: 0,
+            daytime: None,
             splines: HashMap::new(),
             chunks: HashMap::new(),
             builder: build::Builder::new(),
@@ -882,10 +886,11 @@ impl Renderer {
         let vp = cam.proj(aspect) * cam.view();
         let o = cam.origin() - anchor;
         let eye = cam.eye() - cam.origin();
-        let sun = sun_dir();
+        let day = daylight::light(self.daytime);
+        let sun = day.sun;
         let (n, f) = cam.near_far();
         let _ = n;
-        let light = light_view(cam, self.quality.shadow_size().max(1), self.quality.shadow_reach().max(40.0));
+        let light = light_view(cam, sun, self.quality.shadow_size().max(1), self.quality.shadow_reach().max(40.0));
         let brush = extras.brush.map(|b| [(b.centre.x - anchor.x) as f32, (b.centre.y - anchor.y) as f32, b.radius, 1.0]).unwrap_or([0.0; 4]);
         let ht = extras.highlight_tile.map(|t| [t.0 as f32, t.1 as f32]).unwrap_or([1e9, 1e9]);
         Globals {
@@ -894,20 +899,18 @@ impl Renderer {
             origin: [o.x as f32, o.y as f32, o.z as f32, 0.0],
             eye: [eye.x as f32, eye.y as f32, eye.z as f32, self.time],
             sun_dir: [sun.x, sun.y, sun.z, 0.8],
-            // openOMSI's Vanilla+ by day (the stock envir.cfg with the sun 45 degrees up:
-            // A x 0.7, B x 0.5, C x 0.45, see omsi-sim's daylight.rs)
-            sun_color: [0.70, 0.70, 0.677, 1.0],
-            sky_top: [0.30, 0.50, 0.86, 1.0],
-            sky_horizon: [0.66, 0.77, 0.92, 1.0],
+            sun_color: [day.sun_color[0], day.sun_color[1], day.sun_color[2], 1.0],
+            sky_top: [day.sky_top[0], day.sky_top[1], day.sky_top[2], 1.0],
+            sky_horizon: [day.sky_horizon[0], day.sky_horizon[1], day.sky_horizon[2], 1.0],
             // (thick enough by the view's reach that its end is not a hard edge)
-            fog: [0.62, 0.74, 0.92, (1.0 / (f * 0.55)).max(1.6 / self.quality.view_distance())],
+            fog: [day.fog[0], day.fog[1], day.fog[2], (1.0 / (f * 0.55)).max(1.6 / self.quality.view_distance())],
             brush,
             brush_color: extras.brush.map(|b| b.color).unwrap_or([1.0; 4]),
             grid: [tile_size() as f32, if extras.grid { 1.0 } else { 0.0 }, ht[0], ht[1]],
             light_vp: light.0.to_cols_array_2d(),
-            shadow: [if self.quality.shadow_size() > 0 { 1.0 } else { 0.0 }, light.1, 0.0, 0.0],
-            light_b: [0.135, 0.154, 0.174, 0.0],
-            light_c: [0.396, 0.396, 0.416, 0.0],
+            shadow: [if self.quality.shadow_size() > 0 && day.shadows { 1.0 } else { 0.0 }, light.1, 0.0, 0.0],
+            light_b: [day.light_b[0], day.light_b[1], day.light_b[2], 0.0],
+            light_c: [day.light_c[0], day.light_c[1], day.light_c[2], 0.0],
         }
     }
 
@@ -1698,7 +1701,7 @@ impl Renderer {
         let mut sg = *gl;
         sg.view_proj = gl.light_vp;
         // (the eye far off towards the sun: the roads' pull towards it is then a slight bias)
-        let sun = sun_dir();
+        let sun = Vec3::new(gl.sun_dir[0], gl.sun_dir[1], gl.sun_dir[2]);
         sg.eye = [sun.x * 1e5, sun.y * 1e5, sun.z * 1e5, gl.eye[3]];
         gpu.queue.write_buffer(&self.shadow_globals, 0, bytemuck::bytes_of(&sg));
         let mut pass = encoder.begin_render_pass(&wgpu::RenderPassDescriptor {
@@ -2349,15 +2352,10 @@ fn read_texture(gpu: &Gpu, tex: &wgpu::Texture) -> anyhow::Result<image::RgbaIma
     Ok(img)
 }
 
-fn sun_dir() -> Vec3 {
-    Vec3::new(-0.42, -0.55, 0.72).normalize()
-}
-
 /// The sun's view of the scene round where the camera looks (relative to the render origin),
 /// and the size of a shadow map texel there (m). The window follows the camera in whole
 /// texels, so the shadows' edges do not crawl as it moves.
-fn light_view(cam: &Camera, size: u32, reach: f32) -> (Mat4, f32) {
-    let sun = sun_dir();
+fn light_view(cam: &Camera, sun: Vec3, size: u32, reach: f32) -> (Mat4, f32) {
     let centre = (cam.smooth_target_now() - cam.origin()).as_vec3();
     let half = (cam.smooth_distance_now() as f32 * 1.4).clamp(40.0, reach);
     let up = if sun.z.abs() > 0.99 { Vec3::Y } else { Vec3::Z };

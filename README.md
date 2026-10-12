@@ -79,6 +79,9 @@ experienced map makers.
   any angle), mirrored, moved and scaled by eye with the 3D view following.
 * **Names in the view**: bus stops and start points near the camera carry their names over
   them (View menu to switch off).
+* **Time of day** (View menu): the view lit at any hour, the sun where it stands then at the
+  map's place today (Calendar and place, summer time counted), the sky and light going through
+  dusk to a moonlit night; shadows follow the sun.
 * **Layers** (View > Show): trees, other objects, roads and splines each hidden or shown;
   what is hidden is not picked or box-selected either, handy in a dense town.
 * **Copies in a row** (an object's or a selection's properties): a fence, a row of houses, an

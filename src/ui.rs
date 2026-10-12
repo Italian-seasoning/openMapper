@@ -153,6 +153,8 @@ pub struct UiState {
     pub heightmap: crate::heightmap::HeightMapUi,
     /// The Paint tool's rule by slope and height.
     pub autopaint: crate::autopaint::Rule,
+    /// The hour the view is lit at (View menu; None: plain day as openOMSI's).
+    pub daytime: Option<f32>,
 }
 
 impl Default for UiState {
@@ -184,6 +186,7 @@ impl Default for UiState {
             geo: Default::default(),
             heightmap: Default::default(),
             autopaint: Default::default(),
+            daytime: None,
         }
     }
 }
@@ -711,6 +714,18 @@ fn menu_bar(root: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, can_undo: bo
                     }
                     if radio(ui, !unity, tr("Map editor: right button turns round the cursor, drag moves the map", "Редактор карт: правая кнопка вращает вокруг курсора, перетаскивание двигает карту")).clicked() {
                         actions.push(Action::SetCamera("map".into()));
+                    }
+                });
+                ui.menu_button(tr("Time of day", "Время суток"), |ui| {
+                    if radio(ui, st.daytime.is_none(), tr("Plain day (as the game by day)", "Обычный день (как в игре днём)")).clicked() {
+                        st.daytime = None;
+                    }
+                    if radio(ui, st.daytime.is_some(), tr("At an hour", "В заданный час")).clicked() && st.daytime.is_none() {
+                        st.daytime = Some(18.0);
+                    }
+                    if let Some(h) = &mut st.daytime {
+                        let r = ui.add(egui::Slider::new(h, 0.0..=24.0).step_by(0.25).custom_formatter(|v, _| format!("{:02}:{:02}", v as u32 % 24, ((v.fract() * 60.0).round() as u32) % 60)));
+                        r.on_hover_text(tr("Where the sun stands then, today, at the map's place (Map > Calendar and place); by night the moon", "Где тогда стоит солнце, сегодня, в месте карты (Карта > Календарь и место); ночью луна"));
                     }
                 });
                 ui.menu_button(tr("Graphics quality", "Качество графики"), |ui| {

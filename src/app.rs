@@ -351,6 +351,10 @@ impl App {
             Ok("paint") => self.ed.set_tool(Tool::Paint),
             _ => {}
         }
+        // OPENMAPPER_DAYTIME=<hour>: the view lit at that hour
+        if let Some(h) = std::env::var("OPENMAPPER_DAYTIME").ok().and_then(|h| h.parse::<f32>().ok()) {
+            self.ui.daytime = Some(h);
+        }
         // OPENMAPPER_HEIGHTMAP=<picture>[,apply]: the Terrain tool with that picture to import
         // (laid on the map at once with `apply`)
         if let Ok(a) = std::env::var("OPENMAPPER_HEIGHTMAP") {
@@ -1160,6 +1164,7 @@ impl App {
                 self.tt.overlay(&self.ed, &self.cam, &mut extras);
                 g.renderer.profile.add("extras", crate::render::profile::ms(t_x));
                 self.geo.feed(&mut g.renderer.imagery, &g.gpu, &self.ed);
+                g.renderer.daytime = self.ui.daytime.map(|h| crate::render::daylight::at_map(h, &doc.traffic.timezone));
                 g.renderer.sync(&g.gpu, doc, assets, &extras, &self.cam);
                 let ppp = full.pixels_per_point;
                 let (w, h) = (g.gpu.config.width as f32, g.gpu.config.height as f32);
