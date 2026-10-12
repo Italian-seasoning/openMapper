@@ -86,6 +86,9 @@ experienced map makers.
 * **Groups** (Edit menu): a selection kept under a name (a stop with its shelter and signs, a
   crossing with its lights, rows and what hangs on them included), to put down again in any
   map with `Ctrl+V`; kept as tile files in `<content>/openMapper/groups`.
+* **Hanging objects** (an object's properties, Hanging on it): what hangs on its attachment
+  points (`[new_attachment]`), and the catalogue's object hung on one, as OMSI 2's editor does
+  it (signs on a post, a timetable on a stop).
 * **Path rules** (a road's or an object's properties), as in OMSI 2's editor: a speed limit,
   traffic density, priority, trucks, no cars or buses only, each for one path (lane).
 * **Map settings** (Map menu), as in OMSI 2's editor: money system, ticket pack, depot,

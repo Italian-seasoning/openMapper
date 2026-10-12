@@ -185,6 +185,8 @@ pub struct ObjInfo {
     pub labels: Vec<String>,
     /// How many paths (lanes) it has.
     pub paths: usize,
+    /// How many points it has to hang other objects on (`[new_attachment]`).
+    pub attach_points: usize,
 }
 
 /// Facts for the status bar.
@@ -1752,6 +1754,10 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
         }
         Sel::Spline(..) => true,
     };
+    let attach_points = match sel {
+        Sel::Object(k, id) => ed.doc.as_ref().and_then(|d| crate::selection::any_object(d, k, id)).and_then(|o| st.obj_info.as_ref().filter(|i| i.file.eq_ignore_ascii_case(&o.file))).map(|i| i.attach_points).unwrap_or(0),
+        _ => 0,
+    };
     let _ = st;
     if alike {
         let n = ed.select_alike(sel);
@@ -1771,6 +1777,9 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
             crate::ui_edit::array_section(ui, ed, lib);
             if has_paths {
                 crate::ui_edit::rules_section(ui, ed, sel);
+            }
+            if attach_points > 0 {
+                crate::ui_edit::attach_section(ui, ed, lib, k, id, attach_points);
             }
             if let Some(f) = replace_obj {
                 ed.replace_selected_objects(&f);

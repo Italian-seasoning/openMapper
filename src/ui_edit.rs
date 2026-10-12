@@ -349,6 +349,49 @@ pub fn rules_section(ui: &mut egui::Ui, ed: &mut Editor, sel: Sel) {
     }
 }
 
+/// What hangs on an object's attachment points (signs on a post, a timetable on a stop),
+/// and the catalogue's object hung on one, as OMSI 2's editor does it.
+pub fn attach_section(ui: &mut egui::Ui, ed: &mut Editor, lib: &Library, k: TileKey, id: i64, points: usize) {
+    let Some(doc) = ed.doc.as_ref() else { return };
+    let hung: Vec<(i64, usize, String)> = doc.tiles.get(&k).map(|t| t.tile.attach_objects.iter().filter(|a| a.parent_id == Some(id)).map(|a| (a.id, a.attach_index, a.file.clone())).collect()).unwrap_or_default();
+    let key = egui::Id::new("attach point");
+    let mut point: usize = ui.data_mut(|d| *d.get_temp_mut_or_default(key));
+    point = point.min(points - 1);
+    let mut go: Option<Sel> = None;
+    let mut add = false;
+    egui::Frame::new().inner_margin(Margin::symmetric(8, 2)).show(ui, |ui| {
+        egui::CollapsingHeader::new(RichText::new(format!("{} ({})", tr("Hanging on it", "Висит на нём"), hung.len())).strong()).id_salt("attach").show(ui, |ui| {
+            ui.label(RichText::new(format!("{} {points}", tr("Points to hang objects on:", "Точек для крепления:"))).small().color(TEXT_DIM));
+            for (aid, at, file) in &hung {
+                ui.horizontal(|ui| {
+                    ui.label(RichText::new(format!("#{at}")).color(TEXT_DIM));
+                    let n = lib.find(file).map(|a| a.name.clone()).unwrap_or_else(|| file.rsplit('\\').next().unwrap_or(file).to_string());
+                    if ui.link(n).on_hover_text(tr("Select it", "Выбрать его")).clicked() {
+                        go = Some(Sel::Object(k, *aid));
+                    }
+                });
+            }
+            ui.horizontal(|ui| {
+                ui.add(egui::DragValue::new(&mut point).range(0..=points - 1).prefix("#"));
+                let what = ed.object_type.as_ref().map(|o| lib.find(o).map(|a| a.name.clone()).unwrap_or_else(|| o.clone()));
+                let label = match &what {
+                    Some(n) => format!("{} «{n}»", tr("Hang", "Повесить")),
+                    None => tr("Choose an object in the Objects catalogue", "Выберите объект в каталоге «Объекты»").to_string(),
+                };
+                add = ui.add_enabled(what.is_some(), egui::Button::new(icons::labelled(Icon::Add, &label))).clicked();
+            });
+        });
+    });
+    ui.data_mut(|d| d.insert_temp(key, point));
+    if let Some(s) = go {
+        ed.select(Some(s));
+    } else if add {
+        if let Some(f) = ed.object_type.clone() {
+            ed.attach_object(k, id, point, &f);
+        }
+    }
+}
+
 /// Copies of the selection in a row: how many, the step between them and a turn each.
 pub fn array_section(ui: &mut egui::Ui, ed: &mut Editor, lib: &Library) {
     if ed.selection().is_empty() {

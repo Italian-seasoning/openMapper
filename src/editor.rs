@@ -2986,6 +2986,21 @@ impl Editor {
         n
     }
 
+    /// The object `file` hung on point `at` of object `id` (`[attachObj]`); it is selected.
+    pub fn attach_object(&mut self, k: TileKey, parent: i64, at: usize, file: &str) {
+        let Some(doc) = self.doc.as_mut() else { return };
+        self.history.begin(tr("Hang an object", "Подвесить объект"));
+        self.history.touch_tile(doc, k);
+        self.history.touch_global(doc);
+        let id = doc.new_id();
+        if let Some(t) = doc.tiles.get_mut(&k) {
+            t.tile.attach_objects.push(MapObject { file: file.to_string(), id, parent_id: Some(parent), attach_index: at, ..Default::default() });
+            t.touch_content();
+        }
+        self.history.commit();
+        self.select(Some(Sel::Object(k, id)));
+    }
+
     /// The rules of an object's or a spline's paths (one step while a number is dragged).
     pub fn set_rules(&mut self, sel: Sel, rules: Vec<omsi_map::MapRule>) {
         self.begin_panel_step(tr("Path rules", "Правила путей"));
@@ -4397,6 +4412,18 @@ mod tests {
         }
         // well outside, the slope as it was
         assert!((doc.ground(DVec2::new(180.0, 150.0)) as f64 - 18.0).abs() < 0.1);
+    }
+
+    #[test]
+    fn an_object_hangs_on_another() {
+        let mut ed = editor();
+        ed.attach_object((0, 0), 1, 2, "Sceneryobjects\\sign.sco");
+        let t = &ed.doc.as_ref().unwrap().tiles[&(0, 0)].tile;
+        let a = t.attach_objects.last().unwrap();
+        assert_eq!((a.parent_id, a.attach_index), (Some(1), 2));
+        assert_eq!(ed.selected, Some(Sel::Object((0, 0), a.id)));
+        ed.undo();
+        assert!(ed.doc.as_ref().unwrap().tiles[&(0, 0)].tile.attach_objects.is_empty());
     }
 
     #[test]
