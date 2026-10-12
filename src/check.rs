@@ -639,7 +639,7 @@ fn timetable_issues(d: &Document, roots: &[PathBuf], out: &mut Vec<Issue>) {
             let (i, detail) = match r.problems.first() {
                 Some(Problem::NoObject(i)) => (*i, format!("{} {}", tr("the stop has no object:", "у остановки нет объекта:"), stop_name(trip.stations[*i]))),
                 Some(Problem::NoRoad(i)) => (*i, format!("{} {}", tr("no road beside", "нет дороги у"), stop_name(trip.stations[*i]))),
-                Some(Problem::NoWay(i)) => (*i, format!("{} {} → {}", tr("no way", "нет пути"), stop_name(trip.stations[*i]), trip.stations.get(i + 1).map(|s| stop_name(*s)).unwrap_or_default())),
+                Some(Problem::NoWay(i)) => (*i, format!("{} {} -> {}", tr("no way", "нет пути"), stop_name(trip.stations[*i]), trip.stations.get(i + 1).map(|s| stop_name(*s)).unwrap_or_default())),
                 None => (0, tr("no way found", "путь не найден").to_string()),
             };
             let (at, sel) = trip.stations.get(i).map(|id| place(&mut files, *id)).unwrap_or((None, None));

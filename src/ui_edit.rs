@@ -279,9 +279,9 @@ pub fn apply_ends(ed: &mut Editor, ctx: &egui::Context, k: TileKey, id: i64, e: 
 }
 
 /// The rule kinds OMSI 2's editor offers for a path, with whether they take a value.
-const RULES: [(&str, bool); 6] = [("speedlimit", true), ("trafficdensity", true), ("priority", true), ("trucks", true), ("no_cars", false), ("bus", false)];
+pub(crate) const RULES: [(&str, bool); 6] = [("speedlimit", true), ("trafficdensity", true), ("priority", true), ("trucks", true), ("no_cars", false), ("bus", false)];
 
-fn rule_name(kind: &str) -> &'static str {
+pub(crate) fn rule_name(kind: &str) -> &'static str {
     match kind {
         "speedlimit" => tr("Speed limit, km/h", "Ограничение скорости, км/ч"),
         "trafficdensity" => tr("Traffic density ×", "Плотность трафика ×"),

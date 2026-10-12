@@ -285,6 +285,9 @@ pub enum Change {
     Retype(Vec<(i64, bool)>, String),
     /// A map object whose texts become these.
     Relabel(i64, Vec<String>),
+    /// A map object's or spline's (IDCode, is a spline) path rules: those it had taken away,
+    /// these instead.
+    Rules(i64, bool, Vec<omsi_map::MapRule>, Vec<omsi_map::MapRule>),
 }
 
 /// The text a change adds to a patch.
@@ -311,6 +314,12 @@ fn text(c: &Change) -> String {
             s.push_str(&format!("[selobject]\n{id}\n\n[relabel]\n{}\n", strings.len()));
             strings.iter().for_each(|x| s.push_str(&format!("{x}\n")));
             s.push('\n');
+        }
+        Change::Rules(id, is_spline, old, new) => {
+            s.push_str(&format!("[{}]\n{id}\n\n", if *is_spline { "selspline" } else { "selobject" }));
+            let kill: Vec<omsi_map::MapRule> = old.iter().map(|r| omsi_map::MapRule { kill: true, ..r.clone() }).collect();
+            crate::doc::save::rules(&mut s, &kill);
+            crate::doc::save::rules(&mut s, new);
         }
         Change::Retype(ids, file) => {
             for (id, is_spline) in ids {
@@ -451,6 +460,14 @@ mod tests {
         assert_eq!(base.objects.iter().find(|o| o.id == 9).unwrap().file, "Sceneryobjects\\b.sco");
         assert_eq!(base.objects.iter().find(|o| o.id == 9).unwrap().extra, vec!["Neu".to_string(), "Platz".to_string()]);
         assert!(base.objects.iter().any(|o| o.id == 50));
+        // a spline's rules from the day on: the old one gone, the new one there
+        let old = omsi_map::MapRule { path_index: 0, kind: "speedlimit".into(), value: 50.0, extra: 0.0, kill: false };
+        let new = omsi_map::MapRule { value: 30.0, ..old.clone() };
+        let p = write(&dir, "tile_0_1.map", &Change::Rules(8, true, vec![old.clone()], vec![new.clone()])).unwrap();
+        let mut base = Tile::default();
+        base.splines.push(MapSpline { file: "y.sli".into(), id: 8, rules: vec![old], ..Default::default() });
+        base.apply_chrono(&Tile::load(&p).unwrap());
+        assert_eq!(base.splines[0].rules, vec![new]);
         let _ = std::fs::remove_dir_all(&dir);
     }
 }

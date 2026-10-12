@@ -114,7 +114,9 @@ experienced map makers.
   changed there are the scenario's, a line of the map taken away is taken off from its day,
   and only what differs from the map's is kept in its `TTData`. "Edit its AI lists" does the
   same for the Traffic window: vehicles and type groups added to a group or depot, and a
-  depot's own depot file, go into its `ailists_#upd.cfg`.
+  depot's own depot file, go into its `ailists_#upd.cfg`. A scenario may also bring its own
+  ticket pack and money, other texts on a map object and other path rules on a road or object
+  from its day.
 * **Map settings** (Map menu), as in OMSI 2's editor: money system, ticket pack, depot,
   years and year offset, repair time, real rail and the seasons of the year.
 * **Calendar and place** (Map menu), the map's own files as OMSI 2's editor keeps them:

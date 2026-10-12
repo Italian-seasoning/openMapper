@@ -36,6 +36,9 @@ pub struct ChronoWindow {
     new_name: String,
     /// The one object selected and its texts as they are to read in the scenario.
     relabel: Option<(i64, Vec<String>)>,
+    /// The one road or object selected, its rules in the map and as they are to be from the
+    /// scenario's day.
+    rules: Option<(Sel, Vec<omsi_map::MapRule>, Vec<omsi_map::MapRule>)>,
     /// The scenario whose own things are in the map being edited.
     session: Option<crate::chrono_edit::Session>,
     /// The check hook ran.
@@ -365,6 +368,15 @@ impl ChronoWindow {
         if one.as_ref().map(|o| o.0) != self.relabel.as_ref().map(|r| r.0) {
             self.relabel = one;
         }
+        let ruled = match ed.selection().as_slice() {
+            [Sel::Spline(k, id)] => doc.spline(*k, *id).map(|x| (Sel::Spline(*k, *id), x.rules.clone())),
+            [Sel::Object(k, id)] => doc.object(*k, *id).map(|o| (Sel::Object(*k, *id), o.rules.clone())),
+            _ => None,
+        };
+        if ruled.as_ref().map(|r| r.0) != self.rules.as_ref().map(|r| r.0) {
+            self.rules = ruled.map(|(s, r)| (s, r.clone(), r));
+        }
+        let mut write_rules: Option<(Sel, Vec<omsi_map::MapRule>, Vec<omsi_map::MapRule>)> = None;
         let mut look: Option<glam::DVec2> = None;
         let mut take: Option<(crate::doc::TileKey, String, crate::chrono_edit::Part, bool)> = None;
         // the map's things a change names: their names and places
@@ -495,6 +507,39 @@ impl ChronoWindow {
                         }
                     });
                 }
+                // one road or object: its path rules may be others from the scenario's day
+                if let Some((sel, old, new)) = &mut self.rules {
+                    egui::CollapsingHeader::new(format!("{} ({} -> {})", tr("Its path rules from that day", "Его правила путей с этого дня"), old.len(), new.len())).id_salt("chrono rules").show(ui, |ui| {
+                        let mut remove = None;
+                        for (i, r) in new.iter_mut().enumerate() {
+                            ui.horizontal(|ui| {
+                                ui.add(egui::DragValue::new(&mut r.path_index).range(0..=64).prefix("#"));
+                                egui::ComboBox::from_id_salt(("chrono rule", i)).selected_text(crate::ui_edit::rule_name(&r.kind)).width(104.0).show_ui(ui, |ui| {
+                                    for (k, _) in crate::ui_edit::RULES {
+                                        ui.selectable_value(&mut r.kind, k.to_string(), crate::ui_edit::rule_name(k));
+                                    }
+                                });
+                                if crate::ui_edit::RULES.iter().any(|(k, v)| *k == r.kind && *v) {
+                                    ui.add(egui::DragValue::new(&mut r.value).speed(0.1).max_decimals(2));
+                                }
+                                if ui.small_button(icons::labelled(Icon::Delete, "")).clicked() {
+                                    remove = Some(i);
+                                }
+                            });
+                        }
+                        if let Some(i) = remove {
+                            new.remove(i);
+                        }
+                        ui.horizontal(|ui| {
+                            if ui.button(icons::labelled(Icon::Add, tr("Add a rule", "Добавить правило"))).clicked() {
+                                new.push(omsi_map::MapRule { path_index: 0, kind: "speedlimit".into(), value: 30.0, extra: 0.0, kill: false });
+                            }
+                            if ui.add_enabled(new != old, egui::Button::new(tr("Write", "Записать"))).clicked() {
+                                write_rules = Some((*sel, old.clone(), new.clone()));
+                            }
+                        });
+                    });
+                }
                 ui.label(RichText::new(tr("Written into the scenario at once (undo does not take it out of the scenario).", "Записывается в сценарий сразу (отмена не убирает это из сценария).")).small().color(TEXT_DIM));
                 // what the scenario has, tile by tile
                 // (the map's own copy once it has one)
@@ -539,7 +584,7 @@ impl ChronoWindow {
                                 let (mark, text) = if c.delete {
                                     ("-", what)
                                 } else if let Some(f) = &c.new_type {
-                                    (">", format!("{what} → {}", name(f)))
+                                    (">", format!("{what} -> {}", name(f)))
                                 } else if c.relabel.is_some() {
                                     ("*", format!("{what}: {}", tr("new texts", "новые тексты")))
                                 } else {
@@ -732,6 +777,28 @@ impl ChronoWindow {
                 }
                 Err(err) => ed.error(format!("{err}")),
             }
+            self.contents = None;
+            if let Some(doc) = ed.doc.as_mut() {
+                doc.show_chrono(self.date);
+            }
+        }
+        if let (Some((sel, old, new)), Some(e)) = (write_rules, &self.editing) {
+            let file = ed.doc.as_ref().and_then(|d| crate::chrono_edit::by_tile(d, &[sel]).into_iter().next()).map(|t| t.1);
+            let (id, is_spline) = match sel {
+                Sel::Object(_, id) => (id, false),
+                Sel::Spline(_, id) => (id, true),
+            };
+            let res = (|| -> anyhow::Result<()> {
+                let doc = ed.doc.as_ref().ok_or_else(|| anyhow::anyhow!("no map"))?;
+                let dir = own_dir(&e.dir, &root, &doc.dir, doc.source.as_deref())?;
+                crate::chrono_edit::write(&dir, &file.unwrap_or_default(), &crate::chrono_edit::Change::Rules(id, is_spline, old, new))?;
+                Ok(())
+            })();
+            match res {
+                Ok(()) => ed.toast(tr("Written into the scenario", "Записано в сценарий")),
+                Err(err) => ed.error(format!("{err}")),
+            }
+            self.rules = None;
             self.contents = None;
             if let Some(doc) = ed.doc.as_mut() {
                 doc.show_chrono(self.date);
