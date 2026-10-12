@@ -1557,11 +1557,14 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
                 }
                 let mut labels = o.extra.clone();
                 // (the model's names for its labels, once it is read)
-                let names: &[String] = st.obj_info.as_ref().filter(|i| i.file.eq_ignore_ascii_case(&o.file)).map(|i| i.labels.as_slice()).unwrap_or(&[]);
-                if is_stop || !labels.is_empty() || !names.is_empty() {
+                // (a tree keeps its own picture, height and width in them)
+                let tree = lib.find(&o.file).map(|a| a.category == crate::library::Category::Trees).unwrap_or(false);
+                let tree_names = [tr("Picture", "Картинка").to_string(), tr("Height", "Высота").to_string(), tr("Ratio", "Пропорции").to_string()];
+                let names: &[String] = if tree { &tree_names } else { st.obj_info.as_ref().filter(|i| i.file.eq_ignore_ascii_case(&o.file)).map(|i| i.labels.as_slice()).unwrap_or(&[]) };
+                if is_stop || !labels.is_empty() || (!names.is_empty() && !tree) {
                     ui.add_space(6.0);
-                    ui.label(RichText::new(if is_stop { tr("Stop name", "Название остановки") } else { tr("Texts", "Тексты") }).strong());
-                    if !is_stop && !names.is_empty() {
+                    ui.label(RichText::new(if is_stop { tr("Stop name", "Название остановки") } else if tree { tr("This tree", "Это дерево") } else { tr("Texts", "Тексты") }).strong());
+                    if !is_stop && !tree && !names.is_empty() {
                         ui.label(RichText::new(tr("Shown on the object (@ starts a new line)", "Видны на объекте (@ — новая строка)")).small().color(TEXT_DIM));
                     }
                     let n = if is_stop { 1 } else { labels.len().max(names.len()).max(1) };
@@ -1726,7 +1729,11 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
             if ui.button(icons::labelled(Icon::Focus, tr("Go to", "Перейти"))).clicked() {
                 actions.push(Action::FocusSelection);
             }
-            if matches!(sel, Sel::Object(..)) && ui.button(icons::labelled(Icon::Flatten, tr("Level ground", "Выровнять землю"))).on_hover_text(tr("The ground under it made level with its foot, blending in 3 m round it (a house on a slope)", "Земля под ним — ровно на уровне основания, с плавным переходом 3 м вокруг (дом на склоне)")).clicked() {
+            let is_tree = match sel {
+                Sel::Object(k, id) => ed.doc.as_ref().and_then(|d| crate::selection::any_object(d, k, id)).and_then(|o| lib.find(&o.file)).map(|a| a.category == crate::library::Category::Trees).unwrap_or(false),
+                _ => false,
+            };
+            if matches!(sel, Sel::Object(..)) && !is_tree && ui.button(icons::labelled(Icon::Flatten, tr("Level ground", "Выровнять землю"))).on_hover_text(tr("The ground under it made level with its foot, blending in 3 m round it (a house on a slope)", "Земля под ним — ровно на уровне основания, с плавным переходом 3 м вокруг (дом на склоне)")).clicked() {
                 ed.level_request = true;
             }
             if ui.button(icons::labelled(Icon::SelectAll, tr("All like it", "Все такие"))).on_hover_text(tr("Select every one of this type on the map", "Выбрать все такие на карте")).clicked() {
