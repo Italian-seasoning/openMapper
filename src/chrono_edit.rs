@@ -132,6 +132,8 @@ pub enum Change {
     Delete(Vec<(i64, bool)>),
     /// The map's objects (and splines) that take another type.
     Retype(Vec<(i64, bool)>, String),
+    /// A map object whose texts become these.
+    Relabel(i64, Vec<String>),
 }
 
 /// The text a change adds to a patch.
@@ -153,6 +155,11 @@ fn text(c: &Change) -> String {
             for (id, is_spline) in ids {
                 s.push_str(&format!("[{}]\n{id}\n\n[delete]\n\n", if *is_spline { "selspline" } else { "selobject" }));
             }
+        }
+        Change::Relabel(id, strings) => {
+            s.push_str(&format!("[selobject]\n{id}\n\n[relabel]\n{}\n", strings.len()));
+            strings.iter().for_each(|x| s.push_str(&format!("{x}\n")));
+            s.push('\n');
         }
         Change::Retype(ids, file) => {
             for (id, is_spline) in ids {
@@ -253,7 +260,8 @@ mod tests {
         add.splines.push(MapSpline { file: "Splines\\r.sli".into(), id: 51, length: 10.0, ..Default::default() });
         write(&dir, "tile_0_0.map", &Change::Add(add)).unwrap();
         write(&dir, "tile_0_0.map", &Change::Delete(vec![(7, false), (8, true)])).unwrap();
-        let p = write(&dir, "tile_0_0.map", &Change::Retype(vec![(9, false)], "Sceneryobjects\\b.sco".into())).unwrap();
+        write(&dir, "tile_0_0.map", &Change::Retype(vec![(9, false)], "Sceneryobjects\\b.sco".into())).unwrap();
+        let p = write(&dir, "tile_0_0.map", &Change::Relabel(9, vec!["Neu".into(), "Platz".into()])).unwrap();
         let patch = Tile::load(&p).unwrap();
         assert!(!patch.has_terrain, "the map's ground stays");
         assert_eq!((patch.objects.len(), patch.splines.len()), (1, 1));
@@ -265,6 +273,7 @@ mod tests {
         assert!(!base.objects.iter().any(|o| o.id == 7));
         assert!(base.splines.iter().any(|s| s.id == 8 && s.deleted));
         assert_eq!(base.objects.iter().find(|o| o.id == 9).unwrap().file, "Sceneryobjects\\b.sco");
+        assert_eq!(base.objects.iter().find(|o| o.id == 9).unwrap().extra, vec!["Neu".to_string(), "Platz".to_string()]);
         assert!(base.objects.iter().any(|o| o.id == 50));
         let _ = std::fs::remove_dir_all(&dir);
     }

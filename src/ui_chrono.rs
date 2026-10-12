@@ -34,6 +34,8 @@ pub struct ChronoWindow {
     editing: Option<Edit>,
     /// A new scenario's name, as typed.
     new_name: String,
+    /// The one object selected and its texts as they are to read in the scenario.
+    relabel: Option<(i64, Vec<String>)>,
     /// The patches of the scenario being edited (read again after each change).
     contents: Option<Vec<(crate::doc::TileKey, String, omsi_map::Tile)>>,
 }
@@ -112,11 +114,11 @@ fn scan(root: &Path, out: &mut Vec<Scenario>) {
     }
 }
 
-/// Write a scenario's Chrono.cfg and description. The map's chrono folders are brought into
-/// its own copy first when they are still the installation's (that is never written to).
-/// Where the scenario now is.
-fn write_scenario(e: &Edit, root: &Path, map_dir: &Path, source: Option<&Path>) -> anyhow::Result<PathBuf> {
-    let rel = e.dir.strip_prefix(root).map(Path::to_path_buf).unwrap_or_else(|_| PathBuf::from("Chrono").join(e.dir.file_name().unwrap_or_default()));
+/// Where scenario `dir` (under `root`) is in the map's own folder `map_dir`: the map's
+/// chrono folders are brought there first when they are still the installation's (`source`),
+/// which is never written to.
+fn own_dir(dir: &Path, root: &Path, map_dir: &Path, source: Option<&Path>) -> anyhow::Result<PathBuf> {
+    let rel = dir.strip_prefix(root).map(Path::to_path_buf).unwrap_or_else(|_| PathBuf::from("Chrono").join(dir.file_name().unwrap_or_default()));
     if root != map_dir {
         if let Some(src) = source {
             let from = omsi_cfg::resolve_path(src, "Chrono");
@@ -125,7 +127,13 @@ fn write_scenario(e: &Edit, root: &Path, map_dir: &Path, source: Option<&Path>) 
             }
         }
     }
-    let dir = map_dir.join(&rel);
+    Ok(map_dir.join(rel))
+}
+
+/// Write a scenario's Chrono.cfg and description (in the map's own folder: `own_dir`).
+/// Where the scenario now is.
+fn write_scenario(e: &Edit, root: &Path, map_dir: &Path, source: Option<&Path>) -> anyhow::Result<PathBuf> {
+    let dir = own_dir(&e.dir, root, map_dir, source)?;
     std::fs::create_dir_all(&dir)?;
     let cfg = omsi_cfg::resolve_path(&dir, "Chrono.cfg");
     let old = std::fs::read(&cfg).map(|b| omsi_cfg::decode_text(&b)).unwrap_or_default();
@@ -152,17 +160,7 @@ impl ChronoWindow {
         use crate::chrono_edit::{by_tile, write, Change};
         let sels = ed.selection();
         let Some(doc) = ed.doc.as_ref() else { return Ok(0) };
-        // (into the map's own copy: the installation is never written to)
-        let rel = dir.strip_prefix(root).map(Path::to_path_buf).unwrap_or_else(|_| PathBuf::from("Chrono").join(dir.file_name().unwrap_or_default()));
-        if *root != doc.dir {
-            if let Some(src) = &doc.source {
-                let from = omsi_cfg::resolve_path(src, "Chrono");
-                if from.is_dir() {
-                    crate::doc::save::copy_missing(&from, &doc.dir.join("Chrono"))?;
-                }
-            }
-        }
-        let dir = doc.dir.join(&rel);
+        let dir = own_dir(&dir, root, &doc.dir, doc.source.as_deref())?;
         let mut n = 0;
         for (k, tile_file, items) in by_tile(doc, &sels) {
             let ids: Vec<(i64, bool)> = items.iter().map(|s| match *s {
@@ -230,6 +228,15 @@ impl ChronoWindow {
         let mut close_edit = false;
         let mut new_scenario: Option<String> = None;
         let mut change: Option<u8> = None;
+        let mut relabel: Option<(i64, Vec<String>)> = None;
+        // (the texts of the one object selected, kept while it stays selected)
+        let one = match ed.selection().as_slice() {
+            [Sel::Object(k, id)] => crate::selection::any_object(doc, *k, *id).filter(|o| !o.extra.is_empty()).map(|o| (*id, o.extra.clone())),
+            _ => None,
+        };
+        if one.as_ref().map(|o| o.0) != self.relabel.as_ref().map(|r| r.0) {
+            self.relabel = one;
+        }
         let mut look: Option<glam::DVec2> = None;
         let mut take: Option<(crate::doc::TileKey, String, crate::chrono_edit::Part, bool)> = None;
         // the map's things a change names: their names and places
@@ -337,9 +344,26 @@ impl ChronoWindow {
                         }
                     }
                 });
+                // one object with texts: they may read otherwise from the scenario's day
+                if let Some((id, texts)) = &mut self.relabel {
+                    ui.horizontal_wrapped(|ui| {
+                        ui.label(tr("its texts become", "его тексты становятся"));
+                        for t in texts.iter_mut() {
+                            ui.add(egui::TextEdit::singleline(t).desired_width(140.0));
+                        }
+                        if ui.button(tr("Write", "Записать")).clicked() {
+                            relabel = Some((*id, texts.clone()));
+                        }
+                    });
+                }
                 ui.label(RichText::new(tr("Written into the scenario at once (undo does not take it out of the scenario).", "Записывается в сценарий сразу (отмена не убирает это из сценария).")).small().color(TEXT_DIM));
                 // what the scenario has, tile by tile
-                let contents = self.contents.get_or_insert_with(|| crate::chrono_edit::patches(&e.dir, doc_ref));
+                // (the map's own copy once it has one)
+                let contents = self.contents.get_or_insert_with(|| {
+                    let rel = e.dir.strip_prefix(&root).map(Path::to_path_buf).unwrap_or_else(|_| PathBuf::from("Chrono").join(e.dir.file_name().unwrap_or_default()));
+                    let own = doc_ref.dir.join(rel);
+                    crate::chrono_edit::patches(if own.is_dir() { &own } else { &e.dir }, doc_ref)
+                });
                 let total: usize = contents.iter().map(|(_, _, t)| t.objects.len() + t.splines.iter().filter(|s| !s.deleted).count() + t.chrono_changes.len()).sum();
                 egui::CollapsingHeader::new(RichText::new(format!("{} ({total})", tr("What it changes", "Что он меняет"))).strong()).id_salt("chrono contents").default_open(std::env::var_os("OPENMAPPER_CHRONO_EDIT").is_some()).show(ui, |ui| {
                     egui::ScrollArea::vertical().id_salt("chrono contents list").max_height(220.0).show(ui, |ui| {
@@ -468,12 +492,35 @@ impl ChronoWindow {
                 crate::chrono_edit::Part::Spline(id) => (Vec::new(), Vec::new(), t.splines.iter().filter(|s| s.id == id).cloned().collect()),
                 crate::chrono_edit::Part::Change(_) => (Vec::new(), Vec::new(), Vec::new()),
             });
-            match crate::chrono_edit::take_out(&e.dir, &file, part) {
+            let own = ed.doc.as_ref().map(|d| own_dir(&e.dir, &root, &d.dir, d.source.as_deref()));
+            let done = match own {
+                Some(Ok(dir)) => crate::chrono_edit::take_out(&dir, &file, part),
+                Some(Err(err)) => Err(err),
+                None => Ok(()),
+            };
+            match done {
                 Ok(()) => {
                     if let (true, Some((o, h, s))) = (back, moved) {
                         ed.put_back(k, o, h, s);
                     }
                 }
+                Err(err) => ed.error(format!("{err}")),
+            }
+            self.contents = None;
+            if let Some(doc) = ed.doc.as_mut() {
+                doc.show_chrono(self.date);
+            }
+        }
+        if let (Some((id, texts)), Some(e)) = (relabel, &self.editing) {
+            let file = ed.doc.as_ref().and_then(|d| crate::chrono_edit::by_tile(d, &ed.selection()).into_iter().next()).map(|t| t.1);
+            let res = (|| -> anyhow::Result<()> {
+                let doc = ed.doc.as_ref().ok_or_else(|| anyhow::anyhow!("no map"))?;
+                let dir = own_dir(&e.dir, &root, &doc.dir, doc.source.as_deref())?;
+                crate::chrono_edit::write(&dir, &file.unwrap_or_default(), &crate::chrono_edit::Change::Relabel(id, texts))?;
+                Ok(())
+            })();
+            match res {
+                Ok(()) => ed.toast(tr("Written into the scenario", "Записано в сценарий")),
                 Err(err) => ed.error(format!("{err}")),
             }
             self.contents = None;
