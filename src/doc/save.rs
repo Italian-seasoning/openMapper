@@ -33,7 +33,7 @@ fn num(v: f64) -> String {
     if s == "-0" { "0".into() } else { s.to_string() }
 }
 
-fn header() -> String {
+pub(crate) fn header() -> String {
     format!("File created with openMapper {}\n\n", env!("CARGO_PKG_VERSION"))
 }
 
@@ -317,7 +317,7 @@ fn var_parent(s: &mut String, v: Option<i64>) {
     }
 }
 
-fn object(s: &mut String, o: &MapObject, attach: bool) {
+pub(crate) fn object(s: &mut String, o: &MapObject, attach: bool) {
     if attach {
         let _ = write!(s, "[attachObj]\n0\n{}\n{}\n{}\n0\n{}\n", o.file, o.id, o.parent_id.unwrap_or(0), o.attach_index);
     } else {
@@ -330,7 +330,7 @@ fn object(s: &mut String, o: &MapObject, attach: bool) {
     rules(s, &o.rules);
 }
 
-fn spline(s: &mut String, sp: &MapSpline) {
+pub(crate) fn spline(s: &mut String, sp: &MapSpline) {
     let _ = write!(
         s,
         "[{}]\n0\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n",

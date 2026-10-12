@@ -7,6 +7,7 @@ mod app;
 mod assets;
 mod camera;
 mod check;
+mod chrono_edit;
 mod clipboard;
 mod descriptions;
 mod doc;

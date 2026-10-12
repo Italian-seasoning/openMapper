@@ -101,7 +101,10 @@ experienced map makers.
   tiles, the lines they take off and their descriptions; the view shows the map as on any day
   chosen, every scenario active then laid over it as the game does. A scenario's dates, the
   lines it takes off, its name and description are edited there, and new scenarios made (the
-  installation's scenarios are brought into the map's own copy first).
+  installation's scenarios are brought into the map's own copy first). What is selected in the
+  view is put into a scenario (it appears from its first day), taken away from that day on, or
+  given the catalogue's type then, written into the scenario's tile patches as OMSI 2's
+  editor does (`[selobject]`, `[delete]`, `[typ]`).
 * **Map settings** (Map menu), as in OMSI 2's editor: money system, ticket pack, depot,
   years and year offset, repair time, real rail and the seasons of the year.
 * **Calendar and place** (Map menu), the map's own files as OMSI 2's editor keeps them:

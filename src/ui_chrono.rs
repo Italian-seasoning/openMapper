@@ -6,6 +6,7 @@ use std::path::{Path, PathBuf};
 
 use egui::{Color32, RichText};
 
+use crate::doc::Sel;
 use crate::editor::Editor;
 use crate::i18n::tr;
 use crate::icons::{self, Icon};
@@ -143,6 +144,59 @@ fn date_text(d: i32) -> String {
 }
 
 impl ChronoWindow {
+    /// A change of the selection made in scenario `dir` (0 appears, 1 is gone, 2 becomes
+    /// `file`). How many things it touched.
+    fn apply(&mut self, ed: &mut Editor, what: u8, dir: PathBuf, root: &Path, file: Option<String>) -> anyhow::Result<usize> {
+        use crate::chrono_edit::{by_tile, write, Change};
+        let sels = ed.selection();
+        let Some(doc) = ed.doc.as_ref() else { return Ok(0) };
+        // (into the map's own copy: the installation is never written to)
+        let rel = dir.strip_prefix(root).map(Path::to_path_buf).unwrap_or_else(|_| PathBuf::from("Chrono").join(dir.file_name().unwrap_or_default()));
+        if *root != doc.dir {
+            if let Some(src) = &doc.source {
+                let from = omsi_cfg::resolve_path(src, "Chrono");
+                if from.is_dir() {
+                    crate::doc::save::copy_missing(&from, &doc.dir.join("Chrono"))?;
+                }
+            }
+        }
+        let dir = doc.dir.join(&rel);
+        let mut n = 0;
+        for (k, tile_file, items) in by_tile(doc, &sels) {
+            let ids: Vec<(i64, bool)> = items.iter().map(|s| match *s {
+                Sel::Object(_, id) => (id, false),
+                Sel::Spline(_, id) => (id, true),
+            }).collect();
+            n += ids.len();
+            let c = match what {
+                0 => {
+                    let Some(t) = doc.tiles.get(&k) else { continue };
+                    let mut patch = omsi_map::Tile::default();
+                    for (id, is_spline) in &ids {
+                        if *is_spline {
+                            patch.splines.extend(t.tile.splines.iter().filter(|s| s.id == *id && !s.deleted).cloned());
+                        } else {
+                            patch.objects.extend(t.tile.objects.iter().filter(|o| o.id == *id).cloned());
+                            // (and what hangs on it)
+                            patch.attach_objects.extend(t.tile.attach_objects.iter().filter(|a| a.parent_id == Some(*id) || a.id == *id).cloned());
+                        }
+                    }
+                    // (in the tile's own measure, as the file keeps it)
+                    crate::doc::unfit_from_world_grid(&mut patch, k.1);
+                    Change::Add(patch)
+                }
+                1 => Change::Delete(ids),
+                _ => Change::Retype(ids, file.clone().unwrap_or_default()),
+            };
+            write(&dir, &tile_file, &c)?;
+        }
+        if what == 0 {
+            // (out of the map: it is the scenario's now)
+            ed.delete_selected();
+        }
+        Ok(n)
+    }
+
     pub fn window(&mut self, ctx: &egui::Context, ed: &mut Editor) {
         if !self.open {
             self.list = None;
@@ -166,6 +220,9 @@ impl ChronoWindow {
         let mut write = false;
         let mut close_edit = false;
         let mut new_scenario: Option<String> = None;
+        let mut change: Option<u8> = None;
+        let n_sel = ed.selection().len();
+        let catalogue = ed.object_type.clone();
         egui::Window::new(icons::labelled(Icon::History, tr("Chrono scenarios", "Хроно-сценарии"))).id(egui::Id::new("chrono")).open(&mut open).default_pos([330.0, 90.0]).default_size([500.0, 520.0]).resizable(true).show(ctx, |ui| {
             ui.label(RichText::new(tr("How the map changes over the years: each scenario from its first day lays its own tiles, lines and tickets over the map. The view shows the map as on the day chosen here; what you edit is always the map itself.", "Как карта меняется со временем: каждый сценарий с первого дня накладывает на карту свои тайлы, линии и билеты. Вид показывает карту на выбранный здесь день; правится всегда сама карта.")).small().color(TEXT_DIM));
             ui.horizontal(|ui| {
@@ -236,6 +293,23 @@ impl ChronoWindow {
                     });
                 });
                 ui.add(egui::TextEdit::multiline(&mut e.description).hint_text(tr("What changes (shown where the date is chosen)", "Что меняется (видно при выборе даты)")).desired_rows(2).desired_width(f32::INFINITY));
+                ui.add_space(4.0);
+                ui.label(RichText::new(tr("From its first day, the selection in the view:", "С его первого дня — выделенное в окне вида:")).strong());
+                ui.horizontal_wrapped(|ui| {
+                    let any = n_sel > 0;
+                    if ui.add_enabled(any, egui::Button::new(icons::labelled(Icon::Add, tr("appears", "появляется")))).on_hover_text(tr("Taken out of the map into the scenario: it is there from the scenario's first day on (place it first, then press this)", "Убирается из карты в сценарий: появляется с первого дня сценария (сначала поставьте, потом нажмите)")).clicked() {
+                        change = Some(0);
+                    }
+                    if ui.add_enabled(any, egui::Button::new(icons::labelled(Icon::Delete, tr("is gone", "исчезает")))).on_hover_text(tr("Stays in the map, gone from the scenario's first day on", "Остаётся в карте, исчезает с первого дня сценария")).clicked() {
+                        change = Some(1);
+                    }
+                    if let Some(n) = &catalogue {
+                        if ui.add_enabled(any, egui::Button::new(icons::labelled(Icon::Swap, &format!("{} «{n}»", tr("becomes", "становится"))))).clicked() {
+                            change = Some(2);
+                        }
+                    }
+                });
+                ui.label(RichText::new(tr("Written into the scenario at once (undo does not take it out of the scenario).", "Записывается в сценарий сразу (отмена не убирает это из сценария).")).small().color(TEXT_DIM));
                 ui.horizontal(|ui| {
                     if ui.button(icons::labelled(Icon::Save, tr("Write the scenario", "Записать сценарий"))).clicked() {
                         write = true;
@@ -302,6 +376,16 @@ impl ChronoWindow {
             self.editing = Some(Edit { dir: root.join(&rel), title: name, description: String::new(), start: date, end: 0, lines: Vec::new() });
             self.new_name.clear();
             write = true;
+        }
+        if let (Some(c), Some(e)) = (change, &self.editing) {
+            match self.apply(ed, c, e.dir.clone(), &root, catalogue.clone()) {
+                Ok(n) => ed.toast(format!("{} {n}", tr("Written into the scenario:", "Записано в сценарий:"))),
+                Err(err) => ed.error(format!("{}: {err}", tr("Could not write the scenario", "Не удалось записать сценарий"))),
+            }
+            self.list = None;
+            if let Some(doc) = ed.doc.as_mut() {
+                doc.show_chrono(self.date);
+            }
         }
         if write {
             if let Some(e) = &mut self.editing {
