@@ -90,7 +90,7 @@ impl Camera {
     }
 
     /// The way the view looks, and its right and up (the wanted view).
-    fn axes(&self) -> (DVec3, DVec3, DVec3) {
+    pub fn axes(&self) -> (DVec3, DVec3, DVec3) {
         let f = -Self::back(self.yaw, self.pitch);
         let r = f.cross(DVec3::Z).normalize_or(DVec3::X);
         (f, r, r.cross(f))

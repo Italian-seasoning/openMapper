@@ -798,6 +798,26 @@ impl App {
             Some(KeyCode::Digit5) => self.ed.set_tool(Tool::Terrain),
             Some(KeyCode::Digit6) => self.ed.set_tool(Tool::Paint),
             Some(KeyCode::Digit7) => self.ed.set_tool(Tool::Tiles),
+            // Alt + arrows: the selection a step (the grid's; Shift: 10 cm) along the map's axis
+            // nearest to the way the arrow points on the screen
+            Some(k @ (KeyCode::ArrowUp | KeyCode::ArrowDown | KeyCode::ArrowLeft | KeyCode::ArrowRight)) if self.keys.alt && self.ed.selected.is_some() => {
+                let (f, r, _) = self.cam.axes();
+                let ground = |v: DVec3| DVec2::new(v.x, v.y).normalize_or(DVec2::Y);
+                let dir = match k {
+                    KeyCode::ArrowUp => ground(f),
+                    KeyCode::ArrowDown => -ground(f),
+                    KeyCode::ArrowRight => ground(r),
+                    _ => -ground(r),
+                };
+                let axis = if dir.x.abs() > dir.y.abs() { DVec2::new(dir.x.signum(), 0.0) } else { DVec2::new(0.0, dir.y.signum()) };
+                let step = if shift { 0.1 } else { self.ed.grid_step };
+                self.ed.move_selection_by(axis * step);
+            }
+            // Alt + Page Up / Down: the selection up or down 10 cm (Shift: 1 m)
+            Some(k @ (KeyCode::PageUp | KeyCode::PageDown)) if self.keys.alt && self.ed.selected.is_some() => {
+                let step = if shift { 1.0 } else { 0.1 };
+                self.ed.raise_selection(if k == KeyCode::PageUp { step } else { -step });
+            }
             Some(KeyCode::KeyR) if !ctrl => self.ed.rotate(if shift { -15.0 } else { 15.0 }),
             Some(KeyCode::KeyU) if !ctrl => self.ed.toggle_ruler(),
             Some(KeyCode::Enter) | Some(KeyCode::NumpadEnter) => actions.push(Action::BuildRoad),
@@ -880,7 +900,8 @@ impl App {
         let ar = self.keys.arrows;
         let (afwd, aside) = ((ar[0] as i32 - ar[2] as i32) as f64, (ar[3] as i32 - ar[1] as i32) as f64);
         let typing = self.gfx.as_ref().map(|g| g.egui_ctx.egui_wants_keyboard_input()).unwrap_or(false);
-        let keys_on = !typing && !self.keys.ctrl;
+        // (Alt + arrows move the selection, not the camera)
+        let keys_on = !typing && !self.keys.ctrl && !(self.keys.alt && self.ed.selected.is_some() && ar.iter().any(|a| *a));
         if keys_on && self.fly_style() {
             // Unity: W A S D / Q E fly only while the right button is held; the arrows move
             if self.mouse.right && (fwd != 0.0 || side != 0.0 || turn != 0.0) {

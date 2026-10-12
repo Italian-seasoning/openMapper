@@ -1902,6 +1902,8 @@ fn controls(ctx: &egui::Context, st: &mut UiState) {
             ("Ctrl+C / X / V", tr("copy / cut / paste at the cursor", "копировать / вырезать / вставить у курсора")),
             ("Ctrl+D / Ctrl+A", tr("duplicate / select all", "дублировать / выбрать всё")),
             ("Ctrl+F", tr("find in map", "поиск по карте")),
+            (tr("Alt + arrows", "Alt + стрелки"), tr("move the selection a grid step (Shift: 10 cm)", "сдвинуть выделение на шаг сетки (Shift: 10 см)")),
+            (tr("Alt + Page Up / Down", "Alt + Page Up / Down"), tr("selection up / down 10 cm (Shift: 1 m)", "выделение выше / ниже на 10 см (Shift: 1 м)")),
             (tr("Double-click a road", "Двойной клик по дороге"), tr("select all of it", "выбрать её целиком")),
             ("U", tr("ruler: click two points (distance, height, gradient)", "линейка: клик по двум точкам (расстояние, высота, уклон)")),
             ("F", tr("go to the selection", "перейти к выбранному")),
