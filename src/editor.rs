@@ -206,6 +206,8 @@ pub struct Editor {
     /// A length and radius typed for a road, put in at the next tick (where the junctions
     /// its neighbour may end at are known).
     pub shape_request: Option<(TileKey, i64, f64, f64)>,
+    /// The ground under the selected objects is to be levelled at the next tick.
+    pub level_request: bool,
     /// The last click on something with Select, and when (a second soon on a road: its chain).
     last_click: Option<(Sel, Instant)>,
     /// openMapper's junctions whose arms changed: their plates are made again before the
@@ -362,6 +364,7 @@ impl Default for Editor {
             move_delta: DVec2::ZERO,
             carry_preview: Vec::new(),
             shape_request: None,
+            level_request: false,
             last_click: None,
             pending_rebuild: Vec::new(),
             pending_options: Default::default(),
@@ -778,6 +781,15 @@ impl Editor {
         self.learn(assets);
         if let Some((k, id, length, radius)) = self.shape_request.take() {
             self.set_spline_shape(assets, k, id, length, radius);
+        }
+        // (once the objects' models are there: their outlines are needed)
+        if self.level_request {
+            let files: Vec<String> = self.doc.as_ref().map(|d| self.selection().iter().filter_map(|s| if let Sel::Object(k, id) = s { d.object(*k, *id).map(|o| o.file.clone()) } else { None }).collect()).unwrap_or_default();
+            if files.iter().all(|f| assets.object(f).is_some() || assets.object_failed(f)) {
+                self.level_request = false;
+                let n = self.level_under_objects(assets);
+                self.toast(format!("{} {n}", tr("Ground levelled under objects:", "Земля выровнена под объектами:")));
+            }
         }
         // (an undo in between closed the step: the plates are as they were)
         if !self.pending_rebuild.is_empty() && self.drag == Drag::None {
@@ -2621,6 +2633,29 @@ impl Editor {
         self.paste_clip(&clip, at, tr("Duplicate", "Дублирование"), lib);
     }
 
+    /// The ground under each selected object made level with its foot (where it stands at its
+    /// middle), its outline and 3 m round it blending into the ground about. How many.
+    pub fn level_under_objects(&mut self, assets: &mut Assets) -> usize {
+        let sels = self.selection();
+        let Some(doc) = self.doc.as_mut() else { return 0 };
+        let mut done = 0;
+        self.history.begin(tr("Level the ground", "Выравнивание земли"));
+        for s in &sels {
+            let Sel::Object(k, id) = *s else { continue };
+            let Some(o) = doc.object(k, id).cloned() else { continue };
+            let Some(model) = assets.object(&o.file) else { continue };
+            if model.tree.is_some() {
+                continue;
+            }
+            let centre = tile_origin(k) + DVec2::new(o.pos[0], o.pos[1]);
+            let level = if model.abs_height { o.pos[2] } else { doc.ground(centre) as f64 };
+            level_ground(doc, &mut self.history, centre, o.rot[0], (model.lo, model.hi), level);
+            done += 1;
+        }
+        self.history.commit();
+        done
+    }
+
     /// The selected objects turned the way the nearest road runs where it passes them (within
     /// 60 m; the heading a row along that road would give them). How many were turned.
     pub fn align_to_roads(&mut self) -> usize {
@@ -3880,6 +3915,35 @@ fn world_sample(doc: &Document, gx: i64, gy: i64, n: i64) -> Option<f32> {
     None
 }
 
+/// The ground under an outline (`lo`..`hi` in the frame of something at `centre` turned
+/// `heading`) made `level`, blending into the ground about over 3 m.
+fn level_ground(doc: &mut Document, hist: &mut History, centre: DVec2, heading: f64, (lo, hi): (Vec3, Vec3), level: f64) {
+    const MARGIN: f64 = 3.0;
+    let cell = tile_size() / (TERRAIN_SAMPLES - 1) as f64;
+    let n = (TERRAIN_SAMPLES - 1) as i64;
+    let inv = object_matrix(DVec3::ZERO, [heading, 0.0, 0.0]).inverse();
+    let r = ((hi.x - lo.x).hypot(hi.y - lo.y) as f64) * 0.5 + MARGIN + DVec2::new(((lo.x + hi.x) * 0.5) as f64, ((lo.y + hi.y) * 0.5) as f64).length();
+    let (gx0, gx1) = (((centre.x - r) / cell).floor() as i64, ((centre.x + r) / cell).ceil() as i64);
+    let (gy0, gy1) = (((centre.y - r) / cell).floor() as i64, ((centre.y + r) / cell).ceil() as i64);
+    for gy in gy0..=gy1 {
+        for gx in gx0..=gx1 {
+            let p = DVec2::new(gx as f64 * cell, gy as f64 * cell) - centre;
+            let l = inv.transform_point3(Vec3::new(p.x as f32, p.y as f32, 0.0));
+            // how far outside the outline (0 inside)
+            let dx = (lo.x - l.x).max(l.x - hi.x).max(0.0) as f64;
+            let dy = (lo.y - l.y).max(l.y - hi.y).max(0.0) as f64;
+            let out = dx.hypot(dy);
+            if out >= MARGIN {
+                continue;
+            }
+            let Some(h) = world_sample(doc, gx, gy, n) else { continue };
+            let t = out / MARGIN;
+            let w = 1.0 - t * t * (3.0 - 2.0 * t);
+            set_world_sample(doc, hist, gx, gy, n, (h as f64 + (level - h as f64) * w) as f32);
+        }
+    }
+}
+
 /// Set a sample of the map-wide grid in every tile that has it (edges are shared).
 fn set_world_sample(doc: &mut Document, hist: &mut History, gx: i64, gy: i64, n: i64, h: f32) {
     let txs = owners(gx, n);
@@ -4310,6 +4374,29 @@ mod tests {
             (lo, hi, last) = (lo.min(v), hi.max(v), v);
         }
         assert!(hi - lo > 0.6, "it does roll: {lo}..{hi}");
+    }
+
+    /// A slope under a 20 × 10 m house is level with its foot, inside its outline and not
+    /// far off it.
+    #[test]
+    fn the_ground_is_levelled_under_an_outline() {
+        let mut doc = flat_map(1);
+        let t = doc.tiles.get_mut(&(0, 0)).unwrap();
+        let s = TERRAIN_SAMPLES;
+        let cell = tile_size() / (s - 1) as f64;
+        for j in 0..s {
+            for i in 0..s {
+                t.terrain.heights[j * s + i] = (i as f64 * cell * 0.1) as f32;
+            }
+        }
+        let mut hist = History::default();
+        let centre = DVec2::new(150.0, 150.0);
+        level_ground(&mut doc, &mut hist, centre, 0.0, (Vec3::new(-10.0, -5.0, 0.0), Vec3::new(10.0, 5.0, 8.0)), 15.0);
+        for p in [DVec2::new(141.0, 146.0), DVec2::new(159.0, 154.0), centre] {
+            assert!((doc.ground(p) as f64 - 15.0).abs() < 0.3, "{p}: {}", doc.ground(p));
+        }
+        // well outside, the slope as it was
+        assert!((doc.ground(DVec2::new(180.0, 150.0)) as f64 - 18.0).abs() < 0.1);
     }
 
     #[test]

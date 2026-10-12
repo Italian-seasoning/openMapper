@@ -150,6 +150,10 @@ pub fn group_properties(ui: &mut egui::Ui, ed: &mut Editor, lib: &Library) {
             _ => {}
         }
         if objects > 0 {
+            ui.add_space(4.0);
+            if ui.button(icons::labelled(Icon::Flatten, tr("Level the ground under them", "Выровнять землю под ними"))).on_hover_text(tr("Each one's outline made level with its foot, blending into the ground 3 m round it", "Под каждым — ровно на уровне его основания, с плавным переходом 3 м вокруг")).clicked() {
+                ed.level_request = true;
+            }
             if let Some(ot) = ed.object_type.clone() {
                 let n = lib.find(&ot).map(|a| a.name.clone()).unwrap_or_else(|| ot.clone());
                 ui.add_space(4.0);

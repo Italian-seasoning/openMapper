@@ -1726,6 +1726,9 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
             if ui.button(icons::labelled(Icon::Focus, tr("Go to", "Перейти"))).clicked() {
                 actions.push(Action::FocusSelection);
             }
+            if matches!(sel, Sel::Object(..)) && ui.button(icons::labelled(Icon::Flatten, tr("Level ground", "Выровнять землю"))).on_hover_text(tr("The ground under it made level with its foot, blending in 3 m round it (a house on a slope)", "Земля под ним — ровно на уровне основания, с плавным переходом 3 м вокруг (дом на склоне)")).clicked() {
+                ed.level_request = true;
+            }
             if ui.button(icons::labelled(Icon::SelectAll, tr("All like it", "Все такие"))).on_hover_text(tr("Select every one of this type on the map", "Выбрать все такие на карте")).clicked() {
                 alike = true;
             }

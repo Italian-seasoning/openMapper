@@ -307,6 +307,10 @@ impl App {
         if std::env::var_os("OPENMAPPER_HISTORY").is_some() {
             self.ui.history_open = true;
         }
+        // OPENMAPPER_LEVEL=1: the ground levelled under what OPENMAPPER_SELECT selected
+        if std::env::var_os("OPENMAPPER_LEVEL").is_some() {
+            self.ed.level_request = true;
+        }
         // OPENMAPPER_FIND=<text>: Find in map open with that typed
         if let Ok(q) = std::env::var("OPENMAPPER_FIND") {
             self.ui.find.show_with(&q);
