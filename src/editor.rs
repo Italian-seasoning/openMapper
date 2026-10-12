@@ -2930,6 +2930,22 @@ impl Editor {
         }
     }
 
+    /// The selected objects made ones of the type `file`, where they stand.
+    pub fn replace_selected_objects(&mut self, file: &str) {
+        let sels = self.selection();
+        let Some(doc) = self.doc.as_mut() else { return };
+        self.history.begin(tr("Replace objects", "Замена объектов"));
+        for s in &sels {
+            let Sel::Object(k, id) = *s else { continue };
+            self.history.touch_tile(doc, k);
+            if let Some(o) = selection::any_object_mut(doc, k, id) {
+                o.file = file.to_string();
+            }
+            doc.tiles.get_mut(&k).map(|t| t.touch_content());
+        }
+        self.history.commit();
+    }
+
     /// Every object (or spline) of the type `from` made one of `to`, in one step. How many.
     pub fn replace_everywhere(&mut self, from: &str, to: &str, splines: bool) -> usize {
         let Some(doc) = self.doc.as_mut() else { return 0 };

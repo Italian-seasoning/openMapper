@@ -1448,6 +1448,7 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
     let mut spline_change: Option<(Option<String>, Option<bool>)> = None;
     let mut whole_road = false;
     let mut align_road = false;
+    let mut replace_obj: Option<String> = None;
     let Some(doc) = ed.doc.as_ref() else { return };
     Frame::new().inner_margin(Margin::same(8)).show(ui, |ui| {
         match sel {
@@ -1662,6 +1663,17 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
                 }
             }
         }
+        // an object becomes the one chosen in the Objects catalogue (where it stands, turned so)
+        if let (Sel::Object(k, id), Some(ot)) = (sel, ed.object_type.clone()) {
+            let now = ed.doc.as_ref().and_then(|d| crate::selection::any_object(d, k, id)).map(|o| o.file.clone()).unwrap_or_default();
+            if !ot.eq_ignore_ascii_case(&now) {
+                let n = lib.find(&ot).map(|a| a.name.clone()).unwrap_or_else(|| ot.clone());
+                ui.add_space(4.0);
+                if ui.button(icons::labelled(Icon::Swap, &format!("{} «{}»", tr("Replace with", "Заменить на"), n))).on_hover_text(tr("The object chosen in the Objects tool's catalogue takes this one's place", "Объект, выбранный в каталоге инструмента «Объекты», встаёт на место этого")).clicked() {
+                    replace_obj = Some(ot);
+                }
+            }
+        }
         ui.add_space(8.0);
         ui.separator();
         ui.horizontal(|ui| {
@@ -1685,6 +1697,10 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
         Sel::Object(k, id) => {
             crate::ui_edit::junction_section(ui, ed, k, id);
             crate::ui_edit::array_section(ui, ed, lib);
+            if let Some(f) = replace_obj {
+                ed.replace_selected_objects(&f);
+                return;
+            }
             if align_road && ed.align_to_roads() == 0 {
                 ed.toast(tr("No road within 60 m", "В пределах 60 м нет дороги"));
             }

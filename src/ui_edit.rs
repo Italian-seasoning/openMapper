@@ -149,6 +149,15 @@ pub fn group_properties(ui: &mut egui::Ui, ed: &mut Editor, lib: &Library) {
             Some(2) => ed.rotate(v[3]),
             _ => {}
         }
+        if objects > 0 {
+            if let Some(ot) = ed.object_type.clone() {
+                let n = lib.find(&ot).map(|a| a.name.clone()).unwrap_or_else(|| ot.clone());
+                ui.add_space(4.0);
+                if ui.button(icons::labelled(Icon::Swap, &format!("{} «{}»", tr("Make every object", "Сделать все объекты"), n))).on_hover_text(tr("The object chosen in the Objects tool's catalogue", "Объект, выбранный в каталоге инструмента «Объекты»")).clicked() {
+                    ed.replace_selected_objects(&ot);
+                }
+            }
+        }
         if objects > 1 {
             ui.add_space(4.0);
             ui.horizontal_wrapped(|ui| {
