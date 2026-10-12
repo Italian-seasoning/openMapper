@@ -365,6 +365,11 @@ impl App {
                 self.ui.heightmap.apply(&mut self.ed);
             }
         }
+        // OPENMAPPER_LAY=1: every road selected and laid on the ground
+        if std::env::var_os("OPENMAPPER_LAY").is_some() {
+            self.ed.select_all();
+            self.ed.lay_selected_on_ground();
+        }
         // OPENMAPPER_AUTOPAINT=<layer>: the Paint tool's rule by slope and height applied to that layer
         if let Some(layer) = std::env::var("OPENMAPPER_AUTOPAINT").ok().and_then(|l| l.parse::<usize>().ok()) {
             self.ed.set_tool(Tool::Paint);

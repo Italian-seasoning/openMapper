@@ -136,3 +136,4 @@ Add a line when you touch a shared file: stream, file, what.
 * D · `src/main.rs`: `mod autopaint`; `src/ui.rs`: `UiState::autopaint` (its rule at the end of the Paint panel); `src/app.rs`: `OPENMAPPER_AUTOPAINT=<layer>`.
 * D · `src/editor.rs`: `reverse_selected`; `src/reshape.rs`: `reversed`; `src/ui.rs`: a spline's "Reverse direction" (`ui_edit::reverse_help`), also for several in `group_properties`.
 * D · `src/render/mod.rs`: `pub mod daylight`, `Renderer::daytime` (the light of the view from it; `light_view` takes the sun, the shadow pass uses the globals' sun); `src/ui.rs`: `UiState::daytime`, View > Time of day; `src/app.rs`: the renderer's daytime set before `sync`, `OPENMAPPER_DAYTIME=<hour>`.
+* D · `src/main.rs`: `mod onground`; `src/editor.rs`: `lay_selected_on_ground`; `src/ui.rs` / `src/ui_edit.rs`: "Lay on the ground" for a road and a selection (`ui_edit::lay_help`); `src/app.rs`: `OPENMAPPER_LAY=1`.

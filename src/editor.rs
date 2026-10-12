@@ -2942,6 +2942,33 @@ impl Editor {
         self.history.commit();
     }
 
+    /// The selected roads laid on the ground again, the ground then shaped to them (with
+    /// "Shape the ground" on).
+    pub fn lay_selected_on_ground(&mut self) {
+        let sels = self.selection();
+        let Some(doc) = self.doc.as_ref() else { return };
+        if !sels.iter().any(|s| matches!(s, Sel::Spline(..))) {
+            return;
+        }
+        self.history.begin(tr("Lay on the ground", "Положить на землю"));
+        for s in &sels {
+            if let Sel::Spline(k, id) = s {
+                self.history.touch_tile(doc, *k);
+                if let Some(sp) = doc.spline(*k, *id) {
+                    for l in [sp.prev_id, sp.next_id] {
+                        if let Some((nk, _)) = doc.find_spline(l) {
+                            self.history.touch_tile(doc, nk);
+                        }
+                    }
+                }
+            }
+        }
+        let Some(doc) = self.doc.as_mut() else { return };
+        crate::onground::lay(doc, &sels);
+        self.ground_to_selection();
+        self.history.commit();
+    }
+
     /// The selected splines turned round (each starts where it ended), the traffic on them
     /// going the other way: a one-way street, a track's direction.
     pub fn reverse_selected(&mut self) {

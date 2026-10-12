@@ -188,6 +188,9 @@ pub fn group_properties(ui: &mut egui::Ui, ed: &mut Editor, lib: &Library) {
         }
         if splines > 0 {
             ui.add_space(4.0);
+            if ui.button(tr("Lay them on the ground", "Положить их на землю")).on_hover_text(lay_help()).clicked() {
+                ed.lay_selected_on_ground();
+            }
             if ui.button(tr("Reverse their direction", "Развернуть их направление")).on_hover_text(reverse_help()).clicked() {
                 ed.reverse_selected();
             }
@@ -429,6 +432,10 @@ pub fn array_section(ui: &mut egui::Ui, ed: &mut Editor, lib: &Library) {
     if go {
         ed.array(lib, v[0] as usize, DVec2::new(v[1], v[2]), v[3]);
     }
+}
+
+pub(crate) fn lay_help() -> &'static str {
+    tr("Heights along the ground again, smoothed so it climbs a hill rather than every bump (after shaping the ground or laying a height map over it); where a road not selected joins, its height is kept", "Высоты снова по земле, сглаженно: дорога поднимается на холм, а не на каждую кочку (после правки рельефа или наложения карты высот); где примыкает невыделенная дорога, её высота сохраняется")
 }
 
 pub(crate) fn reverse_help() -> &'static str {

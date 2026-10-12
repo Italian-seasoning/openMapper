@@ -1560,6 +1560,7 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
     let mut spline_extra: Option<(f64, f64, u8)> = None;
     let mut whole_road = false;
     let mut reverse = false;
+    let mut lay = false;
     let mut align_road = false;
     let mut alike = false;
     let mut replace_obj: Option<String> = None;
@@ -1788,6 +1789,9 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
                         }
                     });
                 });
+                if ui.small_button(tr("Lay on the ground", "Положить на землю")).on_hover_text(crate::ui_edit::lay_help()).clicked() {
+                    lay = true;
+                }
                 if ui.small_button(tr("Reverse direction", "Развернуть направление")).on_hover_text(crate::ui_edit::reverse_help()).clicked() {
                     reverse = true;
                 }
@@ -1924,6 +1928,10 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
             }
             if reverse {
                 ed.reverse_selected();
+                return;
+            }
+            if lay {
+                ed.lay_selected_on_ground();
                 return;
             }
             crate::ui_edit::apply_ends(ed, ui.ctx(), k, id, ends);
