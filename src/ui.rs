@@ -1447,6 +1447,7 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
     let mut ends = crate::ui_edit::EndsEdit::default();
     let mut spline_change: Option<(Option<String>, Option<bool>)> = None;
     let mut whole_road = false;
+    let mut align_road = false;
     let Some(doc) = ed.doc.as_ref() else { return };
     Frame::new().inner_margin(Margin::same(8)).show(ui, |ui| {
         match sel {
@@ -1498,6 +1499,9 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
                             let a = ui.add(egui::DragValue::new(&mut r[0]).range(-360.0..=720.0).speed(1.0).suffix("°")).on_hover_text(tr("Direction (heading)", "Направление (курс)"));
                             let b = ui.add(egui::DragValue::new(&mut r[1]).range(-90.0..=90.0).speed(0.25).suffix("°")).on_hover_text(tr("Tilt forward", "Наклон вперёд"));
                             let c = ui.add(egui::DragValue::new(&mut r[2]).range(-90.0..=90.0).speed(0.25).suffix("°")).on_hover_text(tr("Bank to the side", "Крен вбок"));
+                            if ui.small_button(Icon::Road.text(13.0)).on_hover_text(tr("Turn it the way the nearest road runs beside it", "Повернуть по ходу ближайшей дороги рядом")).clicked() {
+                                align_road = true;
+                            }
                             if (r[1] != 0.0 || r[2] != 0.0) && ui.small_button("↺").on_hover_text(tr("Stand it upright again", "Поставить ровно")).clicked() {
                                 r[1] = 0.0;
                                 r[2] = 0.0;
@@ -1681,6 +1685,9 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
         Sel::Object(k, id) => {
             crate::ui_edit::junction_section(ui, ed, k, id);
             crate::ui_edit::array_section(ui, ed, lib);
+            if align_road && ed.align_to_roads() == 0 {
+                ed.toast(tr("No road within 60 m", "В пределах 60 м нет дороги"));
+            }
             if let Some((x, y)) = new_pos {
                 let o = crate::doc::tile_origin(k);
                 ed.put_object(k, id, glam::DVec2::new(o.x + x, o.y + y));

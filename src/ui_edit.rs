@@ -155,6 +155,10 @@ pub fn group_properties(ui: &mut egui::Ui, ed: &mut Editor, lib: &Library) {
                 if ui.button(tr("Random headings", "Случайные повороты")).on_hover_text(tr("Every selected object turned its own random way (trees, bushes, rocks)", "Каждый выбранный объект повёрнут случайно (деревья, кусты, камни)")).clicked() {
                     ed.turn_objects(true);
                 }
+                if ui.button(tr("Along the road", "Вдоль дороги")).on_hover_text(tr("Each turned the way the nearest road runs beside it", "Каждый повёрнут по ходу ближайшей дороги рядом")).clicked() {
+                    let n = ed.align_to_roads();
+                    ed.toast(format!("{} {n}", tr("Turned:", "Повёрнуто:")));
+                }
                 if ui.add_enabled(matches!(ed.selected, Some(Sel::Object(..))), egui::Button::new(tr("All like this one", "Все как этот"))).on_hover_text(tr("Every selected object takes the heading of the one in the properties", "Все выбранные объекты получают поворот того, что в свойствах")).clicked() {
                     ed.turn_objects(false);
                 }

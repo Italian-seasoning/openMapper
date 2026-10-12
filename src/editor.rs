@@ -2621,6 +2621,54 @@ impl Editor {
         self.paste_clip(&clip, at, tr("Duplicate", "Дублирование"), lib);
     }
 
+    /// The selected objects turned the way the nearest road runs where it passes them (within
+    /// 60 m; the heading a row along that road would give them). How many were turned.
+    pub fn align_to_roads(&mut self) -> usize {
+        let sels = self.selection();
+        let Some(doc) = self.doc.as_mut() else { return 0 };
+        let mut turns: Vec<(TileKey, i64, f64)> = Vec::new();
+        for s in &sels {
+            let Sel::Object(k, id) = *s else { continue };
+            let Some(o) = doc.object(k, id) else { continue };
+            let p = tile_origin(k) + DVec2::new(o.pos[0], o.pos[1]);
+            let mut best: Option<(f64, f64)> = None;
+            for (sk, t) in &doc.tiles {
+                let org = tile_origin(*sk);
+                for sp in t.tile.splines.iter().filter(|x| !x.deleted) {
+                    let start = org + DVec2::new(sp.pos[0], sp.pos[1]);
+                    if (start - p).length() > sp.length + 60.0 {
+                        continue;
+                    }
+                    let c = omsi_geometry::SplineCurve::from_map(sp, org);
+                    let n = (sp.length.ceil() as usize).clamp(2, 2000);
+                    for i in 0..=n {
+                        let at = sp.length * i as f64 / n as f64;
+                        let d = (c.point_at(at).truncate() - p).length();
+                        if d < 60.0 && best.map(|b| d < b.0).unwrap_or(true) {
+                            best = Some((d, c.heading_at(at)));
+                        }
+                    }
+                }
+            }
+            if let Some((_, h)) = best {
+                turns.push((k, id, roads::norm_deg(h)));
+            }
+        }
+        if turns.is_empty() {
+            return 0;
+        }
+        self.history.begin(tr("Turn objects", "Поворот объектов"));
+        for (k, id, h) in &turns {
+            self.history.touch_tile(doc, *k);
+            if let Some(o) = doc.object_mut(*k, *id) {
+                o.rot[0] = *h;
+            }
+            doc.tiles.get_mut(k).map(|t| t.touch_content());
+        }
+        self.history.commit();
+        turns.len()
+    }
+
     /// `n` copies of the selection in a row, each `step` (m) on from the one before and its
     /// objects turned `turn` degrees more (a fence, a row of houses, an avenue), in one step.
     /// All of them are selected.
@@ -4186,6 +4234,17 @@ mod tests {
             (lo, hi, last) = (lo.min(v), hi.max(v), v);
         }
         assert!(hi - lo > 0.6, "it does roll: {lo}..{hi}");
+    }
+
+    #[test]
+    fn objects_align_to_the_road_beside_them() {
+        let mut ed = editor();
+        // (the road from (50, 50) runs north; turn it east)
+        ed.doc.as_mut().unwrap().tiles.get_mut(&(0, 0)).unwrap().tile.splines[0].heading = 90.0;
+        ed.set_selection(vec![Sel::Object((0, 0), 1)]);
+        ed.doc.as_mut().unwrap().object_mut((0, 0), 1).unwrap().pos = [70.0, 60.0, 0.0];
+        assert_eq!(ed.align_to_roads(), 1);
+        assert!((ed.doc.as_ref().unwrap().object((0, 0), 1).unwrap().rot[0] - 90.0).abs() < 1e-6);
     }
 
     #[test]
