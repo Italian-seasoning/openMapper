@@ -42,6 +42,8 @@ pub struct ChronoWindow {
     checked: bool,
     /// The scenario whose timetable is in the Lines window being edited.
     tt_session: Option<crate::chrono_tt::TtSession>,
+    /// The money systems and ticket packs there are (read once).
+    packs: Option<(Vec<String>, Vec<String>)>,
     /// The scenario whose AI lists are in the Traffic window being edited.
     lists_session: Option<crate::chrono_tt::ListsSession>,
     /// The patches of the scenario being edited (read again after each change).
@@ -55,6 +57,32 @@ struct Edit {
     start: i32,
     end: i32,
     lines: Vec<String>,
+    /// Its own ticket pack and money from its day (None: the map's).
+    tickets: Option<String>,
+    money: Option<String>,
+}
+
+/// Chrono.cfg with a one-line block (`[ticketpack]`, `[moneysystem]`) set, or taken away.
+pub fn cfg_with(old: &str, key: &str, value: Option<&str>) -> String {
+    let mut keep = String::new();
+    let mut skip = false;
+    for l in old.replace("\r\n", "\n").lines() {
+        let t = l.trim();
+        if t.starts_with('[') {
+            skip = t.eq_ignore_ascii_case(&format!("[{key}]"));
+        } else if t.is_empty() && skip {
+            skip = false;
+            continue;
+        }
+        if !skip {
+            keep.push_str(l);
+            keep.push('\n');
+        }
+    }
+    match value.filter(|v| !v.trim().is_empty()) {
+        Some(v) => format!("[{key}]\n{v}\n\n{keep}"),
+        None => keep,
+    }
 }
 
 /// Chrono.cfg with its dates and the lines it takes off set: those blocks are written anew
@@ -145,7 +173,10 @@ fn write_scenario(e: &Edit, root: &Path, map_dir: &Path, source: Option<&Path>) 
     std::fs::create_dir_all(&dir)?;
     let cfg = crate::doc::safe::own_path(&dir, "Chrono.cfg");
     let old = std::fs::read(&cfg).map(|b| omsi_cfg::decode_text(&b)).unwrap_or_default();
-    crate::doc::safe::write_atomic(&cfg, &crate::timetable::encode(&chrono_cfg_text(&old, e.start, e.end, &e.lines)))?;
+    let text = chrono_cfg_text(&old, e.start, e.end, &e.lines);
+    let text = cfg_with(&text, "ticketpack", e.tickets.as_deref());
+    let text = cfg_with(&text, "moneysystem", e.money.as_deref());
+    crate::doc::safe::write_atomic(&cfg, &crate::timetable::encode(&text))?;
     if !e.title.is_empty() || !e.description.is_empty() {
         let dsc = crate::doc::safe::own_path(&dir, "Chrono_ENG.dsc");
         crate::doc::safe::write_atomic(&dsc, &crate::timetable::encode(&crate::descriptions::text(&e.title, &e.description)))?;
@@ -274,7 +305,7 @@ impl ChronoWindow {
         Ok(n)
     }
 
-    pub fn window(&mut self, ctx: &egui::Context, ed: &mut Editor, lib: &crate::library::Library, actions: &mut Vec<crate::ui::Action>) {
+    pub fn window(&mut self, ctx: &egui::Context, ed: &mut Editor, lib: &crate::library::Library, roots: Option<&crate::install::Roots>, actions: &mut Vec<crate::ui::Action>) {
         // (while a scenario's things are on the map, a bar says so, window open or not)
         if let Some(dir) = self.session.as_ref().map(|s| s.dir.clone()).or_else(|| self.tt_session.as_ref().map(|s| s.dir.clone())).or_else(|| self.lists_session.as_ref().map(|s| s.dir.clone())) {
             let name = dir.file_name().unwrap_or_default().to_string_lossy().to_string();
@@ -307,7 +338,7 @@ impl ChronoWindow {
         // OPENMAPPER_CHRONO_EDIT=<n>: the properties of scenario n open (checks)
         if self.editing.is_none() && self.contents.is_none() {
             if let Some(s) = std::env::var("OPENMAPPER_CHRONO_EDIT").ok().and_then(|n| n.parse::<usize>().ok()).and_then(|n| list.get(n)) {
-                self.editing = Some(Edit { dir: s.dir.clone(), title: s.title.clone(), description: s.description.clone(), start: s.cfg.start_date, end: s.cfg.end_date, lines: s.cfg.deactivate_lines.clone() });
+                self.editing = Some(Edit { dir: s.dir.clone(), title: s.title.clone(), description: s.description.clone(), start: s.cfg.start_date, end: s.cfg.end_date, lines: s.cfg.deactivate_lines.clone(), tickets: s.cfg.ticket_pack.clone(), money: s.cfg.money_system.clone() });
                 self.date = s.cfg.start_date.max(self.date.min(1));
             }
         }
@@ -323,6 +354,7 @@ impl ChronoWindow {
         let mut change: Option<u8> = None;
         let mut session_toggle = false;
         let mut tt_toggle = false;
+        let packs = self.packs.get_or_insert_with(|| roots.map(|r| (crate::ui_mapsettings::content_files(r, "Money", "cfg"), crate::ui_mapsettings::content_files(r, "TicketPacks", "otp"))).unwrap_or_default()).clone();
         let mut lists_toggle = false;
         let mut relabel: Option<(i64, Vec<String>)> = None;
         // (the texts of the one object selected, kept while it stays selected)
@@ -402,6 +434,17 @@ impl ChronoWindow {
                             }
                         });
                     });
+                    for (label, v, list) in [(tr("Own tickets", "Свои билеты"), &mut e.tickets, &packs.1), (tr("Own money", "Своя валюта"), &mut e.money, &packs.0)] {
+                        crate::ui::prop_row(ui, label, |ui| {
+                            let shown = v.clone().unwrap_or_else(|| tr("the map's", "как у карты").to_string());
+                            egui::ComboBox::from_id_salt(label).selected_text(shown).width(260.0).show_ui(ui, |ui| {
+                                ui.selectable_value(v, None, tr("the map's", "как у карты"));
+                                for f in list.iter() {
+                                    ui.selectable_value(v, Some(f.clone()), f);
+                                }
+                            });
+                        });
+                    }
                     crate::ui::prop_row(ui, tr("Takes off", "Снимает линии"), |ui| {
                         ui.horizontal_wrapped(|ui| {
                             let mut all: Vec<String> = lines.clone();
@@ -584,7 +627,7 @@ impl ChronoWindow {
                                     date = s.cfg.start_date;
                                 }
                                 if ui.small_button(tr("Properties", "Свойства")).clicked() {
-                                    edit = Some(Edit { dir: s.dir.clone(), title: s.title.clone(), description: s.description.clone(), start: s.cfg.start_date, end: s.cfg.end_date, lines: s.cfg.deactivate_lines.clone() });
+                                    edit = Some(Edit { dir: s.dir.clone(), title: s.title.clone(), description: s.description.clone(), start: s.cfg.start_date, end: s.cfg.end_date, lines: s.cfg.deactivate_lines.clone(), tickets: s.cfg.ticket_pack.clone(), money: s.cfg.money_system.clone() });
                                 }
                             });
                             if !s.about.is_empty() {
@@ -609,7 +652,7 @@ impl ChronoWindow {
             let last = list.iter().filter_map(|s| s.dir.file_name()?.to_string_lossy().split('_').next()?.parse::<u32>().ok()).max().unwrap_or(0);
             let folder: String = format!("{:04}_{}", (last / 100 + 1) * 100, name).chars().map(|c| if "/\\:*?\"<>|".contains(c) { '_' } else { c }).collect();
             let rel = Path::new("Chrono").join(&folder);
-            self.editing = Some(Edit { dir: root.join(&rel), title: name, description: String::new(), start: date, end: 0, lines: Vec::new() });
+            self.editing = Some(Edit { dir: root.join(&rel), title: name, description: String::new(), start: date, end: 0, lines: Vec::new(), tickets: None, money: None });
             self.new_name.clear();
             write = true;
         }
@@ -760,7 +803,7 @@ mod tests {
         let (src, own) = (base.join("install"), base.join("content"));
         std::fs::create_dir_all(src.join("Chrono").join("0100_A")).unwrap();
         std::fs::write(src.join("Chrono").join("0100_A").join("Chrono.cfg"), "[startdate]\r\n19900101\r\n\r\n").unwrap();
-        let e = Edit { dir: src.join("Chrono").join("0200_B"), title: "B".into(), description: "new".into(), start: 19950101, end: 0, lines: vec![] };
+        let e = Edit { dir: src.join("Chrono").join("0200_B"), title: "B".into(), description: "new".into(), start: 19950101, end: 0, lines: vec![], tickets: None, money: None };
         let dir = write_scenario(&e, &src, &own, Some(&src)).unwrap();
         assert_eq!(dir, own.join("Chrono").join("0200_B"));
         assert_eq!(omsi_map::active_chrono_dirs(&own, 19960101).len(), 2);
@@ -840,6 +883,15 @@ mod tests {
         let patch = omsi_map::Tile::load(&own.join(&file)).unwrap();
         assert!((patch.objects.iter().find(|o| o.id == id).unwrap().pos[0] - x).abs() < 1e-6);
         let _ = std::fs::remove_dir_all(&content);
+    }
+
+    #[test]
+    fn a_ticket_pack_of_its_own_is_set_and_taken_away() {
+        let with = cfg_with("[startdate]\n19900101\n\n", "ticketpack", Some("TicketPacks\\B\\B.otp"));
+        let c = omsi_map::ailists::parse_chrono_cfg(&omsi_cfg::CfgFile::from_str("Chrono.cfg", &with));
+        assert_eq!((c.start_date, c.ticket_pack.as_deref()), (19900101, Some("TicketPacks\\B\\B.otp")));
+        let without = cfg_with(&with, "ticketpack", None);
+        assert!(omsi_map::ailists::parse_chrono_cfg(&omsi_cfg::CfgFile::from_str("Chrono.cfg", &without)).ticket_pack.is_none());
     }
 
     #[test]

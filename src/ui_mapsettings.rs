@@ -22,7 +22,7 @@ pub struct MapSettings {
 
 /// The files `<root>/<top>/<folder>/*.<ext>` of both roots, as a map names them
 /// (`Money\DM\DM.cfg`).
-fn content_files(roots: &Roots, top: &str, ext: &str) -> Vec<String> {
+pub(crate) fn content_files(roots: &Roots, top: &str, ext: &str) -> Vec<String> {
     let mut v: Vec<String> = Vec::new();
     for root in [&roots.content, &roots.omsi] {
         let base = omsi_cfg::resolve_path(root, top);
