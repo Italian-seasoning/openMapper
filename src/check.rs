@@ -84,6 +84,7 @@ pub enum Kind {
     UnschedMissing,
     StopUnused,
     SignalRouteBroken,
+    ChronoUnmatched,
 }
 
 impl Kind {
@@ -109,6 +110,7 @@ impl Kind {
             Kind::UnschedMissing => tr("Traffic groups not in the AI lists", "Группы движения не в списке ИИ"),
             Kind::StopUnused => tr("Stops no trip calls at", "Остановки без рейсов"),
             Kind::SignalRouteBroken => tr("Signal routes naming what is gone", "Маршруты сигналов с исчезнувшим"),
+            Kind::ChronoUnmatched => tr("Chrono changes of what is gone", "Хроно-изменения исчезнувшего"),
         }
     }
 
@@ -134,6 +136,7 @@ impl Kind {
             Kind::TourNoDepot => tr("A tour names no depot or group of the AI lists (or one that is not there): the game has no vehicle to send on it. Choose a depot for it in the Lines window.", "Выход не указывает парк или группу из списка ИИ (или указывает несуществующую): игре нечем его обслужить. Выберите парк в окне линий."),
             Kind::UnschedMissing => tr("The unscheduled traffic names a group that the AI lists do not have: those cars never appear. Add the group in Map > Traffic and AI.", "Свободное движение указывает группу, которой нет в списке ИИ: эти машины не появятся. Добавьте группу в Карта > Движение и ИИ."),
             Kind::StopUnused => tr("A stop of the timetable that no trip calls at. Nothing is wrong, it is only not used yet.", "Остановка расписания, на которой не останавливается ни один рейс. Ничего страшного, просто она пока не используется."),
+            Kind::ChronoUnmatched => tr("A chrono scenario takes away, retypes or relabels something that is no longer on the map (it was deleted or its IDCode changed): that change does nothing. Open Map > Chrono scenarios, the scenario's properties, and take the change out.", "Хроно-сценарий убирает, меняет тип или тексты того, чего на карте больше нет (удалено или сменился IDCode): это изменение ничего не делает. Откройте Карта > Хроно-сценарии, свойства сценария, и уберите изменение."),
             Kind::SignalRouteBroken => tr("A signal route names a signal or track pieces no longer on the map: the signal may never clear. Open Map > Signal routes and take the track again, or delete the route.", "Маршрут сигнала указывает сигнал или участки пути, которых больше нет на карте: сигнал может так и не открыться. Откройте Карта > Маршруты сигналов и возьмите пути заново или удалите маршрут."),
         }
     }
@@ -653,6 +656,34 @@ fn timetable_issues(d: &Document, roots: &[PathBuf], out: &mut Vec<Issue>) {
             let k = d.tiles.iter().find(|(_, t)| t.tile.objects.iter().any(|o| o.id == r.signal.0)).map(|(k, _)| *k);
             out.push(Issue { severity: Severity::Warning, kind: Kind::SignalRouteBroken, title: format!("{} {i}", tr("Route", "Маршрут")), detail: format!("{gone} {}", tr("gone", "нет на карте")), at: None, sel: k.map(|k| Sel::Object(k, r.signal.0)), fix: None });
         }
+    }
+    // chrono scenarios: their changes name things of the map or of a scenario
+    let root = omsi_cfg::resolve_path(&d.chrono_root(), "Chrono");
+    let mut patches: Vec<(String, omsi_map::Tile)> = Vec::new();
+    let mut stack = vec![root.clone()];
+    while let Some(dir) = stack.pop() {
+        for p in std::fs::read_dir(&dir).into_iter().flatten().flatten().map(|e| e.path()) {
+            if p.is_dir() {
+                stack.push(p);
+            } else if p.extension().map(|x| x.eq_ignore_ascii_case("map")).unwrap_or(false) {
+                if let Ok(t) = omsi_map::Tile::load(&p) {
+                    let name = p.parent().and_then(|d| d.strip_prefix(&root).ok()).map(|r| r.display().to_string()).unwrap_or_default();
+                    patches.push((name, t));
+                }
+            }
+        }
+    }
+    let added: HashSet<i64> = patches.iter().flat_map(|(_, t)| t.objects.iter().chain(&t.attach_objects).map(|o| o.id).chain(t.splines.iter().map(|s| s.id)).chain(t.spline_attachments.iter().map(|a| a.id))).collect();
+    let mut by_scenario: std::collections::BTreeMap<String, usize> = Default::default();
+    for (name, t) in &patches {
+        for c in &t.chrono_changes {
+            if !ids.contains(&c.id) && !added.contains(&c.id) {
+                *by_scenario.entry(name.clone()).or_default() += 1;
+            }
+        }
+    }
+    for (name, n) in by_scenario {
+        out.push(Issue { severity: Severity::Info, kind: Kind::ChronoUnmatched, title: name, detail: format!("{n} {}", tr("changes of nothing", "изменений впустую")), at: None, sel: None, fix: None });
     }
     let used: HashSet<i64> = tt.trips.iter().flat_map(|t| t.stations.iter().copied()).collect();
     for st in tt.stops.iter().filter(|st| !used.contains(&st.object_id)) {
