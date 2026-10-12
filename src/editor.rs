@@ -3069,6 +3069,22 @@ impl Editor {
         }
     }
 
+    /// A spline's skew at its ends and how it cuts the ground (0: not, 1: under it, 2–4: the
+    /// hole held at the end, the start, both: `[spline_terrain_align_2]`).
+    pub fn set_spline_extra(&mut self, k: TileKey, id: i64, skew_start: f64, skew_end: f64, ground: u8) {
+        self.begin_panel_step(tr("Edit road", "Изменение дороги"));
+        let Some(doc) = self.doc.as_mut() else { return };
+        selection::touch_spline(&mut self.history, doc, k, id);
+        let Some(t) = doc.tiles.get_mut(&k) else { return };
+        if let Some(s) = t.tile.splines.iter_mut().find(|s| s.id == id && !s.deleted) {
+            s.skew_start = skew_start;
+            s.skew_end = skew_end;
+            s.terrain_align_flag = ground == 1;
+            s.terrain_align = (ground >= 2).then_some(ground as f64);
+        }
+        t.touch_content();
+    }
+
     /// A road's cant (%) at one end; the road joined there follows.
     pub fn set_spline_cant(&mut self, k: TileKey, id: i64, at_end: bool, cant: f64) {
         self.begin_panel_step(tr("Edit road", "Изменение дороги"));

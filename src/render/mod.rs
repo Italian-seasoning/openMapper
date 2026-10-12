@@ -529,7 +529,7 @@ fn hash_of<T: std::hash::Hash>(v: &T) -> u64 {
 fn spline_hash(s: &MapSpline, origin: DVec2) -> u64 {
     let nums = [s.pos[0], s.pos[1], s.pos[2], s.heading, s.length, s.radius, s.grad_start, s.grad_end, s.delta_h.unwrap_or(-1e9), s.cant_start, s.cant_end, s.skew_start, s.skew_end, s.tex_offset, origin.x, origin.y];
     let bits: Vec<u64> = nums.iter().map(|v| v.to_bits()).collect();
-    hash_of(&(s.file.to_lowercase(), bits, s.mirror))
+    hash_of(&(s.file.to_lowercase(), bits, s.mirror, s.terrain_align.map(f64::to_bits), s.terrain_align_flag))
 }
 
 /// The matrix that puts a map object where it stands.

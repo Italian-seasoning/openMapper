@@ -1463,6 +1463,9 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
     let mut new_pos: Option<(f64, f64)> = None;
     let mut ends = crate::ui_edit::EndsEdit::default();
     let mut spline_change: Option<(Option<String>, Option<bool>)> = None;
+    // (skew at the start and the end, the ground's mode: 0 none, 1 cut under it, 2–4 the
+    // ends held)
+    let mut spline_extra: Option<(f64, f64, u8)> = None;
     let mut whole_road = false;
     let mut align_road = false;
     let mut alike = false;
@@ -1663,6 +1666,31 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
                             spline_change = Some((None, Some(m)));
                         }
                     });
+                    let mut skew = (s.skew_start, s.skew_end);
+                    let mut mode = s.terrain_align.map(|v| v as u8).unwrap_or(s.terrain_align_flag as u8);
+                    prop_row(ui, tr("Skew", "Скос"), |ui| {
+                        ui.horizontal(|ui| {
+                            let a = ui.add(egui::DragValue::new(&mut skew.0).speed(0.01).range(-4.0..=4.0).max_decimals(3)).on_hover_text(tr("The start cut on a slant: 1 is 45° (two fences meeting at a corner: 1 and -1)", "Скошенный срез в начале: 1 — это 45° (два забора в углу: 1 и -1)"));
+                            let b = ui.add(egui::DragValue::new(&mut skew.1).speed(0.01).range(-4.0..=4.0).max_decimals(3)).on_hover_text(tr("The end cut on a slant", "Скошенный срез в конце"));
+                            if a.changed() || b.changed() {
+                                spline_extra = Some((skew.0, skew.1, mode));
+                            }
+                        });
+                    });
+                    prop_row(ui, tr("Ground", "Земля"), |ui| {
+                        let names = [tr("as it is", "как есть"), tr("cut away under it", "вырезать под ним"), tr("cut, held at the end", "вырезать, до конца"), tr("cut, held at the start", "вырезать, от начала"), tr("cut, held at both ends", "вырезать, оба конца")];
+                        let before = mode;
+                        egui::ComboBox::from_id_salt("terrain align").selected_text(names[(mode as usize).min(4)]).width(170.0).show_ui(ui, |ui| {
+                            for (i, n) in names.iter().enumerate() {
+                                ui.selectable_value(&mut mode, i as u8, *n);
+                            }
+                        })
+                        .response
+                        .on_hover_text(tr("A hole in the ground under it, as for a tunnel, an underpass or a pit (OMSI's terrain align)", "Дыра в земле под ним, как для тоннеля, подземного перехода или ямы (terrain align в OMSI)"));
+                        if mode != before {
+                            spline_extra = Some((skew.0, skew.1, mode));
+                        }
+                    });
                 });
                 if s.prev_id != 0 || s.next_id != 0 {
                     if ui.small_button(tr("Select the whole road", "Выбрать всю дорогу")).on_hover_text(tr("Every piece linked on from this one (or double-click the road)", "Все куски, связанные с этим (или двойной клик по дороге)")).clicked() {
@@ -1783,6 +1811,9 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
             }
             crate::ui_edit::apply_ends(ed, ui.ctx(), k, id, ends);
             crate::ui_edit::parallel_section(ui, ed, lib);
+            if let Some((a, b, mode)) = spline_extra {
+                ed.set_spline_extra(k, id, a, b, mode);
+            }
             crate::ui_edit::rules_section(ui, ed, sel);
             crate::ui_edit::rows_section(ui, ed, lib);
             let Some(doc) = ed.doc.as_mut() else { return };
