@@ -155,6 +155,8 @@ pub struct UiState {
     pub autopaint: crate::autopaint::Rule,
     /// The hour the view is lit at (View menu; None: plain day as openOMSI's).
     pub daytime: Option<f32>,
+    /// The maps' pictures on the welcome screen, small (None: the map has none).
+    welcome_pictures: HashMap<PathBuf, Option<egui::TextureHandle>>,
 }
 
 impl Default for UiState {
@@ -187,6 +189,7 @@ impl Default for UiState {
             heightmap: Default::default(),
             autopaint: Default::default(),
             daytime: None,
+            welcome_pictures: HashMap::new(),
         }
     }
 }
@@ -448,7 +451,7 @@ pub fn welcome(root: &mut egui::Ui, st: &mut UiState, prefs: &Prefs, omsi: Optio
                             ui.label(RichText::new(tr("Maps", "Карты")).strong());
                             Frame::new().fill(BG_FIELD).stroke(Stroke::new(1.0, BORDER)).show(ui, |ui| {
                                 ui.set_width(ui.available_width());
-                                egui::ScrollArea::vertical().min_scrolled_height(300.0).max_height(300.0).auto_shrink([false, false]).show(ui, |ui| {
+                                egui::ScrollArea::vertical().min_scrolled_height(340.0).max_height(340.0).auto_shrink([false, false]).show(ui, |ui| {
                                     // a recent map of the installation that was since saved opens
                                     // as its copy in the content folder, so it is listed once
                                     let folder_of = |p: &std::path::Path| p.parent().and_then(|d| d.file_name()).map(|f| f.to_string_lossy().to_lowercase());
@@ -462,7 +465,11 @@ pub fn welcome(root: &mut egui::Ui, st: &mut UiState, prefs: &Prefs, omsi: Optio
                                     let mut rows: Vec<(String, PathBuf, &str)> = Vec::new();
                                     for p in &recent {
                                         let name = st.maps.iter().find(|m| m.cfg == *p).map(|m| m.name.clone()).unwrap_or_else(|| p.parent().and_then(|d| d.file_name()).map(|f| f.to_string_lossy().to_string()).unwrap_or_default());
-                                        rows.push((name, p.clone(), tr("recent", "недавняя")));
+                                        let kind = match st.maps.iter().find(|m| m.cfg == *p) {
+                                            Some(m) if !m.in_content => tr("recent · OMSI 2", "недавняя · OMSI 2"),
+                                            _ => tr("recent", "недавняя"),
+                                        };
+                                        rows.push((name, p.clone(), kind));
                                     }
                                     for m in &st.maps {
                                         if recent.contains(&m.cfg) {
@@ -470,14 +477,47 @@ pub fn welcome(root: &mut egui::Ui, st: &mut UiState, prefs: &Prefs, omsi: Optio
                                         }
                                         rows.push((m.name.clone(), m.cfg.clone(), if m.in_content { tr("content folder", "папка контента") } else { tr("OMSI 2 (saved as copy)", "OMSI 2 (сохр. копией)") }));
                                     }
+                                    // (one picture read a frame: the list shows at once)
+                                    let mut read_one = false;
                                     for (i, (name, cfg, kind)) in rows.iter().enumerate() {
                                         let on = st.welcome_pick.as_ref() == Some(cfg);
-                                        let (rect, resp) = ui.allocate_exact_size(Vec2::new(ui.available_width(), 24.0), Sense::click());
-                                        let fill = if on { SELECT } else if i % 2 == 1 { Color32::from_rgb(28, 29, 32) } else { Color32::TRANSPARENT };
+                                        let (rect, resp) = ui.allocate_exact_size(Vec2::new(ui.available_width(), 54.0), Sense::click());
+                                        let fill = if on { SELECT } else if resp.hovered() { Color32::from_gray(40) } else if i % 2 == 1 { Color32::from_rgb(28, 29, 32) } else { Color32::TRANSPARENT };
                                         ui.painter().rect_filled(rect, CornerRadius::ZERO, fill);
-                                        icons::paint(ui.painter(), Icon::Map, rect.left_center() + Vec2::new(16.0, 0.0), 18.0, if on { Color32::WHITE } else { TEXT_DIM });
-                                        ui.painter().text(rect.left_center() + Vec2::new(30.0, 0.0), egui::Align2::LEFT_CENTER, name, egui::FontId::proportional(13.0), Color32::from_gray(230));
-                                        ui.painter().text(rect.right_center() - Vec2::new(8.0, 0.0), egui::Align2::RIGHT_CENTER, *kind, egui::FontId::proportional(11.0), TEXT_DIM);
+                                        let pic = egui::Rect::from_min_size(rect.min + Vec2::new(6.0, 5.0), Vec2::new(70.0, 44.0));
+                                        if !st.welcome_pictures.contains_key(cfg) && !read_one && ui.is_rect_visible(rect) {
+                                            read_one = true;
+                                            let tex = cfg.parent().and_then(|d| image::open(d.join("picture.jpg")).ok()).map(|img| {
+                                                let img = img.thumbnail(160, 100).to_rgba8();
+                                                let ci = egui::ColorImage::from_rgba_unmultiplied([img.width() as usize, img.height() as usize], img.as_raw());
+                                                ui.ctx().load_texture(format!("welcome {}", cfg.display()), ci, egui::TextureOptions::LINEAR)
+                                            });
+                                            st.welcome_pictures.insert(cfg.clone(), tex);
+                                            ui.ctx().request_repaint();
+                                        }
+                                        match st.welcome_pictures.get(cfg) {
+                                            Some(Some(t)) => {
+                                                // (cut to the box's shape, not squeezed)
+                                                let [w, h] = t.size().map(|v| v as f32);
+                                                let (bw, bh) = (pic.width(), pic.height());
+                                                let uv = if w / h > bw / bh {
+                                                    let f = (bw / bh) / (w / h);
+                                                    egui::Rect::from_min_max(egui::pos2(0.5 - f / 2.0, 0.0), egui::pos2(0.5 + f / 2.0, 1.0))
+                                                } else {
+                                                    let f = (w / h) / (bw / bh);
+                                                    egui::Rect::from_min_max(egui::pos2(0.0, 0.5 - f / 2.0), egui::pos2(1.0, 0.5 + f / 2.0))
+                                                };
+                                                ui.painter().image(t.id(), pic, uv, Color32::WHITE);
+                                            }
+                                            _ => {
+                                                ui.painter().rect_filled(pic, CornerRadius::same(2), Color32::from_rgb(36, 38, 42));
+                                                icons::paint(ui.painter(), Icon::Map, pic.center(), 22.0, if on { Color32::WHITE } else { TEXT_DIM });
+                                            }
+                                        }
+                                        ui.painter().text(egui::pos2(pic.right() + 10.0, rect.top() + 18.0), egui::Align2::LEFT_CENTER, name, egui::FontId::proportional(14.0), Color32::from_gray(235));
+                                        let folder = cfg.parent().and_then(|d| d.file_name()).map(|f| f.to_string_lossy().to_string()).unwrap_or_default();
+                                        ui.painter().text(egui::pos2(pic.right() + 10.0, rect.top() + 37.0), egui::Align2::LEFT_CENTER, format!("{kind} · {folder}"), egui::FontId::proportional(11.0), TEXT_DIM);
+                                        resp.clone().on_hover_text(cfg.display().to_string());
                                         if resp.clicked() {
                                             st.welcome_pick = Some(cfg.clone());
                                         }
