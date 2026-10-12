@@ -99,7 +99,9 @@ experienced map makers.
   track is gone.
 * **Chrono scenarios** (Map menu): the map's changes over the years listed with their dates,
   tiles, the lines they take off and their descriptions; the view shows the map as on any day
-  chosen, every scenario active then laid over it as the game does.
+  chosen, every scenario active then laid over it as the game does. A scenario's dates, the
+  lines it takes off, its name and description are edited there, and new scenarios made (the
+  installation's scenarios are brought into the map's own copy first).
 * **Map settings** (Map menu), as in OMSI 2's editor: money system, ticket pack, depot,
   years and year offset, repair time, real rail and the seasons of the year.
 * **Calendar and place** (Map menu), the map's own files as OMSI 2's editor keeps them:
