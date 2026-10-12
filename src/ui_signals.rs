@@ -41,7 +41,7 @@ impl SignalWindow {
         let mut routes = before.clone();
         // the one object selected, if it is one; what is selected, as pieces
         let sel_object = match ed.selection().as_slice() {
-            [Sel::Object(k, id)] => crate::selection::any_object(doc, *k, *id).map(|o| (*id, lib.find(&o.file).map(|a| a.name.to_lowercase().contains("signal") || a.rel.to_lowercase().contains("signal")).unwrap_or(false))),
+            [Sel::Object(k, id)] => crate::selection::any_object(doc, *k, *id).map(|o| (*id, lib.find(&o.file).map(|a| a.name.to_lowercase().contains("signal") || a.rel.to_lowercase().contains("sig")).unwrap_or(false))),
             _ => None,
         };
         let pieces = crate::signals::pieces_of(doc, &ed.selection(), roots);

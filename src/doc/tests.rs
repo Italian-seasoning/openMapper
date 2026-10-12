@@ -307,3 +307,23 @@ fn a_stop_moved_into_another_tile_is_found_there() {
     assert_eq!(back.bus_stops[0].group, at);
     let _ = std::fs::remove_dir_all(&roots.content);
 }
+
+/// The view of Berlin-Spandau as in 1980 carries fewer chrono patches than in 1995, and
+/// the map itself is not changed by it.
+#[test]
+fn the_map_is_shown_as_on_a_day() {
+    let _map = one_map();
+    let Some(omsi) = crate::install::find_omsi_root(&crate::install::Prefs::default()) else { return };
+    let cfg = omsi.join("maps").join("Berlin-Spandau").join("global.cfg");
+    if !cfg.is_file() {
+        return;
+    }
+    let roots = Roots { omsi: omsi.clone(), content: std::env::temp_dir().join("openmapper-no-content") };
+    let mut doc = Document::load(&roots, &cfg, |_| {}).unwrap();
+    let dirty = doc.is_dirty();
+    let early = doc.show_chrono(19800101);
+    let patched = doc.tiles.values().filter(|t| !t.chrono.is_empty()).count();
+    assert!(doc.show_chrono(19950101) > early + 5);
+    assert!(doc.tiles.values().filter(|t| !t.chrono.is_empty()).count() > patched);
+    assert_eq!(doc.is_dirty(), dirty);
+}

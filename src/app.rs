@@ -103,6 +103,7 @@ pub struct App {
     map_settings: crate::ui_mapsettings::MapSettings,
     calendar: crate::ui_calendar::CalendarWindow,
     signals: crate::ui_signals::SignalWindow,
+    chrono: crate::ui_chrono::ChronoWindow,
     /// The Satellite and terrain window and the overlay on the ground.
     geo: crate::ui_geo::GeoUi,
     /// Getting started.
@@ -146,6 +147,7 @@ impl App {
             map_settings: Default::default(),
             calendar: Default::default(),
             signals: Default::default(),
+            chrono: Default::default(),
             geo: Default::default(),
             guide: Default::default(),
             picture: false,
@@ -299,6 +301,7 @@ impl App {
         match std::env::var("OPENMAPPER_SETTINGS").as_deref() {
             Ok("calendar") => self.calendar.open = true,
             Ok("signals") => self.signals.open = true,
+            Ok("chrono") => self.chrono.open = true,
             Ok(_) => self.map_settings.open = true,
             Err(_) => {}
         }
@@ -762,6 +765,7 @@ impl App {
             Action::MapSettings => self.map_settings.open = true,
             Action::Calendar => self.calendar.open = true,
             Action::SignalRoutes => self.signals.open = true,
+            Action::Chrono => self.chrono.open = true,
             Action::SetMapCamera => {
                 if let Some(doc) = self.ed.doc.as_mut() {
                     let p = self.cam.target.truncate();
@@ -1072,6 +1076,7 @@ impl App {
                 self.road_types.window(&ctx, &mut self.ed, &self.lib, self.roots.as_ref(), &mut actions);
                 self.map_settings.window(&ctx, &mut self.ed, self.roots.as_ref());
                 self.calendar.window(&ctx, &mut self.ed);
+                self.chrono.window(&ctx, &mut self.ed);
                 self.signals.window(&ctx, &mut self.ed, &self.lib, self.roots.as_ref(), &mut actions);
                 self.geo.window(&ctx, &mut self.ed, &mut self.prefs);
                 if let Some(p) = self.geo.look.take() {

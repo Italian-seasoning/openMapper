@@ -8,7 +8,7 @@ pub(crate) mod save;
 mod tests;
 pub mod dds;
 
-use std::collections::BTreeMap;
+use std::collections::{BTreeMap, HashMap};
 use std::path::{Path, PathBuf};
 use std::sync::atomic::{AtomicU64, Ordering};
 
@@ -282,6 +282,31 @@ impl Document {
             traffic,
             descriptions,
         })
+    }
+
+    /// The folder its chrono scenarios are in (the saved copy's, else the one it was read from).
+    pub fn chrono_root(&self) -> PathBuf {
+        let own = omsi_cfg::resolve_path(&self.dir, "Chrono");
+        if own.is_dir() {
+            return self.dir.clone();
+        }
+        self.source.clone().unwrap_or_else(|| self.dir.clone())
+    }
+
+    /// The map shown as on `date` (YYYYMMDD): every tile's patches of the chrono scenarios
+    /// active then, as the game lays them over it. Nothing of the map itself changes.
+    pub fn show_chrono(&mut self, date: i32) -> usize {
+        let dirs = omsi_map::active_chrono_dirs(&self.chrono_root(), date);
+        let files: HashMap<TileKey, String> = self.global.tiles.iter().map(|t| ((t.x, t.y), t.file.clone())).collect();
+        for (k, t) in self.tiles.iter_mut() {
+            let patches = files.get(k).map(|f| chrono_patches(&dirs, f)).unwrap_or_default();
+            if patches != t.chrono {
+                t.chrono = patches;
+                // (shown anew, not changed: no save is due)
+                t.content_rev = next_rev();
+            }
+        }
+        dirs.len()
     }
 
     /// A copy to read on another thread (the map check): the tiles without their painting
@@ -664,6 +689,17 @@ impl Document {
     }
 }
 
+/// A tile's patches in the given chrono folders, in order.
+fn chrono_patches(chrono_dirs: &[PathBuf], file: &str) -> Vec<Tile> {
+    chrono_dirs
+        .iter()
+        .filter_map(|c| {
+            let p = omsi_cfg::resolve_path(c, file);
+            omsi_cfg::vfs::is_file(&p).then(|| Tile::load(&p).ok()).flatten()
+        })
+        .collect()
+}
+
 /// One tile of the map with its ground, painting and chrono patches (None: no file).
 fn load_tile(src_dir: &Path, global: &GlobalCfg, chrono_dirs: &[PathBuf], t: &omsi_map::MapTileRef) -> Option<TileDoc> {
     let path = src_dir.join(&t.file);
@@ -678,13 +714,7 @@ fn load_tile(src_dir: &Path, global: &GlobalCfg, chrono_dirs: &[PathBuf], t: &om
     // (a [worldcoordinates] tile is scaled onto the map's grid, as the game does; it is
     // scaled back when saved)
     tile.fit_to_world_grid(t.y);
-    let chrono: Vec<Tile> = chrono_dirs
-        .iter()
-        .filter_map(|c| {
-            let p = omsi_cfg::resolve_path(c, &t.file);
-            omsi_cfg::vfs::is_file(&p).then(|| Tile::load(&p).ok()).flatten()
-        })
-        .collect();
+    let chrono = chrono_patches(chrono_dirs, &t.file);
     let terrain_path = src_dir.join(format!("{}.terrain", t.file));
     let terrain = Terrain::load(&terrain_path).ok().filter(|t| t.samples() == TERRAIN_SAMPLES).unwrap_or_else(Terrain::flat);
     let mut masks = Vec::new();

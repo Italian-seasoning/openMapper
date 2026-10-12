@@ -49,6 +49,7 @@ mod ui_geo;
 mod sample;
 mod ui_guide;
 mod ui_calendar;
+mod ui_chrono;
 mod ui_mapsettings;
 mod ui_signals;
 mod ui_minimap;
