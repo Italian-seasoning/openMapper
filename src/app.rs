@@ -343,7 +343,12 @@ impl App {
         // OPENMAPPER_OSM=<main type>[;<street type>[;<stop>]]: roads and stops from OpenStreetMap built (after
         // OPENMAPPER_GEO placed the map)
         if let Ok(t) = std::env::var("OPENMAPPER_OSM") {
-            self.osm.scripted(&self.ed, self.geo.georef(), &t);
+            // (the catalogue read first: the buildings' models come from it)
+            while self.lib.scanning {
+                self.lib.poll();
+                std::thread::sleep(std::time::Duration::from_millis(20));
+            }
+            self.osm.scripted(&self.ed, &self.lib, self.geo.georef(), &t);
         }
         // OPENMAPPER_TRAFFIC=day|groups|lists: the Traffic and AI window open on that tab
         if let Ok(t) = std::env::var("OPENMAPPER_TRAFFIC") {
@@ -1174,6 +1179,10 @@ impl App {
                     self.ed.history.push_snapshot(tr("Lines from OpenStreetMap", "Линии из OpenStreetMap"), before);
                 }
                 text += &format!(" · {} {} · {} {}/{}", tr("lines:", "линий:"), added.lines, tr("trips found their way:", "рейсов с путём:"), added.routed, added.trips);
+            }
+            if !b.buildings.is_empty() {
+                let n = self.ed.place_osm_buildings(assets, &b.buildings, &b.pool);
+                text += &format!(" · {} {n}/{}", tr("buildings:", "зданий:"), b.buildings.len());
             }
             if !b.trees.is_empty() {
                 let n = self.ed.plant_osm(&b.trees, &b.mix);

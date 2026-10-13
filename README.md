@@ -87,6 +87,9 @@ experienced map makers.
     stopping alike once, a route leaving the map cut to its longest run within it), the way
     found along the roads, a tour from 06:00 to 22:00 for each new line, a depot if none;
   * trees, rows of trees and woods planted with the plant mix, none on a road.
+  * buildings: each outline filled with the model of a catalogue folder (Buildings_MC, …)
+    whose ground plan and height (OSM's height or storeys, else what its kind usually is)
+    come nearest, its front to the nearest road; an outline no model fits is left out.
 
   Each is one undo step. © OpenStreetMap contributors (ODbL).
 * **Own pictures** on tiles (a scan, a screenshot, an old plan), no place on the Earth needed:

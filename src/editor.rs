@@ -1273,6 +1273,118 @@ impl Editor {
         n
     }
 
+    /// Buildings from OpenStreetMap: each outline filled with the model of `pool` whose
+    /// ground plan comes nearest (a random one of those about as near), its front to the
+    /// nearest road within 40 m; an outline no model fits, or one on a road, is left out.
+    /// One undo step; how many were put.
+    pub fn place_osm_buildings(&mut self, assets: &mut Assets, outlines: &[(Vec<DVec2>, f64, bool)], pool: &[String]) -> usize {
+        // the pool's models (their ground plans)
+        let t0 = Instant::now();
+        let mut sizes: Vec<(String, f64, f64, DVec2, f64)> = Vec::new();
+        let mut waiting: Vec<&String> = pool.iter().collect();
+        while !waiting.is_empty() && t0.elapsed().as_secs() < 60 {
+            assets.poll();
+            waiting.retain(|rel| match assets.object(rel) {
+                Some(m) => {
+                    let (w, d) = ((m.hi.x - m.lo.x) as f64, (m.hi.y - m.lo.y) as f64);
+                    // (trees, technical helpers and flat things are no buildings)
+                    if m.tree.is_none() && !m.technical && w > 2.0 && d > 2.0 && m.hi.z - m.lo.z > 2.5 {
+                        sizes.push(((*rel).clone(), w, d, DVec2::new(((m.lo.x + m.hi.x) * 0.5) as f64, ((m.lo.y + m.hi.y) * 0.5) as f64), (m.hi.z - m.lo.z) as f64));
+                    }
+                    false
+                }
+                None => !assets.object_failed(rel),
+            });
+            if !waiting.is_empty() {
+                std::thread::sleep(std::time::Duration::from_millis(10));
+            }
+        }
+        let Some(doc) = self.doc.as_ref() else { return 0 };
+        if sizes.is_empty() {
+            return 0;
+        }
+        // the roads, every 2 m with their heading and half width, in 20 m cells
+        let cell = |p: DVec2| ((p.x / 20.0).floor() as i64, (p.y / 20.0).floor() as i64);
+        let mut roads_at: std::collections::HashMap<(i64, i64), Vec<(DVec2, f64, f64)>> = Default::default();
+        for (k, t) in &doc.tiles {
+            for sp in t.tile.splines.iter().filter(|s| !s.deleted) {
+                let Some(m) = assets.spline(&sp.file) else { continue };
+                if !m.joinable() {
+                    continue;
+                }
+                let c = omsi_geometry::SplineCurve::from_map(sp, tile_origin(*k));
+                let n = (sp.length / 2.0).ceil().max(1.0) as usize;
+                for i in 0..=n {
+                    let at = sp.length * i as f64 / n as f64;
+                    let q = c.point_at(at).truncate();
+                    roads_at.entry(cell(q)).or_default().push((q, c.heading_at(at), m.half_width as f64));
+                }
+            }
+        }
+        let nearest = |p: DVec2, within: f64| -> Option<(DVec2, f64, f64)> {
+            let (cx, cy) = cell(p);
+            let r = (within / 20.0).ceil() as i64;
+            let mut best: Option<((DVec2, f64, f64), f64)> = None;
+            for x in cx - r..=cx + r {
+                for y in cy - r..=cy + r {
+                    for q in roads_at.get(&(x, y)).into_iter().flatten() {
+                        let d = (q.0 - p).length();
+                        if d < within && best.map(|b| d < b.1).unwrap_or(true) {
+                            best = Some((*q, d));
+                        }
+                    }
+                }
+            }
+            best.map(|b| b.0)
+        };
+        self.history.begin(tr("Buildings from OpenStreetMap", "Здания из OpenStreetMap"));
+        let mut n = 0;
+        for (poly, height, known) in outlines {
+            if poly.len() < 4 {
+                continue;
+            }
+            let c0 = poly.iter().copied().sum::<DVec2>() / poly.len() as f64;
+            // front to the nearest road (none: along its longest side); on a road: none
+            let heading = match nearest(c0, 40.0) {
+                Some((q, h, hw)) => {
+                    if (q - c0).length() < hw + 1.0 {
+                        continue;
+                    }
+                    let side = if (c0 - q).dot(roads::right(h)) > 0.0 { 270.0 } else { 90.0 };
+                    roads::norm_deg(h + side)
+                }
+                None => crate::osm_buildings::own_heading(poly),
+            };
+            let (c, w, d) = crate::osm_buildings::footprint(poly, heading);
+            let fits: Vec<(f64, &(String, f64, f64, DVec2, f64))> = sizes.iter().filter_map(|m| crate::osm_buildings::misfit((m.1, m.2, m.4), (w, d, *height), *known).map(|e| (e, m))).collect();
+            let Some(best) = fits.iter().map(|f| f.0).min_by(|a, b| a.total_cmp(b)) else { continue };
+            let near: Vec<_> = fits.iter().filter(|f| f.0 <= best + 0.12).collect();
+            let pick = near[(self.plant_rng.next() * near.len() as f64) as usize % near.len()].1;
+            // (the model's own middle on the outline's)
+            let at = c - roads::right(heading) * pick.3.x - roads::dir(heading) * pick.3.y;
+            let k = tile_of(at);
+            let Some(doc) = self.doc.as_mut() else { break };
+            if !doc.tiles.contains_key(&k) {
+                continue;
+            }
+            self.history.touch_tile(doc, k);
+            let id = doc.new_id();
+            let org = tile_origin(k);
+            let o = MapObject { file: pick.0.clone(), id, pos: [at.x - org.x, at.y - org.y, 0.0], rot: [heading, 0.0, 0.0], ..Default::default() };
+            let t = doc.tiles.get_mut(&k).unwrap();
+            t.tile.objects.push(o);
+            t.touch_content();
+            n += 1;
+        }
+        if n == 0 {
+            self.history.cancel();
+        } else {
+            self.history.touch_global(self.doc.as_ref().unwrap());
+            self.history.commit();
+        }
+        n
+    }
+
     /// Stops put down where OpenStreetMap has them (`(where, name)`), each at the kerb of
     /// the lane nearest to it as a stop placed by hand stands; one with no lane within 25 m,
     /// or a stop the map has within 10 m, is left out. One undo step; how many were put.
