@@ -1158,6 +1158,10 @@ impl App {
                 }
                 text += &format!(" · {} {} · {} {}/{}", tr("lines:", "линий:"), added.lines, tr("trips found their way:", "рейсов с путём:"), added.routed, added.trips);
             }
+            if !b.trees.is_empty() {
+                let n = self.ed.plant_osm(&b.trees, &b.mix);
+                text += &format!(" · {} {n}", tr("trees:", "деревьев:"));
+            }
             log::info!("osm: {text}");
             self.ed.toast(text);
         }

@@ -318,7 +318,10 @@ pub fn overpass(q: &str) -> Result<String, Error> {
         return Err(last);
     }
     let text = String::from_utf8_lossy(&body).to_string();
-    if std::fs::create_dir_all(&dir).is_ok() {
+    // (an answer cut short by the server says so in a remark; it and an empty one are not
+    // kept: the next ask may bring what this one did not)
+    let whole = serde_json::from_str::<serde_json::Value>(&text).map(|v| v.get("remark").is_none() && v.get("elements").and_then(|e| e.as_array()).map(|e| !e.is_empty()).unwrap_or(false)).unwrap_or(false);
+    if whole && std::fs::create_dir_all(&dir).is_ok() {
         let _ = std::fs::write(&path, &text);
     }
     Ok(text)

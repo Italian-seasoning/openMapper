@@ -83,7 +83,9 @@ experienced map makers.
   chosen put at the kerb of the nearest lane, as one placed by hand. And the bus lines: each bus route
   through two or more of the map's stops a trip of its line (one trip for variants stopping
   alike; a route leaving the map cut to its longest run within it), the way found along the
-  roads, a tour from 06:00 to 22:00 for each new line and a depot if the map has none. © OpenStreetMap contributors (ODbL).
+  roads, a tour from 06:00 to 22:00 for each new line and a depot if the map has none. Trees and woods too: single
+  trees, rows of them and woods planted with the plant mix (none on a road), so far apart
+  in woods as asked. © OpenStreetMap contributors (ODbL).
 * **Own pictures** on tiles (a scan, a screenshot, an old plan), no place on the Earth needed:
   "Load image file…" for a tile (or drop the picture on the window with the Tiles tool and a tile
   clicked), or one picture over a rectangle of tiles, cut into their pieces; turned (90° steps or

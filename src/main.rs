@@ -31,6 +31,7 @@ mod models;
 mod pbr_maker;
 mod onground;
 mod osm;
+mod osm_green;
 mod osm_lines;
 mod parallel;
 mod place;

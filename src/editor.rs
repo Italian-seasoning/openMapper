@@ -1221,6 +1221,58 @@ impl Editor {
         // (the tool goes on placing: nothing is selected)
     }
 
+    /// Plants of `mix` put at `spots` (OpenStreetMap's trees and woods), each a random one
+    /// turned a random way, none on a road nor outside the map; one undo step. How many.
+    pub fn plant_osm(&mut self, spots: &[DVec2], mix: &[String]) -> usize {
+        let Some(doc) = self.doc.as_ref() else { return 0 };
+        if mix.is_empty() {
+            return 0;
+        }
+        // the roads, every 3 m with how far from them is clear, in 20 m cells
+        let cell = |p: DVec2| ((p.x / 20.0).floor() as i64, (p.y / 20.0).floor() as i64);
+        let mut roads: std::collections::HashMap<(i64, i64), Vec<(DVec2, f64)>> = Default::default();
+        for (k, t) in &doc.tiles {
+            for sp in t.tile.splines.iter().filter(|s| !s.deleted) {
+                let clear = self.known_half.get(&sp.file.to_lowercase()).copied().unwrap_or(4.0) + 2.0;
+                let c = omsi_geometry::SplineCurve::from_map(sp, tile_origin(*k));
+                let n = (sp.length / 3.0).ceil().max(1.0) as usize;
+                for i in 0..=n {
+                    let q = c.point_at(sp.length * i as f64 / n as f64).truncate();
+                    roads.entry(cell(q)).or_default().push((q, clear));
+                }
+            }
+        }
+        let on_road = |p: DVec2| {
+            let (cx, cy) = cell(p);
+            (cx - 1..=cx + 1).any(|x| (cy - 1..=cy + 1).any(|y| roads.get(&(x, y)).map(|v| v.iter().any(|(q, r)| (*q - p).length() < *r)).unwrap_or(false)))
+        };
+        self.history.begin(tr("Trees from OpenStreetMap", "Деревья из OpenStreetMap"));
+        let mut n = 0;
+        for p in spots {
+            let k = tile_of(*p);
+            let Some(doc) = self.doc.as_mut() else { break };
+            if !doc.tiles.contains_key(&k) || on_road(*p) {
+                continue;
+            }
+            self.history.touch_tile(doc, k);
+            let id = doc.new_id();
+            let org = tile_origin(k);
+            let file = mix[(self.plant_rng.next() * mix.len() as f64) as usize % mix.len()].clone();
+            let o = MapObject { file, id, pos: [p.x - org.x, p.y - org.y, 0.0], rot: [self.plant_rng.next() * 360.0, 0.0, 0.0], ..Default::default() };
+            let t = doc.tiles.get_mut(&k).unwrap();
+            t.tile.objects.push(o);
+            t.touch_content();
+            n += 1;
+        }
+        if n == 0 {
+            self.history.cancel();
+        } else {
+            self.history.touch_global(self.doc.as_ref().unwrap());
+            self.history.commit();
+        }
+        n
+    }
+
     /// Stops put down where OpenStreetMap has them (`(where, name)`), each at the kerb of
     /// the lane nearest to it as a stop placed by hand stands; one with no lane within 25 m,
     /// or a stop the map has within 10 m, is left out. One undo step; how many were put.
