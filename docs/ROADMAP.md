@@ -141,3 +141,4 @@ Add a line when you touch a shared file: stream, file, what.
 * D · `src/main.rs`: `mod osm_lines`; `src/app.rs`: after the OSM roads and stops, the bus routes into the timetable (`osm_lines::add`, one snapshot step); `Editor::build_osm` takes the one-way type, `Editor::place_osm_stops`.
 * D · `src/main.rs`: `mod osm_green`; `src/editor.rs`: `plant_osm`; `src/app.rs`: the OSM build plants the trees last.
 * D · `src/assets.rs`: `Material::glow` (`[matl_nightmap]` / `[matl_lightmap]`); `src/render/mod.rs`: the material's binding 5 is its glow texture, `MatUniform::mode[3]` its kind, `Globals::shadow[2]` how dark it is (`Light::night`).
+* D · `src/ui.rs`: `Action::SetSeason`, `UiState::season`, View > Season; `src/app.rs`: `set_season` (omsi-texture's season folder, the assets and models read again), `OPENMAPPER_SEASON`; `src/render/mod.rs`: the ground's textures looked for in the season's folders first.

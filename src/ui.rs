@@ -103,6 +103,8 @@ pub enum Action {
     Geo,
     /// Open or close Roads from OpenStreetMap.
     Osm,
+    /// View > Season: the textures of a season (`None`: summer's).
+    SetSeason(Option<&'static str>),
     /// View > Graphics quality.
     SetGraphics(crate::render::quality::Quality),
     /// Open or close the Getting started guide.
@@ -157,6 +159,8 @@ pub struct UiState {
     pub autopaint: crate::autopaint::Rule,
     /// The hour the view is lit at (View menu; None: plain day as openOMSI's).
     pub daytime: Option<f32>,
+    /// The season the view shows (View menu; None: summer).
+    pub season: Option<&'static str>,
     /// The maps' pictures on the welcome screen, small (None: the map has none).
     welcome_pictures: HashMap<PathBuf, Option<egui::TextureHandle>>,
 }
@@ -191,6 +195,7 @@ impl Default for UiState {
             heightmap: Default::default(),
             autopaint: Default::default(),
             daytime: None,
+            season: None,
             welcome_pictures: HashMap::new(),
         }
     }
@@ -768,6 +773,22 @@ fn menu_bar(root: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, can_undo: bo
                     if let Some(h) = &mut st.daytime {
                         let r = ui.add(egui::Slider::new(h, 0.0..=24.0).step_by(0.25).custom_formatter(|v, _| format!("{:02}:{:02}", v as u32 % 24, ((v.fract() * 60.0).round() as u32) % 60)));
                         r.on_hover_text(tr("Where the sun stands then, today, at the map's place (Map > Calendar and place); by night the moon", "Где тогда стоит солнце, сегодня, в месте карты (Карта > Календарь и место); ночью луна"));
+                    }
+                });
+                ui.menu_button(tr("Season", "Время года"), |ui| {
+                    // (the texture folders OMSI keeps for them)
+                    let seasons: [(Option<&'static str>, &str); 6] = [
+                        (None, tr("Summer", "Лето")),
+                        (Some("SummerDry"), tr("Dry summer", "Сухое лето")),
+                        (Some("Spring"), tr("Spring", "Весна")),
+                        (Some("Fall"), tr("Autumn", "Осень")),
+                        (Some("Winter"), tr("Winter", "Зима")),
+                        (Some("WinterSnow"), tr("Snow", "Снег")),
+                    ];
+                    for (f, name) in seasons {
+                        if radio(ui, st.season == f, name).clicked() && st.season != f {
+                            actions.push(Action::SetSeason(f));
+                        }
                     }
                 });
                 ui.menu_button(tr("Graphics quality", "Качество графики"), |ui| {

@@ -99,6 +99,9 @@ experienced map makers.
   map's place today (Calendar and place, summer time counted), the sky and light going through
   dusk to a moonlit night; shadows follow the sun, and by night the objects' night textures
   and light maps glow (lit windows, street lamps, signs) as in the game.
+* **Season** (View menu): the view in summer, dry summer, spring, autumn, winter or snow,
+  with the seasons' own textures as OMSI keeps them (`Fall`, `Winter`, `WinterSnow`…), the
+  ground's too.
 * **Layers** (View > Show): trees, other objects, roads and splines each hidden or shown;
   what is hidden is not picked or box-selected either, handy in a dense town.
 * **Copies in a row** (an object's or a selection's properties): a fence, a row of houses, an

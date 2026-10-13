@@ -358,6 +358,10 @@ impl App {
             Ok("paint") => self.ed.set_tool(Tool::Paint),
             _ => {}
         }
+        // OPENMAPPER_SEASON=<texture folder>: the view in that season (Winter, WinterSnow, Fall…)
+        if let Ok(f) = std::env::var("OPENMAPPER_SEASON") {
+            self.set_season(Some(Box::leak(f.into_boxed_str())));
+        }
         // OPENMAPPER_DAYTIME=<hour>: the view lit at that hour
         if let Some(h) = std::env::var("OPENMAPPER_DAYTIME").ok().and_then(|h| h.parse::<f32>().ok()) {
             self.ui.daytime = Some(h);
@@ -543,6 +547,18 @@ impl App {
     }
 
     /// Content files changed on disk: the catalogue, models and pictures are read again.
+    /// The view in a season's textures: the models and the ground read again with them.
+    fn set_season(&mut self, f: Option<&'static str>) {
+        self.ui.season = f;
+        omsi_texture::set_season_folder(f.map(str::to_string));
+        if let Some(a) = &mut self.assets {
+            a.clear();
+        }
+        if let Some(g) = &mut self.gfx {
+            g.renderer.reset_models();
+        }
+    }
+
     fn reload_content(&mut self) {
         let Some(roots) = &self.roots else { return };
         omsi_cfg::content_changed();
@@ -749,6 +765,7 @@ impl App {
                     self.pbr.open_for(vec![f], r);
                 }
             }
+            Action::SetSeason(f) => self.set_season(f),
             Action::ReloadContent(msg) => {
                 self.reload_content();
                 self.ed.toast(msg);

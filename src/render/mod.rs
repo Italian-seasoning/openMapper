@@ -1631,20 +1631,26 @@ impl Renderer {
     fn sync_ground(&mut self, gpu: &Gpu, doc: &Document, assets: &mut Assets) {
         let mut roots = vec![doc.dir.clone(), doc.source.clone().unwrap_or_default()];
         roots.extend(self.roots.iter().cloned());
+        // (a season's picture first: `Texture\Winter\gras.bmp` for `Texture\gras.bmp`)
+        let seasons = omsi_texture::season_folders();
         let find = |rel: &str| -> Option<PathBuf> {
-            for r in &roots {
-                if r.as_os_str().is_empty() {
-                    continue;
-                }
-                let p = omsi_cfg::resolve_path(r, rel);
-                if omsi_cfg::vfs::is_file(&p) {
-                    return Some(p);
+            let (dir, file) = rel.rsplit_once(['\\', '/']).unwrap_or(("", rel));
+            let seasonal = seasons.iter().map(|s| if dir.is_empty() { format!("{s}\\{file}") } else { format!("{dir}\\{s}\\{file}") });
+            for rel in seasonal.chain(std::iter::once(rel.to_string())) {
+                for r in &roots {
+                    if r.as_os_str().is_empty() {
+                        continue;
+                    }
+                    let p = omsi_cfg::resolve_path(r, &rel);
+                    if omsi_cfg::vfs::is_file(&p) {
+                        return Some(p);
+                    }
                 }
             }
             None
         };
         let layers: Vec<_> = doc.global.ground_textures.iter().take(9).collect();
-        let mut key = String::new();
+        let mut key = seasons.join("|");
         let mut imgs = Vec::new();
         for g in &layers {
             let a = find(&g.texture).and_then(|p| assets.texture(&p));
