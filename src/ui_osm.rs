@@ -27,7 +27,7 @@ pub struct OsmUi {
     buildings: Vec<crate::osm_buildings::Building>,
     /// Buildings put with the models of this catalogue folder.
     with_buildings: bool,
-    building_dir: Option<String>,
+    building_dirs: Vec<String>,
     /// Trees and woods planted with the plant mix, so far apart in woods.
     with_trees: bool,
     tree_spacing: f64,
@@ -76,7 +76,7 @@ impl Default for OsmUi {
             green: Default::default(),
             buildings: Vec::new(),
             with_buildings: false,
-            building_dir: None,
+            building_dirs: Vec::new(),
             with_trees: false,
             tree_spacing: 8.0,
             with_lines: true,
@@ -95,6 +95,11 @@ impl Default for OsmUi {
 /// What a download brought: the roads and stops, the bus routes, the trees, and what of
 /// it could not be had (the servers busy).
 type Downloaded = (Vec<osm::Way>, Vec<osm::Stop>, Vec<crate::osm_lines::Route>, crate::osm_green::Green, Vec<crate::osm_buildings::Building>, Vec<String>);
+
+/// The models of these catalogue folders that may be buildings.
+fn pool_of(lib: &Library, dirs: &[String]) -> Vec<String> {
+    lib.assets.iter().filter(|a| a.kind == crate::library::Kind::Object && a.category == crate::library::Category::Objects && dirs.iter().any(|d| a.dir.eq_ignore_ascii_case(d))).map(|a| a.rel.clone()).collect()
+}
 
 /// The map's tiles' box (world).
 fn map_box(ed: &Editor) -> (DVec2, DVec2) {
@@ -291,16 +296,20 @@ impl OsmUi {
             }
             // buildings, with the models of a catalogue folder
             let outlines: Vec<(Vec<DVec2>, f64, bool)> = self.buildings.iter().map(|b| (to_world(&b.outline), b.height, b.known)).filter(|(p, _, _)| inside(&(p.iter().copied().sum::<DVec2>() / p.len().max(1) as f64))).collect();
-            let pool: Vec<String> = self.building_dir.as_ref().map(|d| lib.assets.iter().filter(|a| a.kind == crate::library::Kind::Object && a.category == crate::library::Category::Objects && a.dir.eq_ignore_ascii_case(d)).map(|a| a.rel.clone()).collect()).unwrap_or_default();
+            let pool = pool_of(lib, &self.building_dirs);
             ui.horizontal(|ui| {
                 crate::ui::check(ui, &mut self.with_buildings, tr("Buildings", "Здания")).on_hover_text(tr("Each outline filled with the model of the folder chosen whose ground plan comes nearest, its front to the nearest road; an outline no model fits is left out", "Каждый контур заполняется моделью выбранной папки с самым похожим планом, фасадом к ближайшей дороге; контуры, которым ничто не подходит, пропускаются"));
                 ui.label(RichText::new(format!("{}", outlines.len())).small().color(TEXT_DIM));
-                let name = self.building_dir.clone().map(|d| format!("{d} ({})", pool.len())).unwrap_or_else(|| tr("no folder", "папка не выбрана").into());
-                ui.label(RichText::new(name).color(if self.building_dir.is_some() { Color32::WHITE } else { TEXT_DIM }));
+                let name = if self.building_dirs.is_empty() { tr("no folder", "папка не выбрана").to_string() } else { format!("{} ({})", self.building_dirs.join(", "), pool.len()) };
+                ui.label(RichText::new(name).color(if self.building_dirs.is_empty() { TEXT_DIM } else { Color32::WHITE }));
                 let pick = ed.object_type.as_ref().and_then(|t| lib.find(t)).filter(|a| a.category == crate::library::Category::Objects).map(|a| a.dir.clone());
-                let r = ui.add_enabled(pick.is_some(), egui::Button::new(tr("Its folder", "Его папка")).small());
-                if r.on_hover_text(tr("The folder of the object chosen in the catalogue (Buildings_MC, …)", "Папка объекта, выбранного в каталоге (Buildings_MC, …)")).clicked() {
-                    self.building_dir = pick;
+                let can = pick.as_ref().map(|p| !self.building_dirs.contains(p)).unwrap_or(false);
+                let r = ui.add_enabled(can, egui::Button::new(tr("+ its folder", "+ его папка")).small());
+                if r.on_hover_text(tr("Add the folder of the object chosen in the catalogue (Buildings_MC, …)", "Добавить папку объекта, выбранного в каталоге (Buildings_MC, …)")).clicked() {
+                    self.building_dirs.extend(pick);
+                }
+                if !self.building_dirs.is_empty() && ui.small_button("×").clicked() {
+                    self.building_dirs.clear();
                 }
             });
             ui.add_space(4.0);
@@ -326,7 +335,7 @@ impl OsmUi {
         self.open = open;
     }
 
-    /// OPENMAPPER_OSM=open, or <main type>[;<street type>[;<stop object>[;<one-way type>[;<tree>[;<track type>[;<building folder>]]]]]]: downloaded at once and built (checks
+    /// OPENMAPPER_OSM=open, or <main type>[;<street type>[;<stop object>[;<one-way type>[;<tree>[;<track type>[;<building folders, by commas>]]]]]]: downloaded at once and built (checks
     /// without a person at the screen).
     pub fn scripted(&mut self, ed: &Editor, lib: &Library, georef: Option<Georef>, arg: &str) {
         let Some(g) = georef else { return };
@@ -379,8 +388,9 @@ impl OsmUi {
                 };
                 let (buildings, pool) = match &building_dir {
                     Some(d) => {
+                        let dirs: Vec<String> = d.split(',').map(|x| x.trim().to_string()).collect();
                         let o = crate::geo::fetch::overpass(&crate::osm_buildings::query(b)).and_then(|body| crate::osm_buildings::parse(&body)).unwrap_or_default();
-                        let pool: Vec<String> = lib.assets.iter().filter(|a| a.kind == crate::library::Kind::Object && a.category == crate::library::Category::Objects && a.dir.eq_ignore_ascii_case(d)).map(|a| a.rel.clone()).collect();
+                        let pool = pool_of(lib, &dirs);
                         (o.iter().map(|b| (b.outline.iter().map(|p| g.world(p.0, p.1)).collect(), b.height, b.known)).collect(), pool)
                     }
                     None => (Vec::new(), Vec::new()),
