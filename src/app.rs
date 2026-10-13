@@ -324,6 +324,10 @@ impl App {
                 self.cam.snap();
             }
         }
+        // OPENMAPPER_PALETTE=<text>: the command search open with that typed
+        if let Ok(q) = std::env::var("OPENMAPPER_PALETTE") {
+            self.ui.palette.show_with(&q);
+        }
         // OPENMAPPER_HISTORY=1: the edit history open
         if std::env::var_os("OPENMAPPER_HISTORY").is_some() {
             self.ui.history_open = true;
@@ -932,6 +936,8 @@ impl App {
             Some(KeyCode::KeyD) if ctrl => actions.push(Action::Duplicate),
             Some(KeyCode::KeyA) if ctrl => actions.push(Action::SelectAll),
             Some(KeyCode::KeyF) if ctrl => self.ui.find.show(),
+            Some(KeyCode::KeyK) if ctrl => self.ui.palette.show(),
+            Some(KeyCode::KeyP) if ctrl && shift => self.ui.palette.show(),
             // Ctrl+1…9: a saved view gone to (Shift: the view kept there)
             Some(k @ (KeyCode::Digit1 | KeyCode::Digit2 | KeyCode::Digit3 | KeyCode::Digit4 | KeyCode::Digit5 | KeyCode::Digit6 | KeyCode::Digit7 | KeyCode::Digit8 | KeyCode::Digit9)) if ctrl => {
                 let n = [KeyCode::Digit1, KeyCode::Digit2, KeyCode::Digit3, KeyCode::Digit4, KeyCode::Digit5, KeyCode::Digit6, KeyCode::Digit7, KeyCode::Digit8, KeyCode::Digit9].iter().position(|d| *d == k).unwrap_or(0);

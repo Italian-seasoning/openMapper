@@ -23,7 +23,7 @@ pub(crate) const BG_FIELD: Color32 = Color32::from_rgb(22, 23, 25);
 const BORDER: Color32 = Color32::from_rgb(18, 18, 20);
 const HEADER: Color32 = Color32::from_rgb(45, 46, 50);
 pub(crate) const TEXT_DIM: Color32 = Color32::from_rgb(140, 143, 150);
-const SELECT: Color32 = Color32::from_rgb(64, 86, 122);
+pub(crate) const SELECT: Color32 = Color32::from_rgb(64, 86, 122);
 
 /// What the interface asks the application to do.
 pub enum Action {
@@ -123,6 +123,8 @@ pub struct UiState {
     pub search: String,
     /// Saved views (View menu, Ctrl+1…9).
     pub views: crate::ui_views::Views,
+    /// Search for a command (Ctrl+K).
+    pub palette: crate::ui_palette::Palette,
     pub object_cat: Option<Category>,
     pub spline_cat: Option<Category>,
     pub new_map: Option<crate::ui_newmap::NewMapForm>,
@@ -172,6 +174,7 @@ impl Default for UiState {
         UiState {
             search: String::new(),
             views: Default::default(),
+            palette: Default::default(),
             object_cat: None,
             spline_cat: None,
             new_map: None,
@@ -636,6 +639,7 @@ pub fn editor(root: &mut egui::Ui, st: &mut UiState, u: EditorUi, actions: &mut 
     st.find.window(&ctx, ed, lib, actions);
     st.groups.window(&ctx, ed, lib);
     history_window(&ctx, st, ed, actions);
+    crate::ui_palette::window(&ctx, st, ed, actions);
     if let Some(doc) = &ed.doc {
         crate::doc::safe::versions_window(&ctx, &mut st.versions_open, &doc.dir, actions);
     }
@@ -719,6 +723,9 @@ fn menu_bar(root: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, can_undo: bo
                 }
                 if menu_item(ui, Some(Icon::Search), tr("Find in map…", "Поиск по карте…"), "Ctrl+F", true) {
                     st.find.show();
+                }
+                if menu_item(ui, Some(Icon::Search), tr("Search for a command…", "Поиск команды…"), "Ctrl+K", true) {
+                    st.palette.show();
                 }
                 if menu_item(ui, Some(Icon::SelectAll), tr("Select all", "Выбрать всё"), "Ctrl+A", true) {
                     actions.push(Action::SelectAll);
