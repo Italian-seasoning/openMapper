@@ -93,7 +93,7 @@ experienced map makers.
     whose ground plan and height (OSM's height or storeys, else what its kind usually is)
     come nearest, its front to the nearest road; an outline no model fits is left out.
 
-  Each is one undo step. © OpenStreetMap contributors (ODbL).
+  All a build brings is one undo step. © OpenStreetMap contributors (ODbL).
 * **Own pictures** on tiles (a scan, a screenshot, an old plan), no place on the Earth needed:
   "Load image file…" for a tile (or drop the picture on the window with the Tiles tool and a tile
   clicked), or one picture over a rectangle of tiles, cut into their pieces; turned (90° steps or
