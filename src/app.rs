@@ -315,6 +315,15 @@ impl App {
         if std::env::var_os("OPENMAPPER_GROUPS").is_some() {
             self.ui.groups.open = true;
         }
+        // OPENMAPPER_VIEWS=<n>: the saved views open (n: view n gone to)
+        if let Ok(v) = std::env::var("OPENMAPPER_VIEWS") {
+            self.ui.views.open = true;
+            self.ui.views.follow(self.ed.doc.as_ref().map(|d| d.dir.as_path()));
+            if let Some(n) = v.parse::<usize>().ok().filter(|n| *n > 0) {
+                self.ui.views.go(n - 1, &mut self.cam);
+                self.cam.snap();
+            }
+        }
         // OPENMAPPER_HISTORY=1: the edit history open
         if std::env::var_os("OPENMAPPER_HISTORY").is_some() {
             self.ui.history_open = true;
@@ -923,6 +932,17 @@ impl App {
             Some(KeyCode::KeyD) if ctrl => actions.push(Action::Duplicate),
             Some(KeyCode::KeyA) if ctrl => actions.push(Action::SelectAll),
             Some(KeyCode::KeyF) if ctrl => self.ui.find.show(),
+            // Ctrl+1…9: a saved view gone to (Shift: the view kept there)
+            Some(k @ (KeyCode::Digit1 | KeyCode::Digit2 | KeyCode::Digit3 | KeyCode::Digit4 | KeyCode::Digit5 | KeyCode::Digit6 | KeyCode::Digit7 | KeyCode::Digit8 | KeyCode::Digit9)) if ctrl => {
+                let n = [KeyCode::Digit1, KeyCode::Digit2, KeyCode::Digit3, KeyCode::Digit4, KeyCode::Digit5, KeyCode::Digit6, KeyCode::Digit7, KeyCode::Digit8, KeyCode::Digit9].iter().position(|d| *d == k).unwrap_or(0);
+                self.ui.views.follow(self.ed.doc.as_ref().map(|d| d.dir.as_path()));
+                if shift {
+                    let at = self.ui.views.store(n, &self.cam);
+                    self.ed.toast(format!("{} {}", tr("View kept as", "Вид запомнен как"), at + 1));
+                } else if !self.ui.views.go(n, &mut self.cam) {
+                    self.ed.toast(format!("{} {} (Ctrl+Shift+{})", tr("No view kept as", "Нет вида под номером"), n + 1, n + 1));
+                }
+            }
             Some(KeyCode::Digit1) => self.ed.set_tool(Tool::Select),
             Some(KeyCode::Digit2) => self.ed.set_tool(Tool::Roads),
             Some(KeyCode::Digit3) => self.ed.set_tool(Tool::Objects),
@@ -1170,6 +1190,8 @@ impl App {
                 self.chrono.window(&ctx, &mut self.ed, &self.lib, self.roots.as_ref(), &mut actions);
                 self.signals.window(&ctx, &mut self.ed, &self.lib, self.roots.as_ref(), &mut actions);
                 self.geo.window(&ctx, &mut self.ed, &mut self.prefs);
+                self.ui.views.follow(self.ed.doc.as_ref().map(|d| d.dir.as_path()));
+                self.ui.views.window(&ctx, &mut self.cam);
                 self.osm.window(&ctx, &mut self.ed, &self.lib, self.geo.georef());
                 if let Some(p) = self.geo.look.take() {
                     actions.push(Action::LookAt(p));

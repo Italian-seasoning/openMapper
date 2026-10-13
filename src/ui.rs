@@ -121,6 +121,8 @@ pub enum Action {
 /// State of the interface that lives between frames.
 pub struct UiState {
     pub search: String,
+    /// Saved views (View menu, Ctrl+1…9).
+    pub views: crate::ui_views::Views,
     pub object_cat: Option<Category>,
     pub spline_cat: Option<Category>,
     pub new_map: Option<crate::ui_newmap::NewMapForm>,
@@ -169,6 +171,7 @@ impl Default for UiState {
     fn default() -> Self {
         UiState {
             search: String::new(),
+            views: Default::default(),
             object_cat: None,
             spline_cat: None,
             new_map: None,
@@ -746,6 +749,9 @@ fn menu_bar(root: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, can_undo: bo
                 check(ui, &mut st.minimap.open, icons::labelled(Icon::Map, tr("Overview map (M)", "Обзорная карта (M)")));
                 check(ui, &mut st.assets.open, icons::labelled(Icon::Objects, tr("Assets (B)", "Ассеты (B)")));
                 crate::ui_geo::view_menu(ui, &mut st.geo);
+                if menu_item(ui, Some(Icon::Flag), tr("Saved views…", "Сохранённые виды…"), "Ctrl+1…9", true) {
+                    st.views.open = !st.views.open;
+                }
                 if menu_item(ui, Some(Icon::Focus), tr("Go to selection", "К выделенному"), "F", ed.selected.is_some()) {
                     actions.push(Action::FocusSelection);
                 }

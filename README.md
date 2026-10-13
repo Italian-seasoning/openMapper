@@ -107,6 +107,9 @@ experienced map makers.
 * **Season** (View menu): the view in summer, dry summer, spring, autumn, winter or snow,
   with the seasons' own textures as OMSI keeps them (`Fall`, `Winter`, `WinterSnow`…), the
   ground's too.
+* **Saved views** (View menu): places of the map to come back to (a busy junction, the
+  depot, a stop), named and kept with the map; `Ctrl+1…9` flies to the first nine,
+  `Ctrl+Shift+1…9` keeps the view there.
 * **Layers** (View > Show): trees, other objects, roads and splines each hidden or shown;
   what is hidden is not picked or box-selected either, handy in a dense town.
 * **Copies in a row** (an object's or a selection's properties): a fence, a row of houses, an
@@ -205,7 +208,7 @@ experienced map makers.
   Option + drag turns and tilts.
 * **Keyboard:** `W A S D` / arrows move, `Q / E` turn, `1–7` tools, `M` overview map, `B` assets, `L` lines, `T` traffic, `I` satellite and terrain, `R` turn object, `Del`,
   `F` go to selection, `[ ]` brush size, `G` tile grid, `Ctrl+Z`, `Ctrl+Shift+Z`, `Ctrl+S`,
-  `Ctrl+C / X / V / D` copy, cut, paste, duplicate, `Ctrl+A` select all, `Ctrl+F` find in map, `Alt + arrows` nudge the selection a grid step (`Shift`: 10 cm), `Alt + Page Up / Down` raise or lower it, `U` ruler, `Home` look straight down, `F5` test drive, `F12` save a picture of the view (into `~/Pictures/openMapper`).
+  `Ctrl+C / X / V / D` copy, cut, paste, duplicate, `Ctrl+A` select all, `Ctrl+F` find in map, `Alt + arrows` nudge the selection a grid step (`Shift`: 10 cm), `Alt + Page Up / Down` raise or lower it, `U` ruler, `Home` look straight down, `F5` test drive, `F12` save a picture of the view (into `~/Pictures/openMapper`), `Ctrl+1…9` go to a saved view (`Ctrl+Shift`: keep the view there).
 
 ## How it's built
 
