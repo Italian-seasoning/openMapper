@@ -1221,6 +1221,55 @@ impl Editor {
         // (the tool goes on placing: nothing is selected)
     }
 
+    /// Stops put down where OpenStreetMap has them (`(where, name)`), each at the kerb of
+    /// the lane nearest to it as a stop placed by hand stands; one with no lane within 25 m,
+    /// or a stop the map has within 10 m, is left out. One undo step; how many were put.
+    pub fn place_osm_stops(&mut self, assets: &mut Assets, stops: &[(DVec2, String)], rel: &str) -> usize {
+        let Some(doc) = self.doc.as_ref() else { return 0 };
+        let lht = doc.global.left_hand_traffic;
+        // where the map's stops stand (the ones put here count too)
+        let mut stood: Vec<DVec2> = doc.tiles.iter().flat_map(|(k, t)| t.tile.objects.iter().filter(|o| o.extra.len() >= 4 && o.flag == 7).map(move |o| tile_origin(*k) + DVec2::new(o.pos[0], o.pos[1]))).collect();
+        self.history.begin(tr("Stops from OpenStreetMap", "Остановки из OpenStreetMap"));
+        let mut n = 0;
+        for (p, name) in stops {
+            let Some(doc) = self.doc.as_ref() else { break };
+            let (lanes, _) = crate::lanes::near(doc, assets, *p, 25.0);
+            let best = lanes.iter().filter(|l| l.kind == 0).filter_map(|l| l.nearest(*p).map(|q| (q, l.direction))).filter(|(q, _)| q.2 < 25.0).min_by(|a, b| a.0 .2.total_cmp(&b.0 .2));
+            let Some(((q, h, _, _), dir)) = best else {
+                log::debug!("osm stop {name} at {p:?}: no lane near ({} lanes)", lanes.len());
+                continue;
+            };
+            let flow = if dir == 1 { roads::norm_deg(h + 180.0) } else { h };
+            let kerb = roads::right(flow) * if lht { -1.0 } else { 1.0 };
+            let at = q.truncate() + kerb * 3.2;
+            if stood.iter().any(|s| (*s - at).length() < 10.0) {
+                continue;
+            }
+            let k = tile_of(at);
+            let Some(doc) = self.doc.as_mut() else { break };
+            if !doc.tiles.contains_key(&k) {
+                continue;
+            }
+            self.history.touch_tile(doc, k);
+            let id = doc.new_id();
+            let org = tile_origin(k);
+            let label = if name.trim().is_empty() { tr("Stop", "Остановка").to_string() } else { name.trim().to_string() };
+            let o = MapObject { file: rel.to_string(), id, pos: [at.x - org.x, at.y - org.y, 0.0], rot: [flow, 0.0, 0.0], extra: vec![label, "0".into(), "0".into(), "10".into()], flag: 7, ..Default::default() };
+            let t = doc.tiles.get_mut(&k).unwrap();
+            t.tile.objects.push(o);
+            t.touch_content();
+            stood.push(at);
+            n += 1;
+        }
+        if n == 0 {
+            self.history.cancel();
+        } else {
+            self.history.touch_global(self.doc.as_ref().unwrap());
+            self.history.commit();
+        }
+        n
+    }
+
     /// A car park click with rows on: the first click starts a row, the second fills it to
     /// there with car parks every `parking_step` metres, standing along it.
     fn parking_click(&mut self, assets: &mut Assets, lib: &Library) {

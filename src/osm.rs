@@ -70,12 +70,32 @@ pub struct Way {
     pub geometry: Vec<(f64, f64)>,
 }
 
-/// The Overpass query for the roads within a box (south, west, north, east).
+/// The Overpass query for the roads and bus stops within a box (south, west, north, east).
 pub fn query(bbox: [f64; 4]) -> String {
-    format!(
-        "[out:json][timeout:90];way[\"highway\"~\"^(motorway|trunk|primary|secondary|tertiary|unclassified|residential|living_street|service)(_link)?$\"][\"area\"!=\"yes\"]({:.6},{:.6},{:.6},{:.6});out geom;",
-        bbox[0], bbox[1], bbox[2], bbox[3]
-    )
+    let b = format!("{:.6},{:.6},{:.6},{:.6}", bbox[0], bbox[1], bbox[2], bbox[3]);
+    format!("[out:json][timeout:90];(way[\"highway\"~\"^(motorway|trunk|primary|secondary|tertiary|unclassified|residential|living_street|service)(_link)?$\"][\"area\"!=\"yes\"]({b});node[\"highway\"=\"bus_stop\"]({b}););out geom;")
+}
+
+/// A bus stop of OpenStreetMap: where (latitude, longitude) and its name.
+#[derive(Clone, Debug)]
+pub struct Stop {
+    pub at: (f64, f64),
+    pub name: String,
+}
+
+/// The bus stops of an Overpass answer.
+pub fn parse_stops(body: &str) -> Result<Vec<Stop>, String> {
+    let v: serde_json::Value = serde_json::from_str(body).map_err(|e| e.to_string())?;
+    Ok(v.get("elements")
+        .and_then(|e| e.as_array())
+        .into_iter()
+        .flatten()
+        .filter(|e| e.get("type").and_then(|t| t.as_str()) == Some("node"))
+        .filter_map(|e| {
+            let name = e.get("tags").and_then(|t| t.get("name")).and_then(|n| n.as_str()).unwrap_or("").to_string();
+            Some(Stop { at: (e.get("lat")?.as_f64()?, e.get("lon")?.as_f64()?), name })
+        })
+        .collect())
 }
 
 /// The ways of an Overpass answer (`out geom`).
@@ -403,6 +423,9 @@ mod tests {
         let body = r#"{"elements":[{"type":"way","id":7,"nodes":[1,2],"geometry":[{"lat":52.5,"lon":13.4},{"lat":52.501,"lon":13.4}],"tags":{"highway":"residential","name":"Hauptstr"}},{"type":"way","id":8,"nodes":[3,4],"geometry":[{"lat":52.5,"lon":13.4},{"lat":52.501,"lon":13.4}],"tags":{"highway":"footway"}}]}"#;
         let w = parse(body).unwrap();
         assert_eq!(w.len(), 1);
+        let body = r#"{"elements":[{"type":"node","id":5,"lat":52.5,"lon":13.4,"tags":{"highway":"bus_stop","name":"Markt"}}]}"#;
+        let s = parse_stops(body).unwrap();
+        assert_eq!(s[0].name, "Markt");
         assert_eq!(w[0].class, Class::Street);
     }
 }

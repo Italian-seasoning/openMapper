@@ -340,7 +340,7 @@ impl App {
         if let Ok(a) = std::env::var("OPENMAPPER_GEO") {
             self.geo.scripted(&mut self.ed, &self.prefs, &a);
         }
-        // OPENMAPPER_OSM=<main type>[;<street type>]: roads from OpenStreetMap built (after
+        // OPENMAPPER_OSM=<main type>[;<street type>[;<stop>]]: roads and stops from OpenStreetMap built (after
         // OPENMAPPER_GEO placed the map)
         if let Ok(t) = std::env::var("OPENMAPPER_OSM") {
             self.osm.scripted(&self.ed, self.geo.georef(), &t);
@@ -1146,9 +1146,10 @@ impl App {
             }
         }
         self.geo.take_bridge(&mut self.ui.geo, &mut self.ed, &self.prefs);
-        if let (Some((list, types)), Some(assets)) = (self.osm.build.take(), self.assets.as_mut()) {
-            let (roads, junctions) = self.ed.build_osm(assets, &list, &types);
-            self.ed.toast(format!("{} {roads} · {} {junctions}", tr("Roads built:", "Дорог построено:"), tr("junctions:", "перекрёстков:")));
+        if let (Some(b), Some(assets)) = (self.osm.build.take(), self.assets.as_mut()) {
+            let (roads, junctions) = self.ed.build_osm(assets, &b.roads, &b.types);
+            let stops = b.stop_type.map(|t| self.ed.place_osm_stops(assets, &b.stops, &t)).unwrap_or(0);
+            self.ed.toast(format!("{} {roads} · {} {junctions} · {} {stops}", tr("Roads built:", "Дорог построено:"), tr("junctions:", "перекрёстков:"), tr("stops:", "остановок:")));
         }
         g.egui_state.handle_platform_output(&g.window, full.platform_output.clone());
         self.load_swatches(&g.egui_ctx, wanted_swatches);

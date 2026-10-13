@@ -78,7 +78,8 @@ experienced map makers.
   streets, service roads) with how many and how long; each kind built with the road type
   chosen for it, as if drawn: the ways of one street joined into one road, corners rounded
   into OMSI's arcs, junctions where roads meet or cross, one undo step. Roads lying on ones the
-  map already has are left out. © OpenStreetMap contributors (ODbL).
+  map already has are left out. The bus stops come too, with their names: the stop object
+  chosen put at the kerb of the nearest lane, as one placed by hand. © OpenStreetMap contributors (ODbL).
 * **Own pictures** on tiles (a scan, a screenshot, an old plan), no place on the Earth needed:
   "Load image file…" for a tile (or drop the picture on the window with the Tiles tool and a tile
   clicked), or one picture over a rectangle of tiles, cut into their pieces; turned (90° steps or
