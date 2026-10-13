@@ -232,11 +232,20 @@ impl OsmUi {
         self.open = open;
     }
 
-    /// OPENMAPPER_OSM=<main type>[;<street type>[;<stop object>[;<one-way type>]]]: downloaded at once and built (checks
+    /// OPENMAPPER_OSM=open, or <main type>[;<street type>[;<stop object>[;<one-way type>]]]: downloaded at once and built (checks
     /// without a person at the screen).
     pub fn scripted(&mut self, ed: &Editor, georef: Option<Georef>, arg: &str) {
         let Some(g) = georef else { return };
         let Some(b) = bbox(ed, &g) else { return };
+        // (`open`: the window with what was downloaded, nothing built)
+        if arg == "open" {
+            let body = crate::geo::fetch::overpass(&osm::query(b));
+            self.ways = body.as_ref().ok().and_then(|b| osm::parse(b).ok());
+            self.stops = body.as_ref().ok().and_then(|b| osm::parse_stops(b).ok()).unwrap_or_default();
+            self.lines = crate::geo::fetch::overpass(&crate::osm_lines::query(b)).and_then(|b| crate::osm_lines::parse(&b)).unwrap_or_default();
+            self.open = true;
+            return;
+        }
         let mut types = arg.split(';').map(str::trim).filter(|t| !t.is_empty());
         let main = types.next().unwrap_or_default().to_string();
         let street = types.next().map(str::to_string).unwrap_or_else(|| main.clone());
