@@ -44,6 +44,12 @@ pub enum Action {
     RevealAsset(String),
     /// Move an asset of the content folder into openMapper's bin.
     DeleteAsset(String),
+    /// Welcome list: a map's folder shown in the file manager (its global.cfg).
+    RevealMap(PathBuf),
+    /// Welcome list: a copy of a map made in the content folder under a new name.
+    CopyMap(PathBuf),
+    /// Welcome list: a content folder map moved into openMapper's bin.
+    BinMap(PathBuf),
     /// The Road types window (road maker, junction styles).
     RoadTypes,
     /// The PBR window on an object's textures.
@@ -542,6 +548,28 @@ pub fn welcome(root: &mut egui::Ui, st: &mut UiState, prefs: &Prefs, omsi: Optio
                                         if resp.double_clicked() {
                                             actions.push(Action::Open(cfg.clone()));
                                         }
+                                        let in_content = st.maps.iter().any(|m| m.cfg == *cfg && m.in_content);
+                                        resp.context_menu(|ui| {
+                                            if ui.button(icons::labelled(Icon::Open, tr("Open", "Открыть"))).clicked() {
+                                                actions.push(Action::Open(cfg.clone()));
+                                                ui.close();
+                                            }
+                                            if ui.button(icons::labelled(Icon::Copy, tr("Make a copy", "Сделать копию"))).on_hover_text(tr("A copy of the map in the content folder under a new name, to try something out", "Копия карты в папке контента под новым именем, чтобы что-то попробовать")).clicked() {
+                                                actions.push(Action::CopyMap(cfg.clone()));
+                                                ui.close();
+                                            }
+                                            if ui.button(icons::labelled(Icon::Search, tr("Show in the file manager", "Показать в файловом менеджере"))).clicked() {
+                                                actions.push(Action::RevealMap(cfg.clone()));
+                                                ui.close();
+                                            }
+                                            if in_content {
+                                                ui.separator();
+                                                if ui.button(icons::labelled(Icon::Delete, tr("Move to openMapper's bin", "Убрать в корзину openMapper"))).on_hover_text(tr("Its folder goes into openMapper\\bin in the content folder, from where it can be put back by hand", "Её папка переносится в openMapper\\bin в папке контента, откуда её можно вернуть вручную")).clicked() {
+                                                    actions.push(Action::BinMap(cfg.clone()));
+                                                    ui.close();
+                                                }
+                                            }
+                                        });
                                     }
                                 });
                             });

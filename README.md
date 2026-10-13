@@ -171,6 +171,9 @@ experienced map makers.
   view, drawn with OMSI's `.oft` fonts as the game draws them (`[texttexture]`); an object's
   texts are listed by name in its properties (`@` starts a new line).
 * **Open any map**: OMSI 2's own (saved as a copy into the content folder) and mod maps.
+  Right-click a map where maps are chosen: make a copy of it under a new name (to try
+  something out), show it in the file manager, or move a content folder map into
+  openMapper's bin (`openMapper\bin\maps`, from where it can be put back by hand).
 * **New map** from OMSI 2's own template (`template/NewMap`): size, keep right or left, base
   ground, and "Start with a sample": a ring road with stops, a start point, line 1 both ways,
   a tour from 06:00 to 22:00, a depot and AI traffic, so it can be driven in service at once.

@@ -814,6 +814,29 @@ impl App {
                     self.ed.place_now(a, &self.lib);
                 }
             }
+            Action::RevealMap(cfg) => reveal(&cfg),
+            Action::CopyMap(cfg) => {
+                if let Some(r) = &self.roots {
+                    match copy_map(r, &cfg) {
+                        Ok(to) => {
+                            self.ui.maps = install::list_maps(r);
+                            self.ui.welcome_pick = Some(to);
+                        }
+                        Err(e) => self.ed.error(format!("{}: {e:#}", tr("Could not copy the map", "Не удалось скопировать карту"))),
+                    }
+                }
+            }
+            Action::BinMap(cfg) => {
+                if let Some(r) = &self.roots {
+                    match bin_map(&r.content, &cfg) {
+                        Ok(()) => {
+                            self.ui.maps = install::list_maps(r);
+                            self.ui.welcome_pick = None;
+                        }
+                        Err(e) => self.ed.error(format!("{}: {e:#}", tr("Could not move the map", "Не удалось перенести карту"))),
+                    }
+                }
+            }
             Action::RevealAsset(rel) => {
                 if let Some(r) = &self.roots {
                     reveal(&r.resolve(&rel));
@@ -2119,6 +2142,35 @@ fn reveal(p: &Path) {
     let _ = std::process::Command::new("xdg-open").arg(p.parent().unwrap_or(p)).spawn();
 }
 
+/// A copy of a map in the content folder under a free folder name ("<folder> copy", …), its
+/// name marked as a copy; where its global.cfg is.
+fn copy_map(roots: &Roots, cfg: &Path) -> anyhow::Result<PathBuf> {
+    let src = cfg.parent().ok_or_else(|| anyhow::anyhow!("no folder"))?;
+    let folder = src.file_name().map(|f| f.to_string_lossy().to_string()).unwrap_or_else(|| "Map".into());
+    let maps = roots.content.join("maps");
+    let free = (1..).map(|i| if i == 1 { format!("{folder} {}", tr("copy", "копия")) } else { format!("{folder} {} {i}", tr("copy", "копия")) }).find(|n| !maps.join(n).exists()).unwrap();
+    let mut doc = Document::load(roots, cfg, |_| {})?;
+    doc.dir = maps.join(&free);
+    doc.source = Some(src.to_path_buf());
+    let name = if doc.global.friendly_name.is_empty() { doc.global.name.clone() } else { doc.global.friendly_name.clone() };
+    doc.global.friendly_name = format!("{name} ({})", tr("copy", "копия"));
+    doc.global_dirty = true;
+    crate::doc::save(&mut doc)?;
+    Ok(doc.dir.join("global.cfg"))
+}
+
+/// A content folder map's folder moved into `openMapper\bin\maps` (never the installation's).
+fn bin_map(content: &Path, cfg: &Path) -> anyhow::Result<()> {
+    let dir = cfg.parent().ok_or_else(|| anyhow::anyhow!("no folder"))?;
+    anyhow::ensure!(dir.starts_with(content.join("maps")) && dir.is_dir(), "{}", tr("Only maps of the content folder can be moved", "Переносить можно только карты папки контента"));
+    let bin = content.join("openMapper").join("bin").join("maps");
+    std::fs::create_dir_all(&bin)?;
+    let name = dir.file_name().map(|f| f.to_string_lossy().to_string()).unwrap_or_default();
+    let to = (1..).map(|i| if i == 1 { bin.join(&name) } else { bin.join(format!("{name} {i}")) }).find(|p| !p.exists()).unwrap();
+    std::fs::rename(dir, to)?;
+    Ok(())
+}
+
 /// Move a content folder asset's file into `openMapper\bin` (same place below it), so it
 /// can be put back by hand. Only ever the content folder's own files.
 fn bin_asset(content: &Path, rel: &str) -> anyhow::Result<()> {
@@ -2206,6 +2258,8 @@ fn read_frame(gpu: &Gpu, tex: &wgpu::Texture) -> anyhow::Result<image::RgbaImage
 
 #[cfg(test)]
 mod tests {
+    use super::*;
+
     #[test]
     fn map_picture_is_omsi_sized() {
         let dir = std::env::temp_dir().join(format!("openmapper-picture-{}", std::process::id()));
@@ -2215,5 +2269,27 @@ mod tests {
         let back = image::open(&path).unwrap();
         assert_eq!((back.width(), back.height()), (370, 280));
         let _ = std::fs::remove_dir_all(dir);
+    }
+
+    #[test]
+    fn a_map_is_copied_under_a_new_name_and_moved_to_the_bin() {
+        let roots = crate::doc::tests::scratch("copymap");
+        let mut doc = crate::doc::tests::sample_map(&roots);
+        crate::doc::save(&mut doc).unwrap();
+        let cfg = doc.dir.join("global.cfg");
+        let copy = copy_map(&roots, &cfg).unwrap();
+        assert!(copy.parent().unwrap().ends_with(format!("Roundtrip {}", tr("copy", "копия"))));
+        let back = Document::load(&roots, &copy, |_| {}).unwrap();
+        assert_eq!(back.tiles.len(), doc.tiles.len());
+        assert!(back.global.friendly_name.ends_with(&format!("({})", tr("copy", "копия"))));
+        // a second copy takes the next free name
+        let again = copy_map(&roots, &cfg).unwrap();
+        assert_ne!(again, copy);
+        bin_map(&roots.content, &copy).unwrap();
+        assert!(!copy.exists());
+        assert!(roots.content.join("openMapper").join("bin").join("maps").join(copy.parent().unwrap().file_name().unwrap()).join("global.cfg").is_file());
+        // never a map outside the content folder
+        assert!(bin_map(&roots.content.join("maps"), &roots.omsi.join("maps").join("x").join("global.cfg")).is_err());
+        let _ = std::fs::remove_dir_all(&roots.content);
     }
 }
