@@ -49,6 +49,28 @@ pub struct OsmUi {
     include: HashMap<Class, bool>,
     /// Asked for: build these (the app has the assets).
     pub build: Option<Build>,
+    /// What the download makes for the map as it is (the tiles' count and the download's
+    /// number when made): worked out once, not each frame.
+    derived: Option<((usize, u64), std::rc::Rc<Derived>)>,
+    downloads: u64,
+}
+
+/// The downloaded things within the map, in world coordinates.
+#[derive(Default)]
+struct Derived {
+    stops: Vec<(DVec2, String)>,
+    lines: Vec<(String, String, Vec<DVec2>)>,
+    trees: Vec<DVec2>,
+    rows: Vec<Vec<DVec2>>,
+    woods: Vec<Vec<DVec2>>,
+    holes: Vec<Vec<DVec2>>,
+    /// The woods' area within the map (ha).
+    ha: f64,
+    buildings: Vec<(Vec<DVec2>, f64, bool)>,
+    water: Vec<Vec<DVec2>>,
+    islands: Vec<Vec<DVec2>>,
+    /// Water areas reaching into the map.
+    water_in: usize,
 }
 
 /// Roads with their types, then stops (where, name) with their object.
@@ -97,6 +119,8 @@ impl Default for OsmUi {
             oneway_type: None,
             include: [(Class::Main, true), (Class::Street, true), (Class::Service, false), (Class::Tram, false), (Class::Rail, false)].into_iter().collect(),
             build: None,
+            derived: None,
+            downloads: 0,
         }
     }
 }
@@ -146,6 +170,7 @@ impl OsmUi {
                     self.ways = Some(w);
                     self.stops = st;
                     self.lines = li;
+                    self.downloads += 1;
                     self.roads = None;
                     self.rx = None;
                 }
@@ -166,8 +191,15 @@ impl OsmUi {
                 self.roads = Some((tiles, made));
             }
         }
+        if let (Some(g), Some(doc)) = (&georef, &ed.doc) {
+            let key = (tiles, self.downloads);
+            if self.derived.as_ref().map(|d| d.0 != key).unwrap_or(true) {
+                self.derived = Some((key, std::rc::Rc::new(self.derive(g, doc, ed))));
+            }
+        }
+        let derived = self.derived.as_ref().map(|d| d.1.clone()).unwrap_or_default();
         let mut open = self.open;
-        egui::Window::new(icons::labelled(Icon::Road, tr("From OpenStreetMap", "Из OpenStreetMap"))).id(egui::Id::new("osm roads")).open(&mut open).default_pos([360.0, 110.0]).default_width(380.0).resizable(false).vscroll(true).show(ctx, |ui| {
+        egui::Window::new(icons::labelled(Icon::Road, tr("From OpenStreetMap", "Из OpenStreetMap"))).id(egui::Id::new("osm roads")).open(&mut open).default_pos([360.0, 110.0]).default_size([390.0, 700.0]).resizable(true).vscroll(true).show(ctx, |ui| {
             ui.label(RichText::new(tr("The streets of the map's place built as roads with junctions where they meet, its bus stops, lines, trees and woods. Best on tiles with no roads yet: roads lying on ones the map has are left out.", "Улицы места карты, построенные дорогами с перекрёстками, её остановки, линии, деревья и леса. Лучше на тайлах без дорог: дороги поверх уже имеющихся пропускаются.")).small().color(TEXT_DIM));
             ui.add_space(4.0);
             let Some(g) = georef else {
@@ -259,8 +291,7 @@ impl OsmUi {
                 ui.end_row();
             });
             // the stops, with the stop object chosen in the catalogue
-            let doc_ok = ed.doc.as_ref();
-            let stops_in: Vec<(DVec2, String)> = self.stops.iter().map(|st| (g.world(st.at.0, st.at.1), st.name.clone())).filter(|(p, _)| doc_ok.map(|d| d.tiles.contains_key(&tile_of(*p))).unwrap_or(false)).collect();
+            let stops_in = &derived.stops;
             ui.horizontal(|ui| {
                 crate::ui::check(ui, &mut self.with_stops, tr("Bus stops", "Остановки"));
                 ui.label(RichText::new(format!("{}", stops_in.len())).small().color(TEXT_DIM));
@@ -273,8 +304,7 @@ impl OsmUi {
                 }
             });
             // the bus routes through the map's stops: lines and trips
-            let inside = |p: &DVec2| doc_ok.map(|d| d.tiles.contains_key(&tile_of(*p))).unwrap_or(false);
-            let lines_in: Vec<(String, String, Vec<DVec2>)> = self.lines.iter().map(|r| (r.number.clone(), r.name.clone(), r.stops.iter().map(|p| g.world(p.0, p.1)).collect::<Vec<_>>())).filter(|r| r.2.iter().filter(|p| inside(p)).count() >= 2).collect();
+            let lines_in = &derived.lines;
             ui.horizontal(|ui| {
                 crate::ui::check(ui, &mut self.with_lines, tr("Bus lines", "Автобусные линии")).on_hover_text(tr("Each bus route through two or more of the map's stops a trip of its line, the way found along the roads; a tour from 06:00 to 22:00 for each new line", "Каждый маршрут через две или больше остановок карты: рейс своей линии, путь по дорогам находится сам; для каждой новой линии оборот с 06:00 до 22:00"));
                 let mut numbers: Vec<&str> = lines_in.iter().map(|l| l.0.as_str()).collect();
@@ -284,17 +314,8 @@ impl OsmUi {
                 ui.label(RichText::new(format!("{} {}{}", lines_in.len(), shown.join(", "), if numbers.len() > 8 { "…" } else { "" })).small().color(TEXT_DIM));
             });
             // trees and woods, with the plant mix (or the tree chosen)
-            let to_world = |v: &Vec<(f64, f64)>| v.iter().map(|p| g.world(p.0, p.1)).collect::<Vec<DVec2>>();
-            let woods: Vec<Vec<DVec2>> = self.green.woods.iter().map(to_world).collect();
-            let rows: Vec<Vec<DVec2>> = self.green.rows.iter().map(to_world).collect();
-            let trees: Vec<DVec2> = self.green.trees.iter().map(|p| g.world(p.0, p.1)).filter(inside).collect();
+            let (trees, rows, woods, ha) = (&derived.trees, &derived.rows, &derived.woods, derived.ha);
             let mix: Vec<String> = if !ed.plant_mix.is_empty() { ed.plant_mix.clone() } else { ed.object_type.iter().filter(|t| lib.find(t).map(|a| a.category == crate::library::Category::Trees).unwrap_or(false)).cloned().collect() };
-            // (the woods' area within the map, from a coarse count of where they are)
-            let ha: f64 = {
-                let mut none = || 0.5;
-                let holes: Vec<Vec<DVec2>> = self.green.holes.iter().map(to_world).collect();
-                crate::osm_green::spots(&[], &[], &woods, &holes, map_box(ed), 10.0, &mut none).iter().filter(|p| inside(p)).count() as f64 * 100.0 / 10_000.0
-            };
             ui.horizontal(|ui| {
                 crate::ui::check(ui, &mut self.with_trees, tr("Trees and woods", "Деревья и леса")).on_hover_text(tr("Single trees, rows of them and woods, planted with the plant mix (Objects tool > Plant brush) or the tree chosen; none on a road", "Отдельные деревья, ряды и леса, засаженные смесью растений (инструмент «Объекты» > Кисть растений) или выбранным деревом; не на дорогах"));
                 ui.label(RichText::new(format!("{} · {} · {:.1} ha", trees.len(), rows.len(), ha)).small().color(TEXT_DIM));
@@ -309,7 +330,7 @@ impl OsmUi {
                 });
             }
             // buildings, with the models of a catalogue folder
-            let outlines: Vec<(Vec<DVec2>, f64, bool)> = self.buildings.iter().map(|b| (to_world(&b.outline), b.height, b.known)).filter(|(p, _, _)| inside(&(p.iter().copied().sum::<DVec2>() / p.len().max(1) as f64))).collect();
+            let outlines = &derived.buildings;
             let pool = pool_of(lib, &self.building_dirs);
             ui.horizontal(|ui| {
                 crate::ui::check(ui, &mut self.with_buildings, tr("Buildings", "Здания")).on_hover_text(tr("Each outline filled with the model of the folder chosen whose ground plan comes nearest, its front to the nearest road; an outline no model fits is left out", "Каждый контур заполняется моделью выбранной папки с самым похожим планом, фасадом к ближайшей дороге; контуры, которым ничто не подходит, пропускаются"));
@@ -327,7 +348,7 @@ impl OsmUi {
                 }
             });
             // lakes and rivers
-            let areas_in = self.water.areas.iter().filter(|a| a.iter().any(|p| inside(&g.world(p.0, p.1)))).count();
+            let areas_in = derived.water_in;
             ui.horizontal(|ui| {
                 crate::ui::check(ui, &mut self.with_water, tr("Water", "Вода")).on_hover_text(tr("Lakes and rivers: the ground inside them lowered below the banks, and the tiles they lie on given water a little under the banks' height (OMSI's water is one level for a tile: low ground elsewhere on it is flooded too)", "Озёра и реки: земля внутри опускается ниже берегов, тайлам ставится вода чуть ниже берегов (вода OMSI одна на тайл: низкие места на нём тоже затопит)"));
                 ui.label(RichText::new(format!("{areas_in}")).small().color(TEXT_DIM));
@@ -349,14 +370,38 @@ impl OsmUi {
             if r.clicked() {
                 let list: Vec<osm::Road> = roads.iter().filter(|r| wanted.iter().any(|w| w.0 == r.class)).cloned().collect();
                 let mut rng = crate::osm_green::shaker();
-                let holes: Vec<Vec<DVec2>> = self.green.holes.iter().map(to_world).collect();
-                let spots = if self.with_trees { crate::osm_green::spots(&trees, &rows, &woods, &holes, map_box(ed), self.tree_spacing, &mut rng) } else { Vec::new() };
-                self.build = Some(Build { roads: list, types: wanted, stops: if self.with_stops { stops_in } else { Vec::new() }, stop_type: self.stop_type.clone(), oneway_type: self.oneway_type.clone(), lines: if self.with_lines { lines_in } else { Vec::new() }, trees: spots, mix, buildings: if self.with_buildings { outlines } else { Vec::new() }, pool, water: self.with_water.then(|| (self.water.areas.iter().map(to_world).collect(), self.water.islands.iter().map(to_world).collect(), self.water_depth)) });
+                let spots = if self.with_trees { crate::osm_green::spots(trees, rows, woods, &derived.holes, map_box(ed), self.tree_spacing, &mut rng) } else { Vec::new() };
+                self.build = Some(Build { roads: list, types: wanted, stops: if self.with_stops { stops_in.clone() } else { Vec::new() }, stop_type: self.stop_type.clone(), oneway_type: self.oneway_type.clone(), lines: if self.with_lines { lines_in.clone() } else { Vec::new() }, trees: spots, mix, buildings: if self.with_buildings { outlines.clone() } else { Vec::new() }, pool, water: self.with_water.then(|| (derived.water.clone(), derived.islands.clone(), self.water_depth)) });
             }
             ui.add_space(4.0);
             ui.hyperlink_to(RichText::new("© OpenStreetMap contributors (ODbL)").small(), "https://www.openstreetmap.org/copyright");
         });
         self.open = open;
+    }
+
+    /// The downloaded things within the map, in world coordinates.
+    fn derive(&self, g: &Georef, doc: &crate::doc::Document, ed: &Editor) -> Derived {
+        let inside = |p: &DVec2| doc.tiles.contains_key(&tile_of(*p));
+        let w = |v: &Vec<(f64, f64)>| v.iter().map(|p| g.world(p.0, p.1)).collect::<Vec<DVec2>>();
+        let woods: Vec<Vec<DVec2>> = self.green.woods.iter().map(w).collect();
+        let holes: Vec<Vec<DVec2>> = self.green.holes.iter().map(w).collect();
+        // (the woods' area within the map, from a coarse count of where they are)
+        let mut none = || 0.5;
+        let ha = crate::osm_green::spots(&[], &[], &woods, &holes, map_box(ed), 10.0, &mut none).iter().filter(|p| inside(p)).count() as f64 * 100.0 / 10_000.0;
+        let water: Vec<Vec<DVec2>> = self.water.areas.iter().map(w).collect();
+        Derived {
+            stops: self.stops.iter().map(|st| (g.world(st.at.0, st.at.1), st.name.clone())).filter(|(p, _)| inside(p)).collect(),
+            lines: self.lines.iter().map(|r| (r.number.clone(), r.name.clone(), w(&r.stops))).filter(|r| r.2.iter().filter(|p| inside(p)).count() >= 2).collect(),
+            trees: self.green.trees.iter().map(|p| g.world(p.0, p.1)).filter(inside).collect(),
+            rows: self.green.rows.iter().map(w).collect(),
+            woods,
+            holes,
+            ha,
+            buildings: self.buildings.iter().map(|b| (w(&b.outline), b.height, b.known)).filter(|(p, _, _)| inside(&(p.iter().copied().sum::<DVec2>() / p.len().max(1) as f64))).collect(),
+            water_in: water.iter().filter(|a| a.iter().any(inside)).count(),
+            islands: self.water.islands.iter().map(w).collect(),
+            water,
+        }
     }
 
     /// OPENMAPPER_OSM=open, or <main type>[;<street type>[;<stop object>[;<one-way type>[;<tree>[;<track type>[;<building folders, by commas>[;<water depth>]]]]]]]: downloaded at once and built (checks
@@ -373,6 +418,7 @@ impl OsmUi {
             self.green = crate::geo::fetch::overpass(&crate::osm_green::query(b)).and_then(|b| crate::osm_green::parse(&b)).unwrap_or_default();
             self.water = crate::geo::fetch::overpass(&crate::osm_water::query(b)).and_then(|b| crate::osm_water::parse(&b)).unwrap_or_default();
             self.buildings = crate::geo::fetch::overpass(&crate::osm_buildings::query(b)).and_then(|b| crate::osm_buildings::parse(&b)).unwrap_or_default();
+            self.downloads += 1;
             self.open = true;
             return;
         }
