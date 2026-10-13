@@ -17,6 +17,8 @@ pub struct Light {
     pub light_c: [f32; 3],
     /// The sun is high enough to cast shadows.
     pub shadows: bool,
+    /// How dark it is (0 by day, 1 at night): objects' night textures and light maps glow.
+    pub night: f32,
 }
 
 /// When the view is lit: an hour of the day (0..24) at a latitude (degrees north) on a day of
@@ -41,6 +43,7 @@ impl Default for Light {
             light_b: [0.135, 0.154, 0.174],
             light_c: [0.396, 0.396, 0.416],
             shadows: true,
+            night: 0.0,
         }
     }
 }
@@ -87,7 +90,7 @@ pub fn light(t: Option<Daytime>) -> Light {
     let dusk_horizon = [0.85, 0.52, 0.35];
     let sky_top = mix(night_sky, day.sky_top, d);
     let sky_horizon = mix(mix(scale(night_sky, 1.6), day.sky_horizon, d), dusk_horizon, low * 0.8);
-    let sun_color = mix(scale([0.30, 0.36, 0.55], 0.12), mix(day.sun_color, [0.85, 0.52, 0.30], low), smooth(-2.0, 6.0, e));
+    let sun_color = mix(scale([0.30, 0.36, 0.55], 0.05), mix(day.sun_color, [0.85, 0.52, 0.30], low), smooth(-2.0, 6.0, e));
     // (by night the moonlight comes from the sun's opposite side, high enough for the ground)
     let sun = if e > -2.0 { dir(el.max(1.5), az) } else { dir(35.0, (az + 180.0) % 360.0) };
     Light {
@@ -96,9 +99,10 @@ pub fn light(t: Option<Daytime>) -> Light {
         sky_top,
         sky_horizon,
         fog: mix(scale(night_sky, 1.4), mix(day.fog, [0.72, 0.58, 0.50], low * 0.6), d),
-        light_b: mix(scale([0.05, 0.07, 0.12], 0.5), day.light_b, d),
-        light_c: mix([0.03, 0.04, 0.07], day.light_c, d),
+        light_b: mix([0.004, 0.006, 0.012], day.light_b, d),
+        light_c: mix([0.005, 0.007, 0.013], day.light_c, d),
         shadows: e > -2.0,
+        night: 1.0 - smooth(-6.0, 3.0, e),
     }
 }
 
@@ -140,5 +144,6 @@ mod tests {
         assert!((el - 14.0).abs() < 1.0, "{el}");
         assert!(!light(Some(june(1.0))).shadows);
         assert!(light(Some(june(15.0))).shadows);
+        assert_eq!((light(Some(june(15.0))).night, light(Some(june(1.0))).night), (0.0, 1.0));
     }
 }

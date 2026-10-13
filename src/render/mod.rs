@@ -212,6 +212,7 @@ struct GpuTexture {
 #[derive(Clone, PartialEq, Eq, Hash)]
 struct MatKey {
     texture: Option<PathBuf>,
+    glow: Option<(PathBuf, bool)>,
     alpha: u8,
     color: [u8; 4],
 }
@@ -605,7 +606,7 @@ impl Renderer {
         });
         let mat_layout = device.create_bind_group_layout(&wgpu::BindGroupLayoutDescriptor {
             label: Some("material"),
-            entries: &[uniform_entry(0), texture_entry(1, wgpu::TextureViewDimension::D2), texture_entry(2, wgpu::TextureViewDimension::D2), texture_entry(3, wgpu::TextureViewDimension::D2), sampler_entry(4)],
+            entries: &[uniform_entry(0), texture_entry(1, wgpu::TextureViewDimension::D2), texture_entry(2, wgpu::TextureViewDimension::D2), texture_entry(3, wgpu::TextureViewDimension::D2), sampler_entry(4), texture_entry(5, wgpu::TextureViewDimension::D2)],
         });
         let format = gpu.scene_format;
         let terrain_sh = shader(device, "terrain", include_str!("terrain.wgsl"));
@@ -908,7 +909,8 @@ impl Renderer {
             brush_color: extras.brush.map(|b| b.color).unwrap_or([1.0; 4]),
             grid: [tile_size() as f32, if extras.grid { 1.0 } else { 0.0 }, ht[0], ht[1]],
             light_vp: light.0.to_cols_array_2d(),
-            shadow: [if self.quality.shadow_size() > 0 && day.shadows { 1.0 } else { 0.0 }, light.1, 0.0, 0.0],
+            // (z: how much night it is: the lights of objects on)
+            shadow: [if self.quality.shadow_size() > 0 && day.shadows { 1.0 } else { 0.0 }, light.1, day.night, 0.0],
             light_b: [day.light_b[0], day.light_b[1], day.light_b[2], 0.0],
             light_c: [day.light_c[0], day.light_c[1], day.light_c[2], 0.0],
         }
@@ -916,15 +918,7 @@ impl Renderer {
 
     /// A material's bind group (None while its texture loads).
     fn material(&mut self, device: &wgpu::Device, queue: &wgpu::Queue, assets: &mut Assets, m: &Material) -> Option<&wgpu::BindGroup> {
-        let key = MatKey {
-            texture: m.texture.clone(),
-            alpha: match m.alpha {
-                Alpha::Opaque => 0,
-                Alpha::Test => 1,
-                Alpha::Blend => 2,
-            },
-            color: m.color.map(|c| (c.clamp(0.0, 1.0) * 255.0) as u8),
-        };
+        let key = mat_key(m);
         if !self.materials.contains_key(&key) {
             let mut flags = [0.0f32; 4];
             let mut has_tex = 0.0;
@@ -940,6 +934,15 @@ impl Renderer {
                 }
                 has_tex = 1.0;
             }
+            // its glow at night, the same way
+            // (one that cannot be read: no glow)
+            if let Some((p, _)) = key.glow.as_ref().filter(|g| !assets.texture_failed(&g.0)) {
+                if !self.textures.contains_key(p) {
+                    let img = assets.texture(p)?;
+                    let albedo = upload_image(device, queue, &img.image, true);
+                    self.textures.insert(p.clone(), GpuTexture { albedo, normal: None, orm: None, flags: [0.0; 4] });
+                }
+            }
             let t = readable.and_then(|p| self.textures.get(p));
             if let Some(t) = t {
                 flags = t.flags;
@@ -954,11 +957,17 @@ impl Renderer {
             }
             // (a blended colour keeps its own opacity: the water without a picture)
             let color = if has_tex > 0.0 { [1.0, 1.0, 1.0, m.color[3].max(0.0)] } else { [m.color[0], m.color[1], m.color[2], if key.alpha == 2 { m.color[3] } else { 1.0 }] };
-            let u = MatUniform { color, mode: [key.alpha as f32, has_tex, 1.0, 0.0], pbr: flags };
+            let glow_mode = match key.glow.as_ref().filter(|g| self.textures.contains_key(&g.0)) {
+                Some((_, true)) => 1.0,
+                Some((_, false)) => 2.0,
+                None => 0.0,
+            };
+            let u = MatUniform { color, mode: [key.alpha as f32, has_tex, 1.0, glow_mode], pbr: flags };
             let buf = device.create_buffer_init(&wgpu::util::BufferInitDescriptor { label: Some("material"), contents: bytemuck::bytes_of(&u), usage: wgpu::BufferUsages::UNIFORM });
             let albedo = t.map(|t| &t.albedo).unwrap_or(&self.white);
             let normal = t.and_then(|t| t.normal.as_ref()).unwrap_or(&self.flat_normal);
             let orm = t.and_then(|t| t.orm.as_ref()).unwrap_or(&self.default_orm);
+            let glow = key.glow.as_ref().and_then(|g| self.textures.get(&g.0)).map(|t| &t.albedo).unwrap_or(&self.white);
             let bg = device.create_bind_group(&wgpu::BindGroupDescriptor {
                 label: Some("material"),
                 layout: &self.mat_layout,
@@ -968,6 +977,7 @@ impl Renderer {
                     wgpu::BindGroupEntry { binding: 2, resource: wgpu::BindingResource::TextureView(normal) },
                     wgpu::BindGroupEntry { binding: 3, resource: wgpu::BindingResource::TextureView(orm) },
                     wgpu::BindGroupEntry { binding: 4, resource: wgpu::BindingResource::Sampler(&self.linear) },
+                    wgpu::BindGroupEntry { binding: 5, resource: wgpu::BindingResource::TextureView(glow) },
                 ],
             });
             self.materials.insert(key.clone(), bg);
@@ -1340,7 +1350,7 @@ impl Renderer {
                 m.ranges.push((0, 6, 0));
                 let mut bbox = Aabb::EMPTY;
                 m.positions.iter().for_each(|p| bbox.add_sphere(*p + corner, 0.0));
-                let material = Material { texture: water_tex.clone(), color: [0.22, 0.38, 0.45, 0.72], alpha: Alpha::Blend };
+                let material = Material { texture: water_tex.clone(), color: [0.22, 0.38, 0.45, 0.72], alpha: Alpha::Blend, glow: None };
                 let mesh = Some(upload_mesh(device, &m));
                 self.splines.insert(key, SplineEntry { hash: h, mesh, cpu: None, bounds: [0.0, 0.0, t, t], bbox, cuts: false, drivable: false, technical: true, hidden: false, outlines: Vec::new(), rims: Vec::new(), materials: vec![material], instance: 0, in_chunk: false });
                 self.warm_pending = true;
@@ -1586,7 +1596,7 @@ impl Renderer {
         mats.push(marker_material());
         for b in self.batches.iter().chain(self.ghost_batches.iter()) {
             if let Some(p) = b.model.strip_prefix("tree:") {
-                mats.push(Material { texture: Some(PathBuf::from(p)), color: [1.0; 4], alpha: Alpha::Test });
+                mats.push(Material { texture: Some(PathBuf::from(p)), color: [1.0; 4], alpha: Alpha::Test, glow: None });
             }
             if let Some(Some(m)) = self.models.get(&b.model) {
                 for (_, ms) in &m.parts {
@@ -1741,7 +1751,7 @@ impl Renderer {
             }
             if b.tree {
                 let tex = b.model.strip_prefix("tree:").map(PathBuf::from);
-                let m = Material { texture: tex, color: [1.0; 4], alpha: Alpha::Test };
+                let m = Material { texture: tex, color: [1.0; 4], alpha: Alpha::Test, glow: None };
                 calls += draw_mesh(&mut pass, &self.materials, &self.tree_mesh, std::slice::from_ref(&m), Some(false), &ranges);
                 continue;
             }
@@ -1857,7 +1867,7 @@ impl Renderer {
                     // (the tree's texture is the batch: "tree:<path>")
                     if !blend {
                         let tex = b.model.strip_prefix("tree:").map(PathBuf::from);
-                        let m = Material { texture: tex, color: [1.0; 4], alpha: Alpha::Test };
+                        let m = Material { texture: tex, color: [1.0; 4], alpha: Alpha::Test, glow: None };
                         calls += draw_mesh(&mut pass, &self.materials, &self.tree_mesh, std::slice::from_ref(&m), None, ranges);
                     }
                     continue;
@@ -2158,6 +2168,7 @@ fn merge_meshes(parts: &[(&MeshData, &[Material], Aabb)]) -> (MeshData, Vec<Mate
 fn mat_key(m: &Material) -> MatKey {
     MatKey {
         texture: m.texture.clone(),
+        glow: m.glow.clone(),
         alpha: match m.alpha {
             Alpha::Opaque => 0,
             Alpha::Test => 1,
@@ -2168,7 +2179,7 @@ fn mat_key(m: &Material) -> MatKey {
 }
 
 fn marker_material() -> Material {
-    Material { texture: None, color: [0.95, 0.45, 0.2, 1.0], alpha: Alpha::Opaque }
+    Material { texture: None, color: [0.95, 0.45, 0.2, 1.0], alpha: Alpha::Opaque, glow: None }
 }
 
 /// A small upright diamond for objects that have nothing to draw.

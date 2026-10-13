@@ -23,6 +23,9 @@ pub struct Material {
     pub texture: Option<PathBuf>,
     pub color: [f32; 4],
     pub alpha: Alpha,
+    /// What lights it at night: its `[matl_nightmap]` (shown glowing; true) or its
+    /// `[matl_lightmap]` (lighting its texture; false).
+    pub glow: Option<(PathBuf, bool)>,
 }
 
 /// One mesh of a model with its materials (`ranges` name them by slot).
@@ -351,7 +354,8 @@ pub(crate) fn load_object(path: &Path, omsi: &Path, content: &Path) -> Option<Ob
                     2 => Alpha::Blend,
                     _ => Alpha::Opaque,
                 };
-                Material { texture: find_tex(&mat.texture, &dirs), color: mat.diffuse, alpha }
+                let glow = def.and_then(|d| d.nightmap.as_ref().and_then(|n| find_tex(n, &dirs)).map(|p| (p, true)).or_else(|| d.lightmap.as_ref().and_then(|l| find_tex(&l.0, &dirs)).map(|p| (p, false))));
+                Material { texture: find_tex(&mat.texture, &dirs), color: mat.diffuse, alpha, glow }
             })
             .collect();
         parts.push(Part { mesh, materials, texts });
@@ -448,6 +452,7 @@ fn load_spline(path: &Path, omsi: &Path, content: &Path) -> Option<SplineModel> 
         .iter()
         .map(|t| Material {
             texture: find_tex(&t.file, &dirs),
+            glow: None,
             color: [1.0; 4],
             alpha: match t.alpha {
                 1 => Alpha::Test,

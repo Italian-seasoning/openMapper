@@ -13,6 +13,8 @@ struct Mat {
 @group(1) @binding(2) var normal_map: texture_2d<f32>;
 @group(1) @binding(3) var orm_map: texture_2d<f32>;
 @group(1) @binding(4) var samp: sampler;
+// mode.w: 1 a night texture (glows by night), 2 a light map (lights the texture by night)
+@group(1) @binding(5) var glow_map: texture_2d<f32>;
 
 struct VsIn {
     @location(0) pos: vec3<f32>,
@@ -114,6 +116,14 @@ fn fs(i: VsOut, @builtin(front_facing) front: bool) -> @location(0) vec4<f32> {
     if (mat.pbr.w > 0.5) { metal = orm.b; }
     let v = normalize(g.eye.xyz - i.rel);
     var col = shade(base.rgb, n, v, rough, metal, ao, sun_light(i.rel, normalize(i.normal) * select(-1.0, 1.0, front)));
+    let glow = textureSample(glow_map, samp, i.uv);
+    if (mat.mode.w > 0.5 && g.shadow.z > 0.0) {
+        if (mat.mode.w < 1.5) {
+            col += glow.rgb * g.shadow.z * 2.0;
+        } else {
+            col += base.rgb * glow.rgb * g.shadow.z * 2.0;
+        }
+    }
     col = tonemap(apply_fog(col, i.rel));
     col = mix(col, i.tint.rgb, i.tint.a);
     return vec4<f32>(col, base.a);

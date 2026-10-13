@@ -97,7 +97,8 @@ experienced map makers.
   them (View menu to switch off).
 * **Time of day** (View menu): the view lit at any hour, the sun where it stands then at the
   map's place today (Calendar and place, summer time counted), the sky and light going through
-  dusk to a moonlit night; shadows follow the sun.
+  dusk to a moonlit night; shadows follow the sun, and by night the objects' night textures
+  and light maps glow (lit windows, street lamps, signs) as in the game.
 * **Layers** (View > Show): trees, other objects, roads and splines each hidden or shown;
   what is hidden is not picked or box-selected either, handy in a dense town.
 * **Copies in a row** (an object's or a selection's properties): a fence, a row of houses, an
