@@ -1,5 +1,6 @@
-//! Roads from OpenStreetMap (Map menu): the streets of the map's place downloaded, shown by
-//! kind with how much of each there is, and built with the road types chosen for them.
+//! From OpenStreetMap (Map menu): the streets of the map's place downloaded, shown by kind
+//! with how much of each there is, and built with the road types chosen for them; then its
+//! bus stops, its bus lines and its trees and woods.
 
 use std::collections::HashMap;
 use std::sync::mpsc::{channel, Receiver};
