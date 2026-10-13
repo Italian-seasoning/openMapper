@@ -346,6 +346,15 @@ impl App {
         if let Ok(q) = std::env::var("OPENMAPPER_PALETTE") {
             self.ui.palette.show_with(&q);
         }
+        // OPENMAPPER_MERGE=<global.cfg>[,add]: Tiles from another map open on that map (`add`:
+        // all its tiles added beside this one)
+        if let Ok(a) = std::env::var("OPENMAPPER_MERGE") {
+            let (cfg, add) = a.strip_suffix(",add").map(|c| (c, true)).unwrap_or((&a, false));
+            if let Some(r) = &self.roots {
+                self.ui.merge.show(install::list_maps(r));
+            }
+            self.ui.merge.open_on(cfg.into(), &mut self.ed, &self.lib, add);
+        }
         // OPENMAPPER_HISTORY=1: the edit history open
         if std::env::var_os("OPENMAPPER_HISTORY").is_some() {
             self.ui.history_open = true;
@@ -712,6 +721,11 @@ impl App {
                         self.ed.toast(format!("{} ({n})", tr("The map is back as it was before that save", "Карта возвращена к виду до того сохранения")));
                     }
                     Err(e) => self.ed.error(format!("{}: {e}", tr("Could not go back", "Не удалось вернуть"))),
+                }
+            }
+            Action::MergeTiles => {
+                if let Some(r) = &self.roots {
+                    self.ui.merge.show(install::list_maps(r));
                 }
             }
             Action::Close => {

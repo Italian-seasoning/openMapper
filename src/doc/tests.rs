@@ -8,14 +8,14 @@ use crate::install::Roots;
 
 /// A content folder of its own for a test (the installation is not needed: nothing is read
 /// from it).
-fn scratch(name: &str) -> Roots {
+pub(crate) fn scratch(name: &str) -> Roots {
     let d = std::env::temp_dir().join(format!("openmapper-test-{name}-{}", std::process::id()));
     let _ = std::fs::remove_dir_all(&d);
     std::fs::create_dir_all(d.join("maps")).unwrap();
     Roots { omsi: d.join("no-omsi"), content: d }
 }
 
-fn sample_map(roots: &Roots) -> Document {
+pub(crate) fn sample_map(roots: &Roots) -> Document {
     omsi_map::set_world_coordinates(false);
     omsi_map::set_tile_size(omsi_map::TILE_SIZE);
     let mut global = GlobalCfg::default();

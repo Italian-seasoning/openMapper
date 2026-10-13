@@ -5,7 +5,7 @@ pub mod autosave;
 pub mod safe;
 pub(crate) mod save;
 #[cfg(test)]
-mod tests;
+pub(crate) mod tests;
 pub mod dds;
 
 use std::collections::{BTreeMap, HashMap};
@@ -708,7 +708,7 @@ fn chrono_patches(chrono_dirs: &[PathBuf], file: &str) -> Vec<Tile> {
 }
 
 /// One tile of the map with its ground, painting and chrono patches (None: no file).
-fn load_tile(src_dir: &Path, global: &GlobalCfg, chrono_dirs: &[PathBuf], t: &omsi_map::MapTileRef) -> Option<TileDoc> {
+pub(crate) fn load_tile(src_dir: &Path, global: &GlobalCfg, chrono_dirs: &[PathBuf], t: &omsi_map::MapTileRef) -> Option<TileDoc> {
     let path = src_dir.join(&t.file);
     let mut tile = match Tile::load(&path) {
         Ok(t) => t,

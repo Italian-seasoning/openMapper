@@ -109,6 +109,8 @@ pub enum Action {
     SetGraphics(crate::render::quality::Quality),
     /// Open or close the Getting started guide.
     Guide,
+    /// Map > Tiles from another map (the maps to choose from are listed first).
+    MergeTiles,
     /// Save the map and pack it into a .zip to share.
     Export,
     /// Do it without asking about unsaved changes.
@@ -125,6 +127,8 @@ pub struct UiState {
     pub views: crate::ui_views::Views,
     /// Search for a command (Ctrl+K).
     pub palette: crate::ui_palette::Palette,
+    /// Map > Tiles from another map.
+    pub merge: crate::ui_merge::MergeWindow,
     pub object_cat: Option<Category>,
     pub spline_cat: Option<Category>,
     pub new_map: Option<crate::ui_newmap::NewMapForm>,
@@ -175,6 +179,7 @@ impl Default for UiState {
             search: String::new(),
             views: Default::default(),
             palette: Default::default(),
+            merge: Default::default(),
             object_cat: None,
             spline_cat: None,
             new_map: None,
@@ -639,6 +644,7 @@ pub fn editor(root: &mut egui::Ui, st: &mut UiState, u: EditorUi, actions: &mut 
     st.find.window(&ctx, ed, lib, actions);
     st.groups.window(&ctx, ed, lib);
     history_window(&ctx, st, ed, actions);
+    st.merge.window(&ctx, ed, lib);
     crate::ui_palette::window(&ctx, st, ed, actions);
     if let Some(doc) = &ed.doc {
         crate::doc::safe::versions_window(&ctx, &mut st.versions_open, &doc.dir, actions);
@@ -862,6 +868,9 @@ fn menu_bar(root: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, can_undo: bo
                 }
                 if menu_item(ui, Some(Icon::Road), tr("From OpenStreetMap…", "Из OpenStreetMap…"), "", true) {
                     actions.push(Action::Osm);
+                }
+                if menu_item(ui, Some(Icon::Tiles), tr("Tiles from another map…", "Тайлы из другой карты…"), "", true) {
+                    actions.push(Action::MergeTiles);
                 }
                 ui.separator();
                 if menu_item(ui, Some(Icon::Play), tr("Test drive in openOMSI", "Тест-драйв в openOMSI"), "F5", game_found) {

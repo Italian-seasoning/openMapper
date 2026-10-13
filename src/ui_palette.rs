@@ -74,6 +74,7 @@ fn commands() -> Vec<Command> {
         cmd!(Icon::Traffic, "Traffic and AI…", "Трафик и ИИ…", "cars density ailists depot машины плотность", "T", |_, _, a| a.push(Action::Traffic)),
         cmd!(Icon::Layers, "Satellite and terrain…", "Спутник и рельеф…", "imagery aerial photo heights place world спутник снимок высоты место", "I", |_, _, a| a.push(Action::Geo)),
         cmd!(Icon::Road, "From OpenStreetMap…", "Из OpenStreetMap…", "osm real place streets buildings реальное место улицы здания", "", |_, _, a| a.push(Action::Osm)),
+        cmd!(Icon::Tiles, "Tiles from another map…", "Тайлы из другой карты…", "merge join import combine объединить соединить импорт", "", |_, _, a| a.push(Action::MergeTiles)),
         cmd!(Icon::Play, "Test drive in openOMSI", "Тест-драйв в openOMSI", "play run game drive играть запустить", "F5", |_, _, a| a.push(Action::Play)),
         // View
         cmd!(Icon::Flag, "Saved views…", "Сохранённые виды…", "bookmark camera закладка камера", "Ctrl+1…9", |st, _, _| st.views.open = true),

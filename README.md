@@ -94,6 +94,12 @@ experienced map makers.
     come nearest, its front to the nearest road; an outline no model fits is left out.
 
   All a build brings is one undo step. © OpenStreetMap contributors (ODbL).
+* **Tiles from another map** (Map menu): another map's tiles (ground, painting, water,
+  objects, roads, start points) put beside or into this one: its tiles shown over this
+  map's on a small plan, picked by a click and moved into place, raised if wanted, the
+  ground eased where the maps meet. IDCodes are given anew, roads running from one tile
+  taken into another stay joined, its ground textures are found among this map's or added
+  in the same order. One undo step; lines, timetable and AI lists stay with the other map.
 * **Own pictures** on tiles (a scan, a screenshot, an old plan), no place on the Earth needed:
   "Load image file…" for a tile (or drop the picture on the window with the Tiles tool and a tile
   clicked), or one picture over a rectangle of tiles, cut into their pieces; turned (90° steps or
