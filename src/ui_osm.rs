@@ -359,10 +359,24 @@ impl OsmUi {
             });
             ui.add_space(4.0);
             let wanted: Vec<(Class, String)> = Class::ALL.iter().filter(|c| self.include.get(c).copied().unwrap_or(false)).filter_map(|c| self.types.get(c).map(|t| (*c, t.clone()))).collect();
-            let missing = Class::ALL.iter().any(|c| self.include.get(c).copied().unwrap_or(false) && !self.types.contains_key(c)) || (self.with_stops && !stops_in.is_empty() && self.stop_type.is_none()) || (self.with_trees && mix.is_empty()) || (self.with_buildings && !outlines.is_empty() && pool.is_empty());
+            // what is still to choose, each said by name
+            let mut wants: Vec<String> = Class::ALL.iter().filter(|c| self.include.get(c).copied().unwrap_or(false) && !self.types.contains_key(c)).map(|c| format!("{}: {}", c.label(), tr("a road type (Roads tool), then \"Use the chosen\"", "тип дороги (инструмент «Дороги»), затем «Взять выбранный»"))).collect();
+            if self.with_stops && !stops_in.is_empty() && self.stop_type.is_none() {
+                wants.push(format!("{}: {}", tr("Bus stops", "Остановки"), tr("a stop (Game logic > Bus stops), then \"Use the chosen\"", "остановку («Игровая логика > Остановки»), затем «Взять выбранный»")));
+            }
+            if self.with_trees && mix.is_empty() {
+                wants.push(format!("{}: {}", tr("Trees and woods", "Деревья и леса"), tr("a tree in the Objects catalogue (or a plant mix)", "дерево в каталоге объектов (или смесь растений)")));
+            }
+            if self.with_buildings && !outlines.is_empty() && pool.is_empty() {
+                wants.push(format!("{}: {}", tr("Buildings", "Здания"), tr("a building in the catalogue, then \"+ its folder\"", "здание в каталоге, затем «+ его папка»")));
+            }
+            let missing = !wants.is_empty();
             let count = roads.iter().filter(|r| wanted.iter().any(|w| w.0 == r.class)).count();
             if missing {
-                ui.label(RichText::new(tr("Choose a road type in the Roads tool (a stop in Game logic), then \"Use the chosen\" for each kind built", "Выберите тип дороги в инструменте «Дороги» (остановку в «Игровой логике»), затем «Взять выбранный» для каждого строимого вида")).small().color(Color32::from_rgb(230, 170, 100)));
+                ui.label(RichText::new(tr("To build, choose (or untick):", "Чтобы построить, выберите (или снимите галочку):")).small().color(Color32::from_rgb(230, 170, 100)));
+                for w in &wants {
+                    ui.label(RichText::new(format!("• {w}")).small().color(Color32::from_rgb(230, 170, 100)));
+                }
             }
             ui.label(RichText::new(tr("A one-way street is built the way it runs in OpenStreetMap: give it a one-way road type", "Улица с односторонним движением строится в направлении OpenStreetMap: дайте ей односторонний тип дороги")).small().color(TEXT_DIM));
             let stops_n = if self.with_stops { stops_in.len() } else { 0 };
