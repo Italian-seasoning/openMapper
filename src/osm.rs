@@ -10,7 +10,8 @@ use glam::DVec2;
 
 use crate::roads::{self, Seg};
 
-/// What a road is for, from its `highway` tag: each class gets a road type of its own.
+/// What a road is for, from its `highway` tag (or a track, from its `railway` tag): each
+/// class gets a road or track type of its own.
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub enum Class {
     /// Motorways, trunk, primary and secondary roads (and their links).
@@ -19,10 +20,28 @@ pub enum Class {
     Street,
     /// Service roads (yards, car parks, depots).
     Service,
+    /// Tram and light rail tracks.
+    Tram,
+    /// Railway tracks.
+    Rail,
 }
 
 impl Class {
-    pub const ALL: [Class; 3] = [Class::Main, Class::Street, Class::Service];
+    pub const ALL: [Class; 5] = [Class::Main, Class::Street, Class::Service, Class::Tram, Class::Rail];
+
+    /// Tracks: no junctions with what they meet (crossings stay level, branches are
+    /// joined by hand with switches).
+    pub fn is_track(self) -> bool {
+        matches!(self, Class::Tram | Class::Rail)
+    }
+
+    pub fn of_railway(railway: &str) -> Option<Class> {
+        match railway {
+            "tram" | "light_rail" => Some(Class::Tram),
+            "rail" => Some(Class::Rail),
+            _ => None,
+        }
+    }
 
     pub fn of(highway: &str) -> Option<Class> {
         let h = highway.strip_suffix("_link").unwrap_or(highway);
@@ -40,6 +59,8 @@ impl Class {
             Class::Main => tr("Main roads", "Главные дороги"),
             Class::Street => tr("Streets", "Улицы"),
             Class::Service => tr("Service roads", "Служебные проезды"),
+            Class::Tram => tr("Tram tracks", "Трамвайные пути"),
+            Class::Rail => tr("Railway tracks", "Железнодорожные пути"),
         }
     }
 
@@ -49,6 +70,8 @@ impl Class {
             Class::Main => tr("motorway, trunk, primary, secondary", "магистрали, главные и второстепенные"),
             Class::Street => tr("tertiary, residential, unclassified", "местные и жилые улицы"),
             Class::Service => tr("yards, car parks, depots", "дворы, стоянки, депо"),
+            Class::Tram => tr("each track on its own; branches are joined with switches by hand", "каждый путь отдельно; ответвления соединяются стрелками вручную"),
+            Class::Rail => tr("main lines without sidings; branches are joined with switches by hand", "магистрали без подъездных; ответвления соединяются стрелками вручную"),
         }
     }
 
@@ -58,6 +81,8 @@ impl Class {
             Class::Main => 60.0,
             Class::Street => 20.0,
             Class::Service => 10.0,
+            Class::Tram => 25.0,
+            Class::Rail => 300.0,
         }
     }
 }
@@ -76,7 +101,7 @@ pub struct Way {
 /// The Overpass query for the roads and bus stops within a box (south, west, north, east).
 pub fn query(bbox: [f64; 4]) -> String {
     let b = format!("{:.6},{:.6},{:.6},{:.6}", bbox[0], bbox[1], bbox[2], bbox[3]);
-    format!("[out:json][timeout:90];(way[\"highway\"~\"^(motorway|trunk|primary|secondary|tertiary|unclassified|residential|living_street|service)(_link)?$\"][\"area\"!=\"yes\"]({b});node[\"highway\"=\"bus_stop\"]({b}););out geom;")
+    format!("[out:json][timeout:90];(way[\"railway\"~\"^(tram|light_rail|rail)$\"][\"service\"!~\"^(yard|siding|spur)$\"]({b});way[\"highway\"~\"^(motorway|trunk|primary|secondary|tertiary|unclassified|residential|living_street|service)(_link)?$\"][\"area\"!=\"yes\"]({b});node[\"highway\"=\"bus_stop\"]({b}););out geom;")
 }
 
 /// A bus stop of OpenStreetMap: where (latitude, longitude) and its name.
@@ -110,7 +135,11 @@ pub fn parse(body: &str) -> Result<Vec<Way>, String> {
             continue;
         }
         let tag = |k: &str| e.get("tags").and_then(|t| t.get(k)).and_then(|v| v.as_str()).unwrap_or("");
-        let Some(class) = Class::of(tag("highway")) else { continue };
+        let Some(class) = Class::of(tag("highway")).or_else(|| Class::of_railway(tag("railway"))) else { continue };
+        // (a tunnel runs under the ground the map has: not built on it)
+        if tag("tunnel") == "yes" {
+            continue;
+        }
         let oneway = matches!(tag("oneway"), "yes" | "1" | "true") || tag("junction") == "roundabout" || tag("highway") == "motorway";
         let nodes: Vec<i64> = e.get("nodes").and_then(|n| n.as_array()).into_iter().flatten().filter_map(|n| n.as_i64()).collect();
         let geometry: Vec<(f64, f64)> = e.get("geometry").and_then(|g| g.as_array()).into_iter().flatten().filter_map(|p| Some((p.get("lat")?.as_f64()?, p.get("lon")?.as_f64()?))).collect();

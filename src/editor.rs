@@ -1896,8 +1896,9 @@ impl Editor {
         let (mut built, mut junctions) = (0, 0);
         for r in list {
             let Some(rel) = types.iter().find(|t| t.0 == r.class).map(|t| t.1.clone()) else { continue };
+            let track = r.class.is_track();
             let rel = match oneway {
-                Some(o) if r.oneway => o.to_string(),
+                Some(o) if r.oneway && !track => o.to_string(),
                 _ => rel,
             };
             let Some(model) = assets.spline(&rel) else { continue };
@@ -1911,13 +1912,15 @@ impl Editor {
                 let n = (s.length / 5.0).ceil().max(1.0) as usize;
                 (0..=n).map(move |i| c.point_at(s.length * i as f64 / n as f64).truncate())
             }).collect();
-            if samples.iter().filter(|p| near_old(**p)).count() * 2 > samples.len() {
+            // (a tram's track lies on its street: only roads are checked so)
+            if !track && samples.iter().filter(|p| near_old(**p)).count() * 2 > samples.len() {
                 continue;
             }
             self.road_type = Some(rel.clone());
             let (p0, p1) = (segs[0].start, segs.last().unwrap().end());
-            let a0 = self.snap_anchor(assets, p0, 3.0).map(|a| a.0);
-            let a1 = self.snap_anchor(assets, p1, 3.0).map(|a| a.0).filter(|a| a.spline.map(|s| Some(s) != a0.and_then(|b| b.spline)).unwrap_or(true));
+            // (a track meeting another's middle is a switch, laid by hand: not joined here)
+            let a0 = self.snap_anchor(assets, p0, 3.0).map(|a| a.0).filter(|a| !track || a.mid.is_none());
+            let a1 = self.snap_anchor(assets, p1, 3.0).map(|a| a.0).filter(|a| a.spline.map(|s| Some(s) != a0.and_then(|b| b.spline)).unwrap_or(true)).filter(|a| !track || a.mid.is_none());
             // (into a road's middle: from its centre line exactly)
             if let Some(a) = a0.filter(|a| a.mid.is_some()) {
                 if let Some(s) = roads::straight(a.pos.truncate(), p0) {
@@ -1945,7 +1948,7 @@ impl Editor {
             let pieces = roads::split(&segs, 50.0);
             let Some(made) = self.lay_road(&rel, &pieces, z0, z1, start_link, end_link, half) else { continue };
             built += 1;
-            if self.auto_junctions {
+            if self.auto_junctions && !track {
                 let start_mid = a0.and_then(|a| a.mid.map(|m| (m, a.pos)));
                 let end_mid = a1.and_then(|a| a.mid.map(|m| (m, a.pos)));
                 junctions += self.make_junctions(assets, &made, half, start_mid, end_mid);

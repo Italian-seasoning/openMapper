@@ -75,7 +75,7 @@ impl Default for OsmUi {
             status: None,
             types: HashMap::new(),
             oneway_type: None,
-            include: [(Class::Main, true), (Class::Street, true), (Class::Service, false)].into_iter().collect(),
+            include: [(Class::Main, true), (Class::Street, true), (Class::Service, false), (Class::Tram, false), (Class::Rail, false)].into_iter().collect(),
             build: None,
         }
     }
@@ -296,7 +296,7 @@ impl OsmUi {
         self.open = open;
     }
 
-    /// OPENMAPPER_OSM=open, or <main type>[;<street type>[;<stop object>[;<one-way type>[;<tree>]]]]: downloaded at once and built (checks
+    /// OPENMAPPER_OSM=open, or <main type>[;<street type>[;<stop object>[;<one-way type>[;<tree>[;<track type>]]]]]: downloaded at once and built (checks
     /// without a person at the screen).
     pub fn scripted(&mut self, ed: &Editor, georef: Option<Georef>, arg: &str) {
         let Some(g) = georef else { return };
@@ -316,6 +316,11 @@ impl OsmUi {
         let stop = types.next().map(str::to_string).filter(|t| !t.is_empty());
         let oneway = types.next().map(str::to_string).filter(|t| !t.is_empty());
         let tree = types.next().map(str::to_string).filter(|t| !t.is_empty());
+        let rail = types.next().map(str::to_string).filter(|t| !t.is_empty());
+        if let Some(r) = &rail {
+            self.types.insert(Class::Tram, r.clone());
+            self.types.insert(Class::Rail, r.clone());
+        }
         self.types.insert(Class::Main, main.clone());
         self.types.insert(Class::Street, street);
         let body = match crate::geo::fetch::overpass(&osm::query(b)) {
@@ -327,7 +332,7 @@ impl OsmUi {
                 let Some(doc) = ed.doc.as_ref() else { return };
                 let roads = osm::roads(&w, |la, lo| g.world(la, lo), |p| doc.tiles.contains_key(&tile_of(p)));
                 log::info!("osm: {} ways, {} roads", w.len(), roads.len());
-                let wanted: Vec<(Class, String)> = [Class::Main, Class::Street].iter().map(|c| (*c, self.types[c].clone())).collect();
+                let wanted: Vec<(Class, String)> = [Class::Main, Class::Street, Class::Tram, Class::Rail].iter().filter_map(|c| self.types.get(c).map(|t| (*c, t.clone()))).collect();
                 let stops: Vec<(DVec2, String)> = osm::parse_stops(&body).unwrap_or_default().into_iter().map(|st| (g.world(st.at.0, st.at.1), st.name)).collect();
                 let trees = match &tree {
                     Some(_) => {
@@ -343,7 +348,7 @@ impl OsmUi {
                 };
                 let lines = crate::geo::fetch::overpass(&crate::osm_lines::query(b)).and_then(|body| crate::osm_lines::parse(&body)).unwrap_or_default();
                 let lines = lines.into_iter().map(|r| (r.number, r.name, r.stops.iter().map(|p| g.world(p.0, p.1)).collect())).collect();
-                self.build = Some(Build { roads: roads.into_iter().filter(|r| r.class != Class::Service).collect(), types: wanted, stops, stop_type: stop.clone(), oneway_type: oneway.clone(), lines, trees, mix: tree.iter().cloned().collect() });
+                self.build = Some(Build { roads: roads.into_iter().filter(|r| wanted.iter().any(|w| w.0 == r.class)).collect(), types: wanted, stops, stop_type: stop.clone(), oneway_type: oneway.clone(), lines, trees, mix: tree.iter().cloned().collect() });
                 self.ways = Some(w);
             }
             Err(e) => log::warn!("osm: {e}"),

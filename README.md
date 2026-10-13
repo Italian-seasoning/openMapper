@@ -75,11 +75,12 @@ experienced map makers.
   ignores it), left out of shared exports unless asked for.
 * **From OpenStreetMap** (Map menu): for a map placed on the Earth, the streets of its
   place downloaded (Overpass API, kept a week in the cache) and shown by kind (main roads,
-  streets, service roads) with how many and how long; each kind built with the road type
+  streets, service roads, tram and railway tracks; tunnels left out) with how many and how long; each kind built with the road type
   chosen for it, as if drawn: the ways of one street joined into one road, corners rounded
   into OMSI's arcs, cut exactly at the map's edge, one-way roads (each carriageway of a dual
   road) with a one-way type of their own if one is chosen, junctions where roads meet or cross, one undo step. Roads lying on ones the
-  map already has are left out. The bus stops come too, with their names: the stop object
+  map already has are left out; tracks are laid without junctions (a branch is joined with a
+  switch by hand, the map check names its end). The bus stops come too, with their names: the stop object
   chosen put at the kerb of the nearest lane, as one placed by hand. And the bus lines: each bus route
   through two or more of the map's stops a trip of its line (one trip for variants stopping
   alike; a route leaving the map cut to its longest run within it), the way found along the
