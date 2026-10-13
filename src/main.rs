@@ -34,6 +34,7 @@ mod osm;
 mod osm_buildings;
 mod osm_green;
 mod osm_lines;
+mod osm_water;
 mod parallel;
 mod place;
 mod plants;

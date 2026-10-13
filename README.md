@@ -87,6 +87,8 @@ experienced map makers.
     stopping alike once, a route leaving the map cut to its longest run within it), the way
     found along the roads, a tour from 06:00 to 22:00 for each new line, a depot if none;
   * trees, rows of trees and woods planted with the plant mix, none on a road.
+  * water: lakes and rivers (with their islands) dug below their banks, sloping down from them,
+    and OMSI's water put on their tiles a little under the banks.
   * buildings: each outline filled with the model of a catalogue folder (Buildings_MC, …)
     whose ground plan and height (OSM's height or storeys, else what its kind usually is)
     come nearest, its front to the nearest road; an outline no model fits is left out.

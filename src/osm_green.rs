@@ -66,7 +66,7 @@ pub fn parse(body: &str) -> Result<Green, String> {
 }
 
 /// Ways joined end to end into closed rings (what does not close is left out).
-fn rings(mut ways: Vec<Vec<(f64, f64)>>) -> Vec<Vec<(f64, f64)>> {
+pub(crate) fn rings(mut ways: Vec<Vec<(f64, f64)>>) -> Vec<Vec<(f64, f64)>> {
     let mut out = Vec::new();
     while let Some(mut ring) = ways.pop() {
         while ring.first() != ring.last() {

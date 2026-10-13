@@ -1170,6 +1170,9 @@ impl App {
         self.geo.take_bridge(&mut self.ui.geo, &mut self.ed, &self.prefs);
         if let (Some(b), Some(assets)) = (self.osm.build.take(), self.assets.as_mut()) {
             let (roads, junctions) = self.ed.build_osm(assets, &b.roads, &b.types, b.oneway_type.as_deref());
+            if let (Some((areas, islands, depth)), Some(doc)) = (&b.water, self.ed.doc.as_mut()) {
+                crate::osm_water::apply(doc, &mut self.ed.history, areas, islands, *depth);
+            }
             let stops = b.stop_type.map(|t| self.ed.place_osm_stops(assets, &b.stops, &t)).unwrap_or(0);
             let mut text = format!("{} {roads} · {} {junctions} · {} {stops}", tr("Roads built:", "Дорог построено:"), tr("junctions:", "перекрёстков:"), tr("stops:", "остановок:"));
             if let (false, Some(doc), Some(roots)) = (b.lines.is_empty(), self.ed.doc.as_mut(), &self.roots) {

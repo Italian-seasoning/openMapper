@@ -25,6 +25,10 @@ pub struct OsmUi {
     lines: Vec<crate::osm_lines::Route>,
     green: crate::osm_green::Green,
     buildings: Vec<crate::osm_buildings::Building>,
+    water: crate::osm_water::Water,
+    /// Lakes and rivers dug this deep below their banks.
+    with_water: bool,
+    water_depth: f64,
     /// Buildings put with the models of this catalogue folder.
     with_buildings: bool,
     building_dirs: Vec<String>,
@@ -63,6 +67,8 @@ pub struct Build {
     /// (outline, height, whether OSM says it)
     pub buildings: Vec<(Vec<DVec2>, f64, bool)>,
     pub pool: Vec<String>,
+    /// Water areas, their islands, how deep.
+    pub water: Option<(Vec<Vec<DVec2>>, Vec<Vec<DVec2>>, f64)>,
 }
 
 impl Default for OsmUi {
@@ -75,6 +81,9 @@ impl Default for OsmUi {
             lines: Vec::new(),
             green: Default::default(),
             buildings: Vec::new(),
+            water: Default::default(),
+            with_water: false,
+            water_depth: 2.0,
             with_buildings: false,
             building_dirs: Vec::new(),
             with_trees: false,
@@ -94,7 +103,7 @@ impl Default for OsmUi {
 
 /// What a download brought: the roads and stops, the bus routes, the trees, and what of
 /// it could not be had (the servers busy).
-type Downloaded = (Vec<osm::Way>, Vec<osm::Stop>, Vec<crate::osm_lines::Route>, crate::osm_green::Green, Vec<crate::osm_buildings::Building>, Vec<String>);
+type Downloaded = (Vec<osm::Way>, Vec<osm::Stop>, Vec<crate::osm_lines::Route>, crate::osm_green::Green, Vec<crate::osm_buildings::Building>, crate::osm_water::Water, Vec<String>);
 
 /// The models of these catalogue folders that may be buildings.
 fn pool_of(lib: &Library, dirs: &[String]) -> Vec<String> {
@@ -125,8 +134,9 @@ impl OsmUi {
     pub fn window(&mut self, ctx: &egui::Context, ed: &mut Editor, lib: &Library, georef: Option<Georef>) {
         if let Some(rx) = &self.rx {
             match rx.try_recv() {
-                Ok(Ok((w, st, li, gr, bu, missed))) => {
+                Ok(Ok((w, st, li, gr, bu, wa, missed))) => {
                     self.green = gr;
+                    self.water = wa;
                     self.buildings = bu;
                     let mut text = format!("{} {} · {} {} · {} {}", w.len(), tr("ways", "путей"), st.len(), tr("stops", "остановок"), li.len(), tr("bus routes downloaded", "маршрутов загружено"));
                     if !missed.is_empty() {
@@ -171,7 +181,7 @@ impl OsmUi {
                 if r.clicked() {
                     if let Some(b) = bbox(ed, &g) {
                         let (tx, rx) = channel();
-                        let (q, ql, qg, qb) = (osm::query(b), crate::osm_lines::query(b), crate::osm_green::query(b), crate::osm_buildings::query(b));
+                        let (q, ql, qg, qb, qw) = (osm::query(b), crate::osm_lines::query(b), crate::osm_green::query(b), crate::osm_buildings::query(b), crate::osm_water::query(b));
                         std::thread::spawn(move || {
                             // (the routes and the trees are questions of their own: without them
                             // the roads still come)
@@ -188,7 +198,11 @@ impl OsmUi {
                                 missed.push(tr("buildings", "здания").to_string());
                                 Vec::new()
                             });
-                            let _ = tx.send(crate::geo::fetch::overpass(&q).and_then(|body| Ok((osm::parse(&body)?, osm::parse_stops(&body)?, lines, green, buildings, missed))));
+                            let water = crate::geo::fetch::overpass(&qw).and_then(|body| crate::osm_water::parse(&body)).unwrap_or_else(|_| {
+                                missed.push(tr("water", "вода").to_string());
+                                Default::default()
+                            });
+                            let _ = tx.send(crate::geo::fetch::overpass(&q).and_then(|body| Ok((osm::parse(&body)?, osm::parse_stops(&body)?, lines, green, buildings, water, missed))));
                         });
                         self.rx = Some(rx);
                         self.status = Some((tr("Downloading…", "Загрузка…").into(), false));
@@ -312,6 +326,16 @@ impl OsmUi {
                     self.building_dirs.clear();
                 }
             });
+            // lakes and rivers
+            let areas_in = self.water.areas.iter().filter(|a| a.iter().any(|p| inside(&g.world(p.0, p.1)))).count();
+            ui.horizontal(|ui| {
+                crate::ui::check(ui, &mut self.with_water, tr("Water", "Вода")).on_hover_text(tr("Lakes and rivers: the ground inside them lowered below the banks, and the tiles they lie on given water a little under the banks' height (OMSI's water is one level for a tile: low ground elsewhere on it is flooded too)", "Озёра и реки: земля внутри опускается ниже берегов, тайлам ставится вода чуть ниже берегов (вода OMSI одна на тайл: низкие места на нём тоже затопит)"));
+                ui.label(RichText::new(format!("{areas_in}")).small().color(TEXT_DIM));
+                if self.with_water {
+                    ui.label(tr("deep", "глубина"));
+                    ui.add(egui::DragValue::new(&mut self.water_depth).range(0.5..=10.0).speed(0.1).suffix(" m"));
+                }
+            });
             ui.add_space(4.0);
             let wanted: Vec<(Class, String)> = Class::ALL.iter().filter(|c| self.include.get(c).copied().unwrap_or(false)).filter_map(|c| self.types.get(c).map(|t| (*c, t.clone()))).collect();
             let missing = Class::ALL.iter().any(|c| self.include.get(c).copied().unwrap_or(false) && !self.types.contains_key(c)) || (self.with_stops && !stops_in.is_empty() && self.stop_type.is_none()) || (self.with_trees && mix.is_empty()) || (self.with_buildings && !outlines.is_empty() && pool.is_empty());
@@ -321,13 +345,13 @@ impl OsmUi {
             }
             ui.label(RichText::new(tr("A one-way street is built the way it runs in OpenStreetMap: give it a one-way road type", "Улица с односторонним движением строится в направлении OpenStreetMap: дайте ей односторонний тип дороги")).small().color(TEXT_DIM));
             let stops_n = if self.with_stops { stops_in.len() } else { 0 };
-            let r = ui.add_enabled(!missing && (count + stops_n > 0 || self.with_trees || self.with_buildings), egui::Button::new(icons::labelled(Icon::Road, &format!("{} ({count} · {stops_n})", tr("Build", "Построить")))));
+            let r = ui.add_enabled(!missing && (count + stops_n > 0 || self.with_trees || self.with_buildings || self.with_water), egui::Button::new(icons::labelled(Icon::Road, &format!("{} ({count} · {stops_n})", tr("Build", "Построить")))));
             if r.clicked() {
                 let list: Vec<osm::Road> = roads.iter().filter(|r| wanted.iter().any(|w| w.0 == r.class)).cloned().collect();
                 let mut rng = crate::osm_green::shaker();
                 let holes: Vec<Vec<DVec2>> = self.green.holes.iter().map(to_world).collect();
                 let spots = if self.with_trees { crate::osm_green::spots(&trees, &rows, &woods, &holes, map_box(ed), self.tree_spacing, &mut rng) } else { Vec::new() };
-                self.build = Some(Build { roads: list, types: wanted, stops: if self.with_stops { stops_in } else { Vec::new() }, stop_type: self.stop_type.clone(), oneway_type: self.oneway_type.clone(), lines: if self.with_lines { lines_in } else { Vec::new() }, trees: spots, mix, buildings: if self.with_buildings { outlines } else { Vec::new() }, pool });
+                self.build = Some(Build { roads: list, types: wanted, stops: if self.with_stops { stops_in } else { Vec::new() }, stop_type: self.stop_type.clone(), oneway_type: self.oneway_type.clone(), lines: if self.with_lines { lines_in } else { Vec::new() }, trees: spots, mix, buildings: if self.with_buildings { outlines } else { Vec::new() }, pool, water: self.with_water.then(|| (self.water.areas.iter().map(to_world).collect(), self.water.islands.iter().map(to_world).collect(), self.water_depth)) });
             }
             ui.add_space(4.0);
             ui.hyperlink_to(RichText::new("© OpenStreetMap contributors (ODbL)").small(), "https://www.openstreetmap.org/copyright");
@@ -335,7 +359,7 @@ impl OsmUi {
         self.open = open;
     }
 
-    /// OPENMAPPER_OSM=open, or <main type>[;<street type>[;<stop object>[;<one-way type>[;<tree>[;<track type>[;<building folders, by commas>]]]]]]: downloaded at once and built (checks
+    /// OPENMAPPER_OSM=open, or <main type>[;<street type>[;<stop object>[;<one-way type>[;<tree>[;<track type>[;<building folders, by commas>[;<water depth>]]]]]]]: downloaded at once and built (checks
     /// without a person at the screen).
     pub fn scripted(&mut self, ed: &Editor, lib: &Library, georef: Option<Georef>, arg: &str) {
         let Some(g) = georef else { return };
@@ -347,6 +371,7 @@ impl OsmUi {
             self.stops = body.as_ref().ok().and_then(|b| osm::parse_stops(b).ok()).unwrap_or_default();
             self.lines = crate::geo::fetch::overpass(&crate::osm_lines::query(b)).and_then(|b| crate::osm_lines::parse(&b)).unwrap_or_default();
             self.green = crate::geo::fetch::overpass(&crate::osm_green::query(b)).and_then(|b| crate::osm_green::parse(&b)).unwrap_or_default();
+            self.water = crate::geo::fetch::overpass(&crate::osm_water::query(b)).and_then(|b| crate::osm_water::parse(&b)).unwrap_or_default();
             self.buildings = crate::geo::fetch::overpass(&crate::osm_buildings::query(b)).and_then(|b| crate::osm_buildings::parse(&b)).unwrap_or_default();
             self.open = true;
             return;
@@ -359,6 +384,7 @@ impl OsmUi {
         let tree = types.next().map(str::to_string).filter(|t| !t.is_empty());
         let rail = types.next().map(str::to_string).filter(|t| !t.is_empty());
         let building_dir = types.next().map(str::to_string).filter(|t| !t.is_empty());
+        let depth = types.next().and_then(|t| t.parse::<f64>().ok());
         if let Some(r) = &rail {
             self.types.insert(Class::Tram, r.clone());
             self.types.insert(Class::Rail, r.clone());
@@ -397,9 +423,14 @@ impl OsmUi {
                     }
                     None => (Vec::new(), Vec::new()),
                 };
+                let water = depth.map(|d| {
+                    let wa = crate::geo::fetch::overpass(&crate::osm_water::query(b)).and_then(|body| crate::osm_water::parse(&body)).unwrap_or_default();
+                    let w = |v: &Vec<(f64, f64)>| v.iter().map(|p| g.world(p.0, p.1)).collect::<Vec<DVec2>>();
+                    (wa.areas.iter().map(w).collect(), wa.islands.iter().map(w).collect(), d)
+                });
                 let lines = crate::geo::fetch::overpass(&crate::osm_lines::query(b)).and_then(|body| crate::osm_lines::parse(&body)).unwrap_or_default();
                 let lines = lines.into_iter().map(|r| (r.number, r.name, r.stops.iter().map(|p| g.world(p.0, p.1)).collect())).collect();
-                self.build = Some(Build { roads: roads.into_iter().filter(|r| wanted.iter().any(|w| w.0 == r.class)).collect(), types: wanted, stops, stop_type: stop.clone(), oneway_type: oneway.clone(), lines, trees, mix: tree.iter().cloned().collect(), buildings, pool });
+                self.build = Some(Build { roads: roads.into_iter().filter(|r| wanted.iter().any(|w| w.0 == r.class)).collect(), types: wanted, stops, stop_type: stop.clone(), oneway_type: oneway.clone(), lines, trees, mix: tree.iter().cloned().collect(), buildings, pool, water });
                 self.ways = Some(w);
             }
             Err(e) => log::warn!("osm: {e}"),
