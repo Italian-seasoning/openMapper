@@ -1585,7 +1585,7 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
         return;
     };
     if ed.selection().len() > 1 {
-        crate::ui_edit::group_properties(ui, ed, lib);
+        crate::ui_edit::group_properties(ui, ed, lib, actions);
         return;
     }
     section(ui, tr("Properties", "Свойства"));
@@ -1983,6 +1983,7 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
             }
             crate::ui_edit::rules_section(ui, ed, sel);
             crate::ui_edit::rows_section(ui, ed, lib);
+            crate::ui_profile::profile_section(ui, ed, actions);
             let Some(doc) = ed.doc.as_mut() else { return };
             if let Some((file, mirror)) = spline_change {
                 ed.history.begin(tr("Edit road", "Изменение дороги"));

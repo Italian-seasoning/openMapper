@@ -277,19 +277,23 @@ impl App {
             self.cam.yaw = v[3];
             self.cam.pitch = v[4];
         }
-        // OPENMAPPER_SELECT=x,y[,spline]: the object (or the spline starting) nearest there
+        // OPENMAPPER_SELECT=x,y[,spline|chain]: the object (or the spline starting) nearest there
         // selected (checks of its properties)
         let select = std::env::var("OPENMAPPER_SELECT").unwrap_or_default();
         if let (Some(v), Some(doc)) = (Some(select.split(',').filter_map(|x| x.trim().parse::<f64>().ok()).collect::<Vec<_>>()).filter(|v| v.len() == 2), self.ed.doc.as_ref()) {
             let at = DVec2::new(v[0], v[1]);
             let near = |k: crate::doc::TileKey, p: [f64; 3]| (crate::doc::tile_origin(k) + DVec2::new(p[0], p[1]) - at).length();
-            let best = if select.ends_with("spline") {
+            let best = if select.ends_with("spline") || select.ends_with("chain") {
                 doc.tiles.iter().flat_map(|(k, t)| t.tile.splines.iter().filter(|s| !s.deleted).map(move |s| (Sel::Spline(*k, s.id), near(*k, s.pos)))).min_by(|a, b| a.1.total_cmp(&b.1))
             } else {
                 doc.tiles.iter().flat_map(|(k, t)| t.tile.objects.iter().map(move |o| (Sel::Object(*k, o.id), near(*k, o.pos)))).min_by(|a, b| a.1.total_cmp(&b.1))
             };
             if let Some((sel, _)) = best {
                 self.ed.select(Some(sel));
+                // (`chain`: all the road, as a double click selects it)
+                if let (Sel::Spline(k, id), true) = (sel, select.ends_with("chain")) {
+                    self.ed.select_chain(k, id);
+                }
             }
         }
         // OPENMAPPER_HIDE=trees,objects,splines,technical: those layers hidden

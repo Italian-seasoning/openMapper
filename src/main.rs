@@ -64,6 +64,7 @@ mod ui_mapsettings;
 mod ui_signals;
 mod ui_minimap;
 mod ui_osm;
+mod ui_profile;
 mod ui_pbr;
 mod ui_roads;
 mod ui_newmap;

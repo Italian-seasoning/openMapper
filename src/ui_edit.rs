@@ -106,7 +106,7 @@ pub fn snap_controls(ui: &mut egui::Ui, ed: &mut Editor) {
 }
 
 /// The right panel with more than one thing selected.
-pub fn group_properties(ui: &mut egui::Ui, ed: &mut Editor, lib: &Library) {
+pub fn group_properties(ui: &mut egui::Ui, ed: &mut Editor, lib: &Library, actions: &mut Vec<crate::ui::Action>) {
     let sels = ed.selection();
     let objects = sels.iter().filter(|s| matches!(s, Sel::Object(..))).count();
     let splines = sels.len() - objects;
@@ -201,6 +201,7 @@ pub fn group_properties(ui: &mut egui::Ui, ed: &mut Editor, lib: &Library) {
                 ed.even_selected_chain();
             }
         }
+        crate::ui_profile::profile_section(ui, ed, actions);
         ui.add_space(8.0);
         ui.separator();
         ui.horizontal_wrapped(|ui| {
