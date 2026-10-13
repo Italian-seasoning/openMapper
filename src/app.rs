@@ -1237,6 +1237,10 @@ impl App {
             g.renderer.profile.add("frame interval", dt as f32 * 1000.0);
             g.renderer.profile.end_frame();
             self.frames += 1;
+            // OPENMAPPER_SAVE=1: what the checks above did saved
+            if self.frames == 3 && std::env::var_os("OPENMAPPER_SAVE").is_some() {
+                self.save();
+            }
             if self.frames == 3 {
                 if let Ok(d) = std::env::var("OPENMAPPER_DEMO") {
                     if d == "T" {
