@@ -157,7 +157,7 @@ impl OsmUi {
             }
         }
         let mut open = self.open;
-        egui::Window::new(icons::labelled(Icon::Road, tr("From OpenStreetMap", "Из OpenStreetMap"))).id(egui::Id::new("osm roads")).open(&mut open).default_pos([360.0, 110.0]).default_width(380.0).resizable(false).show(ctx, |ui| {
+        egui::Window::new(icons::labelled(Icon::Road, tr("From OpenStreetMap", "Из OpenStreetMap"))).id(egui::Id::new("osm roads")).open(&mut open).default_pos([360.0, 110.0]).default_width(380.0).resizable(false).vscroll(true).show(ctx, |ui| {
             ui.label(RichText::new(tr("The streets of the map's place built as roads with junctions where they meet, its bus stops, lines, trees and woods. Best on tiles with no roads yet: roads lying on ones the map has are left out.", "Улицы места карты, построенные дорогами с перекрёстками, её остановки, линии, деревья и леса. Лучше на тайлах без дорог: дороги поверх уже имеющихся пропускаются.")).small().color(TEXT_DIM));
             ui.add_space(4.0);
             let Some(g) = georef else {
@@ -210,10 +210,10 @@ impl OsmUi {
                     let on = self.include.entry(c).or_insert(false);
                     ui.vertical(|ui| {
                         crate::ui::check(ui, on, c.label()).on_hover_text(c.hint());
-                        ui.label(RichText::new(format!("{} · {km:.1} km", of.len())).small().color(TEXT_DIM));
+                        ui.label(RichText::new(format!("{} · {:.1} km", of.len(), km.max(0.0))).small().color(TEXT_DIM));
                     });
                     let now = self.types.get(&c).cloned();
-                    let name = now.as_ref().map(|t| lib.find(t).map(|a| a.name.clone()).unwrap_or_else(|| t.clone())).unwrap_or_else(|| tr("no road type", "тип не выбран").into());
+                    let name = now.as_ref().map(|t| lib.find(t).map(|a| a.name.clone()).unwrap_or_else(|| t.clone())).unwrap_or_else(|| tr("no type chosen", "тип не выбран").into());
                     ui.label(RichText::new(name).color(if now.is_some() { Color32::WHITE } else { TEXT_DIM }));
                     let pick = ed.road_type.clone();
                     let r = ui.add_enabled(pick.is_some(), egui::Button::new(tr("Use the chosen", "Взять выбранный")).small());
@@ -346,6 +346,8 @@ impl OsmUi {
             self.ways = body.as_ref().ok().and_then(|b| osm::parse(b).ok());
             self.stops = body.as_ref().ok().and_then(|b| osm::parse_stops(b).ok()).unwrap_or_default();
             self.lines = crate::geo::fetch::overpass(&crate::osm_lines::query(b)).and_then(|b| crate::osm_lines::parse(&b)).unwrap_or_default();
+            self.green = crate::geo::fetch::overpass(&crate::osm_green::query(b)).and_then(|b| crate::osm_green::parse(&b)).unwrap_or_default();
+            self.buildings = crate::geo::fetch::overpass(&crate::osm_buildings::query(b)).and_then(|b| crate::osm_buildings::parse(&b)).unwrap_or_default();
             self.open = true;
             return;
         }
