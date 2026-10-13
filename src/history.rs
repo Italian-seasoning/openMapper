@@ -38,6 +38,8 @@ pub struct History {
     undo: Vec<Step>,
     redo: Vec<Step>,
     open: Option<Step>,
+    /// How many steps were ever kept (for `mark` / `merge_since`).
+    kept: u64,
 }
 
 const LIMIT: usize = 100;
@@ -81,11 +83,43 @@ impl History {
                 return;
             }
             self.undo.push(s);
+            self.kept += 1;
             if self.undo.len() > LIMIT {
                 self.undo.remove(0);
             }
             self.redo.clear();
         }
+    }
+
+    /// Where the history stands now, for `merge_since`.
+    pub fn mark(&mut self) -> u64 {
+        self.commit();
+        self.kept
+    }
+
+    /// The steps kept since `mark` made one, under `label` (a run of edits that belong
+    /// together: undone at once). Each thing is kept as it was before the first of them.
+    pub fn merge_since(&mut self, mark: u64, label: &str) {
+        self.commit();
+        let n = (self.kept.saturating_sub(mark) as usize).min(self.undo.len());
+        if n < 2 {
+            if let (1, Some(last)) = (n, self.undo.last_mut()) {
+                last.label = label.to_string();
+            }
+            return;
+        }
+        let steps: Vec<Step> = self.undo.split_off(self.undo.len() - n);
+        let mut merged = Step { label: label.to_string(), tiles: BTreeMap::new(), global: None, timetable: None, traffic: None, descriptions: None, at: std::time::Instant::now() };
+        for s in steps {
+            for (k, t) in s.tiles {
+                merged.tiles.entry(k).or_insert(t);
+            }
+            merged.global = merged.global.or(s.global);
+            merged.timetable = merged.timetable.or(s.timetable);
+            merged.traffic = merged.traffic.or(s.traffic);
+            merged.descriptions = merged.descriptions.or(s.descriptions);
+        }
+        self.undo.push(merged);
     }
 
     /// A finished edit of a window, given as the state before it: one undo step, or part of
@@ -103,6 +137,7 @@ impl History {
             return;
         }
         self.undo.push(Step { label: label.to_string(), tiles: BTreeMap::new(), global: before.global, timetable: before.timetable, traffic: before.traffic, descriptions: before.descriptions, at: std::time::Instant::now() });
+        self.kept += 1;
         if self.undo.len() > LIMIT {
             self.undo.remove(0);
         }
@@ -220,5 +255,30 @@ mod tests {
         assert!(doc.new_id() > first);
         h.redo(&mut doc);
         assert!(doc.new_id() > first + 1);
+    }
+
+    #[test]
+    fn edits_merged_are_undone_at_once() {
+        let mut doc = crate::selection::tests::flat_map(2);
+        let mut h = History::default();
+        let height = |doc: &Document, k: TileKey| doc.tiles[&k].terrain.heights[0];
+        h.begin("before");
+        h.touch_tile(&doc, (0, 0));
+        doc.tiles.get_mut(&(0, 0)).unwrap().terrain.heights[0] = 1.0;
+        h.commit();
+        let mark = h.mark();
+        for (k, v) in [((0, 0), 2.0), ((1, 0), 3.0), ((0, 0), 4.0)] {
+            h.begin("part");
+            h.touch_tile(&doc, k);
+            doc.tiles.get_mut(&k).unwrap().terrain.heights[0] = v;
+            h.commit();
+        }
+        h.merge_since(mark, "all");
+        assert_eq!(h.steps().0.len(), 2);
+        h.undo(&mut doc);
+        // (each tile as it was before the first of them)
+        assert_eq!((height(&doc, (0, 0)), height(&doc, (1, 0))), (1.0, 0.0));
+        h.redo(&mut doc);
+        assert_eq!((height(&doc, (0, 0)), height(&doc, (1, 0))), (4.0, 3.0));
     }
 }

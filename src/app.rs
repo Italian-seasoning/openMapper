@@ -1169,6 +1169,7 @@ impl App {
         }
         self.geo.take_bridge(&mut self.ui.geo, &mut self.ed, &self.prefs);
         if let (Some(b), Some(assets)) = (self.osm.build.take(), self.assets.as_mut()) {
+            let mark = self.ed.history.mark();
             let (roads, junctions) = self.ed.build_osm(assets, &b.roads, &b.types, b.oneway_type.as_deref());
             if let (Some((areas, islands, depth)), Some(doc)) = (&b.water, self.ed.doc.as_mut()) {
                 crate::osm_water::apply(doc, &mut self.ed.history, areas, islands, *depth);
@@ -1191,6 +1192,8 @@ impl App {
                 let n = self.ed.plant_osm(&b.trees, &b.mix);
                 text += &format!(" · {} {n}", tr("trees:", "деревьев:"));
             }
+            // (all of it one step: undone at once)
+            self.ed.history.merge_since(mark, tr("From OpenStreetMap", "Из OpenStreetMap"));
             log::info!("osm: {text}");
             self.ed.toast(text);
         }
