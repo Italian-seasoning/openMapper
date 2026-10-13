@@ -194,6 +194,7 @@ mod tests {
         assert_eq!(load(&dir).len(), 2);
         // retaken keeps its name
         v.list[0].name = "Depot".into();
+        cam.target = DVec3::new(-40.0, 0.0, 0.0);
         v.store(0, &cam);
         assert_eq!(load(&dir)[0].name, "Depot");
         assert_eq!(load(&dir)[0].target, [-40.0, 0.0, 0.0]);
