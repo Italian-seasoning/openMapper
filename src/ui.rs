@@ -826,7 +826,7 @@ fn menu_bar(root: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, can_undo: bo
                 if menu_item(ui, Some(Icon::Layers), tr("Satellite and terrain…", "Спутник и рельеф…"), "I", true) {
                     actions.push(Action::Geo);
                 }
-                if menu_item(ui, Some(Icon::Road), tr("Roads from OpenStreetMap…", "Дороги из OpenStreetMap…"), "", true) {
+                if menu_item(ui, Some(Icon::Road), tr("From OpenStreetMap…", "Из OpenStreetMap…"), "", true) {
                     actions.push(Action::Osm);
                 }
                 ui.separator();
