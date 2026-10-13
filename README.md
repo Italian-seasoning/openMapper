@@ -73,20 +73,22 @@ experienced map makers.
   source's attribution is shown. Downloads are cached in `~/.openomsi/cache/openmapper/tiles`
   and never fetched twice; the map keeps its pictures in `openMapper/` in its folder (the game
   ignores it), left out of shared exports unless asked for.
-* **From OpenStreetMap** (Map menu): for a map placed on the Earth, the streets of its
-  place downloaded (Overpass API, kept a week in the cache) and shown by kind (main roads,
-  streets, service roads, tram and railway tracks; tunnels left out) with how many and how long; each kind built with the road type
-  chosen for it, as if drawn: the ways of one street joined into one road, corners rounded
-  into OMSI's arcs, cut exactly at the map's edge, one-way roads (each carriageway of a dual
-  road) with a one-way type of their own if one is chosen, junctions where roads meet or cross, one undo step. Roads lying on ones the
-  map already has are left out; tracks are laid without junctions (a branch is joined with a
-  switch by hand, the map check names its end). The bus stops come too, with their names: the stop object
-  chosen put at the kerb of the nearest lane, as one placed by hand. And the bus lines: each bus route
-  through two or more of the map's stops a trip of its line (one trip for variants stopping
-  alike; a route leaving the map cut to its longest run within it), the way found along the
-  roads, a tour from 06:00 to 22:00 for each new line and a depot if the map has none. Trees and woods too: single
-  trees, rows of them and woods planted with the plant mix (none on a road), so far apart
-  in woods as asked. © OpenStreetMap contributors (ODbL).
+* **From OpenStreetMap** (Map menu): for a map placed on the Earth, what OpenStreetMap
+  has of its place (Overpass API, kept a week in the cache), shown with how much there is:
+  * roads by kind (main roads, streets, service roads), each built with the road type chosen
+    for it as if drawn: one street's ways joined into one road, corners rounded into OMSI's
+    arcs, cut exactly at the map's edge, junctions where roads meet or cross; one-way roads
+    (each carriageway of a dual road) with a one-way type if one is chosen; tunnels and roads
+    lying on ones the map has are left out;
+  * tram and railway tracks with a track type, laid without junctions (a branch is joined
+    with a switch by hand; the map check names its end);
+  * bus stops with their names, the stop object chosen put at the kerb of the nearest lane;
+  * bus lines: each route through two or more of the map's stops a trip of its line (variants
+    stopping alike once, a route leaving the map cut to its longest run within it), the way
+    found along the roads, a tour from 06:00 to 22:00 for each new line, a depot if none;
+  * trees, rows of trees and woods planted with the plant mix, none on a road.
+
+  Each is one undo step. © OpenStreetMap contributors (ODbL).
 * **Own pictures** on tiles (a scan, a screenshot, an old plan), no place on the Earth needed:
   "Load image file…" for a tile (or drop the picture on the window with the Tiles tool and a tile
   clicked), or one picture over a rectangle of tiles, cut into their pieces; turned (90° steps or
