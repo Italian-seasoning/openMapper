@@ -175,6 +175,10 @@ impl Guide {
                 if s.stops > 0 && !s.stop_on_road {
                     ui.label(RichText::new(tr("Your stops stand away from the roads: a bus serves a stop within 15 m of its lane.", "Остановки стоят далеко от дорог: автобус обслуживает остановку в пределах 15 м от полосы.")).small().color(WARN));
                 }
+                // (a real place: most of it can come at once)
+                if !s.road {
+                    ui.label(RichText::new(tr("A real place? Put the map on the Earth (Map > Satellite and terrain), then Map > From OpenStreetMap brings its streets, stops, lines and trees.", "Реальное место? Привяжите карту к Земле («Карта > Спутник и рельеф»), затем «Карта > Из OpenStreetMap» привезёт её улицы, остановки, линии и деревья.")).small().color(TEXT_DIM));
+                }
                 ui.separator();
                 let auto = !prefs.guide_off;
                 let mut a = auto;

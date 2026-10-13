@@ -147,6 +147,7 @@ impl OsmUi {
                 ui.label(RichText::new(tr("The map does not lie on the Earth yet: place it in Satellite and terrain (Map menu, I) first.", "Карта ещё не привязана к Земле: сначала разместите её в «Спутник и рельеф» (меню Карта, I).")).color(Color32::from_rgb(230, 170, 100)));
                 return;
             };
+            ui.label(RichText::new(tr("Load the terrain heights first (Satellite and terrain): the roads follow the ground as it is when they are built.", "Сначала загрузите высоты рельефа («Спутник и рельеф»): дороги ложатся на землю такой, какая она при постройке.")).small().color(TEXT_DIM));
             let busy = self.rx.is_some();
             ui.horizontal(|ui| {
                 let r = ui.add_enabled(!busy && tiles > 0, egui::Button::new(icons::labelled(Icon::Import, tr("Download for the map's tiles", "Загрузить для тайлов карты"))));
