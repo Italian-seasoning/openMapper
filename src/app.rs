@@ -238,7 +238,16 @@ impl App {
         }
     }
 
+    /// The camera kept for the map open now, to open it there next time.
+    fn remember_view(&mut self) {
+        if let Some(doc) = &self.ed.doc {
+            let c = &self.cam;
+            self.prefs.remember_view(&doc.dir, [c.target.x, c.target.y, c.target.z, c.yaw, c.pitch, c.distance]);
+        }
+    }
+
     fn after_open(&mut self, doc: Document) {
+        self.remember_view();
         // look at the map's middle (or its editor camera)
         let keys: Vec<_> = doc.tiles.keys().copied().collect();
         let mut c = DVec2::ZERO;
@@ -262,6 +271,15 @@ impl App {
                 self.cam.jump_to(DVec3::new(x, y, doc.ground(p)), (mc[7] * 4.0).clamp(150.0, 600.0));
                 self.cam.yaw = mc[5];
                 self.cam.pitch = 40.0;
+            }
+        }
+        // where it was left last time (not for checks without a person at the screen)
+        if let (Some(v), None) = (self.prefs.last_view(&doc.dir), &self.shot) {
+            if doc.height_at(DVec2::new(v[0], v[1])).is_some() {
+                self.cam.jump_to(DVec3::new(v[0], v[1], v[2]), v[5]);
+                self.cam.yaw = v[3];
+                self.cam.pitch = v[4];
+                self.cam.snap();
             }
         }
         log::info!("camera at ({:.1}, {:.1}, {:.1}), tile size {:.2} m, {} tiles", self.cam.target.x, self.cam.target.y, self.cam.target.z, tile_size(), keys.len());
@@ -697,6 +715,7 @@ impl App {
                 }
             }
             Action::Close => {
+                self.remember_view();
                 if let (Some(r), None) = (&self.roots, &self.recover) {
                     crate::doc::autosave::clear(&r.content);
                 }
@@ -707,6 +726,7 @@ impl App {
                 }
             }
             Action::Quit => {
+                self.remember_view();
                 self.quit = true;
                 el.exit();
             }

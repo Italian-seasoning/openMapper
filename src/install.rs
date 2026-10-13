@@ -74,6 +74,10 @@ pub struct Prefs {
     /// Imagery sources added by the user and keys for those that need one.
     #[serde(default)]
     pub geo: crate::geo::sources::GeoPrefs,
+    /// Where the camera was when each map was left (its folder; the point looked at, yaw,
+    /// pitch, distance), newest first: a map opens there again.
+    #[serde(default)]
+    pub last_views: Vec<(String, [f64; 6])>,
 }
 
 impl Prefs {
@@ -124,6 +128,20 @@ impl Prefs {
         self.recent_assets.insert(0, rel.to_string());
         self.recent_assets.truncate(24);
         self.save();
+    }
+
+    /// The camera kept for a map folder as it was left.
+    pub fn remember_view(&mut self, map_dir: &Path, v: [f64; 6]) {
+        let s = map_dir.to_string_lossy().to_string();
+        self.last_views.retain(|(d, _)| d != &s);
+        self.last_views.insert(0, (s, v));
+        self.last_views.truncate(30);
+        self.save();
+    }
+
+    pub fn last_view(&self, map_dir: &Path) -> Option<[f64; 6]> {
+        let s = map_dir.to_string_lossy();
+        self.last_views.iter().find(|(d, _)| *d == s).map(|(_, v)| *v)
     }
 
     pub fn push_recent(&mut self, cfg: &Path) {

@@ -186,7 +186,8 @@ experienced map makers.
   3 minutes to `<content>/openMapper/autosave` (never into the map) and offered back at the next
   start if openMapper ended without saving (the timetable and the traffic too).
 * **Map picture** (`picture.jpg`, shown where maps are chosen) taken from the view, and the
-  view the map opens with (`[mapcam]`), both in the map's properties.
+  view the map opens with (`[mapcam]`), both in the map's properties. A map opened again
+  opens where it was left (kept in openMapper's settings, not in the map).
 * **Favourites and recently used** at the top of the catalogue: right-click an entry to star
   it.
 * **Overview map** in the corner of the view (`M`): tiles, roads, tracks and the camera;

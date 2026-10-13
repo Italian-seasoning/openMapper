@@ -148,3 +148,4 @@ Add a line when you touch a shared file: stream, file, what.
 * D · `src/main.rs`: `mod ui_profile`; `src/ui_edit.rs`: `group_properties` takes `actions` (the height profile after Even slope); `src/ui.rs`: a single road's properties end with `ui_profile::profile_section`; `src/app.rs`: `OPENMAPPER_SELECT=x,y,chain`.
 * D · `src/main.rs`: `mod ui_views`; `src/ui.rs`: `UiState::views`, View > Saved views…; `src/app.rs`: the window drawn after the Satellite window (`follow` the map's folder), `Ctrl(+Shift)+1…9`, `OPENMAPPER_VIEWS=<n>`.
 * D · `src/main.rs`: `mod ui_palette`; `src/ui.rs`: `UiState::palette`, Edit > Search for a command…, drawn after the edit history, `SELECT` is `pub(crate)`; `src/app.rs`: `Ctrl+K` / `Ctrl+Shift+P`, `OPENMAPPER_PALETTE=<text>`.
+* D · `src/install.rs`: `Prefs::last_views` (`remember_view`, `last_view`); `src/app.rs`: `remember_view` before another map opens, on Close and Quit; `after_open` goes there (not in screenshot runs).
