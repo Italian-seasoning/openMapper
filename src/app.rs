@@ -1147,9 +1147,19 @@ impl App {
         }
         self.geo.take_bridge(&mut self.ui.geo, &mut self.ed, &self.prefs);
         if let (Some(b), Some(assets)) = (self.osm.build.take(), self.assets.as_mut()) {
-            let (roads, junctions) = self.ed.build_osm(assets, &b.roads, &b.types);
+            let (roads, junctions) = self.ed.build_osm(assets, &b.roads, &b.types, b.oneway_type.as_deref());
             let stops = b.stop_type.map(|t| self.ed.place_osm_stops(assets, &b.stops, &t)).unwrap_or(0);
-            self.ed.toast(format!("{} {roads} · {} {junctions} · {} {stops}", tr("Roads built:", "Дорог построено:"), tr("junctions:", "перекрёстков:"), tr("stops:", "остановок:")));
+            let mut text = format!("{} {roads} · {} {junctions} · {} {stops}", tr("Roads built:", "Дорог построено:"), tr("junctions:", "перекрёстков:"), tr("stops:", "остановок:"));
+            if let (false, Some(doc), Some(roots)) = (b.lines.is_empty(), self.ed.doc.as_mut(), &self.roots) {
+                let before = crate::history::Snapshot { timetable: Some(doc.timetable.clone()), traffic: Some(doc.traffic.clone()), ..Default::default() };
+                let added = crate::osm_lines::add(doc, vec![roots.content.clone(), roots.omsi.clone()], &b.lines);
+                if added.trips > 0 {
+                    self.ed.history.push_snapshot(tr("Lines from OpenStreetMap", "Линии из OpenStreetMap"), before);
+                }
+                text += &format!(" · {} {} · {} {}/{}", tr("lines:", "линий:"), added.lines, tr("trips found their way:", "рейсов с путём:"), added.routed, added.trips);
+            }
+            log::info!("osm: {text}");
+            self.ed.toast(text);
         }
         g.egui_state.handle_platform_output(&g.window, full.platform_output.clone());
         self.load_swatches(&g.egui_ctx, wanted_swatches);

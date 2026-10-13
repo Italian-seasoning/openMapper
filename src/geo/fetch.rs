@@ -291,19 +291,31 @@ pub fn overpass(q: &str) -> Result<String, Error> {
             return Ok(t);
         }
     }
-    // (the main server first, then a mirror when it is busy)
+    // (the main server first, then a mirror when it is busy or does not answer; a big
+    // place takes them a while)
+    static SLOW: OnceLock<ureq::Agent> = OnceLock::new();
+    let slow = SLOW.get_or_init(|| ureq::Agent::config_builder().user_agent(USER_AGENT).timeout_global(Some(Duration::from_secs(150))).http_status_as_error(false).build().into());
+    let servers = ["https://overpass-api.de/api/interpreter", "https://maps.mail.ru/osm/tools/overpass/api/interpreter"];
     let mut body = Vec::new();
-    for (i, server) in ["https://overpass-api.de/api/interpreter", "https://maps.mail.ru/osm/tools/overpass/api/interpreter"].iter().enumerate() {
-        let (status, b, _) = get(&format!("{server}?data={}", encode(q)))?;
-        match status {
-            200 => {
+    let mut last = String::new();
+    for server in servers {
+        let got = slow.get(&format!("{server}?data={}", encode(q))).call().map_err(net_error).and_then(|mut r| {
+            let status = r.status().as_u16();
+            r.body_mut().with_config().limit(64 << 20).read_to_vec().map(|b| (status, b)).map_err(net_error)
+        });
+        match got {
+            Ok((200, b)) => {
                 body = b;
+                last.clear();
                 break;
             }
-            429 | 502 | 503 | 504 if i == 0 => continue,
-            429 | 502 | 503 | 504 => return Err(tr("OpenStreetMap's servers are busy: try again in a minute", "Серверы OpenStreetMap заняты: попробуйте через минуту").into()),
-            _ => return Err(format!("Overpass: HTTP {status}")),
+            Ok((429 | 502 | 503 | 504, _)) => last = tr("OpenStreetMap's servers are busy: try again in a minute", "Серверы OpenStreetMap заняты: попробуйте через минуту").into(),
+            Ok((status, _)) => return Err(format!("Overpass: HTTP {status}")),
+            Err(e) => last = e,
         }
+    }
+    if !last.is_empty() {
+        return Err(last);
     }
     let text = String::from_utf8_lossy(&body).to_string();
     if std::fs::create_dir_all(&dir).is_ok() {

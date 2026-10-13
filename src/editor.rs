@@ -1804,13 +1804,13 @@ impl Editor {
     }
 
     /// Roads from OpenStreetMap built as if drawn one after the other (in `osm::roads`'
-    /// order): each joins the roads it meets with junctions, or goes on from a road end in
+    /// order; a one-way road with `oneway`'s type when there is one): each joins the roads it meets with junctions, or goes on from a road end in
     /// line with it; one undo step. A road lying mostly on a road the map had is left out
     /// (built before). Gives back how many roads and junctions were made.
-    pub fn build_osm(&mut self, assets: &mut Assets, list: &[crate::osm::Road], types: &[(crate::osm::Class, String)]) -> (usize, usize) {
+    pub fn build_osm(&mut self, assets: &mut Assets, list: &[crate::osm::Road], types: &[(crate::osm::Class, String)], oneway: Option<&str>) -> (usize, usize) {
         // (the types' widths and kinds first)
         let t0 = Instant::now();
-        for (_, t) in types {
+        for t in types.iter().map(|t| t.1.as_str()).chain(oneway) {
             while assets.spline(t).is_none() && !assets.spline_failed(t) && t0.elapsed().as_secs() < 20 {
                 assets.poll();
                 std::thread::sleep(std::time::Duration::from_millis(10));
@@ -1844,6 +1844,10 @@ impl Editor {
         let (mut built, mut junctions) = (0, 0);
         for r in list {
             let Some(rel) = types.iter().find(|t| t.0 == r.class).map(|t| t.1.clone()) else { continue };
+            let rel = match oneway {
+                Some(o) if r.oneway => o.to_string(),
+                _ => rel,
+            };
             let Some(model) = assets.spline(&rel) else { continue };
             let half = model.half_width as f64;
             let mut segs = crate::osm::segments(&r.points, r.class);
@@ -1897,6 +1901,7 @@ impl Editor {
         }
         self.road_type = was;
         self.finish_step();
+        log::info!("osm: {built} of {} roads built, {junctions} junctions", list.len());
         (built, junctions)
     }
 

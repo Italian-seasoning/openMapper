@@ -66,6 +66,9 @@ impl Class {
 #[derive(Clone, Debug)]
 pub struct Way {
     pub class: Class,
+    /// Traffic one way only (`oneway`, a roundabout, a motorway): one carriageway of a
+    /// dual road, a one-way street.
+    pub oneway: bool,
     pub nodes: Vec<i64>,
     pub geometry: Vec<(f64, f64)>,
 }
@@ -106,13 +109,15 @@ pub fn parse(body: &str) -> Result<Vec<Way>, String> {
         if e.get("type").and_then(|t| t.as_str()) != Some("way") {
             continue;
         }
-        let Some(class) = e.get("tags").and_then(|t| t.get("highway")).and_then(|v| v.as_str()).and_then(Class::of) else { continue };
+        let tag = |k: &str| e.get("tags").and_then(|t| t.get(k)).and_then(|v| v.as_str()).unwrap_or("");
+        let Some(class) = Class::of(tag("highway")) else { continue };
+        let oneway = matches!(tag("oneway"), "yes" | "1" | "true") || tag("junction") == "roundabout" || tag("highway") == "motorway";
         let nodes: Vec<i64> = e.get("nodes").and_then(|n| n.as_array()).into_iter().flatten().filter_map(|n| n.as_i64()).collect();
         let geometry: Vec<(f64, f64)> = e.get("geometry").and_then(|g| g.as_array()).into_iter().flatten().filter_map(|p| Some((p.get("lat")?.as_f64()?, p.get("lon")?.as_f64()?))).collect();
         if nodes.len() < 2 || nodes.len() != geometry.len() {
             continue;
         }
-        out.push(Way { class, nodes, geometry });
+        out.push(Way { class, oneway, nodes, geometry });
     }
     Ok(out)
 }
@@ -121,6 +126,7 @@ pub fn parse(body: &str) -> Result<Vec<Way>, String> {
 #[derive(Clone, Debug)]
 pub struct Road {
     pub class: Class,
+    pub oneway: bool,
     pub points: Vec<DVec2>,
 }
 
@@ -135,26 +141,57 @@ pub fn roads(ways: &[Way], to_world: impl Fn(f64, f64) -> DVec2, inside: impl Fn
             at.entry(*n).or_insert_with(|| to_world(g.0, g.1));
         }
     }
-    // the parts of each way within the map (a run of nodes inside)
-    let mut parts: Vec<(Class, Vec<i64>)> = Vec::new();
+    // the parts of each way within the map: its runs of nodes inside, from and to where it
+    // crosses the map's edge (new nodes there, numbered below zero)
+    let mut parts: Vec<(Kind, Vec<i64>)> = Vec::new();
+    let mut fresh = -1i64;
+    let mut edge = |at: &mut HashMap<i64, DVec2>, a: DVec2, b: DVec2| -> i64 {
+        // (a inside, b outside: halved down to a centimetre, then a little inside)
+        let (mut lo, mut hi) = (a, b);
+        for _ in 0..30 {
+            let m = (lo + hi) * 0.5;
+            if inside(m) { lo = m } else { hi = m }
+        }
+        let back = (a - lo).normalize_or_zero() * 0.5;
+        let id = fresh;
+        fresh -= 1;
+        at.insert(id, lo + back);
+        id
+    };
     for w in ways {
+        let kind = Kind { class: w.class, oneway: w.oneway };
         let mut run: Vec<i64> = Vec::new();
-        for n in &w.nodes {
-            if inside(at[n]) {
+        for (i, n) in w.nodes.iter().enumerate() {
+            let p = at[n];
+            let prev = i.checked_sub(1).map(|j| at[&w.nodes[j]]);
+            if inside(p) {
+                if let Some(q) = prev.filter(|q| !inside(*q)) {
+                    run.push(edge(&mut at, p, q));
+                }
                 run.push(*n);
             } else {
+                if let Some(q) = prev.filter(|q| inside(*q)) {
+                    run.push(edge(&mut at, q, p));
+                }
                 if run.len() >= 2 {
-                    parts.push((w.class, std::mem::take(&mut run)));
+                    parts.push((kind, std::mem::take(&mut run)));
                 }
                 run.clear();
             }
         }
         if run.len() >= 2 {
-            parts.push((w.class, run));
+            parts.push((kind, run));
         }
     }
     let parts = join(parts, &at);
     order(parts, &at)
+}
+
+/// What a road is built as: its class, and whether it is one way.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+struct Kind {
+    class: Class,
+    oneway: bool,
 }
 
 /// The heading (degrees) from `a` to `b`.
@@ -169,7 +206,7 @@ fn turn(in_dir: f64, out_dir: f64) -> f64 {
 
 /// Ways of one class meeting end to end joined into one (where several end at a node, the
 /// two that run on most nearly straight).
-fn join(mut parts: Vec<(Class, Vec<i64>)>, at: &HashMap<i64, DVec2>) -> Vec<(Class, Vec<i64>)> {
+fn join(mut parts: Vec<(Kind, Vec<i64>)>, at: &HashMap<i64, DVec2>) -> Vec<(Kind, Vec<i64>)> {
     loop {
         // the ends at each node
         let mut ends: HashMap<i64, Vec<(usize, bool)>> = HashMap::new();
@@ -232,7 +269,7 @@ fn join(mut parts: Vec<(Class, Vec<i64>)>, at: &HashMap<i64, DVec2>) -> Vec<(Cla
 }
 
 /// Built first: the roads others end on in their middle, then main roads, the long first.
-fn order(parts: Vec<(Class, Vec<i64>)>, at: &HashMap<i64, DVec2>) -> Vec<Road> {
+fn order(parts: Vec<(Kind, Vec<i64>)>, at: &HashMap<i64, DVec2>) -> Vec<Road> {
     let n = parts.len();
     // where each node lies inside a road (not at its ends)
     let mut interior: HashMap<i64, Vec<usize>> = HashMap::new();
@@ -252,8 +289,8 @@ fn order(parts: Vec<(Class, Vec<i64>)>, at: &HashMap<i64, DVec2>) -> Vec<Road> {
             }
         }
     }
-    let length = |p: &(Class, Vec<i64>)| p.1.windows(2).map(|w| (at[&w[1]] - at[&w[0]]).length()).sum::<f64>();
-    let rank: Vec<(Class, i64)> = parts.iter().map(|p| (p.0, -(length(p) as i64))).collect();
+    let length = |p: &(Kind, Vec<i64>)| p.1.windows(2).map(|w| (at[&w[1]] - at[&w[0]]).length()).sum::<f64>();
+    let rank: Vec<(Class, i64)> = parts.iter().map(|p| (p.0.class, -(length(p) as i64))).collect();
     let mut done = vec![false; n];
     let mut out: Vec<usize> = Vec::with_capacity(n);
     while out.len() < n {
@@ -265,8 +302,8 @@ fn order(parts: Vec<(Class, Vec<i64>)>, at: &HashMap<i64, DVec2>) -> Vec<Road> {
     }
     out.into_iter()
         .map(|i| {
-            let (class, nodes) = &parts[i];
-            Road { class: *class, points: nodes.iter().map(|n| at[n]).collect() }
+            let (kind, nodes) = &parts[i];
+            Road { class: kind.class, oneway: kind.oneway, points: nodes.iter().map(|n| at[n]).collect() }
         })
         .collect()
 }
@@ -375,7 +412,7 @@ mod tests {
 
     fn way(class: Class, nodes: &[i64], pts: &[(f64, f64)]) -> Way {
         // (the "latitude and longitude" here are world metres: the test's to_world is plain)
-        Way { class, nodes: nodes.to_vec(), geometry: pts.to_vec() }
+        Way { class, oneway: false, nodes: nodes.to_vec(), geometry: pts.to_vec() }
     }
 
     #[test]
@@ -392,9 +429,10 @@ mod tests {
         assert_eq!(r[0].class, Class::Main);
         assert_eq!(r[0].points.len(), 4);
         assert_eq!(r[1].class, Class::Street);
-        // cut where it leaves the map
+        // cut where it leaves the map, at the map's edge
         let r = roads(&ways, |a, b| DVec2::new(a, b), |p| p.x <= 160.0);
-        assert_eq!(r[0].points.len(), 3);
+        assert_eq!(r[0].points.len(), 4);
+        assert!((r[0].points[3].x - 159.5).abs() < 0.01, "{:?}", r[0].points);
     }
 
     #[test]
