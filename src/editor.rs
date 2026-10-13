@@ -312,6 +312,12 @@ pub struct Editor {
     pub plant_spacing: f64,
     /// What the brush sows, picked at random (empty: the catalogue's choice).
     pub plant_mix: Vec<String>,
+    /// The plant brush fills (or clears) an outline clicked round instead of painting.
+    pub plant_area: bool,
+    /// The outline's corners so far (world).
+    pub plant_outline: Vec<DVec2>,
+    /// The camera's distance at the last frame (how near a click must come to a corner).
+    view_distance: std::cell::Cell<f64>,
     plant_rng: crate::plants::Rng,
     ghost_pos: Option<(DVec3, f64)>,
     // tiles
@@ -425,6 +431,9 @@ impl Default for Editor {
             plant_erase: false,
             plant_spacing: 6.0,
             plant_mix: Vec::new(),
+            plant_area: false,
+            plant_outline: Vec::new(),
+            view_distance: std::cell::Cell::new(100.0),
             plant_rng: crate::plants::Rng::new(0x5eed),
             ghost_pos: None,
             hover_tile: None,
@@ -538,6 +547,7 @@ impl Editor {
         self.reshape = None;
         self.select_box = None;
         self.ring_centre = None;
+        self.plant_outline.clear();
         if let Some(doc) = &mut self.doc {
             self.history.commit();
             let _ = doc;
@@ -909,6 +919,16 @@ impl Editor {
             Tool::Roads if self.roundabout && !self.drawing_paths() => self.ring_click(assets),
             Tool::Roads => self.road_click(assets, lib),
             Tool::Objects if self.tool == Tool::Logic && self.logic == LogicMode::Parking && self.parking_row => self.parking_click(assets, lib),
+            Tool::Objects if self.tool == Tool::Objects && self.plant_brush && self.plant_area => {
+                let Some(c) = self.cursor else { return };
+                // (a click on the first corner closes the outline)
+                let close = self.plant_outline.len() >= 3 && (self.plant_outline[0] - c.truncate()).length() < self.close_radius();
+                if close {
+                    self.finish_plant_outline(assets);
+                } else {
+                    self.plant_outline.push(c.truncate());
+                }
+            }
             Tool::Objects if self.tool == Tool::Objects && self.plant_brush => {
                 self.history.begin(if self.plant_erase { tr("Clear plants", "Убрать растения") } else { tr("Plant", "Посадка") });
                 self.drag = Drag::Brush;
@@ -947,6 +967,9 @@ impl Editor {
             Tool::Roads if self.road_start.is_some() => {
                 self.road_start = None;
                 self.road_plan = None;
+            }
+            Tool::Objects if !self.plant_outline.is_empty() => {
+                self.plant_outline.pop();
             }
             Tool::Objects if self.parking_start.is_some() => {
                 self.parking_start = None;
@@ -1224,6 +1247,12 @@ impl Editor {
     /// Plants of `mix` put at `spots` (OpenStreetMap's trees and woods), each a random one
     /// turned a random way, none on a road nor outside the map; one undo step. How many.
     pub fn plant_osm(&mut self, spots: &[DVec2], mix: &[String]) -> usize {
+        self.plant_spots(spots, mix, tr("Trees from OpenStreetMap", "Деревья из OpenStreetMap"))
+    }
+
+    /// Plants put at `spots` (drawn from `mix`, turned at random), none on a road nor off
+    /// the map; one undo step. How many were put.
+    fn plant_spots(&mut self, spots: &[DVec2], mix: &[String], label: &'static str) -> usize {
         let Some(doc) = self.doc.as_ref() else { return 0 };
         if mix.is_empty() {
             return 0;
@@ -1246,7 +1275,7 @@ impl Editor {
             let (cx, cy) = cell(p);
             (cx - 1..=cx + 1).any(|x| (cy - 1..=cy + 1).any(|y| roads.get(&(x, y)).map(|v| v.iter().any(|(q, r)| (*q - p).length() < *r)).unwrap_or(false)))
         };
-        self.history.begin(tr("Trees from OpenStreetMap", "Деревья из OpenStreetMap"));
+        self.history.begin(label);
         let mut n = 0;
         for p in spots {
             let k = tile_of(*p);
@@ -1271,6 +1300,49 @@ impl Editor {
             self.history.commit();
         }
         n
+    }
+
+    /// The plant outline clicked so far: closed and filled with the mix (or cleared of
+    /// plants with the brush on Clear), one undo step. How many were planted or taken away.
+    pub fn finish_plant_outline(&mut self, assets: &mut Assets) -> usize {
+        let poly = std::mem::take(&mut self.plant_outline);
+        if poly.len() < 3 {
+            return 0;
+        }
+        let mix: Vec<String> = if self.plant_mix.is_empty() { self.object_type.iter().cloned().collect() } else { self.plant_mix.clone() };
+        let Some(doc) = self.doc.as_mut() else { return 0 };
+        if self.plant_erase {
+            self.history.begin(tr("Clear plants", "Убрать растения"));
+            let n = crate::plants::clear_inside(doc, &mut self.history, assets, &poly, &mix);
+            if n == 0 {
+                self.history.cancel();
+            } else {
+                self.history.commit();
+            }
+            return n;
+        }
+        if mix.is_empty() {
+            return 0;
+        }
+        let taken = crate::plants::plants_round(doc, assets, &poly, self.plant_spacing, &mix);
+        let spots = crate::plants::fill_spots(&poly, &taken, self.plant_spacing, &mut self.plant_rng);
+        self.plant_spots(&spots, &mix, tr("Plant an area", "Посадка на участке"))
+    }
+
+    /// How near (m) a click must come to an outline's first corner to close it: some
+    /// pixels on the screen.
+    fn close_radius(&self) -> f64 {
+        (self.view_distance.get() * 0.015).clamp(1.0, 40.0)
+    }
+
+    /// How many plants the outline being clicked would take (for the hint).
+    pub fn plant_outline_estimate(&self) -> Option<usize> {
+        let poly = &self.plant_outline;
+        if poly.len() < 3 || self.plant_erase {
+            return None;
+        }
+        let area = (0..poly.len()).map(|i| poly[i].perp_dot(poly[(i + 1) % poly.len()])).sum::<f64>().abs() * 0.5;
+        Some((area * 0.6 / (self.plant_spacing * self.plant_spacing)).round() as usize)
     }
 
     /// Buildings from OpenStreetMap: each outline filled with the model of `pool` whose
@@ -2473,6 +2545,7 @@ impl Editor {
     }
 
     pub fn extras(&self, cam: &crate::camera::Camera, assets: &mut Assets) -> FrameExtras {
+        self.view_distance.set(cam.distance);
         let mut x = FrameExtras { grid: self.show_grid, selected: self.selected, selected_more: self.selection().into_iter().skip(1).collect(), hover: self.hover, ..Default::default() };
         let Some(doc) = self.doc.as_ref() else { return x };
         let w = (cam.distance * 0.004).clamp(0.08, 6.0) as f32;
@@ -2545,7 +2618,33 @@ impl Editor {
                 }
             }
         }
+        // a plant outline being clicked round, closed to the cursor
+        if self.tool == Tool::Objects && self.plant_brush && self.plant_area {
+            let color = if self.plant_erase { [1.0, 0.4, 0.4, 1.0] } else { [0.45, 0.9, 0.45, 1.0] };
+            let on = |p: DVec2| DVec3::new(p.x, p.y, doc.ground(p) + 0.3);
+            let mut pts: Vec<DVec2> = self.plant_outline.clone();
+            if let (Some(c), true) = (self.cursor, self.cursor_in_view) {
+                pts.push(c.truncate());
+            }
+            // (every 4 m on the ground, so the line lies over hills)
+            let edge = |x: &mut FrameExtras, a: DVec2, b: DVec2, width: f32, color: [f32; 4]| {
+                let n = ((b - a).length() / 4.0).ceil().max(1.0) as usize;
+                for i in 0..n {
+                    line(&mut x.overlay, cam, on(a.lerp(b, i as f64 / n as f64)), on(a.lerp(b, (i + 1) as f64 / n as f64)), width, color);
+                }
+            };
+            for seg in pts.windows(2) {
+                edge(&mut x, seg[0], seg[1], w, color);
+            }
+            if pts.len() >= 3 {
+                edge(&mut x, pts[pts.len() - 1], pts[0], w * 0.6, [color[0], color[1], color[2], 0.5]);
+            }
+            for (i, p) in self.plant_outline.iter().enumerate() {
+                disc(&mut x.overlay, cam, on(*p), w * if i == 0 { 4.0 } else { 2.5 }, color);
+            }
+        }
         match self.acts_as() {
+            Tool::Objects if self.tool == Tool::Objects && self.plant_brush && self.plant_area => {}
             Tool::Objects if self.tool == Tool::Objects && self.plant_brush && self.cursor_in_view => {
                 if let Some(c) = self.cursor {
                     let color = if self.plant_erase { [1.0, 0.4, 0.4, 1.0] } else { [0.45, 0.9, 0.45, 1.0] };
@@ -4036,6 +4135,10 @@ impl Editor {
 
     /// Build the road drawn so far (Enter).
     pub fn confirm_road(&mut self, assets: &mut Assets, lib: &Library) {
+        if self.tool == Tool::Objects && !self.plant_outline.is_empty() {
+            self.finish_plant_outline(assets);
+            return;
+        }
         if self.acts_as() == Tool::Roads && self.road_start.is_some() {
             self.plan_road(assets);
             self.road_click(assets, lib);

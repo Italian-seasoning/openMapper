@@ -386,6 +386,27 @@ impl App {
             self.ed.select_all();
             self.ed.lay_selected_on_ground();
         }
+        // OPENMAPPER_PLANT=<plant>;x,y;x,y;…[;open]: the plant brush's outline clicked round
+        // there and filled (left open with `open`)
+        if let Ok(a) = std::env::var("OPENMAPPER_PLANT") {
+            let mut parts = a.split(';');
+            self.ed.set_tool(Tool::Objects);
+            self.ed.plant_brush = true;
+            self.ed.plant_area = true;
+            self.ed.object_type = parts.next().map(str::to_string);
+            let mut open = false;
+            for p in parts {
+                let v: Vec<f64> = p.split(',').filter_map(|x| x.trim().parse().ok()).collect();
+                match v[..] {
+                    [x, y] => self.ed.plant_outline.push(DVec2::new(x, y)),
+                    _ => open |= p == "open",
+                }
+            }
+            if let (false, Some(assets)) = (open, self.assets.as_mut()) {
+                let n = self.ed.finish_plant_outline(assets);
+                log::info!("plant outline: {n} planted");
+            }
+        }
         // OPENMAPPER_AUTOPAINT=<layer>: the Paint tool's rule by slope and height applied to that layer
         if let Some(layer) = std::env::var("OPENMAPPER_AUTOPAINT").ok().and_then(|l| l.parse::<usize>().ok()) {
             self.ed.set_tool(Tool::Paint);
@@ -960,7 +981,7 @@ impl App {
     }
 
     fn ed_has_pending(&self) -> bool {
-        self.ed.selected.is_some()
+        self.ed.selected.is_some() || !self.ed.plant_outline.is_empty()
     }
 
     /// The camera moves like a fly-through (Unity / Unreal) rather than over a map.

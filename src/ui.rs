@@ -991,7 +991,8 @@ fn tool_hint(ed: &Editor) -> &'static str {
         Tool::Select => tr("Click to select, Shift+click to add · drag on nothing: box · drag the selection to move it · Ctrl+C / X / V / D · right button: look + W A S D fly · middle: pan · Alt: orbit · wheel: zoom · F: focus", "Клик: выбрать, Shift+клик: добавить · тянуть по пустому месту: рамка · тянуть выделенное: сдвиг · Ctrl+C / X / V / D · ПКМ: обзор + полёт WASD · средняя: сдвиг · Alt: орбита · колесо: зум · F: к выделенному"),
         Tool::Roads if ed.road_type.is_none() => tr("Choose a road type in the list on the left", "Выберите тип дороги в списке слева"),
         Tool::Roads => tr("Click where the road starts, click again where it goes (it keeps going) · white dots: road ends to join · right-click / Esc: stop", "Клик: начало дороги, ещё клик: куда она идёт (дальше продолжается) · белые точки: концы для стыковки · правый клик / Esc: стоп"),
-        Tool::Objects if ed.object_type.is_none() => tr("Choose an object in the list on the left", "Выберите объект в списке слева"),
+        Tool::Objects if ed.object_type.is_none() && !(ed.plant_brush && (ed.plant_erase || !ed.plant_mix.is_empty())) => tr("Choose an object in the list on the left", "Выберите объект в списке слева"),
+        Tool::Objects if ed.plant_brush && ed.plant_area => tr("Click round the area, corner by corner · click the first corner or press Enter to fill it · right-click: take back a corner · Esc: cancel", "Обведите участок кликами по углам · клик по первому углу или Enter: засадить · правый клик: убрать угол · Esc: отмена"),
         Tool::Objects if ed.plant_brush => tr("Hold the left button and paint · [ ] or Shift+wheel: brush size", "Зажмите левую кнопку и ведите · [ ] или Shift+колесо: размер кисти"),
         Tool::Objects => tr("Click to place · R / Shift+R turn · right-click puts the object away", "Клик: поставить · R / Shift+R: поворот · правый клик: убрать объект"),
         Tool::Logic if ed.logic == LogicMode::Paths && ed.path_edit => tr("Click a path to pick it · drag its dots to move an end or bend it · Ctrl+click on it: add a point · Del: delete", "Клик по пути: выбрать · тяните кружки: двигать конец или изгибать · Ctrl+клик: добавить точку · Del: удалить"),
@@ -1199,10 +1200,25 @@ fn catalogue_of(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Libr
                     ed.plant_erase = true;
                 }
             });
+            ui.horizontal(|ui| {
+                ui.add_space(18.0);
+                if radio(ui, !ed.plant_area, tr("With the brush", "Кистью")).clicked() {
+                    ed.plant_area = false;
+                    ed.plant_outline.clear();
+                }
+                if radio(ui, ed.plant_area, tr("In an outline", "По контуру")).on_hover_text(tr("Click round an area (a wood, a park, a garden) and it is filled at once, or cleared", "Обведите участок (лес, парк, сад) кликами: он засаживается сразу целиком или очищается")).clicked() {
+                    ed.plant_area = true;
+                }
+            });
+            if let Some(n) = ed.plant_outline_estimate() {
+                ui.label(RichText::new(format!("{} {n} {}", tr("About", "Около"), tr("plants (Enter: plant)", "растений (Enter: посадить)"))).small().color(TEXT_DIM));
+            }
             egui::Grid::new("plants").num_columns(2).spacing(Vec2::new(8.0, 4.0)).show(ui, |ui| {
-                ui.label(tr("Size", "Размер"));
-                ui.add(egui::Slider::new(&mut ed.brush_radius, 3.0..=150.0).suffix(" m"));
-                ui.end_row();
+                if !ed.plant_area {
+                    ui.label(tr("Size", "Размер"));
+                    ui.add(egui::Slider::new(&mut ed.brush_radius, 3.0..=150.0).suffix(" m"));
+                    ui.end_row();
+                }
                 ui.label(tr("Apart", "Расстояние"));
                 ui.add(egui::Slider::new(&mut ed.plant_spacing, 1.0..=40.0).suffix(" m"));
                 ui.end_row();

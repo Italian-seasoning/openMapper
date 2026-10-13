@@ -113,6 +113,69 @@ pub fn clear(doc: &mut Document, hist: &mut History, assets: &mut Assets, centre
     gone
 }
 
+/// The outline's middle and the radius round it that holds it all.
+fn circle_round(poly: &[DVec2]) -> (DVec2, f64) {
+    let (lo, hi) = poly.iter().fold((DVec2::splat(f64::MAX), DVec2::splat(f64::MIN)), |(a, b), p| (a.min(*p), b.max(*p)));
+    ((lo + hi) * 0.5, (hi - lo).length() * 0.5)
+}
+
+/// The plants already standing in an outline and round it (within `margin`).
+pub fn plants_round(doc: &Document, assets: &mut Assets, poly: &[DVec2], margin: f64, mix: &[String]) -> Vec<DVec2> {
+    let (c, r) = circle_round(poly);
+    plants_near(doc, assets, c, r + margin, mix)
+}
+
+/// Where plants go to fill an outline: random points inside it, none nearer than `spacing`
+/// to another or to one of `taken` (darts thrown over a grid of cells, so a wood of
+/// thousands is quick); about as dense as the brush sows.
+pub fn fill_spots(poly: &[DVec2], taken: &[DVec2], spacing: f64, rng: &mut Rng) -> Vec<DVec2> {
+    if poly.len() < 3 || spacing <= 0.0 {
+        return Vec::new();
+    }
+    let (lo, hi) = poly.iter().fold((DVec2::splat(f64::MAX), DVec2::splat(f64::MIN)), |(a, b), p| (a.min(*p), b.max(*p)));
+    let cell = |p: DVec2| ((p.x / spacing).floor() as i64, (p.y / spacing).floor() as i64);
+    let mut grid: std::collections::HashMap<(i64, i64), Vec<DVec2>> = Default::default();
+    for p in taken {
+        grid.entry(cell(*p)).or_default().push(*p);
+    }
+    let area = (0..poly.len()).map(|i| poly[i].perp_dot(poly[(i + 1) % poly.len()])).sum::<f64>().abs() * 0.5;
+    let tries = (area / (spacing * spacing) * 4.0).ceil() as usize;
+    let mut out = Vec::new();
+    for _ in 0..tries {
+        let p = lo + (hi - lo) * DVec2::new(rng.next(), rng.next());
+        if !crate::osm_green::inside(poly, p) {
+            continue;
+        }
+        let (cx, cy) = cell(p);
+        let near = (cx - 1..=cx + 1).any(|x| (cy - 1..=cy + 1).any(|y| grid.get(&(x, y)).map(|v| v.iter().any(|q| (*q - p).length() < spacing)).unwrap_or(false)));
+        if near {
+            continue;
+        }
+        grid.entry((cx, cy)).or_default().push(p);
+        out.push(p);
+    }
+    out
+}
+
+/// Clear the plants inside an outline (trees, and the mix's objects). Returns how many went.
+pub fn clear_inside(doc: &mut Document, hist: &mut History, assets: &mut Assets, poly: &[DVec2], mix: &[String]) -> usize {
+    let (c, r) = circle_round(poly);
+    let mut gone = 0;
+    for k in tiles_near(doc, c, r) {
+        let org = tile_origin(k);
+        let doomed: Vec<i64> = doc.tiles[&k].tile.objects.iter().filter(|o| crate::osm_green::inside(poly, org + DVec2::new(o.pos[0], o.pos[1])) && is_plant(assets, &o.file, mix)).map(|o| o.id).collect();
+        if doomed.is_empty() {
+            continue;
+        }
+        hist.touch_tile(doc, k);
+        let t = doc.tiles.get_mut(&k).unwrap();
+        t.tile.objects.retain(|o| !doomed.contains(&o.id));
+        t.touch_content();
+        gone += doomed.len();
+    }
+    gone
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -151,5 +214,33 @@ mod tests {
         assert!(gone > 0 && gone < n);
         hist.undo(&mut doc);
         assert_eq!(plants_near(&doc, &mut a, DVec2::new(300.0, 150.0), 50.0, &mix).len(), n);
+    }
+
+    #[test]
+    fn an_outline_is_filled_spaced_and_cleared() {
+        let mut doc = flat_map(2);
+        let mut hist = History::default();
+        let mut a = assets();
+        let mix = vec!["Sceneryobjects\\Trees\\a.sco".to_string()];
+        let poly = vec![DVec2::new(250.0, 100.0), DVec2::new(350.0, 100.0), DVec2::new(350.0, 200.0), DVec2::new(250.0, 200.0)];
+        let old = vec![DVec2::new(300.0, 150.0)];
+        let pts = fill_spots(&poly, &old, 8.0, &mut Rng::new(3));
+        // (random sequential packing fills some 0.55..0.75 of 1 / spacing²)
+        assert!((80..=130).contains(&pts.len()), "{}", pts.len());
+        let all: Vec<DVec2> = pts.iter().chain(&old).copied().collect();
+        for (i, p) in all.iter().enumerate() {
+            assert!(crate::osm_green::inside(&poly, *p) || i == all.len() - 1);
+            for q in &all[i + 1..] {
+                assert!((*p - *q).length() >= 8.0 - 1e-9);
+            }
+        }
+        hist.begin("sow");
+        let n = sow(&mut doc, &mut hist, &mut a, DVec2::new(300.0, 150.0), 40.0, 6.0, &mix, &mut Rng::new(5), 200);
+        sow(&mut doc, &mut hist, &mut a, DVec2::new(500.0, 150.0), 20.0, 6.0, &mix, &mut Rng::new(5), 50);
+        let gone = clear_inside(&mut doc, &mut hist, &mut a, &poly, &mix);
+        hist.commit();
+        assert!(gone > 0 && gone <= n);
+        assert!(plants_round(&doc, &mut a, &poly, 0.0, &mix).iter().all(|p| !crate::osm_green::inside(&poly, *p)));
+        assert!(!plants_near(&doc, &mut a, DVec2::new(500.0, 150.0), 25.0, &mix).is_empty());
     }
 }
