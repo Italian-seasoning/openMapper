@@ -414,7 +414,7 @@ impl GeoUi {
         self.job.is_some() || !self.queued.is_empty() || self.bake.is_some() || !self.loading.is_empty()
     }
 
-    fn georef(&self) -> Option<Georef> {
+    pub(crate) fn georef(&self) -> Option<Georef> {
         self.file.georef(omsi_map::world_coordinates(), ts())
     }
 

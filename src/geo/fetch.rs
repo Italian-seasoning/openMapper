@@ -278,6 +278,40 @@ pub fn parse_places(body: &str) -> Result<Vec<Place>, Error> {
         .collect())
 }
 
+/// Ask OpenStreetMap's Overpass API (one request at a time; an answer is kept a week in
+/// the cache, so the same place is not asked for again).
+pub fn overpass(q: &str) -> Result<String, Error> {
+    static ONE: Mutex<()> = Mutex::new(());
+    let _one = ONE.lock().unwrap_or_else(|e| e.into_inner());
+    let dir = cache_root().parent().map(|p| p.join("osm")).unwrap_or_else(|| PathBuf::from("osm"));
+    let path = dir.join(format!("{:016x}.json", fnv(q.as_bytes())));
+    let fresh = std::fs::metadata(&path).and_then(|m| m.modified()).ok().and_then(|t| t.elapsed().ok()).map(|a| a.as_secs() < 7 * 86_400).unwrap_or(false);
+    if fresh {
+        if let Ok(t) = std::fs::read_to_string(&path) {
+            return Ok(t);
+        }
+    }
+    // (the main server first, then a mirror when it is busy)
+    let mut body = Vec::new();
+    for (i, server) in ["https://overpass-api.de/api/interpreter", "https://maps.mail.ru/osm/tools/overpass/api/interpreter"].iter().enumerate() {
+        let (status, b, _) = get(&format!("{server}?data={}", encode(q)))?;
+        match status {
+            200 => {
+                body = b;
+                break;
+            }
+            429 | 502 | 503 | 504 if i == 0 => continue,
+            429 | 502 | 503 | 504 => return Err(tr("OpenStreetMap's servers are busy: try again in a minute", "Серверы OpenStreetMap заняты: попробуйте через минуту").into()),
+            _ => return Err(format!("Overpass: HTTP {status}")),
+        }
+    }
+    let text = String::from_utf8_lossy(&body).to_string();
+    if std::fs::create_dir_all(&dir).is_ok() {
+        let _ = std::fs::write(&path, &text);
+    }
+    Ok(text)
+}
+
 /// Percent-encoding for a query parameter.
 fn encode(s: &str) -> String {
     s.bytes()

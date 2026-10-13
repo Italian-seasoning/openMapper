@@ -73,6 +73,12 @@ experienced map makers.
   source's attribution is shown. Downloads are cached in `~/.openomsi/cache/openmapper/tiles`
   and never fetched twice; the map keeps its pictures in `openMapper/` in its folder (the game
   ignores it), left out of shared exports unless asked for.
+* **Roads from OpenStreetMap** (Map menu): for a map placed on the Earth, the streets of its
+  place downloaded (Overpass API, kept a week in the cache) and shown by kind (main roads,
+  streets, service roads) with how many and how long; each kind built with the road type
+  chosen for it, as if drawn: the ways of one street joined into one road, corners rounded
+  into OMSI's arcs, junctions where roads meet or cross, one undo step. Roads lying on ones the
+  map already has are left out. © OpenStreetMap contributors (ODbL).
 * **Own pictures** on tiles (a scan, a screenshot, an old plan), no place on the Earth needed:
   "Load image file…" for a tile (or drop the picture on the window with the Tiles tool and a tile
   clicked), or one picture over a rectangle of tiles, cut into their pieces; turned (90° steps or

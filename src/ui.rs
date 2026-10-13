@@ -101,6 +101,8 @@ pub enum Action {
     Traffic,
     /// Open or close the Satellite and terrain window.
     Geo,
+    /// Open or close Roads from OpenStreetMap.
+    Osm,
     /// View > Graphics quality.
     SetGraphics(crate::render::quality::Quality),
     /// Open or close the Getting started guide.
@@ -823,6 +825,9 @@ fn menu_bar(root: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, can_undo: bo
                 }
                 if menu_item(ui, Some(Icon::Layers), tr("Satellite and terrain…", "Спутник и рельеф…"), "I", true) {
                     actions.push(Action::Geo);
+                }
+                if menu_item(ui, Some(Icon::Road), tr("Roads from OpenStreetMap…", "Дороги из OpenStreetMap…"), "", true) {
+                    actions.push(Action::Osm);
                 }
                 ui.separator();
                 if menu_item(ui, Some(Icon::Play), tr("Test drive in openOMSI", "Тест-драйв в openOMSI"), "F5", game_found) {

@@ -1671,6 +1671,14 @@ impl Editor {
         }
         self.history.touch_global(doc);
         let _ = total;
+        self.lay_road(rel, &pieces, z0, z1, start, end, half)
+    }
+
+    /// The splines of a road, cut into pieces (`roads::split`), put into the map, linked to
+    /// what its ends meet; inside an open step that keeps every tile.
+    fn lay_road(&mut self, rel: &str, pieces: &[Seg], z0: f64, z1: f64, start: Anchor, end: Option<Anchor>, half: f64) -> Option<Vec<(TileKey, i64)>> {
+        let doc = self.doc.as_mut()?;
+        let pieces = pieces.to_vec();
         let profile = if self.keep_height { even_profile(&pieces, z0, z1) } else { road_profile(doc, &pieces, z0, z1) };
         let mut made: Vec<(TileKey, i64)> = Vec::new();
         let ids: Vec<i64> = pieces.iter().map(|_| doc.new_id()).collect();
@@ -1744,6 +1752,103 @@ impl Editor {
         }
         // (the step stays open: the caller may cut the road it joined, in the same step)
         Some(made)
+    }
+
+    /// Roads from OpenStreetMap built as if drawn one after the other (in `osm::roads`'
+    /// order): each joins the roads it meets with junctions, or goes on from a road end in
+    /// line with it; one undo step. A road lying mostly on a road the map had is left out
+    /// (built before). Gives back how many roads and junctions were made.
+    pub fn build_osm(&mut self, assets: &mut Assets, list: &[crate::osm::Road], types: &[(crate::osm::Class, String)]) -> (usize, usize) {
+        // (the types' widths and kinds first)
+        let t0 = Instant::now();
+        for (_, t) in types {
+            while assets.spline(t).is_none() && !assets.spline_failed(t) && t0.elapsed().as_secs() < 20 {
+                assets.poll();
+                std::thread::sleep(std::time::Duration::from_millis(10));
+            }
+        }
+        let Some(doc) = self.doc.as_ref() else { return (0, 0) };
+        // where the map's roads run, every 3 m in 10 m cells
+        let cell = |p: DVec2| ((p.x / 10.0).floor() as i64, (p.y / 10.0).floor() as i64);
+        let mut had: std::collections::HashMap<(i64, i64), Vec<DVec2>> = Default::default();
+        for (k, t) in &doc.tiles {
+            for sp in t.tile.splines.iter().filter(|s| !s.deleted) {
+                let c = omsi_geometry::SplineCurve::from_map(sp, tile_origin(*k));
+                let n = (sp.length / 3.0).ceil().max(1.0) as usize;
+                for i in 0..=n {
+                    let q = c.point_at(sp.length * i as f64 / n as f64).truncate();
+                    had.entry(cell(q)).or_default().push(q);
+                }
+            }
+        }
+        let near_old = |p: DVec2| {
+            let (cx, cy) = cell(p);
+            (cx - 1..=cx + 1).any(|x| (cy - 1..=cy + 1).any(|y| had.get(&(x, y)).map(|v| v.iter().any(|q| (*q - p).length() < 4.0)).unwrap_or(false)))
+        };
+        self.history.begin(tr("Roads from OpenStreetMap", "Дороги из OpenStreetMap"));
+        let keys: Vec<TileKey> = doc.tiles.keys().copied().collect();
+        for k in keys {
+            self.history.touch_tile(doc, k);
+        }
+        self.history.touch_global(doc);
+        let was = self.road_type.clone();
+        let (mut built, mut junctions) = (0, 0);
+        for r in list {
+            let Some(rel) = types.iter().find(|t| t.0 == r.class).map(|t| t.1.clone()) else { continue };
+            let Some(model) = assets.spline(&rel) else { continue };
+            let half = model.half_width as f64;
+            let mut segs = crate::osm::segments(&r.points, r.class);
+            if segs.is_empty() {
+                continue;
+            }
+            let samples: Vec<DVec2> = segs.iter().flat_map(|s| {
+                let c = s.curve();
+                let n = (s.length / 5.0).ceil().max(1.0) as usize;
+                (0..=n).map(move |i| c.point_at(s.length * i as f64 / n as f64).truncate())
+            }).collect();
+            if samples.iter().filter(|p| near_old(**p)).count() * 2 > samples.len() {
+                continue;
+            }
+            self.road_type = Some(rel.clone());
+            let (p0, p1) = (segs[0].start, segs.last().unwrap().end());
+            let a0 = self.snap_anchor(assets, p0, 3.0).map(|a| a.0);
+            let a1 = self.snap_anchor(assets, p1, 3.0).map(|a| a.0).filter(|a| a.spline.map(|s| Some(s) != a0.and_then(|b| b.spline)).unwrap_or(true));
+            // (into a road's middle: from its centre line exactly)
+            if let Some(a) = a0.filter(|a| a.mid.is_some()) {
+                if let Some(s) = roads::straight(a.pos.truncate(), p0) {
+                    segs.insert(0, s);
+                }
+            }
+            if let Some(a) = a1.filter(|a| a.mid.is_some()) {
+                segs.extend(roads::straight(p1, a.pos.truncate()));
+            }
+            let h0 = segs[0].heading;
+            let h1 = segs.last().map(|s| s.curve().heading_at(s.length)).unwrap_or(0.0);
+            // a road end met in line with it: going on from it (else beside it, unjoined)
+            let in_line = |a: f64, b: f64| (roads::norm_deg(a - b + 180.0) - 180.0).abs() < 25.0;
+            let start_link = match a0 {
+                Some(a) if a.mid.is_none() && in_line(a.heading, h0) => a,
+                _ => Anchor { pos: DVec3::new(p0.x, p0.y, 0.0), heading: h0, ..Default::default() },
+            };
+            let end_link = a1.filter(|a| a.mid.is_none() && in_line(a.heading + 180.0, h1));
+            let Some(doc) = self.doc.as_ref() else { break };
+            let z0 = a0.map(|a| a.pos.z).unwrap_or_else(|| doc.ground(p0));
+            let z1 = a1.map(|a| a.pos.z).unwrap_or_else(|| doc.ground(p1));
+            if segs.iter().any(|s| !doc.tiles.contains_key(&tile_of(s.start)) || !doc.tiles.contains_key(&tile_of(s.end()))) {
+                continue;
+            }
+            let pieces = roads::split(&segs, 50.0);
+            let Some(made) = self.lay_road(&rel, &pieces, z0, z1, start_link, end_link, half) else { continue };
+            built += 1;
+            if self.auto_junctions {
+                let start_mid = a0.and_then(|a| a.mid.map(|m| (m, a.pos)));
+                let end_mid = a1.and_then(|a| a.mid.map(|m| (m, a.pos)));
+                junctions += self.make_junctions(assets, &made, half, start_mid, end_mid);
+            }
+        }
+        self.road_type = was;
+        self.finish_step();
+        (built, junctions)
     }
 
     /// Cut the roads where a newly built road `made` crosses one or meets one's middle, and

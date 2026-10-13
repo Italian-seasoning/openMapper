@@ -106,6 +106,7 @@ pub struct App {
     chrono: crate::ui_chrono::ChronoWindow,
     /// The Satellite and terrain window and the overlay on the ground.
     geo: crate::ui_geo::GeoUi,
+    osm: crate::ui_osm::OsmUi,
     /// Getting started.
     guide: crate::ui_guide::Guide,
     /// The next frame's view becomes the map's picture (`picture.jpg`).
@@ -149,6 +150,7 @@ impl App {
             signals: Default::default(),
             chrono: Default::default(),
             geo: Default::default(),
+            osm: Default::default(),
             guide: Default::default(),
             picture: false,
             snapshot: false,
@@ -337,6 +339,11 @@ impl App {
         // OPENMAPPER_GEO=lat,lon[,load][,hide]: placed there, the Satellite and terrain window open
         if let Ok(a) = std::env::var("OPENMAPPER_GEO") {
             self.geo.scripted(&mut self.ed, &self.prefs, &a);
+        }
+        // OPENMAPPER_OSM=<main type>[;<street type>]: roads from OpenStreetMap built (after
+        // OPENMAPPER_GEO placed the map)
+        if let Ok(t) = std::env::var("OPENMAPPER_OSM") {
+            self.osm.scripted(&self.ed, self.geo.georef(), &t);
         }
         // OPENMAPPER_TRAFFIC=day|groups|lists: the Traffic and AI window open on that tab
         if let Ok(t) = std::env::var("OPENMAPPER_TRAFFIC") {
@@ -784,6 +791,7 @@ impl App {
             Action::Timetable => self.tt.open = !self.tt.open,
             Action::Traffic => self.traffic.open = !self.traffic.open,
             Action::Geo => self.geo.open = !self.geo.open,
+            Action::Osm => self.osm.open = !self.osm.open,
             Action::Guide => self.guide.open = !self.guide.open,
             Action::Export => self.export(),
             Action::ToggleFavourite(rel) => {
@@ -1115,6 +1123,7 @@ impl App {
                 self.chrono.window(&ctx, &mut self.ed, &self.lib, self.roots.as_ref(), &mut actions);
                 self.signals.window(&ctx, &mut self.ed, &self.lib, self.roots.as_ref(), &mut actions);
                 self.geo.window(&ctx, &mut self.ed, &mut self.prefs);
+                self.osm.window(&ctx, &mut self.ed, &self.lib, self.geo.georef());
                 if let Some(p) = self.geo.look.take() {
                     actions.push(Action::LookAt(p));
                 }
@@ -1137,6 +1146,10 @@ impl App {
             }
         }
         self.geo.take_bridge(&mut self.ui.geo, &mut self.ed, &self.prefs);
+        if let (Some((list, types)), Some(assets)) = (self.osm.build.take(), self.assets.as_mut()) {
+            let (roads, junctions) = self.ed.build_osm(assets, &list, &types);
+            self.ed.toast(format!("{} {roads} · {} {junctions}", tr("Roads built:", "Дорог построено:"), tr("junctions:", "перекрёстков:")));
+        }
         g.egui_state.handle_platform_output(&g.window, full.platform_output.clone());
         self.load_swatches(&g.egui_ctx, wanted_swatches);
 
