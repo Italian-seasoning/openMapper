@@ -64,9 +64,12 @@ pub fn summarize(log: &str) -> Vec<Line> {
             let bad = text.split(',').skip(1).any(|part| number_after(part.trim(), "").map(|n| n > 0).unwrap_or(false));
             Some(Line { problem: bad, text: text.to_string() })
         } else if ["road check:", "spline check:", "entry point check:", "buried check:", "ground-cut check:", "ground-over-road check:", "wheel check:", "spike check:"].iter().any(|p| text.starts_with(p)) {
-            // ("3 of 804 ...": a problem when the first number is not 0)
+            // ("3 of 804 ...": a problem when the first number is not 0, and is not a tiny share
+            // of a great many, as the stock maps have too: 14 of 283163 ground points)
             let n = text.split_once(':').and_then(|(_, r)| number_after(r, "")).unwrap_or(0);
-            Some(Line { problem: n > 0, text: text.to_string() })
+            let of = number_after(text, " of ").unwrap_or(0);
+            let tiny = of > 0 && (n as f64) < of as f64 * 0.0005;
+            Some(Line { problem: n > 0 && !tiny, text: text.to_string() })
         } else if text.starts_with("bare point at") {
             Some(Line { problem: true, text: text.to_string() })
         } else {
@@ -257,6 +260,7 @@ mod tests {
         assert!(l.iter().any(|x| !x.problem && x.text.starts_with("wheel check: 0")));
         assert!(!summarize("[x INFO  y] wheel check: 3636 wheel points, 0 under a face (a wall to the tyre), 0 off the lane's height by more than 30 cm")[0].problem);
         assert!(summarize("[x INFO  y] wheel check: 3636 wheel points, 2 under a face (a wall to the tyre), 0 off the lane's height by more than 30 cm")[0].problem);
+        assert!(!summarize("[x INFO  y] ground-cut check: 14 of 283163 covered ground points would be cut away with nothing under them (0.00 %)")[0].problem);
         assert_eq!(place_in("bare point at (-156, 96, 0.1), nearest surface NaN m"), Some(glam::DVec2::new(-156.0, 96.0)));
         assert_eq!(place_in("road check: 1 of 804 points"), None);
         let fine = "[x INFO  y] check trips: 2 trips on loaded lanes (0 not wholly loaded): 21 joints, 21 joined, 0 lane changes, 0 gaps, 0 taken the wrong way round; 0 lanes not as long as the file says";
