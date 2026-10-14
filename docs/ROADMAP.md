@@ -23,7 +23,10 @@ Still open for 1.0:
   Still wanted: a LICENSE file (Cargo.toml says MIT) and an icon for the program.
 * A pass in openOMSI over bigger maps made only with openMapper (an OSM town): Map > Check in
   openOMSI runs the game's own checks; the sample with a road built across it passes them
-  (0 of 34 chained ends apart, 21 of 21 trip joints joined, no buried road).
+  (0 of 34 chained ends apart, 21 of 21 trip joints joined, no buried road). Bad Belzig from
+  OpenStreetMap on 9 tiles (44 roads, 31 junctions, 16 stops, 1753 trees; October 2026): 0 of
+  425 chained ends apart, no buried road, 0 of 17794 wheel points under a face; the 25 of 4421
+  lane points without road under them all lie at the map's edge or a street's dead end.
 * The interface's texts read through once more by a native speaker in each language.
 
 ## Workstreams
