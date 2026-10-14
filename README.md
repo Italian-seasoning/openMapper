@@ -192,7 +192,8 @@ can drive in service.
   something out), show it in the file manager, or move a content folder map into
   openMapper's bin (`openMapper\bin\maps`, from where it can be put back by hand).
 * **New map** from OMSI 2's own template (`template/NewMap`): size, keep right or left, base
-  ground, and "Start with a sample": a ring road with stops, a start point, line 1 both ways,
+  ground, the car groups its traffic names copied from the stock maps (the template has
+  none, so its streets would stay empty), and "Start with a sample": a ring road with stops, a start point, line 1 both ways,
   a tour from 06:00 to 22:00, a depot and AI traffic, so it can be driven in service at once.
 * **Getting started** (Help menu, opens by itself for a new map): a checklist that ticks
   itself as the map grows (road, stop, start point, line, tour, buses, saved, test drive),

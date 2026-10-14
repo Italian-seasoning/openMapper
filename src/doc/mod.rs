@@ -233,6 +233,8 @@ impl Document {
             global_rev: next_rev(),
             timetable: Default::default(),
         };
+        // (the cars the template's traffic names, so its streets are not empty)
+        crate::traffic::fill_named_groups(&mut doc.traffic, &roots.omsi);
         let half = size / 2;
         for y in -half..=(size - 1 - half) {
             for x in -half..=(size - 1 - half) {

@@ -327,3 +327,19 @@ fn the_map_is_shown_as_on_a_day() {
     assert!(doc.tiles.values().filter(|t| !t.chrono.is_empty()).count() > patched);
     assert_eq!(doc.is_dirty(), dirty);
 }
+
+#[test]
+fn a_new_map_has_the_cars_its_traffic_names() {
+    let _map = one_map();
+    let Some(omsi) = crate::install::find_omsi_root(&crate::install::Prefs::default()) else {
+        eprintln!("no OMSI 2 installation: skipped");
+        return;
+    };
+    let roots = scratch("newcars");
+    let roots = Roots { omsi, content: roots.content };
+    let doc = Document::new_map(&roots, "Cars", "Cars", 1);
+    for (name, _) in &doc.traffic.veh_groups {
+        assert!(doc.traffic.groups.iter().any(|g| g.name.eq_ignore_ascii_case(name) && !g.vehicles.is_empty()), "{name}");
+    }
+    let _ = std::fs::remove_dir_all(&roots.content);
+}

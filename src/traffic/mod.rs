@@ -404,6 +404,23 @@ pub fn stock_groups(omsi: &Path) -> Vec<AiGroup> {
     out
 }
 
+/// The car groups the unscheduled traffic names but the AI lists lack (OMSI 2's own new
+/// map template names four and has none of them) copied from the stock maps, so a new map's
+/// streets have cars. How many were copied.
+pub fn fill_named_groups(t: &mut Traffic, omsi: &Path) -> usize {
+    let mut n = 0;
+    for g in stock_groups(omsi) {
+        if t.veh_groups.iter().any(|v| v.0.eq_ignore_ascii_case(&g.name)) && !t.groups.iter().any(|x| x.name.eq_ignore_ascii_case(&g.name)) {
+            t.groups.push(g);
+            n += 1;
+        }
+    }
+    if n > 0 {
+        t.touch(File::AiLists);
+    }
+    n
+}
+
 /// A new car group.
 pub fn car_group(name: &str) -> AiGroup {
     AiGroup { name: name.to_string(), ..Default::default() }

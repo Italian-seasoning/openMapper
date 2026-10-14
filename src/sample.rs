@@ -134,14 +134,9 @@ pub fn build(ed: &mut Editor, assets: &mut Assets, lib: &Library, roots: &Roots,
     let tt = &mut doc.timetable;
     tt.lines[0].tours.push(Tour { number: "1".into(), ai_group: String::new(), extra: ALL_DAYS.to_string(), trips });
     tt.touch_line(&line);
-    // its buses, and the cars the template's traffic names
+    // its buses, and the cars the template's traffic names (a new map has them already)
     crate::ui_timetable::add_depot(doc);
-    for g in crate::traffic::stock_groups(&roots.omsi) {
-        if doc.traffic.veh_groups.iter().any(|v| v.0.eq_ignore_ascii_case(&g.name)) && !doc.traffic.groups.iter().any(|x| x.name.eq_ignore_ascii_case(&g.name)) {
-            doc.traffic.groups.push(g);
-            doc.traffic.touch(crate::traffic::File::AiLists);
-        }
-    }
+    crate::traffic::fill_named_groups(&mut doc.traffic, &roots.omsi);
     log::info!("sample: ring road, 4 stops, line 1 with {} departures", doc.timetable.lines[0].tours[0].trips.len());
     Ok(())
 }
