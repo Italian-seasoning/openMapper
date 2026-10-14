@@ -206,7 +206,7 @@ can drive in service.
 * **Getting started** (Help menu, opens by itself for a new map): a checklist that ticks
   itself as the map grows (road, stop, start point, line, tour, buses, saved, test drive),
   with a "Show me" for each step.
-* **Test drive**: saves and launches openOMSI on this map.
+* **Test drive**: saves and launches openOMSI on this map (`F5`); from the start point nearest the view (`Shift+F5`), or the view itself seen in the game with a free camera (Map menu, or a right-click on Test drive).
 * **Check in openOMSI** (Map menu): the map saved and run by the game itself, unseen, with
   its own checks (lanes with no road surface under them, roads buried in the ground, steps
   a bus wheel cannot climb, chained roads apart in height, start points off the road, every
@@ -253,7 +253,7 @@ can drive in service.
   Option + drag turns and tilts.
 * **Keyboard:** `W A S D` / arrows move, `Q / E` turn, `1–7` tools, `M` overview map, `B` assets, `L` lines, `T` traffic, `I` satellite and terrain, `R` turn object, `Del`,
   `F` go to selection, `[ ]` brush size, `G` tile grid, `Ctrl+Z`, `Ctrl+Shift+Z`, `Ctrl+S`,
-  `Ctrl+C / X / V / D` copy, cut, paste, duplicate, `Ctrl+A` select all, `Ctrl+F` find in map, `Ctrl+K` search for a command, `Alt + arrows` nudge the selection a grid step (`Shift`: 10 cm), `Alt + Page Up / Down` raise or lower it, `U` ruler, `Home` look straight down, `F5` test drive, `F12` save a picture of the view (into `~/Pictures/openMapper`), `Ctrl+1…9` go to a saved view (`Ctrl+Shift`: keep the view there).
+  `Ctrl+C / X / V / D` copy, cut, paste, duplicate, `Ctrl+A` select all, `Ctrl+F` find in map, `Ctrl+K` search for a command, `Alt + arrows` nudge the selection a grid step (`Shift`: 10 cm), `Alt + Page Up / Down` raise or lower it, `U` ruler, `Home` look straight down, `F5` test drive (`Shift+F5`: from the start point nearest the view), `F12` save a picture of the view (into `~/Pictures/openMapper`), `Ctrl+1…9` go to a saved view (`Ctrl+Shift`: keep the view there).
 
 ## How it's built
 

@@ -33,6 +33,9 @@ pub enum Action {
     Save,
     Close,
     Play,
+    /// A test drive from the start point nearest the view (false), or the view itself seen
+    /// in openOMSI with a free camera (true).
+    PlayHere(bool),
     Undo,
     Redo,
     Import,
@@ -931,6 +934,7 @@ fn menu_bar(root: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, can_undo: bo
                 if menu_item(ui, Some(Icon::Play), tr("Test drive in openOMSI", "Тест-драйв в openOMSI"), "F5", game_found) {
                     actions.push(Action::Play);
                 }
+                play_here_items(ui, game_found, actions);
                 if menu_item(ui, Some(Icon::CheckCircle), tr("Check in openOMSI…", "Проверка в openOMSI…"), "", game_found) {
                     actions.push(Action::GameCheck);
                 }
@@ -1014,12 +1018,24 @@ fn toolbar(root: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, can_undo: boo
                 if r.clicked() {
                     actions.push(Action::Play);
                 }
+                r.context_menu(|ui| play_here_items(ui, game_found, actions));
                 if let Some(d) = &ed.doc {
                     ui.label(RichText::new(d.display_name()).color(TEXT_DIM));
                 }
             });
         });
     });
+}
+
+/// Test drives from somewhere else than the first start point (Map menu, and a right-click
+/// on Test drive).
+fn play_here_items(ui: &mut egui::Ui, game_found: bool, actions: &mut Vec<Action>) {
+    if menu_item(ui, Some(Icon::Flag), tr("Test drive from the start point nearest the view", "Тест-драйв с ближайшей к виду точки старта"), "Shift+F5", game_found) {
+        actions.push(Action::PlayHere(false));
+    }
+    if menu_item(ui, Some(Icon::Visible), tr("See this view in openOMSI", "Посмотреть этот вид в openOMSI"), "", game_found) {
+        actions.push(Action::PlayHere(true));
+    }
 }
 
 fn status_bar(root: &mut egui::Ui, help_line: Option<String>, ed: &mut Editor, status: &Status) {

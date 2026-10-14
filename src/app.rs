@@ -695,14 +695,39 @@ impl App {
         self.gamecheck.start(game, roots, &folder, cam, doc.tiles.len());
     }
 
-    fn play(&mut self) {
+    /// openOMSI's arguments for a drive from the start point nearest the view (its place in
+    /// global.cfg's list); None, with a word why, when the map has none.
+    fn nearest_entry_args(&mut self) -> Option<Vec<String>> {
+        let doc = self.ed.doc.as_ref()?;
+        let here = self.cam.target.truncate();
+        let at = |id: i64| doc.tiles.iter().find_map(|(k, t)| t.tile.objects.iter().find(|o| o.id == id).map(|o| tile_origin(*k) + DVec2::new(o.pos[0], o.pos[1])));
+        let best = doc.global.entry_points.iter().enumerate().filter_map(|(i, e)| at(e.object_id).map(|p| (i, (p - here).length(), e.name.clone()))).min_by(|a, b| a.1.total_cmp(&b.1));
+        match best {
+            Some((i, _, name)) => {
+                self.ed.toast(format!("{} «{name}»", tr("From the start point", "С точки старта")));
+                Some(vec!["--entry".into(), i.to_string()])
+            }
+            None => {
+                self.ed.error(tr("The map has no start point: place one with Game logic > Start points", "На карте нет точки старта: поставьте её в «Служебное» > «Точки старта»"));
+                None
+            }
+        }
+    }
+
+    /// openOMSI's arguments for a free camera where the view is.
+    fn view_args(&self) -> Option<Vec<String>> {
+        let eye = self.cam.wanted_eye();
+        Some(vec!["--view".into(), "free".into(), "--cam".into(), format!("{:.2},{:.2},{:.2},{:.1},{:.1}", eye.x, eye.y, eye.z, self.cam.yaw, -self.cam.pitch)])
+    }
+
+    fn play(&mut self, extra: Vec<String>) {
         if !self.save() {
             return;
         }
         let (Some(game), Some(roots), Some(doc)) = (&self.game, &self.roots, &self.ed.doc) else { return };
         let folder = doc.dir.file_name().map(|f| f.to_string_lossy().to_string()).unwrap_or_default();
         let mut cmd = std::process::Command::new(game);
-        cmd.arg("--root").arg(&roots.omsi).arg("--map").arg(format!("maps/{folder}/global.cfg"));
+        cmd.arg("--root").arg(&roots.omsi).arg("--map").arg(format!("maps/{folder}/global.cfg")).args(&extra);
         if let Some(dir) = game.parent() {
             cmd.current_dir(dir);
         }
@@ -856,8 +881,15 @@ impl App {
                 el.exit();
             }
             Action::Play => {
-                self.play();
+                self.play(Vec::new());
                 self.guide.driven = true;
+            }
+            Action::PlayHere(look) => {
+                let args = if look { self.view_args() } else { self.nearest_entry_args() };
+                if let Some(a) = args {
+                    self.play(a);
+                    self.guide.driven = true;
+                }
             }
             Action::Undo => self.ed.undo(),
             Action::Redo => self.ed.redo(),
@@ -1164,6 +1196,7 @@ impl App {
             Some(KeyCode::BracketRight) => self.ed.brush_radius = (self.ed.brush_radius * 1.2).min(150.0),
             Some(KeyCode::Delete) | Some(KeyCode::Backspace) => self.ed.delete_selected(),
             Some(KeyCode::KeyF) if !ctrl => actions.push(Action::FocusSelection),
+            Some(KeyCode::F5) if shift => actions.push(Action::PlayHere(false)),
             Some(KeyCode::F5) => actions.push(Action::Play),
             Some(KeyCode::F12) => actions.push(Action::ViewPicture),
             _ => {}

@@ -79,6 +79,8 @@ fn commands() -> Vec<Command> {
         cmd!(Icon::Tiles, "Tiles from another map…", "Тайлы из другой карты…", "merge join import combine объединить соединить импорт", "", |_, _, a| a.push(Action::MergeTiles)),
         cmd!(Icon::CheckCircle, "Check in openOMSI…", "Проверка в openOMSI…", "game verify validate offscreen игра проверить", "", |_, _, a| a.push(Action::GameCheck)),
         cmd!(Icon::Play, "Test drive in openOMSI", "Тест-драйв в openOMSI", "play run game drive играть запустить", "F5", |_, _, a| a.push(Action::Play)),
+        cmd!(Icon::Flag, "Test drive from the start point nearest the view", "Тест-драйв с ближайшей к виду точки старта", "play here entry start drive играть отсюда старт", "Shift+F5", |_, _, a| a.push(Action::PlayHere(false))),
+        cmd!(Icon::Visible, "See this view in openOMSI", "Посмотреть этот вид в openOMSI", "free camera look game свободная камера игра вид", "", |_, _, a| a.push(Action::PlayHere(true))),
         // View
         cmd!(Icon::Flag, "Saved views…", "Сохранённые виды…", "bookmark camera закладка камера", "Ctrl+1…9", |st, _, _| st.views.open = true),
         cmd!(Icon::Focus, "Go to selection", "К выделенному", "focus фокус", "F", |_, _, a| a.push(Action::FocusSelection)),
