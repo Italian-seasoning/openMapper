@@ -481,7 +481,7 @@ impl TimetableUi {
                         _ => {
                             self.line = None;
                             ui.add_space(20.0);
-                            ui.label(RichText::new(tr("Pick a line on the left, or make a new one.\n\nA line has trips (a way from stop to stop) and tours (one bus's day: which trip it drives when).", "Выберите линию слева или создайте новую.\n\nУ линии есть рейсы (путь от остановки к остановке) и выпуски (день одного автобуса: какой рейс и когда)."))
+                            ui.label(RichText::new(tr("Pick a line on the left, or make a new one.\n\nA line has trips (a way from stop to stop) and tours (one bus's day: which trip it drives when).", "Выберите линию слева или создайте новую.\n\nУ линии есть рейсы (путь от остановки к остановке) и выходы (день одного автобуса: какой рейс и когда)."))
                                 .color(TEXT_DIM));
                         }
                     }
@@ -548,7 +548,7 @@ impl TimetableUi {
             if ui.add(egui::Button::selectable(!self.tours_tab, icons::labelled(Icon::Route, tr("Trips", "Рейсы")))).clicked() {
                 self.tours_tab = false;
             }
-            if ui.add(egui::Button::selectable(self.tours_tab, icons::labelled(Icon::Schedule, tr("Tours and times", "Выпуски и время")))).clicked() {
+            if ui.add(egui::Button::selectable(self.tours_tab, icons::labelled(Icon::Schedule, tr("Tours and times", "Выходы и время")))).clicked() {
                 self.tours_tab = true;
                 self.picking = false;
             }
@@ -556,7 +556,7 @@ impl TimetableUi {
         ui.separator();
         let trips = line_trips(&doc.timetable, &doc.timetable.lines[li]);
         if self.tours_tab {
-            ui.label(RichText::new(tr("A tour is one bus's day: the trips it drives, one after the other, and when each leaves.", "Выпуск: день одного автобуса: рейсы, которые он едет друг за другом, и время отправления каждого.")).small().color(TEXT_DIM));
+            ui.label(RichText::new(tr("A tour is one bus's day: the trips it drives, one after the other, and when each leaves.", "Выход — день одного автобуса: рейсы, которые он едет друг за другом, и время отправления каждого.")).small().color(TEXT_DIM));
             self.holidays_panel(ui, &mut doc.timetable);
             ui.add_space(4.0);
             self.tours_panel(ui, doc, li, &trips);
@@ -868,7 +868,7 @@ impl TimetableUi {
                 self.holiday_year = years.iter().copied().find(|y| *y == now).or(years.last().copied()).unwrap_or(now);
             }
             let y = &mut self.holiday_year;
-            ui.label(RichText::new(tr("On a public holiday only the tours with Holidays ticked run; school holidays pick the tours for school holidays or school days.", "В праздник ходят только выпуски с отметкой «Праздники»; каникулы выбирают выпуски для каникул или учебных дней.")).small().color(TEXT_DIM));
+            ui.label(RichText::new(tr("On a public holiday only the tours with Holidays ticked run; school holidays pick the tours for school holidays or school days.", "В праздник ходят только выходы с отметкой «Праздники»; каникулы выбирают выходы для каникул или учебных дней.")).small().color(TEXT_DIM));
             ui.horizontal(|ui| {
                 ui.label(tr("Year", "Год"));
                 ui.add(egui::DragValue::new(y).range(1900..=2200));
@@ -957,8 +957,8 @@ impl TimetableUi {
     fn tours_panel(&mut self, ui: &mut egui::Ui, doc: &mut Document, li: usize, trips: &[String]) {
         let depots: Vec<String> = doc.traffic.depots().map(|d| d.name.clone()).collect();
         if depots.is_empty() {
-            ui.label(RichText::new(tr("The map has no depot (ailists.cfg): only you drive these tours, no AI buses.", "У карты нет депо (ailists.cfg): выпуски водите только вы, автобусов ИИ не будет.")).small().color(WARN));
-            if self.files.exists(crate::traffic::DEPOT_BUS) && ui.button(icons::labelled(Icon::Bus, tr("Add a depot with OMSI 2's MAN buses", "Добавить депо с автобусами MAN из OMSI 2"))).on_hover_text(tr("Its buses run the tours (Map > Traffic and AI shows it)", "Его автобусы ездят по выпускам (Карта > Трафик и ИИ)")).clicked() {
+            ui.label(RichText::new(tr("The map has no depot (ailists.cfg): only you drive these tours, no AI buses.", "У карты нет депо (ailists.cfg): по выходам ездите только вы, автобусов ИИ не будет.")).small().color(WARN));
+            if self.files.exists(crate::traffic::DEPOT_BUS) && ui.button(icons::labelled(Icon::Bus, tr("Add a depot with OMSI 2's MAN buses", "Добавить депо с автобусами MAN из OMSI 2"))).on_hover_text(tr("Its buses run the tours (Map > Traffic and AI shows it)", "Его автобусы ездят по выходам (Карта > Трафик и ИИ)")).clicked() {
                 add_depot(doc);
             }
         }
@@ -968,12 +968,12 @@ impl TimetableUi {
         ui.horizontal_wrapped(|ui| {
             for i in 0..n {
                 let t = &tt.lines[li].tours[i];
-                let text = format!("{} {}", tr("Tour", "Выпуск"), t.number);
+                let text = format!("{} {}", tr("Tour", "Выход"), t.number);
                 if ui.add(egui::Button::selectable(self.tour == Some(i), text)).clicked() {
                     self.tour = Some(i);
                 }
             }
-            if ui.button(icons::labelled(Icon::Add, tr("New tour", "Новый выпуск"))).clicked() {
+            if ui.button(icons::labelled(Icon::Add, tr("New tour", "Новый выход"))).clicked() {
                 let number = tt.lines[li].tours.iter().filter_map(|t| t.number.trim().parse::<i64>().ok()).max().unwrap_or(0) + 1;
                 tt.lines[li].tours.push(Tour { number: number.to_string(), ai_group: depots.first().cloned().unwrap_or_default(), extra: ALL_DAYS.to_string(), trips: Vec::new() });
                 self.tour = Some(n);
@@ -982,7 +982,7 @@ impl TimetableUi {
         });
         let Some(ti) = self.tour.filter(|i| *i < n) else {
             if n > 0 {
-                ui.label(RichText::new(tr("Pick a tour to see its departures.", "Выберите выпуск, чтобы увидеть отправления.")).color(TEXT_DIM));
+                ui.label(RichText::new(tr("Pick a tour to see its departures.", "Выберите выход, чтобы увидеть отправления.")).color(TEXT_DIM));
             }
             return;
         };
@@ -1008,7 +1008,7 @@ impl TimetableUi {
                     }
                 });
                 ui.with_layout(egui::Layout::right_to_left(egui::Align::Center), |ui| {
-                    if small_button(ui, Icon::Delete, tr("Delete the tour", "Удалить выпуск")) {
+                    if small_button(ui, Icon::Delete, tr("Delete the tour", "Удалить выход")) {
                         delete_tour = true;
                     }
                 });
@@ -1071,7 +1071,7 @@ impl TimetableUi {
                 time_edit(ui, &mut self.fill_to);
                 ui.label(tr("break", "перерыв"));
                 ui.add(egui::DragValue::new(&mut self.layover).range(0..=120).suffix(tr(" min", " мин")));
-                if ui.button(icons::labelled(Icon::Schedule, tr("Fill", "Заполнить"))).on_hover_text(tr("Replace the tour's departures: the line's trips one after the other, a break after each", "Заменить отправления выпуска: рейсы линии друг за другом, перерыв после каждого")).clicked() {
+                if ui.button(icons::labelled(Icon::Schedule, tr("Fill", "Заполнить"))).on_hover_text(tr("Replace the tour's departures: the line's trips one after the other, a break after each", "Заменить отправления выхода: рейсы линии друг за другом, перерыв после каждого")).clicked() {
                     let from = (self.fill_from.0 * 60 + self.fill_from.1) as f32;
                     let to = (self.fill_to.0 * 60 + self.fill_to.1) as f32;
                     tour.trips.clear();

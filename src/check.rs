@@ -113,7 +113,7 @@ impl Kind {
             Kind::NoGround => tr("Tiles without ground", "Тайлы без земли"),
             Kind::TripNoRoute => tr("Trips without a way", "Рейсы без пути"),
             Kind::TourEmpty => tr("Tours without departures", "Выходы без рейсов"),
-            Kind::TourNoDepot => tr("Tours without a depot", "Выходы без парка"),
+            Kind::TourNoDepot => tr("Tours without a depot", "Выходы без депо"),
             Kind::UnschedMissing => tr("Traffic groups not in the AI lists", "Группы движения не в списке ИИ"),
             Kind::StopUnused => tr("Stops no trip calls at", "Остановки без рейсов"),
             Kind::SignalRouteBroken => tr("Signal routes naming what is gone", "Маршруты сигналов с исчезнувшим"),
@@ -143,7 +143,7 @@ impl Kind {
             Kind::NoGround => tr("A tile has no height file: its ground is flat. Saving writes one.", "У тайла нет файла высот: земля плоская. Сохранение запишет его."),
             Kind::TripNoRoute => tr("No way along the roads was found through this trip's stops, so buses cannot drive it. Open it in Map > Lines and timetable to see where it breaks.", "Через остановки этого рейса не найден путь по дорогам, автобусы его не проедут. Откройте его в Карта > Линии и расписание, чтобы увидеть, где он рвётся."),
             Kind::TourEmpty => tr("A tour (a bus's day on the line) has no trips, so no bus runs it.", "У выхода (дня автобуса на линии) нет рейсов, по нему никто не поедет."),
-            Kind::TourNoDepot => tr("A tour names no depot or group of the AI lists (or one that is not there): the game has no vehicle to send on it. Choose a depot for it in the Lines window.", "Выход не указывает парк или группу из списка ИИ (или указывает несуществующую): игре нечем его обслужить. Выберите парк в окне линий."),
+            Kind::TourNoDepot => tr("A tour names no depot or group of the AI lists (or one that is not there): the game has no vehicle to send on it. Choose a depot for it in the Lines window.", "Выход не указывает депо или группу из списка ИИ (или указывает несуществующую): игре нечем его обслужить. Выберите депо в окне линий."),
             Kind::UnschedMissing => tr("The unscheduled traffic names a group that the AI lists do not have: those cars never appear. Add the group in Map > Traffic and AI.", "Свободное движение указывает группу, которой нет в списке ИИ: эти машины не появятся. Добавьте группу в Карта > Движение и ИИ."),
             Kind::StopUnused => tr("A stop of the timetable that no trip calls at. Nothing is wrong, it is only not used yet.", "Остановка расписания, на которой не останавливается ни один рейс. Ничего страшного, просто она пока не используется."),
             Kind::ChronoUnmatched => tr("A chrono scenario takes away, retypes or relabels something that is no longer on the map (it was deleted or its IDCode changed): that change does nothing. Open Map > Chrono scenarios, the scenario's properties, and take the change out.", "Хроно-сценарий убирает, меняет тип или тексты того, чего на карте больше нет (удалено или сменился IDCode): это изменение ничего не делает. Откройте Карта > Хроно-сценарии, свойства сценария, и уберите изменение."),
@@ -664,7 +664,7 @@ fn timetable_issues(d: &Document, roots: &[PathBuf], out: &mut Vec<Issue>) {
             }
             // (a bus's tour names a depot; a train's an ordinary group of the AI lists)
             if tour.ai_group.trim().is_empty() || !(depots.contains(&tour.ai_group.to_lowercase()) || groups.contains(&tour.ai_group.to_lowercase())) {
-                let detail = if tour.ai_group.trim().is_empty() { tr("no depot named", "парк не указан").to_string() } else { format!("{} «{}»", tr("not in the AI lists:", "нет в списке ИИ:"), tour.ai_group) };
+                let detail = if tour.ai_group.trim().is_empty() { tr("no depot named", "депо не указано").to_string() } else { format!("{} «{}»", tr("not in the AI lists:", "нет в списке ИИ:"), tour.ai_group) };
                 out.push(Issue { severity: Severity::Warning, kind: Kind::TourNoDepot, title: label, detail, at: None, sel: None, fix: None });
             }
         }

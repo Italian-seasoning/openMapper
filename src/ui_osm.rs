@@ -306,7 +306,7 @@ impl OsmUi {
             // the bus routes through the map's stops: lines and trips
             let lines_in = &derived.lines;
             ui.horizontal(|ui| {
-                crate::ui::check(ui, &mut self.with_lines, tr("Bus lines", "Автобусные линии")).on_hover_text(tr("Each bus route through two or more of the map's stops a trip of its line, the way found along the roads; a tour from 06:00 to 22:00 for each new line", "Каждый маршрут через две или больше остановок карты: рейс своей линии, путь по дорогам находится сам; для каждой новой линии оборот с 06:00 до 22:00"));
+                crate::ui::check(ui, &mut self.with_lines, tr("Bus lines", "Автобусные линии")).on_hover_text(tr("Each bus route through two or more of the map's stops a trip of its line, the way found along the roads; a tour from 06:00 to 22:00 for each new line", "Каждый маршрут через две или больше остановок карты: рейс своей линии, путь по дорогам находится сам; для каждой новой линии выход с 06:00 до 22:00"));
                 let mut numbers: Vec<&str> = lines_in.iter().map(|l| l.0.as_str()).collect();
                 numbers.sort();
                 numbers.dedup();

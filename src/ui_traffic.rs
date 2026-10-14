@@ -158,7 +158,7 @@ impl TrafficUi {
     }
 
     fn groups_panel(&mut self, ui: &mut egui::Ui, doc: &mut Document) {
-        hint(ui, tr("The AI's vehicles come in groups. A car group drives about on the roads; a depot sends out the buses of the timetable's tours.", "Машины ИИ собраны в группы. Группа машин ездит по дорогам сама; депо выпускает автобусы на выпуски расписания."));
+        hint(ui, tr("The AI's vehicles come in groups. A car group drives about on the roads; a depot sends out the buses of the timetable's tours.", "Машины ИИ собраны в группы. Группа машин ездит по дорогам сама; депо выпускает автобусы на выходы расписания."));
         if doc.traffic.legacy {
             hint(ui, tr("(This map's ailists.cfg is in OMSI 2's first format: it is written in the second one when changed.)", "(ailists.cfg этой карты в первом формате OMSI 2: при изменении он запишется во втором.)"));
         }
@@ -255,7 +255,7 @@ impl TrafficUi {
                     }
                 }
             }
-            let hint_text = if used > 0 { tr("Delete the group (tours still take their buses from it)", "Удалить группу (выпуски ещё берут из неё автобусы)") } else { tr("Delete the group", "Удалить группу") };
+            let hint_text = if used > 0 { tr("Delete the group (tours still take their buses from it)", "Удалить группу (выходы ещё берут из неё автобусы)") } else { tr("Delete the group", "Удалить группу") };
             if small_button(ui, Icon::Delete, hint_text) {
                 doc.traffic.groups.remove(i);
                 doc.traffic.set_unscheduled(&old, false, 1, 1.0);
@@ -268,7 +268,7 @@ impl TrafficUi {
         }
         if is_depot {
             if used > 0 {
-                hint(ui, &format!("{} {used}", tr("Tours that take their buses from here:", "Выпусков берут автобусы отсюда:")));
+                hint(ui, &format!("{} {used}", tr("Tours that take their buses from here:", "Выходов, берущих автобусы отсюда:")));
             }
             self.depot_detail(ui, doc, i);
         } else {

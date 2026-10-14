@@ -133,8 +133,8 @@ impl Guide {
             })),
             (s.start, tr("A start point", "Точка старта"), tr("Game logic > Start points: where your bus appears, on a road, facing the way to drive.", "Служебное > Точки старта: где появится автобус: на дороге, лицом по ходу."), Some(Go::Logic(LogicMode::Start))),
             (s.routed, tr("A line with a trip", "Линия с рейсом"), tr("Lines window: New line, New trip, then click the stops in order. The way is found along the roads.", "Окно «Линии»: новая линия, новый рейс, затем кликайте остановки по порядку. Путь найдётся по дорогам."), Some(Go::Lines)),
-            (s.tour, tr("A tour with departures", "Выпуск с отправлениями"), tr("Lines window > Tours and times: New tour, then Fill from … to … .", "Окно «Линии» > Выпуски и время: новый выпуск, затем «Заполнить с … до …»."), Some(Go::Lines)),
-            (s.depot, tr("Buses for the tours", "Автобусы для выпусков"), tr("A depot the tours take their buses from (Tours: Add a depot, or Traffic and AI).", "Депо, из которого выпуски берут автобусы (Выпуски: «Добавить депо» или «Трафик и ИИ»)."), Some(Go::Traffic)),
+            (s.tour, tr("A tour with departures", "Выход с отправлениями"), tr("Lines window > Tours and times: New tour, then Fill from … to … .", "Окно «Линии» > Выходы и время: новый выход, затем «Заполнить с … до …»."), Some(Go::Lines)),
+            (s.depot, tr("Buses for the tours", "Автобусы для выходов"), tr("A depot the tours take their buses from (Tours: Add a depot, or Traffic and AI).", "Депо, из которого выходы берут автобусы (Выходы: «Добавить депо» или «Трафик и ИИ»)."), Some(Go::Traffic)),
             (saved, tr("Saved", "Сохранено"), tr("Ctrl+S. Maps are saved into openOMSI's content folder.", "Ctrl+S. Карты сохраняются в папку контента openOMSI."), Some(Go::Save)),
             (self.driven, tr("A test drive", "Тест-драйв"), tr("F5 saves and starts openOMSI on the map: pick line 1 and drive.", "F5 сохраняет и запускает openOMSI на карте: выберите линию и езжайте."), game_found.then_some(Go::Play)),
         ];
