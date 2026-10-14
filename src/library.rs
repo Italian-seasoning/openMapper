@@ -97,6 +97,9 @@ pub struct Asset {
     pub abs_height: bool,
     /// Lights the ground round it at night (`[maplight]`: a street lamp).
     pub lamp: bool,
+    /// A signal head (`[trafficlight]`, no program of its own): it lights only when linked to
+    /// a crossing (`[varparent]`).
+    pub light_head: bool,
     /// Has `[splinehelper]` points: a junction or crossing piece that splines snap to.
     pub helpers: Vec<omsi_scenery::sco::SplineHelper>,
     // splines
@@ -247,6 +250,7 @@ fn describe(root: &Path, path: &Path, kind: Kind, from_content: bool) -> Option<
         is_car_park: false,
         abs_height: false,
         lamp: false,
+        light_head: false,
         helpers: Vec::new(),
         half_width: 0.0,
         lanes: (0, 0, 0),
@@ -270,6 +274,7 @@ fn describe(root: &Path, path: &Path, kind: Kind, from_content: bool) -> Option<
             a.is_car_park = sco.is_car_park;
             a.abs_height = sco.absolute_height();
             a.lamp = !sco.map_lights.is_empty();
+            a.light_head = sco.is_traffic_light && sco.traffic_lights.is_empty();
             a.helpers = sco.spline_helpers.clone();
             let has_mesh = !sco.model.meshes.is_empty() || sco.model_file.is_some() || sco.tree.is_some();
             a.category = if sco.is_bus_stop || sco.is_entry_point {

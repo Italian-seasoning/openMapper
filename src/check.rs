@@ -106,6 +106,7 @@ pub enum Kind {
     LampsDark,
     HeavyTile,
     LinkLost,
+    HeadUnlinked,
 }
 
 impl Kind {
@@ -135,6 +136,7 @@ impl Kind {
             Kind::LampsDark => tr("Lamps lighting no ground at night", "Фонари не освещают землю ночью"),
             Kind::HeavyTile => tr("Tiles with very many objects", "Тайлы с очень большим числом объектов"),
             Kind::LinkLost => tr("Objects linked to one that is gone", "Объекты, связанные с исчезнувшим"),
+            Kind::HeadUnlinked => tr("Signal heads linked to no crossing", "Светофоры без перекрёстка"),
         }
     }
 
@@ -164,6 +166,7 @@ impl Kind {
             Kind::HeavyTile => tr("A tile holds far more objects than the stock maps' tiles (up to some 600): the game may stutter when it loads it or looks across it. Thin out a wood planted too densely (Plant brush, Clear) or plant it with more space between the trees.", "На тайле объектов намного больше, чем на тайлах стоковых карт (до 600): игра может подтормаживать, загружая его или глядя через него. Проредите слишком густой лес (кисть растений, «Убирать») или сажайте реже."),
             Kind::LampsDark => tr("Street lamps stand on a tile the game does not light from its lamps ([variable_terrainlightmap] is off): at night the ground under them stays dark (unless the tile's light map file was made by OMSI 2's editor). \"Fix\" turns it on, as on nearly every tile of the stock maps.", "Фонари стоят на тайле, который игра не освещает от фонарей ([variable_terrainlightmap] выключен): ночью земля под ними тёмная (если файл карты освещения не сделан редактором OMSI 2). «Исправить» включит его, как почти на всех тайлах стоковых карт."),
             Kind::LinkLost => tr("An object takes its state ([varparent]) from an object no longer on the map: a signal head stays dark, a display blank. Link it to another in its properties (Linked objects), or \"Fix\" forgets the link.", "Объект берёт состояние ([varparent]) от объекта, которого больше нет на карте: светофор не горит, табло пустое. Свяжите его с другим в свойствах («Связанные объекты») или «Исправить» уберёт связь."),
+            Kind::HeadUnlinked => tr("A traffic light's signal head takes its light from a crossing's program ([varparent]); this one is linked to none while others like it are, so it stays dark in the game. Select it and link it in its properties (Linked objects).", "Головка светофора берёт сигнал из программы перекрёстка ([varparent]); эта ни с чем не связана, хотя такие же связаны, и в игре она не горит. Выберите её и свяжите в свойствах («Связанные объекты»)."),
             Kind::SignalRouteBroken => tr("A signal route names a signal or track pieces no longer on the map: the signal may never clear. Open Map > Signal routes and take the track again, or delete the route.", "Маршрут сигнала указывает сигнал или участки пути, которых больше нет на карте: сигнал может так и не открыться. Откройте Карта > Маршруты сигналов и возьмите пути заново или удалите маршрут."),
         }
     }
@@ -206,6 +209,7 @@ struct KindRec {
     /// Stands at its own height, not on the ground.
     abs_height: bool,
     lamp: bool,
+    light_head: bool,
 }
 
 struct ObjRec {
@@ -247,7 +251,7 @@ fn snapshot(doc: &Document, lib: &Library) -> Snapshot {
         let key = file.to_lowercase();
         if !kinds.contains_key(&key) {
             if let Some(a) = lib.find(file) {
-                kinds.insert(key, KindRec { cat: a.category, half_width: a.half_width, bus_stop: a.is_bus_stop, lanes: a.lanes.0 > 0 || a.lanes.2 > 0, abs_height: a.abs_height, lamp: a.lamp });
+                kinds.insert(key, KindRec { cat: a.category, half_width: a.half_width, bus_stop: a.is_bus_stop, lanes: a.lanes.0 > 0 || a.lanes.2 > 0, abs_height: a.abs_height, lamp: a.lamp, light_head: a.light_head });
             }
         }
     };
@@ -654,6 +658,15 @@ fn run(s: Snapshot, roots: Vec<PathBuf>) -> Vec<Issue> {
     lamps.sort_by_key(|(k, _)| *k);
     for (k, (n, at)) in lamps {
         out.push(issue(Severity::Info, Kind::LampsDark, format!("tile_{}_{}.map", k.0, k.1), format!("{n} {}", tr("lamps", "фонарей")), Some(at), None, Some(Fix::LampLight(k))));
+    }
+    // signal heads that take their light from nothing (a head hanging on a post takes it
+    // from the post)
+    // (only kinds of head the map links elsewhere: a level crossing's barrier or a flashing
+    // warning light runs on its own script)
+    let linked: HashSet<i64> = s.var_links.iter().map(|l| l.1).collect();
+    let linked_kinds: HashSet<String> = s.objects.iter().filter(|o| linked.contains(&o.id)).map(|o| o.file.to_lowercase()).collect();
+    for o in s.objects.iter().filter(|o| !o.attached && !linked.contains(&o.id) && linked_kinds.contains(&o.file.to_lowercase()) && s.kinds.get(&o.file.to_lowercase()).map(|k| k.light_head).unwrap_or(false)) {
+        out.push(issue(Severity::Info, Kind::HeadUnlinked, short(&o.file), format!("IDCode {}", o.id), Some(o.world), Some(Sel::Object(o.tile, o.id)), None));
     }
     // objects taking their state from one that is gone
     for (k, id, at, p) in s.var_links.iter().filter(|l| !s.object_ids.contains(&l.3)) {
@@ -1199,7 +1212,7 @@ mod tests {
 
     fn snap(splines: Vec<SplineRec>) -> Snapshot {
         let mut kinds = HashMap::new();
-        kinds.insert("splines\\road.sli".to_string(), KindRec { cat: Category::Roads, half_width: 4.0, bus_stop: false, lanes: true, abs_height: false, lamp: false });
+        kinds.insert("splines\\road.sli".to_string(), KindRec { cat: Category::Roads, half_width: 4.0, bus_stop: false, lanes: true, abs_height: false, lamp: false, light_head: false });
         Snapshot { objects: Vec::new(), splines, chrono_lanes: Vec::new(), kinds, entries: Vec::new(), next_id: 100, listed_missing: Vec::new(), no_terrain: Vec::new(), unlit: HashSet::new(), ground: Vec::new(), map_dir: PathBuf::new(), tiles: HashSet::new(), parents: HashSet::new(), var_links: Vec::new(), object_ids: HashSet::new(), tt_doc: None }
     }
 
@@ -1359,7 +1372,7 @@ mod tests {
     #[test]
     fn lamps_on_a_tile_lit_from_none_are_named_once_per_tile() {
         let mut s = snap(Vec::new());
-        s.kinds.insert("lamp.sco".into(), KindRec { cat: Category::Objects, half_width: 0.0, bus_stop: false, lanes: false, abs_height: false, lamp: true });
+        s.kinds.insert("lamp.sco".into(), KindRec { cat: Category::Objects, half_width: 0.0, bus_stop: false, lanes: false, abs_height: false, lamp: true, light_head: false });
         let o = |id: i64, tile: TileKey| ObjRec { file: "Lamp.sco".into(), tile, id, world: DVec2::new(10.0, 10.0), rot: [0.0; 3], local: [10.0, 10.0], attached: false };
         s.objects = vec![o(1, (0, 0)), o(2, (0, 0)), o(3, (1, 0))];
         s.tiles = [(0, 0), (1, 0)].into_iter().collect();
@@ -1369,6 +1382,20 @@ mod tests {
         assert_eq!(dark.len(), 1);
         assert_eq!(dark[0].fix, Some(Fix::LampLight((0, 0))));
         assert!(dark[0].detail.starts_with('2'));
+    }
+
+    #[test]
+    fn a_head_unlinked_where_its_like_are_linked_is_named() {
+        let mut s = snap(Vec::new());
+        let k = |head| KindRec { cat: Category::Objects, half_width: 0.0, bus_stop: false, lanes: false, abs_height: false, lamp: false, light_head: head };
+        s.kinds.insert("head.sco".into(), k(true));
+        s.kinds.insert("barrier.sco".into(), k(true));
+        let o = |id: i64, f: &str| ObjRec { file: f.into(), tile: (0, 0), id, world: DVec2::ZERO, rot: [0.0; 3], local: [0.0; 2], attached: false };
+        s.objects = vec![o(1, "Head.sco"), o(2, "Head.sco"), o(3, "barrier.sco"), o(9, "crossing.sco")];
+        s.object_ids = [1, 2, 3, 9].into_iter().collect();
+        s.var_links = vec![((0, 0), 1, DVec2::ZERO, 9)];
+        let heads: Vec<_> = run(s, Vec::new()).into_iter().filter(|i| i.kind == Kind::HeadUnlinked).map(|i| i.sel).collect();
+        assert_eq!(heads, [Some(Sel::Object((0, 0), 2))]);
     }
 
     #[test]
