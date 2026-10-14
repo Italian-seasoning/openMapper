@@ -199,7 +199,7 @@ impl App {
     }
 
     fn init_gfx(&mut self, el: &ActiveEventLoop) -> anyhow::Result<()> {
-        let mut attrs = Window::default_attributes().with_title("openMapper").with_inner_size(winit::dpi::LogicalSize::new(1440.0, 900.0)).with_min_inner_size(winit::dpi::LogicalSize::new(900.0, 600.0));
+        let mut attrs = Window::default_attributes().with_title("openMapper").with_inner_size(winit::dpi::LogicalSize::new(1440.0, 900.0)).with_min_inner_size(winit::dpi::LogicalSize::new(900.0, 600.0)).with_window_icon(winit::window::Icon::from_rgba(crate::icon::rgba(64), 64, 64).ok());
         // (a screenshot run stays on top: a window under another gets no frames to take)
         if self.shot.is_some() {
             attrs = attrs.with_window_level(winit::window::WindowLevel::AlwaysOnTop).with_active(false);

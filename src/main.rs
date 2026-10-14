@@ -19,6 +19,7 @@ mod doc;
 mod draw;
 mod export;
 mod gamecheck;
+mod icon;
 mod geo;
 mod editor;
 mod gpu;
@@ -116,6 +117,8 @@ fn main() {
         (Some("--import"), Some(f), _) => std::process::exit(export::cli_import(std::path::Path::new(f))),
         // `openmapper --plan path/to/global.cfg out.svg`: a plan of the map
         (Some("--plan"), Some(cfg), Some(out)) => std::process::exit(plan::cli(std::path::Path::new(cfg), std::path::Path::new(out))),
+        // `openmapper --icon out.png [size]`: the program's icon (for the packages)
+        (Some("--icon"), Some(out), size) => std::process::exit(icon::cli(std::path::Path::new(out), size.and_then(|s| s.to_str()?.parse().ok()).unwrap_or(512))),
         _ => {}
     }
     // `openmapper path/to/global.cfg` opens that map
