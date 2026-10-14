@@ -123,7 +123,8 @@ pub struct App {
 impl App {
     pub fn new(open: Option<PathBuf>) -> App {
         let prefs = Prefs::load();
-        i18n::set(i18n::from_code(&prefs.language));
+        // (OPENMAPPER_LANG=en|ru: checks of either language without a person at the screen)
+        i18n::set(i18n::from_code(&std::env::var("OPENMAPPER_LANG").unwrap_or_else(|_| prefs.language.clone())));
         let mut app = App {
             gfx: None,
             prefs,
