@@ -114,7 +114,7 @@ impl Kind {
             Kind::TripNoRoute => tr("Trips without a way", "Рейсы без пути"),
             Kind::TourEmpty => tr("Tours without departures", "Выходы без рейсов"),
             Kind::TourNoDepot => tr("Tours without a depot", "Выходы без депо"),
-            Kind::UnschedMissing => tr("Traffic groups not in the AI lists", "Группы движения не в списке ИИ"),
+            Kind::UnschedMissing => tr("Traffic groups not in the AI lists", "Группы трафика не в списках ИИ"),
             Kind::StopUnused => tr("Stops no trip calls at", "Остановки без рейсов"),
             Kind::SignalRouteBroken => tr("Signal routes naming what is gone", "Маршруты сигналов с исчезнувшим"),
             Kind::ChronoUnmatched => tr("Chrono changes of what is gone", "Хроно-изменения исчезнувшего"),
