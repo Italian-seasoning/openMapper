@@ -9,6 +9,9 @@ experienced map makers.
 > content. The original folder is never written to. Maps and imported assets go into
 > openOMSI's content folder, which the game reads before the installation.
 
+New to it? [Your first map](docs/TUTORIAL.md) walks you from an empty window to a map you
+can drive in service.
+
 ## What it can do
 
 | Tool | Key | What it does |
