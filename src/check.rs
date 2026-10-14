@@ -58,6 +58,9 @@ pub enum Fix {
     /// Put a start point on a lane before a bus stop (the content folder and the
     /// installation, where the roads' files are).
     AddStart(PathBuf, PathBuf),
+    /// Give a line's tour (line, tour number) the map's depot, or a depot of OMSI 2's MAN
+    /// buses where the map has none (true: their files are there).
+    TourDepot(String, String, bool),
 }
 
 #[derive(Debug, Clone)]
@@ -149,7 +152,7 @@ impl Kind {
             Kind::NoGround => tr("A tile has no height file: its ground is flat. Saving writes one.", "У тайла нет файла высот: земля плоская. Сохранение запишет его."),
             Kind::TripNoRoute => tr("No way along the roads was found through this trip's stops, so buses cannot drive it. Open it in Map > Lines and timetable to see where it breaks.", "Через остановки этого рейса не найден путь по дорогам, автобусы его не проедут. Откройте его в Карта > Линии и расписание, чтобы увидеть, где он рвётся."),
             Kind::TourEmpty => tr("A tour (a bus's day on the line) has no trips, so no bus runs it.", "У выхода (дня автобуса на линии) нет рейсов, по нему никто не поедет."),
-            Kind::TourNoDepot => tr("A tour names no depot or group of the AI lists (or one that is not there): the game has no vehicle to send on it. Choose a depot for it in the Lines window.", "Выход не указывает депо или группу из списка ИИ (или указывает несуществующую): игре нечем его обслужить. Выберите депо в окне линий."),
+            Kind::TourNoDepot => tr("A tour names no depot or group of the AI lists (or one that is not there): the game has no vehicle to send on it. Choose a depot for it in the Lines window, or \"Fix\" gives it the map's depot (one of OMSI 2's MAN buses added where the map has none).", "Выход не указывает депо или группу из списка ИИ (или указывает несуществующую): игре нечем его обслужить. Выберите депо в окне линий или «Исправить» назначит ему депо карты (а если его нет, добавит депо с автобусами MAN из OMSI 2)."),
             Kind::UnschedMissing => tr("The unscheduled traffic names a group that the AI lists do not have: those cars never appear. Add the group in Map > Traffic and AI, or \"Fix\" copies it from OMSI 2's own maps where they have it.", "Свободное движение указывает группу, которой нет в списке ИИ: эти машины не появятся. Добавьте группу в Карта > Трафик и ИИ или «Исправить» скопирует её из карт OMSI 2, если она там есть."),
             Kind::StopUnused => tr("A stop of the timetable that no trip calls at. Nothing is wrong, it is only not used yet.", "Остановка расписания, на которой не останавливается ни один рейс. Ничего страшного, просто она пока не используется."),
             Kind::ChronoUnmatched => tr("A chrono scenario takes away, retypes or relabels something that is no longer on the map (it was deleted or its IDCode changed): that change does nothing. Open Map > Chrono scenarios, the scenario's properties, and take the change out.", "Хроно-сценарий убирает, меняет тип или тексты того, чего на карте больше нет (удалено или сменился IDCode): это изменение ничего не делает. Откройте Карта > Хроно-сценарии, свойства сценария, и уберите изменение."),
@@ -663,6 +666,7 @@ fn timetable_issues(d: &Document, roots: &[PathBuf], out: &mut Vec<Issue>) {
         (p, k.map(|k| Sel::Object(k, id)))
     };
     let stop_name = |id: i64| tt.stop_name(id).map(str::to_string).unwrap_or_else(|| format!("#{id}"));
+    let can_add_depot = find_file(crate::traffic::DEPOT_BUS, roots).is_some();
     for line in &tt.lines {
         for tour in &line.tours {
             let label = format!("{} {} {}", line.name, tr("tour", "выход"), tour.number);
@@ -672,7 +676,8 @@ fn timetable_issues(d: &Document, roots: &[PathBuf], out: &mut Vec<Issue>) {
             // (a bus's tour names a depot; a train's an ordinary group of the AI lists)
             if tour.ai_group.trim().is_empty() || !(depots.contains(&tour.ai_group.to_lowercase()) || groups.contains(&tour.ai_group.to_lowercase())) {
                 let detail = if tour.ai_group.trim().is_empty() { tr("no depot named", "депо не указано").to_string() } else { format!("{} «{}»", tr("not in the AI lists:", "нет в списке ИИ:"), tour.ai_group) };
-                out.push(Issue { severity: Severity::Warning, kind: Kind::TourNoDepot, title: label, detail, at: None, sel: None, fix: None });
+                let fix = (!depots.is_empty() || can_add_depot).then(|| Fix::TourDepot(line.name.clone(), tour.number.clone(), can_add_depot));
+                out.push(Issue { severity: Severity::Warning, kind: Kind::TourNoDepot, title: label, detail, at: None, sel: None, fix });
             }
         }
     }
@@ -878,6 +883,24 @@ pub fn apply(ed: &mut Editor, fix: &Fix) -> bool {
                     true
                 }
                 None => false,
+            }
+        }
+        Fix::TourDepot(line, number, can_add) => {
+            let before = crate::history::Snapshot { timetable: Some(doc.timetable.clone()), traffic: Some(doc.traffic.clone()), ..Default::default() };
+            if doc.traffic.depots().next().is_none() && *can_add {
+                crate::ui_timetable::add_depot(doc);
+            }
+            let depot = doc.traffic.depots().next().map(|d| d.name.clone());
+            let tour = doc.timetable.lines.iter_mut().find(|l| &l.name == line).and_then(|l| l.tours.iter_mut().find(|t| &t.number == number));
+            match (depot, tour) {
+                (Some(d), Some(t)) => {
+                    t.ai_group = d;
+                    doc.timetable.touch_line(line);
+                    doc.timetable.dirty = true;
+                    ed.history.push_snapshot(tr("A depot for the tour", "Депо для выхода"), before);
+                    true
+                }
+                _ => false,
             }
         }
         Fix::DropEntry(id) => {
@@ -1215,6 +1238,27 @@ mod tests {
         let mut d = ed.doc.take().unwrap();
         ed.history.undo(&mut d);
         assert!(d.traffic.groups.is_empty());
+    }
+
+    #[test]
+    fn a_tour_without_a_depot_gets_one() {
+        let Some(omsi) = crate::install::find_omsi_root(&crate::install::Prefs::default()) else { return };
+        let _map = crate::doc::one_map();
+        let mut doc = doc_with(&[(0, 0)]);
+        doc.timetable.lines.push(omsi_timetable::Line { name: "1".into(), tours: vec![omsi_timetable::Tour { number: "1".into(), ..Default::default() }], ..Default::default() });
+        let mut out = Vec::new();
+        timetable_issues(&doc, &[PathBuf::new(), omsi], &mut out);
+        let fix = out.iter().find(|i| i.kind == Kind::TourNoDepot).and_then(|i| i.fix.clone()).unwrap();
+        assert_eq!(fix, Fix::TourDepot("1".into(), "1".into(), true));
+        let mut ed = Editor::default();
+        ed.doc = Some(doc);
+        assert!(apply(&mut ed, &fix));
+        let d = ed.doc.as_ref().unwrap();
+        let depot = d.traffic.depots().next().unwrap().name.clone();
+        assert_eq!(d.timetable.lines[0].tours[0].ai_group, depot);
+        let mut d = ed.doc.take().unwrap();
+        ed.history.undo(&mut d);
+        assert!(d.traffic.depots().next().is_none() && d.timetable.lines[0].tours[0].ai_group.is_empty());
     }
 
     #[test]
