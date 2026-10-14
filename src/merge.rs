@@ -59,20 +59,6 @@ fn layers(doc: &mut Document, src: &GlobalCfg) -> Vec<usize> {
     out
 }
 
-/// A mask of `from` × `from` texels at `to` × `to` (nearest).
-fn resample(m: &[u8], from: usize, to: usize) -> Vec<u8> {
-    if from == to {
-        return m.to_vec();
-    }
-    let mut out = vec![0u8; to * to];
-    for y in 0..to {
-        for x in 0..to {
-            out[y * to + x] = m[(y * from / to) * from + x * from / to];
-        }
-    }
-    out
-}
-
 /// The ground near a new tile's edges eased to meet the tiles beside it (the difference at
 /// the edge fades out over some 60 m), so no step is left where the maps meet.
 fn blend_edges(doc: &Document, k: TileKey, t: &mut TileDoc) {
@@ -188,7 +174,7 @@ pub fn add_tiles(doc: &mut Document, hist: &mut History, src: &Source, chosen: &
             } else {
                 t.masks.get(li).cloned().flatten().map(|m| {
                     let from = (m.len() as f64).sqrt() as usize;
-                    resample(&m, from, size)
+                    crate::doc::resample_mask(&m, from, size)
                 })
             };
         }
@@ -238,8 +224,11 @@ mod tests {
         let src = GlobalCfg { ground_textures: vec![g("mud.bmp", 8.0)], ..Default::default() };
         assert_eq!(layers(&mut doc, &src), vec![5]);
         let m: Vec<u8> = (0..16).map(|i| i as u8).collect();
-        assert_eq!(resample(&m, 4, 2), vec![0, 2, 8, 10]);
-        assert_eq!(resample(&m, 4, 8).len(), 64);
+        // (shrunk: each block's mean; grown: smooth, the corners kept)
+        assert_eq!(crate::doc::resample_mask(&m, 4, 2), vec![2, 4, 10, 12]);
+        let big = crate::doc::resample_mask(&m, 4, 8);
+        assert_eq!((big.len(), big[0], big[63]), (64, 0, 15));
+        assert!(big.windows(2).take(7).all(|w| w[1] >= w[0]));
     }
 
     #[test]

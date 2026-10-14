@@ -2523,6 +2523,34 @@ impl Editor {
         }
     }
 
+    /// A ground layer's paint detail (its masks `2^p` texels a side), every tile's mask of it
+    /// made again at that size; one undo step.
+    pub fn set_paint_detail(&mut self, layer: usize, p: f32) {
+        let Some(doc) = self.doc.as_mut() else { return };
+        if layer == 0 || layer >= doc.global.ground_textures.len() {
+            return;
+        }
+        let from = crate::doc::mask_size(&doc.global.ground_textures[layer]);
+        self.history.begin(tr("Paint detail", "Детальность покраски"));
+        self.history.touch_global(doc);
+        doc.global.ground_textures[layer].params[0] = p;
+        let to = crate::doc::mask_size(&doc.global.ground_textures[layer]);
+        let keys: Vec<TileKey> = doc.tiles.keys().copied().collect();
+        for k in keys {
+            if doc.tiles[&k].masks.get(layer).map(|m| m.is_some()).unwrap_or(false) {
+                self.history.touch_tile(doc, k);
+                let t = doc.tiles.get_mut(&k).unwrap();
+                if let Some(m) = t.masks[layer].as_mut() {
+                    *m = crate::doc::resample_mask(m, from, to);
+                }
+                t.touch_masks();
+            }
+        }
+        doc.global_dirty = true;
+        doc.global_rev = crate::doc::next_rev();
+        self.history.commit();
+    }
+
     /// Whether the game lights a tile's ground from the lamps on and round it at night
     /// (`[variable_terrainlightmap]`: it bakes the tile's light map when it loads it).
     pub fn set_tile_lamplight(&mut self, k: TileKey, on: bool) {
@@ -4986,6 +5014,29 @@ fn rolls(p: DVec2) -> f64 {
 mod tests {
     use super::*;
     use crate::selection::tests::{add_object, add_spline, flat_map};
+
+    #[test]
+    fn a_layer_painted_finer_keeps_its_paint_and_undoes() {
+        let mut doc = flat_map(2);
+        let g = |p: f32| omsi_map::GroundTex { texture: "x.bmp".into(), detail_texture: String::new(), params: [p, 16.0, 4.0] };
+        doc.global.ground_textures = vec![g(0.0), g(8.0)];
+        doc.sync_mask_slots();
+        let mut m = vec![0u8; 256 * 256];
+        m[..256 * 128].iter_mut().for_each(|a| *a = 255);
+        doc.tiles.get_mut(&(0, 0)).unwrap().masks[1] = Some(m.clone());
+        let mut ed = Editor::default();
+        ed.open(doc);
+        ed.set_paint_detail(1, 10.0);
+        let d = ed.doc.as_ref().unwrap();
+        let big = d.tiles[&(0, 0)].masks[1].as_ref().unwrap();
+        assert_eq!(big.len(), 1024 * 1024);
+        assert_eq!((big[0], big[1024 * 1023]), (255, 0));
+        assert!(d.tiles[&(1, 0)].masks[1].is_none());
+        ed.undo();
+        let d = ed.doc.as_ref().unwrap();
+        assert_eq!(d.global.ground_textures[1].params[0], 8.0);
+        assert_eq!(d.tiles[&(0, 0)].masks[1].as_ref(), Some(&m));
+    }
 
     #[test]
     fn an_object_leans_as_the_ground_slopes_under_it() {

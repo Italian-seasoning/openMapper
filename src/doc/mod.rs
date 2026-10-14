@@ -120,6 +120,46 @@ impl TileDoc {
 }
 
 /// Mask edge in texels for a ground layer.
+/// A painting mask of `from` × `from` texels at `to` × `to`: bilinear when it grows (smooth
+/// edges), averaged when it shrinks.
+pub fn resample_mask(m: &[u8], from: usize, to: usize) -> Vec<u8> {
+    if from == to || m.len() != from * from {
+        return m.to_vec();
+    }
+    let mut out = vec![0u8; to * to];
+    if to > from {
+        let f = from as f64 / to as f64;
+        for y in 0..to {
+            let sy = ((y as f64 + 0.5) * f - 0.5).clamp(0.0, (from - 1) as f64);
+            let (y0, ty) = (sy.floor() as usize, sy.fract());
+            let y1 = (y0 + 1).min(from - 1);
+            for x in 0..to {
+                let sx = ((x as f64 + 0.5) * f - 0.5).clamp(0.0, (from - 1) as f64);
+                let (x0, tx) = (sx.floor() as usize, sx.fract());
+                let x1 = (x0 + 1).min(from - 1);
+                let v = |xx: usize, yy: usize| m[yy * from + xx] as f64;
+                let top = v(x0, y0) * (1.0 - tx) + v(x1, y0) * tx;
+                let bottom = v(x0, y1) * (1.0 - tx) + v(x1, y1) * tx;
+                out[y * to + x] = (top * (1.0 - ty) + bottom * ty).round() as u8;
+            }
+        }
+    } else {
+        let k = from / to;
+        for y in 0..to {
+            for x in 0..to {
+                let mut sum = 0u32;
+                for yy in 0..k {
+                    for xx in 0..k {
+                        sum += m[(y * k + yy) * from + x * k + xx] as u32;
+                    }
+                }
+                out[y * to + x] = (sum / (k * k) as u32) as u8;
+            }
+        }
+    }
+    out
+}
+
 pub fn mask_size(g: &GroundTex) -> usize {
     g.mask_size().clamp(16, 1024) as usize
 }

@@ -1535,12 +1535,26 @@ fn paint_panel(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, swatches: &
             remove = Some(ed.paint_layer);
         }
     });
+    let mut detail: Option<f32> = None;
     if let Some(g) = doc.global.ground_textures.get_mut(ed.paint_layer) {
         let before = g.params[1];
+        let size = crate::doc::mask_size(g);
         egui::Grid::new("layer").num_columns(2).show(ui, |ui| {
             ui.label(tr("Repeats per tile", "Повторов на тайл"));
             ui.add(egui::DragValue::new(&mut g.params[1]).range(1.0..=200.0).speed(0.5));
             ui.end_row();
+            if ed.paint_layer > 0 {
+                ui.label(tr("Paint detail", "Детальность покраски")).on_hover_text(tr("How finely this layer can be painted: texels across a tile (its masks are made again at the new size)", "Насколько тонко можно красить этот слой: текселей поперёк тайла (маски пересчитываются под новый размер)"));
+                egui::ComboBox::from_id_salt("paint detail").selected_text(format!("{size} ({:.1} m)", crate::doc::tile_size() / size as f64)).show_ui(ui, |ui| {
+                    for p in [7.0f32, 8.0, 9.0, 10.0] {
+                        let n = 1usize << p as u32;
+                        if ui.selectable_label(n == size, format!("{n} ({:.1} m)", crate::doc::tile_size() / n as f64)).clicked() && n != size {
+                            detail = Some(p);
+                        }
+                    }
+                });
+                ui.end_row();
+            }
         });
         if g.params[1] != before {
             let now = g.params[1];
@@ -1551,6 +1565,9 @@ fn paint_panel(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, swatches: &
             doc.global_dirty = true;
             doc.global_rev = crate::doc::next_rev();
         }
+    }
+    if let Some(p) = detail {
+        ed.set_paint_detail(ed.paint_layer, p);
     }
     ui.add_space(6.0);
     ui.label(RichText::new(tr("Brush", "Кисть")).strong());
