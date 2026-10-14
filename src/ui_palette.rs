@@ -230,7 +230,7 @@ fn found<'a>(all: &'a [Command], query: &str, recent: &[&str]) -> Vec<&'a Comman
         return v;
     }
     let mut v: Vec<(i32, &Command)> = all.iter().filter_map(|c| score(c, &q).map(|s| (s, c))).collect();
-    v.sort_by(|a, b| b.0.cmp(&a.0));
+    v.sort_by_key(|c| std::cmp::Reverse(c.0));
     v.into_iter().map(|(_, c)| c).collect()
 }
 
