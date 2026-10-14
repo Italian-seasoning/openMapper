@@ -61,6 +61,8 @@ pub enum Fix {
     /// Give a line's tour (line, tour number) the map's depot, or a depot of OMSI 2's MAN
     /// buses where the map has none (true: their files are there).
     TourDepot(String, String, bool),
+    /// Make one of openMapper's junction plates again whose file is gone (by its IDCode).
+    RemakeJunction(i64),
 }
 
 #[derive(Debug, Clone)]
@@ -136,7 +138,7 @@ impl Kind {
     /// What it means and what to do, for someone new to it.
     pub fn help(self) -> &'static str {
         match self {
-            Kind::MissingObject => tr("The map uses an object (.sco) that is not installed. The game leaves it out. Install the mod it comes from, or delete the object.", "Карта использует объект (.sco), которого нет. Игра его пропустит. Установите мод, из которого он, или удалите объект."),
+            Kind::MissingObject => tr("The map uses an object (.sco) that is not installed. The game leaves it out. Install the mod it comes from, or delete the object. A junction of openMapper's whose file is gone (the map was moved without it) is made again for its roads with \"Fix\".", "Карта использует объект (.sco), которого нет. Игра его пропустит. Установите мод, из которого он, или удалите объект. Перекрёсток openMapper, файл которого пропал (карту перенесли без него), «Исправить» построит заново для его дорог."),
             Kind::MissingSpline => tr("The map uses a road or spline type (.sli) that is not installed: that road is missing in the game, and buses cannot drive there.", "Карта использует тип дороги или сплайна (.sli), которого нет: этой дороги в игре не будет, и автобусы там не проедут."),
             Kind::MissingTexture => tr("An object or road names a picture that cannot be found. It will look white or black in the game.", "Объект или дорога ссылается на картинку, которой нет. В игре он будет белым или чёрным."),
             Kind::UnlinkedEnds => tr("Two road ends lie on one another but are not joined. Traffic still finds its way (the game joins lanes by their ends), but rows of lamps and posts and the road's texture do not run on across, and the editor does not treat them as one road. \"Join\" links them.", "Два конца дорог лежат друг на друге, но не соединены. Транспорт проедет (игра соединяет полосы по концам), но ряды фонарей и столбиков и текстура дороги не продолжаются через стык, а редактор не считает их одной дорогой. «Соединить» свяжет их."),
@@ -430,7 +432,12 @@ fn run(s: Snapshot, roots: Vec<PathBuf>) -> Vec<Issue> {
         match find_file(&name, &roots) {
             None => {
                 let (kind, sev) = if *is_spline { (Kind::MissingSpline, Severity::Error) } else { (Kind::MissingObject, Severity::Error) };
-                out.push(issue(sev, kind, name.clone(), format!("{} {}", tr("used", "используется"), times(*n)), Some(*at), Some(*sel), None));
+                // (openMapper's own junction plates are made again for their roads)
+                let fix = match sel {
+                    Sel::Object(_, id) if crate::editor::is_own_junction(&name) => Some(Fix::RemakeJunction(*id)),
+                    _ => None,
+                };
+                out.push(issue(sev, kind, name.clone(), format!("{} {}", tr("used", "используется"), times(*n)), Some(*at), Some(*sel), fix));
             }
             Some(path) => {
                 let (tex, paths) = inspect(&path, *is_spline, &roots);
@@ -770,6 +777,10 @@ fn short(file: &str) -> String {
 
 /// Put an issue right (as one step that can be undone). Returns whether anything changed.
 pub fn apply(ed: &mut Editor, fix: &Fix) -> bool {
+    // (made at the next tick, which has the road models)
+    if let Fix::RemakeJunction(id) = fix {
+        return ed.remake_junction(*id);
+    }
     let Some(doc) = ed.doc.as_mut() else { return false };
     ed.history.begin(tr("Fix from the map check", "Исправление из проверки карты"));
     let done = match fix {
@@ -903,6 +914,7 @@ pub fn apply(ed: &mut Editor, fix: &Fix) -> bool {
                 _ => false,
             }
         }
+        Fix::RemakeJunction(_) => false,
         Fix::DropEntry(id) => {
             ed.history.touch_global(doc);
             let before = doc.global.entry_points.len();

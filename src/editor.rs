@@ -3062,6 +3062,32 @@ impl Editor {
     }
 }
 
+/// The free road ends within `reach` of `centre` that face it (the arms a junction plate
+/// there had), nearest first.
+fn ends_facing(doc: &Document, centre: DVec2, reach: f64) -> Vec<crate::junction::Arm> {
+    let mut found: Vec<(f64, crate::junction::Arm)> = Vec::new();
+    for (k, t) in &doc.tiles {
+        let org = tile_origin(*k);
+        for s in t.tile.splines.iter().filter(|s| !s.deleted) {
+            let c = omsi_geometry::SplineCurve::from_map(s, org);
+            for at_end in [false, true] {
+                if (if at_end { s.next_id } else { s.prev_id }) != 0 {
+                    continue;
+                }
+                let (p, h) = if at_end { (c.end_point(), c.heading_at(s.length)) } else { (c.point_at(0.0), c.heading_at(0.0) + 180.0) };
+                let to = centre - p.truncate();
+                let d = to.length();
+                let off = ((roads::heading_of(to) - h + 540.0).rem_euclid(360.0) - 180.0).abs();
+                if d < reach && (d < 1.0 || off < 35.0) {
+                    found.push((d, crate::junction::Arm { key: *k, id: s.id, at_end }));
+                }
+            }
+        }
+    }
+    found.sort_by(|a, b| a.0.total_cmp(&b.0));
+    found.into_iter().map(|f| f.1).collect()
+}
+
 /// A junction openMapper made (and can make again): `Sceneryobjects\openMapper\<map>\junction_<id>.sco`.
 /// A junction plate's helper points (x, forward, height, heading out) and whether it stands
 /// at a height of its own: from its model, or, for a plate made in this very build and not
@@ -4295,6 +4321,18 @@ impl Editor {
         crate::junction::remove_unused(&dir, &folder, &used, self.session_first_id)
     }
 
+    /// One of openMapper's junction plates made again at the next tick (its file lost: the
+    /// map moved without it); false if it is not on the map.
+    pub fn remake_junction(&mut self, id: i64) -> bool {
+        let Some(doc) = self.doc.as_ref() else { return false };
+        if !doc.tiles.values().any(|t| t.tile.objects.iter().any(|o| o.id == id && is_own_junction(&o.file))) {
+            return false;
+        }
+        self.history.begin(tr("Make the junction again", "Перекрёсток заново"));
+        self.pending_rebuild.push(id);
+        true
+    }
+
     /// Make the queued junctions' plates again for the arms they have now.
     fn rebuild_pending(&mut self, assets: &mut Assets) {
         let ids = std::mem::take(&mut self.pending_rebuild);
@@ -4312,16 +4350,27 @@ impl Editor {
         let was_selected = self.selection().iter().any(|s| matches!(s, Sel::Object(_, x) if *x == id));
         let Some(doc) = self.doc.as_mut() else { return };
         let Some((jk, o)) = doc.tiles.iter().find_map(|(k, t)| t.tile.objects.iter().find(|o| o.id == id).map(|o| (*k, o.clone()))) else { return };
-        let Some((abs, helpers)) = plate_helpers(&content, assets, &o.file) else { return };
-        let pts = selection::helper_points(doc, jk, id, abs, &helpers);
         let mut arms: Vec<crate::junction::Arm> = Vec::new();
-        for a in selection::arms_of(doc, &pts) {
-            if let Some((k, sid, at_end)) = selection::free_end_at(doc, a.pos.truncate()) {
-                if !arms.iter().any(|x| x.id == sid && x.at_end == at_end) {
-                    arms.push(crate::junction::Arm { key: k, id: sid, at_end });
+        // (a plate whose file is gone, a map moved without them: the roads that end facing
+        // its middle are its arms; it stood at its own height)
+        let abs = match plate_helpers(&content, assets, &o.file) {
+            Some((abs, helpers)) => {
+                let pts = selection::helper_points(doc, jk, id, abs, &helpers);
+                for a in selection::arms_of(doc, &pts) {
+                    if let Some((k, sid, at_end)) = selection::free_end_at(doc, a.pos.truncate()) {
+                        if !arms.iter().any(|x| x.id == sid && x.at_end == at_end) {
+                            arms.push(crate::junction::Arm { key: k, id: sid, at_end });
+                        }
+                    }
                 }
+                abs
             }
-        }
+            None if is_own_junction(&o.file) => {
+                arms = ends_facing(doc, tile_origin(jk) + DVec2::new(o.pos[0], o.pos[1]), 30.0);
+                true
+            }
+            None => return,
+        };
         for a in self.pending_arms.remove(&id).unwrap_or_default() {
             if doc.spline(a.key, a.id).is_some() && !arms.iter().any(|x| x.id == a.id && x.at_end == a.at_end) {
                 arms.push(a);
@@ -5990,6 +6039,19 @@ mod tests {
         let centre = DVec2::new(j[0].pos[0], j[0].pos[1]);
         let ends = crate::selection::tests::free_ends_near(doc, centre, 25.0);
         assert_eq!(ends, 3, "three arms");
+        // its file lost (the map moved without it): made again for the roads facing it
+        let (old, old_file) = (j[0].id, j[0].file.clone());
+        let file = omsi_cfg::resolve_path(&content, &old_file);
+        std::fs::remove_file(&file).unwrap();
+        let Some(mut fresh) = installed_spline(road) else { return };
+        assert!(ed.remake_junction(old));
+        for _ in 0..50 { fresh.poll(); ed.tick(&mut fresh, 0.0, false); std::thread::sleep(std::time::Duration::from_millis(10)); }
+        let doc = ed.doc.as_ref().unwrap();
+        let j: Vec<_> = doc.tiles[&(0, 0)].tile.objects.iter().filter(|o| o.file.contains("junction_")).collect();
+        assert_eq!(j.len(), 1);
+        assert_ne!(j[0].id, old);
+        assert!(omsi_cfg::resolve_path(&content, &j[0].file).is_file());
+        assert_eq!(crate::selection::tests::free_ends_near(doc, DVec2::new(j[0].pos[0], j[0].pos[1]), 25.0), 3);
         let _ = std::fs::remove_dir_all(content);
     }
 
