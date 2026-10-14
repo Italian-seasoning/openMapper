@@ -189,6 +189,10 @@ can drive in service.
   where it lies and its time zone (the sun), summer time (EU rules filled in for a span of
   years), public and school holidays by year (the timetable's day types) and the AI cars'
   number plates (made from a pattern such as `B-XX 9999`).
+* **Objects on the map** (the Select tool's Objects tab): everything on the map as a tree of
+  the folders its files lie in (Sceneryobjects › Buildings_MC › …), each kind with how many
+  there are and each one a click away (selected and flown to); a search by name, file or
+  IDCode; a right-click selects every one of a kind or everything in a folder.
 * **Find in map** (Edit menu or `Ctrl+F`): stops and start points by name and a point by its coordinates (`x, y`) to go to; every kind of object and spline the map uses,
   with how many, by name, file or IDCode; select them all, go from one to the next, or replace
   them all with the object (road type) chosen in the catalogue in one undo step.

@@ -47,6 +47,10 @@ fn commands() -> Vec<Command> {
         cmd!(Icon::History, "Edit history…", "История правок…", "undo steps шаги", "", |st, _, _| st.history_open = true),
         cmd!(Icon::Objects, "Groups…", "Группы…", "prefab template шаблон", "", |st, _, _| st.groups.open = true),
         cmd!(Icon::Search, "Find in map…", "Поиск по карте…", "search replace stop найти заменить остановка", "Ctrl+F", |st, _, _| st.find.show()),
+        cmd!(Icon::Layers, "Objects on the map by folder", "Объекты карты по папкам", "outliner hierarchy list tree folders иерархия список дерево папки", "", |st, ed, _| {
+            ed.set_tool(Tool::Select);
+            st.outliner.open = true;
+        }),
         // Tools
         cmd!(Icon::Select, "Select", "Выбор", "tool move инструмент", "1", |_, ed, _| ed.set_tool(Tool::Select)),
         cmd!(Icon::Road, "Roads", "Дороги", "tool draw street track rail spline инструмент рисовать улица рельсы сплайн", "2", |_, ed, _| ed.set_tool(Tool::Roads)),

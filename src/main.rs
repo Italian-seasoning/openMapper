@@ -73,6 +73,7 @@ mod ui_signals;
 mod ui_minimap;
 mod ui_merge;
 mod ui_osm;
+mod ui_outliner;
 mod ui_palette;
 mod ui_profile;
 mod ui_views;

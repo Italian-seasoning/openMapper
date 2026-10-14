@@ -441,6 +441,10 @@ impl App {
         if std::env::var_os("OPENMAPPER_LEVEL").is_some() {
             self.ed.level_request = true;
         }
+        // OPENMAPPER_OUTLINER=[text]: the Select panel's Objects tab, that searched for
+        if let Ok(q) = std::env::var("OPENMAPPER_OUTLINER") {
+            self.ui.outliner.show_with(&q);
+        }
         // OPENMAPPER_FIND=<text>: Find in map open with that typed
         if let Ok(q) = std::env::var("OPENMAPPER_FIND") {
             self.ui.find.show_with(&q);

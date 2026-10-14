@@ -184,6 +184,8 @@ pub struct UiState {
     map_picture: Option<(PathBuf, Option<std::time::SystemTime>, Option<egui::TextureHandle>)>,
     /// The satellite overlay as the View menu and the Tiles tool show it.
     pub geo: crate::ui_geo::Bridge,
+    /// The Objects tab of the Select panel: everything on the map by folder.
+    pub outliner: crate::ui_outliner::Outliner,
     /// The Terrain tool's height map export and import.
     pub heightmap: crate::heightmap::HeightMapUi,
     /// The Paint tool's rule by slope and height.
@@ -228,6 +230,7 @@ impl Default for UiState {
             parent_lights: None,
             map_picture: None,
             geo: Default::default(),
+            outliner: Default::default(),
             heightmap: Default::default(),
             autopaint: Default::default(),
             daytime: None,
@@ -1143,9 +1146,22 @@ fn tool_panel(
             crate::ui_geo::tiles_panel(ui, &mut st.geo);
         }
         Tool::Select => {
+            // (two tabs: the tools, and everything on the map by folder)
+            ui.horizontal(|ui| {
+                if ui.add(egui::Button::new(icons::labelled(Icon::Select, tr("Tools", "Инструменты"))).selected(!st.outliner.open).min_size(Vec2::new(0.0, 26.0))).clicked() {
+                    st.outliner.open = false;
+                }
+                if ui.add(egui::Button::new(icons::labelled(Icon::Layers, tr("Objects", "Объекты"))).selected(st.outliner.open).min_size(Vec2::new(0.0, 26.0))).on_hover_text(tr("Everything on the map, grouped by the folders its files lie in", "Всё, что есть на карте, по папкам файлов")).clicked() {
+                    st.outliner.open = true;
+                }
+            });
+            ui.add_space(6.0);
+            if st.outliner.open {
+                st.outliner.panel(ui, ed, lib, actions);
+                return;
+            }
             ui.label(RichText::new(tr("Click an object or a road in the view to see and change it on the right.", "Кликните объект или дорогу в окне вида: свойства появятся справа.")).color(TEXT_DIM));
             ui.add_space(8.0);
-            ui.label(RichText::new(tr("Tools", "Инструменты")).strong());
             for t in Tool::ALL.iter().skip(1) {
                 if ui.add(egui::Button::new(icons::labelled(t.icon(), t.label())).shortcut_text(t.key()).min_size(Vec2::new(ui.available_width(), 24.0))).clicked() {
                     ed.set_tool(*t);
