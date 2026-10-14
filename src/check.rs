@@ -88,6 +88,7 @@ pub enum Kind {
     SignalRouteBroken,
     ChronoUnmatched,
     LampsDark,
+    HeavyTile,
 }
 
 impl Kind {
@@ -115,6 +116,7 @@ impl Kind {
             Kind::SignalRouteBroken => tr("Signal routes naming what is gone", "Маршруты сигналов с исчезнувшим"),
             Kind::ChronoUnmatched => tr("Chrono changes of what is gone", "Хроно-изменения исчезнувшего"),
             Kind::LampsDark => tr("Lamps lighting no ground at night", "Фонари не освещают землю ночью"),
+            Kind::HeavyTile => tr("Tiles with very many objects", "Тайлы с очень большим числом объектов"),
         }
     }
 
@@ -141,6 +143,7 @@ impl Kind {
             Kind::UnschedMissing => tr("The unscheduled traffic names a group that the AI lists do not have: those cars never appear. Add the group in Map > Traffic and AI.", "Свободное движение указывает группу, которой нет в списке ИИ: эти машины не появятся. Добавьте группу в Карта > Движение и ИИ."),
             Kind::StopUnused => tr("A stop of the timetable that no trip calls at. Nothing is wrong, it is only not used yet.", "Остановка расписания, на которой не останавливается ни один рейс. Ничего страшного, просто она пока не используется."),
             Kind::ChronoUnmatched => tr("A chrono scenario takes away, retypes or relabels something that is no longer on the map (it was deleted or its IDCode changed): that change does nothing. Open Map > Chrono scenarios, the scenario's properties, and take the change out.", "Хроно-сценарий убирает, меняет тип или тексты того, чего на карте больше нет (удалено или сменился IDCode): это изменение ничего не делает. Откройте Карта > Хроно-сценарии, свойства сценария, и уберите изменение."),
+            Kind::HeavyTile => tr("A tile holds far more objects than the stock maps' tiles (up to some 600): the game may stutter when it loads it or looks across it. Thin out a wood planted too densely (Plant brush, Clear) or plant it with more space between the trees.", "На тайле объектов намного больше, чем на тайлах стоковых карт (до 600): игра может подтормаживать, загружая его или глядя через него. Проредите слишком густой лес (кисть растений, «Убирать») или сажайте реже."),
             Kind::LampsDark => tr("Street lamps stand on a tile the game does not light from its lamps ([variable_terrainlightmap] is off): at night the ground under them stays dark (unless the tile's light map file was made by OMSI 2's editor). \"Fix\" turns it on, as on nearly every tile of the stock maps.", "Фонари стоят на тайле, который игра не освещает от фонарей ([variable_terrainlightmap] выключен): ночью земля под ними тёмная (если файл карты освещения не сделан редактором OMSI 2). «Исправить» включит его, как почти на всех тайлах стоковых карт."),
             Kind::SignalRouteBroken => tr("A signal route names a signal or track pieces no longer on the map: the signal may never clear. Open Map > Signal routes and take the track again, or delete the route.", "Маршрут сигнала указывает сигнал или участки пути, которых больше нет на карте: сигнал может так и не открыться. Откройте Карта > Маршруты сигналов и возьмите пути заново или удалите маршрут."),
         }
@@ -599,6 +602,16 @@ fn run(s: Snapshot, roots: Vec<PathBuf>) -> Vec<Issue> {
     }
     for k in &s.no_terrain {
         out.push(issue(Severity::Info, Kind::NoGround, format!("tile_{}_{}.map", k.0, k.1), tr("no .terrain file: flat", "нет файла .terrain: плоская").to_string(), Some(tile_origin(*k) + DVec2::splat(tile_size() / 2.0)), None, None));
+    }
+    // tiles far fuller than the stock maps'
+    let mut per_tile: HashMap<TileKey, usize> = HashMap::new();
+    for o in &s.objects {
+        *per_tile.entry(o.tile).or_default() += 1;
+    }
+    let mut heavy: Vec<(TileKey, usize)> = per_tile.into_iter().filter(|(_, n)| *n > 1500).collect();
+    heavy.sort();
+    for (k, n) in heavy {
+        out.push(issue(Severity::Info, Kind::HeavyTile, format!("tile_{}_{}.map", k.0, k.1), format!("{n} {}", tr("objects", "объектов")), Some(tile_origin(k) + DVec2::splat(tile_size() / 2.0)), None, None));
     }
     // lamps on tiles the game lights none from
     let mut lamps: HashMap<TileKey, (usize, DVec2)> = HashMap::new();
@@ -1113,6 +1126,17 @@ mod tests {
         assert!(out.iter().any(|i| i.kind == Kind::TourEmpty));
         assert!(out.iter().any(|i| i.kind == Kind::TourNoDepot && i.detail.contains("Nowhere")));
         assert!(out.iter().any(|i| i.kind == Kind::UnschedMissing && i.title == "Cars"));
+    }
+
+    #[test]
+    fn a_tile_far_fuller_than_the_stock_ones_is_named() {
+        let mut s = snap(Vec::new());
+        let o = |id: i64, tile: TileKey| ObjRec { file: "tree.sco".into(), tile, id, world: DVec2::new(10.0, 10.0), rot: [0.0; 3], local: [10.0, 10.0], attached: false };
+        s.objects = (0..1600).map(|i| o(i, (0, 0))).chain((0..700).map(|i| o(5000 + i, (1, 0)))).collect();
+        s.tiles = [(0, 0), (1, 0)].into_iter().collect();
+        let heavy: Vec<_> = run(s, Vec::new()).into_iter().filter(|i| i.kind == Kind::HeavyTile).collect();
+        assert_eq!(heavy.len(), 1);
+        assert!(heavy[0].title.contains("tile_0_0"));
     }
 
     #[test]
