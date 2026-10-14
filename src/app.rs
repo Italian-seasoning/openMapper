@@ -454,6 +454,12 @@ impl App {
         if std::env::var_os("OPENMAPPER_GUIDE").is_some() {
             self.guide.open = true;
         }
+        // OPENMAPPER_GROW=<n>: n rings of new tiles round the map (checks of bigger maps)
+        if let Some(n) = std::env::var("OPENMAPPER_GROW").ok().and_then(|n| n.parse::<usize>().ok()) {
+            for _ in 0..n {
+                self.ed.grow_map();
+            }
+        }
         // OPENMAPPER_GEO=lat,lon[,load][,hide]: placed there, the Satellite and terrain window open
         if let Ok(a) = std::env::var("OPENMAPPER_GEO") {
             self.geo.scripted(&mut self.ed, &self.prefs, &a);
