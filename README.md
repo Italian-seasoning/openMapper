@@ -104,7 +104,9 @@ can drive in service.
     whose ground plan and height (OSM's height or storeys, else what its kind usually is)
     come nearest, its front to the nearest road; an outline no model fits is left out.
 
-  All a build brings is one undo step. © OpenStreetMap contributors (ODbL).
+  A map without a start point gets one on a lane some 40 m before a bus stop, so the town
+  can be driven at once. All a build brings is one undo step. © OpenStreetMap contributors
+  (ODbL).
 * **Tiles from another map** (Map menu): another map's tiles (ground, painting, water,
   objects, roads, start points) put beside or into this one: its tiles shown over this
   map's on a small plan, picked by a click and moved into place, raised if wanted, the

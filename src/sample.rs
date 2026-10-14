@@ -89,9 +89,7 @@ pub fn build(ed: &mut Editor, assets: &mut Assets, lib: &Library, roots: &Roots,
         let l = &net.lanes[a];
         let p = l.point_at(l.length() * 0.15);
         let d = (l.point_at(l.length() * 0.15 + 1.0) - p).truncate().normalize_or_zero();
-        let id = place(doc, START, p.truncate(), crate::roads::heading_of(d), Vec::new(), 0);
-        doc.global.entry_points.push(EntryPoint { object_id: id, name: tr("Depot", "Депо").into(), ..Default::default() });
-        crate::editor::sync_entry_points(doc);
+        add_start(doc, p.truncate(), crate::roads::heading_of(d), tr("Depot", "Депо"));
     }
 
     // the stops in the timetable's list
@@ -142,6 +140,75 @@ pub fn build(ed: &mut Editor, assets: &mut Assets, lib: &Library, roots: &Roots,
 }
 
 /// A new object at a world point, standing on the ground.
+/// Where a map without a start point (one built from OpenStreetMap) gets one: on a road's
+/// lane up to 40 m before a bus stop beside it (the stop with the most room before it on
+/// its lane), facing the way the lane goes; else a little way along the longest lane. None:
+/// no road with lanes.
+pub fn start_spot(doc: &Document, roots: &Roots) -> Option<(DVec2, f64)> {
+    let mut files = Files::new(vec![roots.content.clone(), roots.omsi.clone()]);
+    let net = Network::build(doc, &mut files);
+    let lanes: Vec<usize> = (0..net.lanes.len()).filter(|&i| net.lanes[i].spline && net.lanes[i].length() > 20.0).collect();
+    let spot = |l: usize, s: f64| {
+        let lane = &net.lanes[l];
+        let s = s.clamp(2.0, (lane.length() - 2.0).max(2.0));
+        let d = (lane.point_at(s + 1.0) - lane.point_at(s - 1.0)).truncate();
+        (lane.point_at(s).truncate(), crate::roads::heading_of(d))
+    };
+    // (bus stops: the objects with a stop's labels, the way they face)
+    let stops: Vec<(DVec2, f64)> = doc.tiles.iter().flat_map(|(k, t)| t.tile.objects.iter().filter(|o| o.flag == 7 && o.extra.len() >= 4).map(move |o| (tile_origin(*k) + DVec2::new(o.pos[0], o.pos[1]), o.rot[0]))).collect();
+    // (of the stops, the one with the most room on its lane before it)
+    let mut chosen: Option<(usize, f64)> = None;
+    for (at, facing) in &stops {
+        // the lane beside it going its way, and how far along it the stop is
+        let mut best: Option<(f64, usize, f64)> = None;
+        for &l in &lanes {
+            let lane = &net.lanes[l];
+            let n = (lane.length() / 2.0).ceil() as usize;
+            for i in 0..=n {
+                let s = lane.length() * i as f64 / n as f64;
+                let gap = (lane.point_at(s).truncate() - *at).length();
+                let (_, h) = spot(l, s);
+                let turn = ((h - facing + 540.0).rem_euclid(360.0) - 180.0).abs();
+                if gap < 12.0 && turn < 45.0 && best.map(|b| gap < b.0).unwrap_or(true) {
+                    best = Some((gap, l, s));
+                }
+            }
+        }
+        if let Some((_, l, s)) = best {
+            if chosen.map(|c| s.min(40.0) > c.1.min(40.0)).unwrap_or(true) {
+                chosen = Some((l, s));
+            }
+        }
+    }
+    if let Some((mut l, s)) = chosen {
+        // (back along the road into the lanes before it where the stop's lane is short)
+        let mut s = s - 40.0;
+        for _ in 0..8 {
+            if s >= 2.0 {
+                break;
+            }
+            match lanes.iter().copied().find(|&p| net.lanes[p].next.contains(&l) && !net.lanes[p].against) {
+                Some(p) => {
+                    s += net.lanes[p].length();
+                    l = p;
+                }
+                None => break,
+            }
+        }
+        return Some(spot(l, s));
+    }
+    let l = *lanes.iter().max_by(|a, b| net.lanes[**a].length().total_cmp(&net.lanes[**b].length()))?;
+    Some(spot(l, net.lanes[l].length() * 0.15))
+}
+
+/// A start point put at `at`, facing `heading` (the bus appears there), named `name`.
+pub fn add_start(doc: &mut Document, at: DVec2, heading: f64, name: &str) -> i64 {
+    let id = place(doc, START, at, heading, Vec::new(), 0);
+    doc.global.entry_points.push(EntryPoint { object_id: id, name: name.into(), ..Default::default() });
+    crate::editor::sync_entry_points(doc);
+    id
+}
+
 fn place(doc: &mut Document, file: &str, at: DVec2, heading: f64, extra: Vec<String>, flag: i32) -> i64 {
     let id = doc.new_id();
     let k = tile_of(at);
@@ -184,6 +251,16 @@ mod tests {
             assert!(tt.tracks.iter().all(|t| t.entries.len() >= 2));
             assert!(tt.lines[0].tours[0].trips.len() > 50);
             assert_eq!(doc.global.entry_points.len(), 1);
+            // (a map with none gets one on a lane before a stop, facing along it)
+            let (at, heading) = start_spot(doc, &roots).unwrap();
+            let stops: Vec<f64> = doc.tiles.iter().flat_map(|(k, t)| t.tile.objects.iter().filter(|o| o.flag == 7).map(move |o| tile_origin(*k) + DVec2::new(o.pos[0], o.pos[1]))).map(|p| (p - at).length()).collect();
+            assert!(stops.iter().any(|d| (35.0..46.0).contains(d)), "{stops:?} m from the stops");
+            let lane = Network::build(doc, &mut Files::new(vec![roots.content.clone(), roots.omsi.clone()])).lanes.iter().filter(|l| l.spline).flat_map(|l| l.pts.windows(2).map(|w| {
+                let (a, b) = (w[0].truncate(), w[1].truncate());
+                let t = ((at - a).dot(b - a) / (b - a).length_squared()).clamp(0.0, 1.0);
+                ((a + (b - a) * t - at).length(), crate::roads::heading_of(b - a))
+            }).collect::<Vec<_>>()).min_by(|x, y| x.0.total_cmp(&y.0)).unwrap();
+            assert!(lane.0 < 0.5 && ((lane.1 - heading + 540.0).rem_euclid(360.0) - 180.0).abs() < 10.0, "{lane:?} {heading}");
             assert!(doc.traffic.depots().any(|d| d.name == tt.lines[0].tours[0].ai_group));
             // the whole map saved: its timetable and traffic with it
             doc.dir = roots.content.join("maps").join(if left { "left" } else { "right" });

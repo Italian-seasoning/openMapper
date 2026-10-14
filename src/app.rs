@@ -1473,6 +1473,20 @@ impl App {
                 let n = self.ed.plant_osm(&b.trees, &b.mix);
                 text += &format!(" · {} {n}", tr("trees:", "деревьев:"));
             }
+            // a start point where there is none, so the town can be driven at once
+            if let (Some(doc), Some(roots)) = (self.ed.doc.as_mut(), &self.roots) {
+                if doc.global.entry_points.is_empty() && roads > 0 {
+                    if let Some((at, heading)) = crate::sample::start_spot(doc, roots) {
+                        let k = crate::doc::tile_of(at);
+                        self.ed.history.begin(tr("Start point", "Точка старта"));
+                        self.ed.history.touch_tile(doc, k);
+                        self.ed.history.touch_global(doc);
+                        crate::sample::add_start(doc, at, heading, tr("Start", "Старт"));
+                        self.ed.history.commit();
+                        text += &format!(" · {}", tr("a start point", "точка старта"));
+                    }
+                }
+            }
             // (all of it one step: undone at once)
             self.ed.history.merge_since(mark, tr("From OpenStreetMap", "Из OpenStreetMap"));
             log::info!("osm: {text}");
