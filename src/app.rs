@@ -1568,6 +1568,8 @@ impl App {
                         }
                         self.new_map(&name, &name, 3, &crate::ui_newmap::NewMapOptions { sample: true, left_hand: std::env::var_os("OPENMAPPER_LHT").is_some(), ..Default::default() });
                         self.save();
+                    } else if d == "RING" {
+                        self.demo_ring();
                     } else if d == "JOIN" {
                         self.demo_join();
                     } else {
@@ -1869,6 +1871,40 @@ impl App {
 
     /// `OPENMAPPER_DEMO=JOIN` (with a map on the command line): a road run into the middle
     /// of one of the map's own roads.
+    /// `OPENMAPPER_DEMO=RING`: a new map with two roads crossing and a roundabout laid on
+    /// their crossing (checks of the roundabout, also in openOMSI).
+    fn demo_ring(&mut self) {
+        while self.lib.scanning {
+            self.lib.poll();
+            std::thread::sleep(std::time::Duration::from_millis(20));
+        }
+        self.new_map("ring", "ring", 3, &Default::default());
+        let Some(assets) = self.assets.as_mut() else { return };
+        self.ed.set_tool(Tool::Roads);
+        self.ed.road_type = self.lib.find("Splines\\Marcel\\str_2spur_8m_borkumer1.sli").map(|a| a.rel.clone());
+        while self.ed.road_type.as_deref().map(|r| assets.spline(r).is_none()).unwrap_or(false) {
+            assets.poll();
+            std::thread::sleep(std::time::Duration::from_millis(10));
+        }
+        let click = |ed: &mut Editor, assets: &mut Assets, lib: &Library, x: f64, y: f64| {
+            let z = ed.doc.as_ref().map(|d| d.ground(DVec2::new(x, y))).unwrap_or(0.0);
+            ed.hover_point(assets, lib, DVec3::new(x, y, z));
+            ed.left_press(assets, lib, false);
+            ed.tick(assets, 0.0, false);
+        };
+        for (a, b) in [((-250.0, 10.0), (250.0, 10.0)), ((10.0, -250.0), (10.0, 250.0))] {
+            click(&mut self.ed, assets, &self.lib, a.0, a.1);
+            click(&mut self.ed, assets, &self.lib, b.0, b.1);
+            self.ed.right_click();
+        }
+        self.ed.roundabout = true;
+        click(&mut self.ed, assets, &self.lib, 10.0, 10.0);
+        click(&mut self.ed, assets, &self.lib, 45.0, 10.0);
+        self.ed.roundabout = false;
+        let n: usize = self.ed.doc.as_ref().map(|d| d.tiles.values().map(|t| t.tile.splines.len()).sum()).unwrap_or(0);
+        log::info!("demo: ring: {n} splines; messages: {:?}", self.ed.toasts.iter().map(|t| t.text.clone()).collect::<Vec<_>>());
+    }
+
     fn demo_join(&mut self) {
         while self.lib.scanning {
             self.lib.poll();
