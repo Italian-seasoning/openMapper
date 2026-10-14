@@ -4,6 +4,25 @@ openMapper 0.1 already opens, edits and saves OMSI 2 maps (roads with automatic 
 objects, terrain, painting, tiles, game logic, import, test drive). What keeps it from being
 a complete editor, and who works on what.
 
+## Where it stands (October 2026)
+
+Done: every part of an OMSI 2 map can be made and changed in openMapper without OMSI 2's
+editor: tiles, ground (brushes, ramps, height maps, painting by brush, rule, along roads),
+water, roads with junctions, lights and crossings, tracks with switches, objects, plants
+(brush and areas), game logic (stops in pairs, start points, car parks, AI paths), lines,
+trips, tours, traffic, calendar, signal routes, chrono scenarios, descriptions; real places
+from satellite imagery, terrain heights, OpenStreetMap and GPS tracks; tiles from other
+maps; checks, safe saving, sharing (zip and plan), a test drive, a written tutorial and a
+command search.
+
+Still open for 1.0:
+* Tram overhead wires along tracks (a wire spline laid over a chain of track, linked).
+* Builds and packages for Windows and Linux (`tools/package-macos.sh` is macOS only), and a
+  release on GitHub with notes.
+* A pass in openOMSI over maps made only with openMapper (the sample, an OSM town), noting
+  anything the game shows differently from the editor.
+* The interface's texts read through once more by a native speaker in each language.
+
 ## Workstreams
 
 Each stream has its own branch and owns its files. Shared files (`src/ui.rs`,
