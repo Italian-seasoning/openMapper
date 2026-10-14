@@ -154,8 +154,10 @@ impl GameCheck {
         self.picture = None;
     }
 
-    /// The window; true when the check is to be run again (the map saved first).
-    pub fn window(&mut self, ctx: &egui::Context) -> bool {
+    /// The window; true when the check is to be run again (the map saved first). `at_edge`:
+    /// whether a place lies at the map's edge (a bus at a road's end there stands over it:
+    /// nothing to mend).
+    pub fn window(&mut self, ctx: &egui::Context, at_edge: &dyn Fn(glam::DVec2) -> bool) -> bool {
         if let Some((rx, _)) = &self.running {
             if let Ok(r) = rx.try_recv() {
                 match r {
@@ -199,7 +201,7 @@ impl GameCheck {
                 ui.colored_label(Color32::from_rgb(235, 110, 90), format!("openOMSI: {e}"));
             }
             if let Some(o) = &self.outcome {
-                let problems = o.lines.iter().filter(|l| l.problem).count();
+                let problems = o.lines.iter().filter(|l| l.problem && !place_in(&l.text).map(at_edge).unwrap_or(false)).count();
                 let head = if problems == 0 { tr("Nothing wrong found", "Проблем не найдено").to_string() } else { format!("{} {problems}", tr("Problems found:", "Найдено проблем:")) };
                 ui.label(RichText::new(format!("{head} · {:.0} s", o.secs)).strong().color(if problems == 0 { Color32::from_rgb(120, 200, 120) } else { Color32::from_rgb(240, 160, 80) }));
                 if let Some(t) = &self.picture {
@@ -208,9 +210,13 @@ impl GameCheck {
                     ui.image((t.id(), size));
                 }
                 egui::ScrollArea::vertical().max_height(240.0).show(ui, |ui| {
+                    let mut edge = 0;
                     for l in &o.lines {
-                        let c = if l.problem { Color32::from_rgb(240, 160, 80) } else { Color32::from_gray(190) };
-                        match place_in(&l.text) {
+                        let place = place_in(&l.text);
+                        let on_edge = place.map(at_edge).unwrap_or(false);
+                        edge += usize::from(on_edge);
+                        let c = if l.problem && !on_edge { Color32::from_rgb(240, 160, 80) } else { Color32::from_gray(if on_edge { 140 } else { 190 }) };
+                        match place {
                             Some(p) => {
                                 if ui.add(egui::Label::new(RichText::new(&l.text).small().color(c).underline()).sense(egui::Sense::click())).on_hover_text(tr("Go there", "Перейти туда")).clicked() {
                                     self.look = Some(p);
@@ -220,6 +226,9 @@ impl GameCheck {
                                 ui.label(RichText::new(&l.text).small().color(c));
                             }
                         }
+                    }
+                    if edge > 0 {
+                        ui.label(RichText::new(format!("{edge} {}", tr("of the places named lie at the map's edge (greyed): a bus at a road's end there stands over it, nothing to mend", "из названных мест лежат на краю карты (серые): автобус в конце дороги там стоит над краем, чинить нечего"))).small().italics().color(TEXT_DIM));
                     }
                     if o.lines.is_empty() {
                         ui.label(RichText::new(tr("The game said nothing about the map", "Игра ничего не сказала о карте")).small().color(TEXT_DIM));

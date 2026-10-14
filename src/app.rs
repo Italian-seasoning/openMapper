@@ -1370,7 +1370,9 @@ impl App {
                 self.ui.views.window(&ctx, &mut self.cam);
                 self.osm.window(&ctx, &mut self.ed, &self.lib, self.geo.georef());
                 self.trace.window(&ctx, &mut self.ed, &self.lib, self.geo.georef());
-                if self.gamecheck.window(&ctx) {
+                // (within 12 m of a side with no tile beyond)
+                let at_edge = |p: DVec2| self.ed.doc.as_ref().map(|d| [DVec2::X, -DVec2::X, DVec2::Y, -DVec2::Y].iter().any(|v| !d.tiles.contains_key(&crate::doc::tile_of(p + *v * 12.0)))).unwrap_or(false);
+                if self.gamecheck.window(&ctx, &at_edge) {
                     actions.push(Action::GameCheck);
                 }
                 if let Some(p) = self.gamecheck.look.take() {
