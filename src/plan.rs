@@ -205,3 +205,27 @@ pub fn cli(cfg: &Path, out: &Path) -> i32 {
         }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::selection::tests::flat_map;
+
+    #[test]
+    fn a_plan_names_each_pair_of_stops_once() {
+        let mut doc = flat_map(2);
+        doc.global.friendly_name = "Town & Country".into();
+        let stop = |id: i64, x: f64| omsi_map::MapObject { file: "stop.sco".into(), id, pos: [x, 100.0, 0.0], flag: 7, extra: vec!["Rathaus <Mitte>".into(), "0".into(), "0".into(), "10".into()], ..Default::default() };
+        let t = doc.tiles.get_mut(&(0, 0)).unwrap();
+        t.tile.objects.extend([stop(1, 100.0), stop(2, 112.0)]);
+        doc.tiles.get_mut(&(1, 0)).unwrap().water = Some([5.0; 4]);
+        let s = svg(&doc, &Library::default(), &[]);
+        assert!(s.starts_with("<svg") && s.trim_end().ends_with("</svg>"));
+        assert_eq!(s.matches("<circle").count(), 2);
+        assert_eq!(s.matches("Rathaus &lt;Mitte&gt;").count(), 1);
+        assert!(s.contains("Town &amp; Country"));
+        // (the flat ground lies under the water all over its tile)
+        assert!(s.contains("#a9cfe8"));
+        assert!(s.matches("<rect").count() > 60);
+    }
+}
