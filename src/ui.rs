@@ -1994,6 +1994,8 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
                 let Some(doc) = ed.doc.as_mut() else { return };
                 ed.history.touch_tile(doc, k);
                 ed.history.touch_global(doc);
+                // (a stop renamed: its name before, and where it stands)
+                let mut renamed: Option<(String, String, glam::DVec2)> = None;
                 if let Some(o) = crate::selection::any_object_mut(doc, k, id) {
                     if let Some(r) = new_rot {
                         o.rot = r;
@@ -2002,10 +2004,33 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
                         o.pos[2] = z;
                     }
                     if let Some(l) = changed_labels {
+                        if o.flag == 7 && o.extra.len() >= 4 {
+                            if let (Some(a), Some(b)) = (o.extra.first(), l.first()) {
+                                renamed = Some((a.clone(), b.clone(), crate::doc::tile_origin(k) + glam::DVec2::new(o.pos[0], o.pos[1])));
+                            }
+                        }
                         if o.flag < l.len() as i32 {
                             o.flag = l.len() as i32;
                         }
                         o.extra = l;
+                    }
+                }
+                // its twin across the road (a stop of the same name within 40 m) follows
+                if let Some((was, now, at)) = renamed.filter(|r| r.0 != r.1) {
+                    let was = &was;
+                    let twins: Vec<(crate::doc::TileKey, i64)> = doc
+                        .tiles
+                        .iter()
+                        .flat_map(|(tk, t)| t.tile.objects.iter().filter(move |o| o.id != id && o.flag == 7 && o.extra.first() == Some(was) && (crate::doc::tile_origin(*tk) + glam::DVec2::new(o.pos[0], o.pos[1]) - at).length() < 40.0).map(move |o| (*tk, o.id)))
+                        .collect();
+                    for (tk, tid) in twins {
+                        ed.history.touch_tile(doc, tk);
+                        if let Some(t) = doc.tiles.get_mut(&tk) {
+                            if let Some(o) = t.tile.objects.iter_mut().find(|o| o.id == tid) {
+                                o.extra[0] = now.clone();
+                            }
+                            t.touch_content();
+                        }
                     }
                 }
                 if let Some(n) = new_name {
