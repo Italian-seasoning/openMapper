@@ -1,0 +1,7 @@
+# Windows: the C runtime linked into the program (and into ufbx's C, which the cc crate
+# builds to match), so it starts on a PC without the Visual C++ Redistributable
+[target.x86_64-pc-windows-msvc]
+rustflags = ["-C", "target-feature=+crt-static"]
+
+[target.aarch64-pc-windows-msvc]
+rustflags = ["-C", "target-feature=+crt-static"]

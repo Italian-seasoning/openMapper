@@ -3,6 +3,9 @@
 //! Needs an installed OMSI 2. Maps are read with openOMSI's own readers and saved in OMSI's
 //! format into openOMSI's content folder; the original installation is never written to.
 
+// (no console window behind the editor on Windows; one it is started from is used)
+#![cfg_attr(all(windows, not(debug_assertions)), windows_subsystem = "windows")]
+
 mod app;
 mod assets;
 mod autopaint;
@@ -80,7 +83,23 @@ mod ui_timetable;
 mod ui_trace;
 mod ui_traffic;
 
+/// A program without a console of its own (Windows' GUI subsystem) writes its log and the
+/// command line modes' output into the console it was started from, if any.
+#[cfg(windows)]
+fn attach_console() {
+    #[link(name = "kernel32")]
+    extern "system" {
+        fn AttachConsole(process: u32) -> i32;
+    }
+    // (ATTACH_PARENT_PROCESS)
+    unsafe {
+        AttachConsole(u32::MAX);
+    }
+}
+
 fn main() {
+    #[cfg(windows)]
+    attach_console();
     env_logger::Builder::from_env(env_logger::Env::default().default_filter_or("info,wgpu_core=warn,wgpu_hal=warn,naga=warn")).init();
     // `openmapper --check path/to/global.cfg` checks a map and prints what it found
     let args: Vec<std::ffi::OsString> = std::env::args_os().collect();

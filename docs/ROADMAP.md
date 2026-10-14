@@ -16,8 +16,11 @@ maps; checks, safe saving, sharing (zip and plan), a test drive, a written tutor
 command search.
 
 Still open for 1.0:
-* Builds and packages for Windows and Linux (`tools/package-macos.sh` is macOS only), and a
-  release on GitHub with notes.
+* A release on GitHub: `tools/package-macos.sh`, `tools/package-linux.sh` and
+  `tools/package-windows.ps1` package the program, and `.github/workflows/release.yml`
+  builds all three on a `v*` tag and publishes them with notes (Windows without a console
+  window, the C runtime linked in). Not run yet: the repository has no GitHub remote here.
+  Still wanted: a LICENSE file (Cargo.toml says MIT) and an icon for the program.
 * A pass in openOMSI over bigger maps made only with openMapper (an OSM town): Map > Check in
   openOMSI runs the game's own checks; the sample with a road built across it passes them
   (0 of 34 chained ends apart, 21 of 21 trip joints joined, no buried road).
