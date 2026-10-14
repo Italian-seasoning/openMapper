@@ -2301,6 +2301,8 @@ fn controls(ctx: &egui::Context, st: &mut UiState) {
             ("Ctrl+C / X / V", tr("copy / cut / paste at the cursor", "копировать / вырезать / вставить у курсора")),
             ("Ctrl+D / Ctrl+A", tr("duplicate / select all", "дублировать / выбрать всё")),
             ("Ctrl+F", tr("find in map", "поиск по карте")),
+            ("Ctrl+K", tr("search for a command", "поиск команды")),
+            ("Ctrl+1…9", tr("go to a saved view (Shift: keep the view there)", "к сохранённому виду (Shift: запомнить вид туда)")),
             ("F12", tr("save a picture of the view (Pictures/openMapper)", "сохранить картинку вида (Изображения/openMapper)")),
             (tr("Alt + arrows", "Alt + стрелки"), tr("move the selection a grid step (Shift: 10 cm)", "сдвинуть выделение на шаг сетки (Shift: 10 см)")),
             (tr("Alt + Page Up / Down", "Alt + Page Up / Down"), tr("selection up / down 10 cm (Shift: 1 m)", "выделение выше / ниже на 10 см (Shift: 1 м)")),
