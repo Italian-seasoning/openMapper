@@ -143,6 +143,10 @@ fn commands() -> Vec<Command> {
             ed.set_tool(Tool::Select);
             ed.toast(tr("Select a road or a chain: Parallel copy in its properties", "Выберите дорогу или цепочку: «Параллельная копия» в свойствах"));
         }),
+        cmd!(Icon::Paint, "Paint the ground along a road", "Покрасить землю вдоль дороги", "verge gravel shoulder dirt обочина гравий грунт", "", |_, ed, _| {
+            ed.set_tool(Tool::Select);
+            ed.toast(tr("Select a road (double-click: all of it): Paint the ground along it in its properties", "Выберите дорогу (двойной клик: всю): «Покрасить землю вдоль» в её свойствах"));
+        }),
         cmd!(Icon::Tiles, "Water, lake, river", "Вода, озеро, река", "sea pond море пруд", "", |_, ed, _| {
             ed.set_tool(Tool::Tiles);
             ed.toast(tr("Click a tile: its water is in the panel; lower the ground under it with the Terrain tool", "Кликните тайл: вода в панели; опустите землю инструментом «Рельеф»"));

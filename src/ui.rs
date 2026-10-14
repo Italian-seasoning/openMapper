@@ -1128,6 +1128,9 @@ fn logic_panel(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Libra
     ui.label(RichText::new(ed.logic.hint()).small().color(TEXT_DIM));
     ui.add_space(4.0);
     match ed.logic {
+        LogicMode::Stops => {
+            check(ui, &mut ed.stop_both_sides, tr("On both sides of the road", "С обеих сторон дороги")).on_hover_text(tr("A stop of the same name also goes at the kerb across the road, facing the other way", "Остановка с тем же названием ставится и у обочины напротив, в другую сторону"));
+        }
         LogicMode::Parking => {
             check(ui, &mut ed.parking_row, tr("In a row along a line", "Рядом вдоль линии"));
             if ed.parking_row {

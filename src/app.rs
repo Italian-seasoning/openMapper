@@ -329,6 +329,33 @@ impl App {
                 log::info!("painted along: {n} texels");
             }
         }
+        // OPENMAPPER_STOP=x,y[,one]: a bus stop placed there with the Game logic tool (on both
+        // sides unless `one`)
+        if let Some(v) = std::env::var("OPENMAPPER_STOP").ok().map(|a| a.split(',').map(str::to_string).collect::<Vec<_>>()) {
+            while self.lib.scanning {
+                self.lib.poll();
+                std::thread::sleep(std::time::Duration::from_millis(20));
+            }
+            if let (Some(x), Some(y), Some(assets)) = (v.first().and_then(|x| x.parse::<f64>().ok()), v.get(1).and_then(|y| y.parse::<f64>().ok()), self.assets.as_mut()) {
+                self.ed.set_tool(Tool::Logic);
+                self.ed.set_logic(crate::editor::LogicMode::Stops);
+                self.ed.stop_both_sides = v.get(2).map(|s| s != "one").unwrap_or(true);
+                self.ed.object_type = self.lib.assets.iter().find(|a| a.is_bus_stop).map(|a| a.rel.clone());
+                let z = self.ed.doc.as_ref().map(|d| d.ground(DVec2::new(x, y))).unwrap_or(0.0);
+                // (the roads' models loaded first: their lanes are what it stands by)
+                for _ in 0..500 {
+                    assets.poll();
+                    if self.ed.doc.as_ref().map(|d| crate::lanes::near(d, assets, DVec2::new(x, y), 25.0).0.iter().filter(|l| l.kind == 0).count() >= 2).unwrap_or(true) {
+                        break;
+                    }
+                    std::thread::sleep(std::time::Duration::from_millis(20));
+                }
+                self.ed.cursor_in_view = true;
+                self.ed.hover_point(assets, &self.lib, DVec3::new(x, y, z));
+                self.ed.left_press(assets, &self.lib, false);
+                self.ed.hover_point(assets, &self.lib, DVec3::new(x, y, z));
+            }
+        }
         // OPENMAPPER_HIDE=trees,objects,splines,technical: those layers hidden
         if let Ok(h) = std::env::var("OPENMAPPER_HIDE") {
             self.ed.show_technical = !h.split(',').any(|x| x.trim() == "technical");

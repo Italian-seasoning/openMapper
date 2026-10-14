@@ -322,6 +322,10 @@ pub struct Editor {
     view_distance: std::cell::Cell<f64>,
     plant_rng: crate::plants::Rng,
     ghost_pos: Option<(DVec3, f64)>,
+    /// A bus stop placed with "both sides": the one across the road (where, heading).
+    stop_twin: Option<(DVec3, f64)>,
+    /// A bus stop goes on both sides of the road at once.
+    pub stop_both_sides: bool,
     // tiles
     hover_tile: Option<TileKey>,
     /// The tile clicked last with the Tiles tool (its overlay shown in the panel).
@@ -439,6 +443,8 @@ impl Default for Editor {
             view_distance: std::cell::Cell::new(100.0),
             plant_rng: crate::plants::Rng::new(0x5eed),
             ghost_pos: None,
+            stop_twin: None,
+            stop_both_sides: true,
             hover_tile: None,
             picked_tile: None,
             drag: Drag::None,
@@ -1047,6 +1053,7 @@ impl Editor {
 
     fn plan_object(&mut self, assets: &mut Assets, lib: &Library) {
         self.ghost_pos = None;
+        self.stop_twin = None;
         self.align_guide = None;
         if self.tool == Tool::Objects && self.plant_brush {
             return;
@@ -1075,6 +1082,22 @@ impl Editor {
                     let pos = DVec3::new(at.x, at.y, z);
                     self.align_guide = Some((DVec3::new(q.x, q.y, z), pos));
                     self.ghost_pos = Some((pos, roads::norm_deg(flow + self.place_heading)));
+                    // the stop across the road: at the kerb of the nearest lane going the
+                    // other way
+                    if stop && self.stop_both_sides {
+                        let back = |h: f64| ((h - flow + 540.0).rem_euclid(360.0) - 180.0).abs() > 135.0;
+                        let twin = lanes
+                            .iter()
+                            .filter(|l| l.kind == 0 && l.direction != 2)
+                            .filter_map(|l| l.nearest(q.truncate()).map(|n| (n, if l.direction == 1 { roads::norm_deg(n.1 + 180.0) } else { n.1 })))
+                            .filter(|((_, _, d, _), f)| *d > 0.5 && *d < 15.0 && back(*f))
+                            .min_by(|a, b| a.0 .2.total_cmp(&b.0 .2));
+                        if let Some(((q2, _, _, _), flow2)) = twin {
+                            let kerb2 = roads::right(flow2) * if lht { -1.0 } else { 1.0 };
+                            let at2 = q2.truncate() + kerb2 * 3.2;
+                            self.stop_twin = Some((DVec3::new(at2.x, at2.y, doc.ground(at2)), roads::norm_deg(flow2 + self.place_heading)));
+                        }
+                    }
                     return;
                 }
             }
@@ -1230,14 +1253,27 @@ impl Editor {
             rot: [heading, 0.0, 0.0],
             ..Default::default()
         };
-        if asset.as_ref().map(|a| a.is_bus_stop).unwrap_or(false) {
+        let is_stop = asset.as_ref().map(|a| a.is_bus_stop).unwrap_or(false);
+        if is_stop {
             o.extra = vec![tr("New stop", "Новая остановка").to_string(), "0".into(), "0".into(), "10".into()];
             o.flag = 7;
         }
         let is_entry = asset.as_ref().map(|a| a.is_entry_point).unwrap_or(false);
         let t = doc.tiles.get_mut(&k).unwrap();
-        t.tile.objects.push(o);
+        t.tile.objects.push(o.clone());
         t.touch_content();
+        // its twin across the road, of the same name
+        if let (true, Some((p2, h2))) = (is_stop, self.stop_twin) {
+            let k2 = tile_of(p2.truncate());
+            if doc.tiles.contains_key(&k2) {
+                self.history.touch_tile(doc, k2);
+                let org2 = tile_origin(k2);
+                let twin = MapObject { id: doc.new_id(), pos: [p2.x - org2.x, p2.y - org2.y, if abs { p2.z } else { 0.0 }], rot: [h2, 0.0, 0.0], ..o };
+                let t2 = doc.tiles.get_mut(&k2).unwrap();
+                t2.tile.objects.push(twin);
+                t2.touch_content();
+            }
+        }
         if is_entry {
             let name = format!("{} {}", tr("Start", "Старт"), doc.global.entry_points.len() + 1);
             doc.global.entry_points.push(EntryPoint { object_id: id, name, ..Default::default() });
@@ -2751,6 +2787,9 @@ impl Editor {
                     if self.cursor_in_view {
                         let ok = doc.tiles.contains_key(&tile_of(p.truncate()));
                         x.ghosts.push(Ghost { rel: rel.clone(), world: p, rot: [h, 0.0, 0.0], tint: if ok { [0.35, 0.85, 0.45, 0.35] } else { [1.0, 0.3, 0.3, 0.5] } });
+                        if let Some((p2, h2)) = self.stop_twin {
+                            x.ghosts.push(Ghost { rel: rel.clone(), world: p2, rot: [h2, 0.0, 0.0], tint: [0.35, 0.85, 0.45, 0.25] });
+                        }
                         // an arrow for the front
                         let d = roads::dir(h);
                         line(&mut x.overlay, cam, p + DVec3::Z * 0.3, p + DVec3::new(d.x * 6.0, d.y * 6.0, 0.3), w, GREEN);
