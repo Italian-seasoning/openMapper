@@ -48,6 +48,8 @@ pub enum Fix {
     DropEntry(i64),
     /// Hand an object over to the tile it stands on.
     MoveToTile(TileKey, i64),
+    /// Have the game light a tile's ground from its lamps at night.
+    LampLight(TileKey),
 }
 
 #[derive(Debug, Clone)]
@@ -85,6 +87,7 @@ pub enum Kind {
     StopUnused,
     SignalRouteBroken,
     ChronoUnmatched,
+    LampsDark,
 }
 
 impl Kind {
@@ -111,6 +114,7 @@ impl Kind {
             Kind::StopUnused => tr("Stops no trip calls at", "Остановки без рейсов"),
             Kind::SignalRouteBroken => tr("Signal routes naming what is gone", "Маршруты сигналов с исчезнувшим"),
             Kind::ChronoUnmatched => tr("Chrono changes of what is gone", "Хроно-изменения исчезнувшего"),
+            Kind::LampsDark => tr("Lamps lighting no ground at night", "Фонари не освещают землю ночью"),
         }
     }
 
@@ -137,6 +141,7 @@ impl Kind {
             Kind::UnschedMissing => tr("The unscheduled traffic names a group that the AI lists do not have: those cars never appear. Add the group in Map > Traffic and AI.", "Свободное движение указывает группу, которой нет в списке ИИ: эти машины не появятся. Добавьте группу в Карта > Движение и ИИ."),
             Kind::StopUnused => tr("A stop of the timetable that no trip calls at. Nothing is wrong, it is only not used yet.", "Остановка расписания, на которой не останавливается ни один рейс. Ничего страшного, просто она пока не используется."),
             Kind::ChronoUnmatched => tr("A chrono scenario takes away, retypes or relabels something that is no longer on the map (it was deleted or its IDCode changed): that change does nothing. Open Map > Chrono scenarios, the scenario's properties, and take the change out.", "Хроно-сценарий убирает, меняет тип или тексты того, чего на карте больше нет (удалено или сменился IDCode): это изменение ничего не делает. Откройте Карта > Хроно-сценарии, свойства сценария, и уберите изменение."),
+            Kind::LampsDark => tr("Street lamps stand on a tile the game does not light from its lamps ([variable_terrainlightmap] is off): at night the ground under them stays dark (unless the tile's light map file was made by OMSI 2's editor). \"Fix\" turns it on, as on nearly every tile of the stock maps.", "Фонари стоят на тайле, который игра не освещает от фонарей ([variable_terrainlightmap] выключен): ночью земля под ними тёмная (если файл карты освещения не сделан редактором OMSI 2). «Исправить» включит его, как почти на всех тайлах стоковых карт."),
             Kind::SignalRouteBroken => tr("A signal route names a signal or track pieces no longer on the map: the signal may never clear. Open Map > Signal routes and take the track again, or delete the route.", "Маршрут сигнала указывает сигнал или участки пути, которых больше нет на карте: сигнал может так и не открыться. Откройте Карта > Маршруты сигналов и возьмите пути заново или удалите маршрут."),
         }
     }
@@ -154,6 +159,8 @@ struct Snapshot {
     next_id: i64,
     listed_missing: Vec<(i32, i32, String)>,
     no_terrain: Vec<TileKey>,
+    /// Tiles the game does not light from their lamps (no `[variable_terrainlightmap]`).
+    unlit: HashSet<TileKey>,
     ground: Vec<String>,
     map_dir: PathBuf,
     tiles: HashSet<TileKey>,
@@ -172,6 +179,7 @@ struct KindRec {
     lanes: bool,
     /// Stands at its own height, not on the ground.
     abs_height: bool,
+    lamp: bool,
 }
 
 struct ObjRec {
@@ -213,7 +221,7 @@ fn snapshot(doc: &Document, lib: &Library) -> Snapshot {
         let key = file.to_lowercase();
         if !kinds.contains_key(&key) {
             if let Some(a) = lib.find(file) {
-                kinds.insert(key, KindRec { cat: a.category, half_width: a.half_width, bus_stop: a.is_bus_stop, lanes: a.lanes.0 > 0 || a.lanes.2 > 0, abs_height: a.abs_height });
+                kinds.insert(key, KindRec { cat: a.category, half_width: a.half_width, bus_stop: a.is_bus_stop, lanes: a.lanes.0 > 0 || a.lanes.2 > 0, abs_height: a.abs_height, lamp: a.lamp });
             }
         }
     };
@@ -257,6 +265,7 @@ fn snapshot(doc: &Document, lib: &Library) -> Snapshot {
         next_id: doc.global.next_id_code,
         listed_missing,
         no_terrain,
+        unlit: doc.tiles.iter().filter(|(_, t)| !t.tile.variable_terrain_lightmap).map(|(k, _)| *k).collect(),
         ground: doc.global.ground_textures.iter().flat_map(|g| [g.texture.clone(), g.detail_texture.clone()]).collect(),
         map_dir: src,
         tiles: present,
@@ -591,6 +600,16 @@ fn run(s: Snapshot, roots: Vec<PathBuf>) -> Vec<Issue> {
     for k in &s.no_terrain {
         out.push(issue(Severity::Info, Kind::NoGround, format!("tile_{}_{}.map", k.0, k.1), tr("no .terrain file: flat", "нет файла .terrain: плоская").to_string(), Some(tile_origin(*k) + DVec2::splat(tile_size() / 2.0)), None, None));
     }
+    // lamps on tiles the game lights none from
+    let mut lamps: HashMap<TileKey, (usize, DVec2)> = HashMap::new();
+    for o in s.objects.iter().filter(|o| s.unlit.contains(&o.tile) && s.kinds.get(&o.file.to_lowercase()).map(|k| k.lamp).unwrap_or(false)) {
+        lamps.entry(o.tile).or_insert((0, o.world)).0 += 1;
+    }
+    let mut lamps: Vec<_> = lamps.into_iter().collect();
+    lamps.sort_by_key(|(k, _)| *k);
+    for (k, (n, at)) in lamps {
+        out.push(issue(Severity::Info, Kind::LampsDark, format!("tile_{}_{}.map", k.0, k.1), format!("{n} {}", tr("lamps", "фонарей")), Some(at), None, Some(Fix::LampLight(k))));
+    }
     out.sort_by(|a, b| a.severity.cmp(&b.severity).then(a.kind.cmp(&b.kind)));
     out
 }
@@ -774,6 +793,17 @@ pub fn apply(ed: &mut Editor, fix: &Fix) -> bool {
                     }
                 }
                 None => false,
+            }
+        }
+        Fix::LampLight(k) => {
+            ed.history.touch_tile(doc, *k);
+            match doc.tiles.get_mut(k) {
+                Some(t) if !t.tile.variable_terrain_lightmap => {
+                    t.tile.variable_terrain_lightmap = true;
+                    t.touch_content();
+                    true
+                }
+                _ => false,
             }
         }
         Fix::DropEntry(id) => {
@@ -1011,8 +1041,8 @@ mod tests {
 
     fn snap(splines: Vec<SplineRec>) -> Snapshot {
         let mut kinds = HashMap::new();
-        kinds.insert("splines\\road.sli".to_string(), KindRec { cat: Category::Roads, half_width: 4.0, bus_stop: false, lanes: true, abs_height: false });
-        Snapshot { objects: Vec::new(), splines, chrono_lanes: Vec::new(), kinds, entries: Vec::new(), next_id: 100, listed_missing: Vec::new(), no_terrain: Vec::new(), ground: Vec::new(), map_dir: PathBuf::new(), tiles: HashSet::new(), parents: HashSet::new(), tt_doc: None }
+        kinds.insert("splines\\road.sli".to_string(), KindRec { cat: Category::Roads, half_width: 4.0, bus_stop: false, lanes: true, abs_height: false, lamp: false });
+        Snapshot { objects: Vec::new(), splines, chrono_lanes: Vec::new(), kinds, entries: Vec::new(), next_id: 100, listed_missing: Vec::new(), no_terrain: Vec::new(), unlit: HashSet::new(), ground: Vec::new(), map_dir: PathBuf::new(), tiles: HashSet::new(), parents: HashSet::new(), tt_doc: None }
     }
 
     fn doc_with(tiles: &[TileKey]) -> Document {
@@ -1083,6 +1113,21 @@ mod tests {
         assert!(out.iter().any(|i| i.kind == Kind::TourEmpty));
         assert!(out.iter().any(|i| i.kind == Kind::TourNoDepot && i.detail.contains("Nowhere")));
         assert!(out.iter().any(|i| i.kind == Kind::UnschedMissing && i.title == "Cars"));
+    }
+
+    #[test]
+    fn lamps_on_a_tile_lit_from_none_are_named_once_per_tile() {
+        let mut s = snap(Vec::new());
+        s.kinds.insert("lamp.sco".into(), KindRec { cat: Category::Objects, half_width: 0.0, bus_stop: false, lanes: false, abs_height: false, lamp: true });
+        let o = |id: i64, tile: TileKey| ObjRec { file: "Lamp.sco".into(), tile, id, world: DVec2::new(10.0, 10.0), rot: [0.0; 3], local: [10.0, 10.0], attached: false };
+        s.objects = vec![o(1, (0, 0)), o(2, (0, 0)), o(3, (1, 0))];
+        s.tiles = [(0, 0), (1, 0)].into_iter().collect();
+        s.unlit = [(0, 0)].into_iter().collect();
+        let issues = run(s, Vec::new());
+        let dark: Vec<_> = issues.iter().filter(|i| i.kind == Kind::LampsDark).collect();
+        assert_eq!(dark.len(), 1);
+        assert_eq!(dark[0].fix, Some(Fix::LampLight((0, 0))));
+        assert!(dark[0].detail.starts_with('2'));
     }
 
     #[test]

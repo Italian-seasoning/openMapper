@@ -184,7 +184,7 @@ experienced map makers.
 * **Map check** (Map > Check map…): missing objects, roads and textures, road ends lying on
   one another but not joined, links to splines that are gone, bus stops with no lane near,
   start points away from a road, IDCodes used twice, a too low NextIDCode, objects off their
-  tile, tiles without a file or ground; trips no way is found for, tours without departures or
+  tile, tiles without a file or ground, street lamps on a tile the game lights no ground from; trips no way is found for, tours without departures or
   a depot, traffic groups missing from the AI lists, stops no trip calls at. Every issue is explained, a click flies there, many
   are put right with one more click (and can be undone). `openmapper --check path/to/global.cfg`
   prints the same without a window.
