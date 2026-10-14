@@ -784,3 +784,114 @@ pub fn junction_section(ui: &mut egui::Ui, ed: &mut Editor, k: TileKey, id: i64)
         ed.set_junction_options(id, new);
     }
 }
+
+/// What an object takes its state from and what takes its state from it (`[varparent]`),
+/// as OMSI 2's editor links them: a signal head shows one light of its crossing's program,
+/// a stop's display its stop. The parent is picked with a click in the view.
+pub fn link_section(ui: &mut egui::Ui, ed: &mut Editor, lib: &Library, k: TileKey, id: i64, info: Option<&crate::ui::ObjInfo>, parent_lights: Option<&(String, Vec<String>)>) {
+    let Some(doc) = ed.doc.as_ref() else { return };
+    let Some(me) = crate::selection::any_object(doc, k, id) else { return };
+    let name_of = |file: &str| lib.find(file).map(|a| a.name.clone()).unwrap_or_else(|| file.rsplit('\\').next().unwrap_or(file).to_string());
+    let parent = me.var_parent.map(|p| (p, crate::selection::object_by_id(doc, p).map(|(pk, o)| (pk, name_of(&o.file), o.file.clone()))));
+    let light: Option<usize> = me.extra.first().and_then(|l| l.trim().parse().ok());
+    let head = info.map(|i| i.light_head).unwrap_or(false);
+    let own_lights: &[String] = info.map(|i| i.lights.as_slice()).unwrap_or(&[]);
+    let children: Vec<(TileKey, i64, String, Option<usize>)> = crate::selection::var_children(doc, id).into_iter().map(|(ck, o)| (ck, o.id, name_of(&o.file), o.extra.first().and_then(|l| l.trim().parse().ok()))).collect();
+    let picking = ed.link_pick == Some((k, id));
+    let mut go: Option<Sel> = None;
+    let mut set_parent: Option<Option<i64>> = None;
+    let mut set_light: Option<usize> = None;
+    let mut pick = false;
+    let count = parent.is_some() as usize + children.len();
+    egui::Frame::new().inner_margin(Margin::symmetric(8, 2)).show(ui, |ui| {
+        egui::CollapsingHeader::new(RichText::new(format!("{} ({count})", tr("Linked objects", "Связанные объекты"))).strong()).id_salt("varparent").default_open(head || count > 0).show(ui, |ui| {
+            ui.label(RichText::new(tr("An object can take its state from another ([varparent]): a signal head shows a light of its crossing's program, a stop's display its stop.", "Объект может брать состояние от другого ([varparent]): светофор показывает сигнал программы своего перекрёстка, табло остановки — свою остановку.")).small().color(TEXT_DIM));
+            match &parent {
+                Some((pid, Some((pk, name, _)))) => {
+                    ui.horizontal_wrapped(|ui| {
+                        ui.label(RichText::new(tr("Takes its state from", "Берёт состояние от")).color(TEXT_DIM));
+                        if ui.link(name).on_hover_text(format!("{} {pid}", tr("Select it: IDCode", "Выбрать его: IDCode"))).clicked() {
+                            go = Some(Sel::Object(*pk, *pid));
+                        }
+                    });
+                }
+                Some((pid, None)) => {
+                    ui.label(RichText::new(format!("{} {pid}", tr("Takes its state from an object that is gone: IDCode", "Берёт состояние от исчезнувшего объекта: IDCode"))).color(Color32::from_rgb(230, 170, 100)));
+                }
+                None => {
+                    ui.label(RichText::new(tr("Takes its state from nothing", "Ни от чего не берёт состояние")).color(TEXT_DIM));
+                }
+            }
+            // a signal head: which light of its crossing's program it shows
+            if head {
+                match (parent_lights, &parent) {
+                    (Some((_, lights)), Some(_)) if !lights.is_empty() => {
+                        ui.horizontal(|ui| {
+                            ui.label(RichText::new(tr("Light", "Сигнал")).color(TEXT_DIM));
+                            let shown = |i: usize| match lights.get(i) {
+                                Some(n) if !n.trim().is_empty() => format!("{i}: {n}"),
+                                _ => format!("{i}"),
+                            };
+                            egui::ComboBox::from_id_salt("light index").selected_text(light.map(shown).unwrap_or_else(|| "-".into())).width(160.0).show_ui(ui, |ui| {
+                                for i in 0..lights.len() {
+                                    if ui.selectable_label(light == Some(i), shown(i)).clicked() && light != Some(i) {
+                                        set_light = Some(i);
+                                    }
+                                }
+                            });
+                        });
+                        if light.map(|l| l >= lights.len()).unwrap_or(true) {
+                            ui.label(RichText::new(tr("Its light is not one of the crossing's: it stays dark", "Его сигнала нет у перекрёстка: он не горит")).small().color(Color32::from_rgb(230, 170, 100)));
+                        }
+                    }
+                    (Some(_), Some(_)) => {
+                        ui.label(RichText::new(tr("That object runs no traffic lights: link the head to a crossing with a light program", "Тот объект не управляет светофорами: свяжите головку с перекрёстком, где есть программа")).small().color(Color32::from_rgb(230, 170, 100)));
+                    }
+                    (_, None) => {
+                        ui.label(RichText::new(tr("A signal head: link it to its crossing to have it light", "Головка светофора: свяжите её с перекрёстком, чтобы она горела")).small().color(Color32::from_rgb(230, 170, 100)));
+                    }
+                    _ => {}
+                }
+            }
+            ui.horizontal_wrapped(|ui| {
+                let label = if picking { tr("Click the object in the view… (Esc)", "Щёлкните объект в виде… (Esc)") } else if parent.is_some() { tr("Link to another…", "Связать с другим…") } else { tr("Link to an object…", "Связать с объектом…") };
+                if ui.add(egui::Button::new(icons::labelled(Icon::Traffic, label)).selected(picking)).on_hover_text(tr("Then click the object it is to take its state from (a crossing for a signal head)", "Затем щёлкните объект, от которого брать состояние (перекрёсток для светофора)")).clicked() {
+                    pick = true;
+                }
+                if parent.is_some() && ui.button(icons::labelled(Icon::Delete, tr("Unlink", "Отвязать"))).clicked() {
+                    set_parent = Some(None);
+                }
+            });
+            if !children.is_empty() {
+                ui.add_space(4.0);
+                ui.label(RichText::new(format!("{} {}", tr("Taking their state from it:", "Берут состояние от него:"), children.len())).color(TEXT_DIM));
+                for (ck, cid, name, l) in children.iter().take(40) {
+                    ui.horizontal(|ui| {
+                        if ui.link(name).on_hover_text(format!("{} {cid}", tr("Select it: IDCode", "Выбрать его: IDCode"))).clicked() {
+                            go = Some(Sel::Object(*ck, *cid));
+                        }
+                        if let (Some(l), false) = (l, own_lights.is_empty()) {
+                            let n = own_lights.get(*l).map(|n| n.as_str()).unwrap_or("?");
+                            ui.label(RichText::new(format!("{} {l}: {n}", tr("light", "сигнал"))).small().color(TEXT_DIM));
+                        }
+                    });
+                }
+                if children.len() > 40 {
+                    ui.label(RichText::new(format!("… {}", children.len() - 40)).color(TEXT_DIM));
+                }
+            }
+        });
+    });
+    if let Some(s) = go {
+        ed.select(Some(s));
+    } else if let Some(p) = set_parent {
+        ed.set_var_parent(k, id, p);
+    } else if let Some(l) = set_light {
+        ed.set_light_index(k, id, l);
+    } else if pick && picking {
+        ed.link_pick = None;
+    } else if pick {
+        ed.link_pick = Some((k, id));
+        ed.toast(tr("Click the object it takes its state from", "Щёлкните объект, от которого брать состояние"));
+    }
+}

@@ -366,6 +366,8 @@ pub struct Editor {
     /// what is under the cursor and where, nothing is selected or moved.
     pub pick_mode: bool,
     pub picked: Option<(Option<Sel>, Option<DVec3>)>,
+    /// An object waiting for the one it takes its state from (`[varparent]`) to be clicked.
+    pub link_pick: Option<(TileKey, i64)>,
 }
 
 impl Default for Editor {
@@ -475,6 +477,7 @@ impl Default for Editor {
             show_names: true,
             pick_mode: false,
             picked: None,
+            link_pick: None,
         }
     }
 }
@@ -482,6 +485,8 @@ impl Default for Editor {
 const ORANGE: [f32; 4] = [0.96, 0.50, 0.19, 1.0];
 const WHITE: [f32; 4] = [1.0, 1.0, 1.0, 0.9];
 const GREEN: [f32; 4] = [0.35, 0.85, 0.45, 1.0];
+/// Links between objects (`[varparent]`).
+const LINK: [f32; 4] = [0.3, 0.85, 0.95, 0.9];
 
 impl Editor {
     pub fn toast(&mut self, text: impl Into<String>) {
@@ -571,6 +576,7 @@ impl Editor {
         self.ring_centre = None;
         self.plant_outline.clear();
         self.ramp_start = None;
+        self.link_pick = None;
         if let Some(doc) = &mut self.doc {
             self.history.commit();
             let _ = doc;
@@ -918,6 +924,14 @@ impl Editor {
 
     pub fn left_press(&mut self, assets: &mut Assets, lib: &Library, shift: bool) {
         if self.doc.is_none() {
+            return;
+        }
+        if let (Some((k, id)), Tool::Select) = (self.link_pick, self.tool) {
+            self.link_pick = None;
+            match self.hover {
+                Some(Sel::Object(_, p)) if p != id => self.link_to(k, id, p),
+                _ => self.toast(tr("No object clicked: nothing linked", "Объект не выбран: ничего не связано")),
+            }
             return;
         }
         if self.pick_mode && self.tool == Tool::Select {
@@ -3797,6 +3811,58 @@ impl Editor {
         self.select(Some(Sel::Object(k, id)));
     }
 
+    /// Object `id` takes its state from object `parent` (`[varparent]`: a signal head from
+    /// its crossing's light program, a stop's display from its stop), or from none.
+    pub fn set_var_parent(&mut self, k: TileKey, id: i64, parent: Option<i64>) {
+        let Some(doc) = self.doc.as_mut() else { return };
+        self.history.begin(if parent.is_some() { tr("Link to an object", "Связать с объектом") } else { tr("Unlink", "Отвязать") });
+        self.history.touch_tile(doc, k);
+        if let Some(o) = selection::any_object_mut(doc, k, id) {
+            o.var_parent = parent;
+        }
+        if let Some(t) = doc.tiles.get_mut(&k) {
+            t.touch_content();
+        }
+        self.history.commit();
+    }
+
+    /// The object clicked while linking: `id` takes its state from it, unless that would
+    /// close a ring (it takes its own state, through others, from `id`).
+    fn link_to(&mut self, k: TileKey, id: i64, parent: i64) {
+        let Some(doc) = self.doc.as_ref() else { return };
+        let mut at = Some(parent);
+        for _ in 0..64 {
+            match at {
+                Some(p) if p == id => {
+                    self.toast(tr("That object already takes its state from this one", "Тот объект сам берёт состояние от этого"));
+                    return;
+                }
+                Some(p) => at = selection::var_parent_of(doc, p),
+                None => break,
+            }
+        }
+        self.set_var_parent(k, id, Some(parent));
+        self.toast(tr("Linked", "Связано"));
+    }
+
+    /// Which light of its parent's program a signal head shows (its first label).
+    pub fn set_light_index(&mut self, k: TileKey, id: i64, light: usize) {
+        let Some(doc) = self.doc.as_mut() else { return };
+        self.history.begin(tr("Signal head's light", "Сигнал светофора"));
+        self.history.touch_tile(doc, k);
+        if let Some(o) = selection::any_object_mut(doc, k, id) {
+            match o.extra.first_mut() {
+                Some(l) => *l = light.to_string(),
+                None => o.extra.push(light.to_string()),
+            }
+            o.flag = o.flag.max(o.extra.len() as i32);
+        }
+        if let Some(t) = doc.tiles.get_mut(&k) {
+            t.touch_content();
+        }
+        self.history.commit();
+    }
+
     /// The rules of an object's or a spline's paths (one step while a number is dragged).
     pub fn set_rules(&mut self, sel: Sel, rules: Vec<omsi_map::MapRule>) {
         self.begin_panel_step(tr("Path rules", "Правила путей"));
@@ -4569,6 +4635,19 @@ impl Editor {
                     ring(&mut x.overlay, cam, doc.object_world(k, o, false) + DVec3::Z * 0.2, w * 3.5, w * 0.5, ORANGE);
                 }
                 _ => {}
+            }
+        }
+        // what one object takes its state from (cyan) and what takes it from it
+        if let (Some(Sel::Object(k, id)), 1) = (self.selected, sels.len()) {
+            let at = |k: TileKey, o: &MapObject| (o.parent_id.is_none()).then(|| doc.object_world(k, o, false) + DVec3::Z * 0.5);
+            if let Some(me) = doc.object(k, id).and_then(|o| at(k, o)) {
+                let parent = doc.object(k, id).and_then(|o| o.var_parent).and_then(|p| selection::object_by_id(doc, p));
+                let others = parent.into_iter().map(|p| (p, true)).chain(selection::var_children(doc, id).into_iter().map(|c| (c, false)));
+                for ((pk, o), up) in others {
+                    let Some(there) = at(pk, o) else { continue };
+                    line(&mut x.overlay, cam, me, there, w * if up { 0.9 } else { 0.6 }, LINK);
+                    disc(&mut x.overlay, cam, there, w * if up { 3.0 } else { 2.0 }, LINK);
+                }
             }
         }
         if self.acts_as() == Tool::Select {

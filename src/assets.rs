@@ -66,6 +66,12 @@ pub struct ObjectModel {
     /// What its labels mean (`[stringvarnamelist]`; empty names where only a text texture
     /// says a label is read). Empty: it reads no labels.
     pub labels: Vec<String>,
+    /// The lights of its traffic light program (`[traffic_light]` names): a crossing whose
+    /// signal heads take their state from it (`[varparent]`).
+    pub lights: Vec<String>,
+    /// A signal head (`[trafficlight]` with no program of its own): its first label names a
+    /// light of its parent's program.
+    pub light_head: bool,
 }
 
 impl ObjectModel {
@@ -440,7 +446,7 @@ pub(crate) fn load_object(path: &Path, omsi: &Path, content: &Path) -> Option<Ob
     // (a tree with an editor-only helper box is seen in the game: only the box is not)
     let technical = (sco.only_editor && tree.is_none()) || sco.is_entry_point || sco.is_car_park || sco.is_help_arrow || (parts.is_empty() && tree.is_none());
     let labels = crate::texts::label_names(&sco.scripts.stringvarlists, &model.text_textures);
-    Some(ObjectModel { parts, lo, hi, abs_height: sco.absolute_height(), tree, helpers, attachments, surface, holes, technical, editor_parts: sco.only_editor, paths: sco.paths.clone(), texts: model.text_textures.clone(), labels })
+    Some(ObjectModel { parts, lo, hi, abs_height: sco.absolute_height(), tree, helpers, attachments, surface, holes, technical, editor_parts: sco.only_editor, paths: sco.paths.clone(), texts: model.text_textures.clone(), labels, lights: sco.traffic_lights.iter().map(|l| l.name.clone()).collect(), light_head: sco.is_traffic_light && sco.traffic_lights.is_empty() })
 }
 
 fn load_spline(path: &Path, omsi: &Path, content: &Path) -> Option<SplineModel> {

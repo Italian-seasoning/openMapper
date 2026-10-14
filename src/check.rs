@@ -50,6 +50,8 @@ pub enum Fix {
     MoveToTile(TileKey, i64),
     /// Have the game light a tile's ground from its lamps at night.
     LampLight(TileKey),
+    /// Forget the object an object takes its state from (`[varparent]`).
+    DropVarParent(TileKey, i64),
 }
 
 #[derive(Debug, Clone)]
@@ -89,6 +91,7 @@ pub enum Kind {
     ChronoUnmatched,
     LampsDark,
     HeavyTile,
+    LinkLost,
 }
 
 impl Kind {
@@ -117,6 +120,7 @@ impl Kind {
             Kind::ChronoUnmatched => tr("Chrono changes of what is gone", "Хроно-изменения исчезнувшего"),
             Kind::LampsDark => tr("Lamps lighting no ground at night", "Фонари не освещают землю ночью"),
             Kind::HeavyTile => tr("Tiles with very many objects", "Тайлы с очень большим числом объектов"),
+            Kind::LinkLost => tr("Objects linked to one that is gone", "Объекты, связанные с исчезнувшим"),
         }
     }
 
@@ -145,6 +149,7 @@ impl Kind {
             Kind::ChronoUnmatched => tr("A chrono scenario takes away, retypes or relabels something that is no longer on the map (it was deleted or its IDCode changed): that change does nothing. Open Map > Chrono scenarios, the scenario's properties, and take the change out.", "Хроно-сценарий убирает, меняет тип или тексты того, чего на карте больше нет (удалено или сменился IDCode): это изменение ничего не делает. Откройте Карта > Хроно-сценарии, свойства сценария, и уберите изменение."),
             Kind::HeavyTile => tr("A tile holds far more objects than the stock maps' tiles (up to some 600): the game may stutter when it loads it or looks across it. Thin out a wood planted too densely (Plant brush, Clear) or plant it with more space between the trees.", "На тайле объектов намного больше, чем на тайлах стоковых карт (до 600): игра может подтормаживать, загружая его или глядя через него. Проредите слишком густой лес (кисть растений, «Убирать») или сажайте реже."),
             Kind::LampsDark => tr("Street lamps stand on a tile the game does not light from its lamps ([variable_terrainlightmap] is off): at night the ground under them stays dark (unless the tile's light map file was made by OMSI 2's editor). \"Fix\" turns it on, as on nearly every tile of the stock maps.", "Фонари стоят на тайле, который игра не освещает от фонарей ([variable_terrainlightmap] выключен): ночью земля под ними тёмная (если файл карты освещения не сделан редактором OMSI 2). «Исправить» включит его, как почти на всех тайлах стоковых карт."),
+            Kind::LinkLost => tr("An object takes its state ([varparent]) from an object no longer on the map: a signal head stays dark, a display blank. Link it to another in its properties (Linked objects), or \"Fix\" forgets the link.", "Объект берёт состояние ([varparent]) от объекта, которого больше нет на карте: светофор не горит, табло пустое. Свяжите его с другим в свойствах («Связанные объекты») или «Исправить» уберёт связь."),
             Kind::SignalRouteBroken => tr("A signal route names a signal or track pieces no longer on the map: the signal may never clear. Open Map > Signal routes and take the track again, or delete the route.", "Маршрут сигнала указывает сигнал или участки пути, которых больше нет на карте: сигнал может так и не открыться. Откройте Карта > Маршруты сигналов и возьмите пути заново или удалите маршрут."),
         }
     }
@@ -169,6 +174,10 @@ struct Snapshot {
     tiles: HashSet<TileKey>,
     /// Objects something hangs on (`[attachObj]`).
     parents: HashSet<i64>,
+    /// Objects that take their state from another (`[varparent]`): its IDCode.
+    var_links: Vec<(TileKey, i64, DVec2, i64)>,
+    /// Every object's IDCode, the chrono scenarios' too.
+    object_ids: HashSet<i64>,
     /// The map for the timetable's checks (routes are found on it).
     tt_doc: Option<Document>,
 }
@@ -273,6 +282,8 @@ fn snapshot(doc: &Document, lib: &Library) -> Snapshot {
         map_dir: src,
         tiles: present,
         parents: doc.tiles.values().flat_map(|t| t.tile.attach_objects.iter().filter_map(|a| a.parent_id)).collect(),
+        var_links: doc.tiles.iter().flat_map(|(k, t)| t.tile.objects.iter().chain(&t.tile.attach_objects).filter_map(move |o| o.var_parent.map(|p| (*k, o.id, tile_origin(*k) + DVec2::new(o.pos[0], o.pos[1]), p)))).collect(),
+        object_ids: doc.tiles.values().flat_map(|t| t.tile.objects.iter().chain(&t.tile.attach_objects).map(|o| o.id).chain(t.tile.spline_attachments.iter().map(|a| a.id)).chain(t.chrono.iter().flat_map(|c| c.objects.iter().chain(&c.attach_objects).map(|o| o.id)))).collect(),
         tt_doc: (!doc.timetable.lines.is_empty() || !doc.timetable.trips.is_empty() || !doc.traffic.veh_groups.is_empty()).then(|| doc.for_reading()),
     }
 }
@@ -623,6 +634,11 @@ fn run(s: Snapshot, roots: Vec<PathBuf>) -> Vec<Issue> {
     for (k, (n, at)) in lamps {
         out.push(issue(Severity::Info, Kind::LampsDark, format!("tile_{}_{}.map", k.0, k.1), format!("{n} {}", tr("lamps", "фонарей")), Some(at), None, Some(Fix::LampLight(k))));
     }
+    // objects taking their state from one that is gone
+    for (k, id, at, p) in s.var_links.iter().filter(|l| !s.object_ids.contains(&l.3)) {
+        let file = s.objects.iter().find(|o| o.id == *id).map(|o| short(&o.file)).unwrap_or_default();
+        out.push(issue(Severity::Warning, Kind::LinkLost, file, format!("[varparent] {p}"), Some(*at), Some(Sel::Object(*k, *id)), Some(Fix::DropVarParent(*k, *id))));
+    }
     out.sort_by(|a, b| a.severity.cmp(&b.severity).then(a.kind.cmp(&b.kind)));
     out
 }
@@ -814,6 +830,17 @@ pub fn apply(ed: &mut Editor, fix: &Fix) -> bool {
                 Some(t) if !t.tile.variable_terrain_lightmap => {
                     t.tile.variable_terrain_lightmap = true;
                     t.touch_content();
+                    true
+                }
+                _ => false,
+            }
+        }
+        Fix::DropVarParent(k, id) => {
+            ed.history.touch_tile(doc, *k);
+            match crate::selection::any_object_mut(doc, *k, *id) {
+                Some(o) if o.var_parent.is_some() => {
+                    o.var_parent = None;
+                    doc.tiles.get_mut(k).map(|t| t.touch_content());
                     true
                 }
                 _ => false,
@@ -1055,7 +1082,7 @@ mod tests {
     fn snap(splines: Vec<SplineRec>) -> Snapshot {
         let mut kinds = HashMap::new();
         kinds.insert("splines\\road.sli".to_string(), KindRec { cat: Category::Roads, half_width: 4.0, bus_stop: false, lanes: true, abs_height: false, lamp: false });
-        Snapshot { objects: Vec::new(), splines, chrono_lanes: Vec::new(), kinds, entries: Vec::new(), next_id: 100, listed_missing: Vec::new(), no_terrain: Vec::new(), unlit: HashSet::new(), ground: Vec::new(), map_dir: PathBuf::new(), tiles: HashSet::new(), parents: HashSet::new(), tt_doc: None }
+        Snapshot { objects: Vec::new(), splines, chrono_lanes: Vec::new(), kinds, entries: Vec::new(), next_id: 100, listed_missing: Vec::new(), no_terrain: Vec::new(), unlit: HashSet::new(), ground: Vec::new(), map_dir: PathBuf::new(), tiles: HashSet::new(), parents: HashSet::new(), var_links: Vec::new(), object_ids: HashSet::new(), tt_doc: None }
     }
 
     fn doc_with(tiles: &[TileKey]) -> Document {
@@ -1097,6 +1124,37 @@ mod tests {
         let mut d = ed.doc.take().unwrap();
         ed.history.undo(&mut d);
         assert_eq!(d.spline((0, 0), 1).unwrap().next_id, 0);
+    }
+
+    #[test]
+    fn links_are_made_picked_in_a_ring_refused_and_forgotten() {
+        let _map = crate::doc::one_map();
+        let mut doc = doc_with(&[(0, 0), (1, 0)]);
+        doc.tiles.get_mut(&(0, 0)).unwrap().tile.objects.push(omsi_map::MapObject { id: 1, file: "crossing.sco".into(), ..Default::default() });
+        doc.tiles.get_mut(&(1, 0)).unwrap().tile.objects.push(omsi_map::MapObject { id: 2, file: "head.sco".into(), extra: vec!["0".into()], flag: 1, ..Default::default() });
+        let mut ed = Editor::default();
+        ed.doc = Some(doc);
+        // a head on the next tile takes its light from the crossing
+        ed.set_var_parent((1, 0), 2, Some(1));
+        ed.set_light_index((1, 0), 2, 3);
+        let d = ed.doc.as_ref().unwrap();
+        assert_eq!(crate::selection::var_parent_of(d, 2), Some(1));
+        assert_eq!(crate::selection::var_children(d, 1).iter().map(|(k, o)| (*k, o.id, o.extra[0].clone())).collect::<Vec<_>>(), vec![((1, 0), 2, "3".to_string())]);
+        // the crossing cannot take its state from its own head
+        ed.link_pick = Some(((0, 0), 1));
+        ed.hover = Some(Sel::Object((1, 0), 2));
+        ed.left_press(&mut crate::assets::Assets::new(PathBuf::new(), PathBuf::new()), &Library::default(), false);
+        assert_eq!(ed.link_pick, None);
+        assert_eq!(crate::selection::var_parent_of(ed.doc.as_ref().unwrap(), 1), None);
+        // the crossing gone: the check names the head, its fix forgets the link (one step)
+        ed.doc.as_mut().unwrap().tiles.get_mut(&(0, 0)).unwrap().tile.objects.clear();
+        let lost: Vec<_> = run(snapshot(ed.doc.as_ref().unwrap(), &Library::default()), Vec::new()).into_iter().filter(|i| i.kind == Kind::LinkLost).collect();
+        assert_eq!(lost.len(), 1);
+        assert!(apply(&mut ed, lost[0].fix.as_ref().unwrap()));
+        assert_eq!(crate::selection::var_parent_of(ed.doc.as_ref().unwrap(), 2), None);
+        let mut d = ed.doc.take().unwrap();
+        ed.history.undo(&mut d);
+        assert_eq!(crate::selection::var_parent_of(&d, 2), Some(1));
     }
 
     #[test]
@@ -1152,6 +1210,20 @@ mod tests {
         assert_eq!(dark.len(), 1);
         assert_eq!(dark[0].fix, Some(Fix::LampLight((0, 0))));
         assert!(dark[0].detail.starts_with('2'));
+    }
+
+    #[test]
+    fn objects_linked_to_one_that_is_gone_are_named() {
+        let mut s = snap(Vec::new());
+        let o = |id: i64| ObjRec { file: "Ampel.sco".into(), tile: (0, 0), id, world: DVec2::new(10.0, 10.0), rot: [0.0; 3], local: [10.0, 10.0], attached: false };
+        s.objects = vec![o(1), o(2), o(3)];
+        s.object_ids = [1, 2, 3, 40].into_iter().collect();
+        // (3 takes its state from 1, 2 from one gone; 40 is a chrono scenario's)
+        s.var_links = vec![((0, 0), 3, DVec2::ZERO, 1), ((0, 0), 2, DVec2::ZERO, 9), ((0, 0), 1, DVec2::ZERO, 40)];
+        let issues = run(s, Vec::new());
+        let lost: Vec<_> = issues.iter().filter(|i| i.kind == Kind::LinkLost).collect();
+        assert_eq!(lost.len(), 1);
+        assert_eq!(lost[0].fix, Some(Fix::DropVarParent((0, 0), 2)));
     }
 
     #[test]

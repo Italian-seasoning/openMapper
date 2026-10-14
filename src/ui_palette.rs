@@ -138,6 +138,10 @@ fn commands() -> Vec<Command> {
             ed.set_tool(Tool::Select);
             ed.toast(tr("Select one of openMapper's junctions: its properties have Traffic lights and crossings", "Выберите перекрёсток openMapper: в его свойствах светофоры и переходы"));
         }),
+        cmd!(Icon::Traffic, "Link a signal head to its crossing", "Связать светофор с перекрёстком", "varparent link parent signal head display связь родитель табло головка", "", |_, ed, _| {
+            ed.set_tool(Tool::Select);
+            ed.toast(tr("Select the signal head (or a display): Linked objects in its properties, then click its crossing", "Выберите головку светофора (или табло): «Связанные объекты» в свойствах, затем щёлкните перекрёсток"));
+        }),
         cmd!(Icon::Fence, "Objects along a road", "Объекты вдоль дороги", "lamps fence posts row фонари забор столбы ряд", "", |_, ed, _| {
             ed.set_tool(Tool::Select);
             ed.toast(tr("Select a road, pick an object in the Objects catalogue: Objects along the road in its properties", "Выберите дорогу и объект в каталоге: «Объекты вдоль дороги» в её свойствах"));

@@ -306,6 +306,21 @@ pub fn any_object_mut(doc: &mut Document, k: TileKey, id: i64) -> Option<&mut om
     t.tile.attach_objects.iter_mut().find(|o| o.id == id)
 }
 
+/// An object anywhere on the map by its IDCode, with its tile.
+pub fn object_by_id(doc: &Document, id: i64) -> Option<(TileKey, &omsi_map::MapObject)> {
+    doc.tiles.iter().find_map(|(k, t)| t.tile.objects.iter().chain(&t.tile.attach_objects).find(|o| o.id == id).map(|o| (*k, o)))
+}
+
+/// The object an object takes its state from (`[varparent]`).
+pub fn var_parent_of(doc: &Document, id: i64) -> Option<i64> {
+    object_by_id(doc, id)?.1.var_parent
+}
+
+/// The objects that take their state from object `id` (`[varparent]`).
+pub fn var_children(doc: &Document, id: i64) -> Vec<(TileKey, &omsi_map::MapObject)> {
+    doc.tiles.iter().flat_map(|(k, t)| t.tile.objects.iter().chain(&t.tile.attach_objects).filter(|o| o.var_parent == Some(id)).map(move |o| (*k, o))).collect()
+}
+
 /// Take away an object hanging on another, and whatever hangs on it in turn.
 fn delete_attached(doc: &mut Document, k: TileKey, id: i64) {
     let Some(t) = doc.tiles.get_mut(&k) else { return };

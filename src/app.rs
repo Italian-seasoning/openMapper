@@ -1168,7 +1168,9 @@ impl App {
             _ => {}
         }
         if let Key::Named(NamedKey::Escape) = logical {
-            if self.ed.tool != Tool::Select && !self.ed_has_pending() {
+            if self.ed.link_pick.take().is_some() {
+                // (only the linking is called off, the object stays selected)
+            } else if self.ed.tool != Tool::Select && !self.ed_has_pending() {
                 self.ed.set_tool(Tool::Select);
             } else {
                 self.ed.right_click();
@@ -1311,9 +1313,19 @@ impl App {
                     labels: m.labels.clone(),
                     paths: m.paths.len(),
                     attach_points: m.attachments.len(),
+                    lights: m.lights.clone(),
+                    light_head: m.light_head,
                 });
             }
         }
+        // (the program of the object the selected one takes its state from)
+        self.ui.parent_lights = match (self.ed.selected, &self.ed.doc, self.assets.as_mut()) {
+            (Some(Sel::Object(k, id)), Some(doc), Some(a)) => crate::selection::any_object(doc, k, id)
+                .and_then(|o| o.var_parent)
+                .and_then(|p| crate::selection::object_by_id(doc, p))
+                .and_then(|(_, p)| a.object(&p.file).map(|m| (p.file.clone(), m.lights.clone()))),
+            _ => None,
+        };
         // (the overview map stays out of the map's picture)
         let minimap_open = self.ui.minimap.open;
         if self.picture || self.snapshot {

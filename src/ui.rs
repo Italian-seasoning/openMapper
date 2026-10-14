@@ -169,6 +169,9 @@ pub struct UiState {
     pub pbr_made: Option<(String, bool)>,
     /// The selected object's model, for its properties.
     pub obj_info: Option<ObjInfo>,
+    /// The lights of the program the selected object's `[varparent]` runs (its file, the
+    /// lights' names), for a signal head's properties.
+    pub parent_lights: Option<(String, Vec<String>)>,
     /// The map's `picture.jpg` as shown in the map's properties, with its file time.
     map_picture: Option<(PathBuf, Option<std::time::SystemTime>, Option<egui::TextureHandle>)>,
     /// The satellite overlay as the View menu and the Tiles tool show it.
@@ -213,6 +216,7 @@ impl Default for UiState {
             recent_assets: Vec::new(),
             pbr_made: None,
             obj_info: None,
+            parent_lights: None,
             map_picture: None,
             geo: Default::default(),
             heightmap: Default::default(),
@@ -225,6 +229,7 @@ impl Default for UiState {
 }
 
 /// What the properties show of a selected object's model.
+#[derive(Clone)]
 pub struct ObjInfo {
     pub file: String,
     pub size: [f32; 3],
@@ -237,6 +242,10 @@ pub struct ObjInfo {
     pub paths: usize,
     /// How many points it has to hang other objects on (`[new_attachment]`).
     pub attach_points: usize,
+    /// Its traffic light program's lights (a crossing).
+    pub lights: Vec<String>,
+    /// A signal head showing one light of its parent's program.
+    pub light_head: bool,
 }
 
 /// Facts for the status bar.
@@ -1994,7 +2003,8 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
         Sel::Object(k, id) => ed.doc.as_ref().and_then(|d| crate::selection::any_object(d, k, id)).and_then(|o| st.obj_info.as_ref().filter(|i| i.file.eq_ignore_ascii_case(&o.file))).map(|i| i.attach_points).unwrap_or(0),
         _ => 0,
     };
-    let _ = st;
+    let obj_info = st.obj_info.clone();
+    let parent_lights = st.parent_lights.clone();
     if alike {
         let n = ed.select_alike(sel);
         ed.toast(format!("{} {n}", tr("Selected:", "Выбрано:")));
@@ -2017,6 +2027,7 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
             if attach_points > 0 {
                 crate::ui_edit::attach_section(ui, ed, lib, k, id, attach_points);
             }
+            crate::ui_edit::link_section(ui, ed, lib, k, id, obj_info.as_ref(), parent_lights.as_ref());
             if let Some(f) = replace_obj {
                 ed.replace_selected_objects(&f);
                 return;
