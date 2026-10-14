@@ -126,6 +126,52 @@ impl Route {
     }
 }
 
+/// The trips whose saved way no longer fits the roads: a lane their track (or, without
+/// one, a station link between their stops) names is gone from the map (`on_map`: the
+/// IDCodes it has), or on a tile `changed` (indices into `order`) no longer as long as the
+/// file says (a road cut by a new junction, moved or deleted). Their ways are to be found again; the others' files stay as they are,
+/// and so do those of trips on lanes the network does not hold (a train's tracks: the
+/// way is found for buses).
+pub fn stale_trips(tt: &super::Timetable, net: &Network, order: &[TileKey], on_map: &std::collections::HashSet<i64>, changed: &std::collections::HashSet<usize>) -> Vec<String> {
+    // (tile index, IDCode, path) -> the length the map gives it now
+    let mut now: std::collections::HashMap<(usize, i64, usize), f64> = std::collections::HashMap::new();
+    for l in &net.lanes {
+        if let Some(i) = order.iter().position(|t| *t == l.key.tile) {
+            now.insert((i, l.key.id, l.key.path), sig3(l.file_length));
+        }
+    }
+    #[derive(PartialEq)]
+    enum Fit {
+        Ok,
+        Broken,
+        Foreign,
+    }
+    let fit = |id: f64, path: f64, tile: f64, len: f64| match now.get(&(tile as usize, id as i64, path as usize)) {
+        // (0: a length the file does not keep, as many of the stock maps' links; within 2 %:
+        // three digits kept, a world map's tiles scaled to the grid. A road cut or moved
+        // changes it by far more)
+        Some(n) if len == 0.0 || (n - len).abs() <= (len.abs() * 0.02).max(0.11) => Fit::Ok,
+        Some(_) if changed.contains(&(tile as usize)) => Fit::Broken,
+        Some(_) => Fit::Ok,
+        None if on_map.contains(&(id as i64)) => Fit::Foreign,
+        None => Fit::Broken,
+    };
+    let mut out = Vec::new();
+    for trip in &tt.trips {
+        let fits: Vec<Fit> = match tt.track(&trip.name) {
+            Some(t) => t.entries.iter().filter_map(|e| match e.values[..] {
+                [id, path, tile, _, len, ..] => Some(fit(id, path, tile, len)),
+                _ => None,
+            }).collect(),
+            None => trip.stations.windows(2).flat_map(|w| tt.links.iter().filter(move |l| l.from_id == w[0] && l.to_id == w[1])).flat_map(|l| l.entries.iter().map(|e| fit(e.values[0], e.values[1], e.values[2], e.values[3]))).collect(),
+        };
+        if fits.contains(&Fit::Broken) && !fits.contains(&Fit::Foreign) {
+            out.push(trip.name.clone());
+        }
+    }
+    out
+}
+
 /// Three significant digits, as OMSI writes the lengths of tracks and links (19.853 m: 19.9).
 pub fn sig3(v: f64) -> f64 {
     if v == 0.0 || !v.is_finite() {

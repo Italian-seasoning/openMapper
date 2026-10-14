@@ -1500,8 +1500,10 @@ impl App {
             g.renderer.profile.add("frame interval", dt as f32 * 1000.0);
             g.renderer.profile.end_frame();
             self.frames += 1;
-            // OPENMAPPER_SAVE=1: what the checks above did saved
-            if self.frames == 3 && std::env::var_os("OPENMAPPER_SAVE").is_some() {
+            // OPENMAPPER_SAVE=1: what the checks above did saved at the third frame (a larger
+            // number: at that frame, after what is built a few frames in)
+            let save_at = std::env::var("OPENMAPPER_SAVE").ok().map(|v| v.parse::<u64>().ok().filter(|n| *n > 1).unwrap_or(3));
+            if save_at == Some(self.frames as u64) {
                 self.save();
             }
             if self.frames == 3 {

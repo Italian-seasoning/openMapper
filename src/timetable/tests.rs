@@ -454,3 +454,30 @@ fn a_line_copied_drives_copies_of_its_trips() {
     assert_eq!(tt.trips.len(), 4);
 }
 
+#[test]
+fn the_stock_maps_trips_fit_their_roads_as_read() {
+    let _map = crate::doc::one_map();
+    let Some(omsi) = crate::install::find_omsi_root(&crate::install::Prefs::default()) else {
+        eprintln!("no OMSI 2 installation: skipped");
+        return;
+    };
+    let roots = crate::install::Roots { omsi: omsi.clone(), content: std::env::temp_dir().join(format!("openmapper-stale-{}", std::process::id())) };
+    for name in ["Grundorf", "Berlin-Spandau"] {
+        let cfg = omsi.join("maps").join(name).join("global.cfg");
+        if !cfg.is_file() {
+            continue;
+        }
+        let doc = crate::doc::Document::load(&roots, &cfg, |_| {}).unwrap();
+        let mut files = Files::new(vec![roots.content.clone(), omsi.clone()]);
+        let net = Network::build(&doc, &mut files);
+        let on_map: std::collections::HashSet<i64> = doc.tiles.values().flat_map(|t| t.tile.splines.iter().map(|s| s.id).chain(t.tile.objects.iter().map(|o| o.id))).collect();
+        let every: std::collections::HashSet<usize> = (0..doc.order.len()).collect();
+        let stale = super::route::stale_trips(&doc.timetable, &net, &doc.order, &on_map, &every);
+        eprintln!("{name}: {} of {} trips stale: {:?}", stale.len(), doc.timetable.trips.len(), stale.iter().take(5).collect::<Vec<_>>());
+        // (Spandau lists tiles it does not ship: trips over them cannot fit)
+        if name == "Grundorf" {
+            assert!(stale.is_empty(), "{stale:?}");
+        }
+    }
+}
+

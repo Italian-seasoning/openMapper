@@ -51,6 +51,10 @@ can drive in service.
   curve with draggable points, car groups and depots of `ailists.cfg` with vehicles picked
   from the installation, which groups drive about on their own, parked cars and people. A group
   the map lacks can be copied from OMSI 2's own maps.
+* When roads a trip runs on are cut by a new junction, moved or deleted, its way is found
+  again on saving (a lane its saved track names gone, or no longer as long), so the game
+  does not lose the bus; the other trips' files, and trains on their tracks, stay as they
+  are.
 * Timetable and traffic edits are part of undo / redo; trips have times at each stop, spread
   by distance or fixed by hand.
 * **Export map for sharing** (File menu, or `openmapper --export global.cfg out.zip`): a zip

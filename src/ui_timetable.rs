@@ -271,12 +271,22 @@ impl TimetableUi {
     /// Before the map is saved: the stop list follows the map's stops, and the routes of
     /// the trips made here are found again where the roads changed since.
     pub fn before_save(&mut self, doc: &mut Document, roots: Option<&Roots>) {
-        if !doc.timetable.dirty || !self.ensure_net(doc, roots) {
+        // (a map whose roads changed: the trips over them may run on lanes no longer there)
+        let roads_changed = !doc.timetable.trips.is_empty() && doc.tiles.values().any(|t| t.dirty);
+        if !(doc.timetable.dirty || roads_changed) || !self.ensure_net(doc, roots) {
             return;
         }
         // (no waiting a second: the save wants the roads as they are)
         self.net_built = None;
         self.ensure_net(doc, roots);
+        if let Some(net) = &self.net {
+            let on_map: std::collections::HashSet<i64> = doc.tiles.values().flat_map(|t| t.tile.splines.iter().filter(|s| !s.deleted).map(|s| s.id).chain(t.tile.objects.iter().map(|o| o.id))).collect();
+            let changed: std::collections::HashSet<usize> = doc.order.iter().enumerate().filter(|(_, k)| doc.tiles.get(k).map(|t| t.dirty).unwrap_or(false)).map(|(i, _)| i).collect();
+            for name in route::stale_trips(&doc.timetable, net, &doc.order, &on_map, &changed) {
+                log::info!("timetable: the way of {name} is found again (its roads changed)");
+                doc.timetable.reroute.insert(name.to_lowercase());
+            }
+        }
         for (name, key) in &self.routed {
             if *key != self.net_key {
                 doc.timetable.reroute.insert(name.clone());
