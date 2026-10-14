@@ -250,6 +250,17 @@ mod tests {
             assert_eq!(ed.doc.as_ref().unwrap().global.entry_points.len(), 1);
             ed.undo();
             ed.doc.as_mut().unwrap().global.entry_points = kept;
+            // (a stop moved away from the road is put back at the kerb by the check's fix)
+            let (sk, sid, was) = ed.doc.as_ref().unwrap().tiles.iter().find_map(|(k, t)| t.tile.objects.iter().find(|o| o.flag == 7).map(|o| (*k, o.id, o.pos))).unwrap();
+            // (outwards from the ring's middle, away from both its carriageways)
+            let out = (DVec2::new(was[0], was[1]) + tile_origin(sk) - DVec2::new(150.0, 150.0)).normalize() * 25.0;
+            let o = ed.doc.as_mut().unwrap().object_mut(sk, sid).unwrap();
+            o.pos[0] += out.x;
+            o.pos[1] += out.y;
+            assert!(crate::check::apply(&mut ed, &crate::check::Fix::StopToKerb(sk, sid, roots.content.clone(), roots.omsi.clone())));
+            let now = ed.doc.as_ref().unwrap().object(sk, sid).unwrap().pos;
+            assert!((DVec2::new(now[0], now[1]) - DVec2::new(was[0], was[1])).length() < 4.0, "{now:?} {was:?}");
+            ed.undo();
             let doc = ed.doc.as_mut().unwrap();
             let tt = &doc.timetable;
             assert_eq!(tt.trips.len(), 2);

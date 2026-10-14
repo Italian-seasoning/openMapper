@@ -63,6 +63,9 @@ pub enum Fix {
     TourDepot(String, String, bool),
     /// Make one of openMapper's junction plates again whose file is gone (by its IDCode).
     RemakeJunction(i64),
+    /// Move a bus stop to the kerb of the lane nearest it, facing along it (the content
+    /// folder and the installation, where the roads' files are).
+    StopToKerb(TileKey, i64, PathBuf, PathBuf),
 }
 
 #[derive(Debug, Clone)]
@@ -143,7 +146,7 @@ impl Kind {
             Kind::MissingTexture => tr("An object or road names a picture that cannot be found. It will look white or black in the game.", "Объект или дорога ссылается на картинку, которой нет. В игре он будет белым или чёрным."),
             Kind::UnlinkedEnds => tr("Two road ends lie on one another but are not joined. Traffic still finds its way (the game joins lanes by their ends), but rows of lamps and posts and the road's texture do not run on across, and the editor does not treat them as one road. \"Join\" links them.", "Два конца дорог лежат друг на друге, но не соединены. Транспорт проедет (игра соединяет полосы по концам), но ряды фонарей и столбиков и текстура дороги не продолжаются через стык, а редактор не считает их одной дорогой. «Соединить» свяжет их."),
             Kind::BrokenLink => tr("A spline says it goes on into another one that no longer exists. \"Fix\" forgets that link.", "Сплайн ссылается на продолжение, которого больше нет. «Исправить» уберёт эту ссылку."),
-            Kind::StopOffRoad => tr("A bus stop belongs to the lane it stands beside (within about 25 m). This one has none near, so buses cannot stop at it. Move it next to the road.", "Остановка относится к полосе, у которой стоит (не дальше примерно 25 м). У этой рядом полосы нет, автобус не сможет у неё остановиться. Передвиньте её к дороге."),
+            Kind::StopOffRoad => tr("A bus stop belongs to the lane it stands beside (within about 25 m). This one has none near, so buses cannot stop at it. Move it next to the road, or \"Fix\" puts it at the kerb of the nearest lane (within 80 m).", "Остановка относится к полосе, у которой стоит (не дальше примерно 25 м). У этой рядом полосы нет, автобус не сможет у неё остановиться. Передвиньте её к дороге или «Исправить» поставит её у бордюра ближайшей полосы (до 80 м)."),
             Kind::EntryOffRoad => tr("A start point is where the bus appears. This one is away from any lane: fine in a depot yard, otherwise the bus starts off the road.", "Точка старта: где появляется автобус. Эта далеко от полос: в парке это нормально, иначе автобус окажется вне дороги."),
             Kind::EntryLost => tr("A start point refers to an object that was deleted. \"Fix\" removes the start point.", "Точка старта ссылается на удалённый объект. «Исправить» удалит точку старта."),
             Kind::NoEntry => tr("There is nowhere for the bus to appear. Place a start point (Game logic > Start points) on a road, or \"Fix\" puts one on a lane some 40 m before a bus stop.", "Автобусу негде появиться. Поставьте точку старта (Служебное > Точки старта) на дорогу или «Исправить» поставит её на полосу метрах в 40 перед остановкой."),
@@ -563,7 +566,8 @@ fn run(s: Snapshot, roots: Vec<PathBuf>) -> Vec<Issue> {
             stops += 1;
             if stops <= LIST {
                 let how = if gap == f64::MAX { tr("no road near", "рядом нет дороги").to_string() } else { format!("{:.0} m {}", gap, tr("from the road", "от дороги")) };
-                out.push(issue(Severity::Warning, Kind::StopOffRoad, short(&o.file), how, Some(o.world), Some(Sel::Object(o.tile, o.id)), None));
+                let fix = (gap < 80.0 && roots.len() >= 2 && !o.attached).then(|| Fix::StopToKerb(o.tile, o.id, roots[0].clone(), roots[roots.len() - 1].clone()));
+                out.push(issue(Severity::Warning, Kind::StopOffRoad, short(&o.file), how, Some(o.world), Some(Sel::Object(o.tile, o.id)), fix));
             }
         }
     }
@@ -915,6 +919,45 @@ pub fn apply(ed: &mut Editor, fix: &Fix) -> bool {
             }
         }
         Fix::RemakeJunction(_) => false,
+        Fix::StopToKerb(k, id, content, omsi) => match doc.object(*k, *id).map(|o| tile_origin(*k) + DVec2::new(o.pos[0], o.pos[1])) {
+            Some(at) => {
+                let net = crate::timetable::network::Network::build(doc, &mut crate::timetable::network::Files::new(vec![content.clone(), omsi.clone()]));
+                // the nearest point of a lane, and the way the lane goes there
+                let mut best: Option<(f64, DVec2, DVec2)> = None;
+                for l in net.lanes.iter().filter(|l| !l.against) {
+                    for w in l.pts.windows(2) {
+                        let (a, b) = (w[0].truncate(), w[1].truncate());
+                        let e = b - a;
+                        if e.length_squared() < 1e-6 {
+                            continue;
+                        }
+                        let q = a + e * ((at - a).dot(e) / e.length_squared()).clamp(0.0, 1.0);
+                        let d = (q - at).length();
+                        if best.map(|b| d < b.0).unwrap_or(true) {
+                            best = Some((d, q, e.normalize()));
+                        }
+                    }
+                }
+                // (on the side the doors open to)
+                let side = if doc.global.left_hand_traffic { -1.0 } else { 1.0 };
+                match best.filter(|b| b.0 < 80.0) {
+                    Some((_, q, dir)) if crate::doc::tile_of(q + DVec2::new(dir.y, -dir.x) * side * 3.2) == *k => {
+                        let to = q + DVec2::new(dir.y, -dir.x) * side * 3.2;
+                        ed.history.touch_tile(doc, *k);
+                        let org = tile_origin(*k);
+                        if let Some(o) = doc.object_mut(*k, *id) {
+                            o.pos[0] = to.x - org.x;
+                            o.pos[1] = to.y - org.y;
+                            o.rot[0] = crate::roads::heading_of(dir);
+                        }
+                        doc.tiles.get_mut(k).map(|t| t.touch_content());
+                        true
+                    }
+                    _ => false,
+                }
+            }
+            None => false,
+        },
         Fix::DropEntry(id) => {
             ed.history.touch_global(doc);
             let before = doc.global.entry_points.len();
