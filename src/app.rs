@@ -1144,7 +1144,7 @@ impl App {
     }
 
     fn ed_has_pending(&self) -> bool {
-        self.ed.selected.is_some() || !self.ed.plant_outline.is_empty()
+        self.ed.selected.is_some() || !self.ed.plant_outline.is_empty() || self.ed.ramp_start.is_some()
     }
 
     /// The camera moves like a fly-through (Unity / Unreal) rather than over a map.

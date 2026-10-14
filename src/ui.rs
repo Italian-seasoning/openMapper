@@ -1059,6 +1059,7 @@ fn tool_hint(ed: &Editor) -> &'static str {
         Tool::Logic if ed.logic == LogicMode::Paths => tr("Click where the path starts, click where it goes (it keeps going) · it snaps to lane ends and along lanes · right-click / Esc: stop", "Клик: начало пути, ещё клик: куда он идёт (дальше продолжается) · прилипает к концам и вдоль полос · правый клик / Esc: стоп"),
         Tool::Logic if ed.logic == LogicMode::Parking && ed.parking_row => tr("Click the start of a row, then its end · R turns the cars · right-click: cancel", "Клик: начало ряда, потом его конец · R: повернуть машины · правый клик: отмена"),
         Tool::Logic => tr("Choose what to place in the list on the left, then click in the view · R / Shift+R turn", "Выберите, что ставить, в списке слева, потом клик в окне · R / Shift+R: поворот"),
+        Tool::Terrain if ed.terrain_mode == TerrainMode::Ramp => tr("Click where the ramp starts, then where it ends · its width is the brush's · right-click: start again", "Клик в начале пандуса, затем в конце · ширина как у кисти · правый клик: заново"),
         Tool::Terrain | Tool::Paint => tr("Hold the left button and drag · [ ] or Shift+wheel: brush size", "Зажмите левую кнопку и ведите · [ ] или Shift+колесо: размер кисти"),
         Tool::Tiles => tr("Click beside the map to add a tile · click a tile for its overlay · right-click a tile to remove it", "Клик рядом с картой: добавить тайл · клик по тайлу: его подложка · правый клик по тайлу: удалить"),
     }
@@ -1473,6 +1474,7 @@ fn terrain_panel(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor) {
             TerrainMode::Raise => tr("Raises the ground under the brush", "Поднимает землю под кистью"),
             TerrainMode::Lower => tr("Lowers the ground under the brush", "Опускает землю под кистью"),
             TerrainMode::Roughen => tr("Gives flat ground the rolls and dips of a natural field; hold longer for more", "Придаёт ровной земле бугры и впадины, как в поле; держите дольше: сильнее"),
+            TerrainMode::Ramp => tr("Click where it starts, then where it ends: the ground between becomes one even slope as wide as the brush (an embankment, a ramp, a level bed)", "Клик в начале, затем в конце: земля между ними станет ровным склоном шириной с кисть (насыпь, пандус, ровное полотно)"),
         };
         help(st, &r, h);
     }

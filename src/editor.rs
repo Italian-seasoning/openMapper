@@ -77,10 +77,12 @@ pub enum TerrainMode {
     Flatten,
     /// Rolls and dips of the natural ground.
     Roughen,
+    /// An even slope from where it starts to where it ends, as wide as the brush.
+    Ramp,
 }
 
 impl TerrainMode {
-    pub const ALL: [TerrainMode; 5] = [TerrainMode::Raise, TerrainMode::Lower, TerrainMode::Smooth, TerrainMode::Flatten, TerrainMode::Roughen];
+    pub const ALL: [TerrainMode; 6] = [TerrainMode::Raise, TerrainMode::Lower, TerrainMode::Smooth, TerrainMode::Flatten, TerrainMode::Roughen, TerrainMode::Ramp];
     pub fn label(self) -> &'static str {
         match self {
             TerrainMode::Raise => tr("Raise", "Поднять"),
@@ -88,6 +90,7 @@ impl TerrainMode {
             TerrainMode::Smooth => tr("Smooth", "Сгладить"),
             TerrainMode::Flatten => tr("Flatten", "Выровнять"),
             TerrainMode::Roughen => tr("Roughen", "Неровности"),
+            TerrainMode::Ramp => tr("Ramp", "Пандус"),
         }
     }
     pub fn icon(self) -> crate::icons::Icon {
@@ -98,6 +101,7 @@ impl TerrainMode {
             TerrainMode::Smooth => Icon::Smooth,
             TerrainMode::Flatten => Icon::Flatten,
             TerrainMode::Roughen => Icon::Terrain,
+            TerrainMode::Ramp => Icon::Route,
         }
     }
 }
@@ -318,6 +322,8 @@ pub struct Editor {
     pub plant_mix: Vec<String>,
     /// How the ground is painted along the selected roads (their properties).
     pub paint_along: crate::roadpaint::Along,
+    /// Where a ramp of the Terrain tool starts (its first click).
+    pub ramp_start: Option<DVec3>,
     /// The plant brush fills (or clears) an outline clicked round instead of painting.
     pub plant_area: bool,
     /// The outline's corners so far (world).
@@ -444,6 +450,7 @@ impl Default for Editor {
             plant_spacing: 6.0,
             plant_mix: Vec::new(),
             paint_along: Default::default(),
+            ramp_start: None,
             plant_area: false,
             plant_outline: Vec::new(),
             view_distance: std::cell::Cell::new(100.0),
@@ -563,6 +570,7 @@ impl Editor {
         self.select_box = None;
         self.ring_centre = None;
         self.plant_outline.clear();
+        self.ramp_start = None;
         if let Some(doc) = &mut self.doc {
             self.history.commit();
             let _ = doc;
@@ -926,6 +934,16 @@ impl Editor {
         }
         match self.acts_as() {
             Tool::Select => self.select_press(shift),
+            Tool::Terrain if self.tool == Tool::Terrain && self.terrain_mode == TerrainMode::Ramp => {
+                let Some(c) = self.cursor else { return };
+                match self.ramp_start.take() {
+                    None => self.ramp_start = Some(c),
+                    Some(a) => {
+                        let grade = self.ramp(a, c);
+                        self.toast(format!("{} {:+.1} %", tr("Ramp:", "Пандус:"), grade));
+                    }
+                }
+            }
             Tool::Terrain | Tool::Paint => {
                 self.history.begin(if self.tool == Tool::Terrain { tr("Shape terrain", "Рельеф") } else { tr("Paint ground", "Покраска") });
                 self.flatten_to = self.flatten_fixed.or(self.cursor.map(|c| c.z as f32));
@@ -982,6 +1000,9 @@ impl Editor {
             Tool::Roads if self.road_start.is_some() => {
                 self.road_start = None;
                 self.road_plan = None;
+            }
+            Tool::Terrain if self.ramp_start.is_some() => {
+                self.ramp_start = None;
             }
             Tool::Objects if !self.plant_outline.is_empty() => {
                 self.plant_outline.pop();
@@ -2384,6 +2405,8 @@ impl Editor {
                     // (towards a fixed pattern of rolls, the same wherever the brush goes, so
                     // holding it longer shapes them more and does not make noise of noise)
                     TerrainMode::Roughen => h + rolls(p) * strength * 3.0 * dt * w,
+                    // (clicked from end to end, not brushed)
+                    TerrainMode::Ramp => h,
                 };
                 changes.push((gx, gy, nh as f32));
             }
@@ -2397,6 +2420,46 @@ impl Editor {
             };
             set_world_sample(doc, &mut self.history, gx, gy, n, h);
         }
+    }
+
+    /// The ground from `a` to `b` made one even slope from the height at `a` to that at
+    /// `b`, as wide as the brush (fully within 60 % of its radius, easing out to its rim);
+    /// one undo step. Its gradient (%).
+    pub fn ramp(&mut self, a: DVec3, b: DVec3) -> f64 {
+        let Some(doc) = self.doc.as_mut() else { return 0.0 };
+        let r = self.brush_radius as f64;
+        let core = r * 0.6;
+        let (a2, b2) = (a.truncate(), b.truncate());
+        let len = (b2 - a2).length();
+        let cell = tile_size() / (TERRAIN_SAMPLES - 1) as f64;
+        let n = (TERRAIN_SAMPLES - 1) as i64;
+        let (lo, hi) = (a2.min(b2) - DVec2::splat(r), a2.max(b2) + DVec2::splat(r));
+        self.history.begin(tr("Ramp", "Пандус"));
+        let mut changes: Vec<(i64, i64, f32)> = Vec::new();
+        for gy in (lo.y / cell).floor() as i64..=(hi.y / cell).ceil() as i64 {
+            for gx in (lo.x / cell).floor() as i64..=(hi.x / cell).ceil() as i64 {
+                let p = DVec2::new(gx as f64 * cell, gy as f64 * cell);
+                let t = if len > 1e-6 { ((p - a2).dot(b2 - a2) / (len * len)).clamp(0.0, 1.0) } else { 0.0 };
+                let d = (p - (a2 + (b2 - a2) * t)).length();
+                if d > r {
+                    continue;
+                }
+                let Some(h) = world_sample(doc, gx, gy, n) else { continue };
+                let target = a.z + (b.z - a.z) * t;
+                let w = if d <= core {
+                    1.0
+                } else {
+                    let x = 1.0 - (d - core) / (r - core);
+                    x * x * (3.0 - 2.0 * x)
+                };
+                changes.push((gx, gy, (h as f64 + (target - h as f64) * w) as f32));
+            }
+        }
+        for (gx, gy, h) in changes {
+            set_world_sample(doc, &mut self.history, gx, gy, n, h);
+        }
+        self.history.commit();
+        if len > 1e-6 { (b.z - a.z) / len * 100.0 } else { 0.0 }
     }
 
     /// The plant brush held over `c` for `dt` seconds.
@@ -2709,6 +2772,18 @@ impl Editor {
                     disc(&mut x.overlay, cam, a + (c - a) * t + DVec3::Z * 0.3, w * 2.5, ORANGE);
                 }
             }
+        }
+        // a ramp being laid out: its middle and its edges, from its start to the cursor
+        if let (Some(a), Some(c), true) = (self.ramp_start, self.cursor, self.tool == Tool::Terrain && self.terrain_mode == TerrainMode::Ramp) {
+            let d = (c - a).truncate();
+            let side = DVec2::new(-d.y, d.x).normalize_or_zero() * self.brush_radius as f64 * 0.6;
+            let lift = DVec3::Z * 0.4;
+            line(&mut x.overlay, cam, a + lift, c + lift, w, ORANGE);
+            for s in [side, -side] {
+                let o = DVec3::new(s.x, s.y, 0.0);
+                line(&mut x.overlay, cam, a + o + lift, c + o + lift, w * 0.5, [1.0, 1.0, 1.0, 0.6]);
+            }
+            disc(&mut x.overlay, cam, a + lift, w * 3.0, ORANGE);
         }
         // GPS tracks to trace, in magenta on the ground
         for t in &self.trace_lines {
@@ -5014,6 +5089,23 @@ fn rolls(p: DVec2) -> f64 {
 mod tests {
     use super::*;
     use crate::selection::tests::{add_object, add_spline, flat_map};
+
+    #[test]
+    fn a_ramp_makes_one_even_slope_as_wide_as_the_brush() {
+        let mut ed = Editor::default();
+        ed.open(flat_map(1));
+        ed.brush_radius = 20.0;
+        let grade = ed.ramp(DVec3::new(50.0, 150.0, 0.0), DVec3::new(250.0, 150.0, 20.0));
+        assert!((grade - 10.0).abs() < 1e-9);
+        let d = ed.doc.as_ref().unwrap();
+        assert!((d.ground(DVec2::new(150.0, 150.0)) - 10.0).abs() < 0.3);
+        assert!((d.ground(DVec2::new(200.0, 155.0)) - 15.0).abs() < 0.3);
+        // past its edge and its ends the ground is as it was
+        assert!(d.ground(DVec2::new(150.0, 180.0)).abs() < 1e-6);
+        assert!(d.ground(DVec2::new(10.0, 150.0)).abs() < 1e-6);
+        ed.undo();
+        assert!(ed.doc.as_ref().unwrap().ground(DVec2::new(150.0, 150.0)).abs() < 1e-6);
+    }
 
     #[test]
     fn a_layer_painted_finer_keeps_its_paint_and_undoes() {

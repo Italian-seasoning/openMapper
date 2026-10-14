@@ -153,6 +153,10 @@ fn commands() -> Vec<Command> {
             ed.set_tool(Tool::Tiles);
             ed.toast(tr("Click a tile: its water is in the panel; lower the ground under it with the Terrain tool", "Кликните тайл: вода в панели; опустите землю инструментом «Рельеф»"));
         }),
+        cmd!(Icon::Route, "Ramp in the ground", "Пандус в земле", "embankment slope level bed насыпь склон уклон полотно", "", |_, ed, _| {
+            ed.set_tool(Tool::Terrain);
+            ed.terrain_mode = crate::editor::TerrainMode::Ramp;
+        }),
         cmd!(Icon::Terrain, "Height map import or export", "Импорт или экспорт карты высот", "heightmap png world machine gaea", "", |_, ed, _| {
             ed.set_tool(Tool::Terrain);
             ed.toast(tr("Height map: at the end of the Terrain panel", "Карта высот: в конце панели «Рельеф»"));
