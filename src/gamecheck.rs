@@ -155,8 +155,7 @@ impl GameCheck {
     }
 
     /// The window; true when the check is to be run again (the map saved first). `at_edge`:
-    /// whether a place lies at the map's edge (a bus at a road's end there stands over it:
-    /// nothing to mend).
+    /// whether a place lies at the map's edge or a road's dead end (nothing to mend).
     pub fn window(&mut self, ctx: &egui::Context, at_edge: &dyn Fn(glam::DVec2) -> bool) -> bool {
         if let Some((rx, _)) = &self.running {
             if let Ok(r) = rx.try_recv() {
@@ -228,7 +227,7 @@ impl GameCheck {
                         }
                     }
                     if edge > 0 {
-                        ui.label(RichText::new(format!("{edge} {}", tr("of the places named lie at the map's edge (greyed): a bus at a road's end there stands over it, nothing to mend", "из названных мест лежат на краю карты (серые): автобус в конце дороги там стоит над краем, чинить нечего"))).small().italics().color(TEXT_DIM));
+                        ui.label(RichText::new(format!("{edge} {}", tr("of the places named lie at the map's edge or a road's dead end (greyed): the game measures a lane's last point on the road's very edge, and a bus at the end stands over it; nothing to mend", "из названных мест лежат на краю карты или в тупике дороги (серые): игра меряет последнюю точку полосы на самом краю дороги, а автобус в конце стоит над ним; чинить нечего"))).small().italics().color(TEXT_DIM));
                     }
                     if o.lines.is_empty() {
                         ui.label(RichText::new(tr("The game said nothing about the map", "Игра ничего не сказала о карте")).small().color(TEXT_DIM));

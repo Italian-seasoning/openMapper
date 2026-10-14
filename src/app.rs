@@ -1370,8 +1370,18 @@ impl App {
                 self.ui.views.window(&ctx, &mut self.cam);
                 self.osm.window(&ctx, &mut self.ed, &self.lib, self.geo.georef());
                 self.trace.window(&ctx, &mut self.ed, &self.lib, self.geo.georef());
-                // (within 12 m of a side with no tile beyond)
-                let at_edge = |p: DVec2| self.ed.doc.as_ref().map(|d| [DVec2::X, -DVec2::X, DVec2::Y, -DVec2::Y].iter().any(|v| !d.tiles.contains_key(&crate::doc::tile_of(p + *v * 12.0)))).unwrap_or(false);
+                // (within 12 m of a side with no tile beyond, or 2 m of a road's dead end: the
+                // game samples a lane's last point on the very edge of its road)
+                let at_edge = |p: DVec2| {
+                    let Some(d) = self.ed.doc.as_ref() else { return false };
+                    [DVec2::X, -DVec2::X, DVec2::Y, -DVec2::Y].iter().any(|v| !d.tiles.contains_key(&crate::doc::tile_of(p + *v * 12.0)))
+                        || d.tiles.iter().any(|(k, t)| {
+                            t.tile.splines.iter().filter(|s| !s.deleted && (s.prev_id == 0 || s.next_id == 0)).any(|s| {
+                                let c = omsi_geometry::SplineCurve::from_map(s, tile_origin(*k));
+                                (s.prev_id == 0 && (c.point_at(0.0).truncate() - p).length() < 2.0) || (s.next_id == 0 && (c.end_point().truncate() - p).length() < 2.0)
+                            })
+                        })
+                };
                 if self.gamecheck.window(&ctx, &at_edge) {
                     actions.push(Action::GameCheck);
                 }
