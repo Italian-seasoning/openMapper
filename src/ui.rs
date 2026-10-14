@@ -2072,13 +2072,13 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
         Sel::Object(k, id) => {
             crate::ui_edit::junction_section(ui, ed, k, id);
             crate::ui_edit::array_section(ui, ed, lib);
+            crate::ui_edit::link_section(ui, ed, lib, k, id, obj_info.as_ref(), parent_lights.as_ref());
             if has_paths {
                 crate::ui_edit::rules_section(ui, ed, sel);
             }
             if attach_points > 0 {
                 crate::ui_edit::attach_section(ui, ed, lib, k, id, attach_points);
             }
-            crate::ui_edit::link_section(ui, ed, lib, k, id, obj_info.as_ref(), parent_lights.as_ref());
             if let Some(f) = replace_obj {
                 ed.replace_selected_objects(&f);
                 return;
