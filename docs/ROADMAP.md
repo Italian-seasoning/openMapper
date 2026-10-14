@@ -153,3 +153,4 @@ Add a line when you touch a shared file: stream, file, what.
 * D · `src/ui.rs`: `Action::{RevealMap, CopyMap, BinMap}` from a right-click on the welcome list; `src/app.rs`: `copy_map`, `bin_map`.
 * D · `src/doc/mod.rs`: `TileDoc::new_flat` marks the tile `[variable_terrainlightmap]`; `src/editor.rs`: `set_tile_lamplight`; `src/ui.rs`: the picked tile's section (`water_panel`) has the switch.
 * D · `src/library.rs`: `Asset::lamp` (`[maplight]`); `src/check.rs`: `Kind::LampsDark`, `Fix::LampLight`.
+* D · `src/main.rs`: `mod roadpaint`; `src/autopaint.rs`: `paint_where` (a layer painted by any weight; `apply` uses it), `band` is `pub(crate)`; `src/editor.rs`: `Editor::paint_along`, `paint_along_selected`; `src/ui_edit.rs`: `paint_along_section` (a road's properties and a selection's); `src/app.rs`: `OPENMAPPER_PAINT_ALONG=<layer>,<width>[,under]`.

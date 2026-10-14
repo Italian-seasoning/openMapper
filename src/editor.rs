@@ -312,6 +312,8 @@ pub struct Editor {
     pub plant_spacing: f64,
     /// What the brush sows, picked at random (empty: the catalogue's choice).
     pub plant_mix: Vec<String>,
+    /// How the ground is painted along the selected roads (their properties).
+    pub paint_along: crate::roadpaint::Along,
     /// The plant brush fills (or clears) an outline clicked round instead of painting.
     pub plant_area: bool,
     /// The outline's corners so far (world).
@@ -431,6 +433,7 @@ impl Default for Editor {
             plant_erase: false,
             plant_spacing: 6.0,
             plant_mix: Vec::new(),
+            paint_along: Default::default(),
             plant_area: false,
             plant_outline: Vec::new(),
             view_distance: std::cell::Cell::new(100.0),
@@ -3378,6 +3381,14 @@ impl Editor {
         }
         reshape::even_chain(doc, &chain);
         self.history.commit();
+    }
+
+    /// The ground painted along the selected roads as `paint_along` says; how many texels.
+    pub fn paint_along_selected(&mut self, lib: &Library) -> usize {
+        let splines: Vec<(TileKey, i64)> = self.selection().into_iter().filter_map(|s| if let Sel::Spline(k, id) = s { Some((k, id)) } else { None }).collect();
+        let a = self.paint_along;
+        let Some(doc) = self.doc.as_mut() else { return 0 };
+        crate::roadpaint::paint_along(doc, &mut self.history, &splines, |f| lib.find(f).map(|x| x.half_width as f64).unwrap_or(3.0), &a)
     }
 
     /// The selected roads laid on the ground again, the ground then shaped to them (with

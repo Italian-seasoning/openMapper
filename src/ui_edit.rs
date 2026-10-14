@@ -202,6 +202,7 @@ pub fn group_properties(ui: &mut egui::Ui, ed: &mut Editor, lib: &Library, actio
             }
         }
         crate::ui_profile::profile_section(ui, ed, actions);
+        paint_along_section(ui, ed, lib);
         ui.add_space(8.0);
         ui.separator();
         ui.horizontal_wrapped(|ui| {
@@ -471,6 +472,47 @@ fn parallel_inner(ui: &mut egui::Ui, ed: &mut Editor, lib: &Library, k: TileKey,
 
 /// Objects along the selected road(s): the rows on a road selected alone, and new rows of the
 /// object chosen in the catalogue.
+/// The ground painted along the selected roads: a layer under them or beside them.
+pub fn paint_along_section(ui: &mut egui::Ui, ed: &mut Editor, lib: &Library) {
+    if !ed.selection().iter().any(|s| matches!(s, Sel::Spline(..))) || ed.editing_paths() {
+        return;
+    }
+    let Some(doc) = ed.doc.as_ref() else { return };
+    let names: Vec<String> = doc.global.ground_textures.iter().map(|g| std::path::Path::new(&g.texture.replace('\\', "/")).file_stem().map(|s| s.to_string_lossy().to_string()).unwrap_or_default()).collect();
+    egui::CollapsingHeader::new(RichText::new(tr("Paint the ground along it", "Покрасить землю вдоль")).strong()).id_salt("paint along").show(ui, |ui| {
+        if names.len() < 2 {
+            ui.label(RichText::new(tr("Add a ground texture in the Paint tool first: the base ground is under everything", "Сначала добавьте текстуру земли в инструменте «Покраска»: основа лежит под всем")).small().color(TEXT_DIM));
+            return;
+        }
+        let a = &mut ed.paint_along;
+        a.layer = a.layer.clamp(1, names.len() - 1);
+        egui::Grid::new("paint along grid").num_columns(2).spacing(Vec2::new(8.0, 4.0)).show(ui, |ui| {
+            ui.label(RichText::new(tr("Layer", "Слой")).color(TEXT_DIM));
+            egui::ComboBox::from_id_salt("paint along layer").selected_text(&names[a.layer]).show_ui(ui, |ui| {
+                for (i, n) in names.iter().enumerate().skip(1) {
+                    ui.selectable_value(&mut a.layer, i, n);
+                }
+            });
+            ui.end_row();
+            ui.label(RichText::new(tr("Where", "Где")).color(TEXT_DIM));
+            ui.horizontal(|ui| {
+                ui.selectable_value(&mut a.under, false, tr("beside it", "рядом"));
+                ui.selectable_value(&mut a.under, true, tr("under it too", "и под ней"));
+            });
+            ui.end_row();
+            ui.label(RichText::new(tr("Out from its edge", "От края")).color(TEXT_DIM));
+            ui.add(egui::DragValue::new(&mut a.width).range(0.0..=40.0).speed(0.1).suffix(" m"));
+            ui.end_row();
+            ui.label(RichText::new(tr("Soft edge", "Мягкий край")).color(TEXT_DIM));
+            ui.add(egui::DragValue::new(&mut a.soft).range(0.0..=20.0).speed(0.1).suffix(" m"));
+            ui.end_row();
+        });
+        if ui.button(icons::labelled(Icon::Brush, tr("Paint", "Покрасить"))).on_hover_text(tr("A gravel verge, dirt by a track, grass along a path: the brush of the Paint tool touches it up afterwards", "Гравийная обочина, грунт у путей, трава вдоль дорожки: кисть «Покраски» поправит потом")).clicked() {
+            ed.paint_along_selected(lib);
+        }
+    });
+}
+
 pub fn rows_section(ui: &mut egui::Ui, ed: &mut Editor, lib: &Library) {
     let sels = ed.selection();
     if !sels.iter().any(|s| matches!(s, Sel::Spline(..))) {

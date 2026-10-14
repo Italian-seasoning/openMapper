@@ -29,7 +29,7 @@ impl Default for Rule {
 }
 
 /// 1 inside `lo..hi`, falling to 0 over `soft` outside it.
-fn band(v: f32, [lo, hi]: [f32; 2], soft: f32) -> f32 {
+pub(crate) fn band(v: f32, [lo, hi]: [f32; 2], soft: f32) -> f32 {
     let out = (lo - v).max(v - hi).max(0.0);
     if soft <= 0.0 {
         return if out > 0.0 { 0.0 } else { 1.0 };
@@ -64,6 +64,14 @@ fn slope_at(t: &crate::doc::TileDoc, x: f64, y: f64) -> f32 {
 /// less; the layers above it give way as under the brush), one undo step. How many texels
 /// it covered.
 pub fn apply(doc: &mut Document, hist: &mut History, layer: usize, rule: &Rule) -> usize {
+    let keys: Vec<_> = doc.tiles.keys().copied().collect();
+    paint_where(doc, hist, layer, tr("Paint by slope and height", "Покраска по уклону и высоте"), &keys, |_, t, p| rule.weight(t.height_at(p.x, p.y), slope_at(t, p.x, p.y)))
+}
+
+/// `layer` painted on the tiles `keys` as much as `weight` (0..1) says at each texel (given
+/// the tile and the tile-local point): what was painted kept where it says less, the layers
+/// above giving way as under the brush. One undo step; how many texels it covered.
+pub fn paint_where(doc: &mut Document, hist: &mut History, layer: usize, label: &'static str, keys: &[crate::doc::TileKey], weight: impl Fn(crate::doc::TileKey, &crate::doc::TileDoc, DVec2) -> f32) -> usize {
     let layers = doc.global.ground_textures.len();
     if layer == 0 || layer >= layers {
         return 0;
@@ -71,10 +79,12 @@ pub fn apply(doc: &mut Document, hist: &mut History, layer: usize, rule: &Rule) 
     doc.sync_mask_slots();
     let sizes: Vec<usize> = doc.global.ground_textures.iter().map(mask_size).collect();
     let ts = tile_size();
-    hist.begin(tr("Paint by slope and height", "Покраска по уклону и высоте"));
-    let keys: Vec<_> = doc.tiles.keys().copied().collect();
+    hist.begin(label);
     let mut covered = 0;
-    for k in keys {
+    for &k in keys {
+        if !doc.tiles.contains_key(&k) {
+            continue;
+        }
         hist.touch_tile(doc, k);
         let t = doc.tiles.get_mut(&k).unwrap();
         // the weight on the layer's own mask, read for the layers above at their sizes
@@ -85,7 +95,7 @@ pub fn apply(doc: &mut Document, hist: &mut History, layer: usize, rule: &Rule) 
         for yi in 0..size {
             for xi in 0..size {
                 let p = DVec2::new((xi as f64 + 0.5) * texel, (yi as f64 + 0.5) * texel);
-                let v = rule.weight(t.height_at(p.x, p.y), slope_at(t, p.x, p.y));
+                let v = weight(k, t, p);
                 // (row 0 is the north edge)
                 w[(size - 1 - yi) * size + xi] = v;
                 if v > 0.004 {

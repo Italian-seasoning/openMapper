@@ -42,6 +42,7 @@ mod plants;
 mod render;
 mod reshape;
 mod road_maker;
+mod roadpaint;
 mod roads;
 mod roundabout;
 mod rows;

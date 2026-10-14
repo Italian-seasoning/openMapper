@@ -314,6 +314,21 @@ impl App {
                 }
             }
         }
+        // OPENMAPPER_PAINT_ALONG=<layer>,<width>[,under]: that layer painted along what
+        // OPENMAPPER_SELECT selected
+        if let Ok(a) = std::env::var("OPENMAPPER_PAINT_ALONG") {
+            let v: Vec<&str> = a.split(',').collect();
+            if let (Some(l), Some(w)) = (v.first().and_then(|x| x.parse().ok()), v.get(1).and_then(|x| x.parse().ok())) {
+                // (the catalogue read first: the roads' widths come from it)
+                while self.lib.scanning {
+                    self.lib.poll();
+                    std::thread::sleep(std::time::Duration::from_millis(20));
+                }
+                self.ed.paint_along = crate::roadpaint::Along { layer: l, width: w, under: v.get(2) == Some(&"under"), ..Default::default() };
+                let n = self.ed.paint_along_selected(&self.lib);
+                log::info!("painted along: {n} texels");
+            }
+        }
         // OPENMAPPER_HIDE=trees,objects,splines,technical: those layers hidden
         if let Ok(h) = std::env::var("OPENMAPPER_HIDE") {
             self.ed.show_technical = !h.split(',').any(|x| x.trim() == "technical");
