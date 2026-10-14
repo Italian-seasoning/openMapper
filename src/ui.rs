@@ -1410,7 +1410,7 @@ fn catalogue_of(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Libr
             for a in &items {
                 let (top, rest) = match a.dir.split_once('\\') {
                     Some((t, r)) => (t.to_string(), r.to_string()),
-                    None => (if a.dir.is_empty() { "-".to_string() } else { a.dir.clone() }, String::new()),
+                    None => (if a.dir.is_empty() { tr("(not in a folder)", "(вне папок)").to_string() } else { a.dir.clone() }, String::new()),
                 };
                 tree.entry(top).or_default().entry(rest).or_default().push(a);
             }

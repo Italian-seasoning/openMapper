@@ -44,7 +44,7 @@ impl Default for AssetBrowser {
 
 /// An asset's folder path as the tree shows it.
 fn folder_of(a: &Asset) -> &str {
-    if a.dir.is_empty() { "-" } else { &a.dir }
+    if a.dir.is_empty() { crate::i18n::tr("(not in a folder)", "(вне папок)") } else { &a.dir }
 }
 
 impl AssetBrowser {
