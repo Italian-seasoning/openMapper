@@ -55,6 +55,9 @@ pub enum Fix {
     /// Copy the car groups the traffic names but the AI lists lack from OMSI 2's own maps
     /// (in the installation there).
     StockGroups(PathBuf),
+    /// Put a start point on a lane before a bus stop (the content folder and the
+    /// installation, where the roads' files are).
+    AddStart(PathBuf, PathBuf),
 }
 
 #[derive(Debug, Clone)]
@@ -138,7 +141,7 @@ impl Kind {
             Kind::StopOffRoad => tr("A bus stop belongs to the lane it stands beside (within about 25 m). This one has none near, so buses cannot stop at it. Move it next to the road.", "Остановка относится к полосе, у которой стоит (не дальше примерно 25 м). У этой рядом полосы нет, автобус не сможет у неё остановиться. Передвиньте её к дороге."),
             Kind::EntryOffRoad => tr("A start point is where the bus appears. This one is away from any lane: fine in a depot yard, otherwise the bus starts off the road.", "Точка старта: где появляется автобус. Эта далеко от полос: в парке это нормально, иначе автобус окажется вне дороги."),
             Kind::EntryLost => tr("A start point refers to an object that was deleted. \"Fix\" removes the start point.", "Точка старта ссылается на удалённый объект. «Исправить» удалит точку старта."),
-            Kind::NoEntry => tr("There is nowhere for the bus to appear. Place a start point (Objects > Bus stops > entrypoint) on a road.", "Автобусу негде появиться. Поставьте точку старта (Объекты > Остановки > entrypoint) на дорогу."),
+            Kind::NoEntry => tr("There is nowhere for the bus to appear. Place a start point (Game logic > Start points) on a road, or \"Fix\" puts one on a lane some 40 m before a bus stop.", "Автобусу негде появиться. Поставьте точку старта (Служебное > Точки старта) на дорогу или «Исправить» поставит её на полосу метрах в 40 перед остановкой."),
             Kind::DuplicateId => tr("Two things on the map share one IDCode: links, timetables and start points may pick the wrong one.", "Две вещи на карте с одним IDCode: связи, расписания и точки старта могут указать не на ту."),
             Kind::NextId => tr("The counter for new IDCodes is below codes already used, so new objects would get codes twice. \"Fix\" raises it.", "Счётчик новых IDCode ниже уже занятых, новые объекты получат повторные коды. «Исправить» поднимет его."),
             Kind::OutsideTile => tr("An object standing on the ground lies outside its own tile. The game does not show it. Move it a little or put it again.", "Объект, стоящий на земле, лежит вне своего тайла. Игра его не покажет. Сдвиньте его или поставьте заново."),
@@ -569,7 +572,8 @@ fn run(s: Snapshot, roots: Vec<PathBuf>) -> Vec<Issue> {
         }
     }
     if s.entries.is_empty() {
-        out.push(issue(Severity::Warning, Kind::NoEntry, tr("The map has no start point", "На карте нет точки старта").to_string(), String::new(), None, None, None));
+        let fix = (s.splines.len() > 0 && roots.len() >= 2).then(|| Fix::AddStart(roots[0].clone(), roots[roots.len() - 1].clone()));
+        out.push(issue(Severity::Warning, Kind::NoEntry, tr("The map has no start point", "На карте нет точки старта").to_string(), String::new(), None, None, fix));
     }
 
     // IDCodes
@@ -863,6 +867,18 @@ pub fn apply(ed: &mut Editor, fix: &Fix) -> bool {
                 ed.history.push_snapshot(tr("Car groups from OMSI 2's maps", "Группы машин из карт OMSI 2"), crate::history::Snapshot { traffic: Some(before), ..Default::default() });
             }
             n > 0
+        }
+        Fix::AddStart(content, omsi) => {
+            let roots = crate::install::Roots { omsi: omsi.clone(), content: content.clone() };
+            match crate::sample::start_spot(doc, &roots).filter(|_| doc.global.entry_points.is_empty()) {
+                Some((at, heading)) => {
+                    ed.history.touch_tile(doc, crate::doc::tile_of(at));
+                    ed.history.touch_global(doc);
+                    crate::sample::add_start(doc, at, heading, tr("Start", "Старт"));
+                    true
+                }
+                None => false,
+            }
         }
         Fix::DropEntry(id) => {
             ed.history.touch_global(doc);

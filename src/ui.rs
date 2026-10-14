@@ -2245,7 +2245,7 @@ fn map_properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Li
         crate::descriptions::editor(ui, doc, &mut ed.history);
         if doc.global.entry_points.is_empty() {
             ui.add_space(6.0);
-            ui.label(RichText::new(tr("No start point yet: place one (Objects > Bus stops > Entrypoint) so the bus has somewhere to appear in openOMSI.", "Нет точки старта: поставьте её (Объекты > Остановки > Entrypoint), чтобы автобусу было где появиться в openOMSI.")).small().color(Color32::from_rgb(230, 170, 100)));
+            ui.label(RichText::new(tr("No start point yet: place one (Game logic > Start points) so the bus has somewhere to appear in openOMSI.", "Нет точки старта: поставьте её (Служебное > Точки старта), чтобы автобусу было где появиться в openOMSI.")).small().color(Color32::from_rgb(230, 170, 100)));
         }
         ui.add_space(8.0);
         ui.label(RichText::new(tr("Picture", "Картинка")).color(TEXT_DIM));

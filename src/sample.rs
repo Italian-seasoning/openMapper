@@ -244,6 +244,12 @@ mod tests {
             ed.open(doc);
             let mut assets = Assets::new(roots.omsi.clone(), roots.content.clone());
             build(&mut ed, &mut assets, &lib, &roots, DVec2::new(150.0, 150.0)).unwrap();
+            // (the map check's fix puts a start point before a stop where there is none)
+            let kept = std::mem::take(&mut ed.doc.as_mut().unwrap().global.entry_points);
+            assert!(crate::check::apply(&mut ed, &crate::check::Fix::AddStart(roots.content.clone(), roots.omsi.clone())));
+            assert_eq!(ed.doc.as_ref().unwrap().global.entry_points.len(), 1);
+            ed.undo();
+            ed.doc.as_mut().unwrap().global.entry_points = kept;
             let doc = ed.doc.as_mut().unwrap();
             let tt = &doc.timetable;
             assert_eq!(tt.trips.len(), 2);

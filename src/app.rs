@@ -651,7 +651,7 @@ impl App {
                     log::info!("removed {gone} unused junction file(s)");
                 }
                 if !has_start {
-                    self.ed.toast(tr("Tip: place a start point (Objects > Bus stops > entrypoint) so the bus has somewhere to appear", "Совет: поставьте точку старта (Объекты > Остановки > entrypoint), чтобы автобусу было где появиться"));
+                    self.ed.toast(tr("Tip: place a start point (Game logic > Start points) so the bus has somewhere to appear", "Совет: поставьте точку старта (Служебное > Точки старта), чтобы автобусу было где появиться"));
                 }
                 true
             }
