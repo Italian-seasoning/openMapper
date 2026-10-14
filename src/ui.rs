@@ -1667,6 +1667,7 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
     let mut reverse = false;
     let mut lay = false;
     let mut align_road = false;
+    let mut lean = false;
     let mut alike = false;
     let mut replace_obj: Option<String> = None;
     let Some(doc) = ed.doc.as_ref() else { return };
@@ -1722,6 +1723,9 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
                             let c = ui.add(egui::DragValue::new(&mut r[2]).range(-90.0..=90.0).speed(0.25).suffix("°")).on_hover_text(tr("Bank to the side", "Крен вбок"));
                             if ui.small_button(Icon::Road.text(13.0)).on_hover_text(tr("Turn it the way the nearest road runs beside it", "Повернуть по ходу ближайшей дороги рядом")).clicked() {
                                 align_road = true;
+                            }
+                            if ui.small_button(Icon::Terrain.text(13.0)).on_hover_text(crate::ui_edit::lean_help()).clicked() {
+                                lean = true;
                             }
                             if (r[1] != 0.0 || r[2] != 0.0) && ui.small_button("↺").on_hover_text(tr("Stand it upright again", "Поставить ровно")).clicked() {
                                 r[1] = 0.0;
@@ -1986,6 +1990,10 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
             }
             if let Some(f) = replace_obj {
                 ed.replace_selected_objects(&f);
+                return;
+            }
+            if lean {
+                ed.lean_objects(true);
                 return;
             }
             if align_road && ed.align_to_roads() == 0 {

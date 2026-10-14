@@ -3309,6 +3309,28 @@ impl Editor {
     /// heights.
     /// The selected objects' headings: each a random one (`random`), or that of the one shown
     /// in the properties.
+    /// The selected objects tilted to the ground under them (a fence or a shed on a slope),
+    /// or stood upright again (`lean` false); things hanging on others are left alone.
+    pub fn lean_objects(&mut self, lean: bool) {
+        let sels = self.selection();
+        let Some(doc) = self.doc.as_mut() else { return };
+        self.history.begin(if lean { tr("Lean with the ground", "Наклон по земле") } else { tr("Stand upright", "Поставить ровно") });
+        for s in &sels {
+            let Sel::Object(k, id) = *s else { continue };
+            let Some(o) = doc.object(k, id) else { continue };
+            let at = tile_origin(k) + DVec2::new(o.pos[0], o.pos[1]);
+            let rot = if lean { lean_rotation(o.rot[0], &|p| doc.ground(p), at) } else { [o.rot[0], 0.0, 0.0] };
+            self.history.touch_tile(doc, k);
+            if let Some(t) = doc.tiles.get_mut(&k) {
+                if let Some(o) = t.tile.objects.iter_mut().find(|o| o.id == id) {
+                    o.rot = rot;
+                }
+                t.touch_content();
+            }
+        }
+        self.history.commit();
+    }
+
     pub fn turn_objects(&mut self, random: bool) {
         let sels = self.selection();
         let Some(doc) = self.doc.as_mut() else { return };
@@ -4474,6 +4496,35 @@ fn join_arms(doc: &mut Document, a: &crate::junction::Arm, b: &crate::junction::
 }
 
 /// Keep the entry points' records in step with their objects.
+/// The angles that tilt an object facing `heading` at `at` to the ground under it: its
+/// forward and right axes, as the view turns them, climbing as the ground climbs along them
+/// (sampled 2 m either side; the signs found by trying, so they follow OMSI's convention).
+pub fn lean_rotation(heading: f64, ground: &dyn Fn(DVec2) -> f64, at: DVec2) -> [f64; 3] {
+    let axes = |rot: [f64; 3]| {
+        let m = object_matrix(DVec3::ZERO, rot);
+        (m.transform_vector3(glam::Vec3::Y).as_dvec3(), m.transform_vector3(glam::Vec3::X).as_dvec3())
+    };
+    let (f0, r0) = axes([heading, 0.0, 0.0]);
+    let grade = |d: DVec3| {
+        let d = d.truncate().normalize_or_zero();
+        (ground(at + d * 2.0) - ground(at - d * 2.0)) / 4.0
+    };
+    let (gf, gr) = (grade(f0), grade(r0));
+    let (a, b) = (gf.atan().to_degrees(), gr.atan().to_degrees());
+    let rise = |v: DVec3| v.z / v.truncate().length().max(1e-9);
+    [(1.0, 1.0), (1.0, -1.0), (-1.0, 1.0), (-1.0, -1.0)]
+        .into_iter()
+        .map(|(s1, s2)| [heading, s1 * a, s2 * b])
+        .min_by(|x, y| {
+            let err = |rot: [f64; 3]| {
+                let (f, r) = axes(rot);
+                (rise(f) - gf).abs() + (rise(r) - gr).abs()
+            };
+            err(*x).total_cmp(&err(*y))
+        })
+        .unwrap()
+}
+
 pub fn sync_entry_points(doc: &mut Document) {
     let order = doc.order.clone();
     let mut eps = std::mem::take(&mut doc.global.entry_points);
@@ -4913,6 +4964,26 @@ fn rolls(p: DVec2) -> f64 {
 mod tests {
     use super::*;
     use crate::selection::tests::{add_object, add_spline, flat_map};
+
+    #[test]
+    fn an_object_leans_as_the_ground_slopes_under_it() {
+        // the ground climbs 10 % to the east and 5 % to the north
+        let ground = |p: DVec2| p.x * 0.10 + p.y * 0.05;
+        for heading in [0.0, 37.0, 90.0, 200.0, 315.0] {
+            let rot = lean_rotation(heading, &ground, DVec2::new(100.0, 100.0));
+            assert_eq!(rot[0], heading);
+            let m = object_matrix(DVec3::ZERO, rot);
+            for v in [glam::Vec3::Y, glam::Vec3::X] {
+                let w = m.transform_vector3(v).as_dvec3();
+                let flat = w.truncate().normalize();
+                let want = flat.x * 0.10 + flat.y * 0.05;
+                let got = w.z / w.truncate().length();
+                assert!((got - want).abs() < 0.01, "heading {heading}: {got} {want}");
+            }
+        }
+        // flat ground: upright
+        assert_eq!(lean_rotation(45.0, &|_| 3.0, DVec2::ZERO), [45.0, 0.0, 0.0]);
+    }
 
     fn editor() -> Editor {
         let mut doc = flat_map(1);

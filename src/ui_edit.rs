@@ -176,6 +176,14 @@ pub fn group_properties(ui: &mut egui::Ui, ed: &mut Editor, lib: &Library, actio
                     ed.turn_objects(false);
                 }
             });
+            ui.horizontal_wrapped(|ui| {
+                if ui.button(tr("Lean with the ground", "Наклонить по земле")).on_hover_text(lean_help()).clicked() {
+                    ed.lean_objects(true);
+                }
+                if ui.button(tr("Stand upright", "Поставить ровно")).clicked() {
+                    ed.lean_objects(false);
+                }
+            });
         }
         if splines > 0 {
             if let Some(rt) = ed.road_type.clone() {
@@ -434,6 +442,10 @@ pub fn array_section(ui: &mut egui::Ui, ed: &mut Editor, lib: &Library) {
     if go {
         ed.array(lib, v[0] as usize, DVec2::new(v[1], v[2]), v[3]);
     }
+}
+
+pub(crate) fn lean_help() -> &'static str {
+    tr("Tilted to the ground under it, the way it slopes forward and to the side (a fence, a bench or a shed on a hillside)", "Наклон по земле под ним, вперёд и вбок (забор, скамейка или сарай на склоне)")
 }
 
 pub(crate) fn lay_help() -> &'static str {
