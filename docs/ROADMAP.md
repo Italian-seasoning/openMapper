@@ -151,3 +151,4 @@ Add a line when you touch a shared file: stream, file, what.
 * D · `src/install.rs`: `Prefs::last_views` (`remember_view`, `last_view`); `src/app.rs`: `remember_view` before another map opens, on Close and Quit; `after_open` goes there (not in screenshot runs).
 * D · `src/main.rs`: `mod merge`, `mod ui_merge`; `src/doc/mod.rs`: `load_tile` is `pub(crate)`, `tests` is `pub(crate)` (`scratch`, `sample_map` for other modules' tests); `src/ui.rs`: `Action::MergeTiles`, `UiState::merge` (drawn after Groups), Map > Tiles from another map…; `src/app.rs`: `Action::MergeTiles` lists the maps, `OPENMAPPER_MERGE=<global.cfg>[,add]`.
 * D · `src/ui.rs`: `Action::{RevealMap, CopyMap, BinMap}` from a right-click on the welcome list; `src/app.rs`: `copy_map`, `bin_map`.
+* D · `src/doc/mod.rs`: `TileDoc::new_flat` marks the tile `[variable_terrainlightmap]`; `src/editor.rs`: `set_tile_lamplight`; `src/ui.rs`: the picked tile's section (`water_panel`) has the switch.

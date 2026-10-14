@@ -2472,6 +2472,19 @@ impl Editor {
         }
     }
 
+    /// Whether the game lights a tile's ground from the lamps on and round it at night
+    /// (`[variable_terrainlightmap]`: it bakes the tile's light map when it loads it).
+    pub fn set_tile_lamplight(&mut self, k: TileKey, on: bool) {
+        let Some(doc) = self.doc.as_mut() else { return };
+        self.history.begin(tr("Lamp light on the ground", "Свет фонарей на земле"));
+        self.history.touch_tile(doc, k);
+        if let Some(t) = doc.tiles.get_mut(&k) {
+            t.tile.variable_terrain_lightmap = on;
+            t.touch_content();
+        }
+        self.history.commit();
+    }
+
     /// A ring of new tiles round the whole map (corners too), in one step. How many.
     pub fn grow_map(&mut self) -> usize {
         let Some(doc) = self.doc.as_mut() else { return 0 };

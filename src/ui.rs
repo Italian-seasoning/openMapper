@@ -1578,11 +1578,12 @@ pub(crate) fn prop_row(ui: &mut egui::Ui, name: &str, add: impl FnOnce(&mut egui
     ui.end_row();
 }
 
-/// The water of the tile clicked last (Tiles tool): on or off, and its height.
+/// The tile clicked last (Tiles tool): its water on or off and its height, and whether its
+/// lamps light the ground at night.
 fn water_panel(ui: &mut egui::Ui, ed: &mut Editor) {
     let Some((k, water, lowest)) = ed.picked_tile.and_then(|k| ed.doc.as_ref()?.tiles.get(&k).map(|t| (k, t.water, t.terrain.heights.iter().copied().fold(f32::MAX, f32::min)))) else { return };
     ui.add_space(10.0);
-    ui.label(RichText::new(format!("{} {}, {}: {}", tr("Tile", "Тайл"), k.0, k.1, tr("water", "вода"))).strong());
+    ui.label(RichText::new(format!("{} {}, {}", tr("Tile", "Тайл"), k.0, k.1)).strong());
     let mut on = water.is_some();
     let mut level = water.map(|w| (w[0] + w[1] + w[2] + w[3]) / 4.0).unwrap_or(lowest + 1.0);
     let mut change = false;
@@ -1596,6 +1597,10 @@ fn water_panel(ui: &mut egui::Ui, ed: &mut Editor) {
         ed.set_water(k, on.then_some(level));
     } else {
         ed.end_panel_step_if_idle(ui.ctx());
+    }
+    let mut lamps = ed.doc.as_ref().and_then(|d| d.tiles.get(&k)).map(|t| t.tile.variable_terrain_lightmap).unwrap_or(false);
+    if check(ui, &mut lamps, tr("Lamps light the ground at night", "Фонари освещают землю ночью")).on_hover_text(tr("The game works out the light pools of the street lamps on and round this tile when it loads it ([variable_terrainlightmap]); off, it shows the tile's light map file as it is", "Игра рассчитывает пятна света фонарей на этом тайле и вокруг при загрузке ([variable_terrainlightmap]); выключено — показывает файл карты освещения тайла как есть")).changed() {
+        ed.set_tile_lamplight(k, lamps);
     }
 }
 

@@ -84,7 +84,9 @@ impl TileDoc {
         let mut terrain = Terrain::flat();
         terrain.heights.iter_mut().for_each(|h| *h = height);
         TileDoc {
-            tile: Tile { version: 14, has_terrain: true, ..Default::default() },
+            // (lamps light the ground round them at night: the game bakes the tile's light
+            // map from them, as on nearly every tile of the stock maps)
+            tile: Tile { version: 14, has_terrain: true, variable_terrain_lightmap: true, ..Default::default() },
             chrono: Vec::new(),
             water: None,
             terrain,
