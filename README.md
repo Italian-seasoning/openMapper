@@ -104,6 +104,11 @@ experienced map makers.
   ground eased where the maps meet. IDCodes are given anew, roads running from one tile
   taken into another stay joined, its ground textures are found among this map's or added
   in the same order. One undo step; lines, timetable and AI lists stay with the other map.
+* **GPS tracks to trace** (Map menu, or drop the file on the window): a route recorded on a
+  phone or drawn in another program (GPX tracks and routes, KML, GeoJSON) laid over a map
+  placed on the Earth, drawn in magenta in the view to draw roads along, or built at once
+  into a road of the Roads tool's type, as if drawn (corners rounded, junctions where it
+  meets the map's roads, only its runs over the map's tiles), one undo step.
 * **Own pictures** on tiles (a scan, a screenshot, an old plan), no place on the Earth needed:
   "Load image file…" for a tile (or drop the picture on the window with the Tiles tool and a tile
   clicked), or one picture over a rectangle of tiles, cut into their pieces; turned (90° steps or

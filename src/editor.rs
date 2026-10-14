@@ -206,6 +206,10 @@ pub struct Editor {
     /// A length and radius typed for a road, put in at the next tick (where the junctions
     /// its neighbour may end at are known).
     pub shape_request: Option<(TileKey, i64, f64, f64)>,
+    /// GPS tracks shown to trace over (world metres; Map > GPS tracks to trace).
+    pub trace_lines: Vec<Vec<DVec2>>,
+    /// The camera asked to go over this point (a window's "go there").
+    pub look_request: Option<DVec2>,
     /// The ground under the selected objects is to be levelled at the next tick.
     pub level_request: bool,
     /// The last click on something with Select, and when (a second soon on a road: its chain).
@@ -378,6 +382,8 @@ impl Default for Editor {
             move_delta: DVec2::ZERO,
             carry_preview: Vec::new(),
             shape_request: None,
+            trace_lines: Vec::new(),
+            look_request: None,
             level_request: false,
             last_click: None,
             pending_rebuild: Vec::new(),
@@ -2083,9 +2089,15 @@ impl Editor {
     /// line with it; one undo step. A road lying mostly on a road the map had is left out
     /// (built before). Gives back how many roads and junctions were made.
     pub fn build_osm(&mut self, assets: &mut Assets, list: &[crate::osm::Road], types: &[(crate::osm::Class, String)], oneway: Option<&str>) -> (usize, usize) {
-        // (the types' widths and kinds first)
+        // (the types' widths and kinds first, and the map's own roads': junctions are made
+        // only with roads whose kind is known)
         let t0 = Instant::now();
-        for t in types.iter().map(|t| t.1.as_str()).chain(oneway) {
+        let mut files: Vec<String> = types.iter().map(|t| t.1.clone()).chain(oneway.map(str::to_string)).collect();
+        if let Some(doc) = self.doc.as_ref() {
+            let mut seen = std::collections::HashSet::new();
+            files.extend(doc.tiles.values().flat_map(|t| t.tile.splines.iter().filter(|s| !s.deleted).map(|s| s.file.clone())).filter(|f| seen.insert(f.to_lowercase())));
+        }
+        for t in &files {
             while assets.spline(t).is_none() && !assets.spline_failed(t) && t0.elapsed().as_secs() < 20 {
                 assets.poll();
                 std::thread::sleep(std::time::Duration::from_millis(10));
@@ -2667,6 +2679,16 @@ impl Editor {
                 for i in 0..n {
                     let t = if n > 1 { i as f64 / (n - 1) as f64 } else { 0.0 };
                     disc(&mut x.overlay, cam, a + (c - a) * t + DVec3::Z * 0.3, w * 2.5, ORANGE);
+                }
+            }
+        }
+        // GPS tracks to trace, in magenta on the ground
+        for t in &self.trace_lines {
+            let on = |p: DVec2| DVec3::new(p.x, p.y, doc.ground(p) + 0.4);
+            for seg in t.windows(2) {
+                let n = ((seg[1] - seg[0]).length() / 6.0).ceil().clamp(1.0, 50.0) as usize;
+                for i in 0..n {
+                    line(&mut x.overlay, cam, on(seg[0].lerp(seg[1], i as f64 / n as f64)), on(seg[0].lerp(seg[1], (i + 1) as f64 / n as f64)), w * 0.8, [0.95, 0.3, 0.85, 0.9]);
                 }
             }
         }

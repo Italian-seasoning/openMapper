@@ -107,6 +107,8 @@ pub struct App {
     /// The Satellite and terrain window and the overlay on the ground.
     geo: crate::ui_geo::GeoUi,
     osm: crate::ui_osm::OsmUi,
+    /// Map > GPS tracks to trace.
+    trace: crate::ui_trace::TraceWindow,
     /// Getting started.
     guide: crate::ui_guide::Guide,
     /// The next frame's view becomes the map's picture (`picture.jpg`).
@@ -151,6 +153,7 @@ impl App {
             chrono: Default::default(),
             geo: Default::default(),
             osm: Default::default(),
+            trace: Default::default(),
             guide: Default::default(),
             picture: false,
             snapshot: false,
@@ -396,6 +399,22 @@ impl App {
                 self.ui.merge.show(install::list_maps(r));
             }
             self.ui.merge.open_on(cfg.into(), &mut self.ed, &self.lib, add);
+        }
+        // OPENMAPPER_TRACE=<file>[,build]: GPS tracks to trace open with that file loaded (and
+        // its first line built into a road of the first road type, after OPENMAPPER_GEO)
+        if let Ok(a) = std::env::var("OPENMAPPER_TRACE") {
+            let (f, build) = a.strip_suffix(",build").map(|f| (f, true)).unwrap_or((&a, false));
+            self.trace.add_file(std::path::Path::new(f));
+            self.trace.open = true;
+            if build {
+                while self.lib.scanning {
+                    self.lib.poll();
+                    std::thread::sleep(std::time::Duration::from_millis(20));
+                }
+                if let Some(rt) = self.lib.assets.iter().find(|x| x.category == crate::library::Category::Roads && x.half_width > 3.0).map(|x| x.rel.clone()) {
+                    self.trace.build_first(rt);
+                }
+            }
         }
         // OPENMAPPER_HISTORY=1: the edit history open
         if std::env::var_os("OPENMAPPER_HISTORY").is_some() {
@@ -965,6 +984,7 @@ impl App {
             Action::Traffic => self.traffic.open = !self.traffic.open,
             Action::Geo => self.geo.open = !self.geo.open,
             Action::Osm => self.osm.open = !self.osm.open,
+            Action::Trace => self.trace.open = !self.trace.open,
             Action::Guide => self.guide.open = !self.guide.open,
             Action::Export => self.export(),
             Action::ToggleFavourite(rel) => {
@@ -1312,6 +1332,10 @@ impl App {
                 self.ui.views.follow(self.ed.doc.as_ref().map(|d| d.dir.as_path()));
                 self.ui.views.window(&ctx, &mut self.cam);
                 self.osm.window(&ctx, &mut self.ed, &self.lib, self.geo.georef());
+                self.trace.window(&ctx, &mut self.ed, &self.lib, self.geo.georef());
+                if let Some(p) = self.ed.look_request.take() {
+                    actions.push(Action::LookAt(p));
+                }
                 if let Some(p) = self.geo.look.take() {
                     actions.push(Action::LookAt(p));
                 }
@@ -1334,6 +1358,26 @@ impl App {
             }
         }
         self.geo.take_bridge(&mut self.ui.geo, &mut self.ed, &self.prefs);
+        // a GPS track built into a road: its runs over the map's tiles, as a street of the type chosen
+        if let (Some((pts, rt)), Some(assets), Some(doc)) = (self.trace.build.take(), self.assets.as_mut(), self.ed.doc.as_ref()) {
+            let mut runs: Vec<Vec<DVec2>> = vec![Vec::new()];
+            for p in pts {
+                if doc.tiles.contains_key(&crate::doc::tile_of(p)) {
+                    runs.last_mut().unwrap().push(p);
+                } else if !runs.last().unwrap().is_empty() {
+                    runs.push(Vec::new());
+                }
+            }
+            let roads: Vec<crate::osm::Road> = runs.into_iter().filter(|r| r.len() >= 2).map(|r| crate::osm::Road { class: crate::osm::Class::Street, oneway: false, points: crate::osm::simplify(&r) }).collect();
+            if roads.is_empty() {
+                self.ed.error(tr("The track does not run over the map's tiles", "Трек не проходит по тайлам карты"));
+            } else {
+                let mark = self.ed.history.mark();
+                let (n, j) = self.ed.build_osm(assets, &roads, &[(crate::osm::Class::Street, rt)], None);
+                self.ed.history.merge_since(mark, tr("Road along a GPS track", "Дорога по GPS-треку"));
+                self.ed.toast(format!("{} {n} · {} {j}", tr("Roads built:", "Дорог построено:"), tr("junctions:", "перекрёстков:")));
+            }
+        }
         if let (Some(b), Some(assets)) = (self.osm.build.take(), self.assets.as_mut()) {
             let mark = self.ed.history.mark();
             let (roads, junctions) = self.ed.build_osm(assets, &b.roads, &b.types, b.oneway_type.as_deref());
@@ -2153,8 +2197,13 @@ impl ApplicationHandler for App {
                 }
             }
             WindowEvent::DroppedFile(p) => {
-                // (a picture dropped with the Tiles tool on: the clicked tile's own picture)
-                if self.ed.tool != Tool::Tiles || !self.geo.drop_picture(&p, &mut self.ed) {
+                let ext = p.extension().map(|e| e.to_string_lossy().to_lowercase()).unwrap_or_default();
+                // (a GPS track: to trace; a picture dropped with the Tiles tool on: the clicked
+                // tile's own picture)
+                if ["gpx", "kml", "geojson"].contains(&ext.as_str()) && self.ed.doc.is_some() {
+                    self.trace.add_file(&p);
+                    self.trace.open = true;
+                } else if self.ed.tool != Tool::Tiles || !self.geo.drop_picture(&p, &mut self.ed) {
                     self.import(vec![p]);
                 }
             }

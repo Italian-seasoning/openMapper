@@ -117,6 +117,8 @@ pub enum Action {
     Guide,
     /// Map > Tiles from another map (the maps to choose from are listed first).
     MergeTiles,
+    /// Open or close GPS tracks to trace.
+    Trace,
     /// Save the map and pack it into a .zip to share.
     Export,
     /// A plan of the map as an SVG picture.
@@ -901,6 +903,9 @@ fn menu_bar(root: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, can_undo: bo
                 }
                 if menu_item(ui, Some(Icon::Road), tr("From OpenStreetMap…", "Из OpenStreetMap…"), "", true) {
                     actions.push(Action::Osm);
+                }
+                if menu_item(ui, Some(Icon::Route), tr("GPS tracks to trace…", "GPS-треки для обводки…"), "", true) {
+                    actions.push(Action::Trace);
                 }
                 if menu_item(ui, Some(Icon::Tiles), tr("Tiles from another map…", "Тайлы из другой карты…"), "", true) {
                     actions.push(Action::MergeTiles);

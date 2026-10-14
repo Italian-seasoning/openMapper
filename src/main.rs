@@ -74,7 +74,9 @@ mod ui_views;
 mod ui_pbr;
 mod ui_roads;
 mod ui_newmap;
+mod trace;
 mod ui_timetable;
+mod ui_trace;
 mod ui_traffic;
 
 fn main() {
