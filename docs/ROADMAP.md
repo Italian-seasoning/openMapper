@@ -16,7 +16,6 @@ maps; checks, safe saving, sharing (zip and plan), a test drive, a written tutor
 command search.
 
 Still open for 1.0:
-* Tram overhead wires along tracks (a wire spline laid over a chain of track, linked).
 * Builds and packages for Windows and Linux (`tools/package-macos.sh` is macOS only), and a
   release on GitHub with notes.
 * A pass in openOMSI over maps made only with openMapper (the sample, an OSM town), noting
@@ -176,3 +175,4 @@ Add a line when you touch a shared file: stream, file, what.
 * D · `src/editor.rs`: `Editor::{stop_both_sides, stop_twin}` (planned with the stop, placed with it, a ghost of its own); `src/ui.rs`: the Bus stops mode's switch; `src/app.rs`: `OPENMAPPER_STOP=x,y[,one]`.
 * D · `src/main.rs`: `mod plan`, `--plan global.cfg out.svg`; `src/ui.rs`: `Action::ExportPlan`, File > Export a plan of the map…; `src/app.rs`: it saves where asked and shows the file.
 * D · `src/main.rs`: `mod trace`, `mod ui_trace`; `src/editor.rs`: `Editor::{trace_lines, look_request}` (drawn in `extras`; a window's "go there"), `build_osm` waits for the map's own road models too (junctions need their kind); `src/ui.rs`: `Action::Trace`, Map > GPS tracks to trace…; `src/app.rs`: `App::trace` drawn after the OSM window, its build taken after the interface, `.gpx` / `.kml` / `.geojson` dropped go to it, `OPENMAPPER_TRACE=<file>[,build]`.
+* D · `src/editor.rs`: `wire_along`; `src/ui_edit.rs`: a track's Overhead wire under Parallel copy; `src/app.rs`: `OPENMAPPER_WIRE=<spline>`.

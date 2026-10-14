@@ -492,10 +492,34 @@ fn parallel_inner(ui: &mut egui::Ui, ed: &mut Editor, lib: &Library, k: TileKey,
     });
     ui.label(RichText::new(tr("Left and right of the way the road runs (its arrows with AI lanes shown)", "Слева и справа по ходу дороги (её стрелки при показе полос ИИ)")).small().color(TEXT_DIM));
     ui.data_mut(|d| d.insert_temp(key, dist));
+    // a track's overhead wire: a wire spline laid on it, piece for piece
+    let track = ed.selection().iter().any(|s| matches!(s, Sel::Spline(k, id) if ed.doc.as_ref().and_then(|d| d.spline(*k, *id)).and_then(|x| lib.find(&x.file)).map(|a| a.category == crate::library::Category::Tracks).unwrap_or(false)));
+    if !track {
+        return;
+    }
+    let wires: Vec<&crate::library::Asset> = lib.assets.iter().filter(|a| a.kind == crate::library::Kind::Spline && ["fahrdraht", "oberleitung", "fahrleitung", "ohl", "wire", "catenary", "contact"].iter().any(|w| a.rel.to_lowercase().contains(w))).collect();
+    ui.add_space(6.0);
+    ui.label(RichText::new(tr("Overhead wire", "Контактный провод")).strong()).on_hover_text(tr("For trams and electric trains: a wire spline laid on the selected track, piece for piece and linked (its height is the wire spline's own); the masts go in with Objects along the road", "Для трамваев и электричек: сплайн провода поверх выбранного пути, кусок за куском и со связями (высота — своя у сплайна провода); мачты ставятся «Объектами вдоль дороги»"));
+    if wires.is_empty() {
+        ui.label(RichText::new(tr("No wire spline installed (one whose name says Fahrdraht, Oberleitung or wire)", "Нет сплайна провода (с Fahrdraht, Oberleitung или wire в имени)")).small().color(TEXT_DIM));
+        return;
+    }
+    let wkey = egui::Id::new("wire type");
+    let mut chosen: String = ui.data_mut(|d| d.get_temp::<String>(wkey)).filter(|c| wires.iter().any(|w| w.rel == *c)).unwrap_or_else(|| wires[0].rel.clone());
+    ui.horizontal(|ui| {
+        egui::ComboBox::from_id_salt("wire pick").selected_text(wires.iter().find(|w| w.rel == chosen).map(|w| w.name.clone()).unwrap_or_default()).width(150.0).show_ui(ui, |ui| {
+            for w in &wires {
+                ui.selectable_value(&mut chosen, w.rel.clone(), &w.name).on_hover_text(&w.rel);
+            }
+        });
+        if ui.button(icons::labelled(Icon::Add, tr("Lay it", "Проложить"))).clicked() {
+            let n = ed.wire_along(&chosen);
+            ed.toast(format!("{} {n}", tr("Wire pieces laid:", "Кусков провода:")));
+        }
+    });
+    ui.data_mut(|d| d.insert_temp(wkey, chosen));
 }
 
-/// Objects along the selected road(s): the rows on a road selected alone, and new rows of the
-/// object chosen in the catalogue.
 /// The ground painted along the selected roads: a layer under them or beside them.
 pub fn paint_along_section(ui: &mut egui::Ui, ed: &mut Editor, lib: &Library) {
     if !ed.selection().iter().any(|s| matches!(s, Sel::Spline(..))) || ed.editing_paths() {
@@ -537,6 +561,8 @@ pub fn paint_along_section(ui: &mut egui::Ui, ed: &mut Editor, lib: &Library) {
     });
 }
 
+/// Objects along the selected road(s): the rows on a road selected alone, and new rows of the
+/// object chosen in the catalogue.
 pub fn rows_section(ui: &mut egui::Ui, ed: &mut Editor, lib: &Library) {
     let sels = ed.selection();
     if !sels.iter().any(|s| matches!(s, Sel::Spline(..))) {

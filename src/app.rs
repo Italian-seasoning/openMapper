@@ -359,6 +359,11 @@ impl App {
                 self.ed.hover_point(assets, &self.lib, DVec3::new(x, y, z));
             }
         }
+        // OPENMAPPER_WIRE=<spline>: that wire laid on what OPENMAPPER_SELECT selected
+        if let Ok(w) = std::env::var("OPENMAPPER_WIRE") {
+            let n = self.ed.wire_along(&w);
+            log::info!("wire: {n} pieces");
+        }
         // OPENMAPPER_HIDE=trees,objects,splines,technical: those layers hidden
         if let Ok(h) = std::env::var("OPENMAPPER_HIDE") {
             self.ed.show_technical = !h.split(',').any(|x| x.trim() == "technical");

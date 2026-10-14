@@ -3676,6 +3676,32 @@ impl Editor {
         }
     }
 
+    /// A spline of type `wire` laid on each selected one (a track's overhead wire: its height
+    /// is in the wire's own profile), the pieces linked as the track's are; one undo step.
+    /// How many.
+    pub fn wire_along(&mut self, wire: &str) -> usize {
+        let splines: Vec<(TileKey, i64)> = self.selection().into_iter().filter_map(|s| if let Sel::Spline(k, id) = s { Some((k, id)) } else { None }).collect();
+        let Some(doc) = self.doc.as_mut() else { return 0 };
+        if splines.is_empty() {
+            return 0;
+        }
+        self.history.begin(tr("Overhead wire", "Контактный провод"));
+        self.history.touch_global(doc);
+        let ids: std::collections::HashMap<i64, i64> = splines.iter().map(|(_, id)| (*id, doc.new_id())).collect();
+        let link = |id: i64| ids.get(&id).copied().unwrap_or(0);
+        for (k, id) in &splines {
+            let Some(s) = doc.spline(*k, *id).cloned() else { continue };
+            self.history.touch_tile(doc, *k);
+            // (a wire cuts no hole in the ground under it)
+            let w = MapSpline { file: wire.to_string(), id: ids[id], prev_id: link(s.prev_id), next_id: link(s.next_id), mirror: false, terrain_align: None, ..s };
+            let t = doc.tiles.get_mut(k).unwrap();
+            t.tile.splines.push(w);
+            t.touch_content();
+        }
+        self.history.commit();
+        ids.len()
+    }
+
     /// Every object (or spline) of the same type as `s` on the map, selected; `s` stays the
     /// one in the properties. How many.
     pub fn select_alike(&mut self, s: Sel) -> usize {
@@ -5288,6 +5314,24 @@ mod tests {
         assert_eq!(ed.selection().len(), 4);
         ed.undo();
         assert_eq!(ed.doc.as_ref().unwrap().tiles[&(0, 0)].tile.objects.len(), 2);
+    }
+
+    #[test]
+    fn a_wire_is_laid_on_a_track_piece_for_piece() {
+        let mut doc = flat_map(1);
+        add_spline(&mut doc, (0, 0), 10, 50.0, 50.0, 0.0, 30.0, 0, 11);
+        add_spline(&mut doc, (0, 0), 11, 50.0, 80.0, 0.0, 30.0, 10, 0);
+        let mut ed = Editor::default();
+        ed.open(doc);
+        ed.set_selection(vec![Sel::Spline((0, 0), 10), Sel::Spline((0, 0), 11)]);
+        assert_eq!(ed.wire_along("Splines\\wire.sli"), 2);
+        let t = &ed.doc.as_ref().unwrap().tiles[&(0, 0)].tile;
+        let w: Vec<&MapSpline> = t.splines.iter().filter(|s| s.file.ends_with("wire.sli")).collect();
+        assert_eq!(w.len(), 2);
+        assert_eq!((w[0].next_id, w[1].prev_id), (w[1].id, w[0].id));
+        assert_eq!((w[0].pos, w[0].length), ([50.0, 50.0, 0.0], 30.0));
+        // (the track itself as it was)
+        assert_eq!(t.splines.iter().find(|s| s.id == 10).unwrap().next_id, 11);
     }
 
     #[test]
