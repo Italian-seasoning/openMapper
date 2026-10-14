@@ -52,6 +52,9 @@ pub enum Fix {
     LampLight(TileKey),
     /// Forget the object an object takes its state from (`[varparent]`).
     DropVarParent(TileKey, i64),
+    /// Copy the car groups the traffic names but the AI lists lack from OMSI 2's own maps
+    /// (in the installation there).
+    StockGroups(PathBuf),
 }
 
 #[derive(Debug, Clone)]
@@ -144,7 +147,7 @@ impl Kind {
             Kind::TripNoRoute => tr("No way along the roads was found through this trip's stops, so buses cannot drive it. Open it in Map > Lines and timetable to see where it breaks.", "Через остановки этого рейса не найден путь по дорогам, автобусы его не проедут. Откройте его в Карта > Линии и расписание, чтобы увидеть, где он рвётся."),
             Kind::TourEmpty => tr("A tour (a bus's day on the line) has no trips, so no bus runs it.", "У выхода (дня автобуса на линии) нет рейсов, по нему никто не поедет."),
             Kind::TourNoDepot => tr("A tour names no depot or group of the AI lists (or one that is not there): the game has no vehicle to send on it. Choose a depot for it in the Lines window.", "Выход не указывает депо или группу из списка ИИ (или указывает несуществующую): игре нечем его обслужить. Выберите депо в окне линий."),
-            Kind::UnschedMissing => tr("The unscheduled traffic names a group that the AI lists do not have: those cars never appear. Add the group in Map > Traffic and AI.", "Свободное движение указывает группу, которой нет в списке ИИ: эти машины не появятся. Добавьте группу в Карта > Движение и ИИ."),
+            Kind::UnschedMissing => tr("The unscheduled traffic names a group that the AI lists do not have: those cars never appear. Add the group in Map > Traffic and AI, or \"Fix\" copies it from OMSI 2's own maps where they have it.", "Свободное движение указывает группу, которой нет в списке ИИ: эти машины не появятся. Добавьте группу в Карта > Трафик и ИИ или «Исправить» скопирует её из карт OMSI 2, если она там есть."),
             Kind::StopUnused => tr("A stop of the timetable that no trip calls at. Nothing is wrong, it is only not used yet.", "Остановка расписания, на которой не останавливается ни один рейс. Ничего страшного, просто она пока не используется."),
             Kind::ChronoUnmatched => tr("A chrono scenario takes away, retypes or relabels something that is no longer on the map (it was deleted or its IDCode changed): that change does nothing. Open Map > Chrono scenarios, the scenario's properties, and take the change out.", "Хроно-сценарий убирает, меняет тип или тексты того, чего на карте больше нет (удалено или сменился IDCode): это изменение ничего не делает. Откройте Карта > Хроно-сценарии, свойства сценария, и уберите изменение."),
             Kind::HeavyTile => tr("A tile holds far more objects than the stock maps' tiles (up to some 600): the game may stutter when it loads it or looks across it. Thin out a wood planted too densely (Plant brush, Clear) or plant it with more space between the trees.", "На тайле объектов намного больше, чем на тайлах стоковых карт (до 600): игра может подтормаживать, загружая его или глядя через него. Проредите слишком густой лес (кисть растений, «Убирать») или сажайте реже."),
@@ -669,9 +672,16 @@ fn timetable_issues(d: &Document, roots: &[PathBuf], out: &mut Vec<Issue>) {
             }
         }
     }
+    // (OMSI 2's own maps have the groups its template names)
+    let omsi = roots.last();
+    let stock: Vec<String> = match omsi {
+        Some(o) if d.traffic.veh_groups.iter().any(|(g, _)| !groups.contains(&g.to_lowercase())) => crate::traffic::stock_groups(o).into_iter().map(|g| g.name.to_lowercase()).collect(),
+        _ => Vec::new(),
+    };
     for (g, _) in &d.traffic.veh_groups {
         if !groups.contains(&g.to_lowercase()) {
-            out.push(Issue { severity: Severity::Warning, kind: Kind::UnschedMissing, title: g.clone(), detail: String::new(), at: None, sel: None, fix: None });
+            let fix = omsi.filter(|_| stock.contains(&g.to_lowercase())).map(|o| Fix::StockGroups(o.clone()));
+            out.push(Issue { severity: Severity::Warning, kind: Kind::UnschedMissing, title: g.clone(), detail: String::new(), at: None, sel: None, fix });
         }
     }
     let trips: Vec<_> = tt.trips.iter().filter(|t| t.stations.len() >= 2).collect();
@@ -846,6 +856,14 @@ pub fn apply(ed: &mut Editor, fix: &Fix) -> bool {
                 _ => false,
             }
         }
+        Fix::StockGroups(omsi) => {
+            let before = doc.traffic.clone();
+            let n = crate::traffic::fill_named_groups(&mut doc.traffic, omsi);
+            if n > 0 {
+                ed.history.push_snapshot(tr("Car groups from OMSI 2's maps", "Группы машин из карт OMSI 2"), crate::history::Snapshot { traffic: Some(before), ..Default::default() });
+            }
+            n > 0
+        }
         Fix::DropEntry(id) => {
             ed.history.touch_global(doc);
             let before = doc.global.entry_points.len();
@@ -1014,9 +1032,15 @@ impl Checker {
         self.open = open;
         let mut n_done = 0;
         for (n, f) in fix_now {
+            if self.fixed.contains(&n) {
+                continue;
+            }
             if apply(ed, &f) {
                 self.fixed.insert(n);
                 n_done += 1;
+                // (one fix may put right several: the car groups all copied at once)
+                let same: Vec<usize> = self.issues.iter().flatten().enumerate().filter(|(_, it)| it.fix.as_ref() == Some(&f)).map(|(i, _)| i).collect();
+                self.fixed.extend(same);
             }
         }
         if n_done > 0 {
@@ -1155,6 +1179,26 @@ mod tests {
         let mut d = ed.doc.take().unwrap();
         ed.history.undo(&mut d);
         assert_eq!(crate::selection::var_parent_of(&d, 2), Some(1));
+    }
+
+    #[test]
+    fn car_groups_the_traffic_names_are_copied_from_the_stock_maps() {
+        let Some(omsi) = crate::install::find_omsi_root(&crate::install::Prefs::default()) else { return };
+        let _map = crate::doc::one_map();
+        let mut doc = doc_with(&[(0, 0)]);
+        doc.traffic.veh_groups = vec![("NormalCars".into(), 10), ("NoSuchGroup".into(), 1)];
+        let mut out = Vec::new();
+        timetable_issues(&doc, &[PathBuf::new(), omsi.clone()], &mut out);
+        let fixes: Vec<_> = out.iter().filter(|i| i.kind == Kind::UnschedMissing).map(|i| (i.title.as_str(), i.fix.is_some())).collect();
+        assert_eq!(fixes, [("NormalCars", true), ("NoSuchGroup", false)]);
+        let mut ed = Editor::default();
+        ed.doc = Some(doc);
+        assert!(apply(&mut ed, &Fix::StockGroups(omsi.clone())));
+        assert!(ed.doc.as_ref().unwrap().traffic.groups.iter().any(|g| g.name == "NormalCars" && !g.vehicles.is_empty()));
+        assert!(!apply(&mut ed, &Fix::StockGroups(omsi)));
+        let mut d = ed.doc.take().unwrap();
+        ed.history.undo(&mut d);
+        assert!(d.traffic.groups.is_empty());
     }
 
     #[test]
