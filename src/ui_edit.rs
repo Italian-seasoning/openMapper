@@ -626,13 +626,13 @@ pub fn rows_section(ui: &mut egui::Ui, ed: &mut Editor, lib: &Library) {
                         }
                     });
                     prop_row(ui, tr("Beside", "Сбоку"), |ui| {
-                        ui.add(egui::DragValue::new(&mut b.offset[0]).speed(0.05).suffix(" m"));
+                        ui.add(egui::DragValue::new(&mut b.offset[0]).speed(0.05).max_decimals(2).suffix(" m"));
                     });
                     prop_row(ui, tr("Height", "Высота"), |ui| {
-                        ui.add(egui::DragValue::new(&mut b.offset[1]).speed(0.02).suffix(" m"));
+                        ui.add(egui::DragValue::new(&mut b.offset[1]).speed(0.02).max_decimals(2).suffix(" m"));
                     });
                     prop_row(ui, tr("Turn", "Поворот"), |ui| {
-                        ui.add(egui::DragValue::new(&mut b.rot[0]).speed(1.0).suffix("°"));
+                        ui.add(egui::DragValue::new(&mut b.rot[0]).speed(1.0).max_decimals(2).suffix("°"));
                     });
                     prop_row(ui, "", |ui| {
                         check(ui, &mut b.tilt, tr("Lean with the road", "Наклон вместе с дорогой")).on_hover_text(tr("Each object leans with the road's gradient and banking (bays and arrows on the road); off, it stands upright", "Каждый объект наклоняется по уклону и виражу дороги (карманы и стрелки на дороге); выключено — стоит прямо"));
