@@ -18,8 +18,9 @@ command search.
 Still open for 1.0:
 * Builds and packages for Windows and Linux (`tools/package-macos.sh` is macOS only), and a
   release on GitHub with notes.
-* A pass in openOMSI over maps made only with openMapper (the sample, an OSM town), noting
-  anything the game shows differently from the editor.
+* A pass in openOMSI over bigger maps made only with openMapper (an OSM town): Map > Check in
+  openOMSI runs the game's own checks; the sample with a road built across it passes them
+  (0 of 34 chained ends apart, 21 of 21 trip joints joined, no buried road).
 * The interface's texts read through once more by a native speaker in each language.
 
 ## Workstreams
@@ -176,3 +177,4 @@ Add a line when you touch a shared file: stream, file, what.
 * D · `src/main.rs`: `mod plan`, `--plan global.cfg out.svg`; `src/ui.rs`: `Action::ExportPlan`, File > Export a plan of the map…; `src/app.rs`: it saves where asked and shows the file.
 * D · `src/main.rs`: `mod trace`, `mod ui_trace`; `src/editor.rs`: `Editor::{trace_lines, look_request}` (drawn in `extras`; a window's "go there"), `build_osm` waits for the map's own road models too (junctions need their kind); `src/ui.rs`: `Action::Trace`, Map > GPS tracks to trace…; `src/app.rs`: `App::trace` drawn after the OSM window, its build taken after the interface, `.gpx` / `.kml` / `.geojson` dropped go to it, `OPENMAPPER_TRACE=<file>[,build]`.
 * D · `src/editor.rs`: `wire_along`; `src/ui_edit.rs`: a track's Overhead wire under Parallel copy; `src/app.rs`: `OPENMAPPER_WIRE=<spline>`.
+* D · `src/main.rs`: `mod gamecheck`; `src/ui.rs`: `Action::GameCheck`, Map > Check in openOMSI…; `src/app.rs`: `game_check` (saves, runs the game offscreen with `--schedule --view free --cam` from the view, `--all` on small maps, its `OMSI_CHECK_*` flags), the window after the trace window, `OPENMAPPER_GAMECHECK=1`.

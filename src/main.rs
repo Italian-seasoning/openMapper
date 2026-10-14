@@ -15,6 +15,7 @@ mod descriptions;
 mod doc;
 mod draw;
 mod export;
+mod gamecheck;
 mod geo;
 mod editor;
 mod gpu;

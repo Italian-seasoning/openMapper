@@ -77,6 +77,7 @@ fn commands() -> Vec<Command> {
         cmd!(Icon::Road, "From OpenStreetMap…", "Из OpenStreetMap…", "osm real place streets buildings реальное место улицы здания", "", |_, _, a| a.push(Action::Osm)),
         cmd!(Icon::Route, "GPS tracks to trace…", "GPS-треки для обводки…", "gpx kml geojson trace route recorded phone трек маршрут телефон", "", |_, _, a| a.push(Action::Trace)),
         cmd!(Icon::Tiles, "Tiles from another map…", "Тайлы из другой карты…", "merge join import combine объединить соединить импорт", "", |_, _, a| a.push(Action::MergeTiles)),
+        cmd!(Icon::CheckCircle, "Check in openOMSI…", "Проверка в openOMSI…", "game verify validate offscreen игра проверить", "", |_, _, a| a.push(Action::GameCheck)),
         cmd!(Icon::Play, "Test drive in openOMSI", "Тест-драйв в openOMSI", "play run game drive играть запустить", "F5", |_, _, a| a.push(Action::Play)),
         // View
         cmd!(Icon::Flag, "Saved views…", "Сохранённые виды…", "bookmark camera закладка камера", "Ctrl+1…9", |st, _, _| st.views.open = true),

@@ -119,6 +119,8 @@ pub enum Action {
     MergeTiles,
     /// Open or close GPS tracks to trace.
     Trace,
+    /// Save and run the map in openOMSI offscreen with its checks.
+    GameCheck,
     /// Save the map and pack it into a .zip to share.
     Export,
     /// A plan of the map as an SVG picture.
@@ -913,6 +915,9 @@ fn menu_bar(root: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, can_undo: bo
                 ui.separator();
                 if menu_item(ui, Some(Icon::Play), tr("Test drive in openOMSI", "Тест-драйв в openOMSI"), "F5", game_found) {
                     actions.push(Action::Play);
+                }
+                if menu_item(ui, Some(Icon::CheckCircle), tr("Check in openOMSI…", "Проверка в openOMSI…"), "", game_found) {
+                    actions.push(Action::GameCheck);
                 }
             });
             ui.menu_button(tr("Help", "Справка"), |ui| {

@@ -109,6 +109,8 @@ pub struct App {
     osm: crate::ui_osm::OsmUi,
     /// Map > GPS tracks to trace.
     trace: crate::ui_trace::TraceWindow,
+    /// Map > Check in openOMSI.
+    gamecheck: crate::gamecheck::GameCheck,
     /// Getting started.
     guide: crate::ui_guide::Guide,
     /// The next frame's view becomes the map's picture (`picture.jpg`).
@@ -155,6 +157,7 @@ impl App {
             geo: Default::default(),
             osm: Default::default(),
             trace: Default::default(),
+            gamecheck: Default::default(),
             guide: Default::default(),
             picture: false,
             snapshot: false,
@@ -422,6 +425,10 @@ impl App {
                 }
             }
         }
+        // OPENMAPPER_GAMECHECK=1: Check in openOMSI run at the start
+        if std::env::var_os("OPENMAPPER_GAMECHECK").is_some() {
+            self.game_check();
+        }
         // OPENMAPPER_HISTORY=1: the edit history open
         if std::env::var_os("OPENMAPPER_HISTORY").is_some() {
             self.ui.history_open = true;
@@ -663,6 +670,23 @@ impl App {
             }
             Err(e) => self.ed.error(format!("{}: {e}", tr("Could not restore the changes", "Не удалось вернуть изменения"))),
         }
+    }
+
+    /// Map > Check in openOMSI: saved, then run by the game offscreen with its checks, its
+    /// picture taken from the view as it is.
+    fn game_check(&mut self) {
+        if self.game.is_none() {
+            self.ed.error(tr("openOMSI was not found", "openOMSI не найдена"));
+            return;
+        }
+        if !self.save() {
+            return;
+        }
+        let (Some(game), Some(roots), Some(doc)) = (&self.game, &self.roots, &self.ed.doc) else { return };
+        let folder = doc.dir.file_name().map(|f| f.to_string_lossy().to_string()).unwrap_or_default();
+        let eye = self.cam.wanted_eye();
+        let cam = [eye.x, eye.y, eye.z, self.cam.yaw, -self.cam.pitch, (self.cam.fov_y as f64).to_degrees()];
+        self.gamecheck.start(game, roots, &folder, cam, doc.tiles.len());
     }
 
     fn play(&mut self) {
@@ -991,6 +1015,7 @@ impl App {
             Action::Geo => self.geo.open = !self.geo.open,
             Action::Osm => self.osm.open = !self.osm.open,
             Action::Trace => self.trace.open = !self.trace.open,
+            Action::GameCheck => self.game_check(),
             Action::Guide => self.guide.open = !self.guide.open,
             Action::Export => self.export(),
             Action::ToggleFavourite(rel) => {
@@ -1339,6 +1364,12 @@ impl App {
                 self.ui.views.window(&ctx, &mut self.cam);
                 self.osm.window(&ctx, &mut self.ed, &self.lib, self.geo.georef());
                 self.trace.window(&ctx, &mut self.ed, &self.lib, self.geo.georef());
+                if self.gamecheck.window(&ctx) {
+                    actions.push(Action::GameCheck);
+                }
+                if let Some(p) = self.gamecheck.look.take() {
+                    actions.push(Action::LookAt(p));
+                }
                 if let Some(p) = self.ed.look_request.take() {
                     actions.push(Action::LookAt(p));
                 }

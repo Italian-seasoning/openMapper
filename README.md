@@ -198,6 +198,11 @@ can drive in service.
   itself as the map grows (road, stop, start point, line, tour, buses, saved, test drive),
   with a "Show me" for each step.
 * **Test drive**: saves and launches openOMSI on this map.
+* **Check in openOMSI** (Map menu): the map saved and run by the game itself, unseen, with
+  its own checks (lanes with no road surface under them, roads buried in the ground, steps
+  a bus wheel cannot climb, chained roads apart in height, start points off the road, every
+  trip's way on the lanes), the game's picture of the map from your view beside what it
+  found, the problems first; a place it names is a click away. A few seconds on a small map.
 * **Map check** (Map > Check map…): missing objects, roads and textures, road ends lying on
   one another but not joined, links to splines that are gone, bus stops with no lane near,
   start points away from a road, IDCodes used twice, a too low NextIDCode, objects off their
