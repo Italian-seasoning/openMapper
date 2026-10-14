@@ -155,3 +155,4 @@ Add a line when you touch a shared file: stream, file, what.
 * D · `src/library.rs`: `Asset::lamp` (`[maplight]`); `src/check.rs`: `Kind::LampsDark`, `Fix::LampLight`.
 * D · `src/main.rs`: `mod roadpaint`; `src/autopaint.rs`: `paint_where` (a layer painted by any weight; `apply` uses it), `band` is `pub(crate)`; `src/editor.rs`: `Editor::paint_along`, `paint_along_selected`; `src/ui_edit.rs`: `paint_along_section` (a road's properties and a selection's); `src/app.rs`: `OPENMAPPER_PAINT_ALONG=<layer>,<width>[,under]`.
 * D · `src/editor.rs`: `Editor::{stop_both_sides, stop_twin}` (planned with the stop, placed with it, a ghost of its own); `src/ui.rs`: the Bus stops mode's switch; `src/app.rs`: `OPENMAPPER_STOP=x,y[,one]`.
+* D · `src/main.rs`: `mod plan`, `--plan global.cfg out.svg`; `src/ui.rs`: `Action::ExportPlan`, File > Export a plan of the map…; `src/app.rs`: it saves where asked and shows the file.

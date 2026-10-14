@@ -38,6 +38,7 @@ mod osm_lines;
 mod osm_water;
 mod parallel;
 mod place;
+mod plan;
 mod plants;
 mod render;
 mod reshape;
@@ -91,6 +92,8 @@ fn main() {
     match (args.get(1).and_then(|a| a.to_str()), args.get(2), args.get(3)) {
         (Some("--export"), Some(cfg), Some(out)) => std::process::exit(export::cli_export(std::path::Path::new(cfg), std::path::Path::new(out))),
         (Some("--import"), Some(f), _) => std::process::exit(export::cli_import(std::path::Path::new(f))),
+        // `openmapper --plan path/to/global.cfg out.svg`: a plan of the map
+        (Some("--plan"), Some(cfg), Some(out)) => std::process::exit(plan::cli(std::path::Path::new(cfg), std::path::Path::new(out))),
         _ => {}
     }
     // `openmapper path/to/global.cfg` opens that map

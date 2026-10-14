@@ -55,6 +55,10 @@ experienced map makers.
   junctions, imported models with their textures and PBR maps, mod assets), never the
   installation's own files; a `readme.txt` lists what it needs. Dropping the zip on openMapper
   (or `openmapper --import file`) installs it.
+* **A plan of the map** (File menu, or `openmapper --plan global.cfg out.svg`): an SVG
+  picture from above with the tiles, water, roads at their widths, tracks and footpaths,
+  every bus line's way in its own colour with a key, the stops with their names, a scale
+  bar and north: to share with players or print.
 * **Descriptions in several languages** (`global_<LANG>.dsc`) in the map's properties, and
   **holidays and school holidays** (`Holidays.txt`) in the Lines window.
 * **Satellite and terrain** (Map menu or `I`): a map of the world in the window (drag, wheel, search a

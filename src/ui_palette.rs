@@ -34,6 +34,7 @@ fn commands() -> Vec<Command> {
         cmd!(Icon::Open, "Open map…", "Открыть карту…", "load", "", |_, _, a| a.push(Action::OpenDialog)),
         cmd!(Icon::Save, "Save", "Сохранить", "write", "Ctrl+S", |_, _, a| a.push(Action::Save)),
         cmd!(Icon::Copy, "Export map for sharing…", "Экспорт карты для обмена…", "zip share publish upload экспорт поделиться", "", |_, _, a| a.push(Action::Export)),
+        cmd!(Icon::Map, "Export a plan of the map…", "Экспорт плана карты…", "svg picture print network scheme картинка печать схема", "", |_, _, a| a.push(Action::ExportPlan)),
         cmd!(Icon::Import, "Import assets…", "Импорт ассетов…", "model obj fbx gltf blender mod zip модель мод", "", |_, _, a| a.push(Action::Import)),
         cmd!(Icon::History, "Earlier versions…", "Прошлые версии…", "backup restore бэкап восстановить", "", |st, _, _| st.versions_open = true),
         // Edit

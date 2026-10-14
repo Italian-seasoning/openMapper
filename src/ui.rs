@@ -119,6 +119,8 @@ pub enum Action {
     MergeTiles,
     /// Save the map and pack it into a .zip to share.
     Export,
+    /// A plan of the map as an SVG picture.
+    ExportPlan,
     /// Do it without asking about unsaved changes.
     Force(Box<Action>),
     /// Save, then do it; nothing more if the save fails.
@@ -709,6 +711,9 @@ fn menu_bar(root: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, can_undo: bo
                 }
                 if menu_item(ui, Some(Icon::Copy), tr("Export map for sharing…", "Экспорт карты для обмена…"), "", true) {
                     actions.push(Action::Export);
+                }
+                if menu_item(ui, Some(Icon::Map), tr("Export a plan of the map…", "Экспорт плана карты…"), "", true) {
+                    actions.push(Action::ExportPlan);
                 }
                 if menu_item(ui, Some(Icon::Import), tr("Import assets…", "Импорт ассетов…"), "", true) {
                     actions.push(Action::Import);

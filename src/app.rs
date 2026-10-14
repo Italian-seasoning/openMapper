@@ -765,6 +765,20 @@ impl App {
                     Err(e) => self.ed.error(format!("{}: {e}", tr("Could not go back", "Не удалось вернуть"))),
                 }
             }
+            Action::ExportPlan => {
+                if let Some(doc) = &self.ed.doc {
+                    let name = doc.dir.file_name().map(|f| f.to_string_lossy().to_string()).unwrap_or_else(|| "map".into());
+                    if let Some(out) = rfd::FileDialog::new().add_filter("SVG", &["svg"]).set_file_name(format!("{name} plan.svg")).set_title(tr("Export a plan of the map", "Экспорт плана карты")).save_file() {
+                        match std::fs::write(&out, crate::plan::svg(doc, &self.lib, &omsi_cfg::content_roots())) {
+                            Ok(()) => {
+                                self.ed.toast(format!("{} {}", tr("Plan saved:", "План сохранён:"), out.display()));
+                                reveal(&out);
+                            }
+                            Err(e) => self.ed.error(format!("{}: {e}", out.display())),
+                        }
+                    }
+                }
+            }
             Action::MergeTiles => {
                 if let Some(r) = &self.roots {
                     self.ui.merge.show(install::list_maps(r));
