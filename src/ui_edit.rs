@@ -80,6 +80,41 @@ pub fn paint_names(ctx: &egui::Context, ed: &Editor, lib: &Library, cam: &crate:
     }
 }
 
+/// The number of each path (lane) of a road or object over the view, as its path rules name
+/// them: at the lane's middle, with the way traffic goes.
+pub fn paint_path_numbers(ctx: &egui::Context, lanes: &[crate::lanes::Lane], cam: &crate::camera::Camera, view: egui::Rect) {
+    let painter = ctx.layer_painter(egui::LayerId::new(egui::Order::Background, egui::Id::new("path numbers"))).with_clip_rect(view);
+    let font = egui::FontId::proportional(11.0);
+    let mut taken: Vec<egui::Rect> = Vec::new();
+    for l in lanes.iter().filter(|l| l.pts.len() >= 2) {
+        let mid = l.pts.len() / 2;
+        let (a, b) = (l.pts[mid - 1], l.pts[mid]);
+        let Some((x, y)) = crate::selection::project(cam, (a + b) * 0.5 + DVec3::Z * 0.3, view.width(), view.height()) else { continue };
+        let at = view.min + Vec2::new(x, y);
+        if !view.contains(at) {
+            continue;
+        }
+        let way = match l.direction {
+            2 => "↔",
+            _ => "",
+        };
+        let fill = match l.kind {
+            1 => Color32::from_rgb(60, 110, 160),
+            2 => Color32::from_rgb(120, 80, 150),
+            _ => Color32::from_rgb(170, 120, 30),
+        };
+        let galley = painter.layout_no_wrap(format!("#{}{way}", l.index), font.clone(), Color32::WHITE);
+        let mut r = egui::Rect::from_center_size(at, galley.size() + Vec2::new(8.0, 2.0));
+        // (lanes side by side: their labels one under another rather than on top)
+        while taken.iter().any(|t| t.intersects(r)) {
+            r = r.translate(Vec2::new(0.0, r.height() + 1.0));
+        }
+        taken.push(r);
+        painter.rect_filled(r, CornerRadius::same(3), fill);
+        painter.galley(r.min + Vec2::new(4.0, 1.0), galley, Color32::WHITE);
+    }
+}
+
 /// Grid and angle snapping, in the status bar.
 pub fn snap_controls(ui: &mut egui::Ui, ed: &mut Editor) {
     ui.spacing_mut().interact_size.y = 16.0;
@@ -322,9 +357,11 @@ pub fn rules_section(ui: &mut egui::Ui, ed: &mut Editor, sel: Sel) {
     };
     let Some(mut rules) = rules else { return };
     let mut changed = false;
+    let mut numbered = false;
     egui::Frame::new().inner_margin(Margin::symmetric(8, 2)).show(ui, |ui| {
-        egui::CollapsingHeader::new(RichText::new(format!("{} ({})", tr("Path rules", "Правила путей"), rules.iter().filter(|r| !r.kill).count())).strong()).id_salt("rules").show(ui, |ui| {
-            ui.label(RichText::new(tr("For the AI and the player on one path (lane) of it, counted from 0", "Для ИИ и игрока на одном пути (полосе), считая от 0")).small().color(TEXT_DIM));
+        egui::CollapsingHeader::new(RichText::new(format!("{} ({})", tr("Path rules", "Правила путей"), rules.iter().filter(|r| !r.kill).count())).strong()).id_salt("rules").default_open(rules.iter().any(|r| !r.kill)).show(ui, |ui| {
+            ui.label(RichText::new(tr("For the AI and the player on one path (lane) of it, counted from 0: the view shows their numbers", "Для ИИ и игрока на одном пути (полосе), считая от 0: их номера видны в окне вида")).small().color(TEXT_DIM));
+            numbered = true;
             let mut remove = None;
             for (i, r) in rules.iter_mut().enumerate().filter(|(_, r)| !r.kill) {
                 ui.horizontal(|ui| {
@@ -361,6 +398,7 @@ pub fn rules_section(ui: &mut egui::Ui, ed: &mut Editor, sel: Sel) {
             }
         });
     });
+    ed.path_numbers = numbered.then_some(sel);
     if changed {
         ed.set_rules(sel, rules);
     } else {

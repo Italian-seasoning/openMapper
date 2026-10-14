@@ -153,7 +153,8 @@ can drive in service.
   display to its stop; a crossing lists the heads that take their lights from it. The map
   check names objects linked to one that is gone.
 * **Path rules** (a road's or an object's properties), as in OMSI 2's editor: a speed limit,
-  traffic density, priority, trucks, no cars or buses only, each for one path (lane).
+  traffic density, priority, trucks, no cars or buses only, each for one path (lane), the
+  paths' numbers shown on the road or object in the view while its rules are open.
 * **Signal routes** (Map menu), as OMSI 2's editor keeps them in `signalroutes.cfg`: for each
   railway signal the track pieces it protects (taken from the tracks and switches selected in
   the view), its distant signal, the next signal, its aspect and a speed limit; each piece's

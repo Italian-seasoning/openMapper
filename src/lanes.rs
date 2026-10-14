@@ -8,7 +8,7 @@ use glam::{DVec2, DVec3, Vec3};
 use omsi_geometry::SplineCurve;
 
 use crate::assets::Assets;
-use crate::doc::{tile_origin, Document};
+use crate::doc::{tile_origin, Document, Sel};
 use crate::place::Pose;
 use crate::roads;
 
@@ -25,6 +25,10 @@ pub struct Lane {
     pub direction: i32,
     /// The spline it runs along (tile, IDCode, length), when it is a spline's.
     pub spline: Option<((i32, i32), i64, f64)>,
+    /// The object it belongs to (tile, IDCode), when it is an object's.
+    pub object: Option<((i32, i32), i64)>,
+    /// Its place among its spline's or object's paths (what a path rule names).
+    pub index: usize,
 }
 
 /// One end of a lane.
@@ -78,6 +82,24 @@ impl Lane {
 }
 
 /// The lanes within `radius` of `centre`, and their ends (linked ones marked).
+/// The lanes of one road or object, each with its path number.
+pub fn of_one(doc: &Document, assets: &mut Assets, sel: Sel) -> Vec<Lane> {
+    let (at, reach) = match sel {
+        Sel::Spline(k, id) => match doc.spline(k, id) {
+            Some(s) => (tile_origin(k) + DVec2::new(s.pos[0], s.pos[1]), s.length + 1.0),
+            None => return Vec::new(),
+        },
+        Sel::Object(k, id) => match doc.object(k, id) {
+            Some(o) => (tile_origin(k) + DVec2::new(o.pos[0], o.pos[1]), 1.0),
+            None => return Vec::new(),
+        },
+    };
+    near(doc, assets, at, reach).0.into_iter().filter(|l| match sel {
+        Sel::Spline(k, id) => l.spline.map(|s| (s.0, s.1)) == Some((k, id)),
+        Sel::Object(k, id) => l.object == Some((k, id)),
+    }).collect()
+}
+
 pub fn near(doc: &Document, assets: &mut Assets, centre: DVec2, radius: f64) -> (Vec<Lane>, Vec<LaneEnd>) {
     let mut lanes = Vec::new();
     for (k, t) in &doc.tiles {
@@ -97,7 +119,7 @@ pub fn near(doc: &Document, assets: &mut Assets, centre: DVec2, radius: f64) -> 
             let c = SplineCurve::from_map(s, org);
             let n = (s.length / 3.0).ceil().max(1.0) as usize;
             let mirror = if s.mirror { -1.0 } else { 1.0 };
-            for p in &m.def.paths {
+            for (index, p) in m.def.paths.iter().enumerate() {
                 let x = p.start[0] as f64 * mirror;
                 let z = p.start[2] as f64;
                 let pts: Vec<DVec3> = (0..=n).map(|i| c.offset_point(s.length * i as f64 / n as f64, x, z)).collect();
@@ -107,7 +129,7 @@ pub fn near(doc: &Document, assets: &mut Assets, centre: DVec2, radius: f64) -> 
                     (1, true) => 0,
                     (d, _) => d,
                 };
-                lanes.push(Lane { pts, kind: p.kind, direction, spline: Some((*k, s.id, s.length)) });
+                lanes.push(Lane { pts, kind: p.kind, direction, spline: Some((*k, s.id, s.length)), object: None, index });
             }
         }
         for o in &t.tile.objects {
@@ -120,7 +142,7 @@ pub fn near(doc: &Document, assets: &mut Assets, centre: DVec2, radius: f64) -> 
                 continue;
             }
             let pose = Pose::of_object(world, o.rot);
-            for p in &model.paths {
+            for (index, p) in model.paths.iter().enumerate() {
                 let c = SplineCurve {
                     start: DVec3::new(p.start[0] as f64, p.start[1] as f64, p.start[2] as f64),
                     heading_deg: p.end[0] as f64,
@@ -147,7 +169,7 @@ pub fn near(doc: &Document, assets: &mut Assets, centre: DVec2, radius: f64) -> 
                         pose.pos + pose.rot.transform_vector3(Vec3::new(q.x as f32, q.y as f32, q.z as f32)).as_dvec3()
                     })
                     .collect();
-                lanes.push(Lane { pts, kind: p.kind, direction: p.direction, spline: None });
+                lanes.push(Lane { pts, kind: p.kind, direction: p.direction, spline: None, object: Some((*k, o.id)), index });
             }
         }
     }

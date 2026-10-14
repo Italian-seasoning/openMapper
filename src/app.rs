@@ -1366,6 +1366,9 @@ impl App {
             // (the pictures taken of the view are clean of them)
             if !self.picture && !self.snapshot {
                 crate::ui_edit::paint_names(&ctx, &self.ed, &self.lib, &self.cam, self.view);
+                if let (Some(sel), Some(doc), Some(a)) = (self.ed.path_numbers.filter(|s| self.ed.selected == Some(*s)), self.ed.doc.as_ref(), self.assets.as_mut()) {
+                    crate::ui_edit::paint_path_numbers(&ctx, &crate::lanes::of_one(doc, a, sel), &self.cam, self.view);
+                }
             }
             crate::ui_edit::paint_box(&ctx, &self.ed);
             crate::ui_edit::road_entry(&ctx, &mut self.ed, self.view, &mut actions);

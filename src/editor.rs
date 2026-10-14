@@ -368,6 +368,8 @@ pub struct Editor {
     pub picked: Option<(Option<Sel>, Option<DVec3>)>,
     /// An object waiting for the one it takes its state from (`[varparent]`) to be clicked.
     pub link_pick: Option<(TileKey, i64)>,
+    /// The paths of what is selected are numbered in the view (its path rules are open).
+    pub path_numbers: Option<Sel>,
 }
 
 impl Default for Editor {
@@ -478,6 +480,7 @@ impl Default for Editor {
             pick_mode: false,
             picked: None,
             link_pick: None,
+            path_numbers: None,
         }
     }
 }
