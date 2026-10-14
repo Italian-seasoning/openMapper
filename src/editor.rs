@@ -3315,19 +3315,24 @@ impl Editor {
     /// `n` copies of the selection in a row, each `step` (m) on from the one before and its
     /// objects turned `turn` degrees more (a fence, a row of houses, an avenue), in one step.
     /// All of them are selected.
-    pub fn array(&mut self, lib: &Library, n: usize, step: DVec2, turn: f64) {
+    /// The selection copied `n` times a `step` on (each turned `turn` more), in `rows`
+    /// rows a `row_step` apart (a grid: an orchard, a car park), one undo step.
+    pub fn array(&mut self, lib: &Library, n: usize, step: DVec2, turn: f64, rows: usize, row_step: DVec2) {
         let sels = self.selection();
         let Some(doc) = self.doc.as_mut() else { return };
         let clip = crate::clipboard::copy(doc, &sels, |f| lib.find(f).map(|a| a.abs_height).unwrap_or(false));
-        if clip.is_empty() || n == 0 || (step.length() < 0.01 && turn.abs() < 1e-6) {
+        let rows = rows.max(1);
+        if clip.is_empty() || (n == 0 && rows < 2) || (step.length() < 0.01 && turn.abs() < 1e-6 && rows < 2) {
             return;
         }
         self.history.begin(tr("Copies in a row", "Копии в ряд"));
         self.history.touch_global(doc);
         let mut all = sels.clone();
         let mut lost = 0;
-        for i in 1..=n.min(500) {
-            let at2 = clip.at.truncate() + step * i as f64;
+        // (the original is the first of the first row)
+        let places: Vec<(usize, DVec2)> = (0..rows).flat_map(|r| (0..=n).map(move |i| (i, row_step * r as f64 + step * i as f64))).filter(|(i, _)| *i > 0 || rows > 1).filter(|p| p.1.length() > 1e-9 || p.0 > 0).take(2000).collect();
+        for (i, off) in places {
+            let at2 = clip.at.truncate() + off;
             for k in crate::clipboard::tiles_touched(doc, &clip, at2) {
                 self.history.touch_tile(doc, k);
             }
@@ -5276,13 +5281,24 @@ mod tests {
     fn copies_in_a_row_stand_a_step_apart() {
         let mut ed = editor();
         ed.select(Some(Sel::Object((0, 0), 1)));
-        ed.array(&Library::default(), 3, DVec2::new(10.0, 0.0), 90.0);
+        ed.array(&Library::default(), 3, DVec2::new(10.0, 0.0), 90.0, 1, DVec2::ZERO);
         let doc = ed.doc.as_ref().unwrap();
         let xs: Vec<(f64, f64)> = doc.tiles[&(0, 0)].tile.objects.iter().skip(2).map(|o| (o.pos[0], o.rot[0])).collect();
         assert_eq!(xs, vec![(110.0, 90.0), (120.0, 180.0), (130.0, 270.0)]);
         assert_eq!(ed.selection().len(), 4);
         ed.undo();
         assert_eq!(ed.doc.as_ref().unwrap().tiles[&(0, 0)].tile.objects.len(), 2);
+    }
+
+    #[test]
+    fn copies_in_rows_make_a_grid() {
+        let mut ed = editor();
+        ed.select(Some(Sel::Object((0, 0), 1)));
+        ed.array(&Library::default(), 2, DVec2::new(10.0, 0.0), 0.0, 3, DVec2::new(0.0, 20.0));
+        let doc = ed.doc.as_ref().unwrap();
+        let mut at: Vec<(i64, i64)> = doc.tiles[&(0, 0)].tile.objects.iter().skip(2).map(|o| (o.pos[0] as i64, o.pos[1] as i64)).collect();
+        at.sort();
+        assert_eq!(at, vec![(100, 120), (100, 140), (110, 100), (110, 120), (110, 140), (120, 100), (120, 120), (120, 140)]);
     }
 
     #[test]

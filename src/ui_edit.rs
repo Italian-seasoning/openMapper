@@ -417,8 +417,8 @@ pub fn array_section(ui: &mut egui::Ui, ed: &mut Editor, lib: &Library) {
         return;
     }
     let key = egui::Id::new("array numbers");
-    // (count, step x, step y, turn: kept between frames)
-    let mut v: [f64; 4] = ui.data_mut(|d| *d.get_temp_mut_or_insert_with(key, || [5.0, 10.0, 0.0, 0.0]));
+    // (count, step x, step y, turn, rows, row step x, row step y: kept between frames)
+    let mut v: [f64; 7] = ui.data_mut(|d| *d.get_temp_mut_or_insert_with(key, || [5.0, 10.0, 0.0, 0.0, 1.0, 0.0, 10.0]));
     let mut go = false;
     egui::Frame::new().inner_margin(Margin::symmetric(8, 2)).show(ui, |ui| egui::CollapsingHeader::new(RichText::new(tr("Copies in a row", "Копии в ряд")).strong()).id_salt("array").show(ui, |ui| {
         ui.label(RichText::new(tr("A fence, a row of houses, an avenue: the selection copied again and again, a step on each time", "Забор, ряд домов, аллея: выделение копируется снова и снова, каждый раз на шаг дальше")).small().color(TEXT_DIM));
@@ -435,12 +435,24 @@ pub fn array_section(ui: &mut egui::Ui, ed: &mut Editor, lib: &Library) {
             prop_row(ui, tr("Turn each", "Поворот каждой"), |ui| {
                 ui.add(egui::DragValue::new(&mut v[3]).speed(0.5).range(-180.0..=180.0).suffix("°"));
             });
+            prop_row(ui, tr("Rows", "Рядов"), |ui| {
+                ui.add(egui::DragValue::new(&mut v[4]).speed(0.1).range(1.0..=50.0).max_decimals(0)).on_hover_text(tr("More than one: a grid (an orchard, a car park), each row a row step on", "Больше одного: сетка (сад, стоянка), каждый ряд на шаг рядов дальше"));
+            });
+            if v[4] >= 2.0 {
+                prop_row(ui, tr("Row step", "Шаг рядов"), |ui| {
+                    ui.horizontal(|ui| {
+                        ui.add(egui::DragValue::new(&mut v[5]).speed(0.1).prefix("X ").suffix(" m"));
+                        ui.add(egui::DragValue::new(&mut v[6]).speed(0.1).prefix("Y ").suffix(" m"));
+                    });
+                });
+            }
         });
-        go = ui.button(icons::labelled(Icon::Copy, &format!("{} {}", tr("Make", "Сделать"), v[0] as usize))).clicked();
+        let total = (v[0] as usize + 1) * v[4].max(1.0) as usize - 1;
+        go = ui.button(icons::labelled(Icon::Copy, &format!("{} {}", tr("Make", "Сделать"), total))).clicked();
     }));
     ui.data_mut(|d| d.insert_temp(key, v));
     if go {
-        ed.array(lib, v[0] as usize, DVec2::new(v[1], v[2]), v[3]);
+        ed.array(lib, v[0] as usize, DVec2::new(v[1], v[2]), v[3], v[4] as usize, DVec2::new(v[5], v[6]));
     }
 }
 

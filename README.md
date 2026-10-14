@@ -135,7 +135,8 @@ can drive in service.
 * **Layers** (View > Show): trees, other objects, roads and splines each hidden or shown;
   what is hidden is not picked or box-selected either, handy in a dense town.
 * **Copies in a row** (an object's or a selection's properties): a fence, a row of houses, an
-  avenue: N copies a step apart, each turned a few degrees more if wanted, in one undo step.
+  avenue: N copies a step apart, each turned a few degrees more if wanted, and in several
+  rows for a grid (an orchard, a car park), in one undo step.
 * **Groups** (Edit menu): a selection kept under a name (a stop with its shelter and signs, a
   crossing with its lights, rows and what hangs on them included), to put down again in any
   map with `Ctrl+V`; kept as tile files in `<content>/openMapper/groups`.
