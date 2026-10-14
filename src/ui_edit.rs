@@ -634,6 +634,29 @@ pub fn rows_section(ui: &mut egui::Ui, ed: &mut Editor, lib: &Library) {
                     prop_row(ui, tr("Turn", "Поворот"), |ui| {
                         ui.add(egui::DragValue::new(&mut b.rot[0]).speed(1.0).suffix("°"));
                     });
+                    prop_row(ui, "", |ui| {
+                        check(ui, &mut b.tilt, tr("Lean with the road", "Наклон вместе с дорогой")).on_hover_text(tr("Each object leans with the road's gradient and banking (bays and arrows on the road); off, it stands upright", "Каждый объект наклоняется по уклону и виражу дороги (карманы и стрелки на дороге); выключено — стоит прямо"));
+                    });
+                    // (the texts every object of the row shows: a street name, a line number)
+                    prop_row(ui, tr("Texts", "Тексты"), |ui| {
+                        ui.vertical(|ui| {
+                            let mut drop = None;
+                            for (i, t) in b.strings.iter_mut().enumerate() {
+                                ui.horizontal(|ui| {
+                                    ui.add(egui::TextEdit::singleline(t).desired_width(120.0));
+                                    if ui.small_button(icons::labelled(Icon::Delete, "")).clicked() {
+                                        drop = Some(i);
+                                    }
+                                });
+                            }
+                            if let Some(i) = drop {
+                                b.strings.remove(i);
+                            }
+                            if ui.small_button(icons::labelled(Icon::Add, tr("Text", "Текст"))).on_hover_text(tr("A text the row's objects show (@ starts a new line)", "Текст, который показывают объекты ряда (@ — новая строка)")).clicked() {
+                                b.strings.push(String::new());
+                            }
+                        });
+                    });
                 });
                 ui.horizontal(|ui| {
                     if let Some(t) = &new_type {
