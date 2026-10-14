@@ -1447,7 +1447,7 @@ impl App {
                 if let Some(p) = self.geo.look.take() {
                     actions.push(Action::LookAt(p));
                 }
-                guide = self.guide.window(&ctx, &self.ed, &self.lib, &self.prefs, self.game.is_some());
+                guide = self.guide.window(&ctx, &self.ed, &self.lib, &self.prefs, self.game.is_some(), self.ui.check.errors_left() == Some(0));
             }
             crate::ui_newmap::dialog(&ctx, &mut self.ui.new_map, &self.texture_files, &self.swatches, &mut wanted_swatches, &mut actions);
             ui::confirm_unsaved(&ctx, &mut self.ui, &mut actions);
@@ -1720,6 +1720,10 @@ impl App {
                 Go::Lines => self.tt.open = true,
                 Go::Traffic => self.traffic.open = true,
                 Go::Save => actions.push(Action::Save),
+                Go::Check => {
+                    self.ui.check.open = true;
+                    self.ui.check.issues = None;
+                }
                 Go::Play => actions.push(Action::Play),
                 Go::LookAt(p) => actions.push(Action::LookAt(p)),
                 Go::Auto(on) => {

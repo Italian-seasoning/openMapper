@@ -204,7 +204,7 @@ can drive in service.
   none, so its streets would stay empty), and "Start with a sample": a ring road with stops, a start point, line 1 both ways,
   a tour from 06:00 to 22:00, a depot and AI traffic, so it can be driven in service at once.
 * **Getting started** (Help menu, opens by itself for a new map): a checklist that ticks
-  itself as the map grows (road, stop, start point, line, tour, buses, saved, test drive),
+  itself as the map grows (road, stop, start point, line, tour, buses, checked, saved, test drive),
   with a "Show me" for each step.
 * **Test drive**: saves and launches openOMSI on this map (`F5`); from the start point nearest the view (`Shift+F5`), or the view itself seen in the game with a free camera (Map menu, or a right-click on Test drive).
 * **Check in openOMSI** (Map menu): the map saved and run by the game itself, unseen, with

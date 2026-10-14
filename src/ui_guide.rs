@@ -26,6 +26,7 @@ pub enum Go {
     Lines,
     Traffic,
     Save,
+    Check,
     Play,
     LookAt(DVec2),
     /// Open the guide by itself for new maps (or not).
@@ -115,7 +116,8 @@ impl Guide {
         self.state = s;
     }
 
-    pub fn window(&mut self, ctx: &egui::Context, ed: &Editor, lib: &Library, prefs: &crate::install::Prefs, game_found: bool) -> Vec<Go> {
+    /// `checked`: the map check ran and left no error unfixed.
+    pub fn window(&mut self, ctx: &egui::Context, ed: &Editor, lib: &Library, prefs: &crate::install::Prefs, game_found: bool, checked: bool) -> Vec<Go> {
         let mut go = Vec::new();
         let Some(doc) = ed.doc.as_ref() else { return go };
         if !self.open {
@@ -124,7 +126,7 @@ impl Guide {
         self.look(doc, lib);
         let s = self.state.clone();
         let saved = !doc.fresh && !doc.is_dirty();
-        let steps: [(bool, &str, &str, Option<Go>); 9] = [
+        let steps: [(bool, &str, &str, Option<Go>); 10] = [
             (s.tiles, tr("Ground", "Земля"), tr("The map's tiles: 300 m squares. Add more beside them with the Tiles tool.", "Тайлы карты: квадраты по 300 м. Новые добавляются инструментом «Тайлы»."), Some(Go::Tool(Tool::Tiles))),
             (s.road, tr("A road", "Дорога"), tr("Roads tool: click where it starts, then where it ends. Click on a road's end to go on from it.", "Инструмент «Дороги»: клик в начале, затем в конце. Клик по концу дороги: продолжить её."), Some(Go::Tool(Tool::Roads))),
             (s.stop_on_road, tr("A bus stop by the road", "Остановка у дороги"), tr("Game logic > Bus stops: put one at the kerb, on the side the doors open. Name it on the right.", "Служебное > Остановки: у бордюра, со стороны дверей. Имя: справа."), Some(match s.stop_off_road.filter(|_| s.stops > 0 && !s.stop_on_road) {
@@ -135,6 +137,7 @@ impl Guide {
             (s.routed, tr("A line with a trip", "Линия с рейсом"), tr("Lines window: New line, New trip, then click the stops in order. The way is found along the roads.", "Окно «Линии»: новая линия, новый рейс, затем кликайте остановки по порядку. Путь найдётся по дорогам."), Some(Go::Lines)),
             (s.tour, tr("A tour with departures", "Выход с отправлениями"), tr("Lines window > Tours and times: New tour, then Fill from … to … .", "Окно «Линии» > Выходы и время: новый выход, затем «Заполнить с … до …»."), Some(Go::Lines)),
             (s.depot, tr("Buses for the tours", "Автобусы для выходов"), tr("A depot the tours take their buses from (Tours: Add a depot, or Traffic and AI).", "Депо, из которого выходы берут автобусы (Выходы: «Добавить депо» или «Трафик и ИИ»)."), Some(Go::Traffic)),
+            (checked, tr("Checked", "Проверено"), tr("Map > Check map: what would go wrong in the game, most of it put right with one click.", "Карта > Проверить карту: что пойдёт не так в игре; почти всё исправляется одним кликом."), Some(Go::Check)),
             (saved, tr("Saved", "Сохранено"), tr("Ctrl+S. Maps are saved into openOMSI's content folder.", "Ctrl+S. Карты сохраняются в папку контента openOMSI."), Some(Go::Save)),
             (self.driven, tr("A test drive", "Тест-драйв"), tr("F5 saves and starts openOMSI on the map: pick line 1 and drive.", "F5 сохраняет и запускает openOMSI на карте: выберите линию и езжайте."), game_found.then_some(Go::Play)),
         ];

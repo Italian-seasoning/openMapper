@@ -997,6 +997,11 @@ pub struct Checker {
 }
 
 impl Checker {
+    /// The errors the last check found that are not put right yet (None: not checked).
+    pub fn errors_left(&self) -> Option<usize> {
+        self.issues.as_ref().map(|l| l.iter().enumerate().filter(|(i, x)| x.severity == Severity::Error && !self.fixed.contains(i)).count())
+    }
+
     pub fn running(&self) -> bool {
         self.rx.is_some()
     }
