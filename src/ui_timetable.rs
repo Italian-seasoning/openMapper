@@ -510,6 +510,14 @@ impl TimetableUi {
                     }
                 }
             }
+            if small_button(ui, Icon::Copy, tr("A copy of the line with its trips and tours (a variant to change)", "Копия линии с её рейсами и выходами (вариант для изменений)")) {
+                if let Some(n) = doc.timetable.duplicate_line(line) {
+                    self.line_name = n.clone();
+                    self.line = Some(n);
+                    self.trip = None;
+                    return;
+                }
+            }
             if small_button(ui, Icon::Delete, tr("Delete the line and its trips", "Удалить линию и её рейсы")) {
                 doc.timetable.delete_line(line);
                 self.line = None;

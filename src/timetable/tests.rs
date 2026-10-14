@@ -430,3 +430,27 @@ fn removing_a_tile_renumbers_an_unchanged_timetable() {
     assert_eq!(back.bus_stops[0].group, 1, "the stop's tile is now the second of the list");
     let _ = std::fs::remove_dir_all(&out);
 }
+
+#[test]
+fn a_line_copied_drives_copies_of_its_trips() {
+    let mut tt = Timetable::default();
+    let l = tt.add_line("76");
+    let a = tt.add_trip(&l, "76_A-B", vec![1, 2]);
+    let b = tt.add_trip(&l, "76_B-A", vec![2, 1]);
+    tt.set_route(&a, vec![Default::default()], Vec::new());
+    let line = tt.lines.iter_mut().find(|x| x.name == l).unwrap();
+    line.tours.push(omsi_timetable::Tour { number: "1".into(), trips: vec![omsi_timetable::TourTrip { trip: a.clone(), ..Default::default() }, omsi_timetable::TourTrip { trip: b.clone(), ..Default::default() }], ..Default::default() });
+    let copy = tt.duplicate_line(&l).unwrap();
+    assert_ne!(copy, l);
+    let c = tt.lines.iter().find(|x| x.name == copy).unwrap();
+    let driven: Vec<&str> = c.tours[0].trips.iter().map(|x| x.trip.as_str()).collect();
+    assert_eq!(driven, vec![format!("{copy}_A-B"), format!("{copy}_B-A")]);
+    assert_eq!(tt.trip(&format!("{copy}_A-B")).unwrap().stations, vec![1, 2]);
+    assert_eq!(tt.trip(&format!("{copy}_A-B")).unwrap().line, copy);
+    // (the way found for the first copied along; the second is found again)
+    assert!(tt.track(&format!("{copy}_A-B")).is_some());
+    // the original as it was
+    assert_eq!(tt.lines.iter().find(|x| x.name == l).unwrap().tours[0].trips[0].trip, a);
+    assert_eq!(tt.trips.len(), 4);
+}
+

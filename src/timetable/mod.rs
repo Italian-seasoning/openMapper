@@ -74,7 +74,6 @@ impl Timetable {
         self.trips.iter_mut().find(|t| t.name.eq_ignore_ascii_case(name))
     }
 
-    #[cfg(test)]
     pub fn track(&self, name: &str) -> Option<&Track> {
         self.tracks.iter().find(|t| track_name(t).eq_ignore_ascii_case(name))
     }
@@ -164,6 +163,46 @@ impl Timetable {
             self.touch_trip(&t);
         }
         Some(new.to_string())
+    }
+
+    /// A copy of a line under a new name (a variant to change): its trips copied with its
+    /// name in theirs ("76_A-B" → "76 copy_A-B"), their ways along, its tours driving the
+    /// copies. The copy's name.
+    pub fn duplicate_line(&mut self, name: &str) -> Option<String> {
+        let src = self.lines.iter().find(|l| l.name == name)?.clone();
+        let new = self.add_line(&format!("{name} {}", crate::i18n::tr("copy", "копия")));
+        let mut trips: BTreeSet<String> = src.tours.iter().flat_map(|t| t.trips.iter().map(|x| x.trip.clone())).collect();
+        trips.extend(self.trips.iter().filter(|t| t.line.trim() == name).map(|t| t.name.clone()));
+        let mut renamed: std::collections::HashMap<String, String> = Default::default();
+        for t in trips {
+            let Some(old) = self.trip(&t).cloned() else { continue };
+            let base = match t.strip_prefix(&format!("{name}_")) {
+                Some(rest) => format!("{new}_{rest}"),
+                None => format!("{new}_{t}"),
+            };
+            let copy = self.unique(&base, |tt, n| tt.trips.iter().any(|x| x.name.eq_ignore_ascii_case(n)));
+            let line = if old.line.trim() == name { new.clone() } else { old.line.clone() };
+            self.trips.push(Trip { name: copy.clone(), line, path: Default::default(), ..old });
+            self.touch_trip(&copy);
+            if let Some(track) = self.track(&t).map(|x| x.entries.clone()) {
+                self.tracks.push(Track { path: format!("{copy}.ttr").into(), entries: track });
+                self.changed.insert(key(&format!("{copy}.ttr")));
+            } else {
+                self.reroute.insert(key(&copy));
+            }
+            renamed.insert(t.to_lowercase(), copy);
+        }
+        let l = self.lines.iter_mut().find(|l| l.name == new)?;
+        l.user_allowed = src.user_allowed;
+        l.priority = src.priority;
+        l.tours = src.tours;
+        for x in l.tours.iter_mut().flat_map(|t| t.trips.iter_mut()) {
+            if let Some(n) = renamed.get(&x.trip.to_lowercase()) {
+                x.trip = n.clone();
+            }
+        }
+        self.touch_line(&new);
+        Some(new)
     }
 
     /// Take a line away, and the trips no other line runs.
