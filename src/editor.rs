@@ -2355,7 +2355,37 @@ impl Editor {
                 join_arms(doc, &arms[0], &arms[1]);
             }
         }
+        // a junction made before whose arm road this one trimmed away (a short road between
+        // the two): made again for the roads it still holds, or a joint of two
+        for id in self.orphaned_junctions(assets) {
+            log::debug!("junction {id} lost an arm: made again");
+            self.rebuild_junction(assets, id);
+        }
         count
+    }
+
+    /// openMapper's junctions with an arm no road ends at any more.
+    fn orphaned_junctions(&self, assets: &mut Assets) -> Vec<i64> {
+        let Some(doc) = self.doc.as_ref() else { return Vec::new() };
+        let mut out = Vec::new();
+        for (k, t) in &doc.tiles {
+            for o in t.tile.objects.iter().filter(|o| is_own_junction(&o.file)) {
+                let Some((abs, helpers)) = self.content_dir.as_deref().and_then(|c| plate_helpers(c, assets, &o.file)) else { continue };
+                let pts = selection::helper_points(doc, *k, o.id, abs, &helpers);
+                // (a helper for each way along an arm: one place per arm)
+                let mut places: Vec<DVec2> = Vec::new();
+                for (p, _) in &pts {
+                    if !places.iter().any(|q| (*q - p.truncate()).length() < 1.5) {
+                        places.push(p.truncate());
+                    }
+                }
+                let held = places.iter().filter(|q| pts.iter().filter(|(p, _)| (p.truncate() - **q).length() < 1.5).any(|(p, _)| selection::free_end_at(doc, p.truncate()).is_some())).count();
+                if held < places.len() {
+                    out.push(o.id);
+                }
+            }
+        }
+        out
     }
 
     // ---------------------------------------------------------------- terrain and paint
@@ -2968,6 +2998,18 @@ impl Editor {
 }
 
 /// A junction openMapper made (and can make again): `Sceneryobjects\openMapper\<map>\junction_<id>.sco`.
+/// A junction plate's helper points (x, forward, height, heading out) and whether it stands
+/// at a height of its own: from its model, or, for a plate made in this very build and not
+/// loaded yet, read from its file.
+fn plate_helpers(content: &std::path::Path, assets: &mut Assets, file: &str) -> Option<(bool, Vec<[f32; 4]>)> {
+    if let Some(m) = assets.object(file) {
+        return Some((m.abs_height, m.helpers.iter().map(|h| h.0).collect()));
+    }
+    let sco = omsi_scenery::SceneryObject::load(&omsi_cfg::resolve_path(content, file)).ok()?;
+    // (OMSI's order: x, height, forward)
+    Some((sco.absolute_height(), sco.spline_helpers.iter().map(|h| [h.x, h.z, h.y, h.heading + 180.0]).collect()))
+}
+
 pub fn is_own_junction(file: &str) -> bool {
     let f = file.to_lowercase();
     f.contains("\\openmapper\\") && f.contains("junction_")
@@ -4153,9 +4195,8 @@ impl Editor {
         let was_selected = self.selection().iter().any(|s| matches!(s, Sel::Object(_, x) if *x == id));
         let Some(doc) = self.doc.as_mut() else { return };
         let Some((jk, o)) = doc.tiles.iter().find_map(|(k, t)| t.tile.objects.iter().find(|o| o.id == id).map(|o| (*k, o.clone()))) else { return };
-        let Some(model) = assets.object(&o.file) else { return };
-        let helpers: Vec<[f32; 4]> = model.helpers.iter().map(|h| h.0).collect();
-        let pts = selection::helper_points(doc, jk, id, model.abs_height, &helpers);
+        let Some((abs, helpers)) = plate_helpers(&content, assets, &o.file) else { return };
+        let pts = selection::helper_points(doc, jk, id, abs, &helpers);
         let mut arms: Vec<crate::junction::Arm> = Vec::new();
         for a in selection::arms_of(doc, &pts) {
             if let Some((k, sid, at_end)) = selection::free_end_at(doc, a.pos.truncate()) {
@@ -4170,7 +4211,7 @@ impl Editor {
             }
         }
         let opts = self.pending_options.remove(&id).unwrap_or_else(|| crate::junction::Options::read(&omsi_cfg::resolve_path(&content, &o.file)));
-        let centre = doc.object_world(jk, &o, model.abs_height);
+        let centre = doc.object_world(jk, &o, abs);
         self.history.touch_tile(doc, jk);
         for a in &arms {
             self.history.touch_tile(doc, a.key);
