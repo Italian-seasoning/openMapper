@@ -1056,6 +1056,7 @@ impl App {
                     self.cam.target = DVec3::new(p.x, p.y, doc.ground(p));
                 }
             }
+            Action::SetGroundTexture(layer, detail, rel) => self.ed.set_ground_texture(layer, detail, &rel),
             Action::AddGroundTexture(rel) => {
                 if let Some(doc) = self.ed.doc.as_mut() {
                     self.ed.history.begin(tr("Add ground texture", "Добавление текстуры земли"));

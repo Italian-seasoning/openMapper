@@ -98,6 +98,8 @@ pub enum Action {
     /// Move the camera over this point (the overview map).
     LookAt(glam::DVec2),
     AddGroundTexture(String),
+    /// A ground layer's texture (or its detail texture: true) changed.
+    SetGroundTexture(usize, bool, String),
     /// Open or close the Lines window.
     Timetable,
     /// Put the map's folder back as it was before the save kept in this backup (and the
@@ -147,6 +149,9 @@ pub struct UiState {
     pub help_open: bool,
     pub about_open: bool,
     pub texture_picker: Option<String>,
+    /// What the texture picker chooses for: a ground layer's texture or detail texture
+    /// (layer, detail), or (None) a new layer.
+    pub texture_pick_for: Option<(usize, bool)>,
     pub maps: Vec<MapEntry>,
     /// Waiting for an answer about unsaved changes before doing this.
     pub confirm: Option<Action>,
@@ -201,6 +206,7 @@ impl Default for UiState {
             help_open: false,
             about_open: false,
             texture_picker: None,
+            texture_pick_for: None,
             maps: Vec::new(),
             confirm: None,
             status_help: None,
@@ -1515,6 +1521,7 @@ fn paint_panel(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, swatches: &
     let Some(doc) = ed.doc.as_mut() else { return };
     ui.label(RichText::new(tr("Ground layers", "Слои земли")).strong());
     let mut remove: Option<usize> = None;
+    let mut move_layer: Option<bool> = None;
     let n = doc.global.ground_textures.len();
     Frame::new().fill(BG_FIELD).stroke(Stroke::new(1.0, BORDER)).show(ui, |ui| {
         ui.set_width(ui.available_width());
@@ -1546,18 +1553,43 @@ fn paint_panel(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, swatches: &
     ui.horizontal(|ui| {
         if ui.button(icons::labelled(Icon::Add, tr("Add…", "Добавить…"))).clicked() {
             st.texture_picker = Some(String::new());
+            st.texture_pick_for = None;
         }
         if ui.add_enabled(ed.paint_layer > 0, egui::Button::new(icons::labelled(Icon::Delete, tr("Remove", "Убрать")))).clicked() {
             remove = Some(ed.paint_layer);
         }
+        // (the order they are drawn in: a later layer over an earlier one)
+        let l = ed.paint_layer;
+        if ui.add_enabled(l > 1, egui::Button::new(Icon::Raise.text(14.0))).on_hover_text(tr("Up the list: drawn under the layers after it", "Выше по списку: рисуется под следующими слоями")).clicked() {
+            move_layer = Some(false);
+        }
+        if ui.add_enabled(l > 0 && l + 1 < n, egui::Button::new(Icon::Lower.text(14.0))).on_hover_text(tr("Down the list: drawn over the layers before it", "Ниже по списку: рисуется поверх предыдущих слоёв")).clicked() {
+            move_layer = Some(true);
+        }
     });
     let mut detail: Option<f32> = None;
     if let Some(g) = doc.global.ground_textures.get_mut(ed.paint_layer) {
-        let before = g.params[1];
+        let before = g.params;
         let size = crate::doc::mask_size(g);
+        let file_name = |t: &str| t.rsplit('\\').next().filter(|n| !n.is_empty()).unwrap_or("-").to_string();
         egui::Grid::new("layer").num_columns(2).show(ui, |ui| {
+            for (detail, name, hint) in [
+                (false, tr("Texture", "Текстура"), tr("The layer's picture; its painting stays", "Картинка слоя; его покраска остаётся")),
+                (true, tr("Detail texture", "Детальная текстура"), tr("A fine grain laid over the texture, seen close up (OMSI's detail texture)", "Мелкая фактура поверх текстуры, видна вблизи (детальная текстура OMSI)")),
+            ] {
+                ui.label(name).on_hover_text(hint);
+                let now = if detail { &g.detail_texture } else { &g.texture };
+                if ui.add(egui::Button::new(file_name(now)).truncate()).on_hover_text(format!("{now}\n{}", tr("Click to choose another", "Щёлкните, чтобы выбрать другую"))).clicked() {
+                    st.texture_picker = Some(String::new());
+                    st.texture_pick_for = Some((ed.paint_layer, detail));
+                }
+                ui.end_row();
+            }
             ui.label(tr("Repeats per tile", "Повторов на тайл"));
             ui.add(egui::DragValue::new(&mut g.params[1]).range(1.0..=200.0).speed(0.5));
+            ui.end_row();
+            ui.label(tr("Detail repeats", "Повторов детальной"));
+            ui.add(egui::DragValue::new(&mut g.params[2]).range(1.0..=400.0).speed(0.5));
             ui.end_row();
             if ed.paint_layer > 0 {
                 ui.label(tr("Paint detail", "Детальность покраски")).on_hover_text(tr("How finely this layer can be painted: texels across a tile (its masks are made again at the new size)", "Насколько тонко можно красить этот слой: текселей поперёк тайла (маски пересчитываются под новый размер)"));
@@ -1572,11 +1604,11 @@ fn paint_panel(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, swatches: &
                 ui.end_row();
             }
         });
-        if g.params[1] != before {
-            let now = g.params[1];
-            g.params[1] = before;
+        if g.params != before {
+            let now = g.params;
+            g.params = before;
             let was = (doc.global.clone(), doc.order.clone());
-            doc.global.ground_textures[ed.paint_layer].params[1] = now;
+            doc.global.ground_textures[ed.paint_layer].params = now;
             ed.history.push_snapshot(tr("Edit ground texture", "Правка текстуры земли"), crate::history::Snapshot { global: Some(was), ..Default::default() });
             doc.global_dirty = true;
             doc.global_rev = crate::doc::next_rev();
@@ -1584,6 +1616,9 @@ fn paint_panel(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, swatches: &
     }
     if let Some(p) = detail {
         ed.set_paint_detail(ed.paint_layer, p);
+    }
+    if let Some(over) = move_layer {
+        ed.move_ground_layer(ed.paint_layer, over);
     }
     ui.add_space(6.0);
     ui.label(RichText::new(tr("Brush", "Кисть")).strong());
@@ -2264,7 +2299,12 @@ fn texture_picker(ctx: &egui::Context, st: &mut UiState, files: &[String], swatc
     let Some(search) = &mut st.texture_picker else { return };
     let mut open = true;
     let mut chosen = None;
-    egui::Window::new(tr("Add ground texture", "Добавить текстуру земли")).open(&mut open).collapsible(false).resizable(false).anchor(egui::Align2::CENTER_CENTER, Vec2::ZERO).show(ctx, |ui| {
+    let title = match st.texture_pick_for {
+        None => tr("Add ground texture", "Добавить текстуру земли"),
+        Some((_, false)) => tr("Change the layer's texture", "Сменить текстуру слоя"),
+        Some((_, true)) => tr("Change the layer's detail texture", "Сменить детальную текстуру слоя"),
+    };
+    egui::Window::new(title).id(egui::Id::new("texture picker")).open(&mut open).collapsible(false).resizable(false).anchor(egui::Align2::CENTER_CENTER, Vec2::ZERO).show(ctx, |ui| {
         ui.set_width(470.0);
         ui.horizontal(|ui| {
             ui.label(tr("Search", "Поиск"));
@@ -2301,11 +2341,15 @@ fn texture_picker(ctx: &egui::Context, st: &mut UiState, files: &[String], swatc
         });
     });
     if let Some(c) = chosen {
-        actions.push(Action::AddGroundTexture(c));
+        actions.push(match st.texture_pick_for {
+            Some((layer, detail)) => Action::SetGroundTexture(layer, detail, c),
+            None => Action::AddGroundTexture(c),
+        });
         open = false;
     }
     if !open {
         st.texture_picker = None;
+        st.texture_pick_for = None;
     }
 }
 

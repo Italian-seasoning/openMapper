@@ -2658,6 +2658,54 @@ impl Editor {
         self.history.commit();
     }
 
+    /// A painted ground layer moved one place on (`over`: after the next, drawn over it) or
+    /// back, its painting on every tile going with it; the base ground stays first. One undo
+    /// step.
+    pub fn move_ground_layer(&mut self, layer: usize, over: bool) {
+        let Some(doc) = self.doc.as_mut() else { return };
+        let other = if over { layer + 1 } else { layer.wrapping_sub(1) };
+        let n = doc.global.ground_textures.len();
+        if layer == 0 || other == 0 || layer >= n || other >= n {
+            return;
+        }
+        self.history.begin(tr("Ground layer order", "Порядок слоёв земли"));
+        self.history.touch_global(doc);
+        doc.global.ground_textures.swap(layer, other);
+        let keys: Vec<TileKey> = doc.tiles.keys().copied().collect();
+        for k in keys {
+            // (every tile is written again: its mask files are named by the layers' places)
+            self.history.touch_tile(doc, k);
+            let t = doc.tiles.get_mut(&k).unwrap();
+            t.masks.resize(n, None);
+            t.masks.swap(layer, other);
+            t.touch_masks();
+        }
+        doc.global_dirty = true;
+        doc.global_rev = crate::doc::next_rev();
+        self.history.commit();
+        self.paint_layer = other;
+    }
+
+    /// A ground layer's texture, or its detail texture (the fine grain over it, seen close
+    /// up), changed; its painting stays. One undo step.
+    pub fn set_ground_texture(&mut self, layer: usize, detail: bool, rel: &str) {
+        let Some(doc) = self.doc.as_mut() else { return };
+        if layer >= doc.global.ground_textures.len() {
+            return;
+        }
+        self.history.begin(if detail { tr("Detail texture", "Детальная текстура") } else { tr("Ground texture", "Текстура земли") });
+        self.history.touch_global(doc);
+        let g = &mut doc.global.ground_textures[layer];
+        if detail {
+            g.detail_texture = rel.to_string();
+        } else {
+            g.texture = rel.to_string();
+        }
+        doc.global_dirty = true;
+        doc.global_rev = crate::doc::next_rev();
+        self.history.commit();
+    }
+
     /// Whether the game lights a tile's ground from the lamps on and round it at night
     /// (`[variable_terrainlightmap]`: it bakes the tile's light map when it loads it).
     pub fn set_tile_lamplight(&mut self, k: TileKey, on: bool) {
@@ -5279,6 +5327,36 @@ mod tests {
         let d = ed.doc.as_ref().unwrap();
         assert_eq!(d.global.ground_textures[1].params[0], 8.0);
         assert_eq!(d.tiles[&(0, 0)].masks[1].as_ref(), Some(&m));
+    }
+
+    #[test]
+    fn ground_layers_change_places_with_their_paint_and_undo() {
+        let mut doc = flat_map(2);
+        let g = |t: &str| omsi_map::GroundTex { texture: t.into(), detail_texture: String::new(), params: [8.0, 16.0, 4.0] };
+        doc.global.ground_textures = vec![g("base.bmp"), g("sand.bmp"), g("rock.bmp")];
+        doc.sync_mask_slots();
+        let sand = vec![7u8; 256 * 256];
+        doc.tiles.get_mut(&(0, 0)).unwrap().masks[1] = Some(sand.clone());
+        let mut ed = Editor::default();
+        ed.open(doc);
+        ed.paint_layer = 1;
+        // sand after rock: drawn over it, its paint along; the base stays first
+        ed.move_ground_layer(1, true);
+        let d = ed.doc.as_ref().unwrap();
+        assert_eq!(d.global.ground_textures.iter().map(|g| g.texture.as_str()).collect::<Vec<_>>(), ["base.bmp", "rock.bmp", "sand.bmp"]);
+        assert_eq!((d.tiles[&(0, 0)].masks[1].as_ref(), d.tiles[&(0, 0)].masks[2].as_ref()), (None, Some(&sand)));
+        assert!(d.tiles[&(1, 0)].dirty);
+        assert_eq!(ed.paint_layer, 2);
+        ed.move_ground_layer(2, true);
+        ed.move_ground_layer(1, false);
+        assert_eq!(ed.doc.as_ref().unwrap().global.ground_textures[0].texture, "base.bmp");
+        ed.set_ground_texture(2, true, "Texture\\noise_low.bmp");
+        assert_eq!(ed.doc.as_ref().unwrap().global.ground_textures[2].detail_texture, "Texture\\noise_low.bmp");
+        ed.undo();
+        ed.undo();
+        let d = ed.doc.as_ref().unwrap();
+        assert_eq!(d.global.ground_textures[1].texture, "sand.bmp");
+        assert_eq!(d.tiles[&(0, 0)].masks[1].as_ref(), Some(&sand));
     }
 
     #[test]
