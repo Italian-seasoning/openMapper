@@ -152,7 +152,7 @@ can drive in service.
 * **Linked objects** (an object's properties), OMSI 2's `[varparent]`: what an object takes
   its state from, picked with a click in the view and drawn as a line to it: a signal head
   bound to a crossing's light program with the light it shows chosen by name, a stop's
-  display to its stop; a crossing lists the heads that take their lights from it. The map
+  display to its stop; a crossing lists the heads that take their lights from it, and a signal head put within 40 m of a crossing with a light program is linked to it at once. The map
   check names objects linked to one that is gone.
 * **Path rules** (a road's or an object's properties), as in OMSI 2's editor: a speed limit,
   traffic density, priority, trucks, no cars or buses only, each for one path (lane), the

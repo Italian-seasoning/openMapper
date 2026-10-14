@@ -1303,6 +1303,20 @@ impl Editor {
             o.flag = 7;
         }
         let is_entry = asset.as_ref().map(|a| a.is_entry_point).unwrap_or(false);
+        // a signal head takes its light from the nearest crossing with a light program
+        let mut linked_to: Option<String> = None;
+        if asset.as_ref().map(|a| a.light_head).unwrap_or(false) {
+            let here = pos.truncate();
+            let near = doc.tiles.iter().flat_map(|(tk, t)| t.tile.objects.iter().map(move |x| (tile_origin(*tk) + DVec2::new(x.pos[0], x.pos[1]), x))).filter_map(|(p, x)| lib.find(&x.file).filter(|a| a.light_program).map(|a| ((p - here).length(), x.id, a.name.clone()))).filter(|c| c.0 < 40.0).min_by(|a, b| a.0.total_cmp(&b.0));
+            if let Some((_, pid, name)) = near {
+                o.var_parent = Some(pid);
+                if o.extra.is_empty() {
+                    o.extra = vec!["0".into()];
+                    o.flag = 1;
+                }
+                linked_to = Some(name);
+            }
+        }
         let t = doc.tiles.get_mut(&k).unwrap();
         t.tile.objects.push(o.clone());
         t.touch_content();
@@ -1324,6 +1338,9 @@ impl Editor {
             sync_entry_points(doc);
         }
         self.history.commit();
+        if let Some(n) = linked_to {
+            self.toast(format!("{} «{n}»: {}", tr("Linked to", "Связан с"), tr("choose its light in its properties", "сигнал выберите в его свойствах")));
+        }
         // (the tool goes on placing: nothing is selected)
     }
 
@@ -5379,6 +5396,33 @@ mod tests {
         let d = ed.doc.as_ref().unwrap();
         assert_eq!(d.global.ground_textures[1].params[0], 8.0);
         assert_eq!(d.tiles[&(0, 0)].masks[1].as_ref(), Some(&m));
+    }
+
+    #[test]
+    fn a_signal_head_put_by_a_crossing_takes_its_light_from_it() {
+        let Some(root) = crate::install::find_omsi_root(&crate::install::Prefs::default()) else { return };
+        let roots = crate::install::Roots { omsi: root, content: std::env::temp_dir().join(format!("om-head-{}", std::process::id())) };
+        let mut lib = Library::default();
+        lib.start_scan(&roots);
+        while lib.scanning {
+            lib.poll();
+            std::thread::sleep(std::time::Duration::from_millis(20));
+        }
+        let mut doc = flat_map(1);
+        add_object(&mut doc, (0, 0), 1, 100.0, 100.0);
+        doc.tiles.get_mut(&(0, 0)).unwrap().tile.objects[0].file = "Sceneryobjects\\Kreuz_MC\\Kreuz_See_Elsflether.sco".into();
+        let mut ed = Editor::default();
+        ed.open(doc);
+        ed.object_type = Some("Sceneryobjects\\Verkehrszeichen_MC\\Ampel_Kfz_1.sco".into());
+        ed.ghost_pos = Some((DVec3::new(112.0, 100.0, 0.0), 0.0));
+        ed.place_object(&lib, false);
+        let d = ed.doc.as_ref().unwrap();
+        let head = d.tiles[&(0, 0)].tile.objects.iter().find(|o| o.file.contains("Ampel")).unwrap();
+        assert_eq!((head.var_parent, head.extra.clone()), (Some(1), vec!["0".to_string()]));
+        // (far from any crossing: linked to nothing)
+        ed.ghost_pos = Some((DVec3::new(250.0, 250.0, 0.0), 0.0));
+        ed.place_object(&lib, false);
+        assert!(ed.doc.as_ref().unwrap().tiles[&(0, 0)].tile.objects.iter().filter(|o| o.file.contains("Ampel")).any(|o| o.var_parent.is_none()));
     }
 
     #[test]
