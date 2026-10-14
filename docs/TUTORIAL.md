@@ -65,6 +65,10 @@ A **roundabout** is a Roads tool option: click its centre, then its ring.
 3. Choose **Start points** and click on a lane where the bus should appear when a drive
    starts (a depot yard, or the first stop).
 
+4. Traffic lights from the catalogue (a signal head) light only when linked to their
+   crossing: select the head, open **Linked objects** in its properties, **Link to an
+   object…** and click the crossing, then choose which of its lights it shows.
+
 ## 6. A line and its timetable
 
 1. Press `L` (Lines and timetable) and make a **New line**.
@@ -82,7 +86,8 @@ A **roundabout** is a Roads tool option: click its centre, then its ring.
    and **Load terrain heights** for all tiles.
 2. **Map > From OpenStreetMap…**: tick what to bring (roads, tram and rail tracks, stops,
    bus lines, trees, water, buildings), choose a road type for each kind of road, and
-   build. Everything it brings is one undo step.
+   build. Everything it brings is one undo step, and a map with no start point gets one
+   before a bus stop, so you can drive the town straight away.
 3. Have a route recorded on your phone? **Map > GPS tracks to trace…** (or drop the GPX,
    KML or GeoJSON file on the window) shows it in the view, and can build a road along it.
 
@@ -90,10 +95,13 @@ A **roundabout** is a Roads tool option: click its centre, then its ring.
 
 1. **Map > Check map…** lists what would go wrong in the game: missing files, road ends not
    joined, stops away from a lane, trips without a way, tiles too full of objects, and more.
-   Click an issue to fly there; many are put right with one more click.
-2. `Ctrl+S` saves. Every save keeps the files it replaced (File > Earlier versions…), and
+   Click an issue to fly there; many are put right with one more click (a stop moved to
+   the kerb, a start point or a depot added, a lost junction made again).
+2. **Map > Check in openOMSI…** runs the game itself on your map, unseen, with its own
+   checks: lanes without road under them, buried roads, steps a bus wheel cannot climb.
+3. `Ctrl+S` saves. Every save keeps the files it replaced (File > Earlier versions…), and
    your changes are autosaved every 3 minutes in case anything goes wrong.
-3. `F5` saves and starts openOMSI on your map.
+4. `F5` saves and starts openOMSI on your map.
 
 ## 9. Share it
 
