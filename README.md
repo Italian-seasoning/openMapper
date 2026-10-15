@@ -143,7 +143,16 @@ can drive in service.
 * **Copies in a row** (an object's or a selection's properties): a fence, a row of houses, an
   avenue: N copies a step apart, each turned a few degrees more if wanted, and in several
   rows for a grid (an orchard, a car park), in one undo step.
-* **Groups** (Edit menu): a selection kept under a name (a stop with its shelter and signs, a
+* **Right-click menu** in the view (Select tool, and Game logic on one of its things): what
+  is under the cursor is selected and the menu offers copy, cut, paste there, duplicate,
+  delete, group and ungroup, select all like it, go to, keep for other maps, select all and
+  deselect.
+* **Groups on the map** (`Ctrl+G`, `Ctrl+Shift+G` to undo, or the right-click menu, or the
+  selection's properties): things kept together under a name (a stop with its shelter and
+  signs); a click on one selects all of it and a drag moves all of it, `Ctrl` + click takes
+  one alone. They are listed in the Select tool's Objects tab and kept beside the map in
+  `openMapper/groups.json` (the game ignores it).
+* **Groups for other maps** (Edit menu): a selection kept under a name (a stop with its shelter and signs, a
   crossing with its lights, rows and what hangs on them included), to put down again in any
   map with `Ctrl+V`; kept as tile files in `<content>/openMapper/groups`.
 * **Hanging objects** (an object's properties, Hanging on it): what hangs on its attachment

@@ -150,6 +150,28 @@ pub fn group_properties(ui: &mut egui::Ui, ed: &mut Editor, lib: &Library, actio
         ui.label(RichText::new(format!("{} {}", tr("Selected:", "Выбрано:"), sels.len())).strong().color(Color32::WHITE));
         ui.label(RichText::new(format!("{} {objects} · {} {splines}", tr("objects", "объектов"), tr("splines", "сплайнов"))).small().color(TEXT_DIM));
         ui.add_space(6.0);
+        // a group: its name, and undoing it; else making one
+        match ed.selected_group() {
+            Some(g) => {
+                let mut name = ed.groups[g].name.clone();
+                ui.horizontal(|ui| {
+                    ui.label(icons::labelled(Icon::Layers, tr("Group", "Группа")));
+                    if ui.add(egui::TextEdit::singleline(&mut name).desired_width(140.0)).changed() {
+                        ed.rename_group(g, &name);
+                    }
+                    if ui.button(tr("Ungroup", "Разгруппировать")).on_hover_text("Ctrl+Shift+G").clicked() {
+                        ed.ungroup_selection();
+                    }
+                });
+                ui.label(RichText::new(tr("A click on one of it selects all of it, Ctrl + click one alone", "Клик по любому её объекту выделяет всю группу, Ctrl + клик — один объект")).small().color(TEXT_DIM));
+            }
+            None => {
+                if ui.button(icons::labelled(Icon::Layers, tr("Group", "Сгруппировать"))).on_hover_text(tr("Keep these together: a click on one selects all, a drag moves all (Ctrl+G)", "Держать вместе: клик по одному выделяет все, перетаскивание двигает все (Ctrl+G)")).clicked() {
+                    ed.group_selection();
+                }
+            }
+        }
+        ui.add_space(6.0);
         // (the numbers are kept between frames until applied)
         let id = egui::Id::new("group numbers");
         let mut v: [f64; 4] = ui.data_mut(|d| *d.get_temp_mut_or_default(id));

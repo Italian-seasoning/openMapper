@@ -36,6 +36,10 @@ pub enum Action {
     /// A test drive from the start point nearest the view (false), or the view itself seen
     /// in openOMSI with a free camera (true).
     PlayHere(bool),
+    /// Paste at this ground point (the view's menu).
+    PasteAt(Option<glam::DVec3>),
+    /// The groups kept for other maps.
+    SavedGroups,
     Undo,
     Redo,
     Import,
@@ -186,6 +190,8 @@ pub struct UiState {
     pub geo: crate::ui_geo::Bridge,
     /// The Objects tab of the Select panel: everything on the map by folder.
     pub outliner: crate::ui_outliner::Outliner,
+    /// The view's right-click menu, while it is open.
+    pub view_menu: Option<crate::ui_menu::ViewMenu>,
     /// The Terrain tool's height map export and import.
     pub heightmap: crate::heightmap::HeightMapUi,
     /// The Paint tool's rule by slope and height.
@@ -231,6 +237,7 @@ impl Default for UiState {
             map_picture: None,
             geo: Default::default(),
             outliner: Default::default(),
+            view_menu: None,
             heightmap: Default::default(),
             autopaint: Default::default(),
             daytime: None,
@@ -782,7 +789,7 @@ fn menu_bar(root: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, can_undo: bo
                 if menu_item(ui, Some(Icon::History), tr("Edit history…", "История правок…"), "", true) {
                     st.history_open = true;
                 }
-                if menu_item(ui, Some(Icon::Objects), tr("Groups…", "Группы…"), "", true) {
+                if menu_item(ui, Some(Icon::Objects), tr("Groups for other maps…", "Группы для других карт…"), "", true) {
                     st.groups.open = true;
                 }
                 if menu_item(ui, Some(Icon::Search), tr("Find in map…", "Поиск по карте…"), "Ctrl+F", true) {

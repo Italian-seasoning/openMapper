@@ -441,6 +441,10 @@ impl App {
         if std::env::var_os("OPENMAPPER_LEVEL").is_some() {
             self.ed.level_request = true;
         }
+        // OPENMAPPER_MENU=x,y: the view's right-click menu open there (window points)
+        if let Some(v) = std::env::var("OPENMAPPER_MENU").ok().map(|c| c.split(',').filter_map(|x| x.trim().parse::<f32>().ok()).collect::<Vec<_>>()).filter(|v| v.len() == 2) {
+            self.ui.view_menu = Some(crate::ui_menu::ViewMenu { at: egui::pos2(v[0], v[1]), ground: None });
+        }
         // OPENMAPPER_OUTLINER=[text]: the Select panel's Objects tab, that searched for
         if let Ok(q) = std::env::var("OPENMAPPER_OUTLINER") {
             self.ui.outliner.show_with(&q);
@@ -1037,6 +1041,13 @@ impl App {
             }
             Action::Cut => self.ed.cut(&self.lib),
             Action::Paste => self.ed.paste(&self.lib),
+            Action::PasteAt(at) => {
+                if at.is_some() {
+                    self.ed.cursor = at;
+                }
+                self.ed.paste(&self.lib);
+            }
+            Action::SavedGroups => self.ui.groups.open = true,
             Action::Duplicate => self.ed.duplicate(&self.lib),
             Action::SelectAll => self.ed.select_all(),
             Action::BuildRoad => {
@@ -1191,6 +1202,8 @@ impl App {
             Some(KeyCode::KeyU) if !ctrl => self.ed.toggle_ruler(),
             Some(KeyCode::Enter) | Some(KeyCode::NumpadEnter) => actions.push(Action::BuildRoad),
             Some(KeyCode::KeyG) if !ctrl => self.ed.show_grid = !self.ed.show_grid,
+            Some(KeyCode::KeyG) if shift => self.ed.ungroup_selection(),
+            Some(KeyCode::KeyG) => self.ed.group_selection(),
             Some(KeyCode::Home) => {
                 self.cam.yaw = (self.cam.yaw / 360.0).round() * 360.0;
                 self.cam.pitch = 89.0;
@@ -1210,12 +1223,17 @@ impl App {
             _ => {}
         }
         if let Key::Named(NamedKey::Escape) = logical {
-            if self.ed.link_pick.take().is_some() {
+            if self.ui.view_menu.take().is_some() {
+                // (only the view's menu closes)
+            } else if self.ed.link_pick.take().is_some() {
                 // (only the linking is called off, the object stays selected)
             } else if self.ed.tool != Tool::Select && !self.ed_has_pending() {
                 self.ed.set_tool(Tool::Select);
             } else {
-                self.ed.right_click();
+                // (Select: Esc lets the selection go; another tool calls off what it was doing)
+                if self.ed.right_click() {
+                    self.ed.select(None);
+                }
                 self.ed.cancel();
             }
         }
@@ -1412,6 +1430,7 @@ impl App {
                 }
             }
             crate::ui_edit::paint_box(&ctx, &self.ed);
+            crate::ui_menu::show(&ctx, &mut self.ui.view_menu, &mut self.ed, &self.lib, &mut actions);
             crate::ui_edit::road_entry(&ctx, &mut self.ed, self.view, &mut actions);
             if self.ed.doc.is_some() {
                 self.tt.window(&ctx, &mut self.ed, self.roots.as_ref(), &mut actions);
@@ -2284,8 +2303,8 @@ impl ApplicationHandler for App {
                             }
                         } else if !pressed && self.mouse.right {
                             self.mouse.right = false;
-                            if self.mouse.right_moved < 5.0 {
-                                self.ed.right_click();
+                            if self.mouse.right_moved < 5.0 && self.ed.right_click() {
+                                self.ui.view_menu = Some(crate::ui_menu::ViewMenu { at: egui::pos2(self.mouse.pos.0, self.mouse.pos.1), ground: self.ed.cursor });
                             }
                         }
                     }

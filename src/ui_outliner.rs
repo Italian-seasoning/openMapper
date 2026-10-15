@@ -126,12 +126,30 @@ impl Outliner {
         }
         let shown = if q.is_empty() { &self.root } else { &self.view };
         let selected = ed.selection();
+        // the map's groups first
+        let mut pick_group: Option<usize> = None;
+        if !ed.groups.is_empty() {
+            let current = ed.selected_group();
+            egui::CollapsingHeader::new(RichText::new(format!("{}  ({})", tr("Groups", "Группы"), ed.groups.len())).color(Color32::from_gray(225))).id_salt("outliner groups").icon(folder_icon).default_open(true).show(ui, |ui| {
+                for (i, g) in ed.groups.iter().enumerate().filter(|(_, g)| q.is_empty() || g.name.to_lowercase().contains(&q)) {
+                    if ui.selectable_label(current == Some(i), format!("{}  ·  {}", g.name, g.ids.len())).on_hover_text(tr("Select the group and go there", "Выделить группу и перейти")).clicked() {
+                        pick_group = Some(i);
+                    }
+                }
+            });
+        }
         let mut go: Option<(Sel, DVec2)> = None;
         let mut alike: Option<Sel> = None;
         let mut all: Option<Vec<Sel>> = None;
         egui::ScrollArea::vertical().auto_shrink([false, false]).show(ui, |ui| {
             show_folder(ui, shown, "", &q, lib, &selected, &mut Picks { go: &mut go, alike: &mut alike, all: &mut all });
         });
+        if let Some(g) = pick_group {
+            ed.select_group(g);
+            if let Some(at) = ed.doc.as_ref().and_then(|d| crate::selection::centre(d, &ed.selection())) {
+                actions.push(Action::LookAt(at));
+            }
+        }
         if let Some(v) = all {
             ed.toast(format!("{} {}", tr("Selected:", "Выбрано:"), v.len()));
             ed.set_selection(v);

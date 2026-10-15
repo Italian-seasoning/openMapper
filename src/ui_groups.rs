@@ -62,7 +62,7 @@ impl Groups {
         let abs = |f: &str| lib.find(f).map(|a| a.abs_height).unwrap_or(false);
         let mut open = self.open;
         let mut reread = false;
-        egui::Window::new(icons::labelled(Icon::Objects, tr("Groups", "Группы"))).id(egui::Id::new("groups")).open(&mut open).default_pos([360.0, 120.0]).default_size([340.0, 420.0]).resizable(true).show(ctx, |ui| {
+        egui::Window::new(icons::labelled(Icon::Objects, tr("Groups for other maps", "Группы для других карт"))).id(egui::Id::new("groups")).open(&mut open).default_pos([360.0, 120.0]).default_size([340.0, 420.0]).resizable(true).show(ctx, |ui| {
             ui.label(RichText::new(tr("A selection kept under a name, to put down again in any map (a stop with its shelter and signs, a crossing with its lights)", "Выделение, сохранённое под именем, чтобы ставить его снова на любой карте (остановка с павильоном и знаками, перекрёсток со светофорами)")).small().color(TEXT_DIM));
             ui.add_space(4.0);
             let n = ed.selection().len();

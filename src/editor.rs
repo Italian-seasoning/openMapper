@@ -370,6 +370,8 @@ pub struct Editor {
     pub link_pick: Option<(TileKey, i64)>,
     /// The paths of what is selected are numbered in the view (its path rules are open).
     pub path_numbers: Option<Sel>,
+    /// The map's groups (things a click selects and a drag moves as one).
+    pub groups: Vec<crate::mapgroups::MapGroup>,
 }
 
 impl Default for Editor {
@@ -481,6 +483,7 @@ impl Default for Editor {
             picked: None,
             link_pick: None,
             path_numbers: None,
+            groups: Vec::new(),
         }
     }
 }
@@ -616,7 +619,81 @@ impl Editor {
         self.pending_arms.clear();
         self.paint_layer = if doc.global.ground_textures.len() > 1 { 1 } else { 0 };
         self.session_first_id = doc.global.next_id_code;
+        self.groups = crate::mapgroups::load(&doc.dir);
         self.doc = Some(doc);
+    }
+
+    /// A selection grown to the whole of the groups it touches.
+    fn with_groups(&self, v: Vec<Sel>) -> Vec<Sel> {
+        match self.doc.as_ref() {
+            Some(doc) if !self.groups.is_empty() => crate::mapgroups::expand(doc, &self.groups, &v),
+            _ => v,
+        }
+    }
+
+    /// The group (its place among the map's) the selection is all of, if it is one.
+    pub fn selected_group(&self) -> Option<usize> {
+        let sels = self.selection();
+        let first = sels.first()?;
+        let g = crate::mapgroups::group_of(&self.groups, crate::mapgroups::id_of(*first))?;
+        let doc = self.doc.as_ref()?;
+        let all = crate::mapgroups::expand(doc, &self.groups, &[*first]);
+        (all.len() == sels.len() && all.iter().all(|s| sels.contains(s))).then_some(g)
+    }
+
+    /// Whether anything selected belongs to a group.
+    pub fn selection_grouped(&self) -> bool {
+        self.selection().iter().any(|s| crate::mapgroups::group_of(&self.groups, crate::mapgroups::id_of(*s)).is_some())
+    }
+
+    /// The selection made a group of its own (taken out of any it was in).
+    pub fn group_selection(&mut self) {
+        let ids: Vec<i64> = self.selection().iter().map(|s| crate::mapgroups::id_of(*s)).collect();
+        if ids.len() < 2 {
+            self.toast(tr("Select two things or more to group them", "Выделите два объекта или больше, чтобы сгруппировать"));
+            return;
+        }
+        for g in &mut self.groups {
+            g.ids.retain(|id| !ids.contains(id));
+        }
+        self.groups.retain(|g| g.ids.len() >= 2);
+        let name = crate::mapgroups::free_name(&self.groups, tr("Group", "Группа"));
+        self.groups.push(crate::mapgroups::MapGroup { name: name.clone(), ids });
+        self.save_groups();
+        self.toast(format!("{} «{name}»", tr("Grouped:", "Сгруппировано:")));
+    }
+
+    /// The groups the selection touches undone (their things stay where they are).
+    pub fn ungroup_selection(&mut self) {
+        let ids: Vec<i64> = self.selection().iter().map(|s| crate::mapgroups::id_of(*s)).collect();
+        let before = self.groups.len();
+        self.groups.retain(|g| !g.ids.iter().any(|id| ids.contains(id)));
+        if self.groups.len() != before {
+            self.save_groups();
+            self.toast(tr("Ungrouped", "Разгруппировано"));
+        }
+    }
+
+    pub fn rename_group(&mut self, g: usize, name: &str) {
+        if let Some(x) = self.groups.get_mut(g) {
+            x.name = name.to_string();
+            self.save_groups();
+        }
+    }
+
+    /// Select every thing of a group.
+    pub fn select_group(&mut self, g: usize) {
+        let Some(doc) = self.doc.as_ref() else { return };
+        let v: Vec<Sel> = self.groups.get(g).map(|x| x.ids.iter().filter_map(|id| crate::mapgroups::sel_of(doc, *id)).collect()).unwrap_or_default();
+        self.set_selection(v);
+    }
+
+    /// The groups written beside the map at once (they are not part of OMSI 2's files).
+    fn save_groups(&mut self) {
+        let Some(doc) = self.doc.as_ref() else { return };
+        if let Err(e) = crate::mapgroups::save(&doc.dir, &self.groups) {
+            self.error(format!("groups.json: {e}"));
+        }
     }
 
     // ---------------------------------------------------------------- picking
@@ -1030,10 +1107,12 @@ impl Editor {
         self.road_start.is_some()
     }
 
-    pub fn right_click(&mut self) {
+    /// A right click without a drag: what the tool was doing is called off; true when the
+    /// view's menu is to open instead.
+    pub fn right_click(&mut self) -> bool {
         if self.ruler.is_some() {
             self.ruler = None;
-            return;
+            return false;
         }
         match self.acts_as() {
             Tool::Roads if self.ring_centre.is_some() => {
@@ -1061,10 +1140,27 @@ impl Editor {
                     self.remove_tile(k);
                 }
             }
+            // (Select, and Game logic on a thing of its own: what is under the cursor is
+            // selected, its group with it, and the view's menu opens)
+            Tool::Select => {
+                if let Some(h) = self.hover.filter(|h| !self.is_selected(*h)) {
+                    let v = if self.ctrl_held { vec![h] } else { self.with_groups(vec![h]) };
+                    self.set_selection(v);
+                }
+                return true;
+            }
+            Tool::Objects if self.tool == Tool::Logic && self.hover.is_some() => {
+                if let Some(h) = self.hover.filter(|h| !self.is_selected(*h)) {
+                    let v = self.with_groups(vec![h]);
+                    self.set_selection(v);
+                }
+                return true;
+            }
             _ => {
                 self.select(None);
             }
         }
+        false
     }
 
     /// Turn what is placed or selected (degrees): a selection turns round its middle.
@@ -3187,10 +3283,16 @@ impl Editor {
     /// Shift-click: in the selection if it was not, out if it was.
     pub fn toggle_selected(&mut self, s: Sel) {
         let mut v = self.selection();
-        if let Some(i) = v.iter().position(|x| *x == s) {
-            v.remove(i);
+        // (a group comes and goes as one)
+        let whole = if self.ctrl_held { vec![s] } else { self.with_groups(vec![s]) };
+        if v.contains(&s) {
+            v.retain(|x| !whole.contains(x));
         } else {
-            v.insert(0, s);
+            for (i, w) in whole.into_iter().enumerate() {
+                if !v.contains(&w) {
+                    v.insert(i, w);
+                }
+            }
         }
         self.set_selection(v);
     }
@@ -3251,7 +3353,9 @@ impl Editor {
             return;
         }
         if !self.is_selected(hit) {
-            self.select(Some(hit));
+            // (a group's thing brings the whole group; Ctrl + click takes it alone)
+            let v = if self.ctrl_held { vec![hit] } else { self.with_groups(vec![hit]) };
+            self.set_selection(v);
         }
         // a press on the selection may become a move of all of it
         if let (Some(c), Some(doc)) = (self.cursor, self.doc.as_ref()) {
@@ -3353,6 +3457,7 @@ impl Editor {
                 v.push(s);
             }
         }
+        let v = self.with_groups(v);
         let n = v.len();
         self.set_selection(v);
         if n > 0 {
@@ -3383,6 +3488,11 @@ impl Editor {
             self.toast(format!("{} {n}", tr("Copied:", "Скопировано:")));
         }
         n
+    }
+
+    /// Something was copied (to paste).
+    pub fn has_clip(&self) -> bool {
+        self.clip.is_some()
     }
 
     pub fn cut(&mut self, lib: &Library) {
@@ -5448,6 +5558,49 @@ mod tests {
         ed.ghost_pos = Some((DVec3::new(250.0, 250.0, 0.0), 0.0));
         ed.place_object(&lib, false);
         assert!(ed.doc.as_ref().unwrap().tiles[&(0, 0)].tile.objects.iter().filter(|o| o.file.contains("Ampel")).any(|o| o.var_parent.is_none()));
+    }
+
+    #[test]
+    fn a_group_is_selected_and_moved_as_one() {
+        let dir = std::env::temp_dir().join(format!("om-groups-{}", std::process::id()));
+        let mut doc = flat_map(1);
+        doc.dir = dir.join("maps").join("G");
+        for (id, x) in [(1, 100.0), (2, 110.0), (3, 200.0)] {
+            add_object(&mut doc, (0, 0), id, x, 100.0);
+        }
+        let mut ed = Editor::default();
+        ed.open(doc);
+        let mut assets = Assets::new(std::path::PathBuf::new(), std::path::PathBuf::new());
+        let lib = Library::default();
+        ed.set_selection(vec![Sel::Object((0, 0), 1), Sel::Object((0, 0), 2)]);
+        ed.group_selection();
+        assert_eq!(ed.groups.len(), 1);
+        assert_eq!(crate::mapgroups::load(&ed.doc.as_ref().unwrap().dir), ed.groups, "kept beside the map");
+        // a click on one: both, and a drag moves both
+        ed.select(None);
+        ed.hover = Some(Sel::Object((0, 0), 2));
+        ed.cursor = Some(DVec3::new(110.0, 100.0, 0.0));
+        ed.left_press(&mut assets, &lib, false);
+        assert_eq!(ed.selection().len(), 2);
+        assert_eq!(ed.selected_group(), Some(0));
+        ed.cursor = Some(DVec3::new(110.0, 120.0, 0.0));
+        ed.tick(&mut assets, 0.0, true);
+        ed.tick(&mut assets, 0.0, false);
+        let d = ed.doc.as_ref().unwrap();
+        assert!((d.object((0, 0), 1).unwrap().pos[1] - 120.0).abs() < 0.6 && (d.object((0, 0), 3).unwrap().pos[1] - 100.0).abs() < 1e-9);
+        // Ctrl + click: one alone; a right click on one selects its group and asks for the menu
+        ed.select(None);
+        ed.ctrl_held = true;
+        ed.left_press(&mut assets, &lib, false);
+        ed.tick(&mut assets, 0.0, false);
+        assert_eq!(ed.selection(), [Sel::Object((0, 0), 2)]);
+        ed.ctrl_held = false;
+        ed.select(None);
+        assert!(ed.right_click());
+        assert_eq!(ed.selection().len(), 2);
+        ed.ungroup_selection();
+        assert!(ed.groups.is_empty() && crate::mapgroups::load(&ed.doc.as_ref().unwrap().dir).is_empty());
+        let _ = std::fs::remove_dir_all(dir);
     }
 
     #[test]
