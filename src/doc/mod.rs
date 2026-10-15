@@ -15,6 +15,8 @@ use std::sync::atomic::{AtomicU64, Ordering};
 use glam::{DVec2, DVec3};
 use omsi_map::{GlobalCfg, GroundTex, MapObject, MapSpline, Terrain, Tile, TERRAIN_SAMPLES};
 
+use crate::i18n::tr;
+
 pub use save::save;
 
 pub type TileKey = (i32, i32);
@@ -654,6 +656,85 @@ impl Document {
             }
         }
         Some(new)
+    }
+
+    /// Join spline `id` and the one after it into one spline, as if it had been laid in one
+    /// go: the rows of objects on the second carried over. Only where the two make one curve
+    /// (same type, bend, and a climb and banking that run on evenly); otherwise why not.
+    pub fn join_splines(&mut self, k: TileKey, id: i64) -> Result<(), &'static str> {
+        let a = self.spline(k, id).cloned().ok_or("")?;
+        let Some((bk, b)) = self.find_spline(a.next_id).map(|(bk, b)| (bk, b.clone())) else {
+            return Err(tr("Nothing comes after it to join", "За ней нечего присоединять"));
+        };
+        if b.prev_id != a.id || b.id == a.id {
+            return Err(tr("The next piece runs the other way: reverse it first", "Следующий кусок идёт в другую сторону: сначала разверните его"));
+        }
+        if bk != k {
+            return Err(tr("The next piece lies on another tile", "Следующий кусок лежит на другой плитке"));
+        }
+        if !a.file.eq_ignore_ascii_case(&b.file) || a.mirror != b.mirror {
+            return Err(tr("The two pieces are of different road types", "Куски разных типов дорог"));
+        }
+        if a.is_h != b.is_h || a.rules != b.rules || a.terrain_align != b.terrain_align || a.terrain_align_flag != b.terrain_align_flag || a.skew_end != 0.0 || b.skew_start != 0.0 {
+            return Err(tr("The two pieces have different settings (path rules, ground, skew)", "У кусков разные настройки (правила путей, земля, скос)"));
+        }
+        let t = self.tiles.get(&k).ok_or("")?;
+        let ib = t.tile.splines.iter().position(|s| s.id == b.id).ok_or("")?;
+        if t.tile.spline_attachments.iter().any(|r| r.spline_index == ib as i32 && r.repeater.is_some()) {
+            return Err(tr("A row of objects comes onto the next piece from another tile", "На следующий кусок заходит ряд объектов с другой плитки"));
+        }
+        let org = tile_origin(k);
+        let mut m = a.clone();
+        m.length = a.length + b.length;
+        m.grad_end = b.grad_end;
+        m.cant_end = b.cant_end;
+        m.skew_end = b.skew_end;
+        m.next_id = b.next_id;
+        if a.is_h {
+            let (ca, cb) = (omsi_geometry::SplineCurve::from_map(&a, org), omsi_geometry::SplineCurve::from_map(&b, org));
+            m.delta_h = Some(cb.point_at(b.length).z - ca.point_at(0.0).z);
+        }
+        // the joined curve must lie where the two did (a bend's radius, the climb, the banking)
+        let (ca, cb, cm) = (omsi_geometry::SplineCurve::from_map(&a, org), omsi_geometry::SplineCurve::from_map(&b, org), omsi_geometry::SplineCurve::from_map(&m, org));
+        for i in 0..=8 {
+            let f = i as f64 / 8.0;
+            let checks = [(&ca, f * a.length, f * a.length), (&cb, f * b.length, a.length + f * b.length)];
+            for (c, own, joined) in checks {
+                let off = (c.point_at(own) - cm.point_at(joined)).length();
+                if off > 0.05 || (c.cant_at(own) - cm.cant_at(joined)).abs() > 0.05 {
+                    return Err(tr("The two pieces do not bend, climb or bank alike: joined they would change shape", "Куски изгибаются, поднимаются или наклоняются по-разному: при соединении изменилась бы форма"));
+                }
+            }
+        }
+        // the second's rows measured along the joined spline (and the objects hanging on them stay)
+        let ia = t.tile.splines.iter().position(|s| s.id == a.id).ok_or("")?;
+        let shift = a.map_chain_offset.unwrap_or(0.0) + a.length - b.map_chain_offset.unwrap_or(0.0);
+        let after = b.next_id;
+        let t = self.tiles.get_mut(&k).unwrap();
+        for r in t.tile.spline_attachments.iter_mut().filter(|r| r.spline_index == ib as i32) {
+            r.spline_index = ia as i32;
+            r.offset[2] += shift;
+        }
+        // (the one after the second followed it, by its start or its end: now the joined one)
+        let by_start = self.find_spline(after).map(|(ck, c)| (ck, c.prev_id == b.id));
+        self.delete_spline(k, b.id);
+        if let Some((ck, by_start)) = by_start {
+            let t = self.tiles.get_mut(&ck).unwrap();
+            if let Some(c) = t.tile.splines.iter_mut().find(|c| c.id == after && !c.deleted) {
+                if by_start {
+                    c.prev_id = a.id;
+                } else {
+                    c.next_id = a.id;
+                }
+            }
+            t.touch_content();
+        }
+        let t = self.tiles.get_mut(&k).unwrap();
+        if let Some(s) = t.tile.splines.iter_mut().find(|s| s.id == a.id) {
+            *s = m;
+        }
+        t.touch_content();
+        Ok(())
     }
 
     /// Find a spline by IDCode anywhere on the map.

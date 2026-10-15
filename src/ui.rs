@@ -1784,6 +1784,8 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
     // ends held)
     let mut spline_extra: Option<(f64, f64, u8)> = None;
     let mut whole_road = false;
+    let mut cut_middle = false;
+    let mut join_next = false;
     let mut reverse = false;
     let mut lay = false;
     let mut align_road = false;
@@ -2029,6 +2031,14 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
                         whole_road = true;
                     }
                 }
+                ui.horizontal_wrapped(|ui| {
+                    if s.length > 2.0 && ui.small_button(tr("Cut in two", "Разрезать надвое")).on_hover_text(tr("Into two pieces at its middle, to give a stretch another type or settings (right-click the road: cut it where clicked)", "На два куска посередине, чтобы дать участку другой тип или настройки (правый клик по дороге: разрезать в месте клика)")).clicked() {
+                        cut_middle = true;
+                    }
+                    if s.next_id != 0 && ui.small_button(tr("Join with the next piece", "Соединить со следующим куском")).on_hover_text(tr("One piece again with the one after it, where the two make one curve", "Снова один кусок со следующим, если вместе они образуют одну кривую")).clicked() {
+                        join_next = true;
+                    }
+                });
                 ends = crate::ui_edit::spline_ends(ui, doc, k, id);
                 if let Some(rt) = &ed.road_type {
                     if !rt.eq_ignore_ascii_case(&s.file) {
@@ -2184,6 +2194,16 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
         Sel::Spline(k, id) => {
             if whole_road {
                 ed.select_chain(k, id);
+                return;
+            }
+            if cut_middle {
+                if let Some(l) = ed.doc.as_ref().and_then(|d| d.spline(k, id)).map(|s| s.length) {
+                    ed.cut_spline(k, id, l / 2.0);
+                }
+                return;
+            }
+            if join_next {
+                ed.join_with_next(k, id);
                 return;
             }
             if reverse {

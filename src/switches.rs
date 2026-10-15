@@ -131,7 +131,7 @@ pub struct Plan {
 }
 
 /// The point of a spline nearest to `p` within `within` m (tile, id, distance along it).
-fn spline_at(doc: &Document, p: DVec2, within: f64) -> Option<(TileKey, i64, f64)> {
+pub fn spline_at(doc: &Document, p: DVec2, within: f64) -> Option<(TileKey, i64, f64)> {
     let mut best: Option<(f64, (TileKey, i64, f64))> = None;
     for (k, t) in &doc.tiles {
         let org = tile_origin(*k);

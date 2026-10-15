@@ -3991,6 +3991,69 @@ impl Editor {
         self.history.commit();
     }
 
+    /// The road or track nearest to `p` (within a few metres of its middle): tile, id and the
+    /// distance along it.
+    pub fn road_at(&self, p: DVec2) -> Option<(TileKey, i64, f64)> {
+        crate::switches::spline_at(self.doc.as_ref()?, p, 8.0)
+    }
+
+    /// The road at `p` cut in two there (to give a stretch of it another type, a bridge, a
+    /// junction later); both pieces selected.
+    pub fn cut_road_at(&mut self, p: DVec2) {
+        let Some((k, id, at)) = self.road_at(p) else {
+            self.error(tr("No road there to cut", "Здесь нет дороги, которую можно разрезать"));
+            return;
+        };
+        self.cut_spline(k, id, at);
+    }
+
+    /// Spline `id` cut in two `at` m along it; both pieces selected.
+    pub fn cut_spline(&mut self, k: TileKey, id: i64, at: f64) {
+        let Some(doc) = self.doc.as_ref() else { return };
+        let Some(s) = doc.spline(k, id) else { return };
+        if at < 1.0 || at > s.length - 1.0 {
+            self.error(tr("Too near the road's end to cut it there", "Слишком близко к концу дороги, чтобы разрезать её здесь"));
+            return;
+        }
+        self.history.begin(tr("Cut the road", "Разрезать дорогу"));
+        self.history.touch_tile(doc, k);
+        if let Some((nk, _)) = doc.find_spline(s.next_id) {
+            self.history.touch_tile(doc, nk);
+        }
+        let Some(new) = self.doc.as_mut().unwrap().split_spline(k, id, at) else {
+            self.history.cancel();
+            return;
+        };
+        self.history.commit();
+        self.set_selection(vec![Sel::Spline(k, id), Sel::Spline(k, new)]);
+        self.toast(tr("Cut in two: each piece can now be changed on its own", "Разрезана надвое: каждый кусок теперь можно менять отдельно"));
+    }
+
+    /// Spline `id` and the one after it made one spline again, where they make one curve.
+    pub fn join_with_next(&mut self, k: TileKey, id: i64) {
+        let Some(doc) = self.doc.as_ref() else { return };
+        let Some(s) = doc.spline(k, id) else { return };
+        self.history.begin(tr("Join the pieces", "Соединить куски"));
+        self.history.touch_tile(doc, k);
+        if let Some((nk, n)) = doc.find_spline(s.next_id) {
+            self.history.touch_tile(doc, nk);
+            if let Some((ck, _)) = doc.find_spline(n.next_id) {
+                self.history.touch_tile(doc, ck);
+            }
+        }
+        match self.doc.as_mut().unwrap().join_splines(k, id) {
+            Ok(()) => {
+                self.history.commit();
+                self.set_selection(vec![Sel::Spline(k, id)]);
+                self.toast(tr("Joined into one piece", "Соединены в один кусок"));
+            }
+            Err(why) => {
+                self.history.cancel();
+                self.error(why);
+            }
+        }
+    }
+
     /// The selected splines copied alongside, `d` m to the right of the first's way
     /// (negative: left); the copies are selected.
     pub fn parallel_copy(&mut self, d: f64) {

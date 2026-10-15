@@ -344,3 +344,66 @@ fn a_new_map_has_the_cars_its_traffic_names() {
     }
     let _ = std::fs::remove_dir_all(&roots.content);
 }
+
+/// Where the objects of every row on tile (0, 0) stand.
+fn row_spots(doc: &Document) -> Vec<DVec3> {
+    let t = &doc.tiles[&(0, 0)].tile;
+    let mut v: Vec<DVec3> = t.spline_attachments.iter().flat_map(|a| crate::place::row_objects(a, &t.splines, tile_origin((0, 0)))).map(|o| o.pose.pos).collect();
+    v.sort_by(|a, b| a.x.total_cmp(&b.x).then(a.y.total_cmp(&b.y)));
+    v
+}
+
+#[test]
+fn a_cut_road_joined_again_is_the_road_it_was() {
+    use crate::selection::tests::{add_spline, flat_map};
+    let mut doc = flat_map(1);
+    add_spline(&mut doc, (0, 0), 1, 50.0, 50.0, 30.0, 120.0, 0, 0);
+    {
+        let s = &mut doc.tiles.get_mut(&(0, 0)).unwrap().tile.splines[0];
+        s.radius = 300.0;
+        s.grad_start = 2.0;
+        s.grad_end = 4.0;
+    }
+    let row = omsi_map::SplineAttachment { file: "x.sco".into(), id: 7, spline_index: 0, offset: [5.0, 0.0, 10.0], interval: 20.0, range: 100.0, ..Default::default() };
+    doc.tiles.get_mut(&(0, 0)).unwrap().tile.spline_attachments.push(row);
+    let before = doc.spline((0, 0), 1).unwrap().clone();
+    let spots = row_spots(&doc);
+    assert_eq!(spots.len(), 6);
+    let b = doc.split_spline((0, 0), 1, 47.0).unwrap();
+    // the row runs on over the cut
+    assert!(row_spots(&doc).iter().zip(&spots).all(|(a, b)| (*a - *b).length() < 1e-6));
+    // a row on the second piece too
+    let mut row2 = doc.tiles[&(0, 0)].tile.spline_attachments[0].clone();
+    row2.id = 8;
+    row2.spline_index = 1;
+    row2.offset = [-5.0, 0.0, 47.0 + 3.0];
+    row2.range = 40.0;
+    doc.tiles.get_mut(&(0, 0)).unwrap().tile.spline_attachments.push(row2);
+    let spots = row_spots(&doc);
+    doc.join_splines((0, 0), 1).unwrap();
+    assert!(doc.find_spline(b).is_none());
+    let after = doc.spline((0, 0), 1).unwrap();
+    assert_eq!(after.next_id, 0);
+    assert!((after.length - before.length).abs() < 1e-9 && (after.grad_end - before.grad_end).abs() < 1e-6, "{after:?}");
+    assert!(row_spots(&doc).iter().zip(&spots).all(|(a, b)| (*a - *b).length() < 1e-6));
+    assert_eq!(row_spots(&doc).len(), spots.len());
+}
+
+#[test]
+fn pieces_of_other_bends_are_not_joined() {
+    use crate::selection::tests::{add_spline, flat_map};
+    let mut doc = flat_map(1);
+    add_spline(&mut doc, (0, 0), 1, 50.0, 50.0, 0.0, 50.0, 0, 2);
+    add_spline(&mut doc, (0, 0), 2, 50.0, 100.0, 0.0, 50.0, 1, 3);
+    add_spline(&mut doc, (0, 0), 3, 50.0, 150.0, 0.0, 30.0, 2, 0);
+    doc.tiles.get_mut(&(0, 0)).unwrap().tile.splines[1].radius = 200.0;
+    assert!(doc.join_splines((0, 0), 1).is_err());
+    // two straights in line: one, the third now following it
+    doc.tiles.get_mut(&(0, 0)).unwrap().tile.splines[1].radius = 0.0;
+    doc.join_splines((0, 0), 1).unwrap();
+    assert_eq!(doc.spline((0, 0), 1).unwrap().length, 100.0);
+    assert_eq!(doc.spline((0, 0), 3).unwrap().prev_id, 1);
+    doc.join_splines((0, 0), 1).unwrap();
+    assert_eq!(doc.spline((0, 0), 1).unwrap().length, 130.0);
+    assert!(doc.join_splines((0, 0), 1).is_err());
+}

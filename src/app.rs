@@ -325,6 +325,18 @@ impl App {
                 }
             }
         }
+        // OPENMAPPER_JOIN_NEXT=<n>: the spline OPENMAPPER_SELECT selected joined with the next
+        // piece n times; OPENMAPPER_CUT=x,y: the road there cut in two
+        if let Some(n) = std::env::var("OPENMAPPER_JOIN_NEXT").ok().and_then(|v| v.parse::<usize>().ok()) {
+            if let Some(Sel::Spline(k, id)) = self.ed.selected {
+                for _ in 0..n {
+                    self.ed.join_with_next(k, id);
+                }
+            }
+        }
+        if let Some(v) = std::env::var("OPENMAPPER_CUT").ok().map(|c| c.split(',').filter_map(|x| x.trim().parse::<f64>().ok()).collect::<Vec<_>>()).filter(|v| v.len() == 2) {
+            self.ed.cut_road_at(DVec2::new(v[0], v[1]));
+        }
         // OPENMAPPER_PAINT_ALONG=<layer>,<width>[,under]: that layer painted along what
         // OPENMAPPER_SELECT selected
         if let Ok(a) = std::env::var("OPENMAPPER_PAINT_ALONG") {
@@ -441,9 +453,11 @@ impl App {
         if std::env::var_os("OPENMAPPER_LEVEL").is_some() {
             self.ed.level_request = true;
         }
-        // OPENMAPPER_MENU=x,y: the view's right-click menu open there (window points)
-        if let Some(v) = std::env::var("OPENMAPPER_MENU").ok().map(|c| c.split(',').filter_map(|x| x.trim().parse::<f32>().ok()).collect::<Vec<_>>()).filter(|v| v.len() == 2) {
-            self.ui.view_menu = Some(crate::ui_menu::ViewMenu { at: egui::pos2(v[0], v[1]), ground: None });
+        // OPENMAPPER_MENU=x,y[,gx,gy]: the view's right-click menu open there (window points),
+        // as if clicked on the ground at world gx, gy
+        if let Some(v) = std::env::var("OPENMAPPER_MENU").ok().map(|c| c.split(',').filter_map(|x| x.trim().parse::<f64>().ok()).collect::<Vec<_>>()).filter(|v| v.len() == 2 || v.len() == 4) {
+            let ground = (v.len() == 4).then(|| glam::DVec3::new(v[2], v[3], 0.0));
+            self.ui.view_menu = Some(crate::ui_menu::ViewMenu { at: egui::pos2(v[0] as f32, v[1] as f32), ground });
         }
         // OPENMAPPER_RULER=x0,y0,x1,y1: the ruler laid between those points; OPENMAPPER_GRID=<step>:
         // grid snapping on, the cursor at the camera's target

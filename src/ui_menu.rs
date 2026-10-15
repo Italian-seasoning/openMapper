@@ -67,6 +67,27 @@ pub fn show(ctx: &egui::Context, menu: &mut Option<ViewMenu>, ed: &mut Editor, l
                 ed.delete_selected();
                 done = true;
             }
+            // a road under the click: cut there; one piece selected: joined to the next again
+            let road = m.ground.and_then(|g| ed.road_at(g.truncate()));
+            let joinable = match (n, sels.first()) {
+                (1, Some(crate::doc::Sel::Spline(k, id))) => ed.doc.as_ref().and_then(|d| d.spline(*k, *id)).filter(|s| s.next_id != 0).map(|_| (*k, *id)),
+                _ => None,
+            };
+            if road.is_some() || joinable.is_some() {
+                ui.separator();
+            }
+            if road.is_some() && item(ui, Icon::Road, tr("Cut the road here", "Разрезать дорогу здесь"), "", true) {
+                if let Some(g) = m.ground {
+                    ed.cut_road_at(g.truncate());
+                }
+                done = true;
+            }
+            if let Some((k, id)) = joinable {
+                if item(ui, Icon::Route, tr("Join with the next piece", "Соединить со следующим куском"), "", true) {
+                    ed.join_with_next(k, id);
+                    done = true;
+                }
+            }
             ui.separator();
             if item(ui, Icon::Layers, tr("Group", "Сгруппировать"), "Ctrl+G", n >= 2 && group.is_none()) {
                 ed.group_selection();
