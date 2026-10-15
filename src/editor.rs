@@ -804,9 +804,29 @@ impl Editor {
                 self.hover_tile = g.map(|p| tile_of(p.truncate()));
             }
             Tool::Roads => self.plan_road(assets),
+            // (Game logic: a stop, start point or other helper already there is picked to
+            // select and move, not put again on top of it)
+            Tool::Objects if self.tool == Tool::Logic && self.drag == Drag::None => {
+                self.hover = self.pick(assets, o, d, g).filter(|s| self.is_logic_object(assets, *s));
+                if self.hover.is_some() {
+                    self.ghost_pos = None;
+                    self.stop_twin = None;
+                } else {
+                    self.plan_object(assets, _lib);
+                }
+            }
             Tool::Objects => self.plan_object(assets, _lib),
             _ => {}
         }
+    }
+
+    /// What the Game logic tool picks rather than places over: a bus stop, a start point or
+    /// any helper the game does not show (car parks, sound sources, …).
+    fn is_logic_object(&self, assets: &mut Assets, s: Sel) -> bool {
+        let Sel::Object(k, id) = s else { return false };
+        let Some(o) = self.doc.as_ref().and_then(|d| selection::any_object(d, k, id)) else { return false };
+        let file = o.file.clone();
+        o.flag == 7 || self.doc.as_ref().map(|d| d.global.entry_points.iter().any(|e| e.object_id == id)).unwrap_or(false) || assets.object(&file).map(|m| m.technical).unwrap_or(false)
     }
 
     /// The cursor at a ground point (scripted use: the demo and tests).
@@ -947,6 +967,11 @@ impl Editor {
                 (Some(a), None) => (Some(a), Some(c)),
                 _ => (Some(c), None),
             };
+            return;
+        }
+        // (Game logic: a press on one already there selects it, and a drag moves it)
+        if self.tool == Tool::Logic && self.acts_as() == Tool::Objects && self.hover.is_some() {
+            self.select_press(shift);
             return;
         }
         match self.acts_as() {
@@ -5423,6 +5448,32 @@ mod tests {
         ed.ghost_pos = Some((DVec3::new(250.0, 250.0, 0.0), 0.0));
         ed.place_object(&lib, false);
         assert!(ed.doc.as_ref().unwrap().tiles[&(0, 0)].tile.objects.iter().filter(|o| o.file.contains("Ampel")).any(|o| o.var_parent.is_none()));
+    }
+
+    #[test]
+    fn game_logic_selects_and_moves_a_stop_already_there() {
+        let mut doc = flat_map(1);
+        add_object(&mut doc, (0, 0), 1, 100.0, 100.0);
+        let o = &mut doc.tiles.get_mut(&(0, 0)).unwrap().tile.objects[0];
+        o.flag = 7;
+        o.extra = vec!["Market".into(), "0".into(), "0".into(), "10".into()];
+        let mut ed = Editor::default();
+        ed.open(doc);
+        ed.set_tool(Tool::Logic);
+        ed.set_logic(LogicMode::Stops);
+        ed.object_type = Some("stop.sco".into());
+        let mut assets = Assets::new(std::path::PathBuf::new(), std::path::PathBuf::new());
+        let lib = Library::default();
+        ed.hover = Some(Sel::Object((0, 0), 1));
+        ed.cursor = Some(DVec3::new(100.0, 100.0, 0.0));
+        ed.left_press(&mut assets, &lib, false);
+        assert_eq!(ed.selected, Some(Sel::Object((0, 0), 1)));
+        assert_eq!(ed.doc.as_ref().unwrap().tiles[&(0, 0)].tile.objects.len(), 1, "nothing new put");
+        // (dragged: it moves)
+        ed.cursor = Some(DVec3::new(110.0, 100.0, 0.0));
+        ed.tick(&mut assets, 0.0, true);
+        ed.tick(&mut assets, 0.0, false);
+        assert!((ed.doc.as_ref().unwrap().object((0, 0), 1).unwrap().pos[0] - 110.0).abs() < 0.6);
     }
 
     #[test]
