@@ -115,11 +115,34 @@ pub fn paint_path_numbers(ctx: &egui::Context, lanes: &[crate::lanes::Lane], cam
     }
 }
 
+/// What the ruler measures, by its line in the view.
+pub fn paint_ruler(ctx: &egui::Context, ed: &Editor, cam: &crate::camera::Camera, view: egui::Rect) {
+    let Some((a, b)) = ed.ruler_line() else { return };
+    let d = b - a;
+    let flat = d.truncate().length();
+    let grade = if flat > 0.01 { format!("  {:+.1} %", d.z / flat * 100.0) } else { String::new() };
+    let Some((x, y)) = crate::selection::project(cam, (a + b) * 0.5 + DVec3::Z * 1.0, view.width(), view.height()) else { return };
+    let at = view.min + Vec2::new(x, y);
+    if !view.contains(at) {
+        return;
+    }
+    let painter = ctx.layer_painter(egui::LayerId::new(egui::Order::Background, egui::Id::new("ruler"))).with_clip_rect(view);
+    let galley = painter.layout_no_wrap(format!("{flat:.2} m  Δh {:+.2} m{grade}", d.z), egui::FontId::monospace(12.0), Color32::BLACK);
+    let r = egui::Rect::from_center_size(at, galley.size() + Vec2::new(10.0, 4.0));
+    painter.rect_filled(r, CornerRadius::same(3), Color32::from_rgb(255, 216, 51));
+    painter.galley(r.min + Vec2::new(5.0, 2.0), galley, Color32::BLACK);
+}
+
 /// Grid and angle snapping, in the status bar.
 pub fn snap_controls(ui: &mut egui::Ui, ed: &mut Editor) {
     ui.spacing_mut().interact_size.y = 16.0;
     // (laid out right to left: the angle, the step, then the grid switch)
-    check(ui, &mut ed.snap_angle, RichText::new("15°").small()).on_hover_text(tr("Snap headings to 15°", "Привязка направления к 15°"));
+    egui::ComboBox::from_id_salt("angle step").width(46.0).selected_text(RichText::new(format!("{}°", ed.angle_step)).small()).show_ui(ui, |ui| {
+        for s in [1.0, 5.0, 10.0, 15.0, 22.5, 30.0, 45.0, 90.0] {
+            ui.selectable_value(&mut ed.angle_step, s, format!("{s}°"));
+        }
+    }).response.on_hover_text(tr("The angle step: what snapping comes to and what R turns by", "Шаг угла: к чему привязывается направление и на сколько поворачивает R"));
+    check(ui, &mut ed.snap_angle, RichText::new(tr("Angle", "Угол")).small()).on_hover_text(tr("Snap headings to the angle step", "Привязка направления к шагу угла"));
     egui::ComboBox::from_id_salt("grid step").width(56.0).selected_text(RichText::new(format!("{} m", ed.grid_step)).small()).show_ui(ui, |ui| {
         for s in [0.5, 1.0, 2.0, 5.0, 10.0] {
             ui.selectable_value(&mut ed.grid_step, s, format!("{s} m"));

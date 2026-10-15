@@ -445,6 +445,20 @@ impl App {
         if let Some(v) = std::env::var("OPENMAPPER_MENU").ok().map(|c| c.split(',').filter_map(|x| x.trim().parse::<f32>().ok()).collect::<Vec<_>>()).filter(|v| v.len() == 2) {
             self.ui.view_menu = Some(crate::ui_menu::ViewMenu { at: egui::pos2(v[0], v[1]), ground: None });
         }
+        // OPENMAPPER_RULER=x0,y0,x1,y1: the ruler laid between those points; OPENMAPPER_GRID=<step>:
+        // grid snapping on, the cursor at the camera's target
+        if let Some(v) = std::env::var("OPENMAPPER_RULER").ok().map(|c| c.split(',').filter_map(|x| x.trim().parse::<f64>().ok()).collect::<Vec<_>>()).filter(|v| v.len() == 4) {
+            if let Some(doc) = &self.ed.doc {
+                let p = |x: f64, y: f64| DVec3::new(x, y, doc.ground(DVec2::new(x, y)));
+                self.ed.ruler = Some((Some(p(v[0], v[1])), Some(p(v[2], v[3]))));
+            }
+        }
+        if let Some(s) = std::env::var("OPENMAPPER_GRID").ok().and_then(|s| s.parse::<f64>().ok()) {
+            self.ed.snap_grid = true;
+            self.ed.grid_step = s;
+            self.ed.cursor = Some(self.cam.target);
+            self.ed.cursor_in_view = true;
+        }
         // OPENMAPPER_OUTLINER=[text]: the Select panel's Objects tab, that searched for
         if let Ok(q) = std::env::var("OPENMAPPER_OUTLINER") {
             self.ui.outliner.show_with(&q);
@@ -1198,7 +1212,7 @@ impl App {
                 let step = if shift { 1.0 } else { 0.1 };
                 self.ed.raise_selection(if k == KeyCode::PageUp { step } else { -step });
             }
-            Some(KeyCode::KeyR) if !ctrl => self.ed.rotate(if shift { -15.0 } else { 15.0 }),
+            Some(KeyCode::KeyR) if !ctrl => self.ed.rotate(if shift { -self.ed.angle_step } else { self.ed.angle_step }),
             Some(KeyCode::KeyU) if !ctrl => self.ed.toggle_ruler(),
             Some(KeyCode::Enter) | Some(KeyCode::NumpadEnter) => actions.push(Action::BuildRoad),
             Some(KeyCode::KeyG) if !ctrl => self.ed.show_grid = !self.ed.show_grid,
@@ -1430,6 +1444,7 @@ impl App {
                 }
             }
             crate::ui_edit::paint_box(&ctx, &self.ed);
+            crate::ui_edit::paint_ruler(&ctx, &self.ed, &self.cam, self.view);
             crate::ui_menu::show(&ctx, &mut self.ui.view_menu, &mut self.ed, &self.lib, &mut actions);
             crate::ui_edit::road_entry(&ctx, &mut self.ed, self.view, &mut actions);
             if self.ed.doc.is_some() {

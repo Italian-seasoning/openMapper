@@ -1200,6 +1200,10 @@ fn logic_panel(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Libra
     });
     ui.add_space(4.0);
     ui.label(RichText::new(ed.logic.hint()).small().color(TEXT_DIM));
+    // (stops, start points and car parks go to the kerb or the lane by themselves: switchable)
+    if matches!(ed.logic, LogicMode::Stops | LogicMode::Start | LogicMode::Parking) {
+        check(ui, &mut ed.align_to_road, tr("Line up with the nearest road (Shift: put it freely)", "Выравнивать по ближайшей дороге (Shift: ставить свободно)"));
+    }
     ui.add_space(4.0);
     match ed.logic {
         LogicMode::Stops => {

@@ -263,6 +263,8 @@ pub struct Editor {
     pub snap_grid: bool,
     pub grid_step: f64,
     pub snap_angle: bool,
+    /// The angle snapping's step, and what R turns by (degrees).
+    pub angle_step: f64,
     /// The open history step is the properties panel's.
     panel_step: bool,
     pub cursor: Option<DVec3>,
@@ -419,6 +421,7 @@ impl Default for Editor {
             snap_grid: false,
             grid_step: 1.0,
             snap_angle: false,
+            angle_step: 15.0,
             panel_step: false,
             cursor: None,
             cursor_in_view: false,
@@ -1200,7 +1203,7 @@ impl Editor {
                 let from: Vec<Origin> = sels.iter().filter_map(|s| selection::origin_of(doc, *s)).collect();
                 // (one thing alone, with angle snapping on, comes to a whole step)
                 let deg = match (&from[..], self.snap_angle) {
-                    ([one], true) => snap_deg(one.heading + deg) - one.heading,
+                    ([one], true) => snap_deg(one.heading + deg, self.angle_step) - one.heading,
                     _ => deg,
                 };
                 self.history.begin(if sels.len() > 1 { tr("Rotate selection", "Поворот выделенного") } else { tr("Rotate", "Поворот") });
@@ -1978,7 +1981,7 @@ impl Editor {
         // a straight from a free start: its heading to whole steps
         if !fixed && snap.is_none() && self.snap_angle {
             let d = target - start.pos.truncate();
-            target = start.pos.truncate() + roads::dir(snap_deg(roads::heading_of(d))) * d.length();
+            target = start.pos.truncate() + roads::dir(snap_deg(roads::heading_of(d), self.angle_step)) * d.length();
         }
         let mut end_anchor = snap;
         // into a junction plate: to its centre (it is cut back to the edge and becomes an arm)
@@ -3214,6 +3217,33 @@ impl Editor {
             _ => {}
         }
         self.selection_extras(&mut x, cam, w);
+        // the grid things snap to, round the cursor (fading out), while snapping is on
+        if let (true, Some(c)) = (self.snap_grid, self.cursor) {
+            let step = self.grid_step.max(0.1);
+            // (no more lines than a few dozen on the screen: a fine step seen from afar shows
+            // every so many)
+            let every = ((cam.distance * 0.02) / step).ceil().max(1.0);
+            let cell = step * every;
+            let n = 12i32;
+            let base = DVec2::new((c.x / cell).round() * cell, (c.y / cell).round() * cell);
+            let reach = cell * n as f64;
+            for i in -n..=n {
+                for (along_x, off) in [(true, i as f64 * cell), (false, i as f64 * cell)] {
+                    // (each line in pieces, so it lies on the ground)
+                    for j in -n..n {
+                        let (s0, s1) = (j as f64 * cell, (j + 1) as f64 * cell);
+                        let (p0, p1) = if along_x { (base + DVec2::new(s0, off), base + DVec2::new(s1, off)) } else { (base + DVec2::new(off, s0), base + DVec2::new(off, s1)) };
+                        let fade = 1.0 - ((p0 + p1) * 0.5 - c.truncate()).length() / reach;
+                        if fade <= 0.0 {
+                            continue;
+                        }
+                        let z0 = doc.ground(p0) + 0.15;
+                        let z1 = doc.ground(p1) + 0.15;
+                        line(&mut x.overlay, cam, DVec3::new(p0.x, p0.y, z0), DVec3::new(p1.x, p1.y, z1), w * 0.35, [1.0, 1.0, 1.0, 0.35 * fade as f32]);
+                    }
+                }
+            }
+        }
         if let Some((a, b)) = self.ruler_line() {
             let lift = DVec3::Z * 0.5;
             line(&mut x.overlay, cam, a + lift, b + lift, w, [1.0, 0.85, 0.2, 1.0]);
@@ -3270,8 +3300,9 @@ pub fn is_own_junction(file: &str) -> bool {
 }
 
 /// A heading to the nearest whole 15 degrees.
-pub fn snap_deg(h: f64) -> f64 {
-    roads::norm_deg((h / 15.0).round() * 15.0)
+pub fn snap_deg(h: f64, step: f64) -> f64 {
+    let step = if step > 0.0 { step } else { 15.0 };
+    roads::norm_deg((h / step).round() * step)
 }
 
 // -------------------------------------------------------------------- selection and editing
@@ -4897,7 +4928,7 @@ impl Editor {
 
     /// A heading to whole 15 degrees, when angles snap.
     pub fn snap_heading(&self, h: f64) -> f64 {
-        if self.snap_angle { snap_deg(h) } else { h }
+        if self.snap_angle { snap_deg(h, self.angle_step) } else { h }
     }
 
     // ------------------------------------------------------------ drawing
@@ -5644,6 +5675,30 @@ mod tests {
         ed.redo();
         assert!(ed.groups().is_empty());
         let _ = std::fs::remove_dir_all(dir);
+    }
+
+    #[test]
+    fn the_ruler_takes_two_clicks_wherever_they_land() {
+        let mut doc = flat_map(1);
+        add_object(&mut doc, (0, 0), 1, 100.0, 100.0);
+        let mut ed = Editor::default();
+        ed.open(doc);
+        let mut assets = Assets::new(std::path::PathBuf::new(), std::path::PathBuf::new());
+        let lib = Library::default();
+        ed.toggle_ruler();
+        // (the first on an object: it is measured from, not selected)
+        ed.hover = Some(Sel::Object((0, 0), 1));
+        ed.cursor = Some(DVec3::new(100.0, 100.0, 0.0));
+        ed.left_press(&mut assets, &lib, false);
+        ed.hover = None;
+        ed.cursor = Some(DVec3::new(130.0, 140.0, 0.0));
+        ed.left_press(&mut assets, &lib, false);
+        let (a, b) = ed.ruler_line().unwrap();
+        assert!(((b - a).truncate().length() - 50.0).abs() < 1e-9);
+        assert_eq!(ed.selected, None);
+        // the angle step is what R turns a selection by and what snapping comes to
+        assert_eq!(snap_deg(37.0, 10.0), 40.0);
+        assert_eq!(snap_deg(37.0, 45.0), 45.0);
     }
 
     #[test]
