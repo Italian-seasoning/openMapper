@@ -421,7 +421,9 @@ impl Mesh {
 
 /// Build the mesh: the roadway in the middle, and round each corner the kerb and footway
 /// of the roads, swept along a smooth curve from one arm's kerb line to the next's.
-fn junction_mesh(arms: &[ArmGeo], centre: DVec3, core_tex: Option<PathBuf>, period: f64) -> Mesh {
+/// `along`: the heading the roadway's texture runs (the widest road's), so its slabs and
+/// patches lie as the road's do, not slanted across it.
+fn junction_mesh(arms: &[ArmGeo], centre: DVec3, core_tex: Option<PathBuf>, period: f64, along: f64) -> Mesh {
     let mut mesh = Mesh::default();
     let core = mesh.material(core_tex);
     let rel = |p: DVec3| p - centre;
@@ -510,7 +512,8 @@ fn junction_mesh(arms: &[ArmGeo], centre: DVec3, core_tex: Option<PathBuf>, peri
     }
     // the roadway: a fan round the centre, its texture laid flat on the map
     let mid = DVec3::new(0.0, 0.0, outline.iter().map(|p| p.z - centre.z).sum::<f64>() / outline.len().max(1) as f64);
-    let uv = |p: DVec3| [p.x / period, -p.y / period];
+    let (fwd, side) = (roads::dir(along), roads::right(along));
+    let uv = |p: DVec3| [(p.x * side.x + p.y * side.y) / period, -(p.x * fwd.x + p.y * fwd.y) / period];
     for i in 0..outline.len() {
         let p0 = rel(outline[i]);
         let p1 = rel(outline[(i + 1) % outline.len()]);
@@ -628,10 +631,16 @@ fn clean_asphalt(tex: &Path, u: f64, u_per_m: f64, period: f64, lane_m: f64, out
     let band_u = (band_m * u_per_m).max(0.002);
     let size = 512usize;
     let mut buf = image::RgbaImage::new(size as u32, size as u32);
+    // (each band side by side taken from another stretch of the road, so its patches and
+    // slabs do not stand in rows of the same one)
+    let bands = (period / band_m).round().max(1.0) as usize;
+    let band_m = period / bands as f64;
     for y in 0..size {
-        let sy = (y * h / size).min(h - 1);
         for x in 0..size {
             let m = x as f64 / size as f64 * period;
+            let j = ((m / band_m) as usize).min(bands - 1);
+            let shift = if j == 0 { 0.0 } else { (j as f64 * 0.618_034).fract() };
+            let sy = (((y as f64 / size as f64 + shift).fract() * h as f64) as usize).min(h - 1);
             let t = if mirror {
                 let f = (m / band_m).rem_euclid(2.0);
                 if f < 1.0 { f } else { 2.0 - f }
@@ -689,7 +698,7 @@ pub fn make_with(doc: &mut Document, assets: &mut Assets, content: &Path, asphal
     let (core_tex, period) = match widest.and_then(|g| g.road_tex.clone()) {
         Some((tex, u, range, period, width, lane)) => {
             let stem = tex.file_stem().map(|s| s.to_string_lossy().to_string()).unwrap_or_else(|| "road".into());
-            let out = tex_dir.join(format!("om_{stem}_plain4.png"));
+            let out = tex_dir.join(format!("om_{stem}_plain5.png"));
             // (one cut short, a full disk say, is made again)
             if out.exists() && image::open(&out).is_err() {
                 let _ = std::fs::remove_file(&out);
@@ -703,7 +712,8 @@ pub fn make_with(doc: &mut Document, assets: &mut Assets, content: &Path, asphal
         }
         None => (asphalt.map(Path::to_path_buf), 8.0),
     };
-    let mut mesh = junction_mesh(&geo, centre, core_tex, period);
+    let along = widest.map(|g| g.out).unwrap_or(0.0);
+    let mut mesh = junction_mesh(&geo, centre, core_tex, period, along);
     if !zebras.is_empty() {
         let white = tex_dir.join("om_zebra_white.png");
         if !white.exists() {
@@ -958,7 +968,7 @@ mod tests {
             road_tex: None,
         };
         let arms = vec![arm(DVec3::new(10.0, 0.0, 0.0), 90.0), arm(DVec3::new(-10.0, 0.0, 0.0), 270.0), arm(DVec3::new(0.0, 10.0, 0.0), 0.0)];
-        let mesh = junction_mesh(&arms, DVec3::ZERO, None, 8.0);
+        let mesh = junction_mesh(&arms, DVec3::ZERO, None, 8.0, 0.0);
         assert!(mesh.tris.len() > 20);
         // every roadway triangle faces up
         for (f, mat) in &mesh.tris {

@@ -171,7 +171,7 @@ impl MapSettings {
         self.open = open;
         if doc.global != before {
             let order = doc.order.clone();
-            ed.history.push_snapshot(tr("Map settings", "Настройки карты"), crate::history::Snapshot { global: Some((before, order)), timetable: None, traffic: None, descriptions: None });
+            ed.history.push_snapshot(tr("Map settings", "Настройки карты"), crate::history::Snapshot { global: Some((before, order)), timetable: None, traffic: None, descriptions: None, groups: None });
             if let Some(doc) = ed.doc.as_mut() {
                 doc.global_dirty = true;
             }

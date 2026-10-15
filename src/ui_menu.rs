@@ -33,7 +33,7 @@ pub fn show(ctx: &egui::Context, menu: &mut Option<ViewMenu>, ed: &mut Editor, l
             ui.set_min_width(230.0);
             // what it is about
             let title = match (group, n) {
-                (Some(g), _) => format!("{} «{}» · {n}", tr("Group", "Группа"), ed.groups[g].name),
+                (Some(g), _) => format!("{} «{}» · {n}", tr("Group", "Группа"), ed.groups()[g].name),
                 (None, 0) => tr("Nothing selected", "Ничего не выделено").to_string(),
                 (None, 1) => {
                     let file = ed.doc.as_ref().and_then(|d| match sels[0] {

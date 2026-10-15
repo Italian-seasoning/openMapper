@@ -295,6 +295,7 @@ mod tests {
             timetable: Default::default(),
             traffic: Default::default(),
             descriptions: Default::default(),
+            groups: Vec::new(),
         };
         doc.global.name = "M".into();
         for k in [(0, 0), (1, 0)] {

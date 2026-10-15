@@ -370,8 +370,6 @@ pub struct Editor {
     pub link_pick: Option<(TileKey, i64)>,
     /// The paths of what is selected are numbered in the view (its path rules are open).
     pub path_numbers: Option<Sel>,
-    /// The map's groups (things a click selects and a drag moves as one).
-    pub groups: Vec<crate::mapgroups::MapGroup>,
 }
 
 impl Default for Editor {
@@ -483,7 +481,6 @@ impl Default for Editor {
             picked: None,
             link_pick: None,
             path_numbers: None,
-            groups: Vec::new(),
         }
     }
 }
@@ -593,16 +590,24 @@ impl Editor {
     /// what the undo takes away (a road drawn on from the end of the one undone).
     pub fn undo(&mut self) {
         self.cancel();
+        let groups = self.groups().to_vec();
         if let Some(d) = self.doc.as_mut() {
             self.history.undo(d);
+        }
+        if self.groups() != groups.as_slice() {
+            self.save_groups();
         }
         self.select(None);
     }
 
     pub fn redo(&mut self) {
         self.cancel();
+        let groups = self.groups().to_vec();
         if let Some(d) = self.doc.as_mut() {
             self.history.redo(d);
+        }
+        if self.groups() != groups.as_slice() {
+            self.save_groups();
         }
         self.select(None);
     }
@@ -619,15 +624,32 @@ impl Editor {
         self.pending_arms.clear();
         self.paint_layer = if doc.global.ground_textures.len() > 1 { 1 } else { 0 };
         self.session_first_id = doc.global.next_id_code;
-        self.groups = crate::mapgroups::load(&doc.dir);
+        let mut doc = doc;
+        doc.groups = crate::mapgroups::load(&doc.dir);
         self.doc = Some(doc);
+    }
+
+    /// The map's groups (things a click selects and a drag moves as one).
+    pub fn groups(&self) -> &[crate::mapgroups::MapGroup] {
+        self.doc.as_ref().map(|d| d.groups.as_slice()).unwrap_or(&[])
     }
 
     /// A selection grown to the whole of the groups it touches.
     fn with_groups(&self, v: Vec<Sel>) -> Vec<Sel> {
         match self.doc.as_ref() {
-            Some(doc) if !self.groups.is_empty() => crate::mapgroups::expand(doc, &self.groups, &v),
+            Some(doc) if !doc.groups.is_empty() => crate::mapgroups::expand(doc, &doc.groups, &v),
             _ => v,
+        }
+    }
+
+    /// The groups changed (one undo step), and written beside the map.
+    fn change_groups(&mut self, label: &str, f: impl FnOnce(&mut Vec<crate::mapgroups::MapGroup>)) {
+        let Some(doc) = self.doc.as_mut() else { return };
+        let before = doc.groups.clone();
+        f(&mut doc.groups);
+        if doc.groups != before {
+            self.history.push_snapshot(label, crate::history::Snapshot { groups: Some(before), ..Default::default() });
+            self.save_groups();
         }
     }
 
@@ -635,15 +657,15 @@ impl Editor {
     pub fn selected_group(&self) -> Option<usize> {
         let sels = self.selection();
         let first = sels.first()?;
-        let g = crate::mapgroups::group_of(&self.groups, crate::mapgroups::id_of(*first))?;
         let doc = self.doc.as_ref()?;
-        let all = crate::mapgroups::expand(doc, &self.groups, &[*first]);
+        let g = crate::mapgroups::group_of(&doc.groups, crate::mapgroups::id_of(*first))?;
+        let all = crate::mapgroups::expand(doc, &doc.groups, &[*first]);
         (all.len() == sels.len() && all.iter().all(|s| sels.contains(s))).then_some(g)
     }
 
     /// Whether anything selected belongs to a group.
     pub fn selection_grouped(&self) -> bool {
-        self.selection().iter().any(|s| crate::mapgroups::group_of(&self.groups, crate::mapgroups::id_of(*s)).is_some())
+        self.selection().iter().any(|s| crate::mapgroups::group_of(self.groups(), crate::mapgroups::id_of(*s)).is_some())
     }
 
     /// The selection made a group of its own (taken out of any it was in).
@@ -653,45 +675,48 @@ impl Editor {
             self.toast(tr("Select two things or more to group them", "Выделите два объекта или больше, чтобы сгруппировать"));
             return;
         }
-        for g in &mut self.groups {
-            g.ids.retain(|id| !ids.contains(id));
-        }
-        self.groups.retain(|g| g.ids.len() >= 2);
-        let name = crate::mapgroups::free_name(&self.groups, tr("Group", "Группа"));
-        self.groups.push(crate::mapgroups::MapGroup { name: name.clone(), ids });
-        self.save_groups();
+        let name = crate::mapgroups::free_name(self.groups(), tr("Group", "Группа"));
+        let n2 = name.clone();
+        self.change_groups(tr("Group", "Сгруппировать"), move |groups| {
+            for g in groups.iter_mut() {
+                g.ids.retain(|id| !ids.contains(id));
+            }
+            groups.retain(|g| g.ids.len() >= 2);
+            groups.push(crate::mapgroups::MapGroup { name: n2, ids });
+        });
         self.toast(format!("{} «{name}»", tr("Grouped:", "Сгруппировано:")));
     }
 
     /// The groups the selection touches undone (their things stay where they are).
     pub fn ungroup_selection(&mut self) {
         let ids: Vec<i64> = self.selection().iter().map(|s| crate::mapgroups::id_of(*s)).collect();
-        let before = self.groups.len();
-        self.groups.retain(|g| !g.ids.iter().any(|id| ids.contains(id)));
-        if self.groups.len() != before {
-            self.save_groups();
+        let before = self.groups().len();
+        self.change_groups(tr("Ungroup", "Разгруппировать"), |groups| groups.retain(|g| !g.ids.iter().any(|id| ids.contains(id))));
+        if self.groups().len() != before {
             self.toast(tr("Ungrouped", "Разгруппировано"));
         }
     }
 
     pub fn rename_group(&mut self, g: usize, name: &str) {
-        if let Some(x) = self.groups.get_mut(g) {
-            x.name = name.to_string();
-            self.save_groups();
-        }
+        let name = name.to_string();
+        self.change_groups(tr("Rename group", "Имя группы"), move |groups| {
+            if let Some(x) = groups.get_mut(g) {
+                x.name = name;
+            }
+        });
     }
 
     /// Select every thing of a group.
     pub fn select_group(&mut self, g: usize) {
         let Some(doc) = self.doc.as_ref() else { return };
-        let v: Vec<Sel> = self.groups.get(g).map(|x| x.ids.iter().filter_map(|id| crate::mapgroups::sel_of(doc, *id)).collect()).unwrap_or_default();
+        let v: Vec<Sel> = doc.groups.get(g).map(|x| x.ids.iter().filter_map(|id| crate::mapgroups::sel_of(doc, *id)).collect()).unwrap_or_default();
         self.set_selection(v);
     }
 
     /// The groups written beside the map at once (they are not part of OMSI 2's files).
     fn save_groups(&mut self) {
         let Some(doc) = self.doc.as_ref() else { return };
-        if let Err(e) = crate::mapgroups::save(&doc.dir, &self.groups) {
+        if let Err(e) = crate::mapgroups::save(&doc.dir, &doc.groups) {
             self.error(format!("groups.json: {e}"));
         }
     }
@@ -4485,6 +4510,18 @@ impl Editor {
         true
     }
 
+    /// Every junction plate of openMapper's made again at the next tick, for the roads it has
+    /// now (with the newest asphalt and kerbs); one undo step. How many.
+    pub fn remake_all_junctions(&mut self) -> usize {
+        let Some(doc) = self.doc.as_ref() else { return 0 };
+        let ids: Vec<i64> = doc.tiles.values().flat_map(|t| t.tile.objects.iter().filter(|o| is_own_junction(&o.file)).map(|o| o.id)).collect();
+        if !ids.is_empty() {
+            self.history.begin(tr("Make the junctions again", "Перестроить перекрёстки"));
+            self.pending_rebuild.extend(ids.iter().copied());
+        }
+        ids.len()
+    }
+
     /// Make the queued junctions' plates again for the arms they have now.
     fn rebuild_pending(&mut self, assets: &mut Assets) {
         let ids = std::mem::take(&mut self.pending_rebuild);
@@ -5574,8 +5611,8 @@ mod tests {
         let lib = Library::default();
         ed.set_selection(vec![Sel::Object((0, 0), 1), Sel::Object((0, 0), 2)]);
         ed.group_selection();
-        assert_eq!(ed.groups.len(), 1);
-        assert_eq!(crate::mapgroups::load(&ed.doc.as_ref().unwrap().dir), ed.groups, "kept beside the map");
+        assert_eq!(ed.groups().len(), 1);
+        assert_eq!(crate::mapgroups::load(&ed.doc.as_ref().unwrap().dir), ed.groups(), "kept beside the map");
         // a click on one: both, and a drag moves both
         ed.select(None);
         ed.hover = Some(Sel::Object((0, 0), 2));
@@ -5599,7 +5636,13 @@ mod tests {
         assert!(ed.right_click());
         assert_eq!(ed.selection().len(), 2);
         ed.ungroup_selection();
-        assert!(ed.groups.is_empty() && crate::mapgroups::load(&ed.doc.as_ref().unwrap().dir).is_empty());
+        assert!(ed.groups().is_empty() && crate::mapgroups::load(&ed.doc.as_ref().unwrap().dir).is_empty());
+        // (grouping and ungrouping are undone like any edit, the file following)
+        ed.undo();
+        assert_eq!(ed.groups().len(), 1);
+        assert_eq!(crate::mapgroups::load(&ed.doc.as_ref().unwrap().dir).len(), 1);
+        ed.redo();
+        assert!(ed.groups().is_empty());
         let _ = std::fs::remove_dir_all(dir);
     }
 
@@ -6299,6 +6342,13 @@ mod tests {
         assert_eq!(j.len(), 1);
         assert_ne!(j[0].id, old);
         assert!(omsi_cfg::resolve_path(&content, &j[0].file).is_file());
+        assert_eq!(crate::selection::tests::free_ends_near(doc, DVec2::new(j[0].pos[0], j[0].pos[1]), 25.0), 3);
+        // every junction made again at once (one step), still one, for the same three roads
+        assert_eq!(ed.remake_all_junctions(), 1);
+        for _ in 0..50 { fresh.poll(); ed.tick(&mut fresh, 0.0, false); std::thread::sleep(std::time::Duration::from_millis(10)); }
+        let doc = ed.doc.as_ref().unwrap();
+        let j: Vec<_> = doc.tiles[&(0, 0)].tile.objects.iter().filter(|o| o.file.contains("junction_")).collect();
+        assert_eq!(j.len(), 1);
         assert_eq!(crate::selection::tests::free_ends_near(doc, DVec2::new(j[0].pos[0], j[0].pos[1]), 25.0), 3);
         let _ = std::fs::remove_dir_all(content);
     }

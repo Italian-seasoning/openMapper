@@ -922,6 +922,10 @@ fn menu_bar(root: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, can_undo: bo
                     st.check.open = true;
                     st.check.issues = None;
                 }
+                if menu_item(ui, Some(Icon::Junction), tr("Make the junctions again", "Перестроить перекрёстки"), "", true) {
+                    let n = ed.remake_all_junctions();
+                    ed.toast(format!("{} {n}", tr("Junctions made again:", "Перекрёстков перестроено:")));
+                }
                 if menu_item(ui, Some(Icon::Bus), tr("Lines and timetable…", "Линии и расписание…"), "L", true) {
                     actions.push(Action::Timetable);
                 }

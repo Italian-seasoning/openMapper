@@ -39,6 +39,7 @@ pub(crate) fn sample_map(roots: &Roots) -> Document {
         timetable: Default::default(),
         traffic: Default::default(),
         descriptions: Default::default(),
+        groups: Vec::new(),
     };
     for k in [(0, 0), (1, 0), (0, -1)] {
         doc.add_tile(k);

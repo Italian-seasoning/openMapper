@@ -2205,7 +2205,13 @@ impl ApplicationHandler for App {
                     PhysicalKey::Code(c) => Some(c),
                     _ => None,
                 };
-                let typing = g.egui_ctx.egui_wants_keyboard_input();
+                let mut typing = g.egui_ctx.egui_wants_keyboard_input();
+                // (Ctrl/Cmd + Z, Y: the map's undo even from a text field, which lets go of
+                // the keyboard; its own text undo would only undo half of the edit)
+                if typing && pressed && self.keys.ctrl && matches!(code, Some(KeyCode::KeyZ) | Some(KeyCode::KeyY)) {
+                    g.egui_ctx.memory_mut(|m| m.stop_text_input());
+                    typing = false;
+                }
                 if !typing || !pressed {
                     self.key(code, &event.logical_key, pressed, el);
                 }

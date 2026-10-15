@@ -81,6 +81,41 @@ impl Minimap {
                 self.lines.push((kind, pts));
             }
         }
+        // junction plates (openMapper's and stock crossing pieces: objects roads snap to),
+        // drawn as their roads carried on to the middle
+        let mut ends: Vec<(DVec2, f64, Line)> = Vec::new();
+        for (&k, t) in &doc.tiles {
+            let o = tile_origin(k);
+            for s in t.tile.splines.iter().filter(|s| !s.deleted) {
+                let Some(kind @ (Line::Road | Line::Path)) = kind_of(lib, &s.file) else { continue };
+                let c = omsi_geometry::SplineCurve::from_map(s, o);
+                if s.prev_id == 0 {
+                    ends.push((c.point_at(0.0).truncate(), c.heading_at(0.0) + 180.0, kind));
+                }
+                if s.next_id == 0 {
+                    ends.push((c.end_point().truncate(), c.heading_at(s.length), kind));
+                }
+            }
+        }
+        for (&k, t) in &doc.tiles {
+            let org = tile_origin(k);
+            for ob in &t.tile.objects {
+                let plate = crate::editor::is_own_junction(&ob.file) || lib.find(&ob.file).map(|a| !a.helpers.is_empty()).unwrap_or(false);
+                if !plate {
+                    continue;
+                }
+                let c = org + DVec2::new(ob.pos[0], ob.pos[1]);
+                for (p, h, kind) in &ends {
+                    let to = c - *p;
+                    let d = to.length();
+                    // (an end that runs into the plate: near it and heading for its middle)
+                    let off = ((to.x.atan2(to.y).to_degrees() - h + 540.0).rem_euclid(360.0) - 180.0).abs();
+                    if d < 35.0 && (d < 1.0 || off < 45.0) {
+                        self.lines.push((*kind, vec![*p, c]));
+                    }
+                }
+            }
+        }
         // roads on top
         self.lines.sort_by_key(|(k, _)| match k {
             Line::Other => 0,

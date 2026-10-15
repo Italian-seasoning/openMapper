@@ -193,6 +193,8 @@ pub struct Document {
     pub traffic: crate::traffic::Traffic,
     /// The name and description in other languages (`global_<LANG>.dsc`).
     pub descriptions: crate::descriptions::Descriptions,
+    /// Things kept together (openMapper's own: `openMapper/groups.json` beside the map).
+    pub groups: Vec<crate::mapgroups::MapGroup>,
 }
 
 impl Document {
@@ -227,6 +229,7 @@ impl Document {
             dir: roots.content.join("maps").join(folder),
             traffic: crate::traffic::Traffic::load(&template),
             descriptions: Default::default(),
+            groups: Vec::new(),
             source: Some(template),
             global_dirty: true,
             fresh: true,
@@ -325,6 +328,7 @@ impl Document {
             timetable,
             traffic,
             descriptions,
+            groups: Vec::new(),
         })
     }
 
@@ -375,6 +379,7 @@ impl Document {
             timetable: self.timetable.clone(),
             traffic: self.traffic.clone(),
             descriptions: Default::default(),
+            groups: Vec::new(),
         }
     }
 

@@ -128,10 +128,10 @@ impl Outliner {
         let selected = ed.selection();
         // the map's groups first
         let mut pick_group: Option<usize> = None;
-        if !ed.groups.is_empty() {
+        if !ed.groups().is_empty() {
             let current = ed.selected_group();
-            egui::CollapsingHeader::new(RichText::new(format!("{}  ({})", tr("Groups", "Группы"), ed.groups.len())).color(Color32::from_gray(225))).id_salt("outliner groups").icon(folder_icon).default_open(true).show(ui, |ui| {
-                for (i, g) in ed.groups.iter().enumerate().filter(|(_, g)| q.is_empty() || g.name.to_lowercase().contains(&q)) {
+            egui::CollapsingHeader::new(RichText::new(format!("{}  ({})", tr("Groups", "Группы"), ed.groups().len())).color(Color32::from_gray(225))).id_salt("outliner groups").icon(folder_icon).default_open(true).show(ui, |ui| {
+                for (i, g) in ed.groups().iter().enumerate().filter(|(_, g)| q.is_empty() || g.name.to_lowercase().contains(&q)) {
                     if ui.selectable_label(current == Some(i), format!("{}  ·  {}", g.name, g.ids.len())).on_hover_text(tr("Select the group and go there", "Выделить группу и перейти")).clicked() {
                         pick_group = Some(i);
                     }

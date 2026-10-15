@@ -153,7 +153,7 @@ pub fn group_properties(ui: &mut egui::Ui, ed: &mut Editor, lib: &Library, actio
         // a group: its name, and undoing it; else making one
         match ed.selected_group() {
             Some(g) => {
-                let mut name = ed.groups[g].name.clone();
+                let mut name = ed.groups()[g].name.clone();
                 ui.horizontal(|ui| {
                     ui.label(icons::labelled(Icon::Layers, tr("Group", "Группа")));
                     if ui.add(egui::TextEdit::singleline(&mut name).desired_width(140.0)).changed() {
