@@ -66,6 +66,14 @@ pub enum Fix {
     /// Move a bus stop to the kerb of the lane nearest it, facing along it (the content
     /// folder and the installation, where the roads' files are).
     StopToKerb(TileKey, i64, PathBuf, PathBuf),
+    /// Make the map a depot file of this name from its lines (empty: named after the
+    /// map's folder), and have the map's depot groups that name none use it.
+    MakeDepot(String),
+    /// Add to the map's depot file of this name what the lines need.
+    FillDepot(String),
+    /// Make the map its own depot file from its lines, in place of another map's of this
+    /// name its depot groups use.
+    OwnDepot(String),
 }
 
 #[derive(Debug, Clone)]
@@ -107,6 +115,7 @@ pub enum Kind {
     HeavyTile,
     LinkLost,
     HeadUnlinked,
+    DepotFile,
 }
 
 impl Kind {
@@ -137,6 +146,7 @@ impl Kind {
             Kind::HeavyTile => tr("Tiles with very many objects", "Тайлы с очень большим числом объектов"),
             Kind::LinkLost => tr("Objects linked to one that is gone", "Объекты, связанные с исчезнувшим"),
             Kind::HeadUnlinked => tr("Signal heads linked to no crossing", "Светофоры без перекрёстка"),
+            Kind::DepotFile => tr("Depot files (destinations)", "Файлы депо (конечные)"),
         }
     }
 
@@ -167,6 +177,7 @@ impl Kind {
             Kind::LampsDark => tr("Street lamps stand on a tile the game does not light from its lamps ([variable_terrainlightmap] is off): at night the ground under them stays dark (unless the tile's light map file was made by OMSI 2's editor). \"Fix\" turns it on, as on nearly every tile of the stock maps.", "Фонари стоят на тайле, который игра не освещает от фонарей ([variable_terrainlightmap] выключен): ночью земля под ними тёмная (если файл карты освещения не сделан редактором OMSI 2). «Исправить» включит его, как почти на всех тайлах стоковых карт."),
             Kind::LinkLost => tr("An object takes its state ([varparent]) from an object no longer on the map: a signal head stays dark, a display blank. Link it to another in its properties (Linked objects), or \"Fix\" forgets the link.", "Объект берёт состояние ([varparent]) от объекта, которого больше нет на карте: светофор не горит, табло пустое. Свяжите его с другим в свойствах («Связанные объекты») или «Исправить» уберёт связь."),
             Kind::HeadUnlinked => tr("A traffic light's signal head takes its light from a crossing's program ([varparent]); this one is linked to none while others like it are, so it stays dark in the game. Select it and link it in its properties (Linked objects).", "Головка светофора берёт сигнал из программы перекрёстка ([varparent]); эта ни с чем не связана, хотя такие же связаны, и в игре она не горит. Выберите её и свяжите в свойствах («Связанные объекты»)."),
+            Kind::DepotFile => tr("A depot file (.hof) gives the buses their destinations, the stop names on their displays and the routes their IBIS knows. Without one the signs stay empty and the IBIS knows no line. \"Fix\" makes it from the map's lines, or adds what the lines need to the map's own (Map > Depot files to see and change it).", "Файл депо (.hof) даёт автобусам конечные, имена остановок на табло и маршруты, которые знает IBIS. Без него указатели пусты, а IBIS не знает ни одной линии. «Исправить» создаст его по линиям карты или добавит в собственный файл карты то, чего не хватает линиям (Карта > Файлы депо, чтобы посмотреть и изменить)."),
             Kind::SignalRouteBroken => tr("A signal route names a signal or track pieces no longer on the map: the signal may never clear. Open Map > Signal routes and take the track again, or delete the route.", "Маршрут сигнала указывает сигнал или участки пути, которых больше нет на карте: сигнал может так и не открыться. Откройте Карта > Маршруты сигналов и возьмите пути заново или удалите маршрут."),
         }
     }
@@ -677,6 +688,65 @@ fn run(s: Snapshot, roots: Vec<PathBuf>) -> Vec<Issue> {
     out
 }
 
+/// Where the depot file of this name is that a bus finds: the map's own (None), the
+/// shared `HOFs` folder or any bus's folder (OMSI 2's maps keep theirs there); by its file
+/// name or the `[name]` in it, as the game looks. `Some(None)`: nowhere.
+fn depot_file(name: &str, d: &Document, roots: &[PathBuf]) -> Option<Option<PathBuf>> {
+    let name = name.trim();
+    if d.traffic.depots.iter().any(|h| h.file.eq_ignore_ascii_case(name) || h.name.trim().eq_ignore_ascii_case(name)) {
+        return None;
+    }
+    let named = |p: &Path| {
+        p.extension().map(|x| x.eq_ignore_ascii_case("hof")).unwrap_or(false)
+            && (p.file_stem().map(|s| s.to_string_lossy().trim().eq_ignore_ascii_case(name)).unwrap_or(false)
+                || omsi_cfg::CfgFile::read(p).ok().map(|f| f.lines.windows(2).any(|w| w[0].trim_end().eq_ignore_ascii_case("[name]") && w[1].trim().eq_ignore_ascii_case(name))).unwrap_or(false))
+    };
+    let mut dirs = roots.iter().flat_map(|r| std::iter::once(r.join("HOFs")).chain(std::fs::read_dir(r.join("Vehicles")).into_iter().flatten().flatten().map(|v| v.path())));
+    Some(dirs.find_map(|dir| std::fs::read_dir(dir).into_iter().flatten().flatten().map(|e| e.path()).find(|p| named(p))))
+}
+
+/// The depot files the buses of the map's lines need.
+fn depot_issues(d: &Document, roots: &[PathBuf], out: &mut Vec<Issue>) {
+    if !d.timetable.trips.iter().any(|t| t.stations.len() >= 2) {
+        return;
+    }
+    let mut named: Vec<String> = d.traffic.depots().filter_map(|g| g.hof.clone()).filter(|h| !h.trim().is_empty()).collect();
+    named.sort_by_key(|n| n.to_lowercase());
+    named.dedup_by(|a, b| a.eq_ignore_ascii_case(b));
+    if named.is_empty() && d.traffic.depots.is_empty() {
+        out.push(Issue { severity: Severity::Warning, kind: Kind::DepotFile, title: tr("The map has no depot file", "У карты нет файла депо").into(), detail: tr("the buses show no destination", "автобусы не показывают конечную").into(), at: None, sel: None, fix: Some(Fix::MakeDepot(String::new())) });
+        return;
+    }
+    // the destinations the trips go to
+    let mut termini: Vec<String> = d.timetable.trips.iter().filter(|t| t.stations.len() >= 2).map(|t| t.terminus.trim().to_string()).filter(|t| !t.is_empty()).collect();
+    termini.sort_by_key(|t| t.to_lowercase());
+    termini.dedup_by(|a, b| a.eq_ignore_ascii_case(b));
+    for n in &named {
+        match depot_file(n, d, roots) {
+            None => {}
+            Some(None) => out.push(Issue { severity: Severity::Warning, kind: Kind::DepotFile, title: format!("{n}.hof"), detail: tr("named by the map's depot, but found nowhere", "указан депо карты, но нигде не найден").into(), at: None, sel: None, fix: Some(Fix::MakeDepot(n.clone())) }),
+            Some(Some(p)) => {
+                // another map's (a new map's depot has Grundorf's): does it know the lines'
+                // destinations?
+                let Some(h) = crate::hof::Hof::load(&p) else { continue };
+                let lacking: Vec<&String> = termini.iter().filter(|t| h.terminus_named(t).is_none()).collect();
+                if !lacking.is_empty() {
+                    let all = lacking.len() == termini.len();
+                    let detail = format!("{} {} {}: {}", if all { tr("knows none of the", "не знает ни одной из") } else { tr("lacks", "не хватает") }, lacking.len(), tr("destinations of the lines", "конечных линий"), lacking.iter().take(4).map(|s| s.as_str()).collect::<Vec<_>>().join(", "));
+                    out.push(Issue { severity: if all { Severity::Warning } else { Severity::Info }, kind: Kind::DepotFile, title: format!("{n}.hof"), detail, at: None, sel: None, fix: Some(Fix::OwnDepot(n.clone())) });
+                }
+            }
+        }
+    }
+    for h in &d.traffic.depots {
+        let (a, b, c) = h.clone().fill_from(&d.timetable);
+        if (a, b, c) != (0, 0, 0) {
+            let detail = format!("{} {a} {}, {b} {}, {c} {}", tr("the lines need", "линиям не хватает:"), tr("destinations", "конечных"), tr("stops", "остановок"), tr("routes", "маршрутов"));
+            out.push(Issue { severity: Severity::Info, kind: Kind::DepotFile, title: h.file_name(), detail, at: None, sel: None, fix: Some(Fix::FillDepot(h.file.clone())) });
+        }
+    }
+}
+
 /// The timetable's and the traffic's issues, the trips' ways found as the Lines window
 /// finds them.
 fn timetable_issues(d: &Document, roots: &[PathBuf], out: &mut Vec<Issue>) {
@@ -717,6 +787,7 @@ fn timetable_issues(d: &Document, roots: &[PathBuf], out: &mut Vec<Issue>) {
             out.push(Issue { severity: Severity::Warning, kind: Kind::UnschedMissing, title: g.clone(), detail: String::new(), at: None, sel: None, fix });
         }
     }
+    depot_issues(d, roots, out);
     let trips: Vec<_> = tt.trips.iter().filter(|t| t.stations.len() >= 2).collect();
     if !trips.is_empty() {
         let net = crate::timetable::network::Network::build(d, &mut files);
@@ -932,6 +1003,29 @@ pub fn apply(ed: &mut Editor, fix: &Fix) -> bool {
             }
         }
         Fix::RemakeJunction(_) => false,
+        Fix::MakeDepot(name) | Fix::OwnDepot(name) => {
+            let before = crate::history::Snapshot { traffic: Some(doc.traffic.clone()), ..Default::default() };
+            let file = crate::ui_hof::make_named(doc, if matches!(fix, Fix::OwnDepot(_)) { "" } else { name });
+            for g in doc.traffic.groups.iter_mut().filter(|g| g.is_depot && (g.hof.as_deref().unwrap_or("").trim().is_empty() || g.hof.as_deref().unwrap_or("").eq_ignore_ascii_case(name))) {
+                g.hof = Some(file.clone());
+            }
+            doc.traffic.touch(crate::traffic::File::AiLists);
+            ed.history.push_snapshot(tr("A depot file from the lines", "Файл депо по линиям"), before);
+            true
+        }
+        Fix::FillDepot(file) => {
+            let before = crate::history::Snapshot { traffic: Some(doc.traffic.clone()), ..Default::default() };
+            let tt = &doc.timetable;
+            match doc.traffic.depots.iter_mut().find(|h| h.file.eq_ignore_ascii_case(file)) {
+                Some(h) => {
+                    h.fill_from(tt);
+                    doc.traffic.touch(crate::traffic::File::Depots);
+                    ed.history.push_snapshot(tr("Depot file: what the lines need", "Файл депо: что нужно линиям"), before);
+                    true
+                }
+                None => false,
+            }
+        }
         Fix::StopToKerb(k, id, content, omsi) => match doc.object(*k, *id).map(|o| tile_origin(*k) + DVec2::new(o.pos[0], o.pos[1])) {
             Some(at) => {
                 let net = crate::timetable::network::Network::build(doc, &mut crate::timetable::network::Files::new(vec![content.clone(), omsi.clone()]));
@@ -1333,6 +1427,37 @@ mod tests {
         let mut d = ed.doc.take().unwrap();
         ed.history.undo(&mut d);
         assert!(d.traffic.depots().next().is_none() && d.timetable.lines[0].tours[0].ai_group.is_empty());
+    }
+
+    #[test]
+    fn a_map_with_another_maps_depot_file_gets_its_own() {
+        let Some(omsi) = crate::install::find_omsi_root(&crate::install::Prefs::default()) else { return };
+        let _map = crate::doc::one_map();
+        let mut doc = doc_with(&[(0, 0)]);
+        for (id, n) in [(1, "Am Markt"), (2, "Bahnhof")] {
+            doc.timetable.stops.push(omsi_timetable::BusStopEntry { name: n.into(), group: 0, object_id: id, params: [0.0; 3] });
+        }
+        doc.timetable.trips.push(omsi_timetable::Trip { name: "a".into(), line: "3".into(), terminus: "Bahnhof".into(), stations: vec![1, 2], ..Default::default() });
+        // (a new map's depot: OMSI 2's MAN buses with Grundorf's depot file)
+        doc.traffic.groups.push(crate::traffic::stock_depot("Depot"));
+        let mut out = Vec::new();
+        depot_issues(&doc, &[PathBuf::new(), omsi], &mut out);
+        let issue = out.iter().find(|i| i.kind == Kind::DepotFile).expect("Grundorf's depot file knows no Bahnhof");
+        assert_eq!(issue.fix, Some(Fix::OwnDepot("Grundorf".into())));
+        let fix = issue.fix.clone().unwrap();
+        let mut ed = Editor::default();
+        ed.doc = Some(doc);
+        assert!(apply(&mut ed, &fix));
+        let d = ed.doc.as_ref().unwrap();
+        let own = &d.traffic.depots[0];
+        assert!(own.terminus_named("Bahnhof").is_some() && own.routes.len() == 1 && own.routes[0].code == "301");
+        assert_eq!(d.traffic.groups[0].hof.as_deref(), Some(own.file.as_str()));
+        let mut out = Vec::new();
+        depot_issues(d, &[], &mut out);
+        assert!(out.is_empty(), "{out:?}");
+        let mut d = ed.doc.take().unwrap();
+        ed.history.undo(&mut d);
+        assert!(d.traffic.depots.is_empty() && d.traffic.groups[0].hof.as_deref() == Some("Grundorf"));
     }
 
     #[test]

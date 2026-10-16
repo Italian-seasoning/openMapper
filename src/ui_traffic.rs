@@ -24,6 +24,7 @@ enum Tab {
     Day,
     Groups,
     Lists,
+    Depots,
 }
 
 #[derive(Default)]
@@ -38,6 +39,7 @@ pub struct TrafficUi {
     /// The installation (for OMSI 2's own groups).
     roots: Vec<std::path::PathBuf>,
     stock: Option<Vec<omsi_map::AiGroup>>,
+    hof: crate::ui_hof::HofUi,
 }
 
 /// Typical days to start a curve from: (hour, factor).
@@ -86,9 +88,15 @@ impl TrafficUi {
         self.tab = match tab {
             "groups" => Tab::Groups,
             "lists" => Tab::Lists,
+            "depots" => Tab::Depots,
             _ => Tab::Day,
         };
         self.group = (self.tab == Tab::Groups).then_some(0);
+    }
+
+    /// The depot files' part shown (`stops`, `routes`, else the destinations).
+    pub fn depots_part(&mut self, part: &str) {
+        self.hof.show_part(part);
     }
 
     pub fn window(&mut self, ctx: &egui::Context, ed: &mut Editor, roots: Option<&Roots>) {
@@ -98,7 +106,9 @@ impl TrafficUi {
         };
         if self.map.as_ref() != Some(&dir) {
             let (open, tab, group) = (self.open, self.tab, self.group);
+            let part = self.hof.part();
             *self = TrafficUi { open, tab, group, map: Some(dir), ..Default::default() };
+            self.hof.show_part(part);
         }
         if !self.open {
             return;
@@ -143,7 +153,7 @@ impl TrafficUi {
 
     fn contents(&mut self, ui: &mut egui::Ui, doc: &mut Document) {
         ui.horizontal(|ui| {
-            for (t, icon, label) in [(Tab::Day, Icon::Schedule, tr("Over the day", "По времени суток")), (Tab::Groups, Icon::Traffic, tr("Vehicle groups", "Группы машин")), (Tab::Lists, Icon::Parking, tr("Parked cars and people", "Парковки и люди"))] {
+            for (t, icon, label) in [(Tab::Day, Icon::Schedule, tr("Over the day", "По времени суток")), (Tab::Groups, Icon::Traffic, tr("Vehicle groups", "Группы машин")), (Tab::Lists, Icon::Parking, tr("Parked cars and people", "Парковки и люди")), (Tab::Depots, Icon::Flag, tr("Depot files", "Файлы депо"))] {
                 if ui.add(egui::Button::selectable(self.tab == t, icons::labelled(icon, label))).clicked() {
                     self.tab = t;
                 }
@@ -154,6 +164,7 @@ impl TrafficUi {
             Tab::Day => day_panel(ui, doc),
             Tab::Groups => self.groups_panel(ui, doc),
             Tab::Lists => self.lists_panel(ui, doc),
+            Tab::Depots => self.hof.panel(ui, doc),
         });
     }
 

@@ -82,6 +82,7 @@ fn commands() -> Vec<Command> {
         }),
         cmd!(Icon::Bus, "Lines and timetable…", "Линии и расписание…", "route trips tours schedule bus line маршрут рейсы туры автобус", "L", |_, _, a| a.push(Action::Timetable)),
         cmd!(Icon::Traffic, "Traffic and AI…", "Трафик и ИИ…", "cars density ailists depot машины плотность", "T", |_, _, a| a.push(Action::Traffic)),
+        cmd!(Icon::Flag, "Depot files (destinations)…", "Файлы депо (конечные)…", "hof destinations ibis routes terminus signs конечные указатели маршруты", "", |_, _, a| a.push(Action::Depots)),
         cmd!(Icon::Layers, "Satellite and terrain…", "Спутник и рельеф…", "imagery aerial photo heights place world спутник снимок высоты место", "I", |_, _, a| a.push(Action::Geo)),
         cmd!(Icon::Road, "From OpenStreetMap…", "Из OpenStreetMap…", "osm real place streets buildings реальное место улицы здания", "", |_, _, a| a.push(Action::Osm)),
         cmd!(Icon::Route, "GPS tracks to trace…", "GPS-треки для обводки…", "gpx kml geojson trace route recorded phone трек маршрут телефон", "", |_, _, a| a.push(Action::Trace)),

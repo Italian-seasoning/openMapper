@@ -524,9 +524,21 @@ impl App {
             }
             self.osm.scripted(&self.ed, &self.lib, self.geo.georef(), &t);
         }
-        // OPENMAPPER_TRAFFIC=day|groups|lists: the Traffic and AI window open on that tab
+        // OPENMAPPER_TRAFFIC=day|groups|lists|depots[,make][,stops|routes]: the Traffic and AI
+        // window open on that tab; `make`: a depot file made from the map's lines
         if let Ok(t) = std::env::var("OPENMAPPER_TRAFFIC") {
-            self.traffic.open_at(&t);
+            let mut parts = t.split(',');
+            let tab = parts.next().unwrap_or("");
+            let rest: Vec<&str> = parts.collect();
+            let make = rest.contains(&"make");
+            self.traffic.open_at(tab);
+            if let Some(p) = rest.iter().find(|p| **p != "make") {
+                self.traffic.depots_part(p);
+            }
+            if let (true, Some(doc)) = (make, self.ed.doc.as_mut()) {
+                let n = crate::ui_hof::make_from_lines(doc);
+                log::info!("depot file made from the lines: {} destinations, {} stops, {} routes", n.0, n.1, n.2);
+            }
         }
         // OPENMAPPER_TOOL=roads|objects|logic|terrain|paint (checks without a person at the screen)
         match std::env::var("OPENMAPPER_TOOL").as_deref() {
@@ -1129,6 +1141,7 @@ impl App {
             Action::Chrono => self.chrono.open = true,
             Action::OpenLines => self.tt.open = true,
             Action::OpenTraffic => self.traffic.open = true,
+            Action::Depots => self.traffic.open_at("depots"),
             Action::SetMapCamera => {
                 if let Some(doc) = self.ed.doc.as_mut() {
                     let p = self.cam.target.truncate();

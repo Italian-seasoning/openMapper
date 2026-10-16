@@ -51,6 +51,17 @@ can drive in service.
   curve with draggable points, car groups and depots of `ailists.cfg` with vehicles picked
   from the installation, which groups drive about on their own, parked cars and people. A group
   the map lacks can be copied from OMSI 2's own maps.
+* **Depot files** (Map > Depot files, or the Traffic window's last tab): the map's `.hof`
+  files, which give its buses their destinations, the stop names on their displays and the
+  routes their IBIS knows. One click makes one from the map's lines (a destination for each
+  trip's terminus, the stops it calls at, a route with its code for each way a line goes, the
+  front and side signs' texts split into two lines where they are long); later lines are
+  added with another click, what is there kept. Every text of a destination or stop, a
+  route's code, destination and stops in order can be changed. Saved into the map's folder
+  (where OMSI 2 looks) and the content's `HOFs` folder (where openOMSI looks). The map check
+  names a depot file a depot uses that is nowhere, one of another map that knows none of the
+  lines' destinations (a new map's depot has Grundorf's), and one lacking what the lines
+  need, each put right with one click.
 * When roads a trip runs on are cut by a new junction, moved or deleted, its way is found
   again on saving (a lane its saved track names gone, or no longer as long), so the game
   does not lose the bus; the other trips' files, and trains on their tracks, stay as they

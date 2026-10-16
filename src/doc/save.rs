@@ -68,6 +68,14 @@ pub fn save(doc: &mut Document) -> anyhow::Result<()> {
     ops.extend(crate::timetable::plan(&mut doc.timetable, &dir, &order));
     ops.extend(crate::traffic::plan(&doc.traffic, &dir));
     ops.extend(doc.descriptions.plan(&dir));
+    // (the depot files taken away, as they were: their copies for openOMSI go too)
+    let gone: Vec<(String, Vec<u8>)> = ops
+        .iter()
+        .filter_map(|o| match o {
+            super::safe::Op::Remove(p) if p.extension().map(|x| x.eq_ignore_ascii_case("hof")).unwrap_or(false) => Some((p.file_name()?.to_string_lossy().into_owned(), std::fs::read(p).ok()?)),
+            _ => None,
+        })
+        .collect();
     let kept = super::safe::backup(&doc.dir, &ops, &[]).map_err(|e| anyhow::anyhow!("{}: {e}", crate::i18n::tr("could not keep a backup, nothing was saved", "не удалось сделать резервную копию, ничего не сохранено")))?;
     super::safe::commit(&ops)?;
     if let Some(b) = kept {
@@ -81,6 +89,9 @@ pub fn save(doc: &mut Document) -> anyhow::Result<()> {
         }
     }
     doc.global_dirty = false;
+    if doc.traffic.depots_changed() {
+        crate::traffic::share_depots(&doc.traffic, &doc.dir, &gone);
+    }
     crate::timetable::saved(&mut doc.timetable);
     crate::traffic::saved(&mut doc.traffic);
     doc.descriptions.saved();

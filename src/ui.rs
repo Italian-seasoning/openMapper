@@ -93,6 +93,8 @@ pub enum Action {
     OpenLines,
     /// The Traffic and AI window opened.
     OpenTraffic,
+    /// The Traffic and AI window opened on the depot files.
+    Depots,
     /// The map opens with the camera as it is now (`[mapcam]`).
     SetMapCamera,
     Copy,
@@ -931,6 +933,9 @@ fn menu_bar(root: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, can_undo: bo
                 }
                 if menu_item(ui, Some(Icon::Traffic), tr("Traffic and AI…", "Трафик и ИИ…"), "T", true) {
                     actions.push(Action::Traffic);
+                }
+                if menu_item(ui, Some(Icon::Flag), tr("Depot files (destinations)…", "Файлы депо (конечные)…"), "", true) {
+                    actions.push(Action::Depots);
                 }
                 if menu_item(ui, Some(Icon::Layers), tr("Satellite and terrain…", "Спутник и рельеф…"), "I", true) {
                     actions.push(Action::Geo);

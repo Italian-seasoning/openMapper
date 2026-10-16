@@ -2,7 +2,6 @@
 //! uses, its years, the depot buses start from, the repair time, real rail and the seasons
 //! of the year.
 
-use std::path::{Path, PathBuf};
 
 use egui::{Color32, RichText, Vec2};
 use omsi_map::global::Season;
@@ -33,23 +32,6 @@ pub(crate) fn content_files(roots: &Roots, top: &str, ext: &str) -> Vec<String> 
                     if !v.iter().any(|x| x.eq_ignore_ascii_case(&rel)) {
                         v.push(rel);
                     }
-                }
-            }
-        }
-    }
-    v.sort_by_key(|s| s.to_lowercase());
-    v
-}
-
-/// The depots of a map: its `.hof` files, by name without the ending.
-fn depots(dirs: &[&Path]) -> Vec<String> {
-    let mut v: Vec<String> = Vec::new();
-    for d in dirs {
-        for f in std::fs::read_dir(d).into_iter().flatten().flatten().map(|e| e.path()) {
-            if f.extension().map(|x| x.eq_ignore_ascii_case("hof")).unwrap_or(false) {
-                let n = f.file_stem().unwrap_or_default().to_string_lossy().to_string();
-                if !v.iter().any(|x| x.eq_ignore_ascii_case(&n)) {
-                    v.push(n);
                 }
             }
         }
@@ -102,8 +84,10 @@ impl MapSettings {
         }
         let (Some(doc), Some(roots)) = (ed.doc.as_mut(), roots) else { return };
         let lists = self.lists.get_or_insert_with(|| {
-            let dirs: Vec<PathBuf> = std::iter::once(doc.dir.clone()).chain(doc.source.clone()).collect();
-            (content_files(roots, "Money", "cfg"), content_files(roots, "TicketPacks", "otp"), depots(&dirs.iter().map(PathBuf::as_path).collect::<Vec<_>>()))
+            // ([standarddepot] names one of the AI's depot groups: the player's bus comes
+            // from it)
+            let deps: Vec<String> = doc.traffic.depots().map(|g| g.name.clone()).collect();
+            (content_files(roots, "Money", "cfg"), content_files(roots, "TicketPacks", "otp"), deps)
         });
         let before = doc.global.clone();
         let g = &mut doc.global;
@@ -115,7 +99,7 @@ impl MapSettings {
                     prop_row(ui, tr("Tickets", "Билеты"), |ui| choose(ui, "tickets", &mut g.ticket_pack, &lists.1));
                     prop_row(ui, tr("Depot", "Депо"), |ui| {
                         if lists.2.is_empty() && g.standard_depot.is_empty() {
-                            ui.label(RichText::new(tr("none: the map has no .hof file", "нет: у карты нет файла .hof")).color(TEXT_DIM));
+                            ui.label(RichText::new(tr("none: the map has no depot group (Traffic and AI)", "нет: у карты нет группы депо (Трафик и ИИ)")).color(TEXT_DIM));
                         } else {
                             choose(ui, "depot", &mut g.standard_depot, &lists.2);
                         }

@@ -27,6 +27,8 @@ pub enum File {
     TimeZone,
     Registrations,
     SignalRoutes,
+    /// The map's depot files (`*.hof`), all of them.
+    Depots,
 }
 
 impl File {
@@ -41,6 +43,7 @@ impl File {
             File::TimeZone => "timezone.txt",
             File::Registrations => "registrations.txt",
             File::SignalRoutes => "signalroutes.cfg",
+            File::Depots => "*.hof",
         }
     }
 }
@@ -63,6 +66,9 @@ pub struct Traffic {
     pub registrations: Vec<String>,
     /// The railway signals' routes: the track pieces each one protects (`signalroutes.cfg`).
     pub signal_routes: Vec<omsi_map::ailists::SignalRoute>,
+    /// The depot files in the map's folder (`*.hof`): its destinations, stop names and
+    /// IBIS routes.
+    pub depots: Vec<crate::hof::Hof>,
     /// Which of those three the map has (only they are written again on an undo).
     pub has: [bool; 3],
     /// The map has `unsched_vehgroups.txt`: without it the first group drives about.
@@ -111,6 +117,7 @@ impl Traffic {
             t.registrations = list("registrations.txt");
             t.has[1] = true;
         }
+        t.depots = crate::hof::load_dir(dir);
         t
     }
 
@@ -125,6 +132,11 @@ impl Traffic {
         self.dirty = true;
     }
 
+    /// The depot files are written with the next save.
+    pub fn depots_changed(&self) -> bool {
+        self.changed.contains(&File::Depots)
+    }
+
     /// Put back as it was (undo, redo): every file of it is written again.
     pub fn restored(&mut self) {
         self.changed = [File::AiLists, File::Parked, File::Humans, File::Drivers].into_iter().collect();
@@ -136,6 +148,7 @@ impl Traffic {
                 self.changed.insert(f);
             }
         }
+        self.changed.insert(File::Depots);
         self.dirty = true;
     }
 
@@ -352,8 +365,13 @@ pub fn plan(t: &Traffic, map_dir: &Path) -> Vec<Op> {
     if !t.dirty {
         return Vec::new();
     }
-    t.changed
+    let mut ops = Vec::new();
+    if t.changed.contains(&File::Depots) {
+        ops.extend(depot_ops(&t.depots, map_dir));
+    }
+    ops.extend(t.changed
         .iter()
+        .filter(|f| **f != File::Depots)
         .map(|f| {
             let text = match f {
                 File::AiLists => ailists_text(&t.groups),
@@ -365,10 +383,61 @@ pub fn plan(t: &Traffic, map_dir: &Path) -> Vec<Op> {
                 File::TimeZone => timezone_text(&t.timezone),
                 File::Registrations => list_text(&t.registrations),
                 File::SignalRoutes => crate::signals::text(&t.signal_routes),
+                File::Depots => unreachable!(),
             };
             Op::Write(crate::doc::safe::own_path(map_dir, f.name()), encode(&text))
-        })
-        .collect()
+        }));
+    ops
+}
+
+/// The depot files written, and those of the folder the map no longer has taken away
+/// (every `.hof` of the folder is one of the map's: they are all read with it).
+fn depot_ops(depots: &[crate::hof::Hof], map_dir: &Path) -> Vec<Op> {
+    let mut ops: Vec<Op> = std::fs::read_dir(map_dir)
+        .into_iter()
+        .flatten()
+        .flatten()
+        .map(|e| e.path())
+        .filter(|p| p.extension().map(|x| x.eq_ignore_ascii_case("hof")).unwrap_or(false))
+        .filter(|p| !depots.iter().any(|h| p.file_stem().map(|s| s.to_string_lossy().eq_ignore_ascii_case(&h.file)).unwrap_or(false)))
+        .map(Op::Remove)
+        .collect();
+    for h in depots {
+        ops.push(Op::Write(crate::doc::safe::own_path(map_dir, &h.file_name()), encode(&crate::hof::text(h))));
+    }
+    ops
+}
+
+/// openOMSI finds a depot file in the bus's folder or the content's `HOFs` folder, not in
+/// the map's (OMSI 2 copies it from there into the buses' folders): the map's depot files
+/// copied into `HOFs` of the content folder the map lies in (`<content>/maps/<map>`), and
+/// the copies of files it no longer has (`gone`: name and content as they were) taken away
+/// where they are still the same. Nothing when the map lies elsewhere.
+pub fn share_depots(t: &Traffic, map_dir: &Path, gone: &[(String, Vec<u8>)]) {
+    let Some(maps) = map_dir.parent().filter(|p| p.file_name().map(|n| n.eq_ignore_ascii_case("maps")).unwrap_or(false)) else { return };
+    let Some(content) = maps.parent() else { return };
+    let hofs = crate::doc::safe::own_path(content, "HOFs");
+    for (name, bytes) in gone {
+        let p = crate::doc::safe::own_path(&hofs, name);
+        if std::fs::read(&p).ok().as_deref() == Some(bytes.as_slice()) {
+            let _ = std::fs::remove_file(&p);
+        }
+    }
+    for h in &t.depots {
+        let p = crate::doc::safe::own_path(&hofs, &h.file_name());
+        // (a file of the name from elsewhere, another map's or a mod's, stays)
+        if let Ok(b) = std::fs::read(&p) {
+            if !omsi_cfg::decode_text(&b).contains(crate::hof::MARK) {
+                log::warn!("{}: not openMapper's, left as it is (the map's depot file is not copied)", p.display());
+                continue;
+            }
+        }
+        let r = std::fs::create_dir_all(&hofs).and_then(|_| crate::doc::safe::write_atomic(&p, &encode(&crate::hof::text(h))));
+        match r {
+            Ok(()) => log::info!("depot file {} copied for openOMSI's buses", p.display()),
+            Err(e) => log::warn!("{}: {e}", p.display()),
+        }
+    }
 }
 
 /// The planned files were written.
