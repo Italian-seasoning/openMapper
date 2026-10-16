@@ -75,6 +75,8 @@ pub struct App {
     assets: Option<Assets>,
     lib: Library,
     ed: Editor,
+    /// A cursor held on the ground for a picture (OPENMAPPER_KNIFE), whatever the mouse does.
+    pinned_cursor: Option<DVec3>,
     cam: Camera,
     ui: UiState,
     mouse: Mouse,
@@ -134,6 +136,7 @@ impl App {
             assets: None,
             lib: Library::default(),
             ed: Editor::default(),
+            pinned_cursor: None,
             cam: Camera::default(),
             ui: UiState::default(),
             mouse: Mouse::default(),
@@ -472,6 +475,13 @@ impl App {
             self.ed.grid_step = s;
             self.ed.cursor = Some(self.cam.target);
             self.ed.cursor_in_view = true;
+        }
+        // OPENMAPPER_KNIFE=x,y: the knife on, the cursor there
+        if let Some(v) = std::env::var("OPENMAPPER_KNIFE").ok().map(|c| c.split(',').filter_map(|x| x.trim().parse::<f64>().ok()).collect::<Vec<_>>()).filter(|v| v.len() == 2) {
+            self.ed.toggle_cutting();
+            if let Some(doc) = &self.ed.doc {
+                self.pinned_cursor = Some(DVec3::new(v[0], v[1], doc.ground(DVec2::new(v[0], v[1]))));
+            }
         }
         // OPENMAPPER_OUTLINER=[text]: the Select panel's Objects tab, that searched for
         if let Ok(q) = std::env::var("OPENMAPPER_OUTLINER") {
@@ -1228,6 +1238,7 @@ impl App {
             }
             Some(KeyCode::KeyR) if !ctrl => self.ed.rotate(if shift { -self.ed.angle_step } else { self.ed.angle_step }),
             Some(KeyCode::KeyU) if !ctrl => self.ed.toggle_ruler(),
+            Some(KeyCode::KeyK) if !ctrl => self.ed.toggle_cutting(),
             Some(KeyCode::Enter) | Some(KeyCode::NumpadEnter) => actions.push(Action::BuildRoad),
             Some(KeyCode::KeyG) if !ctrl => self.ed.show_grid = !self.ed.show_grid,
             Some(KeyCode::KeyG) if shift => self.ed.ungroup_selection(),
@@ -1253,6 +1264,8 @@ impl App {
         if let Key::Named(NamedKey::Escape) = logical {
             if self.ui.view_menu.take().is_some() {
                 // (only the view's menu closes)
+            } else if std::mem::take(&mut self.ed.cutting) {
+                // (only the knife goes, the selection stays)
             } else if self.ed.link_pick.take().is_some() {
                 // (only the linking is called off, the object stays selected)
             } else if self.ed.tool != Tool::Select && !self.ed_has_pending() {
@@ -1353,7 +1366,10 @@ impl App {
         }
         // the editor
         let t_ed = Instant::now();
-        self.ed.cursor_in_view = !self.mouse.over_ui;
+        self.ed.cursor_in_view = !self.mouse.over_ui || self.pinned_cursor.is_some();
+        if let Some(p) = self.pinned_cursor {
+            self.ed.cursor = Some(p);
+        }
         if self.ed.doc.is_some() && (self.mouse.moved || cam_moving || self.mouse.left || self.assets.as_ref().map(|a| a.pending > 0).unwrap_or(false)) {
             if let (Some((o, d)), Some(assets)) = (self.view_ray(), self.assets.as_mut()) {
                 if !self.mouse.over_ui {
@@ -1459,6 +1475,7 @@ impl App {
             }
             crate::ui_edit::paint_box(&ctx, &self.ed);
             crate::ui_edit::paint_ruler(&ctx, &self.ed, &self.cam, self.view);
+            crate::ui_edit::paint_cut(&ctx, &self.ed, &self.cam, self.view);
             crate::ui_menu::show(&ctx, &mut self.ui.view_menu, &mut self.ed, &self.lib, &mut actions);
             crate::ui_edit::road_entry(&ctx, &mut self.ed, self.view, &mut actions);
             if self.ed.doc.is_some() {

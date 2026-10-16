@@ -133,6 +133,25 @@ pub fn paint_ruler(ctx: &egui::Context, ed: &Editor, cam: &crate::camera::Camera
     painter.galley(r.min + Vec2::new(5.0, 2.0), galley, Color32::BLACK);
 }
 
+pub fn knife_help() -> &'static str {
+    tr("Knife (K): a click on a road cuts it there, as often as you like; the pieces' lengths shown at the cursor, on whole grid steps with grid snapping on · right-click or Esc: off", "Нож (K): клик по дороге разрезает её в этом месте, сколько угодно раз; длины кусков видны у курсора, с привязкой к сетке — по целым шагам сетки · правый клик или Esc: выключить")
+}
+
+/// The two pieces the knife would leave, by its line in the view.
+pub fn paint_cut(ctx: &egui::Context, ed: &Editor, cam: &crate::camera::Camera, view: egui::Rect) {
+    let Some(c) = ed.cut_preview() else { return };
+    let Some((x, y)) = crate::selection::project(cam, c.pos + DVec3::Z * 1.0, view.width(), view.height()) else { return };
+    let at = view.min + Vec2::new(x, y - 22.0);
+    if !view.contains(at) {
+        return;
+    }
+    let painter = ctx.layer_painter(egui::LayerId::new(egui::Order::Background, egui::Id::new("knife"))).with_clip_rect(view);
+    let galley = painter.layout_no_wrap(format!("{:.2} m | {:.2} m", c.at, c.length - c.at), egui::FontId::monospace(12.0), Color32::WHITE);
+    let r = egui::Rect::from_center_size(at, galley.size() + Vec2::new(10.0, 4.0));
+    painter.rect_filled(r, CornerRadius::same(3), if c.fits { Color32::from_rgb(200, 55, 45) } else { Color32::from_gray(90) });
+    painter.galley(r.min + Vec2::new(5.0, 2.0), galley, Color32::WHITE);
+}
+
 /// Grid and angle snapping, in the status bar.
 pub fn snap_controls(ui: &mut egui::Ui, ed: &mut Editor) {
     ui.spacing_mut().interact_size.y = 16.0;
@@ -156,6 +175,10 @@ pub fn snap_controls(ui: &mut egui::Ui, ed: &mut Editor) {
         let flat = d.truncate().length();
         let grade = if flat > 0.01 { format!("{:+.1} %", d.z / flat * 100.0) } else { "-".into() };
         ui.label(RichText::new(format!("{:.2} m · Δh {:+.2} m · {grade}", flat, d.z)).small().monospace().color(Color32::from_rgb(255, 216, 51)));
+    }
+    let mut knife = ed.cutting;
+    if check(ui, &mut knife, RichText::new(tr("Knife", "Нож")).small()).on_hover_text(knife_help()).changed() {
+        ed.toggle_cutting();
     }
     let mut on = ed.ruler.is_some();
     if check(ui, &mut on, RichText::new(tr("Ruler", "Линейка")).small()).on_hover_text(tr("Click two points to measure the distance and gradient between them (U) · right-click: off", "Клик по двум точкам: расстояние и уклон между ними (U) · правый клик: выключить")).changed() {

@@ -106,6 +106,19 @@ impl TerrainMode {
     }
 }
 
+/// Where the knife would cut: the road (tile, id), how far along it and how long it is, the
+/// point and the road's way there; `fits` while both pieces would be a metre or longer.
+#[derive(Debug, Clone, Copy)]
+pub struct CutPreview {
+    pub key: TileKey,
+    pub id: i64,
+    pub at: f64,
+    pub length: f64,
+    pub pos: DVec3,
+    pub dir: DVec2,
+    pub fits: bool,
+}
+
 /// A short message at the bottom of the screen.
 pub struct Toast {
     pub text: String,
@@ -259,6 +272,8 @@ pub struct Editor {
     pub keep_height: bool,
     /// The ruler, when on: its first point and, once clicked, its second.
     pub ruler: Option<(Option<DVec3>, Option<DVec3>)>,
+    /// The knife (K): a click on a road cuts it there, until right-click or Esc.
+    pub cutting: bool,
     // snapping
     pub snap_grid: bool,
     pub grid_step: f64,
@@ -410,6 +425,7 @@ impl Default for Editor {
             session_first_id: i64::MAX,
             row_params: Default::default(),
             ruler: None,
+            cutting: false,
             typed_text: Default::default(),
             straight_lock: false,
             path_edit: false,
@@ -583,6 +599,7 @@ impl Editor {
         self.plant_outline.clear();
         self.ramp_start = None;
         self.link_pick = None;
+        self.cutting = false;
         if let Some(doc) = &mut self.doc {
             self.history.commit();
             let _ = doc;
@@ -1066,6 +1083,15 @@ impl Editor {
             self.picked = Some((self.hover, self.cursor));
             return;
         }
+        // the knife takes the clicks while it is on: each cuts the road under the cursor
+        if self.cutting {
+            match self.cut_preview() {
+                Some(c) if c.fits => self.cut_spline(c.key, c.id, c.at),
+                Some(_) => self.error(tr("Too near the road's end to cut it there", "Слишком близко к концу дороги, чтобы разрезать её здесь")),
+                None => self.toast(tr("No road under the cursor", "Под курсором нет дороги")),
+            }
+            return;
+        }
         // the ruler takes the clicks while it is on: from one point to the next
         if let (Some(r), Some(c)) = (&mut self.ruler, self.cursor) {
             *r = match *r {
@@ -1138,6 +1164,10 @@ impl Editor {
     /// A right click without a drag: what the tool was doing is called off; true when the
     /// view's menu is to open instead.
     pub fn right_click(&mut self) -> bool {
+        if self.cutting {
+            self.cutting = false;
+            return false;
+        }
         if self.ruler.is_some() {
             self.ruler = None;
             return false;
@@ -3244,6 +3274,15 @@ impl Editor {
                 }
             }
         }
+        // the knife: a line across the road where a click cuts it
+        if let Some(c) = self.cut_preview() {
+            let half = doc.spline(c.key, c.id).and_then(|s| assets.spline(&s.file)).map(|m| m.half_width as f64).unwrap_or(4.0).max(1.5) + 0.5;
+            let side = DVec3::new(c.dir.y, -c.dir.x, 0.0) * half;
+            let lift = DVec3::Z * 0.4;
+            let col = if c.fits { [1.0, 0.25, 0.2, 1.0] } else { [0.6, 0.6, 0.6, 1.0] };
+            line(&mut x.overlay, cam, c.pos - side + lift, c.pos + side + lift, w * 1.5, col);
+            disc(&mut x.overlay, cam, c.pos + lift, w * 2.5, col);
+        }
         if let Some((a, b)) = self.ruler_line() {
             let lift = DVec3::Z * 0.5;
             line(&mut x.overlay, cam, a + lift, b + lift, w, [1.0, 0.85, 0.2, 1.0]);
@@ -3989,6 +4028,28 @@ impl Editor {
             }
         }
         self.history.commit();
+    }
+
+    /// The knife on or off (K); on, the Select tool takes over and the ruler goes.
+    pub fn toggle_cutting(&mut self) {
+        let on = !self.cutting;
+        self.set_tool(Tool::Select);
+        self.ruler = None;
+        self.cutting = on;
+    }
+
+    /// Where a click of the knife would cut: the road under the cursor, at the point nearest
+    /// it (on whole grid steps along the road with grid snapping on).
+    pub fn cut_preview(&self) -> Option<CutPreview> {
+        if !self.cutting || !self.cursor_in_view {
+            return None;
+        }
+        let (k, id, at) = self.road_at(self.cursor?.truncate())?;
+        let s = self.doc.as_ref()?.spline(k, id)?;
+        let at = if self.snap_grid && self.grid_step > 0.0 { ((at / self.grid_step).round() * self.grid_step).clamp(0.0, s.length) } else { at };
+        let c = omsi_geometry::SplineCurve::from_map(s, tile_origin(k));
+        let h = c.heading_at(at).to_radians();
+        Some(CutPreview { key: k, id, at, length: s.length, pos: c.point_at(at), dir: DVec2::new(h.sin(), h.cos()), fits: at >= 1.0 && at <= s.length - 1.0 })
     }
 
     /// The road or track nearest to `p` (within a few metres of its middle): tile, id and the
@@ -5762,6 +5823,36 @@ mod tests {
         // the angle step is what R turns a selection by and what snapping comes to
         assert_eq!(snap_deg(37.0, 10.0), 40.0);
         assert_eq!(snap_deg(37.0, 45.0), 45.0);
+    }
+
+    #[test]
+    fn the_knife_cuts_a_road_wherever_it_is_clicked_until_turned_off() {
+        let mut doc = flat_map(1);
+        crate::selection::tests::add_spline(&mut doc, (0, 0), 1, 50.0, 100.0, 90.0, 100.0, 0, 0);
+        let mut ed = Editor::default();
+        ed.open(doc);
+        let mut assets = Assets::new(std::path::PathBuf::new(), std::path::PathBuf::new());
+        let lib = Library::default();
+        ed.toggle_cutting();
+        ed.cursor_in_view = true;
+        // beside the road: cut at the point of it nearest the cursor
+        ed.cursor = Some(DVec3::new(80.3, 103.0, 0.0));
+        let c = ed.cut_preview().unwrap();
+        assert!((c.at - 30.3).abs() < 0.2 && c.fits, "{c:?}");
+        // whole metres along it with grid snapping on
+        ed.snap_grid = true;
+        ed.grid_step = 1.0;
+        assert_eq!(ed.cut_preview().unwrap().at, 30.0);
+        ed.left_press(&mut assets, &lib, false);
+        ed.cursor = Some(DVec3::new(120.0, 99.0, 0.0));
+        ed.left_press(&mut assets, &lib, false);
+        let lengths: Vec<f64> = ed.doc.as_ref().unwrap().tiles[&(0, 0)].tile.splines.iter().map(|s| s.length).collect();
+        assert_eq!(lengths, vec![30.0, 40.0, 30.0]);
+        // a right click puts the knife away; a click then cuts nothing
+        ed.right_click();
+        assert!(!ed.cutting && ed.cut_preview().is_none());
+        ed.history.undo(ed.doc.as_mut().unwrap());
+        assert_eq!(ed.doc.as_ref().unwrap().tiles[&(0, 0)].tile.splines.len(), 2);
     }
 
     #[test]

@@ -1097,6 +1097,7 @@ fn status_bar(root: &mut egui::Ui, help_line: Option<String>, ed: &mut Editor, s
 
 fn tool_hint(ed: &Editor) -> &'static str {
     match ed.tool {
+        Tool::Select if ed.cutting => crate::ui_edit::knife_help(),
         Tool::Select if ed.single_spline().is_some() => tr("Drag a white dot: an end moves (joined roads follow), the middle bends the road · drag the road to move it · Shift+click: add to the selection", "Тяните белую точку: конец двигается (соседние дороги следуют), середина изгибает дорогу · тянуть дорогу: сдвиг · Shift+клик: добавить к выделению"),
         Tool::Select => tr("Click to select, Shift+click to add · drag on nothing: box · drag the selection to move it · Ctrl+C / X / V / D · right button: look + W A S D fly · middle: pan · Alt: orbit · wheel: zoom · F: focus · Ctrl+K: commands", "Клик: выбрать, Shift+клик: добавить · тянуть по пустому месту: рамка · тянуть выделенное: сдвиг · Ctrl+C / X / V / D · ПКМ: обзор + полёт WASD · средняя: сдвиг · Alt: орбита · колесо: зум · F: к выделенному · Ctrl+K: команды"),
         Tool::Roads if ed.road_type.is_none() => tr("Choose a road type in the list on the left", "Выберите тип дороги в списке слева"),
@@ -1784,7 +1785,7 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
     // ends held)
     let mut spline_extra: Option<(f64, f64, u8)> = None;
     let mut whole_road = false;
-    let mut cut_middle = false;
+    let mut knife = false;
     let mut join_next = false;
     let mut reverse = false;
     let mut lay = false;
@@ -2032,8 +2033,9 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
                     }
                 }
                 ui.horizontal_wrapped(|ui| {
-                    if s.length > 2.0 && ui.small_button(tr("Cut in two", "Разрезать надвое")).on_hover_text(tr("Into two pieces at its middle, to give a stretch another type or settings (right-click the road: cut it where clicked)", "На два куска посередине, чтобы дать участку другой тип или настройки (правый клик по дороге: разрезать в месте клика)")).clicked() {
-                        cut_middle = true;
+                    let b = egui::Button::new(tr("Cut", "Разрезать")).small().selected(ed.cutting);
+                    if ui.add(b).on_hover_text(crate::ui_edit::knife_help()).clicked() {
+                        knife = true;
                     }
                     if s.next_id != 0 && ui.small_button(tr("Join with the next piece", "Соединить со следующим куском")).on_hover_text(tr("One piece again with the one after it, where the two make one curve", "Снова один кусок со следующим, если вместе они образуют одну кривую")).clicked() {
                         join_next = true;
@@ -2196,10 +2198,8 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
                 ed.select_chain(k, id);
                 return;
             }
-            if cut_middle {
-                if let Some(l) = ed.doc.as_ref().and_then(|d| d.spline(k, id)).map(|s| s.length) {
-                    ed.cut_spline(k, id, l / 2.0);
-                }
+            if knife {
+                ed.toggle_cutting();
                 return;
             }
             if join_next {
@@ -2454,6 +2454,7 @@ fn controls(ctx: &egui::Context, st: &mut UiState) {
             (tr("Alt + Page Up / Down", "Alt + Page Up / Down"), tr("selection up / down 10 cm (Shift: 1 m)", "выделение выше / ниже на 10 см (Shift: 1 м)")),
             (tr("Double-click a road", "Двойной клик по дороге"), tr("select all of it", "выбрать её целиком")),
             ("U", tr("ruler: click two points (distance, height, gradient)", "линейка: клик по двум точкам (расстояние, высота, уклон)")),
+            ("K", tr("knife: a click on a road cuts it there", "нож: клик по дороге разрезает её там")),
             ("F", tr("go to the selection", "перейти к выбранному")),
             ("Esc", tr("stop / deselect", "отмена / снять выбор")),
             ("[ ]  Shift+wheel", tr("brush size", "размер кисти")),
