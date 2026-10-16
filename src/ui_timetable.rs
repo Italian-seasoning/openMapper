@@ -1148,10 +1148,16 @@ impl TimetableUi {
 /// The name of the depot group openMapper adds.
 const DEPOT: &str = "openMapper";
 
-/// A depot for a map without one, and the tours without buses take theirs from it.
+/// A depot for a map without one, and the tours without buses take theirs from it. Its
+/// buses get the map's own depot file, made from the lines, where there are trips (else
+/// Grundorf's: its destinations are not the map's).
 pub(crate) fn add_depot(doc: &mut Document) {
     let name = doc.traffic.unique_name(DEPOT);
-    doc.traffic.groups.push(crate::traffic::stock_depot(&name));
+    let mut group = crate::traffic::stock_depot(&name);
+    if doc.timetable.trips.iter().any(|t| t.stations.len() >= 2) {
+        group.hof = Some(crate::ui_hof::make_named(doc, ""));
+    }
+    doc.traffic.groups.push(group);
     doc.traffic.touch(crate::traffic::File::AiLists);
     let tt = &mut doc.timetable;
     let mut touched = Vec::new();

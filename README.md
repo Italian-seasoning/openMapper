@@ -56,7 +56,8 @@ can drive in service.
   routes their IBIS knows. One click makes one from the map's lines (a destination for each
   trip's terminus, the stops it calls at, a route with its code for each way a line goes, the
   front and side signs' texts split into two lines where they are long); later lines are
-  added with another click, what is there kept. Every text of a destination or stop, a
+  added with another click, what is there kept. The sample map and a town from OpenStreetMap
+  get theirs with their lines (their depot's buses use it, not Grundorf's). Every text of a destination or stop, a
   route's code, destination and stops in order can be changed. Saved into the map's folder
   (where OMSI 2 looks) and the content's `HOFs` folder (where openOMSI looks). The map check
   names a depot file a depot uses that is nowhere, one of another map that knows none of the

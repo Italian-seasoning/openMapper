@@ -73,6 +73,20 @@ pub fn make_named(doc: &mut Document, name: &str) -> String {
     file
 }
 
+/// The map's own depot files a depot group uses get what the lines need (lines added from
+/// OpenStreetMap).
+pub fn follow_lines(doc: &mut Document) {
+    let used: Vec<String> = doc.traffic.depots().filter_map(|g| g.hof.clone()).collect();
+    let tt = &doc.timetable;
+    let mut changed = false;
+    for h in doc.traffic.depots.iter_mut().filter(|h| used.iter().any(|u| u.eq_ignore_ascii_case(&h.file))) {
+        changed |= h.fill_from(tt) != (0, 0, 0);
+    }
+    if changed {
+        doc.traffic.touch(File::Depots);
+    }
+}
+
 /// What the map's lines need that the file lacks: destinations, stops, routes.
 fn missing(h: &Hof, doc: &Document) -> (usize, usize, usize) {
     h.clone().fill_from(&doc.timetable)

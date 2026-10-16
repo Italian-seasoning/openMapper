@@ -287,6 +287,11 @@ mod tests {
             assert_eq!((back.lines.len(), back.trips.len(), back.tracks.len(), back.bus_stops.len()), (1, 2, 2, 4));
             let ai = omsi_map::AiLists::load(&doc.dir.join("ailists.cfg")).unwrap();
             assert!(ai.groups.iter().any(|g| g.is_depot) && ai.groups.iter().any(|g| g.name == "NormalCars"));
+            // (its buses with the map's own depot file, in its folder and for openOMSI)
+            let hof = ai.groups.iter().find(|g| g.is_depot).and_then(|g| g.hof.clone()).unwrap();
+            let own = crate::hof::Hof::load(&doc.dir.join(format!("{hof}.hof"))).expect("the map's own depot file");
+            assert!(own.routes.len() == 2 && own.stops.len() == 2 && doc.timetable.trips.iter().all(|t| own.terminus_named(&t.terminus).is_some()), "{own:?}");
+            assert!(roots.content.join("HOFs").join(format!("{hof}.hof")).is_file());
         }
         let _ = std::fs::remove_dir_all(&roots.content);
     }

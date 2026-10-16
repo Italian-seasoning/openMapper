@@ -168,6 +168,8 @@ pub fn add(doc: &mut Document, roots: Vec<std::path::PathBuf>, routes: &[(String
         l.tours.push(Tour { number: "1".into(), ai_group: depot.clone(), extra: ALL_DAYS.to_string(), trips: list });
         tt.touch_line(&line);
     }
+    // (the map's own depot files learn the new lines' destinations, stops and routes)
+    crate::ui_hof::follow_lines(doc);
     added
 }
 
