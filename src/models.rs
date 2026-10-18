@@ -21,26 +21,68 @@ pub struct Mat {
     pub normal: Option<(image::RgbaImage, bool)>,
     /// Occlusion, roughness, metalness in red, green, blue.
     pub orm: Option<image::RgbaImage>,
+    /// How it treats transparency: 0 opaque, 1 cut out (alpha test), 2 blended; the numbers of
+    /// OMSI's `[matl_alpha]`.
+    pub alpha: u8,
 }
 
-/// A model in OMSI's frame: vertices (position, normal, uv with v down), triangles with
-/// their material.
+/// How a picture's alpha is to be used: 0 if it is all opaque, 1 if it is cut out (nearly
+/// every pixel fully there or fully gone: leaves, fences), 2 if it fades (glass).
+pub fn alpha_of(img: &image::RgbaImage) -> u8 {
+    let (mut clear, mut mid) = (0usize, 0usize);
+    for p in img.pixels() {
+        match p[3] {
+            250..=255 => {}
+            0..=10 => clear += 1,
+            _ => mid += 1,
+        }
+    }
+    match (clear + mid, mid) {
+        (0, _) => 0,
+        (t, m) if m * 20 > t => 2,
+        _ => 1,
+    }
+}
+
+/// One piece of a model (a node of the file, an object or group of the `.obj`): a mesh of
+/// its own, as it was in the tool it came from.
 #[derive(Default)]
-pub struct Model {
+pub struct Part {
+    pub name: String,
     pub verts: Vec<([f32; 3], [f32; 3], [f32; 2])>,
     pub faces: Vec<([u32; 3], usize)>,
+}
+
+/// A model in OMSI's frame: pieces with vertices (position, normal, uv with v down) and
+/// triangles with their material.
+#[derive(Default)]
+pub struct Model {
+    pub parts: Vec<Part>,
     pub mats: Vec<Mat>,
 }
 
 impl Model {
+    /// A new piece for the triangles that follow.
+    fn start_part(&mut self, name: &str) {
+        self.parts.push(Part { name: name.to_string(), ..Default::default() });
+    }
+
+    fn faces(&self) -> usize {
+        self.parts.iter().map(|p| p.faces.len()).sum()
+    }
+
     /// Add a triangle given in a right-handed y-up frame (glTF, FBX converted, OBJ): z turns
     /// round into OMSI's left-handed one, and with it the winding.
     fn push_rh(&mut self, v: [(Vec3, Vec3, [f32; 2]); 3], mat: usize) {
-        let base = self.verts.len() as u32;
-        for (p, n, uv) in v {
-            self.verts.push(([p.x, p.y, -p.z], [n.x, n.y, -n.z], uv));
+        if self.parts.is_empty() {
+            self.start_part("model");
         }
-        self.faces.push(([base, base + 2, base + 1], mat));
+        let part = self.parts.last_mut().unwrap();
+        let base = part.verts.len() as u32;
+        for (p, n, uv) in v {
+            part.verts.push(([p.x, p.y, -p.z], [n.x, n.y, -n.z], uv));
+        }
+        part.faces.push(([base, base + 2, base + 1], mat));
     }
 }
 
@@ -100,7 +142,20 @@ pub fn load_gltf(path: &Path) -> anyhow::Result<Model> {
         let occ = mat.occlusion_texture().and_then(|t| rgba(t.texture().source().index()));
         // (only with a colour texture: the maps go beside it by its name)
         let orm = base.as_ref().map(|_| pack_orm(occ.as_ref().map(|i| (i, 0)), (mr.as_ref().map(|i| (i, 1)), pbr.roughness_factor()), (mr.as_ref().map(|i| (i, 2)), pbr.metallic_factor())));
-        m.mats.push(Mat { color: pbr.base_color_factor(), base, normal, orm });
+        let color = pbr.base_color_factor();
+        // (what the file says counts: a texture with an alpha channel under "opaque" stays opaque)
+        let alpha = match mat.alpha_mode() {
+            gltf::material::AlphaMode::Opaque => 0,
+            gltf::material::AlphaMode::Mask => 1,
+            gltf::material::AlphaMode::Blend => {
+                if color[3] < 0.98 || base.as_ref().map(|b| alpha_of(b) > 0).unwrap_or(false) {
+                    2
+                } else {
+                    0
+                }
+            }
+        };
+        m.mats.push(Mat { color, base, normal, orm, alpha });
     }
     let default_mat = m.mats.len();
     m.mats.push(Mat { color: [0.8, 0.8, 0.8, 1.0], ..Default::default() });
@@ -110,6 +165,7 @@ pub fn load_gltf(path: &Path) -> anyhow::Result<Model> {
         let world = parent * Mat4::from_cols_array_2d(&node.transform().matrix());
         let nm = Mat4::from_mat3(glam::Mat3::from_mat4(world).inverse().transpose());
         if let Some(mesh) = node.mesh() {
+            m.start_part(node.name().or_else(|| mesh.name()).unwrap_or("part"));
             for prim in mesh.primitives().filter(|p| p.mode() == gltf::mesh::Mode::Triangles) {
                 let r = prim.reader(|b| buffers.get(b.index()).map(|d| &d.0[..]));
                 let Some(pos) = r.read_positions().map(|p| p.collect::<Vec<_>>()) else { continue };
@@ -172,12 +228,15 @@ pub fn load_fbx(path: &Path) -> anyhow::Result<Model> {
         let rf = if p.roughness.has_value { p.roughness.value_vec4.x as f32 } else { 0.8 };
         let mf = if p.metalness.has_value { p.metalness.value_vec4.x as f32 } else { 0.0 };
         let orm = (base.is_some() && (rough.is_some() || metal.is_some() || ao.is_some())).then(|| pack_orm(ao.as_ref().map(|i| (i, 0)), (rough.as_ref().map(|i| (i, 0)), if rough.is_some() { 1.0 } else { rf }), (metal.as_ref().map(|i| (i, 0)), if metal.is_some() { 1.0 } else { mf })));
-        m.mats.push(Mat { color: [c.x as f32, c.y as f32, c.z as f32, 1.0], base, normal, orm });
+        let opacity = if p.opacity.has_value { p.opacity.value_vec4.x as f32 } else { 1.0 };
+        let alpha = if opacity < 0.98 { 2 } else { base.as_ref().map(alpha_of).unwrap_or(0) };
+        m.mats.push(Mat { color: [c.x as f32, c.y as f32, c.z as f32, opacity.clamp(0.0, 1.0)], base, normal, orm, alpha });
         m.mats.len() - 1
     };
     let mut tri = vec![0u32; 64];
     for node in scene.nodes.iter() {
         let Some(mesh) = node.mesh.as_ref() else { continue };
+        m.start_part(node.element.name.as_ref() as &str);
         let g = &node.geometry_to_world;
         let nmat = ufbx::matrix_for_normals(g);
         tri.resize(mesh.max_face_triangles * 3, 0);
@@ -199,7 +258,7 @@ pub fn load_fbx(path: &Path) -> anyhow::Result<Model> {
             }
         }
     }
-    if m.faces.is_empty() {
+    if m.faces() == 0 {
         anyhow::bail!("{}", tr("The FBX file has no meshes", "В файле FBX нет мешей"));
     }
     Ok(m)
@@ -208,13 +267,23 @@ pub fn load_fbx(path: &Path) -> anyhow::Result<Model> {
 // ---------------------------------------------------------------------------- writing
 
 /// Write the textures of the model's materials as `<stem>_<n>.png` with their
-/// `_nn` / `_nn_gl` and `_orm` maps beside them; the colour texture's name per material.
+/// `_nn` / `_nn_gl` and `_orm` maps beside them; the colour texture's name per material. A
+/// see-through material with no picture gets a plain white one, so that OMSI's `[matl_alpha]`
+/// has a texture to name.
 pub fn save_textures(m: &Model, stem: &str, dir: &Path) -> anyhow::Result<Vec<Option<String>>> {
     let mut names = Vec::new();
     for (i, mat) in m.mats.iter().enumerate() {
-        let Some(base) = &mat.base else {
-            names.push(None);
-            continue;
+        let white;
+        let base = match &mat.base {
+            Some(b) => b,
+            None if mat.alpha > 0 => {
+                white = image::RgbaImage::from_pixel(4, 4, image::Rgba([255, 255, 255, 255]));
+                &white
+            }
+            None => {
+                names.push(None);
+                continue;
+            }
         };
         let name = format!("{stem}_{i}");
         base.save(dir.join(format!("{name}.png")))?;
@@ -229,10 +298,18 @@ pub fn save_textures(m: &Model, stem: &str, dir: &Path) -> anyhow::Result<Vec<Op
     Ok(names)
 }
 
-/// The model as a DirectX `.x` text mesh; `textures`: each material's texture file name.
-pub fn write_x(m: &Model, textures: &[Option<String>]) -> String {
-    let verts = &m.verts;
-    let faces = &m.faces;
+/// A piece as a DirectX `.x` text mesh, with only the materials its triangles use; those
+/// materials' numbers in the model come back with it, in the order of the file's slots.
+/// `textures`: each material's texture file name.
+pub fn write_x(part: &Part, mats: &[Mat], textures: &[Option<String>]) -> (String, Vec<usize>) {
+    let verts = &part.verts;
+    let faces = &part.faces;
+    let mut used: Vec<usize> = Vec::new();
+    for (_, m) in faces {
+        if !used.contains(m) {
+            used.push(*m);
+        }
+    }
     let mut x = String::from("xof 0302txt 0032\n\nMesh {\n");
     let _ = writeln!(x, " {};", verts.len());
     for (i, (p, _, _)) in verts.iter().enumerate() {
@@ -256,14 +333,14 @@ pub fn write_x(m: &Model, textures: &[Option<String>]) -> String {
         let _ = writeln!(x, "  {:.6};{:.6};{}", t[0], t[1], if i + 1 == verts.len() { ";" } else { "," });
     }
     x.push_str(" }\n");
-    let n = m.mats.len().max(1);
-    let _ = writeln!(x, " MeshMaterialList {{\n  {};\n  {};", n, faces.len());
+    let _ = writeln!(x, " MeshMaterialList {{\n  {};\n  {};", used.len().max(1), faces.len());
     for (i, (_, mat)) in faces.iter().enumerate() {
-        let _ = writeln!(x, "  {}{}", mat, if i + 1 == faces.len() { ";" } else { "," });
+        let slot = used.iter().position(|u| u == mat).unwrap_or(0);
+        let _ = writeln!(x, "  {}{}", slot, if i + 1 == faces.len() { ";" } else { "," });
     }
-    for i in 0..n {
+    for &i in &used {
         // (a coloured material shows its colour; one with a texture shows the texture as it is)
-        let c = m.mats.get(i).map(|mat| if mat.base.is_some() { [1.0, 1.0, 1.0, mat.color[3]] } else { mat.color }).unwrap_or([0.8, 0.8, 0.8, 1.0]);
+        let c = mats.get(i).map(|mat| if mat.base.is_some() { [1.0, 1.0, 1.0, mat.color[3]] } else { mat.color }).unwrap_or([0.8, 0.8, 0.8, 1.0]);
         let _ = writeln!(x, "  Material {{\n   {:.4};{:.4};{:.4};{:.4};;\n   10.0;\n   0.1;0.1;0.1;;\n   0.0;0.0;0.0;;", c[0], c[1], c[2], c[3]);
         if let Some(Some(t)) = textures.get(i) {
             let _ = writeln!(x, "   TextureFilename {{\n    \"{t}\";\n   }}");
@@ -271,7 +348,7 @@ pub fn write_x(m: &Model, textures: &[Option<String>]) -> String {
         x.push_str("  }\n");
     }
     x.push_str(" }\n}\n");
-    x
+    (x, used)
 }
 
 #[cfg(test)]
@@ -311,22 +388,24 @@ mod tests {
         let dir = std::env::temp_dir().join(format!("om-gltf-{}", std::process::id()));
         std::fs::create_dir_all(&dir).unwrap();
         let m = load_gltf(&triangle_gltf(&dir)).unwrap();
-        assert_eq!(m.faces.len(), 1);
+        assert_eq!(m.parts.len(), 1);
+        assert_eq!(m.parts[0].faces.len(), 1);
         // the node's translation is in, z turned round (none here), winding reversed
-        assert!((m.verts[0].0[0] - 10.0).abs() < 1e-6 && (m.verts[1].0[0] - 11.0).abs() < 1e-6);
-        assert_eq!(m.faces[0].0, [0, 2, 1]);
+        assert!((m.parts[0].verts[0].0[0] - 10.0).abs() < 1e-6 && (m.parts[0].verts[1].0[0] - 11.0).abs() < 1e-6);
+        assert_eq!(m.parts[0].faces[0].0, [0, 2, 1]);
         let names = save_textures(&m, "tri", &dir).unwrap();
         assert_eq!(names[0].as_deref(), Some("tri_0.png"));
         assert!(dir.join("tri_0.png").is_file() && dir.join("tri_0_orm.png").is_file());
         // the roughness factor in the packed map's green
         let orm = image::open(dir.join("tri_0_orm.png")).unwrap().to_rgba8();
         assert_eq!(orm.get_pixel(0, 0)[1], 128);
-        let x = write_x(&m, &names);
+        let (x, used) = write_x(&m.parts[0], &m.mats, &names);
+        assert_eq!(used, vec![0]);
         assert!(x.contains("\"tri_0.png\""));
         // and openOMSI's own reader takes the mesh
         std::fs::write(dir.join("tri.x"), &x).unwrap();
         let back = omsi_o3d::load_mesh(&dir.join("tri.x")).unwrap();
-        assert_eq!(back.materials.len(), 2);
+        assert_eq!(back.materials.len(), 1);
         assert_eq!(back.materials[0].texture, "tri_0.png");
         let _ = std::fs::remove_dir_all(dir);
     }

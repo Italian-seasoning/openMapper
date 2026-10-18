@@ -100,7 +100,7 @@ fn commands() -> Vec<Command> {
         cmd!(Icon::Visible, "What the game does not show", "То, чего не видно в игре", "technical helpers invisible технические помощники", "", |_, ed, _| ed.show_technical = !ed.show_technical),
         cmd!(Icon::Route, "AI lanes", "Полосы ИИ", "paths arrows пути стрелки", "", |_, ed, _| ed.show_lanes = !ed.show_lanes),
         cmd!(Icon::Save, "Save a picture of the view", "Сохранить картинку вида", "screenshot скриншот", "F12", |_, _, a| a.push(Action::ViewPicture)),
-        cmd!(Icon::Layers, "Map picture from this view", "Картинка карты из этого вида", "picture.jpg thumbnail превью", "", |_, _, a| a.push(Action::MapPicture)),
+        cmd!(Icon::Import, "Import the map's thumbnail", "Импорт картинки карты", "picture.jpg thumbnail превью", "", |_, _, a| a.push(Action::ImportMapPicture)),
         // Help
         cmd!(Icon::CheckCircle, "Getting started", "С чего начать", "guide tutorial help учебник помощь", "", |_, _, a| a.push(Action::Guide)),
         cmd!(Icon::Help, "Controls", "Управление", "keys mouse shortcuts клавиши мышь", "", |st, _, _| st.help_open = true),

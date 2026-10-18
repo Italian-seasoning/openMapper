@@ -27,6 +27,8 @@ pub(crate) const SELECT: Color32 = Color32::from_rgb(64, 86, 122);
 
 /// What the interface asks the application to do.
 pub enum Action {
+    BindKey(crate::controls::Cmd, Option<crate::controls::Chord>),
+    ResetKeys,
     NewMap { folder: String, friendly: String, size: i32, options: crate::ui_newmap::NewMapOptions },
     Open(PathBuf),
     OpenDialog,
@@ -68,6 +70,9 @@ pub enum Action {
     /// Content files changed (maps made, imported): read the catalogue and models again,
     /// then say so.
     ReloadContent(String),
+    /// A material of an imported object made opaque, cut out or blended: the object's file,
+    /// its mesh, the material's texture and use number, the alpha.
+    SetAlpha(String, usize, String, i32, u8),
     /// How the mouse moves the camera ("map" or "fly").
     SetCamera(String),
     /// The interface's zoom (1 = as the system has it).
@@ -78,7 +83,7 @@ pub enum Action {
     /// A catalogue entry was chosen (for the recently used list).
     UsedAsset(String),
     /// The 3D view becomes the map's picture (`picture.jpg`).
-    MapPicture,
+    ImportMapPicture,
     /// A picture of the view, full size, into the Pictures folder.
     ViewPicture,
     /// The map settings window (money, tickets, years, depot, seasons).
@@ -156,6 +161,8 @@ pub struct UiState {
     pub spline_cat: Option<Category>,
     pub new_map: Option<crate::ui_newmap::NewMapForm>,
     pub help_open: bool,
+    /// The command whose key is being chosen (the next key pressed becomes it).
+    pub key_capture: Option<crate::controls::Cmd>,
     pub about_open: bool,
     pub texture_picker: Option<String>,
     /// What the texture picker chooses for: a ground layer's texture or detail texture
@@ -217,6 +224,7 @@ impl Default for UiState {
             spline_cat: None,
             new_map: None,
             help_open: false,
+            key_capture: None,
             about_open: false,
             texture_picker: None,
             texture_pick_for: None,
@@ -249,6 +257,15 @@ impl Default for UiState {
     }
 }
 
+/// One mesh of a model.
+#[derive(Clone)]
+pub struct PieceInfo {
+    pub triangles: usize,
+    /// Each material: its texture's name, which use of that texture it is, and its alpha (0
+    /// opaque, 1 cut out, 2 blended).
+    pub materials: Vec<(String, i32, u8)>,
+}
+
 /// What the properties show of a selected object's model.
 #[derive(Clone)]
 pub struct ObjInfo {
@@ -259,6 +276,8 @@ pub struct ObjInfo {
     pub textures: Vec<(String, bool)>,
     /// What its labels mean (empty: it reads none; an empty name: unnamed).
     pub labels: Vec<String>,
+    /// Its meshes, as the file had them, with the transparency of their materials.
+    pub pieces: Vec<PieceInfo>,
     /// How many paths (lanes) it has.
     pub paths: usize,
     /// How many points it has to hang other objects on (`[new_attachment]`).
@@ -451,6 +470,9 @@ pub fn welcome(root: &mut egui::Ui, st: &mut UiState, prefs: &Prefs, omsi: Optio
                 }
                 if menu_item(ui, Some(Icon::Open), tr("Open map…", "Открыть карту…"), "", omsi.is_some()) {
                     actions.push(Action::OpenDialog);
+                }
+                if menu_item(ui, Some(Icon::Help), tr("Controls…", "Управление…"), "", true) {
+                    st.help_open = true;
                 }
                 if menu_item(ui, Some(Icon::Import), tr("Import assets…", "Импорт ассетов…"), "", omsi.is_some()) {
                     actions.push(Action::Import);
@@ -702,7 +724,7 @@ pub fn editor(root: &mut egui::Ui, st: &mut UiState, u: EditorUi, actions: &mut 
     });
     let ctx = root.ctx().clone();
     texture_picker(&ctx, st, texture_files, swatches, wanted_swatches, actions);
-    controls(&ctx, st);
+    controls(&ctx, st, prefs, actions);
     about(&ctx, st);
     st.check.window(&ctx, ed, lib, actions);
     st.find.window(&ctx, ed, lib, actions);
@@ -962,9 +984,6 @@ fn menu_bar(root: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, can_undo: bo
                 if menu_item(ui, Some(Icon::CheckCircle), tr("Getting started", "С чего начать"), "", true) {
                     actions.push(Action::Guide);
                 }
-                if menu_item(ui, Some(Icon::Help), tr("Controls", "Управление"), "", true) {
-                    st.help_open = true;
-                }
                 if menu_item(ui, Some(Icon::Info), tr("About openMapper", "О программе"), "", true) {
                     st.about_open = true;
                 }
@@ -1014,10 +1033,25 @@ fn toolbar(root: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, can_undo: boo
             }
             ui.separator();
             for t in Tool::ALL {
-                let r = tool_button(ui, t.icon(), ed.tool == t, true);
+                let on = ed.tool == t && (t != Tool::Select || ed.xform == crate::editor::Xform::Select);
+                let r = tool_button(ui, t.icon(), on, true);
                 help(st, &r, format!("{} ({})", t.label(), t.key()));
                 if r.clicked() {
                     ed.set_tool(t);
+                    if t == Tool::Select {
+                        ed.xform = crate::editor::Xform::Select;
+                    }
+                }
+                // (the three that work on what is selected stand by the Select tool)
+                if t == Tool::Select {
+                    for x in crate::editor::Xform::ALL.into_iter().skip(1) {
+                        let r = tool_button(ui, x.icon(), ed.tool == Tool::Select && ed.xform == x, true);
+                        help(st, &r, x.label());
+                        if r.clicked() {
+                            ed.set_tool(Tool::Select);
+                            ed.xform = if ed.xform == x { crate::editor::Xform::Select } else { x };
+                        }
+                    }
                 }
             }
             ui.separator();
@@ -1065,7 +1099,7 @@ fn status_bar(root: &mut egui::Ui, help_line: Option<String>, ed: &mut Editor, s
             let (text, color) = match (ed.toasts.last(), help_line) {
                 (_, Some(h)) => (h, Color32::from_gray(210)),
                 (Some(t), None) => (t.text.clone(), if t.error { Color32::from_rgb(240, 120, 100) } else { Color32::from_rgb(150, 210, 140) }),
-                (None, None) => (tool_hint(ed).to_string(), TEXT_DIM),
+                (None, None) => (String::new(), TEXT_DIM),
             };
             // (the facts on the right first; the help gets what is left, cut short)
             ui.with_layout(Layout::right_to_left(Align::Center), |ui| {
@@ -1098,27 +1132,6 @@ fn status_bar(root: &mut egui::Ui, help_line: Option<String>, ed: &mut Editor, s
             });
         });
     });
-}
-
-fn tool_hint(ed: &Editor) -> &'static str {
-    match ed.tool {
-        Tool::Select if ed.cutting => crate::ui_edit::knife_help(),
-        Tool::Select if ed.single_spline().is_some() => tr("Drag a white dot: an end moves (joined roads follow), the middle bends the road · drag the road to move it · Shift+click: add to the selection", "Тяните белую точку: конец двигается (соседние дороги следуют), середина изгибает дорогу · тянуть дорогу: сдвиг · Shift+клик: добавить к выделению"),
-        Tool::Select => tr("Click to select, Shift+click to add · drag on nothing: box · drag the selection to move it · Ctrl+C / X / V / D · right button: look + W A S D fly · middle: pan · Alt: orbit · wheel: zoom · F: focus · Ctrl+K: commands", "Клик: выбрать, Shift+клик: добавить · тянуть по пустому месту: рамка · тянуть выделенное: сдвиг · Ctrl+C / X / V / D · ПКМ: обзор + полёт WASD · средняя: сдвиг · Alt: орбита · колесо: зум · F: к выделенному · Ctrl+K: команды"),
-        Tool::Roads if ed.road_type.is_none() => tr("Choose a road type in the list on the left", "Выберите тип дороги в списке слева"),
-        Tool::Roads => tr("Click where the road starts, click again where it goes (it keeps going) · white dots: road ends to join · right-click / Esc: stop", "Клик: начало дороги, ещё клик: куда она идёт (дальше продолжается) · белые точки: концы для стыковки · правый клик / Esc: стоп"),
-        Tool::Objects if ed.object_type.is_none() && !(ed.plant_brush && (ed.plant_erase || !ed.plant_mix.is_empty())) => tr("Choose an object in the list on the left", "Выберите объект в списке слева"),
-        Tool::Objects if ed.plant_brush && ed.plant_area => tr("Click round the area, corner by corner · click the first corner or press Enter to fill it · right-click: take back a corner · Esc: cancel", "Обведите участок кликами по углам · клик по первому углу или Enter: засадить · правый клик: убрать угол · Esc: отмена"),
-        Tool::Objects if ed.plant_brush => tr("Hold the left button and paint · [ ] or Shift+wheel: brush size", "Зажмите левую кнопку и ведите · [ ] или Shift+колесо: размер кисти"),
-        Tool::Objects => tr("Click to place · R / Shift+R turn · right-click puts the object away", "Клик: поставить · R / Shift+R: поворот · правый клик: убрать объект"),
-        Tool::Logic if ed.logic == LogicMode::Paths && ed.path_edit => tr("Click a path to pick it · drag its dots to move an end or bend it · Ctrl+click on it: add a point · Del: delete", "Клик по пути: выбрать · тяните кружки: двигать конец или изгибать · Ctrl+клик: добавить точку · Del: удалить"),
-        Tool::Logic if ed.logic == LogicMode::Paths => tr("Click where the path starts, click where it goes (it keeps going) · it snaps to lane ends and along lanes · right-click / Esc: stop", "Клик: начало пути, ещё клик: куда он идёт (дальше продолжается) · прилипает к концам и вдоль полос · правый клик / Esc: стоп"),
-        Tool::Logic if ed.logic == LogicMode::Parking && ed.parking_row => tr("Click the start of a row, then its end · R turns the cars · right-click: cancel", "Клик: начало ряда, потом его конец · R: повернуть машины · правый клик: отмена"),
-        Tool::Logic => tr("Choose what to place in the list on the left, then click in the view · a click on a stop or start point already there selects it, a drag moves it · R / Shift+R turn", "Выберите, что ставить, в списке слева, потом клик в окне · клик по уже стоящей остановке или точке старта выбирает её, перетаскивание двигает · R / Shift+R: поворот"),
-        Tool::Terrain if ed.terrain_mode == TerrainMode::Ramp => tr("Click where the ramp starts, then where it ends · its width is the brush's · right-click: start again", "Клик в начале пандуса, затем в конце · ширина как у кисти · правый клик: заново"),
-        Tool::Terrain | Tool::Paint => tr("Hold the left button and drag · [ ] or Shift+wheel: brush size", "Зажмите левую кнопку и ведите · [ ] или Shift+колесо: размер кисти"),
-        Tool::Tiles => tr("Click beside the map to add a tile · click a tile for its overlay · right-click a tile to remove it", "Клик рядом с картой: добавить тайл · клик по тайлу: его подложка · правый клик по тайлу: удалить"),
-    }
 }
 
 // ---------------------------------------------------------------------------- left panel
@@ -1933,6 +1946,33 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
                                 ui.label(info.triangles.to_string());
                             });
                         });
+                        // the pieces it was made of, each with the transparency of its materials (an
+                        // imported model's can be changed)
+                        let imported = o.file.to_lowercase().contains("\\imported\\");
+                        if !info.pieces.is_empty() {
+                            ui.label(RichText::new(format!("{} ({})", tr("Parts", "Части"), info.pieces.len())).color(TEXT_DIM));
+                        }
+                        for (pi, piece) in info.pieces.iter().enumerate() {
+                            egui::CollapsingHeader::new(RichText::new(format!("{} {} · {} {}", tr("Part", "Часть"), pi + 1, piece.triangles, tr("triangles", "треугольников"))).small()).id_salt(("piece", pi)).show(ui, |ui| {
+                                for (mi, (tex, index, alpha)) in piece.materials.iter().enumerate() {
+                                    ui.horizontal(|ui| {
+                                        ui.label(RichText::new(if tex.is_empty() { tr("colour only", "только цвет") } else { tex }).small());
+                                        let names = [tr("opaque", "непрозрачный"), tr("cut out", "вырезной"), tr("blended", "полупрозрачный")];
+                                        let mut v = (*alpha).min(2);
+                                        ui.add_enabled_ui(imported && !tex.is_empty(), |ui| {
+                                            egui::ComboBox::from_id_salt(("alpha", pi, mi)).selected_text(names[v as usize]).width(110.0).show_ui(ui, |ui| {
+                                                for (n, name) in names.iter().enumerate() {
+                                                    ui.selectable_value(&mut v, n as u8, *name);
+                                                }
+                                            }).response.on_hover_text(tr("How the texture's transparency is used: cut out for leaves and fences, blended for glass", "Как используется прозрачность текстуры: вырезной — листья и заборы, полупрозрачный — стекло"));
+                                        });
+                                        if v != *alpha {
+                                            actions.push(Action::SetAlpha(o.file.clone(), pi, tex.clone(), *index, v));
+                                        }
+                                    });
+                                }
+                            });
+                        }
                         ui.label(RichText::new(tr("Textures", "Текстуры")).color(TEXT_DIM));
                         for (name, pbr) in &info.textures {
                             ui.horizontal(|ui| {
@@ -2341,10 +2381,10 @@ fn map_properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Li
                 ui.label(RichText::new(tr("None yet: openOMSI shows it where maps are chosen.", "Пока нет: openOMSI показывает её при выборе карты.")).small().color(TEXT_DIM));
             }
         }
-        let r = ui.button(icons::labelled(Icon::Visible, tr("Take it from this view", "Снять с этого вида")));
-        help(st, &r, tr("The middle of the 3D view, as it is now, becomes the map's picture.", "Середина 3D-вида, как он сейчас, станет картинкой карты."));
+        let r = ui.button(icons::labelled(Icon::Import, tr("Import your thumbnail", "Импортировать свою картинку")));
+        help(st, &r, tr("Choose a picture: it is cut to 370 × 280 and becomes the map's picture (picture.jpg).", "Выберите картинку: она будет обрезана до 370 × 280 и станет картинкой карты (picture.jpg)."));
         if r.clicked() {
-            actions.push(Action::MapPicture);
+            actions.push(Action::ImportMapPicture);
         }
         let r = ui.button(icons::labelled(Icon::Flag, tr("Open the map with this view", "Открывать карту с этого вида")));
         help(st, &r, tr("The camera as it is now is where the map opens (here and in OMSI 2's editor).", "Карта будет открываться с камерой, как сейчас (здесь и в редакторе OMSI 2)."));
@@ -2425,9 +2465,36 @@ fn texture_picker(ctx: &egui::Context, st: &mut UiState, files: &[String], swatc
     }
 }
 
-fn controls(ctx: &egui::Context, st: &mut UiState) {
+fn controls(ctx: &egui::Context, st: &mut UiState, prefs: &Prefs, actions: &mut Vec<Action>) {
     let mut open = st.help_open;
-    egui::Window::new(tr("Controls", "Управление")).open(&mut open).collapsible(false).resizable(false).show(ctx, |ui| {
+    egui::Window::new(tr("Controls", "Управление")).open(&mut open).collapsible(false).default_height(560.0).show(ctx, |ui| {
+        egui::ScrollArea::vertical().auto_shrink([true, false]).show(ui, |ui| {
+        ui.label(RichText::new(tr("Keyboard", "Клавиатура")).strong().color(ACCENT));
+        ui.label(RichText::new(tr("Click a key, then press the new one (Esc: leave it). A key already in use is taken from its command.", "Нажмите на клавишу, затем новую (Esc: оставить). Занятая клавиша отбирается у своей команды.")).small().color(TEXT_DIM));
+        let map = crate::controls::Keymap::of(&prefs.keys);
+        egui::Grid::new("key bindings").striped(true).num_columns(3).show(ui, |ui| {
+            for cmd in crate::controls::ALL {
+                ui.label(cmd.label());
+                let waiting = st.key_capture == Some(*cmd);
+                let text = if waiting { tr("press a key…", "нажмите клавишу…").to_string() } else { map.chord(*cmd).map(|k| k.text()).unwrap_or_else(|| "—".into()) };
+                let also = cmd.also();
+                let mut b = ui.add_sized([130.0, 20.0], egui::Button::new(RichText::new(text).monospace()).selected(waiting));
+                if !also.is_empty() {
+                    b = b.on_hover_text(format!("{} {also}", tr("Also:", "Также:")));
+                }
+                if b.clicked() {
+                    st.key_capture = if waiting { None } else { Some(*cmd) };
+                }
+                if ui.small_button(icons::labelled(Icon::Delete, "")).on_hover_text(tr("Back to the default key", "Вернуть клавишу по умолчанию")).clicked() {
+                    actions.push(Action::BindKey(*cmd, Some(cmd.default())));
+                }
+                ui.end_row();
+            }
+        });
+        if ui.button(tr("Reset all keys", "Сбросить все клавиши")).clicked() {
+            actions.push(Action::ResetKeys);
+        }
+        ui.add_space(8.0);
         let rows: &[(&str, &str)] = &[
             (tr("Mouse", "Мышь"), ""),
             (tr("Right button held", "Правая кнопка зажата"), tr("look round; W A S D fly, Q / E down / up, Shift faster, wheel: speed", "оглядываться; W A S D: полёт, Q / E: вниз / вверх, Shift: быстрее, колесо: скорость")),
@@ -2440,35 +2507,17 @@ fn controls(ctx: &egui::Context, st: &mut UiState) {
             (tr("Two fingers", "Два пальца"), tr("pan", "сдвиг вида")),
             (tr("Pinch / twist", "Щипок / поворот"), tr("zoom / turn", "зум / поворот")),
             (tr("Option + two fingers or drag", "Option + два пальца или drag"), tr("orbit round the point under the cursor", "орбита вокруг точки под курсором")),
-            (tr("Keyboard", "Клавиатура"), ""),
-            (tr("W A S D / arrow keys", "W A S D / стрелки"), tr("move over the map (Shift: faster)", "двигаться по карте (Shift: быстрее)")),
-            ("Q / E", tr("turn the camera", "поворачивать камеру")),
-            ("Home", tr("look straight down, north up", "смотреть сверху, север вверху")),
-            ("1 – 7", tr("tools", "инструменты")),
-            ("R / Shift+R, Ctrl+wheel", tr("turn the object", "повернуть объект")),
-            ("Del", tr("delete the selection", "удалить выбранное")),
-            ("Shift+click", tr("add to / take from the selection", "добавить к выделению / убрать из него")),
-            (tr("Shift / Ctrl + drag on empty ground", "Shift / Ctrl + тянуть по пустой земле"), tr("select with a box (Shift adds)", "выделить рамкой (Shift: добавить)")),
-            ("Ctrl+C / X / V", tr("copy / cut / paste at the cursor", "копировать / вырезать / вставить у курсора")),
-            ("Ctrl+D / Ctrl+A", tr("duplicate / select all", "дублировать / выбрать всё")),
-            ("Ctrl+F", tr("find in map", "поиск по карте")),
-            ("Ctrl+K", tr("search for a command", "поиск команды")),
+            (tr("Fixed keys", "Постоянные клавиши"), ""),
+            (tr("Arrow keys", "Стрелки"), tr("move over the map (Shift: faster)", "двигаться по карте (Shift: быстрее)")),
             ("Ctrl+1…9", tr("go to a saved view (Shift: keep the view there)", "к сохранённому виду (Shift: запомнить вид туда)")),
-            ("F12", tr("save a picture of the view (Pictures/openMapper)", "сохранить картинку вида (Изображения/openMapper)")),
             (tr("Alt + arrows", "Alt + стрелки"), tr("move the selection a grid step (Shift: 10 cm)", "сдвинуть выделение на шаг сетки (Shift: 10 см)")),
             (tr("Alt + Page Up / Down", "Alt + Page Up / Down"), tr("selection up / down 10 cm (Shift: 1 m)", "выделение выше / ниже на 10 см (Shift: 1 м)")),
+            ("Shift+click", tr("add to / take from the selection", "добавить к выделению / убрать из него")),
+            (tr("Shift / Ctrl + drag on empty ground", "Shift / Ctrl + тянуть по пустой земле"), tr("select with a box (Shift adds)", "выделить рамкой (Shift: добавить)")),
             (tr("Double-click a road", "Двойной клик по дороге"), tr("select all of it", "выбрать её целиком")),
-            ("U", tr("ruler: click two points (distance, height, gradient)", "линейка: клик по двум точкам (расстояние, высота, уклон)")),
-            ("K", tr("knife: a click on a road cuts it there", "нож: клик по дороге разрезает её там")),
-            ("F", tr("go to the selection", "перейти к выбранному")),
+            ("Ctrl+wheel", tr("turn the object", "повернуть объект")),
+            ("Shift+wheel", tr("brush size", "размер кисти")),
             ("Esc", tr("stop / deselect", "отмена / снять выбор")),
-            ("[ ]  Shift+wheel", tr("brush size", "размер кисти")),
-            ("G", tr("tile grid on / off", "сетка тайлов")),
-            ("M", tr("overview map on / off", "обзорная карта")),
-            ("I", tr("satellite and terrain", "спутник и рельеф")),
-            ("Ctrl+Z / Ctrl+Shift+Z", tr("undo / redo", "отменить / повторить")),
-            ("Ctrl+S", tr("save", "сохранить")),
-            ("F5", tr("test drive in openOMSI", "тест-драйв в openOMSI")),
         ];
         egui::Grid::new("keys").striped(true).num_columns(2).show(ui, |ui| {
             for (k, v) in rows {
@@ -2480,6 +2529,7 @@ fn controls(ctx: &egui::Context, st: &mut UiState) {
                 ui.label(*v);
                 ui.end_row();
             }
+        });
         });
     });
     st.help_open = open;

@@ -67,6 +67,9 @@ pub enum Icon {
     Paste,
     SelectAll,
     Search,
+    Move,
+    Rotate,
+    Scale,
 }
 
 impl Icon {
@@ -131,6 +134,9 @@ impl Icon {
             Icon::Paste => 0xe14f,
             Icon::SelectAll => 0xe162,
             Icon::Search => 0xef7a,
+            Icon::Move => 0xe89f,
+            Icon::Rotate => 0xe41a,
+            Icon::Scale => 0xf1ce,
         };
         char::from_u32(cp).unwrap_or('?')
     }

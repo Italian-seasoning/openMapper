@@ -176,10 +176,56 @@ impl LogicMode {
     }
 }
 
+/// What the Select tool's drag does to the selection: any of it as it comes (Select), or
+/// one thing only, by handles drawn on the selection (Move, Rotate, Scale).
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum Xform {
+    Select,
+    Move,
+    Rotate,
+    Scale,
+}
+
+impl Xform {
+    pub const ALL: [Xform; 4] = [Xform::Select, Xform::Move, Xform::Rotate, Xform::Scale];
+
+    pub fn icon(self) -> crate::icons::Icon {
+        use crate::icons::Icon;
+        match self {
+            Xform::Select => Icon::Select,
+            Xform::Move => Icon::Move,
+            Xform::Rotate => Icon::Rotate,
+            Xform::Scale => Icon::Scale,
+        }
+    }
+
+    pub fn label(self) -> &'static str {
+        match self {
+            Xform::Select => tr("Select", "Выбор"),
+            Xform::Move => tr("Move: drag an arrow along its axis, the square freely", "Перемещение: тяните стрелку вдоль её оси, квадрат — свободно"),
+            Xform::Rotate => tr("Rotate: drag the ring round the selection", "Поворот: тяните кольцо вокруг выделенного"),
+            Xform::Scale => tr("Scale: drag the ring out or in to spread the objects or bring them together (objects have no size of their own in OMSI 2)", "Масштаб: тяните кольцо наружу или внутрь, чтобы раздвинуть объекты или сблизить (у объектов в OMSI 2 нет своего размера)"),
+        }
+    }
+}
+
+/// Which handle of the gizmo is under the cursor or held.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum Handle3 {
+    AxisX,
+    AxisY,
+    Free,
+    Ring,
+}
+
 /// What the left mouse button is doing.
 #[derive(Debug, Clone, Copy, PartialEq)]
 enum Drag {
     None,
+    /// Turning the selection round `pivot` by the handle: the angle of the grab.
+    Turn { pivot: DVec2, grab: f64, started: bool },
+    /// Spreading the selection's objects from `pivot`: the grab's distance.
+    Spread { pivot: DVec2, grab: f64, started: bool },
     Brush,
     /// Moving the selection: where it was grabbed; started once the mouse has gone far
     /// enough that it is not a click.
@@ -218,6 +264,13 @@ pub struct Editor {
     /// The road ends the junctions being moved hold, and how far the move has gone.
     move_arms: Vec<(Sel, Vec<selection::Arm>)>,
     move_delta: DVec2,
+    /// The Select tool's mode, and how far the gizmo reaches on the ground (m, set each frame).
+    pub xform: Xform,
+    pub gizmo_reach: f64,
+    /// A move held to one axis (the gizmo's arrows).
+    move_axis: Option<DVec2>,
+    /// What a turn or spread has come to: degrees, factor.
+    xform_value: f64,
     /// How those ends would follow, shown while dragging.
     carry_preview: Vec<reshape::Plan>,
     /// A length and radius typed for a road, put in at the next tick (where the junctions
@@ -302,6 +355,8 @@ pub struct Editor {
     pub follow_ground: bool,
     /// Where a new road meets or crosses another one, cut both and put a junction there.
     pub auto_junctions: bool,
+    /// Where a track branches off another, put a switch there (off: the tracks just meet).
+    pub auto_switches: bool,
     /// A road drawn near another's end or middle, or a junction piece's helper, joins it
     /// (off: roads are drawn exactly where clicked).
     pub snap_roads: bool,
@@ -407,6 +462,10 @@ impl Default for Editor {
             known_half: Default::default(),
             move_arms: Vec::new(),
             move_delta: DVec2::ZERO,
+            xform: Xform::Select,
+            gizmo_reach: 10.0,
+            move_axis: None,
+            xform_value: 0.0,
             carry_preview: Vec::new(),
             shape_request: None,
             trace_lines: Vec::new(),
@@ -453,6 +512,7 @@ impl Default for Editor {
             road_plan: None,
             follow_ground: true,
             auto_junctions: true,
+            auto_switches: true,
             snap_roads: true,
             keep_drawing: false,
             road_styles: Default::default(),
@@ -1008,6 +1068,22 @@ impl Editor {
                         self.rebuild_pending(assets);
                     }
                     self.carry_preview.clear();
+                    self.move_axis = None;
+                    self.history.commit();
+                }
+                Drag::Turn { pivot, started, .. } | Drag::Spread { pivot, started, .. } => {
+                    if started {
+                        let sels = self.selection();
+                        if let Some(doc) = self.doc.as_mut() {
+                            selection::unlink_outside(doc, &mut self.history, &sels);
+                        }
+                        let arms = std::mem::take(&mut self.move_arms);
+                        if self.xform == Xform::Rotate {
+                            self.carry(&arms, pivot, self.xform_value, DVec2::ZERO, 0.0);
+                        }
+                        self.ground_to_selection();
+                        self.rebuild_pending(assets);
+                    }
                     self.history.commit();
                 }
                 Drag::Reshape(k, id, _) => self.finish_reshape(k, id),
@@ -1035,7 +1111,10 @@ impl Editor {
                 }
                 // (the grid holds the first one's place; the rest keep their distances)
                 let first = self.move_from[0].pos;
-                let delta = self.snap_point(first + raw) - first;
+                let mut delta = self.snap_point(first + raw) - first;
+                if let Some(axis) = self.move_axis {
+                    delta = axis * delta.dot(axis);
+                }
                 let Some(doc) = self.doc.as_mut() else { return };
                 let now = selection::transform(doc, &mut self.history, &self.move_from, DVec2::ZERO, 0.0, delta);
                 // (the roads a junction holds follow when it is let go; meanwhile their new shape
@@ -1043,6 +1122,44 @@ impl Editor {
                 let all: Vec<selection::Arm> = self.move_arms.iter().flat_map(|g| g.1.iter().copied()).collect();
                 self.carry_preview = selection::carry_plans(doc, &all, DVec2::ZERO, 0.0, delta, 0.0, &|_| false).into_iter().flatten().collect();
                 self.move_delta = delta;
+                self.set_selection(now);
+            }
+            Drag::Turn { pivot, grab, started } => {
+                let d = c.truncate() - pivot;
+                let mut deg = (grab - d.y.atan2(d.x).to_degrees() + 540.0).rem_euclid(360.0) - 180.0;
+                if !started {
+                    if deg.abs() < 1.0 || self.move_from.is_empty() {
+                        return;
+                    }
+                    self.history.begin(tr("Rotate", "Поворот"));
+                    self.drag = Drag::Turn { pivot, grab, started: true };
+                    self.move_arms = self.arms_for(&self.selection());
+                }
+                if self.snap_angle {
+                    deg = snap_deg(deg, self.angle_step);
+                }
+                let Some(doc) = self.doc.as_mut() else { return };
+                let now = selection::transform(doc, &mut self.history, &self.move_from, pivot, deg, DVec2::ZERO);
+                self.xform_value = deg;
+                self.set_selection(now);
+            }
+            Drag::Spread { pivot, grab, started } => {
+                let f = ((c.truncate() - pivot).length() / grab).clamp(0.05, 30.0);
+                if !started {
+                    if (f - 1.0).abs() < 0.03 || self.move_from.is_empty() {
+                        return;
+                    }
+                    self.history.begin(tr("Scale", "Масштаб"));
+                    self.drag = Drag::Spread { pivot, grab, started: true };
+                    self.move_arms = self.arms_for(&self.selection());
+                }
+                let Some(doc) = self.doc.as_mut() else { return };
+                let mut now = Vec::new();
+                for o in &self.move_from {
+                    let delta = (o.pos - pivot) * (f - 1.0);
+                    now.extend(selection::transform(doc, &mut self.history, std::slice::from_ref(o), DVec2::ZERO, 0.0, delta));
+                }
+                self.xform_value = f;
                 self.set_selection(now);
             }
             Drag::Reshape(k, id, h) => {
@@ -1327,7 +1444,9 @@ impl Editor {
         }
         // (Shift held: put it down freely)
         let model = assets.object(&rel);
-        let free = self.shift_held || model.as_ref().map(|m| m.tree.is_some() || m.technical).unwrap_or(false);
+        // (a model brought in from a file stands where it is put: it was not made for a road)
+        let imported = rel.to_lowercase().contains("\\imported\\");
+        let free = self.shift_held || imported || model.as_ref().map(|m| m.tree.is_some() || m.technical).unwrap_or(false);
         // a junction or crossing piece (spline helpers) clicks onto the road ends near it:
         // turned and moved so one of its helpers meets an end, facing along it
         if let (true, false, Some(m)) = (self.align_to_road, free, model.as_ref().filter(|m| !m.helpers.is_empty())) {
@@ -1924,6 +2043,9 @@ impl Editor {
     /// right: the plan and its diverging heel (place, heading out of the switch). None while
     /// the switch's model loads, or where the installation has none.
     fn switch_plan(&self, assets: &mut Assets, toe: DVec3, heading: f64, left: bool) -> Option<(crate::switches::Plan, (DVec3, f64))> {
+        if !self.auto_switches {
+            return None;
+        }
         let track = self.road_type.as_deref()?;
         let rel = self.best_switch(assets, track, left);
         let model = assets.object(&rel)?;
@@ -3247,6 +3369,7 @@ impl Editor {
             _ => {}
         }
         self.selection_extras(&mut x, cam, w);
+        self.gizmo_extras(&mut x, cam, w);
         // the grid things snap to, round the cursor (fading out), while snapping is on
         if let (true, Some(c)) = (self.snap_grid, self.cursor) {
             let step = self.grid_step.max(0.1);
@@ -3413,11 +3536,106 @@ impl Editor {
     }
 
     /// The left button down with the Select tool.
+    /// Where the Move / Rotate / Scale handles stand: the middle of the selection.
+    pub fn gizmo_pivot(&self) -> Option<DVec2> {
+        if self.tool != Tool::Select || self.xform == Xform::Select || self.cutting || self.ruler.is_some() || self.single_spline().is_some() {
+            return None;
+        }
+        let sels = self.selection();
+        if sels.is_empty() {
+            return None;
+        }
+        selection::centre(self.doc.as_ref()?, &sels)
+    }
+
+    fn gizmo_hit(&self, pivot: DVec2, c: DVec2) -> Option<Handle3> {
+        let g = self.gizmo_reach;
+        let d = c - pivot;
+        match self.xform {
+            Xform::Select => None,
+            Xform::Move if d.length() < 0.22 * g => Some(Handle3::Free),
+            Xform::Move if d.x > 0.0 && d.x < 1.15 * g && d.y.abs() < 0.12 * g => Some(Handle3::AxisX),
+            Xform::Move if d.y > 0.0 && d.y < 1.15 * g && d.x.abs() < 0.12 * g => Some(Handle3::AxisY),
+            Xform::Move => None,
+            Xform::Rotate | Xform::Scale => ((d.length() - g).abs() < 0.14 * g).then_some(Handle3::Ring),
+        }
+    }
+
+    fn start_gizmo(&mut self, h: Handle3, pivot: DVec2, c: DVec2) {
+        let Some(doc) = self.doc.as_ref() else { return };
+        let sels = self.selection();
+        let mut from: Vec<Origin> = sels.iter().filter_map(|s| selection::origin_of(doc, *s)).collect();
+        if self.xform == Xform::Scale {
+            from.retain(|o| matches!(o.sel, Sel::Object(..)));
+            if from.len() < 2 {
+                self.toast(tr("Scale spreads objects apart: select two or more (an object has no size of its own in OMSI 2)", "Масштаб раздвигает объекты: выделите два или больше (у объекта в OMSI 2 нет своего размера)"));
+                return;
+            }
+        }
+        self.move_from = from;
+        let d = c - pivot;
+        self.drag = match self.xform {
+            Xform::Rotate => Drag::Turn { pivot, grab: d.y.atan2(d.x).to_degrees(), started: false },
+            Xform::Scale => Drag::Spread { pivot, grab: d.length().max(0.1), started: false },
+            _ => {
+                self.move_axis = match h {
+                    Handle3::AxisX => Some(DVec2::X),
+                    Handle3::AxisY => Some(DVec2::Y),
+                    _ => None,
+                };
+                Drag::Move { grab: c, started: false }
+            }
+        };
+    }
+
+    /// The Move / Rotate / Scale handles on the ground round the selection.
+    fn gizmo_extras(&self, x: &mut FrameExtras, cam: &crate::camera::Camera, w: f32) {
+        let (Some(pivot), Some(doc)) = (self.gizmo_pivot(), self.doc.as_ref()) else { return };
+        let g = self.gizmo_reach;
+        let at = |p: DVec2| DVec3::new(p.x, p.y, doc.ground(p) + 0.6);
+        let hot = self.cursor.and_then(|c| self.gizmo_hit(pivot, c.truncate()));
+        let lit = |on: bool, col: [f32; 4]| if on { [1.0, 0.95, 0.4, 1.0] } else { col };
+        match self.xform {
+            Xform::Move => {
+                for (dir, handle, col) in [(DVec2::X, Handle3::AxisX, [0.95, 0.3, 0.3, 1.0]), (DVec2::Y, Handle3::AxisY, [0.35, 0.85, 0.35, 1.0])] {
+                    let c = lit(hot == Some(handle), col);
+                    // (in pieces, so it lies on the ground)
+                    for i in 0..8 {
+                        let (a, b) = (pivot + dir * g * i as f64 / 8.0, pivot + dir * g * (i + 1) as f64 / 8.0);
+                        line(&mut x.overlay, cam, at(a), at(b), w * 1.4, c);
+                    }
+                    let tip = pivot + dir * g;
+                    let side = DVec2::new(-dir.y, dir.x);
+                    line(&mut x.overlay, cam, at(tip + side * 0.1 * g), at(tip + dir * 0.2 * g), w * 1.4, c);
+                    line(&mut x.overlay, cam, at(tip - side * 0.1 * g), at(tip + dir * 0.2 * g), w * 1.4, c);
+                }
+                disc(&mut x.overlay, cam, at(pivot), (0.14 * g) as f32, lit(hot == Some(Handle3::Free), [0.9, 0.9, 0.95, 1.0]));
+            }
+            Xform::Rotate | Xform::Scale => {
+                let c = lit(hot == Some(Handle3::Ring), if self.xform == Xform::Rotate { [0.4, 0.65, 1.0, 1.0] } else { [0.85, 0.55, 1.0, 1.0] });
+                let n = 48;
+                for i in 0..n {
+                    let (a0, a1) = (std::f64::consts::TAU * i as f64 / n as f64, std::f64::consts::TAU * (i + 1) as f64 / n as f64);
+                    let (p0, p1) = (pivot + DVec2::new(a0.cos(), a0.sin()) * g, pivot + DVec2::new(a1.cos(), a1.sin()) * g);
+                    line(&mut x.overlay, cam, at(p0), at(p1), w * 1.4, c);
+                }
+                disc(&mut x.overlay, cam, at(pivot), (0.06 * g) as f32, c);
+            }
+            Xform::Select => {}
+        }
+    }
+
     fn select_press(&mut self, shift: bool) {
         // (whatever the properties had open is done: the view's edit is a step of its own)
         if self.panel_step {
             self.panel_step = false;
             self.history.commit();
+        }
+        if let (Some(pivot), Some(c)) = (self.gizmo_pivot(), self.cursor) {
+            if let Some(h) = self.gizmo_hit(pivot, c.truncate()) {
+                self.start_gizmo(h, pivot, c.truncate());
+                return;
+            }
         }
         if let (Some(h), Some((k, id))) = (self.hover_handle, self.single_spline()) {
             self.drag = Drag::Reshape(k, id, h);

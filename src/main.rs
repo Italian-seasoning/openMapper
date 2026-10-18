@@ -11,6 +11,7 @@ mod assets;
 mod autopaint;
 mod camera;
 mod check;
+mod controls;
 mod chrono_edit;
 mod chrono_tt;
 mod clipboard;

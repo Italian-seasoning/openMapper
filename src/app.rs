@@ -9,6 +9,7 @@ use glam::{DVec2, DVec3};
 use winit::application::ApplicationHandler;
 use winit::event::{ElementState, MouseButton, MouseScrollDelta, WindowEvent};
 use winit::event_loop::{ActiveEventLoop, ControlFlow};
+use crate::controls::{Cmd, Keymap};
 use winit::keyboard::{Key, KeyCode, NamedKey, PhysicalKey};
 use winit::window::{Window, WindowId};
 
@@ -115,8 +116,6 @@ pub struct App {
     gamecheck: crate::gamecheck::GameCheck,
     /// Getting started.
     guide: crate::ui_guide::Guide,
-    /// The next frame's view becomes the map's picture (`picture.jpg`).
-    picture: bool,
     /// A full-size picture of the view is taken this frame (View menu, F12).
     snapshot: bool,
     snapshot_done: bool,
@@ -162,7 +161,6 @@ impl App {
             trace: Default::default(),
             gamecheck: Default::default(),
             guide: Default::default(),
-            picture: false,
             snapshot: false,
             snapshot_done: false,
             unguarded: false,
@@ -942,6 +940,14 @@ impl App {
                 self.quit = true;
                 el.exit();
             }
+            Action::BindKey(cmd, chord) => {
+                crate::controls::bind(&mut self.prefs.keys, cmd, chord);
+                self.prefs.save();
+            }
+            Action::ResetKeys => {
+                self.prefs.keys.clear();
+                self.prefs.save();
+            }
             Action::Play => {
                 self.play(Vec::new());
                 self.guide.driven = true;
@@ -1071,6 +1077,17 @@ impl App {
                 }
             }
             Action::SetSeason(f) => self.set_season(f),
+            Action::SetAlpha(file, mesh, texture, index, alpha) => {
+                let path = self.roots.as_ref().map(|r| omsi_cfg::resolve_path(&r.content, &file));
+                match path.map(|p| crate::import::set_alpha(&p, mesh, &texture, index, alpha)) {
+                    Some(Ok(())) => {
+                        self.reload_content();
+                        self.ui.pbr_made = None;
+                    }
+                    Some(Err(e)) => self.ed.error(e.to_string()),
+                    None => {}
+                }
+            }
             Action::ReloadContent(msg) => {
                 self.reload_content();
                 self.ed.toast(msg);
@@ -1133,7 +1150,20 @@ impl App {
                 self.prefs.push_recent_asset(&rel);
                 self.ui.recent_assets = self.prefs.recent_assets.clone();
             }
-            Action::MapPicture => self.picture = true,
+            Action::ImportMapPicture => {
+                let Some(file) = rfd::FileDialog::new().add_filter(tr("Pictures", "Картинки"), &["png", "jpg", "jpeg", "bmp", "tga", "webp", "gif"]).set_title(tr("Import the map's thumbnail", "Импорт картинки карты")).pick_file() else { return };
+                if let Some(doc) = &self.ed.doc {
+                    let done = image::open(&file).map_err(anyhow::Error::from).and_then(|img| {
+                        let img = img.to_rgba8();
+                        let crop = [0, 0, img.width(), img.height()];
+                        save_map_picture(img, crop, &doc.dir.join("picture.jpg"))
+                    });
+                    match done {
+                        Ok(()) => self.ed.toast(tr("The map's thumbnail is set: openOMSI shows it where maps are chosen.", "Картинка карты задана: openOMSI показывает её при выборе карты.")),
+                        Err(e) => self.ed.error(format!("{}: {e}", tr("Could not use the picture", "Не удалось использовать картинку"))),
+                    }
+                }
+            }
             Action::ViewPicture => self.snapshot = true,
             Action::MapSettings => self.map_settings.open = true,
             Action::Calendar => self.calendar.open = true,
@@ -1179,18 +1209,32 @@ impl App {
     // ------------------------------------------------------------------ input
 
     fn key(&mut self, code: Option<KeyCode>, logical: &Key, pressed: bool, el: &ActiveEventLoop) {
-        match code {
-            Some(KeyCode::KeyW) => self.keys.w = pressed,
-            Some(KeyCode::KeyA) => self.keys.a = pressed,
-            Some(KeyCode::KeyS) => self.keys.s = pressed,
-            Some(KeyCode::KeyD) => self.keys.d = pressed,
-            Some(KeyCode::ArrowUp) => self.keys.arrows[0] = pressed,
-            Some(KeyCode::ArrowLeft) => self.keys.arrows[1] = pressed,
-            Some(KeyCode::ArrowDown) => self.keys.arrows[2] = pressed,
-            Some(KeyCode::ArrowRight) => self.keys.arrows[3] = pressed,
-            Some(KeyCode::KeyQ) => self.keys.q = pressed,
-            Some(KeyCode::KeyE) => self.keys.e = pressed,
-            _ => {}
+        let map = Keymap::of(&self.prefs.keys);
+        if let Some(code) = code {
+            if pressed && self.ui.key_capture.is_some() {
+                self.capture_key(code);
+                return;
+            }
+            let held = [(Cmd::Forward, 0), (Cmd::Back, 1), (Cmd::Left, 2), (Cmd::Right, 3), (Cmd::TurnLeft, 4), (Cmd::TurnRight, 5)];
+            for (cmd, which) in held {
+                if map.is_key(cmd, code) {
+                    match which {
+                        0 => self.keys.w = pressed,
+                        1 => self.keys.s = pressed,
+                        2 => self.keys.a = pressed,
+                        3 => self.keys.d = pressed,
+                        4 => self.keys.q = pressed,
+                        _ => self.keys.e = pressed,
+                    }
+                }
+            }
+            match code {
+                KeyCode::ArrowUp => self.keys.arrows[0] = pressed,
+                KeyCode::ArrowLeft => self.keys.arrows[1] = pressed,
+                KeyCode::ArrowDown => self.keys.arrows[2] = pressed,
+                KeyCode::ArrowRight => self.keys.arrows[3] = pressed,
+                _ => {}
+            }
         }
         if !pressed || self.ed.doc.is_none() {
             return;
@@ -1198,18 +1242,9 @@ impl App {
         let ctrl = self.keys.ctrl;
         let shift = self.keys.shift;
         let mut actions = Vec::new();
+        let cmd = code.and_then(|c| map.find(c, ctrl, shift));
         match code {
-            Some(KeyCode::KeyZ) if ctrl && shift => actions.push(Action::Redo),
-            Some(KeyCode::KeyZ) if ctrl => actions.push(Action::Undo),
             Some(KeyCode::KeyY) if ctrl => actions.push(Action::Redo),
-            Some(KeyCode::KeyS) if ctrl => actions.push(Action::Save),
-            Some(KeyCode::KeyC) if ctrl => actions.push(Action::Copy),
-            Some(KeyCode::KeyX) if ctrl => actions.push(Action::Cut),
-            Some(KeyCode::KeyV) if ctrl => actions.push(Action::Paste),
-            Some(KeyCode::KeyD) if ctrl => actions.push(Action::Duplicate),
-            Some(KeyCode::KeyA) if ctrl => actions.push(Action::SelectAll),
-            Some(KeyCode::KeyF) if ctrl => self.ui.find.show(),
-            Some(KeyCode::KeyK) if ctrl => self.ui.palette.show(),
             Some(KeyCode::KeyP) if ctrl && shift => self.ui.palette.show(),
             // Ctrl+1…9: a saved view gone to (Shift: the view kept there)
             Some(k @ (KeyCode::Digit1 | KeyCode::Digit2 | KeyCode::Digit3 | KeyCode::Digit4 | KeyCode::Digit5 | KeyCode::Digit6 | KeyCode::Digit7 | KeyCode::Digit8 | KeyCode::Digit9)) if ctrl => {
@@ -1222,13 +1257,6 @@ impl App {
                     self.ed.toast(format!("{} {} (Ctrl+Shift+{})", tr("No view kept as", "Нет вида под номером"), n + 1, n + 1));
                 }
             }
-            Some(KeyCode::Digit1) => self.ed.set_tool(Tool::Select),
-            Some(KeyCode::Digit2) => self.ed.set_tool(Tool::Roads),
-            Some(KeyCode::Digit3) => self.ed.set_tool(Tool::Objects),
-            Some(KeyCode::Digit4) => self.ed.set_tool(Tool::Logic),
-            Some(KeyCode::Digit5) => self.ed.set_tool(Tool::Terrain),
-            Some(KeyCode::Digit6) => self.ed.set_tool(Tool::Paint),
-            Some(KeyCode::Digit7) => self.ed.set_tool(Tool::Tiles),
             // Alt + arrows: the selection a step (the grid's; Shift: 10 cm) along the map's axis
             // nearest to the way the arrow points on the screen
             Some(k @ (KeyCode::ArrowUp | KeyCode::ArrowDown | KeyCode::ArrowLeft | KeyCode::ArrowRight)) if self.keys.alt && self.ed.selected.is_some() => {
@@ -1249,30 +1277,13 @@ impl App {
                 let step = if shift { 1.0 } else { 0.1 };
                 self.ed.raise_selection(if k == KeyCode::PageUp { step } else { -step });
             }
-            Some(KeyCode::KeyR) if !ctrl => self.ed.rotate(if shift { -self.ed.angle_step } else { self.ed.angle_step }),
-            Some(KeyCode::KeyU) if !ctrl => self.ed.toggle_ruler(),
-            Some(KeyCode::KeyK) if !ctrl => self.ed.toggle_cutting(),
-            Some(KeyCode::Enter) | Some(KeyCode::NumpadEnter) => actions.push(Action::BuildRoad),
-            Some(KeyCode::KeyG) if !ctrl => self.ed.show_grid = !self.ed.show_grid,
-            Some(KeyCode::KeyG) if shift => self.ed.ungroup_selection(),
-            Some(KeyCode::KeyG) => self.ed.group_selection(),
-            Some(KeyCode::Home) => {
-                self.cam.yaw = (self.cam.yaw / 360.0).round() * 360.0;
-                self.cam.pitch = 89.0;
+            Some(KeyCode::NumpadEnter) => actions.push(Action::BuildRoad),
+            Some(KeyCode::Backspace) => self.ed.delete_selected(),
+            _ => {
+                if let Some(c) = cmd {
+                    self.run_cmd(c, shift, &mut actions);
+                }
             }
-            Some(KeyCode::KeyB) if !ctrl => self.ui.assets.open = !self.ui.assets.open,
-            Some(KeyCode::KeyM) if !ctrl => self.ui.minimap.open = !self.ui.minimap.open,
-            Some(KeyCode::KeyL) if !ctrl => self.tt.open = !self.tt.open,
-            Some(KeyCode::KeyT) if !ctrl => self.traffic.open = !self.traffic.open,
-            Some(KeyCode::KeyI) if !ctrl => self.geo.open = !self.geo.open,
-            Some(KeyCode::BracketLeft) => self.ed.brush_radius = (self.ed.brush_radius / 1.2).max(3.0),
-            Some(KeyCode::BracketRight) => self.ed.brush_radius = (self.ed.brush_radius * 1.2).min(150.0),
-            Some(KeyCode::Delete) | Some(KeyCode::Backspace) => self.ed.delete_selected(),
-            Some(KeyCode::KeyF) if !ctrl => actions.push(Action::FocusSelection),
-            Some(KeyCode::F5) if shift => actions.push(Action::PlayHere(false)),
-            Some(KeyCode::F5) => actions.push(Action::Play),
-            Some(KeyCode::F12) => actions.push(Action::ViewPicture),
-            _ => {}
         }
         if let Key::Named(NamedKey::Escape) = logical {
             if self.ui.view_menu.take().is_some() {
@@ -1293,6 +1304,65 @@ impl App {
         }
         for a in actions {
             self.do_action(a, el);
+        }
+    }
+
+    /// Puts the command being set on the key just pressed (Esc: leaves it as it was).
+    fn capture_key(&mut self, code: KeyCode) {
+        if code == KeyCode::Escape {
+            self.ui.key_capture = None;
+        } else if crate::controls::bindable(code) {
+            if let Some(cmd) = self.ui.key_capture.take() {
+                let chord = crate::controls::Chord { code, ctrl: self.keys.ctrl, shift: self.keys.shift };
+                crate::controls::bind(&mut self.prefs.keys, cmd, Some(chord));
+                self.prefs.save();
+            }
+        }
+    }
+
+    fn run_cmd(&mut self, c: Cmd, shift: bool, actions: &mut Vec<Action>) {
+        match c {
+            // (held keys: the camera takes them every frame)
+            Cmd::Forward | Cmd::Back | Cmd::Left | Cmd::Right | Cmd::TurnLeft | Cmd::TurnRight => {}
+            Cmd::Undo => actions.push(Action::Undo),
+            Cmd::Redo => actions.push(Action::Redo),
+            Cmd::Save => actions.push(Action::Save),
+            Cmd::Copy => actions.push(Action::Copy),
+            Cmd::Cut => actions.push(Action::Cut),
+            Cmd::Paste => actions.push(Action::Paste),
+            Cmd::Duplicate => actions.push(Action::Duplicate),
+            Cmd::SelectAll => actions.push(Action::SelectAll),
+            Cmd::Find => self.ui.find.show(),
+            Cmd::Commands => self.ui.palette.show(),
+            Cmd::ToolSelect => self.ed.set_tool(Tool::Select),
+            Cmd::ToolRoads => self.ed.set_tool(Tool::Roads),
+            Cmd::ToolObjects => self.ed.set_tool(Tool::Objects),
+            Cmd::ToolLogic => self.ed.set_tool(Tool::Logic),
+            Cmd::ToolTerrain => self.ed.set_tool(Tool::Terrain),
+            Cmd::ToolPaint => self.ed.set_tool(Tool::Paint),
+            Cmd::ToolTiles => self.ed.set_tool(Tool::Tiles),
+            Cmd::Rotate => self.ed.rotate(if shift { -self.ed.angle_step } else { self.ed.angle_step }),
+            Cmd::Ruler => self.ed.toggle_ruler(),
+            Cmd::Knife => self.ed.toggle_cutting(),
+            Cmd::BuildRoad => actions.push(Action::BuildRoad),
+            Cmd::TileGrid => self.ed.show_grid = !self.ed.show_grid,
+            Cmd::Group => self.ed.group_selection(),
+            Cmd::Ungroup => self.ed.ungroup_selection(),
+            Cmd::LookDown => {
+                self.cam.yaw = (self.cam.yaw / 360.0).round() * 360.0;
+                self.cam.pitch = 89.0;
+            }
+            Cmd::Assets => self.ui.assets.open = !self.ui.assets.open,
+            Cmd::Overview => self.ui.minimap.open = !self.ui.minimap.open,
+            Cmd::Lines => self.tt.open = !self.tt.open,
+            Cmd::Traffic => self.traffic.open = !self.traffic.open,
+            Cmd::Imagery => self.geo.open = !self.geo.open,
+            Cmd::BrushSmaller => self.ed.brush_radius = (self.ed.brush_radius / 1.2).max(3.0),
+            Cmd::BrushLarger => self.ed.brush_radius = (self.ed.brush_radius * 1.2).min(150.0),
+            Cmd::Delete => self.ed.delete_selected(),
+            Cmd::Focus => actions.push(Action::FocusSelection),
+            Cmd::TestDrive => actions.push(if shift { Action::PlayHere(false) } else { Action::Play }),
+            Cmd::Picture => actions.push(Action::ViewPicture),
         }
     }
 
@@ -1327,6 +1397,7 @@ impl App {
     // ------------------------------------------------------------------ frame
 
     fn frame(&mut self, el: &ActiveEventLoop) {
+        self.ed.gizmo_reach = (self.cam.distance * 0.09).clamp(1.5, 60.0);
         let now = Instant::now();
         let dt = (now - self.last).as_secs_f64().min(0.1);
         self.last = now;
@@ -1427,6 +1498,29 @@ impl App {
                     size: (m.hi - m.lo).to_array(),
                     triangles: m.parts.iter().map(|p| p.mesh.indices.len() / 3).sum(),
                     textures: textures.iter().map(|t| (t.file_name().map(|n| n.to_string_lossy().to_string()).unwrap_or_default(), crate::ui_pbr::is_made(t, r) || !omsi_texture::pbr::find(t).is_empty())).collect(),
+                    pieces: m
+                        .parts
+                        .iter()
+                        .map(|p| crate::ui::PieceInfo {
+                            triangles: p.mesh.indices.len() / 3,
+                            materials: {
+                                let mut seen: HashMap<String, i32> = HashMap::new();
+                                p.materials
+                                    .iter()
+                                    .map(|mat| {
+                                        let name = mat.texture.as_ref().and_then(|t| t.file_name()).map(|n| n.to_string_lossy().to_string()).unwrap_or_default();
+                                        let n = seen.entry(name.to_lowercase()).or_insert(-1);
+                                        *n += 1;
+                                        (name, *n, match mat.alpha {
+                                            crate::assets::Alpha::Opaque => 0,
+                                            crate::assets::Alpha::Test => 1,
+                                            crate::assets::Alpha::Blend => 2,
+                                        })
+                                    })
+                                    .collect()
+                            },
+                        })
+                        .collect(),
                     labels: m.labels.clone(),
                     paths: m.paths.len(),
                     attach_points: m.attachments.len(),
@@ -1445,7 +1539,7 @@ impl App {
         };
         // (the overview map stays out of the map's picture)
         let minimap_open = self.ui.minimap.open;
-        if self.picture || self.snapshot {
+        if self.snapshot {
             self.ui.minimap.open = false;
         }
         let mut guide: Vec<crate::ui_guide::Go> = Vec::new();
@@ -1480,7 +1574,7 @@ impl App {
                 ));
             }
             // (the pictures taken of the view are clean of them)
-            if !self.picture && !self.snapshot {
+            if !self.snapshot {
                 crate::ui_edit::paint_names(&ctx, &self.ed, &self.lib, &self.cam, self.view);
                 if let (Some(sel), Some(doc), Some(a)) = (self.ed.path_numbers.filter(|s| self.ed.selected == Some(*s)), self.ed.doc.as_ref(), self.assets.as_mut()) {
                     crate::ui_edit::paint_path_numbers(&ctx, &crate::lanes::of_one(doc, a, sel), &self.cam, self.view);
@@ -1728,20 +1822,6 @@ impl App {
                             self.tt.demo(&mut self.ed, self.roots.as_ref());
                             self.save();
                         }
-                    }
-                }
-            }
-            if self.picture {
-                self.picture = false;
-                self.ui.minimap.open = minimap_open;
-                let ppp = full.pixels_per_point;
-                let v = self.view;
-                let crop = [(v.min.x * ppp) as u32, (v.min.y * ppp) as u32, (v.width() * ppp) as u32, (v.height() * ppp) as u32];
-                if let Some(doc) = &self.ed.doc {
-                    let path = doc.dir.join("picture.jpg");
-                    match read_frame(&g.gpu, &frame.texture).and_then(|img| save_map_picture(img, crop, &path)) {
-                        Ok(()) => self.ed.toast(tr("The map's picture is taken: openOMSI shows it where maps are chosen.", "Картинка карты снята: openOMSI показывает её при выборе карты.")),
-                        Err(e) => self.ed.error(format!("{}: {e}", tr("Could not save the picture", "Не удалось сохранить картинку"))),
                     }
                 }
             }

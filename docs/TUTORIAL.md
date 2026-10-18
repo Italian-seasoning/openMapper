@@ -10,7 +10,7 @@ finds any command by name if you lose your way.
    `Omsi.exe`). Nothing in it is ever changed: your maps go into openOMSI's content folder.
 2. **New map…** Give it a name, choose its size (3 × 3 tiles is plenty to start) and
    whether traffic keeps right or left.
-   * Tick **Start with a sample** if you would like a ring road, two stops, a line and AI
+   * Tick **Start with a sample** (off at first) if you would like a ring road, two stops, a line and AI
      buses ready to drive. It is a good way to see how the pieces fit together.
    * To build a real place, start without the sample and go to step 7 first.
 3. The **Getting started** checklist opens. It ticks itself as the map grows; each step has
@@ -110,8 +110,8 @@ A **roundabout** is a Roads tool option: click its centre, then its ring.
   installs it.
 * **File > Export a plan of the map…** makes an SVG plan with the roads, the stops and every
   line in its colour, to show players where things are.
-* In the map's properties (click empty ground with Select), **Take it from this view** sets
-  the picture shown where maps are chosen.
+* In the map's properties (click empty ground with Select), **Import your thumbnail** takes a
+  picture of your choice (cut to 370 × 280) as the one shown where maps are chosen.
 
 ## Handy to know
 
@@ -127,4 +127,4 @@ A **roundabout** is a Roads tool option: click its centre, then its ring.
 | `Ctrl+F` | find stops, start points or any object by name |
 | `F12` | save a picture of the view |
 
-Help > Controls lists every key and mouse button.
+File > Controls lists every key and mouse button, and any key can be changed there.

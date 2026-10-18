@@ -78,6 +78,9 @@ pub struct Prefs {
     /// pitch, distance), newest first: a map opens there again.
     #[serde(default)]
     pub last_views: Vec<(String, [f64; 6])>,
+    /// Keyboard commands moved to another key (command id → key as text; empty: no key).
+    #[serde(default)]
+    pub keys: std::collections::BTreeMap<String, String>,
 }
 
 impl Prefs {

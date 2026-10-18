@@ -184,6 +184,9 @@ pub fn snap_controls(ui: &mut egui::Ui, ed: &mut Editor) {
     if check(ui, &mut on, RichText::new(tr("Ruler", "Линейка")).small()).on_hover_text(tr("Click two points to measure the distance and gradient between them (U) · right-click: off", "Клик по двум точкам: расстояние и уклон между ними (U) · правый клик: выключить")).changed() {
         ed.toggle_ruler();
     }
+    check(ui, &mut ed.auto_switches, RichText::new(tr("Auto-Switch", "Авто-стрелки")).small()).on_hover_text(tr("Branching a track off another makes a switch there", "Ответвление пути от другого создаёт стрелку"));
+    check(ui, &mut ed.auto_junctions, RichText::new(tr("Auto-Junction", "Авто-перекрёсток")).small()).on_hover_text(tr("Make junctions where roads meet", "Делать перекрёстки, где дороги встречаются"));
+    check(ui, &mut ed.align_to_road, RichText::new(tr("Auto-Align", "Авто-выравнивание")).small()).on_hover_text(tr("Line objects up with the nearest road (Shift: put it freely)", "Выравнивать объекты по ближайшей дороге (Shift: ставить свободно)"));
 }
 
 /// The right panel with more than one thing selected.

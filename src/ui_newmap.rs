@@ -23,7 +23,7 @@ pub struct NewMapForm {
 
 impl Default for NewMapForm {
     fn default() -> Self {
-        NewMapForm { name: String::new(), size: 3, ground: None, left_hand: false, sample: true }
+        NewMapForm { name: String::new(), size: 3, ground: None, left_hand: false, sample: false }
     }
 }
 
