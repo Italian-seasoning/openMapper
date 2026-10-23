@@ -9,7 +9,6 @@
 //!   turned into a DirectX `.x` that OMSI 2 and openOMSI both read.
 
 use std::collections::HashMap;
-use std::fmt::Write as _;
 use std::io::Read;
 use std::path::{Path, PathBuf};
 
@@ -32,18 +31,21 @@ pub fn import(path: &Path, content: &Path) -> anyhow::Result<Report> {
         return match ext.as_str() {
             "zip" => import_zip(path, content),
             "obj" | "x" | "o3d" | "gltf" | "glb" | "fbx" => import_model(path, content),
+            e if crate::import_image::EXTENSIONS.contains(&e) => crate::import_image::import_image(path, content),
             "sco" | "sli" => {
                 let dir = path.parent().ok_or_else(|| anyhow::anyhow!("no folder"))?;
                 import_folder(dir, content)
             }
-            _ => anyhow::bail!("{}", tr("openMapper cannot import this kind of file (use a folder, .zip, .obj, .gltf, .glb, .fbx, .x or .o3d)", "Этот тип файла не импортируется (подходят папка, .zip, .obj, .gltf, .glb, .fbx, .x, .o3d)")),
+            _ => anyhow::bail!("{}", tr("openMapper cannot import this kind of file (use a folder, .zip, .obj, .gltf, .glb, .fbx, .x, .o3d or a picture)", "Этот тип файла не импортируется (подходят папка, .zip, .obj, .gltf, .glb, .fbx, .x, .o3d, картинка)")),
         };
     }
     import_folder(path, content)
 }
 
+/// A folder laid out like OMSI 2's: it has a `Sceneryobjects`, `Splines`, `Maps`, `Vehicles`
+/// or `Fonts` folder (a `texture` folder alone is what an object's or model's own folder has).
 fn is_content_root(dir: &Path) -> bool {
-    std::fs::read_dir(dir).map(|rd| rd.flatten().any(|e| e.path().is_dir() && CONTENT_FOLDERS.contains(&e.file_name().to_string_lossy().to_lowercase().as_str()))).unwrap_or(false)
+    std::fs::read_dir(dir).map(|rd| rd.flatten().any(|e| e.path().is_dir() && CONTENT_FOLDERS.iter().filter(|f| **f != "texture").any(|f| e.file_name().to_string_lossy().eq_ignore_ascii_case(f)))).unwrap_or(false)
 }
 
 /// The folder inside `dir` that is laid out like OMSI 2 (archives often wrap it).
@@ -73,30 +75,67 @@ fn import_folder(dir: &Path, content: &Path) -> anyhow::Result<Report> {
     let has = |ext: &str| walk_has(dir, ext);
     let name = dir.file_name().map(|f| f.to_string_lossy().to_string()).unwrap_or_else(|| "Imported".into());
     if has("sco") {
+        // an object's folder (its .sco, model and texture folders) or a folder of them
         let target = existing_child(content, "Sceneryobjects").unwrap_or_else(|| content.join("Sceneryobjects")).join(&name);
         let copied = copy_tree(dir, &target)?;
-        return Ok(Report { copied, objects: Vec::new(), message: format!("{} Sceneryobjects\\{name}", tr("Objects added to", "Объекты добавлены в")) });
+        let mut objects = Vec::new();
+        walk_files(&target, &mut |p| {
+            if p.extension().map(|e| e.eq_ignore_ascii_case("sco")).unwrap_or(false) {
+                if let Ok(r) = p.strip_prefix(content) {
+                    objects.push(r.to_string_lossy().replace('/', "\\"));
+                }
+            }
+        });
+        objects.sort();
+        return Ok(Report { copied, message: format!("{} Sceneryobjects\\{name} ({})", tr("Objects added to", "Объекты добавлены в"), objects.len()), objects });
     }
+    // models anywhere in it (not the textures' folders): each becomes an object
+    let mut models = Vec::new();
+    walk_files(dir, &mut |p| {
+        let ext = p.extension().map(|e| e.to_string_lossy().to_lowercase()).unwrap_or_default();
+        if MODEL_EXTENSIONS.contains(&ext.as_str()) {
+            models.push(p.to_path_buf());
+        }
+    });
+    models.sort();
+    let mut objects = Vec::new();
+    let mut copied = 0;
+    let mut notes = Vec::new();
     if has("sli") {
         let target = existing_child(content, "Splines").unwrap_or_else(|| content.join("Splines")).join(&name);
-        let copied = copy_tree(dir, &target)?;
-        return Ok(Report { copied, objects: Vec::new(), message: format!("{} Splines\\{name}", tr("Road types added to", "Типы дорог добавлены в")) });
+        copied += copy_tree(dir, &target)?;
+        notes.push(format!("{} Splines\\{name}", tr("Road types added to", "Типы дорог добавлены в")));
     }
-    // a folder of models: each becomes an object
-    let mut objects = Vec::new();
-    for e in std::fs::read_dir(dir)?.flatten() {
-        let p = e.path();
-        let ext = p.extension().map(|e| e.to_string_lossy().to_lowercase()).unwrap_or_default();
-        if matches!(ext.as_str(), "obj" | "x" | "o3d") {
-            let r = import_model(&p, content)?;
-            objects.extend(r.objects);
-        }
+    for p in &models {
+        let r = import_model(p, content)?;
+        copied += r.copied;
+        objects.extend(r.objects);
     }
-    if objects.is_empty() {
+    if !objects.is_empty() {
+        notes.push(format!("{} {}", tr("Models imported:", "Импортировано моделей:"), objects.len()));
+    }
+    if notes.is_empty() {
         anyhow::bail!("{}", tr("Nothing to import was found in this folder", "В этой папке нечего импортировать"));
     }
-    let n = objects.len();
-    Ok(Report { copied: n, objects, message: format!("{} {n}", tr("Models imported:", "Импортировано моделей:")) })
+    Ok(Report { copied, objects, message: notes.join("; ") })
+}
+
+const MODEL_EXTENSIONS: [&str; 6] = ["obj", "x", "o3d", "gltf", "glb", "fbx"];
+
+/// Every file below `dir`, the textures' folders left out.
+fn walk_files(dir: &Path, f: &mut dyn FnMut(&Path)) {
+    let Ok(rd) = std::fs::read_dir(dir) else { return };
+    let mut entries: Vec<PathBuf> = rd.flatten().map(|e| e.path()).collect();
+    entries.sort();
+    for p in entries {
+        if p.is_dir() {
+            if !p.file_name().map(|n| n.to_string_lossy().eq_ignore_ascii_case("texture")).unwrap_or(false) {
+                walk_files(&p, f);
+            }
+        } else {
+            f(&p);
+        }
+    }
 }
 
 fn walk_has(dir: &Path, ext: &str) -> bool {
@@ -139,8 +178,10 @@ fn copy_tree(src: &Path, dst: &Path) -> std::io::Result<usize> {
 
 fn import_zip(path: &Path, content: &Path) -> anyhow::Result<Report> {
     let stem = path.file_stem().map(|s| s.to_string_lossy().to_string()).unwrap_or_else(|| "mod".into());
-    let tmp = std::env::temp_dir().join(format!("openmapper-import-{}-{stem}", std::process::id()));
-    let _ = std::fs::remove_dir_all(&tmp);
+    // (in a folder of the archive's name: loose files are imported under that name)
+    let outer = std::env::temp_dir().join(format!("openmapper-import-{}", std::process::id()));
+    let tmp = outer.join(&stem);
+    let _ = std::fs::remove_dir_all(&outer);
     std::fs::create_dir_all(&tmp)?;
     let mut zip = zip::ZipArchive::new(std::fs::File::open(path)?)?;
     for i in 0..zip.len() {
@@ -169,7 +210,7 @@ fn import_zip(path: &Path, content: &Path) -> anyhow::Result<Report> {
             Err(e)
         }
     });
-    let _ = std::fs::remove_dir_all(&tmp);
+    let _ = std::fs::remove_dir_all(&outer);
     r
 }
 
@@ -188,29 +229,22 @@ fn pbr_siblings(tex: &Path) -> Vec<PathBuf> {
         .collect()
 }
 
-/// One mesh file of an imported object and what its materials are: the texture file name
-/// (if any) and how it treats transparency, in the order of the mesh's material slots.
-struct MeshOut {
-    file: String,
-    slots: Vec<(Option<String>, u8)>,
-}
-
-/// A model file becomes a scenery object of its own folder in `Sceneryobjects\Imported`:
-/// one mesh for each piece the file has, with the transparency of each material.
+/// A model file becomes an openMapper object of its own folder in
+/// `Sceneryobjects\openMapper\Imported`: a part for each piece the file has (they can be
+/// edited, separated into objects of their own or joined later), its materials with their
+/// colours, textures and transparency. It stands on the ground: a model whose origin is in its
+/// middle would otherwise sink half into it.
 fn import_model(path: &Path, content: &Path) -> anyhow::Result<Report> {
     let stem = path.file_stem().map(|s| s.to_string_lossy().to_string()).unwrap_or_else(|| "model".into());
-    let safe: String = stem.chars().map(|c| if c.is_alphanumeric() || c == '_' || c == '-' { c } else { '_' }).collect();
-    let sco_root = existing_child(content, "Sceneryobjects").unwrap_or_else(|| content.join("Sceneryobjects"));
-    let dir = sco_root.join("Imported").join(&safe);
-    let model_dir = dir.join("model");
+    let safe = crate::editable::safe_name(&stem);
+    let roots = crate::install::Roots { omsi: PathBuf::new(), content: content.to_path_buf() };
+    let rel = crate::editable::new_rel(&roots, "Imported", &safe);
+    let (dir, own) = crate::editable::folder_of(&roots, &rel);
     let tex_dir = dir.join("texture");
-    std::fs::create_dir_all(&model_dir)?;
     std::fs::create_dir_all(&tex_dir)?;
     let src_dir = path.parent().unwrap_or(Path::new("."));
     let ext = path.extension().map(|e| e.to_string_lossy().to_lowercase()).unwrap_or_default();
-    let mut meshes: Vec<MeshOut> = Vec::new();
-    // the textures to copy from beside the model (not already written as pngs)
-    let mut textures: Vec<String> = Vec::new();
+    let mut src = crate::editable::Source { name: stem.clone(), ..Default::default() };
     let mut copied = 1;
     if matches!(ext.as_str(), "obj" | "gltf" | "glb" | "fbx") {
         let (mut m, mut tex_names) = if ext == "obj" {
@@ -218,18 +252,19 @@ fn import_model(path: &Path, content: &Path) -> anyhow::Result<Report> {
         } else {
             let m = if ext == "fbx" { crate::models::load_fbx(path)? } else { crate::models::load_gltf(path)? };
             // (its textures, read out of the file or from beside it, go in as pngs)
-            let names = crate::models::save_textures(&m, &safe, &tex_dir)?;
+            let names = crate::models::save_textures(&m, &own, &tex_dir)?;
             (m, names)
         };
         if ext == "obj" {
             // (a texture in a format OMSI does not read goes in as a png; the others are copied
             // whole, with their maps)
+            let mut textures: Vec<String> = Vec::new();
             for t in tex_names.iter_mut().flatten() {
                 let name = Path::new(&t.replace('\\', "/")).file_name().map(|f| f.to_string_lossy().to_string()).unwrap_or_default();
                 let e = Path::new(&name).extension().map(|e| e.to_string_lossy().to_lowercase()).unwrap_or_default();
-                let src = [src_dir.join(t.replace('\\', "/")), src_dir.join(&name)].into_iter().find(|p| p.is_file());
+                let found = [src_dir.join(t.replace('\\', "/")), src_dir.join(&name)].into_iter().find(|p| p.is_file());
                 if !name.is_empty() && !omsi_texture::EXTENSIONS.contains(&e.as_str()) {
-                    if let Some(img) = crate::models::picture(None, src.as_deref()) {
+                    if let Some(img) = crate::models::picture(None, found.as_deref()) {
                         let png = format!("{}.png", Path::new(&name).file_stem().unwrap().to_string_lossy());
                         img.save(tex_dir.join(&png))?;
                         *t = png;
@@ -239,71 +274,88 @@ fn import_model(path: &Path, content: &Path) -> anyhow::Result<Report> {
                 *t = name.clone();
                 textures.push(name);
             }
-        }
-        // copy what is beside the model first, then look at the pictures for transparency
-        copy_textures(&textures, src_dir, &tex_dir, &mut copied)?;
-        if ext == "obj" {
+            copy_textures(&textures, src_dir, &tex_dir, &mut copied)?;
             for (mat, name) in m.mats.iter_mut().zip(&tex_names) {
                 if let (0, Some(n)) = (mat.alpha, name) {
                     mat.alpha = crate::models::picture(None, Some(&tex_dir.join(n))).map(|i| crate::models::alpha_of(&i)).unwrap_or(0);
                 }
             }
         }
-        let many = m.parts.iter().filter(|p| !p.faces.is_empty()).count() > 1;
-        let mut taken = std::collections::HashSet::new();
-        for (i, part) in m.parts.iter().enumerate().filter(|(_, p)| !p.faces.is_empty()) {
-            let (x, used) = crate::models::write_x(part, &m.mats, &tex_names);
-            let file = if many {
-                let clean: String = part.name.chars().map(|c| if c.is_alphanumeric() || c == '_' || c == '-' { c } else { '_' }).collect();
-                let mut f = format!("{safe}_{}", if clean.is_empty() { format!("part{i}") } else { clean });
-                while !taken.insert(f.to_lowercase()) {
-                    f.push('_');
-                }
-                format!("{f}.x")
-            } else {
-                format!("{safe}.x")
-            };
-            std::fs::write(model_dir.join(&file), x)?;
-            meshes.push(MeshOut { file, slots: used.iter().map(|u| (tex_names.get(*u).cloned().flatten(), m.mats.get(*u).map(|m| m.alpha).unwrap_or(0))).collect() });
-        }
-        if meshes.is_empty() {
-            anyhow::bail!("{}", tr("The model has no triangles", "В модели нет треугольников"));
-        }
-    } else {
-        let name = path.file_name().unwrap().to_string_lossy().to_string();
-        std::fs::copy(path, model_dir.join(&name))?;
-        let tex: Vec<String> = omsi_o3d::load_mesh(path).map(|m| m.materials.iter().map(|m| m.texture.clone()).filter(|t| !t.is_empty()).collect()).unwrap_or_default();
-        copy_textures(&tex, src_dir, &tex_dir, &mut copied)?;
-        // (a texture with transparency gets alpha testing: leaves, fences, windows)
-        let slots = tex
+        src.model.materials = m
+            .mats
             .iter()
-            .map(|t| {
-                let file = Path::new(&t.replace('\\', "/")).file_name().map(|f| f.to_string_lossy().to_string()).unwrap_or_default();
-                let alpha = crate::models::picture(None, Some(&tex_dir.join(&file))).map(|i| crate::models::alpha_of(&i)).unwrap_or(0);
-                (Some(file), alpha)
+            .enumerate()
+            .map(|(i, mat)| {
+                let tex = tex_names.get(i).cloned().flatten();
+                // (a textured material shows its texture as it is: the game applies only its
+                // transparency, and a glTF's colour factor is already in the picture)
+                let color = if tex.is_some() { [1.0, 1.0, 1.0, mat.color[3]] } else { mat.color };
+                openmapper_mesh::Material { name: tex.clone().unwrap_or_else(|| format!("Material{i}")), color, texture: tex, alpha: mat.alpha, ..Default::default() }
             })
             .collect();
-        meshes.push(MeshOut { file: name, slots });
+        for (i, part) in m.parts.iter().enumerate().filter(|(_, p)| !p.faces.is_empty()) {
+            let o3d = omsi_o3d::Mesh {
+                vertices: part.verts.iter().map(|(p, n, uv)| omsi_o3d::Vertex { position: glam::Vec3::from(*p), normal: glam::Vec3::from(*n), uv: glam::Vec2::from(*uv) }).collect(),
+                triangles: part.faces.iter().map(|(f, mat)| omsi_o3d::Triangle { indices: *f, material: *mat as u16 }).collect(),
+                ..Default::default()
+            };
+            let base = if part.name.trim().is_empty() { format!("Part{i}") } else { part.name.trim().to_string() };
+            let name = src.model.free_name(&base);
+            src.model.parts.push(crate::editable::part_from_mesh(&o3d, &name, 0));
+        }
+    } else {
+        let m = omsi_o3d::load_mesh(path)?;
+        let tex: Vec<String> = m.materials.iter().map(|m| m.texture.clone()).filter(|t| !t.is_empty()).collect();
+        copy_textures(&tex, src_dir, &tex_dir, &mut copied)?;
+        src.model.materials = m
+            .materials
+            .iter()
+            .enumerate()
+            .map(|(i, mat)| {
+                let file = Path::new(&mat.texture.replace('\\', "/")).file_name().map(|f| f.to_string_lossy().to_string()).filter(|f| !f.is_empty());
+                // (a texture with transparency gets alpha testing: leaves, fences, windows)
+                let alpha = file.as_ref().and_then(|f| crate::models::picture(None, Some(&tex_dir.join(f)))).map(|i| crate::models::alpha_of(&i)).unwrap_or(0);
+                openmapper_mesh::Material { name: file.clone().unwrap_or_else(|| format!("Material{i}")), color: mat.diffuse, texture: file, alpha, emissive: mat.emissive, specular: mat.specular, power: mat.specular_power, ..Default::default() }
+            })
+            .collect();
+        src.model.parts.push(crate::editable::part_from_mesh(&m, &safe, 0));
     }
-    let mut sco = String::new();
-    let _ = write!(sco, "[friendlyname]\n{stem}\n\n[groups]\n1\nImported\n\n");
-    for m in &meshes {
-        let _ = write!(sco, "[mesh]\n{}\n\n", m.file);
-        let mut seen: HashMap<String, i32> = HashMap::new();
-        for (tex, alpha) in &m.slots {
-            let Some(t) = tex else { continue };
-            // (a material is named by its texture and the how-many-th use of it)
-            let n = seen.entry(t.to_lowercase()).or_insert(-1);
-            *n += 1;
-            if *alpha > 0 {
-                let _ = write!(sco, "[matl]\n{t}\n{n}\n[matl_alpha]\n{alpha}\n\n");
-            }
+    if src.model.parts.iter().all(|p| p.mesh.is_empty()) {
+        anyhow::bail!("{}", tr("The model has no triangles", "В модели нет треугольников"));
+    }
+    stand_on_ground(&mut src.model);
+    crate::editable::merge_materials(&mut src.model);
+    crate::editable::save(&roots, &rel, &src)?;
+    Ok(Report { copied, objects: vec![rel], message: format!("{} {stem}", tr("Model imported:", "Модель импортирована:")) })
+}
+
+/// A model that reaches below its origin is lifted onto the ground, and one that lies far off
+/// its origin is brought over it.
+fn stand_on_ground(model: &mut openmapper_mesh::Model) {
+    let mut lo = glam::Vec3::splat(f32::MAX);
+    let mut hi = glam::Vec3::splat(f32::MIN);
+    for p in model.parts.iter().flat_map(|p| p.mesh.positions.iter()) {
+        lo = lo.min(*p);
+        hi = hi.max(*p);
+    }
+    if lo.x > hi.x {
+        return;
+    }
+    let mut shift = glam::Vec3::ZERO;
+    if lo.z < 0.0 {
+        shift.z = -lo.z;
+    }
+    let mid = (lo + hi) * 0.5;
+    let half = (hi - lo).truncate().length() * 0.5;
+    if mid.truncate().length() > half.max(1.0) {
+        shift.x = -mid.x;
+        shift.y = -mid.y;
+    }
+    if shift != glam::Vec3::ZERO {
+        for p in &mut model.parts {
+            p.mesh.transform(glam::Mat4::from_translation(shift));
         }
     }
-    let sco_path = dir.join(format!("{safe}.sco"));
-    std::fs::write(&sco_path, omsi_cfg::encode_text(&sco.replace('\n', "\r\n")))?;
-    let rel = format!("Sceneryobjects\\Imported\\{safe}\\{safe}.sco");
-    Ok(Report { copied, objects: vec![rel], message: format!("{} {stem}", tr("Model imported:", "Модель импортирована:")) })
 }
 
 /// Sets how a material of an imported object treats transparency (0 opaque, 1 cut out, 2
@@ -559,8 +611,150 @@ fn parse_mtl(text: &str, out: &mut HashMap<String, MtlMat>) {
     }
 }
 
+/// Materials from other tools' files, their pictures brought into `tex_dir` (named after
+/// `stem`): every material of a Wavefront `.mtl` (or the `.mtl` an `.obj` names), of a glTF /
+/// GLB / FBX, and one PBR material of the pictures chosen (by their names' endings: base
+/// colour / albedo / diffuse, normal, roughness, metallic, ambient occlusion, opacity,
+/// emissive).
+pub fn materials_from(files: &[PathBuf], tex_dir: &Path, stem: &str) -> anyhow::Result<Vec<openmapper_mesh::Material>> {
+    let mut out = Vec::new();
+    let mut pictures = Vec::new();
+    for f in files {
+        let ext = f.extension().map(|e| e.to_string_lossy().to_lowercase()).unwrap_or_default();
+        match ext.as_str() {
+            "mtl" | "obj" => {
+                let mtl_path = if ext == "obj" {
+                    let text = std::fs::read_to_string(f)?;
+                    let name = text.lines().find_map(|l| l.trim().strip_prefix("mtllib ").map(|n| n.trim().to_string()));
+                    match name {
+                        Some(n) => f.parent().unwrap_or(Path::new(".")).join(n),
+                        None => continue,
+                    }
+                } else {
+                    f.clone()
+                };
+                let mut mtl = HashMap::new();
+                parse_mtl(&std::fs::read_to_string(&mtl_path)?, &mut mtl);
+                let dir = mtl_path.parent().unwrap_or(Path::new("."));
+                let mut names: Vec<&String> = mtl.keys().collect();
+                names.sort();
+                for name in names {
+                    let m = &mtl[name];
+                    let mut mat = openmapper_mesh::Material { name: name.clone(), color: [m.kd[0], m.kd[1], m.kd[2], m.opacity], ..Default::default() };
+                    if let Some(t) = m.tex.as_ref().or(m.mask.as_ref()) {
+                        let src = dir.join(t.replace('\\', "/"));
+                        if let Ok(n) = crate::app::bring_picture(&src, tex_dir, &format!("{stem}_{}", crate::editable::safe_name(name))) {
+                            mat.alpha = crate::models::picture(None, Some(&tex_dir.join(&n))).map(|i| crate::models::alpha_of(&i)).unwrap_or(0);
+                            mat.texture = Some(n);
+                            mat.color = [1.0, 1.0, 1.0, m.opacity];
+                        }
+                    }
+                    if m.opacity < 0.99 && mat.alpha == 0 {
+                        mat.alpha = 2;
+                    }
+                    out.push(mat);
+                }
+            }
+            "gltf" | "glb" | "fbx" => {
+                let m = if ext == "fbx" { crate::models::load_fbx(f)? } else { crate::models::load_gltf(f)? };
+                let names = crate::models::save_textures(&m, &format!("{stem}_{}", crate::editable::safe_name(&f.file_stem().unwrap_or_default().to_string_lossy())), tex_dir)?;
+                for (i, mat) in m.mats.iter().enumerate() {
+                    let tex = names.get(i).cloned().flatten();
+                    out.push(openmapper_mesh::Material { name: tex.clone().unwrap_or_else(|| format!("Material{i}")), color: if tex.is_some() { [1.0, 1.0, 1.0, mat.color[3]] } else { mat.color }, texture: tex, alpha: mat.alpha, ..Default::default() });
+                }
+            }
+            _ => pictures.push(f.clone()),
+        }
+    }
+    if !pictures.is_empty() {
+        out.push(pbr_material(&pictures, tex_dir, stem)?);
+    }
+    Ok(out)
+}
+
+/// One material of a set of PBR pictures, sorted by the endings of their names; the
+/// openOMSI maps (`_nn`, `_orm`) written beside its colour texture.
+fn pbr_material(pictures: &[PathBuf], tex_dir: &Path, stem: &str) -> anyhow::Result<openmapper_mesh::Material> {
+    let kind = |p: &Path| -> &'static str {
+        let s = p.file_stem().map(|s| s.to_string_lossy().to_lowercase()).unwrap_or_default();
+        let has = |words: &[&str]| words.iter().any(|w| s.ends_with(w) || s.contains(&format!("_{w}")) || s.contains(&format!("-{w}")) || s.contains(&format!(" {w}")));
+        if has(&["normal", "nrm", "nor", "norm", "_n", "normalgl", "normal_gl", "normaldx"]) {
+            "normal"
+        } else if has(&["roughness", "rough", "rgh"]) {
+            "rough"
+        } else if has(&["metallic", "metalness", "metal", "met"]) {
+            "metal"
+        } else if has(&["ambientocclusion", "occlusion", "ao"]) {
+            "ao"
+        } else if has(&["opacity", "alpha", "mask"]) {
+            "opacity"
+        } else if has(&["emissive", "emission", "emit", "glow"]) {
+            "emit"
+        } else if has(&["height", "displacement", "disp", "bump"]) {
+            "height"
+        } else {
+            "color"
+        }
+    };
+    let find = |k: &str| pictures.iter().find(|p| kind(p) == k);
+    let base_path = find("color").ok_or_else(|| anyhow::anyhow!("{}", tr("no base colour picture among them", "среди них нет картинки базового цвета")))?;
+    let name = format!("{stem}_{}", crate::editable::safe_name(&base_path.file_stem().unwrap_or_default().to_string_lossy()));
+    let mut color = crate::models::picture(None, Some(base_path)).ok_or_else(|| anyhow::anyhow!("{}: {}", tr("cannot read the picture", "картинка не читается"), base_path.display()))?;
+    if let Some(op) = find("opacity").and_then(|p| crate::models::picture(None, Some(p))) {
+        let op = image::imageops::resize(&op, color.width(), color.height(), image::imageops::FilterType::Triangle);
+        for (c, o) in color.pixels_mut().zip(op.pixels()) {
+            c[3] = o[0];
+        }
+    }
+    let tex = format!("{name}.png");
+    color.save(tex_dir.join(&tex))?;
+    let mut mat = openmapper_mesh::Material { name: base_path.file_stem().unwrap_or_default().to_string_lossy().to_string(), color: [1.0; 4], texture: Some(tex), alpha: crate::models::alpha_of(&color), ..Default::default() };
+    if let Some(n) = find("normal").and_then(|p| crate::models::picture(None, Some(p))) {
+        // (named …_gl / …GL: OpenGL's green-up maps)
+        let gl = find("normal").map(|p| p.to_string_lossy().to_lowercase().contains("gl")).unwrap_or(false);
+        let file = format!("{name}_nn{}.png", if gl { "_gl" } else { "" });
+        n.save(tex_dir.join(&file))?;
+        mat.normal_map = Some(file);
+    }
+    let ao = find("ao").and_then(|p| crate::models::picture(None, Some(p)));
+    let rough = find("rough").and_then(|p| crate::models::picture(None, Some(p)));
+    let metal = find("metal").and_then(|p| crate::models::picture(None, Some(p)));
+    if ao.is_some() || rough.is_some() || metal.is_some() {
+        let orm = crate::models::pack_orm(ao.as_ref().map(|i| (i, 0)), (rough.as_ref().map(|i| (i, 0)), 1.0), (metal.as_ref().map(|i| (i, 0)), if metal.is_some() { 1.0 } else { 0.0 }));
+        let file = format!("{name}_orm.png");
+        orm.save(tex_dir.join(&file))?;
+        mat.orm_map = Some(file);
+    }
+    if let Some(e) = find("emit").and_then(|p| crate::models::picture(None, Some(p))) {
+        let file = format!("{name}_lm.png");
+        e.save(tex_dir.join(&file))?;
+        mat.light_map = Some(file);
+    }
+    Ok(mat)
+}
+
 #[cfg(test)]
 mod tests {
+    #[test]
+    fn a_set_of_pbr_pictures_becomes_one_material_with_openomsis_maps() {
+        let dir = std::env::temp_dir().join(format!("om-pbr-{}", std::process::id()));
+        let tex = dir.join("tex");
+        std::fs::create_dir_all(&tex).unwrap();
+        for n in ["Bricks_BaseColor.png", "Bricks_Normal.png", "Bricks_Roughness.png", "Bricks_AO.png"] {
+            image::RgbaImage::from_pixel(4, 4, image::Rgba([100, 120, 140, 255])).save(dir.join(n)).unwrap();
+        }
+        let files: Vec<std::path::PathBuf> = ["Bricks_BaseColor.png", "Bricks_Normal.png", "Bricks_Roughness.png", "Bricks_AO.png"].iter().map(|n| dir.join(n)).collect();
+        let mats = super::materials_from(&files, &tex, "wall").unwrap();
+        assert_eq!(mats.len(), 1);
+        let m = &mats[0];
+        let t = m.texture.clone().unwrap();
+        assert!(tex.join(&t).is_file());
+        let stem = t.trim_end_matches(".png");
+        assert_eq!(m.normal_map.as_deref(), Some(format!("{stem}_nn.png").as_str()));
+        assert_eq!(m.orm_map.as_deref(), Some(format!("{stem}_orm.png").as_str()));
+        let _ = std::fs::remove_dir_all(&dir);
+    }
+
     #[test]
     fn an_obj_becomes_pieces_openomsi_reads() {
         let dir = std::env::temp_dir().join(format!("om-obj-{}", std::process::id()));
@@ -571,7 +765,12 @@ mod tests {
         assert_eq!(tex, vec![Some("wall.png".to_string())]);
         assert_eq!(m.parts.len(), 2);
         assert_eq!(m.parts[0].name, "a");
-        let (x, used) = crate::models::write_x(&m.parts[0], &m.mats, &tex);
+        // (written as openMapper writes an imported part, and read back as openOMSI reads it)
+        let p = &m.parts[0];
+        let o3d = omsi_o3d::Mesh { vertices: p.verts.iter().map(|(a, n, uv)| omsi_o3d::Vertex { position: glam::Vec3::from(*a), normal: glam::Vec3::from(*n), uv: glam::Vec2::from(*uv) }).collect(), triangles: p.faces.iter().map(|(f, mat)| omsi_o3d::Triangle { indices: *f, material: *mat as u16 }).collect(), ..Default::default() };
+        let part = crate::editable::part_from_mesh(&o3d, "a", 0);
+        let mat = openmapper_mesh::Material { texture: tex[0].clone(), ..Default::default() };
+        let (x, used) = openmapper_mesh::export::to_x(&part.mesh, &[mat]);
         assert_eq!(used, vec![0]);
         std::fs::write(dir.join("box.x"), &x).unwrap();
         let back = omsi_o3d::load_mesh(&dir.join("box.x")).unwrap();
@@ -611,11 +810,31 @@ mod tests {
         std::fs::write(dir.join("two.mtl"), "newmtl solid\nKd 1 1 1\nnewmtl leaf\nKd 1 1 1\nmap_Kd leaf.png\n").unwrap();
         std::fs::write(dir.join("two.obj"), "mtllib two.mtl\no wall\nv 0 0 0\nv 1 0 0\nv 0 1 0\nvt 0 0\nvt 1 0\nvt 0 1\nusemtl solid\nf 1/1 2/2 3/3\no leaves\nusemtl leaf\nf 1/1 2/2 3/3\n").unwrap();
         super::import(&dir.join("two.obj"), &content).unwrap();
-        let folder = content.join("Sceneryobjects").join("Imported").join("two");
+        let folder = content.join("Sceneryobjects").join("openMapper").join("Imported").join("two");
         let sco = String::from_utf8_lossy(&std::fs::read(folder.join("two.sco")).unwrap()).replace('\0', "");
         assert_eq!(sco.matches("[mesh]").count(), 2, "{sco}");
         assert!(sco.contains("[matl]\r\nleaf.png\r\n0\r\n[matl_alpha]\r\n1"), "{sco}");
         assert!(folder.join("model").join("two_wall.x").is_file() && folder.join("model").join("two_leaves.x").is_file());
         let _ = std::fs::remove_dir_all(&dir);
+    }
+}
+
+#[cfg(test)]
+mod probe {
+    /// Not a check: imports the file named by PROBE_MODEL into PROBE_CONTENT and says what came out.
+    #[test]
+    #[ignore]
+    fn probe_import() {
+        let (Ok(m), Ok(c)) = (std::env::var("PROBE_MODEL"), std::env::var("PROBE_CONTENT")) else { return };
+        let r = super::import(std::path::Path::new(&m), std::path::Path::new(&c)).unwrap();
+        eprintln!("{} {:?}", r.message, r.objects);
+        let roots = crate::install::Roots { omsi: Default::default(), content: c.into() };
+        let src = crate::editable::load(&roots, &r.objects[0]).unwrap();
+        for (i, p) in src.model.parts.iter().enumerate() {
+            eprintln!("part {i} {:?} faces {} modifiers {}", p.name, p.mesh.faces.len(), p.modifiers.len());
+        }
+        for (i, m) in src.model.materials.iter().enumerate() {
+            eprintln!("mat {i} {:?} color {:?} tex {:?} alpha {}", m.name, m.color, m.texture, m.alpha);
+        }
     }
 }

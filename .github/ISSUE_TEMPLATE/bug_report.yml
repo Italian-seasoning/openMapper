@@ -1,0 +1,99 @@
+name: Bug Report
+description: Something isn't working as expected
+labels: [ "bug" ]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a bug! A few things make it much quicker to fix:
+
+        * **Write in English.**
+        * **One problem per issue.**
+        * **Use the latest release.** Many problems are already fixed in a newer build.
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before you start
+      options:
+        - label: I searched the [open and closed issues](https://github.com/openOMSI-org/openMapper/issues?q=is%3Aissue) and this is not a duplicate.
+          required: true
+        - label: It still happens on the latest release.
+          required: true
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: What is it about?
+      options:
+        - Crash, freeze or the editor doesn't start
+        - Performance (FPS, stutter, loading)
+        - Roads, junctions and switches
+        - Objects, plants and the catalogue
+        - Terrain, painting and tiles
+        - Satellite, terrain and OpenStreetMap
+        - Lines, timetable, traffic and depot files
+        - Mesh editing, import and export
+        - Saving, checking and test drive
+        - Interface and controls
+        - Something else
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      description: A clear description of the bug. Screenshots and videos help a lot - paste or drag them in here.
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: How can we make it happen ourselves?
+      placeholder: |
+        1. Open ... 
+        2. Choose the Roads tool and ...
+        3. See ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect?
+    validations:
+      required: false
+
+  - type: dropdown
+    id: os
+    attributes:
+      label: System
+      options:
+        - Windows x64
+        - Windows ARM64
+        - macOS Apple silicon
+        - macOS Intel
+        - Linux x64
+        - Linux ARM64
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: openMapper version
+      placeholder: "0.1.0"
+    validations:
+      required: true
+
+  - type: textarea
+    id: log
+    attributes:
+      label: Log
+      description: The end of the log if the editor stopped (run it from a terminal to see it).
+      render: text
+    validations:
+      required: false

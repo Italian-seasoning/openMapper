@@ -100,11 +100,14 @@ fn run(spec: &Spec, tx: &Sender<Msg>, cancel: &AtomicBool, done: &AtomicUsize) -
     let img = match &spec.imagery {
         Some((srcs, z, size)) => {
             let (src, z) = match (srcs.as_slice(), *z) {
+                ([one], _) if one.kind == super::sources::Kind::OsmMap => (one.clone(), 19),
                 ([one], z) if z > 0 => (one.clone(), z),
                 _ => best(srcs, &spec.prefs, lat, lon)?,
             };
-            let mpp = src.metres_per_pixel(lat, z);
-            let size = if *size > 0 { *size } else { imagery::image_size(spec.ts, mpp) };
+            // (the drawn map is made at the picture's own size: as sharp as the picture can be)
+            let drawn = src.kind == super::sources::Kind::OsmMap;
+            let mpp = if drawn { spec.ts / if *size > 0 { *size } else { 4096 } as f64 } else { src.metres_per_pixel(lat, z) };
+            let size = if *size > 0 { *size } else if drawn { 4096 } else { imagery::image_size(spec.ts, mpp) };
             let _ = tx.send(Msg::Zoom(z, mpp));
             Some((src, z, size))
         }
@@ -130,6 +133,15 @@ fn run(spec: &Spec, tx: &Sender<Msg>, cancel: &AtomicBool, done: &AtomicUsize) -
         }
         None => None,
     };
+    // (the drawn map: what OpenStreetMap has for all the tiles asked for once, not a request
+    // for each tile; if it does not answer, nothing more is asked)
+    let drawn = match &img {
+        Some((src, _, _)) if src.kind == super::sources::Kind::OsmMap => {
+            let keys: Vec<crate::doc::TileKey> = spec.tiles.iter().map(|t| t.0).collect();
+            Some(crate::osm_map::fetch(crate::osm_map::bbox(&spec.geo, &keys, spec.ts))?)
+        }
+        _ => None,
+    };
     let mut failed = 0;
     for &(k, cells) in &spec.tiles {
         if cancel.load(Ordering::Relaxed) {
@@ -138,7 +150,11 @@ fn run(spec: &Spec, tx: &Sender<Msg>, cancel: &AtomicBool, done: &AtomicUsize) -
         let one = || -> Result<(), String> {
             if let Some((src, z, size)) = &img {
                 let fetch = |z: u8, x: u32, y: u32| fetch::tile(src, &spec.prefs, z, x, y);
-                let (pic, coarser) = imagery::build(&spec.geo, k, spec.ts, *z, *size, &fetch, cancel)?;
+                let (pic, coarser) = if src.kind == super::sources::Kind::OsmMap {
+                    (crate::osm_map::build(&spec.geo, k, spec.ts, *size, drawn.as_ref().ok_or("no data")?, cancel)?, false)
+                } else {
+                    imagery::build(&spec.geo, k, spec.ts, *z, *size, &fetch, cancel)?
+                };
                 let kept = src.kind != super::sources::Kind::Google;
                 let path = super::imagery_path(&spec.dir, k);
                 let memory = if kept {

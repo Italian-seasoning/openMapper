@@ -78,6 +78,9 @@ impl Seg {
     }
 }
 
+/// The most a road drawn to meet an end may turn in all (radians): about 200 degrees.
+pub const MAX_TURN: f64 = 3.5;
+
 /// The smallest radius a drawn road may have (m).
 pub const MIN_RADIUS: f64 = 6.0;
 
@@ -164,7 +167,15 @@ pub fn plan(start: &Anchor, start_fixed: bool, end: DVec2, end_anchor: Option<&A
     match (start_fixed, end_anchor) {
         (true, Some(e)) => {
             let hq = norm_deg(e.heading + 180.0);
-            biarc(p, start.heading, e.pos.truncate(), hq).or_else(|| arc_to(p, start.heading, e.pos.truncate()).map(|s| vec![s]))
+            // (a curve that turns most of the way round to meet the end is a loop, not a
+            // road: the end is reached some other way or not at all)
+            biarc(p, start.heading, e.pos.truncate(), hq)
+                .filter(|segs| segs.iter().map(|s| if s.radius == 0.0 { 0.0 } else { (s.length / s.radius).abs() }).sum::<f64>() < MAX_TURN)
+                .or_else(|| {
+                    // (one arc only where it arrives about along the end's own line)
+                    let arc = arc_to(p, start.heading, e.pos.truncate())?;
+                    ((norm_deg(arc.end_heading() - hq + 180.0) - 180.0).abs() < 30.0).then(|| vec![arc])
+                })
         }
         (true, None) => arc_to(p, start.heading, end).map(|s| vec![s]),
         (false, Some(e)) => {
@@ -221,6 +232,22 @@ mod tests {
         assert!((norm_deg(segs[1].end_heading() + 180.0) - 180.0).abs() < 1e-6);
         // tangent at the joint
         assert!((segs[0].end_heading() - segs[1].heading).abs() < 1e-9);
+    }
+
+    #[test]
+    fn an_end_is_not_met_by_a_loop() {
+        // an end at (0, 0) facing east, the new road starting beside it facing east too: it
+        // would have to go all the way round
+        let end = Anchor { pos: DVec3::ZERO, heading: 90.0, ..Default::default() };
+        let start = Anchor { pos: DVec3::new(0.0, 12.0, 0.0), heading: 90.0, ..Default::default() };
+        if let Some(segs) = plan(&start, true, end.pos.truncate(), Some(&end)) {
+            let turn: f64 = segs.iter().map(|s| if s.radius == 0.0 { 0.0 } else { (s.length / s.radius).abs() }).sum();
+            assert!(turn < MAX_TURN, "{turn}");
+        }
+        // a plain S-bend is still made
+        let start = Anchor { pos: DVec3::new(-60.0, 20.0, 0.0), heading: 90.0, ..Default::default() };
+        let end = Anchor { pos: DVec3::ZERO, heading: 270.0, ..Default::default() };
+        assert!(plan(&start, true, end.pos.truncate(), Some(&end)).is_some());
     }
 
     #[test]

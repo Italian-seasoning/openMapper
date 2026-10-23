@@ -184,6 +184,7 @@ pub fn snap_controls(ui: &mut egui::Ui, ed: &mut Editor) {
     if check(ui, &mut on, RichText::new(tr("Ruler", "Линейка")).small()).on_hover_text(tr("Click two points to measure the distance and gradient between them (U) · right-click: off", "Клик по двум точкам: расстояние и уклон между ними (U) · правый клик: выключить")).changed() {
         ed.toggle_ruler();
     }
+    check(ui, &mut ed.auto_terrain, RichText::new(tr("Auto-Terrain", "Авто-рельеф")).small()).on_hover_text(tr("What you build follows the ground: roads, paths and tracks take its height (off: they run level from where they start). Only what is built from now on; nothing already there changes", "Новое подстраивается под рельеф: дороги, пути и рельсы берут его высоту (выкл.: идут ровно от точки начала). Только то, что строится дальше; уже построенное не меняется"));
     check(ui, &mut ed.auto_switches, RichText::new(tr("Auto-Switch", "Авто-стрелки")).small()).on_hover_text(tr("Branching a track off another makes a switch there", "Ответвление пути от другого создаёт стрелку"));
     check(ui, &mut ed.auto_junctions, RichText::new(tr("Auto-Junction", "Авто-перекрёсток")).small()).on_hover_text(tr("Make junctions where roads meet", "Делать перекрёстки, где дороги встречаются"));
     check(ui, &mut ed.align_to_road, RichText::new(tr("Auto-Align", "Авто-выравнивание")).small()).on_hover_text(tr("Line objects up with the nearest road (Shift: put it freely)", "Выравнивать объекты по ближайшей дороге (Shift: ставить свободно)"));
@@ -227,16 +228,16 @@ pub fn group_properties(ui: &mut egui::Ui, ed: &mut Editor, lib: &Library, actio
         let mut act: Option<u8> = None;
         egui::Grid::new("group").num_columns(3).spacing(Vec2::new(6.0, 5.0)).show(ui, |ui| {
             ui.label(RichText::new(tr("Move", "Сдвиг")).color(TEXT_DIM));
-            ui.horizontal(|ui| {
-                ui.add(egui::DragValue::new(&mut v[0]).speed(0.1).prefix("X ").suffix(" m"));
-                ui.add(egui::DragValue::new(&mut v[1]).speed(0.1).prefix("Y ").suffix(" m"));
+            ui.horizontal_wrapped(|ui| {
+                ui.add(egui::DragValue::new(&mut v[0]).speed(0.1).max_decimals(2).prefix("X ").suffix(" m").min_decimals(0));
+                ui.add(egui::DragValue::new(&mut v[1]).speed(0.1).max_decimals(2).prefix("Y ").suffix(" m").min_decimals(0));
             });
             if ui.button(tr("Apply", "Применить")).clicked() {
                 act = Some(0);
             }
             ui.end_row();
             ui.label(RichText::new(tr("Height", "Высота")).color(TEXT_DIM));
-            ui.add(egui::DragValue::new(&mut v[2]).speed(0.05).prefix("± ").suffix(" m"));
+            ui.add(egui::DragValue::new(&mut v[2]).speed(0.05).max_decimals(2).prefix("Z ").suffix(" m"));
             if ui.button(tr("Apply", "Применить")).clicked() {
                 act = Some(1);
             }
@@ -317,6 +318,12 @@ pub fn group_properties(ui: &mut egui::Ui, ed: &mut Editor, lib: &Library, actio
         }
         crate::ui_profile::profile_section(ui, ed, actions);
         paint_along_section(ui, ed, lib);
+        if splines > 0 && !ed.editing_paths() {
+            ui.add_space(4.0);
+            if ui.button(icons::labelled(Icon::Route, tr("Edit its AI lanes", "Править полосы ИИ"))).on_hover_text(tr("Its lanes become AI paths of their own (the same lines, the same way) that the Logic tool's Edit existing bends, moves and deletes. The road keeps its look.", "Полосы становятся отдельными путями ИИ (те же линии, то же направление): их можно двигать, гнуть и удалять в Логике > Пути ИИ > Править готовые. Вид дороги не меняется.")).clicked() {
+                actions.push(crate::ui::Action::DetachLanes);
+            }
+        }
         ui.add_space(8.0);
         ui.separator();
         ui.horizontal_wrapped(|ui| {

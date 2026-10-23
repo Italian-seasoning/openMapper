@@ -1,0 +1,32 @@
+name: Feature Request
+description: An idea for openMapper
+labels: [ "enhancement" ]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for the idea! Write in English, one idea per issue, and check the
+        [roadmap](https://github.com/openOMSI-org/openMapper/blob/main/docs/ROADMAP.md) and the open issues first.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What are you trying to do?
+      description: The map you are making and what is hard about it now.
+    validations:
+      required: true
+
+  - type: textarea
+    id: idea
+    attributes:
+      label: What would help?
+      description: How you imagine it working. OMSI 2's own editor or another program doing it is a good example to point at.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: What do you do instead today?
+    validations:
+      required: false

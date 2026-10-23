@@ -60,6 +60,7 @@ pub fn make_entry(model: &SplineModel, s: &MapSpline, org: DVec2, corner: Vec3, 
         materials: model.materials.clone(),
         instance: 0,
         in_chunk: false,
+        ai_path: model.is_ai_path(),
     }
 }
 

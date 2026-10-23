@@ -17,6 +17,8 @@ pub struct Camera {
     pub pitch: f64,
     pub distance: f64,
     pub fov_y: f32,
+    /// The plan view: looking straight down, north up; nothing tilts or turns it.
+    pub plan: bool,
     /// Flying speed with the right button held (m/s).
     pub fly_speed: f64,
     /// Smoothed state the view follows.
@@ -29,7 +31,7 @@ pub struct Camera {
 impl Default for Camera {
     fn default() -> Self {
         let t = DVec3::new(150.0, 150.0, 0.0);
-        Camera { target: t, yaw: 20.0, pitch: 45.0, distance: 260.0, fov_y: 50f32.to_radians(), fly_speed: 30.0, smooth_target: t, smooth_distance: 260.0, smooth_yaw: 20.0, smooth_pitch: 45.0 }
+        Camera { target: t, yaw: 20.0, pitch: 45.0, distance: 260.0, fov_y: 50f32.to_radians(), plan: false, fly_speed: 30.0, smooth_target: t, smooth_distance: 260.0, smooth_yaw: 20.0, smooth_pitch: 45.0 }
     }
 }
 
@@ -99,6 +101,9 @@ impl Camera {
     /// Look round from where the eye is (right button held): the eye stays, the pivot
     /// swings round it.
     pub fn look_pixels(&mut self, dx: f32, dy: f32) {
+        if self.plan {
+            return;
+        }
         let eye = self.wanted_eye();
         self.yaw += dx as f64 * 0.25;
         self.pitch = (self.pitch + dy as f64 * 0.25).clamp(-85.0, 89.5);
@@ -124,6 +129,9 @@ impl Camera {
     /// Turn round a new pivot from here on (Alt + left button: the point under the cursor),
     /// the eye staying where it is.
     pub fn set_pivot(&mut self, p: DVec3) {
+        if self.plan {
+            return;
+        }
         let eye = self.wanted_eye();
         let d = eye - p;
         if d.length() < 0.5 {
@@ -239,6 +247,9 @@ impl Camera {
 
     /// Orbit round the pivot by screen pixels (Alt + left button, Option + two fingers).
     pub fn orbit_pixels(&mut self, dx: f32, dy: f32) {
+        if self.plan {
+            return;
+        }
         // (yaw is kept unwrapped so the smoothing never spins the long way round)
         self.yaw += dx as f64 * 0.35;
         self.pitch = (self.pitch + dy as f64 * 0.3).clamp(-85.0, 89.5);

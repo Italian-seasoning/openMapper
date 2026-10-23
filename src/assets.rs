@@ -271,6 +271,13 @@ impl Assets {
         matches!(self.objects.get(&rel.to_lowercase()), Some(Slot::Failed))
     }
 
+    /// Forget one object's model, and the pictures in its folder, so they are read again
+    /// (its files were written anew).
+    pub fn forget_object(&mut self, rel: &str, dir: &Path) {
+        self.objects.remove(&rel.to_lowercase());
+        self.textures.retain(|k, s| matches!(s, Slot::Loading) || !k.starts_with(dir));
+    }
+
     /// Forget everything (after an import changed files on disk).
     pub fn clear(&mut self) {
         self.objects.retain(|_, s| matches!(s, Slot::Loading));

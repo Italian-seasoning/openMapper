@@ -5,7 +5,6 @@
 //! keep their colour, their colour texture, and their normal and occlusion / roughness /
 //! metalness maps, which become the `_nn` / `_orm` maps openOMSI finds beside a texture.
 
-use std::fmt::Write as _;
 use std::path::Path;
 
 use glam::{Mat4, Vec3};
@@ -107,7 +106,7 @@ pub fn picture(bytes: Option<&[u8]>, file: Option<&Path>) -> Option<image::RgbaI
 
 /// Occlusion, roughness, metalness packed into one picture of the largest's size (any may
 /// be missing: a value stands in for it).
-fn pack_orm(ao: Option<(&image::RgbaImage, usize)>, rough: (Option<(&image::RgbaImage, usize)>, f32), metal: (Option<(&image::RgbaImage, usize)>, f32)) -> image::RgbaImage {
+pub fn pack_orm(ao: Option<(&image::RgbaImage, usize)>, rough: (Option<(&image::RgbaImage, usize)>, f32), metal: (Option<(&image::RgbaImage, usize)>, f32)) -> image::RgbaImage {
     let size = [ao.map(|a| a.0), rough.0.map(|r| r.0), metal.0.map(|m| m.0)].into_iter().flatten().map(|i| i.dimensions()).max_by_key(|d| d.0 * d.1).unwrap_or((4, 4));
     let fit = |i: &image::RgbaImage| if i.dimensions() == size { i.clone() } else { image::imageops::resize(i, size.0, size.1, image::imageops::FilterType::Triangle) };
     let (ao, r, m) = (ao.map(|(i, c)| (fit(i), c)), rough.0.map(|(i, c)| (fit(i), c)), metal.0.map(|(i, c)| (fit(i), c)));
@@ -142,7 +141,35 @@ pub fn load_gltf(path: &Path) -> anyhow::Result<Model> {
         let occ = mat.occlusion_texture().and_then(|t| rgba(t.texture().source().index()));
         // (only with a colour texture: the maps go beside it by its name)
         let orm = base.as_ref().map(|_| pack_orm(occ.as_ref().map(|i| (i, 0)), (mr.as_ref().map(|i| (i, 1)), pbr.roughness_factor()), (mr.as_ref().map(|i| (i, 2)), pbr.metallic_factor())));
+        // (glTF's colour factors are linear; OMSI takes its colours as they are shown)
         let color = pbr.base_color_factor();
+        let srgb = |c: f32| if c <= 0.0031308 { c * 12.92 } else { 1.055 * c.powf(1.0 / 2.4) - 0.055 };
+        let color = [srgb(color[0]), srgb(color[1]), srgb(color[2]), color[3]];
+        // (a textured material's colour is not applied by the game, only its transparency: the
+        // factor goes into the picture, a black one making it black)
+        let (base, color) = match base {
+            Some(mut img) if color[..3].iter().any(|c| *c < 0.995) => {
+                // a baked shadow map under a black colour (blended, as Blender's exporter leaves
+                // it): black, its picture saying where the shadow lies. A colourful one is a
+                // heat map whose green is the shadow; a grey one is occlusion, bright where lit
+                if color[..3].iter().all(|c| *c < 0.01) && mat.alpha_mode() == gltf::material::AlphaMode::Blend {
+                    let chroma = img.pixels().map(|p| (p[0] as i32 - p[2] as i32).unsigned_abs() as u64).sum::<u64>() / (img.pixels().len() as u64).max(1);
+                    for p in img.pixels_mut() {
+                        let a = if chroma > 60 { p[1] } else { 255 - ((p[0] as u32 * 3 + p[1] as u32 * 6 + p[2] as u32) / 10) as u8 };
+                        *p = image::Rgba([0, 0, 0, ((a as f32 / 255.0) * color[3] * 255.0).round() as u8]);
+                    }
+                    (Some(img), [1.0, 1.0, 1.0, 1.0])
+                } else {
+                for p in img.pixels_mut() {
+                    for k in 0..3 {
+                        p[k] = (p[k] as f32 * color[k]).round().clamp(0.0, 255.0) as u8;
+                    }
+                }
+                (Some(img), [1.0, 1.0, 1.0, color[3]])
+                }
+            }
+            base => (base, color),
+        };
         // (what the file says counts: a texture with an alpha channel under "opaque" stays opaque)
         let alpha = match mat.alpha_mode() {
             gltf::material::AlphaMode::Opaque => 0,
@@ -277,7 +304,9 @@ pub fn save_textures(m: &Model, stem: &str, dir: &Path) -> anyhow::Result<Vec<Op
         let base = match &mat.base {
             Some(b) => b,
             None if mat.alpha > 0 => {
-                white = image::RgbaImage::from_pixel(4, 4, image::Rgba([255, 255, 255, 255]));
+                // (its colour stands in the picture: the game applies only a textured material's transparency)
+                let c = |k: usize| (mat.color[k].clamp(0.0, 1.0) * 255.0).round() as u8;
+                white = image::RgbaImage::from_pixel(4, 4, image::Rgba([c(0), c(1), c(2), 255]));
                 &white
             }
             None => {
@@ -296,59 +325,6 @@ pub fn save_textures(m: &Model, stem: &str, dir: &Path) -> anyhow::Result<Vec<Op
         names.push(Some(format!("{name}.png")));
     }
     Ok(names)
-}
-
-/// A piece as a DirectX `.x` text mesh, with only the materials its triangles use; those
-/// materials' numbers in the model come back with it, in the order of the file's slots.
-/// `textures`: each material's texture file name.
-pub fn write_x(part: &Part, mats: &[Mat], textures: &[Option<String>]) -> (String, Vec<usize>) {
-    let verts = &part.verts;
-    let faces = &part.faces;
-    let mut used: Vec<usize> = Vec::new();
-    for (_, m) in faces {
-        if !used.contains(m) {
-            used.push(*m);
-        }
-    }
-    let mut x = String::from("xof 0302txt 0032\n\nMesh {\n");
-    let _ = writeln!(x, " {};", verts.len());
-    for (i, (p, _, _)) in verts.iter().enumerate() {
-        let _ = writeln!(x, " {:.6};{:.6};{:.6};{}", p[0], p[1], p[2], if i + 1 == verts.len() { ";" } else { "," });
-    }
-    let _ = writeln!(x, " {};", faces.len());
-    for (i, (f, _)) in faces.iter().enumerate() {
-        let _ = writeln!(x, " 3;{},{},{};{}", f[0], f[1], f[2], if i + 1 == faces.len() { ";" } else { "," });
-    }
-    let _ = writeln!(x, " MeshNormals {{\n  {};", verts.len());
-    for (i, (_, n, _)) in verts.iter().enumerate() {
-        let _ = writeln!(x, "  {:.6};{:.6};{:.6};{}", n[0], n[1], n[2], if i + 1 == verts.len() { ";" } else { "," });
-    }
-    let _ = writeln!(x, "  {};", faces.len());
-    for (i, (f, _)) in faces.iter().enumerate() {
-        let _ = writeln!(x, "  3;{},{},{};{}", f[0], f[1], f[2], if i + 1 == faces.len() { ";" } else { "," });
-    }
-    x.push_str(" }\n");
-    let _ = writeln!(x, " MeshTextureCoords {{\n  {};", verts.len());
-    for (i, (_, _, t)) in verts.iter().enumerate() {
-        let _ = writeln!(x, "  {:.6};{:.6};{}", t[0], t[1], if i + 1 == verts.len() { ";" } else { "," });
-    }
-    x.push_str(" }\n");
-    let _ = writeln!(x, " MeshMaterialList {{\n  {};\n  {};", used.len().max(1), faces.len());
-    for (i, (_, mat)) in faces.iter().enumerate() {
-        let slot = used.iter().position(|u| u == mat).unwrap_or(0);
-        let _ = writeln!(x, "  {}{}", slot, if i + 1 == faces.len() { ";" } else { "," });
-    }
-    for &i in &used {
-        // (a coloured material shows its colour; one with a texture shows the texture as it is)
-        let c = mats.get(i).map(|mat| if mat.base.is_some() { [1.0, 1.0, 1.0, mat.color[3]] } else { mat.color }).unwrap_or([0.8, 0.8, 0.8, 1.0]);
-        let _ = writeln!(x, "  Material {{\n   {:.4};{:.4};{:.4};{:.4};;\n   10.0;\n   0.1;0.1;0.1;;\n   0.0;0.0;0.0;;", c[0], c[1], c[2], c[3]);
-        if let Some(Some(t)) = textures.get(i) {
-            let _ = writeln!(x, "   TextureFilename {{\n    \"{t}\";\n   }}");
-        }
-        x.push_str("  }\n");
-    }
-    x.push_str(" }\n}\n");
-    (x, used)
 }
 
 #[cfg(test)]
@@ -399,7 +375,11 @@ mod tests {
         // the roughness factor in the packed map's green
         let orm = image::open(dir.join("tri_0_orm.png")).unwrap().to_rgba8();
         assert_eq!(orm.get_pixel(0, 0)[1], 128);
-        let (x, used) = write_x(&m.parts[0], &m.mats, &names);
+        // (as the importer writes its part)
+        let p = &m.parts[0];
+        let o3d = omsi_o3d::Mesh { vertices: p.verts.iter().map(|(a, n, uv)| omsi_o3d::Vertex { position: Vec3::from(*a), normal: Vec3::from(*n), uv: glam::Vec2::from(*uv) }).collect(), triangles: p.faces.iter().map(|(f, mat)| omsi_o3d::Triangle { indices: *f, material: *mat as u16 }).collect(), ..Default::default() };
+        let part = crate::editable::part_from_mesh(&o3d, "tri", 0);
+        let (x, used) = openmapper_mesh::export::to_x(&part.mesh, &[openmapper_mesh::Material { texture: names[0].clone(), ..Default::default() }]);
         assert_eq!(used, vec![0]);
         assert!(x.contains("\"tri_0.png\""));
         // and openOMSI's own reader takes the mesh

@@ -27,6 +27,8 @@ egui-wgpu = { git = "https://github.com/openOMSI-org/egui-openomsi", rev = "0119
 egui-winit = { git = "https://github.com/openOMSI-org/egui-openomsi", rev = "0119a7a0a8de46a931640912685605223f28da04", default-features = false, features = ["clipboard", "links", "wayland", "x11"] }
 
 glam = "0.30"
+# openMapper's own polygon meshes: primitives, booleans, modifiers, UVs, baking, export
+openmapper-mesh = { path = "crates/mesh" }
 bytemuck = { version = "1", features = ["derive"] }
 pollster = "0.4"
 anyhow = "1"
@@ -41,7 +43,13 @@ image = { version = "0.25", default-features = false, features = ["png", "jpeg",
 gltf = "1.4"
 ufbx = "0.11"
 # satellite imagery, terrain heights and place search (src/geo): a small blocking client
+# the OpenStreetMap map drawn as a picture (src/osm_map.rs): shapes and the street names
+tiny-skia = { version = "0.11", default-features = false, features = ["std", "simd"] }
+ab_glyph = "0.2"
 ureq = { version = "3.4", default-features = false, features = ["rustls"] }
+
+[build-dependencies]
+embed-resource = "3"
 
 [profile.dev]
 opt-level = 1

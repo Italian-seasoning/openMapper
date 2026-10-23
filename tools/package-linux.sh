@@ -5,7 +5,11 @@
 set -e
 cd "$(dirname "$0")/.."
 VERSION=$(sed -n 's/^version = "\(.*\)"/\1/p' Cargo.toml | head -1)
-ARCH=$(uname -m)
+case "$(uname -m)" in
+  x86_64) ARCH=x64 ;;
+  aarch64|arm64) ARCH=arm64 ;;
+  *) ARCH=$(uname -m) ;;
+esac
 cargo build --release --locked
 OUT=target/package
 NAME="openMapper-$VERSION-linux-$ARCH"
@@ -14,7 +18,7 @@ rm -rf "$DIR"
 mkdir -p "$DIR/docs"
 cp target/release/openmapper "$DIR/openmapper"
 strip "$DIR/openmapper" 2>/dev/null || true
-"$DIR/openmapper" --icon "$DIR/openmapper.png" 256
+cp assets/icons/app/openmapper-256.png "$DIR/openmapper.png"
 cp README.md "$DIR/"
 cp docs/TUTORIAL.md "$DIR/docs/"
 [ -f LICENSE ] && cp LICENSE "$DIR/"

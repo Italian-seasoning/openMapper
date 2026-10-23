@@ -223,6 +223,9 @@ pub fn finest_zoom(src: &Source, prefs: &GeoPrefs, lat: f64, lon: f64) -> Result
         return Ok(None);
     }
     let top = src.useful_zoom(lat);
+    if src.kind == Kind::OsmMap {
+        return Ok(Some(top));
+    }
     if src.kind == Kind::Google {
         return Ok(google_viewport(prefs, lat, lon, 16)?.max_zoom.map(|z| z.min(top)));
     }

@@ -1,13 +1,52 @@
-# openMapper
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/logos/openmapper-wordmark-light.svg">
+    <img alt="openMapper" src="assets/logos/openmapper-wordmark-dark.svg" width="420">
+  </picture>
+</p>
 
-**A simple map editor for [openOMSI](https://openomsi.org/).** Draw roads with a couple of
-clicks, place buildings and trees from a visual catalogue, shape and paint the ground, and
-drive your map in openOMSI with a single button. It's built for anyone to pick up, not just
+<p align="center">
+  <a href="https://github.com/openOMSI-org/openMapper/releases/latest"><img alt="Version" src="https://img.shields.io/badge/version-0.1.0-2e86ff?style=for-the-badge"></a>
+  <img alt="Platforms" src="https://img.shields.io/badge/windows%20%C2%B7%20linux%20%C2%B7%20macos-x64%20%7C%20arm64-2d3138?style=for-the-badge">
+  <img alt="Rust" src="https://img.shields.io/badge/rust-2021-2d3138?style=for-the-badge&logo=rust&logoColor=white">
+  <a href="https://openomsi.org/"><img alt="Docs" src="https://img.shields.io/badge/openOMSI-website-2d3138?style=for-the-badge"></a>
+  <a href="https://discord.gg/VG2EKVafYG"><img alt="Discord" src="https://img.shields.io/badge/discord-join%20us-5865F2?style=for-the-badge&logo=discord&logoColor=white"></a>
+  <a href="LICENSE"><img alt="License" src="https://img.shields.io/badge/license-MIT-2e86ff?style=for-the-badge"></a>
+</p>
+
+> [!WARNING]
+> **Early release. Expect bugs.** openMapper is in an early stage of development: things may be
+> missing, broken or change between versions. Please report problems in
+> [Issues](https://github.com/openOMSI-org/openMapper/issues) or on our
+> [Discord server](https://discord.gg/VG2EKVafYG). Keep a copy of a map you care about: saving
+> keeps the last ten versions, but a copy is cheaper than a regret.
+
+**openMapper** is a simple map editor for [openOMSI](https://openomsi.org/). Draw roads with a
+couple of clicks, place buildings and trees from a visual catalogue, shape and paint the ground,
+and drive your map in openOMSI with a single button. It's built for anyone to pick up, not just
 experienced map makers.
 
-> openMapper needs an installed **OMSI 2** (Steam or retail): maps are built from its
+> [!IMPORTANT]
+> **openMapper needs an installed OMSI 2** (Steam or retail): maps are built from its
 > content. The original folder is never written to. Maps and imported assets go into
 > openOMSI's content folder, which the game reads before the installation.
+
+## Download
+
+Every release is on the [**Releases**](https://github.com/openOMSI-org/openMapper/releases)
+page, built by GitHub Actions for each system and processor:
+
+| Platform | Intel / AMD (x64) | ARM64 |
+| --- | --- | --- |
+| Windows 10 / 11 | `openMapper-<version>-windows-x64.zip` | `openMapper-<version>-windows-arm64.zip` |
+| macOS 11 or newer | `openMapper-<version>-macos-x64.zip` | `openMapper-<version>-macos-arm64.zip` (Apple silicon) |
+| Linux | `openMapper-<version>-linux-x64.tar.gz` | `openMapper-<version>-linux-arm64.tar.gz` |
+
+* **Windows:** unpack the zip and run `openmapper.exe`. Nothing else is needed.
+* **macOS:** unpack the zip and move `openMapper.app` to Applications. The app is not notarised: the
+  first time, right-click it and choose Open.
+* **Linux:** unpack the archive and run `./openmapper`; `openmapper.desktop` and the icon are in
+  the folder for a menu entry. It needs GTK 3 for the file dialogs and a Vulkan or OpenGL driver.
 
 New to it? [Your first map](docs/TUTORIAL.md) walks you from an empty window to a map you
 can drive in service.
@@ -24,7 +63,8 @@ can drive in service.
 | Junction moves | - | a junction (or any piece with spline helpers) moved, turned or raised carries the ends of its roads along, tangent, the road before a short arm bending with it; the ground follows its plate; openMapper's own junction plates are made again for their roads, and deleting an arm leaves the others joined (two left: a smooth joint) |
 | Objects along a road | - | select a road or a chain: put the object chosen in the catalogue every so many metres beside it (one or both sides, margins, height, turn, leaning), as OMSI spline attachment rows that follow the road; the road's properties list its rows to change (step, side, height, turn, leaning with the road, the texts its objects show) or remove |
 | Parallel copy | - | select a road, a track or a chain: copy it alongside to the left or right at a distance (a second track, the other carriageway); bends stay exact arcs about the same centre, the copies linked as the originals. A track's overhead wire (trams, electric trains): a wire spline (`Fahrdraht`, `Oberleitung`…) laid on the selected track piece for piece and linked, as the stock maps lay theirs; the masts go in with Objects along a road |
-| Move, Rotate, Scale | - | next to Select in the toolbar: handles on the ground round the selection (arrows along an axis and a square for free moving; a ring to turn by, snapping to the angle step; a ring to spread the objects apart or bring them together, since an OMSI 2 object has no size of its own) |
+| Move, Rotate, Scale | V, C, X | next to Select in the toolbar: handles on the selection as in Blender, the same size on the screen however far the camera is: arrows along X, Y and Z (up) and squares to move in a plane, the circle over the ground; rings to turn about X, Y or Z (snapping to the angle step; a road turns only about Z); arrows ending in cubes to scale along an axis, squares for two, the circle for all three (one object along its own axes). An OMSI 2 map keeps no size for an object, so a scaled one becomes a scaled copy of its type beside the original (`name~s1.5_1.5_2.sco` in the content folder: its meshes, collision mesh, lamps and paths scaled; scaled back to 1 it is the original again) |
+| Location, rotation, scale | - | an object's properties: X, Y and Z (the height above sea level, whatever the object keeps it as; its height above the ground under it shown beneath), rotation about X, Y and Z, and its size along each axis (proportions kept or not), each on a row of its own to drag or type |
 | Auto-Switch, Auto-Junction, Auto-Align | - | status bar: switches where a track branches off, junctions where roads meet, objects lined up with the nearest road (an imported model is never lined up) |
 | Controls | - | File > Controls: every key, each one changeable (click it, press the new key; kept in the settings), and the mouse |
 | Ruler | U | status bar: click two points for the distance, the height between them and the gradient, written on the line in the view |
@@ -103,11 +143,14 @@ can drive in service.
   has of its place (Overpass API, kept a week in the cache), shown with how much there is:
   * roads by kind (main roads, streets, service roads), each built with the road type chosen
     for it as if drawn: one street's ways joined into one road, corners rounded into OMSI's
-    arcs, cut exactly at the map's edge, junctions where roads meet or cross; one-way roads
+    arcs, cut exactly at the map's edge, junctions (with Auto-Junction on) where roads meet or
+    cross, where streets end at one node, and roads ending in a junction plate there before
+    joined to it as arms; one-way roads
     (each carriageway of a dual road) with a one-way type if one is chosen; tunnels and roads
     lying on ones the map has are left out;
-  * tram and railway tracks with a track type, laid without junctions (a branch is joined
-    with a switch by hand; the map check names its end);
+  * tram and railway tracks with a track type, crossing roads on the level; with Auto-Switch
+    on, a track branching off another or joining it gets a switch there (the installation's
+    own, its new track starting from the diverging heel), else the track it meets is cut there;
   * bus stops with their names, the stop object chosen put at the kerb of the nearest lane;
   * bus lines: each route through two or more of the map's stops a trip of its line (variants
     stopping alike once, a route leaving the map cut to its longest run within it), the way
@@ -227,10 +270,12 @@ can drive in service.
   Right-click a map where maps are chosen: make a copy of it under a new name (to try
   something out), show it in the file manager, or move a content folder map into
   openMapper's bin (`openMapper\bin\maps`, from where it can be put back by hand).
-* **New map** from OMSI 2's own template (`template/NewMap`): size, keep right or left, base
-  ground, the car groups its traffic names copied from the stock maps (the template has
-  none, so its streets would stay empty), and "Start with a sample": a ring road with stops, a start point, line 1 both ways,
-  a tour from 06:00 to 22:00, a depot and AI traffic, so it can be driven in service at once.
+* **New map** from OMSI 2's own template (`template/NewMap`): name and description, size, the
+  ground's height above sea level and its texture, keep right or left, how busy the streets
+  and stops are, years and year offset, money and tickets, seasons (four with a snowy winter,
+  a mild winter, or summer only), real rail, and "Start from a real place" (the satellite,
+  terrain and OpenStreetMap window opens at once); the car groups its traffic names are copied
+  from the stock maps (the template has none, so its streets would stay empty).
 * **Getting started** (Help menu, opens by itself for a new map): a checklist that ticks
   itself as the map grows (road, stop, start point, line, tour, buses, checked, saved, test drive),
   with a "Show me" for each step.
@@ -262,10 +307,62 @@ can drive in service.
   click or drag on it to move there, double-click for a larger one.
 * **Asset import**: drop onto the window or use the button:
   * a mod (a folder or `.zip` laid out like OMSI 2) is merged into the content folder;
-  * a folder of `.sco` / `.sli` files becomes a folder under `Sceneryobjects` / `Splines`;
+  * a folder of `.sco` files (an object's folder with its `model` and `texture`, or several)
+    becomes a folder under `Sceneryobjects`, its objects ready to place; one of `.sli` files a
+    folder under `Splines`; models anywhere in a folder or `.zip` (not only at its top) become
+    objects each, and a folder with only a `texture` folder beside its models is not taken for a mod;
   * a 3D model (`.obj`, `.gltf` / `.glb`, `.fbx` from Blender, 3ds Max, Maya and asset stores, `.x`, `.o3d`) becomes a new object, with every node's transform, its materials' colours and textures (embedded ones too; any picture format is turned into one OMSI reads), and their normal and roughness / metalness / occlusion maps as `_nn` / `_orm`: a `.sco` is
     written for it, the textures are copied, and so are their **PBR maps** (`_nn`, `_orm`,
     `_rr`, `_mm`, `_aa` …, the way openOMSI finds them).
+* **Meshes** (openMapper's own objects, kept as `<name>.openmapper.json` beside the `.sco`
+  and `.x` files written from it, so OMSI 2 and openOMSI read them as any other object):
+  * **Shapes** (Objects tool > Shapes and lamps, the Assets panel's Shapes…): cube, plane,
+    grid, circle, triangle, triangular prism, wedge, corner wedge, pyramid, sphere,
+    icosphere, cylinder, cone, torus, tube, capsule, stairs, arch; textured in metres, put on
+    the map with a click, their sizes and segments changed in the properties until edited.
+  * **Edit the mesh** (`Tab`, or Edit the mesh in an object's properties; any object, a copy of
+    its type of its own made first, its textures and lamps carried over): vertices, edges or
+    faces (`1 2 3`) picked with a click, Shift + click, a box, a second click or Alt + click
+    for a loop, `L` / `Ctrl+L` linked, `A`, `Alt+A`, `Ctrl+I`; moved, turned and scaled with the
+    handles; extrude (`E`), inset (`I`), bevel (`Ctrl+B`), loop cut (`Ctrl+R`), their size
+    following the mouse until a click (the wheel: segments or cuts; Adjust the last operation
+    after), subdivide, fill (`F`), bridge loops, connect (`J`), poke, merge (`M`), dissolve,
+    delete (`X`), duplicate (`Shift+D`), split (`Y`), separate into an object (`P`), spin,
+    mirror, smooth, triangulate (`Ctrl+T`) and back to quads (`Alt+J`), normals flipped or set
+    outward, smooth or flat shading, seams and sharp edges, materials per face; its own undo
+    (`Ctrl+Z`); x-ray picking.
+  * **Parts**: an object's meshes listed (shown or not, renamed, duplicated, deleted, a shape
+    added as a part); Separate parts into objects makes each one an object standing where it
+    stood; several objects selected: **Join** (`Ctrl+J`) makes them one.
+  * **Booleans (CSG)** of any objects (two or more selected; the one in the properties against
+    the others): union, difference, intersection and slice (both pieces kept), the cutters
+    kept or not; and a Boolean modifier with another part.
+  * **Modifiers**, as Blender's stack (on, off, order, apply): array, mirror, solidify, bevel,
+    subdivision surface, decimate, triangulate, smooth, displace, wireframe, screw, simple
+    deform (twist, bend, taper, stretch), cast, weld, edge split, boolean, follow the ground.
+  * **Materials**: colour, texture (any picture; OMSI's formats kept, others made PNG), its
+    transparency, glow, shine, normal and ORM maps (openOMSI's `_nn`, `_orm`), OMSI's night
+    texture and light map; Import materials from an `.mtl`, a glTF / GLB / FBX, or the
+    pictures of one PBR material (base colour, normal, roughness, metalness, occlusion,
+    opacity, emission: packed as openOMSI reads them); a texture saved as PNG, JPEG, BMP, TGA,
+    TIFF, WebP or DDS.
+  * **UV maps**: unwrap by seams (conformal), smart project, cube, cylinder, sphere, from the
+    view, lightmap pack; the UV editor window with the texture under the faces (pick, move,
+    turn, flip, scale, fit, pack, even out islands, seams from islands).
+  * **Bake** (as Blender's): the object's textures and colours painted into one picture on a
+    new UV map, with ambient occlusion and its lamps' night light (a light map) if chosen, so
+    the whole object is one material.
+  * **Lamps**: glows (OMSI's `[light_enh_2]`: colour, size, a cone or all round, always, at
+    night or by a script's variable) and light on the ground (`[maplight]`); a **street lamp**
+    and a **signal head** of chosen lamps made in one click (the head lit by its own script
+    from the phase of the crossing it is linked to, as OMSI 2's `Ampel_Kfz_1`; it takes its
+    light from a crossing with a light program within 40 m).
+  * **Export** (an object's or the selection's Export…, objects and roads): OBJ + MTL, glTF,
+    GLB, FBX (binary, as Blender writes it), Collada, USD, STL, PLY, 3MF, OFF, DirectX `.x`
+    and OMSI `.o3d`, textures copied beside (or packed in), metres with z up.
+  * A road or spline's shape made an object (Copy as an object, Replace by an object), to edit
+    as a mesh.
+  * Imported models come in as these objects, a part for each node.
 * **PBR** in the viewport: normal, roughness, metalness and AO maps are found by
   openOMSI's rules (`omsi-texture`) and drawn with the same derivative-based tangent frame.
 * Undo / redo for every action (Edit > Edit history… lists the steps: a click goes back or forward to one), two languages (English / Russian), interface size 80–150 % (View menu).
@@ -279,7 +376,7 @@ can drive in service.
   the cursor and dragging the ground moves the map.
 * **Trackpad:** two fingers move the map, pinch zooms, twist turns; Option + two fingers or
   Option + drag turns and tilts.
-* **Keyboard:** `W A S D` / arrows move, `Q / E` turn, `1–7` tools, `M` overview map, `B` assets, `L` lines, `T` traffic, `I` satellite and terrain, `R` turn object, `Del`,
+* **Keyboard:** `W A S D` / arrows move, `Q / E` turn, `1–7` tools, `V / C / X` move, rotate and scale handles, `Tab` edit the selected object's mesh, `Ctrl+J` join objects, `M` overview map, `B` assets, `L` lines, `T` traffic, `I` satellite and terrain, `R` turn object, `Del`,
   `F` go to selection, `[ ]` brush size, `G` tile grid, `Ctrl+Z`, `Ctrl+Shift+Z`, `Ctrl+S`,
   `Ctrl+C / X / V / D` copy, cut, paste, duplicate, `Ctrl+A` select all, `Ctrl+F` find in map, `Ctrl+K` search for a command, `Alt + arrows` nudge the selection a grid step (`Shift`: 10 cm), `Alt + Page Up / Down` raise or lower it, `U` ruler, `Home` look straight down, `F5` test drive (`Shift+F5`: from the start point nearest the view), `F12` save a picture of the view (into `~/Pictures/openMapper`), `Ctrl+1…9` go to a saved view (`Ctrl+Shift`: keep the view there).
 
@@ -287,7 +384,7 @@ can drive in service.
 
 Rust, written from scratch for openOMSI:
 
-* **wgpu** from the org's fork [`wgpu-openomsi`](https://github.com/openOMSI-Project/wgpu-openomsi)
+* **wgpu** from the org's fork [`wgpu-openomsi`](https://github.com/openOMSI-org/wgpu-openomsi)
   (the same revision openOMSI uses), Metal / Vulkan / Direct3D 12 / GL;
 * the interface is [`egui-openomsi`](https://github.com/openOMSI-org/egui-openomsi), laid out
   like a classic desktop editor: menu bar, toolbar, docked panels (tool/catalogue on the left,
@@ -311,8 +408,9 @@ cargo run --release
 `tools/package-macos.sh` makes `openMapper.app` and a zip of it in `target/package`,
 `tools/package-linux.sh` a tar.gz with a desktop entry and `tools/package-windows.ps1` a zip
 (no console window, nothing else to install); a `v*` tag builds all three on GitHub and
-publishes them as a release (`.github/workflows/release.yml`). The icon is drawn by the
-program (`openmapper --icon out.png 512`).
+publishes them as a release (`.github/workflows/release.yml`; Windows and macOS for x64 and ARM64,
+Linux on a runner of each). The logo and icons are drawn by `tools/make-icons.py` from Inter
+(`assets/logos`, `assets/icons/app`); the program embeds its icon (`openmapper --icon out.png 512`).
 
 `openmapper path/to/global.cfg` opens a map straight away. `OPENMAPPER_SHOT=out.png` saves
 a picture of the window and exits (for checks without a person at the screen).
@@ -327,6 +425,15 @@ made on threads of their own. View > Graphics quality (Low / Medium / High) sets
 edge smoothing, how far the view reaches and how far small things are drawn.
 `OPENMAPPER_PROFILE=gpu` measures the GPU's time for the view apart from the screen's refresh.
 
+## Contributing
+
+Pull requests and issues are welcome: see [CONTRIBUTING.md](CONTRIBUTING.md). Security problems
+are reported privately, see [SECURITY.md](SECURITY.md). What is planned is in
+[docs/ROADMAP.md](docs/ROADMAP.md); what changed in each version is in the
+[changelog](CHANGELOG.md).
+
 ## License
 
-MIT
+[MIT](LICENSE). The logo is set in [Inter](https://rsms.me/inter/) (SIL Open Font License, in
+`assets/fonts`); the icons are Google's [Material Symbols](https://fonts.google.com/icons)
+(Apache 2.0).

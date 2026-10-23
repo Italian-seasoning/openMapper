@@ -32,8 +32,51 @@ pub fn alpha8(size: usize, texels: &[u8]) -> Vec<u8> {
     out
 }
 
+/// An uncompressed 32-bit DDS (A8R8G8B8, as Direct3D lays it out: blue first), no mipmaps:
+/// a texture exported for tools that want DDS.
+pub fn rgba(width: u32, height: u32, rgba: &[u8]) -> Vec<u8> {
+    let mut out = Vec::with_capacity(128 + rgba.len());
+    let w = |out: &mut Vec<u8>, v: u32| out.extend_from_slice(&v.to_le_bytes());
+    out.extend_from_slice(b"DDS ");
+    w(&mut out, 124);
+    w(&mut out, 0x1 | 0x2 | 0x4 | 0x1000 | 0x8);
+    w(&mut out, height);
+    w(&mut out, width);
+    w(&mut out, width * 4);
+    w(&mut out, 0);
+    w(&mut out, 0);
+    for _ in 0..11 {
+        w(&mut out, 0);
+    }
+    w(&mut out, 32);
+    w(&mut out, 0x40 | 0x1); // DDPF_RGB | DDPF_ALPHAPIXELS
+    w(&mut out, 0);
+    w(&mut out, 32);
+    w(&mut out, 0x00ff_0000);
+    w(&mut out, 0x0000_ff00);
+    w(&mut out, 0x0000_00ff);
+    w(&mut out, 0xff00_0000);
+    w(&mut out, 0x1000);
+    for _ in 0..4 {
+        w(&mut out, 0);
+    }
+    for px in rgba.chunks(4).take((width * height) as usize) {
+        out.extend_from_slice(&[px[2], px[1], px[0], px[3]]);
+    }
+    out
+}
+
 #[cfg(test)]
 mod tests {
+    #[test]
+    fn an_rgba_dds_reads_back_through_openomsi() {
+        let px: Vec<u8> = (0..4 * 4 * 4).map(|i| (i * 7 % 256) as u8).collect();
+        let bytes = super::rgba(4, 4, &px);
+        let img = omsi_texture::dds::decode(&bytes).unwrap();
+        assert_eq!((img.width, img.height), (4, 4));
+        assert_eq!(&img.rgba[..8], &px[..8]);
+    }
+
     #[test]
     fn reads_back_through_openomsi() {
         let size = 16;

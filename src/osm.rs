@@ -29,8 +29,8 @@ pub enum Class {
 impl Class {
     pub const ALL: [Class; 5] = [Class::Main, Class::Street, Class::Service, Class::Tram, Class::Rail];
 
-    /// Tracks: no junctions with what they meet (crossings stay level, branches are
-    /// joined by hand with switches).
+    /// Tracks: no junctions with what they meet (crossings stay level); a branch gets a
+    /// switch with Auto-Switch on.
     pub fn is_track(self) -> bool {
         matches!(self, Class::Tram | Class::Rail)
     }

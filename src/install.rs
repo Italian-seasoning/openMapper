@@ -254,6 +254,7 @@ pub fn find_game() -> Option<PathBuf> {
 
 /// Both content roots in the order the game searches them: the content folder (mods and the
 /// maps made here), then the installation.
+#[derive(Clone)]
 pub struct Roots {
     pub omsi: PathBuf,
     pub content: PathBuf,

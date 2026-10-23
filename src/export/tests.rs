@@ -37,7 +37,9 @@ fn an_exported_map_imports_whole() {
     let names: Vec<&str> = plan.files.keys().map(|s| s.as_str()).collect();
     let has = |part: &str| names.iter().any(|n| n.to_lowercase().contains(&part.to_lowercase()));
     assert!(has("maps/ExportTest/global.cfg") && has("maps/ExportTest/tile_0_0.map"), "{names:?}");
-    assert!(has("Imported/kiosk/kiosk.sco") && has("kiosk/model/kiosk.x") && has("kiosk/texture/kiosk.png") && has("kiosk_nn.png"), "{names:?}");
+    assert!(has("Imported/kiosk/kiosk.sco") && has("kiosk/model/kiosk_") && has("kiosk/texture/kiosk.png") && has("kiosk_nn.png"), "{names:?}");
+    // (and the source openMapper edits it from, so the map's recipient can too)
+    assert!(has("kiosk/kiosk.openmapper.json"), "{names:?}");
     assert!(!has("Generic"), "stock files are not packed: {names:?}");
     assert!(plan.stock.keys().any(|k| k.eq_ignore_ascii_case("Sceneryobjects\\Generic")));
     assert!(plan.missing.is_empty(), "{:?}", plan.missing);

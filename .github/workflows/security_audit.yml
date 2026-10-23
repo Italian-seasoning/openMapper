@@ -1,0 +1,22 @@
+# Known vulnerabilities in the crates, checked when the dependencies change and every week.
+name: Security audit
+
+on:
+  push:
+    branches: [main]
+    paths: ["Cargo.lock", "Cargo.toml"]
+  pull_request:
+    paths: ["Cargo.lock", "Cargo.toml"]
+  schedule:
+    - cron: "17 5 * * 1"
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: cargo install cargo-audit --locked
+      - run: cargo audit

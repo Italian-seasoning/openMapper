@@ -16,6 +16,9 @@ pub enum Kind {
     Wms,
     /// Google's Map Tiles API: a session is made first, its token goes into each request.
     Google,
+    /// The map as OpenStreetMap draws it, made from its data as a vector picture (no server of
+    /// tiles: `osm_map`).
+    OsmMap,
     /// Heights as Terrarium PNGs (R * 256 + G + B / 256 - 32768 m).
     Terrarium,
 }
@@ -62,6 +65,8 @@ fn px256() -> u32 {
 
 pub const ESRI: &str = "Esri World Imagery";
 pub const GOOGLE: &str = "Google satellite";
+/// The map as the OpenStreetMap site draws it (streets, names, signs), in place of a picture from the air.
+pub const OSM_STANDARD: &str = "OpenStreetMap map (vector)";
 pub const TERRARIUM: &str = "AWS Terrain Tiles";
 /// The cache folder of Google's sessions.
 pub const GOOGLE_SESSION_DIR: &str = "google-sessions";
@@ -93,6 +98,7 @@ pub fn builtin() -> Vec<Source> {
     vec![
         // (blankTile=false: above its coverage the server answers 404, not a grey picture)
         base(ESRI, "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}?blankTile=false", "Imagery © Esri, Maxar, Earthstar Geographics, and the GIS User Community", 21),
+        Source { kind: Kind::OsmMap, ..base(OSM_STANDARD, "", "© OpenStreetMap contributors, ODbL", 19) },
         keyed(GOOGLE, "https://tile.googleapis.com/v1/2dtiles/{z}/{x}/{y}?session={session}&key={key}", "Google", 22, Kind::Google, "https://console.cloud.google.com/apis/library/tile.googleapis.com", 256),
         keyed("Mapbox Satellite", "https://api.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}@2x.jpg90?access_token={key}", "© Mapbox © OpenStreetMap contributors © Maxar", 21, Kind::Imagery, "https://account.mapbox.com/access-tokens/", 512),
         keyed("MapTiler Satellite", "https://api.maptiler.com/tiles/satellite-v2/{z}/{x}/{y}.jpg?key={key}", "© MapTiler © OpenStreetMap contributors", 20, Kind::Imagery, "https://cloud.maptiler.com/account/keys/", 256),
@@ -197,6 +203,7 @@ impl Source {
     /// A short note for the source list.
     pub fn note(&self) -> String {
         match (self.kind, self.needs_key) {
+            (Kind::OsmMap, _) => tr("drawn from OpenStreetMap data: sharp, with names", "рисуется из данных OpenStreetMap: чётко, с названиями").into(),
             (Kind::Terrarium, _) => tr("terrain heights, no key needed", "высоты рельефа, ключ не нужен").into(),
             (_, true) => tr("needs your own free key", "нужен ваш собственный бесплатный ключ").into(),
             _ => tr("no key needed", "ключ не нужен").into(),
@@ -224,7 +231,9 @@ pub fn rank(v: &mut [(Source, Option<f64>)]) {
         }
     };
     let cm = |m: Option<f64>| m.map(|m| (m * 100.0).round() as i64).unwrap_or(i64::MAX);
-    v.sort_by(|a, b| cm(a.1).cmp(&cm(b.1)).then(pref(&a.0).cmp(&pref(&b.0))));
+    // (the drawn map is never the sharpest by itself: it is chosen, not found)
+    let drawn = |s: &Source| s.name == OSM_STANDARD;
+    v.sort_by(|a, b| drawn(&a.0).cmp(&drawn(&b.0)).then(cm(a.1).cmp(&cm(b.1))).then(pref(&a.0).cmp(&pref(&b.0))));
 }
 
 /// A Google Map Tiles API session (`createSession`'s answer).

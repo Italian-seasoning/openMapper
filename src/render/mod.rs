@@ -165,6 +165,14 @@ pub struct FrameExtras {
     pub show_technical: bool,
     /// Layers left out of the view: trees, other objects, splines (View menu).
     pub hide: [bool; 3],
+    /// Objects drawn at another size along their own axes (a scale being dragged); zero
+    /// hides one (an object whose mesh is being edited is drawn by the edit view).
+    pub resized: Vec<(Sel, DVec3)>,
+    /// Triangles drawn solid among the map (hidden by what is in front, hiding what is
+    /// behind): a mesh being edited.
+    pub solid: Vec<OverlayPoint>,
+    /// Like `overlay`, but hidden by what is in front: its edges and vertices.
+    pub overlay_depth: Vec<OverlayPoint>,
 }
 
 struct GpuMesh {
@@ -295,6 +303,8 @@ struct SplineEntry {
     instance: u32,
     /// Drawn as part of its tile's chunk (then it has no mesh of its own on the GPU).
     in_chunk: bool,
+    /// An AI path: seen as the lanes' lines, never as a mesh.
+    ai_path: bool,
 }
 
 /// A tile's splines in one mesh, a draw per material: thousands of splines become a few
@@ -346,6 +356,10 @@ pub struct Renderer {
     sky_pipeline: wgpu::RenderPipeline,
     overlay_pipeline: wgpu::RenderPipeline,
     overlay_buf: Option<(wgpu::Buffer, u32)>,
+    solid_pipeline: wgpu::RenderPipeline,
+    solid_buf: Option<(wgpu::Buffer, u32)>,
+    overlay_depth_pipeline: wgpu::RenderPipeline,
+    overlay_depth_buf: Option<(wgpu::Buffer, u32)>,
     terrain_index: wgpu::Buffer,
     terrain_index_count: u32,
     tiles: HashMap<TileKey, GpuTile>,
@@ -377,6 +391,9 @@ pub struct Renderer {
     assets_seen: (usize, usize),
     assets_seen_at: std::time::Instant,
     tinted: Vec<(Sel, [f32; 4])>,
+    /// Instances drawn resized, and their matrices as built.
+    resized: Vec<(Sel, DVec3)>,
+    resized_orig: HashMap<u32, [[f32; 4]; 4]>,
     /// The splines' and ghosts' instances as last sent.
     dyn_last: Vec<Instance>,
     blank: Instance,
@@ -710,6 +727,27 @@ impl Renderer {
         };
         let sky_pipeline = sky(format, samples);
         let thumb_sky = sky(thumb_fmt, 1);
+        // (reversed depth: what is nearer has the greater depth)
+        let overlay_with = |label: &str, write: bool, compare: wgpu::CompareFunction| {
+            device.create_render_pipeline(&wgpu::RenderPipelineDescriptor {
+                label: Some(label),
+                layout: Some(&global_only),
+                vertex: wgpu::VertexState {
+                    module: &overlay_sh,
+                    entry_point: Some("vs"),
+                    compilation_options: Default::default(),
+                    buffers: &[wgpu::VertexBufferLayout { array_stride: std::mem::size_of::<OverlayVertex>() as u64, step_mode: wgpu::VertexStepMode::Vertex, attributes: &wgpu::vertex_attr_array![0 => Float32x3, 1 => Float32x4] }],
+                },
+                primitive: wgpu::PrimitiveState { cull_mode: None, ..Default::default() },
+                depth_stencil: Some(wgpu::DepthStencilState { format: DEPTH, depth_write_enabled: Some(write), depth_compare: Some(compare), stencil: Default::default(), bias: Default::default() }),
+                multisample: wgpu::MultisampleState { count: samples, ..Default::default() },
+                fragment: Some(wgpu::FragmentState { module: &overlay_sh, entry_point: Some("fs"), compilation_options: Default::default(), targets: &[Some(wgpu::ColorTargetState { format, blend: blend_alpha, write_mask: wgpu::ColorWrites::ALL })] }),
+                multiview_mask: None,
+                cache: None,
+            })
+        };
+        let solid_pipeline = overlay_with("solid", true, wgpu::CompareFunction::GreaterEqual);
+        let overlay_depth_pipeline = overlay_with("overlay with depth", false, wgpu::CompareFunction::GreaterEqual);
         let overlay_pipeline = device.create_render_pipeline(&wgpu::RenderPipelineDescriptor {
             label: Some("overlay"),
             layout: Some(&global_only),
@@ -802,6 +840,10 @@ impl Renderer {
             sky_pipeline,
             overlay_pipeline,
             overlay_buf: None,
+            solid_pipeline,
+            solid_buf: None,
+            overlay_depth_pipeline,
+            overlay_depth_buf: None,
             terrain_index,
             terrain_index_count: idx.len() as u32,
             tiles: HashMap::new(),
@@ -828,6 +870,8 @@ impl Renderer {
             assets_seen: (0, 0),
             assets_seen_at: std::time::Instant::now(),
             tinted: Vec::new(),
+            resized: Vec::new(),
+            resized_orig: HashMap::new(),
             dyn_last: Vec::new(),
             blank: Instance::new(Mat4::IDENTITY, [0.0; 4]),
             warm_pending: true,
@@ -871,6 +915,19 @@ impl Renderer {
     }
 
     /// Forget loaded models (files changed on disk).
+    /// Forget one object's model and the pictures in its folder (its files were written
+    /// anew): they are made again when it is next drawn.
+    pub fn forget_model(&mut self, rel: &str, dir: &std::path::Path) {
+        let k = rel.to_lowercase();
+        let labelled = format!("{k}\u{1}");
+        self.models.retain(|key, _| *key != k && !key.starts_with(&labelled));
+        self.textures.retain(|p, _| !p.starts_with(dir));
+        self.materials.retain(|m, _| !m.texture.as_ref().map(|t| t.starts_with(dir)).unwrap_or(false) && !m.glow.as_ref().map(|g| g.0.starts_with(dir)).unwrap_or(false));
+        self.thumbs.remove(&k);
+        self.asset_epoch += 1;
+        self.tile_groups.clear();
+    }
+
     pub fn reset_models(&mut self) {
         self.models.clear();
         self.materials.clear();
@@ -1239,6 +1296,8 @@ impl Renderer {
             self.scene_by_sel = by_sel;
             self.cached_scene = instances;
             self.tinted.clear();
+            self.resized.clear();
+            self.resized_orig.clear();
             self.warm_pending = true;
             // (one instance at least: a buffer may not be empty)
             let bytes: &[u8] = if self.cached_scene.is_empty() { bytemuck::bytes_of(&self.blank) } else { bytemuck::cast_slice(&self.cached_scene) };
@@ -1278,6 +1337,31 @@ impl Renderer {
                 set(*s, *t, &mut self.cached_scene);
             }
             self.tinted = want;
+        }
+        if extras.resized != self.resized {
+            let size = std::mem::size_of::<Instance>() as u64;
+            for (i, m) in std::mem::take(&mut self.resized_orig) {
+                let inst = &mut self.cached_scene[i as usize];
+                inst.m = m;
+                if let Some(b) = &self.scene_buf {
+                    queue.write_buffer(b, i as u64 * size, bytemuck::bytes_of(inst));
+                }
+            }
+            for (sel, f) in &extras.resized {
+                for &i in self.scene_by_sel.get(sel).into_iter().flatten() {
+                    let inst = &mut self.cached_scene[i as usize];
+                    self.resized_orig.entry(i).or_insert(inst.m);
+                    for (c, k) in [f.x, f.y, f.z].into_iter().enumerate() {
+                        for r in 0..4 {
+                            inst.m[c][r] *= k as f32;
+                        }
+                    }
+                    if let Some(b) = &self.scene_buf {
+                        queue.write_buffer(b, i as u64 * size, bytemuck::bytes_of(inst));
+                    }
+                }
+            }
+            self.resized = extras.resized.clone();
         }
         let _ = cam;
         self.profile.add("sync.objects", profile::ms(t));
@@ -1322,7 +1406,7 @@ impl Renderer {
                     }
                 }
                 if let Some(e) = self.splines.get_mut(&(*k, s.id)) {
-                    e.hidden = e.technical && !extras.show_technical || extras.hide[2];
+                    e.hidden = e.technical && !extras.show_technical || extras.hide[2] || e.ai_path;
                     e.instance = spline_instances.len() as u32;
                     spline_instances.push(Instance::new(Mat4::from_translation(corner), tint).surface(SURF_SPLINE));
                 }
@@ -1352,7 +1436,7 @@ impl Renderer {
                 m.positions.iter().for_each(|p| bbox.add_sphere(*p + corner, 0.0));
                 let material = Material { texture: water_tex.clone(), color: [0.22, 0.38, 0.45, 0.72], alpha: Alpha::Blend, glow: None };
                 let mesh = Some(upload_mesh(device, &m));
-                self.splines.insert(key, SplineEntry { hash: h, mesh, cpu: None, bounds: [0.0, 0.0, t, t], bbox, cuts: false, drivable: false, technical: true, hidden: false, outlines: Vec::new(), rims: Vec::new(), materials: vec![material], instance: 0, in_chunk: false });
+                self.splines.insert(key, SplineEntry { hash: h, mesh, cpu: None, bounds: [0.0, 0.0, t, t], bbox, cuts: false, drivable: false, technical: true, hidden: false, outlines: Vec::new(), rims: Vec::new(), materials: vec![material], instance: 0, in_chunk: false, ai_path: false });
                 self.warm_pending = true;
             }
             if let Some(e) = self.splines.get_mut(&key) {
@@ -1428,14 +1512,18 @@ impl Renderer {
             self.dyn_last = all;
         }
 
-        // overlay
-        if extras.overlay.is_empty() {
-            self.overlay_buf = None;
-        } else {
-            let verts: Vec<OverlayVertex> = extras.overlay.iter().map(|p| OverlayVertex { pos: (p.pos - anchor).as_vec3().to_array(), color: p.color }).collect();
-            let b = device.create_buffer_init(&wgpu::util::BufferInitDescriptor { label: Some("overlay"), contents: bytemuck::cast_slice(&verts), usage: wgpu::BufferUsages::VERTEX });
-            self.overlay_buf = Some((b, extras.overlay.len() as u32));
-        }
+        // overlays
+        let upload = |list: &[OverlayPoint], label: &str| -> Option<(wgpu::Buffer, u32)> {
+            if list.is_empty() {
+                return None;
+            }
+            let verts: Vec<OverlayVertex> = list.iter().map(|p| OverlayVertex { pos: (p.pos - anchor).as_vec3().to_array(), color: p.color }).collect();
+            let b = device.create_buffer_init(&wgpu::util::BufferInitDescriptor { label: Some(label), contents: bytemuck::cast_slice(&verts), usage: wgpu::BufferUsages::VERTEX });
+            Some((b, list.len() as u32))
+        };
+        self.overlay_buf = upload(&extras.overlay, "overlay");
+        self.solid_buf = upload(&extras.solid, "solid");
+        self.overlay_depth_buf = upload(&extras.overlay_depth, "overlay with depth");
         self.profile.add("sync.upload", profile::ms(t));
         t = std::time::Instant::now();
         // materials of everything that will be drawn (when something new is there to draw)
@@ -1896,6 +1984,16 @@ impl Renderer {
                 let Some(mesh) = &g.1 else { continue };
                 calls += draw_mesh(&mut pass, &self.materials, mesh, &g.2, None, &[g.3..g.3 + 1]);
             }
+        }
+        if let Some((b, n)) = &self.solid_buf {
+            pass.set_pipeline(&self.solid_pipeline);
+            pass.set_vertex_buffer(0, b.slice(..));
+            pass.draw(0..*n, 0..1);
+        }
+        if let Some((b, n)) = &self.overlay_depth_buf {
+            pass.set_pipeline(&self.overlay_depth_pipeline);
+            pass.set_vertex_buffer(0, b.slice(..));
+            pass.draw(0..*n, 0..1);
         }
         if let Some((b, n)) = &self.overlay_buf {
             pass.set_pipeline(&self.overlay_pipeline);

@@ -34,6 +34,10 @@ pub enum Action {
     OpenDialog,
     Save,
     Close,
+    /// A new object of one of the shapes (`primitives::ALL`), to put on the map.
+    CreatePrimitive(usize),
+    /// Something done to openMapper's own objects (edit mode, join, booleans, export...).
+    Mesh(crate::ui_mesh::MeshAction),
     Play,
     /// A test drive from the start point nearest the view (false), or the view itself seen
     /// in openOMSI with a free camera (true).
@@ -65,6 +69,10 @@ pub enum Action {
     PbrForObject(String),
     /// The PBR window on a road type's textures.
     PbrForSpline(String),
+    /// The selected roads' lanes made into AI paths of their own.
+    DetachLanes,
+    /// The relief of the whole map taken away, roads and paths laid on the flat ground.
+    FlattenTerrain,
     /// The PBR window on a picture chosen from disk.
     PbrMaker,
     /// Content files changed (maps made, imported): read the catalogue and models again,
@@ -151,6 +159,17 @@ pub enum Action {
 /// State of the interface that lives between frames.
 pub struct UiState {
     pub search: String,
+    /// The plan view: looking straight down, north up, the tilt and the turn held.
+    pub view_2d: bool,
+    /// What a bake of an openMapper object makes; whether booleans keep their cutters; the
+    /// UV editor open; the lamps of a signal head to make.
+    pub bake: crate::ui_mesh::BakeChoice,
+    pub keep_cutters: bool,
+    pub uv_open: bool,
+    pub uv: crate::ui_uv::UvEditor,
+    pub signal_lamps: Vec<crate::editable::Lamp>,
+    /// Scaling an object in the properties keeps its proportions.
+    pub scale_uniform: bool,
     /// Saved views (View menu, Ctrl+1…9).
     pub views: crate::ui_views::Views,
     /// Search for a command (Ctrl+K).
@@ -217,6 +236,13 @@ impl Default for UiState {
     fn default() -> Self {
         UiState {
             search: String::new(),
+            view_2d: false,
+            bake: Default::default(),
+            keep_cutters: false,
+            uv_open: false,
+            uv: Default::default(),
+            signal_lamps: vec![crate::editable::Lamp::Red, crate::editable::Lamp::Yellow, crate::editable::Lamp::Green],
+            scale_uniform: true,
             views: Default::default(),
             palette: Default::default(),
             merge: Default::default(),
@@ -723,6 +749,20 @@ pub fn editor(root: &mut egui::Ui, st: &mut UiState, u: EditorUi, actions: &mut 
         }
     });
     let ctx = root.ctx().clone();
+    // the round 2D / 3D switch at the top right of the view
+    if view.0.is_positive() {
+        let at = egui::Pos2::new(view.0.right() - 46.0, view.0.top() + 12.0);
+        egui::Area::new(Id::new("view 2d 3d")).fixed_pos(at).order(egui::Order::Foreground).show(&ctx, |ui| {
+            let (rect, resp) = ui.allocate_exact_size(Vec2::splat(34.0), Sense::click());
+            let p = ui.painter();
+            p.circle_filled(rect.center(), 17.0, if resp.hovered() { Color32::from_rgb(70, 74, 82) } else { Color32::from_rgb(46, 49, 55) });
+            p.circle_stroke(rect.center(), 17.0, Stroke::new(1.5, if st.view_2d { ACCENT } else { Color32::from_gray(150) }));
+            p.text(rect.center(), egui::Align2::CENTER_CENTER, if st.view_2d { "3D" } else { "2D" }, egui::FontId::proportional(13.0), Color32::WHITE);
+            if resp.on_hover_text(if st.view_2d { tr("Back to the 3D view (0)", "Вернуться в 3D (0)") } else { tr("The plan view from above, north up (0)", "Вид сверху, север вверху (0)") }).clicked() {
+                st.view_2d = !st.view_2d;
+            }
+        });
+    }
     texture_picker(&ctx, st, texture_files, swatches, wanted_swatches, actions);
     controls(&ctx, st, prefs, actions);
     about(&ctx, st);
@@ -851,6 +891,9 @@ fn menu_bar(root: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, can_undo: bo
                 check(ui, &mut st.minimap.open, icons::labelled(Icon::Map, tr("Overview map (M)", "Обзорная карта (M)")));
                 check(ui, &mut st.assets.open, icons::labelled(Icon::Objects, tr("Assets (B)", "Ассеты (B)")));
                 crate::ui_geo::view_menu(ui, &mut st.geo);
+                if menu_item(ui, Some(Icon::Terrain), tr("Flatten the terrain (roads follow)", "Убрать рельеф (дороги подстроятся)"), "", true) {
+                    actions.push(Action::FlattenTerrain);
+                }
                 if menu_item(ui, Some(Icon::Flag), tr("Saved views…", "Сохранённые виды…"), "Ctrl+1…9", true) {
                     st.views.open = !st.views.open;
                 }
@@ -923,10 +966,6 @@ fn menu_bar(root: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, can_undo: bo
                 }
             });
             ui.menu_button(tr("Map", "Карта"), |ui| {
-                if menu_item(ui, Some(Icon::Settings), tr("Map properties", "Свойства карты"), "", true) {
-                    ed.selected = None;
-                    ed.set_tool(Tool::Select);
-                }
                 if menu_item(ui, Some(Icon::Settings), tr("Map settings…", "Настройки карты…"), "", true) {
                     actions.push(Action::MapSettings);
                 }
@@ -1116,6 +1155,10 @@ fn status_bar(root: &mut egui::Ui, help_line: Option<String>, ed: &mut Editor, s
                     ui.label(RichText::new(format!("{} {} · {} {} · {} {}", doc.tiles.len(), tr("tiles", "тайлов"), splines, tr("splines", "сплайнов"), objects, tr("objects", "объектов"))).small().color(TEXT_DIM));
                     ui.separator();
                 }
+                if let Some(r) = ed.drag_readout() {
+                    ui.label(RichText::new(r).small().strong().color(ACCENT));
+                    ui.separator();
+                }
                 if let Some(c) = status.cursor {
                     let t = crate::doc::tile_of(c.truncate());
                     ui.label(RichText::new(format!("X {:>8.1}   Y {:>8.1}   Z {:>6.1}   {} {},{}", c.x, c.y, c.z, tr("tile", "тайл"), t.0, t.1)).small().monospace().color(TEXT_DIM));
@@ -1148,12 +1191,24 @@ fn tool_panel(
     wanted_swatches: &mut Vec<String>,
     actions: &mut Vec<Action>,
 ) {
+    if ed.mesh.as_ref().map(|m| m.editing).unwrap_or(false) {
+        section(ui, tr("Edit mesh", "Редактирование меша"));
+        Frame::new().inner_margin(Margin::same(8)).show(ui, |ui| crate::ui_mesh::edit_panel(ui, ed, &mut st.uv_open, actions));
+        return;
+    }
     section(ui, ed.tool.label());
     Frame::new().inner_margin(Margin::same(8)).show(ui, |ui| match ed.tool {
         Tool::Roads => catalogue(ui, st, ed, lib, thumbs, wanted, Kind::Spline, actions),
-        Tool::Objects => catalogue(ui, st, ed, lib, thumbs, wanted, Kind::Object, actions),
+        Tool::Objects => {
+            egui::CollapsingHeader::new(RichText::new(tr("Shapes and lamps", "Фигуры и светильники")).strong()).id_salt("shapes").default_open(false).show(ui, |ui| {
+                crate::ui_mesh::primitives_grid(ui, actions);
+                crate::ui_mesh::lamp_makers(ui, &mut st.signal_lamps, actions);
+            });
+            ui.add_space(4.0);
+            catalogue(ui, st, ed, lib, thumbs, wanted, Kind::Object, actions)
+        }
         Tool::Logic => logic_panel(ui, st, ed, lib, thumbs, wanted, actions),
-        Tool::Terrain => terrain_panel(ui, st, ed),
+        Tool::Terrain => terrain_panel(ui, st, ed, actions),
         Tool::Paint => paint_panel(ui, st, ed, swatches, wanted_swatches, actions),
         Tool::Tiles => {
             let n = ed.doc.as_ref().map(|d| d.tiles.len()).unwrap_or(0);
@@ -1250,7 +1305,7 @@ fn logic_panel(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Libra
                 }
             });
             if ed.path_edit {
-                ui.label(RichText::new(tr("Click a path to pick it, drag its dots to move an end or bend it, Ctrl+click on it to add a point, Del deletes it. Lanes of roads and junctions belong to their road type: change the road for them.", "Клик по пути: выбрать, тяните кружки: двигать конец или изгибать, Ctrl+клик по нему: добавить точку, Del: удалить. Полосы дорог и перекрёстков принадлежат типу дороги: меняйте саму дорогу.")).small().color(TEXT_DIM));
+                ui.label(RichText::new(tr("Click a path to pick it: every point is a dot to drag (the small ones in the middle of a piece bend it). Double-click the path to put a point in. Click a dot, then Del, to take that point out; Del with no dot picked deletes the whole path (Ctrl+Z brings it back). Lanes of roads and junctions belong to their road type: use Edit its AI lanes on the road.", "Клик по пути выбирает его: каждая точка это кружок, который можно тянуть (маленькие в середине куска изгибают его). Двойной клик по пути ставит точку. Клик по кружку, затем Del: убрать эту точку; Del без выбранной точки удаляет весь путь (Ctrl+Z вернёт). Полосы дорог и перекрёстков принадлежат типу дороги: используйте «Править полосы ИИ» у дороги.")).small().color(TEXT_DIM));
             }
             // the two everyone needs, at the top
             ui.horizontal(|ui| {
@@ -1547,7 +1602,7 @@ fn brush_grid(ui: &mut egui::Ui, ed: &mut Editor) {
     });
 }
 
-fn terrain_panel(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor) {
+fn terrain_panel(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, actions: &mut Vec<Action>) {
     ui.label(RichText::new(tr("Mode", "Режим")).strong());
     for m in TerrainMode::ALL {
         let r = ui.add(egui::Button::new(icons::labelled(m.icon(), m.label())).selected(ed.terrain_mode == m).min_size(Vec2::new(ui.available_width(), 24.0)));
@@ -1560,6 +1615,7 @@ fn terrain_panel(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor) {
             TerrainMode::Raise => tr("Raises the ground under the brush", "Поднимает землю под кистью"),
             TerrainMode::Lower => tr("Lowers the ground under the brush", "Опускает землю под кистью"),
             TerrainMode::Roughen => tr("Gives flat ground the rolls and dips of a natural field; hold longer for more", "Придаёт ровной земле бугры и впадины, как в поле; держите дольше: сильнее"),
+            TerrainMode::Water => tr("Paint a lake or a river: the ground is dug to a bed under the water's level (where you start the stroke, or the tile's water) and the tile gets water at that level. Water in OMSI is one level for a whole tile: another low place on the same tile shows it too", "Рисуйте озеро или реку: земля копается до дна под уровнем воды (там, где начали мазок, или водой тайла), и тайл получает воду на этом уровне. Вода в OMSI одного уровня на весь тайл: другое низкое место на том же тайле тоже её покажет"),
             TerrainMode::Ramp => tr("Click where it starts, then where it ends: the ground between becomes one even slope as wide as the brush (an embankment, a ramp, a level bed)", "Клик в начале, затем в конце: земля между ними станет ровным склоном шириной с кисть (насыпь, пандус, ровное полотно)"),
         };
         help(st, &r, h);
@@ -1577,9 +1633,20 @@ fn terrain_panel(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor) {
             }
         });
     }
+    if ed.terrain_mode == TerrainMode::Water {
+        ui.horizontal(|ui| {
+            ui.label(tr("Depth", "Глубина"));
+            ui.add(egui::DragValue::new(&mut ed.water_depth).speed(0.05).range(0.2..=20.0).fixed_decimals(1).suffix(" m"));
+        });
+        ui.label(RichText::new(tr("The water's level is set where a stroke starts: start at the bank.", "Уровень воды берётся там, где начат мазок: начинайте у берега.")).small().color(TEXT_DIM));
+    }
     ui.add_space(6.0);
     ui.label(RichText::new(tr("Brush", "Кисть")).strong());
     brush_grid(ui, ed);
+    ui.add_space(6.0);
+    if ui.button(icons::labelled(Icon::Terrain, tr("Flatten the whole terrain", "Убрать рельеф со всей карты"))).on_hover_text(tr("Every tile's ground levelled to the map's mean height; the roads, the AI paths and the junctions follow it. One undo step brings the relief back. (The satellite picture: View > Satellite overlay.)", "Земля всех тайлов выравнивается до средней высоты карты; дороги, пути ИИ и перекрёстки подстраиваются. Один шаг отмены вернёт рельеф. (Спутниковая картинка: Вид > Спутниковая подложка.)")).clicked() {
+        actions.push(Action::FlattenTerrain);
+    }
     st.heightmap.panel(ui, ed);
 }
 
@@ -1788,6 +1855,9 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
     };
     if ed.selection().len() > 1 {
         crate::ui_edit::group_properties(ui, ed, lib, actions);
+        let objects = ed.selection().iter().filter(|s| matches!(s, Sel::Object(..))).count();
+        let splines = ed.selection().len() - objects;
+        Frame::new().inner_margin(Margin::same(8)).show(ui, |ui| crate::ui_mesh::many_panel(ui, &mut st.keep_cutters, objects, splines, actions));
         return;
     }
     section(ui, tr("Properties", "Свойства"));
@@ -1795,6 +1865,7 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
     let mut changed_labels: Option<Vec<String>> = None;
     let mut new_rot: Option<[f64; 3]> = None;
     let mut new_lift: Option<f64> = None;
+    let mut new_scale: Option<(bool, glam::DVec3)> = None;
     let mut new_name: Option<String> = None;
     let mut new_pos: Option<(f64, f64)> = None;
     let mut ends = crate::ui_edit::EndsEdit::default();
@@ -1844,45 +1915,56 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
                             ui.label(format!("ID {p} · {} {}", tr("point", "точка"), o.attach_index));
                         });
                     }
-                    if o.parent_id.is_none() { prop_row(ui, tr("Position", "Позиция"), |ui| {
-                        // (on the map, in metres; past a tile's edge it goes over to the next one)
+                    if o.parent_id.is_none() {
+                        // (on the map, in metres; past a tile's edge it goes over to the next one;
+                        // the height is the world's, whatever the object keeps it as)
                         let org = crate::doc::tile_origin(k);
-                        let (mut x, mut y) = (o.pos[0] + org.x, o.pos[1] + org.y);
-                        ui.horizontal(|ui| {
-                            let a = ui.add(egui::DragValue::new(&mut x).speed(0.05).max_decimals(2).prefix("X "));
-                            let b = ui.add(egui::DragValue::new(&mut y).speed(0.05).max_decimals(2).prefix("Y "));
-                            if a.changed() || b.changed() {
-                                new_pos = Some((x - org.x, y - org.y));
+                        let abs = a.map(|a| a.abs_height).unwrap_or(false);
+                        let ground = doc.ground(glam::DVec2::new(o.pos[0] + org.x, o.pos[1] + org.y));
+                        let mut v = [o.pos[0] + org.x, o.pos[1] + org.y, if abs { o.pos[2] } else { ground + o.pos[2] }];
+                        prop_row(ui, tr("Location", "Положение"), |ui| {
+                            let ch = crate::ui_xform::xyz(ui, &mut v, 0.05, " m", 3, None, [tr("East", "Восток"), tr("North", "Север"), tr("Height above sea level", "Высота над уровнем моря")]);
+                            if ch[0] || ch[1] {
+                                new_pos = Some((v[0] - org.x, v[1] - org.y));
+                            }
+                            if ch[2] {
+                                new_lift = Some(if abs { v[2] } else { v[2] - ground });
                             }
                         });
-                    }); }
+                        if !abs {
+                            prop_row(ui, "", |ui| {
+                                ui.label(RichText::new(format!("{} {:.2} m", tr("above the ground:", "над землёй:"), o.pos[2])).small().color(TEXT_DIM)).on_hover_text(tr("OMSI keeps this object's height above the ground under it: moved elsewhere it stays as high above the ground there", "OMSI хранит высоту этого объекта над землёй под ним: перенесённый в другое место, он остаётся на той же высоте над землёй"));
+                            });
+                        }
+                    }
                     prop_row(ui, tr("Rotation", "Поворот"), |ui| {
-                        let mut r = o.rot;
-                        ui.horizontal(|ui| {
-                            let a = ui.add(egui::DragValue::new(&mut r[0]).range(-360.0..=720.0).speed(1.0).suffix("°")).on_hover_text(tr("Direction (heading)", "Направление (курс)"));
-                            let b = ui.add(egui::DragValue::new(&mut r[1]).range(-90.0..=90.0).speed(0.25).suffix("°")).on_hover_text(tr("Tilt forward", "Наклон вперёд"));
-                            let c = ui.add(egui::DragValue::new(&mut r[2]).range(-90.0..=90.0).speed(0.25).suffix("°")).on_hover_text(tr("Bank to the side", "Крен вбок"));
-                            if ui.small_button(Icon::Road.text(13.0)).on_hover_text(tr("Turn it the way the nearest road runs beside it", "Повернуть по ходу ближайшей дороги рядом")).clicked() {
-                                align_road = true;
+                        // (X: tilt forward, Y: bank to the side, Z: heading, as the gizmo's rings)
+                        let r = o.rot;
+                        let mut v = [r[1], r[2], r[0]];
+                        ui.vertical(|ui| {
+                            let ch = crate::ui_xform::xyz(ui, &mut v, 0.5, "°", 2, Some((-360.0, 720.0)), [tr("Tilt forward (pitch)", "Наклон вперёд (тангаж)"), tr("Bank to the side (roll)", "Крен вбок"), tr("Heading", "Направление (курс)")]);
+                            if ch.iter().any(|c| *c) {
+                                new_rot = Some([v[2].rem_euclid(360.0), v[0], v[1]]);
                             }
-                            if ui.small_button(Icon::Terrain.text(13.0)).on_hover_text(crate::ui_edit::lean_help()).clicked() {
-                                lean = true;
-                            }
-                            if (r[1] != 0.0 || r[2] != 0.0) && ui.small_button("↺").on_hover_text(tr("Stand it upright again", "Поставить ровно")).clicked() {
-                                r[1] = 0.0;
-                                r[2] = 0.0;
-                                new_rot = Some([r[0].rem_euclid(360.0), 0.0, 0.0]);
-                            }
-                            if a.changed() || b.changed() || c.changed() {
-                                new_rot = Some([r[0].rem_euclid(360.0), r[1], r[2]]);
-                            }
+                            ui.horizontal(|ui| {
+                                if ui.small_button(Icon::Road.text(13.0)).on_hover_text(tr("Turn it the way the nearest road runs beside it", "Повернуть по ходу ближайшей дороги рядом")).clicked() {
+                                    align_road = true;
+                                }
+                                if ui.small_button(Icon::Terrain.text(13.0)).on_hover_text(crate::ui_edit::lean_help()).clicked() {
+                                    lean = true;
+                                }
+                                if (r[1] != 0.0 || r[2] != 0.0) && ui.small_button("↺").on_hover_text(tr("Stand it upright again", "Поставить ровно")).clicked() {
+                                    new_rot = Some([r[0].rem_euclid(360.0), 0.0, 0.0]);
+                                }
+                            });
                         });
                     });
-                    if !a.map(|a| a.abs_height).unwrap_or(false) && o.parent_id.is_none() {
-                        prop_row(ui, tr("Above ground", "Над землёй"), |ui| {
-                            let mut z = o.pos[2];
-                            if ui.add(egui::DragValue::new(&mut z).range(-20.0..=50.0).speed(0.05).suffix(" m")).changed() {
-                                new_lift = Some(z);
+                    if o.parent_id.is_none() {
+                        prop_row(ui, tr("Scale", "Масштаб"), |ui| {
+                            let now = crate::scaled::base_of(&o.file).1;
+                            if let Some((done, v)) = crate::ui_xform::scale(ui, egui::Id::new(("scale", id)), [now.x, now.y, now.z], &mut st.scale_uniform) {
+                                let f = glam::DVec3::new(v[0] / now.x.max(1e-6), v[1] / now.y.max(1e-6), v[2] / now.z.max(1e-6));
+                                new_scale = Some((done, f));
                             }
                         });
                     }
@@ -1948,7 +2030,9 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
                         });
                         // the pieces it was made of, each with the transparency of its materials (an
                         // imported model's can be changed)
-                        let imported = o.file.to_lowercase().contains("\\imported\\");
+                        // (an openMapper object's materials are set in its Mesh section: its files are
+                        // written from there)
+                        let imported = o.file.to_lowercase().contains("\\imported\\") && !o.file.to_lowercase().contains("\\openmapper\\");
                         if !info.pieces.is_empty() {
                             ui.label(RichText::new(format!("{} ({})", tr("Parts", "Части"), info.pieces.len())).color(TEXT_DIM));
                         }
@@ -2181,7 +2265,19 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
             if let Some((x, y)) = new_pos {
                 let o = crate::doc::tile_origin(k);
                 ed.put_object(k, id, glam::DVec2::new(o.x + x, o.y + y));
-            } else if new_rot.is_some() || new_lift.is_some() || changed_labels.is_some() || new_name.is_some() {
+            }
+            match new_scale {
+                // (while the number is dragged the object is drawn at its new size; its files are
+                // made once it is let go)
+                Some((false, f)) => ed.scale_preview = vec![(Sel::Object(k, id), f)],
+                Some((true, f)) => {
+                    ed.scale_preview.clear();
+                    ed.history.begin(tr("Scale", "Масштаб"));
+                    ed.scale_requests.push((Sel::Object(k, id), f));
+                }
+                None => {}
+            }
+            if new_rot.is_some() || new_lift.is_some() || changed_labels.is_some() || new_name.is_some() {
                 ed.begin_panel_step(tr("Edit object", "Изменение объекта"));
                 let Some(doc) = ed.doc.as_mut() else { return };
                 ed.history.touch_tile(doc, k);
@@ -2237,6 +2333,16 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
             } else {
                 ed.end_panel_step_if_idle(ui.ctx());
             }
+            // as a mesh: openMapper's own object's parts, modifiers, materials and lamps, or
+            // what can be done to any other
+            egui::Frame::new().inner_margin(Margin::same(8)).show(ui, |ui| {
+                if ed.mesh.as_ref().map(|m| m.inst == Sel::Object(k, id)).unwrap_or(false) {
+                    crate::ui_mesh::object_panel(ui, ed, &mut st.bake, actions);
+                } else {
+                    let parts = st.obj_info.as_ref().map(|i| i.pieces.len()).unwrap_or(0);
+                    crate::ui_mesh::plain_object_panel(ui, parts, actions);
+                }
+            });
         }
         Sel::Spline(k, id) => {
             if whole_road {
@@ -2285,6 +2391,7 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
                 }
                 ed.history.commit();
             }
+            Frame::new().inner_margin(Margin::same(8)).show(ui, |ui| crate::ui_mesh::spline_panel(ui, actions));
         }
     }
 }
@@ -2535,6 +2642,12 @@ fn controls(ctx: &egui::Context, st: &mut UiState, prefs: &Prefs, actions: &mut 
     st.help_open = open;
 }
 
+/// A row of buttons at the right of a window, one line high (a right-to-left layout opened
+/// straight in a window takes all the height there is and stretches the window).
+pub fn button_row(ui: &mut egui::Ui, add: impl FnOnce(&mut egui::Ui)) {
+    ui.allocate_ui_with_layout(Vec2::new(ui.available_width(), 28.0), Layout::right_to_left(Align::Center), add);
+}
+
 /// Ask before something unsaved is lost.
 pub fn confirm_unsaved(ctx: &egui::Context, st: &mut UiState, actions: &mut Vec<Action>) {
     if st.confirm.is_none() {
@@ -2549,7 +2662,7 @@ pub fn confirm_unsaved(ctx: &egui::Context, st: &mut UiState, actions: &mut Vec<
             ui.label(tr("The map has changes that are not saved. Save them first?", "На карте есть несохранённые изменения. Сохранить их?"));
         });
         ui.separator();
-        ui.with_layout(Layout::right_to_left(Align::Center), |ui| {
+        button_row(ui, |ui| {
             if ui.button(tr("Cancel", "Отмена")).clicked() {
                 decided = Some(false);
             }

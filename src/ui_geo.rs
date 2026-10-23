@@ -30,6 +30,8 @@ use crate::ui::TEXT_DIM;
 #[derive(Default)]
 pub struct Bridge {
     pub overlay: bool,
+    /// The map lies on the Earth (imagery can be loaded).
+    pub placed: bool,
     pub tile: Option<TileRow>,
     pub requests: Vec<Request>,
 }
@@ -49,6 +51,8 @@ pub enum Request {
     Visible(TileKey, bool),
     Opacity(TileKey, f32),
     LoadImagery(TileKey),
+    /// The OpenStreetMap map (as the site draws it) for a tile, or for all tiles (None).
+    LoadOsmMap(Option<TileKey>),
     OwnPicture(TileKey),
 }
 
@@ -66,6 +70,7 @@ pub fn tiles_panel(ui: &mut egui::Ui, b: &mut Bridge) {
     ui.label(RichText::new(tr("Satellite and own pictures", "Спутник и свои картинки")).strong());
     let Some(t) = &b.tile else {
         ui.label(RichText::new(tr("Click a tile to see its overlay here.", "Кликните тайл, чтобы увидеть здесь его подложку.")).color(TEXT_DIM));
+        osm_map_row(ui, b, None);
         if ui.button(tr("Satellite and terrain…", "Спутник и рельеф…")).clicked() {
             b.requests.push(Request::Open);
         }
@@ -90,6 +95,22 @@ pub fn tiles_panel(ui: &mut egui::Ui, b: &mut Bridge) {
         }
         if ui.button(tr("Satellite and terrain…", "Спутник и рельеф…")).clicked() {
             b.requests.push(Request::Open);
+        }
+    });
+    osm_map_row(ui, b, Some(k));
+}
+
+/// The map as the OpenStreetMap site draws it, laid on the ground like a satellite picture: its
+/// streets, names, signs and houses to build over (for this tile, or for all of them).
+fn osm_map_row(ui: &mut egui::Ui, b: &mut Bridge, tile: Option<TileKey>) {
+    ui.add_space(4.0);
+    ui.horizontal_wrapped(|ui| {
+        let label = if tile.is_some() { tr("Load the OpenStreetMap map", "Загрузить карту OpenStreetMap") } else { tr("OpenStreetMap map for all tiles", "Карта OpenStreetMap для всех тайлов") };
+        let r = ui.add_enabled(b.placed, egui::Button::new(icons::labelled(Icon::Map, label)));
+        let r = r.on_hover_text(tr("The map as openstreetmap.org draws it (streets with their names, houses, water, green, stop signs), drawn sharp from OpenStreetMap data and laid on the tile in place of a satellite picture: to build roads and houses over by eye. Nothing is generated from it.", "Карта как на openstreetmap.org (улицы с названиями, дома, вода, зелень, значки остановок) рисуется чётко из данных OpenStreetMap и кладётся на тайл вместо спутника: чтобы строить дороги и дома поверх. Ничего не генерируется."));
+        let r = r.on_disabled_hover_text(tr("Place the map on the Earth first (Satellite and terrain…)", "Сначала разместите карту на Земле (Спутник и рельеф…)"));
+        if r.clicked() {
+            b.requests.push(Request::LoadOsmMap(tile));
         }
     });
 }
@@ -582,6 +603,7 @@ impl GeoUi {
     pub fn fill_bridge(&mut self, b: &mut Bridge, ed: &Editor) {
         self.follow(ed);
         b.overlay = self.file.overlay;
+        b.placed = self.georef().is_some();
         b.tile = ed.picked_tile.filter(|k| ed.doc.as_ref().map(|d| d.tiles.contains_key(k)).unwrap_or(false)).map(|k| {
             let t = self.file.tile(k);
             TileRow { key: k, visible: t.visible, opacity: t.opacity, what: self.what(k), placed: self.georef().is_some() }
@@ -604,7 +626,23 @@ impl GeoUi {
                     self.file.tile_mut(k).opacity = o;
                     self.touch();
                 }
-                Request::LoadImagery(k) => self.load(ed, &prefs.geo, vec![k], true, self.file.with_terrain),
+                Request::LoadImagery(k) => {
+                    // (the satellite button brings the satellite, not the drawn map chosen before)
+                    if self.file.source == sources::OSM_STANDARD {
+                        self.file.source.clear();
+                    }
+                    self.load(ed, &prefs.geo, vec![k], true, self.file.with_terrain)
+                }
+                Request::LoadOsmMap(k) => {
+                    let keys: Vec<TileKey> = match k {
+                        Some(k) => vec![k],
+                        None => ed.doc.as_ref().map(|d| d.tiles.keys().copied().collect()).unwrap_or_default(),
+                    };
+                    self.file.source = sources::OSM_STANDARD.to_string();
+                    self.file.overlay = true;
+                    self.touch();
+                    self.load(ed, &prefs.geo, keys, true, false)
+                }
                 Request::OwnPicture(k) => self.pick_picture(ed, [k.0, k.1, k.0, k.1]),
             }
         }
@@ -1595,7 +1633,13 @@ impl GeoUi {
         }
         self.map.look_at(la, lo, 15.5);
         self.open = !parts.contains(&"hide");
-        if parts.contains(&"load") {
+        // (`osm_map`: the drawn OpenStreetMap map laid on every tile, no terrain)
+        if parts.contains(&"osm_map") {
+            self.file.source = sources::OSM_STANDARD.to_string();
+            self.file.overlay = true;
+            let keys: Vec<TileKey> = ed.doc.as_ref().map(|d| d.tiles.keys().copied().collect()).unwrap_or_default();
+            self.load(ed, &prefs.geo, keys, true, false);
+        } else if parts.contains(&"load") {
             self.file.with_terrain = true;
             let keys: Vec<TileKey> = ed.doc.as_ref().map(|d| d.tiles.keys().copied().collect()).unwrap_or_default();
             self.load(ed, &prefs.geo, keys, true, true);

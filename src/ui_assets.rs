@@ -69,6 +69,7 @@ impl AssetBrowser {
                 if ui.button(icons::labelled(Icon::Import, tr("Import…", "Импорт…"))).clicked() {
                     actions.push(Action::Import);
                 }
+                ui.menu_button(tr("Shapes…", "Фигуры…"), |ui| crate::ui_mesh::primitives_menu(ui, actions));
                 ui.with_layout(egui::Layout::right_to_left(egui::Align::Center), |ui| {
                     if ui.small_button("×").on_hover_text(tr("Close (B)", "Закрыть (B)")).clicked() {
                         self.open = false;
@@ -213,9 +214,8 @@ impl AssetBrowser {
         ui.painter().with_clip_rect(text_rect).galley(text_rect.min, galley, Color32::WHITE);
         let resp = resp.on_hover_text(format!("{}\n{}", a.name, a.rel));
         if resp.clicked() {
+            // choosing is using: the tool is ready at once (the button in the details stays for re-arming)
             self.picked = Some(a.rel.clone());
-        }
-        if resp.double_clicked() {
             use_asset(ed, a);
         }
         if resp.drag_started() && a.kind == Kind::Object {

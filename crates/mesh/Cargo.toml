@@ -1,0 +1,22 @@
+[package]
+name = "openmapper-mesh"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+description = "openMapper's polygon meshes: primitives, booleans, modifiers, UV unwrapping, baking and export"
+publish = false
+
+[dependencies]
+glam = { version = "0.30", features = ["serde"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+zip = { version = "8.6", default-features = false, features = ["deflate"] }
+
+[dev-dependencies]
+# round trips of the exported files through other readers
+gltf = "1.4"
+ufbx = "0.11"
+omsi-o3d = { git = "https://github.com/openOMSI-org/openOMSI", rev = "c4738ed6f43f11b4c06ead299af7ac74280d5c5b" }
+
+[profile.dev]
+opt-level = 1

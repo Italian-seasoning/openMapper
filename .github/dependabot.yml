@@ -1,0 +1,32 @@
+# Dependency updates, once a week. Minor and patch versions of the crates come together in one
+# pull request; a new major version (winit, wgpu...) comes on its own, as it usually needs code
+# changes. Security fixes come whenever an advisory is published, whatever the schedule.
+version: 2
+updates:
+  - package-ecosystem: cargo
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    # a release is only proposed once it is a week old: a broken or compromised one is usually
+    # yanked by then (security fixes do not wait)
+    cooldown:
+      default-days: 7
+    open-pull-requests-limit: 5
+    groups:
+      crates:
+        update-types:
+          - minor
+          - patch
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    cooldown:
+      default-days: 7
+    groups:
+      actions:
+        patterns:
+          - "*"

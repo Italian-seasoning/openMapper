@@ -148,6 +148,15 @@ pub fn drag_end(doc: &Document, k: TileKey, id: i64, at_end: bool, p: DVec2, gro
     end_to(doc, k, id, at_end, p, None, ground(p) + (old.z - ground(old.truncate())), locked)
 }
 
+/// Drag a spline's end to `p` and have it arrive there heading `arrive` (the way along the road
+/// towards that end): onto the end of a lane it is to join, tangent to it.
+pub fn drag_end_aligned(doc: &Document, k: TileKey, id: i64, at_end: bool, p: DVec2, arrive: f64, ground: &dyn Fn(DVec2) -> f64, locked: &dyn Fn(DVec2) -> bool) -> Result<Plan, &'static str> {
+    let s = doc.spline(k, id).ok_or("gone")?;
+    let e = ends_of(s, k);
+    let old = if at_end { e.b } else { e.a };
+    carry_end(doc, k, id, at_end, p, arrive, ground(p) - ground(old.truncate()), locked)
+}
+
 /// Carry a road's end along with what it is joined to (a junction moved or turned): to
 /// `p`, arriving there heading `arrive` (the way along the road towards that end), its height
 /// changed by `dz`.

@@ -24,6 +24,10 @@ use crate::library::Library;
 use crate::render::Renderer;
 use crate::ui::{self, Action, UiState};
 
+#[path = "app_mesh.rs"]
+mod mesh;
+pub use mesh::bring_picture;
+
 struct Gfx {
     window: Arc<Window>,
     gpu: Gpu,
@@ -76,6 +80,12 @@ pub struct App {
     assets: Option<Assets>,
     lib: Library,
     ed: Editor,
+    /// Whether the selected object's type is openMapper's own (asked once per type).
+    mesh_known: Option<(String, bool)>,
+    /// OPENMAPPER_EDIT, done once the selected object's source is open.
+    hook_edit: Option<String>,
+    /// The tilt and heading the camera had before the plan view took over.
+    pre_2d: Option<(f64, f64)>,
     /// A cursor held on the ground for a picture (OPENMAPPER_KNIFE), whatever the mouse does.
     pinned_cursor: Option<DVec3>,
     cam: Camera,
@@ -134,6 +144,9 @@ impl App {
             roots: None,
             assets: None,
             lib: Library::default(),
+            mesh_known: None,
+            hook_edit: None,
+            pre_2d: None,
             ed: Editor::default(),
             pinned_cursor: None,
             cam: Camera::default(),
@@ -323,6 +336,67 @@ impl App {
                 // (`chain`: all the road, as a double click selects it)
                 if let (Sel::Spline(k, id), true) = (sel, select.ends_with("chain")) {
                     self.ed.select_chain(k, id);
+                }
+            }
+        }
+        // OPENMAPPER_SHAPE=<n>,x,y: shape n of `primitives::ALL` put there as an object of its
+        // own and selected; OPENMAPPER_EDIT=vertex|edge|face[,all][,<op>]: its mesh edited
+        // (`signal` or `lamp` in place of n: a signal head or a street lamp; several split by
+        // `;` are all selected, the first in the properties)
+        let mut placed = Vec::new();
+        for shape in std::env::var("OPENMAPPER_SHAPE").unwrap_or_default().split(';').filter(|s| !s.is_empty()) {
+            let made = match shape.split(',').next().unwrap_or("") {
+                "signal" => Some(crate::signal_maker::signal_head(&[])),
+                "lamp" => Some(crate::signal_maker::street_lamp()),
+                n => n.parse::<usize>().ok().and_then(|i| openmapper_mesh::primitives::ALL.get(i).copied()).map(crate::editable::primitive_source),
+            };
+            let v: Vec<f64> = shape.split(',').skip(1).filter_map(|x| x.trim().parse::<f64>().ok()).collect();
+            let (Some(src), true, Some(roots)) = (made, v.len() >= 2, self.roots.clone()) else { continue };
+            let rel = crate::editable::new_rel(&roots, "Checks", &crate::editable::safe_name(&src.name));
+            if crate::editable::save(&roots, &rel, &src).is_ok() {
+                let at = DVec2::new(v[0], v[1]);
+                let z = self.ed.doc.as_ref().map(|d| d.ground(at)).unwrap_or(0.0) + v.get(2).copied().unwrap_or(0.0);
+                placed.extend(self.add_map_object_at(&rel, DVec3::new(at.x, at.y, z)));
+            }
+        }
+        if !placed.is_empty() {
+            self.ed.set_selection(placed);
+        }
+        // OPENMAPPER_MESHOP=union|difference|intersection|slice|join|separate: done to the
+        // selection (after OPENMAPPER_SHAPE)
+        if let (Ok(op), Some(roots)) = (std::env::var("OPENMAPPER_MESHOP"), self.roots.clone()) {
+            use crate::meshops::Bool;
+            let r = match op.as_str() {
+                "join" => crate::meshops::join(&mut self.ed, &roots, &self.lib).map(|_| ()),
+                "separate" => self.ed.selected.map(|s| crate::meshops::separate_parts(&mut self.ed, &roots, &self.lib, s).map(|_| ())).unwrap_or(Ok(())),
+                o => {
+                    let b = match o {
+                        "union" => Bool::Union,
+                        "intersection" => Bool::Intersection,
+                        "slice" => Bool::Slice,
+                        _ => Bool::Difference,
+                    };
+                    crate::meshops::boolean(&mut self.ed, &roots, &self.lib, b, false).map(|_| ())
+                }
+            };
+            if let Err(e) = r {
+                log::warn!("mesh op {op}: {e}");
+            }
+        }
+        self.hook_edit = std::env::var("OPENMAPPER_EDIT").ok();
+        // OPENMAPPER_XFORM=move|rotate|scale: the Select tool's handles shown on the selection
+        if let Ok(x) = std::env::var("OPENMAPPER_XFORM") {
+            use crate::editor::Xform;
+            self.ed.xform = match x.as_str() {
+                "move" => Xform::Move,
+                "rotate" => Xform::Rotate,
+                "scale" => Xform::Scale,
+                _ => Xform::Select,
+            };
+            if let (Some(Sel::Object(k, id)), Some(doc)) = (self.ed.selected, self.ed.doc.as_ref()) {
+                if let Some(o) = doc.object(k, id) {
+                    let org = crate::doc::tile_origin(k);
+                    log::info!("selected {} at ({:.1}, {:.1})", o.file, org.x + o.pos[0], org.y + o.pos[1]);
                 }
             }
         }
@@ -591,6 +665,17 @@ impl App {
                 log::info!("plant outline: {n} planted");
             }
         }
+        // OPENMAPPER_PUT=<object>;x,y: one object put there (and selected), for checks of what it looks like
+        if let Ok(a) = std::env::var("OPENMAPPER_PUT") {
+            let mut parts = a.split(';');
+            let rel = parts.next().unwrap_or("").to_string();
+            let v: Vec<f64> = parts.next().unwrap_or("").split(',').filter_map(|x| x.trim().parse().ok()).collect();
+            if let [x, y] = v[..] {
+                let z = self.ed.doc.as_ref().map(|d| d.ground(DVec2::new(x, y))).unwrap_or(0.0);
+                let placed = self.add_map_object_at(&rel, DVec3::new(x, y, z));
+                log::info!("put: {} placed", placed.is_some());
+            }
+        }
         // OPENMAPPER_AUTOPAINT=<layer>: the Paint tool's rule by slope and height applied to that layer
         if let Some(layer) = std::env::var("OPENMAPPER_AUTOPAINT").ok().and_then(|l| l.parse::<usize>().ok()) {
             self.ed.set_tool(Tool::Paint);
@@ -618,11 +703,46 @@ impl App {
         if let (Some(g), Some(base)) = (&options.ground, doc.global.ground_textures.first_mut()) {
             base.texture = g.clone();
         }
-        doc.global.left_hand_traffic = options.left_hand;
+        let g = &mut doc.global;
+        g.description = options.description.trim().to_string();
+        g.left_hand_traffic = options.left_hand;
+        g.real_rail = options.real_rail;
+        g.years = (options.years.0.min(options.years.1), options.years.0.max(options.years.1));
+        g.real_year_offset = options.year_offset;
+        if !options.money.is_empty() {
+            g.money_system = options.money.clone();
+        }
+        if !options.tickets.is_empty() {
+            g.ticket_pack = options.tickets.clone();
+        }
+        for d in &mut g.traffic_density_road {
+            d.1 *= options.traffic;
+        }
+        for d in &mut g.traffic_density_passenger {
+            d.1 *= options.passengers;
+        }
+        use crate::ui_newmap::Seasons;
+        use omsi_map::global::Season;
+        g.seasons = match options.seasons {
+            Seasons::Summer => Vec::new(),
+            // (days from 1 January: spring from March, autumn from mid September, winter from
+            // December to February)
+            Seasons::Four => vec![Season { kind: 4, start_day: 0, end_day: 59 }, Season { kind: 1, start_day: 59, end_day: 151 }, Season { kind: 2, start_day: 258, end_day: 334 }, Season { kind: 4, start_day: 334, end_day: 366 }],
+            Seasons::Mild => vec![Season { kind: 3, start_day: 0, end_day: 59 }, Season { kind: 1, start_day: 59, end_day: 151 }, Season { kind: 2, start_day: 258, end_day: 334 }, Season { kind: 3, start_day: 334, end_day: 366 }],
+        };
+        if options.height != 0.0 {
+            for t in doc.tiles.values_mut() {
+                for h in t.terrain.heights.iter_mut() {
+                    *h = options.height;
+                }
+                t.touch_terrain();
+            }
+        }
         self.after_open(doc);
         self.ed.set_tool(Tool::Roads);
-        if options.sample {
-            self.sample();
+        if options.real_place {
+            self.osm.open = true;
+            self.ed.toast(tr("Find the place in the window and build from it", "Найдите место в окне и постройте карту по нему"));
         } else {
             self.ed.toast(tr("Your map is ready. Start with a road!", "Карта готова. Начните с дороги!"));
         }
@@ -961,12 +1081,31 @@ impl App {
             }
             Action::Undo => self.ed.undo(),
             Action::Redo => self.ed.redo(),
+            Action::Mesh(a) => self.mesh_action(a),
             Action::Import => {
-                let files = rfd::FileDialog::new().add_filter(tr("Mods and models", "Моды и модели"), &["zip", "obj", "gltf", "glb", "fbx", "x", "o3d", "sco", "sli"]).set_title(tr("Import assets", "Импорт ассетов")).pick_files();
+                let files = rfd::FileDialog::new().add_filter(tr("Mods, models and pictures", "Моды, модели и картинки"), &["zip", "obj", "gltf", "glb", "fbx", "x", "o3d", "sco", "sli", "png", "jpg", "jpeg", "webp", "bmp", "tga", "tif"]).set_title(tr("Import assets", "Импорт ассетов")).pick_files();
                 if let Some(f) = files {
                     self.import(f);
                 } else if let Some(d) = rfd::FileDialog::new().set_title(tr("…or choose a mod folder", "…или выберите папку мода")).pick_folder() {
                     self.import(vec![d]);
+                }
+            }
+            Action::CreatePrimitive(i) => {
+                let (Some(roots), Some(p)) = (&self.roots, openmapper_mesh::primitives::ALL.get(i).copied()) else { return };
+                let map = self.ed.doc.as_ref().and_then(|d| d.dir.file_name()).map(|f| f.to_string_lossy().to_string()).unwrap_or_else(|| "Shared".into());
+                let mut src = crate::editable::primitive_source(p);
+                src.name = crate::ui_mesh::primitive_label(&p).to_string();
+                let rel = crate::editable::new_rel(roots, &map, p.name());
+                match crate::editable::save(roots, &rel, &src) {
+                    Ok(()) => {
+                        self.lib.start_scan(roots);
+                        if self.ed.doc.is_some() {
+                            self.ed.set_tool(Tool::Objects);
+                            self.ed.object_type = Some(rel);
+                            self.ed.toast(tr("Click on the map to put it there", "Кликните по карте, чтобы поставить"));
+                        }
+                    }
+                    Err(e) => self.ed.error(format!("{}: {e}", tr("Could not make the shape", "Не удалось создать фигуру"))),
                 }
             }
             Action::ChooseOmsi => {
@@ -1059,6 +1198,15 @@ impl App {
                         Ok(()) => self.reload_content(),
                         Err(e) => self.ed.error(e.to_string()),
                     }
+                }
+            }
+            Action::FlattenTerrain => {
+                let n = self.ed.flatten_terrain();
+                self.ed.toast(format!("{} {n}", tr("Terrain flattened; splines laid on it:", "Рельеф убран; сплайнов уложено:")));
+            }
+            Action::DetachLanes => {
+                if let (Some(a), Some(r)) = (self.assets.as_mut(), &self.roots) {
+                    self.ed.detach_lanes(a, r);
                 }
             }
             Action::PbrForSpline(rel) => {
@@ -1215,6 +1363,10 @@ impl App {
                 self.capture_key(code);
                 return;
             }
+            // (the edit mode of a mesh takes its keys first, Blender's where it can)
+            if pressed && self.mesh_key(code) {
+                return;
+            }
             let held = [(Cmd::Forward, 0), (Cmd::Back, 1), (Cmd::Left, 2), (Cmd::Right, 3), (Cmd::TurnLeft, 4), (Cmd::TurnRight, 5)];
             for (cmd, which) in held {
                 if map.is_key(cmd, code) {
@@ -1344,6 +1496,14 @@ impl App {
             Cmd::Rotate => self.ed.rotate(if shift { -self.ed.angle_step } else { self.ed.angle_step }),
             Cmd::Ruler => self.ed.toggle_ruler(),
             Cmd::Knife => self.ed.toggle_cutting(),
+            Cmd::EditMesh => self.toggle_edit_mode(),
+            Cmd::JoinObjects => self.mesh_action(crate::ui_mesh::MeshAction::Join),
+            Cmd::XformMove | Cmd::XformRotate | Cmd::XformScale => {
+                use crate::editor::Xform;
+                let x = match c { Cmd::XformMove => Xform::Move, Cmd::XformRotate => Xform::Rotate, _ => Xform::Scale };
+                self.ed.set_tool(Tool::Select);
+                self.ed.xform = if self.ed.xform == x { Xform::Select } else { x };
+            }
             Cmd::BuildRoad => actions.push(Action::BuildRoad),
             Cmd::TileGrid => self.ed.show_grid = !self.ed.show_grid,
             Cmd::Group => self.ed.group_selection(),
@@ -1352,6 +1512,7 @@ impl App {
                 self.cam.yaw = (self.cam.yaw / 360.0).round() * 360.0;
                 self.cam.pitch = 89.0;
             }
+            Cmd::View2d => self.ui.view_2d = !self.ui.view_2d,
             Cmd::Assets => self.ui.assets.open = !self.ui.assets.open,
             Cmd::Overview => self.ui.minimap.open = !self.ui.minimap.open,
             Cmd::Lines => self.tt.open = !self.tt.open,
@@ -1397,7 +1558,6 @@ impl App {
     // ------------------------------------------------------------------ frame
 
     fn frame(&mut self, el: &ActiveEventLoop) {
-        self.ed.gizmo_reach = (self.cam.distance * 0.09).clamp(1.5, 60.0);
         let now = Instant::now();
         let dt = (now - self.last).as_secs_f64().min(0.1);
         self.last = now;
@@ -1418,7 +1578,13 @@ impl App {
         let typing = self.gfx.as_ref().map(|g| g.egui_ctx.egui_wants_keyboard_input()).unwrap_or(false);
         // (Alt + arrows move the selection, not the camera)
         let keys_on = !typing && !self.keys.ctrl && !(self.keys.alt && self.ed.selected.is_some() && ar.iter().any(|a| *a));
-        if keys_on && self.fly_style() {
+        if keys_on && self.ui.view_2d {
+            // (the plan view: the keys always move over the map, nothing turns)
+            let (m_fwd, m_side) = ((fwd + afwd).clamp(-1.0, 1.0), (side + aside).clamp(-1.0, 1.0));
+            if m_fwd != 0.0 || m_side != 0.0 {
+                self.cam.drive(m_fwd, m_side, 0.0, self.keys.shift, dt);
+            }
+        } else if keys_on && self.fly_style() {
             // Unity: W A S D / Q E fly only while the right button is held; the arrows move
             if self.mouse.right && (fwd != 0.0 || side != 0.0 || turn != 0.0) {
                 self.keys.fly_held += dt;
@@ -1440,6 +1606,19 @@ impl App {
         if crate::render::profile::orbit() {
             self.cam.yaw += dt * 12.0;
         }
+        // the plan view: straight down, north up, whatever the mouse did to the tilt and the turn;
+        // leaving it brings the tilt back
+        self.cam.plan = self.ui.view_2d;
+        if self.ui.view_2d {
+            if self.pre_2d.is_none() {
+                self.pre_2d = Some((self.cam.pitch, self.cam.yaw));
+            }
+            self.cam.pitch = 89.5;
+            self.cam.yaw = (self.cam.yaw / 360.0).round() * 360.0;
+        } else if let Some((p, y)) = self.pre_2d.take() {
+            self.cam.pitch = p;
+            self.cam.yaw = y;
+        }
         let cam_moving = self.cam.is_moving();
         self.cam.update(dt);
         // the Roads tool starts with an ordinary two-lane road, so the first click builds
@@ -1451,6 +1630,7 @@ impl App {
         // the editor
         let t_ed = Instant::now();
         self.ed.cursor_in_view = !self.mouse.over_ui || self.pinned_cursor.is_some();
+        self.ed.set_gizmo_view(&self.cam, self.view.width(), self.view.height(), self.mouse.pos.0 - self.view.min.x, self.mouse.pos.1 - self.view.min.y);
         if let Some(p) = self.pinned_cursor {
             self.ed.cursor = Some(p);
         }
@@ -1462,9 +1642,18 @@ impl App {
             }
             self.mouse.moved = false;
         }
+        if let (Some((pieces, at)), Some(assets), Some(roots)) = (self.ed.lane_detach_request.take(), self.assets.as_mut(), &self.roots) {
+            self.ed.set_selection(pieces.into_iter().map(|(k, id)| Sel::Spline(k, id)).collect());
+            self.ed.detach_lanes(assets, roots);
+            self.ed.pick_ai_path_near(assets, at);
+        }
         if let Some(assets) = self.assets.as_mut() {
             self.ed.tick(assets, dt, self.mouse.left && !self.mouse.over_ui);
+            if let Some(roots) = &self.roots {
+                self.ed.apply_scales(roots);
+            }
         }
+        self.mesh_frame();
 
         let Some(mut g) = self.gfx.take() else { return };
         g.renderer.profile.add("editor", crate::render::profile::ms(t_ed));
@@ -1568,7 +1757,7 @@ impl App {
                         game_found: self.game.is_some(),
                         texture_files: &self.texture_files,
                         prefs: &self.prefs,
-                        status: ui::Status { cursor, loading, gpu: gpu_name.clone(), cam: Some(crate::ui_minimap::CamView { target: self.cam.target, yaw: self.cam.yaw, distance: self.cam.distance }) },
+                        status: ui::Status { cursor, loading, gpu: gpu_name.clone(), cam: Some(crate::ui_minimap::CamView { yaw: self.cam.yaw, distance: self.cam.distance, eye: self.cam.wanted_eye().truncate() }) },
                     },
                     &mut actions,
                 ));
@@ -1625,7 +1814,8 @@ impl App {
                 }
                 guide = self.guide.window(&ctx, &self.ed, &self.lib, &self.prefs, self.game.is_some(), self.ui.check.errors_left() == Some(0));
             }
-            crate::ui_newmap::dialog(&ctx, &mut self.ui.new_map, &self.texture_files, &self.swatches, &mut wanted_swatches, &mut actions);
+            crate::ui_uv::window(&ctx, &mut self.ui.uv, &mut self.ui.uv_open, &mut self.ed, self.roots.as_ref());
+            crate::ui_newmap::dialog(&ctx, &mut self.ui.new_map, self.roots.as_ref(), &self.texture_files, &self.swatches, &mut wanted_swatches, &mut actions);
             ui::confirm_unsaved(&ctx, &mut self.ui, &mut actions);
             if let Some(m) = &self.recover {
                 recover_answer = crate::doc::autosave::offer(&ctx, m);
@@ -1809,7 +1999,8 @@ impl App {
                             self.lib.poll();
                             std::thread::sleep(std::time::Duration::from_millis(20));
                         }
-                        self.new_map(&name, &name, 3, &crate::ui_newmap::NewMapOptions { sample: true, left_hand: std::env::var_os("OPENMAPPER_LHT").is_some(), ..Default::default() });
+                        self.new_map(&name, &name, 3, &crate::ui_newmap::NewMapOptions { left_hand: std::env::var_os("OPENMAPPER_LHT").is_some(), seasons: crate::ui_newmap::Seasons::Summer, ..Default::default() });
+                        self.sample();
                         self.save();
                     } else if d == "RING" {
                         self.demo_ring();
@@ -2368,7 +2559,9 @@ impl ApplicationHandler for App {
                 if self.mouse.right {
                     // (Unity: the eye looks round, Alt + right drag zooms; map style: the view
                     // turns round the point the button went down on, the map following the hand)
-                    if unity && self.keys.alt {
+                    if self.ui.view_2d {
+                        self.cam.pan_screen(dx, dy, h);
+                    } else if unity && self.keys.alt {
                         self.cam.dolly((dx - dy) * 0.02);
                     } else if unity {
                         self.cam.look_pixels(dx, dy);
@@ -2397,9 +2590,30 @@ impl ApplicationHandler for App {
                 match button {
                     MouseButton::Left => {
                         if pressed && !over_ui {
+                            // (a handle of the Move / Rotate / Scale gizmo is taken, wherever it is)
+                            let on_gizmo = self.ed.gizmo_under_cursor();
                             if self.keys.alt {
                                 // Option + drag: turn the camera
                                 self.mouse.alt_orbit = true;
+                            } else if self.ed.mesh.as_ref().map(|m| m.editing).unwrap_or(false) {
+                                // (the edit mode: a press picks or takes a handle; on nothing it
+                                // draws a box)
+                                let picks = on_gizmo || self.ed.mesh.as_ref().map(|m| m.modal_active() || m.hover.is_some()).unwrap_or(false);
+                                if picks {
+                                    self.mouse.left = true;
+                                    self.mouse.press = self.mouse.pos;
+                                    if let Some(assets) = self.assets.as_mut() {
+                                        self.ed.left_press(assets, &self.lib, self.keys.shift);
+                                    }
+                                } else {
+                                    self.ed.select_box = Some([self.mouse.pos, self.mouse.pos]);
+                                }
+                            } else if on_gizmo {
+                                self.mouse.left = true;
+                                self.mouse.press = self.mouse.pos;
+                                if let Some(assets) = self.assets.as_mut() {
+                                    self.ed.left_press(assets, &self.lib, self.keys.shift);
+                                }
                             } else if self.ed.tool == Tool::Select && self.ed.hover.is_none() && self.ed.ruler.is_none() && (self.keys.shift || self.keys.ctrl || self.fly_style()) {
                                 // (Unity: a drag on nothing draws a selection box)
                                 // Shift / Ctrl + drag on empty ground: a selection box
@@ -2462,6 +2676,17 @@ impl ApplicationHandler for App {
             }
             WindowEvent::MouseWheel { delta, .. } => {
                 if self.mouse.over_ui {
+                    return;
+                }
+                // (a bevel or loop cut going on: the wheel sets its segments or cuts)
+                if let Some(m) = self.ed.mesh.as_mut().filter(|m| m.modal_active()) {
+                    let y = match delta {
+                        MouseScrollDelta::LineDelta(_, y) => y,
+                        MouseScrollDelta::PixelDelta(p) => (p.y / 30.0) as f32,
+                    };
+                    if y.abs() >= 0.5 {
+                        m.modal_count(y.signum() as i32);
+                    }
                     return;
                 }
                 let steps = match delta {

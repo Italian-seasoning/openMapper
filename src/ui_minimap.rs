@@ -2,7 +2,7 @@
 //! is. A click or drag on it moves the camera there.
 
 use egui::{Color32, CornerRadius, Pos2, Rect, Sense, Shape, Stroke, Vec2};
-use glam::{DVec2, DVec3};
+use glam::DVec2;
 
 use crate::doc::{tile_origin, tile_size, Document};
 use crate::i18n::tr;
@@ -11,9 +11,10 @@ use crate::library::{Category, Library};
 /// What the camera shows, for the marker.
 #[derive(Clone, Copy)]
 pub struct CamView {
-    pub target: DVec3,
     pub yaw: f64,
     pub distance: f64,
+    /// Where the eye is over the ground.
+    pub eye: DVec2,
 }
 
 #[derive(Clone, Copy, PartialEq)]
@@ -163,11 +164,12 @@ impl Minimap {
             };
             painter.add(Shape::line(pts.iter().map(|&p| to_screen(p)).collect(), Stroke::new(w, c)));
         }
-        // the camera: where it looks and which way
-        let at = to_screen(cam.target.truncate());
+        // the camera: where the eye is and which way it looks, the cone as long as the view
+        // reaches (it grows with the height)
+        let at = to_screen(cam.eye);
         let d = crate::roads::dir(cam.yaw);
         let fwd = Vec2::new(d.x as f32, -d.y as f32);
-        let reach = ((cam.distance * 0.8 * scale) as f32).clamp(8.0, side * 0.3);
+        let reach = ((cam.distance * 1.2 * scale) as f32).clamp(8.0, side * 0.45);
         let side_v = Vec2::new(-fwd.y, fwd.x) * reach * 0.55;
         let accent = Color32::from_rgb(232, 120, 40);
         painter.add(Shape::convex_polygon(vec![at, at + fwd * reach + side_v, at + fwd * reach - side_v], Color32::from_rgba_unmultiplied(232, 120, 40, 50), Stroke::new(1.0, accent)));
