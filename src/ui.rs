@@ -139,6 +139,8 @@ pub enum Action {
     SetGraphics(crate::render::quality::Quality),
     /// Open or close the Getting started guide.
     Guide,
+    /// Help > Updates.
+    Updates,
     /// Map > Tiles from another map (the maps to choose from are listed first).
     MergeTiles,
     /// Open or close GPS tracks to trace.
@@ -514,6 +516,9 @@ pub fn welcome(root: &mut egui::Ui, st: &mut UiState, prefs: &Prefs, omsi: Optio
             });
             ui.menu_button(tr("View", "Вид"), |ui| lang_menu(ui, actions));
             ui.menu_button(tr("Help", "Справка"), |ui| {
+                if menu_item(ui, Some(Icon::Import), tr("Updates…", "Обновления…"), "", true) {
+                    actions.push(Action::Updates);
+                }
                 if menu_item(ui, Some(Icon::Info), tr("About openMapper", "О программе"), "", true) {
                     st.about_open = true;
                 }
@@ -1022,6 +1027,9 @@ fn menu_bar(root: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, can_undo: bo
             ui.menu_button(tr("Help", "Справка"), |ui| {
                 if menu_item(ui, Some(Icon::CheckCircle), tr("Getting started", "С чего начать"), "", true) {
                     actions.push(Action::Guide);
+                }
+                if menu_item(ui, Some(Icon::Import), tr("Updates…", "Обновления…"), "", true) {
+                    actions.push(Action::Updates);
                 }
                 if menu_item(ui, Some(Icon::Info), tr("About openMapper", "О программе"), "", true) {
                     st.about_open = true;

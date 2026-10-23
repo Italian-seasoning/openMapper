@@ -1614,7 +1614,13 @@ impl Editor {
                 return;
             }
         }
-        if self.align_to_road && !free {
+        // on the road itself (the cursor within a road's width): it stands there, at the
+        // road's height, and aligned it runs along the road; no setback pushes it off the road
+        let on_road = if free && !imported { None } else { self.road_under(assets, c.truncate()) };
+        if let (true, Some((h, _))) = (self.align_to_road && !free, on_road) {
+            heading = roads::norm_deg(h + self.place_heading);
+        }
+        if self.align_to_road && !free && on_road.is_none() {
             // its depth decides how far from a road it still belongs to it
             let depth = model.as_ref().map(|m| (m.hi.y - m.lo.y) as f64).unwrap_or(10.0);
             if let Some((q, h, n, hw)) = self.nearest_road(assets, c.truncate(), depth + 25.0) {
@@ -1632,12 +1638,43 @@ impl Editor {
                 }
             }
         }
-        if let Some(m) = assets.object(&rel) {
-            if m.abs_height {
-                pos.z = c.z;
-            }
+        if let Some((_, z)) = on_road {
+            // (the road's own height: a bridge or an embankment is not the ground under it)
+            pos.z = z;
+        } else if assets.object(&rel).map(|m| m.abs_height).unwrap_or(false) {
+            pos.z = c.z;
         }
         self.ghost_pos = Some((pos, self.snap_heading(heading)));
+    }
+
+    /// When `p` lies on a road's surface: the way the road runs there and its height.
+    fn road_under(&self, assets: &mut Assets, p: DVec2) -> Option<(f64, f64)> {
+        let doc = self.doc.as_ref()?;
+        let mut best: Option<(f64, f64, f64)> = None;
+        for (k, t) in &doc.tiles {
+            let org = tile_origin(*k);
+            for s in t.tile.splines.iter().filter(|s| !s.deleted) {
+                if (DVec2::new(org.x + s.pos[0], org.y + s.pos[1]) - p).length() > s.length + 20.0 {
+                    continue;
+                }
+                let Some(m) = assets.spline(&s.file) else { continue };
+                if !m.joinable() {
+                    continue;
+                }
+                let hw = m.half_width as f64;
+                let c = omsi_geometry::SplineCurve::from_map(s, org);
+                let n = (s.length / 0.5).ceil().max(2.0) as usize;
+                for i in 0..=n {
+                    let at = s.length * i as f64 / n as f64;
+                    let q = c.point_at(at);
+                    let d = (q.truncate() - p).length();
+                    if d < hw && best.map(|b| d < b.2).unwrap_or(true) {
+                        best = Some((c.heading_at(at), q.z, d));
+                    }
+                }
+            }
+        }
+        best.map(|b| (b.0, b.1))
     }
 
     /// The free ends of visible roads within `within` m of `p` (as anchors: heading out of
@@ -1645,6 +1682,16 @@ impl Editor {
     fn free_road_ends(&self, assets: &mut Assets, p: DVec2, within: f64) -> Vec<Anchor> {
         let Some(doc) = self.doc.as_ref() else { return Vec::new() };
         let mut out = Vec::new();
+        // (every spline end near: a helper one of them is at is already used)
+        let mut taken: Vec<DVec3> = Vec::new();
+        for (k, t) in &doc.tiles {
+            let org = tile_origin(*k);
+            for s in t.tile.splines.iter().filter(|s| !s.deleted) {
+                let c = omsi_geometry::SplineCurve::from_map(s, org);
+                taken.push(c.point_at(0.0));
+                taken.push(c.end_point());
+            }
+        }
         for (k, t) in &doc.tiles {
             let org = tile_origin(*k);
             for s in t.tile.splines.iter().filter(|s| !s.deleted && (s.prev_id == 0 || s.next_id == 0)) {
@@ -1660,6 +1707,22 @@ impl Editor {
                 }
                 if s.next_id == 0 && (c.end_point().truncate() - p).length() < within {
                     out.push(Anchor { pos: c.end_point(), heading: roads::norm_deg(c.heading_at(s.length)), spline: Some((*k, s.id, true)), mid: None });
+                }
+            }
+            // the helper points of junction pieces already on the map (not those a road
+            // already ends at): a piece can be set against another piece too
+            for o in &t.tile.objects {
+                let Some(model) = assets.object(&o.file) else { continue };
+                if model.helpers.is_empty() {
+                    continue;
+                }
+                let world = doc.object_world(*k, o, model.abs_height);
+                let m = object_matrix(DVec3::ZERO, o.rot);
+                for (h, _) in &model.helpers {
+                    let q = world + m.transform_point3(Vec3::new(h[0], h[1], h[2])).as_dvec3();
+                    if (q.truncate() - p).length() < within && !taken.iter().any(|t| (t.truncate() - q.truncate()).length() < 1.0) {
+                        out.push(Anchor { pos: q, heading: roads::norm_deg(h[3] as f64 + o.rot[0]), spline: None, mid: None });
+                    }
                 }
             }
         }
@@ -1734,7 +1797,8 @@ impl Editor {
         let mut o = MapObject {
             file: rel.clone(),
             id,
-            pos: [pos.x - org.x, pos.y - org.y, if abs { pos.z } else { 0.0 }],
+            // (height above the ground, which an object on a raised road needs)
+            pos: [pos.x - org.x, pos.y - org.y, if abs { pos.z } else { let up = pos.z - doc.ground(pos.truncate()); if up.abs() > 0.05 { up } else { 0.0 } }],
             rot: [heading, 0.0, 0.0],
             ..Default::default()
         };
@@ -3795,6 +3859,12 @@ impl Editor {
                 }
             }
             Tool::Objects => {
+                // the points a junction piece or a road can be joined at, near the cursor
+                if let (Some(c), true) = (self.cursor, self.cursor_in_view) {
+                    for a in self.free_road_ends(&mut *assets, c.truncate(), (cam.distance * 0.6).clamp(30.0, 200.0)) {
+                        disc(&mut x.overlay, cam, a.pos + DVec3::Z * 0.2, dw * 2.0, [1.0, 1.0, 1.0, 0.7]);
+                    }
+                }
                 if let (Some((p, h)), Some(rel)) = (self.ghost_pos, &self.object_type) {
                     if self.cursor_in_view {
                         let ok = doc.tiles.contains_key(&tile_of(p.truncate()));
@@ -3808,7 +3878,7 @@ impl Editor {
                         // set against a road: the road's edge it keeps its distance from
                         if let Some((edge, at)) = self.align_guide {
                             line(&mut x.overlay, cam, edge + DVec3::Z * 0.3, at + DVec3::Z * 0.3, w * 0.5, WHITE);
-                            disc(&mut x.overlay, cam, edge + DVec3::Z * 0.3, w * 1.5, WHITE);
+                            disc(&mut x.overlay, cam, edge + DVec3::Z * 0.3, w * 1.5, ORANGE);
                         }
                     }
                 }

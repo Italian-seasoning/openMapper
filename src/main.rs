@@ -70,6 +70,7 @@ mod texts;
 mod timetable;
 mod traffic;
 mod ui;
+mod updater;
 mod ui_assets;
 mod ui_edit;
 mod ui_find;
@@ -140,6 +141,7 @@ fn main() {
         _ => {}
     }
     // `openmapper path/to/global.cfg` opens that map
+    updater::clean_up();
     let open = std::env::args_os().nth(1).map(std::path::PathBuf::from).filter(|p| p.is_file());
     let event_loop = match winit::event_loop::EventLoop::new() {
         Ok(e) => e,

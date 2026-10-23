@@ -1,6 +1,6 @@
 [package]
 name = "openmapper"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 license = "MIT"
 description = "openMapper: a simple map editor for openOMSI"
@@ -37,6 +37,7 @@ env_logger = "0.11"
 rfd = "0.15"
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
+sha2 = "0.10"
 zip = { version = "8.6", default-features = false, features = ["deflate"] }
 image = { version = "0.25", default-features = false, features = ["png", "jpeg", "tiff", "bmp", "webp"] }
 # model import: glTF / GLB, FBX (ufbx: a small C library, built with the crate)

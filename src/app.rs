@@ -126,6 +126,7 @@ pub struct App {
     gamecheck: crate::gamecheck::GameCheck,
     /// Getting started.
     guide: crate::ui_guide::Guide,
+    updater: crate::updater::Updater,
     /// A full-size picture of the view is taken this frame (View menu, F12).
     snapshot: bool,
     snapshot_done: bool,
@@ -174,6 +175,7 @@ impl App {
             trace: Default::default(),
             gamecheck: Default::default(),
             guide: Default::default(),
+            updater: crate::updater::Updater::new(),
             snapshot: false,
             snapshot_done: false,
             unguarded: false,
@@ -1289,6 +1291,7 @@ impl App {
             Action::Trace => self.trace.open = !self.trace.open,
             Action::GameCheck => self.game_check(),
             Action::Guide => self.guide.open = !self.guide.open,
+            Action::Updates => self.updater.window = true,
             Action::Export => self.export(),
             Action::ToggleFavourite(rel) => {
                 self.prefs.toggle_favourite(&rel);
@@ -1667,6 +1670,7 @@ impl App {
         let mut view: Option<(egui::Rect, bool)> = None;
         let gpu_name = g.gpu.adapter_name.clone();
         let mut recover_answer = None;
+        let mut restart_now = false;
         // (the selected object's PBR state for its properties: looked up when it changes)
         let sel_file = match (self.ed.selected, &self.ed.doc) {
             (Some(Sel::Object(k, id)), Some(doc)) => crate::selection::any_object(doc, k, id).map(|o| (o.file.clone(), false)),
@@ -1820,6 +1824,8 @@ impl App {
             if let Some(m) = &self.recover {
                 recover_answer = crate::doc::autosave::offer(&ctx, m);
             }
+            let unsaved = self.ed.doc.as_ref().map(|d| d.is_dirty()).unwrap_or(false);
+            restart_now = self.updater.frame(&ctx, &mut self.prefs, unsaved) && self.recover.is_none();
         });
         match view {
             Some((rect, hovered)) => {
@@ -2084,6 +2090,10 @@ impl App {
                     self.prefs.save();
                 }
             }
+        }
+        if restart_now {
+            self.remember_view();
+            crate::updater::restart();
         }
         if let Some(yes) = recover_answer {
             if let Some(meta) = self.recover.take() {

@@ -195,11 +195,24 @@ fn google_session(key: &str) -> Result<String, Error> {
         .map_err(net_error)?;
     let status = r.status().as_u16();
     let body = r.body_mut().read_to_string().map_err(net_error)?;
-    let s = sources::parse_google_session(&body).map_err(|e| format!("Google (HTTP {status}): {e}"))?;
+    let s = sources::parse_google_session(&body).map_err(|e| google_refusal(status, &e))?;
     let _ = std::fs::create_dir_all(file.parent().unwrap());
     let _ = std::fs::write(&file, &body);
     map.insert(h, s.clone());
     Ok(s.token)
+}
+
+/// Google's refusal in words. Accounts billed in the European Economic Area get no satellite
+/// tiles from Google at all, whatever the key: the answer says so, and the other sources work.
+fn google_refusal(status: u16, message: &str) -> Error {
+    if status == 403 && message.contains("not available for your account and region") {
+        return tr(
+            "Google (HTTP 403): Google gives no satellite imagery to accounts billed in the European Economic Area, so this key cannot work. Use another source (Esri, Bing, Mapbox, MapTiler), or a key from a Google account billed outside the EEA.",
+            "Google (HTTP 403): Google не отдаёт спутниковые снимки аккаунтам с платёжным адресом в Европейской экономической зоне, поэтому этот ключ работать не может. Выберите другой источник (Esri, Bing, Mapbox, MapTiler) или ключ от аккаунта Google вне ЕЭЗ.",
+        )
+        .to_string();
+    }
+    format!("Google (HTTP {status}): {message}")
 }
 
 /// Google's copyright line and finest zoom for an area around (lat, lon).

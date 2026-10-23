@@ -81,6 +81,10 @@ pub struct Prefs {
     /// Keyboard commands moved to another key (command id → key as text; empty: no key).
     #[serde(default)]
     pub keys: std::collections::BTreeMap<String, String>,
+    /// New versions from GitHub: "ask" (offered; the default), "auto" (installed and the
+    /// program restarted by itself) or "off" (not looked for).
+    #[serde(default)]
+    pub update_mode: String,
 }
 
 impl Prefs {

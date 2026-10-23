@@ -4,6 +4,16 @@ Releases are tagged `v<version>`; the downloads are on the
 [Releases](https://github.com/openOMSI-org/openMapper/releases) page, each with the notes of its
 version from this file.
 
+## 0.1.1 - 2026-10-23
+
+### Added
+- **Updates from GitHub**: at start openMapper looks for a newer release and offers it (Install and restart, Not now, or never offer again). Help > Updates chooses what happens: offer, install and restart by itself, or never look. The download is checked against the release's SHA256SUMS, the program's file is replaced and openMapper starts again once nothing is unsaved.
+- The Objects tool shows the points where roads and junction pieces can be joined (free road ends and the helper points of pieces on the map); a junction piece lines up with another piece's point as well as with a road end.
+
+### Fixed
+- Google imagery: when Google refuses with "not available for your account and region" (accounts billed in the European Economic Area get no Google satellite tiles) the message now says so and what to do ([#7](https://github.com/openOMSI-org/openMapper/issues/7)).
+- An object put on a road stays on it, turned along the road when Auto-Align is on, at the road's own height, instead of being pushed to the roadside or sunk in the ground under a raised road.
+
 ## 0.1.0 - 2026-10-23
 
 The first release: a map editor for [openOMSI](https://openomsi.org/) that opens, edits and saves
