@@ -68,6 +68,10 @@ pub struct Prefs {
     /// builders) or "fly" (like Unity / Unreal: right button looks round, W A S D fly).
     #[serde(default)]
     pub camera: String,
+    /// Only the tiles round the place looked at are loaded, 100 at a time, as in OMSI 2's own
+    /// editor (None: not asked yet; the default is off).
+    #[serde(default)]
+    pub tile_streaming: Option<bool>,
     /// Graphics quality: "low", "medium", "high" (empty: high).
     #[serde(default)]
     pub graphics: String,

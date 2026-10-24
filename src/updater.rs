@@ -182,7 +182,7 @@ impl Updater {
                     ui.label(RichText::new(format!("{} {}", tr("New version:", "Новая версия:"), r.version)).strong());
                     if !r.notes.is_empty() {
                         egui::ScrollArea::vertical().max_height(160.0).show(ui, |ui| {
-                            ui.label(RichText::new(r.notes.trim()).small());
+                            crate::markdown::show(ui, r.notes.trim());
                         });
                     }
                     ui.horizontal(|ui| {

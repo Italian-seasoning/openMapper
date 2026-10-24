@@ -85,6 +85,7 @@ pub enum Action {
     SetAlpha(String, usize, String, i32, u8),
     /// How the mouse moves the camera ("map" or "fly").
     SetCamera(String),
+    SetTileStreaming(bool),
     /// The interface's zoom (1 = as the system has it).
     SetScale(f32),
     FocusSelection,
@@ -927,10 +928,14 @@ fn menu_bar(root: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, can_undo: bo
                     if radio(ui, unity, tr("Unity: right button looks round and W A S D fly, middle pans, Alt orbits", "Unity: правая кнопка оглядывает и W A S D летят, средняя двигает, Alt вращает")).clicked() {
                         actions.push(Action::SetCamera("fly".into()));
                     }
-                    if radio(ui, !unity, tr("Map editor: right button turns round the cursor, drag moves the map", "Редактор карт: правая кнопка вращает вокруг курсора, перетаскивание двигает карту")).clicked() {
+                    if radio(ui, !unity, tr("Map editor: right button looks round and W A S D fly (Q down, E up), middle pans, the wheel zooms to the cursor, drag moves the map", "Редактор карт: правая кнопка оглядывает и W A S D летят (Q вниз, E вверх), средняя двигает, колесо приближает к курсору, перетаскивание двигает карту")).clicked() {
                         actions.push(Action::SetCamera("map".into()));
                     }
                 });
+                let mut streaming = prefs.tile_streaming == Some(true);
+                if check(ui, &mut streaming, tr("Load 100 tiles at a time (like OMSI 2's editor)", "Загружать по 100 тайлов (как в редакторе OMSI 2)")).clicked() {
+                    actions.push(Action::SetTileStreaming(streaming));
+                }
                 ui.menu_button(tr("Time of day", "Время суток"), |ui| {
                     if radio(ui, st.daytime.is_none(), tr("Plain day (as the game by day)", "Обычный день (как в игре днём)")).clicked() {
                         st.daytime = None;

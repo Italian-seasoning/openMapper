@@ -74,6 +74,7 @@ mod texts;
 mod timetable;
 mod traffic;
 mod ui;
+mod markdown;
 mod updater;
 mod ui_assets;
 mod ui_edit;

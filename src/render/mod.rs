@@ -368,6 +368,10 @@ pub struct Renderer {
     terrain_index: wgpu::Buffer,
     terrain_index_count: u32,
     tiles: HashMap<TileKey, GpuTile>,
+    /// The tiles drawn when only a window of the map is loaded (None: all of them), and a
+    /// number that changes with the set.
+    live: Option<std::collections::HashSet<TileKey>>,
+    live_rev: u64,
     ground_bind: Option<wgpu::BindGroup>,
     ground_key: String,
     linear: wgpu::Sampler,
@@ -855,6 +859,8 @@ impl Renderer {
             terrain_index,
             terrain_index_count: idx.len() as u32,
             tiles: HashMap::new(),
+            live: None,
+            live_rev: 0,
             ground_bind: None,
             ground_key: String::new(),
             linear,
@@ -1109,6 +1115,15 @@ impl Renderer {
         key
     }
 
+    /// Draw only these tiles (None: all). The others lose their graphics at once; they are
+    /// built again when they come back.
+    pub fn set_live(&mut self, live: Option<std::collections::HashSet<TileKey>>) {
+        if self.live != live {
+            self.live = live;
+            self.live_rev += 1;
+        }
+    }
+
     /// Bring the GPU copy of the map up to date with the document.
     pub fn sync(&mut self, gpu: &Gpu, doc: &Document, assets: &mut Assets, extras: &FrameExtras, cam: &Camera) {
         let device = &gpu.device;
@@ -1139,8 +1154,10 @@ impl Renderer {
         self.sync_ground(gpu, doc, assets);
         let mut t = std::time::Instant::now();
         // tiles
-        self.tiles.retain(|k, _| doc.tiles.contains_key(k));
-        let keys: Vec<TileKey> = doc.tiles.keys().copied().collect();
+        let live = self.live.clone();
+        let is_live = |k: &TileKey| live.as_ref().map(|l| l.contains(k)).unwrap_or(true);
+        self.tiles.retain(|k, _| doc.tiles.contains_key(k) && is_live(k));
+        let keys: Vec<TileKey> = doc.tiles.keys().copied().filter(|k| is_live(k)).collect();
         for k in keys {
             let t = &doc.tiles[&k];
             let need_new = !self.tiles.contains_key(&k);
@@ -1229,8 +1246,8 @@ impl Renderer {
         self.profile.add("sync.tiles", profile::ms(t));
         t = std::time::Instant::now();
         // every tile as the game shows it (chrono patches laid over)
-        self.display.retain(|k, _| doc.tiles.contains_key(k));
-        for (k, t) in &doc.tiles {
+        self.display.retain(|k, _| doc.tiles.contains_key(k) && is_live(k));
+        for (k, t) in doc.tiles.iter().filter(|(k, _)| is_live(k)) {
             if self.display.get(k).map(|d| d.0 != t.content_rev).unwrap_or(true) {
                 self.display.insert(*k, (t.content_rev, Arc::new(t.display(k.1).into_owned())));
             }
@@ -1245,7 +1262,8 @@ impl Renderer {
             self.assets_seen_at = std::time::Instant::now();
             self.asset_epoch += 1;
         }
-        let mut key_parts: Vec<u64> = doc.tiles.values().flat_map(|t| [t.content_rev, t.terrain_rev]).collect();
+        let mut key_parts: Vec<u64> = doc.tiles.iter().filter(|(k, _)| is_live(k)).flat_map(|(_, t)| [t.content_rev, t.terrain_rev]).collect();
+        key_parts.push(self.live_rev);
         key_parts.push(extras.show_technical as u64);
         key_parts.extend(extras.hide.map(|h| h as u64));
         self.hide_splines = extras.hide[2];
@@ -1254,7 +1272,7 @@ impl Renderer {
         if key != self.scene_key {
             self.scene_key = key;
             // each tile's instances are kept, and made again only when it changed
-            self.tile_groups.retain(|k, _| doc.tiles.contains_key(k));
+            self.tile_groups.retain(|k, _| doc.tiles.contains_key(k) && is_live(k));
             for (k, t) in &disp {
                 let Some(td) = doc.tiles.get(k) else { continue };
                 let tkey = hash_of(&[td.content_rev, td.terrain_rev, extras.show_technical as u64, self.asset_epoch, extras.hide[0] as u64, extras.hide[1] as u64]);
@@ -1442,7 +1460,7 @@ impl Renderer {
         // each tile's water: one quad at its four corner heights, blended over the ground
         // (an ordinary instance, not a surface: openOMSI's reason, the banks must win)
         let water_tex = ["texture/water.tga", "Texture/water.tga"].iter().map(|r| doc.dir.join(r)).chain(doc.source.iter().map(|s| s.join("texture").join("water.tga"))).find(|p| p.is_file());
-        for (k, td) in &doc.tiles {
+        for (k, td) in doc.tiles.iter().filter(|(k, _)| is_live(k)) {
             let Some(w) = td.water else { continue };
             let key = (*k, WATER);
             alive.push(key);
