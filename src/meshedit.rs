@@ -358,7 +358,7 @@ impl Session {
             return None;
         }
         let c = edit::selection_center(self.mesh(), &self.sel)?;
-        Some(gizmo::Gizmo { mode, pivot: self.world(c), axes: glam::DMat3::from_quat(self.rotation()), allowed: [true; 3] })
+        Some(gizmo::Gizmo { mode, pivot: self.world(c), axes: glam::DMat3::from_quat(self.rotation()), allowed: [true; 3], cap: f64::INFINITY })
     }
 
     pub fn begin_drag(&mut self) {

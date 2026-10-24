@@ -12,6 +12,8 @@ use crate::selection::project;
 
 /// How long an arrow is on the screen (points).
 const REACH_PX: f64 = 95.0;
+/// The shortest an arrow gets on the screen, however small the selection (points).
+const MIN_PX: f64 = 38.0;
 /// How near the cursor must come to a handle to take it (points).
 const PICK_PX: f64 = 9.0;
 
@@ -74,11 +76,15 @@ pub struct Gizmo {
     pub axes: DMat3,
     /// Which axes may be used (turning a road about x or y is not possible).
     pub allowed: [bool; 3],
+    /// How long the arrows may be at most (metres): about the size of what is selected, so
+    /// a small object is not buried in handles. Never shorter than `MIN_PX` on the screen.
+    pub cap: f64,
 }
 
 impl Gizmo {
     pub fn reach(&self, view: &View) -> f64 {
-        view.metres_per_point(self.pivot) * REACH_PX
+        let mpp = view.metres_per_point(self.pivot);
+        (mpp * REACH_PX).min(self.cap).max(mpp * MIN_PX)
     }
 
     fn axis(&self, i: usize) -> DVec3 {
@@ -478,7 +484,7 @@ mod tests {
     }
 
     fn gizmo(mode: Mode) -> Gizmo {
-        Gizmo { mode, pivot: DVec3::ZERO, axes: DMat3::IDENTITY, allowed: [true; 3] }
+        Gizmo { mode, pivot: DVec3::ZERO, axes: DMat3::IDENTITY, allowed: [true; 3], cap: f64::INFINITY }
     }
 
     #[test]

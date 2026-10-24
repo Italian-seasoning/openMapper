@@ -6,6 +6,16 @@ version from this file.
 
 ## Unreleased
 
+## 0.1.5 - 2026-10-24
+
+### Changed
+- **A selected object glows orange** (soft, translucent, over the whole object) instead of wearing a ball or an outline; a selected road glows the same way and no longer has lines along its sides.
+- **The move, rotate and scale handles follow the size of the selected object**: a small object gets short handles, a big mesh long ones, never shorter than a few dozen points on the screen.
+- **README.md names the files of the latest release**: the release workflow updates the download table by itself.
+
+### Fixed
+- **Selecting a big junction mesh drew a huge cone and cloud**: the lines and dots to the objects hanging on it are thin now and as big as those objects.
+
 ### Added
 - **A Windows installer and a macOS disk image**, as openOMSI has: `openMapper-<version>-windows-<arch>-setup.exe` installs for the user alone (no administrator rights, Start menu entry, desktop shortcut, listed under Settings > Apps, removed cleanly: maps and settings are never touched) and `openMapper-<version>-macos-<arch>.dmg` opens to a window with the app and an Applications folder to drag it onto. Both are in openMapper's own look. The zips stay.
 

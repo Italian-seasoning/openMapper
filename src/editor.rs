@@ -349,6 +349,8 @@ pub struct Editor {
     // terrain
     pub terrain_mode: TerrainMode,
     pub brush_radius: f32,
+    /// How long the move handles may be (metres): the size of the selection, noted while drawing.
+    gizmo_cap: std::cell::Cell<f64>,
     pub brush_strength: f32,
     flatten_to: Option<f32>,
     /// The water's level of the stroke going on (Lake / river), and how deep the bed is dug under it (m).
@@ -531,6 +533,7 @@ impl Default for Editor {
             cursor_in_view: false,
             terrain_mode: TerrainMode::Raise,
             brush_radius: 25.0,
+            gizmo_cap: std::cell::Cell::new(f64::INFINITY),
             brush_strength: 0.5,
             flatten_to: None,
             water_level: None,
@@ -4309,7 +4312,7 @@ impl Editor {
         // (a road turns only about the vertical: tilting it is its climb and banking)
         let roads = sels.iter().any(|s| matches!(s, Sel::Spline(..)));
         let allowed = if mode == Mode::Rotate && roads { [false, false, true] } else { [true; 3] };
-        Some(Gizmo { mode, pivot, axes, allowed })
+        Some(Gizmo { mode, pivot, axes, allowed, cap: self.gizmo_cap.get() })
     }
 
     /// Where a selected thing stands in the world: an object's origin, a road's middle.
@@ -6299,35 +6302,13 @@ impl Editor {
     fn selection_extras(&self, x: &mut FrameExtras, cam: &crate::camera::Camera, w: f32, assets: &mut Assets) {
         let Some(doc) = self.doc.as_ref() else { return };
         let sels = self.selection();
-        for s in &sels {
-            match *s {
-                Sel::Spline(k, id) => {
-                    let Some(s) = doc.spline(k, id) else { continue };
-                    let c = omsi_geometry::SplineCurve::from_map(s, tile_origin(k));
-                    // (the outline: the two edges of the road, thin (not across the ends: the grips sit there), nothing laid over it)
-                    let half = assets.spline(&s.file).map(|m| m.half_width as f64).unwrap_or(1.0).max(0.1);
-                    let n = (s.length / 2.0).ceil().max(1.0) as usize;
-                    let at = |i: usize| c.point_at(s.length * i as f64 / n as f64);
-                    // (as thick as the road is wide, never thinner than a hairline on the screen)
-                    let thick = (half as f32 * 0.04).max(w * 0.12);
-                    let side = |i: usize, sign: f64| {
-                        let (a, b) = if i == 0 { (at(0), at(1)) } else { (at(i - 1), at(i)) };
-                        let t = (b - a).truncate().normalize_or_zero();
-                        at(i) + DVec3::new(-t.y, t.x, 0.0) * half * sign + DVec3::Z * 0.2
-                    };
-                    for i in 0..n {
-                        for sign in [-1.0, 1.0] {
-                            line(&mut x.overlay, cam, side(i, sign), side(i + 1, sign), thick, ORANGE);
-                        }
-                    }
-                }
-                // (a small ball on the object: the object itself stays uncovered)
-                Sel::Object(k, id) => {
-                    let Some(o) = doc.object(k, id) else { continue };
-                    ball(&mut x.overlay_depth, doc.object_world(k, o, false) + DVec3::Z * w as f64 * 0.5, w as f64 * 0.8, ORANGE);
-                }
-            }
-        }
+        // (the handles are about as long as the selection is big)
+        let size = sels.iter().map(|s| match *s {
+            Sel::Object(k, id) => doc.object(k, id).and_then(|o| assets.object(&o.file)).map(|m| m.radius() as f64 * 1.3).unwrap_or(f64::INFINITY),
+            Sel::Spline(..) => f64::INFINITY,
+        }).fold(0.0, f64::max);
+        self.gizmo_cap.set(if sels.len() == 1 { size.max(2.0) } else { f64::INFINITY });
+        // (what is selected glows in the scene itself: no outline or ball is drawn over it)
         // what one object takes its state from (cyan) and what takes it from it
         if let (Some(Sel::Object(k, id)), 1) = (self.selected, sels.len()) {
             let at = |k: TileKey, o: &MapObject| (o.parent_id.is_none()).then(|| doc.object_world(k, o, false) + DVec3::Z * 0.5);
@@ -6336,8 +6317,10 @@ impl Editor {
                 let others = parent.into_iter().map(|p| (p, true)).chain(selection::var_children(doc, id).into_iter().map(|c| (c, false)));
                 for ((pk, o), up) in others {
                     let Some(there) = at(pk, o) else { continue };
-                    line(&mut x.overlay, cam, me, there, w * if up { 0.9 } else { 0.6 }, LINK);
-                    disc(&mut x.overlay, cam, there, w * if up { 3.0 } else { 2.0 }, LINK);
+                    // (thin, and a dot as big as the linked thing, not as the view is wide)
+                    let r = assets.object(&o.file).map(|m| m.radius() as f64 * 0.2).unwrap_or(0.5).clamp(0.15, 1.5) as f32;
+                    line(&mut x.overlay, cam, me, there, (w * 0.3).min(r), LINK);
+                    disc(&mut x.overlay, cam, there, r * if up { 1.4 } else { 1.0 }, LINK);
                 }
             }
         }

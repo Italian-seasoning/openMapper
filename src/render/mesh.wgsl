@@ -125,7 +125,13 @@ fn fs(i: VsOut, @builtin(front_facing) front: bool) -> @location(0) vec4<f32> {
         }
     }
     col = tonemap(apply_fog(col, i.rel));
-    col = mix(col, i.tint.rgb, i.tint.a);
+    if (i.tint.a < 0.0) {
+        // the selection's glow: orange light at the rim and a little all over
+        let rim = pow(1.0 - clamp(dot(n, v), 0.0, 1.0), 1.1);
+        col = mix(col, i.tint.rgb, 0.14 + 0.36 * rim);
+    } else {
+        col = mix(col, i.tint.rgb, i.tint.a);
+    }
     return vec4<f32>(col, base.a);
 }
 
