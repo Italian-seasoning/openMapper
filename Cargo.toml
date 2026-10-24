@@ -2,7 +2,7 @@
 name = "openmapper"
 version = "0.1.3"
 edition = "2024"
-rust-version = "1.85"
+rust-version = "1.93"
 license = "AGPL-3.0-only"
 description = "openMapper: a simple map editor for openOMSI"
 repository = "https://github.com/openOMSI-org/openMapper"
@@ -42,7 +42,7 @@ rfd = "0.17"
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 sha2 = "0.10"
-zip = { version = "8.6", default-features = false, features = ["deflate"] }
+zip = { version = "9.0", default-features = false, features = ["deflate"] }
 image = { version = "0.25", default-features = false, features = ["png", "jpeg", "tiff", "bmp", "webp"] }
 # model import: glTF / GLB, FBX (ufbx: a small C library, built with the crate)
 gltf = "1.4"
