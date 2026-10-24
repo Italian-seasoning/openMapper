@@ -6,7 +6,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/openOMSI-org/openMapper/releases/latest"><img alt="Version" src="https://img.shields.io/badge/version-0.1.0-2e86ff?style=for-the-badge"></a>
+  <a href="https://github.com/openOMSI-org/openMapper/releases/latest"><img alt="Version" src="https://img.shields.io/github/v/release/openOMSI-org/openMapper?label=version&color=2e86ff&style=for-the-badge"></a>
   <img alt="Platforms" src="https://img.shields.io/badge/windows%20%C2%B7%20linux%20%C2%B7%20macos-x64%20%7C%20arm64-2d3138?style=for-the-badge">
   <img alt="Rust" src="https://img.shields.io/badge/rust-2024-2d3138?style=for-the-badge&logo=rust&logoColor=white">
   <a href="https://openomsi.org/"><img alt="Docs" src="https://img.shields.io/badge/openOMSI-website-2d3138?style=for-the-badge"></a>
