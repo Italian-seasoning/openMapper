@@ -89,7 +89,16 @@ impl Gpu {
         }));
         let size = window.inner_size();
         let caps = surface.get_capabilities(&adapter);
-        let format = caps.formats.iter().copied().find(|f| !f.is_srgb()).unwrap_or(caps.formats[0]).remove_srgb_suffix();
+        // (8 bits a channel first: a surface may also list formats such as Rgba16Unorm, which
+        // need device features this editor does not ask for; the native Wayland path leads with one)
+        let usable = |f: &wgpu::TextureFormat| device.features().contains(f.required_features());
+        let format = [wgpu::TextureFormat::Bgra8Unorm, wgpu::TextureFormat::Rgba8Unorm]
+            .into_iter()
+            .find(|f| caps.formats.contains(f))
+            .or_else(|| caps.formats.iter().copied().find(|f| !f.is_srgb() && usable(f)))
+            .or_else(|| caps.formats.iter().copied().find(usable))
+            .unwrap_or(caps.formats[0])
+            .remove_srgb_suffix();
         let scene_format = format.add_srgb_suffix();
         // (COPY_SRC: the screenshot mode reads the picture back)
         let copy = if caps.usages.contains(wgpu::TextureUsages::COPY_SRC) { wgpu::TextureUsages::COPY_SRC } else { wgpu::TextureUsages::empty() };
