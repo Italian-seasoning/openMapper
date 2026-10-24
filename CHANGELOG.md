@@ -9,6 +9,10 @@ version from this file.
 ### Added
 - **Multiplayer** (File > Multiplayer…): several people edit one map at once. One hosts the map open in their openMapper; the others join on the same network or from anywhere through a free Cloudflare quick tunnel (openOMSI's own). Tiles, the global settings and groups are shared as they are made; an edit made on a tile somebody else changed first is put back and its author told. Undo leaves the others' edits alone, and each editor hands out IDCodes of its own. The others' cursors, names and selections are drawn in the view in their colours. The timetable, the traffic and the descriptions stay the host's for now, and the host saves the map.
 
+### Fixed
+- **A road can leave a junction** ([#18](https://github.com/openOMSI-org/openMapper/issues/18)): clicking on a junction's plate (anywhere on it, its corners and the open side too) starts a new road from its middle, as another arm of it. The road ends at the plate's edge and a loose road end at it no longer takes the click.
+- **Out of graphics memory** ([#16](https://github.com/openOMSI-org/openMapper/issues/16)): a tile of plain ground now costs the graphics card only its terrain (the paint masks and the ground cut are made only for tiles that have paint or roads, and one shared blank is used otherwise), so a map of thousands of tiles fits. If the graphics memory still runs out, the editor lets go of what it can build again and goes on instead of closing; blocks are no longer set aside beyond what is used.
+
 ## 0.1.3 - 2026-10-24
 
 ### Changed

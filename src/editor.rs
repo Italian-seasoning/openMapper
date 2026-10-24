@@ -2165,6 +2165,11 @@ impl Editor {
     /// (and the spline type that is there, which a road started from it goes on with)
     fn snap_anchor(&self, assets: &mut Assets, p: DVec2, within: f64) -> Option<(Anchor, Option<String>)> {
         let doc = self.doc.as_ref()?;
+        // over a junction's plate: the plate itself is the place (a road starts from its
+        // middle, as a new arm, or runs into it), not the road ends and middles at its edge
+        if !self.drawing_paths() && !self.drawing_track(assets) && self.plate_at(assets, p).is_some() {
+            return None;
+        }
         let mut best: Option<(f64, Anchor, Option<String>)> = None;
         let mut consider = |d: f64, a: Anchor, file: &str| {
             if d < within && best.as_ref().map(|b| d < b.0).unwrap_or(true) {
@@ -2173,6 +2178,19 @@ impl Editor {
         };
         // (a track joins tracks, a road roads: rails and asphalt only cross)
         let track = self.drawing_track(assets);
+        // the connectors of openMapper's own junctions: a road's end at one is an arm of the
+        // junction, not a loose end to go on from (a new road from there is drawn out of the
+        // plate itself, as a new arm)
+        let mut plate_edges: Vec<DVec2> = Vec::new();
+        for (k, t) in &doc.tiles {
+            for o in t.tile.objects.iter().filter(|o| is_own_junction(&o.file)) {
+                let Some(model) = assets.object(&o.file) else { continue };
+                let world = doc.object_world(*k, o, model.abs_height);
+                let m = object_matrix(DVec3::ZERO, o.rot);
+                plate_edges.extend(model.helpers.iter().map(|(h, _)| (world + m.transform_point3(Vec3::new(h[0], h[1], h[2])).as_dvec3()).truncate()));
+            }
+        }
+        let at_plate = |q: DVec3| !track && plate_edges.iter().any(|e| (*e - q.truncate()).length() < 3.0);
         for (k, t) in &doc.tiles {
             let org = tile_origin(*k);
             for s in t.tile.splines.iter().filter(|s| !s.deleted) {
@@ -2180,11 +2198,11 @@ impl Editor {
                     continue;
                 }
                 let c = omsi_geometry::SplineCurve::from_map(s, org);
-                if s.prev_id == 0 {
+                if s.prev_id == 0 && !at_plate(c.point_at(0.0)) {
                     let a = c.point_at(0.0);
                     consider((a.truncate() - p).length(), Anchor { pos: a, heading: roads::norm_deg(s.heading + 180.0), spline: Some((*k, s.id, false)), mid: None }, &s.file);
                 }
-                if s.next_id == 0 {
+                if s.next_id == 0 && !at_plate(c.end_point()) {
                     let e = c.end_point();
                     consider((e.truncate() - p).length(), Anchor { pos: e, heading: roads::norm_deg(c.heading_at(s.length)), spline: Some((*k, s.id, true)), mid: None }, &s.file);
                 }
@@ -2199,7 +2217,13 @@ impl Editor {
                 for (h, file) in &model.helpers {
                     // (h[3]: the way out of the junction, in the object's frame)
                     let q = world + m.transform_point3(Vec3::new(h[0], h[1], h[2])).as_dvec3();
-                    consider((q.truncate() - p).length(), Anchor { pos: q, heading: roads::norm_deg(h[3] as f64 + o.rot[0]), spline: None, mid: None }, file);
+                    let d = (q.truncate() - p).length();
+                    // (a connector a road already ends at is taken: a new road does not start
+                    // there, on top of that road)
+                    if d < within && self.spline_end_at(assets, q.truncate()) {
+                        continue;
+                    }
+                    consider(d, Anchor { pos: q, heading: roads::norm_deg(h[3] as f64 + o.rot[0]), spline: None, mid: None }, file);
                 }
             }
         }
@@ -2243,6 +2267,25 @@ impl Editor {
             }
         }
         mid.map(|m| (m.1, Some(m.2)))
+    }
+
+    /// A road's end (either) lies within a metre of `p`.
+    fn spline_end_at(&self, assets: &mut Assets, p: DVec2) -> bool {
+        let Some(doc) = self.doc.as_ref() else { return false };
+        for (k, t) in &doc.tiles {
+            let org = tile_origin(*k);
+            for s in t.tile.splines.iter().filter(|s| !s.deleted) {
+                let start = DVec2::new(org.x + s.pos[0], org.y + s.pos[1]);
+                if (start - p).length() > s.length + 2.0 || assets.spline(&s.file).map(|m| !m.joinable()).unwrap_or(true) {
+                    continue;
+                }
+                let c = omsi_geometry::SplineCurve::from_map(s, org);
+                if (c.point_at(0.0).truncate() - p).length() < 1.0 || (c.end_point().truncate() - p).length() < 1.0 {
+                    return true;
+                }
+            }
+        }
+        false
     }
 
     /// The type being drawn is a track (rails meet in switches, not junctions).
@@ -5785,7 +5828,11 @@ impl Editor {
                 }
                 let Some(m) = assets.object(&o.file) else { continue };
                 let r = m.helpers.iter().map(|h| DVec2::new(h.0[0] as f64, h.0[1] as f64).length()).fold(0.0, f64::max);
-                if r > 0.0 && (at - p).length() < r * 0.85 {
+                // (its middle, or anywhere on the plate itself: a corner reaches past the
+                // arms' ends)
+                let local = object_matrix(DVec3::ZERO, o.rot).inverse().transform_point3(Vec3::new((p.x - at.x) as f32, (p.y - at.y) as f32, 0.0));
+                let on_plate = local.x >= m.lo.x && local.x <= m.hi.x && local.y >= m.lo.y && local.y <= m.hi.y;
+                if r > 0.0 && ((at - p).length() < r * 0.85 || on_plate) {
                     return Some((o.id, doc.object_world(*k, o, m.abs_height), r));
                 }
             }
@@ -8151,6 +8198,125 @@ mod tests {
         let j: Vec<_> = doc.tiles[&(0, 0)].tile.objects.iter().filter(|o| o.file.contains("junction_")).collect();
         assert_eq!(j.len(), 1);
         assert_eq!(crate::selection::tests::free_ends_near(doc, DVec2::new(j[0].pos[0], j[0].pos[1]), 25.0), 3);
+        let _ = std::fs::remove_dir_all(content);
+    }
+
+    #[test]
+    fn a_road_drawn_out_of_a_junction_becomes_a_fourth_arm() {
+        let road = "Splines\\Marcel\\str_2spur_8m_borkumer1.sli";
+        let Some(omsi) = crate::install::find_omsi_root(&Default::default()) else { return };
+        let content = std::env::temp_dir().join(format!("om-tjout-{}", std::process::id()));
+        std::fs::create_dir_all(&content).unwrap();
+        let mut assets = Assets::new(omsi, content.clone());
+        for _ in 0..500 { if assets.spline(road).is_some() { break; } assets.poll(); std::thread::sleep(std::time::Duration::from_millis(10)); }
+        if assets.spline(road).is_none() { return }
+        let mut doc = flat_map(1);
+        doc.dir = content.join("maps").join("TJO");
+        let mut ed = Editor::default();
+        ed.content_dir = Some(content.clone());
+        ed.open(doc);
+        ed.set_tool(Tool::Roads);
+        ed.road_type = Some(road.into());
+        let lib = Library::default();
+        let click = |ed: &mut Editor, a: &mut Assets, x: f64, y: f64| {
+            ed.cursor = Some(DVec3::new(x, y, 0.0));
+            ed.plan_road(a);
+            ed.road_click(a, &lib);
+            ed.tick(a, 0.0, false);
+        };
+        click(&mut ed, &mut assets, 60.0, 150.0);
+        click(&mut ed, &mut assets, 240.0, 150.0);
+        ed.right_click();
+        click(&mut ed, &mut assets, 150.0, 260.0);
+        click(&mut ed, &mut assets, 150.0, 151.0);
+        ed.right_click();
+        for _ in 0..50 { assets.poll(); ed.tick(&mut assets, 0.0, false); std::thread::sleep(std::time::Duration::from_millis(10)); }
+        let centre = {
+            let doc = ed.doc.as_ref().unwrap();
+            let o = doc.tiles[&(0, 0)].tile.objects.iter().find(|o| o.file.contains("junction_")).expect("a junction");
+            DVec2::new(o.pos[0], o.pos[1])
+        };
+        let r = {
+            let mut r = None;
+            for _ in 0..500 { assets.poll(); ed.tick(&mut assets, 0.0, false); r = ed.plate_at(&mut assets, centre).map(|p| p.2); if r.is_some() { break; } std::thread::sleep(std::time::Duration::from_millis(10)); }
+            r.expect("the plate")
+        };
+        eprintln!("plate at {centre:?} r {r}");
+        // out of the open (northern) side: from the plate's middle, and from near its edge
+        for (dx, from) in [(0.0, 0.0), (0.0, -r * 0.7), (r * 0.9, -r * 0.5)] {
+            click(&mut ed, &mut assets, centre.x + dx, centre.y + from);
+            let start = ed.road_start.expect("a start").0.pos;
+            assert!((start.truncate() - centre).length() < 0.5, "from the plate's middle, not {start:?}");
+            click(&mut ed, &mut assets, centre.x, centre.y - 90.0);
+            ed.right_click();
+            for _ in 0..50 { assets.poll(); ed.tick(&mut assets, 0.0, false); std::thread::sleep(std::time::Duration::from_millis(10)); }
+            let doc = ed.doc.as_ref().unwrap();
+            let j = doc.tiles[&(0, 0)].tile.objects.iter().filter(|o| o.file.contains("junction_")).count();
+            let ends = crate::selection::tests::free_ends_near(doc, centre, r + 15.0);
+            eprintln!("from {from}: {j} junctions, {ends} free ends, {} splines", doc.tiles[&(0, 0)].tile.splines.len());
+            assert_eq!(j, 1);
+            assert_eq!(ends, 4, "a fourth arm from {from}");
+            ed.undo();
+        }
+        let _ = std::fs::remove_dir_all(content);
+    }
+
+    #[test]
+    fn a_road_drawn_into_a_junction_becomes_a_fourth_arm() {
+        let road = "Splines\\Marcel\\str_3spur_12m_Stresowstr2.sli";
+        let Some(omsi) = crate::install::find_omsi_root(&Default::default()) else { return };
+        let content = std::env::temp_dir().join(format!("om-tjin-{}", std::process::id()));
+        std::fs::create_dir_all(&content).unwrap();
+        let mut assets = Assets::new(omsi, content.clone());
+        for _ in 0..500 { if assets.spline(road).is_some() { break; } assets.poll(); std::thread::sleep(std::time::Duration::from_millis(10)); }
+        if assets.spline(road).is_none() { return }
+        let mut doc = flat_map(1);
+        doc.dir = content.join("maps").join("TJI");
+        let mut ed = Editor::default();
+        ed.content_dir = Some(content.clone());
+        ed.open(doc);
+        ed.set_tool(Tool::Roads);
+        ed.road_type = Some(road.into());
+        let lib = Library::default();
+        let click = |ed: &mut Editor, a: &mut Assets, x: f64, y: f64| {
+            ed.cursor = Some(DVec3::new(x, y, 0.0));
+            ed.plan_road(a);
+            ed.road_click(a, &lib);
+            ed.tick(a, 0.0, false);
+        };
+        click(&mut ed, &mut assets, 52.6, 127.5);
+        click(&mut ed, &mut assets, 247.4, 172.5);
+        ed.right_click();
+        click(&mut ed, &mut assets, 141.6, 265.2);
+        click(&mut ed, &mut assets, 149.0, 150.0);
+        ed.right_click();
+        for _ in 0..50 { assets.poll(); ed.tick(&mut assets, 0.0, false); std::thread::sleep(std::time::Duration::from_millis(10)); }
+        let centre = {
+            let doc = ed.doc.as_ref().unwrap();
+            let o = doc.tiles[&(0, 0)].tile.objects.iter().find(|o| o.file.contains("junction_")).expect("a junction");
+            DVec2::new(o.pos[0], o.pos[1])
+        };
+        let r = {
+            let mut r = None;
+            for _ in 0..500 { assets.poll(); ed.tick(&mut assets, 0.0, false); r = ed.plate_at(&mut assets, centre).map(|p| p.2); if r.is_some() { break; } std::thread::sleep(std::time::Duration::from_millis(10)); }
+            r.expect("the plate")
+        };
+        eprintln!("plate at {centre:?} r {r}");
+        eprintln!("T: {} splines, {} objects", ed.doc.as_ref().unwrap().tiles[&(0, 0)].tile.splines.len(), ed.doc.as_ref().unwrap().tiles[&(0, 0)].tile.objects.len());
+        // into the open (southern) side from outside, to the plate's middle and to near its edge
+        for (dx, to) in [(0.0, -r * 0.7), (0.0, -r * 0.8), (0.0, -r * 0.9), (0.0, -r), (3.0, -r * 1.2), (0.0, -r * 1.6)] {
+            click(&mut ed, &mut assets, centre.x - 6.0, centre.y - 90.0);
+            click(&mut ed, &mut assets, centre.x + dx, centre.y + to);
+            ed.right_click();
+            for _ in 0..50 { assets.poll(); ed.tick(&mut assets, 0.0, false); std::thread::sleep(std::time::Duration::from_millis(10)); }
+            let doc = ed.doc.as_ref().unwrap();
+            let j = doc.tiles[&(0, 0)].tile.objects.iter().filter(|o| o.file.contains("junction_")).count();
+            let ends = crate::selection::tests::free_ends_near(doc, centre, r + 15.0);
+            eprintln!("to {to}: {j} junctions, {ends} free ends, {} splines", doc.tiles[&(0, 0)].tile.splines.len());
+            assert_eq!(j, 1);
+            assert_eq!(ends, 4, "a fourth arm");
+            ed.undo();
+        }
         let _ = std::fs::remove_dir_all(content);
     }
 
