@@ -1,5 +1,6 @@
 #!/bin/sh
-# Builds openMapper.app and a zip of it in target/package (macOS), for the Mac it runs on or,
+# Builds openMapper.app, a zip of it and a disk image (openMapper-<version>-macos-<arch>.dmg) in
+# target/package (macOS), for the Mac it runs on or,
 # given a target, for the other one: `sh tools/package-macos.sh x86_64-apple-darwin`
 # (Intel) or `aarch64-apple-darwin` (Apple silicon).
 set -e
@@ -39,4 +40,6 @@ cat > "$APP/Contents/Info.plist" <<PLIST
 PLIST
 codesign --force --deep --sign - "$APP" 2>/dev/null || true
 (cd "$OUT" && rm -f "openMapper-$VERSION-macos-$ARCH.zip" && ditto -c -k --keepParent openMapper.app "openMapper-$VERSION-macos-$ARCH.zip")
+sh tools/make-dmg.sh "$APP" "$OUT/openMapper-$VERSION-macos-$ARCH.dmg"
 echo "$OUT/openMapper-$VERSION-macos-$ARCH.zip"
+echo "$OUT/openMapper-$VERSION-macos-$ARCH.dmg"

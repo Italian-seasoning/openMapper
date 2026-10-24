@@ -1,4 +1,5 @@
-# Builds openmapper.exe and a zip of it in target\package (Windows; -Target aarch64-pc-windows-msvc
+# Builds openmapper.exe, a zip of it and (with NSIS' makensis on the PATH) the installer
+# openMapper-<version>-windows-<arch>-setup.exe in target\package (Windows; -Target aarch64-pc-windows-msvc
 # for ARM64, the program's icon is built into the .exe by build.rs): the program, the README
 # and the tutorial (in docs, where the README links it). The C runtime is linked in
 # (.cargo\config.toml): nothing to install.
@@ -41,3 +42,12 @@ $zip = Join-Path $out "$name.zip"
 if (Test-Path $zip) { Remove-Item $zip }
 Compress-Archive -Path $dir -DestinationPath $zip
 Write-Output $zip
+if (Get-Command makensis -ErrorAction SilentlyContinue) {
+    $setup = Join-Path $out "$name-setup.exe"
+    $env:OPENMAPPER_VERSION = $version
+    sh tools/make-installer.sh $dir $setup
+    if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+    Write-Output $setup
+} else {
+    Write-Warning "makensis not found: no installer made (install NSIS: choco install nsis)"
+}

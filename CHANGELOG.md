@@ -4,6 +4,11 @@ Releases are tagged `v<version>`; the downloads are on the
 [Releases](https://github.com/openOMSI-org/openMapper/releases) page, each with the notes of its
 version from this file.
 
+## Unreleased
+
+### Added
+- **A Windows installer and a macOS disk image**, as openOMSI has: `openMapper-<version>-windows-<arch>-setup.exe` installs for the user alone (no administrator rights, Start menu entry, desktop shortcut, listed under Settings > Apps, removed cleanly: maps and settings are never touched) and `openMapper-<version>-macos-<arch>.dmg` opens to a window with the app and an Applications folder to drag it onto. Both are in openMapper's own look. The zips stay.
+
 ## 0.1.4 - 2026-10-24
 
 ### Added

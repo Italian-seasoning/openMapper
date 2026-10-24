@@ -40,13 +40,16 @@ page, built by GitHub Actions for each system and processor:
 
 | Platform | Intel / AMD (x64) | ARM64 |
 | --- | --- | --- |
-| Windows 10 / 11 | `openMapper-<version>-windows-x64.zip` | `openMapper-<version>-windows-arm64.zip` |
-| macOS 11 or newer | `openMapper-<version>-macos-x64.zip` | `openMapper-<version>-macos-arm64.zip` (Apple silicon) |
+| Windows 10 / 11 | `openMapper-<version>-windows-x64-setup.exe` or `-windows-x64.zip` | `openMapper-<version>-windows-arm64-setup.exe` or `-windows-arm64.zip` |
+| macOS 11 or newer | `openMapper-<version>-macos-x64.dmg` or `-macos-x64.zip` | `openMapper-<version>-macos-arm64.dmg` or `-macos-arm64.zip` (Apple silicon) |
 | Linux | `openMapper-<version>-linux-x64.tar.gz` | `openMapper-<version>-linux-arm64.tar.gz` |
 
-* **Windows:** unpack the zip and run `openmapper.exe`. Nothing else is needed.
-* **macOS:** unpack the zip and move `openMapper.app` to Applications. The app is not notarised: the
-  first time, right-click it and choose Open.
+* **Windows:** run the `-setup.exe`: it installs for you alone (no administrator rights), adds
+  a Start menu entry and a desktop shortcut, and `Settings > Apps` removes it again. Or unpack the zip
+  and run `openmapper.exe`: nothing else is needed either way.
+* **macOS:** open the `.dmg` and drag `openMapper` onto Applications. The app is not notarised: the
+  first time, right-click it and choose Open (or System Settings > Privacy & Security > Open Anyway).
+  The zip holds the same `openMapper.app`.
 * **Linux:** unpack the archive and run `./openmapper`; `openmapper.desktop` and the icon are in
   the folder for a menu entry. It needs GTK 3 for the file dialogs and a Vulkan or OpenGL driver.
 
@@ -91,12 +94,13 @@ that the written tiles read back through openOMSI's own parser.
 cargo run --release
 ```
 
-`tools/package-macos.sh` makes `openMapper.app` and a zip of it in `target/package`,
-`tools/package-linux.sh` a tar.gz with a desktop entry and `tools/package-windows.ps1` a zip
-(no console window, nothing else to install); a `v*` tag builds all three on GitHub and
+`tools/package-macos.sh` makes `openMapper.app`, a zip of it and a `.dmg` in `target/package`,
+`tools/package-linux.sh` a tar.gz with a desktop entry and `tools/package-windows.ps1` a zip and,
+with NSIS installed, a `-setup.exe` (no console window, nothing else to install); a `v*` tag builds all three on GitHub and
 publishes them as a release (`.github/workflows/release.yml`; Windows and macOS for x64 and ARM64,
 Linux on a runner of each). The logo and icons are drawn by `tools/make-icons.py` from Inter
-(`assets/logos`, `assets/icons/app`); the program embeds its icon (`openmapper --icon out.png 512`).
+(`assets/logos`, `assets/icons/app`; the installer's and the disk image's pictures by
+`tools/make-installer-art.sh`); the program embeds its icon (`openmapper --icon out.png 512`).
 
 `openmapper path/to/global.cfg` opens a map straight away. `OPENMAPPER_SHOT=out.png` saves
 a picture of the window and exits (for checks without a person at the screen).

@@ -1,6 +1,6 @@
 # Builds openMapper for Windows, macOS and Linux, each for x64 and ARM64, with the
 # tools/package-* scripts. A tag v<version> publishes the packages as that release on GitHub, with
-# the notes of that version from CHANGELOG.md; run by hand, the packages are only kept with the run.
+# the notes of that version from CHANGELOG.md (Windows also gets a setup.exe, macOS a .dmg); run by hand, the packages are only kept with the run.
 name: Release
 
 on:
@@ -81,13 +81,41 @@ jobs:
       - name: Linux libraries
         if: runner.os == 'Linux'
         run: sudo apt-get update && sudo apt-get install -y libgtk-3-dev libxkbcommon-dev libwayland-dev
+      - name: NSIS (Windows installer)
+        if: runner.os == 'Windows'
+        shell: bash
+        run: |
+          export PATH="/c/Program Files (x86)/NSIS:$PATH"
+          for i in 1 2 3 4 5; do
+            command -v makensis >/dev/null && break
+            choco install nsis -y --no-progress || sleep 30
+          done
+          echo "C:\\Program Files (x86)\\NSIS" >> "$GITHUB_PATH"
       - run: ${{ matrix.run }}
+      - name: Installer installs and uninstalls
+        if: matrix.name == 'windows-x64'
+        shell: pwsh
+        run: |
+          $dir = "$env:RUNNER_TEMP\openMapper"
+          $lnk = "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\openMapper.lnk"
+          $key = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Uninstall\openMapper"
+          $setup = (Get-ChildItem target/package/*-setup.exe | Select-Object -First 1).FullName
+          Start-Process -Wait $setup -ArgumentList "/S", "/D=$dir"
+          foreach ($p in "$dir\openmapper.exe", "$dir\uninstall.exe", $lnk, $key) {
+            if (-not (Test-Path $p)) { throw "the installer did not make $p" }
+          }
+          Start-Process -Wait "$dir\uninstall.exe" -ArgumentList "/S", "_?=$dir"
+          foreach ($p in "$dir\openmapper.exe", $lnk, $key) {
+            if (Test-Path $p) { throw "the uninstaller left $p" }
+          }
       - uses: actions/upload-artifact@v7
         with:
           name: openMapper-${{ matrix.name }}
           path: |
             target/package/*.zip
             target/package/*.tar.gz
+            target/package/*-setup.exe
+            target/package/*.dmg
           if-no-files-found: error
 
   release:

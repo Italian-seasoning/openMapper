@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="540" height="400" viewBox="0 0 540 400">
+<rect width="540" height="400" fill="#14161A"/>
+<image href="../../logos/openmapper-wordmark-mono-light.svg" x="30" y="110" width="480" opacity=".05"/>
+<g font-family="Inter Variable" text-anchor="middle">
+<text x="270" y="44" font-size="21" font-weight="650" fill="#ededed">Install <tspan fill="#2e86ff">openMapper</tspan></text>
+<circle cx="136" cy="64" r="9" fill="#2e86ff"/><text x="136" y="68" font-size="11" font-weight="700" fill="#ffffff">1</text>
+<text x="283" y="68" font-size="13" fill="#b8b8b8">Drag the app onto the <tspan fill="#ededed">Applications</tspan> folder</text>
+</g>
+<g fill="#707070">
+<rect x="84" y="250" width="112" height="26" rx="13"/>
+<rect x="344" y="250" width="112" height="26" rx="13"/>
+</g>
+<g transform="translate(270 180) skewX(-12)" fill="#2e86ff">
+<rect x="-34" y="-3" width="10" height="6" rx="2" opacity=".35"/>
+<rect x="-20" y="-3" width="14" height="6" rx="2" opacity=".65"/>
+<path d="M-2 -3h18v-9l20 12-20 12v-9H-2z"/>
+</g>
+<rect x="40" y="298" width="460" height="1" fill="#2f2f2f"/>
+<g font-family="Inter Variable" font-size="11.5" fill="#8a8a8a">
+<circle cx="52" cy="322" r="9" fill="#2e86ff"/><text x="52" y="326" font-size="11" font-weight="700" fill="#ffffff" text-anchor="middle">2</text>
+<text x="70" y="326">Then start openMapper from <tspan fill="#ededed">Applications</tspan>.</text>
+<circle cx="52" cy="348" r="9" fill="#2f2f2f"/><text x="52" y="352" font-size="11" font-weight="700" fill="#ededed" text-anchor="middle">?</text>
+<text x="70" y="352">Blocked at first start? <tspan fill="#ededed">System Settings › Privacy &amp; Security › Open Anyway</tspan></text>
+</g>
+</svg>
