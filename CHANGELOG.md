@@ -4,7 +4,7 @@ Releases are tagged `v<version>`; the downloads are on the
 [Releases](https://github.com/openOMSI-org/openMapper/releases) page, each with the notes of its
 version from this file.
 
-## Unreleased
+## 0.1.4 - 2026-10-24
 
 ### Added
 - **Multiplayer** (File > Multiplayer…): several people edit one map at once. One hosts the map open in their openMapper; the others join on the same network or from anywhere through a free Cloudflare quick tunnel (openOMSI's own). Tiles, the global settings and groups are shared as they are made; an edit made on a tile somebody else changed first is put back and its author told. Undo leaves the others' edits alone, and each editor hands out IDCodes of its own. The others' cursors, names and selections are drawn in the view in their colours. The timetable, the traffic and the descriptions stay the host's for now, and the host saves the map.
@@ -14,8 +14,12 @@ version from this file.
 
 ### Changed
 - A window nobody touches redraws about 20 times a second instead of every frame.
+- New editor installations start with Medium graphics ([#15](https://github.com/openOMSI-org/openMapper/issues/15)).
+- Both ZIP dependencies and TLS updated; ZIP 9 compatibility fixed ([#14](https://github.com/openOMSI-org/openMapper/pull/14)).
 
 ### Fixed
+- **The editor starts on native Wayland**: an 8-bit window format is picked first ([#19](https://github.com/openOMSI-org/openMapper/pull/19)).
+- **A save that cannot finish rolls the map files back** instead of leaving them half written ([#13](https://github.com/openOMSI-org/openMapper/pull/13)).
 - **The Map editor camera** looks and flies like a 3D editor's: the right button held looks round (the cursor held and hidden), W A S D fly with Q down and E up, the wheel sets the speed meanwhile and otherwise zooms to the cursor, the middle button pans.
 - **Unity-style camera was jerky** with the right button: the cursor is held and hidden while it looks round, the turn comes from the mouse's own motion applied once per frame (no more jumps at the screen's edge), and lifting the eye over the ground is shown at once instead of easing while the view turns.
 - **A road can leave a junction** ([#18](https://github.com/openOMSI-org/openMapper/issues/18)): clicking on a junction's plate (anywhere on it, its corners and the open side too) starts a new road from its middle, as another arm of it. The road ends at the plate's edge and a loose road end at it no longer takes the click.
