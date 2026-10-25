@@ -34,6 +34,10 @@ pub struct Part {
     pub materials: Vec<Material>,
     /// Material slots showing one of the model's text textures: (slot, text texture).
     pub texts: Vec<(usize, usize)>,
+    /// Material slots whose picture an object's label picks (`[matl_freetex]`): (slot, the
+    /// label). The label's value is a picture's name, looked for where the object's own
+    /// textures are; an empty one leaves the slot's own picture, as in Omsi.exe.
+    pub freetex: Vec<(usize, usize)>,
 }
 
 pub struct ObjectModel {
@@ -223,6 +227,20 @@ impl Assets {
         }
     }
 
+    /// The picture a `[matl_freetex]` label of `object` names: looked for where the object's
+    /// own textures are, as Omsi.exe looks for it. The label's value may name a subfolder of
+    /// the texture folder (`freetex\LTR12.png`, with backslashes as OMSI's labels use them).
+    pub fn freetex_texture(&self, object: &str, name: &str) -> Option<PathBuf> {
+        let name = name.trim().trim_matches('"').trim();
+        if name.is_empty() {
+            return None;
+        }
+        let p = self.resolve(object);
+        let dir = p.parent()?;
+        let dirs = texture_dirs(&self.omsi, &self.content, dir);
+        find_tex(name, &dirs)
+    }
+
     pub fn texture(&mut self, path: &Path) -> Option<Arc<TextureImage>> {
         match self.textures.get(path) {
             Some(Slot::Ready(t)) => Some(t.clone()),
@@ -306,6 +324,27 @@ fn find_tex(name: &str, dirs: &[PathBuf]) -> Option<PathBuf> {
     omsi_texture::find_texture(name, &refs)
 }
 
+/// Which label of an object picks the picture of a `[matl_freetex]` slot.
+///
+/// The variable the tag names is a label of the object's `[stringvarnamelist]`, and its value
+/// (the map's `[object]` record holds it) is the picture's name. Failing that, OMSI falls back
+/// to the order the freetex slots are declared in, one label each — which is what a model whose
+/// labels are unnamed relies on.
+fn freetex_label(names: &[String], var: &str, order: usize) -> Option<usize> {
+    let var = var.trim();
+    if !var.is_empty() {
+        // (by name, which is how the tutorial says to write it)
+        if let Some(i) = names.iter().position(|n| n.trim().eq_ignore_ascii_case(var)) {
+            return Some(i);
+        }
+        // (a variable that is a number names a label by its place, as a text texture does)
+        if let Ok(i) = var.parse::<usize>() {
+            return Some(i);
+        }
+    }
+    (order < names.len()).then_some(order)
+}
+
 pub(crate) fn load_object(path: &Path, omsi: &Path, content: &Path) -> Option<ObjectModel> {
     let mut sco = SceneryObject::load(path).map_err(|e| log::debug!("{}: {e}", path.display())).ok()?;
     let sco_dir = path.parent()?.to_path_buf();
@@ -326,6 +365,8 @@ pub(crate) fn load_object(path: &Path, omsi: &Path, content: &Path) -> Option<Ob
         dirs.insert(0, own);
     }
     let mesh_defs: Vec<&omsi_model::MeshDef> = if model.lods.is_empty() { model.meshes.iter().collect() } else { model.lod_meshes(0).iter().collect() };
+    // (the names of the object's labels: a `[matl_freetex]` variable is one of them)
+    let label_names = crate::texts::label_names(&sco.scripts.stringvarlists, &model.text_textures);
     let mut parts = Vec::new();
     let mut lo = Vec3::splat(f32::MAX);
     let mut hi = Vec3::splat(f32::MIN);
@@ -350,6 +391,8 @@ pub(crate) fn load_object(path: &Path, omsi: &Path, content: &Path) -> Option<Ob
         // a material's settings by its texture and the how-many-th use of it
         let mut seen: HashMap<String, i32> = HashMap::new();
         let mut texts = Vec::new();
+        let mut freetex = Vec::new();
+        let mut freetex_order = 0usize;
         let materials = m
             .materials
             .iter()
@@ -362,6 +405,14 @@ pub(crate) fn load_object(path: &Path, omsi: &Path, content: &Path) -> Option<Ob
                 if let Some(t) = def.and_then(|d| d.use_text_texture).filter(|t| *t >= 0 && (*t as usize) < model.text_textures.len()) {
                     texts.push((slot, t as usize));
                 }
+                // (a slot whose picture the map's label picks: `[matl_freetex] texture var`,
+                // where `var` names a label of the object's `[stringvarnamelist]`)
+                if let Some((_, var)) = def.and_then(|d| d.freetex.as_ref()) {
+                    if let Some(i) = freetex_label(&label_names, var, freetex_order) {
+                        freetex.push((slot, i));
+                    }
+                    freetex_order += 1;
+                }
                 let alpha = match def.map(|d| d.alpha).unwrap_or(0) {
                     1 => Alpha::Test,
                     2 => Alpha::Blend,
@@ -371,7 +422,7 @@ pub(crate) fn load_object(path: &Path, omsi: &Path, content: &Path) -> Option<Ob
                 Material { texture: find_tex(&mat.texture, &dirs), color: mat.diffuse, alpha, glow }
             })
             .collect();
-        parts.push(Part { mesh, materials, texts });
+        parts.push(Part { mesh, materials, texts, freetex });
     }
     // a junction plate draped onto its `[crossing_heightdeformation]` field, as openOMSI
     // (and Omsi.exe, as it loads the type) does: its arms meet roads that do not lie at the
@@ -452,8 +503,7 @@ pub(crate) fn load_object(path: &Path, omsi: &Path, content: &Path) -> Option<Ob
     }
     // (a tree with an editor-only helper box is seen in the game: only the box is not)
     let technical = (sco.only_editor && tree.is_none()) || sco.is_entry_point || sco.is_car_park || sco.is_help_arrow || (parts.is_empty() && tree.is_none());
-    let labels = crate::texts::label_names(&sco.scripts.stringvarlists, &model.text_textures);
-    Some(ObjectModel { parts, lo, hi, abs_height: sco.absolute_height(), tree, helpers, attachments, surface, holes, technical, editor_parts: sco.only_editor, paths: sco.paths.clone(), texts: model.text_textures.clone(), labels, lights: sco.traffic_lights.iter().map(|l| l.name.clone()).collect(), light_head: sco.is_traffic_light && sco.traffic_lights.is_empty() })
+    Some(ObjectModel { parts, lo, hi, abs_height: sco.absolute_height(), tree, helpers, attachments, surface, holes, technical, editor_parts: sco.only_editor, paths: sco.paths.clone(), texts: model.text_textures.clone(), labels: label_names, lights: sco.traffic_lights.iter().map(|l| l.name.clone()).collect(), light_head: sco.is_traffic_light && sco.traffic_lights.is_empty() })
 }
 
 fn load_spline(path: &Path, omsi: &Path, content: &Path) -> Option<SplineModel> {
@@ -580,4 +630,56 @@ fn field_height(m: &omsi_geometry::MeshData, x: f32, y: f32) -> Option<f32> {
 fn is_season(var: &str) -> bool {
     let v = var.to_lowercase();
     ["sommer", "summer", "winter", "season", "jahreszeit"].iter().any(|w| v.contains(w))
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn a_freetex_variable_names_one_of_the_objects_labels() {
+        let names = vec!["Texture".to_string(), "Route".to_string()];
+        // (the tutorial's way: the tag's variable is the label's name)
+        assert_eq!(freetex_label(&names, "Texture", 0), Some(0));
+        assert_eq!(freetex_label(&names, "route", 0), Some(1));
+        assert_eq!(freetex_label(&names, " Texture ", 0), Some(0));
+        // (a variable that is a number names a label by its place)
+        assert_eq!(freetex_label(&names, "1", 0), Some(1));
+        // (a name that matches nothing falls back to the order the slots are declared in)
+        assert_eq!(freetex_label(&names, "nothing", 1), Some(1));
+        // (no labels at all: nothing to pick, the slot keeps its own picture)
+        assert_eq!(freetex_label(&[], "Texture", 0), None);
+        // (fewer labels than slots: the later slots keep theirs)
+        assert_eq!(freetex_label(&names, "nothing", 2), None);
+    }
+
+    /// The Hong Kong content's gantry: its two slots are painted with a picture the object does
+    /// not ship, and the map's label names the one to use instead.
+    #[test]
+    fn a_gantry_takes_the_picture_its_label_names() {
+        let Some(omsi) = crate::install::find_omsi_root(&crate::install::Prefs::default()) else {
+            eprintln!("no OMSI 2 installation: skipped");
+            return;
+        };
+        let content = std::env::temp_dir().join("openmapper-freetex-none");
+        let sco = omsi_cfg::resolve_path(&omsi, "Sceneryobjects/76K_GM/FreetexGantry.sco");
+        if !sco.is_file() {
+            eprintln!("no FreetexGantry: skipped");
+            return;
+        }
+        let m = load_object(&sco, &omsi, &content).expect("the gantry reads");
+        assert_eq!(m.labels.first().map(String::as_str), Some("Texture"), "the label the freetex names");
+        let (slot, label) = m.parts.iter().flat_map(|p| p.freetex.iter()).copied().next().expect("a freetex slot");
+        assert_eq!(label, 0, "the label named Texture is the first");
+        // (the slot's own picture is not in the object's folders, so it is bare without a label)
+        let assets = Assets::new(omsi.clone(), content);
+        let own = &m.parts[0].materials[slot];
+        assert!(own.texture.is_none(), "the gantry ships no picture of its own");
+        // (the picture the map's label names is found where the object's textures are)
+        let found = assets.freetex_texture("Sceneryobjects/76K_GM/FreetexGantry.sco", "freetex\\LTR12.png");
+        assert!(found.is_some(), "the label's picture is not found");
+        assert!(found.unwrap().to_string_lossy().to_lowercase().ends_with("ltr12.png"));
+        // (an empty label picks nothing: the slot keeps its own, as Omsi.exe leaves it)
+        assert!(assets.freetex_texture("Sceneryobjects/76K_GM/FreetexGantry.sco", "  ").is_none());
+    }
 }

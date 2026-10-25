@@ -388,8 +388,9 @@ pub(crate) fn missing_textures(path: &Path, is_spline: bool, roots: &[PathBuf]) 
             continue;
         }
         // (script and text textures are made as the game runs, and a texture change swaps
-        // in a picture of its own folder)
-        for m in md.materials.iter().filter(|m| m.use_script_texture.is_none() && m.use_text_texture.is_none() && m.change.is_none()) {
+        // in a picture of its own folder; a `[matl_freetex]` slot takes the picture the map's
+        // label names, so a model that ships none of its own is complete)
+        for m in md.materials.iter().filter(|m| m.use_script_texture.is_none() && m.use_text_texture.is_none() && m.change.is_none() && m.freetex.is_none()) {
             if !m.texture.trim().is_empty() && !find(&m.texture, &dirs) {
                 out.push(m.texture.clone());
             }

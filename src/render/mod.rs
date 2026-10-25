@@ -1169,14 +1169,29 @@ impl Renderer {
     }
 
     /// The model as an object with these labels shows it: one with text textures gets a
-    /// copy of its own per text, the text drawn into those slots. Returns the model's key.
-    fn model_with_labels(&mut self, device: &wgpu::Device, key: &str, m: &ObjectModel, labels: &[String]) -> String {
+    /// copy of its own per text, the text drawn into those slots, and one whose label picks a
+    /// picture (`[matl_freetex]`) gets the picture it names. Returns the model's key.
+    fn model_with_labels(&mut self, device: &wgpu::Device, key: &str, m: &ObjectModel, labels: &[String], assets: &Assets) -> String {
         if m.texts.is_empty() || m.parts.iter().all(|p| p.texts.is_empty()) {
-            self.model(device, key, m);
-            return key.to_string();
+            // (no text: a picture picked by a label is still a model of its own per picture)
+            if m.parts.iter().all(|p| p.freetex.is_empty()) {
+                self.model(device, key, m);
+                return key.to_string();
+            }
         }
         let shown: Vec<&str> = m.texts.iter().map(|tt| crate::texts::label_of(tt).and_then(|i| labels.get(i)).map(String::as_str).unwrap_or("")).collect();
-        let key = format!("{key}\u{1}{}", shown.join("\u{1}"));
+        // (the pictures the map's labels pick, resolved once per label value)
+        let picked: Vec<(&str, Option<PathBuf>)> = m
+            .parts
+            .iter()
+            .flat_map(|p| p.freetex.iter())
+            .filter_map(|&(_, i)| labels.get(i).map(String::as_str).map(str::trim).filter(|s| !s.is_empty()).map(|name| (name, assets.freetex_texture(key, name))))
+            .collect();
+        let key = if picked.is_empty() {
+            format!("{key}\u{1}{}", shown.join("\u{1}"))
+        } else {
+            format!("{key}\u{1}{}\u{2}{}", shown.join("\u{1}"), picked.iter().map(|(n, _)| *n).collect::<Vec<_>>().join("\u{1}"))
+        };
         if !self.models.contains_key(&key) {
             let parts = m
                 .parts
@@ -1191,6 +1206,19 @@ impl Renderer {
                                 mat.alpha = Alpha::Blend;
                             }
                             mat.color[3] = 1.0;
+                        }
+                    }
+                    // (a slot whose picture the placement's label names: the picture replaces
+                    // the slot's own; an empty label or one naming nothing leaves it, as in
+                    // Omsi.exe)
+                    for &(slot, i) in &p.freetex {
+                        let Some(name) = labels.get(i).map(|s| s.trim()).filter(|s| !s.is_empty()) else { continue };
+                        let Some(path) = picked.iter().find(|(n, _)| *n == name).and_then(|(_, p)| p.clone()) else {
+                            log::debug!("freetex: \"{name}\" is nowhere near {key}");
+                            continue;
+                        };
+                        if let Some(mat) = mats.get_mut(slot) {
+                            mat.texture = Some(path);
                         }
                     }
                     (upload_mesh(device, &p.mesh), mats)
@@ -1374,7 +1402,7 @@ impl Renderer {
                     if model.technical && !extras.show_technical || hidden_layer(&model, extras) {
                         continue;
                     }
-                    let key = self.model_with_labels(device, &rel_key, &model, &o.extra);
+                    let key = self.model_with_labels(device, &rel_key, &model, &o.extra, assets);
                     let world = doc.object_world(*k, o, model.abs_height);
                     let pose = Pose::of_object(world, o.rot);
                     // (one standing on the ground outside its own tile is never seen in OMSI or
@@ -1390,7 +1418,7 @@ impl Renderer {
                 let org = tile_origin(*k);
                 for a in t.spline_attachments.iter().filter(|_| !extras.hide[1]) {
                     let Some(model) = assets.object(&a.file) else { continue };
-                    let rel_key = self.model_with_labels(device, &a.file.to_lowercase(), &model, &a.strings);
+                    let rel_key = self.model_with_labels(device, &a.file.to_lowercase(), &model, &a.strings, assets);
                     let objs = crate::place::row_objects(a, &t.splines, org);
                     let first = objs.iter().map(|o| o.index).min();
                     for ro in &objs {
@@ -1407,7 +1435,7 @@ impl Renderer {
                         continue;
                     }
                     let Some((parent, pmodel)) = o.parent_id.and_then(|p| parents.get(&p)).cloned() else { continue };
-                    let rel_key = self.model_with_labels(device, &o.file.to_lowercase(), &model, &o.extra);
+                    let rel_key = self.model_with_labels(device, &o.file.to_lowercase(), &model, &o.extra, assets);
                     let attach = pmodel.attachments.get(o.attach_index).copied().unwrap_or(Mat4::IDENTITY);
                     let pose = parent.attached(&attach, omsi_geometry::map_rotation(o.rot));
                     push_object(&mut groups, &rel_key, &model, o.extra.first(), pose.matrix_from(anchor), [0.0; 4], Some(Sel::Object(*k, o.id)), extras.show_technical);
