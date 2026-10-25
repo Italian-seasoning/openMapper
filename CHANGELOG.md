@@ -6,6 +6,14 @@ version from this file.
 
 ## Unreleased
 
+## 0.1.7 - 2026-10-25
+
+### Fixed
+- **Signs and gantries take the picture the map names** ([#28](https://github.com/openOMSI-org/openMapper/pull/28)): an object whose material is declared `[matl_freetex]` ships no picture on purpose, the map's label for the object names one; openMapper ignored the tag and drew a blank board. Now the Hong Kong gantries, light boxes and bus huts show their pictures, each placement its own, and the map check no longer calls such a slot's missing picture missing.
+- **A sign panel or road marking is no longer eaten by the road it stands on** ([#26](https://github.com/openOMSI-org/openMapper/pull/26)): a picture with no transparency at all is drawn solid, so it keeps its whole face instead of being cut in bands. A sign whose picture the content does not ship stays bare, as in the game, instead of taking a same-named picture from another folder.
+- **Fences and guard rails no longer flicker** ([#27](https://github.com/openOMSI-org/openMapper/pull/27)): splines are drawn from the side their faces face, as OMSI draws them, so the two faces a couple of centimetres apart stop fighting in the depth buffer (`OPENMAPPER_NO_CULL=1` draws both sides again, for a comparison).
+- **Junction plates came out a dull dark grey** beside the roads they join: they were laid with the installation's dark junction asphalt. They are made of the asphalt of the roads that meet there again (the widest road's, cut so no patch comes along in rows), the installation's only where those roads have none. Use Map > Make the junctions again for junctions made before.
+
 ## 0.1.6 - 2026-10-25
 
 ### Added

@@ -706,11 +706,11 @@ pub fn make_with(doc: &mut Document, assets: &mut Assets, content: &Path, asphal
     let tex_dir = dir.join("texture");
     std::fs::create_dir_all(dir.join("model"))?;
     std::fs::create_dir_all(&tex_dir)?;
-    // the roadway's texture: the installation's own junction asphalt (what OMSI 2's crossings
-    // are made of: a road's texture repeated on a plate brought its patches along in rows),
-    // else one made from the roads' asphalt
+    // the roadway's texture: the asphalt of the roads that meet (a plate in the colour of its
+    // roads, cut so that no patch comes along in rows), else the installation's own junction
+    // asphalt
     let widest = geo.iter().filter(|g| g.road_tex.is_some()).max_by(|a, b| (a.left_w + a.right_w).total_cmp(&(b.left_w + b.right_w)));
-    let road_tex = if asphalt.is_some() { None } else { widest.and_then(|g| g.road_tex.clone()) };
+    let road_tex = widest.and_then(|g| g.road_tex.clone());
     let (core_tex, period) = match road_tex {
         Some((tex, u, range, period, width, lane)) => {
             let stem = tex.file_stem().map(|s| s.to_string_lossy().to_string()).unwrap_or_else(|| "road".into());
