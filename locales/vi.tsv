@@ -1,0 +1,2129 @@
+Could not open the map	Không mở được bản đồ
+The next 100 tiles are loaded, the others are hidden	100 ô tiếp theo đã được tải, các ô còn lại bị ẩn
+Find the place in the window and build from it	Tìm địa điểm trong cửa sổ và xây dựng từ đó
+Your map is ready. Start with a road!	Bản đồ đã sẵn sàng. Hãy bắt đầu bằng một con đường!
+Export the map for sharing	Xuất bản đồ để chia sẻ
+Exported:	Đã xuất:
+files	tệp
+files the map names were not found: the readme lists them	không tìm thấy các tệp mà bản đồ nhắc tới: readme liệt kê chúng
+Could not export	Không xuất được
+A ring road with line 1 on it: save, then try it in openOMSI (F5).	Một vòng đường có tuyến 1: lưu, rồi thử trong openOMSI (F5).
+The sample could not be made	Không tạo được bản mẫu
+In multiplayer the host saves the map. Leave the session to save this as a copy of your own.	Khi chơi nhiều người, chủ phòng sẽ lưu bản đồ. Hãy rời phiên để lưu bản này thành bản sao riêng.
+Saved:	Đã lưu:
+Tip: place a start point (Game logic > Start points) so the bus has somewhere to appear	Mẹo: đặt một điểm xuất phát (Logic trò chơi > Điểm xuất phát) để xe buýt có chỗ xuất hiện
+Could not save (the changes are still here, nothing is lost)	Không lưu được (các thay đổi vẫn còn, không mất gì)
+The unsaved changes are back. Save to keep them.	Các thay đổi chưa lưu đã được khôi phục. Hãy lưu để giữ lại.
+Could not restore the changes	Không khôi phục được các thay đổi
+openOMSI was not found	Không tìm thấy openOMSI
+From the start point	Từ điểm xuất phát
+The map has no start point: place one with Game logic > Start points	Bản đồ chưa có điểm xuất phát: hãy đặt bằng Logic trò chơi > Điểm xuất phát
+Starting openOMSI…	Đang khởi động openOMSI…
+To drive the map in OMSI 2 itself it has to be copied into the OMSI 2 folder (Maps, and the objects, roads and textures made for it). Nothing that is there is replaced except earlier copies of this map. Copy it there?	Để lái bản đồ ngay trong OMSI 2, cần sao chép nó vào thư mục OMSI 2 (Maps, cùng các đối tượng, đường và texture làm cho nó). Không có gì ở đó bị thay thế, ngoại trừ các bản sao cũ của bản đồ này. Sao chép vào đó?
+Starting OMSI 2: choose the map	Đang khởi động OMSI 2: hãy chọn bản đồ
+The map is copied into the OMSI 2 folder; OMSI 2 itself runs on Windows only:	Bản đồ đã được sao chép vào thư mục OMSI 2; bản thân OMSI 2 chỉ chạy trên Windows:
+Could not copy the map into OMSI 2	Không sao chép được bản đồ vào OMSI 2
+Click on the map to place it	Nhấp lên bản đồ để đặt
+Open a map (its global.cfg)	Mở bản đồ (tệp global.cfg)
+The map is back as it was before that save	Bản đồ đã trở về như trước lần lưu đó
+Could not go back	Không quay lại được
+Export a plan of the map	Xuất sơ đồ của bản đồ
+Plan saved:	Đã lưu sơ đồ:
+Mods, models and pictures	Mod, mô hình và hình ảnh
+Import assets	Nhập tài nguyên
+…or choose a mod folder	…hoặc chọn thư mục mod
+Click on the map to put it there	Nhấp lên bản đồ để đặt vào đó
+Could not make the shape	Không tạo được hình dạng
+Choose the OMSI 2 folder	Chọn thư mục OMSI 2
+That is not an OMSI 2 folder (Omsi.exe, maps and Vehicles must be in it)	Đây không phải thư mục OMSI 2 (phải có Omsi.exe, maps và Vehicles)
+This object has no textures to make PBR maps of	Đối tượng này không có texture để tạo bản đồ PBR
+Could not copy the map	Không sao chép được bản đồ
+Could not move the map	Không di chuyển được bản đồ
+Terrain flattened; splines laid on it:	Đã san phẳng địa hình; spline được đặt lên trên:
+This road type has no textures to make PBR maps of	Loại đường này không có texture để tạo bản đồ PBR
+Pictures	Hình ảnh
+Only 100 tiles round the camera are loaded; click on the empty zone to load the next 100	Chỉ 100 ô quanh camera được tải; nhấp vào vùng trống để tải 100 ô tiếp theo
+All tiles are loaded	Đã tải tất cả các ô
+Import the map's thumbnail	Nhập ảnh thu nhỏ của bản đồ
+The map's thumbnail is set: openOMSI shows it where maps are chosen.	Đã đặt ảnh thu nhỏ của bản đồ: openOMSI hiển thị nó ở nơi chọn bản đồ.
+Could not use the picture	Không dùng được ảnh này
+Map camera	Camera bản đồ
+The map opens with this view from now on.	Từ nay bản đồ sẽ mở với góc nhìn này.
+Add ground texture	Thêm texture mặt đất
+View kept as	Góc nhìn được lưu là
+No view kept as	Không có góc nhìn được lưu là
+Files changed on disk: the catalogue and models are updated	Tệp trên đĩa đã thay đổi: danh mục và mô hình đã được cập nhật
+The track does not run over the map's tiles	Đường GPS không đi qua các ô của bản đồ
+Road along a GPS track	Đường theo vết GPS
+Roads built:	Đã xây đường:
+junctions:	nút giao:
+stops:	điểm dừng:
+Lines from OpenStreetMap	Tuyến từ OpenStreetMap
+lines:	tuyến:
+trips found their way:	chuyến tìm được đường đi:
+buildings:	tòa nhà:
+trees:	cây:
+Start point	Điểm xuất phát
+Start	Bắt đầu
+a start point	một điểm xuất phát
+From OpenStreetMap	Từ OpenStreetMap
+Picture saved:	Đã lưu ảnh:
+Could not save the picture	Không lưu được ảnh
+The graphics could not be started.	Không khởi động được đồ họa.
+Flying speed	Tốc độ bay
+copy	bản sao
+Only maps of the content folder can be moved	Chỉ có thể di chuyển bản đồ trong thư mục nội dung
+Only assets of the content folder can be deleted	Chỉ có thể xóa tài nguyên trong thư mục nội dung
+Could not write the object	Không ghi được đối tượng
+Select an object to edit its mesh	Chọn một đối tượng để sửa lưới của nó
+A copy of its own was made: the original type is unchanged	Đã tạo bản sao riêng: loại gốc không thay đổi
+Cannot edit this object	Không sửa được đối tượng này
+Point at an edge to cut across its ring of faces	Chỉ vào một cạnh để cắt ngang vòng mặt của nó
+Objects made:	Đã tạo đối tượng:
+select the faces to separate	chọn các mặt cần tách
+Separated into an object of its own	Đã tách thành đối tượng riêng
+Add object	Thêm đối tượng
+select what to export (objects, roads)	chọn thứ cần xuất (đối tượng, đường)
+Export the selection	Xuất vùng chọn
+unknown format	định dạng không xác định
+the models are still loading: try again in a moment	các mô hình vẫn đang tải: hãy thử lại sau giây lát
+this material has no texture	vật liệu này không có texture
+cannot read	không đọc được
+Export the texture	Xuất texture
+Texture saved:	Đã lưu texture:
+Choose a picture	Chọn một hình ảnh
+give the material a texture first: its maps go beside it	hãy gán texture cho vật liệu trước: các bản đồ của nó nằm cạnh
+Import materials (an .mtl, a model, or the pictures of one PBR material)	Nhập vật liệu (tệp .mtl, một mô hình, hoặc các hình của một vật liệu PBR)
+Materials and pictures	Vật liệu và hình ảnh
+no materials found there	không tìm thấy vật liệu nào ở đó
+Materials added:	Đã thêm vật liệu:
+nothing to bake	không có gì để bake
+the object has no lamps to bake the night light of	đối tượng không có đèn để bake ánh sáng ban đêm
+Baked into	Đã bake vào
+select a road or spline first	hãy chọn một con đường hoặc spline trước
+the road's type is still loading: try again in a moment	loại đường vẫn đang tải: hãy thử lại sau giây lát
+these splines have no shape to see	các spline này không có hình dạng để xem
+Replace by an object	Thay bằng đối tượng
+Made into an object: Tab edits its mesh	Đã chuyển thành đối tượng: Tab để sửa lưới
+Signal head made: click where it stands (near a crossing with a light program it links to it)	Đã tạo đèn tín hiệu: nhấp vào nơi đặt (gần ngã tư có chương trình đèn thì sẽ liên kết với nó)
+Choose a picture or a texture	Chọn một hình ảnh hoặc texture
+cannot read the picture	không đọc được hình ảnh
+Picture made: click where it goes (it can be moved, turned and scaled after)	Đã tạo hình ảnh: nhấp vào nơi đặt (sau đó có thể di chuyển, xoay và đổi cỡ)
+Light made: click where it shines	Đã tạo đèn: nhấp vào nơi chiếu sáng
+Choose a sound	Chọn một âm thanh
+Sounds	Âm thanh
+Sound source made: click where it plays	Đã tạo nguồn âm: nhấp vào nơi phát
+Street lamp made: click where it stands	Đã tạo đèn đường: nhấp vào nơi đặt
+Paint by slope and height	Sơn theo độ dốc và độ cao
+By slope and height	Theo độ dốc và độ cao
+The chosen layer painted over the whole map where the ground is so steep (and so high)	Lớp đã chọn được sơn khắp bản đồ ở nơi mặt đất dốc (và cao) như vậy
+Slope	Độ dốc
+Height	Độ cao
+Fade	Mờ dần
+Cover	Phủ
+Paint the map	Sơn bản đồ
+Choose a layer above the base ground	Chọn một lớp phía trên mặt đất nền
+No ground on the map is like that	Không có mặt đất nào trên bản đồ như vậy
+Painted	Đã sơn
+Missing objects	Thiếu đối tượng
+Missing roads and splines	Thiếu đường và spline
+Missing textures	Thiếu texture
+Road ends not joined	Đầu đường chưa nối
+Links to splines that are gone	Liên kết tới spline đã mất
+Bus stops away from a road	Điểm dừng xa đường
+Start points away from a road	Điểm xuất phát xa đường
+Start points without their object	Điểm xuất phát thiếu đối tượng
+No start point	Không có điểm xuất phát
+IDCodes used twice	IDCode bị dùng hai lần
+Next IDCode too low	IDCode kế tiếp quá thấp
+Objects off their tile	Đối tượng ngoài ô của nó
+Tiles without a file	Ô không có tệp
+Tiles without ground	Ô không có mặt đất
+Trips without a way	Chuyến không có đường đi
+Tours without departures	Lượt không có giờ xuất bến
+Tours without a depot	Lượt không có depot
+Traffic groups not in the AI lists	Nhóm giao thông không có trong danh sách AI
+Stops no trip calls at	Điểm dừng không chuyến nào ghé
+Signal routes naming what is gone	Tuyến tín hiệu nhắc tới thứ đã mất
+Chrono changes of what is gone	Thay đổi chrono của thứ đã mất
+Lamps lighting no ground at night	Đèn không chiếu sáng mặt đất ban đêm
+Tiles with very many objects	Ô có rất nhiều đối tượng
+Objects linked to one that is gone	Đối tượng liên kết tới đối tượng đã mất
+Signal heads linked to no crossing	Đèn tín hiệu không liên kết ngã tư
+Depot files (destinations)	Tệp depot (điểm đến)
+The map uses an object (.sco) that is not installed. The game leaves it out. Install the mod it comes from, or delete the object. A junction of openMapper's whose file is gone (the map was moved without it) is made again for its roads with "Fix".	Bản đồ dùng một đối tượng (.sco) chưa được cài. Trò chơi bỏ qua nó. Hãy cài mod chứa nó, hoặc xóa đối tượng. Nút giao của openMapper mà tệp đã mất (bản đồ bị chuyển đi mà không có nó) sẽ được tạo lại cho các đường của nó bằng "Sửa".
+The map uses a road or spline type (.sli) that is not installed: that road is missing in the game, and buses cannot drive there.	Bản đồ dùng một loại đường hoặc spline (.sli) chưa được cài: đường đó bị thiếu trong trò chơi và xe buýt không chạy được ở đó.
+An object or road names a picture that cannot be found. It will look white or black in the game.	Một đối tượng hoặc đường nhắc tới hình ảnh không tìm thấy. Nó sẽ trắng hoặc đen trong trò chơi.
+Two road ends lie on one another but are not joined. Traffic still finds its way (the game joins lanes by their ends), but rows of lamps and posts and the road's texture do not run on across, and the editor does not treat them as one road. "Join" links them.	Hai đầu đường nằm chồng lên nhau nhưng chưa nối. Giao thông vẫn tìm được đường (trò chơi nối làn theo đầu làn), nhưng hàng đèn, cột và texture đường không chạy liền qua, và trình sửa không coi chúng là một đường. "Nối" sẽ liên kết chúng.
+A spline says it goes on into another one that no longer exists. "Fix" forgets that link.	Một spline nói rằng nó đi tiếp vào spline khác không còn tồn tại. "Sửa" sẽ bỏ liên kết đó.
+A bus stop belongs to the lane it stands beside (within about 25 m). This one has none near, so buses cannot stop at it. Move it next to the road, or "Fix" puts it at the kerb of the nearest lane (within 80 m).	Điểm dừng thuộc về làn nó đứng cạnh (trong khoảng 25 m). Điểm này không có làn nào gần, nên xe buýt không dừng được. Hãy dời nó sát đường, hoặc "Sửa" sẽ đặt nó ở lề đường của làn gần nhất (trong 80 m).
+A start point is where the bus appears. This one is away from any lane: fine in a depot yard, otherwise the bus starts off the road.	Điểm xuất phát là nơi xe buýt xuất hiện. Điểm này xa mọi làn: ổn trong bãi depot, nếu không xe buýt sẽ xuất phát ngoài đường.
+A start point refers to an object that was deleted. "Fix" removes the start point.	Một điểm xuất phát tham chiếu tới đối tượng đã bị xóa. "Sửa" sẽ xóa điểm xuất phát.
+There is nowhere for the bus to appear. Place a start point (Game logic > Start points) on a road, or "Fix" puts one on a lane some 40 m before a bus stop.	Không có chỗ nào để xe buýt xuất hiện. Hãy đặt điểm xuất phát (Logic trò chơi > Điểm xuất phát) trên đường, hoặc "Sửa" sẽ đặt một điểm trên làn khoảng 40 m trước điểm dừng.
+Two things on the map share one IDCode: links, timetables and start points may pick the wrong one.	Hai thứ trên bản đồ dùng chung một IDCode: liên kết, bảng giờ và điểm xuất phát có thể chọn nhầm.
+The counter for new IDCodes is below codes already used, so new objects would get codes twice. "Fix" raises it.	Bộ đếm IDCode mới thấp hơn các mã đã dùng, nên đối tượng mới sẽ trùng mã. "Sửa" sẽ nâng nó lên.
+An object standing on the ground lies outside its own tile. The game does not show it. Move it a little or put it again.	Một đối tượng đặt trên mặt đất nằm ngoài ô của nó. Trò chơi không hiển thị nó. Hãy dời nhẹ hoặc đặt lại.
+global.cfg lists tiles whose file is not there. The game leaves them out; they stay listed, as start points and timetables count tiles by their place in the list.	global.cfg liệt kê các ô mà tệp không có. Trò chơi bỏ qua chúng; chúng vẫn nằm trong danh sách vì điểm xuất phát và bảng giờ đếm ô theo vị trí trong danh sách.
+A tile has no height file: its ground is flat. Saving writes one.	Ô không có tệp độ cao: mặt đất phẳng. Khi lưu sẽ ghi một tệp.
+No way along the roads was found through this trip's stops, so buses cannot drive it. Open it in Map > Lines and timetable to see where it breaks.	Không tìm thấy đường đi qua các điểm dừng của chuyến này, nên xe buýt không chạy được. Mở nó trong Bản đồ > Tuyến và bảng giờ để xem chỗ đứt.
+A tour (a bus's day on the line) has no trips, so no bus runs it.	Một lượt (ngày chạy của xe buýt trên tuyến) không có chuyến nào, nên không xe nào chạy nó.
+A tour names no depot or group of the AI lists (or one that is not there): the game has no vehicle to send on it. Choose a depot for it in the Lines window, or "Fix" gives it the map's depot (one of OMSI 2's MAN buses added where the map has none).	Một lượt không nêu depot hoặc nhóm trong danh sách AI (hoặc nhóm không tồn tại): trò chơi không có xe để điều đi. Hãy chọn depot cho nó trong cửa sổ Tuyến, hoặc "Sửa" sẽ gán depot của bản đồ (một xe buýt MAN của OMSI 2 được thêm nếu bản đồ chưa có).
+The unscheduled traffic names a group that the AI lists do not have: those cars never appear. Add the group in Map > Traffic and AI, or "Fix" copies it from OMSI 2's own maps where they have it.	Giao thông không theo lịch nêu một nhóm mà danh sách AI không có: các xe đó sẽ không bao giờ xuất hiện. Hãy thêm nhóm trong Bản đồ > Giao thông và AI, hoặc "Sửa" sẽ sao chép từ các bản đồ của OMSI 2 nếu có.
+A stop of the timetable that no trip calls at. Nothing is wrong, it is only not used yet.	Một điểm dừng của bảng giờ mà không chuyến nào ghé. Không có gì sai, chỉ là chưa được dùng.
+A chrono scenario takes away, retypes or relabels something that is no longer on the map (it was deleted or its IDCode changed): that change does nothing. Open Map > Chrono scenarios, the scenario's properties, and take the change out.	Một kịch bản chrono gỡ bỏ, đổi loại hoặc đổi nhãn thứ không còn trên bản đồ (đã bị xóa hoặc đổi IDCode): thay đổi này không có tác dụng. Mở Bản đồ > Kịch bản chrono, thuộc tính của kịch bản, và bỏ thay đổi đó.
+A tile holds far more objects than the stock maps' tiles (up to some 600): the game may stutter when it loads it or looks across it. Thin out a wood planted too densely (Plant brush, Clear) or plant it with more space between the trees.	Một ô chứa nhiều đối tượng hơn hẳn các ô của bản đồ gốc (tối đa khoảng 600): trò chơi có thể giật khi tải hoặc nhìn ngang qua nó. Hãy làm thưa khu rừng trồng quá dày (cọ Trồng, Xóa) hoặc trồng cây cách xa nhau hơn.
+Street lamps stand on a tile the game does not light from its lamps ([variable_terrainlightmap] is off): at night the ground under them stays dark (unless the tile's light map file was made by OMSI 2's editor). "Fix" turns it on, as on nearly every tile of the stock maps.	Đèn đường đứng trên ô mà trò chơi không chiếu sáng từ đèn của nó ([variable_terrainlightmap] đang tắt): ban đêm mặt đất dưới đèn vẫn tối (trừ khi tệp bản đồ ánh sáng của ô do trình sửa của OMSI 2 tạo). "Sửa" sẽ bật nó, như trên hầu hết các ô của bản đồ gốc.
+An object takes its state ([varparent]) from an object no longer on the map: a signal head stays dark, a display blank. Link it to another in its properties (Linked objects), or "Fix" forgets the link.	Một đối tượng lấy trạng thái ([varparent]) từ một đối tượng không còn trên bản đồ: đèn tín hiệu vẫn tối, màn hình trống. Hãy liên kết nó với đối tượng khác trong thuộc tính (Đối tượng liên kết), hoặc "Sửa" sẽ bỏ liên kết.
+A traffic light's signal head takes its light from a crossing's program ([varparent]); this one is linked to none while others like it are, so it stays dark in the game. Select it and link it in its properties (Linked objects).	Đèn tín hiệu của đèn giao thông lấy ánh sáng từ chương trình của ngã tư ([varparent]); cái này không liên kết với cái nào trong khi các cái khác thì có, nên nó vẫn tối trong trò chơi. Hãy chọn nó và liên kết trong thuộc tính (Đối tượng liên kết).
+A depot file (.hof) gives the buses their destinations, the stop names on their displays and the routes their IBIS knows. Without one the signs stay empty and the IBIS knows no line. "Fix" makes it from the map's lines, or adds what the lines need to the map's own (Map > Depot files to see and change it).	Tệp depot (.hof) cho xe buýt biết điểm đến, tên điểm dừng trên màn hình và các tuyến mà IBIS biết. Không có nó thì biển trống và IBIS không biết tuyến nào. "Sửa" sẽ tạo nó từ các tuyến của bản đồ, hoặc thêm phần các tuyến cần vào tệp của bản đồ (Bản đồ > Tệp depot để xem và đổi).
+A signal route names a signal or track pieces no longer on the map: the signal may never clear. Open Map > Signal routes and take the track again, or delete the route.	Một tuyến tín hiệu nhắc tới tín hiệu hoặc đoạn ray không còn trên bản đồ: tín hiệu có thể không bao giờ mở. Mở Bản đồ > Tuyến tín hiệu và chọn lại đường ray, hoặc xóa tuyến.
+font	phông chữ
+used	đã dùng
+in	trong
+a ground texture of the map	một texture mặt đất của bản đồ
+splines	spline
+apart	cách nhau
+spline	spline
+goes on into	đi tiếp vào
+no road near	không có đường gần
+from the road	từ đường
+start point	điểm xuất phát
+object	đối tượng
+The map has no start point	Bản đồ chưa có điểm xuất phát
+things have it	thứ có nó
+highest in use:	cao nhất đang dùng:
+tile	ô
+no .terrain file: flat	không có tệp .terrain: phẳng
+objects	đối tượng
+lamps	đèn
+The map has no depot file	Bản đồ chưa có tệp depot
+the buses show no destination	xe buýt không hiển thị điểm đến
+named by the map's depot, but found nowhere	được depot của bản đồ nêu, nhưng không tìm thấy ở đâu
+knows none of the	không biết
+lacks	thiếu
+destinations of the lines	điểm đến của các tuyến
+the lines need	các tuyến cần
+destinations	điểm đến
+stops	điểm dừng
+routes	tuyến
+tour	lượt
+no depot named	không nêu depot
+not in the AI lists:	không có trong danh sách AI:
+the stop has no object:	điểm dừng không có đối tượng:
+no road beside	không có đường bên cạnh
+no way	không có đường đi
+no way found	không tìm thấy đường đi
+Route	Tuyến đường
+gone	đã mất
+changes of nothing	thay đổi không tác dụng
+time	lần
+times	lần
+Fix from the map check	Sửa từ kiểm tra bản đồ
+Car groups from OMSI 2's maps	Nhóm xe từ các bản đồ của OMSI 2
+A depot for the tour	Depot cho lượt
+A depot file from the lines	Tệp depot từ các tuyến
+Depot file: what the lines need	Tệp depot: những gì các tuyến cần
+Map check	Kiểm tra bản đồ
+Check again	Kiểm tra lại
+Checking the map…	Đang kiểm tra bản đồ…
+errors	lỗi
+warnings	cảnh báo
+notes	ghi chú
+Nothing found: the map looks fine.	Không tìm thấy gì: bản đồ ổn.
+Fix all	Sửa tất cả
+Join	Nối
+Fix	Sửa
+Click to fly there	Nhấp để bay tới đó
+Fixed:	Đã sửa:
+it has parts openMapper does not write	có phần openMapper không ghi
+A host on the internet needs a password of at least	Máy chủ trên internet cần mật khẩu dài ít nhất
+Type a password, or choose explicitly to host without one	Hãy nhập mật khẩu, hoặc chọn rõ ràng để host không mật khẩu
+Could not listen on port	Không lắng nghe được trên cổng
+The way in for the tunnel could not be opened	Không mở được lối vào cho đường hầm
+Hosting this map: others can join it now	Đang host bản đồ này: người khác có thể tham gia ngay
+Multiplayer ended: another map was opened	Đã kết thúc nhiều người chơi: một bản đồ khác đã được mở
+Somebody changed this first: your edit was put back	Có người đã đổi trước: chỉnh sửa của bạn đã bị hoàn lại
+The host takes no more: the edit is too big, or the session holds as much as it may. Your edit was put back	Chủ phòng không nhận thêm: chỉnh sửa quá lớn, hoặc phiên đã đạt mức tối đa. Chỉnh sửa của bạn đã bị hoàn lại
+That lies too far from the map for this session: your edit was put back	Vị trí đó quá xa bản đồ đối với phiên này: chỉnh sửa của bạn đã bị hoàn lại
+tiles	ô
+changed what you were editing: it is as they left it	đã đổi thứ bạn đang sửa: giờ nó như họ để lại
+The timetable, the traffic and the descriptions are the host's in multiplayer: your change was put back	Bảng giờ, giao thông và mô tả thuộc về chủ phòng khi chơi nhiều người: thay đổi của bạn đã bị hoàn lại
+Your conflicting edit was kept	Đã giữ chỉnh sửa xung đột của bạn
+Could not keep your conflicting edit; multiplayer stopped	Không giữ được chỉnh sửa xung đột của bạn; đã dừng chơi nhiều người
+Too much of the others' work came in while your edit was held open: multiplayer stopped. The map stays open; it can be saved as a copy.	Quá nhiều công việc của người khác đến trong khi chỉnh sửa của bạn đang mở: đã dừng chơi nhiều người. Bản đồ vẫn mở; có thể lưu thành bản sao.
+The connection to the host was lost. The map stays open; it can be saved as a copy.	Mất kết nối tới chủ phòng. Bản đồ vẫn mở; có thể lưu thành bản sao.
+No OMSI 2 installation: the map has nowhere to go	Không có bản cài OMSI 2: bản đồ không có nơi để đến
+The host sent no map	Chủ phòng không gửi bản đồ
+The host's map could not be read	Không đọc được bản đồ của chủ phòng
+No connection	Không có kết nối
+That address is not an openMapper host	Địa chỉ đó không phải máy chủ openMapper
+Wrong password	Sai mật khẩu
+The session is full	Phiên đã đầy
+Type a name (up to 32 letters)	Nhập tên (tối đa 32 chữ cái)
+The host has another version of openMapper	Chủ phòng dùng phiên bản openMapper khác
+Move forward	Tiến lên
+Move back	Lùi lại
+Move left	Sang trái
+Move right	Sang phải
+Turn the camera left	Xoay camera sang trái
+Turn the camera right	Xoay camera sang phải
+Undo	Hoàn tác
+Redo	Làm lại
+Save	Lưu
+Copy	Sao chép
+Cut	Cắt
+Paste at the cursor	Dán tại con trỏ
+Duplicate	Nhân đôi
+Select all	Chọn tất cả
+Find in the map	Tìm trong bản đồ
+Search for a command	Tìm lệnh
+Tool: Select	Công cụ: Chọn
+Tool: Roads	Công cụ: Đường
+Tool: Objects	Công cụ: Đối tượng
+Tool: Game logic	Công cụ: Logic trò chơi
+Tool: Terrain	Công cụ: Địa hình
+Tool: Paint	Công cụ: Sơn
+Tool: Tiles	Công cụ: Ô
+Turn the object (Shift: the other way)	Xoay đối tượng (Shift: hướng ngược lại)
+Ruler	Thước
+Knife	Dao
+Move handles	Tay cầm di chuyển
+Rotate handles	Tay cầm xoay
+Scale handles	Tay cầm đổi cỡ
+Edit the mesh (vertices, edges, faces)	Sửa lưới (đỉnh, cạnh, mặt)
+Join the selected objects into one	Gộp các đối tượng đã chọn thành một
+Build the planned road	Xây con đường đã lên kế hoạch
+Tile grid on / off	Bật / tắt lưới ô
+Group the selection	Nhóm vùng chọn
+Ungroup	Bỏ nhóm
+Look straight down, north up	Nhìn thẳng xuống, bắc hướng lên
+2D plan view on / off (3D: tilt and turn again)	Bật / tắt xem sơ đồ 2D (3D: nghiêng và xoay lại)
+Catalogue on / off	Bật / tắt danh mục
+Overview map on / off	Bật / tắt bản đồ tổng quan
+Lines window	Cửa sổ Tuyến
+Traffic window	Cửa sổ Giao thông
+Satellite and terrain window	Cửa sổ Vệ tinh và địa hình
+Smaller brush	Cọ nhỏ hơn
+Larger brush	Cọ lớn hơn
+Delete the selection	Xóa vùng chọn
+Go to the selection	Đến vùng chọn
+Test drive in openOMSI (Shift: from the camera)	Lái thử trong openOMSI (Shift: từ camera)
+Save a picture of the view	Lưu ảnh của góc nhìn
+The map's own (global.cfg)	Của riêng bản đồ (global.cfg)
+Description	Mô tả
+Name in this language	Tên trong ngôn ngữ này
+Description in this language	Mô tả trong ngôn ngữ này
+Remove this language	Xóa ngôn ngữ này
+Not written yet: it is saved as soon as you type.	Chưa được ghi: sẽ lưu ngay khi bạn gõ.
+Edit description	Sửa mô tả
+just now	vừa xong
+min ago	phút trước
+h ago	giờ trước
+Unsaved changes found	Tìm thấy thay đổi chưa lưu
+openMapper was closed without saving the map	openMapper đã đóng mà chưa lưu bản đồ
+The changes kept by the autosave can be brought back. The map itself was not changed.	Có thể khôi phục các thay đổi do tự động lưu giữ lại. Bản thân bản đồ không bị thay đổi.
+Restore the changes	Khôi phục thay đổi
+Drop them	Bỏ chúng
+Nothing comes after it to join	Phía sau không có gì để nối
+The next piece runs the other way: reverse it first	Đoạn kế tiếp chạy ngược chiều: hãy đảo nó trước
+The next piece lies on another tile	Đoạn kế tiếp nằm trên ô khác
+The two pieces are of different road types	Hai đoạn thuộc loại đường khác nhau
+The two pieces have different settings (path rules, ground, skew)	Hai đoạn có thiết lập khác nhau (quy tắc lối đi, mặt đất, độ xiên)
+A row of objects comes onto the next piece from another tile	Một hàng đối tượng từ ô khác chạy vào đoạn kế tiếp
+The two pieces do not bend, climb or bank alike: joined they would change shape	Hai đoạn không cong, dốc hay nghiêng giống nhau: nối lại sẽ đổi hình dạng
+Earlier versions	Phiên bản cũ hơn
+Before every save, the files it replaces are kept (the last 10 saves). Going back puts the map as it was before that save; later changes go.	Trước mỗi lần lưu, các tệp bị thay thế được giữ lại (10 lần lưu gần nhất). Quay lại sẽ đưa bản đồ về như trước lần lưu đó; các thay đổi sau đó sẽ mất.
+No earlier versions yet: they appear once the map is saved again.	Chưa có phiên bản cũ: chúng xuất hiện khi bản đồ được lưu lần nữa.
+before the save of	trước lần lưu lúc
+Go back to this	Quay lại bản này
+could not keep a backup, nothing was saved	không giữ được bản sao lưu, chưa lưu gì
+Red	Đỏ
+Yellow	Vàng
+Green	Xanh lá
+file not found	không tìm thấy tệp
+this object takes its model from a model file and cannot be edited here	đối tượng này lấy mô hình từ tệp mô hình và không sửa được ở đây
+the object has no mesh to edit	đối tượng không có lưới để sửa
+cannot read the object	không đọc được đối tượng
+Select	Chọn
+Terrain	Địa hình
+Paint	Sơn
+Roads	Đường
+Objects	Đối tượng
+Game logic	Logic trò chơi
+Tiles	Ô
+Raise	Nâng
+Lower	Hạ
+Smooth	Làm mịn
+Flatten	San phẳng
+Roughen	Làm gồ ghề
+Ramp	Dốc nghiêng
+Lake / river	Hồ / sông
+Start points	Điểm xuất phát
+Bus stops	Điểm dừng xe buýt
+Car parks	Bãi đỗ xe
+AI paths	Đường AI
+Other	Khác
+Where the bus appears when a drive starts. Put it on a road or in the depot, facing the way to drive.	Nơi xe buýt xuất hiện khi bắt đầu lái. Đặt trên đường hoặc trong depot, hướng theo chiều lái.
+Where passengers wait. Put it beside the road at the kerb; name it on the right.	Nơi hành khách chờ. Đặt cạnh đường ở lề; đặt tên ở bên phải.
+Where parked cars stand. Click for one; with a row on, click the start and end of a row along the kerb.	Nơi xe đỗ. Nhấp để đặt một chỗ; khi bật hàng, nhấp điểm đầu và cuối của hàng dọc lề đường.
+Lanes the AI's cars or people follow. Draw like a road: it snaps to lane ends (green: joined, red: dead end) and along lanes. A car path runs the way you draw it.	Các làn mà xe hoặc người của AI đi theo. Vẽ như đường: bám vào đầu làn (xanh: đã nối, đỏ: cụt) và dọc làn. Đường xe chạy theo chiều bạn vẽ.
+Sound sources, help arrows and other helpers the game does not show.	Nguồn âm, mũi tên chỉ dẫn và các vật hỗ trợ khác mà trò chơi không hiển thị.
+Move (V): drag an arrow along X, Y or Z, a square in its plane, the circle over the ground	Di chuyển (V): kéo mũi tên theo X, Y hoặc Z, ô vuông trong mặt phẳng của nó, vòng tròn trên mặt đất
+Rotate (C): drag a ring to turn about X, Y or Z	Xoay (C): kéo một vòng để xoay quanh X, Y hoặc Z
+Scale (X): drag an arrow to scale along that axis, a square for two, the circle for all three	Đổi cỡ (X): kéo mũi tên để đổi cỡ theo trục đó, ô vuông cho hai trục, vòng tròn cho cả ba
+These roads have no lanes of their own to take apart (rails stay as they are)	Các đường này không có làn riêng để tách ra (ray giữ nguyên)
+Make the lanes editable	Cho phép sửa làn
+Roads whose lanes are now editable:	Đường đã cho phép sửa làn:
+Flatten the terrain	San phẳng địa hình
+Select two things or more to group them	Chọn hai thứ trở lên để nhóm
+Group	Nhóm
+Grouped:	Đã nhóm:
+Ungrouped	Đã bỏ nhóm
+Rename group	Đổi tên nhóm
+Ground levelled under objects:	Mặt đất đã được san dưới đối tượng:
+Move	Di chuyển
+No object clicked: nothing linked	Không nhấp vào đối tượng nào: không liên kết
+Too near the road's end to cut it there	Quá gần đầu đường để cắt ở đó
+No road under the cursor	Không có đường dưới con trỏ
+Ramp:	Dốc:
+Shape terrain	Tạo hình địa hình
+Paint ground	Sơn mặt đất
+Clear plants	Xóa cây
+Plant	Trồng
+Rotate selection	Xoay vùng chọn
+Rotate	Xoay
+Delete object	Xóa đối tượng
+Delete road	Xóa đường
+Delete selection	Xóa vùng chọn
+Pick an object in the catalogue first	Hãy chọn một đối tượng trong danh mục trước
+There is no tile here: add one with the Tiles tool	Chỗ này chưa có ô: thêm bằng công cụ Ô
+Place object	Đặt đối tượng
+New stop	Điểm dừng mới
+Linked to	Liên kết tới
+choose its light in its properties	chọn đèn của nó trong thuộc tính
+Trees from OpenStreetMap	Cây từ OpenStreetMap
+Plant an area	Trồng một vùng
+Buildings from OpenStreetMap	Tòa nhà từ OpenStreetMap
+Stops from OpenStreetMap	Điểm dừng từ OpenStreetMap
+Stop	Điểm dừng
+Pick a car park in the list first	Hãy chọn một bãi đỗ xe trong danh sách trước
+Place car parks	Đặt bãi đỗ xe
+Car parks placed:	Đã đặt bãi đỗ xe:
+Pick a road type in the catalogue first	Hãy chọn một loại đường trong danh mục trước
+That bend is too sharp	Khúc cua đó quá gắt
+Switch made	Đã tạo ghi (đổi đường)
+Junctions made:	Đã tạo nút giao:
+The road leaves the map: add tiles there first	Đường ra khỏi bản đồ: hãy thêm ô ở đó trước
+Build road	Xây đường
+Roads from OpenStreetMap	Đường từ OpenStreetMap
+Pick a tree in the catalogue (or add some to the mix) first	Hãy chọn một cây trong danh mục (hoặc thêm vào hỗn hợp) trước
+Right-click a tile to remove it	Nhấp chuột phải vào ô để xóa nó
+New tiles go next to the map	Ô mới nằm cạnh bản đồ
+Add tile	Thêm ô
+Water	Nước
+Paint detail	Sơn chi tiết
+Ground layer order	Thứ tự lớp mặt đất
+Detail texture	Texture chi tiết
+Ground texture	Texture mặt đất
+Lamp light on the ground	Ánh sáng đèn trên mặt đất
+Add tiles	Thêm ô
+A map needs at least one tile	Bản đồ cần ít nhất một ô
+Remove tile	Xóa ô
+Pick a point (a dot at an end or where pieces meet) to take it out	Chọn một điểm (chấm ở đầu hoặc nơi các đoạn gặp nhau) để bỏ nó
+Remove a point of the path	Bỏ một điểm của đường
+Point taken out	Đã bỏ điểm
+A path of one piece: Del with nothing picked deletes it	Đường chỉ có một đoạn: nhấn Del khi không chọn gì sẽ xóa nó
+Extrude	Đùn
+Inset	Thụt vào
+Bevel	Vát cạnh
+Loop cut	Cắt vòng
+click: done, right click / Esc: cancel, wheel: segments	nhấp: xong, nhấp chuột phải / Esc: hủy, con lăn: số đoạn
+Scale	Đổi cỡ
+Roads are not scaled: change their length and width in their properties	Đường không đổi cỡ: hãy đổi chiều dài và chiều rộng trong thuộc tính
+Only the objects are scaled, the roads stay	Chỉ các đối tượng được đổi cỡ, đường giữ nguyên
+Could not scale	Không đổi cỡ được
+Too near the end: drag the end's dot instead	Quá gần đầu: hãy kéo chấm ở đầu thay vào đó
+Add a point to the path	Thêm một điểm vào đường
+Point added: drag the dot where the pieces meet	Đã thêm điểm: kéo chấm ở nơi các đoạn gặp nhau
+Reshape road	Chỉnh hình dạng đường
+Selected:	Đã chọn:
+Copied:	Đã sao chép:
+Nothing copied yet	Chưa sao chép gì
+Paste	Dán
+Level the ground	San bằng mặt đất
+Turn objects	Xoay đối tượng
+Copies in a row	Bản sao theo hàng
+Left out (off the map):	Bị bỏ lại (ngoài bản đồ):
+Pasted (the rest is off the map):	Đã dán (phần còn lại ngoài bản đồ):
+Edit object	Sửa đối tượng
+Lean with the ground	Nghiêng theo mặt đất
+Stand upright	Đứng thẳng
+Change height	Đổi độ cao
+Change road type	Đổi loại đường
+The selected roads are not one chain (they branch or leave gaps)	Các đường đã chọn không phải một chuỗi (có nhánh hoặc có khoảng hở)
+Even slope	Độ dốc đều
+Lay on the ground	Đặt lên mặt đất
+Remove the rows of objects along it first (they are measured from its start)	Hãy xóa các hàng đối tượng dọc theo nó trước (chúng được đo từ điểm đầu)
+Reverse direction	Đảo chiều
+No road there to cut	Không có đường để cắt ở đó
+Cut the road	Cắt đường
+Cut in two: each piece can now be changed on its own	Đã cắt làm đôi: mỗi đoạn giờ có thể thay đổi riêng
+Join the pieces	Nối các đoạn
+Joined into one piece	Đã nối thành một đoạn
+Parallel copy	Bản sao song song
+Overhead wire	Dây điện trên cao
+Back into the map	Quay lại bản đồ
+Hang an object	Treo một đối tượng
+Link to an object	Liên kết tới đối tượng
+Unlink	Bỏ liên kết
+That object already takes its state from this one	Đối tượng đó đã lấy trạng thái từ cái này rồi
+Linked	Đã liên kết
+Signal head's light	Ánh sáng của đèn tín hiệu
+Path rules	Quy tắc lối đi
+Replace objects	Thay đối tượng
+Edit road	Sửa đường
+Roads that could not follow the junction (too sharp a bend):	Đường không theo kịp nút giao (khúc cua quá gắt):
+Edit junction	Sửa nút giao
+Make the junction again	Tạo lại nút giao
+Make the junctions again	Tạo lại các nút giao
+Pick an object in the Objects tool's catalogue first	Hãy chọn một đối tượng trong danh mục của công cụ Đối tượng trước
+The road is too short for that	Đường quá ngắn cho việc đó
+Objects along the road	Đối tượng dọc đường
+Rows of objects added:	Đã thêm hàng đối tượng:
+Edit row of objects	Sửa hàng đối tượng
+Remove row of objects	Xóa hàng đối tượng
+Remove rows of objects	Xóa các hàng đối tượng
+Roundabout built; roads joined to it:	Đã xây vòng xuyến; đường nối vào nó:
+This road type carries traffic both ways: pick a one-way road for a proper roundabout	Loại đường này chạy hai chiều: hãy chọn đường một chiều để có vòng xuyến đúng nghĩa
+Start point: where the bus appears in openOMSI	Điểm xuất phát: nơi xe buýt xuất hiện trong openOMSI
+Bus stop: name it in the panel on the right	Điểm dừng: đặt tên ở bảng bên phải
+openOMSI stopped with an error	openOMSI đã dừng vì lỗi
+Check in openOMSI	Kiểm tra trong openOMSI
+The saved map run by the game itself, unseen, with its own checks; the picture is the game's, from your view	Bản đồ đã lưu được chính trò chơi chạy ngầm, với các kiểm tra riêng; hình ảnh là của trò chơi, từ góc nhìn của bạn
+Every tile (slower on a big map)	Mọi ô (chậm hơn trên bản đồ lớn)
+Run again	Chạy lại
+openOMSI is loading the map…	openOMSI đang tải bản đồ…
+Nothing wrong found	Không thấy gì sai
+Problems found:	Vấn đề tìm thấy:
+Go there	Đi tới đó
+of the places named lie at the map's edge or a road's dead end (greyed): the game measures a lane's last point on the road's very edge, and a bus at the end stands over it; nothing to mend	nơi được nêu nằm ở rìa bản đồ hoặc cuối đường cụt (màu xám): trò chơi đo điểm cuối của làn ngay mép đường, và xe buýt ở cuối nằm trên nó; không cần sửa
+The game said nothing about the map	Trò chơi không báo gì về bản đồ
+The game's whole output	Toàn bộ đầu ra của trò chơi
+no key entered	chưa nhập khóa
+the server refused the key	máy chủ từ chối khóa
+too many requests, try again later	quá nhiều yêu cầu, hãy thử lại sau
+No connection to the server: are you online?	Không kết nối được máy chủ: bạn có trực tuyến không?
+Enter your Google key first	Hãy nhập khóa Google của bạn trước
+OpenStreetMap's servers are busy: try again in a minute	Máy chủ OpenStreetMap đang bận: hãy thử lại sau một phút
+The area is too large for this zoom	Vùng quá lớn cho mức thu phóng này
+Cancelled	Đã hủy
+Stopped by an internal error (see the log)	Dừng do lỗi nội bộ (xem nhật ký)
+No source has imagery here	Không nguồn nào có ảnh ở đây
+drawn from OpenStreetMap data: sharp, with names	vẽ từ dữ liệu OpenStreetMap: sắc nét, có tên
+terrain heights, no key needed	độ cao địa hình, không cần khóa
+needs your own free key	cần khóa miễn phí của riêng bạn
+no key needed	không cần khóa
+the picture is too small	hình ảnh quá nhỏ
+Import height map	Nhập bản đồ độ cao
+Height map	Bản đồ độ cao
+The ground as a grey picture, to shape in another program and bring back	Mặt đất dưới dạng ảnh xám, để chỉnh trong chương trình khác rồi đưa về
+Export…	Xuất…
+Import…	Nhập…
+over	trên
+a pixel	một điểm ảnh
+Black adds	Đen thêm
+Black is	Đen là
+White adds	Trắng thêm
+White is	Trắng là
+Smoothing	Làm mịn
+Replace the ground	Thay mặt đất
+Add to it	Cộng thêm vào
+Roads and objects keep their heights: best done before building	Đường và đối tượng giữ độ cao của chúng: tốt nhất làm trước khi xây
+An 8-bit picture has only 256 steps of height: smoothing hides them	Ảnh 8 bit chỉ có 256 bậc độ cao: làm mịn sẽ che chúng đi
+Lay it on the map	Đặt lên bản đồ
+Cancel	Hủy
+Height map laid over	Đã phủ bản đồ độ cao
+Export the height map	Xuất bản đồ độ cao
+Height map written	Đã ghi bản đồ độ cao
+The height map could not be written	Không ghi được bản đồ độ cao
+A height map for the whole map	Bản đồ độ cao cho cả bản đồ
+The picture could not be read	Không đọc được hình ảnh
+IBIS and roller blind	IBIS và biển cuộn
+Front sign, line 1	Biển trước, dòng 1
+Front sign, line 2	Biển trước, dòng 2
+Side sign	Biển bên
+Roller blind texture	Texture biển cuộn
+IBIS 2 (20 letters)	IBIS 2 (20 chữ)
+Extra sign	Biển phụ
+Krüger picture	Hình Krüger
+Text	Văn bản
+IBIS (16 letters)	IBIS (16 chữ)
+Display, line 1	Màn hình, dòng 1
+Display, line 2	Màn hình, dòng 2
+Full name (20 letters)	Tên đầy đủ (20 chữ)
+Service trip	Chuyến phục vụ
+Special trip	Chuyến đặc biệt
+Blank	Trống
+openMapper cannot import this kind of file (use a folder, .zip, .obj, .gltf, .glb, .fbx, .x, .o3d or a picture)	openMapper không nhập được loại tệp này (dùng thư mục, .zip, .obj, .gltf, .glb, .fbx, .x, .o3d hoặc hình ảnh)
+Mod installed, files:	Đã cài mod, tệp:
+Objects added to	Đối tượng đã thêm vào
+Road types added to	Loại đường đã thêm vào
+Models imported:	Đã nhập mô hình:
+Nothing to import was found in this folder	Không tìm thấy gì để nhập trong thư mục này
+The model has no triangles	Mô hình không có tam giác
+Model imported:	Đã nhập mô hình:
+The .obj file has no faces	Tệp .obj không có mặt
+no base colour picture among them	không có hình màu cơ bản trong số đó
+The picture cannot be read	Không đọc được hình ảnh
+Picture made into a standee:	Đã chuyển hình thành tấm đứng:
+Picture made into a sign:	Đã chuyển hình thành biển:
+Trees	Cây
+Stops and start points	Điểm dừng và điểm xuất phát
+Junctions	Nút giao
+Tracks	Đường ray
+Footpaths	Lối đi bộ
+Fences, walls, kerbs	Hàng rào, tường, lề đường
+Technical (AI, helpers)	Kỹ thuật (AI, phụ trợ)
+This map lies on the world's grid ([worldcoordinates]): its tiles cannot be taken yet	Bản đồ này nằm trên lưới thế giới ([worldcoordinates]): chưa lấy được ô của nó
+This map lies on the world's grid ([worldcoordinates]): tiles cannot be added from another yet	Bản đồ này nằm trên lưới thế giới ([worldcoordinates]): chưa thêm được ô từ bản đồ khác
+Tiles from another map	Ô từ bản đồ khác
+Union	Hợp
+Difference (cut out)	Hiệu (cắt bỏ)
+Intersection	Giao
+Slice (keep both pieces)	Cắt lát (giữ cả hai phần)
+One object of all the selected, their insides gone	Một đối tượng từ tất cả các đối tượng đã chọn, phần bên trong bị bỏ
+The other selected objects cut out of the one shown in the properties	Các đối tượng đã chọn khác bị cắt khỏi đối tượng hiển thị trong thuộc tính
+Only what all the selected share	Chỉ phần mà tất cả đối tượng đã chọn cùng có
+The first object cut by the others into what is outside them and what is inside	Đối tượng đầu tiên bị các đối tượng khác cắt thành phần bên ngoài và phần bên trong chúng
+select an object first	hãy chọn một đối tượng trước
+Make editable	Cho phép sửa
+Make single	Tách riêng
+the object has only one part	đối tượng chỉ có một phần
+Separate parts	Tách các phần
+select two or more objects to join	chọn hai đối tượng trở lên để gộp
+Join objects	Gộp đối tượng
+select two or more objects: the one shown in the properties and what acts on it	chọn hai đối tượng trở lên: đối tượng hiển thị trong thuộc tính và những gì tác động lên nó
+nothing is left: the objects do not overlap that way	không còn gì: các đối tượng không chồng lên nhau theo cách đó
+The file has no scene	Tệp không có cảnh
+The FBX file has no meshes	Tệp FBX không có lưới
+Main roads	Đường chính
+Streets	Phố
+Service roads	Đường phục vụ
+Tram tracks	Đường tàu điện
+Railway tracks	Đường sắt
+motorway, trunk, primary, secondary	motorway, trunk, primary, secondary
+tertiary, residential, unclassified	tertiary, residential, unclassified
+yards, car parks, depots	sân, bãi đỗ xe, depot
+each track on its own; branches are joined with switches by hand	mỗi đường ray riêng; các nhánh được nối bằng ghi thủ công
+main lines without sidings; branches are joined with switches by hand	tuyến chính không có đường nhánh; các nhánh được nối bằng ghi thủ công
+Water from OpenStreetMap	Nước từ OpenStreetMap
+Give a distance	Nhập khoảng cách
+The bend is too tight for that distance on its inner side	Khúc cua quá gắt cho khoảng cách đó ở phía trong
+The copy leaves the map: add tiles there first	Bản sao ra khỏi bản đồ: hãy thêm ô ở đó trước
+Made with openMapper	Tạo bằng openMapper
+Low (no shadows, rough edges, 3 km view)	Thấp (không bóng, cạnh thô, tầm nhìn 3 km)
+Medium (softer shadows, 8 km view)	Trung bình (bóng mềm hơn, tầm nhìn 8 km)
+High	Cao
+This end belongs to a junction: select the junction and move it, the road follows	Đầu này thuộc một nút giao: hãy chọn nút giao và di chuyển nó, đường sẽ theo
+Paint along the roads	Sơn dọc theo đường
+Market	Chợ
+Station	Nhà ga
+Depot	Depot
+this object takes its model from a model file: it cannot be scaled	đối tượng này lấy mô hình từ tệp mô hình: không đổi cỡ được
+Not a GPX, KML or GeoJSON file	Không phải tệp GPX, KML hay GeoJSON
+No lines in the file	Không có tuyến nào trong tệp
+Language	Ngôn ngữ
+Interface size	Kích thước giao diện
+File	Tệp
+New map…	Bản đồ mới…
+Open map…	Mở bản đồ…
+Controls…	Điều khiển…
+Import assets…	Nhập tài nguyên…
+Multiplayer…	Nhiều người chơi…
+OMSI 2 folder…	Thư mục OMSI 2…
+Quit	Thoát
+View	Xem
+Help	Trợ giúp
+Updates…	Cập nhật…
+About openMapper	Giới thiệu openMapper
+OMSI 2 not found	Không tìm thấy OMSI 2
+Map editor for openOMSI	Trình sửa bản đồ cho openOMSI
+openMapper builds maps from the content of an installed OMSI 2. Choose its folder (the one with Omsi.exe, maps and Vehicles).	openMapper xây bản đồ từ nội dung của OMSI 2 đã cài. Hãy chọn thư mục của nó (thư mục có Omsi.exe, maps và Vehicles).
+Choose OMSI 2 folder…	Chọn thư mục OMSI 2…
+Maps	Bản đồ
+recent · OMSI 2	gần đây · OMSI 2
+recent	gần đây
+content folder	thư mục nội dung
+OMSI 2 (saved as copy)	OMSI 2 (lưu thành bản sao)
+Open	Mở
+Make a copy	Tạo bản sao
+A copy of the map in the content folder under a new name, to try something out	Một bản sao của bản đồ trong thư mục nội dung dưới tên mới, để thử nghiệm
+Show in the file manager	Hiện trong trình quản lý tệp
+Move to openMapper's bin	Chuyển vào thùng bin của openMapper
+Its folder goes into openMapper\\bin in the content folder, from where it can be put back by hand	Thư mục của nó được chuyển vào openMapper\\bin trong thư mục nội dung, từ đó có thể đặt lại thủ công
+Browse…	Duyệt…
+Double-click a map to open it. Maps of OMSI 2 are saved as a copy into openOMSI's content folder; the original stays untouched.	Nhấp đúp vào bản đồ để mở. Bản đồ của OMSI 2 được lưu thành bản sao vào thư mục nội dung của openOMSI; bản gốc không bị đụng tới.
+A simple map editor for openOMSI.	Trình sửa bản đồ đơn giản cho openOMSI.
+Back to the 3D view (0)	Về chế độ xem 3D (0)
+The plan view from above, north up (0)	Xem sơ đồ từ trên xuống, bắc hướng lên (0)
+Recent maps	Bản đồ gần đây
+(none)	(không có)
+Export map for sharing…	Xuất bản đồ để chia sẻ…
+Export a plan of the map…	Xuất sơ đồ của bản đồ…
+Earlier versions…	Phiên bản cũ hơn…
+Close map	Đóng bản đồ
+Edit	Chỉnh sửa
+Edit history…	Lịch sử chỉnh sửa…
+Groups for other maps…	Nhóm cho bản đồ khác…
+Find in map…	Tìm trong bản đồ…
+Search for a command…	Tìm lệnh…
+Delete	Xóa
+Deselect	Bỏ chọn
+Tile grid	Lưới ô
+What the game does not show	Những gì trò chơi không hiển thị
+AI lanes	Làn AI
+Names of stops and start points	Tên điểm dừng và điểm xuất phát
+Show	Hiển thị
+Roads and splines	Đường và spline
+Overview map (M)	Bản đồ tổng quan (M)
+Assets (B)	Tài nguyên (B)
+Flatten the terrain (roads follow)	San phẳng địa hình (đường theo)
+Saved views…	Góc nhìn đã lưu…
+Go to selection	Đến vùng chọn
+Camera	Camera
+Unity: right button looks round and W A S D fly, middle pans, Alt orbits	Unity: chuột phải để nhìn quanh và W A S D để bay, chuột giữa để kéo, Alt để xoay quanh
+Map editor: right button looks round and W A S D fly (Q down, E up), middle pans, the wheel zooms to the cursor, drag moves the map	Trình sửa bản đồ: chuột phải để nhìn quanh và W A S D để bay (Q xuống, E lên), chuột giữa để kéo, con lăn phóng tới con trỏ, kéo để di chuyển bản đồ
+Load 100 tiles at a time (like OMSI 2's editor)	Tải 100 ô mỗi lần (như trình sửa của OMSI 2)
+Time of day	Thời điểm trong ngày
+Plain day (as the game by day)	Ban ngày thường (như trò chơi ban ngày)
+At an hour	Vào một giờ
+Where the sun stands then, today, at the map's place (Map > Calendar and place); by night the moon	Nơi mặt trời đứng lúc đó, hôm nay, tại vị trí của bản đồ (Bản đồ > Lịch và vị trí); ban đêm là mặt trăng
+Season	Mùa
+Summer	Mùa hè
+Dry summer	Mùa hè khô
+Spring	Mùa xuân
+Autumn	Mùa thu
+Winter	Mùa đông
+Snow	Tuyết
+Graphics quality	Chất lượng đồ họa
+Tools	Công cụ
+Road types and junctions…	Loại đường và nút giao…
+PBR maps for a picture…	Bản đồ PBR cho hình ảnh…
+Map	Bản đồ
+Map settings…	Cài đặt bản đồ…
+Calendar and place…	Lịch và vị trí…
+Signal routes…	Tuyến tín hiệu…
+Chrono scenarios…	Kịch bản chrono…
+Ground textures…	Texture mặt đất…
+Check map…	Kiểm tra bản đồ…
+Junctions made again:	Đã tạo lại nút giao:
+Lines and timetable…	Tuyến và bảng giờ…
+Traffic and AI…	Giao thông và AI…
+Depot files (destinations)…	Tệp depot (điểm đến)…
+Satellite and terrain…	Vệ tinh và địa hình…
+From OpenStreetMap…	Từ OpenStreetMap…
+GPS tracks to trace…	Vết GPS để vẽ theo…
+Tiles from another map…	Ô từ bản đồ khác…
+Test drive in openOMSI	Lái thử trong openOMSI
+Test drive in OMSI 2 (the original)…	Lái thử trong OMSI 2 (bản gốc)…
+Check in openOMSI…	Kiểm tra trong openOMSI…
+Getting started	Bắt đầu
+New map	Bản đồ mới
+Open a map	Mở bản đồ
+Save (Ctrl+S): there are unsaved changes	Lưu (Ctrl+S): có thay đổi chưa lưu
+Save (Ctrl+S)	Lưu (Ctrl+S)
+Import assets: a mod folder or .zip, a .obj / .x / .o3d model (or drop files on the window)	Nhập tài nguyên: thư mục mod hoặc .zip, mô hình .obj / .x / .o3d (hoặc thả tệp vào cửa sổ)
+Redo (Ctrl+Shift+Z)	Làm lại (Ctrl+Shift+Z)
+Tile grid (G)	Lưới ô (G)
+Assets: every object and road type, with pictures (B)	Tài nguyên: mọi đối tượng và loại đường, có hình (B)
+Test drive	Lái thử
+Save the map and drive it in openOMSI (F5)	Lưu bản đồ và lái trong openOMSI (F5)
+openOMSI was not found: install it to test maps	Không tìm thấy openOMSI: hãy cài để thử bản đồ
+Test drive from the start point nearest the view	Lái thử từ điểm xuất phát gần góc nhìn nhất
+See this view in openOMSI	Xem góc nhìn này trong openOMSI
+loading	đang tải
+Edit mesh	Sửa lưới
+Shapes and lamps	Hình khối và đèn
+Click beside the map to add a 300 × 300 m tile. Right-click a tile to remove it.	Nhấp cạnh bản đồ để thêm ô 300 × 300 m. Nhấp chuột phải vào ô để xóa.
+Area	Vùng
+A ring of tiles round the map	Một vòng ô quanh bản đồ
+Every free place beside the map, corners too, gets a tile at the height of its neighbours	Mọi chỗ trống cạnh bản đồ, cả các góc, đều có ô ở độ cao của ô lân cận
+Tiles added:	Đã thêm ô:
+Everything on the map, grouped by the folders its files lie in	Mọi thứ trên bản đồ, nhóm theo thư mục chứa tệp của chúng
+Click an object or a road in the view to see and change it on the right.	Nhấp vào đối tượng hoặc đường trong khung nhìn để xem và đổi ở bên phải.
+Line up with the nearest road (Shift: put it freely)	Căn theo đường gần nhất (Shift: đặt tự do)
+On both sides of the road	Ở cả hai bên đường
+A stop of the same name also goes at the kerb across the road, facing the other way	Điểm dừng cùng tên cũng được đặt ở lề đường đối diện, hướng ngược lại
+In a row along a line	Thành hàng dọc một đường
+Every	Mỗi
+Draw new	Vẽ mới
+Edit existing	Sửa cái có sẵn
+Click a path to pick it: every point is a dot to drag (the small ones in the middle of a piece bend it). Double-click the path to put a point in. Click a dot, then Del, to take that point out; Del with no dot picked deletes the whole path (Ctrl+Z brings it back). Lanes of roads and junctions belong to their road type: use Edit its AI lanes on the road.	Nhấp vào một đường để chọn: mỗi điểm là một chấm để kéo (chấm nhỏ giữa đoạn làm nó cong). Nhấp đúp vào đường để thêm điểm. Nhấp một chấm rồi nhấn Del để bỏ điểm đó; Del khi không chọn chấm nào sẽ xóa cả đường (Ctrl+Z để hoàn lại). Làn của đường và nút giao thuộc loại đường của chúng: dùng Sửa làn AI của nó trên đường.
+Cars	Xe
+People	Người
+Show these in the other tools too	Cũng hiện những thứ này trong các công cụ khác
+Show the AI's lanes in the other tools too	Cũng hiện làn AI trong các công cụ khác
+Everything	Tất cả
+Search	Tìm kiếm
+Shape the ground under the road	Tạo hình mặt đất dưới đường
+Go on drawing from the end of the road just built	Tiếp tục vẽ từ cuối con đường vừa xây
+Join road ends, roads and junction pieces near the cursor	Nối đầu đường, đường và mảnh nút giao gần con trỏ
+Make junctions where roads meet	Tạo nút giao nơi các đường gặp nhau
+Go on with the type of the road I start from	Tiếp tục với loại đường tôi bắt đầu từ đó
+Building with:	Xây bằng:
+nothing chosen	chưa chọn gì
+Front at the roadside, back	Mặt trước ở lề đường, mặt sau
+Plant brush: sow trees by painting	Cọ trồng cây: gieo cây bằng cách sơn
+Sow	Gieo
+Clear	Xóa
+With the brush	Bằng cọ
+In an outline	Trong đường viền
+Click round an area (a wood, a park, a garden) and it is filled at once, or cleared	Nhấp quanh một vùng (rừng, công viên, vườn) và nó được lấp đầy ngay, hoặc được xóa
+About	Khoảng
+plants (Enter: plant)	cây (Enter: trồng)
+Size	Kích thước
+Apart	Cách nhau
+Sows the object chosen below. Right-click entries: "Add to the plant mix" to sow several at random. Clearing takes trees and the mix's objects.	Gieo đối tượng chọn bên dưới. Nhấp chuột phải vào mục: "Thêm vào hỗn hợp cây" để gieo ngẫu nhiên nhiều loại. Xóa sẽ gỡ cây và các đối tượng của hỗn hợp.
+Mix (picked at random):	Hỗn hợp (chọn ngẫu nhiên):
+reading OMSI 2…	đang đọc OMSI 2…
+items	mục
+Nothing found	Không tìm thấy gì
+mod	mod
+right-click: star it	nhấp chuột phải: gắn sao
+Take out of the plant mix	Bỏ khỏi hỗn hợp cây
+Add to the plant mix	Thêm vào hỗn hợp cây
+Remove from favourites	Bỏ khỏi mục yêu thích
+Add to favourites	Thêm vào mục yêu thích
+Favourites	Yêu thích
+Recently used	Dùng gần đây
+(not in a folder)	(không trong thư mục)
+Strength	Độ mạnh
+Mode	Chế độ
+Levels the ground to the height where you start dragging	San mặt đất tới độ cao nơi bạn bắt đầu kéo
+Softens bumps and edges	Làm mềm chỗ gồ ghề và cạnh
+Raises the ground under the brush	Nâng mặt đất dưới cọ
+Lowers the ground under the brush	Hạ mặt đất dưới cọ
+Gives flat ground the rolls and dips of a natural field; hold longer for more	Cho đất phẳng độ nhấp nhô tự nhiên của cánh đồng; giữ lâu hơn để rõ hơn
+Paint a lake or a river: the ground is dug to a bed under the water's level (where you start the stroke, or the tile's water) and the tile gets water at that level. Water in OMSI is one level for a whole tile: another low place on the same tile shows it too	Sơn hồ hoặc sông: mặt đất được đào thành lòng dưới mực nước (nơi bạn bắt đầu nét vẽ, hoặc nước của ô) và ô có nước ở mực đó. Nước trong OMSI là một mực cho cả ô: chỗ trũng khác trên cùng ô cũng hiện nước
+Click where it starts, then where it ends: the ground between becomes one even slope as wide as the brush (an embankment, a ramp, a level bed)	Nhấp nơi bắt đầu, rồi nơi kết thúc: mặt đất giữa chúng thành một dốc đều rộng bằng cọ (đê, đường dốc, nền phẳng)
+To a height	Tới độ cao
+Flatten to the height typed instead of the one where the drag starts (a level square, a platform)	San phẳng tới độ cao đã nhập thay vì độ cao nơi bắt đầu kéo (ô vuông phẳng, bệ)
+Depth	Độ sâu
+The water's level is set where a stroke starts: start at the bank.	Mực nước được đặt nơi nét vẽ bắt đầu: hãy bắt đầu ở bờ.
+Brush	Cọ
+Flatten the whole terrain	San phẳng toàn bộ địa hình
+Every tile's ground levelled to the map's mean height; the roads, the AI paths and the junctions follow it. One undo step brings the relief back. (The satellite picture: View > Satellite overlay.)	Mặt đất của mọi ô được san về độ cao trung bình của bản đồ; đường, đường AI và nút giao theo nó. Một bước hoàn tác trả lại địa hình. (Ảnh vệ tinh: Xem > Lớp phủ vệ tinh.)
+Ground layers	Lớp mặt đất
+base ground	mặt đất nền
+layer	lớp
+Add…	Thêm…
+Remove	Xóa bỏ
+Up the list: drawn under the layers after it	Lên trong danh sách: vẽ dưới các lớp sau nó
+Down the list: drawn over the layers before it	Xuống trong danh sách: vẽ trên các lớp trước nó
+Texture	Texture
+The layer's picture; its painting stays	Hình của lớp; phần đã sơn được giữ
+A fine grain laid over the texture, seen close up (OMSI's detail texture)	Hạt mịn phủ lên texture, thấy khi nhìn gần (texture chi tiết của OMSI)
+Click to choose another	Nhấp để chọn cái khác
+Repeats per tile	Lặp mỗi ô
+Detail repeats	Lặp chi tiết
+How finely this layer can be painted: texels across a tile (its masks are made again at the new size)	Độ mịn khi sơn lớp này: texel trên một ô (mặt nạ được tạo lại theo kích thước mới)
+Edit ground texture	Sửa texture mặt đất
+Erase	Xóa
+Remove ground texture	Gỡ texture mặt đất
+Tile	Ô
+A water surface over the whole tile: it shows where the ground lies below it (lower the ground with the Terrain tool for a lake or a river)	Mặt nước phủ cả ô: nó hiện ở nơi mặt đất nằm thấp hơn (hạ mặt đất bằng công cụ Địa hình để làm hồ hoặc sông)
+at 	ở
+Lamps light the ground at night	Đèn chiếu sáng mặt đất ban đêm
+The game works out the light pools of the street lamps on and round this tile when it loads it ([variable_terrainlightmap]); off, it shows the tile's light map file as it is	Trò chơi tính vùng sáng của đèn đường trên và quanh ô này khi tải ([variable_terrainlightmap]); tắt thì dùng nguyên tệp bản đồ ánh sáng của ô
+Edit history	Lịch sử chỉnh sửa
+Click a step to go back to just after it	Nhấp một bước để quay về ngay sau nó
+Opened	Đã mở
+Properties	Thuộc tính
+Configure PBR	Cấu hình PBR
+Create PBR	Tạo PBR
+Normal, roughness, metal and shadow maps made from the object's textures, tuned and written as openOMSI reads them	Bản đồ normal, roughness, metal và bóng được tạo từ texture của đối tượng, tinh chỉnh và ghi theo cách openOMSI đọc
+Type	Loại
+Hangs on	Treo trên
+point	điểm
+Location	Vị trí
+East	Đông
+North	Bắc
+Height above sea level	Độ cao so với mực nước biển
+above the ground:	trên mặt đất:
+OMSI keeps this object's height above the ground under it: moved elsewhere it stays as high above the ground there	OMSI giữ độ cao của đối tượng này so với mặt đất bên dưới: dời đi chỗ khác thì nó vẫn cao như vậy so với mặt đất ở đó
+Rotation	Xoay
+Tilt forward (pitch)	Nghiêng về trước (pitch)
+Bank to the side (roll)	Nghiêng sang bên (roll)
+Heading	Hướng
+Turn it the way the nearest road runs beside it	Xoay theo hướng con đường gần nhất chạy bên cạnh
+Stand it upright again	Dựng thẳng lại
+Picture	Hình ảnh
+Ratio	Tỉ lệ
+Stop name	Tên điểm dừng
+This tree	Cây này
+Texts	Văn bản
+Shown on the object (@ starts a new line)	Hiển thị trên đối tượng (@ xuống dòng mới)
+Model	Mô hình
+Triangles	Tam giác
+Parts	Phần
+Part	Phần
+triangles	tam giác
+colour only	chỉ màu
+opaque	đục
+cut out	cắt khuyết
+blended	pha trộn
+How the texture's transparency is used: cut out for leaves and fences, blended for glass	Cách dùng độ trong suốt của texture: cắt khuyết cho lá và hàng rào, pha trộn cho kính
+Textures	Texture
+Normal, roughness, metal and shadow maps made from the road type's textures	Bản đồ normal, roughness, metal và bóng được tạo từ texture của loại đường
+Length	Chiều dài
+Radius	Bán kính
+right	phải
+left	trái
+straight	thẳng
+start	đầu
+end	cuối
+Mirrored	Lật gương
+Skew	Xiên
+The start cut on a slant: 1 is 45° (two fences meeting at a corner: 1 and -1)	Đầu cắt xiên: 1 là 45° (hai hàng rào gặp nhau ở góc: 1 và -1)
+The end cut on a slant	Cuối cắt xiên
+Ground	Mặt đất
+as it is	giữ nguyên
+cut away under it	khoét bỏ bên dưới
+cut, held at the end	khoét, giữ ở cuối
+cut, held at the start	khoét, giữ ở đầu
+cut, held at both ends	khoét, giữ ở cả hai đầu
+A hole in the ground under it, as for a tunnel, an underpass or a pit (OMSI's terrain align)	Một lỗ trên mặt đất bên dưới, như hầm, đường chui hoặc hố (terrain align của OMSI)
+Select the whole road	Chọn cả con đường
+Every piece linked on from this one (or double-click the road)	Mọi đoạn nối tiếp từ đoạn này (hoặc nhấp đúp vào đường)
+Join with the next piece	Nối với đoạn kế tiếp
+One piece again with the one after it, where the two make one curve	Thành một đoạn với đoạn sau nó, nơi hai đoạn tạo một đường cong
+Replace with	Thay bằng
+The object chosen in the Objects tool's catalogue takes this one's place	Đối tượng chọn trong danh mục của công cụ Đối tượng thế chỗ đối tượng này
+Go to	Đi tới
+Level ground	San phẳng mặt đất
+The ground under it made level with its foot, blending in 3 m round it (a house on a slope)	Mặt đất dưới nó được san bằng với chân nó, hòa vào trong 3 m xung quanh (nhà trên sườn dốc)
+All like it	Tất cả giống nó
+Select every one of this type on the map	Chọn mọi cái cùng loại này trên bản đồ
+No road within 60 m	Không có đường trong 60 m
+Name	Tên
+Folder	Thư mục
+Traffic	Giao thông
+left-hand	lái bên trái
+No start point yet: place one (Game logic > Start points) so the bus has somewhere to appear in openOMSI.	Chưa có điểm xuất phát: hãy đặt một (Logic trò chơi > Điểm xuất phát) để xe buýt có chỗ xuất hiện trong openOMSI.
+None yet: openOMSI shows it where maps are chosen.	Chưa có: openOMSI hiển thị nó ở nơi chọn bản đồ.
+Import your thumbnail	Nhập ảnh thu nhỏ của bạn
+Choose a picture: it is cut to 370 × 280 and becomes the map's picture (picture.jpg).	Chọn một hình ảnh: nó được cắt thành 370 × 280 và trở thành hình của bản đồ (picture.jpg).
+Open the map with this view	Mở bản đồ với góc nhìn này
+The camera as it is now is where the map opens (here and in OMSI 2's editor).	Camera như hiện tại là nơi bản đồ mở (ở đây và trong trình sửa của OMSI 2).
+Saved to	Đã lưu vào
+Edit map	Sửa bản đồ
+Change the layer's texture	Đổi texture của lớp
+Change the layer's detail texture	Đổi texture chi tiết của lớp
+Controls	Điều khiển
+Keyboard	Bàn phím
+Click a key, then press the new one (Esc: leave it). A key already in use is taken from its command.	Nhấp một phím, rồi nhấn phím mới (Esc: bỏ). Phím đang dùng sẽ bị lấy khỏi lệnh của nó.
+press a key…	nhấn một phím…
+Also:	Cũng:
+Back to the default key	Về phím mặc định
+Reset all keys	Đặt lại mọi phím
+Mouse	Chuột
+Right button held	Giữ nút phải
+look round; W A S D fly, Q / E down / up, Shift faster, wheel: speed	nhìn quanh; W A S D bay, Q / E xuống / lên, Shift nhanh hơn, con lăn: tốc độ
+Middle drag	Kéo chuột giữa
+pan	kéo bản đồ
+Alt + left / right / middle drag	Alt + kéo trái / phải / giữa
+orbit / zoom / pan (as in Unity)	xoay quanh / thu phóng / kéo (như trong Unity)
+Left drag on nothing	Kéo trái trên chỗ trống
+select with a box	chọn bằng khung
+Alt + left drag	Alt + kéo trái
+orbit round the point under the cursor	xoay quanh điểm dưới con trỏ
+Wheel	Con lăn
+move towards the cursor	tiến về phía con trỏ
+Trackpad	Trackpad
+Two fingers	Hai ngón
+Pinch / twist	Chụm / xoay
+zoom / turn	thu phóng / xoay
+Option + two fingers or drag	Option + hai ngón hoặc kéo
+Fixed keys	Phím cố định
+Arrow keys	Phím mũi tên
+move over the map (Shift: faster)	di chuyển trên bản đồ (Shift: nhanh hơn)
+go to a saved view (Shift: keep the view there)	đến góc nhìn đã lưu (Shift: giữ góc nhìn tại đó)
+Alt + arrows	Alt + mũi tên
+move the selection a grid step (Shift: 10 cm)	dời vùng chọn một bước lưới (Shift: 10 cm)
+Alt + Page Up / Down	Alt + Page Up / Down
+selection up / down 10 cm (Shift: 1 m)	nâng / hạ vùng chọn 10 cm (Shift: 1 m)
+add to / take from the selection	thêm vào / bớt khỏi vùng chọn
+Shift / Ctrl + drag on empty ground	Shift / Ctrl + kéo trên đất trống
+select with a box (Shift adds)	chọn bằng khung (Shift để thêm)
+Double-click a road	Nhấp đúp vào đường
+select all of it	chọn toàn bộ
+turn the object	xoay đối tượng
+brush size	cỡ cọ
+stop / deselect	dừng / bỏ chọn
+Unsaved changes	Thay đổi chưa lưu
+The map has changes that are not saved. Save them first?	Bản đồ có thay đổi chưa lưu. Lưu trước?
+Don't save	Không lưu
+Assets	Tài nguyên
+All	Tất cả
+Picture size	Cỡ hình
+Shapes…	Hình khối…
+Close (B)	Đóng (B)
+Scenery objects	Đối tượng cảnh quan
+Splines (roads, tracks…)	Spline (đường, ray…)
+Favourite on / off	Yêu thích bật / tắt
+content folder (mod, import, own)	thư mục nội dung (mod, nhập, của riêng)
+OMSI 2	OMSI 2
+width	rộng
+Build with it	Xây bằng nó
+Place it	Đặt nó
+PBR material…	Vật liệu PBR…
+Delete…	Xóa…
+Not seen in the game (a helper).	Không thấy trong trò chơi (vật phụ trợ).
+Delete the asset?	Xóa tài nguyên?
+Its folder goes into openMapper's bin in the content folder (openMapper\\bin), from where it can be put back by hand. Maps that use it show it missing.	Thư mục của nó được chuyển vào bin của openMapper trong thư mục nội dung (openMapper\\bin), từ đó có thể đặt lại thủ công. Bản đồ dùng nó sẽ báo thiếu.
+Calendar and place	Lịch và vị trí
+Place and time	Vị trí và thời gian
+Holidays	Ngày lễ
+Number plates	Biển số
+Latitude	Vĩ độ
+Longitude	Kinh độ
+Time zone	Múi giờ
+Where the sun stands and when it rises and sets come from here.	Vị trí mặt trời và giờ mọc, lặn lấy từ đây.
+Summer time	Giờ mùa hè
+years	năm
+none: the clocks are never put forward	không: đồng hồ không bao giờ chỉnh sớm
+EU rules for these years	Quy tắc EU cho những năm này
+Last Sunday of March to last Sunday of October, replacing what is set for these years	Từ Chủ nhật cuối tháng Ba đến Chủ nhật cuối tháng Mười, thay thế thiết lập của những năm này
+None	Không
+Year	Năm
+entries	mục
+Public holidays run Sunday's timetable; school holidays the holiday one.	Ngày lễ công cộng chạy bảng giờ Chủ nhật; nghỉ học chạy bảng giờ nghỉ.
+Public holidays	Ngày lễ công cộng
+Add a holiday	Thêm ngày lễ
+Holiday	Ngày lễ
+School holidays	Nghỉ học
+Ends before it starts	Kết thúc trước khi bắt đầu
+Add school holidays	Thêm kỳ nghỉ học
+The AI's cars carry these, one a line.	Xe của AI mang các biển này, mỗi dòng một biển.
+X: a letter, 9: a digit	X: một chữ cái, 9: một chữ số
+Make	Tạo
+Replaces the list with plates of the pattern	Thay danh sách bằng biển số theo mẫu
+plates	biển số
+The scenario's AI lists are written, groups changed:	Danh sách AI của kịch bản đã được ghi, nhóm đã đổi:
+Could not write the scenario	Không ghi được kịch bản
+The scenario's timetable is written, files:	Bảng giờ của kịch bản đã được ghi, tệp:
+Back in the scenario:	Trở lại kịch bản:
+The scenario's things are on the map:	Các thứ của kịch bản đang ở trên bản đồ:
+what you place now is the scenario's too	những gì bạn đặt bây giờ cũng thuộc kịch bản
+Editing the scenario	Đang sửa kịch bản
+Done	Xong
+Chrono scenarios	Kịch bản chrono
+How the map changes over the years: each scenario from its first day lays its own tiles, lines and tickets over the map. The view shows the map as on the day chosen here; what you edit is always the map itself.	Bản đồ thay đổi qua các năm: mỗi kịch bản từ ngày đầu tiên của nó đặt các ô, tuyến và vé riêng lên bản đồ. Khung nhìn hiển thị bản đồ như vào ngày chọn ở đây; những gì bạn sửa luôn là bản đồ gốc.
+Show the map as on	Hiện bản đồ như vào ngày
+Today	Hôm nay
+Active on that day:	Có hiệu lực vào ngày đó:
+New scenario's name	Tên kịch bản mới
+New scenario	Kịch bản mới
+A scenario starting on the day shown, after the others	Một kịch bản bắt đầu vào ngày đang hiển thị, sau các kịch bản khác
+From	Từ
+To	Đến
+for good	vĩnh viễn
+Own tickets	Vé riêng
+Own money	Tiền riêng
+the map's	của bản đồ
+Takes off	Gỡ bỏ
+What changes (shown where the date is chosen)	Những gì thay đổi (hiển thị ở nơi chọn ngày)
+From its first day, the selection in the view:	Từ ngày đầu tiên của nó, vùng chọn trong khung nhìn:
+appears	xuất hiện
+Taken out of the map into the scenario: it is there from the scenario's first day on (place it first, then press this)	Được lấy khỏi bản đồ vào kịch bản: nó có từ ngày đầu của kịch bản (hãy đặt nó trước, rồi nhấn nút này)
+is gone	biến mất
+Stays in the map, gone from the scenario's first day on	Vẫn ở trong bản đồ, biến mất khỏi kịch bản từ ngày đầu của nó
+becomes	trở thành
+its texts become	văn bản của nó trở thành
+Write	Ghi
+Its path rules from that day	Quy tắc lối đi của nó từ ngày đó
+Add a rule	Thêm quy tắc
+Written into the scenario at once (undo does not take it out of the scenario).	Được ghi ngay vào kịch bản (hoàn tác không lấy nó ra khỏi kịch bản).
+What it changes	Nó thay đổi gì
+into the map	vào bản đồ
+Out of the scenario into the map itself: there on every day	Từ kịch bản vào chính bản đồ: có mặt mọi ngày
+Take it out of the scenario	Lấy ra khỏi kịch bản
+new texts	văn bản mới
+rules	quy tắc
+Nothing yet.	Chưa có gì.
+Its own things are on the map: select, move, change and place as usual. The map's own things stay the map's.	Các thứ riêng của nó nằm trên bản đồ: chọn, di chuyển, đổi và đặt như thường. Các thứ của bản đồ vẫn thuộc bản đồ.
+Done: back into the scenario	Xong: quay lại kịch bản
+Edit its own things on the map	Sửa các thứ riêng của nó trên bản đồ
+What it brings in is put on the map to work with as with anything else; Done writes it back (undo starts afresh)	Những gì nó đưa vào được đặt lên bản đồ để làm việc như với mọi thứ khác; Xong sẽ ghi lại (hoàn tác bắt đầu lại)
+The Lines window shows its timetable (the map's with its own laid over): lines, trips and tours edited there are the scenario's; a line of the map taken away is taken off from its day.	Cửa sổ Tuyến hiển thị bảng giờ của nó (của bản đồ cùng phần riêng phủ lên): tuyến, chuyến và lượt sửa ở đó thuộc kịch bản; tuyến của bản đồ bị gỡ sẽ bị gỡ từ ngày của nó.
+Done with its timetable	Xong với bảng giờ của nó
+Edit its timetable	Sửa bảng giờ của nó
+Its own lines, trips and tours in the Lines window; Done writes only what differs from the map's (undo starts afresh)	Các tuyến, chuyến và lượt riêng của nó trong cửa sổ Tuyến; Xong chỉ ghi phần khác với bản đồ (hoàn tác bắt đầu lại)
+The Traffic window shows its AI lists (the map's with its own added): vehicles and type groups added there, and a depot's own depot file, are the scenario's from its day.	Cửa sổ Giao thông hiển thị danh sách AI của nó (của bản đồ cùng phần thêm riêng): xe và nhóm loại thêm ở đó, cùng tệp depot riêng của depot, thuộc kịch bản từ ngày của nó.
+Done with its AI lists	Xong với danh sách AI của nó
+Edit its AI lists	Sửa danh sách AI của nó
+Vehicles it adds to the groups and depots (OMSI's ailists_#upd.cfg); taking one away is the map's own business	Các xe nó thêm vào nhóm và depot (ailists_#upd.cfg của OMSI); gỡ xe là việc của bản đồ
+Write the scenario	Ghi kịch bản
+Close	Đóng
+The map has no chrono scenarios.	Bản đồ chưa có kịch bản chrono.
+from	từ
+to	đến
+takes off	gỡ bỏ
+own tickets	vé riêng
+Its first day	Ngày đầu tiên của nó
+Written into the scenario	Đã ghi vào kịch bản
+Written into the scenario:	Đã ghi vào kịch bản:
+Scenario written	Đã ghi kịch bản
+The map as on	Bản đồ như vào ngày
+scenarios:	kịch bản:
+Multiplayer	Chơi nhiều người
+Joining… (a big map takes a while to come)	Đang tham gia… (bản đồ lớn mất một lúc)
+Recover a conflicting edit…	Khôi phục chỉnh sửa xung đột…
+Recovered your edit; undo is available	Đã khôi phục chỉnh sửa của bạn; có thể hoàn tác
+Edit one map together: one of you hosts it, the others join. Roads, objects, ground and paint are shared as they are made; the timetable, the traffic and the descriptions stay the host's, and the host saves the map. Everybody needs the same objects and splines installed.	Cùng sửa một bản đồ: một người host, những người khác tham gia. Đường, đối tượng, mặt đất và sơn được chia sẻ khi tạo; bảng giờ, giao thông và mô tả vẫn thuộc chủ phòng, và chủ phòng lưu bản đồ. Mọi người cần cài cùng các đối tượng và spline.
+Your name	Tên của bạn
+Password	Mật khẩu
+Host this map	Host bản đồ này
+Others on this network can join	Người khác trong mạng này có thể tham gia
+Others anywhere can join (a free Cloudflare tunnel, nothing to set up on the router)	Người khác ở bất kỳ đâu có thể tham gia (đường hầm Cloudflare miễn phí, không cần cài gì trên router)
+Port	Cổng
+Over the internet the password must have at least this many letters:	Qua internet mật khẩu phải có ít nhất chừng này chữ cái:
+No password: anybody who reaches this computer's port can join and change the whole map.	Không mật khẩu: bất kỳ ai tới được cổng của máy này đều có thể tham gia và sửa cả bản đồ.
+Ask for a password after all	Vẫn hỏi mật khẩu
+Host without a password? Anybody on this network who finds the port can join and change the whole map.	Host không mật khẩu? Bất kỳ ai trong mạng này tìm thấy cổng đều có thể tham gia và sửa cả bản đồ.
+Yes, without a password	Có, không mật khẩu
+No	Không
+Type a password the others will need.	Hãy nhập mật khẩu mà những người khác sẽ cần.
+Host without a password…	Host không mật khẩu…
+Host	Làm chủ phòng
+Open a map, type a name and a password first	Hãy mở bản đồ, nhập tên và mật khẩu trước
+Join a map	Tham gia bản đồ
+The map open now has unsaved changes: joining closes it. Save it first.	Bản đồ đang mở có thay đổi chưa lưu: tham gia sẽ đóng nó. Hãy lưu trước.
+You host this map. Give the others one of these:	Bạn đang host bản đồ này. Hãy đưa cho người khác một trong các địa chỉ này:
+On this network the connection is not encrypted: somebody listening in can see the map, and from what they catch try passwords on their own computer. Use a long password, or the internet tunnel (encrypted).	Trong mạng này kết nối không được mã hóa: người nghe lén có thể thấy bản đồ và từ những gì bắt được thử mật khẩu trên máy của họ. Hãy dùng mật khẩu dài, hoặc đường hầm internet (có mã hóa).
+Everybody who joins can change the whole map.	Mọi người tham gia đều có thể sửa cả bản đồ.
+Opening the Cloudflare tunnel… (fetched the first time)	Đang mở đường hầm Cloudflare… (tải lần đầu)
+internet	internet
+Waiting for Cloudflare's address…	Đang chờ địa chỉ của Cloudflare…
+The Cloudflare tunnel could not be opened (no cloudflared, or no internet). The LAN addresses still work.	Không mở được đường hầm Cloudflare (không có cloudflared, hoặc không có internet). Các địa chỉ LAN vẫn dùng được.
+You joined this map. The host saves it.	Bạn đã tham gia bản đồ này. Chủ phòng sẽ lưu nó.
+Everything of yours is with the others	Mọi thứ của bạn đã ở chỗ những người khác
+Sending your edits…	Đang gửi chỉnh sửa của bạn…
+In the session	Trong phiên
+Say something…	Nói gì đó…
+Leave	Rời đi
+Knife (K): a click on a road cuts it there, as often as you like; the pieces' lengths shown at the cursor, on whole grid steps with grid snapping on · right-click or Esc: off	Dao (K): nhấp lên đường để cắt tại đó, bao nhiêu lần tùy ý; chiều dài các đoạn hiện ở con trỏ, theo bước lưới nguyên khi bật bám lưới · nhấp chuột phải hoặc Esc: tắt
+The angle step: what snapping comes to and what R turns by	Bước góc: độ bám tới và R xoay bao nhiêu
+Angle	Góc
+Snap headings to the angle step	Bám hướng theo bước góc
+Grid	Lưới
+Snap positions to the grid	Bám vị trí vào lưới
+Click two points to measure the distance and gradient between them (U) · right-click: off	Nhấp hai điểm để đo khoảng cách và độ dốc giữa chúng (U) · nhấp chuột phải: tắt
+Auto-Terrain	Tự động địa hình
+What you build follows the ground: roads, paths and tracks take its height (off: they run level from where they start). Only what is built from now on; nothing already there changes	Những gì bạn xây theo mặt đất: đường, lối đi và ray lấy độ cao của nó (tắt: chạy phẳng từ chỗ bắt đầu). Chỉ áp dụng cho thứ xây từ giờ; thứ có sẵn không đổi
+Auto-Switch	Tự động ghi
+Branching a track off another makes a switch there	Rẽ nhánh ray khỏi ray khác sẽ tạo ghi ở đó
+Auto-Junction	Tự động nút giao
+Auto-Align	Tự động căn
+Line objects up with the nearest road (Shift: put it freely)	Căn đối tượng theo đường gần nhất (Shift: đặt tự do)
+Selection	Vùng chọn
+A click on one of it selects all of it, Ctrl + click one alone	Nhấp vào một cái chọn tất cả, Ctrl + nhấp chọn riêng một cái
+Keep these together: a click on one selects all, a drag moves all (Ctrl+G)	Giữ chúng cùng nhau: nhấp một cái chọn tất cả, kéo di chuyển tất cả (Ctrl+G)
+Apply	Áp dụng
+Turn	Xoay
+Level the ground under them	San mặt đất dưới chúng
+Each one's outline made level with its foot, blending into the ground 3 m round it	Viền của mỗi cái được san bằng chân nó, hòa vào mặt đất trong 3 m xung quanh
+Make every object	Biến mọi đối tượng thành
+The object chosen in the Objects tool's catalogue	Đối tượng chọn trong danh mục của công cụ Đối tượng
+Random headings	Hướng ngẫu nhiên
+Every selected object turned its own random way (trees, bushes, rocks)	Mỗi đối tượng đã chọn xoay theo hướng ngẫu nhiên riêng (cây, bụi, đá)
+Along the road	Dọc theo đường
+Each turned the way the nearest road runs beside it	Mỗi cái xoay theo hướng con đường gần nhất chạy bên cạnh
+Turned:	Đã xoay:
+All like this one	Tất cả giống cái này
+Every selected object takes the heading of the one in the properties	Mọi đối tượng đã chọn lấy hướng của đối tượng trong thuộc tính
+Make every road	Biến mọi đường thành
+The road type chosen in the Roads tool's catalogue	Loại đường chọn trong danh mục của công cụ Đường
+Lay them on the ground	Đặt chúng lên mặt đất
+Reverse their direction	Đảo chiều của chúng
+Even slope along them	Độ dốc đều dọc theo chúng
+One chain of roads: from the height at one end to that at the other, evenly (a bridge, a ramp)	Một chuỗi đường: từ độ cao ở một đầu tới độ cao ở đầu kia, đều đặn (cầu, đường dốc)
+Edit its AI lanes	Sửa làn AI của nó
+Its lanes become AI paths of their own (the same lines, the same way) that the Logic tool's Edit existing bends, moves and deletes. The road keeps its look.	Các làn của nó thành đường AI riêng (cùng đường, cùng chiều) mà Sửa cái có sẵn của công cụ Logic có thể uốn, dời và xóa. Đường giữ nguyên hình dạng.
+Ends (joined roads follow)	Đầu (đường nối theo)
+height	độ cao
+gradient	độ dốc
+cant	độ nghiêng
+Banking across the road, %: positive lowers its right side (into a right bend)	Độ nghiêng ngang đường, %: dương hạ bên phải xuống (vào khúc cua phải)
+End	Cuối
+Even slope end to end	Độ dốc đều từ đầu đến cuối
+Both gradients to the straight climb between the ends' heights	Cả hai độ dốc theo đường lên thẳng giữa độ cao hai đầu
+Speed limit, km/h	Giới hạn tốc độ, km/h
+Traffic density ×	Mật độ giao thông ×
+Priority	Ưu tiên
+Trucks (0: none)	Xe tải (0: không)
+No cars	Không xe con
+Buses only	Chỉ xe buýt
+For the AI and the player on one path (lane) of it, counted from 0: the view shows their numbers	Cho AI và người chơi trên một đường (làn) của nó, đếm từ 0: khung nhìn hiện số của chúng
+Path (lane) number	Số đường (làn)
+Hanging on it	Treo trên nó
+Points to hang objects on:	Điểm để treo đối tượng:
+Select it	Chọn nó
+Hang	Treo
+Choose an object in the Objects catalogue first	Hãy chọn một đối tượng trong danh mục Đối tượng trước
+A fence, a row of houses, an avenue: the selection copied again and again, a step on each time	Hàng rào, dãy nhà, đại lộ: vùng chọn được sao chép lặp lại, mỗi lần một bước
+Copies	Số bản sao
+Step	Bước
+Turn each	Xoay mỗi cái
+Rows	Hàng
+More than one: a grid (an orchard, a car park), each row a row step on	Hơn một: một lưới (vườn cây, bãi đỗ xe), mỗi hàng cách một bước hàng
+Row step	Bước hàng
+Tilted to the ground under it, the way it slopes forward and to the side (a fence, a bench or a shed on a hillside)	Nghiêng theo mặt đất bên dưới, theo độ dốc về trước và sang bên (hàng rào, ghế hoặc nhà kho trên sườn đồi)
+Heights along the ground again, smoothed so it climbs a hill rather than every bump (after shaping the ground or laying a height map over it); where a road not selected joins, its height is kept	Độ cao dọc theo mặt đất tính lại, làm mịn để nó leo đồi thay vì theo từng chỗ gồ (sau khi tạo hình mặt đất hoặc phủ bản đồ độ cao); nơi một đường không chọn nối vào, độ cao của nó được giữ
+Each starts where it ended: the traffic on it goes the other way (a one-way street, a track's direction), the road itself stays where it is	Mỗi cái bắt đầu từ nơi nó kết thúc: giao thông trên đó đi chiều ngược lại (đường một chiều, chiều của ray), đường vẫn nằm yên
+A second track or the other carriageway: the selected splines copied alongside, bends kept exact, linked as they are	Ray thứ hai hoặc làn đường bên kia: các spline đã chọn được sao chép bên cạnh, giữ nguyên khúc cua, liên kết như vốn có
+To the left	Sang trái
+To the right	Sang phải
+Left and right of the way the road runs (its arrows with AI lanes shown)	Trái và phải theo chiều đường chạy (mũi tên của nó khi hiện làn AI)
+For trams and electric trains: a wire spline laid on the selected track, piece for piece and linked (its height is the wire spline's own); the masts go in with Objects along the road	Cho tàu điện và tàu điện sắt: một spline dây điện đặt trên ray đã chọn, từng đoạn một và liên kết (độ cao là của spline dây); cột được thêm bằng Đối tượng dọc đường
+No wire spline installed (one whose name says Fahrdraht, Oberleitung or wire)	Chưa cài spline dây điện (tên có Fahrdraht, Oberleitung hoặc wire)
+Lay it	Đặt
+Wire pieces laid:	Đã đặt đoạn dây:
+Paint the ground along it	Sơn mặt đất dọc theo nó
+Add a ground texture in the Paint tool first: the base ground is under everything	Hãy thêm texture mặt đất trong công cụ Sơn trước: mặt đất nền nằm dưới mọi thứ
+Layer	Lớp
+Where	Ở đâu
+beside it	bên cạnh
+under it too	cũng bên dưới
+Out from its edge	Ra khỏi mép
+Soft edge	Mép mềm
+A gravel verge, dirt by a track, grass along a path: the brush of the Paint tool touches it up afterwards	Lề sỏi, đất cạnh ray, cỏ dọc lối đi: cọ của công cụ Sơn chỉnh lại sau
+Beside	Bên cạnh
+Lean with the road	Nghiêng theo đường
+Each object leans with the road's gradient and banking (bays and arrows on the road); off, it stands upright	Mỗi đối tượng nghiêng theo độ dốc và độ nghiêng của đường (vịnh đậu và mũi tên trên đường); tắt thì đứng thẳng
+A text the row's objects show (@ starts a new line)	Văn bản mà các đối tượng của hàng hiển thị (@ xuống dòng mới)
+Object:	Đối tượng:
+Pick an object (a lamp, a tree, a bollard) in the Objects tool's catalogue	Chọn một đối tượng (đèn, cây, trụ chắn) trong danh mục của công cụ Đối tượng
+Right of the road's direction; negative: left	Bên phải chiều đường; số âm: bên trái
+Free at start / end	Tự do ở đầu / cuối
+Both sides	Cả hai bên
+Place along the road	Đặt dọc theo đường
+Remove all rows	Xóa mọi hàng
+Roundabout: click the centre, then the ring	Vòng xuyến: nhấp tâm, rồi vòng
+A one-way ring of the chosen road type (pick a one-way road); roads inside are cut back to it and joined with junctions	Vòng một chiều của loại đường đã chọn (chọn đường một chiều); các đường bên trong bị cắt lui về vòng và nối bằng nút giao
+Keep the height (bridge, embankment)	Giữ độ cao (cầu, đê)
+An even gradient from end to end, the ground left as it is; the rise to the end can be typed while drawing. Pillars: select the road and put them along it as objects.	Độ dốc đều từ đầu đến cuối, mặt đất giữ nguyên; độ cao lên cuối có thể nhập khi vẽ. Trụ: chọn đường và đặt dọc theo như đối tượng.
+Rise	Độ cao tăng
+Shift: straight · Enter: build	Shift: thẳng · Enter: xây
+Junction	Nút giao
+Traffic lights	Đèn giao thông
+Lights need three roads or more	Đèn cần từ ba đường trở lên
+Main road green	Đường chính xanh
+Side roads green	Đường phụ xanh
+The main road is the pair of roads most in line; red-yellow 2 s, yellow 3 s, 2 s all red between	Đường chính là cặp đường thẳng hàng nhất; đỏ-vàng 2 s, vàng 3 s, giữa hai pha 2 s toàn đỏ
+Zebra crossings	Vạch qua đường
+Road	Đường
+Build it again	Xây lại
+Makes the plate, its kerbs and lanes again for the roads as they are now	Tạo lại tấm nền, lề đường và làn cho các đường như hiện tại
+Linked objects	Đối tượng liên kết
+An object can take its state from another ([varparent]): a signal head shows a light of its crossing's program, a stop's display its stop.	Một đối tượng có thể lấy trạng thái từ đối tượng khác ([varparent]): đèn tín hiệu hiện đèn của chương trình ngã tư, màn hình điểm dừng hiện điểm dừng của nó.
+Takes its state from	Lấy trạng thái từ
+Select it: IDCode	Chọn nó: IDCode
+Takes its state from an object that is gone: IDCode	Lấy trạng thái từ đối tượng đã mất: IDCode
+Takes its state from nothing	Không lấy trạng thái từ đâu
+Light	Đèn tín hiệu
+Its light is not one of the crossing's: it stays dark	Đèn của nó không thuộc ngã tư: nó vẫn tối
+That object runs no traffic lights: link the head to a crossing with a light program	Đối tượng đó không chạy đèn giao thông: hãy liên kết đèn với một ngã tư có chương trình đèn
+A signal head: link it to its crossing to have it light	Đèn tín hiệu: liên kết nó với ngã tư của nó để sáng
+Click the object in the view… (Esc)	Nhấp vào đối tượng trong khung nhìn… (Esc)
+Link to another…	Liên kết tới cái khác…
+Link to an object…	Liên kết tới đối tượng…
+Then click the object it is to take its state from (a crossing for a signal head)	Rồi nhấp vào đối tượng mà nó sẽ lấy trạng thái (ngã tư cho đèn tín hiệu)
+Taking their state from it:	Lấy trạng thái từ nó:
+light	đèn
+Click the object it takes its state from	Nhấp vào đối tượng mà nó lấy trạng thái
+stop	điểm dừng
+Find in map	Tìm trong bản đồ
+Name, file, IDCode, stop or x, y	Tên, tệp, IDCode, điểm dừng hoặc x, y
+The point	Điểm
+Spline	Spline
+Object	Đối tượng
+Nothing on the map has this IDCode.	Không có gì trên bản đồ có IDCode này.
+kinds	loại
+on the map	trên bản đồ
+Next	Tiếp theo
+Select the next one and go there	Chọn cái kế tiếp và đến đó
+Every one of these becomes the road type chosen in the Roads tool	Mỗi cái trong số này trở thành loại đường chọn trong công cụ Đường
+Every one of these becomes the object chosen in the catalogue	Mỗi cái trong số này trở thành đối tượng chọn trong danh mục
+More: type to narrow the list	Thêm: gõ để thu hẹp danh sách
+Replaced:	Đã thay:
+Satellite overlay	Lớp phủ vệ tinh
+Satellite and own pictures	Vệ tinh và hình riêng
+Click a tile to see its overlay here.	Nhấp một ô để xem lớp phủ của nó ở đây.
+Show the overlay	Hiện lớp phủ
+opacity	độ mờ đục
+Load satellite imagery	Tải ảnh vệ tinh
+Place the map on the Earth first (Satellite and terrain…)	Hãy đặt bản đồ lên Trái Đất trước (Vệ tinh và địa hình…)
+Load image file…	Tải tệp hình ảnh…
+Your own picture for this tile (a scan, a screenshot): or drop it on the window	Hình riêng của bạn cho ô này (bản quét, ảnh chụp màn hình): hoặc thả vào cửa sổ
+Load the OpenStreetMap map	Tải bản đồ OpenStreetMap
+OpenStreetMap map for all tiles	Bản đồ OpenStreetMap cho mọi ô
+The map as openstreetmap.org draws it (streets with their names, houses, water, green, stop signs), drawn sharp from OpenStreetMap data and laid on the tile in place of a satellite picture: to build roads and houses over by eye. Nothing is generated from it.	Bản đồ như openstreetmap.org vẽ (phố có tên, nhà, nước, cây xanh, biển điểm dừng), vẽ sắc nét từ dữ liệu OpenStreetMap và đặt lên ô thay cho ảnh vệ tinh: để xây đường và nhà theo mắt. Không có gì được tạo từ nó.
+own picture	hình riêng
+for an earlier placement	cho vị trí đặt trước đó
+not kept with the map	không lưu cùng bản đồ
+, partly coarser	, một phần thô hơn
+nothing	không có
+Place the map on the Earth first.	Hãy đặt bản đồ lên Trái Đất trước.
+Load terrain heights	Tải độ cao địa hình
+Done:	Xong:
+with problems	có vấn đề
+A picture for the tiles	Hình cho các ô
+Could not read the picture	Không đọc được hình ảnh
+Could not copy the picture	Không sao chép được hình ảnh
+The picture is on the tiles: line it up in Satellite and terrain, Own pictures.	Hình đã nằm trên các ô: căn nó trong Vệ tinh và địa hình, Hình riêng.
+Nothing found by that name.	Không tìm thấy gì với tên đó.
+Some tiles had Google imagery: enter your Google key to see it again (it is not kept with the map).	Một số ô từng có ảnh Google: nhập khóa Google của bạn để xem lại (khóa không lưu cùng bản đồ).
+Satellite and terrain	Vệ tinh và địa hình
+Find a place: a town, a street, an address… (Enter)	Tìm một nơi: thị trấn, đường phố, địa chỉ… (Enter)
+Searching…	Đang tìm…
+Search © OpenStreetMap contributors	Tìm kiếm © OpenStreetMap contributors
+This map has world coordinates ([worldcoordinates]): it lies on the Earth by itself, its tiles are Web Mercator tiles.	Bản đồ này có tọa độ thế giới ([worldcoordinates]): nó tự nằm trên Trái Đất, các ô là ô Web Mercator.
+Click on the map where the orange tile goes…	Nhấp lên bản đồ nơi đặt ô màu cam…
+Place the map here	Đặt bản đồ tại đây
+Then click on the map: the middle of the orange tile goes there	Rồi nhấp lên bản đồ: tâm ô màu cam sẽ đặt ở đó
+At the view's middle	Ở giữa khung nhìn
+North turned	Hướng bắc xoay
+Orange tile	Ô màu cam
+click the map to fly there in the view	nhấp bản đồ để bay tới đó trong khung nhìn
+1. Find the place.  2. Press "Place the map here" and click on the map: the orange tile (the map's middle) goes there.	1. Tìm nơi.  2. Nhấn "Đặt bản đồ tại đây" rồi nhấp lên bản đồ: ô màu cam (tâm bản đồ) sẽ đặt ở đó.
+Imagery	Ảnh
+The sharpest here	Nét nhất ở đây
+cm a pixel here	cm một điểm ảnh ở đây
+checking…	đang kiểm tra…
+is sharper here	nét hơn ở đây
+Sharper imagery may be had here with your own free key for Mapbox, MapTiler or Google (Keys below).	Có thể có ảnh nét hơn ở đây với khóa miễn phí của riêng bạn cho Mapbox, MapTiler hoặc Google (Khóa bên dưới).
+Terms of use	Điều khoản sử dụng
+Zoom	Thu phóng
+the finest here	mịn nhất ở đây
+Picture of a tile	Hình của một ô
+every pixel of the source (up to 4096)	mọi điểm ảnh của nguồn (tối đa 4096)
+Loaded at	Đã tải ở
+cm a pixel	cm một điểm ảnh
+Also load terrain heights	Cũng tải độ cao địa hình
+New tiles get imagery by themselves	Ô mới tự có ảnh
+Load for all tiles	Tải cho mọi ô
+For the selected tile	Cho ô đã chọn
+Click a tile with the Tiles tool (7)	Nhấp một ô bằng công cụ Ô (7)
+Terrain heights only	Chỉ độ cao địa hình
+of	trong số
+tiles beside the loaded heights were not loaded: the ground steps at their edge.	ô cạnh độ cao đã tải chưa được tải: mặt đất bị bậc ở mép chúng.
+Fit their edges	Khớp mép
+Their edge takes the loaded heights, fading out 60 m into the tile	Mép của chúng lấy độ cao đã tải, mờ dần trong 60 m vào ô
+Leave them	Để nguyên
+Terrain heights	Độ cao địa hình
+Relative: the orange tile's mean height is 0 m	Tương đối: độ cao trung bình của ô màu cam là 0 m
+Raise everything by	Nâng mọi thứ thêm
+Taken off:	Đã trừ:
+Measure again	Đo lại
+Terrain data attribution	Ghi công dữ liệu địa hình
+Overlay on the ground	Lớp phủ trên mặt đất
+Put the imagery into maps exported for sharing (check its licence first)	Đưa ảnh vào bản đồ xuất để chia sẻ (hãy kiểm tra giấy phép trước)
+Fit tile edges	Khớp mép ô
+Keys for more sources (optional)	Khóa cho thêm nguồn (tùy chọn)
+Everything works without a key. With your own free key these may be sharper in some places; the key stays on this computer.	Mọi thứ chạy không cần khóa. Với khóa miễn phí của riêng bạn, một số nơi có thể nét hơn; khóa chỉ lưu trên máy này.
+Google satellite (needs your API key)	Vệ tinh Google (cần khóa API của bạn)
+get a key	lấy khóa
+In Google Cloud: make a project, enable the Map Tiles API, create an API key, paste it here. Google bills by use above its free amount.	Trong Google Cloud: tạo dự án, bật Map Tiles API, tạo khóa API, dán vào đây. Google tính phí theo mức dùng vượt phần miễn phí.
+key	khóa
+Your own tile server	Máy chủ ô của riêng bạn
+URL	URL
+Attribution	Ghi công
+Finest zoom	Thu phóng mịn nhất
+Kind	Loại
+XYZ / WMTS tiles	Ô XYZ / WMTS
+Terrarium heights	Độ cao Terrarium
+{z} {x} {y} are filled in; a WMS gets {bbox} (EPSG:3857) and {width} {height}; {key} is your key.	{z} {x} {y} được điền; WMS nhận {bbox} (EPSG:3857) và {width} {height}; {key} là khóa của bạn.
+Add	Thêm
+Own pictures	Hình riêng
+A scan, a screenshot, an old plan: laid on tiles and lined up by eye. No place on the Earth needed.	Bản quét, ảnh chụp màn hình, sơ đồ cũ: đặt lên các ô và căn theo mắt. Không cần vị trí trên Trái Đất.
+Tiles from	Ô từ
+Load image file over these tiles…	Tải tệp hình ảnh lên các ô này…
+Turn left 90°	Xoay trái 90°
+Turn right 90°	Xoay phải 90°
+mirror left-right	lật trái-phải
+mirror top-bottom	lật trên-dưới
+Reset	Đặt lại
+Your own pictures	Hình riêng của bạn
+of these tiles have your own pictures. Replace them with satellite imagery?	trong số các ô này có hình riêng của bạn. Thay bằng ảnh vệ tinh?
+Replace them	Thay chúng
+Keep my pictures	Giữ hình của tôi
+Groups for other maps	Nhóm cho bản đồ khác
+A selection kept under a name, to put down again in any map (a stop with its shelter and signs, a crossing with its lights)	Vùng chọn được giữ dưới một tên, để đặt lại trong bất kỳ bản đồ nào (điểm dừng với mái che và biển, ngã tư với đèn)
+Keep the selection	Giữ vùng chọn
+Group kept	Đã giữ nhóm
+Select what to keep in the view first.	Hãy chọn thứ cần giữ trong khung nhìn trước.
+No groups yet.	Chưa có nhóm.
+thing	thứ
+things	thứ
+Delete the group (to openMapper's bin)	Xóa nhóm (vào bin của openMapper)
+Use	Dùng
+Into the clipboard: Ctrl+V puts it down at the cursor, as often as wanted	Vào clipboard: Ctrl+V đặt nó tại con trỏ, bao nhiêu lần tùy ý
+is in the clipboard: Ctrl+V puts it at the cursor	đang trong clipboard: Ctrl+V đặt nó tại con trỏ
+The map's tiles: 300 m squares. Add more beside them with the Tiles tool.	Các ô của bản đồ: hình vuông 300 m. Thêm ô cạnh chúng bằng công cụ Ô.
+A road	Một con đường
+Roads tool: click where it starts, then where it ends. Click on a road's end to go on from it.	Công cụ Đường: nhấp nơi bắt đầu, rồi nơi kết thúc. Nhấp vào đầu một đường để đi tiếp từ đó.
+A bus stop by the road	Điểm dừng bên đường
+Game logic > Bus stops: put one at the kerb, on the side the doors open. Name it on the right.	Logic trò chơi > Điểm dừng xe buýt: đặt một cái ở lề đường, bên cửa mở. Đặt tên ở bên phải.
+A start point	Một điểm xuất phát
+Game logic > Start points: where your bus appears, on a road, facing the way to drive.	Logic trò chơi > Điểm xuất phát: nơi xe buýt của bạn xuất hiện, trên đường, hướng theo chiều lái.
+A line with a trip	Một tuyến có một chuyến
+Lines window: New line, New trip, then click the stops in order. The way is found along the roads.	Cửa sổ Tuyến: Tuyến mới, Chuyến mới, rồi nhấp các điểm dừng theo thứ tự. Đường đi được tìm dọc theo các con đường.
+A tour with departures	Một lượt có giờ xuất bến
+Lines window > Tours and times: New tour, then Fill from … to … .	Cửa sổ Tuyến > Lượt và giờ: Lượt mới, rồi Điền từ … đến … .
+Buses for the tours	Xe buýt cho các lượt
+A depot the tours take their buses from (Tours: Add a depot, or Traffic and AI).	Một depot mà các lượt lấy xe buýt (Lượt: Thêm depot, hoặc Giao thông và AI).
+Checked	Đã kiểm tra
+Map > Check map: what would go wrong in the game, most of it put right with one click.	Bản đồ > Kiểm tra bản đồ: những gì sẽ hỏng trong trò chơi, phần lớn sửa được bằng một cú nhấp.
+Saved	Đã lưu
+Ctrl+S. Maps are saved into openOMSI's content folder.	Ctrl+S. Bản đồ được lưu vào thư mục nội dung của openOMSI.
+A test drive	Một chuyến lái thử
+F5 saves and starts openOMSI on the map: pick line 1 and drive.	F5 lưu và khởi động openOMSI với bản đồ: chọn tuyến 1 và lái.
+A map you can drive in service:	Một bản đồ có thể lái chạy tuyến:
+Show me	Chỉ cho tôi
+Your stops stand away from the roads: a bus serves a stop within 15 m of its lane.	Các điểm dừng của bạn cách xa đường: xe buýt phục vụ điểm dừng trong 15 m tính từ làn của nó.
+A real place? Put the map on the Earth (Map > Satellite and terrain), then Map > From OpenStreetMap brings its streets, stops, lines and trees.	Một nơi có thật? Hãy đặt bản đồ lên Trái Đất (Bản đồ > Vệ tinh và địa hình), rồi Bản đồ > Từ OpenStreetMap sẽ mang về phố, điểm dừng, tuyến và cây.
+Show this for new maps	Hiện điều này cho bản đồ mới
+The map has no depot file.	Bản đồ chưa có tệp depot.
+Make one from the lines	Tạo từ các tuyến
+The map has no trips yet (Map > Lines and timetable)	Bản đồ chưa có chuyến nào (Bản đồ > Tuyến và bảng giờ)
+Empty one	Tệp trống
+New	Mới
+A new depot file from the map's lines	Tệp depot mới từ các tuyến của bản đồ
+Delete this depot file	Xóa tệp depot này
+The lines need	Các tuyến cần
+Add them	Thêm chúng
+What is there stays as it is	Những gì có sẵn giữ nguyên
+No depot group uses it.	Không nhóm depot nào dùng nó.
+Used by the depot	Được depot dùng
+Use it for every depot	Dùng cho mọi depot
+The AI's depot groups (Vehicle groups tab) take their buses' destinations from it	Các nhóm depot của AI (tab Nhóm xe) lấy điểm đến của xe buýt từ nó
+Rename	Đổi tên
+not a usable name	tên không dùng được
+The destination a bus shows on its way to and from the depot	Điểm đến mà xe buýt hiển thị trên đường tới và từ depot
+Destinations	Điểm đến
+Stops	Điểm dừng
+Routes	Tuyến đường
+nobody gets on	không ai lên xe
+Code	Mã
+another destination has this code	một điểm đến khác có mã này
+As a trip's terminus is named in the timetable: the stop where everybody gets off	Như bến cuối của chuyến được nêu trong bảng giờ: điểm dừng mà mọi người xuống
+Nobody gets on (service trip, empty sign)	Không ai lên xe (chuyến phục vụ, biển trống)
+Delete destination	Xóa điểm đến
+Add destination	Thêm điểm đến
+New destination	Điểm đến mới
+As the timetable names the stop	Như bảng giờ gọi tên điểm dừng
+Delete stop	Xóa điểm dừng
+Add stop	Thêm điểm dừng
+line	tuyến
+What the driver types: the line's number and two digits (7601: line 76, route 01)	Điều tài xế gõ: số tuyến và hai chữ số (7601: tuyến 76, lộ trình 01)
+Line	Đường
+IBIS text	Văn bản IBIS
+Destination	Điểm cuối
+Stops in order	Điểm dừng theo thứ tự
+Not in the Stops list: the displays have no texts for it	Không có trong danh sách Điểm dừng: màn hình không có văn bản cho nó
+Move up	Lên
+Move down	Xuống
+Take out	Bỏ ra
+Add a stop…	Thêm điểm dừng…
+Delete route	Xóa lộ trình
+Add route	Thêm lộ trình
+No routes: the IBIS knows the destinations' codes only. Add them from the lines above.	Chưa có lộ trình: IBIS chỉ biết mã điểm đến. Hãy thêm từ các tuyến ở trên.
+Winter with snow	Mùa đông có tuyết
+Summer (dry)	Mùa hè (khô)
+Jan	Thg 1
+Feb	Thg 2
+Mar	Thg 3
+Apr	Thg 4
+May	Thg 5
+Jun	Thg 6
+Jul	Thg 7
+Aug	Thg 8
+Sep	Thg 9
+Oct	Thg 10
+Nov	Thg 11
+Dec	Thg 12
+Map settings	Cài đặt bản đồ
+Money	Tiền
+Tickets	Vé
+none: the map has no depot group (Traffic and AI)	không: bản đồ chưa có nhóm depot (Giao thông và AI)
+Years	Năm
+Year offset	Độ lệch năm
+Added to today's year when the game starts at the real date (Berlin-Spandau: -25 for the 1980s)	Cộng vào năm hiện tại khi trò chơi bắt đầu theo ngày thật (Berlin-Spandau: -25 cho thập niên 1980)
+Repair time	Thời gian sửa chữa
+ min	 phút
+Rail	Đường sắt
+real rail (trams and trains follow their tracks' switches)	ray thật (tàu điện và tàu hỏa theo ghi của ray)
+Helper	Phụ trợ
+dynamic helper active (the original editor's map option, kept as it is)	phụ trợ động đang bật (tùy chọn bản đồ của trình sửa gốc, giữ nguyên)
+Seasons	Mùa
+Summer where none is set. The days count from 1 January.	Mùa hè nếu không đặt. Ngày đếm từ 1 tháng Một.
+Add a season	Thêm mùa
+A season ends before it starts	Một mùa kết thúc trước khi bắt đầu
+Nothing selected	Chưa chọn gì
+Paste here	Dán tại đây
+Cut the road here	Cắt đường tại đây
+Select all like it	Chọn tất cả cái giống nó
+Keep for other maps…	Giữ cho bản đồ khác…
+Its ground, painting, water, objects and roads, put beside or into this map. Lines, timetable and AI lists stay with the other map.	Mặt đất, sơn, nước, đối tượng và đường của nó, đặt cạnh hoặc vào bản đồ này. Tuyến, bảng giờ và danh sách AI ở lại bản đồ kia.
+Choose a map…	Chọn bản đồ…
+Other…	Khác…
+A map to take tiles from (its global.cfg)	Bản đồ để lấy ô (global.cfg của nó)
+Grey: this map · orange: the tiles to add (click to take one or leave it) · red: on a tile of this map, left out	Xám: bản đồ này · cam: ô sẽ thêm (nhấp để lấy hoặc bỏ) · đỏ: trên ô của bản đồ này, bị bỏ qua
+Move:	Dời:
+west	tây
+east	đông
+north	bắc
+south	nam
+Raise it by	Nâng lên
+Its ground, water, roads and objects at a height of their own	Mặt đất, nước, đường và đối tượng của nó ở độ cao riêng
+Ease the ground where the maps meet	Làm êm mặt đất nơi các bản đồ gặp nhau
+Added	Đã thêm
+tiles from the other map	ô từ bản đồ kia
+Cube	Khối lập phương
+Plane	Mặt phẳng
+Circle	Hình tròn
+Triangle	Hình tam giác
+Triangular prism	Lăng trụ tam giác
+Wedge	Nêm
+Corner wedge	Nêm góc
+Pyramid	Kim tự tháp
+Sphere	Hình cầu
+Icosphere	Icosphere
+Cylinder	Hình trụ
+Cone	Hình nón
+Torus	Torus
+Tube	Ống
+Capsule	Viên nang
+Stairs	Cầu thang
+Arch	Vòm
+Make one and put it on the map with a click (each one can then be edited, scaled, cut and joined)	Tạo một hình và đặt lên bản đồ bằng một cú nhấp (sau đó mỗi hình có thể sửa, đổi cỡ, cắt và gộp)
+Array	Mảng
+Mirror	Đối xứng
+Solidify	Tạo độ dày
+Subdivision surface	Bề mặt chia nhỏ
+Decimate	Giảm mặt
+Triangulate	Tam giác hóa
+Displace	Dịch chuyển
+Wireframe	Khung dây
+Screw	Xoắn ốc
+Simple deform	Biến dạng đơn giản
+Cast	Cast
+Weld	Hàn
+Edge split	Tách cạnh
+Boolean	Boolean
+Follow the ground	Theo mặt đất
+Count	Số lượng
+Relative	Tương đối
+Offset	Độ lệch
+Merge touching ends	Gộp các đầu chạm nhau
+Distance	Khoảng cách
+Cut away the other side first	Cắt bỏ phía bên kia trước
+Weld at the mirror	Hàn tại gương
+Thickness	Độ dày
+Close the rim	Đóng mép
+Width	Chiều rộng
+Segments	Số đoạn
+Levels	Mức
+Smooth (Catmull-Clark)	Mịn (Catmull-Clark)
+Factor	Hệ số
+Repeat	Lặp lại
+Seed	Seed
+Along the normals	Theo pháp tuyến
+Steps	Bước
+Axis	Trục
+Twist	Xoắn
+Bend	Uốn
+Taper	Thu hẹp
+Stretch	Kéo giãn
+Amount	Lượng
+Box	Hộp
+Difference	Hiệu
+With the part	Với phần
+Tip: hide the cutting part (its eye in the list) so only the cut shows	Mẹo: ẩn phần cắt (con mắt trong danh sách) để chỉ thấy phần đã cắt
+Above the ground	Trên mặt đất
+Every vertex follows the terrain under it (in the editor's view and the written files at the place it stands)	Mỗi đỉnh theo địa hình bên dưới (trong khung nhìn của trình sửa và trong tệp ghi tại nơi nó đứng)
+Mesh (openMapper object)	Lưới (đối tượng openMapper)
+Shared by	Dùng chung bởi
+objects on the map: changes apply to all	đối tượng trên bản đồ: thay đổi áp dụng cho tất cả
+Make this one single	Làm riêng cái này
+Leave the edit mode (Tab)	Thoát chế độ sửa (Tab)
+Edit the mesh (Tab)	Sửa lưới (Tab)
+Write it as OBJ, glTF / GLB, FBX, Collada, USD, STL, PLY, 3MF, OFF, X or O3D	Ghi thành OBJ, glTF / GLB, FBX, Collada, USD, STL, PLY, 3MF, OFF, X hoặc O3D
+Off: its height is kept above the ground under it	Tắt: độ cao của nó so với mặt đất bên dưới được giữ
+Solid (collides)	Đặc (va chạm)
+The part edited and given modifiers	Phần được sửa và gán modifier
+Shown (and written into the object)	Hiển thị (và ghi vào đối tượng)
+faces	mặt
+Duplicate the part	Nhân đôi phần
+Delete the part	Xóa phần
+Add a shape as a part	Thêm một hình làm phần
+Separate parts into objects	Tách các phần thành đối tượng
+Each part becomes an object of its own, standing where it stood	Mỗi phần thành một đối tượng riêng, đứng ở chỗ cũ
+Shape	Hình
+Modifiers	Modifier
+Make it part of the mesh	Biến thành một phần của lưới
+Add a modifier	Thêm modifier
+Materials	Vật liệu
+Colour (multiplies the texture)	Màu (nhân với texture)
+Assign to selected faces	Gán cho các mặt đã chọn
+Choose…	Chọn…
+No texture	Không texture
+Save as…	Lưu thành…
+PNG, JPEG, BMP, TGA, TIFF, WebP or DDS	PNG, JPEG, BMP, TGA, TIFF, WebP hoặc DDS
+Transparency	Độ trong suốt
+Opaque	Đục
+Cut out	Cắt khuyết
+Blended	Pha trộn
+Glows	Phát sáng
+Light of its own: black for none	Ánh sáng riêng: đen là không có
+Shine	Độ bóng
+Normal map	Normal map
+ORM map	ORM map
+Night texture	Texture ban đêm
+Light map	Bản đồ ánh sáng
+Remove the material	Xóa vật liệu
+Add a material	Thêm vật liệu
+Import materials…	Nhập vật liệu…
+From an .mtl, a glTF / GLB / FBX, or the pictures of one PBR material (base colour, normal, roughness, metal, AO...)	Từ tệp .mtl, glTF / GLB / FBX, hoặc các hình của một vật liệu PBR (màu cơ bản, normal, roughness, metal, AO...)
+Lamps	Đèn
+Glow	Quầng sáng
+Light on the ground	Ánh sáng trên mặt đất
+Colour	Màu sắc
+Reach	Tầm
+On	Bật
+Always	Luôn luôn
+At night	Ban đêm
+variable	biến đổi
+Seen from one side	Nhìn thấy từ một phía
+Star	Ngôi sao
+Facing	Hướng
+Remove the lamp	Xóa đèn
+Add a glow	Thêm quầng sáng
+A lamp's bulb, a lit sign: a glow seen at night	Bóng đèn, biển sáng: quầng sáng thấy ban đêm
+Add light on the ground	Thêm ánh sáng trên mặt đất
+The pool of light a street lamp throws at night	Vùng sáng mà đèn đường rọi xuống ban đêm
+Signal head, lamps	Đèn tín hiệu, đèn
+Put it within 40 m of a crossing with a light program: it takes its light from it (or link it in its properties)	Đặt trong 40 m quanh ngã tư có chương trình đèn: nó lấy ánh sáng từ đó (hoặc liên kết trong thuộc tính)
+Bake	Bake
+Its textures and colours painted into one picture on a new UV map (one material: fewer draws in the game), with its own shadows and its lamps' night light if chosen	Texture và màu của nó được vẽ vào một hình trên UV map mới (một vật liệu: ít lệnh vẽ hơn trong trò chơi), cùng bóng riêng và ánh sáng ban đêm của đèn nếu chọn
+Ambient occlusion	Đổ bóng môi trường
+How far its shadows reach	Bóng của nó với tới đâu
+Lamps' light at night (light map)	Ánh sáng đèn ban đêm (bản đồ ánh sáng)
+The object's last change (Ctrl+Z in the edit mode)	Thay đổi cuối của đối tượng (Ctrl+Z trong chế độ sửa)
+Divisions X	Chia X
+Divisions Y	Chia Y
+Rings	Vòng
+Subdivisions	Chia nhỏ
+Bottom radius	Bán kính đáy
+Top radius	Bán kính đỉnh
+Tube radius	Bán kính ống
+Tube segments	Số đoạn ống
+Outer radius	Bán kính ngoài
+Inner radius	Bán kính trong
+Opening	Độ mở
+Wall	Tường
+Mesh	Lưới
+A copy of this object's type of its own is made for it, with its meshes, materials and lamps to edit; the original stays as it is	Một bản sao riêng của loại đối tượng này được tạo cho nó, với lưới, vật liệu và đèn để sửa; bản gốc giữ nguyên
+As a mesh	Thành lưới
+Copy as an object	Sao chép thành đối tượng
+An openMapper object of its shape beside it, to edit as a mesh (vertices, edges, faces)	Một đối tượng openMapper có hình dạng đó đặt cạnh nó, để sửa như lưới (đỉnh, cạnh, mặt)
+The same, the spline taken away (its lanes go with it)	Như vậy, spline bị bỏ (làn của nó đi theo)
+Splines as a mesh	Spline thành lưới
+Copy as one object	Sao chép thành một đối tượng
+Replace by one object	Thay bằng một đối tượng
+Export the selection…	Xuất vùng chọn…
+As meshes	Thành lưới
+Join into one object (Ctrl+J)	Gộp thành một đối tượng (Ctrl+J)
+All their parts in the one shown in the properties, the others gone	Mọi phần của chúng vào đối tượng hiển thị trong thuộc tính, các đối tượng khác bị bỏ
+Solid modelling (CSG): the object shown in the properties with the others	Mô hình đặc (CSG): đối tượng hiển thị trong thuộc tính với các đối tượng khác
+Keep the cutting objects	Giữ các đối tượng cắt
+Vertices	Đỉnh
+Edges	Cạnh
+Faces	Mặt
+vertices	đỉnh
+edges	cạnh
+Selected	Đã chọn
+X-ray: pick through the mesh	X-ray: chọn xuyên qua lưới
+All (A)	Tất cả (A)
+None (Alt+A)	Không (Alt+A)
+Invert (Ctrl+I)	Đảo (Ctrl+I)
+Linked (Ctrl+L)	Liên kết (Ctrl+L)
+More	Thêm
+Less	Ít hơn
+Click, Shift + click to add, drag on nothing for a box, a second click or Alt + click for a loop	Nhấp, Shift + nhấp để thêm, kéo trên chỗ trống để chọn khung, nhấp lần hai hoặc Alt + nhấp để chọn vòng
+Change	Thay đổi
+Extrude (E)	Đùn (E)
+Inset (I)	Thụt vào (I)
+Bevel (Ctrl+B)	Vát cạnh (Ctrl+B)
+Loop cut (Ctrl+R)	Cắt vòng (Ctrl+R)
+Point at an edge and press Ctrl+R	Chỉ vào một cạnh và nhấn Ctrl+R
+Subdivide	Chia nhỏ
+Fill (F)	Lấp đầy (F)
+Bridge loops	Nối vòng
+Connect (J)	Kết nối (J)
+Poke	Poke
+Duplicate (Shift+D)	Nhân đôi (Shift+D)
+Split (Y)	Tách (Y)
+Separate into an object (P)	Tách thành đối tượng (P)
+Spin 360°	Xoay tròn 360°
+The selection turned round the object's up axis through its middle, in 12 steps	Vùng chọn xoay quanh trục đứng của đối tượng qua tâm của nó, trong 12 bước
+Smooth vertices	Làm mịn đỉnh
+Merge (M)	Gộp (M)
+At the middle	Ở giữa
+At the first	Ở đỉnh đầu
+At the last	Ở đỉnh cuối
+Collapse each piece	Co từng phần
+By distance (1 mm)	Theo khoảng cách (1 mm)
+Delete (X)	Xóa (X)
+Only faces	Chỉ mặt
+Dissolve vertices	Hòa tan đỉnh
+Dissolve edges	Hòa tan cạnh
+Dissolve faces	Hòa tan mặt
+Triangulate (Ctrl+T)	Tam giác hóa (Ctrl+T)
+Triangles to quads (Alt+J)	Tam giác thành tứ giác (Alt+J)
+Shade smooth	Đổ bóng mịn
+Shade flat	Đổ bóng phẳng
+Flip normals (Alt+N)	Lật pháp tuyến (Alt+N)
+Normals outward (Shift+N)	Pháp tuyến hướng ra ngoài (Shift+N)
+Mark seam	Đánh dấu đường may
+Clear seam	Xóa đường may
+Mark sharp	Đánh dấu cạnh sắc
+Clear sharp	Xóa cạnh sắc
+Adjust the last operation	Chỉnh thao tác cuối
+Slide	Trượt
+Cuts	Số lát cắt
+UV map	UV map
+Unwrap	Trải phẳng
+By seams (conformal)	Theo đường may (conformal)
+Smart project	Chiếu thông minh
+Cube projection (metres)	Chiếu hộp (mét)
+Cylinder projection	Chiếu trụ
+Sphere projection	Chiếu cầu
+Project from the view	Chiếu từ khung nhìn
+Lightmap pack	Lightmap pack
+Close the UV editor	Đóng trình sửa UV
+UV editor	Trình sửa UV
+Faces of the selection (all, with none selected); mark seams on edges first for an unwrap by seams	Các mặt của vùng chọn (tất cả nếu không chọn gì); hãy đánh dấu đường may trên cạnh trước khi trải theo đường may
+Material of the selected faces	Vật liệu của các mặt đã chọn
+With lamps	Có đèn
+Street lamp	Đèn đường
+A pole with a lamp that glows and lights the ground at night	Một cột có đèn phát sáng và chiếu sáng mặt đất ban đêm
+Signal head	Đèn tín hiệu
+A traffic light of the lamps below that a crossing's light program drives	Đèn giao thông gồm các đèn dưới đây, do chương trình đèn của ngã tư điều khiển
+Lamps:	Đèn:
+Picture, light, sound	Hình, ánh sáng, âm thanh
+Picture / pattern…	Hình / mẫu…
+Choose a picture or a texture: it becomes an object you place, move, turn and scale like any other. Several repeats make a pattern	Chọn một hình hoặc texture: nó trở thành đối tượng để đặt, di chuyển, xoay và đổi cỡ như mọi đối tượng. Lặp nhiều lần tạo thành mẫu
+Light source	Nguồn sáng
+A lamp that glows and lights the ground round it	Một đèn phát sáng và chiếu sáng mặt đất xung quanh
+Sound source…	Nguồn âm…
+Choose a sound file (.wav): it plays where you put the marker, as far as the radius carries; the marker shows in the editor only	Chọn tệp âm thanh (.wav): nó phát tại chỗ bạn đặt dấu, xa tới bán kính; dấu chỉ hiện trong trình sửa
+Picture width, m	Chiều rộng hình, m
+Repeats	Lặp
+on the ground	trên mặt đất
+standing	đứng
+Light colour	Màu ánh sáng
+Light reach, m	Tầm sáng, m
+at night	ban đêm
+always	luôn luôn
+Sound reach, m	Tầm âm thanh, m
+Sound volume	Âm lượng
+Overview: click or drag to move there · double-click: larger / smaller · M: hide	Tổng quan: nhấp hoặc kéo để di chuyển tới đó · nhấp đúp: lớn hơn / nhỏ hơn · M: ẩn
+Name:	Tên:
+My town	Thị trấn của tôi
+Description:	Mô tả:
+What the map is, for the game's map list	Bản đồ là gì, cho danh sách bản đồ của trò chơi
+Size:	Kích thước:
+Ground height:	Độ cao mặt đất:
+ m above sea level	 m trên mực nước biển
+Traffic:	Giao thông:
+keeps right	đi bên phải
+keeps left	đi bên trái
+Busy:	Đông đúc:
+cars	xe
+passengers	Hành khách
+Years:	Năm:
+year offset	độ lệch năm
+Added to today's year when the game starts at the real date	Cộng vào năm hiện tại khi trò chơi bắt đầu theo ngày thật
+Money:	Tiền:
+Tickets:	Vé:
+Seasons:	Mùa:
+four, snowy winter	bốn mùa, đông có tuyết
+mild winter	đông ôn hòa
+summer only	chỉ mùa hè
+Rail:	Đường sắt:
+trams and trains follow their tracks' switches	tàu điện và tàu hỏa theo ghi của ray
+Ground texture (all tiles):	Texture mặt đất (mọi ô):
+template	mẫu
+More ground layers are painted later (Paint tool); the map's settings can all be changed in Map > Map settings.	Các lớp mặt đất khác được sơn sau (công cụ Sơn); mọi cài đặt của bản đồ có thể đổi trong Bản đồ > Cài đặt bản đồ.
+Create	Tạo
+as the template	như mẫu
+ways	đường
+bus routes downloaded	tuyến xe buýt đã tải
+not had:	không có:
+The streets of the map's place built as roads with junctions where they meet, its bus stops, lines, trees and woods. Best on tiles with no roads yet: roads lying on ones the map has are left out.	Phố của nơi đặt bản đồ được xây thành đường với nút giao nơi chúng gặp nhau, cùng điểm dừng xe buýt, tuyến, cây và rừng. Tốt nhất trên ô chưa có đường: đường nằm trên đường sẵn có của bản đồ sẽ bị bỏ.
+The map does not lie on the Earth yet: place it in Satellite and terrain (Map menu, I) first.	Bản đồ chưa nằm trên Trái Đất: hãy đặt nó trong Vệ tinh và địa hình (menu Bản đồ, I) trước.
+Load the terrain heights first (Satellite and terrain): the roads follow the ground as it is when they are built.	Hãy tải độ cao địa hình trước (Vệ tinh và địa hình): đường theo mặt đất như lúc xây.
+Download for the map's tiles	Tải về cho các ô của bản đồ
+bus routes	tuyến xe buýt
+trees	cây
+buildings	tòa nhà
+water	nước
+Downloading…	Đang tải về…
+no type chosen	chưa chọn loại
+Use the chosen	Dùng cái đã chọn
+One-way roads	Đường một chiều
+Each carriageway of a dual road and one-way streets: with a one-way road type they lie side by side as they should; with none chosen they get their kind's	Mỗi làn của đường đôi và phố một chiều: với loại đường một chiều chúng nằm cạnh nhau đúng cách; nếu không chọn thì dùng loại theo kiểu của chúng
+as their kind	theo kiểu của chúng
+no stop object	không có đối tượng điểm dừng
+The stop chosen in Game logic > Bus stops	Điểm dừng chọn trong Logic trò chơi > Điểm dừng xe buýt
+Bus lines	Tuyến xe buýt
+Each bus route through two or more of the map's stops a trip of its line, the way found along the roads; a tour from 06:00 to 22:00 for each new line	Mỗi lộ trình xe buýt qua hai điểm dừng trở lên của bản đồ thành một chuyến của tuyến, đường đi tìm dọc các con đường; mỗi tuyến mới có một lượt từ 06:00 đến 22:00
+Trees and woods	Cây và rừng
+Single trees, rows of them and woods, planted with the plant mix (Objects tool > Plant brush) or the tree chosen; none on a road	Cây lẻ, hàng cây và rừng, trồng bằng hỗn hợp cây (công cụ Đối tượng > Cọ trồng cây) hoặc cây đã chọn; không trồng trên đường
+no plants chosen	chưa chọn cây
+kinds of plants	loại cây
+apart in woods	cách nhau trong rừng
+Buildings	Tòa nhà
+Each outline filled with the model of the folder chosen whose ground plan comes nearest, its front to the nearest road; an outline no model fits is left out	Mỗi đường viền được lấp bằng mô hình trong thư mục đã chọn có mặt bằng gần nhất, mặt trước hướng ra đường gần nhất; đường viền không mô hình nào vừa sẽ bị bỏ
+no folder	không thư mục
++ its folder	+ thư mục của nó
+Add the folder of the object chosen in the catalogue (Buildings_MC, …)	Thêm thư mục của đối tượng chọn trong danh mục (Buildings_MC, …)
+Lakes and rivers: the ground inside them lowered below the banks, and the tiles they lie on given water a little under the banks' height (OMSI's water is one level for a tile: low ground elsewhere on it is flooded too)	Hồ và sông: mặt đất bên trong hạ thấp dưới bờ, và các ô chứa chúng có nước thấp hơn độ cao bờ một chút (nước của OMSI là một mực cho cả ô: chỗ thấp khác trên ô cũng bị ngập)
+deep	sâu
+a road type (Roads tool), then "Use the chosen"	một loại đường (công cụ Đường), rồi "Dùng cái đã chọn"
+a stop (Game logic > Bus stops), then "Use the chosen"	một điểm dừng (Logic trò chơi > Điểm dừng xe buýt), rồi "Dùng cái đã chọn"
+a tree in the Objects catalogue (or a plant mix)	một cây trong danh mục Đối tượng (hoặc hỗn hợp cây)
+a building in the catalogue, then "+ its folder"	một tòa nhà trong danh mục, rồi "+ thư mục của nó"
+To build, choose (or untick):	Để xây, hãy chọn (hoặc bỏ chọn):
+A one-way street is built the way it runs in OpenStreetMap: give it a one-way road type	Phố một chiều được xây theo chiều chạy trong OpenStreetMap: hãy cho nó loại đường một chiều
+Build	Xây
+Name, file or IDCode	Tên, tệp hoặc IDCode
+things on the map	thứ trên bản đồ
+Groups	Nhóm
+Select the group and go there	Chọn nhóm và đến đó
+Select everything in it	Chọn mọi thứ trong đó
+Select it and go there	Chọn nó và đến đó
+more: narrow the search	thêm: hãy thu hẹp tìm kiếm
+Select all of them	Chọn tất cả
+Go to the first	Đến cái đầu tiên
+Pick a tree in the catalogue, then paint	Chọn một cây trong danh mục, rồi sơn
+Pick a tree in the catalogue, then click round the area	Chọn một cây trong danh mục, rồi nhấp quanh vùng
+Pick a road type, click the centre, then the ring	Chọn loại đường, nhấp tâm, rồi vòng
+Select a road (double-click: all of it): its properties show its height profile	Chọn một đường (nhấp đúp: toàn bộ): thuộc tính hiện biên dạng độ cao
+Select one of openMapper's junctions: its properties have Traffic lights and crossings	Chọn một nút giao của openMapper: thuộc tính có Đèn giao thông và vạch qua đường
+Select the signal head (or a display): Linked objects in its properties, then click its crossing	Chọn đèn tín hiệu (hoặc màn hình): Đối tượng liên kết trong thuộc tính, rồi nhấp ngã tư của nó
+Select a road, pick an object in the Objects catalogue: Objects along the road in its properties	Chọn một đường, chọn đối tượng trong danh mục Đối tượng: Đối tượng dọc đường trong thuộc tính
+Select a track (double-click: all of it): Overhead wire under Parallel copy in its properties	Chọn một ray (nhấp đúp: toàn bộ): Dây điện trên cao trong Bản sao song song ở thuộc tính
+Select a road or a chain: Parallel copy in its properties	Chọn một đường hoặc chuỗi: Bản sao song song trong thuộc tính
+Select a road (double-click: all of it): Paint the ground along it in its properties	Chọn một đường (nhấp đúp: toàn bộ): Sơn mặt đất dọc theo nó trong thuộc tính
+Click a tile: its water is in the panel; lower the ground under it with the Terrain tool	Nhấp một ô: nước của nó ở bảng; hạ mặt đất bên dưới bằng công cụ Địa hình
+Height map: at the end of the Terrain panel	Bản đồ độ cao: ở cuối bảng Địa hình
+By slope and height: at the end of the Paint panel	Theo độ dốc và độ cao: ở cuối bảng Sơn
+View menu: Time of day, Season	Menu Xem: Giờ trong ngày, Mùa
+What do you want to do?	Bạn muốn làm gì?
+Groups…	Nhóm…
+Objects on the map by folder	Đối tượng trên bản đồ theo thư mục
+Knife: cut roads	Dao: cắt đường
+Test drive in OMSI 2 (the original)	Lái thử trong OMSI 2 (bản gốc)
+Overview map	Bản đồ tổng quan
+Place a bus stop	Đặt điểm dừng xe buýt
+Place a start point	Đặt điểm xuất phát
+Plant trees with a brush	Trồng cây bằng cọ
+Plant a wood or a park	Trồng rừng hoặc công viên
+Roundabout	Vòng xuyến
+Height profile of a road	Biên dạng độ cao của đường
+Traffic lights and zebra crossings	Đèn giao thông và vạch qua đường
+Link a signal head to its crossing	Liên kết đèn tín hiệu với ngã tư
+Objects along a road	Đối tượng dọc đường
+Overhead wire along a track	Dây điện trên cao dọc ray
+Parallel copy of a road	Bản sao song song của đường
+Paint the ground along a road	Sơn mặt đất dọc theo đường
+Water, lake, river	Nước, hồ, sông
+Ramp in the ground	Dốc nghiêng trên mặt đất
+Height map import or export	Nhập hoặc xuất bản đồ độ cao
+Time of day and season	Giờ trong ngày và mùa
+PBR material	Vật liệu PBR
+none	không
+Own picture…	Hình riêng…
+Choose a texture of the object, or a picture of your own.	Chọn một texture của đối tượng, hoặc hình của riêng bạn.
+Normals (_nn)	Normal (_nn)
+Roughness	Roughness
+Shadow in hollows	Bóng trong chỗ lõm
+Bumps	Độ gồ ghề
+Only big shapes	Chỉ hình khối lớn
+Dark parts stand out (not sink in)	Phần tối nổi lên (không lõm xuống)
+Bright parts smoother	Phần sáng mịn hơn
+Metal	Kim loại
+Back to the defaults	Về mặc định
+This texture has PBR maps of its own already: new ones made here are taken instead of them.	Texture này đã có bản đồ PBR riêng: bản đồ mới tạo ở đây sẽ được dùng thay chúng.
+Written as:	Đã ghi thành:
+PBR maps made	Đã tạo bản đồ PBR
+Delete the PBR material	Xóa vật liệu PBR
+PBR maps taken away	Đã gỡ bản đồ PBR
+Height profile	Biên dạng độ cao
+over the ground	trên mặt đất
+Click: go there in the view · drag a dot (a joint) up or down: its height	Nhấp: đến đó trong khung nhìn · kéo một chấm (khớp) lên hoặc xuống: độ cao của nó
+Climbs, falls	Lên dốc, xuống dốc
+Steepest	Dốc nhất
+at	tại
+Highest over the ground	Cao nhất trên mặt đất
+Deepest under it	Sâu nhất dưới nó
+Over 8 % is steep for a bus; over 12 % few streets go	Trên 8 % là dốc với xe buýt; trên 12 % ít đường nào có
+roadway	lòng đường
+Road types	Loại đường
+Make a new road type…	Tạo loại đường mới…
+My road	Đường của tôi
+ · own	 · của riêng
+Create the road type	Tạo loại đường
+Road type made: the Roads tool builds with it	Đã tạo loại đường: công cụ Đường xây bằng nó
+Change it in the road maker	Đổi trong trình tạo đường
+Its junctions	Nút giao của nó
+Make a junction where it meets another road (else they only cross)	Tạo nút giao nơi nó gặp đường khác (nếu không chúng chỉ cắt nhau)
+Corners	Góc
+× rounder	× tròn hơn
+Traffic lights by themselves	Tự có đèn giao thông
+Zebra crossings on every arm	Vạch qua đường ở mọi nhánh
+Used for the junctions made from now on (where several road types meet, the one asking more wins). A junction already made keeps its own settings: select it to change them.	Dùng cho nút giao tạo từ giờ (nơi nhiều loại đường gặp nhau, loại đòi hỏi nhiều hơn thắng). Nút giao đã tạo giữ cài đặt riêng: chọn nó để đổi.
+Pick a road type on the left, or make a new one.	Chọn một loại đường bên trái, hoặc tạo loại mới.
+Road maker	Trình tạo đường
+Lanes	Làn
+(▼ 0: one-way)	(▼ 0: một chiều)
+Lane width	Chiều rộng làn
+Middle strip	Dải giữa
+Footways	Vỉa hè
+Kerb	Lề đường
+Roadway texture	Texture lòng đường
+Footway texture	Texture vỉa hè
+Own…	Riêng…
+The roadway texture is laid once across all its lanes (as OMSI 2's lane textures are painted: pick one with as many lanes); the footway texture's right end is the kerb.	Texture lòng đường được trải một lần qua mọi làn (như texture làn của OMSI 2 được vẽ: chọn cái có đúng số làn); đầu phải của texture vỉa hè là lề đường.
+not on the map	không có trên bản đồ
+Signal routes	Tuyến tín hiệu
+Each railway signal clears when a train wants the track pieces of its route and none stands on them.	Mỗi tín hiệu đường sắt mở khi tàu cần các đoạn ray của tuyến của nó và không có gì đứng trên đó.
+New route for the selected signal	Tuyến mới cho tín hiệu đã chọn
+Select a signal (one object) in the view first	Hãy chọn một tín hiệu (một đối tượng) trong khung nhìn trước
+The selected object does not look like a signal (its name says nothing of one): check it is.	Đối tượng đã chọn trông không giống tín hiệu (tên không nhắc tới): hãy kiểm tra đúng không.
+No routes yet.	Chưa có tuyến.
+pieces	đoạn
+Signal	Tín hiệu
+the selected	cái đã chọn
+Aspect	Hiển thị
+What the signal shows when this route is clear: 1 proceed, 2 proceed slowly (with a speed limit)…	Tín hiệu hiện gì khi tuyến này thông: 1 đi, 2 đi chậm (có giới hạn tốc độ)…
+Distant signal	Tín hiệu báo trước
+Next signal	Tín hiệu kế tiếp
+Speed limit	Giới hạn tốc độ
+OMSI's route kind (the stock maps have 0 and 1)	Loại tuyến của OMSI (bản đồ gốc có 0 và 1)
+Track pieces	Đoạn ray
+Take the selected track	Lấy ray đã chọn
+Every rail path of the selected tracks and switches (double-click a track: all of it); replaces the pieces	Mọi đường ray của các ray và ghi đã chọn (nhấp đúp ray: toàn bộ); thay thế các đoạn
+Select the signal and its pieces in the view	Chọn tín hiệu và các đoạn của nó trong khung nhìn
+Delete the route	Xóa tuyến
+Lines and timetable	Tuyến và bảng giờ
+Edit timetable	Sửa bảng giờ
+No bus stop there: click one of the orange marks	Không có điểm dừng ở đó: nhấp một trong các dấu màu cam
+The roads can't be read without the OMSI 2 folder.	Không đọc được đường nếu thiếu thư mục OMSI 2.
+A line needs at least two bus stops on the map: place them with Game logic > Bus stops, beside a road.	Một tuyến cần ít nhất hai điểm dừng trên bản đồ: đặt bằng Logic trò chơi > Điểm dừng xe buýt, cạnh đường.
+Lines	Tuyến
+No lines yet.	Chưa có tuyến.
+New line	Tuyến mới
+Pick a line on the left, or make a new one.\n\nA line has trips (a way from stop to stop) and tours (one bus's day: which trip it drives when).	Chọn một tuyến bên trái, hoặc tạo tuyến mới.\n\nMột tuyến có các chuyến (đường đi từ điểm dừng này đến điểm dừng khác) và các lượt (một ngày của một xe buýt: khi nào chạy chuyến nào).
+That name is taken or can't be a file name	Tên đã có hoặc không thể làm tên tệp
+A copy of the line with its trips and tours (a variant to change)	Bản sao của tuyến cùng các chuyến và lượt (một biến thể để sửa)
+Delete the line and its trips	Xóa tuyến và các chuyến
+Players can drive it	Người chơi có thể lái
+Trips	Chuyến
+Tours and times	Lượt và giờ
+A tour is one bus's day: the trips it drives, one after the other, and when each leaves.	Một lượt là một ngày của một xe buýt: các chuyến nó chạy nối tiếp nhau, và khi nào mỗi chuyến rời bến.
+A trip is one way along the line: its stops in order. Most lines have two, there and back.	Một chuyến là một chiều dọc tuyến: các điểm dừng theo thứ tự. Phần lớn tuyến có hai chuyến, đi và về.
+New trip	Chuyến mới
+Make the way back	Tạo chiều về
+A new trip with the same stops the other way round	Chuyến mới có cùng điểm dừng theo chiều ngược lại
+Trip	Chuyến
+Delete the trip	Xóa chuyến
+Destination sign	Biển điểm đến
+This trip runs on a track of its own (a train): its stops are kept as they are.	Chuyến này chạy trên đường ray riêng (tàu): các điểm dừng được giữ nguyên.
+Show on the map	Hiện trên bản đồ
+No stops yet.	Chưa có điểm dừng.
+Done picking	Xong chọn
+Pick stops on the map	Chọn điểm dừng trên bản đồ
+Click the stops in the view one after the other, in the order the bus calls at them	Nhấp các điểm dừng trong khung nhìn lần lượt, theo thứ tự xe buýt ghé
+Add stop…	Thêm điểm dừng…
+Click stops on the map (they are marked orange)…	Nhấp các điểm dừng trên bản đồ (được đánh dấu màu cam)…
+Add two stops or more: the way between them is found along the roads.	Thêm hai điểm dừng trở lên: đường đi giữa chúng được tìm dọc các con đường.
+Finding the way…	Đang tìm đường đi…
+Route found:	Đã tìm thấy lộ trình:
+km along the roads (blue in the view)	km dọc các con đường (màu xanh trong khung nhìn)
+the way drives a one-way lane against its direction; is a path drawn the wrong way round?	đường đi chạy ngược chiều một làn một chiều; có phải đường đi vẽ ngược không?
+is not on the map	không có trên bản đồ
+no road with car lanes within 15 m	không có đường có làn xe trong 15 m
+No way	Không có đường đi
+the roads are not joined, or run the other way (see View > AI lanes)	các đường chưa nối, hoặc chạy ngược chiều (xem Xem > Làn AI)
+The trip is saved, but its way is not until this is mended	Chuyến đã được lưu, nhưng đường đi chưa cho tới khi sửa xong
+Trip time	Thời gian chuyến
+Guess:	Ước tính:
+From the route's length at the pace of a town bus	Từ độ dài lộ trình theo tốc độ xe buýt nội thị
+Times at the stops	Giờ tại các điểm dừng
+Minutes after the trip leaves. They follow the distance between the stops; fix one to keep the bus to it (it waits there when early).	Số phút sau khi chuyến rời bến. Chúng theo khoảng cách giữa các điểm dừng; cố định một giờ để xe buýt theo đó (đến sớm thì chờ ở đó).
+fixed	cố định
+Spread all by distance	Chia đều theo khoảng cách
+Holidays and school holidays	Ngày lễ và nghỉ học
+On a public holiday only the tours with Holidays ticked run; school holidays pick the tours for school holidays or school days.	Vào ngày lễ công cộng chỉ các lượt đã đánh dấu Ngày lễ chạy; kỳ nghỉ học chọn lượt cho kỳ nghỉ học hoặc ngày đi học.
+Copy to	Sao chép tới
+The same days a year later (feasts that move, like Easter, are to be set by hand)	Cùng các ngày một năm sau (lễ di động như Phục sinh phải đặt thủ công)
+The map has no depot (ailists.cfg): only you drive these tours, no AI buses.	Bản đồ chưa có depot (ailists.cfg): chỉ bạn lái các lượt này, không có xe buýt AI.
+Add a depot with OMSI 2's MAN buses	Thêm depot với xe buýt MAN của OMSI 2
+Its buses run the tours (Map > Traffic and AI shows it)	Xe buýt của nó chạy các lượt (Bản đồ > Giao thông và AI hiển thị)
+Tour	Lượt chạy
+New tour	Lượt mới
+Pick a tour to see its departures.	Chọn một lượt để xem giờ xuất bến.
+Make a trip first.	Hãy tạo một chuyến trước.
+Number	Số
+Buses from	Xe buýt từ
+Delete the tour	Xóa lượt
+Runs on	Chạy vào
+Mo	T2
+Tu	T3
+We	T4
+Th	T5
+Fr	T6
+Sa	T7
+Su	CN
+Every day	Mỗi ngày
+Monday to Friday	Thứ Hai đến thứ Sáu
+Weekends and holidays	Cuối tuần và ngày lễ
+In the school holidays	Trong kỳ nghỉ học
+On school days	Vào ngày đi học
+Next departure	Giờ xuất bến kế tiếp
+The next trip of the line, when the bus is back and has had its break	Chuyến kế tiếp của tuyến, khi xe buýt đã về và nghỉ xong
+Fill from	Điền từ
+break	nghỉ
+Fill	Điền
+Replace the tour's departures: the line's trips one after the other, a break after each	Thay giờ xuất bến của lượt: các chuyến của tuyến nối tiếp nhau, nghỉ sau mỗi chuyến
+No departures yet: add them above.	Chưa có giờ xuất bến: hãy thêm ở trên.
+Delete the departure	Xóa giờ xuất bến
+GPS tracks to trace	Vết GPS để vẽ theo
+A route recorded on a phone or drawn elsewhere (GPX, KML, GeoJSON), shown in the view in magenta to draw roads along, or built into a road at once	Lộ trình ghi trên điện thoại hoặc vẽ nơi khác (GPX, KML, GeoJSON), hiện màu đỏ tươi trong khung nhìn để vẽ đường theo, hoặc xây thành đường ngay
+Place the map on the Earth first (Map > Satellite and terrain)	Hãy đặt bản đồ lên Trái Đất trước (Bản đồ > Vệ tinh và địa hình)
+Load a file…	Tải tệp…
+None loaded	Chưa tải gì
+Forget it	Quên nó
+Build a road along it:	Xây đường theo nó:
+Choose a road type in the Roads tool to build it	Chọn loại đường trong công cụ Đường để xây
+Built as if drawn: corners rounded into arcs, junctions where it meets roads, cut at the map's edge; one undo step	Xây như khi vẽ: góc bo thành cung, nút giao nơi gặp đường, cắt ở mép bản đồ; một bước hoàn tác
+Traffic and AI	Giao thông và AI
+Edit traffic	Sửa giao thông
+Over the day	Trong ngày
+Vehicle groups	Nhóm xe
+Parked cars and people	Xe đỗ và người
+Depot files	Tệp depot
+The AI's vehicles come in groups. A car group drives about on the roads; a depot sends out the buses of the timetable's tours.	Xe của AI theo nhóm. Nhóm xe con chạy quanh trên đường; depot điều xe buýt cho các lượt của bảng giờ.
+(This map's ailists.cfg is in OMSI 2's first format: it is written in the second one when changed.)	(ailists.cfg của bản đồ này theo định dạng đầu tiên của OMSI 2: khi đổi sẽ được ghi theo định dạng thứ hai.)
+is to drive about, but there is no such group.	sẽ chạy quanh, nhưng không có nhóm như vậy.
+Make it with OMSI 2's vehicles	Tạo bằng xe của OMSI 2
+The group of that name from OMSI 2's own maps	Nhóm cùng tên từ các bản đồ của OMSI 2
+New car group	Nhóm xe con mới
+New depot	Depot mới
+Pick a group on the left.	Chọn một nhóm bên trái.
+Delete the group (tours still take their buses from it)	Xóa nhóm (các lượt vẫn lấy xe buýt từ đây)
+Delete the group	Xóa nhóm
+Tours that take their buses from here:	Các lượt lấy xe buýt từ đây:
+Drives about on its own	Tự chạy quanh
+as many:	nhiều bằng:
+Times the traffic over the day	Thời điểm giao thông trong ngày
+A vehicle with more weight comes along more often.	Xe có trọng số lớn hơn xuất hiện thường hơn.
+Add a vehicle…	Thêm xe…
+Depot file (.hof)	Tệp depot (.hof)
+None of its buses has this depot file beside it: they run without their destination signs and fleet data.	Không xe buýt nào của nó có tệp depot này bên cạnh: chúng chạy không có biển điểm đến và dữ liệu đội xe.
+The buses it has: a type of bus and the fleet number and plate of each.	Các xe buýt nó có: loại xe buýt cùng số hiệu và biển số của mỗi xe.
+Take this type out	Bỏ loại này
+number	số
+plate	biển số
+Another bus	Xe buýt khác
+Add a type of bus…	Thêm loại xe buýt…
+The lists can't be read without the OMSI 2 folder.	Không đọc được danh sách nếu thiếu thư mục OMSI 2.
+Parked cars	Xe đang đỗ
+What stands on the car parks (Game logic > Car parks). A car listed more often stands there more often.	Những gì đứng ở bãi đỗ xe (Logic trò chơi > Bãi đỗ xe). Xe được liệt kê nhiều lần thì đứng đó thường hơn.
+Who walks about and waits at the stops.	Ai đi bộ và chờ ở các điểm dừng.
+Drivers	Tài xế
+Who drives the AI's buses.	Ai lái xe buýt của AI.
+How often it is listed (0 takes it out)	Tần suất liệt kê (0 là bỏ ra)
+How busy the map is at each hour: the road traffic, and the passengers at the stops. 1 is normal; the game goes along the line between the points.	Mức đông đúc của bản đồ mỗi giờ: giao thông đường và hành khách ở điểm dừng. 1 là bình thường; trò chơi nội suy giữa các điểm.
+Road traffic	Giao thông đường
+Passengers	Hành khách
+Its own traffic over the day	Giao thông riêng trong ngày
+Without one the group follows the map's road traffic. A curve can be for some days of the week only.	Nếu không có, nhóm theo giao thông đường của bản đồ. Một đường cong có thể chỉ cho một số ngày trong tuần.
+Days:	Ngày:
+Mo–Fr	T2–T6
+Take this curve out	Bỏ đường cong này
+A curve	Một đường cong
+Typical day…	Ngày điển hình…
+Quiet village	Làng yên tĩnh
+Town with rush hours	Thị trấn có giờ cao điểm
+The same all day	Như nhau cả ngày
+No curve: 1 all day.	Không có đường cong: 1 cả ngày.
+Take the point out	Bỏ điểm
+Point	Điểm
+Smart unwrap	Trải thông minh
+Every flat side apart in the picture, no faces on top of one another (all faces if none is selected)	Mỗi mặt phẳng tách riêng trong hình, không mặt nào chồng lên nhau (tất cả mặt nếu không chọn gì)
+Box unwrap	Trải hộp
+The six sides of a box apart in the picture	Sáu mặt của hộp tách riêng trong hình
+Flip ↔	Lật ↔
+Flip ↕	Lật ↕
+Scale ×2	Phóng ×2
+Scale ÷2	Thu ÷2
+Fit	Vừa khít
+Stretched to fill the picture	Kéo giãn lấp đầy hình
+Pack islands	Xếp các đảo
+Average island scale	Tỉ lệ đảo trung bình
+Seams from islands	Đường may từ các đảo
+Click: a face (Shift adds) · drag: move the selected · wheel: zoom · right button: pan	Nhấp: một mặt (Shift để thêm) · kéo: di chuyển phần đã chọn · con lăn: thu phóng · nút phải: kéo
+Could not keep the views	Không giữ được các góc nhìn
+Saved views	Góc nhìn đã lưu
+Places of the map to come back to: Ctrl+1…9 goes to the first nine, Ctrl+Shift+1…9 keeps the view there	Những nơi của bản đồ để quay lại: Ctrl+1…9 đến chín nơi đầu, Ctrl+Shift+1…9 lưu góc nhìn tại đó
+Keep this view	Lưu góc nhìn này
+None yet	Chưa có
+Go	Đi
+Earlier in the list	Lên trước trong danh sách
+Later in the list	Xuống sau trong danh sách
+Take the view now instead	Lấy góc nhìn hiện tại thay vào
+Keep proportions	Giữ tỉ lệ
+Back to its own size	Về cỡ riêng
+Updates	Cập nhật
+This version:	Phiên bản này:
+New version:	Phiên bản mới:
+Install and restart	Cài đặt và khởi động lại
+Not now	Để sau
+What changed	Có gì thay đổi
+Downloading and installing	Đang tải và cài đặt
+Installed version	Phiên bản đã cài
+openMapper restarts when you save the map.	openMapper khởi động lại khi bạn lưu bản đồ.
+Looking for a new version…	Đang tìm phiên bản mới…
+This is the newest version.	Đây là phiên bản mới nhất.
+Download it from GitHub by hand	Tải từ GitHub thủ công
+When there is a new version:	Khi có phiên bản mới:
+Offer it to me	Đề nghị với tôi
+Install it and restart by itself	Tự cài và khởi động lại
+Never look for updates	Không bao giờ tìm cập nhật
+Check now	Kiểm tra ngay
+Never offer updates again	Không bao giờ đề nghị cập nhật nữa
+The release has no package	Bản phát hành không có gói
+No automatic updates for this system.	Không có cập nhật tự động cho hệ thống này.
+No connection to GitHub: are you online?	Không kết nối được GitHub: bạn có trực tuyến không?
+The release has no SHA256SUMS: not installed.	Bản phát hành không có SHA256SUMS: chưa cài.
+The package is not in SHA256SUMS: not installed.	Gói không có trong SHA256SUMS: chưa cài.
+The download does not match its checksum: not installed.	Tệp tải về không khớp mã kiểm tra: chưa cài.
+Could not replace the program	Không thay được chương trình
+The package has no program in it.	Gói không chứa chương trình.
+openMapper has stopped:	openMapper đã dừng:
+The log with the details:	Nhật ký có chi tiết:

@@ -73,6 +73,7 @@ mod switches;
 mod texts;
 mod timetable;
 mod traffic;
+mod sysfont;
 mod ui;
 mod markdown;
 mod updater;

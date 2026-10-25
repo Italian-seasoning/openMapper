@@ -695,7 +695,7 @@ pub fn rows_section(ui: &mut egui::Ui, ed: &mut Editor, lib: &Library) {
             let new_type = ed.object_type.clone();
             for (r, a) in &rows {
                 let mut b = a.clone();
-                ui.label(RichText::new(name_of(&a.file)).strong());
+                crate::ui::long_label(ui, &name_of(&a.file), egui::TextStyle::Body, Color32::WHITE);
                 egui::Grid::new(("row", *r)).num_columns(2).spacing(Vec2::new(6.0, 4.0)).show(ui, |ui| {
                     prop_row(ui, tr("Every", "Шаг"), |ui| {
                         let mut i = b.interval;
@@ -738,7 +738,7 @@ pub fn rows_section(ui: &mut egui::Ui, ed: &mut Editor, lib: &Library) {
                 });
                 ui.horizontal(|ui| {
                     if let Some(t) = &new_type {
-                        if !t.eq_ignore_ascii_case(&a.file) && ui.button(icons::labelled(Icon::Swap, &format!("{} «{}»", tr("Replace with", "Заменить на"), name_of(t)))).clicked() {
+                        if !t.eq_ignore_ascii_case(&a.file) && ui.button(icons::labelled(Icon::Swap, &format!("{} «{}»", tr("Replace with", "Заменить на"), crate::ui::short(&name_of(t), 24)))).clicked() {
                             b.file = t.clone();
                         }
                     }
@@ -764,7 +764,7 @@ pub fn rows_section(ui: &mut egui::Ui, ed: &mut Editor, lib: &Library) {
         }
         // a new row
         match &ed.object_type {
-            Some(t) => ui.label(format!("{} {}", tr("Object:", "Объект:"), name_of(t))),
+            Some(t) => ui.label(format!("{} {}", tr("Object:", "Объект:"), crate::ui::short(&name_of(t), 40))),
             None => ui.label(RichText::new(tr("Pick an object (a lamp, a tree, a bollard) in the Objects tool's catalogue", "Выберите объект (фонарь, дерево, столбик) в каталоге инструмента «Объекты»")).small().color(TEXT_DIM)),
         };
         let p = &mut ed.row_params;

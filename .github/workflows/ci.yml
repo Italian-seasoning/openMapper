@@ -37,6 +37,13 @@ jobs:
       - uses: Swatinem/rust-cache@v2
       - run: cargo check --release --locked
 
+  translations:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Every interface text has a translation in every language
+        run: python3 tools/i18n/check.py
+
   files:
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest

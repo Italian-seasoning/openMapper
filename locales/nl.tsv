@@ -1,0 +1,2129 @@
+Could not open the map	Kon de kaart niet openen
+The next 100 tiles are loaded, the others are hidden	De volgende 100 tegels zijn geladen, de rest is verborgen
+Find the place in the window and build from it	Zoek de plek in het venster en bouw daarvandaan
+Your map is ready. Start with a road!	Je kaart is klaar. Begin met een weg!
+Export the map for sharing	Kaart exporteren om te delen
+Exported:	Geëxporteerd:
+files	bestanden
+files the map names were not found: the readme lists them	bestanden die de kaart noemt zijn niet gevonden: de readme vermeldt ze
+Could not export	Exporteren mislukt
+A ring road with line 1 on it: save, then try it in openOMSI (F5).	Een ringweg met lijn 1: sla op en probeer het in openOMSI (F5).
+The sample could not be made	Het voorbeeld kon niet worden gemaakt
+In multiplayer the host saves the map. Leave the session to save this as a copy of your own.	Bij multiplayer slaat de host de kaart op. Verlaat de sessie om dit als eigen kopie op te slaan.
+Saved:	Opgeslagen:
+Tip: place a start point (Game logic > Start points) so the bus has somewhere to appear	Tip: plaats een startpunt (Spellogica > Startpunten) zodat de bus ergens kan verschijnen
+Could not save (the changes are still here, nothing is lost)	Opslaan mislukt (de wijzigingen zijn er nog, niets is verloren)
+The unsaved changes are back. Save to keep them.	De niet-opgeslagen wijzigingen zijn terug. Sla op om ze te bewaren.
+Could not restore the changes	Kon de wijzigingen niet herstellen
+openOMSI was not found	openOMSI niet gevonden
+From the start point	Vanaf het startpunt
+The map has no start point: place one with Game logic > Start points	De kaart heeft geen startpunt: plaats er een via Spellogica > Startpunten
+Starting openOMSI…	openOMSI starten…
+To drive the map in OMSI 2 itself it has to be copied into the OMSI 2 folder (Maps, and the objects, roads and textures made for it). Nothing that is there is replaced except earlier copies of this map. Copy it there?	Om de kaart in OMSI 2 zelf te rijden, moet hij naar de OMSI 2-map worden gekopieerd (Maps, plus de objecten, wegen en texturen die ervoor zijn gemaakt). Er wordt niets vervangen behalve eerdere kopieën van deze kaart. Daar naartoe kopiëren?
+Starting OMSI 2: choose the map	OMSI 2 starten: kies de kaart
+The map is copied into the OMSI 2 folder; OMSI 2 itself runs on Windows only:	De kaart is naar de OMSI 2-map gekopieerd; OMSI 2 zelf draait alleen op Windows:
+Could not copy the map into OMSI 2	Kon de kaart niet naar OMSI 2 kopiëren
+Click on the map to place it	Klik op de kaart om te plaatsen
+Open a map (its global.cfg)	Een kaart openen (zijn global.cfg)
+The map is back as it was before that save	De kaart is terug zoals vóór die opslag
+Could not go back	Kon niet terug
+Export a plan of the map	Plattegrond van de kaart exporteren
+Plan saved:	Plattegrond opgeslagen:
+Mods, models and pictures	Mods, modellen en afbeeldingen
+Import assets	Assets importeren
+…or choose a mod folder	…of kies een modmap
+Click on the map to put it there	Klik op de kaart om te plaatsen
+Could not make the shape	Kon de vorm niet maken
+Choose the OMSI 2 folder	Kies de OMSI 2-map
+That is not an OMSI 2 folder (Omsi.exe, maps and Vehicles must be in it)	Dat is geen OMSI 2-map (Omsi.exe, maps en Vehicles moeten erin staan)
+This object has no textures to make PBR maps of	Dit object heeft geen texturen om PBR-maps van te maken
+Could not copy the map	Kon de kaart niet kopiëren
+Could not move the map	Kon de kaart niet verplaatsen
+Terrain flattened; splines laid on it:	Terrein vlakgemaakt; splines gelegd:
+This road type has no textures to make PBR maps of	Dit wegtype heeft geen texturen om PBR-maps van te maken
+Pictures	Afbeeldingen
+Only 100 tiles round the camera are loaded; click on the empty zone to load the next 100	Alleen 100 tegels rond de camera zijn geladen; klik op de lege zone om de volgende 100 te laden
+All tiles are loaded	Alle tegels zijn geladen
+Import the map's thumbnail	De miniatuur van de kaart importeren
+The map's thumbnail is set: openOMSI shows it where maps are chosen.	De miniatuur van de kaart is ingesteld: openOMSI toont hem bij het kiezen van kaarten.
+Could not use the picture	Kon de afbeelding niet gebruiken
+Map camera	Kaartcamera
+The map opens with this view from now on.	De kaart opent voortaan met dit beeld.
+Add ground texture	Grondtextuur toevoegen
+View kept as	Beeld opgeslagen als
+No view kept as	Geen beeld opgeslagen als
+Files changed on disk: the catalogue and models are updated	Bestanden op schijf gewijzigd: catalogus en modellen zijn bijgewerkt
+The track does not run over the map's tiles	Het spoor loopt niet over de tegels van de kaart
+Road along a GPS track	Weg langs een gps-spoor
+Roads built:	Wegen gebouwd:
+junctions:	kruispunten:
+stops:	haltes:
+Lines from OpenStreetMap	Lijnen uit OpenStreetMap
+lines:	lijnen:
+trips found their way:	ritten kregen een route:
+buildings:	gebouwen:
+trees:	bomen:
+Start point	Startpunt
+Start	Start
+a start point	een startpunt
+From OpenStreetMap	Uit OpenStreetMap
+Picture saved:	Afbeelding opgeslagen:
+Could not save the picture	Kon de afbeelding niet opslaan
+The graphics could not be started.	De graphics konden niet worden gestart.
+Flying speed	Vliegsnelheid
+copy	kopie
+Only maps of the content folder can be moved	Alleen kaarten in de contentmap kunnen worden verplaatst
+Only assets of the content folder can be deleted	Alleen assets in de contentmap kunnen worden verwijderd
+Could not write the object	Kon het object niet schrijven
+Select an object to edit its mesh	Selecteer een object om de mesh te bewerken
+A copy of its own was made: the original type is unchanged	Er is een eigen kopie gemaakt: het oorspronkelijke type is ongewijzigd
+Cannot edit this object	Dit object kan niet worden bewerkt
+Point at an edge to cut across its ring of faces	Wijs een rand aan om de ring van vlakken door te snijden
+Objects made:	Objecten gemaakt:
+select the faces to separate	selecteer de vlakken om af te splitsen
+Separated into an object of its own	Afgesplitst tot een eigen object
+Add object	Object toevoegen
+select what to export (objects, roads)	selecteer wat je wilt exporteren (objecten, wegen)
+Export the selection	Selectie exporteren
+unknown format	onbekend formaat
+the models are still loading: try again in a moment	de modellen worden nog geladen: probeer het zo opnieuw
+this material has no texture	dit materiaal heeft geen textuur
+cannot read	kan niet lezen
+Export the texture	Textuur exporteren
+Texture saved:	Textuur opgeslagen:
+Choose a picture	Kies een afbeelding
+give the material a texture first: its maps go beside it	geef het materiaal eerst een textuur: de maps komen ernaast te staan
+Import materials (an .mtl, a model, or the pictures of one PBR material)	Materialen importeren (een .mtl, een model of de afbeeldingen van één PBR-materiaal)
+Materials and pictures	Materialen en afbeeldingen
+no materials found there	geen materialen gevonden
+Materials added:	Materialen toegevoegd:
+nothing to bake	niets om te bakken
+the object has no lamps to bake the night light of	het object heeft geen lampen om het nachtlicht van te bakken
+Baked into	Gebakken in
+select a road or spline first	selecteer eerst een weg of spline
+the road's type is still loading: try again in a moment	het type van de weg wordt nog geladen: probeer het zo opnieuw
+these splines have no shape to see	deze splines hebben geen zichtbare vorm
+Replace by an object	Vervangen door een object
+Made into an object: Tab edits its mesh	Omgezet in een object: Tab bewerkt de mesh
+Signal head made: click where it stands (near a crossing with a light program it links to it)	Seinlicht gemaakt: klik waar het staat (bij een kruising met een regelprogramma koppelt het daaraan)
+Choose a picture or a texture	Kies een afbeelding of textuur
+cannot read the picture	kan de afbeelding niet lezen
+Picture made: click where it goes (it can be moved, turned and scaled after)	Afbeelding gemaakt: klik waar ze komt (daarna te verplaatsen, draaien en schalen)
+Light made: click where it shines	Licht gemaakt: klik waar het schijnt
+Choose a sound	Kies een geluid
+Sounds	Geluiden
+Sound source made: click where it plays	Geluidsbron gemaakt: klik waar hij speelt
+Street lamp made: click where it stands	Straatlantaarn gemaakt: klik waar hij staat
+Paint by slope and height	Verven op helling en hoogte
+By slope and height	Op helling en hoogte
+The chosen layer painted over the whole map where the ground is so steep (and so high)	De gekozen laag over de hele kaart geverfd waar de grond zo steil (en zo hoog) is
+Slope	Helling
+Height	Hoogte
+Fade	Overgang
+Cover	Dekking
+Paint the map	Kaart verven
+Choose a layer above the base ground	Kies een laag boven de basisgrond
+No ground on the map is like that	Zo'n grond is er niet op de kaart
+Painted	Geverfd
+Missing objects	Ontbrekende objecten
+Missing roads and splines	Ontbrekende wegen en splines
+Missing textures	Ontbrekende texturen
+Road ends not joined	Wegeinden niet verbonden
+Links to splines that are gone	Verwijzingen naar verdwenen splines
+Bus stops away from a road	Haltes ver van een weg
+Start points away from a road	Startpunten ver van een weg
+Start points without their object	Startpunten zonder hun object
+No start point	Geen startpunt
+IDCodes used twice	Twee keer gebruikte IDCodes
+Next IDCode too low	Volgende IDCode te laag
+Objects off their tile	Objecten buiten hun tegel
+Tiles without a file	Tegels zonder bestand
+Tiles without ground	Tegels zonder grond
+Trips without a way	Ritten zonder route
+Tours without departures	Omlopen zonder ritten
+Tours without a depot	Omlopen zonder depot
+Traffic groups not in the AI lists	Verkeersgroepen niet in de AI-lijsten
+Stops no trip calls at	Haltes waar geen rit stopt
+Signal routes naming what is gone	Seinroutes met verdwenen onderdelen
+Chrono changes of what is gone	Chrono-wijzigingen van verdwenen onderdelen
+Lamps lighting no ground at night	Lantaarns die 's nachts geen grond verlichten
+Tiles with very many objects	Tegels met zeer veel objecten
+Objects linked to one that is gone	Objecten gekoppeld aan een verdwenen object
+Signal heads linked to no crossing	Seinlichten zonder kruising
+Depot files (destinations)	Depotbestanden (bestemmingen)
+The map uses an object (.sco) that is not installed. The game leaves it out. Install the mod it comes from, or delete the object. A junction of openMapper's whose file is gone (the map was moved without it) is made again for its roads with "Fix".	De kaart gebruikt een object (.sco) dat niet is geïnstalleerd. Het spel laat het weg. Installeer de mod waar het uit komt of verwijder het object. Een kruispunt van openMapper waarvan het bestand weg is (de kaart is zonder verplaatst) wordt met "Herstellen" opnieuw gemaakt voor zijn wegen.
+The map uses a road or spline type (.sli) that is not installed: that road is missing in the game, and buses cannot drive there.	De kaart gebruikt een weg- of splinetype (.sli) dat niet is geïnstalleerd: die weg ontbreekt in het spel en bussen kunnen er niet rijden.
+An object or road names a picture that cannot be found. It will look white or black in the game.	Een object of weg noemt een afbeelding die niet te vinden is. In het spel ziet het er wit of zwart uit.
+Two road ends lie on one another but are not joined. Traffic still finds its way (the game joins lanes by their ends), but rows of lamps and posts and the road's texture do not run on across, and the editor does not treat them as one road. "Join" links them.	Twee wegeinden liggen op elkaar maar zijn niet verbonden. Het verkeer vindt nog steeds zijn weg (het spel verbindt rijstroken via hun uiteinden), maar rijen lantaarns en palen en de textuur van de weg lopen niet door, en de editor ziet ze niet als één weg. "Verbinden" koppelt ze.
+A spline says it goes on into another one that no longer exists. "Fix" forgets that link.	Een spline zegt door te lopen in een andere die niet meer bestaat. "Herstellen" vergeet die koppeling.
+A bus stop belongs to the lane it stands beside (within about 25 m). This one has none near, so buses cannot stop at it. Move it next to the road, or "Fix" puts it at the kerb of the nearest lane (within 80 m).	Een halte hoort bij de rijstrook waarnaast hij staat (binnen ongeveer 25 m). Deze heeft er geen in de buurt, dus bussen kunnen er niet stoppen. Verplaats hem naast de weg, of "Herstellen" zet hem aan de stoeprand van de dichtstbijzijnde rijstrook (binnen 80 m).
+A start point is where the bus appears. This one is away from any lane: fine in a depot yard, otherwise the bus starts off the road.	Een startpunt is waar de bus verschijnt. Deze ligt ver van elke rijstrook: prima op een depotterrein, anders start de bus naast de weg.
+A start point refers to an object that was deleted. "Fix" removes the start point.	Een startpunt verwijst naar een object dat is verwijderd. "Herstellen" verwijdert het startpunt.
+There is nowhere for the bus to appear. Place a start point (Game logic > Start points) on a road, or "Fix" puts one on a lane some 40 m before a bus stop.	De bus kan nergens verschijnen. Plaats een startpunt (Spellogica > Startpunten) op een weg, of "Herstellen" zet er een op een rijstrook zo'n 40 m vóór een halte.
+Two things on the map share one IDCode: links, timetables and start points may pick the wrong one.	Twee dingen op de kaart delen één IDCode: koppelingen, dienstregelingen en startpunten kunnen de verkeerde kiezen.
+The counter for new IDCodes is below codes already used, so new objects would get codes twice. "Fix" raises it.	De teller voor nieuwe IDCodes staat onder reeds gebruikte codes, dus nieuwe objecten krijgen dubbele codes. "Herstellen" verhoogt hem.
+An object standing on the ground lies outside its own tile. The game does not show it. Move it a little or put it again.	Een object op de grond ligt buiten zijn eigen tegel. Het spel toont het niet. Verschuif het wat of plaats het opnieuw.
+global.cfg lists tiles whose file is not there. The game leaves them out; they stay listed, as start points and timetables count tiles by their place in the list.	global.cfg noemt tegels waarvan het bestand ontbreekt. Het spel laat ze weg; ze blijven in de lijst staan, want startpunten en dienstregelingen tellen tegels naar hun plaats in de lijst.
+A tile has no height file: its ground is flat. Saving writes one.	Een tegel heeft geen hoogtebestand: zijn grond is vlak. Opslaan schrijft er een.
+No way along the roads was found through this trip's stops, so buses cannot drive it. Open it in Map > Lines and timetable to see where it breaks.	Via de haltes van deze rit is geen route over de wegen gevonden, dus bussen kunnen hem niet rijden. Open hem in Kaart > Lijnen en dienstregeling om te zien waar hij breekt.
+A tour (a bus's day on the line) has no trips, so no bus runs it.	Een omloop (de dag van een bus op de lijn) heeft geen ritten, dus er rijdt geen bus.
+A tour names no depot or group of the AI lists (or one that is not there): the game has no vehicle to send on it. Choose a depot for it in the Lines window, or "Fix" gives it the map's depot (one of OMSI 2's MAN buses added where the map has none).	Een omloop noemt geen depot of groep uit de AI-lijsten (of een die er niet is): het spel heeft geen voertuig om erop te zetten. Kies een depot in het lijnenvenster, of "Herstellen" geeft hem het depot van de kaart (een MAN-bus van OMSI 2 wordt toegevoegd als de kaart er geen heeft).
+The unscheduled traffic names a group that the AI lists do not have: those cars never appear. Add the group in Map > Traffic and AI, or "Fix" copies it from OMSI 2's own maps where they have it.	Het ongeplande verkeer noemt een groep die de AI-lijsten niet hebben: die auto's verschijnen nooit. Voeg de groep toe in Kaart > Verkeer en AI, of "Herstellen" kopieert hem uit de eigen kaarten van OMSI 2 als ze hem hebben.
+A stop of the timetable that no trip calls at. Nothing is wrong, it is only not used yet.	Een halte van de dienstregeling waar geen rit stopt. Er is niets mis, hij wordt alleen nog niet gebruikt.
+A chrono scenario takes away, retypes or relabels something that is no longer on the map (it was deleted or its IDCode changed): that change does nothing. Open Map > Chrono scenarios, the scenario's properties, and take the change out.	Een chronoscenario haalt iets weg, wijzigt het type of de tekst van iets dat niet meer op de kaart staat (verwijderd of IDCode gewijzigd): die wijziging doet niets. Open Kaart > Chronoscenario's, de eigenschappen van het scenario, en verwijder de wijziging.
+A tile holds far more objects than the stock maps' tiles (up to some 600): the game may stutter when it loads it or looks across it. Thin out a wood planted too densely (Plant brush, Clear) or plant it with more space between the trees.	Een tegel bevat veel meer objecten dan de tegels van de standaardkaarten (tot zo'n 600): het spel kan haperen bij het laden of erdoorheen kijken. Dun een te dicht beplant bos uit (plantenkwast, Wissen) of plant met meer ruimte tussen de bomen.
+Street lamps stand on a tile the game does not light from its lamps ([variable_terrainlightmap] is off): at night the ground under them stays dark (unless the tile's light map file was made by OMSI 2's editor). "Fix" turns it on, as on nearly every tile of the stock maps.	Straatlantaarns staan op een tegel die het spel niet met zijn lampen verlicht ([variable_terrainlightmap] staat uit): 's nachts blijft de grond eronder donker (tenzij het lichtmapbestand van de tegel door de editor van OMSI 2 is gemaakt). "Herstellen" zet het aan, zoals op bijna elke tegel van de standaardkaarten.
+An object takes its state ([varparent]) from an object no longer on the map: a signal head stays dark, a display blank. Link it to another in its properties (Linked objects), or "Fix" forgets the link.	Een object neemt zijn toestand ([varparent]) van een object dat niet meer op de kaart staat: een seinlicht blijft donker, een display leeg. Koppel het aan een ander in zijn eigenschappen (Gekoppelde objecten), of "Herstellen" vergeet de koppeling.
+A traffic light's signal head takes its light from a crossing's program ([varparent]); this one is linked to none while others like it are, so it stays dark in the game. Select it and link it in its properties (Linked objects).	De seinkop van een verkeerslicht krijgt zijn licht van het programma van een kruising ([varparent]); deze is aan geen gekoppeld terwijl soortgelijke dat wel zijn, dus blijft hij in het spel donker. Selecteer hem en koppel hem in zijn eigenschappen (Gekoppelde objecten).
+A depot file (.hof) gives the buses their destinations, the stop names on their displays and the routes their IBIS knows. Without one the signs stay empty and the IBIS knows no line. "Fix" makes it from the map's lines, or adds what the lines need to the map's own (Map > Depot files to see and change it).	Een depotbestand (.hof) geeft de bussen hun bestemmingen, de haltenamen op hun displays en de routes die hun IBIS kent. Zonder blijven de bordjes leeg en kent het IBIS geen lijn. "Herstellen" maakt het uit de lijnen van de kaart, of voegt wat de lijnen nodig hebben toe aan dat van de kaart zelf (Kaart > Depotbestanden om het te bekijken en te wijzigen).
+A signal route names a signal or track pieces no longer on the map: the signal may never clear. Open Map > Signal routes and take the track again, or delete the route.	Een seinroute noemt een sein of spoordelen die niet meer op de kaart staan: het sein springt misschien nooit open. Open Kaart > Seinroutes en kies het spoor opnieuw, of verwijder de route.
+font	lettertype
+used	gebruikt
+in	in
+a ground texture of the map	een grondtextuur van de kaart
+splines	splines
+apart	uit elkaar
+spline	spline
+goes on into	loopt door in
+no road near	geen weg in de buurt
+from the road	van de weg
+start point	startpunt
+object	object
+The map has no start point	De kaart heeft geen startpunt
+things have it	dingen hebben het
+highest in use:	hoogst gebruikte:
+tile	tegel
+no .terrain file: flat	geen .terrain-bestand: vlak
+objects	objecten
+lamps	lantaarns
+The map has no depot file	De kaart heeft geen depotbestand
+the buses show no destination	de bussen tonen geen bestemming
+named by the map's depot, but found nowhere	genoemd door het depot van de kaart, maar nergens gevonden
+knows none of the	kent geen enkele van de
+lacks	mist
+destinations of the lines	bestemmingen van de lijnen
+the lines need	de lijnen hebben nodig:
+destinations	bestemmingen
+stops	haltes
+routes	routes
+tour	omloop
+no depot named	geen depot genoemd
+not in the AI lists:	niet in de AI-lijsten:
+the stop has no object:	de halte heeft geen object:
+no road beside	geen weg naast
+no way	geen route
+no way found	geen route gevonden
+Route	Route
+gone	verdwenen
+changes of nothing	wijzigingen van niets
+time	keer
+times	keer
+Fix from the map check	Herstel uit de kaartcontrole
+Car groups from OMSI 2's maps	Autogroepen uit de kaarten van OMSI 2
+A depot for the tour	Een depot voor de omloop
+A depot file from the lines	Een depotbestand uit de lijnen
+Depot file: what the lines need	Depotbestand: wat de lijnen nodig hebben
+Map check	Kaartcontrole
+Check again	Opnieuw controleren
+Checking the map…	Kaart controleren…
+errors	fouten
+warnings	waarschuwingen
+notes	opmerkingen
+Nothing found: the map looks fine.	Niets gevonden: de kaart ziet er goed uit.
+Fix all	Alles herstellen
+Join	Verbinden
+Fix	Herstellen
+Click to fly there	Klik om erheen te vliegen
+Fixed:	Hersteld:
+it has parts openMapper does not write	hij bevat delen die openMapper niet schrijft
+A host on the internet needs a password of at least	Een host op internet heeft een wachtwoord nodig van minstens
+Type a password, or choose explicitly to host without one	Typ een wachtwoord, of kies uitdrukkelijk om zonder te hosten
+Could not listen on port	Kon niet luisteren op poort
+The way in for the tunnel could not be opened	De ingang voor de tunnel kon niet worden geopend
+Hosting this map: others can join it now	Deze kaart wordt gehost: anderen kunnen nu meedoen
+Multiplayer ended: another map was opened	Multiplayer beëindigd: er is een andere kaart geopend
+Somebody changed this first: your edit was put back	Iemand anders heeft dit eerder gewijzigd: je bewerking is teruggezet
+The host takes no more: the edit is too big, or the session holds as much as it may. Your edit was put back	De host accepteert niets meer: de bewerking is te groot, of de sessie zit vol. Je bewerking is teruggezet
+That lies too far from the map for this session: your edit was put back	Dat ligt te ver van de kaart voor deze sessie: je bewerking is teruggezet
+tiles	tegels
+changed what you were editing: it is as they left it	wijzigde wat je bewerkte: het is zoals die persoon het liet
+The timetable, the traffic and the descriptions are the host's in multiplayer: your change was put back	De dienstregeling, het verkeer en de beschrijvingen zijn bij multiplayer van de host: je wijziging is teruggezet
+Your conflicting edit was kept	Je conflicterende bewerking is bewaard
+Could not keep your conflicting edit; multiplayer stopped	Kon je conflicterende bewerking niet bewaren; multiplayer gestopt
+Too much of the others' work came in while your edit was held open: multiplayer stopped. The map stays open; it can be saved as a copy.	Er kwam te veel werk van anderen binnen terwijl je bewerking openstond: multiplayer gestopt. De kaart blijft open; je kunt hem als kopie opslaan.
+The connection to the host was lost. The map stays open; it can be saved as a copy.	De verbinding met de host is verbroken. De kaart blijft open; je kunt hem als kopie opslaan.
+No OMSI 2 installation: the map has nowhere to go	Geen OMSI 2-installatie: de kaart kan nergens heen
+The host sent no map	De host stuurde geen kaart
+The host's map could not be read	De kaart van de host kon niet worden gelezen
+No connection	Geen verbinding
+That address is not an openMapper host	Dat adres is geen openMapper-host
+Wrong password	Verkeerd wachtwoord
+The session is full	De sessie is vol
+Type a name (up to 32 letters)	Typ een naam (max. 32 letters)
+The host has another version of openMapper	De host heeft een andere versie van openMapper
+Move forward	Vooruit
+Move back	Achteruit
+Move left	Naar links
+Move right	Naar rechts
+Turn the camera left	Camera naar links draaien
+Turn the camera right	Camera naar rechts draaien
+Undo	Ongedaan maken
+Redo	Opnieuw
+Save	Opslaan
+Copy	Kopiëren
+Cut	Knippen
+Paste at the cursor	Plakken bij de cursor
+Duplicate	Dupliceren
+Select all	Alles selecteren
+Find in the map	Zoeken in de kaart
+Search for a command	Opdracht zoeken
+Tool: Select	Gereedschap: Selecteren
+Tool: Roads	Gereedschap: Wegen
+Tool: Objects	Gereedschap: Objecten
+Tool: Game logic	Gereedschap: Spellogica
+Tool: Terrain	Gereedschap: Terrein
+Tool: Paint	Gereedschap: Verven
+Tool: Tiles	Gereedschap: Tegels
+Turn the object (Shift: the other way)	Het object draaien (Shift: andere kant op)
+Ruler	Liniaal
+Knife	Mes
+Move handles	Verplaatsgrepen
+Rotate handles	Draaigrepen
+Scale handles	Schaalgrepen
+Edit the mesh (vertices, edges, faces)	De mesh bewerken (hoekpunten, randen, vlakken)
+Join the selected objects into one	De geselecteerde objecten samenvoegen tot één
+Build the planned road	De geplande weg bouwen
+Tile grid on / off	Tegelraster aan / uit
+Group the selection	De selectie groeperen
+Ungroup	Groep opheffen
+Look straight down, north up	Recht omlaag kijken, noord boven
+2D plan view on / off (3D: tilt and turn again)	2D-plattegrond aan / uit (3D: opnieuw kantelen en draaien)
+Catalogue on / off	Catalogus aan / uit
+Overview map on / off	Overzichtskaart aan / uit
+Lines window	Lijnenvenster
+Traffic window	Verkeersvenster
+Satellite and terrain window	Satelliet- en terreinvenster
+Smaller brush	Kleinere kwast
+Larger brush	Grotere kwast
+Delete the selection	De selectie verwijderen
+Go to the selection	Naar de selectie gaan
+Test drive in openOMSI (Shift: from the camera)	Proefrit in openOMSI (Shift: vanaf de camera)
+Save a picture of the view	Een afbeelding van het beeld opslaan
+The map's own (global.cfg)	Eigen gegevens van de kaart (global.cfg)
+Description	Beschrijving
+Name in this language	Naam in deze taal
+Description in this language	Beschrijving in deze taal
+Remove this language	Deze taal verwijderen
+Not written yet: it is saved as soon as you type.	Nog niet geschreven: het wordt opgeslagen zodra je typt.
+Edit description	Beschrijving bewerken
+just now	zojuist
+min ago	min geleden
+h ago	u geleden
+Unsaved changes found	Niet-opgeslagen wijzigingen gevonden
+openMapper was closed without saving the map	openMapper is gesloten zonder de kaart op te slaan
+The changes kept by the autosave can be brought back. The map itself was not changed.	De door de automatische opslag bewaarde wijzigingen kunnen worden teruggehaald. De kaart zelf is niet gewijzigd.
+Restore the changes	Wijzigingen herstellen
+Drop them	Weggooien
+Nothing comes after it to join	Erna komt niets om aan te sluiten
+The next piece runs the other way: reverse it first	Het volgende stuk loopt de andere kant op: keer het eerst om
+The next piece lies on another tile	Het volgende stuk ligt op een andere tegel
+The two pieces are of different road types	De twee stukken zijn van verschillende wegtypes
+The two pieces have different settings (path rules, ground, skew)	De twee stukken hebben verschillende instellingen (padregels, grond, scheefstand)
+A row of objects comes onto the next piece from another tile	Een rij objecten komt vanaf een andere tegel op het volgende stuk
+The two pieces do not bend, climb or bank alike: joined they would change shape	De twee stukken buigen, stijgen of hellen niet gelijk: samengevoegd zou de vorm veranderen
+Earlier versions	Eerdere versies
+Before every save, the files it replaces are kept (the last 10 saves). Going back puts the map as it was before that save; later changes go.	Vóór elke opslag worden de bestanden die het vervangt bewaard (de laatste 10 keer). Teruggaan zet de kaart terug zoals vóór die opslag; latere wijzigingen gaan verloren.
+No earlier versions yet: they appear once the map is saved again.	Nog geen eerdere versies: ze verschijnen zodra de kaart weer is opgeslagen.
+before the save of	vóór de opslag van
+Go back to this	Hiernaar teruggaan
+could not keep a backup, nothing was saved	kon geen back-up maken, niets is opgeslagen
+Red	Rood
+Yellow	Geel
+Green	Groen
+file not found	bestand niet gevonden
+this object takes its model from a model file and cannot be edited here	dit object haalt zijn model uit een modelbestand en kan hier niet worden bewerkt
+the object has no mesh to edit	het object heeft geen mesh om te bewerken
+cannot read the object	kan het object niet lezen
+Select	Selecteren
+Terrain	Terrein
+Paint	Verven
+Roads	Wegen
+Objects	Objecten
+Game logic	Spellogica
+Tiles	Tegels
+Raise	Verhogen
+Lower	Verlagen
+Smooth	Gladstrijken
+Flatten	Egaliseren
+Roughen	Ruwer maken
+Ramp	Helling
+Lake / river	Meer / rivier
+Start points	Startpunten
+Bus stops	Haltes
+Car parks	Parkeerplaatsen
+AI paths	AI-paden
+Other	Overig
+Where the bus appears when a drive starts. Put it on a road or in the depot, facing the way to drive.	Waar de bus verschijnt als een rit begint. Zet hem op een weg of in het depot, met het gezicht in rijrichting.
+Where passengers wait. Put it beside the road at the kerb; name it on the right.	Waar passagiers wachten. Zet hem naast de weg bij de stoeprand; geef rechts een naam.
+Where parked cars stand. Click for one; with a row on, click the start and end of a row along the kerb.	Waar geparkeerde auto's staan. Klik voor één; met een rij aan: klik op begin en einde van een rij langs de stoeprand.
+Lanes the AI's cars or people follow. Draw like a road: it snaps to lane ends (green: joined, red: dead end) and along lanes. A car path runs the way you draw it.	Rijstroken die de auto's of mensen van de AI volgen. Teken als een weg: hij klikt vast op uiteinden (groen: verbonden, rood: doodlopend) en langs rijstroken. Een autopad loopt de kant op die je tekent.
+Sound sources, help arrows and other helpers the game does not show.	Geluidsbronnen, hulppijlen en andere hulpmiddelen die het spel niet toont.
+Move (V): drag an arrow along X, Y or Z, a square in its plane, the circle over the ground	Verplaatsen (V): sleep een pijl langs X, Y of Z, een vierkant in zijn vlak, de cirkel over de grond
+Rotate (C): drag a ring to turn about X, Y or Z	Draaien (C): sleep een ring om om X, Y of Z te draaien
+Scale (X): drag an arrow to scale along that axis, a square for two, the circle for all three	Schalen (X): sleep een pijl om langs die as te schalen, een vierkant voor twee, de cirkel voor alle drie
+These roads have no lanes of their own to take apart (rails stay as they are)	Deze wegen hebben geen eigen rijstroken om uit elkaar te halen (rails blijven zoals ze zijn)
+Make the lanes editable	Rijstroken bewerkbaar maken
+Roads whose lanes are now editable:	Wegen met nu bewerkbare rijstroken:
+Flatten the terrain	Terrein egaliseren
+Select two things or more to group them	Selecteer twee of meer dingen om ze te groeperen
+Group	Groep
+Grouped:	Gegroepeerd:
+Ungrouped	Groep opgeheven
+Rename group	Groep hernoemen
+Ground levelled under objects:	Grond geëgaliseerd onder objecten:
+Move	Verplaatsen
+No object clicked: nothing linked	Geen object aangeklikt: niets gekoppeld
+Too near the road's end to cut it there	Te dicht bij het einde van de weg om hier door te snijden
+No road under the cursor	Geen weg onder de cursor
+Ramp:	Helling:
+Shape terrain	Terrein vormen
+Paint ground	Grond verven
+Clear plants	Planten wissen
+Plant	Planten
+Rotate selection	Selectie draaien
+Rotate	Draaien
+Delete object	Object verwijderen
+Delete road	Weg verwijderen
+Delete selection	Selectie verwijderen
+Pick an object in the catalogue first	Kies eerst een object in de catalogus
+There is no tile here: add one with the Tiles tool	Hier is geen tegel: voeg er een toe met het gereedschap Tegels
+Place object	Object plaatsen
+New stop	Nieuwe halte
+Linked to	Gekoppeld aan
+choose its light in its properties	kies het licht in de eigenschappen
+Trees from OpenStreetMap	Bomen uit OpenStreetMap
+Plant an area	Een gebied beplanten
+Buildings from OpenStreetMap	Gebouwen uit OpenStreetMap
+Stops from OpenStreetMap	Haltes uit OpenStreetMap
+Stop	Halte
+Pick a car park in the list first	Kies eerst een parkeerplaats in de lijst
+Place car parks	Parkeerplaatsen plaatsen
+Car parks placed:	Parkeerplaatsen geplaatst:
+Pick a road type in the catalogue first	Kies eerst een wegtype in de catalogus
+That bend is too sharp	Die bocht is te scherp
+Switch made	Wissel gemaakt
+Junctions made:	Kruispunten gemaakt:
+The road leaves the map: add tiles there first	De weg verlaat de kaart: voeg daar eerst tegels toe
+Build road	Weg bouwen
+Roads from OpenStreetMap	Wegen uit OpenStreetMap
+Pick a tree in the catalogue (or add some to the mix) first	Kies eerst een boom in de catalogus (of voeg er enkele toe aan de mix)
+Right-click a tile to remove it	Rechtsklik op een tegel om hem te verwijderen
+New tiles go next to the map	Nieuwe tegels komen naast de kaart
+Add tile	Tegel toevoegen
+Water	Water
+Paint detail	Verfdetail
+Ground layer order	Volgorde van grondlagen
+Detail texture	Detailtextuur
+Ground texture	Grondtextuur
+Lamp light on the ground	Lantaarnlicht op de grond
+Add tiles	Tegels toevoegen
+A map needs at least one tile	Een kaart heeft minstens één tegel nodig
+Remove tile	Tegel verwijderen
+Pick a point (a dot at an end or where pieces meet) to take it out	Kies een punt (een stip aan een einde of waar stukken samenkomen) om het te verwijderen
+Remove a point of the path	Een punt van het pad verwijderen
+Point taken out	Punt verwijderd
+A path of one piece: Del with nothing picked deletes it	Een pad van één stuk: Del zonder gekozen punt verwijdert het
+Extrude	Extruderen
+Inset	Inzetten
+Bevel	Afschuinen
+Loop cut	Lussnede
+click: done, right click / Esc: cancel, wheel: segments	klik: klaar, rechtsklik / Esc: annuleren, wiel: segmenten
+Scale	Schaal
+Roads are not scaled: change their length and width in their properties	Wegen worden niet geschaald: wijzig hun lengte en breedte in hun eigenschappen
+Only the objects are scaled, the roads stay	Alleen de objecten worden geschaald, de wegen blijven
+Could not scale	Kon niet schalen
+Too near the end: drag the end's dot instead	Te dicht bij het einde: sleep in plaats daarvan de stip van het einde
+Add a point to the path	Een punt aan het pad toevoegen
+Point added: drag the dot where the pieces meet	Punt toegevoegd: sleep de stip waar de stukken samenkomen
+Reshape road	Weg hervormen
+Selected:	Geselecteerd:
+Copied:	Gekopieerd:
+Nothing copied yet	Nog niets gekopieerd
+Paste	Plakken
+Level the ground	De grond egaliseren
+Turn objects	Objecten draaien
+Copies in a row	Kopieën in een rij
+Left out (off the map):	Weggelaten (buiten de kaart):
+Pasted (the rest is off the map):	Geplakt (de rest valt buiten de kaart):
+Edit object	Object bewerken
+Lean with the ground	Meehellen met de grond
+Stand upright	Rechtop zetten
+Change height	Hoogte wijzigen
+Change road type	Wegtype wijzigen
+The selected roads are not one chain (they branch or leave gaps)	De geselecteerde wegen vormen geen enkele keten (ze vertakken of hebben gaten)
+Even slope	Gelijkmatige helling
+Lay on the ground	Op de grond leggen
+Remove the rows of objects along it first (they are measured from its start)	Verwijder eerst de rijen objecten erlangs (ze worden vanaf het begin gemeten)
+Reverse direction	Richting omkeren
+No road there to cut	Daar is geen weg om door te snijden
+Cut the road	De weg doorsnijden
+Cut in two: each piece can now be changed on its own	In tweeën gesneden: elk stuk kan nu apart worden gewijzigd
+Join the pieces	De stukken verbinden
+Joined into one piece	Verbonden tot één stuk
+Parallel copy	Parallelle kopie
+Overhead wire	Bovenleiding
+Back into the map	Terug in de kaart
+Hang an object	Een object ophangen
+Link to an object	Aan een object koppelen
+Unlink	Ontkoppelen
+That object already takes its state from this one	Dat object neemt zijn toestand al van dit object
+Linked	Gekoppeld
+Signal head's light	Licht van de seinkop
+Path rules	Padregels
+Replace objects	Objecten vervangen
+Edit road	Weg bewerken
+Roads that could not follow the junction (too sharp a bend):	Wegen die het kruispunt niet konden volgen (te scherpe bocht):
+Edit junction	Kruispunt bewerken
+Make the junction again	Het kruispunt opnieuw maken
+Make the junctions again	De kruispunten opnieuw maken
+Pick an object in the Objects tool's catalogue first	Kies eerst een object in de catalogus van het gereedschap Objecten
+The road is too short for that	De weg is daarvoor te kort
+Objects along the road	Objecten langs de weg
+Rows of objects added:	Rijen objecten toegevoegd:
+Edit row of objects	Rij objecten bewerken
+Remove row of objects	Rij objecten verwijderen
+Remove rows of objects	Rijen objecten verwijderen
+Roundabout built; roads joined to it:	Rotonde gebouwd; wegen erop aangesloten:
+This road type carries traffic both ways: pick a one-way road for a proper roundabout	Dit wegtype heeft verkeer in beide richtingen: kies een eenrichtingsweg voor een echte rotonde
+Start point: where the bus appears in openOMSI	Startpunt: hier verschijnt de bus in openOMSI
+Bus stop: name it in the panel on the right	Halte: geef hem een naam in het paneel rechts
+openOMSI stopped with an error	openOMSI stopte met een fout
+Check in openOMSI	Controleren in openOMSI
+The saved map run by the game itself, unseen, with its own checks; the picture is the game's, from your view	De opgeslagen kaart door het spel zelf gedraaid, onzichtbaar, met zijn eigen controles; de afbeelding is die van het spel, vanuit jouw beeld
+Every tile (slower on a big map)	Elke tegel (langzamer op een grote kaart)
+Run again	Opnieuw uitvoeren
+openOMSI is loading the map…	openOMSI laadt de kaart…
+Nothing wrong found	Niets mis gevonden
+Problems found:	Problemen gevonden:
+Go there	Ga erheen
+of the places named lie at the map's edge or a road's dead end (greyed): the game measures a lane's last point on the road's very edge, and a bus at the end stands over it; nothing to mend	van de genoemde plekken liggen op de rand van de kaart of een doodlopend wegeinde (grijs): het spel meet het laatste punt van een rijstrook op de rand van de weg, en een bus aan het einde staat erboven; niets te herstellen
+The game said nothing about the map	Het spel zei niets over de kaart
+The game's whole output	De volledige uitvoer van het spel
+no key entered	geen sleutel ingevoerd
+the server refused the key	de server weigerde de sleutel
+too many requests, try again later	te veel verzoeken, probeer het later opnieuw
+No connection to the server: are you online?	Geen verbinding met de server: ben je online?
+Enter your Google key first	Voer eerst je Google-sleutel in
+OpenStreetMap's servers are busy: try again in a minute	De servers van OpenStreetMap zijn druk: probeer het over een minuut opnieuw
+The area is too large for this zoom	Het gebied is te groot voor deze zoom
+Cancelled	Geannuleerd
+Stopped by an internal error (see the log)	Gestopt door een interne fout (zie het logboek)
+No source has imagery here	Geen bron heeft hier beelden
+drawn from OpenStreetMap data: sharp, with names	getekend uit OpenStreetMap-gegevens: scherp, met namen
+terrain heights, no key needed	terreinhoogtes, geen sleutel nodig
+needs your own free key	vereist je eigen gratis sleutel
+no key needed	geen sleutel nodig
+the picture is too small	de afbeelding is te klein
+Import height map	Hoogtekaart importeren
+Height map	Hoogtekaart
+The ground as a grey picture, to shape in another program and bring back	De grond als grijze afbeelding, om in een ander programma te vormen en terug te brengen
+Export…	Exporteren…
+Import…	Importeren…
+over	over
+a pixel	per pixel
+Black adds	Zwart voegt toe
+Black is	Zwart is
+White adds	Wit voegt toe
+White is	Wit is
+Smoothing	Afvlakking
+Replace the ground	De grond vervangen
+Add to it	Erbij optellen
+Roads and objects keep their heights: best done before building	Wegen en objecten behouden hun hoogte: het best vóór het bouwen te doen
+An 8-bit picture has only 256 steps of height: smoothing hides them	Een 8-bits afbeelding heeft maar 256 hoogtestappen: afvlakking verbergt ze
+Lay it on the map	Op de kaart leggen
+Cancel	Annuleren
+Height map laid over	Hoogtekaart gelegd over
+Export the height map	De hoogtekaart exporteren
+Height map written	Hoogtekaart geschreven
+The height map could not be written	De hoogtekaart kon niet worden geschreven
+A height map for the whole map	Een hoogtekaart voor de hele kaart
+The picture could not be read	De afbeelding kon niet worden gelezen
+IBIS and roller blind	IBIS en rolbord
+Front sign, line 1	Voorbord, regel 1
+Front sign, line 2	Voorbord, regel 2
+Side sign	Zijbord
+Roller blind texture	Rolbordtextuur
+IBIS 2 (20 letters)	IBIS 2 (20 tekens)
+Extra sign	Extra bord
+Krüger picture	Krüger-afbeelding
+Text	Tekst
+IBIS (16 letters)	IBIS (16 tekens)
+Display, line 1	Display, regel 1
+Display, line 2	Display, regel 2
+Full name (20 letters)	Volledige naam (20 tekens)
+Service trip	Dienstrit
+Special trip	Extra rit
+Blank	Leeg
+openMapper cannot import this kind of file (use a folder, .zip, .obj, .gltf, .glb, .fbx, .x, .o3d or a picture)	openMapper kan dit soort bestand niet importeren (gebruik een map, .zip, .obj, .gltf, .glb, .fbx, .x, .o3d of een afbeelding)
+Mod installed, files:	Mod geïnstalleerd, bestanden:
+Objects added to	Objecten toegevoegd aan
+Road types added to	Wegtypes toegevoegd aan
+Models imported:	Modellen geïmporteerd:
+Nothing to import was found in this folder	In deze map is niets te importeren gevonden
+The model has no triangles	Het model heeft geen driehoeken
+Model imported:	Model geïmporteerd:
+The .obj file has no faces	Het .obj-bestand heeft geen vlakken
+no base colour picture among them	geen basiskleurafbeelding daaronder
+The picture cannot be read	De afbeelding kan niet worden gelezen
+Picture made into a standee:	Afbeelding gemaakt tot standee:
+Picture made into a sign:	Afbeelding gemaakt tot bord:
+Trees	Bomen
+Stops and start points	Haltes en startpunten
+Junctions	Kruispunten
+Tracks	Sporen
+Footpaths	Voetpaden
+Fences, walls, kerbs	Hekken, muren, stoeprand
+Technical (AI, helpers)	Technisch (AI, hulpmiddelen)
+This map lies on the world's grid ([worldcoordinates]): its tiles cannot be taken yet	Deze kaart ligt op het wereldraster ([worldcoordinates]): zijn tegels kunnen nog niet worden overgenomen
+This map lies on the world's grid ([worldcoordinates]): tiles cannot be added from another yet	Deze kaart ligt op het wereldraster ([worldcoordinates]): er kunnen nog geen tegels van een andere worden toegevoegd
+Tiles from another map	Tegels van een andere kaart
+Union	Vereniging
+Difference (cut out)	Verschil (uitsnijden)
+Intersection	Doorsnede
+Slice (keep both pieces)	Snijden (beide delen houden)
+One object of all the selected, their insides gone	Eén object van alle geselecteerde, hun binnenkant weg
+The other selected objects cut out of the one shown in the properties	De andere geselecteerde objecten uitgesneden uit dat in de eigenschappen
+Only what all the selected share	Alleen wat alle geselecteerde delen
+The first object cut by the others into what is outside them and what is inside	Het eerste object door de andere gesneden in wat erbuiten en wat erbinnen valt
+select an object first	selecteer eerst een object
+Make editable	Bewerkbaar maken
+Make single	Los maken
+the object has only one part	het object heeft maar één deel
+Separate parts	In delen splitsen
+select two or more objects to join	selecteer twee of meer objecten om samen te voegen
+Join objects	Objecten samenvoegen
+select two or more objects: the one shown in the properties and what acts on it	selecteer twee of meer objecten: dat in de eigenschappen en wat erop inwerkt
+nothing is left: the objects do not overlap that way	er blijft niets over: de objecten overlappen zo niet
+The file has no scene	Het bestand heeft geen scène
+The FBX file has no meshes	Het FBX-bestand heeft geen meshes
+Main roads	Hoofdwegen
+Streets	Straten
+Service roads	Dienstwegen
+Tram tracks	Tramsporen
+Railway tracks	Spoorwegsporen
+motorway, trunk, primary, secondary	snelweg, trunk, primary, secondary
+tertiary, residential, unclassified	tertiary, residential, unclassified
+yards, car parks, depots	erven, parkeerplaatsen, depots
+each track on its own; branches are joined with switches by hand	elk spoor apart; aftakkingen worden met de hand met wissels verbonden
+main lines without sidings; branches are joined with switches by hand	hoofdlijnen zonder opstelsporen; aftakkingen worden met de hand met wissels verbonden
+Water from OpenStreetMap	Water uit OpenStreetMap
+Give a distance	Geef een afstand op
+The bend is too tight for that distance on its inner side	De bocht is te krap voor die afstand aan de binnenzijde
+The copy leaves the map: add tiles there first	De kopie verlaat de kaart: voeg daar eerst tegels toe
+Made with openMapper	Gemaakt met openMapper
+Low (no shadows, rough edges, 3 km view)	Laag (geen schaduwen, ruwe randen, zicht 3 km)
+Medium (softer shadows, 8 km view)	Gemiddeld (zachtere schaduwen, zicht 8 km)
+High	Hoog
+This end belongs to a junction: select the junction and move it, the road follows	Dit einde hoort bij een kruispunt: selecteer het kruispunt en verplaats het, de weg volgt
+Paint along the roads	Verven langs de wegen
+Market	Markt
+Station	Station
+Depot	Depot
+this object takes its model from a model file: it cannot be scaled	dit object haalt zijn model uit een modelbestand: het kan niet worden geschaald
+Not a GPX, KML or GeoJSON file	Geen GPX-, KML- of GeoJSON-bestand
+No lines in the file	Geen lijnen in het bestand
+Language	Taal
+Interface size	Interfacegrootte
+File	Bestand
+New map…	Nieuwe kaart…
+Open map…	Kaart openen…
+Controls…	Besturing…
+Import assets…	Assets importeren…
+Multiplayer…	Multiplayer…
+OMSI 2 folder…	OMSI 2-map…
+Quit	Afsluiten
+View	Beeld
+Help	Help
+Updates…	Updates…
+About openMapper	Over openMapper
+OMSI 2 not found	OMSI 2 niet gevonden
+Map editor for openOMSI	Kaarteditor voor openOMSI
+openMapper builds maps from the content of an installed OMSI 2. Choose its folder (the one with Omsi.exe, maps and Vehicles).	openMapper bouwt kaarten uit de content van een geïnstalleerde OMSI 2. Kies de map (die met Omsi.exe, maps en Vehicles).
+Choose OMSI 2 folder…	OMSI 2-map kiezen…
+Maps	Kaarten
+recent · OMSI 2	recent · OMSI 2
+recent	recent
+content folder	inhoudsmap
+OMSI 2 (saved as copy)	OMSI 2 (als kopie opgeslagen)
+Open	Openen
+Make a copy	Kopie maken
+A copy of the map in the content folder under a new name, to try something out	Een kopie van de kaart in de contentmap onder een nieuwe naam, om iets uit te proberen
+Show in the file manager	Tonen in bestandsbeheer
+Move to openMapper's bin	Naar de bin van openMapper verplaatsen
+Its folder goes into openMapper\\bin in the content folder, from where it can be put back by hand	Zijn map gaat naar openMapper\\bin in de contentmap, vanwaar hij met de hand kan worden teruggezet
+Browse…	Bladeren…
+Double-click a map to open it. Maps of OMSI 2 are saved as a copy into openOMSI's content folder; the original stays untouched.	Dubbelklik op een kaart om hem te openen. Kaarten van OMSI 2 worden als kopie in de contentmap van openOMSI opgeslagen; het origineel blijft ongemoeid.
+A simple map editor for openOMSI.	Een eenvoudige kaarteditor voor openOMSI.
+Back to the 3D view (0)	Terug naar de 3D-weergave (0)
+The plan view from above, north up (0)	De plattegrond van boven, noord boven (0)
+Recent maps	Recente kaarten
+(none)	(geen)
+Export map for sharing…	Kaart exporteren om te delen…
+Export a plan of the map…	Plattegrond van de kaart exporteren…
+Earlier versions…	Eerdere versies…
+Close map	Kaart sluiten
+Edit	Bewerken
+Edit history…	Bewerkingsgeschiedenis…
+Groups for other maps…	Groepen voor andere kaarten…
+Find in map…	Zoeken in kaart…
+Search for a command…	Opdracht zoeken…
+Delete	Verwijderen
+Deselect	Selectie opheffen
+Tile grid	Tegelraster
+What the game does not show	Wat het spel niet toont
+AI lanes	AI-rijstroken
+Names of stops and start points	Namen van haltes en startpunten
+Show	Tonen
+Roads and splines	Wegen en splines
+Overview map (M)	Overzichtskaart (M)
+Assets (B)	Assets (B)
+Flatten the terrain (roads follow)	Het terrein vlakmaken (wegen volgen)
+Saved views…	Opgeslagen beelden…
+Go to selection	Naar selectie
+Camera	Camera
+Unity: right button looks round and W A S D fly, middle pans, Alt orbits	Unity: rechterknop kijkt rond en W A S D vliegen, middelste pant, Alt draait rond
+Map editor: right button looks round and W A S D fly (Q down, E up), middle pans, the wheel zooms to the cursor, drag moves the map	Kaarteditor: rechterknop kijkt rond en W A S D vliegen (Q omlaag, E omhoog), middelste pant, het wiel zoomt naar de cursor, slepen verplaatst de kaart
+Load 100 tiles at a time (like OMSI 2's editor)	100 tegels tegelijk laden (zoals de editor van OMSI 2)
+Time of day	Tijdstip
+Plain day (as the game by day)	Gewone dag (zoals het spel overdag)
+At an hour	Op een uur
+Where the sun stands then, today, at the map's place (Map > Calendar and place); by night the moon	Waar de zon dan staat, vandaag, op de plek van de kaart (Kaart > Kalender en plaats); 's nachts de maan
+Season	Seizoen
+Summer	Zomer
+Dry summer	Droge zomer
+Spring	Lente
+Autumn	Herfst
+Winter	Winter
+Snow	Sneeuw
+Graphics quality	Grafische kwaliteit
+Tools	Gereedschap
+Road types and junctions…	Wegtypes en kruispunten…
+PBR maps for a picture…	PBR-maps voor een afbeelding…
+Map	Kaart
+Map settings…	Kaartinstellingen…
+Calendar and place…	Kalender en plaats…
+Signal routes…	Seinroutes…
+Chrono scenarios…	Chronoscenario's…
+Ground textures…	Grondtexturen…
+Check map…	Kaart controleren…
+Junctions made again:	Kruispunten opnieuw gemaakt:
+Lines and timetable…	Lijnen en dienstregeling…
+Traffic and AI…	Verkeer en AI…
+Depot files (destinations)…	Depotbestanden (bestemmingen)…
+Satellite and terrain…	Satelliet en terrein…
+From OpenStreetMap…	Uit OpenStreetMap…
+GPS tracks to trace…	GPS-sporen om over te trekken…
+Tiles from another map…	Tegels van een andere kaart…
+Test drive in openOMSI	Proefrit in openOMSI
+Test drive in OMSI 2 (the original)…	Proefrit in OMSI 2 (het origineel)…
+Check in openOMSI…	Controleren in openOMSI…
+Getting started	Aan de slag
+New map	Nieuwe kaart
+Open a map	Een kaart openen
+Save (Ctrl+S): there are unsaved changes	Opslaan (Ctrl+S): er zijn niet-opgeslagen wijzigingen
+Save (Ctrl+S)	Opslaan (Ctrl+S)
+Import assets: a mod folder or .zip, a .obj / .x / .o3d model (or drop files on the window)	Assets importeren: een modmap of .zip, een .obj / .x / .o3d-model (of sleep bestanden naar het venster)
+Redo (Ctrl+Shift+Z)	Opnieuw (Ctrl+Shift+Z)
+Tile grid (G)	Tegelraster (G)
+Assets: every object and road type, with pictures (B)	Assets: elk object en wegtype, met afbeeldingen (B)
+Test drive	Proefrit
+Save the map and drive it in openOMSI (F5)	De kaart opslaan en in openOMSI rijden (F5)
+openOMSI was not found: install it to test maps	openOMSI niet gevonden: installeer het om kaarten te testen
+Test drive from the start point nearest the view	Proefrit vanaf het startpunt dichtst bij het beeld
+See this view in openOMSI	Dit beeld bekijken in openOMSI
+loading	laden
+Edit mesh	Mesh bewerken
+Shapes and lamps	Vormen en lampen
+Click beside the map to add a 300 × 300 m tile. Right-click a tile to remove it.	Klik naast de kaart om een tegel van 300 × 300 m toe te voegen. Rechtsklik op een tegel om hem te verwijderen.
+Area	Gebied
+A ring of tiles round the map	Een ring van tegels rond de kaart
+Every free place beside the map, corners too, gets a tile at the height of its neighbours	Elke vrije plek naast de kaart, ook de hoeken, krijgt een tegel op de hoogte van zijn buren
+Tiles added:	Tegels toegevoegd:
+Everything on the map, grouped by the folders its files lie in	Alles op de kaart, gegroepeerd per map waarin de bestanden staan
+Click an object or a road in the view to see and change it on the right.	Klik op een object of weg in het beeld om het rechts te zien en te wijzigen.
+Line up with the nearest road (Shift: put it freely)	Uitlijnen op de dichtstbijzijnde weg (Shift: vrij plaatsen)
+On both sides of the road	Aan beide zijden van de weg
+A stop of the same name also goes at the kerb across the road, facing the other way	Een halte met dezelfde naam komt ook aan de stoeprand aan de overkant, in de andere richting
+In a row along a line	Naast elkaar langs een lijn
+Every	Elke
+Draw new	Nieuwe tekenen
+Edit existing	Bestaande bewerken
+Click a path to pick it: every point is a dot to drag (the small ones in the middle of a piece bend it). Double-click the path to put a point in. Click a dot, then Del, to take that point out; Del with no dot picked deletes the whole path (Ctrl+Z brings it back). Lanes of roads and junctions belong to their road type: use Edit its AI lanes on the road.	Klik op een pad om het te kiezen: elk punt is een stip om te slepen (de kleine in het midden van een stuk buigen het). Dubbelklik op het pad om een punt toe te voegen. Klik op een stip en dan Del om dat punt te verwijderen; Del zonder gekozen punt verwijdert het hele pad (Ctrl+Z haalt het terug). Rijstroken van wegen en kruispunten horen bij hun wegtype: gebruik Zijn AI-rijstroken bewerken bij de weg.
+Cars	Auto's
+People	Mensen
+Show these in the other tools too	Deze ook in de andere gereedschappen tonen
+Show the AI's lanes in the other tools too	De AI-rijstroken ook in de andere gereedschappen tonen
+Everything	Alles
+Search	Zoeken
+Shape the ground under the road	De grond onder de weg vormen
+Go on drawing from the end of the road just built	Doortekenen vanaf het einde van de net gebouwde weg
+Join road ends, roads and junction pieces near the cursor	Aansluiten op wegeinden, wegen en kruispuntdelen bij de cursor
+Make junctions where roads meet	Kruispunten maken waar wegen samenkomen
+Go on with the type of the road I start from	Doorgaan met het type van de weg waarvan ik start
+Building with:	Bouwt met:
+nothing chosen	niets gekozen
+Front at the roadside, back	Voorkant aan de weg, achter
+Plant brush: sow trees by painting	Plantenkwast: bomen zaaien door te verven
+Sow	Zaaien
+Clear	Wissen
+With the brush	Met de kwast
+In an outline	Op een omtrek
+Click round an area (a wood, a park, a garden) and it is filled at once, or cleared	Klik rond een gebied (bos, park, tuin) en het wordt meteen gevuld, of gewist
+About	Ongeveer
+plants (Enter: plant)	planten (Enter: planten)
+Size	Grootte
+Apart	Afstand
+Sows the object chosen below. Right-click entries: "Add to the plant mix" to sow several at random. Clearing takes trees and the mix's objects.	Zaait het hieronder gekozen object. Rechtsklik op items: "Aan plantenmix toevoegen" om meerdere willekeurig te zaaien. Wissen haalt bomen en de objecten van de mix weg.
+Mix (picked at random):	Mix (willekeurig gekozen):
+reading OMSI 2…	OMSI 2 lezen…
+items	stuks
+Nothing found	Niets gevonden
+mod	mod
+right-click: star it	rechtsklik: favoriet maken
+Take out of the plant mix	Uit de plantenmix halen
+Add to the plant mix	Aan de plantenmix toevoegen
+Remove from favourites	Uit favorieten verwijderen
+Add to favourites	Aan favorieten toevoegen
+Favourites	Favorieten
+Recently used	Recent gebruikt
+(not in a folder)	(niet in een map)
+Strength	Sterkte
+Mode	Modus
+Levels the ground to the height where you start dragging	Egaliseert de grond tot de hoogte waar je met slepen begint
+Softens bumps and edges	Maakt hobbels en randen zachter
+Raises the ground under the brush	Verhoogt de grond onder de kwast
+Lowers the ground under the brush	Verlaagt de grond onder de kwast
+Gives flat ground the rolls and dips of a natural field; hold longer for more	Geeft vlakke grond de golvingen en kuilen van een natuurlijk veld; houd langer vast voor meer
+Paint a lake or a river: the ground is dug to a bed under the water's level (where you start the stroke, or the tile's water) and the tile gets water at that level. Water in OMSI is one level for a whole tile: another low place on the same tile shows it too	Verf een meer of rivier: de grond wordt tot een bedding onder het waterpeil uitgegraven (waar je de streek begint, of het water van de tegel) en de tegel krijgt water op dat peil. Water in OMSI heeft één peil per tegel: een andere lage plek op dezelfde tegel toont het ook
+Click where it starts, then where it ends: the ground between becomes one even slope as wide as the brush (an embankment, a ramp, a level bed)	Klik waar het begint, dan waar het eindigt: de grond ertussen wordt één gelijkmatige helling zo breed als de kwast (een dijk, een oprit, een vlakke bedding)
+To a height	Tot een hoogte
+Flatten to the height typed instead of the one where the drag starts (a level square, a platform)	Egaliseren tot de getypte hoogte in plaats van die waar het slepen begint (een vlak plein, een platform)
+Depth	Diepte
+The water's level is set where a stroke starts: start at the bank.	Het waterpeil wordt bepaald waar een streek begint: begin bij de oever.
+Brush	Kwast
+Flatten the whole terrain	Het hele terrein vlakmaken
+Every tile's ground levelled to the map's mean height; the roads, the AI paths and the junctions follow it. One undo step brings the relief back. (The satellite picture: View > Satellite overlay.)	De grond van elke tegel wordt geëgaliseerd tot de gemiddelde hoogte van de kaart; wegen, AI-paden en kruispunten volgen. Eén stap ongedaan maken brengt het reliëf terug. (De satellietafbeelding: Beeld > Satellietlaag.)
+Ground layers	Grondlagen
+base ground	basisgrond
+layer	laag
+Add…	Toevoegen…
+Remove	Verwijderen
+Up the list: drawn under the layers after it	Hoger in de lijst: onder de volgende lagen getekend
+Down the list: drawn over the layers before it	Lager in de lijst: over de vorige lagen getekend
+Texture	Textuur
+The layer's picture; its painting stays	De afbeelding van de laag; de verf blijft
+A fine grain laid over the texture, seen close up (OMSI's detail texture)	Een fijne korrel over de textuur, van dichtbij zichtbaar (detailtextuur van OMSI)
+Click to choose another	Klik om een andere te kiezen
+Repeats per tile	Herhalingen per tegel
+Detail repeats	Detailherhalingen
+How finely this layer can be painted: texels across a tile (its masks are made again at the new size)	Hoe fijn deze laag kan worden geverfd: texels over een tegel (de maskers worden opnieuw gemaakt op de nieuwe grootte)
+Edit ground texture	Grondtextuur bewerken
+Erase	Wissen
+Remove ground texture	Grondtextuur verwijderen
+Tile	Tegel
+A water surface over the whole tile: it shows where the ground lies below it (lower the ground with the Terrain tool for a lake or a river)	Een wateroppervlak over de hele tegel: zichtbaar waar de grond eronder ligt (verlaag de grond met het gereedschap Terrein voor een meer of rivier)
+at 	op
+Lamps light the ground at night	Lantaarns verlichten de grond 's nachts
+The game works out the light pools of the street lamps on and round this tile when it loads it ([variable_terrainlightmap]); off, it shows the tile's light map file as it is	Het spel berekent de lichtplekken van de straatlantaarns op en rond deze tegel bij het laden ([variable_terrainlightmap]); uit toont het de lichtmapbestand van de tegel zoals hij is
+Edit history	Bewerkingsgeschiedenis
+Click a step to go back to just after it	Klik op een stap om terug te gaan naar vlak erna
+Opened	Geopend
+Properties	Eigenschappen
+Configure PBR	PBR instellen
+Create PBR	PBR maken
+Normal, roughness, metal and shadow maps made from the object's textures, tuned and written as openOMSI reads them	Normal-, ruwheids-, metaal- en schaduwmaps gemaakt uit de texturen van het object, afgesteld en geschreven zoals openOMSI ze leest
+Type	Type
+Hangs on	Hangt aan
+point	punt
+Location	Positie
+East	Oost
+North	Noord
+Height above sea level	Hoogte boven zeeniveau
+above the ground:	boven de grond:
+OMSI keeps this object's height above the ground under it: moved elsewhere it stays as high above the ground there	OMSI bewaart de hoogte van dit object boven de grond eronder: elders neergezet blijft het even hoog boven de grond daar
+Rotation	Rotatie
+Tilt forward (pitch)	Voorwaarts kantelen (pitch)
+Bank to the side (roll)	Zijwaarts hellen (roll)
+Heading	Richting (heading)
+Turn it the way the nearest road runs beside it	Draai het zoals de dichtstbijzijnde weg ernaast loopt
+Stand it upright again	Weer rechtop zetten
+Picture	Afbeelding
+Ratio	Verhouding
+Stop name	Haltenaam
+This tree	Deze boom
+Texts	Teksten
+Shown on the object (@ starts a new line)	Getoond op het object (@ begint een nieuwe regel)
+Model	Model
+Triangles	Driehoeken
+Parts	Delen
+Part	Deel
+triangles	driehoeken
+colour only	alleen kleur
+opaque	ondoorzichtig
+cut out	uitgeknipt
+blended	doorschijnend
+How the texture's transparency is used: cut out for leaves and fences, blended for glass	Hoe de transparantie van de textuur wordt gebruikt: uitgeknipt voor bladeren en hekken, doorschijnend voor glas
+Textures	Texturen
+Normal, roughness, metal and shadow maps made from the road type's textures	Normal-, ruwheids-, metaal- en schaduwmaps gemaakt uit de texturen van het wegtype
+Length	Lengte
+Radius	Straal
+right	rechts
+left	links
+straight	recht
+start	begin
+end	einde
+Mirrored	Gespiegeld
+Skew	Scheef
+The start cut on a slant: 1 is 45° (two fences meeting at a corner: 1 and -1)	De snede aan het begin schuin: 1 is 45° (twee hekken die in een hoek samenkomen: 1 en -1)
+The end cut on a slant	De snede aan het einde schuin
+Ground	Grond
+as it is	zoals het is
+cut away under it	eronder weggesneden
+cut, held at the end	gesneden, vast aan het einde
+cut, held at the start	gesneden, vast aan het begin
+cut, held at both ends	gesneden, vast aan beide einden
+A hole in the ground under it, as for a tunnel, an underpass or a pit (OMSI's terrain align)	Een gat in de grond eronder, zoals voor een tunnel, onderdoorgang of kuil (terrain align van OMSI)
+Select the whole road	De hele weg selecteren
+Every piece linked on from this one (or double-click the road)	Elk stuk dat hieraan doorloopt (of dubbelklik op de weg)
+Join with the next piece	Met het volgende stuk verbinden
+One piece again with the one after it, where the two make one curve	Weer één stuk met het volgende, waar de twee samen één kromme vormen
+Replace with	Vervangen door
+The object chosen in the Objects tool's catalogue takes this one's place	Het object gekozen in de catalogus van het gereedschap Objecten neemt de plaats van dit in
+Go to	Ga naar
+Level ground	Grond egaliseren
+The ground under it made level with its foot, blending in 3 m round it (a house on a slope)	De grond eronder gelijk gemaakt met zijn voet, met een overgang van 3 m eromheen (een huis op een helling)
+All like it	Alle gelijke
+Select every one of this type on the map	Elk van dit type op de kaart selecteren
+No road within 60 m	Geen weg binnen 60 m
+Name	Naam
+Folder	Map
+Traffic	Verkeer
+left-hand	linksverkeer
+No start point yet: place one (Game logic > Start points) so the bus has somewhere to appear in openOMSI.	Nog geen startpunt: plaats er een (Spellogica > Startpunten) zodat de bus ergens kan verschijnen in openOMSI.
+None yet: openOMSI shows it where maps are chosen.	Nog geen: openOMSI toont hem bij het kiezen van kaarten.
+Import your thumbnail	Je miniatuur importeren
+Choose a picture: it is cut to 370 × 280 and becomes the map's picture (picture.jpg).	Kies een afbeelding: ze wordt bijgesneden tot 370 × 280 en wordt de afbeelding van de kaart (picture.jpg).
+Open the map with this view	De kaart openen met dit beeld
+The camera as it is now is where the map opens (here and in OMSI 2's editor).	De camera zoals hij nu is, is waar de kaart opent (hier en in de editor van OMSI 2).
+Saved to	Opgeslagen in
+Edit map	Kaart bewerken
+Change the layer's texture	De textuur van de laag wijzigen
+Change the layer's detail texture	De detailtextuur van de laag wijzigen
+Controls	Besturing
+Keyboard	Toetsenbord
+Click a key, then press the new one (Esc: leave it). A key already in use is taken from its command.	Klik op een toets en druk dan op de nieuwe (Esc: laten staan). Een al gebruikte toets wordt van zijn opdracht afgenomen.
+press a key…	druk op een toets…
+Also:	Ook:
+Back to the default key	Terug naar de standaardtoets
+Reset all keys	Alle toetsen resetten
+Mouse	Muis
+Right button held	Rechterknop ingedrukt
+look round; W A S D fly, Q / E down / up, Shift faster, wheel: speed	rondkijken; W A S D vliegen, Q / E omlaag / omhoog, Shift sneller, wiel: snelheid
+Middle drag	Slepen met midden
+pan	pannen
+Alt + left / right / middle drag	Alt + slepen links / rechts / midden
+orbit / zoom / pan (as in Unity)	rondzwenken / zoomen / pannen (zoals in Unity)
+Left drag on nothing	Links slepen op niets
+select with a box	selecteren met een kader
+Alt + left drag	Alt + links slepen
+orbit round the point under the cursor	rondzwenken om het punt onder de cursor
+Wheel	Wiel
+move towards the cursor	naar de cursor toe bewegen
+Trackpad	Trackpad
+Two fingers	Twee vingers
+Pinch / twist	Knijpen / draaien
+zoom / turn	zoomen / draaien
+Option + two fingers or drag	Option + twee vingers of slepen
+Fixed keys	Vaste toetsen
+Arrow keys	Pijltjestoetsen
+move over the map (Shift: faster)	over de kaart bewegen (Shift: sneller)
+go to a saved view (Shift: keep the view there)	naar een opgeslagen beeld (Shift: het beeld daar bewaren)
+Alt + arrows	Alt + pijltjes
+move the selection a grid step (Shift: 10 cm)	de selectie een rasterstap verplaatsen (Shift: 10 cm)
+Alt + Page Up / Down	Alt + Page Up / Down
+selection up / down 10 cm (Shift: 1 m)	selectie 10 cm omhoog / omlaag (Shift: 1 m)
+add to / take from the selection	aan de selectie toevoegen / eruit halen
+Shift / Ctrl + drag on empty ground	Shift / Ctrl + slepen op lege grond
+select with a box (Shift adds)	selecteren met een kader (Shift voegt toe)
+Double-click a road	Dubbelklik op een weg
+select all of it	alles ervan selecteren
+turn the object	het object draaien
+brush size	kwastgrootte
+stop / deselect	stoppen / selectie opheffen
+Unsaved changes	Niet-opgeslagen wijzigingen
+The map has changes that are not saved. Save them first?	De kaart heeft niet-opgeslagen wijzigingen. Eerst opslaan?
+Don't save	Niet opslaan
+Assets	Assets
+All	Alle
+Picture size	Afbeeldingsgrootte
+Shapes…	Vormen…
+Close (B)	Sluiten (B)
+Scenery objects	Scenery-objecten
+Splines (roads, tracks…)	Splines (wegen, sporen…)
+Favourite on / off	Favoriet aan / uit
+content folder (mod, import, own)	contentmap (mod, import, eigen)
+OMSI 2	OMSI 2
+width	breedte
+Build with it	Ermee bouwen
+Place it	Plaatsen
+PBR material…	PBR-materiaal…
+Delete…	Verwijderen…
+Not seen in the game (a helper).	Niet zichtbaar in het spel (een hulpmiddel).
+Delete the asset?	Het asset verwijderen?
+Its folder goes into openMapper's bin in the content folder (openMapper\\bin), from where it can be put back by hand. Maps that use it show it missing.	Zijn map gaat naar de bin van openMapper in de contentmap (openMapper\\bin), vanwaar hij met de hand kan worden teruggezet. Kaarten die het gebruiken tonen het als ontbrekend.
+Calendar and place	Kalender en plaats
+Place and time	Plaats en tijd
+Holidays	Feestdagen
+Number plates	Kentekens
+Latitude	Breedtegraad
+Longitude	Lengtegraad
+Time zone	Tijdzone
+Where the sun stands and when it rises and sets come from here.	Hieruit komen de stand van de zon en de tijden van zonsopgang en zonsondergang.
+Summer time	Zomertijd
+years	jaar
+none: the clocks are never put forward	geen: de klok wordt nooit vooruitgezet
+EU rules for these years	EU-regels voor deze jaren
+Last Sunday of March to last Sunday of October, replacing what is set for these years	Laatste zondag van maart tot laatste zondag van oktober, ter vervanging van wat voor deze jaren is ingesteld
+None	Geen
+Year	Jaar
+entries	items
+Public holidays run Sunday's timetable; school holidays the holiday one.	Op feestdagen rijdt de zondagsdienstregeling; in schoolvakanties de vakantiedienstregeling.
+Public holidays	Feestdagen
+Add a holiday	Een feestdag toevoegen
+Holiday	Feestdag
+School holidays	Schoolvakanties
+Ends before it starts	Eindigt vóór het begin
+Add school holidays	Schoolvakantie toevoegen
+The AI's cars carry these, one a line.	De auto's van de AI dragen deze, één per regel.
+X: a letter, 9: a digit	X: een letter, 9: een cijfer
+Make	Maken
+Replaces the list with plates of the pattern	Vervangt de lijst door kentekens volgens het patroon
+plates	kentekens
+The scenario's AI lists are written, groups changed:	De AI-lijsten van het scenario zijn geschreven, groepen gewijzigd:
+Could not write the scenario	Kon het scenario niet schrijven
+The scenario's timetable is written, files:	De dienstregeling van het scenario is geschreven, bestanden:
+Back in the scenario:	Terug in het scenario:
+The scenario's things are on the map:	De dingen van het scenario staan op de kaart:
+what you place now is the scenario's too	wat je nu plaatst, hoort ook bij het scenario
+Editing the scenario	Het scenario bewerken
+Done	Gereed
+Chrono scenarios	Chronoscenario's
+How the map changes over the years: each scenario from its first day lays its own tiles, lines and tickets over the map. The view shows the map as on the day chosen here; what you edit is always the map itself.	Hoe de kaart in de loop der jaren verandert: elk scenario legt vanaf zijn eerste dag eigen tegels, lijnen en kaartjes over de kaart. Het beeld toont de kaart zoals op de hier gekozen dag; wat je bewerkt is altijd de kaart zelf.
+Show the map as on	De kaart tonen zoals op
+Today	Vandaag
+Active on that day:	Actief op die dag:
+New scenario's name	Naam van het nieuwe scenario
+New scenario	Nieuw scenario
+A scenario starting on the day shown, after the others	Een scenario dat begint op de getoonde dag, na de andere
+From	Vanaf
+To	Tot
+for good	voorgoed
+Own tickets	Eigen kaartjes
+Own money	Eigen geld
+the map's	die van de kaart
+Takes off	Haalt lijnen weg
+What changes (shown where the date is chosen)	Wat verandert (getoond waar de datum wordt gekozen)
+From its first day, the selection in the view:	Vanaf zijn eerste dag, de selectie in het beeld:
+appears	verschijnt
+Taken out of the map into the scenario: it is there from the scenario's first day on (place it first, then press this)	Uit de kaart gehaald en in het scenario gezet: het is er vanaf de eerste dag van het scenario (plaats het eerst, druk dan hierop)
+is gone	verdwijnt
+Stays in the map, gone from the scenario's first day on	Blijft in de kaart, verdwijnt vanaf de eerste dag van het scenario
+becomes	wordt
+its texts become	zijn teksten worden
+Write	Schrijven
+Its path rules from that day	Zijn padregels vanaf die dag
+Add a rule	Een regel toevoegen
+Written into the scenario at once (undo does not take it out of the scenario).	Meteen in het scenario geschreven (ongedaan maken haalt het er niet uit).
+What it changes	Wat het wijzigt
+into the map	in de kaart
+Out of the scenario into the map itself: there on every day	Uit het scenario in de kaart zelf: er op elke dag
+Take it out of the scenario	Uit het scenario halen
+new texts	nieuwe teksten
+rules	regels
+Nothing yet.	Nog niets.
+Its own things are on the map: select, move, change and place as usual. The map's own things stay the map's.	Zijn eigen dingen staan op de kaart: selecteer, verplaats, wijzig en plaats ze zoals gewoonlijk. De eigen dingen van de kaart blijven van de kaart.
+Done: back into the scenario	Klaar: terug naar het scenario
+Edit its own things on the map	Zijn eigen dingen op de kaart bewerken
+What it brings in is put on the map to work with as with anything else; Done writes it back (undo starts afresh)	Wat het toevoegt wordt op de kaart gezet om ermee te werken als met al het andere; Klaar schrijft het terug (ongedaan maken begint opnieuw)
+The Lines window shows its timetable (the map's with its own laid over): lines, trips and tours edited there are the scenario's; a line of the map taken away is taken off from its day.	Het lijnenvenster toont zijn dienstregeling (die van de kaart met de zijne eroverheen): lijnen, ritten en omlopen die daar worden bewerkt, zijn van het scenario; een weggehaalde lijn van de kaart wordt vanaf zijn dag verwijderd.
+Done with its timetable	Klaar met zijn dienstregeling
+Edit its timetable	Zijn dienstregeling bewerken
+Its own lines, trips and tours in the Lines window; Done writes only what differs from the map's (undo starts afresh)	Zijn eigen lijnen, ritten en omlopen in het lijnenvenster; Klaar schrijft alleen wat afwijkt van de kaart (ongedaan maken begint opnieuw)
+The Traffic window shows its AI lists (the map's with its own added): vehicles and type groups added there, and a depot's own depot file, are the scenario's from its day.	Het verkeersvenster toont zijn AI-lijsten (die van de kaart met de zijne erbij): daar toegevoegde voertuigen en typegroepen, en het eigen depotbestand van een depot, zijn van het scenario vanaf zijn dag.
+Done with its AI lists	Klaar met zijn AI-lijsten
+Edit its AI lists	Zijn AI-lijsten bewerken
+Vehicles it adds to the groups and depots (OMSI's ailists_#upd.cfg); taking one away is the map's own business	Voertuigen die het aan de groepen en depots toevoegt (ailists_#upd.cfg van OMSI); er een weghalen is de zaak van de kaart zelf
+Write the scenario	Het scenario schrijven
+Close	Sluiten
+The map has no chrono scenarios.	De kaart heeft geen chronoscenario's.
+from	van
+to	tot
+takes off	haalt weg
+own tickets	eigen kaartjes
+Its first day	Zijn eerste dag
+Written into the scenario	In het scenario geschreven
+Written into the scenario:	In het scenario geschreven:
+Scenario written	Scenario geschreven
+The map as on	De kaart zoals op
+scenarios:	scenario's:
+Multiplayer	Multiplayer
+Joining… (a big map takes a while to come)	Verbinden… (een grote kaart doet er even over)
+Recover a conflicting edit…	Een conflicterende bewerking herstellen…
+Recovered your edit; undo is available	Je bewerking is hersteld; ongedaan maken is mogelijk
+Edit one map together: one of you hosts it, the others join. Roads, objects, ground and paint are shared as they are made; the timetable, the traffic and the descriptions stay the host's, and the host saves the map. Everybody needs the same objects and splines installed.	Samen één kaart bewerken: een van jullie host hem, de anderen doen mee. Wegen, objecten, grond en verf worden gedeeld zodra ze worden gemaakt; de dienstregeling, het verkeer en de beschrijvingen blijven van de host, en de host slaat de kaart op. Iedereen heeft dezelfde objecten en splines nodig.
+Your name	Je naam
+Password	Wachtwoord
+Host this map	Deze kaart hosten
+Others on this network can join	Anderen op dit netwerk kunnen meedoen
+Others anywhere can join (a free Cloudflare tunnel, nothing to set up on the router)	Anderen overal kunnen meedoen (een gratis Cloudflare-tunnel, niets in te stellen op de router)
+Port	Poort
+Over the internet the password must have at least this many letters:	Via internet moet het wachtwoord minstens zoveel letters hebben:
+No password: anybody who reaches this computer's port can join and change the whole map.	Geen wachtwoord: iedereen die de poort van deze computer bereikt kan meedoen en de hele kaart wijzigen.
+Ask for a password after all	Toch om een wachtwoord vragen
+Host without a password? Anybody on this network who finds the port can join and change the whole map.	Zonder wachtwoord hosten? Iedereen op dit netwerk die de poort vindt kan meedoen en de hele kaart wijzigen.
+Yes, without a password	Ja, zonder wachtwoord
+No	Nee
+Type a password the others will need.	Typ een wachtwoord dat de anderen nodig hebben.
+Host without a password…	Zonder wachtwoord hosten…
+Host	Hosten
+Open a map, type a name and a password first	Open eerst een kaart, typ een naam en een wachtwoord
+Join a map	Meedoen met een kaart
+The map open now has unsaved changes: joining closes it. Save it first.	De geopende kaart heeft niet-opgeslagen wijzigingen: meedoen sluit hem. Sla eerst op.
+You host this map. Give the others one of these:	Jij host deze kaart. Geef de anderen een van deze:
+On this network the connection is not encrypted: somebody listening in can see the map, and from what they catch try passwords on their own computer. Use a long password, or the internet tunnel (encrypted).	Op dit netwerk is de verbinding niet versleuteld: iemand die meeluistert kan de kaart zien en met wat hij onderschept wachtwoorden proberen op zijn eigen computer. Gebruik een lang wachtwoord of de internettunnel (versleuteld).
+Everybody who joins can change the whole map.	Iedereen die meedoet kan de hele kaart wijzigen.
+Opening the Cloudflare tunnel… (fetched the first time)	De Cloudflare-tunnel openen… (de eerste keer opgehaald)
+internet	internet
+Waiting for Cloudflare's address…	Wachten op het adres van Cloudflare…
+The Cloudflare tunnel could not be opened (no cloudflared, or no internet). The LAN addresses still work.	De Cloudflare-tunnel kon niet worden geopend (geen cloudflared, of geen internet). De LAN-adressen werken nog.
+You joined this map. The host saves it.	Je doet mee met deze kaart. De host slaat hem op.
+Everything of yours is with the others	Alles van jou is bij de anderen
+Sending your edits…	Je bewerkingen verzenden…
+In the session	In de sessie
+Say something…	Zeg iets…
+Leave	Verlaten
+Knife (K): a click on a road cuts it there, as often as you like; the pieces' lengths shown at the cursor, on whole grid steps with grid snapping on · right-click or Esc: off	Mes (K): een klik op een weg snijdt hem daar door, zo vaak je wilt; de lengtes van de stukken staan bij de cursor, bij rasterbinding op hele rasterstappen · rechtsklik of Esc: uit
+The angle step: what snapping comes to and what R turns by	De hoekstap: waar het vastklikken op uitkomt en hoeveel R draait
+Angle	Hoek
+Snap headings to the angle step	Richtingen op de hoekstap laten klikken
+Grid	Raster
+Snap positions to the grid	Posities op het raster laten klikken
+Click two points to measure the distance and gradient between them (U) · right-click: off	Klik twee punten aan om afstand en helling ertussen te meten (U) · rechtsklik: uit
+Auto-Terrain	Auto-terrein
+What you build follows the ground: roads, paths and tracks take its height (off: they run level from where they start). Only what is built from now on; nothing already there changes	Wat je bouwt volgt de grond: wegen, paden en sporen nemen zijn hoogte aan (uit: ze lopen vlak vanaf het begin). Alleen wat vanaf nu wordt gebouwd; wat er al is verandert niet
+Auto-Switch	Auto-wissel
+Branching a track off another makes a switch there	Een spoor van een ander aftakken maakt daar een wissel
+Auto-Junction	Auto-kruispunt
+Auto-Align	Auto-uitlijnen
+Line objects up with the nearest road (Shift: put it freely)	Objecten uitlijnen op de dichtstbijzijnde weg (Shift: vrij plaatsen)
+Selection	Selectie
+A click on one of it selects all of it, Ctrl + click one alone	Een klik op één ervan selecteert alles, Ctrl + klik er één
+Keep these together: a click on one selects all, a drag moves all (Ctrl+G)	Bij elkaar houden: een klik op één selecteert alles, slepen verplaatst alles (Ctrl+G)
+Apply	Toepassen
+Turn	Draaien
+Level the ground under them	De grond eronder egaliseren
+Each one's outline made level with its foot, blending into the ground 3 m round it	De omtrek van elk gelijk gemaakt met zijn voet, met overgang in de grond over 3 m eromheen
+Make every object	Alle objecten maken
+The object chosen in the Objects tool's catalogue	Het object gekozen in de catalogus van het gereedschap Objecten
+Random headings	Willekeurige richtingen
+Every selected object turned its own random way (trees, bushes, rocks)	Elk geselecteerd object op een eigen willekeurige manier gedraaid (bomen, struiken, rotsen)
+Along the road	Langs de weg
+Each turned the way the nearest road runs beside it	Elk gedraaid zoals de dichtstbijzijnde weg ernaast loopt
+Turned:	Gedraaid:
+All like this one	Alle zoals deze
+Every selected object takes the heading of the one in the properties	Elk geselecteerd object krijgt de richting van het object in de eigenschappen
+Make every road	Alle wegen maken
+The road type chosen in the Roads tool's catalogue	Het wegtype gekozen in de catalogus van het gereedschap Wegen
+Lay them on the ground	Op de grond leggen
+Reverse their direction	Hun richting omkeren
+Even slope along them	Gelijkmatige helling erlangs
+One chain of roads: from the height at one end to that at the other, evenly (a bridge, a ramp)	Eén keten wegen: gelijkmatig van de hoogte aan het ene einde naar die aan het andere (een brug, een oprit)
+Edit its AI lanes	Zijn AI-rijstroken bewerken
+Its lanes become AI paths of their own (the same lines, the same way) that the Logic tool's Edit existing bends, moves and deletes. The road keeps its look.	Zijn rijstroken worden eigen AI-paden (dezelfde lijnen, dezelfde richting) die Bestaande bewerken van het Logica-gereedschap buigt, verplaatst en verwijdert. De weg behoudt zijn uiterlijk.
+Ends (joined roads follow)	Einden (aangesloten wegen volgen)
+height	hoogte
+gradient	helling
+cant	overhelling
+Banking across the road, %: positive lowers its right side (into a right bend)	Zijwaartse helling over de weg, %: plus verlaagt de rechterkant (in een bocht naar rechts)
+End	End
+Even slope end to end	Gelijkmatige helling van begin tot einde
+Both gradients to the straight climb between the ends' heights	Beide hellingen naar de rechte stijging tussen de hoogtes van de einden
+Speed limit, km/h	Snelheidslimiet, km/u
+Traffic density ×	Verkeersdichtheid ×
+Priority	Voorrang
+Trucks (0: none)	Vrachtwagens (0: geen)
+No cars	Geen auto's
+Buses only	Alleen bussen
+For the AI and the player on one path (lane) of it, counted from 0: the view shows their numbers	Voor de AI en de speler op één pad (rijstrook) ervan, geteld vanaf 0: het beeld toont hun nummers
+Path (lane) number	Pad- (rijstrook-)nummer
+Hanging on it	Eraan hangend
+Points to hang objects on:	Punten om objecten aan te hangen:
+Select it	Selecteren
+Hang	Ophangen
+Choose an object in the Objects catalogue first	Kies eerst een object in de catalogus Objecten
+A fence, a row of houses, an avenue: the selection copied again and again, a step on each time	Een hek, een rij huizen, een laan: de selectie steeds opnieuw gekopieerd, telkens een stap verder
+Copies	Kopieën
+Step	Stap
+Turn each	Elk draaien
+Rows	Rijen
+More than one: a grid (an orchard, a car park), each row a row step on	Meer dan één: een raster (een boomgaard, een parkeerplaats), elke rij een rijstap verder
+Row step	Rijstap
+Tilted to the ground under it, the way it slopes forward and to the side (a fence, a bench or a shed on a hillside)	Gekanteld op de grond eronder, zoals die voorwaarts en zijwaarts helt (een hek, bank of schuur op een heuvel)
+Heights along the ground again, smoothed so it climbs a hill rather than every bump (after shaping the ground or laying a height map over it); where a road not selected joins, its height is kept	Hoogtes weer langs de grond, afgevlakt zodat het een heuvel op gaat in plaats van elke hobbel (na het vormen van de grond of het leggen van een hoogtekaart); waar een niet-geselecteerde weg aansluit, blijft zijn hoogte behouden
+Each starts where it ended: the traffic on it goes the other way (a one-way street, a track's direction), the road itself stays where it is	Elk begint waar het eindigde: het verkeer erop gaat de andere kant op (een eenrichtingsstraat, de richting van een spoor), de weg zelf blijft waar hij is
+A second track or the other carriageway: the selected splines copied alongside, bends kept exact, linked as they are	Een tweede spoor of de andere rijbaan: de geselecteerde splines ernaast gekopieerd, bochten exact, gekoppeld zoals ze zijn
+To the left	Naar links
+To the right	Naar rechts
+Left and right of the way the road runs (its arrows with AI lanes shown)	Links en rechts van de rijrichting van de weg (zijn pijlen met AI-rijstroken getoond)
+For trams and electric trains: a wire spline laid on the selected track, piece for piece and linked (its height is the wire spline's own); the masts go in with Objects along the road	Voor trams en elektrische treinen: een draadspline op het geselecteerde spoor gelegd, stuk voor stuk en gekoppeld (zijn hoogte is die van de draadspline zelf); de masten komen via Objecten langs de weg
+No wire spline installed (one whose name says Fahrdraht, Oberleitung or wire)	Geen draadspline geïnstalleerd (een met Fahrdraht, Oberleitung of wire in de naam)
+Lay it	Leggen
+Wire pieces laid:	Draadstukken gelegd:
+Paint the ground along it	De grond ernaast verven
+Add a ground texture in the Paint tool first: the base ground is under everything	Voeg eerst een grondtextuur toe in het gereedschap Verven: de basisgrond ligt onder alles
+Layer	Laag
+Where	Waar
+beside it	ernaast
+under it too	ook eronder
+Out from its edge	Vanaf zijn rand
+Soft edge	Zachte rand
+A gravel verge, dirt by a track, grass along a path: the brush of the Paint tool touches it up afterwards	Een grindberm, aarde langs een spoor, gras langs een pad: de kwast van het gereedschap Verven werkt het daarna bij
+Beside	Naast
+Lean with the road	Meehellen met de weg
+Each object leans with the road's gradient and banking (bays and arrows on the road); off, it stands upright	Elk object helt mee met de helling en overhelling van de weg (halten en pijlen op de weg); uit staat het rechtop
+A text the row's objects show (@ starts a new line)	Een tekst die de objecten van de rij tonen (@ begint een nieuwe regel)
+Object:	Object:
+Pick an object (a lamp, a tree, a bollard) in the Objects tool's catalogue	Kies een object (een lantaarn, boom, paaltje) in de catalogus van het gereedschap Objecten
+Right of the road's direction; negative: left	Rechts van de rijrichting van de weg; negatief: links
+Free at start / end	Vrij aan begin / einde
+Both sides	Beide zijden
+Place along the road	Langs de weg plaatsen
+Remove all rows	Alle rijen verwijderen
+Roundabout: click the centre, then the ring	Rotonde: klik op het midden, dan op de ring
+A one-way ring of the chosen road type (pick a one-way road); roads inside are cut back to it and joined with junctions	Een eenrichtingsring van het gekozen wegtype (kies een eenrichtingsweg); wegen binnenin worden erop bijgesneden en met kruispunten verbonden
+Keep the height (bridge, embankment)	Hoogte behouden (brug, dijk)
+An even gradient from end to end, the ground left as it is; the rise to the end can be typed while drawing. Pillars: select the road and put them along it as objects.	Een gelijkmatige helling van begin tot einde, de grond blijft zoals hij is; de stijging naar het einde kan tijdens het tekenen worden getypt. Pijlers: selecteer de weg en zet ze er als objecten langs.
+Rise	Stijging
+Shift: straight · Enter: build	Shift: recht · Enter: bouwen
+Junction	Kruispunt
+Traffic lights	Verkeerslichten
+Lights need three roads or more	Lichten hebben minstens drie wegen nodig
+Main road green	Groen hoofdweg
+Side roads green	Groen zijwegen
+The main road is the pair of roads most in line; red-yellow 2 s, yellow 3 s, 2 s all red between	De hoofdweg is het wegenpaar dat het meest op één lijn ligt; rood-geel 2 s, geel 3 s, 2 s alles rood ertussen
+Zebra crossings	Zebrapaden
+Road	Weg
+Build it again	Opnieuw bouwen
+Makes the plate, its kerbs and lanes again for the roads as they are now	Maakt de plaat, zijn stoepranden en rijstroken opnieuw voor de wegen zoals ze nu zijn
+Linked objects	Gekoppelde objecten
+An object can take its state from another ([varparent]): a signal head shows a light of its crossing's program, a stop's display its stop.	Een object kan zijn toestand van een ander nemen ([varparent]): een seinkop toont een licht van het programma van zijn kruising, het display van een halte zijn halte.
+Takes its state from	Neemt zijn toestand van
+Select it: IDCode	Selecteren: IDCode
+Takes its state from an object that is gone: IDCode	Neemt zijn toestand van een verdwenen object: IDCode
+Takes its state from nothing	Neemt zijn toestand van niets
+Light	Verkeerslicht
+Its light is not one of the crossing's: it stays dark	Zijn licht hoort niet bij de kruising: hij blijft donker
+That object runs no traffic lights: link the head to a crossing with a light program	Dat object regelt geen verkeerslichten: koppel de kop aan een kruising met een lichtprogramma
+A signal head: link it to its crossing to have it light	Een seinkop: koppel hem aan zijn kruising zodat hij brandt
+Click the object in the view… (Esc)	Klik op het object in het beeld… (Esc)
+Link to another…	Aan een ander koppelen…
+Link to an object…	Aan een object koppelen…
+Then click the object it is to take its state from (a crossing for a signal head)	Klik dan op het object waarvan het zijn toestand moet nemen (een kruising voor een seinkop)
+Taking their state from it:	Nemen hun toestand ervan:
+light	licht
+Click the object it takes its state from	Klik op het object waarvan het zijn toestand neemt
+stop	halte
+Find in map	Zoeken in kaart
+Name, file, IDCode, stop or x, y	Naam, bestand, IDCode, halte of x, y
+The point	Het punt
+Spline	Spline
+Object	Object
+Nothing on the map has this IDCode.	Niets op de kaart heeft deze IDCode.
+kinds	soorten
+on the map	op de kaart
+Next	Volgende
+Select the next one and go there	Het volgende selecteren en erheen gaan
+Every one of these becomes the road type chosen in the Roads tool	Elk van deze wordt het wegtype gekozen in het gereedschap Wegen
+Every one of these becomes the object chosen in the catalogue	Elk van deze wordt het object gekozen in de catalogus
+More: type to narrow the list	Meer: typ om de lijst te beperken
+Replaced:	Vervangen:
+Satellite overlay	Satellietlaag
+Satellite and own pictures	Satelliet en eigen afbeeldingen
+Click a tile to see its overlay here.	Klik op een tegel om hier zijn laag te zien.
+Show the overlay	De laag tonen
+opacity	dekking
+Load satellite imagery	Satellietbeelden laden
+Place the map on the Earth first (Satellite and terrain…)	Plaats de kaart eerst op de aarde (Satelliet en terrein…)
+Load image file…	Afbeeldingsbestand laden…
+Your own picture for this tile (a scan, a screenshot): or drop it on the window	Je eigen afbeelding voor deze tegel (een scan, screenshot): of sleep haar naar het venster
+Load the OpenStreetMap map	De OpenStreetMap-kaart laden
+OpenStreetMap map for all tiles	OpenStreetMap-kaart voor alle tegels
+The map as openstreetmap.org draws it (streets with their names, houses, water, green, stop signs), drawn sharp from OpenStreetMap data and laid on the tile in place of a satellite picture: to build roads and houses over by eye. Nothing is generated from it.	De kaart zoals openstreetmap.org hem tekent (straten met namen, huizen, water, groen, haltebordjes), scherp getekend uit OpenStreetMap-gegevens en op de tegel gelegd in plaats van een satellietbeeld: om op het oog wegen en huizen overheen te bouwen. Er wordt niets uit gegenereerd.
+own picture	eigen afbeelding
+for an earlier placement	voor een eerdere plaatsing
+not kept with the map	niet bij de kaart bewaard
+, partly coarser	, deels grover
+nothing	niets
+Place the map on the Earth first.	Plaats de kaart eerst op de aarde.
+Load terrain heights	Terreinhoogtes laden
+Done:	Klaar:
+with problems	met problemen
+A picture for the tiles	Een afbeelding voor de tegels
+Could not read the picture	Kon de afbeelding niet lezen
+Could not copy the picture	Kon de afbeelding niet kopiëren
+The picture is on the tiles: line it up in Satellite and terrain, Own pictures.	De afbeelding staat op de tegels: lijn haar uit in Satelliet en terrein, Eigen afbeeldingen.
+Nothing found by that name.	Niets gevonden onder die naam.
+Some tiles had Google imagery: enter your Google key to see it again (it is not kept with the map).	Sommige tegels hadden Google-beelden: voer je Google-sleutel in om ze weer te zien (hij wordt niet bij de kaart bewaard).
+Satellite and terrain	Satelliet en terrein
+Find a place: a town, a street, an address… (Enter)	Zoek een plek: een stad, straat, adres… (Enter)
+Searching…	Zoeken…
+Search © OpenStreetMap contributors	Zoeken © OpenStreetMap-bijdragers
+This map has world coordinates ([worldcoordinates]): it lies on the Earth by itself, its tiles are Web Mercator tiles.	Deze kaart heeft wereldcoördinaten ([worldcoordinates]): hij ligt zelf op de aarde, zijn tegels zijn Web Mercator-tegels.
+Click on the map where the orange tile goes…	Klik op de kaart waar de oranje tegel komt…
+Place the map here	Kaart hier plaatsen
+Then click on the map: the middle of the orange tile goes there	Klik dan op de kaart: het midden van de oranje tegel komt daar
+At the view's middle	In het midden van het beeld
+North turned	Draaiing van noord
+Orange tile	Oranje tegel
+click the map to fly there in the view	klik op de kaart om er in het beeld heen te vliegen
+1. Find the place.  2. Press "Place the map here" and click on the map: the orange tile (the map's middle) goes there.	1. Zoek de plek.  2. Druk op "Kaart hier plaatsen" en klik op de kaart: de oranje tegel (het midden van de kaart) komt daar.
+Imagery	Beelden
+The sharpest here	Het scherpst hier
+cm a pixel here	cm per pixel hier
+checking…	controleren…
+is sharper here	is hier scherper
+Sharper imagery may be had here with your own free key for Mapbox, MapTiler or Google (Keys below).	Scherpere beelden zijn hier mogelijk met je eigen gratis sleutel voor Mapbox, MapTiler of Google (Sleutels hieronder).
+Terms of use	Gebruiksvoorwaarden
+Zoom	Zoom
+the finest here	het fijnst hier
+Picture of a tile	Afbeelding van een tegel
+every pixel of the source (up to 4096)	elke pixel van de bron (tot 4096)
+Loaded at	Geladen op
+cm a pixel	cm per pixel
+Also load terrain heights	Ook terreinhoogtes laden
+New tiles get imagery by themselves	Nieuwe tegels krijgen vanzelf beelden
+Load for all tiles	Voor alle tegels laden
+For the selected tile	Voor de geselecteerde tegel
+Click a tile with the Tiles tool (7)	Klik op een tegel met het gereedschap Tegels (7)
+Terrain heights only	Alleen terreinhoogtes
+of	van
+tiles beside the loaded heights were not loaded: the ground steps at their edge.	tegels naast de geladen hoogtes zijn niet geladen: de grond heeft een stap aan hun rand.
+Fit their edges	Hun randen aanpassen
+Their edge takes the loaded heights, fading out 60 m into the tile	Hun rand neemt de geladen hoogtes over en loopt over 60 m de tegel in uit
+Leave them	Laten staan
+Terrain heights	Terreinhoogtes
+Relative: the orange tile's mean height is 0 m	Relatief: de gemiddelde hoogte van de oranje tegel is 0 m
+Raise everything by	Alles verhogen met
+Taken off:	Afgetrokken:
+Measure again	Opnieuw meten
+Terrain data attribution	Bronvermelding terreingegevens
+Overlay on the ground	Laag op de grond
+Put the imagery into maps exported for sharing (check its licence first)	Beelden opnemen in kaarten die worden geëxporteerd om te delen (controleer eerst de licentie)
+Fit tile edges	Tegelranden aanpassen
+Keys for more sources (optional)	Sleutels voor meer bronnen (optioneel)
+Everything works without a key. With your own free key these may be sharper in some places; the key stays on this computer.	Alles werkt zonder sleutel. Met je eigen gratis sleutel kunnen deze op sommige plekken scherper zijn; de sleutel blijft op deze computer.
+Google satellite (needs your API key)	Google-satelliet (vereist je API-sleutel)
+get a key	sleutel aanvragen
+In Google Cloud: make a project, enable the Map Tiles API, create an API key, paste it here. Google bills by use above its free amount.	In Google Cloud: maak een project, schakel de Map Tiles API in, maak een API-sleutel en plak hem hier. Google rekent af op gebruik boven het gratis deel.
+key	sleutel
+Your own tile server	Je eigen tegelserver
+URL	URL
+Attribution	Bronvermelding
+Finest zoom	Fijnste zoom
+Kind	Soort
+XYZ / WMTS tiles	XYZ- / WMTS-tegels
+Terrarium heights	Terrarium-hoogtes
+{z} {x} {y} are filled in; a WMS gets {bbox} (EPSG:3857) and {width} {height}; {key} is your key.	{z} {x} {y} worden ingevuld; een WMS krijgt {bbox} (EPSG:3857) en {width} {height}; {key} is je sleutel.
+Add	Toevoegen
+Own pictures	Eigen afbeeldingen
+A scan, a screenshot, an old plan: laid on tiles and lined up by eye. No place on the Earth needed.	Een scan, screenshot, oud plan: op tegels gelegd en op het oog uitgelijnd. Geen plek op de aarde nodig.
+Tiles from	Tegels van
+Load image file over these tiles…	Afbeeldingsbestand over deze tegels laden…
+Turn left 90°	90° naar links draaien
+Turn right 90°	90° naar rechts draaien
+mirror left-right	links-rechts spiegelen
+mirror top-bottom	boven-onder spiegelen
+Reset	Resetten
+Your own pictures	Je eigen afbeeldingen
+of these tiles have your own pictures. Replace them with satellite imagery?	van deze tegels hebben je eigen afbeeldingen. Vervangen door satellietbeelden?
+Replace them	Vervangen
+Keep my pictures	Mijn afbeeldingen houden
+Groups for other maps	Groepen voor andere kaarten
+A selection kept under a name, to put down again in any map (a stop with its shelter and signs, a crossing with its lights)	Een selectie onder een naam bewaard, om weer neer te zetten in elke kaart (een halte met abri en borden, een kruising met lichten)
+Keep the selection	De selectie bewaren
+Group kept	Groep bewaard
+Select what to keep in the view first.	Selecteer eerst in het beeld wat je wilt bewaren.
+No groups yet.	Nog geen groepen.
+thing	ding
+things	dingen
+Delete the group (to openMapper's bin)	De groep verwijderen (naar de bin van openMapper)
+Use	Gebruiken
+Into the clipboard: Ctrl+V puts it down at the cursor, as often as wanted	Naar het klembord: Ctrl+V zet haar bij de cursor neer, zo vaak als nodig
+is in the clipboard: Ctrl+V puts it at the cursor	staat op het klembord: Ctrl+V zet haar bij de cursor
+The map's tiles: 300 m squares. Add more beside them with the Tiles tool.	De tegels van de kaart: vierkanten van 300 m. Voeg er meer naast toe met het gereedschap Tegels.
+A road	Een weg
+Roads tool: click where it starts, then where it ends. Click on a road's end to go on from it.	Gereedschap Wegen: klik waar hij begint, dan waar hij eindigt. Klik op het einde van een weg om daarvandaan door te gaan.
+A bus stop by the road	Een halte bij de weg
+Game logic > Bus stops: put one at the kerb, on the side the doors open. Name it on the right.	Spellogica > Haltes: zet er een bij de stoeprand, aan de kant van de deuren. Geef hem rechts een naam.
+A start point	Een startpunt
+Game logic > Start points: where your bus appears, on a road, facing the way to drive.	Spellogica > Startpunten: waar je bus verschijnt, op een weg, in rijrichting.
+A line with a trip	Een lijn met een rit
+Lines window: New line, New trip, then click the stops in order. The way is found along the roads.	Lijnenvenster: Nieuwe lijn, Nieuwe rit, klik dan de haltes in volgorde aan. De route wordt langs de wegen gevonden.
+A tour with departures	Een omloop met vertrektijden
+Lines window > Tours and times: New tour, then Fill from … to … .	Lijnenvenster > Omlopen en tijden: Nieuwe omloop, dan Vullen van … tot … .
+Buses for the tours	Bussen voor de omlopen
+A depot the tours take their buses from (Tours: Add a depot, or Traffic and AI).	Een depot waaruit de omlopen hun bussen halen (Omlopen: Depot toevoegen, of Verkeer en AI).
+Checked	Gecontroleerd
+Map > Check map: what would go wrong in the game, most of it put right with one click.	Kaart > Kaart controleren: wat er in het spel mis zou gaan, het meeste met één klik te herstellen.
+Saved	Opgeslagen
+Ctrl+S. Maps are saved into openOMSI's content folder.	Ctrl+S. Kaarten worden opgeslagen in de contentmap van openOMSI.
+A test drive	Een proefrit
+F5 saves and starts openOMSI on the map: pick line 1 and drive.	F5 slaat op en start openOMSI op de kaart: kies lijn 1 en rij.
+A map you can drive in service:	Een kaart waarop je in dienst kunt rijden:
+Show me	Toon me
+Your stops stand away from the roads: a bus serves a stop within 15 m of its lane.	Je haltes staan ver van de wegen: een bus bedient een halte binnen 15 m van zijn rijstrook.
+A real place? Put the map on the Earth (Map > Satellite and terrain), then Map > From OpenStreetMap brings its streets, stops, lines and trees.	Een echte plek? Plaats de kaart op de aarde (Kaart > Satelliet en terrein), dan brengt Kaart > Uit OpenStreetMap de straten, haltes, lijnen en bomen.
+Show this for new maps	Dit tonen voor nieuwe kaarten
+The map has no depot file.	De kaart heeft geen depotbestand.
+Make one from the lines	Een maken uit de lijnen
+The map has no trips yet (Map > Lines and timetable)	De kaart heeft nog geen ritten (Kaart > Lijnen en dienstregeling)
+Empty one	Leeg
+New	Nieuw
+A new depot file from the map's lines	Een nieuw depotbestand uit de lijnen van de kaart
+Delete this depot file	Dit depotbestand verwijderen
+The lines need	De lijnen hebben nodig
+Add them	Toevoegen
+What is there stays as it is	Wat er is, blijft zoals het is
+No depot group uses it.	Geen depotgroep gebruikt het.
+Used by the depot	Gebruikt door het depot
+Use it for every depot	Voor elk depot gebruiken
+The AI's depot groups (Vehicle groups tab) take their buses' destinations from it	De depotgroepen van de AI (tabblad Voertuiggroepen) nemen de bestemmingen van hun bussen hieruit
+Rename	Hernoemen
+not a usable name	geen bruikbare naam
+The destination a bus shows on its way to and from the depot	De bestemming die een bus toont op weg van en naar het depot
+Destinations	Bestemmingen
+Stops	Haltes
+Routes	Routes
+nobody gets on	niemand stapt in
+Code	Code
+another destination has this code	een andere bestemming heeft deze code
+As a trip's terminus is named in the timetable: the stop where everybody gets off	Zoals de eindhalte van een rit in de dienstregeling heet: de halte waar iedereen uitstapt
+Nobody gets on (service trip, empty sign)	Niemand stapt in (dienstrit, leeg bord)
+Delete destination	Bestemming verwijderen
+Add destination	Bestemming toevoegen
+New destination	Nieuwe bestemming
+As the timetable names the stop	Zoals de halte in de dienstregeling heet
+Delete stop	Halte verwijderen
+Add stop	Halte toevoegen
+line	lijn
+What the driver types: the line's number and two digits (7601: line 76, route 01)	Wat de chauffeur intypt: het lijnnummer en twee cijfers (7601: lijn 76, route 01)
+Line	Lijn
+IBIS text	IBIS-tekst
+Destination	Eindbestemming
+Stops in order	Haltes in volgorde
+Not in the Stops list: the displays have no texts for it	Niet in de lijst Haltes: de displays hebben er geen teksten voor
+Move up	Omhoog
+Move down	Omlaag
+Take out	Weghalen
+Add a stop…	Een halte toevoegen…
+Delete route	Route verwijderen
+Add route	Route toevoegen
+No routes: the IBIS knows the destinations' codes only. Add them from the lines above.	Geen routes: het IBIS kent alleen de codes van de bestemmingen. Voeg ze toe uit de lijnen hierboven.
+Winter with snow	Winter met sneeuw
+Summer (dry)	Zomer (droog)
+Jan	Jan
+Feb	Feb
+Mar	Mrt
+Apr	Apr
+May	Mei
+Jun	Jun
+Jul	Jul
+Aug	Aug
+Sep	Sep
+Oct	Okt
+Nov	Nov
+Dec	Dec
+Map settings	Kaartinstellingen
+Money	Geld
+Tickets	Kaartjes
+none: the map has no depot group (Traffic and AI)	geen: de kaart heeft geen depotgroep (Verkeer en AI)
+Years	Jaren
+Year offset	Jaarverschuiving
+Added to today's year when the game starts at the real date (Berlin-Spandau: -25 for the 1980s)	Opgeteld bij het huidige jaar als het spel op de echte datum start (Berlin-Spandau: -25 voor de jaren 80)
+Repair time	Reparatietijd
+ min	 min
+Rail	Rails
+real rail (trams and trains follow their tracks' switches)	echte rails (trams en treinen volgen de wissels van hun sporen)
+Helper	Hulp
+dynamic helper active (the original editor's map option, kept as it is)	dynamische hulp actief (kaartoptie van de originele editor, ongewijzigd)
+Seasons	Seizoenen
+Summer where none is set. The days count from 1 January.	Zomer waar niets is ingesteld. De dagen tellen vanaf 1 januari.
+Add a season	Een seizoen toevoegen
+A season ends before it starts	Een seizoen eindigt vóór het begin
+Nothing selected	Niets geselecteerd
+Paste here	Hier plakken
+Cut the road here	De weg hier doorsnijden
+Select all like it	Alle gelijke selecteren
+Keep for other maps…	Bewaren voor andere kaarten…
+Its ground, painting, water, objects and roads, put beside or into this map. Lines, timetable and AI lists stay with the other map.	Zijn grond, verf, water, objecten en wegen, naast of in deze kaart gezet. Lijnen, dienstregeling en AI-lijsten blijven bij de andere kaart.
+Choose a map…	Kies een kaart…
+Other…	Andere…
+A map to take tiles from (its global.cfg)	Een kaart om tegels van te nemen (zijn global.cfg)
+Grey: this map · orange: the tiles to add (click to take one or leave it) · red: on a tile of this map, left out	Grijs: deze kaart · oranje: de toe te voegen tegels (klik om er een te nemen of te laten) · rood: op een tegel van deze kaart, weggelaten
+Move:	Verschuiven:
+west	west
+east	oost
+north	noord
+south	zuid
+Raise it by	Verhogen met
+Its ground, water, roads and objects at a height of their own	Zijn grond, water, wegen en objecten op een eigen hoogte
+Ease the ground where the maps meet	De grond afvlakken waar de kaarten samenkomen
+Added	Toegevoegd
+tiles from the other map	tegels van de andere kaart
+Cube	Kubus
+Plane	Vlak
+Circle	Cirkel
+Triangle	Driehoek
+Triangular prism	Driehoekig prisma
+Wedge	Wig
+Corner wedge	Hoekwig
+Pyramid	Piramide
+Sphere	Bol
+Icosphere	Icosfeer
+Cylinder	Cilinder
+Cone	Kegel
+Torus	Torus
+Tube	Buis
+Capsule	Capsule
+Stairs	Trap
+Arch	Boog
+Make one and put it on the map with a click (each one can then be edited, scaled, cut and joined)	Maak er een en zet hem met een klik op de kaart (daarna kan elk worden bewerkt, geschaald, gesneden en samengevoegd)
+Array	Array
+Mirror	Spiegelen
+Solidify	Solidify
+Subdivision surface	Subdivision surface
+Decimate	Decimate
+Triangulate	Triangulate
+Displace	Displace
+Wireframe	Wireframe
+Screw	Screw
+Simple deform	Simple deform
+Cast	Cast
+Weld	Weld
+Edge split	Edge split
+Boolean	Boolean
+Follow the ground	De grond volgen
+Count	Aantal
+Relative	Relatief
+Offset	Verschuiving
+Merge touching ends	Aansluitende einden samenvoegen
+Distance	Afstand
+Cut away the other side first	Eerst de andere kant wegsnijden
+Weld at the mirror	Samenvoegen op de spiegel
+Thickness	Dikte
+Close the rim	De rand sluiten
+Width	Breedte
+Segments	Segmenten
+Levels	Niveaus
+Smooth (Catmull-Clark)	Vloeiend (Catmull-Clark)
+Factor	Factor
+Repeat	Herhalen
+Seed	Seed
+Along the normals	Langs de normalen
+Steps	Stappen
+Axis	As
+Twist	Draaiing
+Bend	Buiging
+Taper	Versmalling
+Stretch	Rek
+Amount	Hoeveelheid
+Box	Box
+Difference	Verschil
+With the part	Met het deel
+Tip: hide the cutting part (its eye in the list) so only the cut shows	Tip: verberg het snijdende deel (zijn oog in de lijst) zodat alleen de uitsnede zichtbaar is
+Above the ground	Boven de grond
+Every vertex follows the terrain under it (in the editor's view and the written files at the place it stands)	Elk hoekpunt volgt het terrein eronder
+Mesh (openMapper object)	Mesh (openMapper-object)
+Shared by	Gedeeld door
+objects on the map: changes apply to all	objecten op de kaart: wijzigingen gelden voor alle
+Make this one single	Dit los maken
+Leave the edit mode (Tab)	De bewerkmodus verlaten (Tab)
+Edit the mesh (Tab)	De mesh bewerken (Tab)
+Write it as OBJ, glTF / GLB, FBX, Collada, USD, STL, PLY, 3MF, OFF, X or O3D	Schrijven als OBJ, glTF / GLB, FBX, Collada, USD, STL, PLY, 3MF, OFF, X of O3D
+Off: its height is kept above the ground under it	Uit: zijn hoogte wordt boven de grond eronder gehouden
+Solid (collides)	Massief (botst)
+The part edited and given modifiers	Het deel dat wordt bewerkt en modifiers krijgt
+Shown (and written into the object)	Getoond (en in het object geschreven)
+faces	vlakken
+Duplicate the part	Het deel dupliceren
+Delete the part	Het deel verwijderen
+Add a shape as a part	Een vorm als deel toevoegen
+Separate parts into objects	Delen in objecten splitsen
+Each part becomes an object of its own, standing where it stood	Elk deel wordt een eigen object, op zijn plek
+Shape	Vorm
+Modifiers	Modifiers
+Make it part of the mesh	Deel van de mesh maken
+Add a modifier	Een modifier toevoegen
+Materials	Materialen
+Colour (multiplies the texture)	Kleur (vermenigvuldigt de textuur)
+Assign to selected faces	Toewijzen aan geselecteerde vlakken
+Choose…	Kiezen…
+No texture	Geen textuur
+Save as…	Opslaan als…
+PNG, JPEG, BMP, TGA, TIFF, WebP or DDS	PNG, JPEG, BMP, TGA, TIFF, WebP of DDS
+Transparency	Transparantie
+Opaque	Ondoorzichtig
+Cut out	Uitgeknipt
+Blended	Doorschijnend
+Glows	Gloeit
+Light of its own: black for none	Eigen licht: zwart voor geen
+Shine	Glans
+Normal map	Normal map
+ORM map	ORM-map
+Night texture	Nachttextuur
+Light map	Lichtmap
+Remove the material	Het materiaal verwijderen
+Add a material	Een materiaal toevoegen
+Import materials…	Materialen importeren…
+From an .mtl, a glTF / GLB / FBX, or the pictures of one PBR material (base colour, normal, roughness, metal, AO...)	Uit een .mtl, een glTF / GLB / FBX, of de afbeeldingen van één PBR-materiaal (basiskleur, normal, ruwheid, metaal, AO...)
+Lamps	Lampen
+Glow	Gloed
+Light on the ground	Licht op de grond
+Colour	Kleur
+Reach	Bereik
+On	Aan
+Always	Altijd
+At night	's Nachts
+variable	variabele
+Seen from one side	Van één kant zichtbaar
+Star	Ster
+Facing	Richting
+Remove the lamp	De lamp verwijderen
+Add a glow	Een gloed toevoegen
+A lamp's bulb, a lit sign: a glow seen at night	De lamp van een lantaarn, een verlicht bord: een gloed die 's nachts zichtbaar is
+Add light on the ground	Licht op de grond toevoegen
+The pool of light a street lamp throws at night	De lichtplek die een straatlantaarn 's nachts werpt
+Signal head, lamps	Seinkop, lampen
+Put it within 40 m of a crossing with a light program: it takes its light from it (or link it in its properties)	Zet hem binnen 40 m van een kruising met een lichtprogramma: hij neemt zijn licht daarvan (of koppel hem in zijn eigenschappen)
+Bake	Bakken
+Its textures and colours painted into one picture on a new UV map (one material: fewer draws in the game), with its own shadows and its lamps' night light if chosen	Zijn texturen en kleuren in één afbeelding geschilderd op een nieuwe UV-map (één materiaal: minder draws in het spel), met eigen schaduwen en het nachtlicht van zijn lampen indien gekozen
+Ambient occlusion	Ambient occlusion
+How far its shadows reach	Hoe ver zijn schaduwen reiken
+Lamps' light at night (light map)	Licht van de lampen 's nachts (lichtmap)
+The object's last change (Ctrl+Z in the edit mode)	De laatste wijziging van het object (Ctrl+Z in de bewerkmodus)
+Divisions X	Delingen X
+Divisions Y	Delingen Y
+Rings	Ringen
+Subdivisions	Onderverdelingen
+Bottom radius	Onderste straal
+Top radius	Bovenste straal
+Tube radius	Buisstraal
+Tube segments	Buissegmenten
+Outer radius	Buitenste straal
+Inner radius	Binnenste straal
+Opening	Opening
+Wall	Wand
+Mesh	Mesh
+A copy of this object's type of its own is made for it, with its meshes, materials and lamps to edit; the original stays as it is	Er wordt een eigen kopie van het type van dit object gemaakt, met zijn meshes, materialen en lampen om te bewerken; het origineel blijft zoals het is
+As a mesh	Als mesh
+Copy as an object	Kopie als object
+An openMapper object of its shape beside it, to edit as a mesh (vertices, edges, faces)	Een openMapper-object van zijn vorm ernaast, om als mesh te bewerken (hoekpunten, randen, vlakken)
+The same, the spline taken away (its lanes go with it)	Hetzelfde, de spline weggehaald (zijn rijstroken gaan mee)
+Splines as a mesh	Splines als mesh
+Copy as one object	Kopie als één object
+Replace by one object	Vervangen door één object
+Export the selection…	Selectie exporteren…
+As meshes	Als meshes
+Join into one object (Ctrl+J)	Samenvoegen tot één object (Ctrl+J)
+All their parts in the one shown in the properties, the others gone	Al hun delen in dat in de eigenschappen, de andere verdwijnen
+Solid modelling (CSG): the object shown in the properties with the others	Solid modelling (CSG): het object in de eigenschappen met de andere
+Keep the cutting objects	De snijdende objecten behouden
+Vertices	Hoekpunten
+Edges	Randen
+Faces	Vlakken
+vertices	hoekpunten
+edges	randen
+Selected	Geselecteerd
+X-ray: pick through the mesh	Röntgen: door de mesh heen kiezen
+All (A)	Alles (A)
+None (Alt+A)	Niets (Alt+A)
+Invert (Ctrl+I)	Omkeren (Ctrl+I)
+Linked (Ctrl+L)	Verbonden (Ctrl+L)
+More	Meer
+Less	Minder
+Click, Shift + click to add, drag on nothing for a box, a second click or Alt + click for a loop	Klik, Shift + klik om toe te voegen, slepen op niets voor een kader, een tweede klik of Alt + klik voor een lus
+Change	Wijzigen
+Extrude (E)	Extruderen (E)
+Inset (I)	Inzetten (I)
+Bevel (Ctrl+B)	Afschuinen (Ctrl+B)
+Loop cut (Ctrl+R)	Lussnede (Ctrl+R)
+Point at an edge and press Ctrl+R	Wijs een rand aan en druk op Ctrl+R
+Subdivide	Onderverdelen
+Fill (F)	Vullen (F)
+Bridge loops	Lussen overbruggen
+Connect (J)	Verbinden (J)
+Poke	Poke
+Duplicate (Shift+D)	Dupliceren (Shift+D)
+Split (Y)	Splitsen (Y)
+Separate into an object (P)	Afsplitsen tot object (P)
+Spin 360°	Spin 360°
+The selection turned round the object's up axis through its middle, in 12 steps	De selectie rond de opwaartse as van het object door zijn midden gedraaid, in 12 stappen
+Smooth vertices	Hoekpunten gladstrijken
+Merge (M)	Samenvoegen (M)
+At the middle	In het midden
+At the first	Bij de eerste
+At the last	Bij de laatste
+Collapse each piece	Elk stuk samentrekken
+By distance (1 mm)	Op afstand (1 mm)
+Delete (X)	Verwijderen (X)
+Only faces	Alleen vlakken
+Dissolve vertices	Hoekpunten oplossen
+Dissolve edges	Randen oplossen
+Dissolve faces	Vlakken oplossen
+Triangulate (Ctrl+T)	Triangulate (Ctrl+T)
+Triangles to quads (Alt+J)	Driehoeken naar vierhoeken (Alt+J)
+Shade smooth	Vloeiend schaduwen
+Shade flat	Vlak schaduwen
+Flip normals (Alt+N)	Normalen omkeren (Alt+N)
+Normals outward (Shift+N)	Normalen naar buiten (Shift+N)
+Mark seam	Naad markeren
+Clear seam	Naad wissen
+Mark sharp	Als scherp markeren
+Clear sharp	Scherp wissen
+Adjust the last operation	De laatste bewerking aanpassen
+Slide	Schuiven
+Cuts	Sneden
+UV map	UV-map
+Unwrap	Uitvouwen
+By seams (conformal)	Op naden (conform)
+Smart project	Slimme projectie
+Cube projection (metres)	Kubusprojectie (meters)
+Cylinder projection	Cilinderprojectie
+Sphere projection	Bolprojectie
+Project from the view	Projecteren vanuit het beeld
+Lightmap pack	Lightmap pack
+Close the UV editor	De UV-editor sluiten
+UV editor	UV-editor
+Faces of the selection (all, with none selected); mark seams on edges first for an unwrap by seams	Vlakken van de selectie (alle, zonder selectie); markeer voor uitvouwen op naden eerst naden op randen
+Material of the selected faces	Materiaal van de geselecteerde vlakken
+With lamps	Met lampen
+Street lamp	Straatlantaarn
+A pole with a lamp that glows and lights the ground at night	Een paal met een lamp die 's nachts gloeit en de grond verlicht
+Signal head	Seinkop
+A traffic light of the lamps below that a crossing's light program drives	Een verkeerslicht van de lampen hieronder, aangestuurd door het lichtprogramma van een kruising
+Lamps:	Lampen:
+Picture, light, sound	Afbeelding, licht, geluid
+Picture / pattern…	Afbeelding / patroon…
+Choose a picture or a texture: it becomes an object you place, move, turn and scale like any other. Several repeats make a pattern	Kies een afbeelding of textuur: ze wordt een object dat je plaatst, verplaatst, draait en schaalt zoals elk ander. Meerdere herhalingen maken een patroon
+Light source	Lichtbron
+A lamp that glows and lights the ground round it	Een lamp die gloeit en de grond eromheen verlicht
+Sound source…	Geluidsbron…
+Choose a sound file (.wav): it plays where you put the marker, as far as the radius carries; the marker shows in the editor only	Kies een geluidsbestand (.wav): het speelt waar je de markering zet, zo ver als de straal reikt; de markering is alleen in de editor zichtbaar
+Picture width, m	Afbeeldingsbreedte, m
+Repeats	Herhalingen
+on the ground	op de grond
+standing	staand
+Light colour	Lichtkleur
+Light reach, m	Lichtbereik, m
+at night	's nachts
+always	altijd
+Sound reach, m	Geluidsbereik, m
+Sound volume	Geluidsvolume
+Overview: click or drag to move there · double-click: larger / smaller · M: hide	Overzicht: klik of sleep om erheen te gaan · dubbelklik: groter / kleiner · M: verbergen
+Name:	Naam:
+My town	Mijn stad
+Description:	Beschrijving:
+What the map is, for the game's map list	Wat de kaart is, voor de kaartenlijst van het spel
+Size:	Grootte:
+Ground height:	Grondhoogte:
+ m above sea level	 m boven zeeniveau
+Traffic:	Verkeer:
+keeps right	rechts rijden
+keeps left	links rijden
+Busy:	Drukte:
+cars	auto's
+passengers	passagiers
+Years:	Jaren:
+year offset	jaarverschuiving
+Added to today's year when the game starts at the real date	Opgeteld bij het huidige jaar als het spel op de echte datum start
+Money:	Geld:
+Tickets:	Kaartjes:
+Seasons:	Seizoenen:
+four, snowy winter	vier, sneeuwrijke winter
+mild winter	zachte winter
+summer only	alleen zomer
+Rail:	Rails:
+trams and trains follow their tracks' switches	trams en treinen volgen de wissels van hun sporen
+Ground texture (all tiles):	Grondtextuur (alle tegels):
+template	sjabloon
+More ground layers are painted later (Paint tool); the map's settings can all be changed in Map > Map settings.	Meer grondlagen worden later geverfd (gereedschap Verven); de instellingen van de kaart zijn allemaal te wijzigen in Kaart > Kaartinstellingen.
+Create	Maken
+as the template	zoals het sjabloon
+ways	wegen
+bus routes downloaded	busroutes gedownload
+not had:	niet gekregen:
+The streets of the map's place built as roads with junctions where they meet, its bus stops, lines, trees and woods. Best on tiles with no roads yet: roads lying on ones the map has are left out.	De straten van de plek van de kaart gebouwd als wegen met kruispunten waar ze samenkomen, plus haltes, lijnen, bomen en bossen. Het best op tegels zonder wegen: wegen op reeds aanwezige worden weggelaten.
+The map does not lie on the Earth yet: place it in Satellite and terrain (Map menu, I) first.	De kaart ligt nog niet op de aarde: plaats hem eerst in Satelliet en terrein (menu Kaart, I).
+Load the terrain heights first (Satellite and terrain): the roads follow the ground as it is when they are built.	Laad eerst de terreinhoogtes (Satelliet en terrein): de wegen volgen de grond zoals die is wanneer ze worden gebouwd.
+Download for the map's tiles	Downloaden voor de tegels van de kaart
+bus routes	busroutes
+trees	bomen
+buildings	gebouwen
+water	water
+Downloading…	Downloaden…
+no type chosen	geen type gekozen
+Use the chosen	Het gekozene gebruiken
+One-way roads	Eenrichtingswegen
+Each carriageway of a dual road and one-way streets: with a one-way road type they lie side by side as they should; with none chosen they get their kind's	Elke rijbaan van een dubbele weg en eenrichtingsstraten: met een eenrichtingswegtype liggen ze zoals het hoort naast elkaar; zonder keuze krijgen ze dat van hun soort
+as their kind	zoals hun soort
+no stop object	geen halteobject
+The stop chosen in Game logic > Bus stops	De halte gekozen in Spellogica > Haltes
+Bus lines	Buslijnen
+Each bus route through two or more of the map's stops a trip of its line, the way found along the roads; a tour from 06:00 to 22:00 for each new line	Elke busroute langs twee of meer haltes van de kaart: een rit van zijn lijn, de route langs de wegen gevonden; een omloop van 06:00 tot 22:00 voor elke nieuwe lijn
+Trees and woods	Bomen en bossen
+Single trees, rows of them and woods, planted with the plant mix (Objects tool > Plant brush) or the tree chosen; none on a road	Losse bomen, rijen en bossen, geplant met de plantenmix (gereedschap Objecten > Plantenkwast) of de gekozen boom; geen op een weg
+no plants chosen	geen planten gekozen
+kinds of plants	soorten planten
+apart in woods	tussenruimte in bossen
+Buildings	Gebouwen
+Each outline filled with the model of the folder chosen whose ground plan comes nearest, its front to the nearest road; an outline no model fits is left out	Elke omtrek gevuld met het model uit de gekozen map waarvan de plattegrond het dichtst komt, met de voorkant naar de dichtstbijzijnde weg; een omtrek waar geen model bij past, wordt weggelaten
+no folder	geen map
++ its folder	+ zijn map
+Add the folder of the object chosen in the catalogue (Buildings_MC, …)	De map toevoegen van het object gekozen in de catalogus (Buildings_MC, …)
+Lakes and rivers: the ground inside them lowered below the banks, and the tiles they lie on given water a little under the banks' height (OMSI's water is one level for a tile: low ground elsewhere on it is flooded too)	Meren en rivieren: de grond erin verlaagd onder de oevers, en de tegels waarop ze liggen krijgen water iets onder de hoogte van de oevers (water in OMSI is één peil per tegel: lage grond elders erop wordt ook overstroomd)
+deep	diep
+a road type (Roads tool), then "Use the chosen"	een wegtype (gereedschap Wegen), dan "Het gekozene gebruiken"
+a stop (Game logic > Bus stops), then "Use the chosen"	een halte (Spellogica > Haltes), dan "Het gekozene gebruiken"
+a tree in the Objects catalogue (or a plant mix)	een boom in de catalogus Objecten (of een plantenmix)
+a building in the catalogue, then "+ its folder"	een gebouw in de catalogus, dan "+ zijn map"
+To build, choose (or untick):	Kies om te bouwen (of vink uit):
+A one-way street is built the way it runs in OpenStreetMap: give it a one-way road type	Een eenrichtingsstraat wordt gebouwd zoals hij in OpenStreetMap loopt: geef hem een eenrichtingswegtype
+Build	Bouwen
+Name, file or IDCode	Naam, bestand of IDCode
+things on the map	dingen op de kaart
+Groups	Groepen
+Select the group and go there	De groep selecteren en erheen gaan
+Select everything in it	Alles erin selecteren
+Select it and go there	Selecteren en erheen gaan
+more: narrow the search	meer: verfijn het zoeken
+Select all of them	Alle selecteren
+Go to the first	Naar de eerste gaan
+Pick a tree in the catalogue, then paint	Kies een boom in de catalogus en verf dan
+Pick a tree in the catalogue, then click round the area	Kies een boom in de catalogus en klik dan rond het gebied
+Pick a road type, click the centre, then the ring	Kies een wegtype, klik op het midden, dan op de ring
+Select a road (double-click: all of it): its properties show its height profile	Selecteer een weg (dubbelklik: alles): zijn eigenschappen tonen zijn hoogteprofiel
+Select one of openMapper's junctions: its properties have Traffic lights and crossings	Selecteer een kruispunt van openMapper: zijn eigenschappen hebben Verkeerslichten en oversteken
+Select the signal head (or a display): Linked objects in its properties, then click its crossing	Selecteer de seinkop (of een display): Gekoppelde objecten in zijn eigenschappen, klik dan op zijn kruising
+Select a road, pick an object in the Objects catalogue: Objects along the road in its properties	Selecteer een weg, kies een object in de catalogus Objecten: Objecten langs de weg in zijn eigenschappen
+Select a track (double-click: all of it): Overhead wire under Parallel copy in its properties	Selecteer een spoor (dubbelklik: alles): Bovenleiding onder Parallelle kopie in zijn eigenschappen
+Select a road or a chain: Parallel copy in its properties	Selecteer een weg of keten: Parallelle kopie in zijn eigenschappen
+Select a road (double-click: all of it): Paint the ground along it in its properties	Selecteer een weg (dubbelklik: alles): De grond ernaast verven in zijn eigenschappen
+Click a tile: its water is in the panel; lower the ground under it with the Terrain tool	Klik op een tegel: zijn water staat in het paneel; verlaag de grond eronder met het gereedschap Terrein
+Height map: at the end of the Terrain panel	Hoogtekaart: aan het einde van het paneel Terrein
+By slope and height: at the end of the Paint panel	Op helling en hoogte: aan het einde van het paneel Verven
+View menu: Time of day, Season	Menu Beeld: Tijdstip, Seizoen
+What do you want to do?	Wat wil je doen?
+Groups…	Groepen…
+Objects on the map by folder	Objecten op de kaart per map
+Knife: cut roads	Mes: wegen doorsnijden
+Test drive in OMSI 2 (the original)	Proefrit in OMSI 2 (het origineel)
+Overview map	Overzichtskaart
+Place a bus stop	Een halte plaatsen
+Place a start point	Een startpunt plaatsen
+Plant trees with a brush	Bomen planten met een kwast
+Plant a wood or a park	Een bos of park planten
+Roundabout	Rotonde
+Height profile of a road	Hoogteprofiel van een weg
+Traffic lights and zebra crossings	Verkeerslichten en zebrapaden
+Link a signal head to its crossing	Een seinkop aan zijn kruising koppelen
+Objects along a road	Objecten langs een weg
+Overhead wire along a track	Bovenleiding langs een spoor
+Parallel copy of a road	Parallelle kopie van een weg
+Paint the ground along a road	De grond langs een weg verven
+Water, lake, river	Water, meer, rivier
+Ramp in the ground	Helling in de grond
+Height map import or export	Hoogtekaart importeren of exporteren
+Time of day and season	Tijdstip en seizoen
+PBR material	PBR-materiaal
+none	geen
+Own picture…	Eigen afbeelding…
+Choose a texture of the object, or a picture of your own.	Kies een textuur van het object of een eigen afbeelding.
+Normals (_nn)	Normals (_nn)
+Roughness	Ruwheid
+Shadow in hollows	Schaduw in holtes
+Bumps	Bobbels
+Only big shapes	Alleen grote vormen
+Dark parts stand out (not sink in)	Donkere delen steken uit (zakken niet in)
+Bright parts smoother	Heldere delen gladder
+Metal	Metaal
+Back to the defaults	Terug naar de standaardwaarden
+This texture has PBR maps of its own already: new ones made here are taken instead of them.	Deze textuur heeft al eigen PBR-maps: hier gemaakte worden in plaats daarvan gebruikt.
+Written as:	Geschreven als:
+PBR maps made	PBR-maps gemaakt
+Delete the PBR material	Het PBR-materiaal verwijderen
+PBR maps taken away	PBR-maps verwijderd
+Height profile	Hoogteprofiel
+over the ground	boven de grond
+Click: go there in the view · drag a dot (a joint) up or down: its height	Klik: erheen in het beeld · sleep een stip (een verbinding) omhoog of omlaag: zijn hoogte
+Climbs, falls	Stijgt, daalt
+Steepest	Steilste
+at	op
+Highest over the ground	Hoogst boven de grond
+Deepest under it	Diepst eronder
+Over 8 % is steep for a bus; over 12 % few streets go	Boven 8 % is steil voor een bus; boven 12 % hebben weinig straten het
+roadway	rijbaan
+Road types	Wegtypes
+Make a new road type…	Een nieuw wegtype maken…
+My road	Mijn weg
+ · own	 · eigen
+Create the road type	Het wegtype maken
+Road type made: the Roads tool builds with it	Wegtype gemaakt: het gereedschap Wegen bouwt ermee
+Change it in the road maker	Wijzigen in de wegbouwer
+Its junctions	Zijn kruispunten
+Make a junction where it meets another road (else they only cross)	Een kruispunt maken waar hij een andere weg ontmoet (anders kruisen ze alleen)
+Corners	Hoeken
+× rounder	× ronder
+Traffic lights by themselves	Verkeerslichten vanzelf
+Zebra crossings on every arm	Zebrapaden op elke tak
+Used for the junctions made from now on (where several road types meet, the one asking more wins). A junction already made keeps its own settings: select it to change them.	Gebruikt voor de kruispunten die vanaf nu worden gemaakt (waar meerdere wegtypes samenkomen, wint het veeleisendste). Een al gemaakt kruispunt behoudt zijn eigen instellingen: selecteer het om ze te wijzigen.
+Pick a road type on the left, or make a new one.	Kies links een wegtype of maak een nieuw.
+Road maker	Wegbouwer
+Lanes	Rijstroken
+(▼ 0: one-way)	(▼ 0: eenrichting)
+Lane width	Rijstrookbreedte
+Middle strip	Middenstrook
+Footways	Trottoirs
+Kerb	Stoeprand
+Roadway texture	Wegdektextuur
+Footway texture	Trottoirtextuur
+Own…	Eigen…
+The roadway texture is laid once across all its lanes (as OMSI 2's lane textures are painted: pick one with as many lanes); the footway texture's right end is the kerb.	De wegdektextuur ligt één keer over al zijn rijstroken (zoals de rijstrooktexturen van OMSI 2 zijn geschilderd: kies er een met evenveel rijstroken); het rechteruiteinde van de trottoirtextuur is de stoeprand.
+not on the map	niet op de kaart
+Signal routes	Seinroutes
+Each railway signal clears when a train wants the track pieces of its route and none stands on them.	Elk spoorwegsein springt open als een trein de spoordelen van zijn route wil en er niemand op staat.
+New route for the selected signal	Nieuwe route voor het geselecteerde sein
+Select a signal (one object) in the view first	Selecteer eerst een sein (één object) in het beeld
+The selected object does not look like a signal (its name says nothing of one): check it is.	Het geselecteerde object lijkt geen sein (zijn naam wijst er niet op): controleer of het er een is.
+No routes yet.	Nog geen routes.
+pieces	delen
+Signal	Sein
+the selected	het geselecteerde
+Aspect	Sein-beeld
+What the signal shows when this route is clear: 1 proceed, 2 proceed slowly (with a speed limit)…	Wat het sein toont als deze route vrij is: 1 doorrijden, 2 langzaam doorrijden (met snelheidslimiet)…
+Distant signal	Voorsein
+Next signal	Volgend sein
+Speed limit	Snelheidslimiet
+OMSI's route kind (the stock maps have 0 and 1)	Routesoort van OMSI (de standaardkaarten hebben 0 en 1)
+Track pieces	Spoordelen
+Take the selected track	Het geselecteerde spoor nemen
+Every rail path of the selected tracks and switches (double-click a track: all of it); replaces the pieces	Elk railpad van de geselecteerde sporen en wissels (dubbelklik op een spoor: alles); vervangt de delen
+Select the signal and its pieces in the view	Het sein en zijn delen in het beeld selecteren
+Delete the route	De route verwijderen
+Lines and timetable	Lijnen en dienstregeling
+Edit timetable	Dienstregeling bewerken
+No bus stop there: click one of the orange marks	Daar is geen halte: klik op een van de oranje markeringen
+The roads can't be read without the OMSI 2 folder.	De wegen kunnen zonder de OMSI 2-map niet worden gelezen.
+A line needs at least two bus stops on the map: place them with Game logic > Bus stops, beside a road.	Een lijn heeft minstens twee haltes op de kaart nodig: plaats ze met Spellogica > Haltes, naast een weg.
+Lines	Lijnen
+No lines yet.	Nog geen lijnen.
+New line	Nieuwe lijn
+Pick a line on the left, or make a new one.\n\nA line has trips (a way from stop to stop) and tours (one bus's day: which trip it drives when).	Kies links een lijn of maak een nieuwe.\n\nEen lijn heeft ritten (een route van halte naar halte) en omlopen (de dag van één bus: welke rit hij wanneer rijdt).
+That name is taken or can't be a file name	Die naam is bezet of kan geen bestandsnaam zijn
+A copy of the line with its trips and tours (a variant to change)	Een kopie van de lijn met zijn ritten en omlopen (een variant om te wijzigen)
+Delete the line and its trips	De lijn en zijn ritten verwijderen
+Players can drive it	Spelers kunnen hem rijden
+Trips	Ritten
+Tours and times	Omlopen en tijden
+A tour is one bus's day: the trips it drives, one after the other, and when each leaves.	Een omloop is de dag van één bus: de ritten die hij na elkaar rijdt, en wanneer elk vertrekt.
+A trip is one way along the line: its stops in order. Most lines have two, there and back.	Een rit is één richting langs de lijn: zijn haltes in volgorde. De meeste lijnen hebben er twee, heen en terug.
+New trip	Nieuwe rit
+Make the way back	De terugrit maken
+A new trip with the same stops the other way round	Een nieuwe rit met dezelfde haltes in omgekeerde volgorde
+Trip	Rit
+Delete the trip	De rit verwijderen
+Destination sign	Bestemmingsbord
+This trip runs on a track of its own (a train): its stops are kept as they are.	Deze rit rijdt op een eigen spoor (een trein): zijn haltes blijven zoals ze zijn.
+Show on the map	Op de kaart tonen
+No stops yet.	Nog geen haltes.
+Done picking	Klaar met kiezen
+Pick stops on the map	Op de kaart kiezen
+Click the stops in the view one after the other, in the order the bus calls at them	Klik de haltes in het beeld na elkaar aan, in de volgorde waarin de bus ze aandoet
+Add stop…	Halte toevoegen…
+Click stops on the map (they are marked orange)…	Klik haltes aan op de kaart (ze zijn oranje gemarkeerd)…
+Add two stops or more: the way between them is found along the roads.	Voeg twee haltes of meer toe: de route ertussen wordt langs de wegen gevonden.
+Finding the way…	Route zoeken…
+Route found:	Route gevonden:
+km along the roads (blue in the view)	km langs de wegen (blauw in het beeld)
+the way drives a one-way lane against its direction; is a path drawn the wrong way round?	de route rijdt een eenrichtingsstrook tegen zijn richting in; is een pad verkeerd om getekend?
+is not on the map	staat niet op de kaart
+no road with car lanes within 15 m	geen weg met autostroken binnen 15 m
+No way	Geen route
+the roads are not joined, or run the other way (see View > AI lanes)	de wegen zijn niet verbonden, of lopen de andere kant op (zie Beeld > AI-rijstroken)
+The trip is saved, but its way is not until this is mended	De rit wordt opgeslagen, maar zijn route pas als dit is hersteld
+Trip time	Rittijd
+Guess:	Schatting:
+From the route's length at the pace of a town bus	Uit de lengte van de route in het tempo van een stadsbus
+Times at the stops	Tijden bij de haltes
+Minutes after the trip leaves. They follow the distance between the stops; fix one to keep the bus to it (it waits there when early).	Minuten na vertrek van de rit. Ze volgen de afstand tussen de haltes; leg er een vast om de bus eraan te houden (hij wacht daar als hij te vroeg is).
+fixed	vast
+Spread all by distance	Alles naar afstand spreiden
+Holidays and school holidays	Feestdagen en schoolvakanties
+On a public holiday only the tours with Holidays ticked run; school holidays pick the tours for school holidays or school days.	Op een feestdag rijden alleen de omlopen waar Feestdagen is aangevinkt; schoolvakanties kiezen de omlopen voor schoolvakanties of schooldagen.
+Copy to	Kopiëren naar
+The same days a year later (feasts that move, like Easter, are to be set by hand)	Dezelfde dagen een jaar later (verschuivende feesten, zoals Pasen, zijn met de hand in te stellen)
+The map has no depot (ailists.cfg): only you drive these tours, no AI buses.	De kaart heeft geen depot (ailists.cfg): alleen jij rijdt deze omlopen, geen AI-bussen.
+Add a depot with OMSI 2's MAN buses	Een depot toevoegen met de MAN-bussen van OMSI 2
+Its buses run the tours (Map > Traffic and AI shows it)	Zijn bussen rijden de omlopen (Kaart > Verkeer en AI toont het)
+Tour	Omloop
+New tour	Nieuwe omloop
+Pick a tour to see its departures.	Kies een omloop om zijn vertrektijden te zien.
+Make a trip first.	Maak eerst een rit.
+Number	Nummer
+Buses from	Bussen uit
+Delete the tour	De omloop verwijderen
+Runs on	Rijdt op
+Mo	Ma
+Tu	Di
+We	Wo
+Th	Do
+Fr	Vr
+Sa	Za
+Su	Zo
+Every day	Elke dag
+Monday to Friday	Maandag t/m vrijdag
+Weekends and holidays	Weekenden en feestdagen
+In the school holidays	In de schoolvakanties
+On school days	Op schooldagen
+Next departure	Volgend vertrek
+The next trip of the line, when the bus is back and has had its break	De volgende rit van de lijn, als de bus terug is en zijn pauze heeft gehad
+Fill from	Vullen vanaf
+break	pauze
+Fill	Vullen
+Replace the tour's departures: the line's trips one after the other, a break after each	De vertrektijden van de omloop vervangen: de ritten van de lijn na elkaar, na elke rit een pauze
+No departures yet: add them above.	Nog geen vertrektijden: voeg ze hierboven toe.
+Delete the departure	Het vertrek verwijderen
+GPS tracks to trace	GPS-sporen om over te trekken
+A route recorded on a phone or drawn elsewhere (GPX, KML, GeoJSON), shown in the view in magenta to draw roads along, or built into a road at once	Een route opgenomen op een telefoon of elders getekend (GPX, KML, GeoJSON), in magenta in het beeld getoond om wegen langs te tekenen, of meteen tot een weg gebouwd
+Place the map on the Earth first (Map > Satellite and terrain)	Plaats de kaart eerst op de aarde (Kaart > Satelliet en terrein)
+Load a file…	Een bestand laden…
+None loaded	Niets geladen
+Forget it	Vergeten
+Build a road along it:	Een weg erlangs bouwen:
+Choose a road type in the Roads tool to build it	Kies een wegtype in het gereedschap Wegen om te bouwen
+Built as if drawn: corners rounded into arcs, junctions where it meets roads, cut at the map's edge; one undo step	Gebouwd alsof getekend: hoeken afgerond tot bogen, kruispunten waar hij wegen ontmoet, afgesneden aan de rand van de kaart; één stap ongedaan maken
+Traffic and AI	Verkeer en AI
+Edit traffic	Verkeer bewerken
+Over the day	Over de dag
+Vehicle groups	Voertuiggroepen
+Parked cars and people	Geparkeerde auto's en mensen
+Depot files	Depotbestanden
+The AI's vehicles come in groups. A car group drives about on the roads; a depot sends out the buses of the timetable's tours.	De voertuigen van de AI komen in groepen. Een autogroep rijdt rond over de wegen; een depot stuurt de bussen van de omlopen van de dienstregeling erop uit.
+(This map's ailists.cfg is in OMSI 2's first format: it is written in the second one when changed.)	(De ailists.cfg van deze kaart staat in het eerste formaat van OMSI 2: bij wijziging wordt hij in het tweede geschreven.)
+is to drive about, but there is no such group.	moet rondrijden, maar zo'n groep bestaat niet.
+Make it with OMSI 2's vehicles	Maken met de voertuigen van OMSI 2
+The group of that name from OMSI 2's own maps	De groep met die naam uit de eigen kaarten van OMSI 2
+New car group	Nieuwe autogroep
+New depot	Nieuw depot
+Pick a group on the left.	Kies links een groep.
+Delete the group (tours still take their buses from it)	De groep verwijderen (omlopen halen er nog bussen uit)
+Delete the group	De groep verwijderen
+Tours that take their buses from here:	Omlopen die hier hun bussen halen:
+Drives about on its own	Rijdt zelf rond
+as many:	zoveel:
+Times the traffic over the day	Vermenigvuldigt het verkeer over de dag
+A vehicle with more weight comes along more often.	Een voertuig met meer gewicht komt vaker voor.
+Add a vehicle…	Een voertuig toevoegen…
+Depot file (.hof)	Depotbestand (.hof)
+None of its buses has this depot file beside it: they run without their destination signs and fleet data.	Geen van zijn bussen heeft dit depotbestand naast zich: ze rijden zonder hun bestemmingsborden en vlootgegevens.
+The buses it has: a type of bus and the fleet number and plate of each.	De bussen die het heeft: een bustype en het vlootnummer en kenteken van elk.
+Take this type out	Dit type verwijderen
+number	nummer
+plate	kenteken
+Another bus	Nog een bus
+Add a type of bus…	Een bustype toevoegen…
+The lists can't be read without the OMSI 2 folder.	De lijsten kunnen zonder de OMSI 2-map niet worden gelezen.
+Parked cars	Geparkeerde auto's
+What stands on the car parks (Game logic > Car parks). A car listed more often stands there more often.	Wat er op de parkeerplaatsen staat (Spellogica > Parkeerplaatsen). Een auto die vaker is vermeld, staat er vaker.
+Who walks about and waits at the stops.	Wie rondloopt en bij de haltes wacht.
+Drivers	Bestuurders
+Who drives the AI's buses.	Wie de AI-bussen bestuurt.
+How often it is listed (0 takes it out)	Hoe vaak het is vermeld (0 haalt het weg)
+How busy the map is at each hour: the road traffic, and the passengers at the stops. 1 is normal; the game goes along the line between the points.	Hoe druk de kaart is op elk uur: het wegverkeer en de passagiers bij de haltes. 1 is normaal; het spel volgt de lijn tussen de punten.
+Road traffic	Wegverkeer
+Passengers	Passagiers
+Its own traffic over the day	Eigen verkeer over de dag
+Without one the group follows the map's road traffic. A curve can be for some days of the week only.	Zonder volgt de groep het wegverkeer van de kaart. Een curve kan voor slechts enkele dagen van de week gelden.
+Days:	Dagen:
+Mo–Fr	Ma–Vr
+Take this curve out	Deze curve verwijderen
+A curve	Een curve
+Typical day…	Typische dag…
+Quiet village	Rustig dorp
+Town with rush hours	Stad met spitsuren
+The same all day	De hele dag hetzelfde
+No curve: 1 all day.	Geen curve: de hele dag 1.
+Take the point out	Het punt verwijderen
+Point	Punt
+Smart unwrap	Slim uitvouwen
+Every flat side apart in the picture, no faces on top of one another (all faces if none is selected)	Elke vlakke zijde apart in de afbeelding, geen vlakken op elkaar (alle vlakken zonder selectie)
+Box unwrap	Box-uitvouwen
+The six sides of a box apart in the picture	De zes zijden van een doos apart in de afbeelding
+Flip ↔	Spiegelen ↔
+Flip ↕	Spiegelen ↕
+Scale ×2	Schaal ×2
+Scale ÷2	Schaal ÷2
+Fit	Passend
+Stretched to fill the picture	Uitgerekt om de afbeelding te vullen
+Pack islands	Eilanden inpakken
+Average island scale	Eilandschaal gelijktrekken
+Seams from islands	Naden uit eilanden
+Click: a face (Shift adds) · drag: move the selected · wheel: zoom · right button: pan	Klik: een vlak (Shift voegt toe) · sleep: verplaats het geselecteerde · wiel: zoom · rechterknop: pannen
+Could not keep the views	Kon de beelden niet bewaren
+Saved views	Opgeslagen beelden
+Places of the map to come back to: Ctrl+1…9 goes to the first nine, Ctrl+Shift+1…9 keeps the view there	Plekken van de kaart om naar terug te keren: Ctrl+1…9 gaat naar de eerste negen, Ctrl+Shift+1…9 bewaart het beeld daar
+Keep this view	Dit beeld bewaren
+None yet	Nog geen
+Go	Ga
+Earlier in the list	Eerder in de lijst
+Later in the list	Later in de lijst
+Take the view now instead	Het huidige beeld nemen
+Keep proportions	Verhoudingen behouden
+Back to its own size	Terug naar eigen grootte
+Updates	Updates
+This version:	Deze versie:
+New version:	Nieuwe versie:
+Install and restart	Installeren en herstarten
+Not now	Niet nu
+What changed	Wat is er gewijzigd
+Downloading and installing	Downloaden en installeren
+Installed version	Geïnstalleerde versie
+openMapper restarts when you save the map.	openMapper herstart als je de kaart opslaat.
+Looking for a new version…	Zoeken naar een nieuwe versie…
+This is the newest version.	Dit is de nieuwste versie.
+Download it from GitHub by hand	Met de hand downloaden van GitHub
+When there is a new version:	Als er een nieuwe versie is:
+Offer it to me	Aanbieden
+Install it and restart by itself	Zelf installeren en herstarten
+Never look for updates	Nooit naar updates zoeken
+Check now	Nu controleren
+Never offer updates again	Nooit meer updates aanbieden
+The release has no package	De release heeft geen pakket
+No automatic updates for this system.	Geen automatische updates voor dit systeem.
+No connection to GitHub: are you online?	Geen verbinding met GitHub: ben je online?
+The release has no SHA256SUMS: not installed.	De release heeft geen SHA256SUMS: niet geïnstalleerd.
+The package is not in SHA256SUMS: not installed.	Het pakket staat niet in SHA256SUMS: niet geïnstalleerd.
+The download does not match its checksum: not installed.	De download komt niet overeen met zijn checksum: niet geïnstalleerd.
+Could not replace the program	Kon het programma niet vervangen
+The package has no program in it.	Het pakket bevat geen programma.
+openMapper has stopped:	openMapper is gestopt:
+The log with the details:	Het logboek met de details:

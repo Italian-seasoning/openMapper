@@ -180,6 +180,9 @@ struct GpuMesh {
     vb: wgpu::Buffer,
     ib: wgpu::Buffer,
     ranges: Vec<(u32, u32, u32)>,
+    /// Drawn as the game draws it: the back of a face shows nothing (an object's mesh, not a
+    /// road or an overlay).
+    one_sided: bool,
 }
 
 struct GpuTile {
@@ -351,6 +354,10 @@ pub struct Renderer {
     terrain_pipeline: wgpu::RenderPipeline,
     mesh_opaque: wgpu::RenderPipeline,
     mesh_blend: wgpu::RenderPipeline,
+    /// The same with the back faces culled, as the game draws an object's mesh (text on a sign
+    /// reads the one way round, a window modelled once per side shows one glass).
+    mesh_opaque_cull: wgpu::RenderPipeline,
+    mesh_blend_cull: wgpu::RenderPipeline,
     spline_opaque: wgpu::RenderPipeline,
     ghost_pipeline: wgpu::RenderPipeline,
     spline_blend: wgpu::RenderPipeline,
@@ -538,7 +545,7 @@ fn upload_mesh(device: &wgpu::Device, m: &MeshData) -> GpuMesh {
         .collect();
     let vb = device.create_buffer_init(&wgpu::util::BufferInitDescriptor { label: Some("mesh vb"), contents: bytemuck::cast_slice(&verts), usage: wgpu::BufferUsages::VERTEX });
     let ib = device.create_buffer_init(&wgpu::util::BufferInitDescriptor { label: Some("mesh ib"), contents: bytemuck::cast_slice(&m.indices), usage: wgpu::BufferUsages::INDEX });
-    GpuMesh { vb, ib, ranges: m.ranges.clone() }
+    GpuMesh { vb, ib, ranges: m.ranges.clone(), one_sided: m.one_sided }
 }
 
 fn mesh_layouts() -> [wgpu::VertexBufferLayout<'static>; 2] {
@@ -569,6 +576,20 @@ pub fn object_matrix(world: DVec3, rot: [f64; 3]) -> Mat4 {
 }
 
 impl Renderer {
+    /// The pipeline an object's mesh is drawn with, set only when it changes.
+    fn set_object_pipeline<'a>(&'a self, pass: &mut wgpu::RenderPass<'a>, one_sided: bool, blend: bool, culled: &mut bool) {
+        if *culled == one_sided {
+            return;
+        }
+        *culled = one_sided;
+        pass.set_pipeline(match (one_sided, blend) {
+            (false, false) => &self.mesh_opaque,
+            (false, true) => &self.mesh_blend,
+            (true, false) => &self.mesh_opaque_cull,
+            (true, true) => &self.mesh_blend_cull,
+        });
+    }
+
     pub fn new(gpu: &Gpu, quality: quality::Quality) -> Renderer {
         let device = &gpu.device;
         let samples = gpu.samples;
@@ -672,12 +693,14 @@ impl Renderer {
             multiview_mask: None,
             cache: None,
         });
-        let mesh_pipeline = |label: &str, fmt: wgpu::TextureFormat, samples: u32, blend: Option<wgpu::BlendState>, write: bool, bias: i32| {
+        let mesh_pipeline_with = |label: &str, fmt: wgpu::TextureFormat, samples: u32, blend: Option<wgpu::BlendState>, write: bool, bias: i32, cull: bool| {
             device.create_render_pipeline(&wgpu::RenderPipelineDescriptor {
                 label: Some(label),
                 layout: Some(&mesh_layout),
                 vertex: wgpu::VertexState { module: &mesh_sh, entry_point: Some("vs"), compilation_options: Default::default(), buffers: &mesh_layouts() },
-                primitive: wgpu::PrimitiveState { cull_mode: None, ..Default::default() },
+                // (as openOMSI's `one_sided_primitive`: the visible side of an object's face
+                // arrives clockwise)
+                primitive: wgpu::PrimitiveState { cull_mode: cull.then_some(wgpu::Face::Back), front_face: if cull { wgpu::FrontFace::Cw } else { wgpu::FrontFace::Ccw }, ..Default::default() },
                 depth_stencil: depth(write, bias),
                 multisample: wgpu::MultisampleState { count: samples, alpha_to_coverage_enabled: false, ..Default::default() },
                 fragment: Some(wgpu::FragmentState { module: &mesh_sh, entry_point: Some("fs"), compilation_options: Default::default(), targets: &[Some(wgpu::ColorTargetState { format: fmt, blend, write_mask: wgpu::ColorWrites::ALL })] }),
@@ -685,6 +708,7 @@ impl Renderer {
                 cache: None,
             })
         };
+        let mesh_pipeline = |label: &str, fmt: wgpu::TextureFormat, samples: u32, blend: Option<wgpu::BlendState>, write: bool, bias: i32| mesh_pipeline_with(label, fmt, samples, blend, write, bias, false);
         // the sun's view: depth only, sloped faces pushed back against acne
         let shadow_pipeline = device.create_render_pipeline(&wgpu::RenderPipelineDescriptor {
             label: Some("shadow"),
@@ -706,6 +730,8 @@ impl Renderer {
         let thumb_fmt = wgpu::TextureFormat::Rgba8UnormSrgb;
         let mesh_opaque = mesh_pipeline("mesh", format, samples, None, true, 0);
         let mesh_blend = mesh_pipeline("mesh blend", format, samples, blend_alpha, false, 0);
+        let mesh_opaque_cull = mesh_pipeline_with("mesh culled", format, samples, None, true, 0, true);
+        let mesh_blend_cull = mesh_pipeline_with("mesh blend culled", format, samples, blend_alpha, false, 0, true);
         // the road being drawn: over everything (the ground is shaped to it only once built)
         let ghost_pipeline = device.create_render_pipeline(&wgpu::RenderPipelineDescriptor {
             label: Some("ghost"),
@@ -842,6 +868,8 @@ impl Renderer {
             terrain_pipeline,
             mesh_opaque,
             mesh_blend,
+            mesh_opaque_cull,
+            mesh_blend_cull,
             spline_opaque,
             ghost_pipeline,
             spline_blend,
@@ -2012,6 +2040,7 @@ impl Renderer {
             }
             // objects
             pass.set_pipeline(if blend { &self.mesh_blend } else { &self.mesh_opaque });
+            let mut culled = false;
             let mut bound_dynamic = true;
             for (b, ranges, ghost) in &visible {
                 if *ghost != bound_dynamic {
@@ -2020,6 +2049,7 @@ impl Renderer {
                 }
                 if b.model == "\u{0}marker" {
                     if !blend {
+                        self.set_object_pipeline(&mut pass, false, blend, &mut culled);
                         let m = marker_material();
                         calls += draw_mesh(&mut pass, &self.materials, &self.marker, std::slice::from_ref(&m), None, ranges);
                     }
@@ -2028,6 +2058,7 @@ impl Renderer {
                 if b.tree {
                     // (the tree's texture is the batch: "tree:<path>")
                     if !blend {
+                        self.set_object_pipeline(&mut pass, false, blend, &mut culled);
                         let tex = b.model.strip_prefix("tree:").map(PathBuf::from);
                         let m = Material { texture: tex, color: [1.0; 4], alpha: Alpha::Test, glow: None };
                         calls += draw_mesh(&mut pass, &self.materials, &self.tree_mesh, std::slice::from_ref(&m), None, ranges);
@@ -2036,6 +2067,7 @@ impl Renderer {
                 }
                 let Some(Some(model)) = self.models.get(&b.model) else { continue };
                 for (mesh, mats) in &model.parts {
+                    self.set_object_pipeline(&mut pass, mesh.one_sided, blend, &mut culled);
                     calls += draw_mesh(&mut pass, &self.materials, mesh, mats, Some(blend), ranges);
                 }
             }

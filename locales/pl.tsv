@@ -1,0 +1,2129 @@
+Could not open the map	Nie można otworzyć mapy
+The next 100 tiles are loaded, the others are hidden	Wczytano kolejne 100 kafelków, pozostałe są ukryte
+Find the place in the window and build from it	Znajdź miejsce w oknie i zbuduj od niego mapę
+Your map is ready. Start with a road!	Mapa jest gotowa. Zacznij od drogi!
+Export the map for sharing	Eksportuj mapę do udostępnienia
+Exported:	Wyeksportowano:
+files	plików
+files the map names were not found: the readme lists them	nie znaleziono plików, które wymienia mapa: lista jest w readme
+Could not export	Nie można wyeksportować
+A ring road with line 1 on it: save, then try it in openOMSI (F5).	Droga okrężna z linią 1: zapisz, potem wypróbuj w openOMSI (F5).
+The sample could not be made	Nie udało się utworzyć przykładu
+In multiplayer the host saves the map. Leave the session to save this as a copy of your own.	W trybie wieloosobowym mapę zapisuje host. Opuść sesję, aby zapisać własną kopię.
+Saved:	Zapisano:
+Tip: place a start point (Game logic > Start points) so the bus has somewhere to appear	Wskazówka: ustaw punkt startu (Logika gry > Punkty startu), aby autobus miał gdzie się pojawić
+Could not save (the changes are still here, nothing is lost)	Nie można zapisać (zmiany nadal tu są, nic nie zginęło)
+The unsaved changes are back. Save to keep them.	Niezapisane zmiany zostały przywrócone. Zapisz, aby je zachować.
+Could not restore the changes	Nie można przywrócić zmian
+openOMSI was not found	Nie znaleziono openOMSI
+From the start point	Od punktu startu
+The map has no start point: place one with Game logic > Start points	Mapa nie ma punktu startu: ustaw go w Logika gry > Punkty startu
+Starting openOMSI…	Uruchamianie openOMSI…
+To drive the map in OMSI 2 itself it has to be copied into the OMSI 2 folder (Maps, and the objects, roads and textures made for it). Nothing that is there is replaced except earlier copies of this map. Copy it there?	Aby przejechać mapę w samym OMSI 2, trzeba ją skopiować do folderu OMSI 2 (Maps oraz obiekty, drogi i tekstury zrobione dla niej). Nic z istniejących plików nie zostanie zastąpione poza wcześniejszymi kopiami tej mapy. Skopiować?
+Starting OMSI 2: choose the map	Uruchamianie OMSI 2: wybierz mapę
+The map is copied into the OMSI 2 folder; OMSI 2 itself runs on Windows only:	Mapa została skopiowana do folderu OMSI 2; sam OMSI 2 działa tylko w systemie Windows:
+Could not copy the map into OMSI 2	Nie można skopiować mapy do OMSI 2
+Click on the map to place it	Kliknij na mapie, aby ją umieścić
+Open a map (its global.cfg)	Otwórz mapę (jej global.cfg)
+The map is back as it was before that save	Mapa wróciła do stanu sprzed tego zapisu
+Could not go back	Nie można cofnąć
+Export a plan of the map	Eksportuj plan mapy
+Plan saved:	Plan zapisany:
+Mods, models and pictures	Mody, modele i obrazy
+Import assets	Importuj zasoby
+…or choose a mod folder	…lub wybierz folder modu
+Click on the map to put it there	Kliknij na mapie, aby to tam umieścić
+Could not make the shape	Nie można utworzyć kształtu
+Choose the OMSI 2 folder	Wybierz folder OMSI 2
+That is not an OMSI 2 folder (Omsi.exe, maps and Vehicles must be in it)	To nie jest folder OMSI 2 (muszą w nim być Omsi.exe, maps i Vehicles)
+This object has no textures to make PBR maps of	Ten obiekt nie ma tekstur, z których można zrobić mapy PBR
+Could not copy the map	Nie można skopiować mapy
+Could not move the map	Nie można przenieść mapy
+Terrain flattened; splines laid on it:	Teren wyrównany; ułożone spline'y:
+This road type has no textures to make PBR maps of	Ten typ drogi nie ma tekstur, z których można zrobić mapy PBR
+Pictures	Obrazy
+Only 100 tiles round the camera are loaded; click on the empty zone to load the next 100	Wczytano tylko 100 kafelków wokół kamery; kliknij pustą strefę, aby wczytać kolejne 100
+All tiles are loaded	Wszystkie kafelki wczytane
+Import the map's thumbnail	Importuj miniaturę mapy
+The map's thumbnail is set: openOMSI shows it where maps are chosen.	Miniatura mapy ustawiona: openOMSI pokazuje ją przy wyborze mapy.
+Could not use the picture	Nie można użyć obrazu
+Map camera	Kamera mapy
+The map opens with this view from now on.	Mapa będzie się odtąd otwierać z tym widokiem.
+Add ground texture	Dodaj teksturę gruntu
+View kept as	Widok zapamiętany jako
+No view kept as	Brak widoku zapamiętanego jako
+Files changed on disk: the catalogue and models are updated	Pliki na dysku się zmieniły: katalog i modele zaktualizowane
+The track does not run over the map's tiles	Ślad nie biegnie po kafelkach mapy
+Road along a GPS track	Droga wzdłuż śladu GPS
+Roads built:	Zbudowano dróg:
+junctions:	skrzyżowań:
+stops:	przystanków:
+Lines from OpenStreetMap	Linie z OpenStreetMap
+lines:	linii:
+trips found their way:	kursów z trasą:
+buildings:	budynków:
+trees:	drzew:
+Start point	Punkt startu
+Start	Start
+a start point	punkt startu
+From OpenStreetMap	Z OpenStreetMap
+Picture saved:	Obraz zapisany:
+Could not save the picture	Nie można zapisać obrazu
+The graphics could not be started.	Nie udało się uruchomić grafiki.
+Flying speed	Prędkość lotu
+copy	kopia
+Only maps of the content folder can be moved	Przenosić można tylko mapy z folderu zawartości
+Only assets of the content folder can be deleted	Usuwać można tylko zasoby z folderu zawartości
+Could not write the object	Nie można zapisać obiektu
+Select an object to edit its mesh	Zaznacz obiekt, aby edytować jego siatkę
+A copy of its own was made: the original type is unchanged	Utworzono własną kopię: oryginalny typ bez zmian
+Cannot edit this object	Tego obiektu nie można edytować
+Point at an edge to cut across its ring of faces	Wskaż krawędź, aby przeciąć pierścień ścian w poprzek
+Objects made:	Utworzone obiekty:
+select the faces to separate	zaznacz ściany do oddzielenia
+Separated into an object of its own	Oddzielono do własnego obiektu
+Add object	Dodaj obiekt
+select what to export (objects, roads)	zaznacz, co wyeksportować (obiekty, drogi)
+Export the selection	Eksportuj zaznaczenie
+unknown format	nieznany format
+the models are still loading: try again in a moment	modele jeszcze się wczytują: spróbuj za chwilę
+this material has no texture	ten materiał nie ma tekstury
+cannot read	nie można odczytać
+Export the texture	Eksportuj teksturę
+Texture saved:	Tekstura zapisana:
+Choose a picture	Wybierz obraz
+give the material a texture first: its maps go beside it	najpierw przypisz materiałowi teksturę: mapy trafią obok niej
+Import materials (an .mtl, a model, or the pictures of one PBR material)	Importuj materiały (.mtl, model lub obrazy jednego materiału PBR)
+Materials and pictures	Materiały i obrazy
+no materials found there	nie znaleziono tam materiałów
+Materials added:	Dodane materiały:
+nothing to bake	nie ma czego wypalać
+the object has no lamps to bake the night light of	obiekt nie ma lamp, których nocne światło można wypalić
+Baked into	Wypalono do
+select a road or spline first	najpierw zaznacz drogę lub spline
+the road's type is still loading: try again in a moment	typ drogi jeszcze się wczytuje: spróbuj za chwilę
+these splines have no shape to see	te spline'y nie mają widocznego kształtu
+Replace by an object	Zamień na obiekt
+Made into an object: Tab edits its mesh	Zamieniono na obiekt: Tab edytuje jego siatkę
+Signal head made: click where it stands (near a crossing with a light program it links to it)	Sygnalizator utworzony: kliknij, gdzie stoi (przy skrzyżowaniu z programem świateł połączy się z nim)
+Choose a picture or a texture	Wybierz obraz lub teksturę
+cannot read the picture	nie można odczytać obrazu
+Picture made: click where it goes (it can be moved, turned and scaled after)	Obraz utworzony: kliknij, gdzie ma być (potem można go przesuwać, obracać i skalować)
+Light made: click where it shines	Światło utworzone: kliknij, gdzie świeci
+Choose a sound	Wybierz dźwięk
+Sounds	Dźwięki
+Sound source made: click where it plays	Źródło dźwięku utworzone: kliknij, gdzie gra
+Street lamp made: click where it stands	Latarnia utworzona: kliknij, gdzie stoi
+Paint by slope and height	Malowanie wg nachylenia i wysokości
+By slope and height	Wg nachylenia i wysokości
+The chosen layer painted over the whole map where the ground is so steep (and so high)	Wybrana warstwa pomalowana na całej mapie tam, gdzie grunt jest tak stromy (i tak wysoki)
+Slope	Nachylenie
+Height	Wysokość
+Fade	Przejście
+Cover	Pokrycie
+Paint the map	Pomaluj mapę
+Choose a layer above the base ground	Wybierz warstwę powyżej gruntu bazowego
+No ground on the map is like that	Na mapie nie ma takiego gruntu
+Painted	Pomalowano
+Missing objects	Brakujące obiekty
+Missing roads and splines	Brakujące drogi i spline'y
+Missing textures	Brakujące tekstury
+Road ends not joined	Niepołączone końce dróg
+Links to splines that are gone	Odnośniki do spline'ów, których już nie ma
+Bus stops away from a road	Przystanki z dala od drogi
+Start points away from a road	Punkty startu z dala od drogi
+Start points without their object	Punkty startu bez obiektu
+No start point	Brak punktu startu
+IDCodes used twice	IDCode użyte dwa razy
+Next IDCode too low	Zbyt niski NextIDCode
+Objects off their tile	Obiekty poza swoim kafelkiem
+Tiles without a file	Kafelki bez pliku
+Tiles without ground	Kafelki bez gruntu
+Trips without a way	Kursy bez trasy
+Tours without departures	Brygady bez kursów
+Tours without a depot	Brygady bez zajezdni
+Traffic groups not in the AI lists	Grupy ruchu spoza list AI
+Stops no trip calls at	Przystanki bez kursów
+Signal routes naming what is gone	Trasy sygnałów z nieistniejącymi elementami
+Chrono changes of what is gone	Zmiany chrono nieistniejących elementów
+Lamps lighting no ground at night	Lampy nieoświetlające gruntu nocą
+Tiles with very many objects	Kafelki z bardzo wieloma obiektami
+Objects linked to one that is gone	Obiekty powiązane z nieistniejącym
+Signal heads linked to no crossing	Sygnalizatory bez skrzyżowania
+Depot files (destinations)	Pliki zajezdni (kierunki)
+The map uses an object (.sco) that is not installed. The game leaves it out. Install the mod it comes from, or delete the object. A junction of openMapper's whose file is gone (the map was moved without it) is made again for its roads with "Fix".	Mapa używa obiektu (.sco), który nie jest zainstalowany. Gra go pomija. Zainstaluj mod, z którego pochodzi, lub usuń obiekt. Skrzyżowanie openMappera, którego plik zniknął (mapę przeniesiono bez niego), „Napraw" zbuduje od nowa dla jego dróg.
+The map uses a road or spline type (.sli) that is not installed: that road is missing in the game, and buses cannot drive there.	Mapa używa typu drogi lub spline'a (.sli), który nie jest zainstalowany: tej drogi w grze nie będzie, a autobusy tam nie pojadą.
+An object or road names a picture that cannot be found. It will look white or black in the game.	Obiekt lub droga wskazuje obraz, którego nie można znaleźć. W grze będzie biały lub czarny.
+Two road ends lie on one another but are not joined. Traffic still finds its way (the game joins lanes by their ends), but rows of lamps and posts and the road's texture do not run on across, and the editor does not treat them as one road. "Join" links them.	Dwa końce dróg leżą na sobie, ale nie są połączone. Ruch i tak przejedzie (gra łączy pasy po końcach), ale rzędy lamp i słupków oraz tekstura drogi nie biegną dalej, a edytor nie traktuje ich jako jednej drogi. „Połącz" je zespoli.
+A spline says it goes on into another one that no longer exists. "Fix" forgets that link.	Spline wskazuje kontynuację w innym, który już nie istnieje. „Napraw" usunie to powiązanie.
+A bus stop belongs to the lane it stands beside (within about 25 m). This one has none near, so buses cannot stop at it. Move it next to the road, or "Fix" puts it at the kerb of the nearest lane (within 80 m).	Przystanek należy do pasa, przy którym stoi (do ok. 25 m). Ten nie ma takiego w pobliżu, więc autobusy nie mogą przy nim stanąć. Przesuń go przy drogę lub „Napraw" postawi go przy krawężniku najbliższego pasa (do 80 m).
+A start point is where the bus appears. This one is away from any lane: fine in a depot yard, otherwise the bus starts off the road.	Punkt startu to miejsce, gdzie pojawia się autobus. Ten leży z dala od pasów: w zajezdni to w porządku, inaczej autobus ruszy poza drogą.
+A start point refers to an object that was deleted. "Fix" removes the start point.	Punkt startu wskazuje usunięty obiekt. „Napraw" usunie punkt startu.
+There is nowhere for the bus to appear. Place a start point (Game logic > Start points) on a road, or "Fix" puts one on a lane some 40 m before a bus stop.	Autobus nie ma gdzie się pojawić. Ustaw punkt startu (Logika gry > Punkty startu) na drodze lub „Napraw" postawi go na pasie ok. 40 m przed przystankiem.
+Two things on the map share one IDCode: links, timetables and start points may pick the wrong one.	Dwie rzeczy na mapie mają ten sam IDCode: powiązania, rozkłady i punkty startu mogą wskazać niewłaściwą.
+The counter for new IDCodes is below codes already used, so new objects would get codes twice. "Fix" raises it.	Licznik nowych IDCode jest poniżej już użytych kodów, więc nowe obiekty dostałyby powtórzone kody. „Napraw" go podniesie.
+An object standing on the ground lies outside its own tile. The game does not show it. Move it a little or put it again.	Obiekt stojący na gruncie leży poza swoim kafelkiem. Gra go nie pokaże. Przesuń go trochę lub postaw ponownie.
+global.cfg lists tiles whose file is not there. The game leaves them out; they stay listed, as start points and timetables count tiles by their place in the list.	global.cfg wymienia kafelki, których pliku nie ma. Gra je pomija; zostają na liście, bo punkty startu i rozkłady liczą kafelki według miejsca na liście.
+A tile has no height file: its ground is flat. Saving writes one.	Kafelek nie ma pliku wysokości: jego grunt jest płaski. Zapis go utworzy.
+No way along the roads was found through this trip's stops, so buses cannot drive it. Open it in Map > Lines and timetable to see where it breaks.	Nie znaleziono trasy po drogach przez przystanki tego kursu, więc autobusy nie mogą nim jechać. Otwórz go w Mapa > Linie i rozkład, aby zobaczyć, gdzie się urywa.
+A tour (a bus's day on the line) has no trips, so no bus runs it.	Brygada (dzień pracy autobusu na linii) nie ma kursów, więc nikt jej nie obsługuje.
+A tour names no depot or group of the AI lists (or one that is not there): the game has no vehicle to send on it. Choose a depot for it in the Lines window, or "Fix" gives it the map's depot (one of OMSI 2's MAN buses added where the map has none).	Brygada nie wskazuje zajezdni ani grupy z list AI (lub wskazuje nieistniejącą): gra nie ma pojazdu, który mógłby ją obsłużyć. Wybierz dla niej zajezdnię w oknie linii lub „Napraw" przypisze jej zajezdnię mapy (a jeśli mapa jej nie ma, doda autobusy MAN z OMSI 2).
+The unscheduled traffic names a group that the AI lists do not have: those cars never appear. Add the group in Map > Traffic and AI, or "Fix" copies it from OMSI 2's own maps where they have it.	Ruch poza rozkładem wskazuje grupę, której nie ma na listach AI: te auta się nie pojawią. Dodaj grupę w Mapa > Ruch i AI lub „Napraw" skopiuje ją z map OMSI 2, jeśli tam jest.
+A stop of the timetable that no trip calls at. Nothing is wrong, it is only not used yet.	Przystanek rozkładu, na którym nie staje żaden kurs. Nic złego, po prostu jeszcze nie jest używany.
+A chrono scenario takes away, retypes or relabels something that is no longer on the map (it was deleted or its IDCode changed): that change does nothing. Open Map > Chrono scenarios, the scenario's properties, and take the change out.	Scenariusz chrono usuwa, zmienia typ lub opisy czegoś, czego już nie ma na mapie (usunięto lub zmienił się IDCode): ta zmiana nic nie robi. Otwórz Mapa > Scenariusze chrono, właściwości scenariusza, i usuń zmianę.
+A tile holds far more objects than the stock maps' tiles (up to some 600): the game may stutter when it loads it or looks across it. Thin out a wood planted too densely (Plant brush, Clear) or plant it with more space between the trees.	Kafelek zawiera znacznie więcej obiektów niż kafelki map seryjnych (do ok. 600): gra może przycinać przy jego wczytaniu lub patrzeniu przez niego. Przerzedź zbyt gęsty las (pędzel roślin, Usuwanie) lub sadź rzadziej.
+Street lamps stand on a tile the game does not light from its lamps ([variable_terrainlightmap] is off): at night the ground under them stays dark (unless the tile's light map file was made by OMSI 2's editor). "Fix" turns it on, as on nearly every tile of the stock maps.	Latarnie stoją na kafelku, którego gra nie oświetla lampami ([variable_terrainlightmap] wyłączone): nocą grunt pod nimi pozostaje ciemny (chyba że plik mapy świateł kafelka zrobił edytor OMSI 2). „Napraw" to włączy, jak prawie na każdym kafelku map seryjnych.
+An object takes its state ([varparent]) from an object no longer on the map: a signal head stays dark, a display blank. Link it to another in its properties (Linked objects), or "Fix" forgets the link.	Obiekt pobiera stan ([varparent]) od obiektu, którego już nie ma na mapie: sygnalizator pozostaje ciemny, wyświetlacz pusty. Powiąż go z innym we właściwościach (Powiązane obiekty) lub „Napraw" usunie powiązanie.
+A traffic light's signal head takes its light from a crossing's program ([varparent]); this one is linked to none while others like it are, so it stays dark in the game. Select it and link it in its properties (Linked objects).	Głowica sygnalizatora pobiera światło z programu skrzyżowania ([varparent]); ta nie jest powiązana z żadnym, choć podobne są, więc w grze nie świeci. Zaznacz ją i powiąż we właściwościach (Powiązane obiekty).
+A depot file (.hof) gives the buses their destinations, the stop names on their displays and the routes their IBIS knows. Without one the signs stay empty and the IBIS knows no line. "Fix" makes it from the map's lines, or adds what the lines need to the map's own (Map > Depot files to see and change it).	Plik zajezdni (.hof) daje autobusom kierunki, nazwy przystanków na wyświetlaczach i trasy znane IBIS. Bez niego tablice są puste, a IBIS nie zna żadnej linii. „Napraw" utworzy go z linii mapy lub doda do własnego pliku mapy to, czego linie potrzebują (Mapa > Pliki zajezdni, aby zobaczyć i zmienić).
+A signal route names a signal or track pieces no longer on the map: the signal may never clear. Open Map > Signal routes and take the track again, or delete the route.	Trasa sygnału wskazuje sygnał lub odcinki toru, których już nie ma na mapie: sygnał może nigdy nie otworzyć. Otwórz Mapa > Trasy sygnałów i wybierz tor ponownie lub usuń trasę.
+font	czcionka
+used	używane
+in	w
+a ground texture of the map	tekstura gruntu mapy
+splines	spline'y
+apart	odstęp
+spline	spline
+goes on into	przechodzi w
+no road near	brak drogi w pobliżu
+from the road	od drogi
+start point	punkt startu
+object	obiekt
+The map has no start point	Mapa nie ma punktu startu
+things have it	rzeczy go mają
+highest in use:	najwyższy używany:
+tile	kafelek
+no .terrain file: flat	brak pliku .terrain: płaski
+objects	obiektów
+lamps	lamp
+The map has no depot file	Mapa nie ma pliku zajezdni
+the buses show no destination	autobusy nie pokazują kierunku
+named by the map's depot, but found nowhere	wskazany przez zajezdnię mapy, ale nigdzie nie znaleziony
+knows none of the	nie zna żadnego z
+lacks	brakuje
+destinations of the lines	kierunków linii
+the lines need	linie potrzebują
+destinations	kierunków
+stops	przystanki
+routes	tras
+tour	brygada
+no depot named	nie wskazano zajezdni
+not in the AI lists:	brak na listach AI:
+the stop has no object:	przystanek nie ma obiektu:
+no road beside	brak drogi przy
+no way	brak trasy
+no way found	nie znaleziono trasy
+Route	Trasa
+gone	nie istnieje
+changes of nothing	zmian bez efektu
+time	raz
+times	razy
+Fix from the map check	Naprawa z sprawdzenia mapy
+Car groups from OMSI 2's maps	Grupy aut z map OMSI 2
+A depot for the tour	Zajezdnia dla brygady
+A depot file from the lines	Plik zajezdni z linii
+Depot file: what the lines need	Plik zajezdni: czego potrzebują linie
+Map check	Sprawdzenie mapy
+Check again	Sprawdź ponownie
+Checking the map…	Sprawdzanie mapy…
+errors	błędów
+warnings	ostrzeżeń
+notes	uwag
+Nothing found: the map looks fine.	Nic nie znaleziono: mapa jest w porządku.
+Fix all	Napraw wszystko
+Join	Połącz
+Fix	Napraw
+Click to fly there	Kliknij, aby tam polecieć
+Fixed:	Naprawiono:
+it has parts openMapper does not write	zawiera elementy, których openMapper nie zapisuje
+A host on the internet needs a password of at least	Host w internecie wymaga hasła o długości co najmniej
+Type a password, or choose explicitly to host without one	Wpisz hasło lub wyraźnie wybierz hostowanie bez hasła
+Could not listen on port	Nie można nasłuchiwać na porcie
+The way in for the tunnel could not be opened	Nie można otworzyć wejścia dla tunelu
+Hosting this map: others can join it now	Hostowanie tej mapy: inni mogą już dołączyć
+Multiplayer ended: another map was opened	Tryb wieloosobowy zakończony: otwarto inną mapę
+Somebody changed this first: your edit was put back	Ktoś zmienił to wcześniej: Twoja edycja została cofnięta
+The host takes no more: the edit is too big, or the session holds as much as it may. Your edit was put back	Host nie przyjmuje więcej: edycja jest za duża lub sesja osiągnęła limit. Twoja edycja została cofnięta
+That lies too far from the map for this session: your edit was put back	To leży zbyt daleko od mapy dla tej sesji: Twoja edycja została cofnięta
+tiles	kafelków
+changed what you were editing: it is as they left it	zmienił to, co edytowałeś: zostało tak, jak zostawił
+The timetable, the traffic and the descriptions are the host's in multiplayer: your change was put back	Rozkład, ruch i opisy należą do hosta w trybie wieloosobowym: Twoja zmiana została cofnięta
+Your conflicting edit was kept	Twoja kolidująca edycja została zachowana
+Could not keep your conflicting edit; multiplayer stopped	Nie można zachować Twojej kolidującej edycji; tryb wieloosobowy zatrzymany
+Too much of the others' work came in while your edit was held open: multiplayer stopped. The map stays open; it can be saved as a copy.	Zbyt dużo cudzej pracy napłynęło, gdy Twoja edycja była otwarta: tryb wieloosobowy zatrzymany. Mapa pozostaje otwarta; można ją zapisać jako kopię.
+The connection to the host was lost. The map stays open; it can be saved as a copy.	Utracono połączenie z hostem. Mapa pozostaje otwarta; można ją zapisać jako kopię.
+No OMSI 2 installation: the map has nowhere to go	Brak instalacji OMSI 2: mapa nie ma gdzie trafić
+The host sent no map	Host nie wysłał mapy
+The host's map could not be read	Nie można odczytać mapy hosta
+No connection	Brak połączenia
+That address is not an openMapper host	Pod tym adresem nie ma hosta openMapper
+Wrong password	Złe hasło
+The session is full	Sesja jest pełna
+Type a name (up to 32 letters)	Wpisz nazwę (do 32 liter)
+The host has another version of openMapper	Host ma inną wersję openMapper
+Move forward	Do przodu
+Move back	Do tyłu
+Move left	W lewo
+Move right	W prawo
+Turn the camera left	Obróć kamerę w lewo
+Turn the camera right	Obróć kamerę w prawo
+Undo	Cofnij
+Redo	Ponów
+Save	Zapisz
+Copy	Kopiuj
+Cut	Wytnij
+Paste at the cursor	Wklej przy kursorze
+Duplicate	Duplikuj
+Select all	Zaznacz wszystko
+Find in the map	Szukaj na mapie
+Search for a command	Szukaj polecenia
+Tool: Select	Narzędzie: Zaznaczanie
+Tool: Roads	Narzędzie: Drogi
+Tool: Objects	Narzędzie: Obiekty
+Tool: Game logic	Narzędzie: Logika gry
+Tool: Terrain	Narzędzie: Teren
+Tool: Paint	Narzędzie: Malowanie
+Tool: Tiles	Narzędzie: Kafelki
+Turn the object (Shift: the other way)	Obróć obiekt (Shift: w drugą stronę)
+Ruler	Linijka
+Knife	Nóż
+Move handles	Uchwyty przesuwania
+Rotate handles	Uchwyty obrotu
+Scale handles	Uchwyty skali
+Edit the mesh (vertices, edges, faces)	Edytuj siatkę (wierzchołki, krawędzie, ściany)
+Join the selected objects into one	Połącz zaznaczone obiekty w jeden
+Build the planned road	Zbuduj zaplanowaną drogę
+Tile grid on / off	Siatka kafelków wł. / wył.
+Group the selection	Zgrupuj zaznaczenie
+Ungroup	Rozgrupuj
+Look straight down, north up	Patrz prosto w dół, północ u góry
+2D plan view on / off (3D: tilt and turn again)	Widok 2D z góry wł. / wył. (3D: znów nachyl i obróć)
+Catalogue on / off	Katalog wł. / wył.
+Overview map on / off	Mapa przeglądowa wł. / wył.
+Lines window	Okno linii
+Traffic window	Okno ruchu
+Satellite and terrain window	Okno satelity i terenu
+Smaller brush	Mniejszy pędzel
+Larger brush	Większy pędzel
+Delete the selection	Usuń zaznaczenie
+Go to the selection	Przejdź do zaznaczenia
+Test drive in openOMSI (Shift: from the camera)	Jazda próbna w openOMSI (Shift: od kamery)
+Save a picture of the view	Zapisz obraz widoku
+The map's own (global.cfg)	Własne mapy (global.cfg)
+Description	Opis
+Name in this language	Nazwa w tym języku
+Description in this language	Opis w tym języku
+Remove this language	Usuń ten język
+Not written yet: it is saved as soon as you type.	Jeszcze nie zapisano: zapisze się, gdy zaczniesz pisać.
+Edit description	Edytuj opis
+just now	przed chwilą
+min ago	min temu
+h ago	godz. temu
+Unsaved changes found	Znaleziono niezapisane zmiany
+openMapper was closed without saving the map	openMapper został zamknięty bez zapisania mapy
+The changes kept by the autosave can be brought back. The map itself was not changed.	Zmiany zachowane przez autozapis można przywrócić. Sama mapa nie została zmieniona.
+Restore the changes	Przywróć zmiany
+Drop them	Odrzuć
+Nothing comes after it to join	Nie ma nic dalej do połączenia
+The next piece runs the other way: reverse it first	Następny odcinek biegnie w drugą stronę: najpierw go odwróć
+The next piece lies on another tile	Następny odcinek leży na innym kafelku
+The two pieces are of different road types	Oba odcinki są różnych typów dróg
+The two pieces have different settings (path rules, ground, skew)	Oba odcinki mają różne ustawienia (reguły ścieżek, grunt, skos)
+A row of objects comes onto the next piece from another tile	Na następny odcinek wchodzi rząd obiektów z innego kafelka
+The two pieces do not bend, climb or bank alike: joined they would change shape	Oba odcinki nie wyginają się, nie wznoszą ani nie przechylają tak samo: po połączeniu zmieniłby się kształt
+Earlier versions	Wcześniejsze wersje
+Before every save, the files it replaces are kept (the last 10 saves). Going back puts the map as it was before that save; later changes go.	Przed każdym zapisem pliki, które zastępuje, są zachowywane (ostatnie 10 zapisów). Powrót przywraca mapę sprzed tego zapisu; późniejsze zmiany przepadną.
+No earlier versions yet: they appear once the map is saved again.	Brak wcześniejszych wersji: pojawią się po kolejnym zapisie mapy.
+before the save of	przed zapisem z
+Go back to this	Wróć do tej
+could not keep a backup, nothing was saved	nie można zrobić kopii zapasowej, nic nie zapisano
+Red	Czerwony
+Yellow	Żółty
+Green	Zielony
+file not found	nie znaleziono pliku
+this object takes its model from a model file and cannot be edited here	ten obiekt bierze model z pliku modelu i nie można go tu edytować
+the object has no mesh to edit	obiekt nie ma siatki do edycji
+cannot read the object	nie można odczytać obiektu
+Select	Zaznacz
+Terrain	Teren
+Paint	Malowanie
+Roads	Drogi
+Objects	Obiekty
+Game logic	Logika gry
+Tiles	Kafelki
+Raise	Podnieś
+Lower	Obniż
+Smooth	Wygładź
+Flatten	Wyrównaj
+Roughen	Nierówności
+Ramp	Rampa
+Lake / river	Jezioro / rzeka
+Start points	Punkty startu
+Bus stops	Przystanki
+Car parks	Parkingi
+AI paths	Ścieżki AI
+Other	Inne
+Where the bus appears when a drive starts. Put it on a road or in the depot, facing the way to drive.	Miejsce, gdzie autobus pojawia się na początku jazdy. Ustaw na drodze lub w zajezdni, zwrócony w kierunku jazdy.
+Where passengers wait. Put it beside the road at the kerb; name it on the right.	Miejsce, gdzie czekają pasażerowie. Ustaw obok drogi przy krawężniku; nazwę podaj po prawej.
+Where parked cars stand. Click for one; with a row on, click the start and end of a row along the kerb.	Miejsce, gdzie stoją zaparkowane auta. Klik: jedno; z włączonym rzędem: kliknij początek i koniec rzędu wzdłuż krawężnika.
+Lanes the AI's cars or people follow. Draw like a road: it snaps to lane ends (green: joined, red: dead end) and along lanes. A car path runs the way you draw it.	Pasy, którymi jadą auta lub idą ludzie AI. Rysuj jak drogę: przyciąga do końców pasów (zielony: połączony, czerwony: ślepy koniec) i wzdłuż pasów. Ścieżka aut biegnie w stronę, w którą ją rysujesz.
+Sound sources, help arrows and other helpers the game does not show.	Źródła dźwięku, strzałki pomocnicze i inni pomocnicy, których gra nie pokazuje.
+Move (V): drag an arrow along X, Y or Z, a square in its plane, the circle over the ground	Przesuwanie (V): przeciągnij strzałkę wzdłuż X, Y lub Z, kwadrat w jego płaszczyźnie, koło po gruncie
+Rotate (C): drag a ring to turn about X, Y or Z	Obrót (C): przeciągnij pierścień, aby obracać wokół X, Y lub Z
+Scale (X): drag an arrow to scale along that axis, a square for two, the circle for all three	Skala (X): przeciągnij strzałkę, aby skalować wzdłuż osi, kwadrat dla dwóch, koło dla wszystkich trzech
+These roads have no lanes of their own to take apart (rails stay as they are)	Te drogi nie mają własnych pasów do rozdzielenia (tory zostają bez zmian)
+Make the lanes editable	Pasy stały się edytowalne
+Roads whose lanes are now editable:	Drogi z edytowalnymi pasami:
+Flatten the terrain	Wyrównaj teren
+Select two things or more to group them	Zaznacz co najmniej dwie rzeczy, aby je zgrupować
+Group	Grupa
+Grouped:	Zgrupowano:
+Ungrouped	Rozgrupowano
+Rename group	Nazwa grupy
+Ground levelled under objects:	Grunt wyrównany pod obiektami:
+Move	Przesuwanie
+No object clicked: nothing linked	Nie kliknięto obiektu: nic nie powiązano
+Too near the road's end to cut it there	Za blisko końca drogi, aby ją tu przeciąć
+No road under the cursor	Pod kursorem nie ma drogi
+Ramp:	Rampa:
+Shape terrain	Kształtuj teren
+Paint ground	Maluj grunt
+Clear plants	Usuń rośliny
+Plant	Sadzenie
+Rotate selection	Obróć zaznaczenie
+Rotate	Obrót
+Delete object	Usuwanie obiektu
+Delete road	Usuwanie drogi
+Delete selection	Usuwanie zaznaczenia
+Pick an object in the catalogue first	Najpierw wybierz obiekt w katalogu
+There is no tile here: add one with the Tiles tool	Nie ma tu kafelka: dodaj go narzędziem „Kafelki"
+Place object	Ustawianie obiektu
+New stop	Nowy przystanek
+Linked to	Powiązany z
+choose its light in its properties	światło wybierz w jego właściwościach
+Trees from OpenStreetMap	Drzewa z OpenStreetMap
+Plant an area	Sadzenie na obszarze
+Buildings from OpenStreetMap	Budynki z OpenStreetMap
+Stops from OpenStreetMap	Przystanki z OpenStreetMap
+Stop	Przystanek
+Pick a car park in the list first	Najpierw wybierz parking z listy
+Place car parks	Ustawianie parkingów
+Car parks placed:	Ustawione parkingi:
+Pick a road type in the catalogue first	Najpierw wybierz typ drogi w katalogu
+That bend is too sharp	Ten zakręt jest zbyt ostry
+Switch made	Rozjazd utworzony
+Junctions made:	Utworzone skrzyżowania:
+The road leaves the map: add tiles there first	Droga wychodzi poza mapę: najpierw dodaj tam kafelki
+Build road	Buduj drogę
+Roads from OpenStreetMap	Drogi z OpenStreetMap
+Pick a tree in the catalogue (or add some to the mix) first	Najpierw wybierz drzewo w katalogu (lub dodaj jakieś do mieszanki)
+Right-click a tile to remove it	Prawy klik na kafelku: usuń go
+New tiles go next to the map	Nowe kafelki trafiają obok mapy
+Add tile	Dodaj kafelek
+Water	Woda
+Paint detail	Szczegółowość malowania
+Ground layer order	Kolejność warstw gruntu
+Detail texture	Tekstura detalu
+Ground texture	Tekstura gruntu
+Lamp light on the ground	Światło lamp na gruncie
+Add tiles	Dodawanie kafelków
+A map needs at least one tile	Mapa potrzebuje co najmniej jednego kafelka
+Remove tile	Usuń kafelek
+Pick a point (a dot at an end or where pieces meet) to take it out	Wybierz punkt (kropkę na końcu lub na styku odcinków), aby go usunąć
+Remove a point of the path	Usuń punkt ścieżki
+Point taken out	Punkt usunięty
+A path of one piece: Del with nothing picked deletes it	Ścieżka z jednego odcinka: Del bez wybranego punktu usuwa ją całą
+Extrude	Wyciągnij
+Inset	Wcięcie
+Bevel	Fazowanie
+Loop cut	Cięcie pętli
+click: done, right click / Esc: cancel, wheel: segments	klik: gotowe, prawy klik / Esc: anuluj, kółko: segmenty
+Scale	Skala
+Roads are not scaled: change their length and width in their properties	Dróg się nie skaluje: zmień ich długość i szerokość we właściwościach
+Only the objects are scaled, the roads stay	Skalowane są tylko obiekty, drogi zostają
+Could not scale	Nie można przeskalować
+Too near the end: drag the end's dot instead	Za blisko końca: przeciągnij raczej kropkę końca
+Add a point to the path	Dodaj punkt do ścieżki
+Point added: drag the dot where the pieces meet	Punkt dodany: przeciągnij kropkę na styku odcinków
+Reshape road	Zmień kształt drogi
+Selected:	Zaznaczono:
+Copied:	Skopiowano:
+Nothing copied yet	Jeszcze nic nie skopiowano
+Paste	Wklej
+Level the ground	Wyrównaj grunt
+Turn objects	Obróć obiekty
+Copies in a row	Kopie w rzędzie
+Left out (off the map):	Pominięto (poza mapą):
+Pasted (the rest is off the map):	Wklejono (reszta jest poza mapą):
+Edit object	Edytuj obiekt
+Lean with the ground	Pochyl wg gruntu
+Stand upright	Ustaw pionowo
+Change height	Zmień wysokość
+Change road type	Zmień typ drogi
+The selected roads are not one chain (they branch or leave gaps)	Zaznaczone drogi nie tworzą jednego łańcucha (rozgałęziają się lub mają luki)
+Even slope	Równe nachylenie
+Lay on the ground	Połóż na gruncie
+Remove the rows of objects along it first (they are measured from its start)	Najpierw usuń wzdłuż niej rzędy obiektów (są mierzone od jej początku)
+Reverse direction	Odwróć kierunek
+No road there to cut	Nie ma tu drogi do przecięcia
+Cut the road	Przetnij drogę
+Cut in two: each piece can now be changed on its own	Przecięta na dwa: każdy odcinek można teraz zmieniać osobno
+Join the pieces	Połącz odcinki
+Joined into one piece	Połączone w jeden odcinek
+Parallel copy	Kopia równoległa
+Overhead wire	Przewód trakcyjny
+Back into the map	Z powrotem do mapy
+Hang an object	Zawieś obiekt
+Link to an object	Powiąż z obiektem
+Unlink	Odłącz
+That object already takes its state from this one	Tamten obiekt już bierze stan z tego
+Linked	Powiązano
+Signal head's light	Światło sygnalizatora
+Path rules	Reguły ścieżek
+Replace objects	Zamień obiekty
+Edit road	Edytuj drogę
+Roads that could not follow the junction (too sharp a bend):	Drogi, które nie mogły podążyć za skrzyżowaniem (zbyt ostry zakręt):
+Edit junction	Edytuj skrzyżowanie
+Make the junction again	Zbuduj skrzyżowanie od nowa
+Make the junctions again	Zbuduj skrzyżowania od nowa
+Pick an object in the Objects tool's catalogue first	Najpierw wybierz obiekt w katalogu narzędzia „Obiekty"
+The road is too short for that	Droga jest na to zbyt krótka
+Objects along the road	Obiekty wzdłuż drogi
+Rows of objects added:	Dodane rzędy obiektów:
+Edit row of objects	Edytuj rząd obiektów
+Remove row of objects	Usuń rząd obiektów
+Remove rows of objects	Usuń rzędy obiektów
+Roundabout built; roads joined to it:	Rondo zbudowane; dołączone drogi:
+This road type carries traffic both ways: pick a one-way road for a proper roundabout	Ten typ drogi ma ruch w obu kierunkach: wybierz drogę jednokierunkową dla prawdziwego ronda
+Start point: where the bus appears in openOMSI	Punkt startu: tu pojawia się autobus w openOMSI
+Bus stop: name it in the panel on the right	Przystanek: nadaj nazwę w panelu po prawej
+openOMSI stopped with an error	openOMSI zakończyło działanie z błędem
+Check in openOMSI	Sprawdź w openOMSI
+The saved map run by the game itself, unseen, with its own checks; the picture is the game's, from your view	Zapisana mapa uruchomiona przez samą grę, bez okna, z jej własnymi kontrolami; obraz pochodzi z gry, z Twojego widoku
+Every tile (slower on a big map)	Wszystkie kafelki (wolniej na dużej mapie)
+Run again	Uruchom ponownie
+openOMSI is loading the map…	openOMSI wczytuje mapę…
+Nothing wrong found	Nie znaleziono problemów
+Problems found:	Znalezione problemy:
+Go there	Przejdź tam
+of the places named lie at the map's edge or a road's dead end (greyed): the game measures a lane's last point on the road's very edge, and a bus at the end stands over it; nothing to mend	z wymienionych miejsc leży na krawędzi mapy lub w ślepym końcu drogi (wyszarzone): gra mierzy ostatni punkt pasa na samej krawędzi drogi, a autobus na końcu stoi nad nim; nie ma czego naprawiać
+The game said nothing about the map	Gra nic nie powiedziała o mapie
+The game's whole output	Cały komunikat gry
+no key entered	nie wpisano klucza
+the server refused the key	serwer odrzucił klucz
+too many requests, try again later	zbyt wiele żądań, spróbuj później
+No connection to the server: are you online?	Brak połączenia z serwerem: czy jesteś online?
+Enter your Google key first	Najpierw wpisz swój klucz Google
+OpenStreetMap's servers are busy: try again in a minute	Serwery OpenStreetMap są zajęte: spróbuj za minutę
+The area is too large for this zoom	Obszar jest za duży dla tego powiększenia
+Cancelled	Anulowano
+Stopped by an internal error (see the log)	Zatrzymano przez błąd wewnętrzny (zobacz dziennik)
+No source has imagery here	Żadne źródło nie ma tu zdjęć
+drawn from OpenStreetMap data: sharp, with names	rysowane z danych OpenStreetMap: ostre, z nazwami
+terrain heights, no key needed	wysokości terenu, klucz niepotrzebny
+needs your own free key	potrzebny własny darmowy klucz
+no key needed	klucz niepotrzebny
+the picture is too small	obraz jest za mały
+Import height map	Importuj mapę wysokości
+Height map	Mapa wysokości
+The ground as a grey picture, to shape in another program and bring back	Grunt jako szary obraz, do obróbki w innym programie i przywrócenia
+Export…	Eksportuj…
+Import…	Importuj…
+over	na
+a pixel	na piksel
+Black adds	Czerń dodaje
+Black is	Czerń to
+White adds	Biel dodaje
+White is	Biel to
+Smoothing	Wygładzanie
+Replace the ground	Zastąp grunt
+Add to it	Dodaj do niego
+Roads and objects keep their heights: best done before building	Drogi i obiekty zachowują swoje wysokości: najlepiej robić przed budową
+An 8-bit picture has only 256 steps of height: smoothing hides them	Obraz 8-bitowy ma tylko 256 stopni wysokości: wygładzanie je ukrywa
+Lay it on the map	Nałóż na mapę
+Cancel	Anuluj
+Height map laid over	Mapa wysokości nałożona na
+Export the height map	Eksportuj mapę wysokości
+Height map written	Mapa wysokości zapisana
+The height map could not be written	Nie można zapisać mapy wysokości
+A height map for the whole map	Mapa wysokości dla całej mapy
+The picture could not be read	Nie można odczytać obrazu
+IBIS and roller blind	IBIS i rolka kierunku
+Front sign, line 1	Tablica czołowa, wiersz 1
+Front sign, line 2	Tablica czołowa, wiersz 2
+Side sign	Tablica boczna
+Roller blind texture	Tekstura rolki kierunku
+IBIS 2 (20 letters)	IBIS 2 (20 znaków)
+Extra sign	Dodatkowa tablica
+Krüger picture	Obraz Krügera
+Text	Tekst
+IBIS (16 letters)	IBIS (16 znaków)
+Display, line 1	Wyświetlacz, wiersz 1
+Display, line 2	Wyświetlacz, wiersz 2
+Full name (20 letters)	Pełna nazwa (20 znaków)
+Service trip	Zjazd do zajezdni
+Special trip	Przejazd specjalny
+Blank	Pusto
+openMapper cannot import this kind of file (use a folder, .zip, .obj, .gltf, .glb, .fbx, .x, .o3d or a picture)	openMapper nie może zaimportować tego rodzaju pliku (użyj folderu, .zip, .obj, .gltf, .glb, .fbx, .x, .o3d lub obrazu)
+Mod installed, files:	Mod zainstalowany, plików:
+Objects added to	Obiekty dodane do
+Road types added to	Typy dróg dodane do
+Models imported:	Zaimportowane modele:
+Nothing to import was found in this folder	W tym folderze nie znaleziono nic do importu
+The model has no triangles	Model nie ma trójkątów
+Model imported:	Model zaimportowany:
+The .obj file has no faces	Plik .obj nie ma ścian
+no base colour picture among them	wśród nich nie ma obrazu koloru bazowego
+The picture cannot be read	Nie można odczytać obrazu
+Picture made into a standee:	Obraz zamieniony w sylwetkę:
+Picture made into a sign:	Obraz zamieniony w tablicę:
+Trees	Drzewa
+Stops and start points	Przystanki i punkty startu
+Junctions	Skrzyżowania
+Tracks	Tory
+Footpaths	Chodniki
+Fences, walls, kerbs	Płoty, mury, krawężniki
+Technical (AI, helpers)	Techniczne (AI, pomocnicze)
+This map lies on the world's grid ([worldcoordinates]): its tiles cannot be taken yet	Ta mapa leży na siatce świata ([worldcoordinates]): jej kafelków nie można jeszcze przejąć
+This map lies on the world's grid ([worldcoordinates]): tiles cannot be added from another yet	Ta mapa leży na siatce świata ([worldcoordinates]): nie można jeszcze dodać kafelków z innej
+Tiles from another map	Kafelki z innej mapy
+Union	Suma
+Difference (cut out)	Różnica (wytnij)
+Intersection	Część wspólna
+Slice (keep both pieces)	Podziel (zachowaj obie części)
+One object of all the selected, their insides gone	Jeden obiekt ze wszystkich zaznaczonych, bez wewnętrznych ścianek
+The other selected objects cut out of the one shown in the properties	Pozostałe zaznaczone obiekty wycięte z tego, który widać we właściwościach
+Only what all the selected share	Tylko to, co mają wspólne wszystkie zaznaczone
+The first object cut by the others into what is outside them and what is inside	Pierwszy obiekt przecięty przez pozostałe na część na zewnątrz i wewnątrz nich
+select an object first	najpierw zaznacz obiekt
+Make editable	Uczyń edytowalnym
+Make single	Uczyń pojedynczym
+the object has only one part	obiekt ma tylko jedną część
+Separate parts	Rozdziel na części
+select two or more objects to join	zaznacz co najmniej dwa obiekty do połączenia
+Join objects	Połącz obiekty
+select two or more objects: the one shown in the properties and what acts on it	zaznacz co najmniej dwa obiekty: ten z właściwości i te, które na niego działają
+nothing is left: the objects do not overlap that way	nic nie zostało: obiekty tak się nie przecinają
+The file has no scene	Plik nie ma sceny
+The FBX file has no meshes	Plik FBX nie ma siatek
+Main roads	Drogi główne
+Streets	Ulice
+Service roads	Drogi dojazdowe
+Tram tracks	Tory tramwajowe
+Railway tracks	Tory kolejowe
+motorway, trunk, primary, secondary	autostrada, ekspresowa, główna, drugorzędna
+tertiary, residential, unclassified	zbiorcza, lokalna, nieklasyfikowana
+yards, car parks, depots	dziedzińce, parkingi, zajezdnie
+each track on its own; branches are joined with switches by hand	każdy tor osobno; odgałęzienia łączy się rozjazdami ręcznie
+main lines without sidings; branches are joined with switches by hand	linie główne bez bocznic; odgałęzienia łączy się rozjazdami ręcznie
+Water from OpenStreetMap	Woda z OpenStreetMap
+Give a distance	Podaj odległość
+The bend is too tight for that distance on its inner side	Zakręt jest za ciasny dla tej odległości po wewnętrznej stronie
+The copy leaves the map: add tiles there first	Kopia wychodzi poza mapę: najpierw dodaj tam kafelki
+Made with openMapper	Wykonano w openMapper
+Low (no shadows, rough edges, 3 km view)	Niska (bez cieni, ostre krawędzie, widok 3 km)
+Medium (softer shadows, 8 km view)	Średnia (łagodniejsze cienie, widok 8 km)
+High	Wysokie
+This end belongs to a junction: select the junction and move it, the road follows	Ten koniec należy do skrzyżowania: zaznacz skrzyżowanie i przesuń je, droga podąży za nim
+Paint along the roads	Malowanie wzdłuż dróg
+Market	Targowisko
+Station	Dworzec
+Depot	Zajezdnia
+this object takes its model from a model file: it cannot be scaled	ten obiekt bierze model z pliku modelu: nie można go skalować
+Not a GPX, KML or GeoJSON file	To nie jest plik GPX, KML ani GeoJSON
+No lines in the file	W pliku nie ma linii
+Language	Język
+Interface size	Rozmiar interfejsu
+File	Plik
+New map…	Nowa mapa…
+Open map…	Otwórz mapę…
+Controls…	Sterowanie…
+Import assets…	Importuj zasoby…
+Multiplayer…	Tryb wieloosobowy…
+OMSI 2 folder…	Folder OMSI 2…
+Quit	Wyjdź
+View	Widok
+Help	Pomoc
+Updates…	Aktualizacje…
+About openMapper	O openMapper
+OMSI 2 not found	Nie znaleziono OMSI 2
+Map editor for openOMSI	Edytor map dla openOMSI
+openMapper builds maps from the content of an installed OMSI 2. Choose its folder (the one with Omsi.exe, maps and Vehicles).	openMapper buduje mapy z zawartości zainstalowanego OMSI 2. Wskaż jego folder (ten z Omsi.exe, maps i Vehicles).
+Choose OMSI 2 folder…	Wybierz folder OMSI 2…
+Maps	Mapy
+recent · OMSI 2	ostatnia · OMSI 2
+recent	ostatnia
+content folder	folder z zawartością
+OMSI 2 (saved as copy)	OMSI 2 (zapisano jako kopię)
+Open	Otwórz
+Make a copy	Utwórz kopię
+A copy of the map in the content folder under a new name, to try something out	Kopia mapy w folderze zawartości pod nową nazwą, do wypróbowania zmian
+Show in the file manager	Pokaż w menedżerze plików
+Move to openMapper's bin	Przenieś do kosza openMapper
+Its folder goes into openMapper\\bin in the content folder, from where it can be put back by hand	Jej folder trafia do openMapper\\bin w folderze zawartości, skąd można go ręcznie przywrócić
+Browse…	Przeglądaj…
+Double-click a map to open it. Maps of OMSI 2 are saved as a copy into openOMSI's content folder; the original stays untouched.	Kliknij dwukrotnie mapę, aby ją otworzyć. Mapy OMSI 2 są zapisywane jako kopia w folderze zawartości openOMSI; oryginał pozostaje nietknięty.
+A simple map editor for openOMSI.	Prosty edytor map dla openOMSI.
+Back to the 3D view (0)	Wróć do widoku 3D (0)
+The plan view from above, north up (0)	Widok planu z góry, północ u góry (0)
+Recent maps	Ostatnie mapy
+(none)	(brak)
+Export map for sharing…	Eksportuj mapę do udostępnienia…
+Export a plan of the map…	Eksportuj plan mapy…
+Earlier versions…	Wcześniejsze wersje…
+Close map	Zamknij mapę
+Edit	Edycja
+Edit history…	Historia edycji…
+Groups for other maps…	Grupy dla innych map…
+Find in map…	Szukaj na mapie…
+Search for a command…	Szukaj polecenia…
+Delete	Usuń
+Deselect	Odznacz
+Tile grid	Siatka kafelków
+What the game does not show	Czego gra nie pokazuje
+AI lanes	Pasy AI
+Names of stops and start points	Nazwy przystanków i punktów startu
+Show	Pokaż
+Roads and splines	Drogi i spline'y
+Overview map (M)	Mapa przeglądowa (M)
+Assets (B)	Zasoby (B)
+Flatten the terrain (roads follow)	Wyrównaj teren (drogi podążą)
+Saved views…	Zapisane widoki…
+Go to selection	Do zaznaczenia
+Camera	Kamera
+Unity: right button looks round and W A S D fly, middle pans, Alt orbits	Unity: prawy przycisk rozgląda się, W A S D latają, środkowy przesuwa, Alt orbituje
+Map editor: right button looks round and W A S D fly (Q down, E up), middle pans, the wheel zooms to the cursor, drag moves the map	Edytor map: prawy przycisk rozgląda się, W A S D latają (Q w dół, E w górę), środkowy przesuwa, kółko przybliża do kursora, przeciąganie przesuwa mapę
+Load 100 tiles at a time (like OMSI 2's editor)	Wczytuj po 100 kafelków (jak edytor OMSI 2)
+Time of day	Pora dnia
+Plain day (as the game by day)	Zwykły dzień (jak w grze za dnia)
+At an hour	O wybranej godzinie
+Where the sun stands then, today, at the map's place (Map > Calendar and place); by night the moon	Gdzie wtedy stoi słońce, dziś, w miejscu mapy (Mapa > Kalendarz i miejsce); nocą księżyc
+Season	Pora roku
+Summer	Lato
+Dry summer	Suche lato
+Spring	Wiosna
+Autumn	Jesień
+Winter	Zima
+Snow	Śnieg
+Graphics quality	Jakość grafiki
+Tools	Narzędzia
+Road types and junctions…	Typy dróg i skrzyżowania…
+PBR maps for a picture…	Mapy PBR dla obrazu…
+Map	Mapa
+Map settings…	Ustawienia mapy…
+Calendar and place…	Kalendarz i miejsce…
+Signal routes…	Trasy sygnałów…
+Chrono scenarios…	Scenariusze chrono…
+Ground textures…	Tekstury gruntu…
+Check map…	Sprawdź mapę…
+Junctions made again:	Skrzyżowania zbudowane od nowa:
+Lines and timetable…	Linie i rozkład…
+Traffic and AI…	Ruch i AI…
+Depot files (destinations)…	Pliki zajezdni (kierunki)…
+Satellite and terrain…	Satelita i teren…
+From OpenStreetMap…	Z OpenStreetMap…
+GPS tracks to trace…	Ślady GPS do odrysowania…
+Tiles from another map…	Kafelki z innej mapy…
+Test drive in openOMSI	Jazda próbna w openOMSI
+Test drive in OMSI 2 (the original)…	Jazda próbna w OMSI 2 (oryginał)…
+Check in openOMSI…	Sprawdź w openOMSI…
+Getting started	Zaczynamy
+New map	Nowa mapa
+Open a map	Otwórz mapę
+Save (Ctrl+S): there are unsaved changes	Zapisz (Ctrl+S): są niezapisane zmiany
+Save (Ctrl+S)	Zapisz (Ctrl+S)
+Import assets: a mod folder or .zip, a .obj / .x / .o3d model (or drop files on the window)	Importuj zasoby: folder lub .zip moda, model .obj / .x / .o3d (lub upuść pliki na okno)
+Redo (Ctrl+Shift+Z)	Ponów (Ctrl+Shift+Z)
+Tile grid (G)	Siatka kafelków (G)
+Assets: every object and road type, with pictures (B)	Zasoby: wszystkie obiekty i typy dróg, z obrazami (B)
+Test drive	Jazda próbna
+Save the map and drive it in openOMSI (F5)	Zapisz mapę i przejedź ją w openOMSI (F5)
+openOMSI was not found: install it to test maps	Nie znaleziono openOMSI: zainstaluj je, aby testować mapy
+Test drive from the start point nearest the view	Jazda próbna z punktu startu najbliższego widokowi
+See this view in openOMSI	Zobacz ten widok w openOMSI
+loading	wczytywanie
+Edit mesh	Edytuj siatkę
+Shapes and lamps	Kształty i lampy
+Click beside the map to add a 300 × 300 m tile. Right-click a tile to remove it.	Kliknij obok mapy, aby dodać kafelek 300 × 300 m. Prawy klik na kafelku: usuń go.
+Area	Obszar
+A ring of tiles round the map	Pierścień kafelków wokół mapy
+Every free place beside the map, corners too, gets a tile at the height of its neighbours	Każde wolne miejsce obok mapy, także narożniki, dostaje kafelek na wysokości sąsiadów
+Tiles added:	Dodane kafelki:
+Everything on the map, grouped by the folders its files lie in	Wszystko na mapie, pogrupowane według folderów plików
+Click an object or a road in the view to see and change it on the right.	Kliknij obiekt lub drogę w widoku, aby zobaczyć i zmienić je po prawej.
+Line up with the nearest road (Shift: put it freely)	Wyrównaj do najbliższej drogi (Shift: ustaw swobodnie)
+On both sides of the road	Po obu stronach drogi
+A stop of the same name also goes at the kerb across the road, facing the other way	Przystanek o tej samej nazwie stawiany jest też przy krawężniku naprzeciwko, zwrócony w drugą stronę
+In a row along a line	W rzędzie wzdłuż linii
+Every	Co
+Draw new	Rysuj nowe
+Edit existing	Edytuj istniejące
+Click a path to pick it: every point is a dot to drag (the small ones in the middle of a piece bend it). Double-click the path to put a point in. Click a dot, then Del, to take that point out; Del with no dot picked deletes the whole path (Ctrl+Z brings it back). Lanes of roads and junctions belong to their road type: use Edit its AI lanes on the road.	Kliknij ścieżkę, aby ją wybrać: każdy punkt to kropka do przeciągania (małe w środku odcinka zaginają go). Kliknij dwukrotnie ścieżkę, aby dodać punkt. Kliknij kropkę, potem Del, aby usunąć ten punkt; Del bez wybranej kropki usuwa całą ścieżkę (Ctrl+Z ją przywróci). Pasy dróg i skrzyżowań należą do typu drogi: użyj „Edytuj jej pasy AI" na drodze.
+Cars	Samochody
+People	Ludzie
+Show these in the other tools too	Pokaż to także w innych narzędziach
+Show the AI's lanes in the other tools too	Pokaż pasy AI także w innych narzędziach
+Everything	Wszystko
+Search	Szukaj
+Shape the ground under the road	Dopasuj grunt pod drogą
+Go on drawing from the end of the road just built	Rysuj dalej od końca właśnie zbudowanej drogi
+Join road ends, roads and junction pieces near the cursor	Łącz z końcami dróg, drogami i elementami skrzyżowań przy kursorze
+Make junctions where roads meet	Twórz skrzyżowania tam, gdzie spotykają się drogi
+Go on with the type of the road I start from	Kontynuuj typem drogi, od której zaczynam
+Building with:	Budowane:
+nothing chosen	nic nie wybrano
+Front at the roadside, back	Front przy drodze, odstęp
+Plant brush: sow trees by painting	Pędzel roślin: sadź drzewa malując
+Sow	Sadź
+Clear	Usuwaj
+With the brush	Pędzlem
+In an outline	Po obrysie
+Click round an area (a wood, a park, a garden) and it is filled at once, or cleared	Klikaj wokół obszaru (las, park, ogród), a zostanie od razu zasadzony lub oczyszczony
+About	Około
+plants (Enter: plant)	roślin (Enter: sadź)
+Size	Rozmiar
+Apart	Odstęp
+Sows the object chosen below. Right-click entries: "Add to the plant mix" to sow several at random. Clearing takes trees and the mix's objects.	Sadzi obiekt wybrany poniżej. Prawy klik na pozycjach: „Dodaj do mieszanki roślin", aby sadzić kilka losowo. Usuwanie zabiera drzewa i obiekty mieszanki.
+Mix (picked at random):	Mieszanka (losowo):
+reading OMSI 2…	odczyt OMSI 2…
+items	szt.
+Nothing found	Nic nie znaleziono
+mod	mod
+right-click: star it	prawy klik: dodaj do ulubionych
+Take out of the plant mix	Usuń z mieszanki roślin
+Add to the plant mix	Dodaj do mieszanki roślin
+Remove from favourites	Usuń z ulubionych
+Add to favourites	Dodaj do ulubionych
+Favourites	Ulubione
+Recently used	Ostatnio używane
+(not in a folder)	(poza folderami)
+Strength	Siła
+Mode	Tryb
+Levels the ground to the height where you start dragging	Wyrównuje grunt do wysokości, od której zaczynasz przeciągać
+Softens bumps and edges	Łagodzi nierówności i krawędzie
+Raises the ground under the brush	Podnosi grunt pod pędzlem
+Lowers the ground under the brush	Obniża grunt pod pędzlem
+Gives flat ground the rolls and dips of a natural field; hold longer for more	Nadaje płaskiemu gruntowi pagórki i zagłębienia jak na polu; trzymaj dłużej, by wzmocnić
+Paint a lake or a river: the ground is dug to a bed under the water's level (where you start the stroke, or the tile's water) and the tile gets water at that level. Water in OMSI is one level for a whole tile: another low place on the same tile shows it too	Maluj jezioro lub rzekę: grunt jest wykopywany do dna poniżej poziomu wody (tam, gdzie zaczynasz pociągnięcie, lub wody kafelka), a kafelek dostaje wodę na tym poziomie. Woda w OMSI ma jeden poziom na cały kafelek: inne niskie miejsce na tym samym kafelku też ją pokaże
+Click where it starts, then where it ends: the ground between becomes one even slope as wide as the brush (an embankment, a ramp, a level bed)	Kliknij początek, potem koniec: grunt pomiędzy stanie się równym spadkiem szerokim jak pędzel (nasyp, rampa, równe podłoże)
+To a height	Do wysokości
+Flatten to the height typed instead of the one where the drag starts (a level square, a platform)	Wyrównaj do wpisanej wysokości zamiast tej, od której zaczyna się przeciąganie (równy plac, platforma)
+Depth	Głębokość
+The water's level is set where a stroke starts: start at the bank.	Poziom wody ustalany jest tam, gdzie zaczyna się pociągnięcie: zacznij przy brzegu.
+Brush	Pędzel
+Flatten the whole terrain	Wyrównaj cały teren
+Every tile's ground levelled to the map's mean height; the roads, the AI paths and the junctions follow it. One undo step brings the relief back. (The satellite picture: View > Satellite overlay.)	Grunt każdego kafelka wyrównany do średniej wysokości mapy; drogi, ścieżki AI i skrzyżowania podążają za nim. Jeden krok cofnięcia przywróci rzeźbę terenu. (Obraz satelitarny: Widok > Nakładka satelitarna.)
+Ground layers	Warstwy gruntu
+base ground	grunt bazowy
+layer	warstwa
+Add…	Dodaj…
+Remove	Usuń
+Up the list: drawn under the layers after it	Wyżej na liście: rysowana pod kolejnymi warstwami
+Down the list: drawn over the layers before it	Niżej na liście: rysowana nad poprzednimi warstwami
+Texture	Tekstura
+The layer's picture; its painting stays	Obraz warstwy; jej malowanie zostaje
+A fine grain laid over the texture, seen close up (OMSI's detail texture)	Drobne ziarno nałożone na teksturę, widoczne z bliska (tekstura detalu OMSI)
+Click to choose another	Kliknij, aby wybrać inną
+Repeats per tile	Powtórzeń na kafelek
+Detail repeats	Powtórzeń detalu
+How finely this layer can be painted: texels across a tile (its masks are made again at the new size)	Jak drobno można malować tę warstwę: teksele w poprzek kafelka (jej maski są tworzone od nowa w nowym rozmiarze)
+Edit ground texture	Edytuj teksturę gruntu
+Erase	Wymaż
+Remove ground texture	Usuń teksturę gruntu
+Tile	Kafelek
+A water surface over the whole tile: it shows where the ground lies below it (lower the ground with the Terrain tool for a lake or a river)	Powierzchnia wody na całym kafelku: widać ją tam, gdzie grunt leży niżej (obniż grunt narzędziem „Teren" dla jeziora lub rzeki)
+at 	na
+Lamps light the ground at night	Lampy oświetlają grunt nocą
+The game works out the light pools of the street lamps on and round this tile when it loads it ([variable_terrainlightmap]); off, it shows the tile's light map file as it is	Gra oblicza plamy światła latarni na tym kafelku i wokół niego przy wczytaniu ([variable_terrainlightmap]); wyłączone: pokazuje plik mapy świateł kafelka bez zmian
+Edit history	Historia edycji
+Click a step to go back to just after it	Kliknij krok, aby wrócić do stanu zaraz po nim
+Opened	Otwarto
+Properties	Właściwości
+Configure PBR	Konfiguruj PBR
+Create PBR	Utwórz PBR
+Normal, roughness, metal and shadow maps made from the object's textures, tuned and written as openOMSI reads them	Mapy normalnych, chropowatości, metalu i cieni z tekstur obiektu: dostrój i zapisz tak, jak czyta je openOMSI
+Type	Typ
+Hangs on	Wisi na
+point	punkt
+Location	Położenie
+East	Wschód
+North	Północ
+Height above sea level	Wysokość nad poziomem morza
+above the ground:	nad gruntem:
+OMSI keeps this object's height above the ground under it: moved elsewhere it stays as high above the ground there	OMSI zapamiętuje wysokość tego obiektu nad gruntem pod nim: przeniesiony gdzie indziej zostaje na tej samej wysokości nad gruntem
+Rotation	Obrót
+Tilt forward (pitch)	Pochylenie do przodu (pitch)
+Bank to the side (roll)	Przechył na bok (roll)
+Heading	Kierunek (heading)
+Turn it the way the nearest road runs beside it	Obróć zgodnie z biegiem najbliższej drogi obok
+Stand it upright again	Ustaw ponownie pionowo
+Picture	Obraz
+Ratio	Proporcje
+Stop name	Nazwa przystanku
+This tree	To drzewo
+Texts	Teksty
+Shown on the object (@ starts a new line)	Widoczne na obiekcie (@ zaczyna nowy wiersz)
+Model	Model
+Triangles	Trójkąty
+Parts	Części
+Part	Część
+triangles	trójkątów
+colour only	tylko kolor
+opaque	nieprzezroczysty
+cut out	wycięty
+blended	półprzezroczysty
+How the texture's transparency is used: cut out for leaves and fences, blended for glass	Jak używana jest przezroczystość tekstury: wycięty dla liści i płotów, półprzezroczysty dla szkła
+Textures	Tekstury
+Normal, roughness, metal and shadow maps made from the road type's textures	Mapy normalnych, chropowatości, metalu i cieni z tekstur typu drogi
+Length	Długość
+Radius	Promień
+right	w prawo
+left	w lewo
+straight	prosto
+start	początek
+end	koniec
+Mirrored	Odbicie lustrzane
+Skew	Skos
+The start cut on a slant: 1 is 45° (two fences meeting at a corner: 1 and -1)	Skośne cięcie na początku: 1 to 45° (dwa płoty spotykające się w rogu: 1 i -1)
+The end cut on a slant	Skośne cięcie na końcu
+Ground	Grunt
+as it is	bez zmian
+cut away under it	wytnij pod nim
+cut, held at the end	wytnij, trzymaj na końcu
+cut, held at the start	wytnij, trzymaj na początku
+cut, held at both ends	wytnij, trzymaj na obu końcach
+A hole in the ground under it, as for a tunnel, an underpass or a pit (OMSI's terrain align)	Dziura w gruncie pod nim, jak dla tunelu, przejścia podziemnego lub dołu (terrain align w OMSI)
+Select the whole road	Zaznacz całą drogę
+Every piece linked on from this one (or double-click the road)	Każdy odcinek powiązany z tym (lub kliknij drogę dwukrotnie)
+Join with the next piece	Połącz z następnym odcinkiem
+One piece again with the one after it, where the two make one curve	Znów jeden odcinek z następnym, gdzie razem tworzą jedną krzywą
+Replace with	Zamień na
+The object chosen in the Objects tool's catalogue takes this one's place	Obiekt wybrany w katalogu narzędzia „Obiekty" zajmuje miejsce tego
+Go to	Przejdź do
+Level ground	Wyrównaj grunt
+The ground under it made level with its foot, blending in 3 m round it (a house on a slope)	Grunt pod nim wyrównany do jego podstawy, z płynnym przejściem 3 m wokół (dom na zboczu)
+All like it	Wszystkie takie
+Select every one of this type on the map	Zaznacz wszystkie tego typu na mapie
+No road within 60 m	Brak drogi w promieniu 60 m
+Name	Nazwa
+Folder	Folder
+Traffic	Ruch
+left-hand	lewostronny
+No start point yet: place one (Game logic > Start points) so the bus has somewhere to appear in openOMSI.	Brak punktu startu: ustaw go (Logika gry > Punkty startu), aby autobus miał gdzie się pojawić w openOMSI.
+None yet: openOMSI shows it where maps are chosen.	Jeszcze brak: openOMSI pokazuje go przy wyborze mapy.
+Import your thumbnail	Importuj własną miniaturę
+Choose a picture: it is cut to 370 × 280 and becomes the map's picture (picture.jpg).	Wybierz obraz: zostanie przycięty do 370 × 280 i stanie się obrazem mapy (picture.jpg).
+Open the map with this view	Otwieraj mapę z tym widokiem
+The camera as it is now is where the map opens (here and in OMSI 2's editor).	Kamera taka jak teraz to miejsce, w którym otwiera się mapa (tu i w edytorze OMSI 2).
+Saved to	Zapisywane w
+Edit map	Edytuj mapę
+Change the layer's texture	Zmień teksturę warstwy
+Change the layer's detail texture	Zmień teksturę detalu warstwy
+Controls	Sterowanie
+Keyboard	Klawiatura
+Click a key, then press the new one (Esc: leave it). A key already in use is taken from its command.	Kliknij klawisz, potem naciśnij nowy (Esc: zostaw). Zajęty klawisz zostaje odebrany swojemu poleceniu.
+press a key…	naciśnij klawisz…
+Also:	Także:
+Back to the default key	Przywróć domyślny klawisz
+Reset all keys	Zresetuj wszystkie klawisze
+Mouse	Mysz
+Right button held	Prawy przycisk wciśnięty
+look round; W A S D fly, Q / E down / up, Shift faster, wheel: speed	rozglądanie się; W A S D: lot, Q / E: w dół / w górę, Shift: szybciej, kółko: prędkość
+Middle drag	Środkowy przycisk, przeciąganie
+pan	przesuwanie widoku
+Alt + left / right / middle drag	Alt + lewy / prawy / środkowy, przeciąganie
+orbit / zoom / pan (as in Unity)	orbita / zoom / przesuwanie (jak w Unity)
+Left drag on nothing	Lewy przycisk na pustym miejscu
+select with a box	zaznacz ramką
+Alt + left drag	Alt + lewy przycisk
+orbit round the point under the cursor	orbita wokół punktu pod kursorem
+Wheel	Kółko
+move towards the cursor	przybliżenie do kursora
+Trackpad	Gładzik
+Two fingers	Dwa palce
+Pinch / twist	Szczypanie / skręcanie
+zoom / turn	zoom / obrót
+Option + two fingers or drag	Option + dwa palce lub przeciąganie
+Fixed keys	Stałe klawisze
+Arrow keys	Strzałki
+move over the map (Shift: faster)	poruszanie po mapie (Shift: szybciej)
+go to a saved view (Shift: keep the view there)	do zapisanego widoku (Shift: zapamiętaj tam widok)
+Alt + arrows	Alt + strzałki
+move the selection a grid step (Shift: 10 cm)	przesuń zaznaczenie o krok siatki (Shift: 10 cm)
+Alt + Page Up / Down	Alt + Page Up / Down
+selection up / down 10 cm (Shift: 1 m)	zaznaczenie w górę / w dół o 10 cm (Shift: 1 m)
+add to / take from the selection	dodaj do zaznaczenia / odejmij od niego
+Shift / Ctrl + drag on empty ground	Shift / Ctrl + przeciąganie po pustym gruncie
+select with a box (Shift adds)	zaznacz ramką (Shift dodaje)
+Double-click a road	Dwuklik na drodze
+select all of it	zaznacz ją całą
+turn the object	obróć obiekt
+brush size	rozmiar pędzla
+stop / deselect	przerwij / odznacz
+Unsaved changes	Niezapisane zmiany
+The map has changes that are not saved. Save them first?	Mapa ma niezapisane zmiany. Zapisać je najpierw?
+Don't save	Nie zapisuj
+Assets	Zasoby
+All	Wszystkie
+Picture size	Rozmiar obrazów
+Shapes…	Kształty…
+Close (B)	Zamknij (B)
+Scenery objects	Obiekty sceny
+Splines (roads, tracks…)	Spline'y (drogi, tory…)
+Favourite on / off	Ulubione wł. / wył.
+content folder (mod, import, own)	folder zawartości (mod, import, własne)
+OMSI 2	OMSI 2
+width	szerokość
+Build with it	Buduj nim
+Place it	Postaw
+PBR material…	Materiał PBR…
+Delete…	Usuń…
+Not seen in the game (a helper).	Niewidoczny w grze (pomocniczy).
+Delete the asset?	Usunąć zasób?
+Its folder goes into openMapper's bin in the content folder (openMapper\\bin), from where it can be put back by hand. Maps that use it show it missing.	Jego folder trafia do kosza openMapper w folderze zawartości (openMapper\\bin), skąd można go ręcznie przywrócić. Mapy, które go używają, pokażą go jako brakujący.
+Calendar and place	Kalendarz i miejsce
+Place and time	Miejsce i czas
+Holidays	Święta i ferie
+Number plates	Tablice rejestracyjne
+Latitude	Szerokość geograficzna
+Longitude	Długość geograficzna
+Time zone	Strefa czasowa
+Where the sun stands and when it rises and sets come from here.	Stąd biorą się położenie słońca oraz godziny wschodu i zachodu.
+Summer time	Czas letni
+years	lat
+none: the clocks are never put forward	brak: zegary nigdy nie są przesuwane
+EU rules for these years	Zasady UE na te lata
+Last Sunday of March to last Sunday of October, replacing what is set for these years	Od ostatniej niedzieli marca do ostatniej niedzieli października, zamiast ustawień na te lata
+None	Brak
+Year	Rok
+entries	wpisów
+Public holidays run Sunday's timetable; school holidays the holiday one.	W święta kursuje rozkład niedzielny, w ferie rozkład feryjny.
+Public holidays	Święta państwowe
+Add a holiday	Dodaj święto
+Holiday	Święto
+School holidays	Ferie szkolne
+Ends before it starts	Kończy się przed początkiem
+Add school holidays	Dodaj ferie
+The AI's cars carry these, one a line.	Auta AI mają takie tablice, po jednej w wierszu.
+X: a letter, 9: a digit	X: litera, 9: cyfra
+Make	Utwórz
+Replaces the list with plates of the pattern	Zastępuje listę tablicami według wzoru
+plates	tablic
+The scenario's AI lists are written, groups changed:	Listy AI scenariusza zapisane, zmienione grupy:
+Could not write the scenario	Nie można zapisać scenariusza
+The scenario's timetable is written, files:	Rozkład scenariusza zapisany, plików:
+Back in the scenario:	Z powrotem w scenariuszu:
+The scenario's things are on the map:	Rzeczy scenariusza są na mapie:
+what you place now is the scenario's too	to, co teraz stawiasz, też należy do scenariusza
+Editing the scenario	Edycja scenariusza
+Done	Gotowe
+Chrono scenarios	Scenariusze chrono
+How the map changes over the years: each scenario from its first day lays its own tiles, lines and tickets over the map. The view shows the map as on the day chosen here; what you edit is always the map itself.	Jak mapa zmienia się z latami: każdy scenariusz od swojego pierwszego dnia nakłada na mapę własne kafelki, linie i bilety. Widok pokazuje mapę z wybranego tu dnia; edytujesz zawsze samą mapę.
+Show the map as on	Pokaż mapę z dnia
+Today	Dziś
+Active on that day:	Aktywne tego dnia:
+New scenario's name	Nazwa nowego scenariusza
+New scenario	Nowy scenariusz
+A scenario starting on the day shown, after the others	Scenariusz zaczynający się od pokazanego dnia, po pozostałych
+From	Od
+To	Do
+for good	na stałe
+Own tickets	Własne bilety
+Own money	Własna waluta
+the map's	mapy
+Takes off	Zdejmuje linie
+What changes (shown where the date is chosen)	Co się zmienia (widoczne przy wyborze daty)
+From its first day, the selection in the view:	Od jego pierwszego dnia, zaznaczenie w widoku:
+appears	pojawia się
+Taken out of the map into the scenario: it is there from the scenario's first day on (place it first, then press this)	Usunięte z mapy do scenariusza: jest tam od pierwszego dnia scenariusza (najpierw postaw, potem naciśnij)
+is gone	znika
+Stays in the map, gone from the scenario's first day on	Zostaje w mapie, znika od pierwszego dnia scenariusza
+becomes	staje się
+its texts become	jego teksty stają się
+Write	Zapisz
+Its path rules from that day	Jego reguły ścieżek od tego dnia
+Add a rule	Dodaj regułę
+Written into the scenario at once (undo does not take it out of the scenario).	Zapisywane do scenariusza od razu (cofnięcie nie usuwa tego ze scenariusza).
+What it changes	Co zmienia
+into the map	do mapy
+Out of the scenario into the map itself: there on every day	Ze scenariusza do samej mapy: będzie tam każdego dnia
+Take it out of the scenario	Usuń ze scenariusza
+new texts	nowe teksty
+rules	reguł
+Nothing yet.	Na razie nic.
+Its own things are on the map: select, move, change and place as usual. The map's own things stay the map's.	Jego własne rzeczy są na mapie: zaznaczaj, przesuwaj, zmieniaj i stawiaj jak zwykle. Rzeczy samej mapy zostają mapy.
+Done: back into the scenario	Gotowe: z powrotem do scenariusza
+Edit its own things on the map	Edytuj jego własne rzeczy na mapie
+What it brings in is put on the map to work with as with anything else; Done writes it back (undo starts afresh)	To, co wnosi, trafia na mapę, by pracować z tym jak z każdą rzeczą; „Gotowe" zapisuje to z powrotem (historia cofania zaczyna się od nowa)
+The Lines window shows its timetable (the map's with its own laid over): lines, trips and tours edited there are the scenario's; a line of the map taken away is taken off from its day.	Okno linii pokazuje jego rozkład (mapy z nałożonym własnym): edytowane tam linie, kursy i brygady należą do scenariusza; usunięta linia mapy jest zdejmowana od jego dnia.
+Done with its timetable	Gotowe z jego rozkładem
+Edit its timetable	Edytuj jego rozkład
+Its own lines, trips and tours in the Lines window; Done writes only what differs from the map's (undo starts afresh)	Jego własne linie, kursy i brygady w oknie linii; „Gotowe" zapisuje tylko różnice względem mapy (historia cofania zaczyna się od nowa)
+The Traffic window shows its AI lists (the map's with its own added): vehicles and type groups added there, and a depot's own depot file, are the scenario's from its day.	Okno ruchu pokazuje jego listy AI (mapy z dodanymi własnymi): dodane tam pojazdy i grupy typów oraz własny plik zajezdni należą do scenariusza od jego dnia.
+Done with its AI lists	Gotowe z jego listami AI
+Edit its AI lists	Edytuj jego listy AI
+Vehicles it adds to the groups and depots (OMSI's ailists_#upd.cfg); taking one away is the map's own business	Pojazdy, które dodaje do grup i zajezdni (ailists_#upd.cfg OMSI); usuwanie pojazdów to sprawa samej mapy
+Write the scenario	Zapisz scenariusz
+Close	Zamknij
+The map has no chrono scenarios.	Mapa nie ma scenariuszy chrono.
+from	od
+to	do
+takes off	zdejmuje
+own tickets	własne bilety
+Its first day	Jego pierwszy dzień
+Written into the scenario	Zapisano do scenariusza
+Written into the scenario:	Zapisano do scenariusza:
+Scenario written	Scenariusz zapisany
+The map as on	Mapa z dnia
+scenarios:	scenariuszy:
+Multiplayer	Multiplayer
+Joining… (a big map takes a while to come)	Dołączanie… (duża mapa jest przesyłana dłuższą chwilę)
+Recover a conflicting edit…	Odzyskaj kolidującą edycję…
+Recovered your edit; undo is available	Edycja odzyskana; można ją cofnąć
+Edit one map together: one of you hosts it, the others join. Roads, objects, ground and paint are shared as they are made; the timetable, the traffic and the descriptions stay the host's, and the host saves the map. Everybody needs the same objects and splines installed.	Wspólna edycja jednej mapy: jedna osoba ją hostuje, pozostałe dołączają. Drogi, obiekty, grunt i malowanie są współdzielone na bieżąco; rozkład, ruch i opisy zostają przy hoście, a mapę zapisuje host. Wszyscy muszą mieć zainstalowane te same obiekty i spline'y.
+Your name	Twoja nazwa
+Password	Hasło
+Host this map	Hostuj tę mapę
+Others on this network can join	Inni w tej sieci mogą dołączyć
+Others anywhere can join (a free Cloudflare tunnel, nothing to set up on the router)	Inni z dowolnego miejsca mogą dołączyć (darmowy tunel Cloudflare, bez konfiguracji routera)
+Port	Port
+Over the internet the password must have at least this many letters:	W internecie hasło musi mieć co najmniej tyle liter:
+No password: anybody who reaches this computer's port can join and change the whole map.	Bez hasła: każdy, kto dotrze do portu tego komputera, może dołączyć i zmienić całą mapę.
+Ask for a password after all	Jednak pytaj o hasło
+Host without a password? Anybody on this network who finds the port can join and change the whole map.	Hostować bez hasła? Każdy w tej sieci, kto znajdzie port, może dołączyć i zmienić całą mapę.
+Yes, without a password	Tak, bez hasła
+No	Nie
+Type a password the others will need.	Wpisz hasło, którego będą potrzebować inni.
+Host without a password…	Hostuj bez hasła…
+Host	Hostuj
+Open a map, type a name and a password first	Najpierw otwórz mapę, wpisz nazwę i hasło
+Join a map	Dołącz do mapy
+The map open now has unsaved changes: joining closes it. Save it first.	Otwarta mapa ma niezapisane zmiany: dołączenie ją zamknie. Najpierw zapisz.
+You host this map. Give the others one of these:	Hostujesz tę mapę. Podaj innym jeden z tych adresów:
+On this network the connection is not encrypted: somebody listening in can see the map, and from what they catch try passwords on their own computer. Use a long password, or the internet tunnel (encrypted).	W tej sieci połączenie nie jest szyfrowane: ktoś podsłuchujący widzi mapę i z przechwyconego może zgadywać hasła na własnym komputerze. Użyj długiego hasła lub tunelu internetowego (szyfrowany).
+Everybody who joins can change the whole map.	Każdy, kto dołączy, może zmienić całą mapę.
+Opening the Cloudflare tunnel… (fetched the first time)	Otwieranie tunelu Cloudflare… (pobierany za pierwszym razem)
+internet	internet
+Waiting for Cloudflare's address…	Oczekiwanie na adres od Cloudflare…
+The Cloudflare tunnel could not be opened (no cloudflared, or no internet). The LAN addresses still work.	Nie można otworzyć tunelu Cloudflare (brak cloudflared lub internetu). Adresy w sieci lokalnej nadal działają.
+You joined this map. The host saves it.	Dołączyłeś do tej mapy. Zapisuje ją host.
+Everything of yours is with the others	Wszystko Twoje jest u pozostałych
+Sending your edits…	Wysyłanie Twoich zmian…
+In the session	W sesji
+Say something…	Napisz coś…
+Leave	Wyjdź
+Knife (K): a click on a road cuts it there, as often as you like; the pieces' lengths shown at the cursor, on whole grid steps with grid snapping on · right-click or Esc: off	Nóż (K): kliknięcie drogi przecina ją w tym miejscu, ile razy chcesz; długości odcinków widać przy kursorze, z przyciąganiem do siatki — w całych krokach siatki · prawy klik lub Esc: wyłącz
+The angle step: what snapping comes to and what R turns by	Krok kąta: do czego przyciąga i o ile obraca R
+Angle	Kąt
+Snap headings to the angle step	Przyciągaj kierunki do kroku kąta
+Grid	Siatka
+Snap positions to the grid	Przyciągaj położenia do siatki
+Click two points to measure the distance and gradient between them (U) · right-click: off	Kliknij dwa punkty, aby zmierzyć odległość i nachylenie między nimi (U) · prawy klik: wyłącz
+Auto-Terrain	Auto-teren
+What you build follows the ground: roads, paths and tracks take its height (off: they run level from where they start). Only what is built from now on; nothing already there changes	To, co budujesz, podąża za gruntem: drogi, ścieżki i tory przyjmują jego wysokość (wył.: biegną poziomo od punktu startu). Tylko to, co budowane od teraz; istniejące bez zmian
+Auto-Switch	Auto-rozjazd
+Branching a track off another makes a switch there	Odgałęzienie toru od innego tworzy tam rozjazd
+Auto-Junction	Auto-skrzyżowanie
+Auto-Align	Auto-wyrównanie
+Line objects up with the nearest road (Shift: put it freely)	Wyrównuj obiekty do najbliższej drogi (Shift: ustaw swobodnie)
+Selection	Zaznaczenie
+A click on one of it selects all of it, Ctrl + click one alone	Kliknięcie jednego zaznacza całość, Ctrl + klik tylko jeden
+Keep these together: a click on one selects all, a drag moves all (Ctrl+G)	Trzymaj razem: klik jednego zaznacza wszystkie, przeciągnięcie przesuwa wszystkie (Ctrl+G)
+Apply	Zastosuj
+Turn	Obrót
+Level the ground under them	Wyrównaj grunt pod nimi
+Each one's outline made level with its foot, blending into the ground 3 m round it	Obrys każdego wyrównany do jego podstawy, płynnie przechodzący w grunt na 3 m wokół
+Make every object	Zamień wszystkie obiekty na
+The object chosen in the Objects tool's catalogue	Obiekt wybrany w katalogu narzędzia „Obiekty"
+Random headings	Losowe kierunki
+Every selected object turned its own random way (trees, bushes, rocks)	Każdy zaznaczony obiekt obrócony losowo (drzewa, krzaki, skały)
+Along the road	Wzdłuż drogi
+Each turned the way the nearest road runs beside it	Każdy obrócony zgodnie z biegiem najbliższej drogi obok
+Turned:	Obrócono:
+All like this one	Wszystkie jak ten
+Every selected object takes the heading of the one in the properties	Wszystkie zaznaczone obiekty przyjmują kierunek tego z właściwości
+Make every road	Zamień wszystkie drogi na
+The road type chosen in the Roads tool's catalogue	Typ drogi wybrany w katalogu narzędzia „Drogi"
+Lay them on the ground	Połóż je na gruncie
+Reverse their direction	Odwróć ich kierunek
+Even slope along them	Równe nachylenie wzdłuż nich
+One chain of roads: from the height at one end to that at the other, evenly (a bridge, a ramp)	Jeden łańcuch dróg: od wysokości na jednym końcu do wysokości na drugim, równomiernie (most, rampa)
+Edit its AI lanes	Edytuj jej pasy AI
+Its lanes become AI paths of their own (the same lines, the same way) that the Logic tool's Edit existing bends, moves and deletes. The road keeps its look.	Jej pasy stają się własnymi ścieżkami AI (te same linie, ten sam kierunek), które narzędzie Logika > Edytuj istniejące zagina, przesunie i usunie. Droga zachowuje wygląd.
+Ends (joined roads follow)	Końce (połączone drogi podążają)
+height	wysokość
+gradient	nachylenie
+cant	przechyłka
+Banking across the road, %: positive lowers its right side (into a right bend)	Przechył w poprzek drogi, %: dodatni obniża jej prawą stronę (w prawy łuk)
+End	End
+Even slope end to end	Równe nachylenie od końca do końca
+Both gradients to the straight climb between the ends' heights	Oba nachylenia na prostą wznoszącą się między wysokościami końców
+Speed limit, km/h	Ograniczenie prędkości, km/h
+Traffic density ×	Gęstość ruchu ×
+Priority	Pierwszeństwo
+Trucks (0: none)	Ciężarówki (0: brak)
+No cars	Bez osobówek
+Buses only	Tylko autobusy
+For the AI and the player on one path (lane) of it, counted from 0: the view shows their numbers	Dla AI i gracza na jednej jej ścieżce (pasie), licząc od 0: ich numery widać w widoku
+Path (lane) number	Numer ścieżki (pasa)
+Hanging on it	Wiszą na niej
+Points to hang objects on:	Punktów do zawieszania obiektów:
+Select it	Zaznacz ją
+Hang	Zawieś
+Choose an object in the Objects catalogue first	Najpierw wybierz obiekt w katalogu „Obiekty"
+A fence, a row of houses, an avenue: the selection copied again and again, a step on each time	Płot, rząd domów, aleja: zaznaczenie kopiowane raz za razem, za każdym razem o krok dalej
+Copies	Kopii
+Step	Krok
+Turn each	Obrót każdej
+Rows	Rzędów
+More than one: a grid (an orchard, a car park), each row a row step on	Więcej niż jeden: siatka (sad, parking), każdy rząd o krok rzędów dalej
+Row step	Krok rzędów
+Tilted to the ground under it, the way it slopes forward and to the side (a fence, a bench or a shed on a hillside)	Pochylony do gruntu pod nim, tak jak opada do przodu i na bok (płot, ławka lub szopa na zboczu)
+Heights along the ground again, smoothed so it climbs a hill rather than every bump (after shaping the ground or laying a height map over it); where a road not selected joins, its height is kept	Wysokości znów po gruncie, wygładzone, by droga wspinała się na wzgórze, a nie na każdą nierówność (po kształtowaniu gruntu lub nałożeniu mapy wysokości); gdzie łączy się niezaznaczona droga, jej wysokość zostaje
+Each starts where it ended: the traffic on it goes the other way (a one-way street, a track's direction), the road itself stays where it is	Każdy zaczyna się tam, gdzie się kończył: ruch po nim idzie w przeciwną stronę (ulica jednokierunkowa, kierunek toru), sama droga zostaje na miejscu
+A second track or the other carriageway: the selected splines copied alongside, bends kept exact, linked as they are	Drugi tor lub druga jezdnia: zaznaczone spline'y skopiowane obok, łuki dokładne, powiązania jak w oryginale
+To the left	Z lewej
+To the right	Z prawej
+Left and right of the way the road runs (its arrows with AI lanes shown)	Lewa i prawa strona względem kierunku drogi (jej strzałki przy pokazanych pasach AI)
+For trams and electric trains: a wire spline laid on the selected track, piece for piece and linked (its height is the wire spline's own); the masts go in with Objects along the road	Dla tramwajów i pociągów elektrycznych: spline przewodu ułożony na zaznaczonym torze, odcinek po odcinku i powiązany (jego wysokość jest własna dla spline'a przewodu); słupy dodajesz „Obiektami wzdłuż drogi"
+No wire spline installed (one whose name says Fahrdraht, Oberleitung or wire)	Brak zainstalowanego spline'a przewodu (z Fahrdraht, Oberleitung lub wire w nazwie)
+Lay it	Ułóż
+Wire pieces laid:	Ułożone odcinki przewodu:
+Paint the ground along it	Pomaluj grunt wzdłuż niej
+Add a ground texture in the Paint tool first: the base ground is under everything	Najpierw dodaj teksturę gruntu w narzędziu „Malowanie": grunt bazowy leży pod wszystkim
+Layer	Warstwa
+Where	Gdzie
+beside it	obok niej
+under it too	także pod nią
+Out from its edge	Od krawędzi
+Soft edge	Miękka krawędź
+A gravel verge, dirt by a track, grass along a path: the brush of the Paint tool touches it up afterwards	Żwirowe pobocze, ziemia przy torze, trawa wzdłuż ścieżki: pędzel „Malowania" poprawi to potem
+Beside	Obok
+Lean with the road	Przechyl razem z drogą
+Each object leans with the road's gradient and banking (bays and arrows on the road); off, it stands upright	Każdy obiekt przechyla się z nachyleniem i przechyłką drogi (zatoki i strzałki na drodze); wyłączone: stoi pionowo
+A text the row's objects show (@ starts a new line)	Tekst pokazywany przez obiekty rzędu (@ zaczyna nowy wiersz)
+Object:	Obiekt:
+Pick an object (a lamp, a tree, a bollard) in the Objects tool's catalogue	Wybierz obiekt (lampę, drzewo, słupek) w katalogu narzędzia „Obiekty"
+Right of the road's direction; negative: left	Po prawej względem kierunku drogi; ujemne: po lewej
+Free at start / end	Odstęp na początku / końcu
+Both sides	Po obu stronach
+Place along the road	Rozmieść wzdłuż drogi
+Remove all rows	Usuń wszystkie rzędy
+Roundabout: click the centre, then the ring	Rondo: kliknij środek, potem pierścień
+A one-way ring of the chosen road type (pick a one-way road); roads inside are cut back to it and joined with junctions	Jednokierunkowy pierścień wybranego typu drogi (wybierz drogę jednokierunkową); drogi wewnątrz są przycinane do niego i łączone skrzyżowaniami
+Keep the height (bridge, embankment)	Trzymaj wysokość (most, nasyp)
+An even gradient from end to end, the ground left as it is; the rise to the end can be typed while drawing. Pillars: select the road and put them along it as objects.	Równe nachylenie od końca do końca, grunt bez zmian; wzniesienie do końca można wpisać podczas rysowania. Filary: zaznacz drogę i rozstaw je wzdłuż niej jako obiekty.
+Rise	Wzniesienie
+Shift: straight · Enter: build	Shift: prosto · Enter: zbuduj
+Junction	Skrzyżowanie
+Traffic lights	Sygnalizacja świetlna
+Lights need three roads or more	Sygnalizacja wymaga co najmniej trzech dróg
+Main road green	Zielone dla głównej
+Side roads green	Zielone dla bocznych
+The main road is the pair of roads most in line; red-yellow 2 s, yellow 3 s, 2 s all red between	Droga główna to para dróg najbliższa jednej linii; czerwone z żółtym 2 s, żółte 3 s, między fazami 2 s wszędzie czerwone
+Zebra crossings	Przejścia dla pieszych
+Road	Droga
+Build it again	Zbuduj od nowa
+Makes the plate, its kerbs and lanes again for the roads as they are now	Tworzy od nowa płytę, krawężniki i pasy dla dróg w obecnym kształcie
+Linked objects	Powiązane obiekty
+An object can take its state from another ([varparent]): a signal head shows a light of its crossing's program, a stop's display its stop.	Obiekt może brać stan od innego ([varparent]): głowica sygnalizatora pokazuje światło z programu swojego skrzyżowania, wyświetlacz przystanku swój przystanek.
+Takes its state from	Bierze stan od
+Select it: IDCode	Zaznacz go: IDCode
+Takes its state from an object that is gone: IDCode	Bierze stan od nieistniejącego obiektu: IDCode
+Takes its state from nothing	Nie bierze stanu znikąd
+Light	Sygnalizator
+Its light is not one of the crossing's: it stays dark	Jego światła nie ma na skrzyżowaniu: pozostaje ciemny
+That object runs no traffic lights: link the head to a crossing with a light program	Ten obiekt nie steruje sygnalizacją: powiąż głowicę ze skrzyżowaniem z programem świateł
+A signal head: link it to its crossing to have it light	Głowica sygnalizatora: powiąż ją ze skrzyżowaniem, aby świeciła
+Click the object in the view… (Esc)	Kliknij obiekt w widoku… (Esc)
+Link to another…	Powiąż z innym…
+Link to an object…	Powiąż z obiektem…
+Then click the object it is to take its state from (a crossing for a signal head)	Potem kliknij obiekt, od którego ma brać stan (skrzyżowanie dla głowicy sygnalizatora)
+Taking their state from it:	Biorą od niego stan:
+light	światło
+Click the object it takes its state from	Kliknij obiekt, od którego ma brać stan
+stop	przystanek
+Find in map	Szukaj na mapie
+Name, file, IDCode, stop or x, y	Nazwa, plik, IDCode, przystanek lub x, y
+The point	Punkt
+Spline	Spline
+Object	Obiekt
+Nothing on the map has this IDCode.	Nic na mapie nie ma tego IDCode.
+kinds	rodzajów
+on the map	na mapie
+Next	Następny
+Select the next one and go there	Zaznacz następny i przejdź do niego
+Every one of these becomes the road type chosen in the Roads tool	Wszystkie takie staną się typem drogi wybranym w narzędziu „Drogi"
+Every one of these becomes the object chosen in the catalogue	Wszystkie takie staną się obiektem wybranym w katalogu
+More: type to narrow the list	Jest więcej: zawęź wyszukiwanie
+Replaced:	Zastąpiono:
+Satellite overlay	Nakładka satelitarna
+Satellite and own pictures	Satelita i własne obrazy
+Click a tile to see its overlay here.	Kliknij kafelek, aby zobaczyć tu jego nakładkę.
+Show the overlay	Pokaż nakładkę
+opacity	krycie
+Load satellite imagery	Wczytaj zdjęcia satelitarne
+Place the map on the Earth first (Satellite and terrain…)	Najpierw umieść mapę na Ziemi (Satelita i teren…)
+Load image file…	Wczytaj plik obrazu…
+Your own picture for this tile (a scan, a screenshot): or drop it on the window	Własny obraz dla tego kafelka (skan, zrzut ekranu): lub upuść go na okno
+Load the OpenStreetMap map	Wczytaj mapę OpenStreetMap
+OpenStreetMap map for all tiles	Mapa OpenStreetMap dla wszystkich kafelków
+The map as openstreetmap.org draws it (streets with their names, houses, water, green, stop signs), drawn sharp from OpenStreetMap data and laid on the tile in place of a satellite picture: to build roads and houses over by eye. Nothing is generated from it.	Mapa taka, jak rysuje openstreetmap.org (ulice z nazwami, domy, woda, zieleń, znaki przystanków), rysowana ostro z danych OpenStreetMap i kładziona na kafelek zamiast zdjęcia satelitarnego: do budowania dróg i domów na oko. Nic się z niej nie generuje.
+own picture	własny obraz
+for an earlier placement	dla wcześniejszego umieszczenia
+not kept with the map	nie jest zapisywany z mapą
+, partly coarser	, miejscami gorszej jakości
+nothing	nic
+Place the map on the Earth first.	Najpierw umieść mapę na Ziemi.
+Load terrain heights	Wczytaj wysokości terenu
+Done:	Gotowe:
+with problems	z problemami
+A picture for the tiles	Obraz dla kafelków
+Could not read the picture	Nie można odczytać obrazu
+Could not copy the picture	Nie można skopiować obrazu
+The picture is on the tiles: line it up in Satellite and terrain, Own pictures.	Obraz jest na kafelkach: dopasuj go w „Satelita i teren", „Własne obrazy".
+Nothing found by that name.	Nic nie znaleziono pod tą nazwą.
+Some tiles had Google imagery: enter your Google key to see it again (it is not kept with the map).	Niektóre kafelki miały zdjęcia Google: wpisz swój klucz Google, aby znów je zobaczyć (nie są zapisywane z mapą).
+Satellite and terrain	Satelita i teren
+Find a place: a town, a street, an address… (Enter)	Znajdź miejsce: miasto, ulicę, adres… (Enter)
+Searching…	Szukanie…
+Search © OpenStreetMap contributors	Wyszukiwanie © autorzy OpenStreetMap
+This map has world coordinates ([worldcoordinates]): it lies on the Earth by itself, its tiles are Web Mercator tiles.	Ta mapa ma współrzędne świata ([worldcoordinates]): leży na Ziemi sama, jej kafelki to kafelki Web Mercator.
+Click on the map where the orange tile goes…	Kliknij na mapie, gdzie ma trafić pomarańczowy kafelek…
+Place the map here	Umieść mapę tutaj
+Then click on the map: the middle of the orange tile goes there	Potem kliknij na mapie: środek pomarańczowego kafelka trafi tam
+At the view's middle	W środek widoku
+North turned	Obrót północy
+Orange tile	Pomarańczowy kafelek
+click the map to fly there in the view	kliknij mapę, aby tam polecieć w widoku
+1. Find the place.  2. Press "Place the map here" and click on the map: the orange tile (the map's middle) goes there.	1. Znajdź miejsce.  2. Naciśnij „Umieść mapę tutaj" i kliknij na mapie: pomarańczowy kafelek (środek mapy) trafi tam.
+Imagery	Zdjęcia
+The sharpest here	Najostrzejsze tutaj
+cm a pixel here	cm na piksel tutaj
+checking…	sprawdzanie…
+is sharper here	jest tu ostrzejsze
+Sharper imagery may be had here with your own free key for Mapbox, MapTiler or Google (Keys below).	Ostrzejsze zdjęcia mogą być tu dostępne z własnym darmowym kluczem Mapbox, MapTiler lub Google (Klucze poniżej).
+Terms of use	Warunki użytkowania
+Zoom	Zoom
+the finest here	najdrobniejszy tutaj
+Picture of a tile	Obraz kafelka
+every pixel of the source (up to 4096)	każdy piksel źródła (do 4096)
+Loaded at	Wczytano z
+cm a pixel	cm na piksel
+Also load terrain heights	Wczytuj też wysokości terenu
+New tiles get imagery by themselves	Nowe kafelki same dostają zdjęcia
+Load for all tiles	Wczytaj dla wszystkich kafelków
+For the selected tile	Dla zaznaczonego kafelka
+Click a tile with the Tiles tool (7)	Kliknij kafelek narzędziem „Kafelki" (7)
+Terrain heights only	Tylko wysokości terenu
+of	z
+tiles beside the loaded heights were not loaded: the ground steps at their edge.	kafelków obok wczytanych wysokości nie wczytano: grunt ma na ich krawędzi stopień.
+Fit their edges	Dopasuj ich krawędzie
+Their edge takes the loaded heights, fading out 60 m into the tile	Ich krawędź przyjmuje wczytane wysokości, wygasając na 60 m w głąb kafelka
+Leave them	Zostaw je
+Terrain heights	Wysokości terenu
+Relative: the orange tile's mean height is 0 m	Względne: średnia wysokość pomarańczowego kafelka to 0 m
+Raise everything by	Podnieś wszystko o
+Taken off:	Odjęto:
+Measure again	Zmierz ponownie
+Terrain data attribution	Źródła danych terenu
+Overlay on the ground	Nakładka na gruncie
+Put the imagery into maps exported for sharing (check its licence first)	Dołączaj zdjęcia do map eksportowanych do udostępnienia (najpierw sprawdź licencję)
+Fit tile edges	Dopasowanie krawędzi kafelków
+Keys for more sources (optional)	Klucze do innych źródeł (opcjonalnie)
+Everything works without a key. With your own free key these may be sharper in some places; the key stays on this computer.	Wszystko działa bez klucza. Z własnym darmowym kluczem te źródła mogą być miejscami ostrzejsze; klucz zostaje na tym komputerze.
+Google satellite (needs your API key)	Satelita Google (potrzebny Twój klucz API)
+get a key	zdobądź klucz
+In Google Cloud: make a project, enable the Map Tiles API, create an API key, paste it here. Google bills by use above its free amount.	W Google Cloud: utwórz projekt, włącz Map Tiles API, utwórz klucz API i wklej go tutaj. Google nalicza opłaty za użycie powyżej darmowego limitu.
+key	klucz
+Your own tile server	Własny serwer kafelków
+URL	URL
+Attribution	Atrybucja
+Finest zoom	Najdrobniejszy zoom
+Kind	Rodzaj
+XYZ / WMTS tiles	kafelki XYZ / WMTS
+Terrarium heights	wysokości Terrarium
+{z} {x} {y} are filled in; a WMS gets {bbox} (EPSG:3857) and {width} {height}; {key} is your key.	{z} {x} {y} są podstawiane; WMS dostaje {bbox} (EPSG:3857) oraz {width} {height}; {key} to Twój klucz.
+Add	Dodaj
+Own pictures	Własne obrazy
+A scan, a screenshot, an old plan: laid on tiles and lined up by eye. No place on the Earth needed.	Skan, zrzut ekranu, stary plan: kładziony na kafelki i dopasowywany na oko. Umieszczenie na Ziemi niepotrzebne.
+Tiles from	Kafelki od
+Load image file over these tiles…	Wczytaj plik obrazu na te kafelki…
+Turn left 90°	Obróć w lewo o 90°
+Turn right 90°	Obróć w prawo o 90°
+mirror left-right	odbij lewo-prawo
+mirror top-bottom	odbij góra-dół
+Reset	Resetuj
+Your own pictures	Twoje własne obrazy
+of these tiles have your own pictures. Replace them with satellite imagery?	z tych kafelków ma własne obrazy. Zastąpić je zdjęciami satelitarnymi?
+Replace them	Zastąp je
+Keep my pictures	Zachowaj moje obrazy
+Groups for other maps	Grupy dla innych map
+A selection kept under a name, to put down again in any map (a stop with its shelter and signs, a crossing with its lights)	Zaznaczenie zapisane pod nazwą, aby postawić je ponownie na dowolnej mapie (przystanek z wiatą i znakami, skrzyżowanie z sygnalizacją)
+Keep the selection	Zachowaj zaznaczenie
+Group kept	Grupa zachowana
+Select what to keep in the view first.	Najpierw zaznacz w widoku to, co zachować.
+No groups yet.	Brak grup.
+thing	szt.
+things	szt.
+Delete the group (to openMapper's bin)	Usuń grupę (do kosza openMapper)
+Use	Użyj
+Into the clipboard: Ctrl+V puts it down at the cursor, as often as wanted	Do schowka: Ctrl+V stawia ją przy kursorze, ile razy chcesz
+is in the clipboard: Ctrl+V puts it at the cursor	jest w schowku: Ctrl+V stawia ją przy kursorze
+The map's tiles: 300 m squares. Add more beside them with the Tiles tool.	Kafelki mapy: kwadraty 300 m. Dodaj kolejne obok narzędziem „Kafelki".
+A road	Droga
+Roads tool: click where it starts, then where it ends. Click on a road's end to go on from it.	Narzędzie „Drogi": kliknij początek, potem koniec. Kliknij koniec drogi, aby kontynuować od niego.
+A bus stop by the road	Przystanek przy drodze
+Game logic > Bus stops: put one at the kerb, on the side the doors open. Name it on the right.	Logika gry > Przystanki: postaw przy krawężniku, po stronie drzwi. Nazwa po prawej.
+A start point	Punkt startu
+Game logic > Start points: where your bus appears, on a road, facing the way to drive.	Logika gry > Punkty startu: gdzie pojawi się autobus, na drodze, zwrócony w kierunku jazdy.
+A line with a trip	Linia z kursem
+Lines window: New line, New trip, then click the stops in order. The way is found along the roads.	Okno „Linie": nowa linia, nowy kurs, potem klikaj przystanki po kolei. Trasa znajdzie się wzdłuż dróg.
+A tour with departures	Brygada z odjazdami
+Lines window > Tours and times: New tour, then Fill from … to … .	Okno „Linie" > Brygady i czasy: nowa brygada, potem „Wypełnij od … do …".
+Buses for the tours	Autobusy dla brygad
+A depot the tours take their buses from (Tours: Add a depot, or Traffic and AI).	Zajezdnia, z której brygady biorą autobusy (Brygady: „Dodaj zajezdnię" lub Ruch i AI).
+Checked	Sprawdzone
+Map > Check map: what would go wrong in the game, most of it put right with one click.	Mapa > Sprawdź mapę: co pójdzie źle w grze, większość naprawisz jednym kliknięciem.
+Saved	Zapisano
+Ctrl+S. Maps are saved into openOMSI's content folder.	Ctrl+S. Mapy zapisują się w folderze zawartości openOMSI.
+A test drive	Jazda próbna
+F5 saves and starts openOMSI on the map: pick line 1 and drive.	F5 zapisuje i uruchamia openOMSI na mapie: wybierz linię 1 i jedź.
+A map you can drive in service:	Mapa, po której możesz jeździć według rozkładu:
+Show me	Pokaż
+Your stops stand away from the roads: a bus serves a stop within 15 m of its lane.	Twoje przystanki stoją z dala od dróg: autobus obsługuje przystanek w promieniu 15 m od pasa.
+A real place? Put the map on the Earth (Map > Satellite and terrain), then Map > From OpenStreetMap brings its streets, stops, lines and trees.	Prawdziwe miejsce? Umieść mapę na Ziemi (Mapa > Satelita i teren), potem Mapa > Z OpenStreetMap sprowadzi jego ulice, przystanki, linie i drzewa.
+Show this for new maps	Pokazuj to dla nowych map
+The map has no depot file.	Mapa nie ma pliku zajezdni.
+Make one from the lines	Utwórz z linii
+The map has no trips yet (Map > Lines and timetable)	Mapa nie ma jeszcze kursów (Mapa > Linie i rozkład)
+Empty one	Pusty
+New	Nowy
+A new depot file from the map's lines	Nowy plik zajezdni z linii mapy
+Delete this depot file	Usuń ten plik zajezdni
+The lines need	Linie potrzebują
+Add them	Dodaj je
+What is there stays as it is	To, co jest, zostaje bez zmian
+No depot group uses it.	Żadna grupa zajezdni go nie używa.
+Used by the depot	Używany przez zajezdnię
+Use it for every depot	Użyj dla każdej zajezdni
+The AI's depot groups (Vehicle groups tab) take their buses' destinations from it	Grupy zajezdni AI (zakładka „Grupy pojazdów") biorą z niego kierunki swoich autobusów
+Rename	Zmień nazwę
+not a usable name	niedozwolona nazwa
+The destination a bus shows on its way to and from the depot	Kierunek, który autobus pokazuje w drodze do zajezdni i z niej
+Destinations	Kierunki
+Stops	Przystanki
+Routes	Trasy
+nobody gets on	bez wsiadania
+Code	Kod
+another destination has this code	inny kierunek ma ten kod
+As a trip's terminus is named in the timetable: the stop where everybody gets off	Tak, jak przystanek końcowy kursu jest nazwany w rozkładzie: przystanek, na którym wszyscy wysiadają
+Nobody gets on (service trip, empty sign)	Bez wsiadania (kurs techniczny, pusta tablica)
+Delete destination	Usuń kierunek
+Add destination	Dodaj kierunek
+New destination	Nowy kierunek
+As the timetable names the stop	Tak, jak przystanek jest nazwany w rozkładzie
+Delete stop	Usuń przystanek
+Add stop	Dodaj przystanek
+line	linia
+What the driver types: the line's number and two digits (7601: line 76, route 01)	Co wpisuje kierowca: numer linii i dwie cyfry (7601: linia 76, trasa 01)
+Line	Linia
+IBIS text	Tekst IBIS
+Destination	Cel podróży
+Stops in order	Przystanki po kolei
+Not in the Stops list: the displays have no texts for it	Brak na liście przystanków: wyświetlacze nie mają dla niego tekstów
+Move up	W górę
+Move down	W dół
+Take out	Usuń
+Add a stop…	Dodaj przystanek…
+Delete route	Usuń trasę
+Add route	Dodaj trasę
+No routes: the IBIS knows the destinations' codes only. Add them from the lines above.	Brak tras: IBIS zna tylko kody kierunków. Dodaj je z linii powyżej.
+Winter with snow	Zima ze śniegiem
+Summer (dry)	Lato (sucho)
+Jan	Sty
+Feb	Lut
+Mar	Mar
+Apr	Kwi
+May	Maj
+Jun	Cze
+Jul	Lip
+Aug	Sie
+Sep	Wrz
+Oct	Paź
+Nov	Lis
+Dec	Gru
+Map settings	Ustawienia mapy
+Money	Waluta
+Tickets	Bilety
+none: the map has no depot group (Traffic and AI)	brak: mapa nie ma grupy zajezdni (Ruch i AI)
+Years	Lata
+Year offset	Przesunięcie roku
+Added to today's year when the game starts at the real date (Berlin-Spandau: -25 for the 1980s)	Dodawane do bieżącego roku, gdy gra startuje w prawdziwej dacie (Berlin-Spandau: -25 dla lat 80.)
+Repair time	Czas naprawy
+ min	 min
+Rail	Tory
+real rail (trams and trains follow their tracks' switches)	prawdziwe tory (tramwaje i pociągi jadą według rozjazdów swoich torów)
+Helper	Pomocnik
+dynamic helper active (the original editor's map option, kept as it is)	dynamiczny pomocnik włączony (opcja mapy z oryginalnego edytora, zachowana bez zmian)
+Seasons	Pory roku
+Summer where none is set. The days count from 1 January.	Lato tam, gdzie nic nie ustawiono. Dni liczone od 1 stycznia.
+Add a season	Dodaj porę roku
+A season ends before it starts	Pora roku kończy się przed początkiem
+Nothing selected	Nic nie zaznaczono
+Paste here	Wklej tutaj
+Cut the road here	Przetnij drogę tutaj
+Select all like it	Zaznacz wszystkie takie
+Keep for other maps…	Zachowaj dla innych map…
+Its ground, painting, water, objects and roads, put beside or into this map. Lines, timetable and AI lists stay with the other map.	Jej grunt, malowanie, woda, obiekty i drogi, ustawione obok tej mapy lub w niej. Linie, rozkład i listy AI zostają przy tamtej mapie.
+Choose a map…	Wybierz mapę…
+Other…	Inna…
+A map to take tiles from (its global.cfg)	Mapa, z której wziąć kafelki (jej global.cfg)
+Grey: this map · orange: the tiles to add (click to take one or leave it) · red: on a tile of this map, left out	Szare: ta mapa · pomarańczowe: kafelki do dodania (klik: weź lub zostaw) · czerwone: na kafelku tej mapy, pominięte
+Move:	Przesuń:
+west	zachód
+east	wschód
+north	północ
+south	południe
+Raise it by	Podnieś o
+Its ground, water, roads and objects at a height of their own	Jej grunt, woda, drogi i obiekty na własnej wysokości
+Ease the ground where the maps meet	Wygładź grunt na styku map
+Added	Dodano
+tiles from the other map	kafelków z drugiej mapy
+Cube	Sześcian
+Plane	Płaszczyzna
+Circle	Koło
+Triangle	Trójkąt
+Triangular prism	Graniastosłup trójkątny
+Wedge	Klin
+Corner wedge	Klin narożny
+Pyramid	Ostrosłup
+Sphere	Kula
+Icosphere	Ikosfera
+Cylinder	Walec
+Cone	Stożek
+Torus	Torus
+Tube	Rura
+Capsule	Kapsuła
+Stairs	Schody
+Arch	Łuk
+Make one and put it on the map with a click (each one can then be edited, scaled, cut and joined)	Utwórz i postaw na mapie kliknięciem (potem można go edytować, skalować, ciąć i łączyć)
+Array	Tablica
+Mirror	Odbicie
+Solidify	Pogrubienie
+Subdivision surface	Podział powierzchni
+Decimate	Decymacja
+Triangulate	Triangulacja
+Displace	Przemieszczenie
+Wireframe	Szkielet
+Screw	Śruba
+Simple deform	Prosta deformacja
+Cast	Rzutowanie
+Weld	Zespawanie
+Edge split	Podział krawędzi
+Boolean	Boolean
+Follow the ground	Podążaj za gruntem
+Count	Liczba
+Relative	Względnie
+Offset	Przesunięcie
+Merge touching ends	Scal stykające się końce
+Distance	Odległość
+Cut away the other side first	Najpierw odetnij drugą stronę
+Weld at the mirror	Zespól na lustrze
+Thickness	Grubość
+Close the rim	Zamknij brzeg
+Width	Szerokość
+Segments	Segmenty
+Levels	Poziomy
+Smooth (Catmull-Clark)	Wygładź (Catmull-Clark)
+Factor	Współczynnik
+Repeat	Powtórzenia
+Seed	Ziarno
+Along the normals	Wzdłuż normalnych
+Steps	Kroki
+Axis	Oś
+Twist	Skręt
+Bend	Zgięcie
+Taper	Zwężenie
+Stretch	Rozciągnięcie
+Amount	Wartość
+Box	Sześcian
+Difference	Różnica
+With the part	Z częścią
+Tip: hide the cutting part (its eye in the list) so only the cut shows	Wskazówka: ukryj tnącą część (jej oko na liście), aby widać było tylko wycięcie
+Above the ground	Nad gruntem
+Every vertex follows the terrain under it (in the editor's view and the written files at the place it stands)	Każdy wierzchołek podąża za terenem pod nim
+Mesh (openMapper object)	Siatka (obiekt openMapper)
+Shared by	Używany przez
+objects on the map: changes apply to all	obiektów na mapie: zmiany dotyczą wszystkich
+Make this one single	Uczyń tę osobną kopią
+Leave the edit mode (Tab)	Wyjdź z edycji (Tab)
+Edit the mesh (Tab)	Edytuj siatkę (Tab)
+Write it as OBJ, glTF / GLB, FBX, Collada, USD, STL, PLY, 3MF, OFF, X or O3D	Zapisz jako OBJ, glTF / GLB, FBX, Collada, USD, STL, PLY, 3MF, OFF, X lub O3D
+Off: its height is kept above the ground under it	Wył.: jego wysokość liczona jest nad gruntem pod nim
+Solid (collides)	Lity (kolizje)
+The part edited and given modifiers	Część edytowana i z modyfikatorami
+Shown (and written into the object)	Widoczna (i zapisana w obiekcie)
+faces	ścian
+Duplicate the part	Duplikuj część
+Delete the part	Usuń część
+Add a shape as a part	Dodaj kształt jako część
+Separate parts into objects	Rozdziel części na obiekty
+Each part becomes an object of its own, standing where it stood	Każda część staje się osobnym obiektem na swoim miejscu
+Shape	Kształt
+Modifiers	Modyfikatory
+Make it part of the mesh	Uczyń częścią siatki
+Add a modifier	Dodaj modyfikator
+Materials	Materiały
+Colour (multiplies the texture)	Kolor (mnoży teksturę)
+Assign to selected faces	Przypisz do zaznaczonych ścian
+Choose…	Wybierz…
+No texture	Bez tekstury
+Save as…	Zapisz jako…
+PNG, JPEG, BMP, TGA, TIFF, WebP or DDS	PNG, JPEG, BMP, TGA, TIFF, WebP lub DDS
+Transparency	Przezroczystość
+Opaque	Brak
+Cut out	Wycięcie
+Blended	Mieszanie
+Glows	Świecenie
+Light of its own: black for none	Własne światło: czarny dla braku
+Shine	Połysk
+Normal map	Mapa normalnych
+ORM map	Mapa ORM
+Night texture	Tekstura nocna
+Light map	Mapa światła
+Remove the material	Usuń materiał
+Add a material	Dodaj materiał
+Import materials…	Importuj materiały…
+From an .mtl, a glTF / GLB / FBX, or the pictures of one PBR material (base colour, normal, roughness, metal, AO...)	Z .mtl, glTF / GLB / FBX lub obrazów jednego materiału PBR (kolor bazowy, normalne, chropowatość, metal, AO...)
+Lamps	Lampy
+Glow	Poświata
+Light on the ground	Światło na gruncie
+Colour	Kolor
+Reach	Zasięg
+On	Wł.
+Always	Zawsze
+At night	Nocą
+variable	zmienna
+Seen from one side	Widoczna z jednej strony
+Star	Gwiazda
+Facing	Kierunek
+Remove the lamp	Usuń lampę
+Add a glow	Dodaj poświatę
+A lamp's bulb, a lit sign: a glow seen at night	Żarówka lampy, podświetlany szyld: poświata widoczna nocą
+Add light on the ground	Dodaj światło na gruncie
+The pool of light a street lamp throws at night	Plama światła rzucana nocą przez latarnię
+Signal head, lamps	Głowica sygnalizatora, lampy
+Put it within 40 m of a crossing with a light program: it takes its light from it (or link it in its properties)	Postaw ją w odległości do 40 m od skrzyżowania z programem świateł: weźmie z niego światło (lub powiąż we właściwościach)
+Bake	Wypalanie
+Its textures and colours painted into one picture on a new UV map (one material: fewer draws in the game), with its own shadows and its lamps' night light if chosen	Jego tekstury i kolory namalowane na jednym obrazie na nowej mapie UV (jeden materiał: mniej wywołań rysowania w grze), z własnymi cieniami i nocnym światłem jego lamp, jeśli wybrano
+Ambient occlusion	Ambient occlusion
+How far its shadows reach	Jak daleko sięgają jego cienie
+Lamps' light at night (light map)	Nocne światło lamp (mapa światła)
+The object's last change (Ctrl+Z in the edit mode)	Ostatnia zmiana obiektu (Ctrl+Z w trybie edycji)
+Divisions X	Podziały X
+Divisions Y	Podziały Y
+Rings	Pierścienie
+Subdivisions	Podziały
+Bottom radius	Promień dolny
+Top radius	Promień górny
+Tube radius	Promień rury
+Tube segments	Segmenty rury
+Outer radius	Promień zewnętrzny
+Inner radius	Promień wewnętrzny
+Opening	Otwór
+Wall	Ścianka
+Mesh	Siatka
+A copy of this object's type of its own is made for it, with its meshes, materials and lamps to edit; the original stays as it is	Dla obiektu tworzona jest własna kopia jego typu z siatkami, materiałami i lampami do edycji; oryginał zostaje bez zmian
+As a mesh	Jako siatka
+Copy as an object	Kopia jako obiekt
+An openMapper object of its shape beside it, to edit as a mesh (vertices, edges, faces)	Obiekt openMapper o jego kształcie obok niego, do edycji jako siatka (wierzchołki, krawędzie, ściany)
+The same, the spline taken away (its lanes go with it)	To samo, a spline jest usuwany (razem z pasami)
+Splines as a mesh	Spline'y jako siatka
+Copy as one object	Kopia jako jeden obiekt
+Replace by one object	Zastąp jednym obiektem
+Export the selection…	Eksportuj zaznaczenie…
+As meshes	Jako siatki
+Join into one object (Ctrl+J)	Połącz w jeden obiekt (Ctrl+J)
+All their parts in the one shown in the properties, the others gone	Wszystkie ich części w tym, który widać we właściwościach, pozostałe znikają
+Solid modelling (CSG): the object shown in the properties with the others	Modelowanie bryłowe (CSG): obiekt z właściwości z pozostałymi
+Keep the cutting objects	Zachowaj tnące obiekty
+Vertices	Wierzchołki
+Edges	Krawędzie
+Faces	Ściany
+vertices	wierzchołków
+edges	krawędzi
+Selected	Zaznaczono
+X-ray: pick through the mesh	Rentgen: wybieraj przez siatkę
+All (A)	Wszystko (A)
+None (Alt+A)	Nic (Alt+A)
+Invert (Ctrl+I)	Odwróć (Ctrl+I)
+Linked (Ctrl+L)	Powiązane (Ctrl+L)
+More	Więcej
+Less	Mniej
+Click, Shift + click to add, drag on nothing for a box, a second click or Alt + click for a loop	Klik, Shift + klik dodaje, przeciągnięcie po pustym to ramka, drugi klik lub Alt + klik to pętla
+Change	Zmień
+Extrude (E)	Wyciągnij (E)
+Inset (I)	Wcięcie (I)
+Bevel (Ctrl+B)	Fazowanie (Ctrl+B)
+Loop cut (Ctrl+R)	Cięcie pętli (Ctrl+R)
+Point at an edge and press Ctrl+R	Wskaż krawędź i naciśnij Ctrl+R
+Subdivide	Podziel
+Fill (F)	Wypełnij (F)
+Bridge loops	Połącz pętle
+Connect (J)	Połącz (J)
+Poke	Wachlarz ze środka
+Duplicate (Shift+D)	Duplikuj (Shift+D)
+Split (Y)	Oddziel (Y)
+Separate into an object (P)	Rozdziel na obiekt (P)
+Spin 360°	Obrót 360°
+The selection turned round the object's up axis through its middle, in 12 steps	Zaznaczenie obrócone wokół pionowej osi obiektu przez jego środek, w 12 krokach
+Smooth vertices	Wygładź wierzchołki
+Merge (M)	Scal (M)
+At the middle	W środku
+At the first	Do pierwszego
+At the last	Do ostatniego
+Collapse each piece	Zwiń każdy fragment
+By distance (1 mm)	Wg odległości (1 mm)
+Delete (X)	Usuń (X)
+Only faces	Tylko ściany
+Dissolve vertices	Rozpuść wierzchołki
+Dissolve edges	Rozpuść krawędzie
+Dissolve faces	Rozpuść ściany
+Triangulate (Ctrl+T)	Triangulacja (Ctrl+T)
+Triangles to quads (Alt+J)	Trójkąty w czworokąty (Alt+J)
+Shade smooth	Cieniowanie gładkie
+Shade flat	Cieniowanie płaskie
+Flip normals (Alt+N)	Odwróć normalne (Alt+N)
+Normals outward (Shift+N)	Normalne na zewnątrz (Shift+N)
+Mark seam	Oznacz szew
+Clear seam	Usuń szew
+Mark sharp	Oznacz jako ostrą
+Clear sharp	Usuń ostrość
+Adjust the last operation	Dostosuj ostatnią operację
+Slide	Ślizg
+Cuts	Cięcia
+UV map	Mapa UV
+Unwrap	Rozwiń
+By seams (conformal)	Wg szwów (konforemnie)
+Smart project	Inteligentna projekcja
+Cube projection (metres)	Projekcja sześcienna (w metrach)
+Cylinder projection	Projekcja walcowa
+Sphere projection	Projekcja sferyczna
+Project from the view	Projekcja z widoku
+Lightmap pack	Pakowanie mapy światła
+Close the UV editor	Zamknij edytor UV
+UV editor	Edytor UV
+Faces of the selection (all, with none selected); mark seams on edges first for an unwrap by seams	Ściany zaznaczenia (wszystkie, gdy nic nie zaznaczono); do rozwinięcia wg szwów najpierw oznacz szwy na krawędziach
+Material of the selected faces	Materiał zaznaczonych ścian
+With lamps	Z lampami
+Street lamp	Latarnia
+A pole with a lamp that glows and lights the ground at night	Słup z lampą, która świeci i oświetla grunt nocą
+Signal head	Sygnalizator
+A traffic light of the lamps below that a crossing's light program drives	Sygnalizator z poniższych lamp, sterowany programem świateł skrzyżowania
+Lamps:	Lampy:
+Picture, light, sound	Obraz, światło, dźwięk
+Picture / pattern…	Obraz / wzór…
+Choose a picture or a texture: it becomes an object you place, move, turn and scale like any other. Several repeats make a pattern	Wybierz obraz lub teksturę: stanie się obiektem, który stawiasz, przesuwasz, obracasz i skalujesz jak każdy inny. Kilka powtórzeń daje wzór
+Light source	Źródło światła
+A lamp that glows and lights the ground round it	Lampa, która świeci i oświetla grunt wokół
+Sound source…	Źródło dźwięku…
+Choose a sound file (.wav): it plays where you put the marker, as far as the radius carries; the marker shows in the editor only	Wybierz plik dźwiękowy (.wav): gra tam, gdzie stoi znacznik, tak daleko, jak sięga promień; znacznik widać tylko w edytorze
+Picture width, m	Szerokość obrazu, m
+Repeats	Powtórzeń
+on the ground	na gruncie
+standing	stoi
+Light colour	Kolor światła
+Light reach, m	Zasięg światła, m
+at night	nocą
+always	zawsze
+Sound reach, m	Zasięg dźwięku, m
+Sound volume	Głośność dźwięku
+Overview: click or drag to move there · double-click: larger / smaller · M: hide	Przegląd: kliknij lub przeciągnij, aby się przenieść · dwuklik: większy / mniejszy · M: ukryj
+Name:	Nazwa:
+My town	Moje miasto
+Description:	Opis:
+What the map is, for the game's map list	Czym jest mapa, do listy map w grze
+Size:	Rozmiar:
+Ground height:	Wysokość gruntu:
+ m above sea level	 m n.p.m.
+Traffic:	Ruch:
+keeps right	prawostronny
+keeps left	lewostronny
+Busy:	Natężenie:
+cars	samochody
+passengers	pasażerowie
+Years:	Lata:
+year offset	przesunięcie roku
+Added to today's year when the game starts at the real date	Dodawane do bieżącego roku, gdy gra startuje w prawdziwej dacie
+Money:	Waluta:
+Tickets:	Bilety:
+Seasons:	Pory roku:
+four, snowy winter	cztery, śnieżna zima
+mild winter	łagodna zima
+summer only	tylko lato
+Rail:	Tory:
+trams and trains follow their tracks' switches	tramwaje i pociągi jadą według rozjazdów swoich torów
+Ground texture (all tiles):	Tekstura gruntu (wszystkie kafelki):
+template	szablon
+More ground layers are painted later (Paint tool); the map's settings can all be changed in Map > Map settings.	Kolejne warstwy gruntu maluje się później (narzędzie „Malowanie"); wszystkie ustawienia mapy można zmienić w Mapa > Ustawienia mapy.
+Create	Utwórz
+as the template	jak w szablonie
+ways	dróg
+bus routes downloaded	pobranych tras autobusowych
+not had:	nie pobrano:
+The streets of the map's place built as roads with junctions where they meet, its bus stops, lines, trees and woods. Best on tiles with no roads yet: roads lying on ones the map has are left out.	Ulice miejsca mapy zbudowane jako drogi ze skrzyżowaniami tam, gdzie się spotykają, jego przystanki, linie, drzewa i lasy. Najlepiej na kafelkach bez dróg: drogi leżące na już istniejących są pomijane.
+The map does not lie on the Earth yet: place it in Satellite and terrain (Map menu, I) first.	Mapa nie leży jeszcze na Ziemi: najpierw umieść ją w „Satelita i teren" (menu Mapa, I).
+Load the terrain heights first (Satellite and terrain): the roads follow the ground as it is when they are built.	Najpierw wczytaj wysokości terenu („Satelita i teren"): drogi układają się na gruncie takim, jaki jest w chwili budowy.
+Download for the map's tiles	Pobierz dla kafelków mapy
+bus routes	trasy autobusowe
+trees	drzewa
+buildings	budynki
+water	woda
+Downloading…	Pobieranie…
+no type chosen	nie wybrano typu
+Use the chosen	Użyj wybranego
+One-way roads	Drogi jednokierunkowe
+Each carriageway of a dual road and one-way streets: with a one-way road type they lie side by side as they should; with none chosen they get their kind's	Każda jezdnia drogi dwujezdniowej i ulice jednokierunkowe: z typem drogi jednokierunkowej leżą obok siebie jak trzeba; bez wyboru dostają typ swojego rodzaju
+as their kind	jak ich rodzaj
+no stop object	brak obiektu przystanku
+The stop chosen in Game logic > Bus stops	Przystanek wybrany w Logika gry > Przystanki
+Bus lines	Linie autobusowe
+Each bus route through two or more of the map's stops a trip of its line, the way found along the roads; a tour from 06:00 to 22:00 for each new line	Każda trasa autobusowa przez dwa lub więcej przystanków mapy to kurs swojej linii, trasa wyznaczana po drogach; dla każdej nowej linii brygada od 06:00 do 22:00
+Trees and woods	Drzewa i lasy
+Single trees, rows of them and woods, planted with the plant mix (Objects tool > Plant brush) or the tree chosen; none on a road	Pojedyncze drzewa, rzędy i lasy sadzone mieszanką roślin (narzędzie „Obiekty" > Pędzel roślin) lub wybranym drzewem; nie na drogach
+no plants chosen	nie wybrano roślin
+kinds of plants	rodzajów roślin
+apart in woods	odstęp w lasach
+Buildings	Budynki
+Each outline filled with the model of the folder chosen whose ground plan comes nearest, its front to the nearest road; an outline no model fits is left out	Każdy obrys wypełniany modelem z wybranego folderu o najbliższym rzucie, frontem do najbliższej drogi; obrys, do którego nic nie pasuje, jest pomijany
+no folder	nie wybrano folderu
++ its folder	+ jego folder
+Add the folder of the object chosen in the catalogue (Buildings_MC, …)	Dodaj folder obiektu wybranego w katalogu (Buildings_MC, …)
+Lakes and rivers: the ground inside them lowered below the banks, and the tiles they lie on given water a little under the banks' height (OMSI's water is one level for a tile: low ground elsewhere on it is flooded too)	Jeziora i rzeki: grunt wewnątrz obniżany poniżej brzegów, a kafelkom, na których leżą, ustawiana woda nieco poniżej wysokości brzegów (woda w OMSI ma jeden poziom na kafelek: niskie miejsca na nim też zostaną zalane)
+deep	głęboko
+a road type (Roads tool), then "Use the chosen"	typ drogi (narzędzie „Drogi"), potem „Użyj wybranego"
+a stop (Game logic > Bus stops), then "Use the chosen"	przystanek (Logika gry > Przystanki), potem „Użyj wybranego"
+a tree in the Objects catalogue (or a plant mix)	drzewo w katalogu obiektów (lub mieszankę roślin)
+a building in the catalogue, then "+ its folder"	budynek w katalogu, potem „+ jego folder"
+To build, choose (or untick):	Aby zbudować, wybierz (lub odznacz):
+A one-way street is built the way it runs in OpenStreetMap: give it a one-way road type	Ulica jednokierunkowa budowana jest tak, jak biegnie w OpenStreetMap: nadaj jej typ drogi jednokierunkowej
+Build	Zbuduj
+Name, file or IDCode	Nazwa, plik lub IDCode
+things on the map	rzeczy na mapie
+Groups	Grupy
+Select the group and go there	Zaznacz grupę i przejdź do niej
+Select everything in it	Zaznacz wszystko w niej
+Select it and go there	Zaznacz i przejdź
+more: narrow the search	więcej: zawęź wyszukiwanie
+Select all of them	Zaznacz wszystkie
+Go to the first	Przejdź do pierwszego
+Pick a tree in the catalogue, then paint	Wybierz drzewo w katalogu, potem maluj
+Pick a tree in the catalogue, then click round the area	Wybierz drzewo w katalogu, potem klikaj wokół obszaru
+Pick a road type, click the centre, then the ring	Wybierz typ drogi, kliknij środek, potem pierścień
+Select a road (double-click: all of it): its properties show its height profile	Zaznacz drogę (dwuklik: całą): jej właściwości pokazują profil wysokości
+Select one of openMapper's junctions: its properties have Traffic lights and crossings	Zaznacz skrzyżowanie openMappera: jego właściwości mają sygnalizację i przejścia
+Select the signal head (or a display): Linked objects in its properties, then click its crossing	Zaznacz głowicę sygnalizatora (lub wyświetlacz): Powiązane obiekty we właściwościach, potem kliknij jego skrzyżowanie
+Select a road, pick an object in the Objects catalogue: Objects along the road in its properties	Zaznacz drogę, wybierz obiekt w katalogu „Obiekty": Obiekty wzdłuż drogi w jej właściwościach
+Select a track (double-click: all of it): Overhead wire under Parallel copy in its properties	Zaznacz tor (dwuklik: cały): Przewód trakcyjny pod Kopią równoległą we właściwościach
+Select a road or a chain: Parallel copy in its properties	Zaznacz drogę lub łańcuch: Kopia równoległa we właściwościach
+Select a road (double-click: all of it): Paint the ground along it in its properties	Zaznacz drogę (dwuklik: całą): Pomaluj grunt wzdłuż niej we właściwościach
+Click a tile: its water is in the panel; lower the ground under it with the Terrain tool	Kliknij kafelek: jego woda jest w panelu; obniż grunt pod nim narzędziem „Teren"
+Height map: at the end of the Terrain panel	Mapa wysokości: na końcu panelu „Teren"
+By slope and height: at the end of the Paint panel	Wg nachylenia i wysokości: na końcu panelu „Malowanie"
+View menu: Time of day, Season	Menu „Widok": pora dnia, pora roku
+What do you want to do?	Co chcesz zrobić?
+Groups…	Grupy…
+Objects on the map by folder	Obiekty mapy wg folderów
+Knife: cut roads	Nóż: tnij drogi
+Test drive in OMSI 2 (the original)	Jazda próbna w OMSI 2 (oryginał)
+Overview map	Mapa przeglądowa
+Place a bus stop	Postaw przystanek
+Place a start point	Postaw punkt startu
+Plant trees with a brush	Sadź drzewa pędzlem
+Plant a wood or a park	Zasadź las lub park
+Roundabout	Rondo
+Height profile of a road	Profil wysokości drogi
+Traffic lights and zebra crossings	Sygnalizacja i zebry
+Link a signal head to its crossing	Powiąż sygnalizator ze skrzyżowaniem
+Objects along a road	Obiekty wzdłuż drogi
+Overhead wire along a track	Przewód trakcyjny wzdłuż toru
+Parallel copy of a road	Kopia równoległa drogi
+Paint the ground along a road	Pomaluj grunt wzdłuż drogi
+Water, lake, river	Woda, jezioro, rzeka
+Ramp in the ground	Rampa w gruncie
+Height map import or export	Import lub eksport mapy wysokości
+Time of day and season	Pora dnia i roku
+PBR material	Materiał PBR
+none	brak
+Own picture…	Własny obraz…
+Choose a texture of the object, or a picture of your own.	Wybierz teksturę obiektu lub własny obraz.
+Normals (_nn)	Normalne (_nn)
+Roughness	Chropowatość
+Shadow in hollows	Cień we wgłębieniach
+Bumps	Wypukłości
+Only big shapes	Tylko duże kształty
+Dark parts stand out (not sink in)	Ciemne wystaje (nie zapada się)
+Bright parts smoother	Jasne gładsze
+Metal	Metal
+Back to the defaults	Przywróć domyślne
+This texture has PBR maps of its own already: new ones made here are taken instead of them.	Ta tekstura ma już własne mapy PBR: nowe zrobione tutaj zostaną użyte zamiast nich.
+Written as:	Zapisywane jako:
+PBR maps made	Mapy PBR utworzone
+Delete the PBR material	Usuń materiał PBR
+PBR maps taken away	Mapy PBR usunięte
+Height profile	Profil wysokości
+over the ground	nad gruntem
+Click: go there in the view · drag a dot (a joint) up or down: its height	Klik: przejdź tam w widoku · przeciągnij kropkę (złącze) w górę lub w dół: jej wysokość
+Climbs, falls	Wznosi się, opada
+Steepest	Najstromiej
+at	na
+Highest over the ground	Najwyżej nad gruntem
+Deepest under it	Najgłębiej pod nim
+Over 8 % is steep for a bus; over 12 % few streets go	Ponad 8 % to stromo dla autobusu; ponad 12 % rzadko spotykane
+roadway	jezdnia
+Road types	Typy dróg
+Make a new road type…	Utwórz nowy typ drogi…
+My road	Moja droga
+ · own	 · własna
+Create the road type	Utwórz typ drogi
+Road type made: the Roads tool builds with it	Typ drogi utworzony: buduje nim narzędzie „Drogi"
+Change it in the road maker	Zmień w kreatorze drogi
+Its junctions	Jego skrzyżowania
+Make a junction where it meets another road (else they only cross)	Twórz skrzyżowanie, gdzie spotyka inną drogę (inaczej tylko się krzyżują)
+Corners	Narożniki
+× rounder	× bardziej okrągłe
+Traffic lights by themselves	Sygnalizacja automatycznie
+Zebra crossings on every arm	Przejścia dla pieszych na każdym wlocie
+Used for the junctions made from now on (where several road types meet, the one asking more wins). A junction already made keeps its own settings: select it to change them.	Używane dla skrzyżowań tworzonych od teraz (gdzie spotykają się różne typy dróg, wygrywa bardziej wymagający). Gotowe skrzyżowanie zachowuje własne ustawienia: zaznacz je, aby je zmienić.
+Pick a road type on the left, or make a new one.	Wybierz typ drogi po lewej lub utwórz nowy.
+Road maker	Kreator drogi
+Lanes	Pasy
+(▼ 0: one-way)	(▼ 0: jednokierunkowa)
+Lane width	Szerokość pasa
+Middle strip	Pas środkowy
+Footways	Chodniki
+Kerb	Krawężnik
+Roadway texture	Tekstura jezdni
+Footway texture	Tekstura chodnika
+Own…	Własna…
+The roadway texture is laid once across all its lanes (as OMSI 2's lane textures are painted: pick one with as many lanes); the footway texture's right end is the kerb.	Tekstura jezdni kładziona jest raz w poprzek wszystkich pasów (tak jak malowane są tekstury pasów OMSI 2: wybierz z tą samą liczbą pasów); prawy koniec tekstury chodnika to krawężnik.
+not on the map	nie ma na mapie
+Signal routes	Trasy sygnałów
+Each railway signal clears when a train wants the track pieces of its route and none stands on them.	Każdy sygnał kolejowy otwiera się, gdy pociąg chce odcinków toru swojej trasy i nikt na nich nie stoi.
+New route for the selected signal	Nowa trasa dla zaznaczonego sygnału
+Select a signal (one object) in the view first	Najpierw zaznacz w widoku sygnał (jeden obiekt)
+The selected object does not look like a signal (its name says nothing of one): check it is.	Zaznaczony obiekt nie wygląda na sygnał (jego nazwa o tym nie mówi): sprawdź, czy nim jest.
+No routes yet.	Brak tras.
+pieces	odcinków
+Signal	Sygnał
+the selected	zaznaczony
+Aspect	Wskazanie
+What the signal shows when this route is clear: 1 proceed, 2 proceed slowly (with a speed limit)…	Co pokazuje sygnał, gdy ta trasa jest wolna: 1 jedź, 2 jedź powoli (z ograniczeniem prędkości)…
+Distant signal	Powtarzacz
+Next signal	Następny sygnał
+Speed limit	Ograniczenie prędkości
+OMSI's route kind (the stock maps have 0 and 1)	Rodzaj trasy OMSI (mapy seryjne mają 0 i 1)
+Track pieces	Odcinki toru
+Take the selected track	Weź zaznaczone tory
+Every rail path of the selected tracks and switches (double-click a track: all of it); replaces the pieces	Każda ścieżka szynowa zaznaczonych torów i rozjazdów (dwuklik toru: cały); zastępuje odcinki
+Select the signal and its pieces in the view	Zaznacz sygnał i jego odcinki w widoku
+Delete the route	Usuń trasę
+Lines and timetable	Linie i rozkład
+Edit timetable	Edytuj rozkład
+No bus stop there: click one of the orange marks	Nie ma tam przystanku: kliknij jeden z pomarańczowych znaczników
+The roads can't be read without the OMSI 2 folder.	Bez folderu OMSI 2 nie można odczytać dróg.
+A line needs at least two bus stops on the map: place them with Game logic > Bus stops, beside a road.	Linia potrzebuje co najmniej dwóch przystanków na mapie: postaw je w Logika gry > Przystanki, obok drogi.
+Lines	Linie
+No lines yet.	Brak linii.
+New line	Nowa linia
+Pick a line on the left, or make a new one.\n\nA line has trips (a way from stop to stop) and tours (one bus's day: which trip it drives when).	Wybierz linię po lewej lub utwórz nową.\n\nLinia ma kursy (trasa od przystanku do przystanku) i brygady (dzień jednego autobusu: który kurs i kiedy jedzie).
+That name is taken or can't be a file name	Ta nazwa jest zajęta lub nie nadaje się na nazwę pliku
+A copy of the line with its trips and tours (a variant to change)	Kopia linii z jej kursami i brygadami (wariant do zmian)
+Delete the line and its trips	Usuń linię i jej kursy
+Players can drive it	Gracze mogą nią jeździć
+Trips	Kursy
+Tours and times	Brygady i czasy
+A tour is one bus's day: the trips it drives, one after the other, and when each leaves.	Brygada to dzień jednego autobusu: kursy, które jedzie jeden po drugim, i kiedy każdy rusza.
+A trip is one way along the line: its stops in order. Most lines have two, there and back.	Kurs to jeden przejazd wzdłuż linii: jej przystanki po kolei. Większość linii ma dwa, tam i z powrotem.
+New trip	Nowy kurs
+Make the way back	Utwórz kurs powrotny
+A new trip with the same stops the other way round	Nowy kurs z tymi samymi przystankami w odwrotnej kolejności
+Trip	Kurs
+Delete the trip	Usuń kurs
+Destination sign	Tablica kierunku
+This trip runs on a track of its own (a train): its stops are kept as they are.	Ten kurs jedzie własnym torem (pociąg): jego przystanki zostają bez zmian.
+Show on the map	Pokaż na mapie
+No stops yet.	Brak przystanków.
+Done picking	Gotowe
+Pick stops on the map	Wybierz na mapie
+Click the stops in the view one after the other, in the order the bus calls at them	Klikaj przystanki w widoku jeden po drugim, w kolejności, w jakiej autobus się przy nich zatrzymuje
+Add stop…	Dodaj przystanek…
+Click stops on the map (they are marked orange)…	Klikaj przystanki na mapie (są oznaczone na pomarańczowo)…
+Add two stops or more: the way between them is found along the roads.	Dodaj dwa przystanki lub więcej: trasa między nimi zostanie wyznaczona po drogach.
+Finding the way…	Wyznaczanie trasy…
+Route found:	Trasa znaleziona:
+km along the roads (blue in the view)	km po drogach (niebieska w widoku)
+the way drives a one-way lane against its direction; is a path drawn the wrong way round?	trasa prowadzi pasem jednokierunkowym pod prąd; czy ścieżka nie jest narysowana w złą stronę?
+is not on the map	nie ma na mapie
+no road with car lanes within 15 m	w promieniu 15 m brak drogi z pasami dla aut
+No way	Brak trasy
+the roads are not joined, or run the other way (see View > AI lanes)	drogi nie są połączone lub biegną w drugą stronę (zobacz Widok > Pasy AI)
+The trip is saved, but its way is not until this is mended	Kurs jest zapisany, ale jego trasa nie, dopóki to nie zostanie naprawione
+Trip time	Czas przejazdu
+Guess:	Szacunek:
+From the route's length at the pace of a town bus	Z długości trasy w tempie autobusu miejskiego
+Times at the stops	Czasy na przystankach
+Minutes after the trip leaves. They follow the distance between the stops; fix one to keep the bus to it (it waits there when early).	Minuty od odjazdu kursu. Wynikają z odległości między przystankami; zablokuj jeden, aby autobus go dotrzymywał (jeśli jest przed czasem, czeka).
+fixed	zablokowane
+Spread all by distance	Rozłóż wszystkie wg odległości
+Holidays and school holidays	Święta i ferie
+On a public holiday only the tours with Holidays ticked run; school holidays pick the tours for school holidays or school days.	W święto kursują tylko brygady z zaznaczonym „Święta"; ferie wybierają brygady na ferie lub dni nauki.
+Copy to	Kopiuj do
+The same days a year later (feasts that move, like Easter, are to be set by hand)	Te same dni rok później (święta ruchome, jak Wielkanoc, ustaw ręcznie)
+The map has no depot (ailists.cfg): only you drive these tours, no AI buses.	Mapa nie ma zajezdni (ailists.cfg): te brygady jeździsz tylko ty, bez autobusów AI.
+Add a depot with OMSI 2's MAN buses	Dodaj zajezdnię z autobusami MAN z OMSI 2
+Its buses run the tours (Map > Traffic and AI shows it)	Jej autobusy jeżdżą na brygadach (pokazuje to Mapa > Ruch i AI)
+Tour	Brygada
+New tour	Nowa brygada
+Pick a tour to see its departures.	Wybierz brygadę, aby zobaczyć odjazdy.
+Make a trip first.	Najpierw utwórz kurs.
+Number	Numer
+Buses from	Autobusy z
+Delete the tour	Usuń brygadę
+Runs on	Dni kursowania
+Mo	Pn
+Tu	Wt
+We	Śr
+Th	Cz
+Fr	Pt
+Sa	So
+Su	Nd
+Every day	Codziennie
+Monday to Friday	Pn–Pt
+Weekends and holidays	Weekendy i święta
+In the school holidays	W ferie
+On school days	W dni nauki
+Next departure	Następny odjazd
+The next trip of the line, when the bus is back and has had its break	Następny kurs linii, gdy autobus wróci i odbędzie przerwę
+Fill from	Wypełnij od
+break	przerwa
+Fill	Wypełnij
+Replace the tour's departures: the line's trips one after the other, a break after each	Zastąp odjazdy brygady: kursy linii jeden po drugim, po każdym przerwa
+No departures yet: add them above.	Brak odjazdów: dodaj je powyżej.
+Delete the departure	Usuń odjazd
+GPS tracks to trace	Ślady GPS do odrysowania
+A route recorded on a phone or drawn elsewhere (GPX, KML, GeoJSON), shown in the view in magenta to draw roads along, or built into a road at once	Trasa nagrana telefonem lub narysowana gdzie indziej (GPX, KML, GeoJSON), pokazana w widoku na magenta, by rysować wzdłuż niej drogi, lub od razu zbudowana jako droga
+Place the map on the Earth first (Map > Satellite and terrain)	Najpierw umieść mapę na Ziemi (Mapa > Satelita i teren)
+Load a file…	Wczytaj plik…
+None loaded	Nic nie wczytano
+Forget it	Zapomnij
+Build a road along it:	Zbuduj wzdłuż niego drogę:
+Choose a road type in the Roads tool to build it	Wybierz typ drogi w narzędziu „Drogi", aby zbudować
+Built as if drawn: corners rounded into arcs, junctions where it meets roads, cut at the map's edge; one undo step	Budowana jak rysowana: narożniki zaokrąglone w łuki, skrzyżowania tam, gdzie spotyka drogi, ucięta na krawędzi mapy; jeden krok cofnięcia
+Traffic and AI	Ruch i AI
+Edit traffic	Edytuj ruch
+Over the day	W ciągu dnia
+Vehicle groups	Grupy pojazdów
+Parked cars and people	Zaparkowane auta i ludzie
+Depot files	Pliki zajezdni
+The AI's vehicles come in groups. A car group drives about on the roads; a depot sends out the buses of the timetable's tours.	Pojazdy AI są w grupach. Grupa aut jeździ sama po drogach; zajezdnia wysyła autobusy brygad rozkładu.
+(This map's ailists.cfg is in OMSI 2's first format: it is written in the second one when changed.)	(ailists.cfg tej mapy jest w pierwszym formacie OMSI 2: po zmianie zapisze się w drugim.)
+is to drive about, but there is no such group.	ma jeździć po drogach, ale takiej grupy nie ma.
+Make it with OMSI 2's vehicles	Utwórz z pojazdami OMSI 2
+The group of that name from OMSI 2's own maps	Grupa o tej nazwie z map OMSI 2
+New car group	Nowa grupa aut
+New depot	Nowa zajezdnia
+Pick a group on the left.	Wybierz grupę po lewej.
+Delete the group (tours still take their buses from it)	Usuń grupę (brygady nadal biorą z niej autobusy)
+Delete the group	Usuń grupę
+Tours that take their buses from here:	Brygady biorące stąd autobusy:
+Drives about on its own	Jeździ sama
+as many:	ile:
+Times the traffic over the day	Mnożnik ruchu w ciągu dnia
+A vehicle with more weight comes along more often.	Pojazd o większej wadze pojawia się częściej.
+Add a vehicle…	Dodaj pojazd…
+Depot file (.hof)	Plik zajezdni (.hof)
+None of its buses has this depot file beside it: they run without their destination signs and fleet data.	Żaden z jej autobusów nie ma obok tego pliku zajezdni: pojadą bez tablic kierunku i danych taboru.
+The buses it has: a type of bus and the fleet number and plate of each.	Jej autobusy: typ autobusu oraz numer taborowy i tablica każdego.
+Take this type out	Usuń ten typ
+number	numer
+plate	tablica
+Another bus	Kolejny autobus
+Add a type of bus…	Dodaj typ autobusu…
+The lists can't be read without the OMSI 2 folder.	Bez folderu OMSI 2 nie można odczytać list.
+Parked cars	Zaparkowane samochody
+What stands on the car parks (Game logic > Car parks). A car listed more often stands there more often.	Co stoi na parkingach (Logika gry > Parkingi). Auto wymienione częściej stoi tam częściej.
+Who walks about and waits at the stops.	Kto chodzi i czeka na przystankach.
+Drivers	Kierowcy
+Who drives the AI's buses.	Kto prowadzi autobusy AI.
+How often it is listed (0 takes it out)	Ile razy jest na liście (0 usuwa)
+How busy the map is at each hour: the road traffic, and the passengers at the stops. 1 is normal; the game goes along the line between the points.	Jak ożywiona jest mapa w każdej godzinie: ruch drogowy i pasażerowie na przystankach. 1 to normalnie; gra idzie po linii między punktami.
+Road traffic	Ruch drogowy
+Passengers	Pasażerowie
+Its own traffic over the day	Własny ruch w ciągu dnia
+Without one the group follows the map's road traffic. A curve can be for some days of the week only.	Bez niego grupa podąża za ruchem drogowym mapy. Krzywa może obowiązywać tylko w niektóre dni tygodnia.
+Days:	Dni:
+Mo–Fr	Pn–Pt
+Take this curve out	Usuń tę krzywą
+A curve	Krzywa
+Typical day…	Typowy dzień…
+Quiet village	Cicha wieś
+Town with rush hours	Miasto ze szczytami
+The same all day	Tak samo przez cały dzień
+No curve: 1 all day.	Brak krzywej: 1 przez cały dzień.
+Take the point out	Usuń punkt
+Point	Punkt
+Smart unwrap	Inteligentne rozwinięcie
+Every flat side apart in the picture, no faces on top of one another (all faces if none is selected)	Każda płaska strona osobno na obrazie, ściany nie leżą na sobie (wszystkie, gdy nic nie zaznaczono)
+Box unwrap	Rozwinięcie pudełkiem
+The six sides of a box apart in the picture	Sześć boków pudełka osobno na obrazie
+Flip ↔	Odbij ↔
+Flip ↕	Odbij ↕
+Scale ×2	Skala ×2
+Scale ÷2	Skala ÷2
+Fit	Dopasuj
+Stretched to fill the picture	Rozciągnij na cały obraz
+Pack islands	Upakuj wyspy
+Average island scale	Wyrównaj skalę wysp
+Seams from islands	Szwy z wysp
+Click: a face (Shift adds) · drag: move the selected · wheel: zoom · right button: pan	Klik: ściana (Shift dodaje) · przeciągnięcie: przesuń zaznaczone · kółko: zoom · prawy przycisk: przesuwanie widoku
+Could not keep the views	Nie można zapisać widoków
+Saved views	Zapisane widoki
+Places of the map to come back to: Ctrl+1…9 goes to the first nine, Ctrl+Shift+1…9 keeps the view there	Miejsca mapy, do których warto wracać: Ctrl+1…9 przechodzi do pierwszych dziewięciu, Ctrl+Shift+1…9 zapamiętuje tam widok
+Keep this view	Zapamiętaj ten widok
+None yet	Brak
+Go	Idź
+Earlier in the list	Wyżej na liście
+Later in the list	Niżej na liście
+Take the view now instead	Zastąp obecnym widokiem
+Keep proportions	Zachowaj proporcje
+Back to its own size	Przywróć własny rozmiar
+Updates	Aktualizacje
+This version:	Ta wersja:
+New version:	Nowa wersja:
+Install and restart	Zainstaluj i uruchom ponownie
+Not now	Nie teraz
+What changed	Co nowego
+Downloading and installing	Pobieranie i instalacja
+Installed version	Zainstalowana wersja
+openMapper restarts when you save the map.	openMapper uruchomi się ponownie po zapisaniu mapy.
+Looking for a new version…	Szukanie nowej wersji…
+This is the newest version.	To najnowsza wersja.
+Download it from GitHub by hand	Pobierz ręcznie z GitHub
+When there is a new version:	Gdy jest nowa wersja:
+Offer it to me	Zaproponuj mi ją
+Install it and restart by itself	Zainstaluj i uruchom ponownie sam
+Never look for updates	Nigdy nie szukaj aktualizacji
+Check now	Sprawdź teraz
+Never offer updates again	Nigdy więcej nie proponuj aktualizacji
+The release has no package	Wydanie nie ma pakietu
+No automatic updates for this system.	Brak automatycznych aktualizacji dla tego systemu.
+No connection to GitHub: are you online?	Brak połączenia z GitHub: czy jesteś online?
+The release has no SHA256SUMS: not installed.	Wydanie nie ma SHA256SUMS: nie zainstalowano.
+The package is not in SHA256SUMS: not installed.	Pakietu nie ma w SHA256SUMS: nie zainstalowano.
+The download does not match its checksum: not installed.	Pobrany plik nie zgadza się z sumą kontrolną: nie zainstalowano.
+Could not replace the program	Nie można zastąpić programu
+The package has no program in it.	W pakiecie nie ma programu.
+openMapper has stopped:	openMapper przestał działać:
+The log with the details:	Dziennik ze szczegółami:

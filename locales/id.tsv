@@ -1,0 +1,2129 @@
+Could not open the map	Tidak dapat membuka peta
+The next 100 tiles are loaded, the others are hidden	100 tile berikutnya dimuat, sisanya disembunyikan
+Find the place in the window and build from it	Cari tempat di jendela lalu buat peta darinya
+Your map is ready. Start with a road!	Peta Anda siap. Mulailah dengan jalan!
+Export the map for sharing	Ekspor peta untuk dibagikan
+Exported:	Diekspor:
+files	file
+files the map names were not found: the readme lists them	file yang disebut peta tidak ditemukan: daftarnya ada di readme
+Could not export	Tidak dapat mengekspor
+A ring road with line 1 on it: save, then try it in openOMSI (F5).	Jalan lingkar dengan jalur 1: simpan, lalu coba di openOMSI (F5).
+The sample could not be made	Contoh tidak dapat dibuat
+In multiplayer the host saves the map. Leave the session to save this as a copy of your own.	Dalam multiplayer, host yang menyimpan peta. Keluar dari sesi untuk menyimpannya sebagai salinan sendiri.
+Saved:	Disimpan:
+Tip: place a start point (Game logic > Start points) so the bus has somewhere to appear	Tips: letakkan titik awal (Logika game > Titik awal) agar bus punya tempat muncul
+Could not save (the changes are still here, nothing is lost)	Tidak dapat menyimpan (perubahan masih ada di sini, tidak ada yang hilang)
+The unsaved changes are back. Save to keep them.	Perubahan yang belum disimpan telah kembali. Simpan untuk mempertahankannya.
+Could not restore the changes	Tidak dapat memulihkan perubahan
+openOMSI was not found	openOMSI tidak ditemukan
+From the start point	Dari titik awal
+The map has no start point: place one with Game logic > Start points	Peta tidak punya titik awal: letakkan dengan Logika game > Titik awal
+Starting openOMSI…	Memulai openOMSI…
+To drive the map in OMSI 2 itself it has to be copied into the OMSI 2 folder (Maps, and the objects, roads and textures made for it). Nothing that is there is replaced except earlier copies of this map. Copy it there?	Untuk mengendarai peta di OMSI 2 sendiri, peta harus disalin ke folder OMSI 2 (Maps, beserta objek, jalan, dan tekstur yang dibuat untuknya). Tidak ada yang diganti kecuali salinan lama peta ini. Salin ke sana?
+Starting OMSI 2: choose the map	Memulai OMSI 2: pilih peta
+The map is copied into the OMSI 2 folder; OMSI 2 itself runs on Windows only:	Peta telah disalin ke folder OMSI 2; OMSI 2 sendiri hanya berjalan di Windows:
+Could not copy the map into OMSI 2	Tidak dapat menyalin peta ke OMSI 2
+Click on the map to place it	Klik pada peta untuk menempatkannya
+Open a map (its global.cfg)	Buka peta (global.cfg-nya)
+The map is back as it was before that save	Peta dikembalikan seperti sebelum penyimpanan itu
+Could not go back	Tidak dapat kembali
+Export a plan of the map	Ekspor denah peta
+Plan saved:	Denah disimpan:
+Mods, models and pictures	Mod, model, dan gambar
+Import assets	Impor aset
+…or choose a mod folder	…atau pilih folder mod
+Click on the map to put it there	Klik pada peta untuk menaruhnya di sana
+Could not make the shape	Tidak dapat membuat bentuk
+Choose the OMSI 2 folder	Pilih folder OMSI 2
+That is not an OMSI 2 folder (Omsi.exe, maps and Vehicles must be in it)	Itu bukan folder OMSI 2 (harus ada Omsi.exe, maps, dan Vehicles)
+This object has no textures to make PBR maps of	Objek ini tidak punya tekstur untuk dibuatkan peta PBR
+Could not copy the map	Tidak dapat menyalin peta
+Could not move the map	Tidak dapat memindahkan peta
+Terrain flattened; splines laid on it:	Medan diratakan; spline diletakkan di atasnya:
+This road type has no textures to make PBR maps of	Jenis jalan ini tidak punya tekstur untuk dibuatkan peta PBR
+Pictures	Gambar
+Only 100 tiles round the camera are loaded; click on the empty zone to load the next 100	Hanya 100 tile di sekitar kamera yang dimuat; klik zona kosong untuk memuat 100 berikutnya
+All tiles are loaded	Semua tile dimuat
+Import the map's thumbnail	Impor thumbnail peta
+The map's thumbnail is set: openOMSI shows it where maps are chosen.	Thumbnail peta ditetapkan: openOMSI menampilkannya saat memilih peta.
+Could not use the picture	Tidak dapat memakai gambar
+Map camera	Kamera peta
+The map opens with this view from now on.	Mulai sekarang peta dibuka dengan tampilan ini.
+Add ground texture	Tambah tekstur tanah
+View kept as	Tampilan disimpan sebagai
+No view kept as	Tidak ada tampilan tersimpan sebagai
+Files changed on disk: the catalogue and models are updated	File di disk berubah: katalog dan model diperbarui
+The track does not run over the map's tiles	Trek tidak melewati tile peta
+Road along a GPS track	Jalan mengikuti trek GPS
+Roads built:	Jalan dibuat:
+junctions:	persimpangan:
+stops:	halte:
+Lines from OpenStreetMap	Jalur dari OpenStreetMap
+lines:	jalur:
+trips found their way:	perjalanan menemukan rutenya:
+buildings:	bangunan:
+trees:	pohon:
+Start point	Titik awal
+Start	Mulai
+a start point	titik awal
+From OpenStreetMap	Dari OpenStreetMap
+Picture saved:	Gambar disimpan:
+Could not save the picture	Tidak dapat menyimpan gambar
+The graphics could not be started.	Grafik tidak dapat dijalankan.
+Flying speed	Kecepatan terbang
+copy	salinan
+Only maps of the content folder can be moved	Hanya peta di folder konten yang dapat dipindahkan
+Only assets of the content folder can be deleted	Hanya aset di folder konten yang dapat dihapus
+Could not write the object	Tidak dapat menulis objek
+Select an object to edit its mesh	Pilih objek untuk mengedit mesh-nya
+A copy of its own was made: the original type is unchanged	Salinan sendiri telah dibuat: jenis aslinya tidak berubah
+Cannot edit this object	Objek ini tidak dapat diedit
+Point at an edge to cut across its ring of faces	Arahkan ke tepi untuk memotong melintang cincin permukaannya
+Objects made:	Objek dibuat:
+select the faces to separate	pilih permukaan yang akan dipisahkan
+Separated into an object of its own	Dipisahkan menjadi objek tersendiri
+Add object	Tambah objek
+select what to export (objects, roads)	pilih yang akan diekspor (objek, jalan)
+Export the selection	Ekspor pilihan
+unknown format	format tidak dikenal
+the models are still loading: try again in a moment	model masih dimuat: coba lagi sebentar lagi
+this material has no texture	material ini tidak punya tekstur
+cannot read	tidak dapat dibaca
+Export the texture	Ekspor tekstur
+Texture saved:	Tekstur disimpan:
+Choose a picture	Pilih gambar
+give the material a texture first: its maps go beside it	beri material tekstur dulu: petanya ditaruh di sebelahnya
+Import materials (an .mtl, a model, or the pictures of one PBR material)	Impor material (file .mtl, model, atau gambar satu material PBR)
+Materials and pictures	Material dan gambar
+no materials found there	material tidak ditemukan di sana
+Materials added:	Material ditambahkan:
+nothing to bake	tidak ada yang di-bake
+the object has no lamps to bake the night light of	objek tidak punya lampu untuk di-bake cahaya malamnya
+Baked into	Di-bake ke
+select a road or spline first	pilih jalan atau spline dulu
+the road's type is still loading: try again in a moment	jenis jalan masih dimuat: coba lagi sebentar lagi
+these splines have no shape to see	spline ini tidak punya bentuk yang terlihat
+Replace by an object	Ganti dengan objek
+Made into an object: Tab edits its mesh	Dijadikan objek: Tab mengedit mesh-nya
+Signal head made: click where it stands (near a crossing with a light program it links to it)	Lampu sinyal dibuat: klik tempat berdirinya (di dekat persimpangan dengan program lampu, ia terhubung ke sana)
+Choose a picture or a texture	Pilih gambar atau tekstur
+cannot read the picture	tidak dapat membaca gambar
+Picture made: click where it goes (it can be moved, turned and scaled after)	Gambar dibuat: klik tempat meletakkannya (nanti bisa digeser, diputar, dan diskalakan)
+Light made: click where it shines	Cahaya dibuat: klik tempat ia menyinari
+Choose a sound	Pilih suara
+Sounds	Suara
+Sound source made: click where it plays	Sumber suara dibuat: klik tempat ia berbunyi
+Street lamp made: click where it stands	Lampu jalan dibuat: klik tempat berdirinya
+Paint by slope and height	Cat menurut kemiringan dan ketinggian
+By slope and height	Menurut kemiringan dan ketinggian
+The chosen layer painted over the whole map where the ground is so steep (and so high)	Lapisan terpilih dicat di seluruh peta pada tanah yang securam (dan setinggi) ini
+Slope	Kemiringan
+Height	Ketinggian
+Fade	Transisi
+Cover	Cakupan
+Paint the map	Cat peta
+Choose a layer above the base ground	Pilih lapisan di atas tanah dasar
+No ground on the map is like that	Tidak ada tanah seperti itu di peta
+Painted	Dicat
+Missing objects	Objek tidak ditemukan
+Missing roads and splines	Jalan dan spline tidak ditemukan
+Missing textures	Tekstur tidak ditemukan
+Road ends not joined	Ujung jalan belum tersambung
+Links to splines that are gone	Tautan ke spline yang sudah hilang
+Bus stops away from a road	Halte jauh dari jalan
+Start points away from a road	Titik awal jauh dari jalan
+Start points without their object	Titik awal tanpa objeknya
+No start point	Tidak ada titik awal
+IDCodes used twice	IDCode dipakai dua kali
+Next IDCode too low	NextIDCode terlalu rendah
+Objects off their tile	Objek di luar tile-nya
+Tiles without a file	Tile tanpa file
+Tiles without ground	Tile tanpa tanah
+Trips without a way	Perjalanan tanpa rute
+Tours without departures	Dinas tanpa keberangkatan
+Tours without a depot	Dinas tanpa depo
+Traffic groups not in the AI lists	Grup lalu lintas tidak ada di daftar AI
+Stops no trip calls at	Halte yang tidak disinggahi perjalanan
+Signal routes naming what is gone	Rute sinyal yang menyebut yang sudah hilang
+Chrono changes of what is gone	Perubahan kronologi atas yang sudah hilang
+Lamps lighting no ground at night	Lampu tidak menerangi tanah di malam hari
+Tiles with very many objects	Tile dengan objek sangat banyak
+Objects linked to one that is gone	Objek tertaut ke yang sudah hilang
+Signal heads linked to no crossing	Lampu sinyal tanpa persimpangan
+Depot files (destinations)	File depo (tujuan)
+The map uses an object (.sco) that is not installed. The game leaves it out. Install the mod it comes from, or delete the object. A junction of openMapper's whose file is gone (the map was moved without it) is made again for its roads with "Fix".	Peta memakai objek (.sco) yang tidak terpasang. Game melewatkannya. Pasang mod asalnya, atau hapus objeknya. Persimpangan openMapper yang filenya hilang (peta dipindah tanpanya) dibuat ulang untuk jalannya dengan "Perbaiki".
+The map uses a road or spline type (.sli) that is not installed: that road is missing in the game, and buses cannot drive there.	Peta memakai jenis jalan atau spline (.sli) yang tidak terpasang: jalan itu tidak ada di game, dan bus tidak bisa lewat.
+An object or road names a picture that cannot be found. It will look white or black in the game.	Objek atau jalan menyebut gambar yang tidak ditemukan. Di game akan tampak putih atau hitam.
+Two road ends lie on one another but are not joined. Traffic still finds its way (the game joins lanes by their ends), but rows of lamps and posts and the road's texture do not run on across, and the editor does not treat them as one road. "Join" links them.	Dua ujung jalan saling menempel tetapi belum tersambung. Lalu lintas tetap bisa lewat (game menyambung lajur lewat ujungnya), tetapi deretan lampu dan tiang serta tekstur jalan tidak berlanjut, dan editor tidak menganggapnya satu jalan. "Sambungkan" menautkannya.
+A spline says it goes on into another one that no longer exists. "Fix" forgets that link.	Sebuah spline menyebut berlanjut ke spline lain yang sudah tidak ada. "Perbaiki" menghapus tautan itu.
+A bus stop belongs to the lane it stands beside (within about 25 m). This one has none near, so buses cannot stop at it. Move it next to the road, or "Fix" puts it at the kerb of the nearest lane (within 80 m).	Halte milik lajur di sebelahnya (dalam sekitar 25 m). Halte ini tidak punya lajur di dekatnya, jadi bus tidak bisa berhenti. Pindahkan ke samping jalan, atau "Perbaiki" menaruhnya di tepi jalan lajur terdekat (dalam 80 m).
+A start point is where the bus appears. This one is away from any lane: fine in a depot yard, otherwise the bus starts off the road.	Titik awal adalah tempat bus muncul. Titik ini jauh dari lajur mana pun: tidak masalah di halaman depo, selain itu bus mulai di luar jalan.
+A start point refers to an object that was deleted. "Fix" removes the start point.	Titik awal merujuk objek yang sudah dihapus. "Perbaiki" menghapus titik awal.
+There is nowhere for the bus to appear. Place a start point (Game logic > Start points) on a road, or "Fix" puts one on a lane some 40 m before a bus stop.	Bus tidak punya tempat muncul. Letakkan titik awal (Logika game > Titik awal) di jalan, atau "Perbaiki" menaruhnya di lajur sekitar 40 m sebelum halte.
+Two things on the map share one IDCode: links, timetables and start points may pick the wrong one.	Dua hal di peta memakai satu IDCode: tautan, jadwal, dan titik awal bisa memilih yang salah.
+The counter for new IDCodes is below codes already used, so new objects would get codes twice. "Fix" raises it.	Penghitung IDCode baru di bawah kode yang sudah dipakai, sehingga objek baru akan mendapat kode ganda. "Perbaiki" menaikkannya.
+An object standing on the ground lies outside its own tile. The game does not show it. Move it a little or put it again.	Objek yang berdiri di tanah berada di luar tile-nya. Game tidak menampilkannya. Geser sedikit atau letakkan lagi.
+global.cfg lists tiles whose file is not there. The game leaves them out; they stay listed, as start points and timetables count tiles by their place in the list.	global.cfg mendaftar tile yang filenya tidak ada. Game melewatkannya; tetap terdaftar, karena titik awal dan jadwal menghitung tile menurut urutannya di daftar.
+A tile has no height file: its ground is flat. Saving writes one.	Tile tidak punya file ketinggian: tanahnya datar. Penyimpanan akan menulisnya.
+No way along the roads was found through this trip's stops, so buses cannot drive it. Open it in Map > Lines and timetable to see where it breaks.	Tidak ditemukan rute di jalan melewati halte perjalanan ini, jadi bus tidak bisa menjalankannya. Buka di Peta > Jalur dan jadwal untuk melihat di mana putusnya.
+A tour (a bus's day on the line) has no trips, so no bus runs it.	Dinas (satu hari kerja bus di jalur) tidak punya perjalanan, jadi tidak ada bus yang menjalankannya.
+A tour names no depot or group of the AI lists (or one that is not there): the game has no vehicle to send on it. Choose a depot for it in the Lines window, or "Fix" gives it the map's depot (one of OMSI 2's MAN buses added where the map has none).	Dinas tidak menyebut depo atau grup di daftar AI (atau yang tidak ada): game tidak punya kendaraan untuk dikirim. Pilih depo untuknya di jendela Jalur, atau "Perbaiki" memberinya depo peta (bus MAN OMSI 2 ditambahkan jika peta tidak punya).
+The unscheduled traffic names a group that the AI lists do not have: those cars never appear. Add the group in Map > Traffic and AI, or "Fix" copies it from OMSI 2's own maps where they have it.	Lalu lintas tak terjadwal menyebut grup yang tidak ada di daftar AI: mobil itu tidak pernah muncul. Tambahkan grup di Peta > Lalu lintas dan AI, atau "Perbaiki" menyalinnya dari peta bawaan OMSI 2 bila ada.
+A stop of the timetable that no trip calls at. Nothing is wrong, it is only not used yet.	Halte jadwal yang tidak disinggahi perjalanan mana pun. Tidak ada yang salah, hanya belum dipakai.
+A chrono scenario takes away, retypes or relabels something that is no longer on the map (it was deleted or its IDCode changed): that change does nothing. Open Map > Chrono scenarios, the scenario's properties, and take the change out.	Skenario kronologi menghapus, mengubah jenis, atau mengganti label sesuatu yang tidak ada lagi di peta (dihapus atau IDCode-nya berubah): perubahan itu tidak berefek. Buka Peta > Skenario kronologi, properti skenario, lalu hapus perubahannya.
+A tile holds far more objects than the stock maps' tiles (up to some 600): the game may stutter when it loads it or looks across it. Thin out a wood planted too densely (Plant brush, Clear) or plant it with more space between the trees.	Satu tile memuat jauh lebih banyak objek daripada tile peta bawaan (hingga sekitar 600): game bisa tersendat saat memuat atau memandang melintasinya. Jarangkan hutan yang terlalu rapat (kuas Tanam, Hapus) atau tanam dengan jarak lebih lebar.
+Street lamps stand on a tile the game does not light from its lamps ([variable_terrainlightmap] is off): at night the ground under them stays dark (unless the tile's light map file was made by OMSI 2's editor). "Fix" turns it on, as on nearly every tile of the stock maps.	Lampu jalan berdiri di tile yang tidak diterangi game dari lampunya ([variable_terrainlightmap] mati): malam hari tanah di bawahnya tetap gelap (kecuali file light map tile dibuat editor OMSI 2). "Perbaiki" menyalakannya, seperti di hampir semua tile peta bawaan.
+An object takes its state ([varparent]) from an object no longer on the map: a signal head stays dark, a display blank. Link it to another in its properties (Linked objects), or "Fix" forgets the link.	Objek mengambil statusnya ([varparent]) dari objek yang sudah tidak ada di peta: lampu sinyal tetap mati, layar kosong. Tautkan ke objek lain di propertinya (Objek tertaut), atau "Perbaiki" menghapus tautannya.
+A traffic light's signal head takes its light from a crossing's program ([varparent]); this one is linked to none while others like it are, so it stays dark in the game. Select it and link it in its properties (Linked objects).	Kepala lampu lalu lintas mengambil cahayanya dari program persimpangan ([varparent]); yang ini tidak tertaut, padahal yang serupa tertaut, jadi tetap mati di game. Pilih lalu tautkan di propertinya (Objek tertaut).
+A depot file (.hof) gives the buses their destinations, the stop names on their displays and the routes their IBIS knows. Without one the signs stay empty and the IBIS knows no line. "Fix" makes it from the map's lines, or adds what the lines need to the map's own (Map > Depot files to see and change it).	File depo (.hof) memberi bus tujuan, nama halte di layar, dan rute yang dikenal IBIS. Tanpanya papan tujuan kosong dan IBIS tidak mengenal jalur apa pun. "Perbaiki" membuatnya dari jalur peta, atau menambahkan yang dibutuhkan jalur ke file peta sendiri (Peta > File depo untuk melihat dan mengubahnya).
+A signal route names a signal or track pieces no longer on the map: the signal may never clear. Open Map > Signal routes and take the track again, or delete the route.	Rute sinyal menyebut sinyal atau bagian rel yang tidak ada lagi di peta: sinyal mungkin tidak pernah hijau. Buka Peta > Rute sinyal lalu ambil rel lagi, atau hapus rutenya.
+font	font
+used	dipakai
+in	di
+a ground texture of the map	tekstur tanah peta
+splines	spline
+apart	berjarak
+spline	spline
+goes on into	berlanjut ke
+no road near	tidak ada jalan di dekat
+from the road	dari jalan
+start point	titik awal
+object	objek
+The map has no start point	Peta tidak punya titik awal
+things have it	hal memakainya
+highest in use:	tertinggi yang dipakai:
+tile	tile
+no .terrain file: flat	tidak ada file .terrain: datar
+objects	objek
+lamps	lampu
+The map has no depot file	Peta tidak punya file depo
+the buses show no destination	bus tidak menampilkan tujuan
+named by the map's depot, but found nowhere	disebut depo peta, tetapi tidak ditemukan di mana pun
+knows none of the	tidak mengenal satu pun dari
+lacks	kurang
+destinations of the lines	tujuan jalur
+the lines need	jalur membutuhkan
+destinations	tujuan
+stops	halte
+routes	rute
+tour	dinas
+no depot named	depo tidak disebut
+not in the AI lists:	tidak ada di daftar AI:
+the stop has no object:	halte tidak punya objek:
+no road beside	tidak ada jalan di samping
+no way	tidak ada rute
+no way found	rute tidak ditemukan
+Route	Rute
+gone	hilang
+changes of nothing	perubahan sia-sia
+time	kali
+times	kali
+Fix from the map check	Perbaikan dari pemeriksaan peta
+Car groups from OMSI 2's maps	Grup mobil dari peta OMSI 2
+A depot for the tour	Depo untuk dinas
+A depot file from the lines	File depo dari jalur
+Depot file: what the lines need	File depo: yang dibutuhkan jalur
+Map check	Pemeriksaan peta
+Check again	Periksa lagi
+Checking the map…	Memeriksa peta…
+errors	kesalahan
+warnings	peringatan
+notes	catatan
+Nothing found: the map looks fine.	Tidak ada temuan: peta tampak baik.
+Fix all	Perbaiki semua
+Join	Hubungkan
+Fix	Perbaiki
+Click to fly there	Klik untuk terbang ke sana
+Fixed:	Diperbaiki:
+it has parts openMapper does not write	ada bagian yang tidak ditulis openMapper
+A host on the internet needs a password of at least	Host di internet membutuhkan kata sandi minimal
+Type a password, or choose explicitly to host without one	Ketik kata sandi, atau pilih secara eksplisit untuk menghosting tanpa kata sandi
+Could not listen on port	Tidak dapat mendengarkan di port
+The way in for the tunnel could not be opened	Pintu masuk untuk terowongan tidak dapat dibuka
+Hosting this map: others can join it now	Menghosting peta ini: orang lain bisa bergabung sekarang
+Multiplayer ended: another map was opened	Multiplayer berakhir: peta lain dibuka
+Somebody changed this first: your edit was put back	Seseorang mengubahnya lebih dulu: suntingan Anda dikembalikan
+The host takes no more: the edit is too big, or the session holds as much as it may. Your edit was put back	Host tidak menerima lagi: suntingan terlalu besar, atau sesi sudah penuh. Suntingan Anda dikembalikan
+That lies too far from the map for this session: your edit was put back	Itu terlalu jauh dari peta untuk sesi ini: suntingan Anda dikembalikan
+tiles	tile
+changed what you were editing: it is as they left it	mengubah yang sedang Anda edit: dibiarkan seperti yang ia tinggalkan
+The timetable, the traffic and the descriptions are the host's in multiplayer: your change was put back	Jadwal, lalu lintas, dan deskripsi milik host dalam multiplayer: perubahan Anda dikembalikan
+Your conflicting edit was kept	Suntingan Anda yang bentrok dipertahankan
+Could not keep your conflicting edit; multiplayer stopped	Tidak dapat mempertahankan suntingan Anda yang bentrok; multiplayer dihentikan
+Too much of the others' work came in while your edit was held open: multiplayer stopped. The map stays open; it can be saved as a copy.	Terlalu banyak pekerjaan orang lain masuk saat suntingan Anda dibiarkan terbuka: multiplayer dihentikan. Peta tetap terbuka; dapat disimpan sebagai salinan.
+The connection to the host was lost. The map stays open; it can be saved as a copy.	Koneksi ke host terputus. Peta tetap terbuka; dapat disimpan sebagai salinan.
+No OMSI 2 installation: the map has nowhere to go	Tidak ada instalasi OMSI 2: peta tidak punya tempat tujuan
+The host sent no map	Host tidak mengirim peta
+The host's map could not be read	Peta host tidak dapat dibaca
+No connection	Tidak ada koneksi
+That address is not an openMapper host	Alamat itu bukan host openMapper
+Wrong password	Kata sandi salah
+The session is full	Sesi sudah penuh
+Type a name (up to 32 letters)	Ketik nama (hingga 32 huruf)
+The host has another version of openMapper	Host memakai versi openMapper lain
+Move forward	Maju
+Move back	Mundur
+Move left	Ke kiri
+Move right	Ke kanan
+Turn the camera left	Putar kamera ke kiri
+Turn the camera right	Putar kamera ke kanan
+Undo	Urungkan
+Redo	Ulangi
+Save	Simpan
+Copy	Salin
+Cut	Potong
+Paste at the cursor	Tempel di kursor
+Duplicate	Duplikat
+Select all	Pilih semua
+Find in the map	Cari di peta
+Search for a command	Cari perintah
+Tool: Select	Alat: Pilih
+Tool: Roads	Alat: Jalan
+Tool: Objects	Alat: Objek
+Tool: Game logic	Alat: Logika game
+Tool: Terrain	Alat: Medan
+Tool: Paint	Alat: Cat
+Tool: Tiles	Alat: Tile
+Turn the object (Shift: the other way)	Putar objek (Shift: arah sebaliknya)
+Ruler	Penggaris
+Knife	Pisau
+Move handles	Gagang pindah
+Rotate handles	Gagang putar
+Scale handles	Gagang skala
+Edit the mesh (vertices, edges, faces)	Edit mesh (titik, tepi, permukaan)
+Join the selected objects into one	Gabungkan objek terpilih menjadi satu
+Build the planned road	Bangun jalan yang direncanakan
+Tile grid on / off	Kisi tile hidup / mati
+Group the selection	Kelompokkan pilihan
+Ungroup	Pisahkan grup
+Look straight down, north up	Lihat lurus ke bawah, utara di atas
+2D plan view on / off (3D: tilt and turn again)	Tampilan denah 2D hidup / mati (3D: miringkan dan putar lagi)
+Catalogue on / off	Katalog hidup / mati
+Overview map on / off	Peta ikhtisar hidup / mati
+Lines window	Jendela jalur
+Traffic window	Jendela lalu lintas
+Satellite and terrain window	Jendela satelit dan medan
+Smaller brush	Kuas lebih kecil
+Larger brush	Kuas lebih besar
+Delete the selection	Hapus pilihan
+Go to the selection	Ke pilihan
+Test drive in openOMSI (Shift: from the camera)	Uji kendara di openOMSI (Shift: dari kamera)
+Save a picture of the view	Simpan gambar tampilan
+The map's own (global.cfg)	Milik peta (global.cfg)
+Description	Deskripsi
+Name in this language	Nama dalam bahasa ini
+Description in this language	Deskripsi dalam bahasa ini
+Remove this language	Hapus bahasa ini
+Not written yet: it is saved as soon as you type.	Belum ditulis: tersimpan segera setelah Anda mengetik.
+Edit description	Edit deskripsi
+just now	baru saja
+min ago	mnt lalu
+h ago	j lalu
+Unsaved changes found	Perubahan belum disimpan ditemukan
+openMapper was closed without saving the map	openMapper ditutup tanpa menyimpan peta
+The changes kept by the autosave can be brought back. The map itself was not changed.	Perubahan yang disimpan autosave dapat dipulihkan. Peta itu sendiri tidak berubah.
+Restore the changes	Pulihkan perubahan
+Drop them	Buang
+Nothing comes after it to join	Tidak ada yang dapat disambung setelahnya
+The next piece runs the other way: reverse it first	Bagian berikutnya menghadap arah lain: balikkan dulu
+The next piece lies on another tile	Bagian berikutnya berada di tile lain
+The two pieces are of different road types	Kedua bagian berjenis jalan berbeda
+The two pieces have different settings (path rules, ground, skew)	Kedua bagian punya pengaturan berbeda (aturan jalur, tanah, kemiringan)
+A row of objects comes onto the next piece from another tile	Deretan objek dari tile lain masuk ke bagian berikutnya
+The two pieces do not bend, climb or bank alike: joined they would change shape	Kedua bagian tidak melengkung, menanjak, atau miring sama: jika disambung bentuknya berubah
+Earlier versions	Versi sebelumnya
+Before every save, the files it replaces are kept (the last 10 saves). Going back puts the map as it was before that save; later changes go.	Sebelum setiap penyimpanan, file yang digantinya disimpan (10 penyimpanan terakhir). Kembali mengembalikan peta seperti sebelum penyimpanan itu; perubahan setelahnya hilang.
+No earlier versions yet: they appear once the map is saved again.	Belum ada versi sebelumnya: muncul setelah peta disimpan lagi.
+before the save of	sebelum penyimpanan
+Go back to this	Kembali ke ini
+could not keep a backup, nothing was saved	tidak dapat membuat cadangan, tidak ada yang disimpan
+Red	Merah
+Yellow	Kuning
+Green	Hijau
+file not found	file tidak ditemukan
+this object takes its model from a model file and cannot be edited here	objek ini mengambil modelnya dari file model dan tidak dapat diedit di sini
+the object has no mesh to edit	objek tidak punya mesh untuk diedit
+cannot read the object	tidak dapat membaca objek
+Select	Pilih
+Terrain	Medan
+Paint	Pewarnaan
+Roads	Jalan
+Objects	Objek
+Game logic	Logika game
+Tiles	Tile
+Raise	Naikkan
+Lower	Turunkan
+Smooth	Haluskan
+Flatten	Ratakan
+Roughen	Kasarkan
+Ramp	Tanjakan
+Lake / river	Danau / sungai
+Start points	Titik awal
+Bus stops	Halte
+Car parks	Tempat parkir
+AI paths	Jalur AI
+Other	Lainnya
+Where the bus appears when a drive starts. Put it on a road or in the depot, facing the way to drive.	Tempat bus muncul saat berkendara dimulai. Letakkan di jalan atau di depo, menghadap arah berkendara.
+Where passengers wait. Put it beside the road at the kerb; name it on the right.	Tempat penumpang menunggu. Letakkan di samping jalan di tepi; beri nama di kanan.
+Where parked cars stand. Click for one; with a row on, click the start and end of a row along the kerb.	Tempat mobil parkir. Klik untuk satu; dengan deretan aktif, klik awal dan akhir deretan di sepanjang tepi jalan.
+Lanes the AI's cars or people follow. Draw like a road: it snaps to lane ends (green: joined, red: dead end) and along lanes. A car path runs the way you draw it.	Lajur yang diikuti mobil atau orang AI. Gambar seperti jalan: menempel ke ujung lajur (hijau: tersambung, merah: buntu) dan sepanjang lajur. Jalur mobil mengikuti arah gambar Anda.
+Sound sources, help arrows and other helpers the game does not show.	Sumber suara, panah bantu, dan pembantu lain yang tidak ditampilkan game.
+Move (V): drag an arrow along X, Y or Z, a square in its plane, the circle over the ground	Pindah (V): seret panah sepanjang X, Y, atau Z, kotak di bidangnya, lingkaran di atas tanah
+Rotate (C): drag a ring to turn about X, Y or Z	Putar (C): seret cincin untuk memutar pada X, Y, atau Z
+Scale (X): drag an arrow to scale along that axis, a square for two, the circle for all three	Skala (X): seret panah untuk skala sepanjang sumbu itu, kotak untuk dua, lingkaran untuk ketiganya
+These roads have no lanes of their own to take apart (rails stay as they are)	Jalan ini tidak punya lajur sendiri untuk dipisahkan (rel tetap seperti adanya)
+Make the lanes editable	Jadikan lajur dapat diedit
+Roads whose lanes are now editable:	Jalan dengan lajur kini dapat diedit:
+Flatten the terrain	Ratakan medan
+Select two things or more to group them	Pilih dua hal atau lebih untuk dikelompokkan
+Group	Grup
+Grouped:	Dikelompokkan:
+Ungrouped	Grup dipisahkan
+Rename group	Ganti nama grup
+Ground levelled under objects:	Tanah diratakan di bawah objek:
+Move	Pindah
+No object clicked: nothing linked	Tidak ada objek yang diklik: tidak ada yang tertaut
+Too near the road's end to cut it there	Terlalu dekat ujung jalan untuk memotongnya di sini
+No road under the cursor	Tidak ada jalan di bawah kursor
+Ramp:	Tanjakan:
+Shape terrain	Bentuk medan
+Paint ground	Cat tanah
+Clear plants	Hapus tanaman
+Plant	Tanam
+Rotate selection	Putar pilihan
+Rotate	Putar
+Delete object	Hapus objek
+Delete road	Hapus jalan
+Delete selection	Hapus pilihan
+Pick an object in the catalogue first	Pilih objek di katalog dulu
+There is no tile here: add one with the Tiles tool	Tidak ada tile di sini: tambahkan dengan alat Tile
+Place object	Letakkan objek
+New stop	Halte baru
+Linked to	Tertaut ke
+choose its light in its properties	pilih cahayanya di propertinya
+Trees from OpenStreetMap	Pohon dari OpenStreetMap
+Plant an area	Tanam di area
+Buildings from OpenStreetMap	Bangunan dari OpenStreetMap
+Stops from OpenStreetMap	Halte dari OpenStreetMap
+Stop	Halte
+Pick a car park in the list first	Pilih tempat parkir di daftar dulu
+Place car parks	Tempatkan tempat parkir
+Car parks placed:	Tempat parkir ditempatkan:
+Pick a road type in the catalogue first	Pilih jenis jalan di katalog dulu
+That bend is too sharp	Tikungan itu terlalu tajam
+Switch made	Wesel dibuat
+Junctions made:	Persimpangan dibuat:
+The road leaves the map: add tiles there first	Jalan keluar dari peta: tambahkan tile di sana dulu
+Build road	Bangun jalan
+Roads from OpenStreetMap	Jalan dari OpenStreetMap
+Pick a tree in the catalogue (or add some to the mix) first	Pilih pohon di katalog (atau tambahkan ke campuran) dulu
+Right-click a tile to remove it	Klik kanan tile untuk menghapusnya
+New tiles go next to the map	Tile baru ditaruh di samping peta
+Add tile	Tambah tile
+Water	Air
+Paint detail	Detail cat
+Ground layer order	Urutan lapisan tanah
+Detail texture	Tekstur detail
+Ground texture	Tekstur tanah
+Lamp light on the ground	Cahaya lampu di tanah
+Add tiles	Tambah tile
+A map needs at least one tile	Peta butuh minimal satu tile
+Remove tile	Hapus tile
+Pick a point (a dot at an end or where pieces meet) to take it out	Pilih titik (kotak di ujung atau tempat bagian bertemu) untuk menghapusnya
+Remove a point of the path	Hapus titik jalur
+Point taken out	Titik dihapus
+A path of one piece: Del with nothing picked deletes it	Jalur satu bagian: Del tanpa pilihan menghapusnya
+Extrude	Ekstrusi
+Inset	Inset
+Bevel	Bevel
+Loop cut	Potong lingkar
+click: done, right click / Esc: cancel, wheel: segments	klik: selesai, klik kanan / Esc: batal, roda: segmen
+Scale	Skala
+Roads are not scaled: change their length and width in their properties	Jalan tidak diskalakan: ubah panjang dan lebarnya di propertinya
+Only the objects are scaled, the roads stay	Hanya objek yang diskalakan, jalan tetap
+Could not scale	Tidak dapat menskala
+Too near the end: drag the end's dot instead	Terlalu dekat ujung: seret titik ujungnya
+Add a point to the path	Tambah titik ke jalur
+Point added: drag the dot where the pieces meet	Titik ditambahkan: seret titik tempat bagian bertemu
+Reshape road	Ubah bentuk jalan
+Selected:	Dipilih:
+Copied:	Disalin:
+Nothing copied yet	Belum ada yang disalin
+Paste	Tempel
+Level the ground	Ratakan tanah
+Turn objects	Putar objek
+Copies in a row	Salinan berderet
+Left out (off the map):	Dilewati (di luar peta):
+Pasted (the rest is off the map):	Ditempel (sisanya di luar peta):
+Edit object	Edit objek
+Lean with the ground	Miring mengikuti tanah
+Stand upright	Tegakkan
+Change height	Ubah ketinggian
+Change road type	Ubah jenis jalan
+The selected roads are not one chain (they branch or leave gaps)	Jalan terpilih bukan satu rantai (bercabang atau ada celah)
+Even slope	Kemiringan rata
+Lay on the ground	Taruh di tanah
+Remove the rows of objects along it first (they are measured from its start)	Hapus dulu deretan objek di sepanjangnya (diukur dari awalnya)
+Reverse direction	Balikkan arah
+No road there to cut	Tidak ada jalan di sana untuk dipotong
+Cut the road	Potong jalan
+Cut in two: each piece can now be changed on its own	Dipotong dua: tiap bagian kini bisa diubah sendiri
+Join the pieces	Sambung bagian
+Joined into one piece	Disambung menjadi satu bagian
+Parallel copy	Salinan paralel
+Overhead wire	Kabel listrik atas
+Back into the map	Kembali ke peta
+Hang an object	Gantung objek
+Link to an object	Tautkan ke objek
+Unlink	Lepas tautan
+That object already takes its state from this one	Objek itu sudah mengambil statusnya dari objek ini
+Linked	Tertaut
+Signal head's light	Cahaya lampu sinyal
+Path rules	Aturan jalur
+Replace objects	Ganti objek
+Edit road	Edit jalan
+Roads that could not follow the junction (too sharp a bend):	Jalan yang tidak bisa mengikuti persimpangan (tikungan terlalu tajam):
+Edit junction	Edit persimpangan
+Make the junction again	Buat ulang persimpangan
+Make the junctions again	Buat ulang persimpangan
+Pick an object in the Objects tool's catalogue first	Pilih objek di katalog alat Objek dulu
+The road is too short for that	Jalan terlalu pendek untuk itu
+Objects along the road	Objek di sepanjang jalan
+Rows of objects added:	Deretan objek ditambahkan:
+Edit row of objects	Edit deretan objek
+Remove row of objects	Hapus deretan objek
+Remove rows of objects	Hapus deretan objek
+Roundabout built; roads joined to it:	Bundaran dibangun; jalan tersambung:
+This road type carries traffic both ways: pick a one-way road for a proper roundabout	Jenis jalan ini melayani dua arah: pilih jalan satu arah untuk bundaran yang benar
+Start point: where the bus appears in openOMSI	Titik awal: tempat bus muncul di openOMSI
+Bus stop: name it in the panel on the right	Halte: beri nama di panel kanan
+openOMSI stopped with an error	openOMSI berhenti dengan kesalahan
+Check in openOMSI	Periksa di openOMSI
+The saved map run by the game itself, unseen, with its own checks; the picture is the game's, from your view	Peta tersimpan dijalankan game sendiri, tanpa tampilan, dengan pemeriksaannya sendiri; gambarnya dari game, sesuai sudut pandang Anda
+Every tile (slower on a big map)	Semua tile (lebih lambat di peta besar)
+Run again	Jalankan lagi
+openOMSI is loading the map…	openOMSI sedang memuat peta…
+Nothing wrong found	Tidak ditemukan masalah
+Problems found:	Masalah ditemukan:
+Go there	Ke sana
+of the places named lie at the map's edge or a road's dead end (greyed): the game measures a lane's last point on the road's very edge, and a bus at the end stands over it; nothing to mend	dari tempat yang disebut berada di tepi peta atau ujung buntu jalan (abu-abu): game mengukur titik terakhir lajur tepat di tepi jalan, dan bus di ujung berdiri di atasnya; tidak perlu diperbaiki
+The game said nothing about the map	Game tidak mengatakan apa pun tentang peta
+The game's whole output	Seluruh keluaran game
+no key entered	kunci belum dimasukkan
+the server refused the key	server menolak kunci
+too many requests, try again later	terlalu banyak permintaan, coba lagi nanti
+No connection to the server: are you online?	Tidak ada koneksi ke server: apakah Anda online?
+Enter your Google key first	Masukkan kunci Google Anda dulu
+OpenStreetMap's servers are busy: try again in a minute	Server OpenStreetMap sibuk: coba lagi semenit lagi
+The area is too large for this zoom	Area terlalu besar untuk zoom ini
+Cancelled	Dibatalkan
+Stopped by an internal error (see the log)	Dihentikan oleh kesalahan internal (lihat log)
+No source has imagery here	Tidak ada sumber yang punya citra di sini
+drawn from OpenStreetMap data: sharp, with names	digambar dari data OpenStreetMap: tajam, dengan nama
+terrain heights, no key needed	ketinggian medan, tanpa kunci
+needs your own free key	butuh kunci gratis milik Anda sendiri
+no key needed	tanpa kunci
+the picture is too small	gambar terlalu kecil
+Import height map	Impor peta ketinggian
+Height map	Peta ketinggian
+The ground as a grey picture, to shape in another program and bring back	Tanah sebagai gambar abu-abu, untuk dibentuk di program lain lalu dibawa kembali
+Export…	Ekspor…
+Import…	Impor…
+over	selebar
+a pixel	per piksel
+Black adds	Hitam menambah
+Black is	Hitam adalah
+White adds	Putih menambah
+White is	Putih adalah
+Smoothing	Penghalusan
+Replace the ground	Ganti tanah
+Add to it	Tambahkan ke tanah
+Roads and objects keep their heights: best done before building	Jalan dan objek mempertahankan ketinggiannya: sebaiknya dilakukan sebelum membangun
+An 8-bit picture has only 256 steps of height: smoothing hides them	Gambar 8-bit hanya punya 256 tingkat ketinggian: penghalusan menyembunyikannya
+Lay it on the map	Taruh di peta
+Cancel	Batal
+Height map laid over	Peta ketinggian ditaruh di atas
+Export the height map	Ekspor peta ketinggian
+Height map written	Peta ketinggian ditulis
+The height map could not be written	Peta ketinggian tidak dapat ditulis
+A height map for the whole map	Peta ketinggian untuk seluruh peta
+The picture could not be read	Gambar tidak dapat dibaca
+IBIS and roller blind	IBIS dan roller blind
+Front sign, line 1	Papan depan, baris 1
+Front sign, line 2	Papan depan, baris 2
+Side sign	Papan samping
+Roller blind texture	Tekstur roller blind
+IBIS 2 (20 letters)	IBIS 2 (20 huruf)
+Extra sign	Papan tambahan
+Krüger picture	Gambar Krüger
+Text	Teks
+IBIS (16 letters)	IBIS (16 huruf)
+Display, line 1	Layar, baris 1
+Display, line 2	Layar, baris 2
+Full name (20 letters)	Nama lengkap (20 huruf)
+Service trip	Perjalanan dinas
+Special trip	Perjalanan khusus
+Blank	Kosong
+openMapper cannot import this kind of file (use a folder, .zip, .obj, .gltf, .glb, .fbx, .x, .o3d or a picture)	openMapper tidak dapat mengimpor jenis file ini (pakai folder, .zip, .obj, .gltf, .glb, .fbx, .x, .o3d, atau gambar)
+Mod installed, files:	Mod terpasang, file:
+Objects added to	Objek ditambahkan ke
+Road types added to	Jenis jalan ditambahkan ke
+Models imported:	Model diimpor:
+Nothing to import was found in this folder	Tidak ada yang bisa diimpor di folder ini
+The model has no triangles	Model tidak punya segitiga
+Model imported:	Model diimpor:
+The .obj file has no faces	File .obj tidak punya permukaan
+no base colour picture among them	tidak ada gambar warna dasar di antaranya
+The picture cannot be read	Gambar tidak dapat dibaca
+Picture made into a standee:	Gambar dijadikan standee:
+Picture made into a sign:	Gambar dijadikan papan:
+Trees	Pohon
+Stops and start points	Halte dan titik awal
+Junctions	Persimpangan
+Tracks	Rel
+Footpaths	Trotoar
+Fences, walls, kerbs	Pagar, tembok, tepi jalan
+Technical (AI, helpers)	Teknis (AI, pembantu)
+This map lies on the world's grid ([worldcoordinates]): its tiles cannot be taken yet	Peta ini berada di kisi dunia ([worldcoordinates]): tile-nya belum dapat diambil
+This map lies on the world's grid ([worldcoordinates]): tiles cannot be added from another yet	Peta ini berada di kisi dunia ([worldcoordinates]): tile dari peta lain belum dapat ditambahkan
+Tiles from another map	Tile dari peta lain
+Union	Gabungan
+Difference (cut out)	Selisih (potong)
+Intersection	Irisan
+Slice (keep both pieces)	Iris (pertahankan kedua bagian)
+One object of all the selected, their insides gone	Satu objek dari semua yang dipilih, bagian dalamnya hilang
+The other selected objects cut out of the one shown in the properties	Objek terpilih lainnya dipotong dari yang ditampilkan di properti
+Only what all the selected share	Hanya bagian yang dimiliki bersama semua yang dipilih
+The first object cut by the others into what is outside them and what is inside	Objek pertama dipotong oleh yang lain menjadi bagian luar dan bagian dalamnya
+select an object first	pilih objek dulu
+Make editable	Jadikan dapat diedit
+Make single	Jadikan tunggal
+the object has only one part	objek hanya punya satu bagian
+Separate parts	Pisahkan bagian
+select two or more objects to join	pilih dua objek atau lebih untuk digabung
+Join objects	Gabungkan objek
+select two or more objects: the one shown in the properties and what acts on it	pilih dua objek atau lebih: yang ditampilkan di properti dan yang bekerja padanya
+nothing is left: the objects do not overlap that way	tidak ada yang tersisa: objek tidak tumpang tindih seperti itu
+The file has no scene	File tidak punya adegan
+The FBX file has no meshes	File FBX tidak punya mesh
+Main roads	Jalan utama
+Streets	Jalan
+Service roads	Jalan layanan
+Tram tracks	Rel trem
+Railway tracks	Rel kereta api
+motorway, trunk, primary, secondary	jalan tol, trunk, primer, sekunder
+tertiary, residential, unclassified	tersier, permukiman, tak terklasifikasi
+yards, car parks, depots	halaman, tempat parkir, depo
+each track on its own; branches are joined with switches by hand	tiap rel sendiri; cabang disambung dengan wesel secara manual
+main lines without sidings; branches are joined with switches by hand	jalur utama tanpa rel samping; cabang disambung dengan wesel secara manual
+Water from OpenStreetMap	Air dari OpenStreetMap
+Give a distance	Tentukan jarak
+The bend is too tight for that distance on its inner side	Tikungan terlalu tajam untuk jarak itu di sisi dalamnya
+The copy leaves the map: add tiles there first	Salinan keluar dari peta: tambahkan tile di sana dulu
+Made with openMapper	Dibuat dengan openMapper
+Low (no shadows, rough edges, 3 km view)	Rendah (tanpa bayangan, tepi kasar, jarak pandang 3 km)
+Medium (softer shadows, 8 km view)	Sedang (bayangan lebih lembut, jarak pandang 8 km)
+High	Tinggi
+This end belongs to a junction: select the junction and move it, the road follows	Ujung ini milik persimpangan: pilih persimpangan lalu pindahkan, jalan mengikuti
+Paint along the roads	Cat di sepanjang jalan
+Market	Pasar
+Station	Stasiun
+Depot	Depo
+this object takes its model from a model file: it cannot be scaled	objek ini mengambil modelnya dari file model: tidak dapat diskalakan
+Not a GPX, KML or GeoJSON file	Bukan file GPX, KML, atau GeoJSON
+No lines in the file	Tidak ada garis di file
+Language	Bahasa
+Interface size	Ukuran antarmuka
+File	File
+New map…	Peta baru…
+Open map…	Buka peta…
+Controls…	Kontrol…
+Import assets…	Impor aset…
+Multiplayer…	Multiplayer…
+OMSI 2 folder…	Folder OMSI 2…
+Quit	Keluar
+View	Tampilan
+Help	Bantuan
+Updates…	Pembaruan…
+About openMapper	Tentang openMapper
+OMSI 2 not found	OMSI 2 tidak ditemukan
+Map editor for openOMSI	Editor peta untuk openOMSI
+openMapper builds maps from the content of an installed OMSI 2. Choose its folder (the one with Omsi.exe, maps and Vehicles).	openMapper membangun peta dari konten OMSI 2 yang terpasang. Pilih foldernya (yang berisi Omsi.exe, maps, dan Vehicles).
+Choose OMSI 2 folder…	Pilih folder OMSI 2…
+Maps	Peta
+recent · OMSI 2	terbaru · OMSI 2
+recent	terbaru
+content folder	folder konten
+OMSI 2 (saved as copy)	OMSI 2 (disimpan sebagai salinan)
+Open	Buka
+Make a copy	Buat salinan
+A copy of the map in the content folder under a new name, to try something out	Salinan peta di folder konten dengan nama baru, untuk mencoba sesuatu
+Show in the file manager	Tampilkan di manajer file
+Move to openMapper's bin	Pindahkan ke bin openMapper
+Its folder goes into openMapper\\bin in the content folder, from where it can be put back by hand	Foldernya dipindah ke openMapper\\bin di folder konten, dari sana dapat dikembalikan secara manual
+Browse…	Telusuri…
+Double-click a map to open it. Maps of OMSI 2 are saved as a copy into openOMSI's content folder; the original stays untouched.	Klik dua kali peta untuk membukanya. Peta OMSI 2 disimpan sebagai salinan ke folder konten openOMSI; aslinya tidak diubah.
+A simple map editor for openOMSI.	Editor peta sederhana untuk openOMSI.
+Back to the 3D view (0)	Kembali ke tampilan 3D (0)
+The plan view from above, north up (0)	Tampilan denah dari atas, utara di atas (0)
+Recent maps	Peta terbaru
+(none)	(tidak ada)
+Export map for sharing…	Ekspor peta untuk dibagikan…
+Export a plan of the map…	Ekspor denah peta…
+Earlier versions…	Versi sebelumnya…
+Close map	Tutup peta
+Edit	Edit
+Edit history…	Riwayat edit…
+Groups for other maps…	Grup untuk peta lain…
+Find in map…	Cari di peta…
+Search for a command…	Cari perintah…
+Delete	Hapus
+Deselect	Batalkan pilihan
+Tile grid	Kisi tile
+What the game does not show	Yang tidak ditampilkan game
+AI lanes	Lajur AI
+Names of stops and start points	Nama halte dan titik awal
+Show	Tampilkan
+Roads and splines	Jalan dan spline
+Overview map (M)	Peta ikhtisar (M)
+Assets (B)	Aset (B)
+Flatten the terrain (roads follow)	Ratakan medan (jalan mengikuti)
+Saved views…	Tampilan tersimpan…
+Go to selection	Ke pilihan
+Camera	Kamera
+Unity: right button looks round and W A S D fly, middle pans, Alt orbits	Unity: tombol kanan melihat sekeliling dan W A S D terbang, tengah menggeser, Alt mengorbit
+Map editor: right button looks round and W A S D fly (Q down, E up), middle pans, the wheel zooms to the cursor, drag moves the map	Editor peta: tombol kanan melihat sekeliling dan W A S D terbang (Q turun, E naik), tengah menggeser, roda memperbesar ke kursor, seret memindahkan peta
+Load 100 tiles at a time (like OMSI 2's editor)	Muat 100 tile sekaligus (seperti editor OMSI 2)
+Time of day	Waktu
+Plain day (as the game by day)	Hari biasa (seperti game di siang hari)
+At an hour	Pada jam tertentu
+Where the sun stands then, today, at the map's place (Map > Calendar and place); by night the moon	Posisi matahari saat itu, hari ini, di lokasi peta (Peta > Kalender dan lokasi); malam hari bulan
+Season	Musim
+Summer	Musim panas
+Dry summer	Musim panas kering
+Spring	Musim semi
+Autumn	Musim gugur
+Winter	Musim dingin
+Snow	Salju
+Graphics quality	Kualitas grafik
+Tools	Alat
+Road types and junctions…	Jenis jalan dan persimpangan…
+PBR maps for a picture…	Peta PBR untuk gambar…
+Map	Peta
+Map settings…	Pengaturan peta…
+Calendar and place…	Kalender dan lokasi…
+Signal routes…	Rute sinyal…
+Chrono scenarios…	Skenario kronologi…
+Ground textures…	Tekstur tanah…
+Check map…	Periksa peta…
+Junctions made again:	Persimpangan dibuat ulang:
+Lines and timetable…	Jalur dan jadwal…
+Traffic and AI…	Lalu lintas dan AI…
+Depot files (destinations)…	File depo (tujuan)…
+Satellite and terrain…	Satelit dan medan…
+From OpenStreetMap…	Dari OpenStreetMap…
+GPS tracks to trace…	Trek GPS untuk dijiplak…
+Tiles from another map…	Tile dari peta lain…
+Test drive in openOMSI	Uji kendara di openOMSI
+Test drive in OMSI 2 (the original)…	Uji kendara di OMSI 2 (aslinya)…
+Check in openOMSI…	Periksa di openOMSI…
+Getting started	Memulai
+New map	Peta baru
+Open a map	Buka peta
+Save (Ctrl+S): there are unsaved changes	Simpan (Ctrl+S): ada perubahan belum disimpan
+Save (Ctrl+S)	Simpan (Ctrl+S)
+Import assets: a mod folder or .zip, a .obj / .x / .o3d model (or drop files on the window)	Impor aset: folder atau .zip mod, model .obj / .x / .o3d (atau jatuhkan file ke jendela)
+Redo (Ctrl+Shift+Z)	Ulangi (Ctrl+Shift+Z)
+Tile grid (G)	Kisi tile (G)
+Assets: every object and road type, with pictures (B)	Aset: semua objek dan jenis jalan, dengan gambar (B)
+Test drive	Uji kendara
+Save the map and drive it in openOMSI (F5)	Simpan peta dan kendarai di openOMSI (F5)
+openOMSI was not found: install it to test maps	openOMSI tidak ditemukan: pasang untuk menguji peta
+Test drive from the start point nearest the view	Uji kendara dari titik awal terdekat dengan tampilan
+See this view in openOMSI	Lihat tampilan ini di openOMSI
+loading	memuat
+Edit mesh	Edit mesh
+Shapes and lamps	Bentuk dan lampu
+Click beside the map to add a 300 × 300 m tile. Right-click a tile to remove it.	Klik di samping peta untuk menambah tile 300 × 300 m. Klik kanan tile untuk menghapusnya.
+Area	Area
+A ring of tiles round the map	Cincin tile di sekeliling peta
+Every free place beside the map, corners too, gets a tile at the height of its neighbours	Setiap tempat kosong di samping peta, termasuk sudut, mendapat tile setinggi tetangganya
+Tiles added:	Tile ditambahkan:
+Everything on the map, grouped by the folders its files lie in	Semua di peta, dikelompokkan menurut folder tempat filenya berada
+Click an object or a road in the view to see and change it on the right.	Klik objek atau jalan di tampilan untuk melihat dan mengubahnya di kanan.
+Line up with the nearest road (Shift: put it freely)	Sejajarkan dengan jalan terdekat (Shift: letakkan bebas)
+On both sides of the road	Di kedua sisi jalan
+A stop of the same name also goes at the kerb across the road, facing the other way	Halte bernama sama juga ditaruh di tepi seberang jalan, menghadap arah lain
+In a row along a line	Berderet sepanjang garis
+Every	Setiap
+Draw new	Gambar baru
+Edit existing	Edit yang ada
+Click a path to pick it: every point is a dot to drag (the small ones in the middle of a piece bend it). Double-click the path to put a point in. Click a dot, then Del, to take that point out; Del with no dot picked deletes the whole path (Ctrl+Z brings it back). Lanes of roads and junctions belong to their road type: use Edit its AI lanes on the road.	Klik jalur untuk memilihnya: setiap titik adalah kotak yang bisa diseret (yang kecil di tengah bagian membengkokkannya). Klik dua kali jalur untuk menambah titik. Klik titik, lalu Del, untuk menghapus titik itu; Del tanpa titik terpilih menghapus seluruh jalur (Ctrl+Z mengembalikannya). Lajur jalan dan persimpangan milik jenis jalannya: pakai Edit lajur AI-nya pada jalan.
+Cars	Mobil
+People	Orang
+Show these in the other tools too	Tampilkan ini juga di alat lain
+Show the AI's lanes in the other tools too	Tampilkan lajur AI juga di alat lain
+Everything	Semua
+Search	Cari
+Shape the ground under the road	Bentuk tanah di bawah jalan
+Go on drawing from the end of the road just built	Lanjut menggambar dari ujung jalan yang baru dibangun
+Join road ends, roads and junction pieces near the cursor	Sambungkan ujung jalan, jalan, dan bagian persimpangan di dekat kursor
+Make junctions where roads meet	Buat persimpangan di tempat jalan bertemu
+Go on with the type of the road I start from	Lanjutkan dengan jenis jalan tempat saya mulai
+Building with:	Membangun dengan:
+nothing chosen	belum ada yang dipilih
+Front at the roadside, back	Depan di tepi jalan, mundur
+Plant brush: sow trees by painting	Kuas tanaman: tabur pohon dengan melukis
+Sow	Tabur
+Clear	Hapus
+With the brush	Dengan kuas
+In an outline	Dalam garis tepi
+Click round an area (a wood, a park, a garden) and it is filled at once, or cleared	Klik mengelilingi area (hutan, taman, kebun) dan langsung diisi, atau dibersihkan
+About	Sekitar
+plants (Enter: plant)	tanaman (Enter: tanam)
+Size	Ukuran
+Apart	Jarak
+Sows the object chosen below. Right-click entries: "Add to the plant mix" to sow several at random. Clearing takes trees and the mix's objects.	Menabur objek yang dipilih di bawah. Klik kanan entri: "Tambah ke campuran tanaman" untuk menabur beberapa secara acak. Penghapusan mengambil pohon dan objek campuran.
+Mix (picked at random):	Campuran (dipilih acak):
+reading OMSI 2…	membaca OMSI 2…
+items	item
+Nothing found	Tidak ditemukan
+mod	mod
+right-click: star it	klik kanan: beri bintang
+Take out of the plant mix	Keluarkan dari campuran tanaman
+Add to the plant mix	Tambah ke campuran tanaman
+Remove from favourites	Hapus dari favorit
+Add to favourites	Tambah ke favorit
+Favourites	Favorit
+Recently used	Baru dipakai
+(not in a folder)	(tidak dalam folder)
+Strength	Kekuatan
+Mode	Mode
+Levels the ground to the height where you start dragging	Meratakan tanah ke ketinggian tempat Anda mulai menyeret
+Softens bumps and edges	Melunakkan gundukan dan tepi
+Raises the ground under the brush	Menaikkan tanah di bawah kuas
+Lowers the ground under the brush	Menurunkan tanah di bawah kuas
+Gives flat ground the rolls and dips of a natural field; hold longer for more	Memberi tanah datar gelombang dan cekungan seperti ladang alami; tahan lebih lama untuk lebih kuat
+Paint a lake or a river: the ground is dug to a bed under the water's level (where you start the stroke, or the tile's water) and the tile gets water at that level. Water in OMSI is one level for a whole tile: another low place on the same tile shows it too	Lukis danau atau sungai: tanah digali menjadi dasar di bawah permukaan air (tempat goresan dimulai, atau air tile) dan tile mendapat air pada tingkat itu. Air di OMSI satu tingkat untuk seluruh tile: tempat rendah lain di tile yang sama juga menampilkannya
+Click where it starts, then where it ends: the ground between becomes one even slope as wide as the brush (an embankment, a ramp, a level bed)	Klik tempat mulai, lalu tempat berakhir: tanah di antaranya menjadi satu lereng rata selebar kuas (tanggul, tanjakan, dasar rata)
+To a height	Ke ketinggian
+Flatten to the height typed instead of the one where the drag starts (a level square, a platform)	Ratakan ke ketinggian yang diketik, bukan yang di awal seretan (lapangan rata, peron)
+Depth	Kedalaman
+The water's level is set where a stroke starts: start at the bank.	Tinggi air ditentukan di tempat goresan dimulai: mulailah dari tepi.
+Brush	Kuas
+Flatten the whole terrain	Ratakan seluruh medan
+Every tile's ground levelled to the map's mean height; the roads, the AI paths and the junctions follow it. One undo step brings the relief back. (The satellite picture: View > Satellite overlay.)	Tanah setiap tile diratakan ke ketinggian rata-rata peta; jalan, jalur AI, dan persimpangan mengikutinya. Satu langkah urungkan mengembalikan relief. (Gambar satelit: Tampilan > Lapisan satelit.)
+Ground layers	Lapisan tanah
+base ground	tanah dasar
+layer	lapisan
+Add…	Tambah…
+Remove	Hapus
+Up the list: drawn under the layers after it	Naik di daftar: digambar di bawah lapisan setelahnya
+Down the list: drawn over the layers before it	Turun di daftar: digambar di atas lapisan sebelumnya
+Texture	Tekstur
+The layer's picture; its painting stays	Gambar lapisan; catnya tetap
+A fine grain laid over the texture, seen close up (OMSI's detail texture)	Butiran halus di atas tekstur, terlihat dari dekat (tekstur detail OMSI)
+Click to choose another	Klik untuk memilih yang lain
+Repeats per tile	Pengulangan per tile
+Detail repeats	Pengulangan detail
+How finely this layer can be painted: texels across a tile (its masks are made again at the new size)	Seberapa halus lapisan ini bisa dicat: texel melintasi tile (maskernya dibuat ulang pada ukuran baru)
+Edit ground texture	Edit tekstur tanah
+Erase	Hapus
+Remove ground texture	Hapus tekstur tanah
+Tile	Tile
+A water surface over the whole tile: it shows where the ground lies below it (lower the ground with the Terrain tool for a lake or a river)	Permukaan air di seluruh tile: terlihat di tempat tanah lebih rendah darinya (turunkan tanah dengan alat Medan untuk danau atau sungai)
+at 	pada
+Lamps light the ground at night	Lampu menerangi tanah di malam hari
+The game works out the light pools of the street lamps on and round this tile when it loads it ([variable_terrainlightmap]); off, it shows the tile's light map file as it is	Game menghitung genangan cahaya lampu jalan di dan sekitar tile ini saat memuatnya ([variable_terrainlightmap]); jika mati, file light map tile ditampilkan apa adanya
+Edit history	Riwayat edit
+Click a step to go back to just after it	Klik langkah untuk kembali ke tepat setelahnya
+Opened	Dibuka
+Properties	Properti
+Configure PBR	Atur PBR
+Create PBR	Buat PBR
+Normal, roughness, metal and shadow maps made from the object's textures, tuned and written as openOMSI reads them	Peta normal, kekasaran, logam, dan bayangan dibuat dari tekstur objek, disetel dan ditulis seperti dibaca openOMSI
+Type	Jenis
+Hangs on	Menggantung di
+point	titik
+Location	Lokasi
+East	Timur
+North	Utara
+Height above sea level	Ketinggian di atas permukaan laut
+above the ground:	di atas tanah:
+OMSI keeps this object's height above the ground under it: moved elsewhere it stays as high above the ground there	OMSI menyimpan ketinggian objek ini di atas tanah di bawahnya: jika dipindah, ia tetap setinggi itu di atas tanah di sana
+Rotation	Rotasi
+Tilt forward (pitch)	Miring ke depan (pitch)
+Bank to the side (roll)	Miring ke samping (roll)
+Heading	Arah (heading)
+Turn it the way the nearest road runs beside it	Putar sesuai arah jalan terdekat di sampingnya
+Stand it upright again	Tegakkan lagi
+Picture	Gambar
+Ratio	Rasio
+Stop name	Nama halte
+This tree	Pohon ini
+Texts	Teks
+Shown on the object (@ starts a new line)	Ditampilkan di objek (@ memulai baris baru)
+Model	Model
+Triangles	Segitiga
+Parts	Bagian
+Part	Bagian
+triangles	segitiga
+colour only	hanya warna
+opaque	buram
+cut out	berlubang
+blended	campuran
+How the texture's transparency is used: cut out for leaves and fences, blended for glass	Cara transparansi tekstur dipakai: berlubang untuk daun dan pagar, campuran untuk kaca
+Textures	Tekstur
+Normal, roughness, metal and shadow maps made from the road type's textures	Peta normal, kekasaran, logam, dan bayangan dibuat dari tekstur jenis jalan
+Length	Panjang
+Radius	Radius
+right	kanan
+left	kiri
+straight	lurus
+start	awal
+end	akhir
+Mirrored	Cermin
+Skew	Miring
+The start cut on a slant: 1 is 45° (two fences meeting at a corner: 1 and -1)	Potongan awal miring: 1 adalah 45° (dua pagar bertemu di sudut: 1 dan -1)
+The end cut on a slant	Potongan akhir miring
+Ground	Tanah
+as it is	apa adanya
+cut away under it	potong di bawahnya
+cut, held at the end	potong, tahan di akhir
+cut, held at the start	potong, tahan di awal
+cut, held at both ends	potong, tahan di kedua ujung
+A hole in the ground under it, as for a tunnel, an underpass or a pit (OMSI's terrain align)	Lubang di tanah di bawahnya, seperti untuk terowongan, underpass, atau lubang (terrain align OMSI)
+Select the whole road	Pilih seluruh jalan
+Every piece linked on from this one (or double-click the road)	Setiap bagian yang tertaut dari ini (atau klik dua kali jalan)
+Join with the next piece	Sambung dengan bagian berikutnya
+One piece again with the one after it, where the two make one curve	Menjadi satu bagian lagi dengan yang sesudahnya, jika keduanya membentuk satu lengkung
+Replace with	Ganti dengan
+The object chosen in the Objects tool's catalogue takes this one's place	Objek yang dipilih di katalog alat Objek menggantikan yang ini
+Go to	Ke
+Level ground	Ratakan tanah
+The ground under it made level with its foot, blending in 3 m round it (a house on a slope)	Tanah di bawahnya diratakan setinggi dasarnya, menyatu 3 m di sekitarnya (rumah di lereng)
+All like it	Semua yang serupa
+Select every one of this type on the map	Pilih semua yang berjenis ini di peta
+No road within 60 m	Tidak ada jalan dalam 60 m
+Name	Nama
+Folder	Folder
+Traffic	Lalu lintas
+left-hand	lajur kiri
+No start point yet: place one (Game logic > Start points) so the bus has somewhere to appear in openOMSI.	Belum ada titik awal: letakkan (Logika game > Titik awal) agar bus punya tempat muncul di openOMSI.
+None yet: openOMSI shows it where maps are chosen.	Belum ada: openOMSI menampilkannya saat memilih peta.
+Import your thumbnail	Impor thumbnail Anda
+Choose a picture: it is cut to 370 × 280 and becomes the map's picture (picture.jpg).	Pilih gambar: dipotong menjadi 370 × 280 dan menjadi gambar peta (picture.jpg).
+Open the map with this view	Buka peta dengan tampilan ini
+The camera as it is now is where the map opens (here and in OMSI 2's editor).	Kamera seperti sekarang adalah tampilan awal peta (di sini dan di editor OMSI 2).
+Saved to	Disimpan ke
+Edit map	Edit peta
+Change the layer's texture	Ganti tekstur lapisan
+Change the layer's detail texture	Ganti tekstur detail lapisan
+Controls	Kontrol
+Keyboard	Keyboard
+Click a key, then press the new one (Esc: leave it). A key already in use is taken from its command.	Klik tombol, lalu tekan yang baru (Esc: biarkan). Tombol yang sudah dipakai diambil dari perintahnya.
+press a key…	tekan tombol…
+Also:	Juga:
+Back to the default key	Kembali ke tombol default
+Reset all keys	Setel ulang semua tombol
+Mouse	Mouse
+Right button held	Tombol kanan ditahan
+look round; W A S D fly, Q / E down / up, Shift faster, wheel: speed	lihat sekeliling; W A S D terbang, Q / E turun / naik, Shift lebih cepat, roda: kecepatan
+Middle drag	Seret tengah
+pan	geser
+Alt + left / right / middle drag	Alt + seret kiri / kanan / tengah
+orbit / zoom / pan (as in Unity)	orbit / zoom / geser (seperti di Unity)
+Left drag on nothing	Seret kiri di tempat kosong
+select with a box	pilih dengan kotak
+Alt + left drag	Alt + seret kiri
+orbit round the point under the cursor	orbit di sekitar titik di bawah kursor
+Wheel	Roda
+move towards the cursor	bergerak ke arah kursor
+Trackpad	Trackpad
+Two fingers	Dua jari
+Pinch / twist	Cubit / putar
+zoom / turn	zoom / putar
+Option + two fingers or drag	Option + dua jari atau seret
+Fixed keys	Tombol tetap
+Arrow keys	Tombol panah
+move over the map (Shift: faster)	bergerak di peta (Shift: lebih cepat)
+go to a saved view (Shift: keep the view there)	ke tampilan tersimpan (Shift: simpan tampilan di sana)
+Alt + arrows	Alt + panah
+move the selection a grid step (Shift: 10 cm)	geser pilihan satu langkah kisi (Shift: 10 cm)
+Alt + Page Up / Down	Alt + Page Up / Down
+selection up / down 10 cm (Shift: 1 m)	pilihan naik / turun 10 cm (Shift: 1 m)
+add to / take from the selection	tambah ke / ambil dari pilihan
+Shift / Ctrl + drag on empty ground	Shift / Ctrl + seret di tanah kosong
+select with a box (Shift adds)	pilih dengan kotak (Shift menambah)
+Double-click a road	Klik dua kali jalan
+select all of it	pilih seluruhnya
+turn the object	putar objek
+brush size	ukuran kuas
+stop / deselect	berhenti / batalkan pilihan
+Unsaved changes	Perubahan belum disimpan
+The map has changes that are not saved. Save them first?	Peta punya perubahan yang belum disimpan. Simpan dulu?
+Don't save	Jangan simpan
+Assets	Aset
+All	Semua
+Picture size	Ukuran gambar
+Shapes…	Bentuk…
+Close (B)	Tutup (B)
+Scenery objects	Objek pemandangan
+Splines (roads, tracks…)	Spline (jalan, rel…)
+Favourite on / off	Favorit hidup / mati
+content folder (mod, import, own)	folder konten (mod, impor, milik sendiri)
+OMSI 2	OMSI 2
+width	lebar
+Build with it	Bangun dengan ini
+Place it	Letakkan
+PBR material…	Material PBR…
+Delete…	Hapus…
+Not seen in the game (a helper).	Tidak terlihat di game (pembantu).
+Delete the asset?	Hapus aset?
+Its folder goes into openMapper's bin in the content folder (openMapper\\bin), from where it can be put back by hand. Maps that use it show it missing.	Foldernya dipindah ke bin openMapper di folder konten (openMapper\\bin), dari sana dapat dikembalikan secara manual. Peta yang memakainya akan menampilkannya hilang.
+Calendar and place	Kalender dan lokasi
+Place and time	Lokasi dan waktu
+Holidays	Hari libur
+Number plates	Plat nomor
+Latitude	Lintang
+Longitude	Bujur
+Time zone	Zona waktu
+Where the sun stands and when it rises and sets come from here.	Posisi matahari serta waktu terbit dan terbenamnya berasal dari sini.
+Summer time	Waktu musim panas
+years	tahun
+none: the clocks are never put forward	tidak ada: jam tidak pernah dimajukan
+EU rules for these years	Aturan UE untuk tahun-tahun ini
+Last Sunday of March to last Sunday of October, replacing what is set for these years	Minggu terakhir Maret sampai Minggu terakhir Oktober, menggantikan yang diatur untuk tahun-tahun ini
+None	Tidak ada
+Year	Tahun
+entries	entri
+Public holidays run Sunday's timetable; school holidays the holiday one.	Hari libur nasional memakai jadwal hari Minggu; libur sekolah memakai jadwal libur.
+Public holidays	Hari libur nasional
+Add a holiday	Tambah hari libur
+Holiday	Hari libur
+School holidays	Libur sekolah
+Ends before it starts	Berakhir sebelum mulai
+Add school holidays	Tambah libur sekolah
+The AI's cars carry these, one a line.	Mobil AI memakai ini, satu per baris.
+X: a letter, 9: a digit	X: huruf, 9: angka
+Make	Buat
+Replaces the list with plates of the pattern	Mengganti daftar dengan plat berpola ini
+plates	plat
+The scenario's AI lists are written, groups changed:	Daftar AI skenario ditulis, grup diubah:
+Could not write the scenario	Tidak dapat menulis skenario
+The scenario's timetable is written, files:	Jadwal skenario ditulis, file:
+Back in the scenario:	Kembali di skenario:
+The scenario's things are on the map:	Isi skenario ada di peta:
+what you place now is the scenario's too	yang Anda letakkan sekarang juga milik skenario
+Editing the scenario	Mengedit skenario
+Done	Selesai
+Chrono scenarios	Skenario kronologi
+How the map changes over the years: each scenario from its first day lays its own tiles, lines and tickets over the map. The view shows the map as on the day chosen here; what you edit is always the map itself.	Bagaimana peta berubah dari tahun ke tahun: tiap skenario sejak hari pertamanya menaruh tile, jalur, dan tiket sendiri di atas peta. Tampilan menunjukkan peta pada hari yang dipilih di sini; yang Anda edit selalu peta itu sendiri.
+Show the map as on	Tampilkan peta pada
+Today	Hari ini
+Active on that day:	Aktif pada hari itu:
+New scenario's name	Nama skenario baru
+New scenario	Skenario baru
+A scenario starting on the day shown, after the others	Skenario yang dimulai pada hari yang ditampilkan, setelah yang lain
+From	Dari
+To	Sampai
+for good	selamanya
+Own tickets	Tiket sendiri
+Own money	Uang sendiri
+the map's	milik peta
+Takes off	Mencabut
+What changes (shown where the date is chosen)	Yang berubah (terlihat di tempat tanggal dipilih)
+From its first day, the selection in the view:	Sejak hari pertamanya, pilihan di tampilan:
+appears	muncul
+Taken out of the map into the scenario: it is there from the scenario's first day on (place it first, then press this)	Dikeluarkan dari peta ke skenario: ada sejak hari pertama skenario (letakkan dulu, lalu tekan ini)
+is gone	hilang
+Stays in the map, gone from the scenario's first day on	Tetap di peta, hilang sejak hari pertama skenario
+becomes	menjadi
+its texts become	teksnya menjadi
+Write	Tulis
+Its path rules from that day	Aturan jalurnya sejak hari itu
+Add a rule	Tambah aturan
+Written into the scenario at once (undo does not take it out of the scenario).	Langsung ditulis ke skenario (urungkan tidak mengeluarkannya dari skenario).
+What it changes	Yang diubahnya
+into the map	ke peta
+Out of the scenario into the map itself: there on every day	Dari skenario ke peta itu sendiri: ada di setiap hari
+Take it out of the scenario	Keluarkan dari skenario
+new texts	teks baru
+rules	aturan
+Nothing yet.	Belum ada.
+Its own things are on the map: select, move, change and place as usual. The map's own things stay the map's.	Isinya ada di peta: pilih, geser, ubah, dan letakkan seperti biasa. Isi peta sendiri tetap milik peta.
+Done: back into the scenario	Selesai: kembali ke skenario
+Edit its own things on the map	Edit isinya di peta
+What it brings in is put on the map to work with as with anything else; Done writes it back (undo starts afresh)	Yang dibawanya ditaruh di peta untuk dikerjakan seperti lainnya; Selesai menuliskannya kembali (riwayat urungkan dimulai ulang)
+The Lines window shows its timetable (the map's with its own laid over): lines, trips and tours edited there are the scenario's; a line of the map taken away is taken off from its day.	Jendela Jalur menampilkan jadwalnya (jadwal peta dengan miliknya di atas): jalur, perjalanan, dan dinas yang diedit di sana milik skenario; jalur peta yang dicabut dicabut sejak harinya.
+Done with its timetable	Selesai dengan jadwalnya
+Edit its timetable	Edit jadwalnya
+Its own lines, trips and tours in the Lines window; Done writes only what differs from the map's (undo starts afresh)	Jalur, perjalanan, dan dinas miliknya di jendela Jalur; Selesai menulis hanya yang berbeda dari peta (riwayat urungkan dimulai ulang)
+The Traffic window shows its AI lists (the map's with its own added): vehicles and type groups added there, and a depot's own depot file, are the scenario's from its day.	Jendela Lalu lintas menampilkan daftar AI-nya (milik peta dengan miliknya ditambahkan): kendaraan dan grup jenis yang ditambahkan di sana, serta file depo sendiri, milik skenario sejak harinya.
+Done with its AI lists	Selesai dengan daftar AI-nya
+Edit its AI lists	Edit daftar AI-nya
+Vehicles it adds to the groups and depots (OMSI's ailists_#upd.cfg); taking one away is the map's own business	Kendaraan yang ditambahkannya ke grup dan depo (ailists_#upd.cfg OMSI); mencabutnya urusan peta sendiri
+Write the scenario	Tulis skenario
+Close	Tutup
+The map has no chrono scenarios.	Peta tidak punya skenario kronologi.
+from	dari
+to	sampai
+takes off	mencabut
+own tickets	tiket sendiri
+Its first day	Hari pertamanya
+Written into the scenario	Ditulis ke skenario
+Written into the scenario:	Ditulis ke skenario:
+Scenario written	Skenario ditulis
+The map as on	Peta pada
+scenarios:	skenario:
+Multiplayer	Multipemain
+Joining… (a big map takes a while to come)	Bergabung… (peta besar butuh waktu)
+Recover a conflicting edit…	Pulihkan suntingan yang bentrok…
+Recovered your edit; undo is available	Suntingan Anda dipulihkan; urungkan tersedia
+Edit one map together: one of you hosts it, the others join. Roads, objects, ground and paint are shared as they are made; the timetable, the traffic and the descriptions stay the host's, and the host saves the map. Everybody needs the same objects and splines installed.	Edit satu peta bersama: satu orang menghostingnya, yang lain bergabung. Jalan, objek, tanah, dan cat dibagikan saat dibuat; jadwal, lalu lintas, dan deskripsi tetap milik host, dan host yang menyimpan peta. Semua orang perlu memasang objek dan spline yang sama.
+Your name	Nama Anda
+Password	Kata sandi
+Host this map	Hosting peta ini
+Others on this network can join	Orang lain di jaringan ini dapat bergabung
+Others anywhere can join (a free Cloudflare tunnel, nothing to set up on the router)	Orang lain di mana saja dapat bergabung (terowongan Cloudflare gratis, tanpa pengaturan router)
+Port	Port
+Over the internet the password must have at least this many letters:	Lewat internet kata sandi harus minimal sepanjang ini (huruf):
+No password: anybody who reaches this computer's port can join and change the whole map.	Tanpa kata sandi: siapa pun yang mencapai port komputer ini dapat bergabung dan mengubah seluruh peta.
+Ask for a password after all	Tetap minta kata sandi
+Host without a password? Anybody on this network who finds the port can join and change the whole map.	Hosting tanpa kata sandi? Siapa pun di jaringan ini yang menemukan port dapat bergabung dan mengubah seluruh peta.
+Yes, without a password	Ya, tanpa kata sandi
+No	Tidak
+Type a password the others will need.	Ketik kata sandi yang akan dibutuhkan orang lain.
+Host without a password…	Hosting tanpa kata sandi…
+Host	Jadi host
+Open a map, type a name and a password first	Buka peta, ketik nama dan kata sandi dulu
+Join a map	Gabung ke peta
+The map open now has unsaved changes: joining closes it. Save it first.	Peta yang terbuka punya perubahan belum disimpan: bergabung akan menutupnya. Simpan dulu.
+You host this map. Give the others one of these:	Anda host peta ini. Berikan salah satu ini ke yang lain:
+On this network the connection is not encrypted: somebody listening in can see the map, and from what they catch try passwords on their own computer. Use a long password, or the internet tunnel (encrypted).	Di jaringan ini koneksi tidak dienkripsi: orang yang menyadap dapat melihat peta, dan dari yang ditangkap mencoba kata sandi di komputernya sendiri. Pakai kata sandi panjang, atau terowongan internet (terenkripsi).
+Everybody who joins can change the whole map.	Siapa pun yang bergabung dapat mengubah seluruh peta.
+Opening the Cloudflare tunnel… (fetched the first time)	Membuka terowongan Cloudflare… (diunduh pertama kali)
+internet	internet
+Waiting for Cloudflare's address…	Menunggu alamat dari Cloudflare…
+The Cloudflare tunnel could not be opened (no cloudflared, or no internet). The LAN addresses still work.	Terowongan Cloudflare tidak dapat dibuka (tidak ada cloudflared, atau tidak ada internet). Alamat LAN tetap berfungsi.
+You joined this map. The host saves it.	Anda bergabung ke peta ini. Host yang menyimpannya.
+Everything of yours is with the others	Semua milik Anda sudah ada di yang lain
+Sending your edits…	Mengirim suntingan Anda…
+In the session	Dalam sesi
+Say something…	Tulis sesuatu…
+Leave	Keluar
+Knife (K): a click on a road cuts it there, as often as you like; the pieces' lengths shown at the cursor, on whole grid steps with grid snapping on · right-click or Esc: off	Pisau (K): klik pada jalan memotongnya di situ, sebanyak yang Anda mau; panjang bagian terlihat di kursor, dalam langkah kisi utuh bila snapping kisi aktif · klik kanan atau Esc: mati
+The angle step: what snapping comes to and what R turns by	Langkah sudut: ke mana snapping mengarah dan seberapa R memutar
+Angle	Sudut
+Snap headings to the angle step	Snap arah ke langkah sudut
+Grid	Kisi
+Snap positions to the grid	Snap posisi ke kisi
+Click two points to measure the distance and gradient between them (U) · right-click: off	Klik dua titik untuk mengukur jarak dan kemiringan di antaranya (U) · klik kanan: mati
+Auto-Terrain	Auto-Medan
+What you build follows the ground: roads, paths and tracks take its height (off: they run level from where they start). Only what is built from now on; nothing already there changes	Yang Anda bangun mengikuti tanah: jalan, jalur, dan rel mengambil ketinggiannya (mati: rata dari titik awal). Hanya yang dibangun mulai sekarang; yang sudah ada tidak berubah
+Auto-Switch	Auto-Wesel
+Branching a track off another makes a switch there	Mencabangkan rel dari rel lain membuat wesel di situ
+Auto-Junction	Auto-Persimpangan
+Auto-Align	Auto-Sejajar
+Line objects up with the nearest road (Shift: put it freely)	Sejajarkan objek dengan jalan terdekat (Shift: letakkan bebas)
+Selection	Pilihan
+A click on one of it selects all of it, Ctrl + click one alone	Klik salah satunya memilih semuanya, Ctrl + klik hanya satu
+Keep these together: a click on one selects all, a drag moves all (Ctrl+G)	Pertahankan bersama: klik satu memilih semua, seret memindahkan semua (Ctrl+G)
+Apply	Terapkan
+Turn	Putar
+Level the ground under them	Ratakan tanah di bawahnya
+Each one's outline made level with its foot, blending into the ground 3 m round it	Bentuk tiap objek diratakan setinggi dasarnya, menyatu ke tanah 3 m di sekitarnya
+Make every object	Jadikan semua objek
+The object chosen in the Objects tool's catalogue	Objek yang dipilih di katalog alat Objek
+Random headings	Arah acak
+Every selected object turned its own random way (trees, bushes, rocks)	Tiap objek terpilih diputar ke arah acaknya sendiri (pohon, semak, batu)
+Along the road	Sepanjang jalan
+Each turned the way the nearest road runs beside it	Masing-masing diputar sesuai arah jalan terdekat di sampingnya
+Turned:	Diputar:
+All like this one	Semua seperti ini
+Every selected object takes the heading of the one in the properties	Semua objek terpilih mengambil arah objek yang ada di properti
+Make every road	Jadikan semua jalan
+The road type chosen in the Roads tool's catalogue	Jenis jalan yang dipilih di katalog alat Jalan
+Lay them on the ground	Taruh di tanah
+Reverse their direction	Balikkan arahnya
+Even slope along them	Kemiringan rata sepanjangnya
+One chain of roads: from the height at one end to that at the other, evenly (a bridge, a ramp)	Satu rantai jalan: dari ketinggian di satu ujung ke ketinggian di ujung lain, merata (jembatan, tanjakan)
+Edit its AI lanes	Edit lajur AI-nya
+Its lanes become AI paths of their own (the same lines, the same way) that the Logic tool's Edit existing bends, moves and deletes. The road keeps its look.	Lajurnya menjadi jalur AI tersendiri (garis yang sama, arah yang sama) yang dapat dibengkokkan, dipindah, dan dihapus oleh Edit yang ada pada alat Logika. Tampilan jalan tetap.
+Ends (joined roads follow)	Ujung (jalan tersambung mengikuti)
+height	ketinggian
+gradient	kemiringan
+cant	superelevasi
+Banking across the road, %: positive lowers its right side (into a right bend)	Kemiringan melintang jalan, %: positif menurunkan sisi kanan (di tikungan kanan)
+End	Akhir
+Even slope end to end	Kemiringan rata dari ujung ke ujung
+Both gradients to the straight climb between the ends' heights	Kedua kemiringan mengikuti tanjakan lurus di antara ketinggian ujung
+Speed limit, km/h	Batas kecepatan, km/h
+Traffic density ×	Kepadatan lalu lintas ×
+Priority	Prioritas
+Trucks (0: none)	Truk (0: tidak ada)
+No cars	Tanpa mobil
+Buses only	Hanya bus
+For the AI and the player on one path (lane) of it, counted from 0: the view shows their numbers	Untuk AI dan pemain pada satu jalur (lajur)-nya, dihitung dari 0: nomornya terlihat di tampilan
+Path (lane) number	Nomor jalur (lajur)
+Hanging on it	Menggantung padanya
+Points to hang objects on:	Titik untuk menggantung objek:
+Select it	Pilih
+Hang	Gantung
+Choose an object in the Objects catalogue first	Pilih objek di katalog Objek dulu
+A fence, a row of houses, an avenue: the selection copied again and again, a step on each time	Pagar, deretan rumah, jalan berpohon: pilihan disalin berulang kali, tiap kali satu langkah
+Copies	Salinan
+Step	Langkah
+Turn each	Putar tiap
+Rows	Baris
+More than one: a grid (an orchard, a car park), each row a row step on	Lebih dari satu: kisi (kebun buah, tempat parkir), tiap baris satu langkah baris
+Row step	Langkah baris
+Tilted to the ground under it, the way it slopes forward and to the side (a fence, a bench or a shed on a hillside)	Dimiringkan mengikuti tanah di bawahnya, ke depan dan ke samping (pagar, bangku, atau gudang di lereng)
+Heights along the ground again, smoothed so it climbs a hill rather than every bump (after shaping the ground or laying a height map over it); where a road not selected joins, its height is kept	Ketinggian mengikuti tanah lagi, dihaluskan agar menaiki bukit, bukan tiap gundukan (setelah membentuk tanah atau menaruh peta ketinggian di atasnya); di tempat jalan yang tidak dipilih bersambung, ketinggiannya dipertahankan
+Each starts where it ended: the traffic on it goes the other way (a one-way street, a track's direction), the road itself stays where it is	Masing-masing mulai di tempat ia berakhir: lalu lintas di atasnya berbalik arah (jalan satu arah, arah rel), jalannya sendiri tetap di tempat
+A second track or the other carriageway: the selected splines copied alongside, bends kept exact, linked as they are	Rel kedua atau jalur seberang: spline terpilih disalin di sampingnya, tikungan tepat, tertaut seperti aslinya
+To the left	Ke kiri
+To the right	Ke kanan
+Left and right of the way the road runs (its arrows with AI lanes shown)	Kiri dan kanan menurut arah jalan (panahnya saat lajur AI ditampilkan)
+For trams and electric trains: a wire spline laid on the selected track, piece for piece and linked (its height is the wire spline's own); the masts go in with Objects along the road	Untuk trem dan kereta listrik: spline kabel diletakkan di atas rel terpilih, bagian per bagian dan tertaut (ketinggiannya milik spline kabel); tiang dipasang dengan Objek di sepanjang jalan
+No wire spline installed (one whose name says Fahrdraht, Oberleitung or wire)	Tidak ada spline kabel terpasang (yang namanya memuat Fahrdraht, Oberleitung, atau wire)
+Lay it	Pasang
+Wire pieces laid:	Bagian kabel dipasang:
+Paint the ground along it	Cat tanah di sepanjangnya
+Add a ground texture in the Paint tool first: the base ground is under everything	Tambahkan tekstur tanah di alat Cat dulu: tanah dasar ada di bawah semuanya
+Layer	Lapisan
+Where	Di mana
+beside it	di sampingnya
+under it too	juga di bawahnya
+Out from its edge	Dari tepinya
+Soft edge	Tepi lembut
+A gravel verge, dirt by a track, grass along a path: the brush of the Paint tool touches it up afterwards	Bahu kerikil, tanah di dekat rel, rumput di sepanjang jalan setapak: kuas alat Cat dapat merapikannya kemudian
+Beside	Di samping
+Lean with the road	Miring bersama jalan
+Each object leans with the road's gradient and banking (bays and arrows on the road); off, it stands upright	Tiap objek miring mengikuti kemiringan dan superelevasi jalan (teluk dan panah di jalan); mati: berdiri tegak
+A text the row's objects show (@ starts a new line)	Teks yang ditampilkan objek dalam deretan (@ memulai baris baru)
+Object:	Objek:
+Pick an object (a lamp, a tree, a bollard) in the Objects tool's catalogue	Pilih objek (lampu, pohon, bolar) di katalog alat Objek
+Right of the road's direction; negative: left	Di kanan arah jalan; negatif: kiri
+Free at start / end	Kosong di awal / akhir
+Both sides	Kedua sisi
+Place along the road	Letakkan di sepanjang jalan
+Remove all rows	Hapus semua deretan
+Roundabout: click the centre, then the ring	Bundaran: klik pusat, lalu cincinnya
+A one-way ring of the chosen road type (pick a one-way road); roads inside are cut back to it and joined with junctions	Cincin satu arah dari jenis jalan terpilih (pilih jalan satu arah); jalan di dalam dipotong sampai cincin dan disambung dengan persimpangan
+Keep the height (bridge, embankment)	Pertahankan ketinggian (jembatan, tanggul)
+An even gradient from end to end, the ground left as it is; the rise to the end can be typed while drawing. Pillars: select the road and put them along it as objects.	Kemiringan rata dari ujung ke ujung, tanah dibiarkan; kenaikan ke ujung dapat diketik saat menggambar. Pilar: pilih jalan dan letakkan di sepanjangnya sebagai objek.
+Rise	Kenaikan
+Shift: straight · Enter: build	Shift: lurus · Enter: bangun
+Junction	Persimpangan
+Traffic lights	Lampu lalu lintas
+Lights need three roads or more	Lampu butuh tiga jalan atau lebih
+Main road green	Hijau jalan utama
+Side roads green	Hijau jalan samping
+The main road is the pair of roads most in line; red-yellow 2 s, yellow 3 s, 2 s all red between	Jalan utama adalah pasangan jalan yang paling sejajar; merah-kuning 2 dtk, kuning 3 dtk, 2 dtk merah semua di antaranya
+Zebra crossings	Penyeberangan zebra
+Road	Jalan
+Build it again	Bangun ulang
+Makes the plate, its kerbs and lanes again for the roads as they are now	Membuat ulang pelat, tepi jalan, dan lajurnya untuk jalan seperti sekarang
+Linked objects	Objek tertaut
+An object can take its state from another ([varparent]): a signal head shows a light of its crossing's program, a stop's display its stop.	Objek dapat mengambil statusnya dari objek lain ([varparent]): lampu sinyal menampilkan cahaya program persimpangannya, layar halte menampilkan haltenya.
+Takes its state from	Mengambil status dari
+Select it: IDCode	Pilih: IDCode
+Takes its state from an object that is gone: IDCode	Mengambil status dari objek yang sudah hilang: IDCode
+Takes its state from nothing	Tidak mengambil status dari apa pun
+Light	Lampu lalu lintas
+Its light is not one of the crossing's: it stays dark	Cahayanya bukan salah satu milik persimpangan: tetap mati
+That object runs no traffic lights: link the head to a crossing with a light program	Objek itu tidak menjalankan lampu lalu lintas: tautkan kepala lampu ke persimpangan yang punya program lampu
+A signal head: link it to its crossing to have it light	Kepala lampu sinyal: tautkan ke persimpangannya agar menyala
+Click the object in the view… (Esc)	Klik objek di tampilan… (Esc)
+Link to another…	Tautkan ke yang lain…
+Link to an object…	Tautkan ke objek…
+Then click the object it is to take its state from (a crossing for a signal head)	Lalu klik objek tempat ia mengambil statusnya (persimpangan untuk kepala lampu)
+Taking their state from it:	Mengambil status darinya:
+light	cahaya
+Click the object it takes its state from	Klik objek tempat ia mengambil statusnya
+stop	halte
+Find in map	Cari di peta
+Name, file, IDCode, stop or x, y	Nama, file, IDCode, halte, atau x, y
+The point	Titik
+Spline	Spline
+Object	Objek
+Nothing on the map has this IDCode.	Tidak ada apa pun di peta dengan IDCode ini.
+kinds	jenis
+on the map	di peta
+Next	Berikutnya
+Select the next one and go there	Pilih berikutnya dan ke sana
+Every one of these becomes the road type chosen in the Roads tool	Semua ini menjadi jenis jalan yang dipilih di alat Jalan
+Every one of these becomes the object chosen in the catalogue	Semua ini menjadi objek yang dipilih di katalog
+More: type to narrow the list	Masih ada: ketik untuk mempersempit daftar
+Replaced:	Diganti:
+Satellite overlay	Lapisan satelit
+Satellite and own pictures	Satelit dan gambar sendiri
+Click a tile to see its overlay here.	Klik tile untuk melihat lapisannya di sini.
+Show the overlay	Tampilkan lapisan
+opacity	opasitas
+Load satellite imagery	Muat citra satelit
+Place the map on the Earth first (Satellite and terrain…)	Tempatkan peta di Bumi dulu (Satelit dan medan…)
+Load image file…	Muat file gambar…
+Your own picture for this tile (a scan, a screenshot): or drop it on the window	Gambar Anda sendiri untuk tile ini (pindaian, tangkapan layar): atau jatuhkan ke jendela
+Load the OpenStreetMap map	Muat peta OpenStreetMap
+OpenStreetMap map for all tiles	Peta OpenStreetMap untuk semua tile
+The map as openstreetmap.org draws it (streets with their names, houses, water, green, stop signs), drawn sharp from OpenStreetMap data and laid on the tile in place of a satellite picture: to build roads and houses over by eye. Nothing is generated from it.	Peta seperti yang digambar openstreetmap.org (jalan dengan namanya, rumah, air, hijauan, tanda halte), digambar tajam dari data OpenStreetMap dan ditaruh di tile menggantikan gambar satelit: untuk membangun jalan dan rumah di atasnya dengan mata. Tidak ada yang dibuat darinya.
+own picture	gambar sendiri
+for an earlier placement	untuk penempatan sebelumnya
+not kept with the map	tidak disimpan bersama peta
+, partly coarser	, sebagian lebih kasar
+nothing	tidak ada
+Place the map on the Earth first.	Tempatkan peta di Bumi dulu.
+Load terrain heights	Muat ketinggian medan
+Done:	Selesai:
+with problems	dengan masalah
+A picture for the tiles	Gambar untuk tile
+Could not read the picture	Tidak dapat membaca gambar
+Could not copy the picture	Tidak dapat menyalin gambar
+The picture is on the tiles: line it up in Satellite and terrain, Own pictures.	Gambar sudah ada di tile: sejajarkan di Satelit dan medan, Gambar sendiri.
+Nothing found by that name.	Tidak ditemukan dengan nama itu.
+Some tiles had Google imagery: enter your Google key to see it again (it is not kept with the map).	Beberapa tile punya citra Google: masukkan kunci Google untuk melihatnya lagi (tidak disimpan bersama peta).
+Satellite and terrain	Satelit dan medan
+Find a place: a town, a street, an address… (Enter)	Cari tempat: kota, jalan, alamat… (Enter)
+Searching…	Mencari…
+Search © OpenStreetMap contributors	Pencarian © kontributor OpenStreetMap
+This map has world coordinates ([worldcoordinates]): it lies on the Earth by itself, its tiles are Web Mercator tiles.	Peta ini punya koordinat dunia ([worldcoordinates]): ia berada di Bumi dengan sendirinya, tile-nya adalah tile Web Mercator.
+Click on the map where the orange tile goes…	Klik pada peta tempat tile oranye diletakkan…
+Place the map here	Tempatkan peta di sini
+Then click on the map: the middle of the orange tile goes there	Lalu klik pada peta: bagian tengah tile oranye diletakkan di sana
+At the view's middle	Di tengah tampilan
+North turned	Putaran utara
+Orange tile	Tile oranye
+click the map to fly there in the view	klik peta untuk terbang ke sana di tampilan
+1. Find the place.  2. Press "Place the map here" and click on the map: the orange tile (the map's middle) goes there.	1. Cari tempat.  2. Tekan "Tempatkan peta di sini" lalu klik pada peta: tile oranye (tengah peta) diletakkan di sana.
+Imagery	Citra
+The sharpest here	Paling tajam di sini
+cm a pixel here	cm per piksel di sini
+checking…	memeriksa…
+is sharper here	lebih tajam di sini
+Sharper imagery may be had here with your own free key for Mapbox, MapTiler or Google (Keys below).	Citra lebih tajam mungkin tersedia di sini dengan kunci gratis Anda untuk Mapbox, MapTiler, atau Google (Kunci di bawah).
+Terms of use	Ketentuan penggunaan
+Zoom	Zoom
+the finest here	terhalus di sini
+Picture of a tile	Gambar tile
+every pixel of the source (up to 4096)	setiap piksel sumber (hingga 4096)
+Loaded at	Dimuat pada
+cm a pixel	cm per piksel
+Also load terrain heights	Muat juga ketinggian medan
+New tiles get imagery by themselves	Tile baru mendapat citra sendiri
+Load for all tiles	Muat untuk semua tile
+For the selected tile	Untuk tile terpilih
+Click a tile with the Tiles tool (7)	Klik tile dengan alat Tile (7)
+Terrain heights only	Hanya ketinggian medan
+of	dari
+tiles beside the loaded heights were not loaded: the ground steps at their edge.	tile di samping ketinggian termuat tidak dimuat: tanah bertingkat di tepinya.
+Fit their edges	Cocokkan tepinya
+Their edge takes the loaded heights, fading out 60 m into the tile	Tepinya mengambil ketinggian termuat, memudar 60 m ke dalam tile
+Leave them	Biarkan
+Terrain heights	Ketinggian medan
+Relative: the orange tile's mean height is 0 m	Relatif: ketinggian rata-rata tile oranye adalah 0 m
+Raise everything by	Naikkan semuanya sebesar
+Taken off:	Dikurangi:
+Measure again	Ukur ulang
+Terrain data attribution	Atribusi data medan
+Overlay on the ground	Lapisan di tanah
+Put the imagery into maps exported for sharing (check its licence first)	Sertakan citra dalam peta yang diekspor untuk dibagikan (periksa lisensinya dulu)
+Fit tile edges	Cocokkan tepi tile
+Keys for more sources (optional)	Kunci untuk sumber lain (opsional)
+Everything works without a key. With your own free key these may be sharper in some places; the key stays on this computer.	Semuanya berfungsi tanpa kunci. Dengan kunci gratis Anda sendiri, ini mungkin lebih tajam di beberapa tempat; kunci tetap di komputer ini.
+Google satellite (needs your API key)	Satelit Google (butuh kunci API Anda)
+get a key	dapatkan kunci
+In Google Cloud: make a project, enable the Map Tiles API, create an API key, paste it here. Google bills by use above its free amount.	Di Google Cloud: buat proyek, aktifkan Map Tiles API, buat kunci API, tempel di sini. Google menagih menurut pemakaian di atas jatah gratisnya.
+key	kunci
+Your own tile server	Server tile Anda sendiri
+URL	URL
+Attribution	Atribusi
+Finest zoom	Zoom terhalus
+Kind	Jenis
+XYZ / WMTS tiles	tile XYZ / WMTS
+Terrarium heights	ketinggian Terrarium
+{z} {x} {y} are filled in; a WMS gets {bbox} (EPSG:3857) and {width} {height}; {key} is your key.	{z} {x} {y} diisi; WMS mendapat {bbox} (EPSG:3857) serta {width} {height}; {key} adalah kunci Anda.
+Add	Tambah
+Own pictures	Gambar sendiri
+A scan, a screenshot, an old plan: laid on tiles and lined up by eye. No place on the Earth needed.	Pindaian, tangkapan layar, denah lama: ditaruh di tile dan disejajarkan dengan mata. Tidak perlu lokasi di Bumi.
+Tiles from	Tile dari
+Load image file over these tiles…	Muat file gambar ke tile ini…
+Turn left 90°	Putar kiri 90°
+Turn right 90°	Putar kanan 90°
+mirror left-right	cermin kiri-kanan
+mirror top-bottom	cermin atas-bawah
+Reset	Setel ulang
+Your own pictures	Gambar Anda sendiri
+of these tiles have your own pictures. Replace them with satellite imagery?	dari tile ini punya gambar Anda sendiri. Ganti dengan citra satelit?
+Replace them	Ganti
+Keep my pictures	Pertahankan gambar saya
+Groups for other maps	Grup untuk peta lain
+A selection kept under a name, to put down again in any map (a stop with its shelter and signs, a crossing with its lights)	Pilihan yang disimpan dengan nama, untuk diletakkan lagi di peta mana pun (halte dengan peneduh dan rambunya, persimpangan dengan lampunya)
+Keep the selection	Simpan pilihan
+Group kept	Grup disimpan
+Select what to keep in the view first.	Pilih dulu yang akan disimpan di tampilan.
+No groups yet.	Belum ada grup.
+thing	item
+things	item
+Delete the group (to openMapper's bin)	Hapus grup (ke bin openMapper)
+Use	Pakai
+Into the clipboard: Ctrl+V puts it down at the cursor, as often as wanted	Ke clipboard: Ctrl+V meletakkannya di kursor, sebanyak yang diinginkan
+is in the clipboard: Ctrl+V puts it at the cursor	ada di clipboard: Ctrl+V meletakkannya di kursor
+The map's tiles: 300 m squares. Add more beside them with the Tiles tool.	Tile peta: persegi 300 m. Tambah lagi di sampingnya dengan alat Tile.
+A road	Jalan
+Roads tool: click where it starts, then where it ends. Click on a road's end to go on from it.	Alat Jalan: klik tempat mulai, lalu tempat berakhir. Klik ujung jalan untuk melanjutkannya.
+A bus stop by the road	Halte di tepi jalan
+Game logic > Bus stops: put one at the kerb, on the side the doors open. Name it on the right.	Logika game > Halte: letakkan di tepi jalan, di sisi pintu terbuka. Beri nama di kanan.
+A start point	Titik awal
+Game logic > Start points: where your bus appears, on a road, facing the way to drive.	Logika game > Titik awal: tempat bus Anda muncul, di jalan, menghadap arah berkendara.
+A line with a trip	Jalur dengan perjalanan
+Lines window: New line, New trip, then click the stops in order. The way is found along the roads.	Jendela Jalur: Jalur baru, Perjalanan baru, lalu klik halte berurutan. Rute dicari di sepanjang jalan.
+A tour with departures	Dinas dengan keberangkatan
+Lines window > Tours and times: New tour, then Fill from … to … .	Jendela Jalur > Dinas dan waktu: Dinas baru, lalu Isi dari … sampai … .
+Buses for the tours	Bus untuk dinas
+A depot the tours take their buses from (Tours: Add a depot, or Traffic and AI).	Depo tempat dinas mengambil busnya (Dinas: Tambah depo, atau Lalu lintas dan AI).
+Checked	Diperiksa
+Map > Check map: what would go wrong in the game, most of it put right with one click.	Peta > Periksa peta: apa yang akan salah di game, sebagian besar diperbaiki dengan satu klik.
+Saved	Tersimpan
+Ctrl+S. Maps are saved into openOMSI's content folder.	Ctrl+S. Peta disimpan ke folder konten openOMSI.
+A test drive	Uji kendara
+F5 saves and starts openOMSI on the map: pick line 1 and drive.	F5 menyimpan dan memulai openOMSI di peta: pilih jalur 1 dan berkendaralah.
+A map you can drive in service:	Peta yang bisa dikendarai dalam layanan:
+Show me	Tunjukkan
+Your stops stand away from the roads: a bus serves a stop within 15 m of its lane.	Halte Anda berdiri jauh dari jalan: bus melayani halte dalam 15 m dari lajurnya.
+A real place? Put the map on the Earth (Map > Satellite and terrain), then Map > From OpenStreetMap brings its streets, stops, lines and trees.	Tempat nyata? Taruh peta di Bumi (Peta > Satelit dan medan), lalu Peta > Dari OpenStreetMap membawa jalan, halte, jalur, dan pohonnya.
+Show this for new maps	Tampilkan ini untuk peta baru
+The map has no depot file.	Peta tidak punya file depo.
+Make one from the lines	Buat dari jalur
+The map has no trips yet (Map > Lines and timetable)	Peta belum punya perjalanan (Peta > Jalur dan jadwal)
+Empty one	Kosong
+New	Baru
+A new depot file from the map's lines	File depo baru dari jalur peta
+Delete this depot file	Hapus file depo ini
+The lines need	Jalur membutuhkan
+Add them	Tambahkan
+What is there stays as it is	Yang ada tetap seperti adanya
+No depot group uses it.	Tidak ada grup depo yang memakainya.
+Used by the depot	Dipakai depo
+Use it for every depot	Pakai untuk semua depo
+The AI's depot groups (Vehicle groups tab) take their buses' destinations from it	Grup depo AI (tab Grup kendaraan) mengambil tujuan busnya darinya
+Rename	Ganti nama
+not a usable name	nama tidak dapat dipakai
+The destination a bus shows on its way to and from the depot	Tujuan yang ditampilkan bus saat menuju dan dari depo
+Destinations	Tujuan
+Stops	Halte
+Routes	Rute
+nobody gets on	tidak ada yang naik
+Code	Kode
+another destination has this code	tujuan lain memakai kode ini
+As a trip's terminus is named in the timetable: the stop where everybody gets off	Seperti nama pemberhentian akhir perjalanan di jadwal: halte tempat semua turun
+Nobody gets on (service trip, empty sign)	Tidak ada yang naik (perjalanan dinas, papan kosong)
+Delete destination	Hapus tujuan
+Add destination	Tambah tujuan
+New destination	Tujuan baru
+As the timetable names the stop	Seperti nama halte di jadwal
+Delete stop	Hapus halte
+Add stop	Tambah halte
+line	jalur
+What the driver types: the line's number and two digits (7601: line 76, route 01)	Yang diketik pengemudi: nomor jalur dan dua digit (7601: jalur 76, rute 01)
+Line	Garis
+IBIS text	Teks IBIS
+Destination	Tujuan
+Stops in order	Halte berurutan
+Not in the Stops list: the displays have no texts for it	Tidak ada di daftar Halte: layar tidak punya teks untuknya
+Move up	Naik
+Move down	Turun
+Take out	Keluarkan
+Add a stop…	Tambah halte…
+Delete route	Hapus rute
+Add route	Tambah rute
+No routes: the IBIS knows the destinations' codes only. Add them from the lines above.	Tidak ada rute: IBIS hanya mengenal kode tujuan. Tambahkan dari jalur di atas.
+Winter with snow	Musim dingin bersalju
+Summer (dry)	Musim panas (kering)
+Jan	Jan
+Feb	Feb
+Mar	Mar
+Apr	Apr
+May	Mei
+Jun	Jun
+Jul	Jul
+Aug	Agu
+Sep	Sep
+Oct	Okt
+Nov	Nov
+Dec	Des
+Map settings	Pengaturan peta
+Money	Uang
+Tickets	Tiket
+none: the map has no depot group (Traffic and AI)	tidak ada: peta tidak punya grup depo (Lalu lintas dan AI)
+Years	Tahun
+Year offset	Pergeseran tahun
+Added to today's year when the game starts at the real date (Berlin-Spandau: -25 for the 1980s)	Ditambahkan ke tahun sekarang saat game dimulai pada tanggal nyata (Berlin-Spandau: -25 untuk tahun 1980-an)
+Repair time	Waktu perbaikan
+ min	 mnt
+Rail	Rel
+real rail (trams and trains follow their tracks' switches)	rel nyata (trem dan kereta mengikuti wesel relnya)
+Helper	Pembantu
+dynamic helper active (the original editor's map option, kept as it is)	pembantu dinamis aktif (opsi peta editor asli, dibiarkan apa adanya)
+Seasons	Musim
+Summer where none is set. The days count from 1 January.	Musim panas bila tidak ada yang ditetapkan. Hari dihitung dari 1 Januari.
+Add a season	Tambah musim
+A season ends before it starts	Musim berakhir sebelum mulai
+Nothing selected	Tidak ada yang dipilih
+Paste here	Tempel di sini
+Cut the road here	Potong jalan di sini
+Select all like it	Pilih semua yang serupa
+Keep for other maps…	Simpan untuk peta lain…
+Its ground, painting, water, objects and roads, put beside or into this map. Lines, timetable and AI lists stay with the other map.	Tanah, cat, air, objek, dan jalannya, ditaruh di samping atau ke dalam peta ini. Jalur, jadwal, dan daftar AI tetap di peta lain.
+Choose a map…	Pilih peta…
+Other…	Lainnya…
+A map to take tiles from (its global.cfg)	Peta tempat mengambil tile (global.cfg-nya)
+Grey: this map · orange: the tiles to add (click to take one or leave it) · red: on a tile of this map, left out	Abu-abu: peta ini · oranye: tile yang ditambahkan (klik untuk mengambil atau membiarkan) · merah: di tile peta ini, dilewati
+Move:	Geser:
+west	barat
+east	timur
+north	utara
+south	selatan
+Raise it by	Naikkan sebesar
+Its ground, water, roads and objects at a height of their own	Tanah, air, jalan, dan objeknya pada ketinggian sendiri
+Ease the ground where the maps meet	Haluskan tanah di tempat peta bertemu
+Added	Ditambahkan
+tiles from the other map	tile dari peta lain
+Cube	Kubus
+Plane	Bidang
+Circle	Lingkaran
+Triangle	Segitiga
+Triangular prism	Prisma segitiga
+Wedge	Baji
+Corner wedge	Baji sudut
+Pyramid	Piramida
+Sphere	Bola
+Icosphere	Ikosfer
+Cylinder	Silinder
+Cone	Kerucut
+Torus	Torus
+Tube	Tabung
+Capsule	Kapsul
+Stairs	Tangga
+Arch	Lengkung
+Make one and put it on the map with a click (each one can then be edited, scaled, cut and joined)	Buat satu dan letakkan di peta dengan klik (lalu masing-masing dapat diedit, diskalakan, dipotong, dan digabung)
+Array	Array
+Mirror	Cermin
+Solidify	Solidify
+Subdivision surface	Subdivision surface
+Decimate	Decimate
+Triangulate	Triangulate
+Displace	Displace
+Wireframe	Wireframe
+Screw	Screw
+Simple deform	Simple deform
+Cast	Cast
+Weld	Weld
+Edge split	Edge split
+Boolean	Boolean
+Follow the ground	Ikuti tanah
+Count	Jumlah
+Relative	Relatif
+Offset	Offset
+Merge touching ends	Gabungkan ujung bersentuhan
+Distance	Jarak
+Cut away the other side first	Potong sisi lain dulu
+Weld at the mirror	Las di cermin
+Thickness	Ketebalan
+Close the rim	Tutup tepi
+Width	Lebar
+Segments	Segmen
+Levels	Tingkat
+Smooth (Catmull-Clark)	Haluskan (Catmull-Clark)
+Factor	Faktor
+Repeat	Pengulangan
+Seed	Seed
+Along the normals	Sepanjang normal
+Steps	Langkah
+Axis	Sumbu
+Twist	Puntir
+Bend	Tekuk
+Taper	Runcing
+Stretch	Regang
+Amount	Jumlah
+Box	Kotak
+Difference	Selisih
+With the part	Dengan bagian
+Tip: hide the cutting part (its eye in the list) so only the cut shows	Tips: sembunyikan bagian pemotong (matanya di daftar) agar hanya potongannya yang terlihat
+Above the ground	Di atas tanah
+Every vertex follows the terrain under it (in the editor's view and the written files at the place it stands)	Setiap titik mengikuti medan di bawahnya
+Mesh (openMapper object)	Mesh (objek openMapper)
+Shared by	Dipakai oleh
+objects on the map: changes apply to all	objek di peta: perubahan berlaku untuk semuanya
+Make this one single	Jadikan yang ini tunggal
+Leave the edit mode (Tab)	Keluar dari mode edit (Tab)
+Edit the mesh (Tab)	Edit mesh (Tab)
+Write it as OBJ, glTF / GLB, FBX, Collada, USD, STL, PLY, 3MF, OFF, X or O3D	Tulis sebagai OBJ, glTF / GLB, FBX, Collada, USD, STL, PLY, 3MF, OFF, X, atau O3D
+Off: its height is kept above the ground under it	Mati: ketinggiannya dipertahankan di atas tanah di bawahnya
+Solid (collides)	Padat (bertabrakan)
+The part edited and given modifiers	Bagian yang diedit dan diberi modifier
+Shown (and written into the object)	Ditampilkan (dan ditulis ke objek)
+faces	permukaan
+Duplicate the part	Duplikat bagian
+Delete the part	Hapus bagian
+Add a shape as a part	Tambah bentuk sebagai bagian
+Separate parts into objects	Pisahkan bagian menjadi objek
+Each part becomes an object of its own, standing where it stood	Setiap bagian menjadi objek sendiri, di tempatnya semula
+Shape	Bentuk
+Modifiers	Modifier
+Make it part of the mesh	Jadikan bagian dari mesh
+Add a modifier	Tambah modifier
+Materials	Material
+Colour (multiplies the texture)	Warna (dikalikan dengan tekstur)
+Assign to selected faces	Tetapkan ke permukaan terpilih
+Choose…	Pilih…
+No texture	Tanpa tekstur
+Save as…	Simpan sebagai…
+PNG, JPEG, BMP, TGA, TIFF, WebP or DDS	PNG, JPEG, BMP, TGA, TIFF, WebP, atau DDS
+Transparency	Transparansi
+Opaque	Buram
+Cut out	Berlubang
+Blended	Campuran
+Glows	Bercahaya
+Light of its own: black for none	Cahaya sendiri: hitam berarti tidak ada
+Shine	Kilap
+Normal map	Peta normal
+ORM map	Peta ORM
+Night texture	Tekstur malam
+Light map	Light map
+Remove the material	Hapus material
+Add a material	Tambah material
+Import materials…	Impor material…
+From an .mtl, a glTF / GLB / FBX, or the pictures of one PBR material (base colour, normal, roughness, metal, AO...)	Dari .mtl, glTF / GLB / FBX, atau gambar satu material PBR (warna dasar, normal, kekasaran, logam, AO...)
+Lamps	Lampu
+Glow	Pendar
+Light on the ground	Cahaya di tanah
+Colour	Warna
+Reach	Jangkauan
+On	Hidup
+Always	Selalu
+At night	Di malam hari
+variable	variabel
+Seen from one side	Terlihat dari satu sisi
+Star	Bintang
+Facing	Menghadap
+Remove the lamp	Hapus lampu
+Add a glow	Tambah pendar
+A lamp's bulb, a lit sign: a glow seen at night	Bohlam lampu, papan bercahaya: pendar yang terlihat di malam hari
+Add light on the ground	Tambah cahaya di tanah
+The pool of light a street lamp throws at night	Genangan cahaya yang dilemparkan lampu jalan di malam hari
+Signal head, lamps	Kepala lampu sinyal, lampu
+Put it within 40 m of a crossing with a light program: it takes its light from it (or link it in its properties)	Letakkan dalam 40 m dari persimpangan dengan program lampu: ia mengambil cahayanya darinya (atau tautkan di propertinya)
+Bake	Bake
+Its textures and colours painted into one picture on a new UV map (one material: fewer draws in the game), with its own shadows and its lamps' night light if chosen	Tekstur dan warnanya dilukis ke satu gambar pada peta UV baru (satu material: lebih sedikit draw di game), dengan bayangan sendiri dan cahaya malam lampunya bila dipilih
+Ambient occlusion	Ambient occlusion
+How far its shadows reach	Seberapa jauh bayangannya
+Lamps' light at night (light map)	Cahaya lampu di malam hari (light map)
+The object's last change (Ctrl+Z in the edit mode)	Perubahan terakhir objek (Ctrl+Z di mode edit)
+Divisions X	Pembagian X
+Divisions Y	Pembagian Y
+Rings	Cincin
+Subdivisions	Subdivisi
+Bottom radius	Radius bawah
+Top radius	Radius atas
+Tube radius	Radius tabung
+Tube segments	Segmen tabung
+Outer radius	Radius luar
+Inner radius	Radius dalam
+Opening	Bukaan
+Wall	Dinding
+Mesh	Mesh
+A copy of this object's type of its own is made for it, with its meshes, materials and lamps to edit; the original stays as it is	Salinan jenis objek ini dibuat khusus untuknya, dengan mesh, material, dan lampu untuk diedit; aslinya tidak berubah
+As a mesh	Sebagai mesh
+Copy as an object	Salin sebagai objek
+An openMapper object of its shape beside it, to edit as a mesh (vertices, edges, faces)	Objek openMapper berbentuk sama di sampingnya, untuk diedit sebagai mesh (titik, tepi, permukaan)
+The same, the spline taken away (its lanes go with it)	Sama, spline dihapus (lajurnya ikut hilang)
+Splines as a mesh	Spline sebagai mesh
+Copy as one object	Salin sebagai satu objek
+Replace by one object	Ganti dengan satu objek
+Export the selection…	Ekspor pilihan…
+As meshes	Sebagai mesh
+Join into one object (Ctrl+J)	Gabung menjadi satu objek (Ctrl+J)
+All their parts in the one shown in the properties, the others gone	Semua bagiannya di objek yang ditampilkan di properti, yang lain dihapus
+Solid modelling (CSG): the object shown in the properties with the others	Pemodelan solid (CSG): objek yang ditampilkan di properti dengan yang lain
+Keep the cutting objects	Pertahankan objek pemotong
+Vertices	Titik
+Edges	Tepi
+Faces	Permukaan
+vertices	titik
+edges	tepi
+Selected	Dipilih
+X-ray: pick through the mesh	X-ray: pilih menembus mesh
+All (A)	Semua (A)
+None (Alt+A)	Tidak ada (Alt+A)
+Invert (Ctrl+I)	Balik (Ctrl+I)
+Linked (Ctrl+L)	Tertaut (Ctrl+L)
+More	Lainnya
+Less	Kurang
+Click, Shift + click to add, drag on nothing for a box, a second click or Alt + click for a loop	Klik, Shift + klik untuk menambah, seret di tempat kosong untuk kotak, klik kedua atau Alt + klik untuk lingkar
+Change	Ubah
+Extrude (E)	Ekstrusi (E)
+Inset (I)	Inset (I)
+Bevel (Ctrl+B)	Bevel (Ctrl+B)
+Loop cut (Ctrl+R)	Potong lingkar (Ctrl+R)
+Point at an edge and press Ctrl+R	Arahkan ke tepi lalu tekan Ctrl+R
+Subdivide	Subdivisi
+Fill (F)	Isi (F)
+Bridge loops	Jembatani lingkar
+Connect (J)	Hubungkan (J)
+Poke	Poke
+Duplicate (Shift+D)	Duplikat (Shift+D)
+Split (Y)	Pisah (Y)
+Separate into an object (P)	Pisahkan jadi objek (P)
+Spin 360°	Putar 360°
+The selection turned round the object's up axis through its middle, in 12 steps	Pilihan diputar mengelilingi sumbu atas objek melalui tengahnya, dalam 12 langkah
+Smooth vertices	Haluskan titik
+Merge (M)	Gabung (M)
+At the middle	Di tengah
+At the first	Ke yang pertama
+At the last	Ke yang terakhir
+Collapse each piece	Ciutkan tiap bagian
+By distance (1 mm)	Menurut jarak (1 mm)
+Delete (X)	Hapus (X)
+Only faces	Hanya permukaan
+Dissolve vertices	Larutkan titik
+Dissolve edges	Larutkan tepi
+Dissolve faces	Larutkan permukaan
+Triangulate (Ctrl+T)	Triangulasi (Ctrl+T)
+Triangles to quads (Alt+J)	Segitiga ke segi empat (Alt+J)
+Shade smooth	Shade smooth
+Shade flat	Shade flat
+Flip normals (Alt+N)	Balik normal (Alt+N)
+Normals outward (Shift+N)	Normal ke luar (Shift+N)
+Mark seam	Tandai seam
+Clear seam	Hapus seam
+Mark sharp	Tandai tajam
+Clear sharp	Hapus tajam
+Adjust the last operation	Atur operasi terakhir
+Slide	Geser
+Cuts	Potongan
+UV map	Peta UV
+Unwrap	Unwrap
+By seams (conformal)	Menurut seam (konformal)
+Smart project	Proyeksi cerdas
+Cube projection (metres)	Proyeksi kubus (meter)
+Cylinder projection	Proyeksi silinder
+Sphere projection	Proyeksi bola
+Project from the view	Proyeksi dari tampilan
+Lightmap pack	Lightmap pack
+Close the UV editor	Tutup editor UV
+UV editor	Editor UV
+Faces of the selection (all, with none selected); mark seams on edges first for an unwrap by seams	Permukaan pilihan (semua, bila tidak ada yang dipilih); tandai seam pada tepi dulu untuk unwrap menurut seam
+Material of the selected faces	Material permukaan terpilih
+With lamps	Dengan lampu
+Street lamp	Lampu jalan
+A pole with a lamp that glows and lights the ground at night	Tiang dengan lampu yang menyala dan menerangi tanah di malam hari
+Signal head	Kepala lampu sinyal
+A traffic light of the lamps below that a crossing's light program drives	Lampu lalu lintas dari lampu di bawah yang digerakkan program lampu persimpangan
+Lamps:	Lampu:
+Picture, light, sound	Gambar, cahaya, suara
+Picture / pattern…	Gambar / pola…
+Choose a picture or a texture: it becomes an object you place, move, turn and scale like any other. Several repeats make a pattern	Pilih gambar atau tekstur: menjadi objek yang Anda letakkan, pindahkan, putar, dan skalakan seperti objek lain. Beberapa pengulangan membentuk pola
+Light source	Sumber cahaya
+A lamp that glows and lights the ground round it	Lampu yang menyala dan menerangi tanah di sekitarnya
+Sound source…	Sumber suara…
+Choose a sound file (.wav): it plays where you put the marker, as far as the radius carries; the marker shows in the editor only	Pilih file suara (.wav): diputar di tempat Anda meletakkan penanda, sejauh jangkauan radiusnya; penanda hanya terlihat di editor
+Picture width, m	Lebar gambar, m
+Repeats	Pengulangan
+on the ground	di tanah
+standing	berdiri
+Light colour	Warna cahaya
+Light reach, m	Jangkauan cahaya, m
+at night	di malam hari
+always	selalu
+Sound reach, m	Jangkauan suara, m
+Sound volume	Volume suara
+Overview: click or drag to move there · double-click: larger / smaller · M: hide	Ikhtisar: klik atau seret untuk pindah ke sana · klik dua kali: lebih besar / kecil · M: sembunyikan
+Name:	Nama:
+My town	Kota saya
+Description:	Deskripsi:
+What the map is, for the game's map list	Apa itu peta ini, untuk daftar peta game
+Size:	Ukuran:
+Ground height:	Ketinggian tanah:
+ m above sea level	 m di atas permukaan laut
+Traffic:	Lalu lintas:
+keeps right	lajur kanan
+keeps left	lajur kiri
+Busy:	Keramaian:
+cars	mobil
+passengers	Penumpang
+Years:	Tahun:
+year offset	pergeseran tahun
+Added to today's year when the game starts at the real date	Ditambahkan ke tahun sekarang saat game dimulai pada tanggal nyata
+Money:	Uang:
+Tickets:	Tiket:
+Seasons:	Musim:
+four, snowy winter	empat, musim dingin bersalju
+mild winter	musim dingin ringan
+summer only	hanya musim panas
+Rail:	Rel:
+trams and trains follow their tracks' switches	trem dan kereta mengikuti wesel relnya
+Ground texture (all tiles):	Tekstur tanah (semua tile):
+template	templat
+More ground layers are painted later (Paint tool); the map's settings can all be changed in Map > Map settings.	Lapisan tanah lain dicat nanti (alat Cat); semua pengaturan peta dapat diubah di Peta > Pengaturan peta.
+Create	Buat
+as the template	seperti templat
+ways	jalur
+bus routes downloaded	rute bus diunduh
+not had:	tidak didapat:
+The streets of the map's place built as roads with junctions where they meet, its bus stops, lines, trees and woods. Best on tiles with no roads yet: roads lying on ones the map has are left out.	Jalan di lokasi peta dibangun sebagai jalan dengan persimpangan di tempat bertemu, beserta halte, jalur, pohon, dan hutannya. Terbaik di tile tanpa jalan: jalan di atas jalan yang sudah ada di peta dilewati.
+The map does not lie on the Earth yet: place it in Satellite and terrain (Map menu, I) first.	Peta belum berada di Bumi: tempatkan di Satelit dan medan (menu Peta, I) dulu.
+Load the terrain heights first (Satellite and terrain): the roads follow the ground as it is when they are built.	Muat ketinggian medan dulu (Satelit dan medan): jalan mengikuti tanah seperti saat dibangun.
+Download for the map's tiles	Unduh untuk tile peta
+bus routes	rute bus
+trees	pohon
+buildings	bangunan
+water	air
+Downloading…	Mengunduh…
+no type chosen	jenis belum dipilih
+Use the chosen	Pakai yang dipilih
+One-way roads	Jalan satu arah
+Each carriageway of a dual road and one-way streets: with a one-way road type they lie side by side as they should; with none chosen they get their kind's	Setiap jalur jalan terbelah dan jalan satu arah: dengan jenis jalan satu arah keduanya berdampingan sebagaimana mestinya; tanpa pilihan, memakai jenis sesuai tipenya
+as their kind	sesuai tipenya
+no stop object	tidak ada objek halte
+The stop chosen in Game logic > Bus stops	Halte yang dipilih di Logika game > Halte
+Bus lines	Jalur bus
+Each bus route through two or more of the map's stops a trip of its line, the way found along the roads; a tour from 06:00 to 22:00 for each new line	Setiap rute bus melalui dua halte peta atau lebih menjadi perjalanan jalurnya, rute dicari di sepanjang jalan; dinas pukul 06:00 sampai 22:00 untuk tiap jalur baru
+Trees and woods	Pohon dan hutan
+Single trees, rows of them and woods, planted with the plant mix (Objects tool > Plant brush) or the tree chosen; none on a road	Pohon tunggal, deretan, dan hutan, ditanam dengan campuran tanaman (alat Objek > Kuas tanaman) atau pohon yang dipilih; tidak di jalan
+no plants chosen	tanaman belum dipilih
+kinds of plants	jenis tanaman
+apart in woods	jarak di hutan
+Buildings	Bangunan
+Each outline filled with the model of the folder chosen whose ground plan comes nearest, its front to the nearest road; an outline no model fits is left out	Setiap garis tepi diisi dengan model dari folder terpilih yang denah dasarnya paling mirip, depannya menghadap jalan terdekat; garis tepi yang tidak cocok dengan model dilewati
+no folder	tanpa folder
++ its folder	+ foldernya
+Add the folder of the object chosen in the catalogue (Buildings_MC, …)	Tambah folder objek yang dipilih di katalog (Buildings_MC, …)
+Lakes and rivers: the ground inside them lowered below the banks, and the tiles they lie on given water a little under the banks' height (OMSI's water is one level for a tile: low ground elsewhere on it is flooded too)	Danau dan sungai: tanah di dalamnya diturunkan di bawah tepi, dan tile tempatnya berada diberi air sedikit di bawah ketinggian tepi (air OMSI satu tingkat per tile: tanah rendah lain di tile itu ikut tergenang)
+deep	dalam
+a road type (Roads tool), then "Use the chosen"	jenis jalan (alat Jalan), lalu "Pakai yang dipilih"
+a stop (Game logic > Bus stops), then "Use the chosen"	halte (Logika game > Halte), lalu "Pakai yang dipilih"
+a tree in the Objects catalogue (or a plant mix)	pohon di katalog Objek (atau campuran tanaman)
+a building in the catalogue, then "+ its folder"	bangunan di katalog, lalu "+ foldernya"
+To build, choose (or untick):	Untuk membangun, pilih (atau hapus centang):
+A one-way street is built the way it runs in OpenStreetMap: give it a one-way road type	Jalan satu arah dibangun sesuai arahnya di OpenStreetMap: beri jenis jalan satu arah
+Build	Bangun
+Name, file or IDCode	Nama, file, atau IDCode
+things on the map	hal di peta
+Groups	Grup
+Select the group and go there	Pilih grup dan ke sana
+Select everything in it	Pilih semua isinya
+Select it and go there	Pilih dan ke sana
+more: narrow the search	lagi: persempit pencarian
+Select all of them	Pilih semuanya
+Go to the first	Ke yang pertama
+Pick a tree in the catalogue, then paint	Pilih pohon di katalog, lalu lukis
+Pick a tree in the catalogue, then click round the area	Pilih pohon di katalog, lalu klik mengelilingi area
+Pick a road type, click the centre, then the ring	Pilih jenis jalan, klik pusat, lalu cincin
+Select a road (double-click: all of it): its properties show its height profile	Pilih jalan (klik dua kali: seluruhnya): propertinya menampilkan profil ketinggian
+Select one of openMapper's junctions: its properties have Traffic lights and crossings	Pilih persimpangan openMapper: propertinya punya Lampu lalu lintas dan penyeberangan
+Select the signal head (or a display): Linked objects in its properties, then click its crossing	Pilih kepala lampu sinyal (atau layar): Objek tertaut di propertinya, lalu klik persimpangannya
+Select a road, pick an object in the Objects catalogue: Objects along the road in its properties	Pilih jalan, pilih objek di katalog Objek: Objek di sepanjang jalan di propertinya
+Select a track (double-click: all of it): Overhead wire under Parallel copy in its properties	Pilih rel (klik dua kali: seluruhnya): Kabel listrik atas di bawah Salinan paralel di propertinya
+Select a road or a chain: Parallel copy in its properties	Pilih jalan atau rantai: Salinan paralel di propertinya
+Select a road (double-click: all of it): Paint the ground along it in its properties	Pilih jalan (klik dua kali: seluruhnya): Cat tanah di sepanjangnya di propertinya
+Click a tile: its water is in the panel; lower the ground under it with the Terrain tool	Klik tile: airnya ada di panel; turunkan tanah di bawahnya dengan alat Medan
+Height map: at the end of the Terrain panel	Peta ketinggian: di akhir panel Medan
+By slope and height: at the end of the Paint panel	Menurut kemiringan dan ketinggian: di akhir panel Cat
+View menu: Time of day, Season	Menu Tampilan: Waktu hari, Musim
+What do you want to do?	Apa yang ingin Anda lakukan?
+Groups…	Grup…
+Objects on the map by folder	Objek peta menurut folder
+Knife: cut roads	Pisau: potong jalan
+Test drive in OMSI 2 (the original)	Uji kendara di OMSI 2 (aslinya)
+Overview map	Peta ikhtisar
+Place a bus stop	Letakkan halte
+Place a start point	Letakkan titik awal
+Plant trees with a brush	Tanam pohon dengan kuas
+Plant a wood or a park	Tanam hutan atau taman
+Roundabout	Bundaran
+Height profile of a road	Profil ketinggian jalan
+Traffic lights and zebra crossings	Lampu lalu lintas dan zebra cross
+Link a signal head to its crossing	Tautkan kepala lampu ke persimpangannya
+Objects along a road	Objek di sepanjang jalan
+Overhead wire along a track	Kabel listrik atas di sepanjang rel
+Parallel copy of a road	Salinan paralel jalan
+Paint the ground along a road	Cat tanah di sepanjang jalan
+Water, lake, river	Air, danau, sungai
+Ramp in the ground	Tanjakan di tanah
+Height map import or export	Impor atau ekspor peta ketinggian
+Time of day and season	Waktu hari dan musim
+PBR material	Material PBR
+none	tidak ada
+Own picture…	Gambar sendiri…
+Choose a texture of the object, or a picture of your own.	Pilih tekstur objek, atau gambar Anda sendiri.
+Normals (_nn)	Normal (_nn)
+Roughness	Kekasaran
+Shadow in hollows	Bayangan di cekungan
+Bumps	Tonjolan
+Only big shapes	Hanya bentuk besar
+Dark parts stand out (not sink in)	Bagian gelap menonjol (tidak masuk)
+Bright parts smoother	Bagian terang lebih halus
+Metal	Logam
+Back to the defaults	Kembali ke default
+This texture has PBR maps of its own already: new ones made here are taken instead of them.	Tekstur ini sudah punya peta PBR sendiri: yang dibuat di sini dipakai sebagai gantinya.
+Written as:	Ditulis sebagai:
+PBR maps made	Peta PBR dibuat
+Delete the PBR material	Hapus material PBR
+PBR maps taken away	Peta PBR dihapus
+Height profile	Profil ketinggian
+over the ground	di atas tanah
+Click: go there in the view · drag a dot (a joint) up or down: its height	Klik: ke sana di tampilan · seret titik (sambungan) naik atau turun: ketinggiannya
+Climbs, falls	Naik, turun
+Steepest	Tercuram
+at	pada
+Highest over the ground	Tertinggi di atas tanah
+Deepest under it	Terdalam di bawahnya
+Over 8 % is steep for a bus; over 12 % few streets go	Di atas 8 % curam untuk bus; di atas 12 % jarang ada jalan
+roadway	badan jalan
+Road types	Jenis jalan
+Make a new road type…	Buat jenis jalan baru…
+My road	Jalan saya
+ · own	 · milik sendiri
+Create the road type	Buat jenis jalan
+Road type made: the Roads tool builds with it	Jenis jalan dibuat: alat Jalan membangun dengannya
+Change it in the road maker	Ubah di pembuat jalan
+Its junctions	Persimpangannya
+Make a junction where it meets another road (else they only cross)	Buat persimpangan di tempat jalan bertemu jalan lain (jika tidak, hanya bersilangan)
+Corners	Sudut
+× rounder	× lebih bulat
+Traffic lights by themselves	Lampu lalu lintas otomatis
+Zebra crossings on every arm	Zebra cross di setiap lengan
+Used for the junctions made from now on (where several road types meet, the one asking more wins). A junction already made keeps its own settings: select it to change them.	Dipakai untuk persimpangan yang dibuat mulai sekarang (di tempat beberapa jenis jalan bertemu, yang lebih menuntut menang). Persimpangan yang sudah dibuat mempertahankan pengaturannya: pilih untuk mengubahnya.
+Pick a road type on the left, or make a new one.	Pilih jenis jalan di kiri, atau buat yang baru.
+Road maker	Pembuat jalan
+Lanes	Lajur
+(▼ 0: one-way)	(▼ 0: satu arah)
+Lane width	Lebar lajur
+Middle strip	Median
+Footways	Trotoar
+Kerb	Tepi jalan
+Roadway texture	Tekstur badan jalan
+Footway texture	Tekstur trotoar
+Own…	Sendiri…
+The roadway texture is laid once across all its lanes (as OMSI 2's lane textures are painted: pick one with as many lanes); the footway texture's right end is the kerb.	Tekstur badan jalan diletakkan sekali melintasi semua lajurnya (seperti tekstur lajur OMSI 2 dilukis: pilih yang jumlah lajurnya sama); ujung kanan tekstur trotoar adalah tepi jalan.
+not on the map	tidak ada di peta
+Signal routes	Rute sinyal
+Each railway signal clears when a train wants the track pieces of its route and none stands on them.	Setiap sinyal kereta menjadi hijau saat kereta menginginkan bagian rel rutenya dan tidak ada yang berdiri di atasnya.
+New route for the selected signal	Rute baru untuk sinyal terpilih
+Select a signal (one object) in the view first	Pilih sinyal (satu objek) di tampilan dulu
+The selected object does not look like a signal (its name says nothing of one): check it is.	Objek terpilih tidak tampak seperti sinyal (namanya tidak menyebutnya): pastikan itu sinyal.
+No routes yet.	Belum ada rute.
+pieces	bagian
+Signal	Sinyal
+the selected	yang dipilih
+Aspect	Aspek
+What the signal shows when this route is clear: 1 proceed, 2 proceed slowly (with a speed limit)…	Yang ditunjukkan sinyal saat rute ini bebas: 1 jalan, 2 jalan pelan (dengan batas kecepatan)…
+Distant signal	Sinyal pendahulu
+Next signal	Sinyal berikutnya
+Speed limit	Batas kecepatan
+OMSI's route kind (the stock maps have 0 and 1)	Jenis rute OMSI (peta bawaan punya 0 dan 1)
+Track pieces	Bagian rel
+Take the selected track	Ambil rel terpilih
+Every rail path of the selected tracks and switches (double-click a track: all of it); replaces the pieces	Setiap jalur rel dari rel dan wesel terpilih (klik dua kali rel: seluruhnya); menggantikan bagian
+Select the signal and its pieces in the view	Pilih sinyal dan bagiannya di tampilan
+Delete the route	Hapus rute
+Lines and timetable	Jalur dan jadwal
+Edit timetable	Edit jadwal
+No bus stop there: click one of the orange marks	Tidak ada halte di sana: klik salah satu tanda oranye
+The roads can't be read without the OMSI 2 folder.	Jalan tidak dapat dibaca tanpa folder OMSI 2.
+A line needs at least two bus stops on the map: place them with Game logic > Bus stops, beside a road.	Jalur butuh minimal dua halte di peta: letakkan dengan Logika game > Halte, di samping jalan.
+Lines	Jalur
+No lines yet.	Belum ada jalur.
+New line	Jalur baru
+Pick a line on the left, or make a new one.\n\nA line has trips (a way from stop to stop) and tours (one bus's day: which trip it drives when).	Pilih jalur di kiri, atau buat yang baru.\n\nJalur punya perjalanan (rute dari halte ke halte) dan dinas (satu hari kerja bus: perjalanan mana yang dijalaninya dan kapan).
+That name is taken or can't be a file name	Nama itu sudah dipakai atau tidak bisa jadi nama file
+A copy of the line with its trips and tours (a variant to change)	Salinan jalur dengan perjalanan dan dinasnya (varian untuk diubah)
+Delete the line and its trips	Hapus jalur dan perjalanannya
+Players can drive it	Pemain dapat mengendarainya
+Trips	Perjalanan
+Tours and times	Dinas dan waktu
+A tour is one bus's day: the trips it drives, one after the other, and when each leaves.	Dinas adalah satu hari kerja bus: perjalanan yang dijalaninya, satu demi satu, dan kapan masing-masing berangkat.
+A trip is one way along the line: its stops in order. Most lines have two, there and back.	Perjalanan adalah satu arah sepanjang jalur: halte berurutan. Kebanyakan jalur punya dua, pergi dan pulang.
+New trip	Perjalanan baru
+Make the way back	Buat perjalanan balik
+A new trip with the same stops the other way round	Perjalanan baru dengan halte yang sama dalam arah sebaliknya
+Trip	Perjalanan
+Delete the trip	Hapus perjalanan
+Destination sign	Papan tujuan
+This trip runs on a track of its own (a train): its stops are kept as they are.	Perjalanan ini berjalan di rel sendiri (kereta): halte-haltenya dibiarkan apa adanya.
+Show on the map	Tampilkan di peta
+No stops yet.	Belum ada halte.
+Done picking	Selesai memilih
+Pick stops on the map	Pilih di peta
+Click the stops in the view one after the other, in the order the bus calls at them	Klik halte di tampilan satu demi satu, sesuai urutan bus singgah
+Add stop…	Tambah halte…
+Click stops on the map (they are marked orange)…	Klik halte di peta (ditandai oranye)…
+Add two stops or more: the way between them is found along the roads.	Tambah dua halte atau lebih: rute di antaranya dicari di sepanjang jalan.
+Finding the way…	Mencari rute…
+Route found:	Rute ditemukan:
+km along the roads (blue in the view)	km di sepanjang jalan (biru di tampilan)
+the way drives a one-way lane against its direction; is a path drawn the wrong way round?	rute melewati lajur satu arah berlawanan arah; apakah jalurnya digambar terbalik?
+is not on the map	tidak ada di peta
+no road with car lanes within 15 m	tidak ada jalan dengan lajur mobil dalam 15 m
+No way	Tidak ada rute
+the roads are not joined, or run the other way (see View > AI lanes)	jalan tidak tersambung, atau berlawanan arah (lihat Tampilan > Lajur AI)
+The trip is saved, but its way is not until this is mended	Perjalanan disimpan, tetapi rutenya tidak sampai ini diperbaiki
+Trip time	Waktu perjalanan
+Guess:	Perkiraan:
+From the route's length at the pace of a town bus	Dari panjang rute dengan kecepatan bus kota
+Times at the stops	Waktu di halte
+Minutes after the trip leaves. They follow the distance between the stops; fix one to keep the bus to it (it waits there when early).	Menit setelah perjalanan berangkat. Mengikuti jarak antar halte; kunci satu agar bus mengikutinya (menunggu di sana jika lebih awal).
+fixed	dikunci
+Spread all by distance	Sebarkan semua menurut jarak
+Holidays and school holidays	Hari libur dan libur sekolah
+On a public holiday only the tours with Holidays ticked run; school holidays pick the tours for school holidays or school days.	Pada hari libur nasional hanya dinas dengan Hari libur dicentang yang jalan; libur sekolah memilih dinas untuk libur sekolah atau hari sekolah.
+Copy to	Salin ke
+The same days a year later (feasts that move, like Easter, are to be set by hand)	Hari yang sama setahun kemudian (hari raya yang berpindah, seperti Paskah, atur manual)
+The map has no depot (ailists.cfg): only you drive these tours, no AI buses.	Peta tidak punya depo (ailists.cfg): hanya Anda yang mengendarai dinas ini, tanpa bus AI.
+Add a depot with OMSI 2's MAN buses	Tambah depo dengan bus MAN OMSI 2
+Its buses run the tours (Map > Traffic and AI shows it)	Busnya menjalankan dinas (Peta > Lalu lintas dan AI menampilkannya)
+Tour	Perjalanan
+New tour	Dinas baru
+Pick a tour to see its departures.	Pilih dinas untuk melihat keberangkatannya.
+Make a trip first.	Buat perjalanan dulu.
+Number	Nomor
+Buses from	Bus dari
+Delete the tour	Hapus dinas
+Runs on	Berjalan pada
+Mo	Sen
+Tu	Sel
+We	Rab
+Th	Kam
+Fr	Jum
+Sa	Sab
+Su	Min
+Every day	Setiap hari
+Monday to Friday	Senin sampai Jumat
+Weekends and holidays	Akhir pekan dan hari libur
+In the school holidays	Pada libur sekolah
+On school days	Pada hari sekolah
+Next departure	Keberangkatan berikutnya
+The next trip of the line, when the bus is back and has had its break	Perjalanan berikutnya dari jalur, saat bus sudah kembali dan istirahat
+Fill from	Isi dari
+break	istirahat
+Fill	Isi
+Replace the tour's departures: the line's trips one after the other, a break after each	Ganti keberangkatan dinas: perjalanan jalur satu demi satu, istirahat setelah masing-masing
+No departures yet: add them above.	Belum ada keberangkatan: tambahkan di atas.
+Delete the departure	Hapus keberangkatan
+GPS tracks to trace	Trek GPS untuk dijiplak
+A route recorded on a phone or drawn elsewhere (GPX, KML, GeoJSON), shown in the view in magenta to draw roads along, or built into a road at once	Rute yang direkam di ponsel atau digambar di tempat lain (GPX, KML, GeoJSON), ditampilkan magenta di tampilan untuk menggambar jalan mengikutinya, atau langsung dibangun menjadi jalan
+Place the map on the Earth first (Map > Satellite and terrain)	Tempatkan peta di Bumi dulu (Peta > Satelit dan medan)
+Load a file…	Muat file…
+None loaded	Belum ada yang dimuat
+Forget it	Lupakan
+Build a road along it:	Bangun jalan mengikutinya:
+Choose a road type in the Roads tool to build it	Pilih jenis jalan di alat Jalan untuk membangunnya
+Built as if drawn: corners rounded into arcs, junctions where it meets roads, cut at the map's edge; one undo step	Dibangun seperti digambar: sudut dibulatkan menjadi busur, persimpangan di tempat bertemu jalan, dipotong di tepi peta; satu langkah urungkan
+Traffic and AI	Lalu lintas dan AI
+Edit traffic	Edit lalu lintas
+Over the day	Sepanjang hari
+Vehicle groups	Grup kendaraan
+Parked cars and people	Mobil parkir dan orang
+Depot files	File depo
+The AI's vehicles come in groups. A car group drives about on the roads; a depot sends out the buses of the timetable's tours.	Kendaraan AI datang dalam grup. Grup mobil berkeliling di jalan; depo mengirim bus dinas jadwal.
+(This map's ailists.cfg is in OMSI 2's first format: it is written in the second one when changed.)	(ailists.cfg peta ini dalam format pertama OMSI 2: ditulis dalam format kedua saat diubah.)
+is to drive about, but there is no such group.	harus berkeliling, tetapi grup itu tidak ada.
+Make it with OMSI 2's vehicles	Buat dengan kendaraan OMSI 2
+The group of that name from OMSI 2's own maps	Grup bernama itu dari peta bawaan OMSI 2
+New car group	Grup mobil baru
+New depot	Depo baru
+Pick a group on the left.	Pilih grup di kiri.
+Delete the group (tours still take their buses from it)	Hapus grup (dinas masih mengambil busnya darinya)
+Delete the group	Hapus grup
+Tours that take their buses from here:	Dinas yang mengambil busnya dari sini:
+Drives about on its own	Berkeliling sendiri
+as many:	sebanyak:
+Times the traffic over the day	Atur lalu lintas sepanjang hari
+A vehicle with more weight comes along more often.	Kendaraan dengan bobot lebih besar muncul lebih sering.
+Add a vehicle…	Tambah kendaraan…
+Depot file (.hof)	File depo (.hof)
+None of its buses has this depot file beside it: they run without their destination signs and fleet data.	Tidak ada bus yang punya file depo ini di sampingnya: mereka jalan tanpa papan tujuan dan data armada.
+The buses it has: a type of bus and the fleet number and plate of each.	Bus yang dimilikinya: jenis bus serta nomor armada dan plat masing-masing.
+Take this type out	Keluarkan jenis ini
+number	nomor
+plate	plat
+Another bus	Bus lain
+Add a type of bus…	Tambah jenis bus…
+The lists can't be read without the OMSI 2 folder.	Daftar tidak dapat dibaca tanpa folder OMSI 2.
+Parked cars	Mobil parkir
+What stands on the car parks (Game logic > Car parks). A car listed more often stands there more often.	Yang berdiri di tempat parkir (Logika game > Tempat parkir). Mobil yang terdaftar lebih sering berdiri lebih sering.
+Who walks about and waits at the stops.	Siapa yang berjalan-jalan dan menunggu di halte.
+Drivers	Pengemudi
+Who drives the AI's buses.	Siapa yang mengemudikan bus AI.
+How often it is listed (0 takes it out)	Seberapa sering terdaftar (0 menghapusnya)
+How busy the map is at each hour: the road traffic, and the passengers at the stops. 1 is normal; the game goes along the line between the points.	Seberapa ramai peta di tiap jam: lalu lintas jalan dan penumpang di halte. 1 normal; game mengikuti garis di antara titik.
+Road traffic	Lalu lintas jalan
+Passengers	Penumpang
+Its own traffic over the day	Lalu lintas sendiri sepanjang hari
+Without one the group follows the map's road traffic. A curve can be for some days of the week only.	Tanpa ini grup mengikuti lalu lintas jalan peta. Kurva bisa hanya untuk beberapa hari dalam seminggu.
+Days:	Hari:
+Mo–Fr	Sen–Jum
+Take this curve out	Hapus kurva ini
+A curve	Kurva
+Typical day…	Hari tipikal…
+Quiet village	Desa sepi
+Town with rush hours	Kota dengan jam sibuk
+The same all day	Sama sepanjang hari
+No curve: 1 all day.	Tanpa kurva: 1 sepanjang hari.
+Take the point out	Hapus titik
+Point	Titik
+Smart unwrap	Unwrap cerdas
+Every flat side apart in the picture, no faces on top of one another (all faces if none is selected)	Tiap sisi datar terpisah di gambar, tidak ada permukaan bertumpuk (semua permukaan bila tidak ada yang dipilih)
+Box unwrap	Unwrap kotak
+The six sides of a box apart in the picture	Enam sisi kotak terpisah di gambar
+Flip ↔	Balik ↔
+Flip ↕	Balik ↕
+Scale ×2	Skala ×2
+Scale ÷2	Skala ÷2
+Fit	Pas
+Stretched to fill the picture	Diregangkan memenuhi gambar
+Pack islands	Susun pulau
+Average island scale	Ratakan skala pulau
+Seams from islands	Seam dari pulau
+Click: a face (Shift adds) · drag: move the selected · wheel: zoom · right button: pan	Klik: permukaan (Shift menambah) · seret: pindahkan yang dipilih · roda: zoom · tombol kanan: geser
+Could not keep the views	Tidak dapat menyimpan tampilan
+Saved views	Tampilan tersimpan
+Places of the map to come back to: Ctrl+1…9 goes to the first nine, Ctrl+Shift+1…9 keeps the view there	Tempat di peta untuk dikunjungi lagi: Ctrl+1…9 ke sembilan pertama, Ctrl+Shift+1…9 menyimpan tampilan di sana
+Keep this view	Simpan tampilan ini
+None yet	Belum ada
+Go	Ke sana
+Earlier in the list	Lebih awal di daftar
+Later in the list	Lebih akhir di daftar
+Take the view now instead	Ganti dengan tampilan sekarang
+Keep proportions	Pertahankan proporsi
+Back to its own size	Kembali ke ukuran aslinya
+Updates	Pembaruan
+This version:	Versi ini:
+New version:	Versi baru:
+Install and restart	Pasang dan mulai ulang
+Not now	Nanti saja
+What changed	Yang berubah
+Downloading and installing	Mengunduh dan memasang
+Installed version	Versi terpasang
+openMapper restarts when you save the map.	openMapper dimulai ulang saat Anda menyimpan peta.
+Looking for a new version…	Mencari versi baru…
+This is the newest version.	Ini versi terbaru.
+Download it from GitHub by hand	Unduh dari GitHub secara manual
+When there is a new version:	Saat ada versi baru:
+Offer it to me	Tawarkan kepada saya
+Install it and restart by itself	Pasang dan mulai ulang otomatis
+Never look for updates	Jangan cari pembaruan
+Check now	Periksa sekarang
+Never offer updates again	Jangan tawarkan pembaruan lagi
+The release has no package	Rilis tidak punya paket
+No automatic updates for this system.	Tidak ada pembaruan otomatis untuk sistem ini.
+No connection to GitHub: are you online?	Tidak ada koneksi ke GitHub: apakah Anda online?
+The release has no SHA256SUMS: not installed.	Rilis tidak punya SHA256SUMS: tidak dipasang.
+The package is not in SHA256SUMS: not installed.	Paket tidak ada di SHA256SUMS: tidak dipasang.
+The download does not match its checksum: not installed.	Unduhan tidak cocok dengan checksum-nya: tidak dipasang.
+Could not replace the program	Tidak dapat mengganti program
+The package has no program in it.	Paket tidak berisi program.
+openMapper has stopped:	openMapper berhenti:
+The log with the details:	Log dengan rinciannya:

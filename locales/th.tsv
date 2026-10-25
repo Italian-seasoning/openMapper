@@ -1,0 +1,2129 @@
+Could not open the map	เปิดแผนที่ไม่ได้
+The next 100 tiles are loaded, the others are hidden	โหลดไทล์ 100 ชิ้นถัดไปแล้ว ส่วนที่เหลือซ่อนอยู่
+Find the place in the window and build from it	ค้นหาสถานที่ในหน้าต่างแล้วสร้างแผนที่จากที่นั่น
+Your map is ready. Start with a road!	แผนที่พร้อมแล้ว เริ่มจากถนนเลย!
+Export the map for sharing	ส่งออกแผนที่เพื่อแชร์
+Exported:	ส่งออกแล้ว:
+files	ไฟล์
+files the map names were not found: the readme lists them	ไม่พบไฟล์ที่แผนที่อ้างถึง: รายการอยู่ใน readme
+Could not export	ส่งออกไม่ได้
+A ring road with line 1 on it: save, then try it in openOMSI (F5).	ถนนวงแหวนพร้อมสาย 1: บันทึกแล้วลองใน openOMSI (F5)
+The sample could not be made	สร้างตัวอย่างไม่ได้
+In multiplayer the host saves the map. Leave the session to save this as a copy of your own.	ในโหมดผู้เล่นหลายคน โฮสต์เป็นผู้บันทึกแผนที่ ออกจากเซสชันเพื่อบันทึกเป็นสำเนาของคุณเอง
+Saved:	บันทึกแล้ว:
+Tip: place a start point (Game logic > Start points) so the bus has somewhere to appear	เคล็ดลับ: วางจุดเริ่มต้น (ตรรกะเกม > จุดเริ่มต้น) เพื่อให้รถบัสมีที่ปรากฏตัว
+Could not save (the changes are still here, nothing is lost)	บันทึกไม่ได้ (การแก้ไขยังอยู่ ไม่มีอะไรหาย)
+The unsaved changes are back. Save to keep them.	การแก้ไขที่ยังไม่ได้บันทึกกลับมาแล้ว บันทึกเพื่อเก็บไว้
+Could not restore the changes	กู้คืนการแก้ไขไม่ได้
+openOMSI was not found	ไม่พบ openOMSI
+From the start point	จากจุดเริ่มต้น
+The map has no start point: place one with Game logic > Start points	แผนที่ไม่มีจุดเริ่มต้น: วางได้ที่ ตรรกะเกม > จุดเริ่มต้น
+Starting openOMSI…	กำลังเริ่ม openOMSI…
+To drive the map in OMSI 2 itself it has to be copied into the OMSI 2 folder (Maps, and the objects, roads and textures made for it). Nothing that is there is replaced except earlier copies of this map. Copy it there?	การขับแผนที่ใน OMSI 2 เองต้องคัดลอกไปยังโฟลเดอร์ OMSI 2 (Maps รวมถึงวัตถุ ถนน และพื้นผิวที่ทำไว้สำหรับแผนที่) ของเดิมจะไม่ถูกแทนที่ ยกเว้นสำเนาเก่าของแผนที่นี้ คัดลอกไปที่นั่นหรือไม่?
+Starting OMSI 2: choose the map	กำลังเริ่ม OMSI 2: เลือกแผนที่
+The map is copied into the OMSI 2 folder; OMSI 2 itself runs on Windows only:	คัดลอกแผนที่ไปยังโฟลเดอร์ OMSI 2 แล้ว; OMSI 2 ทำงานบน Windows เท่านั้น:
+Could not copy the map into OMSI 2	คัดลอกแผนที่ไปยัง OMSI 2 ไม่ได้
+Click on the map to place it	คลิกบนแผนที่เพื่อวาง
+Open a map (its global.cfg)	เปิดแผนที่ (global.cfg ของแผนที่)
+The map is back as it was before that save	แผนที่กลับเป็นสภาพก่อนการบันทึกครั้งนั้นแล้ว
+Could not go back	ย้อนกลับไม่ได้
+Export a plan of the map	ส่งออกแผนผังของแผนที่
+Plan saved:	บันทึกแผนผังแล้ว:
+Mods, models and pictures	ม็อด โมเดล และรูปภาพ
+Import assets	นำเข้าแอสเซ็ต
+…or choose a mod folder	…หรือเลือกโฟลเดอร์ม็อด
+Click on the map to put it there	คลิกบนแผนที่เพื่อวางตรงนั้น
+Could not make the shape	สร้างรูปทรงไม่ได้
+Choose the OMSI 2 folder	เลือกโฟลเดอร์ OMSI 2
+That is not an OMSI 2 folder (Omsi.exe, maps and Vehicles must be in it)	นี่ไม่ใช่โฟลเดอร์ OMSI 2 (ต้องมี Omsi.exe, maps และ Vehicles อยู่ข้างใน)
+This object has no textures to make PBR maps of	วัตถุนี้ไม่มีพื้นผิวสำหรับสร้างแมป PBR
+Could not copy the map	คัดลอกแผนที่ไม่ได้
+Could not move the map	ย้ายแผนที่ไม่ได้
+Terrain flattened; splines laid on it:	ปรับภูมิประเทศเรียบแล้ว; วางสไปลน์แล้ว:
+This road type has no textures to make PBR maps of	ถนนชนิดนี้ไม่มีพื้นผิวสำหรับสร้างแมป PBR
+Pictures	รูปภาพ
+Only 100 tiles round the camera are loaded; click on the empty zone to load the next 100	โหลดเฉพาะไทล์ 100 ชิ้นรอบกล้อง; คลิกที่โซนว่างเพื่อโหลด 100 ชิ้นถัดไป
+All tiles are loaded	โหลดไทล์ครบทั้งหมดแล้ว
+Import the map's thumbnail	นำเข้ารูปย่อของแผนที่
+The map's thumbnail is set: openOMSI shows it where maps are chosen.	ตั้งรูปย่อของแผนที่แล้ว: openOMSI แสดงรูปนี้ตอนเลือกแผนที่
+Could not use the picture	ใช้รูปภาพนี้ไม่ได้
+Map camera	กล้องแผนที่
+The map opens with this view from now on.	จากนี้แผนที่จะเปิดด้วยมุมมองนี้
+Add ground texture	เพิ่มพื้นผิวพื้นดิน
+View kept as	จำมุมมองไว้เป็น
+No view kept as	ไม่มีมุมมองที่จำไว้เป็น
+Files changed on disk: the catalogue and models are updated	ไฟล์บนดิสก์เปลี่ยนไป: อัปเดตแค็ตตาล็อกและโมเดลแล้ว
+The track does not run over the map's tiles	เส้นทางไม่ผ่านไทล์ของแผนที่
+Road along a GPS track	ถนนตามแทร็ก GPS
+Roads built:	สร้างถนนแล้ว:
+junctions:	ทางแยก:
+stops:	ป้าย:
+Lines from OpenStreetMap	สายจาก OpenStreetMap
+lines:	สาย:
+trips found their way:	เที่ยวที่พบเส้นทาง:
+buildings:	อาคาร:
+trees:	ต้นไม้:
+Start point	จุดเริ่มต้น
+Start	เริ่ม
+a start point	จุดเริ่มต้น
+From OpenStreetMap	จาก OpenStreetMap
+Picture saved:	บันทึกรูปภาพแล้ว:
+Could not save the picture	บันทึกรูปภาพไม่ได้
+The graphics could not be started.	เริ่มระบบกราฟิกไม่ได้
+Flying speed	ความเร็วการบิน
+copy	สำเนา
+Only maps of the content folder can be moved	ย้ายได้เฉพาะแผนที่ในโฟลเดอร์เนื้อหา
+Only assets of the content folder can be deleted	ลบได้เฉพาะแอสเซ็ตในโฟลเดอร์เนื้อหา
+Could not write the object	เขียนวัตถุไม่ได้
+Select an object to edit its mesh	เลือกวัตถุเพื่อแก้ไขเมช
+A copy of its own was made: the original type is unchanged	สร้างสำเนาของตัวเองแล้ว: ชนิดเดิมไม่เปลี่ยน
+Cannot edit this object	แก้ไขวัตถุนี้ไม่ได้
+Point at an edge to cut across its ring of faces	ชี้ที่ขอบเพื่อตัดผ่านวงแหวนของหน้า
+Objects made:	สร้างวัตถุแล้ว:
+select the faces to separate	เลือกหน้าที่จะแยก
+Separated into an object of its own	แยกเป็นวัตถุของตัวเองแล้ว
+Add object	เพิ่มวัตถุ
+select what to export (objects, roads)	เลือกสิ่งที่จะส่งออก (วัตถุ ถนน)
+Export the selection	ส่งออกส่วนที่เลือก
+unknown format	ไม่รู้จักรูปแบบ
+the models are still loading: try again in a moment	โมเดลยังโหลดอยู่: ลองใหม่อีกครู่
+this material has no texture	วัสดุนี้ไม่มีพื้นผิว
+cannot read	อ่านไม่ได้
+Export the texture	ส่งออกพื้นผิว
+Texture saved:	บันทึกพื้นผิวแล้ว:
+Choose a picture	เลือกรูปภาพ
+give the material a texture first: its maps go beside it	ตั้งพื้นผิวให้วัสดุก่อน: แมปจะอยู่ข้างกัน
+Import materials (an .mtl, a model, or the pictures of one PBR material)	นำเข้าวัสดุ (ไฟล์ .mtl โมเดล หรือรูปภาพของวัสดุ PBR หนึ่งชิ้น)
+Materials and pictures	วัสดุและรูปภาพ
+no materials found there	ไม่พบวัสดุที่นั่น
+Materials added:	เพิ่มวัสดุแล้ว:
+nothing to bake	ไม่มีอะไรให้เบค
+the object has no lamps to bake the night light of	วัตถุไม่มีโคมไฟให้เบคแสงกลางคืน
+Baked into	เบคลงใน
+select a road or spline first	เลือกถนนหรือสไปลน์ก่อน
+the road's type is still loading: try again in a moment	ชนิดถนนยังโหลดอยู่: ลองใหม่อีกครู่
+these splines have no shape to see	สไปลน์เหล่านี้ไม่มีรูปทรงให้ดู
+Replace by an object	แทนที่ด้วยวัตถุ
+Made into an object: Tab edits its mesh	แปลงเป็นวัตถุแล้ว: Tab แก้ไขเมช
+Signal head made: click where it stands (near a crossing with a light program it links to it)	สร้างหัวสัญญาณแล้ว: คลิกที่ตำแหน่งที่ตั้ง (ใกล้ทางแยกที่มีโปรแกรมไฟจราจรจะเชื่อมกับทางแยกนั้น)
+Choose a picture or a texture	เลือกรูปภาพหรือพื้นผิว
+cannot read the picture	อ่านรูปภาพไม่ได้
+Picture made: click where it goes (it can be moved, turned and scaled after)	สร้างรูปภาพแล้ว: คลิกที่ตำแหน่งที่จะวาง (ย้าย หมุน และปรับขนาดได้ภายหลัง)
+Light made: click where it shines	สร้างแสงแล้ว: คลิกที่ตำแหน่งที่ส่องสว่าง
+Choose a sound	เลือกเสียง
+Sounds	เสียง
+Sound source made: click where it plays	สร้างแหล่งเสียงแล้ว: คลิกที่ตำแหน่งที่เล่นเสียง
+Street lamp made: click where it stands	สร้างเสาไฟแล้ว: คลิกที่ตำแหน่งที่ตั้ง
+Paint by slope and height	ทาสีตามความลาดและความสูง
+By slope and height	ตามความลาดและความสูง
+The chosen layer painted over the whole map where the ground is so steep (and so high)	ชั้นที่เลือกถูกทาทั่วแผนที่ ตรงที่พื้นดินชันขนาดนี้ (และสูงขนาดนี้)
+Slope	ความลาด
+Height	ความสูง
+Fade	การเลือนขอบ
+Cover	การครอบคลุม
+Paint the map	ทาสีแผนที่
+Choose a layer above the base ground	เลือกชั้นที่อยู่เหนือพื้นดินฐาน
+No ground on the map is like that	ไม่มีพื้นดินแบบนั้นบนแผนที่
+Painted	ทาสีแล้ว
+Missing objects	ไม่มีไฟล์วัตถุ
+Missing roads and splines	ไม่มีไฟล์ถนนและสไปลน์
+Missing textures	ไม่มีพื้นผิว
+Road ends not joined	ปลายถนนที่ไม่เชื่อมกัน
+Links to splines that are gone	ลิงก์ไปยังสไปลน์ที่หายไป
+Bus stops away from a road	ป้ายรถบัสที่อยู่ห่างจากถนน
+Start points away from a road	จุดเริ่มต้นที่อยู่ห่างจากถนน
+Start points without their object	จุดเริ่มต้นที่ไม่มีวัตถุ
+No start point	ไม่มีจุดเริ่มต้น
+IDCodes used twice	IDCode ที่ใช้ซ้ำ
+Next IDCode too low	NextIDCode ต่ำเกินไป
+Objects off their tile	วัตถุนอกไทล์ของตัวเอง
+Tiles without a file	ไทล์ที่ไม่มีไฟล์
+Tiles without ground	ไทล์ที่ไม่มีพื้นดิน
+Trips without a way	เที่ยวที่ไม่มีเส้นทาง
+Tours without departures	ทัวร์ที่ไม่มีเที่ยวออก
+Tours without a depot	ทัวร์ที่ไม่มีดีโป
+Traffic groups not in the AI lists	กลุ่มการจราจรที่ไม่อยู่ในรายการ AI
+Stops no trip calls at	ป้ายที่ไม่มีเที่ยวใดจอด
+Signal routes naming what is gone	เส้นทางสัญญาณที่อ้างถึงสิ่งที่หายไป
+Chrono changes of what is gone	การเปลี่ยนแปลงตามเวลาของสิ่งที่หายไป
+Lamps lighting no ground at night	เสาไฟที่ไม่ส่องพื้นในเวลากลางคืน
+Tiles with very many objects	ไทล์ที่มีวัตถุมากเกินไป
+Objects linked to one that is gone	วัตถุที่เชื่อมกับสิ่งที่หายไป
+Signal heads linked to no crossing	หัวสัญญาณที่ไม่เชื่อมกับทางแยก
+Depot files (destinations)	ไฟล์ดีโป (ปลายทาง)
+The map uses an object (.sco) that is not installed. The game leaves it out. Install the mod it comes from, or delete the object. A junction of openMapper's whose file is gone (the map was moved without it) is made again for its roads with "Fix".	แผนที่ใช้วัตถุ (.sco) ที่ไม่ได้ติดตั้ง เกมจะข้ามวัตถุนั้น ติดตั้งม็อดที่วัตถุนี้มาจาก หรือลบวัตถุทิ้ง ทางแยกของ openMapper ที่ไฟล์หายไป (ย้ายแผนที่โดยไม่มีไฟล์) จะถูกสร้างใหม่ให้ถนนของมันด้วย "แก้ไข"
+The map uses a road or spline type (.sli) that is not installed: that road is missing in the game, and buses cannot drive there.	แผนที่ใช้ชนิดถนนหรือสไปลน์ (.sli) ที่ไม่ได้ติดตั้ง: ถนนนั้นจะหายไปในเกม และรถบัสขับผ่านไม่ได้
+An object or road names a picture that cannot be found. It will look white or black in the game.	วัตถุหรือถนนอ้างถึงรูปภาพที่ไม่พบ ในเกมจะเป็นสีขาวหรือสีดำ
+Two road ends lie on one another but are not joined. Traffic still finds its way (the game joins lanes by their ends), but rows of lamps and posts and the road's texture do not run on across, and the editor does not treat them as one road. "Join" links them.	ปลายถนนสองเส้นซ้อนกันแต่ไม่ได้เชื่อมกัน การจราจรยังไปได้ (เกมเชื่อมเลนตามปลาย) แต่แถวเสาไฟ เสา และพื้นผิวถนนจะไม่ต่อเนื่องข้ามจุดนั้น และตัวแก้ไขไม่ถือว่าเป็นถนนเส้นเดียว "เชื่อม" จะเชื่อมให้
+A spline says it goes on into another one that no longer exists. "Fix" forgets that link.	สไปลน์บอกว่าต่อไปยังอีกเส้นที่ไม่มีอยู่แล้ว "แก้ไข" จะลบลิงก์นั้น
+A bus stop belongs to the lane it stands beside (within about 25 m). This one has none near, so buses cannot stop at it. Move it next to the road, or "Fix" puts it at the kerb of the nearest lane (within 80 m).	ป้ายรถบัสสังกัดเลนที่อยู่ข้างๆ (ภายในราว 25 ม.) ป้ายนี้ไม่มีเลนใกล้เคียง รถบัสจึงจอดไม่ได้ ย้ายไปข้างถนน หรือ "แก้ไข" จะวางไว้ที่ขอบทางของเลนที่ใกล้สุด (ภายใน 80 ม.)
+A start point is where the bus appears. This one is away from any lane: fine in a depot yard, otherwise the bus starts off the road.	จุดเริ่มต้นคือที่ที่รถบัสปรากฏตัว จุดนี้อยู่ห่างจากทุกเลน: ไม่เป็นไรในลานดีโป นอกนั้นรถบัสจะเริ่มนอกถนน
+A start point refers to an object that was deleted. "Fix" removes the start point.	จุดเริ่มต้นอ้างถึงวัตถุที่ถูกลบไปแล้ว "แก้ไข" จะลบจุดเริ่มต้น
+There is nowhere for the bus to appear. Place a start point (Game logic > Start points) on a road, or "Fix" puts one on a lane some 40 m before a bus stop.	รถบัสไม่มีที่ปรากฏตัว วางจุดเริ่มต้น (ตรรกะเกม > จุดเริ่มต้น) บนถนน หรือ "แก้ไข" จะวางไว้บนเลนก่อนถึงป้ายรถบัสราว 40 ม.
+Two things on the map share one IDCode: links, timetables and start points may pick the wrong one.	สองสิ่งบนแผนที่ใช้ IDCode เดียวกัน: ลิงก์ ตารางเวลา และจุดเริ่มต้นอาจชี้ผิดอัน
+The counter for new IDCodes is below codes already used, so new objects would get codes twice. "Fix" raises it.	ตัวนับ IDCode ใหม่ต่ำกว่ารหัสที่ใช้แล้ว วัตถุใหม่จึงได้รหัสซ้ำ "แก้ไข" จะเพิ่มค่าให้
+An object standing on the ground lies outside its own tile. The game does not show it. Move it a little or put it again.	วัตถุที่ตั้งบนพื้นอยู่นอกไทล์ของตัวเอง เกมจะไม่แสดง ขยับเล็กน้อยหรือวางใหม่
+global.cfg lists tiles whose file is not there. The game leaves them out; they stay listed, as start points and timetables count tiles by their place in the list.	global.cfg ระบุไทล์ที่ไม่มีไฟล์ เกมจะข้ามไป แต่ยังคงอยู่ในรายการ เพราะจุดเริ่มต้นและตารางเวลานับไทล์ตามลำดับในรายการ
+A tile has no height file: its ground is flat. Saving writes one.	ไทล์ไม่มีไฟล์ความสูง: พื้นดินเรียบ การบันทึกจะเขียนให้
+No way along the roads was found through this trip's stops, so buses cannot drive it. Open it in Map > Lines and timetable to see where it breaks.	ไม่พบเส้นทางตามถนนผ่านป้ายของเที่ยวนี้ รถบัสจึงขับไม่ได้ เปิดใน แผนที่ > สายและตารางเวลา เพื่อดูว่าขาดตรงไหน
+A tour (a bus's day on the line) has no trips, so no bus runs it.	ทัวร์ (หนึ่งวันของรถบัสบนสาย) ไม่มีเที่ยว จึงไม่มีรถบัสวิ่ง
+A tour names no depot or group of the AI lists (or one that is not there): the game has no vehicle to send on it. Choose a depot for it in the Lines window, or "Fix" gives it the map's depot (one of OMSI 2's MAN buses added where the map has none).	ทัวร์ไม่ระบุดีโปหรือกลุ่มในรายการ AI (หรือระบุอันที่ไม่มี): เกมไม่มียานพาหนะส่งไปวิ่ง เลือกดีโปให้ในหน้าต่างสาย หรือ "แก้ไข" จะกำหนดดีโปของแผนที่ให้ (เพิ่มรถบัส MAN ของ OMSI 2 ถ้าแผนที่ไม่มี)
+The unscheduled traffic names a group that the AI lists do not have: those cars never appear. Add the group in Map > Traffic and AI, or "Fix" copies it from OMSI 2's own maps where they have it.	การจราจรนอกตารางระบุกลุ่มที่ไม่มีในรายการ AI: รถเหล่านั้นจะไม่ปรากฏ เพิ่มกลุ่มใน แผนที่ > การจราจรและ AI หรือ "แก้ไข" จะคัดลอกจากแผนที่ของ OMSI 2 เองถ้ามี
+A stop of the timetable that no trip calls at. Nothing is wrong, it is only not used yet.	ป้ายในตารางเวลาที่ไม่มีเที่ยวใดจอด ไม่มีอะไรผิด แค่ยังไม่ได้ใช้
+A chrono scenario takes away, retypes or relabels something that is no longer on the map (it was deleted or its IDCode changed): that change does nothing. Open Map > Chrono scenarios, the scenario's properties, and take the change out.	ฉากตามเวลาลบ เปลี่ยนชนิด หรือเปลี่ยนป้ายของสิ่งที่ไม่อยู่บนแผนที่แล้ว (ถูกลบหรือ IDCode เปลี่ยน): การเปลี่ยนแปลงนั้นไม่ทำอะไร เปิด แผนที่ > ฉากตามเวลา คุณสมบัติของฉาก แล้วลบการเปลี่ยนแปลงออก
+A tile holds far more objects than the stock maps' tiles (up to some 600): the game may stutter when it loads it or looks across it. Thin out a wood planted too densely (Plant brush, Clear) or plant it with more space between the trees.	ไทล์มีวัตถุมากกว่าไทล์ของแผนที่มาตรฐานมาก (ราว 600): เกมอาจกระตุกตอนโหลดหรือมองข้าม ลดป่าที่หนาแน่นเกินไป (แปรงปลูก, ล้าง) หรือปลูกให้ห่างขึ้น
+Street lamps stand on a tile the game does not light from its lamps ([variable_terrainlightmap] is off): at night the ground under them stays dark (unless the tile's light map file was made by OMSI 2's editor). "Fix" turns it on, as on nearly every tile of the stock maps.	เสาไฟตั้งอยู่บนไทล์ที่เกมไม่ได้ให้แสงจากเสาไฟ ([variable_terrainlightmap] ปิดอยู่): กลางคืนพื้นใต้เสาจะมืด (เว้นแต่ไฟล์แผนที่แสงของไทล์สร้างด้วยตัวแก้ไขของ OMSI 2) "แก้ไข" จะเปิดให้ เหมือนเกือบทุกไทล์ของแผนที่มาตรฐาน
+An object takes its state ([varparent]) from an object no longer on the map: a signal head stays dark, a display blank. Link it to another in its properties (Linked objects), or "Fix" forgets the link.	วัตถุรับสถานะ ([varparent]) จากวัตถุที่ไม่อยู่บนแผนที่แล้ว: หัวสัญญาณจะดับ จอแสดงผลว่าง เชื่อมกับอันอื่นในคุณสมบัติ (วัตถุที่เชื่อมโยง) หรือ "แก้ไข" จะลบลิงก์
+A traffic light's signal head takes its light from a crossing's program ([varparent]); this one is linked to none while others like it are, so it stays dark in the game. Select it and link it in its properties (Linked objects).	หัวสัญญาณไฟจราจรรับไฟจากโปรแกรมของทางแยก ([varparent]); อันนี้ไม่ได้เชื่อมกับอะไร ขณะที่อันอื่นเชื่อมแล้ว ในเกมจึงดับอยู่ เลือกแล้วเชื่อมในคุณสมบัติ (วัตถุที่เชื่อมโยง)
+A depot file (.hof) gives the buses their destinations, the stop names on their displays and the routes their IBIS knows. Without one the signs stay empty and the IBIS knows no line. "Fix" makes it from the map's lines, or adds what the lines need to the map's own (Map > Depot files to see and change it).	ไฟล์ดีโป (.hof) ให้ปลายทาง ชื่อป้ายบนจอ และเส้นทางที่ IBIS รู้จักแก่รถบัส ถ้าไม่มี ป้ายปลายทางจะว่างและ IBIS ไม่รู้จักสายใดเลย "แก้ไข" จะสร้างจากสายของแผนที่ หรือเพิ่มสิ่งที่สายต้องการลงในไฟล์ของแผนที่เอง (แผนที่ > ไฟล์ดีโป เพื่อดูและแก้ไข)
+A signal route names a signal or track pieces no longer on the map: the signal may never clear. Open Map > Signal routes and take the track again, or delete the route.	เส้นทางสัญญาณอ้างถึงสัญญาณหรือชิ้นทางที่ไม่อยู่บนแผนที่แล้ว: สัญญาณอาจไม่เปิดเลย เปิด แผนที่ > เส้นทางสัญญาณ แล้วเลือกทางใหม่ หรือลบเส้นทาง
+font	ฟอนต์
+used	ใช้อยู่
+in	ใน
+a ground texture of the map	พื้นผิวพื้นดินของแผนที่
+splines	สไปลน์
+apart	ห่างกัน
+spline	สไปลน์
+goes on into	ต่อไปยัง
+no road near	ไม่มีถนนใกล้เคียง
+from the road	จากถนน
+start point	จุดเริ่มต้น
+object	วัตถุ
+The map has no start point	แผนที่ไม่มีจุดเริ่มต้น
+things have it	สิ่งที่ใช้รหัสนี้
+highest in use:	ค่าสูงสุดที่ใช้:
+tile	ไทล์
+no .terrain file: flat	ไม่มีไฟล์ .terrain: เรียบ
+objects	วัตถุ
+lamps	เสาไฟ
+The map has no depot file	แผนที่ไม่มีไฟล์ดีโป
+the buses show no destination	รถบัสไม่แสดงปลายทาง
+named by the map's depot, but found nowhere	ระบุโดยดีโปของแผนที่ แต่ไม่พบที่ไหนเลย
+knows none of the	ไม่รู้จักเลยจาก
+lacks	ขาด
+destinations of the lines	ปลายทางของสาย
+the lines need	สายต้องการ
+destinations	ปลายทาง
+stops	ป้าย
+routes	เส้นทาง
+tour	ทัวร์
+no depot named	ไม่ได้ระบุดีโป
+not in the AI lists:	ไม่อยู่ในรายการ AI:
+the stop has no object:	ป้ายไม่มีวัตถุ:
+no road beside	ไม่มีถนนข้าง
+no way	ไม่มีเส้นทาง
+no way found	ไม่พบเส้นทาง
+Route	เส้นทาง
+gone	หายไป
+changes of nothing	การเปลี่ยนแปลงที่ไม่มีผล
+time	ครั้ง
+times	ครั้ง
+Fix from the map check	แก้ไขจากการตรวจสอบแผนที่
+Car groups from OMSI 2's maps	กลุ่มรถจากแผนที่ของ OMSI 2
+A depot for the tour	ดีโปสำหรับทัวร์
+A depot file from the lines	ไฟล์ดีโปจากสาย
+Depot file: what the lines need	ไฟล์ดีโป: สิ่งที่สายต้องการ
+Map check	ตรวจสอบแผนที่
+Check again	ตรวจอีกครั้ง
+Checking the map…	กำลังตรวจสอบแผนที่…
+errors	ข้อผิดพลาด
+warnings	คำเตือน
+notes	หมายเหตุ
+Nothing found: the map looks fine.	ไม่พบอะไร: แผนที่ปกติดี
+Fix all	แก้ไขทั้งหมด
+Join	เชื่อม
+Fix	แก้ไข
+Click to fly there	คลิกเพื่อบินไปที่นั่น
+Fixed:	แก้ไขแล้ว:
+it has parts openMapper does not write	มีส่วนที่ openMapper ไม่เขียน
+A host on the internet needs a password of at least	โฮสต์บนอินเทอร์เน็ตต้องมีรหัสผ่านอย่างน้อย
+Type a password, or choose explicitly to host without one	ใส่รหัสผ่าน หรือเลือกโฮสต์โดยไม่มีรหัสผ่านอย่างชัดเจน
+Could not listen on port	เปิดพอร์ตไม่ได้
+The way in for the tunnel could not be opened	เปิดทางเข้าสำหรับอุโมงค์ไม่ได้
+Hosting this map: others can join it now	เปิดแผนที่ให้แก้ไขร่วมกันแล้ว
+Multiplayer ended: another map was opened	สิ้นสุดโหมดผู้เล่นหลายคน: เปิดแผนที่อื่นแล้ว
+Somebody changed this first: your edit was put back	มีคนแก้ไขสิ่งนี้ก่อน: การแก้ไขของคุณถูกย้อนกลับ
+The host takes no more: the edit is too big, or the session holds as much as it may. Your edit was put back	โฮสต์ไม่รับเพิ่มแล้ว: การแก้ไขใหญ่เกินไป หรือเซสชันเต็มตามที่อนุญาต การแก้ไขของคุณถูกย้อนกลับ
+That lies too far from the map for this session: your edit was put back	ตำแหน่งนั้นไกลจากแผนที่เกินไปสำหรับเซสชันนี้: การแก้ไขของคุณถูกย้อนกลับ
+tiles	ไทล์
+changed what you were editing: it is as they left it	เปลี่ยนสิ่งที่คุณกำลังแก้ไข: คงไว้ตามที่เขาทิ้งไว้
+The timetable, the traffic and the descriptions are the host's in multiplayer: your change was put back	ตารางเวลา การจราจร และคำอธิบายเป็นของโฮสต์ในโหมดผู้เล่นหลายคน: การเปลี่ยนแปลงของคุณถูกย้อนกลับ
+Your conflicting edit was kept	เก็บการแก้ไขที่ขัดแย้งของคุณไว้แล้ว
+Could not keep your conflicting edit; multiplayer stopped	เก็บการแก้ไขที่ขัดแย้งของคุณไว้ไม่ได้; หยุดโหมดผู้เล่นหลายคนแล้ว
+Too much of the others' work came in while your edit was held open: multiplayer stopped. The map stays open; it can be saved as a copy.	งานของคนอื่นเข้ามามากเกินไปขณะที่การแก้ไขของคุณค้างอยู่: หยุดโหมดผู้เล่นหลายคนแล้ว แผนที่ยังเปิดอยู่ บันทึกเป็นสำเนาได้
+The connection to the host was lost. The map stays open; it can be saved as a copy.	ขาดการเชื่อมต่อกับโฮสต์ แผนที่ยังเปิดอยู่ บันทึกเป็นสำเนาได้
+No OMSI 2 installation: the map has nowhere to go	ไม่มีการติดตั้ง OMSI 2: แผนที่ไม่มีที่ให้ไป
+The host sent no map	โฮสต์ไม่ได้ส่งแผนที่มา
+The host's map could not be read	อ่านแผนที่ของโฮสต์ไม่ได้
+No connection	ไม่มีการเชื่อมต่อ
+That address is not an openMapper host	ที่อยู่นั้นไม่ใช่โฮสต์ openMapper
+Wrong password	รหัสผ่านไม่ถูกต้อง
+The session is full	เซสชันเต็ม
+Type a name (up to 32 letters)	ใส่ชื่อ (ไม่เกิน 32 ตัวอักษร)
+The host has another version of openMapper	โฮสต์ใช้ openMapper คนละเวอร์ชัน
+Move forward	เดินหน้า
+Move back	ถอยหลัง
+Move left	ไปทางซ้าย
+Move right	ไปทางขวา
+Turn the camera left	หมุนกล้องไปทางซ้าย
+Turn the camera right	หมุนกล้องไปทางขวา
+Undo	เลิกทำ
+Redo	ทำซ้ำ
+Save	บันทึก
+Copy	คัดลอก
+Cut	ตัด
+Paste at the cursor	วางที่เคอร์เซอร์
+Duplicate	ทำซ้ำสำเนา
+Select all	เลือกทั้งหมด
+Find in the map	ค้นหาในแผนที่
+Search for a command	ค้นหาคำสั่ง
+Tool: Select	เครื่องมือ: เลือก
+Tool: Roads	เครื่องมือ: ถนน
+Tool: Objects	เครื่องมือ: วัตถุ
+Tool: Game logic	เครื่องมือ: ตรรกะเกม
+Tool: Terrain	เครื่องมือ: ภูมิประเทศ
+Tool: Paint	เครื่องมือ: ทาสี
+Tool: Tiles	เครื่องมือ: ไทล์
+Turn the object (Shift: the other way)	หมุนวัตถุ (Shift: ทิศตรงข้าม)
+Ruler	ไม้บรรทัด
+Knife	มีด
+Move handles	แฮนเดิลย้าย
+Rotate handles	แฮนเดิลหมุน
+Scale handles	แฮนเดิลปรับขนาด
+Edit the mesh (vertices, edges, faces)	แก้ไขเมช (จุดยอด ขอบ หน้า)
+Join the selected objects into one	รวมวัตถุที่เลือกเป็นชิ้นเดียว
+Build the planned road	สร้างถนนที่วางแผนไว้
+Tile grid on / off	เปิด / ปิดตารางไทล์
+Group the selection	จัดกลุ่มส่วนที่เลือก
+Ungroup	ยกเลิกการจัดกลุ่ม
+Look straight down, north up	มองลงตรง ๆ ทิศเหนืออยู่บน
+2D plan view on / off (3D: tilt and turn again)	เปิด / ปิดมุมมองแผนผัง 2D (3D: เอียงและหมุนอีกครั้ง)
+Catalogue on / off	เปิด / ปิดแค็ตตาล็อก
+Overview map on / off	เปิด / ปิดแผนที่ภาพรวม
+Lines window	หน้าต่างสาย
+Traffic window	หน้าต่างการจราจร
+Satellite and terrain window	หน้าต่างดาวเทียมและภูมิประเทศ
+Smaller brush	แปรงเล็กลง
+Larger brush	แปรงใหญ่ขึ้น
+Delete the selection	ลบส่วนที่เลือก
+Go to the selection	ไปที่ส่วนที่เลือก
+Test drive in openOMSI (Shift: from the camera)	ทดลองขับใน openOMSI (Shift: จากกล้อง)
+Save a picture of the view	บันทึกรูปภาพของมุมมอง
+The map's own (global.cfg)	ของแผนที่เอง (global.cfg)
+Description	คำอธิบาย
+Name in this language	ชื่อในภาษานี้
+Description in this language	คำอธิบายในภาษานี้
+Remove this language	ลบภาษานี้
+Not written yet: it is saved as soon as you type.	ยังไม่ได้เขียน: จะบันทึกทันทีที่คุณพิมพ์
+Edit description	แก้ไขคำอธิบาย
+just now	เมื่อสักครู่
+min ago	นาทีที่แล้ว
+h ago	ชม.ที่แล้ว
+Unsaved changes found	พบการแก้ไขที่ยังไม่ได้บันทึก
+openMapper was closed without saving the map	openMapper ถูกปิดโดยไม่ได้บันทึกแผนที่
+The changes kept by the autosave can be brought back. The map itself was not changed.	กู้คืนการแก้ไขที่เก็บโดยบันทึกอัตโนมัติได้ ตัวแผนที่เองไม่ได้เปลี่ยน
+Restore the changes	กู้คืนการแก้ไข
+Drop them	ทิ้ง
+Nothing comes after it to join	ไม่มีอะไรต่อจากนี้ให้เชื่อม
+The next piece runs the other way: reverse it first	ชิ้นถัดไปไปอีกทาง: กลับทิศก่อน
+The next piece lies on another tile	ชิ้นถัดไปอยู่บนอีกไทล์
+The two pieces are of different road types	สองชิ้นเป็นถนนคนละชนิด
+The two pieces have different settings (path rules, ground, skew)	สองชิ้นมีการตั้งค่าต่างกัน (กฎเส้นทาง พื้นดิน ความเอียง)
+A row of objects comes onto the next piece from another tile	แถววัตถุจากอีกไทล์ต่อเข้ามาบนชิ้นถัดไป
+The two pieces do not bend, climb or bank alike: joined they would change shape	สองชิ้นโค้ง ลาดขึ้น หรือเอียงไม่เหมือนกัน: เมื่อเชื่อมแล้วรูปทรงจะเปลี่ยน
+Earlier versions	เวอร์ชันก่อนหน้า
+Before every save, the files it replaces are kept (the last 10 saves). Going back puts the map as it was before that save; later changes go.	ก่อนบันทึกทุกครั้ง ไฟล์ที่จะถูกแทนที่จะถูกเก็บไว้ (10 ครั้งล่าสุด) การย้อนกลับจะคืนแผนที่เป็นสภาพก่อนการบันทึกครั้งนั้น การแก้ไขหลังจากนั้นจะหายไป
+No earlier versions yet: they appear once the map is saved again.	ยังไม่มีเวอร์ชันก่อนหน้า: จะปรากฏเมื่อบันทึกแผนที่อีกครั้ง
+before the save of	ก่อนการบันทึกเมื่อ
+Go back to this	ย้อนกลับไปที่นี้
+could not keep a backup, nothing was saved	เก็บข้อมูลสำรองไม่ได้ ไม่ได้บันทึกอะไร
+Red	แดง
+Yellow	เหลือง
+Green	เขียว
+file not found	ไม่พบไฟล์
+this object takes its model from a model file and cannot be edited here	วัตถุนี้ใช้โมเดลจากไฟล์โมเดลและแก้ไขที่นี่ไม่ได้
+the object has no mesh to edit	วัตถุไม่มีเมชให้แก้ไข
+cannot read the object	อ่านวัตถุไม่ได้
+Select	เลือก
+Terrain	ภูมิประเทศ
+Paint	ระบายสี
+Roads	ถนน
+Objects	วัตถุ
+Game logic	ตรรกะเกม
+Tiles	ไทล์
+Raise	ยก
+Lower	ลด
+Smooth	ทำให้เรียบ
+Flatten	ปรับระดับ
+Roughen	ทำขรุขระ
+Ramp	ทางลาด
+Lake / river	ทะเลสาบ / แม่น้ำ
+Start points	จุดเริ่มต้น
+Bus stops	ป้ายรถบัส
+Car parks	ที่จอดรถ
+AI paths	เส้นทาง AI
+Other	อื่น ๆ
+Where the bus appears when a drive starts. Put it on a road or in the depot, facing the way to drive.	ที่ที่รถบัสปรากฏตอนเริ่มขับ วางบนถนนหรือในดีโป หันไปทางที่จะขับ
+Where passengers wait. Put it beside the road at the kerb; name it on the right.	ที่ที่ผู้โดยสารรอ วางข้างถนนที่ขอบทาง; ตั้งชื่อทางขวา
+Where parked cars stand. Click for one; with a row on, click the start and end of a row along the kerb.	ที่ที่รถจอดอยู่ คลิกเพื่อวางหนึ่งคัน; เมื่อเปิดโหมดแถว คลิกจุดเริ่มและจุดสิ้นสุดของแถวตามขอบทาง
+Lanes the AI's cars or people follow. Draw like a road: it snaps to lane ends (green: joined, red: dead end) and along lanes. A car path runs the way you draw it.	เลนที่รถหรือคนของ AI ใช้ วาดเหมือนถนน: ดูดติดปลายเลน (เขียว: เชื่อมแล้ว แดง: ทางตัน) และตามเลน เส้นทางรถไปตามทิศที่คุณวาด
+Sound sources, help arrows and other helpers the game does not show.	แหล่งเสียง ลูกศรบอกทาง และตัวช่วยอื่นที่เกมไม่แสดง
+Move (V): drag an arrow along X, Y or Z, a square in its plane, the circle over the ground	ย้าย (V): ลากลูกศรตามแกน X, Y หรือ Z ลากสี่เหลี่ยมในระนาบของมัน ลากวงกลมบนพื้น
+Rotate (C): drag a ring to turn about X, Y or Z	หมุน (C): ลากวงแหวนเพื่อหมุนรอบแกน X, Y หรือ Z
+Scale (X): drag an arrow to scale along that axis, a square for two, the circle for all three	ปรับขนาด (X): ลากลูกศรเพื่อปรับตามแกนนั้น สี่เหลี่ยมสำหรับสองแกน วงกลมสำหรับทั้งสามแกน
+These roads have no lanes of their own to take apart (rails stay as they are)	ถนนเหล่านี้ไม่มีเลนของตัวเองให้แยก (ราง คงเดิม)
+Make the lanes editable	ทำให้เลนแก้ไขได้
+Roads whose lanes are now editable:	ถนนที่เลนแก้ไขได้แล้ว:
+Flatten the terrain	ปรับภูมิประเทศให้เรียบ
+Select two things or more to group them	เลือกตั้งแต่สองอย่างขึ้นไปเพื่อจัดกลุ่ม
+Group	กลุ่ม
+Grouped:	จัดกลุ่มแล้ว:
+Ungrouped	ยกเลิกการจัดกลุ่มแล้ว
+Rename group	เปลี่ยนชื่อกลุ่ม
+Ground levelled under objects:	ปรับระดับพื้นใต้วัตถุแล้ว:
+Move	ย้าย
+No object clicked: nothing linked	ไม่ได้คลิกวัตถุ: ไม่มีการเชื่อม
+Too near the road's end to cut it there	ใกล้ปลายถนนเกินไปที่จะตัดตรงนี้
+No road under the cursor	ไม่มีถนนใต้เคอร์เซอร์
+Ramp:	ทางลาด:
+Shape terrain	ปั้นภูมิประเทศ
+Paint ground	ทาสีพื้น
+Clear plants	ล้างพืช
+Plant	ปลูก
+Rotate selection	หมุนส่วนที่เลือก
+Rotate	หมุน
+Delete object	ลบวัตถุ
+Delete road	ลบถนน
+Delete selection	ลบส่วนที่เลือก
+Pick an object in the catalogue first	เลือกวัตถุในแค็ตตาล็อกก่อน
+There is no tile here: add one with the Tiles tool	ไม่มีไทล์ตรงนี้: เพิ่มด้วยเครื่องมือไทล์
+Place object	วางวัตถุ
+New stop	ป้ายใหม่
+Linked to	เชื่อมกับ
+choose its light in its properties	เลือกสัญญาณไฟในคุณสมบัติของมัน
+Trees from OpenStreetMap	ต้นไม้จาก OpenStreetMap
+Plant an area	ปลูกในพื้นที่
+Buildings from OpenStreetMap	อาคารจาก OpenStreetMap
+Stops from OpenStreetMap	ป้ายจาก OpenStreetMap
+Stop	ป้ายหยุดรถ
+Pick a car park in the list first	เลือกที่จอดรถในรายการก่อน
+Place car parks	วางที่จอดรถ
+Car parks placed:	วางที่จอดรถแล้ว:
+Pick a road type in the catalogue first	เลือกชนิดถนนในแค็ตตาล็อกก่อน
+That bend is too sharp	โค้งนั้นหักเกินไป
+Switch made	สร้างประแจสลับแล้ว
+Junctions made:	สร้างทางแยกแล้ว:
+The road leaves the map: add tiles there first	ถนนออกนอกแผนที่: เพิ่มไทล์ตรงนั้นก่อน
+Build road	สร้างถนน
+Roads from OpenStreetMap	ถนนจาก OpenStreetMap
+Pick a tree in the catalogue (or add some to the mix) first	เลือกต้นไม้ในแค็ตตาล็อกก่อน (หรือเพิ่มเข้าในส่วนผสม)
+Right-click a tile to remove it	คลิกขวาที่ไทล์เพื่อลบ
+New tiles go next to the map	ไทล์ใหม่จะวางติดกับแผนที่
+Add tile	เพิ่มไทล์
+Water	น้ำ
+Paint detail	ความละเอียดการทาสี
+Ground layer order	ลำดับชั้นพื้นดิน
+Detail texture	พื้นผิวรายละเอียด
+Ground texture	พื้นผิวพื้นดิน
+Lamp light on the ground	แสงเสาไฟบนพื้น
+Add tiles	เพิ่มไทล์
+A map needs at least one tile	แผนที่ต้องมีไทล์อย่างน้อยหนึ่งชิ้น
+Remove tile	ลบไทล์
+Pick a point (a dot at an end or where pieces meet) to take it out	เลือกจุด (จุดที่ปลายหรือที่ชิ้นมาบรรจบ) เพื่อลบออก
+Remove a point of the path	ลบจุดของเส้นทาง
+Point taken out	ลบจุดแล้ว
+A path of one piece: Del with nothing picked deletes it	เส้นทางที่มีชิ้นเดียว: กด Del โดยไม่เลือกจุดจะลบทั้งเส้น
+Extrude	ดันขึ้น
+Inset	อินเซ็ต
+Bevel	ลบมุม
+Loop cut	ตัดเป็นวง
+click: done, right click / Esc: cancel, wheel: segments	คลิก: เสร็จ, คลิกขวา / Esc: ยกเลิก, ล้อเมาส์: จำนวนส่วน
+Scale	ปรับขนาด
+Roads are not scaled: change their length and width in their properties	ถนนปรับขนาดไม่ได้: เปลี่ยนความยาวและความกว้างในคุณสมบัติ
+Only the objects are scaled, the roads stay	ปรับขนาดเฉพาะวัตถุ ถนนคงเดิม
+Could not scale	ปรับขนาดไม่ได้
+Too near the end: drag the end's dot instead	ใกล้ปลายเกินไป: ลากจุดที่ปลายแทน
+Add a point to the path	เพิ่มจุดให้เส้นทาง
+Point added: drag the dot where the pieces meet	เพิ่มจุดแล้ว: ลากจุดที่ชิ้นมาบรรจบ
+Reshape road	ปรับรูปทรงถนน
+Selected:	เลือกแล้ว:
+Copied:	คัดลอกแล้ว:
+Nothing copied yet	ยังไม่ได้คัดลอกอะไร
+Paste	วาง
+Level the ground	ปรับระดับพื้นดิน
+Turn objects	หมุนวัตถุ
+Copies in a row	สำเนาเป็นแถว
+Left out (off the map):	ข้ามไป (นอกแผนที่):
+Pasted (the rest is off the map):	วางแล้ว (ที่เหลืออยู่นอกแผนที่):
+Edit object	แก้ไขวัตถุ
+Lean with the ground	เอียงตามพื้น
+Stand upright	ตั้งตรง
+Change height	เปลี่ยนความสูง
+Change road type	เปลี่ยนชนิดถนน
+The selected roads are not one chain (they branch or leave gaps)	ถนนที่เลือกไม่ได้ต่อเป็นสายเดียว (แตกแขนงหรือมีช่องว่าง)
+Even slope	ความลาดสม่ำเสมอ
+Lay on the ground	วางบนพื้น
+Remove the rows of objects along it first (they are measured from its start)	ลบแถววัตถุตามถนนก่อน (วัดจากจุดเริ่มต้น)
+Reverse direction	กลับทิศทาง
+No road there to cut	ไม่มีถนนตรงนั้นให้ตัด
+Cut the road	ตัดถนน
+Cut in two: each piece can now be changed on its own	ตัดเป็นสองส่วน: แก้ไขแต่ละชิ้นแยกกันได้แล้ว
+Join the pieces	เชื่อมชิ้น
+Joined into one piece	เชื่อมเป็นชิ้นเดียวแล้ว
+Parallel copy	สำเนาขนาน
+Overhead wire	สายไฟเหนือหัว
+Back into the map	กลับเข้าแผนที่
+Hang an object	แขวนวัตถุ
+Link to an object	เชื่อมกับวัตถุ
+Unlink	เลิกเชื่อม
+That object already takes its state from this one	วัตถุนั้นรับสถานะจากอันนี้อยู่แล้ว
+Linked	เชื่อมแล้ว
+Signal head's light	ไฟหัวสัญญาณ
+Path rules	กฎเส้นทาง
+Replace objects	แทนที่วัตถุ
+Edit road	แก้ไขถนน
+Roads that could not follow the junction (too sharp a bend):	ถนนที่ตามทางแยกไม่ได้ (โค้งหักเกินไป):
+Edit junction	แก้ไขทางแยก
+Make the junction again	สร้างทางแยกใหม่
+Make the junctions again	สร้างทางแยกใหม่ทั้งหมด
+Pick an object in the Objects tool's catalogue first	เลือกวัตถุในแค็ตตาล็อกของเครื่องมือวัตถุก่อน
+The road is too short for that	ถนนสั้นเกินไปสำหรับสิ่งนั้น
+Objects along the road	วัตถุตามถนน
+Rows of objects added:	เพิ่มแถววัตถุแล้ว:
+Edit row of objects	แก้ไขแถววัตถุ
+Remove row of objects	ลบแถววัตถุ
+Remove rows of objects	ลบแถววัตถุ
+Roundabout built; roads joined to it:	สร้างวงเวียนแล้ว; ถนนที่เชื่อมเข้า:
+This road type carries traffic both ways: pick a one-way road for a proper roundabout	ถนนชนิดนี้รับการจราจรสองทาง: เลือกถนนทางเดียวเพื่อวงเวียนที่ถูกต้อง
+Start point: where the bus appears in openOMSI	จุดเริ่มต้น: ที่ที่รถบัสปรากฏใน openOMSI
+Bus stop: name it in the panel on the right	ป้ายรถบัส: ตั้งชื่อในแผงทางขวา
+openOMSI stopped with an error	openOMSI หยุดทำงานด้วยข้อผิดพลาด
+Check in openOMSI	ตรวจสอบใน openOMSI
+The saved map run by the game itself, unseen, with its own checks; the picture is the game's, from your view	แผนที่ที่บันทึกแล้วถูกเกมรันเองโดยไม่แสดงหน้าต่าง พร้อมการตรวจสอบของเกม ภาพเป็นของเกม จากมุมมองของคุณ
+Every tile (slower on a big map)	ทุกไทล์ (ช้าลงบนแผนที่ใหญ่)
+Run again	รันอีกครั้ง
+openOMSI is loading the map…	openOMSI กำลังโหลดแผนที่…
+Nothing wrong found	ไม่พบปัญหา
+Problems found:	พบปัญหา:
+Go there	ไปที่นั่น
+of the places named lie at the map's edge or a road's dead end (greyed): the game measures a lane's last point on the road's very edge, and a bus at the end stands over it; nothing to mend	ของสถานที่ที่ระบุอยู่ที่ขอบแผนที่หรือปลายตันของถนน (สีเทา): เกมวัดจุดสุดท้ายของเลนที่ขอบถนนพอดี และรถบัสที่ปลายทางอยู่เหนือจุดนั้น; ไม่ต้องแก้
+The game said nothing about the map	เกมไม่ได้แจ้งอะไรเกี่ยวกับแผนที่
+The game's whole output	ผลลัพธ์ทั้งหมดของเกม
+no key entered	ไม่ได้ใส่คีย์
+the server refused the key	เซิร์ฟเวอร์ไม่ยอมรับคีย์
+too many requests, try again later	คำขอมากเกินไป ลองใหม่ภายหลัง
+No connection to the server: are you online?	เชื่อมต่อเซิร์ฟเวอร์ไม่ได้: ออนไลน์อยู่หรือไม่?
+Enter your Google key first	ใส่คีย์ Google ก่อน
+OpenStreetMap's servers are busy: try again in a minute	เซิร์ฟเวอร์ OpenStreetMap ไม่ว่าง: ลองใหม่ในอีกสักครู่
+The area is too large for this zoom	พื้นที่ใหญ่เกินไปสำหรับระดับซูมนี้
+Cancelled	ยกเลิกแล้ว
+Stopped by an internal error (see the log)	หยุดเพราะข้อผิดพลาดภายใน (ดูบันทึก)
+No source has imagery here	ไม่มีแหล่งใดมีภาพถ่ายที่นี่
+drawn from OpenStreetMap data: sharp, with names	วาดจากข้อมูล OpenStreetMap: คมชัด มีชื่อ
+terrain heights, no key needed	ความสูงภูมิประเทศ ไม่ต้องใช้คีย์
+needs your own free key	ต้องใช้คีย์ฟรีของคุณเอง
+no key needed	ไม่ต้องใช้คีย์
+the picture is too small	รูปภาพเล็กเกินไป
+Import height map	นำเข้าแผนที่ความสูง
+Height map	แผนที่ความสูง
+The ground as a grey picture, to shape in another program and bring back	พื้นดินเป็นภาพสีเทา เพื่อปั้นในโปรแกรมอื่นแล้วนำกลับมา
+Export…	ส่งออก…
+Import…	นำเข้า…
+over	ตลอด
+a pixel	ต่อพิกเซล
+Black adds	สีดำเพิ่ม
+Black is	สีดำคือ
+White adds	สีขาวเพิ่ม
+White is	สีขาวคือ
+Smoothing	การทำให้เรียบ
+Replace the ground	แทนที่พื้นดิน
+Add to it	เพิ่มเข้าไป
+Roads and objects keep their heights: best done before building	ถนนและวัตถุคงความสูงเดิม: ควรทำก่อนสร้าง
+An 8-bit picture has only 256 steps of height: smoothing hides them	ภาพ 8 บิตมีความสูงเพียง 256 ระดับ: การทำให้เรียบจะซ่อนระดับเหล่านั้น
+Lay it on the map	วางบนแผนที่
+Cancel	ยกเลิก
+Height map laid over	วางแผนที่ความสูงทับบน
+Export the height map	ส่งออกแผนที่ความสูง
+Height map written	เขียนแผนที่ความสูงแล้ว
+The height map could not be written	เขียนแผนที่ความสูงไม่ได้
+A height map for the whole map	แผนที่ความสูงของทั้งแผนที่
+The picture could not be read	อ่านรูปภาพไม่ได้
+IBIS and roller blind	IBIS และป้ายม้วน
+Front sign, line 1	ป้ายหน้า บรรทัด 1
+Front sign, line 2	ป้ายหน้า บรรทัด 2
+Side sign	ป้ายข้าง
+Roller blind texture	พื้นผิวป้ายม้วน
+IBIS 2 (20 letters)	IBIS 2 (20 ตัวอักษร)
+Extra sign	ป้ายเสริม
+Krüger picture	ภาพ Krüger
+Text	ข้อความ
+IBIS (16 letters)	IBIS (16 ตัวอักษร)
+Display, line 1	จอแสดงผล บรรทัด 1
+Display, line 2	จอแสดงผล บรรทัด 2
+Full name (20 letters)	ชื่อเต็ม (20 ตัวอักษร)
+Service trip	เที่ยวเข้าดีโป
+Special trip	เที่ยวพิเศษ
+Blank	ว่าง
+openMapper cannot import this kind of file (use a folder, .zip, .obj, .gltf, .glb, .fbx, .x, .o3d or a picture)	openMapper นำเข้าไฟล์ชนิดนี้ไม่ได้ (ใช้โฟลเดอร์, .zip, .obj, .gltf, .glb, .fbx, .x, .o3d หรือรูปภาพ)
+Mod installed, files:	ติดตั้งม็อดแล้ว ไฟล์:
+Objects added to	เพิ่มวัตถุไปที่
+Road types added to	เพิ่มชนิดถนนไปที่
+Models imported:	นำเข้าโมเดลแล้ว:
+Nothing to import was found in this folder	ไม่พบสิ่งที่จะนำเข้าในโฟลเดอร์นี้
+The model has no triangles	โมเดลไม่มีสามเหลี่ยม
+Model imported:	นำเข้าโมเดลแล้ว:
+The .obj file has no faces	ไฟล์ .obj ไม่มีหน้า
+no base colour picture among them	ไม่มีภาพสีพื้นฐานในนั้น
+The picture cannot be read	อ่านรูปภาพไม่ได้
+Picture made into a standee:	แปลงรูปภาพเป็นป้ายตัดขอบแล้ว:
+Picture made into a sign:	แปลงรูปภาพเป็นป้ายแล้ว:
+Trees	ต้นไม้
+Stops and start points	ป้ายและจุดเริ่มต้น
+Junctions	ทางแยก
+Tracks	ราง
+Footpaths	ทางเท้า
+Fences, walls, kerbs	รั้ว กำแพง ขอบทาง
+Technical (AI, helpers)	เทคนิค (AI, ตัวช่วย)
+This map lies on the world's grid ([worldcoordinates]): its tiles cannot be taken yet	แผนที่นี้อยู่บนตารางโลก ([worldcoordinates]): ยังเอาไทล์ไปไม่ได้
+This map lies on the world's grid ([worldcoordinates]): tiles cannot be added from another yet	แผนที่นี้อยู่บนตารางโลก ([worldcoordinates]): ยังเพิ่มไทล์จากแผนที่อื่นไม่ได้
+Tiles from another map	ไทล์จากแผนที่อื่น
+Union	รวม
+Difference (cut out)	ลบออก (ตัดออก)
+Intersection	ส่วนตัดกัน
+Slice (keep both pieces)	แบ่งตัด (เก็บทั้งสองชิ้น)
+One object of all the selected, their insides gone	วัตถุเดียวจากทั้งหมดที่เลือก โดยไม่มีด้านใน
+The other selected objects cut out of the one shown in the properties	วัตถุอื่นที่เลือกถูกตัดออกจากอันที่แสดงในคุณสมบัติ
+Only what all the selected share	เฉพาะส่วนที่ทุกวัตถุที่เลือกมีร่วมกัน
+The first object cut by the others into what is outside them and what is inside	วัตถุแรกถูกวัตถุอื่นตัดเป็นส่วนนอกและส่วนใน
+select an object first	เลือกวัตถุก่อน
+Make editable	ทำให้แก้ไขได้
+Make single	ทำสำเนาเดี่ยว
+the object has only one part	วัตถุมีเพียงส่วนเดียว
+Separate parts	แยกเป็นส่วน
+select two or more objects to join	เลือกวัตถุตั้งแต่สองชิ้นขึ้นไปเพื่อรวม
+Join objects	รวมวัตถุ
+select two or more objects: the one shown in the properties and what acts on it	เลือกวัตถุตั้งแต่สองชิ้นขึ้นไป: อันที่แสดงในคุณสมบัติ และอันที่กระทำกับมัน
+nothing is left: the objects do not overlap that way	ไม่เหลืออะไร: วัตถุไม่ทับกันแบบนั้น
+The file has no scene	ไฟล์ไม่มีฉาก
+The FBX file has no meshes	ไฟล์ FBX ไม่มีเมช
+Main roads	ถนนสายหลัก
+Streets	ถนนสายย่อย
+Service roads	ถนนบริการ
+Tram tracks	รางรถราง
+Railway tracks	รางรถไฟ
+motorway, trunk, primary, secondary	ทางด่วน ทางหลวง สายหลัก สายรอง
+tertiary, residential, unclassified	สายตติยภูมิ ย่านที่อยู่อาศัย ไม่จัดประเภท
+yards, car parks, depots	ลาน ที่จอดรถ ดีโป
+each track on its own; branches are joined with switches by hand	แต่ละรางแยกกัน; เชื่อมกิ่งด้วยประแจสลับด้วยมือ
+main lines without sidings; branches are joined with switches by hand	ทางสายหลักไม่มีทางแยก; เชื่อมกิ่งด้วยประแจสลับด้วยมือ
+Water from OpenStreetMap	น้ำจาก OpenStreetMap
+Give a distance	ระบุระยะทาง
+The bend is too tight for that distance on its inner side	โค้งแคบเกินไปสำหรับระยะทางนี้ด้านใน
+The copy leaves the map: add tiles there first	สำเนาออกนอกแผนที่: เพิ่มไทล์ตรงนั้นก่อน
+Made with openMapper	สร้างด้วย openMapper
+Low (no shadows, rough edges, 3 km view)	ต่ำ (ไม่มีเงา ขอบหยาบ ทัศนวิสัย 3 กม.)
+Medium (softer shadows, 8 km view)	กลาง (เงานุ่มขึ้น ทัศนวิสัย 8 กม.)
+High	สูง
+This end belongs to a junction: select the junction and move it, the road follows	ปลายนี้เป็นของทางแยก: เลือกทางแยกแล้วย้าย ถนนจะตามไป
+Paint along the roads	ทาสีตามถนน
+Market	ตลาด
+Station	สถานีรถไฟ
+Depot	ดีโป
+this object takes its model from a model file: it cannot be scaled	วัตถุนี้ใช้โมเดลจากไฟล์โมเดล: ปรับขนาดไม่ได้
+Not a GPX, KML or GeoJSON file	ไม่ใช่ไฟล์ GPX, KML หรือ GeoJSON
+No lines in the file	ไม่มีเส้นในไฟล์
+Language	ภาษา
+Interface size	ขนาดอินเทอร์เฟซ
+File	ไฟล์
+New map…	แผนที่ใหม่…
+Open map…	เปิดแผนที่…
+Controls…	การควบคุม…
+Import assets…	นำเข้าแอสเซ็ต…
+Multiplayer…	ผู้เล่นหลายคน…
+OMSI 2 folder…	โฟลเดอร์ OMSI 2…
+Quit	ออก
+View	มุมมอง
+Help	ช่วยเหลือ
+Updates…	อัปเดต…
+About openMapper	เกี่ยวกับ openMapper
+OMSI 2 not found	ไม่พบ OMSI 2
+Map editor for openOMSI	ตัวแก้ไขแผนที่สำหรับ openOMSI
+openMapper builds maps from the content of an installed OMSI 2. Choose its folder (the one with Omsi.exe, maps and Vehicles).	openMapper สร้างแผนที่จากเนื้อหาของ OMSI 2 ที่ติดตั้งไว้ เลือกโฟลเดอร์ของมัน (ที่มี Omsi.exe, maps และ Vehicles)
+Choose OMSI 2 folder…	เลือกโฟลเดอร์ OMSI 2…
+Maps	แผนที่
+recent · OMSI 2	ล่าสุด · OMSI 2
+recent	ล่าสุด
+content folder	โฟลเดอร์เนื้อหา
+OMSI 2 (saved as copy)	OMSI 2 (บันทึกเป็นสำเนา)
+Open	เปิด
+Make a copy	ทำสำเนา
+A copy of the map in the content folder under a new name, to try something out	สำเนาของแผนที่ในโฟลเดอร์เนื้อหาภายใต้ชื่อใหม่ เพื่อลองอะไรบางอย่าง
+Show in the file manager	แสดงในตัวจัดการไฟล์
+Move to openMapper's bin	ย้ายไปถังขยะของ openMapper
+Its folder goes into openMapper\\bin in the content folder, from where it can be put back by hand	โฟลเดอร์ของมันจะถูกย้ายไป openMapper\\bin ในโฟลเดอร์เนื้อหา และนำกลับมาด้วยมือได้จากที่นั่น
+Browse…	เรียกดู…
+Double-click a map to open it. Maps of OMSI 2 are saved as a copy into openOMSI's content folder; the original stays untouched.	ดับเบิลคลิกแผนที่เพื่อเปิด แผนที่ของ OMSI 2 จะถูกบันทึกเป็นสำเนาในโฟลเดอร์เนื้อหาของ openOMSI; ต้นฉบับไม่เปลี่ยน
+A simple map editor for openOMSI.	ตัวแก้ไขแผนที่แบบง่ายสำหรับ openOMSI
+Back to the 3D view (0)	กลับสู่มุมมอง 3D (0)
+The plan view from above, north up (0)	มุมมองแผนผังจากด้านบน ทิศเหนืออยู่บน (0)
+Recent maps	แผนที่ล่าสุด
+(none)	(ไม่มี)
+Export map for sharing…	ส่งออกแผนที่เพื่อแชร์…
+Export a plan of the map…	ส่งออกแผนผังของแผนที่…
+Earlier versions…	เวอร์ชันก่อนหน้า…
+Close map	ปิดแผนที่
+Edit	แก้ไข
+Edit history…	ประวัติการแก้ไข…
+Groups for other maps…	กลุ่มสำหรับแผนที่อื่น…
+Find in map…	ค้นหาในแผนที่…
+Search for a command…	ค้นหาคำสั่ง…
+Delete	ลบ
+Deselect	ยกเลิกการเลือก
+Tile grid	ตารางไทล์
+What the game does not show	สิ่งที่เกมไม่แสดง
+AI lanes	เลน AI
+Names of stops and start points	ชื่อป้ายและจุดเริ่มต้น
+Show	แสดง
+Roads and splines	ถนนและสไปลน์
+Overview map (M)	แผนที่ภาพรวม (M)
+Assets (B)	แอสเซ็ต (B)
+Flatten the terrain (roads follow)	ปรับภูมิประเทศให้เรียบ (ถนนตาม)
+Saved views…	มุมมองที่บันทึก…
+Go to selection	ไปที่ส่วนที่เลือก
+Camera	กล้อง
+Unity: right button looks round and W A S D fly, middle pans, Alt orbits	Unity: ปุ่มขวามองรอบ ๆ และ W A S D บิน ปุ่มกลางเลื่อน Alt โคจร
+Map editor: right button looks round and W A S D fly (Q down, E up), middle pans, the wheel zooms to the cursor, drag moves the map	ตัวแก้ไขแผนที่: ปุ่มขวามองรอบ ๆ และ W A S D บิน (Q ลง, E ขึ้น) ปุ่มกลางเลื่อน ล้อซูมเข้าหาเคอร์เซอร์ ลากเพื่อย้ายแผนที่
+Load 100 tiles at a time (like OMSI 2's editor)	โหลดทีละ 100 ไทล์ (เหมือนตัวแก้ไขของ OMSI 2)
+Time of day	ช่วงเวลา
+Plain day (as the game by day)	วันปกติ (เหมือนในเกมตอนกลางวัน)
+At an hour	ในชั่วโมงที่กำหนด
+Where the sun stands then, today, at the map's place (Map > Calendar and place); by night the moon	ตำแหน่งดวงอาทิตย์ในเวลานั้น วันนี้ ที่ตำแหน่งของแผนที่ (แผนที่ > ปฏิทินและสถานที่); กลางคืนเป็นดวงจันทร์
+Season	ฤดูกาล
+Summer	ฤดูร้อน
+Dry summer	หน้าร้อนแห้งแล้ง
+Spring	ฤดูใบไม้ผลิ
+Autumn	ฤดูใบไม้ร่วง
+Winter	ฤดูหนาว
+Snow	หิมะ
+Graphics quality	คุณภาพกราฟิก
+Tools	เครื่องมือ
+Road types and junctions…	ชนิดถนนและทางแยก…
+PBR maps for a picture…	แมป PBR สำหรับรูปภาพ…
+Map	แผนที่
+Map settings…	การตั้งค่าแผนที่…
+Calendar and place…	ปฏิทินและสถานที่…
+Signal routes…	เส้นทางสัญญาณ…
+Chrono scenarios…	ฉากตามเวลา…
+Ground textures…	พื้นผิวพื้นดิน…
+Check map…	ตรวจสอบแผนที่…
+Junctions made again:	สร้างทางแยกใหม่แล้ว:
+Lines and timetable…	สายและตารางเวลา…
+Traffic and AI…	การจราจรและ AI…
+Depot files (destinations)…	ไฟล์ดีโป (ปลายทาง)…
+Satellite and terrain…	ดาวเทียมและภูมิประเทศ…
+From OpenStreetMap…	จาก OpenStreetMap…
+GPS tracks to trace…	แทร็ก GPS สำหรับลากตาม…
+Tiles from another map…	ไทล์จากแผนที่อื่น…
+Test drive in openOMSI	ทดลองขับใน openOMSI
+Test drive in OMSI 2 (the original)…	ทดลองขับใน OMSI 2 (ต้นฉบับ)…
+Check in openOMSI…	ตรวจสอบใน openOMSI…
+Getting started	เริ่มต้นใช้งาน
+New map	แผนที่ใหม่
+Open a map	เปิดแผนที่
+Save (Ctrl+S): there are unsaved changes	บันทึก (Ctrl+S): มีการแก้ไขที่ยังไม่ได้บันทึก
+Save (Ctrl+S)	บันทึก (Ctrl+S)
+Import assets: a mod folder or .zip, a .obj / .x / .o3d model (or drop files on the window)	นำเข้าแอสเซ็ต: โฟลเดอร์ม็อดหรือ .zip โมเดล .obj / .x / .o3d (หรือลากไฟล์มาวางที่หน้าต่าง)
+Redo (Ctrl+Shift+Z)	ทำซ้ำ (Ctrl+Shift+Z)
+Tile grid (G)	ตารางไทล์ (G)
+Assets: every object and road type, with pictures (B)	แอสเซ็ต: ทุกวัตถุและชนิดถนน พร้อมรูปภาพ (B)
+Test drive	ทดลองขับ
+Save the map and drive it in openOMSI (F5)	บันทึกแผนที่แล้วขับใน openOMSI (F5)
+openOMSI was not found: install it to test maps	ไม่พบ openOMSI: ติดตั้งเพื่อทดสอบแผนที่
+Test drive from the start point nearest the view	ทดลองขับจากจุดเริ่มต้นที่ใกล้มุมมองที่สุด
+See this view in openOMSI	ดูมุมมองนี้ใน openOMSI
+loading	กำลังโหลด
+Edit mesh	แก้ไขเมช
+Shapes and lamps	รูปทรงและโคมไฟ
+Click beside the map to add a 300 × 300 m tile. Right-click a tile to remove it.	คลิกข้างแผนที่เพื่อเพิ่มไทล์ 300 × 300 ม. คลิกขวาที่ไทล์เพื่อลบ
+Area	พื้นที่
+A ring of tiles round the map	วงแหวนไทล์รอบแผนที่
+Every free place beside the map, corners too, gets a tile at the height of its neighbours	ทุกที่ว่างข้างแผนที่ รวมถึงมุม จะได้ไทล์ที่ความสูงเท่าเพื่อนบ้าน
+Tiles added:	เพิ่มไทล์แล้ว:
+Everything on the map, grouped by the folders its files lie in	ทุกอย่างบนแผนที่ จัดกลุ่มตามโฟลเดอร์ของไฟล์
+Click an object or a road in the view to see and change it on the right.	คลิกวัตถุหรือถนนในมุมมองเพื่อดูและแก้ไขทางขวา
+Line up with the nearest road (Shift: put it freely)	จัดแนวกับถนนที่ใกล้ที่สุด (Shift: วางอิสระ)
+On both sides of the road	ทั้งสองด้านของถนน
+A stop of the same name also goes at the kerb across the road, facing the other way	ป้ายชื่อเดียวกันจะวางที่ขอบทางฝั่งตรงข้ามด้วย หันไปอีกทาง
+In a row along a line	เป็นแถวตามเส้น
+Every	ทุก
+Draw new	วาดใหม่
+Edit existing	แก้ไขที่มีอยู่
+Click a path to pick it: every point is a dot to drag (the small ones in the middle of a piece bend it). Double-click the path to put a point in. Click a dot, then Del, to take that point out; Del with no dot picked deletes the whole path (Ctrl+Z brings it back). Lanes of roads and junctions belong to their road type: use Edit its AI lanes on the road.	คลิกเส้นทางเพื่อเลือก: ทุกจุดเป็นจุดกลมให้ลาก (จุดเล็กกลางชิ้นทำให้ชิ้นโค้ง) ดับเบิลคลิกเส้นทางเพื่อเพิ่มจุด คลิกจุดแล้วกด Del เพื่อลบจุดนั้น; กด Del โดยไม่เลือกจุดจะลบทั้งเส้นทาง (Ctrl+Z เพื่อกู้คืน) เลนของถนนและทางแยกเป็นของชนิดถนน: ใช้ แก้ไขเลน AI ของถนน บนถนน
+Cars	รถ
+People	คน
+Show these in the other tools too	แสดงสิ่งเหล่านี้ในเครื่องมืออื่นด้วย
+Show the AI's lanes in the other tools too	แสดงเลน AI ในเครื่องมืออื่นด้วย
+Everything	ทั้งหมด
+Search	ค้นหา
+Shape the ground under the road	ปรับพื้นดินใต้ถนน
+Go on drawing from the end of the road just built	วาดต่อจากปลายถนนที่เพิ่งสร้าง
+Join road ends, roads and junction pieces near the cursor	เชื่อมกับปลายถนน ถนน และชิ้นทางแยกใกล้เคอร์เซอร์
+Make junctions where roads meet	สร้างทางแยกที่ถนนมาบรรจบ
+Go on with the type of the road I start from	ต่อด้วยชนิดถนนที่ฉันเริ่มจาก
+Building with:	กำลังสร้างด้วย:
+nothing chosen	ยังไม่ได้เลือก
+Front at the roadside, back	ด้านหน้าหันเข้าหาถนน ระยะถอย
+Plant brush: sow trees by painting	แปรงพืช: หว่านต้นไม้ด้วยการทา
+Sow	หว่าน
+Clear	ล้าง
+With the brush	ด้วยแปรง
+In an outline	ตามเส้นขอบ
+Click round an area (a wood, a park, a garden) and it is filled at once, or cleared	คลิกล้อมพื้นที่ (ป่า สวนสาธารณะ สวน) แล้วจะเติมเต็มหรือล้างทันที
+About	ประมาณ
+plants (Enter: plant)	พืช (Enter: ปลูก)
+Size	ขนาด
+Apart	ระยะห่าง
+Sows the object chosen below. Right-click entries: "Add to the plant mix" to sow several at random. Clearing takes trees and the mix's objects.	หว่านวัตถุที่เลือกด้านล่าง คลิกขวาที่รายการ: "เพิ่มเข้าส่วนผสมพืช" เพื่อหว่านหลายอย่างแบบสุ่ม การล้างจะเอาต้นไม้และวัตถุในส่วนผสมออก
+Mix (picked at random):	ส่วนผสม (สุ่มเลือก):
+reading OMSI 2…	กำลังอ่าน OMSI 2…
+items	รายการ
+Nothing found	ไม่พบอะไร
+mod	ม็อด
+right-click: star it	คลิกขวา: ติดดาว
+Take out of the plant mix	เอาออกจากส่วนผสมพืช
+Add to the plant mix	เพิ่มเข้าส่วนผสมพืช
+Remove from favourites	เอาออกจากรายการโปรด
+Add to favourites	เพิ่มเข้ารายการโปรด
+Favourites	รายการโปรด
+Recently used	ใช้ล่าสุด
+(not in a folder)	(ไม่อยู่ในโฟลเดอร์)
+Strength	ความแรง
+Mode	โหมด
+Levels the ground to the height where you start dragging	ปรับพื้นให้เรียบเท่าความสูงที่เริ่มลาก
+Softens bumps and edges	ทำให้ความไม่เรียบและขอบนุ่มลง
+Raises the ground under the brush	ยกพื้นใต้แปรงขึ้น
+Lowers the ground under the brush	ลดพื้นใต้แปรงลง
+Gives flat ground the rolls and dips of a natural field; hold longer for more	ทำให้พื้นเรียบมีเนินและแอ่งแบบทุ่งธรรมชาติ; กดค้างนานขึ้นเพื่อให้มากขึ้น
+Paint a lake or a river: the ground is dug to a bed under the water's level (where you start the stroke, or the tile's water) and the tile gets water at that level. Water in OMSI is one level for a whole tile: another low place on the same tile shows it too	วาดทะเลสาบหรือแม่น้ำ: พื้นดินถูกขุดเป็นท้องน้ำต่ำกว่าระดับน้ำ (ที่เริ่มลาก หรือน้ำของไทล์) และไทล์จะมีน้ำที่ระดับนั้น น้ำใน OMSI มีระดับเดียวทั้งไทล์: ที่ต่ำอีกแห่งในไทล์เดียวกันก็จะแสดงน้ำด้วย
+Click where it starts, then where it ends: the ground between becomes one even slope as wide as the brush (an embankment, a ramp, a level bed)	คลิกที่จุดเริ่ม แล้วคลิกที่จุดสิ้นสุด: พื้นระหว่างนั้นจะเป็นทางลาดเรียบกว้างเท่าแปรง (คันดิน ทางลาด ฐานเรียบ)
+To a height	ถึงความสูง
+Flatten to the height typed instead of the one where the drag starts (a level square, a platform)	ปรับให้เรียบถึงความสูงที่พิมพ์ แทนความสูงที่เริ่มลาก (ลานเรียบ แท่น)
+Depth	ความลึก
+The water's level is set where a stroke starts: start at the bank.	ระดับน้ำตั้งที่จุดเริ่มลาก: เริ่มที่ริมฝั่ง
+Brush	แปรง
+Flatten the whole terrain	ปรับภูมิประเทศทั้งหมดให้เรียบ
+Every tile's ground levelled to the map's mean height; the roads, the AI paths and the junctions follow it. One undo step brings the relief back. (The satellite picture: View > Satellite overlay.)	พื้นของทุกไทล์ถูกปรับเป็นความสูงเฉลี่ยของแผนที่; ถนน เส้นทาง AI และทางแยกตามไป การเลิกทำหนึ่งครั้งจะคืนความสูงต่ำ (ภาพดาวเทียม: มุมมอง > ภาพดาวเทียมซ้อน)
+Ground layers	ชั้นพื้นดิน
+base ground	พื้นดินฐาน
+layer	ชั้น
+Add…	เพิ่ม…
+Remove	นำออก
+Up the list: drawn under the layers after it	ขึ้นในรายการ: วาดใต้ชั้นถัดไป
+Down the list: drawn over the layers before it	ลงในรายการ: วาดทับชั้นก่อนหน้า
+Texture	พื้นผิว
+The layer's picture; its painting stays	รูปภาพของชั้น; การทาสีของมันยังอยู่
+A fine grain laid over the texture, seen close up (OMSI's detail texture)	ลายละเอียดเล็กซ้อนบนพื้นผิว เห็นเมื่อดูใกล้ (พื้นผิวรายละเอียดของ OMSI)
+Click to choose another	คลิกเพื่อเลือกอันอื่น
+Repeats per tile	ซ้ำต่อไทล์
+Detail repeats	การซ้ำของรายละเอียด
+How finely this layer can be painted: texels across a tile (its masks are made again at the new size)	ทาชั้นนี้ละเอียดได้แค่ไหน: จำนวนเท็กเซลข้ามไทล์ (สร้างมาสก์ใหม่ตามขนาดใหม่)
+Edit ground texture	แก้ไขพื้นผิวพื้นดิน
+Erase	ลบ
+Remove ground texture	ลบพื้นผิวพื้นดิน
+Tile	ไทล์
+A water surface over the whole tile: it shows where the ground lies below it (lower the ground with the Terrain tool for a lake or a river)	ผิวน้ำคลุมทั้งไทล์: เห็นตรงที่พื้นอยู่ต่ำกว่า (ลดพื้นด้วยเครื่องมือภูมิประเทศเพื่อทำทะเลสาบหรือแม่น้ำ)
+at 	ที่
+Lamps light the ground at night	เสาไฟส่องพื้นตอนกลางคืน
+The game works out the light pools of the street lamps on and round this tile when it loads it ([variable_terrainlightmap]); off, it shows the tile's light map file as it is	เกมคำนวณแสงเสาไฟบนและรอบไทล์นี้ตอนโหลด ([variable_terrainlightmap]); เมื่อปิด จะแสดงไฟล์แผนที่แสงของไทล์ตามที่เป็น
+Edit history	ประวัติการแก้ไข
+Click a step to go back to just after it	คลิกขั้นตอนเพื่อย้อนกลับไปสถานะหลังจากนั้น
+Opened	เปิดแล้ว
+Properties	คุณสมบัติ
+Configure PBR	ตั้งค่า PBR
+Create PBR	สร้าง PBR
+Normal, roughness, metal and shadow maps made from the object's textures, tuned and written as openOMSI reads them	แมปนอร์มอล ความหยาบ โลหะ และเงา สร้างจากพื้นผิวของวัตถุ ปรับแต่งและเขียนในแบบที่ openOMSI อ่าน
+Type	ชนิด
+Hangs on	แขวนอยู่บน
+point	จุด
+Location	ตำแหน่ง
+East	ตะวันออก
+North	เหนือ
+Height above sea level	ความสูงเหนือระดับน้ำทะเล
+above the ground:	เหนือพื้น:
+OMSI keeps this object's height above the ground under it: moved elsewhere it stays as high above the ground there	OMSI เก็บความสูงของวัตถุนี้เหนือพื้นใต้มัน: เมื่อย้ายไปที่อื่นจะอยู่สูงเหนือพื้นที่นั่นเท่าเดิม
+Rotation	การหมุน
+Tilt forward (pitch)	เอียงไปข้างหน้า (พิตช์)
+Bank to the side (roll)	เอียงไปด้านข้าง (โรล)
+Heading	ทิศทาง (หัน)
+Turn it the way the nearest road runs beside it	หมุนตามทางที่ถนนใกล้ที่สุดข้างๆ วิ่งไป
+Stand it upright again	ตั้งตรงอีกครั้ง
+Picture	รูปภาพ
+Ratio	สัดส่วน
+Stop name	ชื่อป้าย
+This tree	ต้นไม้นี้
+Texts	ข้อความ
+Shown on the object (@ starts a new line)	แสดงบนวัตถุ (@ ขึ้นบรรทัดใหม่)
+Model	โมเดล
+Triangles	สามเหลี่ยม
+Parts	ส่วน
+Part	ส่วน
+triangles	สามเหลี่ยม
+colour only	สีเท่านั้น
+opaque	ทึบ
+cut out	ตัดขอบ
+blended	ผสมโปร่งใส
+How the texture's transparency is used: cut out for leaves and fences, blended for glass	วิธีใช้ความโปร่งใสของพื้นผิว: ตัดขอบสำหรับใบไม้และรั้ว ผสมโปร่งใสสำหรับกระจก
+Textures	พื้นผิว
+Normal, roughness, metal and shadow maps made from the road type's textures	แมปนอร์มอล ความหยาบ โลหะ และเงา สร้างจากพื้นผิวของชนิดถนน
+Length	ความยาว
+Radius	รัศมี
+right	ขวา
+left	ซ้าย
+straight	ตรง
+start	เริ่ม
+end	สิ้นสุด
+Mirrored	กลับด้านกระจก
+Skew	ความเอียง
+The start cut on a slant: 1 is 45° (two fences meeting at a corner: 1 and -1)	ปลายเริ่มตัดเฉียง: 1 คือ 45° (รั้วสองแนวบรรจบที่มุม: 1 และ -1)
+The end cut on a slant	ปลายสิ้นสุดตัดเฉียง
+Ground	พื้นดิน
+as it is	ตามเดิม
+cut away under it	ตัดออกใต้มัน
+cut, held at the end	ตัด คงไว้ที่ปลาย
+cut, held at the start	ตัด คงไว้ที่ต้น
+cut, held at both ends	ตัด คงไว้ทั้งสองปลาย
+A hole in the ground under it, as for a tunnel, an underpass or a pit (OMSI's terrain align)	รูในพื้นใต้มัน เช่นสำหรับอุโมงค์ ทางลอด หรือหลุม (terrain align ของ OMSI)
+Select the whole road	เลือกถนนทั้งเส้น
+Every piece linked on from this one (or double-click the road)	ทุกชิ้นที่ต่อจากชิ้นนี้ (หรือดับเบิลคลิกถนน)
+Join with the next piece	เชื่อมกับชิ้นถัดไป
+One piece again with the one after it, where the two make one curve	เป็นชิ้นเดียวอีกครั้งกับชิ้นถัดไป เมื่อสองชิ้นเป็นเส้นโค้งเดียวกัน
+Replace with	แทนที่ด้วย
+The object chosen in the Objects tool's catalogue takes this one's place	วัตถุที่เลือกในแค็ตตาล็อกของเครื่องมือวัตถุจะมาแทนที่อันนี้
+Go to	ไปที่
+Level ground	ปรับระดับพื้น
+The ground under it made level with its foot, blending in 3 m round it (a house on a slope)	พื้นใต้มันปรับให้เรียบเสมอฐาน กลืนกับพื้นรอบ 3 ม. (บ้านบนเนิน)
+All like it	ทั้งหมดที่เหมือนกัน
+Select every one of this type on the map	เลือกทุกอันของชนิดนี้บนแผนที่
+No road within 60 m	ไม่มีถนนภายใน 60 ม.
+Name	ชื่อ
+Folder	โฟลเดอร์
+Traffic	การจราจร
+left-hand	ขับชิดซ้าย
+No start point yet: place one (Game logic > Start points) so the bus has somewhere to appear in openOMSI.	ยังไม่มีจุดเริ่มต้น: วาง (ตรรกะเกม > จุดเริ่มต้น) เพื่อให้รถบัสมีที่ปรากฏตัวใน openOMSI
+None yet: openOMSI shows it where maps are chosen.	ยังไม่มี: openOMSI แสดงรูปนี้ตอนเลือกแผนที่
+Import your thumbnail	นำเข้ารูปย่อของคุณ
+Choose a picture: it is cut to 370 × 280 and becomes the map's picture (picture.jpg).	เลือกรูปภาพ: จะถูกตัดเป็น 370 × 280 และกลายเป็นรูปของแผนที่ (picture.jpg)
+Open the map with this view	เปิดแผนที่ด้วยมุมมองนี้
+The camera as it is now is where the map opens (here and in OMSI 2's editor).	กล้องตามที่เป็นอยู่ตอนนี้คือที่ที่แผนที่เปิด (ที่นี่และในตัวแก้ไขของ OMSI 2)
+Saved to	บันทึกไปที่
+Edit map	แก้ไขแผนที่
+Change the layer's texture	เปลี่ยนพื้นผิวของชั้น
+Change the layer's detail texture	เปลี่ยนพื้นผิวรายละเอียดของชั้น
+Controls	การควบคุม
+Keyboard	แป้นพิมพ์
+Click a key, then press the new one (Esc: leave it). A key already in use is taken from its command.	คลิกปุ่ม แล้วกดปุ่มใหม่ (Esc: คงเดิม) ปุ่มที่ใช้อยู่แล้วจะถูกดึงจากคำสั่งเดิม
+press a key…	กดปุ่ม…
+Also:	และ:
+Back to the default key	คืนปุ่มเริ่มต้น
+Reset all keys	รีเซ็ตทุกปุ่ม
+Mouse	เมาส์
+Right button held	กดปุ่มขวาค้าง
+look round; W A S D fly, Q / E down / up, Shift faster, wheel: speed	มองรอบ ๆ; W A S D บิน, Q / E ลง / ขึ้น, Shift เร็วขึ้น, ล้อ: ความเร็ว
+Middle drag	ลากปุ่มกลาง
+pan	เลื่อนมุมมอง
+Alt + left / right / middle drag	Alt + ลากซ้าย / ขวา / กลาง
+orbit / zoom / pan (as in Unity)	โคจร / ซูม / เลื่อน (แบบ Unity)
+Left drag on nothing	ลากซ้ายบนที่ว่าง
+select with a box	เลือกด้วยกรอบ
+Alt + left drag	Alt + ลากซ้าย
+orbit round the point under the cursor	โคจรรอบจุดใต้เคอร์เซอร์
+Wheel	ล้อ
+move towards the cursor	เคลื่อนเข้าหาเคอร์เซอร์
+Trackpad	แทร็กแพด
+Two fingers	สองนิ้ว
+Pinch / twist	บีบ / บิด
+zoom / turn	ซูม / หมุน
+Option + two fingers or drag	Option + สองนิ้วหรือลาก
+Fixed keys	ปุ่มตายตัว
+Arrow keys	ปุ่มลูกศร
+move over the map (Shift: faster)	เคลื่อนบนแผนที่ (Shift: เร็วขึ้น)
+go to a saved view (Shift: keep the view there)	ไปที่มุมมองที่บันทึก (Shift: จำมุมมองไว้ที่นั่น)
+Alt + arrows	Alt + ลูกศร
+move the selection a grid step (Shift: 10 cm)	ย้ายส่วนที่เลือกหนึ่งขั้นตาราง (Shift: 10 ซม.)
+Alt + Page Up / Down	Alt + Page Up / Down
+selection up / down 10 cm (Shift: 1 m)	ส่วนที่เลือกขึ้น / ลง 10 ซม. (Shift: 1 ม.)
+add to / take from the selection	เพิ่มเข้า / เอาออกจากส่วนที่เลือก
+Shift / Ctrl + drag on empty ground	Shift / Ctrl + ลากบนพื้นว่าง
+select with a box (Shift adds)	เลือกด้วยกรอบ (Shift: เพิ่ม)
+Double-click a road	ดับเบิลคลิกถนน
+select all of it	เลือกทั้งเส้น
+turn the object	หมุนวัตถุ
+brush size	ขนาดแปรง
+stop / deselect	หยุด / ยกเลิกการเลือก
+Unsaved changes	การแก้ไขที่ยังไม่ได้บันทึก
+The map has changes that are not saved. Save them first?	แผนที่มีการแก้ไขที่ยังไม่ได้บันทึก บันทึกก่อนหรือไม่?
+Don't save	ไม่บันทึก
+Assets	แอสเซ็ต
+All	ทั้งหมด
+Picture size	ขนาดรูปภาพ
+Shapes…	รูปทรง…
+Close (B)	ปิด (B)
+Scenery objects	วัตถุฉาก
+Splines (roads, tracks…)	สไปลน์ (ถนน ราง…)
+Favourite on / off	เปิด / ปิดรายการโปรด
+content folder (mod, import, own)	โฟลเดอร์เนื้อหา (ม็อด นำเข้า ของตัวเอง)
+OMSI 2	OMSI 2
+width	ความกว้าง
+Build with it	สร้างด้วยอันนี้
+Place it	วาง
+PBR material…	วัสดุ PBR…
+Delete…	ลบ…
+Not seen in the game (a helper).	ไม่เห็นในเกม (ตัวช่วย)
+Delete the asset?	ลบแอสเซ็ตหรือไม่?
+Its folder goes into openMapper's bin in the content folder (openMapper\\bin), from where it can be put back by hand. Maps that use it show it missing.	โฟลเดอร์ของมันจะถูกย้ายไปถังขยะของ openMapper ในโฟลเดอร์เนื้อหา (openMapper\\bin) และนำกลับมาด้วยมือได้ แผนที่ที่ใช้มันจะแสดงว่าขาดหาย
+Calendar and place	ปฏิทินและสถานที่
+Place and time	สถานที่และเวลา
+Holidays	วันหยุด
+Number plates	ป้ายทะเบียน
+Latitude	ละติจูด
+Longitude	ลองจิจูด
+Time zone	เขตเวลา
+Where the sun stands and when it rises and sets come from here.	ตำแหน่งดวงอาทิตย์และเวลาขึ้น-ตกมาจากที่นี่
+Summer time	เวลาออมแสง
+years	ปี
+none: the clocks are never put forward	ไม่มี: ไม่ปรับนาฬิกาไปข้างหน้า
+EU rules for these years	กฎของ EU สำหรับปีเหล่านี้
+Last Sunday of March to last Sunday of October, replacing what is set for these years	ตั้งแต่วันอาทิตย์สุดท้ายของมีนาคมถึงวันอาทิตย์สุดท้ายของตุลาคม แทนที่ค่าที่ตั้งไว้สำหรับปีเหล่านี้
+None	ไม่มี
+Year	ปี
+entries	รายการ
+Public holidays run Sunday's timetable; school holidays the holiday one.	วันหยุดนักขัตฤกษ์ใช้ตารางเวลาวันอาทิตย์ ปิดเทอมใช้ตารางเวลาวันหยุด
+Public holidays	วันหยุดนักขัตฤกษ์
+Add a holiday	เพิ่มวันหยุด
+Holiday	วันหยุด
+School holidays	ปิดเทอม
+Ends before it starts	สิ้นสุดก่อนเริ่ม
+Add school holidays	เพิ่มปิดเทอม
+The AI's cars carry these, one a line.	รถของ AI ใช้ป้ายทะเบียนเหล่านี้ บรรทัดละหนึ่งป้าย
+X: a letter, 9: a digit	X: ตัวอักษร, 9: ตัวเลข
+Make	สร้าง
+Replaces the list with plates of the pattern	แทนที่รายการด้วยป้ายทะเบียนตามรูปแบบ
+plates	ป้ายทะเบียน
+The scenario's AI lists are written, groups changed:	เขียนรายการ AI ของฉากแล้ว เปลี่ยนกลุ่ม:
+Could not write the scenario	เขียนฉากไม่ได้
+The scenario's timetable is written, files:	เขียนตารางเวลาของฉากแล้ว ไฟล์:
+Back in the scenario:	กลับในฉาก:
+The scenario's things are on the map:	สิ่งของของฉากอยู่บนแผนที่:
+what you place now is the scenario's too	สิ่งที่คุณวางตอนนี้ก็เป็นของฉากด้วย
+Editing the scenario	กำลังแก้ไขฉาก
+Done	เสร็จ
+Chrono scenarios	ฉากตามเวลา
+How the map changes over the years: each scenario from its first day lays its own tiles, lines and tickets over the map. The view shows the map as on the day chosen here; what you edit is always the map itself.	แผนที่เปลี่ยนไปตามปีอย่างไร: แต่ละฉากตั้งแต่วันแรกวางไทล์ สาย และตั๋วของตัวเองซ้อนบนแผนที่ มุมมองแสดงแผนที่ตามวันที่เลือกที่นี่ สิ่งที่คุณแก้ไขคือตัวแผนที่เสมอ
+Show the map as on	แสดงแผนที่ ณ วันที่
+Today	วันนี้
+Active on that day:	ใช้งานในวันนั้น:
+New scenario's name	ชื่อฉากใหม่
+New scenario	ฉากใหม่
+A scenario starting on the day shown, after the others	ฉากที่เริ่มในวันที่แสดง ต่อจากฉากอื่น
+From	จาก
+To	ถึง
+for good	ถาวร
+Own tickets	ตั๋วของตัวเอง
+Own money	เงินของตัวเอง
+the map's	ของแผนที่
+Takes off	ถอดสายออก
+What changes (shown where the date is chosen)	สิ่งที่เปลี่ยน (แสดงตรงที่เลือกวันที่)
+From its first day, the selection in the view:	ตั้งแต่วันแรก ส่วนที่เลือกในมุมมอง:
+appears	ปรากฏ
+Taken out of the map into the scenario: it is there from the scenario's first day on (place it first, then press this)	ย้ายออกจากแผนที่เข้าฉาก: มีตั้งแต่วันแรกของฉาก (วางก่อน แล้วกดอันนี้)
+is gone	หายไป
+Stays in the map, gone from the scenario's first day on	อยู่ในแผนที่ แต่หายไปตั้งแต่วันแรกของฉาก
+becomes	กลายเป็น
+its texts become	ข้อความของมันกลายเป็น
+Write	เขียน
+Its path rules from that day	กฎเส้นทางของมันตั้งแต่วันนั้น
+Add a rule	เพิ่มกฎ
+Written into the scenario at once (undo does not take it out of the scenario).	เขียนลงฉากทันที (การเลิกทำไม่เอาออกจากฉาก)
+What it changes	สิ่งที่มันเปลี่ยน
+into the map	เข้าแผนที่
+Out of the scenario into the map itself: there on every day	จากฉากเข้าสู่ตัวแผนที่: มีทุกวัน
+Take it out of the scenario	เอาออกจากฉาก
+new texts	ข้อความใหม่
+rules	กฎ
+Nothing yet.	ยังไม่มีอะไร
+Its own things are on the map: select, move, change and place as usual. The map's own things stay the map's.	สิ่งของของมันอยู่บนแผนที่: เลือก ย้าย เปลี่ยน และวางได้ตามปกติ สิ่งของของแผนที่เองยังเป็นของแผนที่
+Done: back into the scenario	เสร็จ: กลับเข้าฉาก
+Edit its own things on the map	แก้ไขสิ่งของของมันบนแผนที่
+What it brings in is put on the map to work with as with anything else; Done writes it back (undo starts afresh)	สิ่งที่มันนำเข้ามาถูกวางบนแผนที่ให้ทำงานเหมือนสิ่งอื่น; เสร็จ จะเขียนกลับ (ประวัติเลิกทำเริ่มใหม่)
+The Lines window shows its timetable (the map's with its own laid over): lines, trips and tours edited there are the scenario's; a line of the map taken away is taken off from its day.	หน้าต่างสายแสดงตารางเวลาของมัน (ของแผนที่ที่ซ้อนด้วยของตัวเอง): สาย เที่ยว และทัวร์ที่แก้ไขที่นั่นเป็นของฉาก; สายของแผนที่ที่ถอดออกจะถูกถอดตั้งแต่วันของมัน
+Done with its timetable	เสร็จกับตารางเวลา
+Edit its timetable	แก้ไขตารางเวลา
+Its own lines, trips and tours in the Lines window; Done writes only what differs from the map's (undo starts afresh)	สาย เที่ยว และทัวร์ของมันในหน้าต่างสาย; เสร็จ จะเขียนเฉพาะที่ต่างจากแผนที่ (ประวัติเลิกทำเริ่มใหม่)
+The Traffic window shows its AI lists (the map's with its own added): vehicles and type groups added there, and a depot's own depot file, are the scenario's from its day.	หน้าต่างการจราจรแสดงรายการ AI ของมัน (ของแผนที่ที่เพิ่มของตัวเอง): ยานพาหนะและกลุ่มชนิดที่เพิ่มที่นั่น และไฟล์ดีโปของดีโป เป็นของฉากตั้งแต่วันของมัน
+Done with its AI lists	เสร็จกับรายการ AI
+Edit its AI lists	แก้ไขรายการ AI
+Vehicles it adds to the groups and depots (OMSI's ailists_#upd.cfg); taking one away is the map's own business	ยานพาหนะที่มันเพิ่มในกลุ่มและดีโป (ailists_#upd.cfg ของ OMSI); การเอาออกเป็นเรื่องของแผนที่เอง
+Write the scenario	เขียนฉาก
+Close	ปิด
+The map has no chrono scenarios.	แผนที่ไม่มีฉากตามเวลา
+from	จาก
+to	ถึง
+takes off	ถอดออก
+own tickets	ตั๋วของตัวเอง
+Its first day	วันแรก
+Written into the scenario	เขียนลงฉากแล้ว
+Written into the scenario:	เขียนลงฉากแล้ว:
+Scenario written	เขียนฉากแล้ว
+The map as on	แผนที่ ณ วันที่
+scenarios:	ฉาก:
+Multiplayer	ผู้เล่นหลายคน
+Joining… (a big map takes a while to come)	กำลังเชื่อมต่อ… (แผนที่ใหญ่ใช้เวลาสักครู่)
+Recover a conflicting edit…	กู้คืนการแก้ไขที่ขัดแย้ง…
+Recovered your edit; undo is available	กู้คืนการแก้ไขของคุณแล้ว; เลิกทำได้
+Edit one map together: one of you hosts it, the others join. Roads, objects, ground and paint are shared as they are made; the timetable, the traffic and the descriptions stay the host's, and the host saves the map. Everybody needs the same objects and splines installed.	แก้ไขแผนที่เดียวกันด้วยกัน: คนหนึ่งเป็นโฮสต์ คนอื่นเข้าร่วม ถนน วัตถุ พื้นดิน และสีแชร์กันทันทีที่ทำ; ตารางเวลา การจราจร และคำอธิบายยังเป็นของโฮสต์ และโฮสต์เป็นผู้บันทึกแผนที่ ทุกคนต้องติดตั้งวัตถุและสไปลน์ชุดเดียวกัน
+Your name	ชื่อของคุณ
+Password	รหัสผ่าน
+Host this map	เปิดแผนที่นี้เป็นโฮสต์
+Others on this network can join	คนอื่นในเครือข่ายนี้เข้าร่วมได้
+Others anywhere can join (a free Cloudflare tunnel, nothing to set up on the router)	คนอื่นที่ไหนก็ได้เข้าร่วมได้ (อุโมงค์ Cloudflare ฟรี ไม่ต้องตั้งค่าเราเตอร์)
+Port	พอร์ต
+Over the internet the password must have at least this many letters:	ผ่านอินเทอร์เน็ต รหัสผ่านต้องมีอย่างน้อยกี่ตัวอักษร:
+No password: anybody who reaches this computer's port can join and change the whole map.	ไม่มีรหัสผ่าน: ใครก็ตามที่เข้าถึงพอร์ตของคอมพิวเตอร์เครื่องนี้ได้สามารถเข้าร่วมและแก้ไขทั้งแผนที่
+Ask for a password after all	ขอรหัสผ่านดีกว่า
+Host without a password? Anybody on this network who finds the port can join and change the whole map.	เป็นโฮสต์โดยไม่มีรหัสผ่านหรือไม่? ใครก็ตามในเครือข่ายนี้ที่พบพอร์ตสามารถเข้าร่วมและแก้ไขทั้งแผนที่
+Yes, without a password	ใช่ ไม่มีรหัสผ่าน
+No	ไม่
+Type a password the others will need.	พิมพ์รหัสผ่านที่คนอื่นจะต้องใช้
+Host without a password…	เป็นโฮสต์โดยไม่มีรหัสผ่าน…
+Host	เป็นโฮสต์
+Open a map, type a name and a password first	เปิดแผนที่ แล้วพิมพ์ชื่อและรหัสผ่านก่อน
+Join a map	เข้าร่วมแผนที่
+The map open now has unsaved changes: joining closes it. Save it first.	แผนที่ที่เปิดอยู่มีการแก้ไขที่ยังไม่ได้บันทึก: การเข้าร่วมจะปิดมัน บันทึกก่อน
+You host this map. Give the others one of these:	คุณเป็นโฮสต์ของแผนที่นี้ ให้ที่อยู่ใดที่อยู่หนึ่งนี้แก่คนอื่น:
+On this network the connection is not encrypted: somebody listening in can see the map, and from what they catch try passwords on their own computer. Use a long password, or the internet tunnel (encrypted).	ในเครือข่ายนี้การเชื่อมต่อไม่ได้เข้ารหัส: คนที่แอบฟังเห็นแผนที่ได้ และลองเดารหัสผ่านบนคอมพิวเตอร์ตัวเองจากสิ่งที่ดักได้ ใช้รหัสผ่านยาว ๆ หรืออุโมงค์อินเทอร์เน็ต (เข้ารหัส)
+Everybody who joins can change the whole map.	ทุกคนที่เข้าร่วมแก้ไขทั้งแผนที่ได้
+Opening the Cloudflare tunnel… (fetched the first time)	กำลังเปิดอุโมงค์ Cloudflare… (ดาวน์โหลดครั้งแรก)
+internet	อินเทอร์เน็ต
+Waiting for Cloudflare's address…	กำลังรอที่อยู่จาก Cloudflare…
+The Cloudflare tunnel could not be opened (no cloudflared, or no internet). The LAN addresses still work.	เปิดอุโมงค์ Cloudflare ไม่ได้ (ไม่มี cloudflared หรือไม่มีอินเทอร์เน็ต) ที่อยู่ใน LAN ยังใช้ได้
+You joined this map. The host saves it.	คุณเข้าร่วมแผนที่นี้แล้ว โฮสต์เป็นผู้บันทึก
+Everything of yours is with the others	ทุกอย่างของคุณอยู่กับคนอื่นแล้ว
+Sending your edits…	กำลังส่งการแก้ไขของคุณ…
+In the session	ในเซสชัน
+Say something…	พิมพ์ข้อความ…
+Leave	ออก
+Knife (K): a click on a road cuts it there, as often as you like; the pieces' lengths shown at the cursor, on whole grid steps with grid snapping on · right-click or Esc: off	มีด (K): คลิกบนถนนเพื่อตัด ตัดได้กี่ครั้งก็ได้; ความยาวชิ้นแสดงที่เคอร์เซอร์ เป็นขั้นตารางเต็มเมื่อเปิดการดูดติดตาราง · คลิกขวาหรือ Esc: ปิด
+The angle step: what snapping comes to and what R turns by	ขั้นมุม: ค่าที่การดูดติดไปถึง และมุมที่ R หมุนทีละเท่าไร
+Angle	มุม
+Snap headings to the angle step	ดูดทิศทางติดขั้นมุม
+Grid	ตาราง
+Snap positions to the grid	ดูดตำแหน่งติดตาราง
+Click two points to measure the distance and gradient between them (U) · right-click: off	คลิกสองจุดเพื่อวัดระยะและความลาดระหว่างกัน (U) · คลิกขวา: ปิด
+Auto-Terrain	ภูมิประเทศอัตโนมัติ
+What you build follows the ground: roads, paths and tracks take its height (off: they run level from where they start). Only what is built from now on; nothing already there changes	สิ่งที่สร้างตามพื้นดิน: ถนน ทางเดิน และรางใช้ความสูงของพื้น (ปิด: วิ่งระดับเดียวจากจุดเริ่ม) เฉพาะสิ่งที่สร้างจากนี้ไป สิ่งที่มีอยู่แล้วไม่เปลี่ยน
+Auto-Switch	ประแจสลับอัตโนมัติ
+Branching a track off another makes a switch there	การแตกรางออกจากรางอื่นจะสร้างประแจสลับตรงนั้น
+Auto-Junction	ทางแยกอัตโนมัติ
+Auto-Align	จัดแนวอัตโนมัติ
+Line objects up with the nearest road (Shift: put it freely)	จัดวัตถุให้ตรงกับถนนที่ใกล้ที่สุด (Shift: วางอิสระ)
+Selection	การเลือก
+A click on one of it selects all of it, Ctrl + click one alone	คลิกอันใดอันหนึ่งจะเลือกทั้งหมด Ctrl + คลิกเลือกอันเดียว
+Keep these together: a click on one selects all, a drag moves all (Ctrl+G)	คงไว้ด้วยกัน: คลิกอันเดียวเลือกทั้งหมด ลากย้ายทั้งหมด (Ctrl+G)
+Apply	ใช้
+Turn	หมุน
+Level the ground under them	ปรับระดับพื้นใต้มัน
+Each one's outline made level with its foot, blending into the ground 3 m round it	เส้นขอบของแต่ละอันปรับเรียบเสมอฐาน กลืนกับพื้นรอบ 3 ม.
+Make every object	ทำทุกวัตถุเป็น
+The object chosen in the Objects tool's catalogue	วัตถุที่เลือกในแค็ตตาล็อกของเครื่องมือวัตถุ
+Random headings	ทิศทางสุ่ม
+Every selected object turned its own random way (trees, bushes, rocks)	วัตถุที่เลือกแต่ละอันหมุนไปทางสุ่มของตัวเอง (ต้นไม้ พุ่มไม้ หิน)
+Along the road	ตามถนน
+Each turned the way the nearest road runs beside it	แต่ละอันหมุนตามทางที่ถนนใกล้ที่สุดข้างๆ วิ่งไป
+Turned:	หมุนแล้ว:
+All like this one	ทั้งหมดเหมือนอันนี้
+Every selected object takes the heading of the one in the properties	วัตถุที่เลือกทั้งหมดใช้ทิศทางของอันที่แสดงในคุณสมบัติ
+Make every road	ทำทุกถนนเป็น
+The road type chosen in the Roads tool's catalogue	ชนิดถนนที่เลือกในแค็ตตาล็อกของเครื่องมือถนน
+Lay them on the ground	วางลงบนพื้น
+Reverse their direction	กลับทิศทางของมัน
+Even slope along them	ความลาดสม่ำเสมอตามมัน
+One chain of roads: from the height at one end to that at the other, evenly (a bridge, a ramp)	ถนนสายเดียวต่อกัน: จากความสูงปลายหนึ่งไปอีกปลายหนึ่งอย่างสม่ำเสมอ (สะพาน ทางลาด)
+Edit its AI lanes	แก้ไขเลน AI ของมัน
+Its lanes become AI paths of their own (the same lines, the same way) that the Logic tool's Edit existing bends, moves and deletes. The road keeps its look.	เลนของมันกลายเป็นเส้นทาง AI ของตัวเอง (เส้นเดิม ทิศเดิม) ที่ ตรรกะ > แก้ไขที่มีอยู่ ดัด ย้าย และลบได้ ถนนยังหน้าตาเดิม
+Ends (joined roads follow)	ปลาย (ถนนที่เชื่อมตามไป)
+height	ความสูง
+gradient	ความลาด
+cant	ความเอียงโค้ง
+Banking across the road, %: positive lowers its right side (into a right bend)	ความเอียงขวางถนน, %: ค่าบวกลดด้านขวา (เข้าโค้งขวา)
+End	สิ้นสุด
+Even slope end to end	ความลาดสม่ำเสมอจากต้นจรดปลาย
+Both gradients to the straight climb between the ends' heights	ความลาดทั้งสองเป็นทางขึ้นตรงระหว่างความสูงของปลายทั้งสอง
+Speed limit, km/h	จำกัดความเร็ว, กม./ชม.
+Traffic density ×	ความหนาแน่นการจราจร ×
+Priority	ลำดับความสำคัญ
+Trucks (0: none)	รถบรรทุก (0: ไม่มี)
+No cars	ไม่มีรถเก๋ง
+Buses only	เฉพาะรถบัส
+For the AI and the player on one path (lane) of it, counted from 0: the view shows their numbers	สำหรับ AI และผู้เล่นบนเส้นทาง (เลน) หนึ่งเส้นของมัน นับจาก 0: มุมมองแสดงหมายเลขของมัน
+Path (lane) number	หมายเลขเส้นทาง (เลน)
+Hanging on it	แขวนอยู่บนมัน
+Points to hang objects on:	จุดสำหรับแขวนวัตถุ:
+Select it	เลือกมัน
+Hang	แขวน
+Choose an object in the Objects catalogue first	เลือกวัตถุในแค็ตตาล็อก วัตถุ ก่อน
+A fence, a row of houses, an avenue: the selection copied again and again, a step on each time	รั้ว แถวบ้าน ถนนต้นไม้: คัดลอกส่วนที่เลือกซ้ำ ๆ ขยับไปหนึ่งขั้นทุกครั้ง
+Copies	สำเนา
+Step	ขั้น
+Turn each	หมุนแต่ละอัน
+Rows	แถว
+More than one: a grid (an orchard, a car park), each row a row step on	มากกว่าหนึ่ง: ตาราง (สวนผลไม้ ที่จอดรถ) แต่ละแถวห่างกันหนึ่งขั้นแถว
+Row step	ขั้นแถว
+Tilted to the ground under it, the way it slopes forward and to the side (a fence, a bench or a shed on a hillside)	เอียงตามพื้นใต้มัน ทั้งไปข้างหน้าและข้างๆ (รั้ว ม้านั่ง หรือเพิงบนเนิน)
+Heights along the ground again, smoothed so it climbs a hill rather than every bump (after shaping the ground or laying a height map over it); where a road not selected joins, its height is kept	ความสูงตามพื้นอีกครั้ง ทำให้เรียบเพื่อขึ้นเนินแทนที่จะตามทุกรอยนูน (หลังปั้นพื้นหรือวางแผนที่ความสูงทับ); ตรงที่ถนนที่ไม่ได้เลือกเชื่อมอยู่ จะคงความสูงของมันไว้
+Each starts where it ended: the traffic on it goes the other way (a one-way street, a track's direction), the road itself stays where it is	แต่ละอันเริ่มที่ปลายเดิม: การจราจรบนมันไปทางตรงข้าม (ถนนทางเดียว ทิศทางของราง) ตัวถนนยังอยู่ที่เดิม
+A second track or the other carriageway: the selected splines copied alongside, bends kept exact, linked as they are	รางที่สองหรือฝั่งตรงข้าม: สไปลน์ที่เลือกถูกคัดลอกไว้ข้างๆ โค้งตรงเป๊ะ เชื่อมเหมือนเดิม
+To the left	ทางซ้าย
+To the right	ทางขวา
+Left and right of the way the road runs (its arrows with AI lanes shown)	ซ้ายและขวาของทิศที่ถนนวิ่ง (ลูกศรของมันเมื่อแสดงเลน AI)
+For trams and electric trains: a wire spline laid on the selected track, piece for piece and linked (its height is the wire spline's own); the masts go in with Objects along the road	สำหรับรถรางและรถไฟฟ้า: สไปลน์สายไฟวางบนรางที่เลือก ทีละชิ้นและเชื่อมกัน (ความสูงเป็นของสไปลน์สายไฟเอง); เสาใส่ด้วย วัตถุตามถนน
+No wire spline installed (one whose name says Fahrdraht, Oberleitung or wire)	ไม่ได้ติดตั้งสไปลน์สายไฟ (ชื่อมี Fahrdraht, Oberleitung หรือ wire)
+Lay it	วาง
+Wire pieces laid:	วางชิ้นสายไฟแล้ว:
+Paint the ground along it	ทาพื้นตามมัน
+Add a ground texture in the Paint tool first: the base ground is under everything	เพิ่มพื้นผิวพื้นดินในเครื่องมือทาสีก่อน: พื้นดินฐานอยู่ใต้ทุกอย่าง
+Layer	ชั้น
+Where	ที่ไหน
+beside it	ข้างๆ
+under it too	ใต้มันด้วย
+Out from its edge	ออกจากขอบ
+Soft edge	ขอบนุ่ม
+A gravel verge, dirt by a track, grass along a path: the brush of the Paint tool touches it up afterwards	ไหล่ทางกรวด ดินข้างราง หญ้าตามทางเดิน: แปรงของเครื่องมือทาสีแต่งเพิ่มภายหลังได้
+Beside	ข้างๆ
+Lean with the road	เอียงตามถนน
+Each object leans with the road's gradient and banking (bays and arrows on the road); off, it stands upright	แต่ละวัตถุเอียงตามความลาดและความเอียงโค้งของถนน (ช่องจอดและลูกศรบนถนน); ปิด: ตั้งตรง
+A text the row's objects show (@ starts a new line)	ข้อความที่วัตถุในแถวแสดง (@ ขึ้นบรรทัดใหม่)
+Object:	วัตถุ:
+Pick an object (a lamp, a tree, a bollard) in the Objects tool's catalogue	เลือกวัตถุ (เสาไฟ ต้นไม้ เสาหลัก) ในแค็ตตาล็อกของเครื่องมือวัตถุ
+Right of the road's direction; negative: left	ทางขวาของทิศทางถนน; ติดลบ: ซ้าย
+Free at start / end	เว้นที่ต้น / ปลาย
+Both sides	ทั้งสองข้าง
+Place along the road	วางตามถนน
+Remove all rows	ลบทุกแถว
+Roundabout: click the centre, then the ring	วงเวียน: คลิกที่ศูนย์กลาง แล้วคลิกที่วง
+A one-way ring of the chosen road type (pick a one-way road); roads inside are cut back to it and joined with junctions	วงแหวนทางเดียวของชนิดถนนที่เลือก (เลือกถนนทางเดียว); ถนนข้างในถูกตัดให้ชนวงและเชื่อมด้วยทางแยก
+Keep the height (bridge, embankment)	คงความสูง (สะพาน คันดิน)
+An even gradient from end to end, the ground left as it is; the rise to the end can be typed while drawing. Pillars: select the road and put them along it as objects.	ความลาดสม่ำเสมอจากต้นจรดปลาย พื้นคงเดิม; พิมพ์ความสูงที่ขึ้นถึงปลายได้ขณะวาด เสา: เลือกถนนแล้ววางตามมันเป็นวัตถุ
+Rise	ความสูงที่ขึ้น
+Shift: straight · Enter: build	Shift: ตรง · Enter: สร้าง
+Junction	ทางแยก
+Traffic lights	ไฟจราจร
+Lights need three roads or more	ไฟจราจรต้องมีถนนตั้งแต่สามเส้นขึ้นไป
+Main road green	ไฟเขียวถนนหลัก
+Side roads green	ไฟเขียวถนนรอง
+The main road is the pair of roads most in line; red-yellow 2 s, yellow 3 s, 2 s all red between	ถนนหลักคือคู่ถนนที่อยู่แนวเดียวกันที่สุด; แดง-เหลือง 2 วิ เหลือง 3 วิ ระหว่างนั้นแดงทั้งหมด 2 วิ
+Zebra crossings	ทางม้าลาย
+Road	ถนน
+Build it again	สร้างใหม่
+Makes the plate, its kerbs and lanes again for the roads as they are now	สร้างแผ่น ขอบทาง และเลนใหม่ให้ถนนตามที่เป็นตอนนี้
+Linked objects	วัตถุที่เชื่อมโยง
+An object can take its state from another ([varparent]): a signal head shows a light of its crossing's program, a stop's display its stop.	วัตถุรับสถานะจากอีกอันได้ ([varparent]): หัวสัญญาณแสดงไฟจากโปรแกรมของทางแยก จอป้ายแสดงป้ายของมัน
+Takes its state from	รับสถานะจาก
+Select it: IDCode	เลือกมัน: IDCode
+Takes its state from an object that is gone: IDCode	รับสถานะจากวัตถุที่หายไป: IDCode
+Takes its state from nothing	ไม่ได้รับสถานะจากอะไร
+Light	สัญญาณไฟ
+Its light is not one of the crossing's: it stays dark	ไฟของมันไม่ใช่ของทางแยก: จะดับอยู่
+That object runs no traffic lights: link the head to a crossing with a light program	วัตถุนั้นไม่ควบคุมไฟจราจร: เชื่อมหัวสัญญาณกับทางแยกที่มีโปรแกรมไฟ
+A signal head: link it to its crossing to have it light	หัวสัญญาณ: เชื่อมกับทางแยกของมันเพื่อให้ไฟติด
+Click the object in the view… (Esc)	คลิกวัตถุในมุมมอง… (Esc)
+Link to another…	เชื่อมกับอันอื่น…
+Link to an object…	เชื่อมกับวัตถุ…
+Then click the object it is to take its state from (a crossing for a signal head)	จากนั้นคลิกวัตถุที่จะรับสถานะ (ทางแยกสำหรับหัวสัญญาณ)
+Taking their state from it:	รับสถานะจากมัน:
+light	ไฟ
+Click the object it takes its state from	คลิกวัตถุที่มันรับสถานะ
+stop	ป้าย
+Find in map	ค้นหาในแผนที่
+Name, file, IDCode, stop or x, y	ชื่อ ไฟล์ IDCode ป้าย หรือ x, y
+The point	จุด
+Spline	สไปลน์
+Object	วัตถุ
+Nothing on the map has this IDCode.	ไม่มีสิ่งใดบนแผนที่ที่มี IDCode นี้
+kinds	ชนิด
+on the map	บนแผนที่
+Next	ถัดไป
+Select the next one and go there	เลือกอันถัดไปแล้วไปที่นั่น
+Every one of these becomes the road type chosen in the Roads tool	ทั้งหมดนี้จะกลายเป็นชนิดถนนที่เลือกในเครื่องมือถนน
+Every one of these becomes the object chosen in the catalogue	ทั้งหมดนี้จะกลายเป็นวัตถุที่เลือกในแค็ตตาล็อก
+More: type to narrow the list	มีอีก: พิมพ์เพื่อกรองรายการ
+Replaced:	แทนที่แล้ว:
+Satellite overlay	ภาพดาวเทียมซ้อน
+Satellite and own pictures	ดาวเทียมและรูปภาพของคุณ
+Click a tile to see its overlay here.	คลิกไทล์เพื่อดูภาพซ้อนของมันที่นี่
+Show the overlay	แสดงภาพซ้อน
+opacity	ความทึบ
+Load satellite imagery	โหลดภาพดาวเทียม
+Place the map on the Earth first (Satellite and terrain…)	วางแผนที่บนโลกก่อน (ดาวเทียมและภูมิประเทศ…)
+Load image file…	โหลดไฟล์ภาพ…
+Your own picture for this tile (a scan, a screenshot): or drop it on the window	รูปภาพของคุณสำหรับไทล์นี้ (สแกน ภาพหน้าจอ): หรือลากมาวางที่หน้าต่าง
+Load the OpenStreetMap map	โหลดแผนที่ OpenStreetMap
+OpenStreetMap map for all tiles	แผนที่ OpenStreetMap สำหรับทุกไทล์
+The map as openstreetmap.org draws it (streets with their names, houses, water, green, stop signs), drawn sharp from OpenStreetMap data and laid on the tile in place of a satellite picture: to build roads and houses over by eye. Nothing is generated from it.	แผนที่ตามที่ openstreetmap.org วาด (ถนนพร้อมชื่อ บ้าน น้ำ พื้นที่สีเขียว ป้ายรถ) วาดคมชัดจากข้อมูล OpenStreetMap แล้ววางบนไทล์แทนภาพดาวเทียม: เพื่อสร้างถนนและบ้านทับด้วยสายตา ไม่มีอะไรถูกสร้างจากมัน
+own picture	รูปภาพของตัวเอง
+for an earlier placement	สำหรับการวางครั้งก่อน
+not kept with the map	ไม่ได้เก็บไว้กับแผนที่
+, partly coarser	, บางส่วนหยาบกว่า
+nothing	ไม่มี
+Place the map on the Earth first.	วางแผนที่บนโลกก่อน
+Load terrain heights	โหลดความสูงภูมิประเทศ
+Done:	เสร็จแล้ว:
+with problems	มีปัญหา
+A picture for the tiles	รูปภาพสำหรับไทล์
+Could not read the picture	อ่านรูปภาพไม่ได้
+Could not copy the picture	คัดลอกรูปภาพไม่ได้
+The picture is on the tiles: line it up in Satellite and terrain, Own pictures.	รูปภาพอยู่บนไทล์แล้ว: จัดแนวใน ดาวเทียมและภูมิประเทศ, รูปภาพของคุณ
+Nothing found by that name.	ไม่พบอะไรด้วยชื่อนั้น
+Some tiles had Google imagery: enter your Google key to see it again (it is not kept with the map).	บางไทล์มีภาพ Google: ใส่คีย์ Google เพื่อดูอีกครั้ง (ไม่ได้เก็บไว้กับแผนที่)
+Satellite and terrain	ดาวเทียมและภูมิประเทศ
+Find a place: a town, a street, an address… (Enter)	ค้นหาสถานที่: เมือง ถนน ที่อยู่… (Enter)
+Searching…	กำลังค้นหา…
+Search © OpenStreetMap contributors	ค้นหา © ผู้ร่วมสร้าง OpenStreetMap
+This map has world coordinates ([worldcoordinates]): it lies on the Earth by itself, its tiles are Web Mercator tiles.	แผนที่นี้มีพิกัดโลก ([worldcoordinates]): วางบนโลกเองได้ ไทล์ของมันเป็นไทล์ Web Mercator
+Click on the map where the orange tile goes…	คลิกบนแผนที่ตรงที่ไทล์สีส้มจะวาง…
+Place the map here	วางแผนที่ตรงนี้
+Then click on the map: the middle of the orange tile goes there	จากนั้นคลิกบนแผนที่: กึ่งกลางไทล์สีส้มจะไปอยู่ตรงนั้น
+At the view's middle	ที่กลางมุมมอง
+North turned	การหมุนทิศเหนือ
+Orange tile	ไทล์สีส้ม
+click the map to fly there in the view	คลิกแผนที่เพื่อบินไปที่นั่นในมุมมอง
+1. Find the place.  2. Press "Place the map here" and click on the map: the orange tile (the map's middle) goes there.	1. ค้นหาสถานที่  2. กด "วางแผนที่ตรงนี้" แล้วคลิกบนแผนที่: ไทล์สีส้ม (กลางแผนที่) จะไปอยู่ตรงนั้น
+Imagery	ภาพถ่าย
+The sharpest here	คมชัดที่สุดที่นี่
+cm a pixel here	ซม. ต่อพิกเซลที่นี่
+checking…	กำลังตรวจสอบ…
+is sharper here	คมชัดกว่าที่นี่
+Sharper imagery may be had here with your own free key for Mapbox, MapTiler or Google (Keys below).	อาจได้ภาพที่คมชัดกว่าที่นี่ด้วยคีย์ฟรีของคุณสำหรับ Mapbox, MapTiler หรือ Google (คีย์ ด้านล่าง)
+Terms of use	ข้อกำหนดการใช้งาน
+Zoom	ซูม
+the finest here	ละเอียดที่สุดที่นี่
+Picture of a tile	รูปภาพของไทล์
+every pixel of the source (up to 4096)	ทุกพิกเซลของต้นทาง (สูงสุด 4096)
+Loaded at	โหลดที่
+cm a pixel	ซม. ต่อพิกเซล
+Also load terrain heights	โหลดความสูงภูมิประเทศด้วย
+New tiles get imagery by themselves	ไทล์ใหม่ได้ภาพถ่ายเอง
+Load for all tiles	โหลดสำหรับทุกไทล์
+For the selected tile	สำหรับไทล์ที่เลือก
+Click a tile with the Tiles tool (7)	คลิกไทล์ด้วยเครื่องมือไทล์ (7)
+Terrain heights only	เฉพาะความสูงภูมิประเทศ
+of	จาก
+tiles beside the loaded heights were not loaded: the ground steps at their edge.	ไทล์ข้างความสูงที่โหลดไม่ได้โหลด: พื้นเป็นขั้นที่ขอบ
+Fit their edges	ปรับขอบให้เข้ากัน
+Their edge takes the loaded heights, fading out 60 m into the tile	ขอบของมันใช้ความสูงที่โหลด ค่อยๆ จางหาย 60 ม. เข้าไปในไทล์
+Leave them	ปล่อยไว้
+Terrain heights	ความสูงภูมิประเทศ
+Relative: the orange tile's mean height is 0 m	สัมพัทธ์: ความสูงเฉลี่ยของไทล์สีส้มคือ 0 ม.
+Raise everything by	ยกทั้งหมดขึ้น
+Taken off:	หักออก:
+Measure again	วัดใหม่
+Terrain data attribution	แหล่งที่มาของข้อมูลภูมิประเทศ
+Overlay on the ground	ภาพซ้อนบนพื้น
+Put the imagery into maps exported for sharing (check its licence first)	ใส่ภาพถ่ายในแผนที่ที่ส่งออกเพื่อแชร์ (ตรวจใบอนุญาตก่อน)
+Fit tile edges	ปรับขอบไทล์
+Keys for more sources (optional)	คีย์สำหรับแหล่งอื่น (ไม่บังคับ)
+Everything works without a key. With your own free key these may be sharper in some places; the key stays on this computer.	ทุกอย่างใช้งานได้โดยไม่ต้องมีคีย์ ด้วยคีย์ฟรีของคุณ แหล่งเหล่านี้อาจคมชัดกว่าในบางที่ คีย์อยู่บนคอมพิวเตอร์เครื่องนี้
+Google satellite (needs your API key)	ดาวเทียม Google (ต้องมี API key ของคุณ)
+get a key	รับคีย์
+In Google Cloud: make a project, enable the Map Tiles API, create an API key, paste it here. Google bills by use above its free amount.	ใน Google Cloud: สร้างโปรเจกต์ เปิด Map Tiles API สร้าง API key แล้ววางที่นี่ Google คิดค่าใช้จ่ายตามการใช้เกินโควตาฟรี
+key	คีย์
+Your own tile server	เซิร์ฟเวอร์ไทล์ของคุณเอง
+URL	URL
+Attribution	การอ้างที่มา
+Finest zoom	ซูมละเอียดสุด
+Kind	ชนิด
+XYZ / WMTS tiles	ไทล์ XYZ / WMTS
+Terrarium heights	ความสูง Terrarium
+{z} {x} {y} are filled in; a WMS gets {bbox} (EPSG:3857) and {width} {height}; {key} is your key.	{z} {x} {y} จะถูกเติมให้ WMS ได้ {bbox} (EPSG:3857) และ {width} {height}; {key} คือคีย์ของคุณ
+Add	เพิ่ม
+Own pictures	รูปภาพของคุณ
+A scan, a screenshot, an old plan: laid on tiles and lined up by eye. No place on the Earth needed.	สแกน ภาพหน้าจอ แผนผังเก่า: วางบนไทล์และจัดแนวด้วยสายตา ไม่ต้องวางบนโลก
+Tiles from	ไทล์จาก
+Load image file over these tiles…	โหลดไฟล์ภาพทับไทล์เหล่านี้…
+Turn left 90°	หมุนซ้าย 90°
+Turn right 90°	หมุนขวา 90°
+mirror left-right	สะท้อนซ้าย-ขวา
+mirror top-bottom	สะท้อนบน-ล่าง
+Reset	รีเซ็ต
+Your own pictures	รูปภาพของคุณ
+of these tiles have your own pictures. Replace them with satellite imagery?	ของไทล์เหล่านี้มีรูปภาพของคุณ แทนที่ด้วยภาพดาวเทียมหรือไม่?
+Replace them	แทนที่
+Keep my pictures	เก็บรูปของฉัน
+Groups for other maps	กลุ่มสำหรับแผนที่อื่น
+A selection kept under a name, to put down again in any map (a stop with its shelter and signs, a crossing with its lights)	ส่วนที่เลือกที่เก็บไว้ใต้ชื่อ เพื่อวางอีกครั้งในแผนที่ใดก็ได้ (ป้ายรถพร้อมศาลาและป้าย ทางแยกพร้อมไฟจราจร)
+Keep the selection	เก็บส่วนที่เลือก
+Group kept	เก็บกลุ่มแล้ว
+Select what to keep in the view first.	เลือกสิ่งที่จะเก็บในมุมมองก่อน
+No groups yet.	ยังไม่มีกลุ่ม
+thing	ชิ้น
+things	ชิ้น
+Delete the group (to openMapper's bin)	ลบกลุ่ม (ไปถังขยะของ openMapper)
+Use	ใช้
+Into the clipboard: Ctrl+V puts it down at the cursor, as often as wanted	ใส่คลิปบอร์ด: Ctrl+V วางที่เคอร์เซอร์ กี่ครั้งก็ได้
+is in the clipboard: Ctrl+V puts it at the cursor	อยู่ในคลิปบอร์ด: Ctrl+V วางที่เคอร์เซอร์
+The map's tiles: 300 m squares. Add more beside them with the Tiles tool.	ไทล์ของแผนที่: สี่เหลี่ยม 300 ม. เพิ่มข้างๆ ได้ด้วยเครื่องมือไทล์
+A road	ถนน
+Roads tool: click where it starts, then where it ends. Click on a road's end to go on from it.	เครื่องมือถนน: คลิกที่จุดเริ่ม แล้วที่จุดสิ้นสุด คลิกที่ปลายถนนเพื่อต่อจากมัน
+A bus stop by the road	ป้ายรถบัสข้างถนน
+Game logic > Bus stops: put one at the kerb, on the side the doors open. Name it on the right.	ตรรกะเกม > ป้ายรถบัส: วางที่ขอบทาง ด้านที่ประตูเปิด ตั้งชื่อทางขวา
+A start point	จุดเริ่มต้น
+Game logic > Start points: where your bus appears, on a road, facing the way to drive.	ตรรกะเกม > จุดเริ่มต้น: ที่ที่รถบัสของคุณปรากฏ บนถนน หันไปทางที่จะขับ
+A line with a trip	สายพร้อมเที่ยว
+Lines window: New line, New trip, then click the stops in order. The way is found along the roads.	หน้าต่างสาย: สายใหม่ เที่ยวใหม่ แล้วคลิกป้ายตามลำดับ เส้นทางจะหาตามถนน
+A tour with departures	ทัวร์พร้อมเที่ยวออก
+Lines window > Tours and times: New tour, then Fill from … to … .	หน้าต่างสาย > ทัวร์และเวลา: ทัวร์ใหม่ แล้ว เติมจาก … ถึง …
+Buses for the tours	รถบัสสำหรับทัวร์
+A depot the tours take their buses from (Tours: Add a depot, or Traffic and AI).	ดีโปที่ทัวร์ใช้เอารถบัส (ทัวร์: เพิ่มดีโป หรือ การจราจรและ AI)
+Checked	ตรวจแล้ว
+Map > Check map: what would go wrong in the game, most of it put right with one click.	แผนที่ > ตรวจสอบแผนที่: สิ่งที่จะผิดพลาดในเกม ส่วนใหญ่แก้ได้ด้วยคลิกเดียว
+Saved	บันทึกแล้ว
+Ctrl+S. Maps are saved into openOMSI's content folder.	Ctrl+S แผนที่จะถูกบันทึกในโฟลเดอร์เนื้อหาของ openOMSI
+A test drive	ทดลองขับ
+F5 saves and starts openOMSI on the map: pick line 1 and drive.	F5 บันทึกและเริ่ม openOMSI บนแผนที่: เลือกสาย 1 แล้วขับ
+A map you can drive in service:	แผนที่ที่ขับเดินรถได้:
+Show me	แสดงให้ดู
+Your stops stand away from the roads: a bus serves a stop within 15 m of its lane.	ป้ายของคุณอยู่ห่างจากถนน: รถบัสให้บริการป้ายภายใน 15 ม. จากเลน
+A real place? Put the map on the Earth (Map > Satellite and terrain), then Map > From OpenStreetMap brings its streets, stops, lines and trees.	สถานที่จริง? วางแผนที่บนโลก (แผนที่ > ดาวเทียมและภูมิประเทศ) แล้ว แผนที่ > จาก OpenStreetMap จะนำถนน ป้าย สาย และต้นไม้มาให้
+Show this for new maps	แสดงสิ่งนี้สำหรับแผนที่ใหม่
+The map has no depot file.	แผนที่ไม่มีไฟล์ดีโป
+Make one from the lines	สร้างจากสาย
+The map has no trips yet (Map > Lines and timetable)	แผนที่ยังไม่มีเที่ยว (แผนที่ > สายและตารางเวลา)
+Empty one	ว่าง
+New	ใหม่
+A new depot file from the map's lines	ไฟล์ดีโปใหม่จากสายของแผนที่
+Delete this depot file	ลบไฟล์ดีโปนี้
+The lines need	สายต้องการ
+Add them	เพิ่ม
+What is there stays as it is	สิ่งที่มีอยู่ไม่เปลี่ยน
+No depot group uses it.	ไม่มีกลุ่มดีโปใดใช้มัน
+Used by the depot	ใช้โดยดีโป
+Use it for every depot	ใช้กับทุกดีโป
+The AI's depot groups (Vehicle groups tab) take their buses' destinations from it	กลุ่มดีโปของ AI (แท็บกลุ่มยานพาหนะ) ใช้ปลายทางของรถบัสจากมัน
+Rename	เปลี่ยนชื่อ
+not a usable name	ชื่อที่ใช้ไม่ได้
+The destination a bus shows on its way to and from the depot	ปลายทางที่รถบัสแสดงระหว่างไปและกลับดีโป
+Destinations	ปลายทาง
+Stops	ป้าย
+Routes	เส้นทาง
+nobody gets on	ไม่รับผู้โดยสาร
+Code	รหัส
+another destination has this code	ปลายทางอื่นใช้รหัสนี้แล้ว
+As a trip's terminus is named in the timetable: the stop where everybody gets off	ตามชื่อปลายทางของเที่ยวในตารางเวลา: ป้ายที่ทุกคนลง
+Nobody gets on (service trip, empty sign)	ไม่รับผู้โดยสาร (เที่ยวบริการ ป้ายว่าง)
+Delete destination	ลบปลายทาง
+Add destination	เพิ่มปลายทาง
+New destination	ปลายทางใหม่
+As the timetable names the stop	ตามชื่อป้ายในตารางเวลา
+Delete stop	ลบป้าย
+Add stop	เพิ่มป้าย
+line	สาย
+What the driver types: the line's number and two digits (7601: line 76, route 01)	สิ่งที่คนขับพิมพ์: หมายเลขสายและเลขสองหลัก (7601: สาย 76 เส้นทาง 01)
+Line	เส้น
+IBIS text	ข้อความ IBIS
+Destination	ปลายทาง
+Stops in order	ป้ายตามลำดับ
+Not in the Stops list: the displays have no texts for it	ไม่อยู่ในรายการป้าย: จอแสดงผลไม่มีข้อความสำหรับป้ายนี้
+Move up	เลื่อนขึ้น
+Move down	เลื่อนลง
+Take out	เอาออก
+Add a stop…	เพิ่มป้าย…
+Delete route	ลบเส้นทาง
+Add route	เพิ่มเส้นทาง
+No routes: the IBIS knows the destinations' codes only. Add them from the lines above.	ไม่มีเส้นทาง: IBIS รู้จักเฉพาะรหัสปลายทาง เพิ่มจากสายด้านบน
+Winter with snow	ฤดูหนาวมีหิมะ
+Summer (dry)	ฤดูร้อน (แห้ง)
+Jan	ม.ค.
+Feb	ก.พ.
+Mar	มี.ค.
+Apr	เม.ย.
+May	พ.ค.
+Jun	มิ.ย.
+Jul	ก.ค.
+Aug	ส.ค.
+Sep	ก.ย.
+Oct	ต.ค.
+Nov	พ.ย.
+Dec	ธ.ค.
+Map settings	การตั้งค่าแผนที่
+Money	เงิน
+Tickets	ตั๋ว
+none: the map has no depot group (Traffic and AI)	ไม่มี: แผนที่ไม่มีกลุ่มดีโป (การจราจรและ AI)
+Years	ปี
+Year offset	ค่าเลื่อนปี
+Added to today's year when the game starts at the real date (Berlin-Spandau: -25 for the 1980s)	บวกเพิ่มกับปีปัจจุบันเมื่อเกมเริ่มที่วันที่จริง (Berlin-Spandau: -25 สำหรับยุค 1980)
+Repair time	เวลาซ่อม
+ min	 นาที
+Rail	ราง
+real rail (trams and trains follow their tracks' switches)	รางจริง (รถรางและรถไฟตามประแจสลับของราง)
+Helper	ตัวช่วย
+dynamic helper active (the original editor's map option, kept as it is)	ตัวช่วยแบบไดนามิกทำงาน (ตัวเลือกแผนที่จากตัวแก้ไขต้นฉบับ คงไว้ตามเดิม)
+Seasons	ฤดูกาล
+Summer where none is set. The days count from 1 January.	เป็นฤดูร้อนเมื่อไม่ได้ตั้ง วันนับจาก 1 มกราคม
+Add a season	เพิ่มฤดูกาล
+A season ends before it starts	ฤดูกาลสิ้นสุดก่อนเริ่ม
+Nothing selected	ไม่ได้เลือกอะไร
+Paste here	วางที่นี่
+Cut the road here	ตัดถนนตรงนี้
+Select all like it	เลือกทั้งหมดที่เหมือนกัน
+Keep for other maps…	เก็บไว้สำหรับแผนที่อื่น…
+Its ground, painting, water, objects and roads, put beside or into this map. Lines, timetable and AI lists stay with the other map.	พื้นดิน การทาสี น้ำ วัตถุ และถนนของมัน วางข้างหรือเข้าในแผนที่นี้ สาย ตารางเวลา และรายการ AI ยังอยู่กับแผนที่อื่น
+Choose a map…	เลือกแผนที่…
+Other…	อื่น…
+A map to take tiles from (its global.cfg)	แผนที่ที่จะเอาไทล์มา (global.cfg ของมัน)
+Grey: this map · orange: the tiles to add (click to take one or leave it) · red: on a tile of this map, left out	เทา: แผนที่นี้ · ส้ม: ไทล์ที่จะเพิ่ม (คลิกเพื่อเอาหรือปล่อย) · แดง: อยู่บนไทล์ของแผนที่นี้ ไม่เอา
+Move:	ย้าย:
+west	ตะวันตก
+east	ตะวันออก
+north	เหนือ
+south	ใต้
+Raise it by	ยกขึ้น
+Its ground, water, roads and objects at a height of their own	พื้นดิน น้ำ ถนน และวัตถุของมันที่ความสูงของตัวเอง
+Ease the ground where the maps meet	ทำให้พื้นเรียบตรงที่แผนที่มาบรรจบ
+Added	เพิ่มแล้ว
+tiles from the other map	ไทล์จากแผนที่อื่น
+Cube	ลูกบาศก์
+Plane	ระนาบ
+Circle	วงกลม
+Triangle	สามเหลี่ยม
+Triangular prism	ปริซึมสามเหลี่ยม
+Wedge	ลิ่ม
+Corner wedge	ลิ่มมุม
+Pyramid	พีระมิด
+Sphere	ทรงกลม
+Icosphere	ไอโคสเฟียร์
+Cylinder	ทรงกระบอก
+Cone	กรวย
+Torus	ทอรัส
+Tube	ท่อ
+Capsule	แคปซูล
+Stairs	บันได
+Arch	ซุ้มโค้ง
+Make one and put it on the map with a click (each one can then be edited, scaled, cut and joined)	สร้างแล้ววางบนแผนที่ด้วยการคลิก (จากนั้นแก้ไข ปรับขนาด ตัด และรวมได้)
+Array	อาร์เรย์
+Mirror	กระจก
+Solidify	เพิ่มความหนา
+Subdivision surface	แบ่งพื้นผิวย่อย
+Decimate	ลดรูป
+Triangulate	แปลงเป็นสามเหลี่ยม
+Displace	ดิสเพลซ
+Wireframe	โครงลวด
+Screw	สกรู
+Simple deform	ดัดอย่างง่าย
+Cast	แคสต์
+Weld	เชื่อมจุดยอด
+Edge split	แยกขอบ
+Boolean	บูลีน
+Follow the ground	ตามพื้นดิน
+Count	จำนวน
+Relative	สัมพัทธ์
+Offset	ออฟเซ็ต
+Merge touching ends	เชื่อมปลายที่ชนกัน
+Distance	ระยะทาง
+Cut away the other side first	ตัดอีกด้านออกก่อน
+Weld at the mirror	เชื่อมที่แกนกระจก
+Thickness	ความหนา
+Close the rim	ปิดขอบ
+Width	ความกว้าง
+Segments	ส่วน
+Levels	ระดับ
+Smooth (Catmull-Clark)	ทำให้เรียบ (Catmull-Clark)
+Factor	ค่าสัมประสิทธิ์
+Repeat	ซ้ำ
+Seed	ซีด
+Along the normals	ตามนอร์มอล
+Steps	ขั้น
+Axis	แกน
+Twist	บิด
+Bend	โค้งงอ
+Taper	เรียว
+Stretch	ยืด
+Amount	ปริมาณ
+Box	กล่อง
+Difference	ผลต่าง
+With the part	กับส่วน
+Tip: hide the cutting part (its eye in the list) so only the cut shows	เคล็ดลับ: ซ่อนส่วนที่ตัด (ตาในรายการ) เพื่อให้เห็นเฉพาะรอยตัด
+Above the ground	เหนือพื้น
+Every vertex follows the terrain under it (in the editor's view and the written files at the place it stands)	ทุกจุดยอดตามภูมิประเทศใต้มัน
+Mesh (openMapper object)	เมช (วัตถุ openMapper)
+Shared by	ใช้ร่วมโดย
+objects on the map: changes apply to all	วัตถุบนแผนที่: การเปลี่ยนแปลงมีผลกับทั้งหมด
+Make this one single	ทำให้อันนี้เป็นอันเดี่ยว
+Leave the edit mode (Tab)	ออกจากโหมดแก้ไข (Tab)
+Edit the mesh (Tab)	แก้ไขเมช (Tab)
+Write it as OBJ, glTF / GLB, FBX, Collada, USD, STL, PLY, 3MF, OFF, X or O3D	เขียนเป็น OBJ, glTF / GLB, FBX, Collada, USD, STL, PLY, 3MF, OFF, X หรือ O3D
+Off: its height is kept above the ground under it	ปิด: คงความสูงเหนือพื้นใต้มัน
+Solid (collides)	ตัน (ชนได้)
+The part edited and given modifiers	ส่วนที่แก้ไขและใส่โมดิฟายเออร์
+Shown (and written into the object)	แสดง (และเขียนลงวัตถุ)
+faces	หน้า
+Duplicate the part	ทำสำเนาส่วน
+Delete the part	ลบส่วน
+Add a shape as a part	เพิ่มรูปทรงเป็นส่วน
+Separate parts into objects	แยกส่วนเป็นวัตถุ
+Each part becomes an object of its own, standing where it stood	แต่ละส่วนกลายเป็นวัตถุของตัวเองที่ตำแหน่งเดิม
+Shape	รูปทรง
+Modifiers	โมดิฟายเออร์
+Make it part of the mesh	ทำให้เป็นส่วนหนึ่งของเมช
+Add a modifier	เพิ่มโมดิฟายเออร์
+Materials	วัสดุ
+Colour (multiplies the texture)	สี (คูณกับพื้นผิว)
+Assign to selected faces	กำหนดให้หน้าที่เลือก
+Choose…	เลือก…
+No texture	ไม่มีพื้นผิว
+Save as…	บันทึกเป็น…
+PNG, JPEG, BMP, TGA, TIFF, WebP or DDS	PNG, JPEG, BMP, TGA, TIFF, WebP หรือ DDS
+Transparency	ความโปร่งใส
+Opaque	ทึบ
+Cut out	ตัดขอบ
+Blended	ผสม
+Glows	เรืองแสง
+Light of its own: black for none	แสงของตัวเอง: สีดำคือไม่มี
+Shine	ความเงา
+Normal map	แมปนอร์มอล
+ORM map	แมป ORM
+Night texture	พื้นผิวกลางคืน
+Light map	แมปแสง
+Remove the material	ลบวัสดุ
+Add a material	เพิ่มวัสดุ
+Import materials…	นำเข้าวัสดุ…
+From an .mtl, a glTF / GLB / FBX, or the pictures of one PBR material (base colour, normal, roughness, metal, AO...)	จาก .mtl, glTF / GLB / FBX หรือรูปภาพของวัสดุ PBR หนึ่งชิ้น (สีพื้นฐาน นอร์มอล ความหยาบ โลหะ AO...)
+Lamps	โคมไฟ
+Glow	เรืองแสง
+Light on the ground	แสงบนพื้น
+Colour	สี
+Reach	ระยะ
+On	เปิด
+Always	เสมอ
+At night	ตอนกลางคืน
+variable	ตัวแปร
+Seen from one side	เห็นจากด้านเดียว
+Star	ดาว
+Facing	ทิศหัน
+Remove the lamp	ลบโคมไฟ
+Add a glow	เพิ่มแสงเรือง
+A lamp's bulb, a lit sign: a glow seen at night	หลอดไฟของโคม ป้ายที่สว่าง: แสงเรืองที่เห็นตอนกลางคืน
+Add light on the ground	เพิ่มแสงบนพื้น
+The pool of light a street lamp throws at night	แอ่งแสงที่เสาไฟส่องตอนกลางคืน
+Signal head, lamps	หัวสัญญาณ โคมไฟ
+Put it within 40 m of a crossing with a light program: it takes its light from it (or link it in its properties)	วางไว้ภายใน 40 ม. จากทางแยกที่มีโปรแกรมไฟ: มันจะรับไฟจากทางแยก (หรือเชื่อมในคุณสมบัติ)
+Bake	เบค
+Its textures and colours painted into one picture on a new UV map (one material: fewer draws in the game), with its own shadows and its lamps' night light if chosen	พื้นผิวและสีของมันถูกวาดลงภาพเดียวบน UV map ใหม่ (วัสดุเดียว: วาดน้อยลงในเกม) พร้อมเงาของตัวเองและแสงกลางคืนของโคมไฟถ้าเลือก
+Ambient occlusion	การบดบังแสงแวดล้อม
+How far its shadows reach	เงาไปไกลแค่ไหน
+Lamps' light at night (light map)	แสงโคมไฟตอนกลางคืน (แมปแสง)
+The object's last change (Ctrl+Z in the edit mode)	การเปลี่ยนแปลงล่าสุดของวัตถุ (Ctrl+Z ในโหมดแก้ไข)
+Divisions X	การแบ่ง X
+Divisions Y	การแบ่ง Y
+Rings	วง
+Subdivisions	การแบ่งย่อย
+Bottom radius	รัศมีล่าง
+Top radius	รัศมีบน
+Tube radius	รัศมีท่อ
+Tube segments	ส่วนของท่อ
+Outer radius	รัศมีนอก
+Inner radius	รัศมีใน
+Opening	ช่องเปิด
+Wall	ผนัง
+Mesh	เมช
+A copy of this object's type of its own is made for it, with its meshes, materials and lamps to edit; the original stays as it is	สร้างสำเนาชนิดของวัตถุนี้เป็นของตัวเอง พร้อมเมช วัสดุ และโคมไฟให้แก้ไข ต้นฉบับไม่เปลี่ยน
+As a mesh	เป็นเมช
+Copy as an object	คัดลอกเป็นวัตถุ
+An openMapper object of its shape beside it, to edit as a mesh (vertices, edges, faces)	วัตถุ openMapper รูปทรงเดียวกันข้างมัน เพื่อแก้ไขเป็นเมช (จุดยอด ขอบ หน้า)
+The same, the spline taken away (its lanes go with it)	เหมือนกัน แต่ลบสไปลน์ออก (เลนไปด้วย)
+Splines as a mesh	สไปลน์เป็นเมช
+Copy as one object	คัดลอกเป็นวัตถุเดียว
+Replace by one object	แทนที่ด้วยวัตถุเดียว
+Export the selection…	ส่งออกส่วนที่เลือก…
+As meshes	เป็นเมช
+Join into one object (Ctrl+J)	รวมเป็นวัตถุเดียว (Ctrl+J)
+All their parts in the one shown in the properties, the others gone	ทุกส่วนของมันอยู่ในอันที่แสดงในคุณสมบัติ อันอื่นหายไป
+Solid modelling (CSG): the object shown in the properties with the others	การสร้างแบบจำลองทึบ (CSG): วัตถุที่แสดงในคุณสมบัติกับอันอื่น
+Keep the cutting objects	เก็บวัตถุที่ตัดไว้
+Vertices	จุดยอด
+Edges	ขอบ
+Faces	หน้า
+vertices	จุดยอด
+edges	ขอบ
+Selected	เลือกแล้ว
+X-ray: pick through the mesh	เอกซเรย์: เลือกทะลุเมช
+All (A)	ทั้งหมด (A)
+None (Alt+A)	ไม่เลือก (Alt+A)
+Invert (Ctrl+I)	กลับการเลือก (Ctrl+I)
+Linked (Ctrl+L)	ที่เชื่อมถึง (Ctrl+L)
+More	เพิ่มเติม
+Less	ลด
+Click, Shift + click to add, drag on nothing for a box, a second click or Alt + click for a loop	คลิก, Shift + คลิกเพื่อเพิ่ม, ลากบนที่ว่างเป็นกรอบ, คลิกครั้งที่สองหรือ Alt + คลิกเพื่อเลือกเป็นวง
+Change	เปลี่ยน
+Extrude (E)	ดันขึ้น (E)
+Inset (I)	อินเซ็ต (I)
+Bevel (Ctrl+B)	ลบมุม (Ctrl+B)
+Loop cut (Ctrl+R)	ตัดเป็นวง (Ctrl+R)
+Point at an edge and press Ctrl+R	ชี้ที่ขอบแล้วกด Ctrl+R
+Subdivide	แบ่งย่อย
+Fill (F)	เติม (F)
+Bridge loops	เชื่อมวง
+Connect (J)	เชื่อมต่อ (J)
+Poke	พัดจากศูนย์กลาง
+Duplicate (Shift+D)	ทำสำเนา (Shift+D)
+Split (Y)	แยก (Y)
+Separate into an object (P)	แยกเป็นวัตถุ (P)
+Spin 360°	หมุน 360°
+The selection turned round the object's up axis through its middle, in 12 steps	ส่วนที่เลือกหมุนรอบแกนตั้งของวัตถุผ่านกึ่งกลาง ใน 12 ขั้น
+Smooth vertices	ทำจุดยอดให้เรียบ
+Merge (M)	รวม (M)
+At the middle	ที่กึ่งกลาง
+At the first	ที่อันแรก
+At the last	ที่อันสุดท้าย
+Collapse each piece	ยุบแต่ละชิ้น
+By distance (1 mm)	ตามระยะ (1 มม.)
+Delete (X)	ลบ (X)
+Only faces	เฉพาะหน้า
+Dissolve vertices	ละลายจุดยอด
+Dissolve edges	ละลายขอบ
+Dissolve faces	ละลายหน้า
+Triangulate (Ctrl+T)	แปลงเป็นสามเหลี่ยม (Ctrl+T)
+Triangles to quads (Alt+J)	สามเหลี่ยมเป็นสี่เหลี่ยม (Alt+J)
+Shade smooth	แรเงาเรียบ
+Shade flat	แรเงาแบน
+Flip normals (Alt+N)	พลิกนอร์มอล (Alt+N)
+Normals outward (Shift+N)	นอร์มอลหันออก (Shift+N)
+Mark seam	ทำเครื่องหมายตะเข็บ
+Clear seam	ล้างตะเข็บ
+Mark sharp	ทำเครื่องหมายคม
+Clear sharp	ล้างความคม
+Adjust the last operation	ปรับการทำงานล่าสุด
+Slide	เลื่อน
+Cuts	รอยตัด
+UV map	UV map
+Unwrap	คลี่
+By seams (conformal)	ตามตะเข็บ (คอนฟอร์มัล)
+Smart project	โปรเจกต์อัจฉริยะ
+Cube projection (metres)	การฉายแบบลูกบาศก์ (เมตร)
+Cylinder projection	การฉายแบบทรงกระบอก
+Sphere projection	การฉายแบบทรงกลม
+Project from the view	ฉายจากมุมมอง
+Lightmap pack	แพ็กไลต์แมป
+Close the UV editor	ปิดตัวแก้ไข UV
+UV editor	ตัวแก้ไข UV
+Faces of the selection (all, with none selected); mark seams on edges first for an unwrap by seams	หน้าของส่วนที่เลือก (ทั้งหมดถ้าไม่ได้เลือก); ทำเครื่องหมายตะเข็บบนขอบก่อนเพื่อคลี่ตามตะเข็บ
+Material of the selected faces	วัสดุของหน้าที่เลือก
+With lamps	พร้อมโคมไฟ
+Street lamp	เสาไฟ
+A pole with a lamp that glows and lights the ground at night	เสาที่มีโคมไฟซึ่งเรืองแสงและส่องพื้นตอนกลางคืน
+Signal head	หัวสัญญาณ
+A traffic light of the lamps below that a crossing's light program drives	ไฟจราจรจากโคมไฟด้านล่าง ซึ่งขับด้วยโปรแกรมไฟของทางแยก
+Lamps:	โคมไฟ:
+Picture, light, sound	รูปภาพ แสง เสียง
+Picture / pattern…	รูปภาพ / ลวดลาย…
+Choose a picture or a texture: it becomes an object you place, move, turn and scale like any other. Several repeats make a pattern	เลือกรูปภาพหรือพื้นผิว: จะกลายเป็นวัตถุที่วาง ย้าย หมุน และปรับขนาดได้เหมือนวัตถุอื่น ทำซ้ำหลายครั้งได้ลวดลาย
+Light source	แหล่งกำเนิดแสง
+A lamp that glows and lights the ground round it	โคมไฟที่เรืองแสงและส่องพื้นรอบๆ
+Sound source…	แหล่งเสียง…
+Choose a sound file (.wav): it plays where you put the marker, as far as the radius carries; the marker shows in the editor only	เลือกไฟล์เสียง (.wav): เล่นตรงที่วางเครื่องหมาย ไปไกลเท่ารัศมี; เครื่องหมายแสดงเฉพาะในตัวแก้ไข
+Picture width, m	ความกว้างรูปภาพ, ม.
+Repeats	ทำซ้ำ
+on the ground	บนพื้น
+standing	ตั้งอยู่
+Light colour	สีของแสง
+Light reach, m	ระยะแสง, ม.
+at night	ตอนกลางคืน
+always	ตลอดเวลา
+Sound reach, m	ระยะเสียง, ม.
+Sound volume	ระดับเสียง
+Overview: click or drag to move there · double-click: larger / smaller · M: hide	ภาพรวม: คลิกหรือลากเพื่อไปที่นั่น · ดับเบิลคลิก: ใหญ่ขึ้น / เล็กลง · M: ซ่อน
+Name:	ชื่อ:
+My town	เมืองของฉัน
+Description:	คำอธิบาย:
+What the map is, for the game's map list	แผนที่นี้คืออะไร สำหรับรายการแผนที่ในเกม
+Size:	ขนาด:
+Ground height:	ความสูงพื้นดิน:
+ m above sea level	 ม. เหนือระดับน้ำทะเล
+Traffic:	การจราจร:
+keeps right	ขับชิดขวา
+keeps left	ขับชิดซ้าย
+Busy:	ความคับคั่ง:
+cars	รถ
+passengers	ผู้โดยสาร
+Years:	ปี:
+year offset	ค่าเลื่อนปี
+Added to today's year when the game starts at the real date	บวกเพิ่มกับปีปัจจุบันเมื่อเกมเริ่มที่วันที่จริง
+Money:	เงิน:
+Tickets:	ตั๋ว:
+Seasons:	ฤดูกาล:
+four, snowy winter	สี่ฤดู ฤดูหนาวมีหิมะ
+mild winter	ฤดูหนาวอ่อน
+summer only	ฤดูร้อนอย่างเดียว
+Rail:	ราง:
+trams and trains follow their tracks' switches	รถรางและรถไฟตามประแจสลับของราง
+Ground texture (all tiles):	พื้นผิวพื้นดิน (ทุกไทล์):
+template	แม่แบบ
+More ground layers are painted later (Paint tool); the map's settings can all be changed in Map > Map settings.	ชั้นพื้นดินอื่นทาภายหลัง (เครื่องมือทาสี); การตั้งค่าแผนที่ทั้งหมดเปลี่ยนได้ใน แผนที่ > การตั้งค่าแผนที่
+Create	สร้าง
+as the template	ตามแม่แบบ
+ways	เส้นทาง
+bus routes downloaded	ดาวน์โหลดเส้นทางรถบัสแล้ว
+not had:	ไม่ได้รับ:
+The streets of the map's place built as roads with junctions where they meet, its bus stops, lines, trees and woods. Best on tiles with no roads yet: roads lying on ones the map has are left out.	ถนนในที่ตั้งของแผนที่ สร้างเป็นถนนพร้อมทางแยกตรงที่มาบรรจบ รวมถึงป้ายรถบัส สาย ต้นไม้ และป่า เหมาะกับไทล์ที่ยังไม่มีถนน: ถนนที่ทับกับของที่แผนที่มีอยู่จะถูกข้าม
+The map does not lie on the Earth yet: place it in Satellite and terrain (Map menu, I) first.	แผนที่ยังไม่ได้วางบนโลก: วางใน ดาวเทียมและภูมิประเทศ (เมนูแผนที่, I) ก่อน
+Load the terrain heights first (Satellite and terrain): the roads follow the ground as it is when they are built.	โหลดความสูงภูมิประเทศก่อน (ดาวเทียมและภูมิประเทศ): ถนนวางตามพื้นตามที่เป็นตอนสร้าง
+Download for the map's tiles	ดาวน์โหลดสำหรับไทล์ของแผนที่
+bus routes	เส้นทางรถบัส
+trees	ต้นไม้
+buildings	อาคาร
+water	น้ำ
+Downloading…	กำลังดาวน์โหลด…
+no type chosen	ยังไม่ได้เลือกชนิด
+Use the chosen	ใช้ที่เลือก
+One-way roads	ถนนทางเดียว
+Each carriageway of a dual road and one-way streets: with a one-way road type they lie side by side as they should; with none chosen they get their kind's	แต่ละฝั่งของถนนคู่และถนนทางเดียว: ด้วยชนิดถนนทางเดียวจะวางเคียงกันอย่างที่ควร; ถ้าไม่เลือกจะใช้ชนิดของแต่ละประเภท
+as their kind	ตามประเภท
+no stop object	ไม่มีวัตถุป้าย
+The stop chosen in Game logic > Bus stops	ป้ายที่เลือกใน ตรรกะเกม > ป้ายรถบัส
+Bus lines	สายรถบัส
+Each bus route through two or more of the map's stops a trip of its line, the way found along the roads; a tour from 06:00 to 22:00 for each new line	ทุกเส้นทางรถบัสที่ผ่านป้ายของแผนที่สองแห่งขึ้นไปเป็นเที่ยวของสายนั้น เส้นทางหาตามถนน; สายใหม่แต่ละสายได้ทัวร์ 06:00 ถึง 22:00
+Trees and woods	ต้นไม้และป่า
+Single trees, rows of them and woods, planted with the plant mix (Objects tool > Plant brush) or the tree chosen; none on a road	ต้นไม้เดี่ยว แถวต้นไม้ และป่า ปลูกด้วยส่วนผสมพืช (เครื่องมือวัตถุ > แปรงพืช) หรือต้นไม้ที่เลือก; ไม่ปลูกบนถนน
+no plants chosen	ยังไม่ได้เลือกพืช
+kinds of plants	ชนิดพืช
+apart in woods	ระยะห่างในป่า
+Buildings	อาคาร
+Each outline filled with the model of the folder chosen whose ground plan comes nearest, its front to the nearest road; an outline no model fits is left out	แต่ละเส้นขอบเติมด้วยโมเดลจากโฟลเดอร์ที่เลือกซึ่งผังพื้นใกล้เคียงที่สุด ด้านหน้าหันเข้าหาถนนที่ใกล้ที่สุด; เส้นขอบที่ไม่มีโมเดลเหมาะจะถูกข้าม
+no folder	ไม่มีโฟลเดอร์
++ its folder	+ โฟลเดอร์ของมัน
+Add the folder of the object chosen in the catalogue (Buildings_MC, …)	เพิ่มโฟลเดอร์ของวัตถุที่เลือกในแค็ตตาล็อก (Buildings_MC, …)
+Lakes and rivers: the ground inside them lowered below the banks, and the tiles they lie on given water a little under the banks' height (OMSI's water is one level for a tile: low ground elsewhere on it is flooded too)	ทะเลสาบและแม่น้ำ: พื้นภายในถูกลดต่ำกว่าตลิ่ง และไทล์ที่อยู่ได้น้ำต่ำกว่าความสูงตลิ่งเล็กน้อย (น้ำของ OMSI มีระดับเดียวต่อไทล์: ที่ต่ำอื่นในไทล์นั้นก็ท่วมด้วย)
+deep	ลึก
+a road type (Roads tool), then "Use the chosen"	ชนิดถนน (เครื่องมือถนน) แล้ว "ใช้ที่เลือก"
+a stop (Game logic > Bus stops), then "Use the chosen"	ป้าย (ตรรกะเกม > ป้ายรถบัส) แล้ว "ใช้ที่เลือก"
+a tree in the Objects catalogue (or a plant mix)	ต้นไม้ในแค็ตตาล็อกวัตถุ (หรือส่วนผสมพืช)
+a building in the catalogue, then "+ its folder"	อาคารในแค็ตตาล็อก แล้ว "+ โฟลเดอร์ของมัน"
+To build, choose (or untick):	เพื่อสร้าง เลือก (หรือเอาเครื่องหมายออก):
+A one-way street is built the way it runs in OpenStreetMap: give it a one-way road type	ถนนทางเดียวสร้างตามทิศที่ใช้ใน OpenStreetMap: กำหนดชนิดถนนทางเดียวให้มัน
+Build	สร้าง
+Name, file or IDCode	ชื่อ ไฟล์ หรือ IDCode
+things on the map	สิ่งของบนแผนที่
+Groups	กลุ่ม
+Select the group and go there	เลือกกลุ่มแล้วไปที่นั่น
+Select everything in it	เลือกทุกอย่างในนั้น
+Select it and go there	เลือกแล้วไปที่นั่น
+more: narrow the search	มีอีก: กรองการค้นหาให้แคบลง
+Select all of them	เลือกทั้งหมด
+Go to the first	ไปที่อันแรก
+Pick a tree in the catalogue, then paint	เลือกต้นไม้ในแค็ตตาล็อก แล้วทาด้วยแปรง
+Pick a tree in the catalogue, then click round the area	เลือกต้นไม้ในแค็ตตาล็อก แล้วคลิกล้อมพื้นที่
+Pick a road type, click the centre, then the ring	เลือกชนิดถนน คลิกศูนย์กลาง แล้วคลิกวง
+Select a road (double-click: all of it): its properties show its height profile	เลือกถนน (ดับเบิลคลิก: ทั้งเส้น): คุณสมบัติของมันแสดงโปรไฟล์ความสูง
+Select one of openMapper's junctions: its properties have Traffic lights and crossings	เลือกทางแยกของ openMapper: คุณสมบัติของมันมีไฟจราจรและทางข้าม
+Select the signal head (or a display): Linked objects in its properties, then click its crossing	เลือกหัวสัญญาณ (หรือจอ): วัตถุที่เชื่อมโยงในคุณสมบัติ แล้วคลิกทางแยกของมัน
+Select a road, pick an object in the Objects catalogue: Objects along the road in its properties	เลือกถนน เลือกวัตถุในแค็ตตาล็อกวัตถุ: วัตถุตามถนนในคุณสมบัติของมัน
+Select a track (double-click: all of it): Overhead wire under Parallel copy in its properties	เลือกราง (ดับเบิลคลิก: ทั้งเส้น): สายไฟเหนือหัวใต้สำเนาขนานในคุณสมบัติ
+Select a road or a chain: Parallel copy in its properties	เลือกถนนหรือสายต่อ: สำเนาขนานในคุณสมบัติ
+Select a road (double-click: all of it): Paint the ground along it in its properties	เลือกถนน (ดับเบิลคลิก: ทั้งเส้น): ทาพื้นตามมันในคุณสมบัติ
+Click a tile: its water is in the panel; lower the ground under it with the Terrain tool	คลิกไทล์: น้ำอยู่ในแผง; ลดพื้นใต้มันด้วยเครื่องมือภูมิประเทศ
+Height map: at the end of the Terrain panel	แผนที่ความสูง: ท้ายแผงภูมิประเทศ
+By slope and height: at the end of the Paint panel	ตามความลาดและความสูง: ท้ายแผงทาสี
+View menu: Time of day, Season	เมนูมุมมอง: ช่วงเวลาของวัน ฤดูกาล
+What do you want to do?	คุณต้องการทำอะไร?
+Groups…	กลุ่ม…
+Objects on the map by folder	วัตถุบนแผนที่ตามโฟลเดอร์
+Knife: cut roads	มีด: ตัดถนน
+Test drive in OMSI 2 (the original)	ทดลองขับใน OMSI 2 (ต้นฉบับ)
+Overview map	แผนที่ภาพรวม
+Place a bus stop	วางป้ายรถบัส
+Place a start point	วางจุดเริ่มต้น
+Plant trees with a brush	ปลูกต้นไม้ด้วยแปรง
+Plant a wood or a park	ปลูกป่าหรือสวนสาธารณะ
+Roundabout	วงเวียน
+Height profile of a road	โปรไฟล์ความสูงของถนน
+Traffic lights and zebra crossings	ไฟจราจรและทางม้าลาย
+Link a signal head to its crossing	เชื่อมหัวสัญญาณกับทางแยก
+Objects along a road	วัตถุตามถนน
+Overhead wire along a track	สายไฟเหนือหัวตามราง
+Parallel copy of a road	สำเนาขนานของถนน
+Paint the ground along a road	ทาพื้นตามถนน
+Water, lake, river	น้ำ ทะเลสาบ แม่น้ำ
+Ramp in the ground	ทางลาดในพื้น
+Height map import or export	นำเข้าหรือส่งออกแผนที่ความสูง
+Time of day and season	ช่วงเวลาของวันและฤดูกาล
+PBR material	วัสดุ PBR
+none	ไม่มี
+Own picture…	รูปภาพของตัวเอง…
+Choose a texture of the object, or a picture of your own.	เลือกพื้นผิวของวัตถุหรือรูปภาพของคุณเอง
+Normals (_nn)	นอร์มอล (_nn)
+Roughness	ความหยาบ
+Shadow in hollows	เงาในแอ่ง
+Bumps	รอยนูน
+Only big shapes	เฉพาะรูปทรงใหญ่
+Dark parts stand out (not sink in)	ส่วนมืดนูนขึ้น (ไม่จม)
+Bright parts smoother	ส่วนสว่างเรียบขึ้น
+Metal	โลหะ
+Back to the defaults	กลับเป็นค่าเริ่มต้น
+This texture has PBR maps of its own already: new ones made here are taken instead of them.	พื้นผิวนี้มีแมป PBR ของตัวเองอยู่แล้ว: อันที่สร้างที่นี่จะถูกใช้แทน
+Written as:	เขียนเป็น:
+PBR maps made	สร้างแมป PBR แล้ว
+Delete the PBR material	ลบวัสดุ PBR
+PBR maps taken away	ลบแมป PBR แล้ว
+Height profile	โปรไฟล์ความสูง
+over the ground	เหนือพื้น
+Click: go there in the view · drag a dot (a joint) up or down: its height	คลิก: ไปที่นั่นในมุมมอง · ลากจุด (รอยต่อ) ขึ้นหรือลง: ความสูงของมัน
+Climbs, falls	ขึ้น ลง
+Steepest	ชันที่สุด
+at	ที่
+Highest over the ground	สูงที่สุดเหนือพื้น
+Deepest under it	ลึกที่สุดใต้พื้น
+Over 8 % is steep for a bus; over 12 % few streets go	เกิน 8 % ชันสำหรับรถบัส; เกิน 12 % มีถนนน้อยสายที่ชันขนาดนั้น
+roadway	ผิวถนน
+Road types	ชนิดถนน
+Make a new road type…	สร้างชนิดถนนใหม่…
+My road	ถนนของฉัน
+ · own	 · ของตัวเอง
+Create the road type	สร้างชนิดถนน
+Road type made: the Roads tool builds with it	สร้างชนิดถนนแล้ว: เครื่องมือถนนสร้างด้วยชนิดนี้
+Change it in the road maker	เปลี่ยนในตัวสร้างถนน
+Its junctions	ทางแยกของมัน
+Make a junction where it meets another road (else they only cross)	สร้างทางแยกตรงที่มันพบถนนอื่น (ไม่เช่นนั้นแค่ตัดกัน)
+Corners	มุม
+× rounder	× มนกว่า
+Traffic lights by themselves	ไฟจราจรอัตโนมัติ
+Zebra crossings on every arm	ทางม้าลายทุกแขนของทางแยก
+Used for the junctions made from now on (where several road types meet, the one asking more wins). A junction already made keeps its own settings: select it to change them.	ใช้กับทางแยกที่สร้างจากนี้ไป (ตรงที่ชนิดถนนหลายแบบมาพบกัน แบบที่ต้องการมากกว่าจะชนะ) ทางแยกที่สร้างแล้วคงการตั้งค่าของตัวเอง: เลือกเพื่อเปลี่ยน
+Pick a road type on the left, or make a new one.	เลือกชนิดถนนทางซ้าย หรือสร้างใหม่
+Road maker	ตัวสร้างถนน
+Lanes	เลน
+(▼ 0: one-way)	(▼ 0: ทางเดียว)
+Lane width	ความกว้างเลน
+Middle strip	เกาะกลาง
+Footways	ทางเท้า
+Kerb	ขอบทาง
+Roadway texture	พื้นผิวผิวถนน
+Footway texture	พื้นผิวทางเท้า
+Own…	ของตัวเอง…
+The roadway texture is laid once across all its lanes (as OMSI 2's lane textures are painted: pick one with as many lanes); the footway texture's right end is the kerb.	พื้นผิวผิวถนนวางหนึ่งครั้งข้ามทุกเลน (เหมือนพื้นผิวเลนของ OMSI 2 ที่ทา: เลือกอันที่มีจำนวนเลนเท่ากัน); ปลายขวาของพื้นผิวทางเท้าคือขอบทาง
+not on the map	ไม่อยู่บนแผนที่
+Signal routes	เส้นทางสัญญาณ
+Each railway signal clears when a train wants the track pieces of its route and none stands on them.	สัญญาณรถไฟแต่ละอันเปิดเมื่อรถไฟต้องการชิ้นรางของเส้นทางและไม่มีอะไรอยู่บนนั้น
+New route for the selected signal	เส้นทางใหม่สำหรับสัญญาณที่เลือก
+Select a signal (one object) in the view first	เลือกสัญญาณ (วัตถุเดียว) ในมุมมองก่อน
+The selected object does not look like a signal (its name says nothing of one): check it is.	วัตถุที่เลือกดูไม่เหมือนสัญญาณ (ชื่อไม่บอกว่าเป็น): ตรวจสอบว่าใช่
+No routes yet.	ยังไม่มีเส้นทาง
+pieces	ชิ้น
+Signal	สัญญาณ
+the selected	ที่เลือก
+Aspect	สัญญาณไฟ
+What the signal shows when this route is clear: 1 proceed, 2 proceed slowly (with a speed limit)…	สิ่งที่สัญญาณแสดงเมื่อเส้นทางนี้ว่าง: 1 ไปได้ 2 ไปช้าๆ (มีจำกัดความเร็ว)…
+Distant signal	สัญญาณล่วงหน้า
+Next signal	สัญญาณถัดไป
+Speed limit	จำกัดความเร็ว
+OMSI's route kind (the stock maps have 0 and 1)	ชนิดเส้นทางของ OMSI (แผนที่มาตรฐานมี 0 และ 1)
+Track pieces	ชิ้นราง
+Take the selected track	ใช้รางที่เลือก
+Every rail path of the selected tracks and switches (double-click a track: all of it); replaces the pieces	ทุกเส้นทางรางของรางและประแจสลับที่เลือก (ดับเบิลคลิกราง: ทั้งเส้น); แทนที่ชิ้นเดิม
+Select the signal and its pieces in the view	เลือกสัญญาณและชิ้นของมันในมุมมอง
+Delete the route	ลบเส้นทาง
+Lines and timetable	สายและตารางเวลา
+Edit timetable	แก้ไขตารางเวลา
+No bus stop there: click one of the orange marks	ไม่มีป้ายตรงนั้น: คลิกเครื่องหมายสีส้ม
+The roads can't be read without the OMSI 2 folder.	อ่านถนนไม่ได้ถ้าไม่มีโฟลเดอร์ OMSI 2
+A line needs at least two bus stops on the map: place them with Game logic > Bus stops, beside a road.	สายต้องมีป้ายรถบัสอย่างน้อยสองแห่งบนแผนที่: วางที่ ตรรกะเกม > ป้ายรถบัส ข้างถนน
+Lines	สาย
+No lines yet.	ยังไม่มีสาย
+New line	สายใหม่
+Pick a line on the left, or make a new one.\n\nA line has trips (a way from stop to stop) and tours (one bus's day: which trip it drives when).	เลือกสายทางซ้าย หรือสร้างใหม่\n\nสายมีเที่ยว (เส้นทางจากป้ายสู่ป้าย) และทัวร์ (หนึ่งวันของรถบัสหนึ่งคัน: ขับเที่ยวไหนเมื่อไร)
+That name is taken or can't be a file name	ชื่อนั้นถูกใช้แล้วหรือใช้เป็นชื่อไฟล์ไม่ได้
+A copy of the line with its trips and tours (a variant to change)	สำเนาของสายพร้อมเที่ยวและทัวร์ (แบบแปรผันไว้แก้ไข)
+Delete the line and its trips	ลบสายและเที่ยวของมัน
+Players can drive it	ผู้เล่นขับได้
+Trips	เที่ยว
+Tours and times	ทัวร์และเวลา
+A tour is one bus's day: the trips it drives, one after the other, and when each leaves.	ทัวร์คือหนึ่งวันของรถบัสหนึ่งคัน: เที่ยวที่ขับต่อเนื่องกัน และเวลาออกของแต่ละเที่ยว
+A trip is one way along the line: its stops in order. Most lines have two, there and back.	เที่ยวคือหนึ่งทางตามสาย: ป้ายตามลำดับ ส่วนใหญ่สายมีสองเที่ยว ไปและกลับ
+New trip	เที่ยวใหม่
+Make the way back	สร้างเที่ยวกลับ
+A new trip with the same stops the other way round	เที่ยวใหม่ที่มีป้ายเดิมในทิศทางตรงข้าม
+Trip	เที่ยว
+Delete the trip	ลบเที่ยว
+Destination sign	ป้ายปลายทาง
+This trip runs on a track of its own (a train): its stops are kept as they are.	เที่ยวนี้วิ่งบนรางของตัวเอง (รถไฟ): ป้ายของมันคงเดิม
+Show on the map	แสดงบนแผนที่
+No stops yet.	ยังไม่มีป้าย
+Done picking	เลือกเสร็จ
+Pick stops on the map	เลือกบนแผนที่
+Click the stops in the view one after the other, in the order the bus calls at them	คลิกป้ายในมุมมองทีละแห่ง ตามลำดับที่รถบัสแวะ
+Add stop…	เพิ่มป้าย…
+Click stops on the map (they are marked orange)…	คลิกป้ายบนแผนที่ (ทำเครื่องหมายสีส้ม)…
+Add two stops or more: the way between them is found along the roads.	เพิ่มป้ายตั้งแต่สองแห่งขึ้นไป: เส้นทางระหว่างกันหาตามถนน
+Finding the way…	กำลังหาเส้นทาง…
+Route found:	พบเส้นทาง:
+km along the roads (blue in the view)	กม. ตามถนน (สีน้ำเงินในมุมมอง)
+the way drives a one-way lane against its direction; is a path drawn the wrong way round?	เส้นทางวิ่งในเลนทางเดียวสวนทิศ; เส้นทางถูกวาดกลับด้านหรือไม่?
+is not on the map	ไม่อยู่บนแผนที่
+no road with car lanes within 15 m	ไม่มีถนนที่มีเลนรถภายใน 15 ม.
+No way	ไม่มีเส้นทาง
+the roads are not joined, or run the other way (see View > AI lanes)	ถนนไม่ได้เชื่อมกันหรือวิ่งไปอีกทาง (ดู มุมมอง > เลน AI)
+The trip is saved, but its way is not until this is mended	บันทึกเที่ยวแล้ว แต่เส้นทางจะยังไม่บันทึกจนกว่าจะแก้ไข
+Trip time	เวลาเดินทาง
+Guess:	ประมาณ:
+From the route's length at the pace of a town bus	จากความยาวเส้นทางที่ความเร็วของรถบัสในเมือง
+Times at the stops	เวลาที่ป้าย
+Minutes after the trip leaves. They follow the distance between the stops; fix one to keep the bus to it (it waits there when early).	นาทีหลังเที่ยวออก ตามระยะระหว่างป้าย; ตรึงเวลาเพื่อให้รถบัสยึดตามนั้น (ถ้ามาเร็วจะรอที่นั่น)
+fixed	ตรึงแล้ว
+Spread all by distance	กระจายทั้งหมดตามระยะ
+Holidays and school holidays	วันหยุดและปิดเทอม
+On a public holiday only the tours with Holidays ticked run; school holidays pick the tours for school holidays or school days.	ในวันหยุดนักขัตฤกษ์ วิ่งเฉพาะทัวร์ที่ติ๊ก วันหยุด; ปิดเทอมเลือกทัวร์สำหรับปิดเทอมหรือวันเรียน
+Copy to	คัดลอกไปที่
+The same days a year later (feasts that move, like Easter, are to be set by hand)	วันเดียวกันในปีถัดไป (เทศกาลที่ย้ายวัน เช่น อีสเตอร์ ต้องตั้งเอง)
+The map has no depot (ailists.cfg): only you drive these tours, no AI buses.	แผนที่ไม่มีดีโป (ailists.cfg): มีแค่คุณที่ขับทัวร์เหล่านี้ ไม่มีรถบัส AI
+Add a depot with OMSI 2's MAN buses	เพิ่มดีโปพร้อมรถบัส MAN ของ OMSI 2
+Its buses run the tours (Map > Traffic and AI shows it)	รถบัสของมันวิ่งทัวร์ (แผนที่ > การจราจรและ AI แสดงไว้)
+Tour	รอบเดินรถ
+New tour	ทัวร์ใหม่
+Pick a tour to see its departures.	เลือกทัวร์เพื่อดูเที่ยวออก
+Make a trip first.	สร้างเที่ยวก่อน
+Number	หมายเลข
+Buses from	รถบัสจาก
+Delete the tour	ลบทัวร์
+Runs on	วิ่งวัน
+Mo	จ.
+Tu	อ.
+We	พ.
+Th	พฤ.
+Fr	ศ.
+Sa	ส.
+Su	อา.
+Every day	ทุกวัน
+Monday to Friday	จันทร์ถึงศุกร์
+Weekends and holidays	วันหยุดสุดสัปดาห์และนักขัตฤกษ์
+In the school holidays	ช่วงปิดเทอม
+On school days	วันเรียน
+Next departure	เที่ยวออกถัดไป
+The next trip of the line, when the bus is back and has had its break	เที่ยวถัดไปของสาย เมื่อรถบัสกลับมาและพักแล้ว
+Fill from	เติมจาก
+break	พัก
+Fill	เติม
+Replace the tour's departures: the line's trips one after the other, a break after each	แทนที่เที่ยวออกของทัวร์: เที่ยวของสายต่อเนื่องกัน พักหลังแต่ละเที่ยว
+No departures yet: add them above.	ยังไม่มีเที่ยวออก: เพิ่มด้านบน
+Delete the departure	ลบเที่ยวออก
+GPS tracks to trace	แทร็ก GPS สำหรับลากตาม
+A route recorded on a phone or drawn elsewhere (GPX, KML, GeoJSON), shown in the view in magenta to draw roads along, or built into a road at once	เส้นทางที่บันทึกด้วยโทรศัพท์หรือวาดที่อื่น (GPX, KML, GeoJSON) แสดงในมุมมองสีม่วงแดงเพื่อวาดถนนตาม หรือสร้างเป็นถนนทันที
+Place the map on the Earth first (Map > Satellite and terrain)	วางแผนที่บนโลกก่อน (แผนที่ > ดาวเทียมและภูมิประเทศ)
+Load a file…	โหลดไฟล์…
+None loaded	ยังไม่ได้โหลด
+Forget it	ลืมมัน
+Build a road along it:	สร้างถนนตามมัน:
+Choose a road type in the Roads tool to build it	เลือกชนิดถนนในเครื่องมือถนนเพื่อสร้าง
+Built as if drawn: corners rounded into arcs, junctions where it meets roads, cut at the map's edge; one undo step	สร้างเหมือนวาดเอง: มุมถูกปัดเป็นส่วนโค้ง ทางแยกตรงที่พบถนน ตัดที่ขอบแผนที่; เลิกทำหนึ่งขั้น
+Traffic and AI	การจราจรและ AI
+Edit traffic	แก้ไขการจราจร
+Over the day	ตามช่วงของวัน
+Vehicle groups	กลุ่มยานพาหนะ
+Parked cars and people	รถจอดและผู้คน
+Depot files	ไฟล์ดีโป
+The AI's vehicles come in groups. A car group drives about on the roads; a depot sends out the buses of the timetable's tours.	ยานพาหนะของ AI อยู่เป็นกลุ่ม กลุ่มรถวิ่งไปตามถนน; ดีโปส่งรถบัสไปวิ่งทัวร์ตามตารางเวลา
+(This map's ailists.cfg is in OMSI 2's first format: it is written in the second one when changed.)	(ailists.cfg ของแผนที่นี้เป็นรูปแบบแรกของ OMSI 2: จะเขียนเป็นรูปแบบที่สองเมื่อมีการเปลี่ยน)
+is to drive about, but there is no such group.	ควรวิ่งไปตามถนน แต่ไม่มีกลุ่มนั้น
+Make it with OMSI 2's vehicles	สร้างด้วยยานพาหนะของ OMSI 2
+The group of that name from OMSI 2's own maps	กลุ่มชื่อนั้นจากแผนที่ของ OMSI 2 เอง
+New car group	กลุ่มรถใหม่
+New depot	ดีโปใหม่
+Pick a group on the left.	เลือกกลุ่มทางซ้าย
+Delete the group (tours still take their buses from it)	ลบกลุ่ม (ทัวร์ยังรับรถบัสจากมัน)
+Delete the group	ลบกลุ่ม
+Tours that take their buses from here:	ทัวร์ที่รับรถบัสจากที่นี่:
+Drives about on its own	วิ่งไปเอง
+as many:	จำนวน:
+Times the traffic over the day	ตัวคูณการจราจรตามช่วงของวัน
+A vehicle with more weight comes along more often.	ยานพาหนะที่น้ำหนักมากกว่าจะผ่านมาบ่อยกว่า
+Add a vehicle…	เพิ่มยานพาหนะ…
+Depot file (.hof)	ไฟล์ดีโป (.hof)
+None of its buses has this depot file beside it: they run without their destination signs and fleet data.	ไม่มีรถบัสคันใดมีไฟล์ดีโปนี้อยู่ข้างๆ: จะวิ่งโดยไม่มีป้ายปลายทางและข้อมูลกองรถ
+The buses it has: a type of bus and the fleet number and plate of each.	รถบัสที่มี: ชนิดของรถบัส และหมายเลขรถกับป้ายทะเบียนของแต่ละคัน
+Take this type out	เอาชนิดนี้ออก
+number	หมายเลข
+plate	ป้ายทะเบียน
+Another bus	รถบัสอีกคัน
+Add a type of bus…	เพิ่มชนิดรถบัส…
+The lists can't be read without the OMSI 2 folder.	อ่านรายการไม่ได้ถ้าไม่มีโฟลเดอร์ OMSI 2
+Parked cars	รถที่จอด
+What stands on the car parks (Game logic > Car parks). A car listed more often stands there more often.	สิ่งที่จอดบนที่จอดรถ (ตรรกะเกม > ที่จอดรถ) รถที่อยู่ในรายการบ่อยกว่าจะจอดบ่อยกว่า
+Who walks about and waits at the stops.	ใครเดินไปมาและรอที่ป้าย
+Drivers	คนขับ
+Who drives the AI's buses.	ใครขับรถบัส AI
+How often it is listed (0 takes it out)	อยู่ในรายการกี่ครั้ง (0 คือเอาออก)
+How busy the map is at each hour: the road traffic, and the passengers at the stops. 1 is normal; the game goes along the line between the points.	แผนที่คึกคักแค่ไหนในแต่ละชั่วโมง: การจราจรบนถนนและผู้โดยสารที่ป้าย 1 คือปกติ; เกมไล่ตามเส้นระหว่างจุด
+Road traffic	การจราจรบนถนน
+Passengers	ผู้โดยสาร
+Its own traffic over the day	การจราจรของตัวเองตามช่วงของวัน
+Without one the group follows the map's road traffic. A curve can be for some days of the week only.	ถ้าไม่มี กลุ่มจะตามการจราจรของแผนที่ เส้นโค้งใช้กับบางวันของสัปดาห์เท่านั้นได้
+Days:	วัน:
+Mo–Fr	จ.–ศ.
+Take this curve out	เอาเส้นโค้งนี้ออก
+A curve	เส้นโค้ง
+Typical day…	วันทั่วไป…
+Quiet village	หมู่บ้านเงียบสงบ
+Town with rush hours	เมืองที่มีชั่วโมงเร่งด่วน
+The same all day	เหมือนกันทั้งวัน
+No curve: 1 all day.	ไม่มีเส้นโค้ง: 1 ทั้งวัน
+Take the point out	เอาจุดออก
+Point	จุด
+Smart unwrap	คลี่อัจฉริยะ
+Every flat side apart in the picture, no faces on top of one another (all faces if none is selected)	ทุกด้านเรียบแยกกันในภาพ ไม่มีหน้าซ้อนกัน (ทุกหน้าถ้าไม่ได้เลือก)
+Box unwrap	คลี่แบบกล่อง
+The six sides of a box apart in the picture	หกด้านของกล่องแยกกันในภาพ
+Flip ↔	พลิก ↔
+Flip ↕	พลิก ↕
+Scale ×2	ขยาย ×2
+Scale ÷2	ย่อ ÷2
+Fit	พอดี
+Stretched to fill the picture	ยืดให้เต็มภาพ
+Pack islands	จัดเรียงเกาะ
+Average island scale	ปรับขนาดเกาะให้เฉลี่ย
+Seams from islands	ตะเข็บจากเกาะ
+Click: a face (Shift adds) · drag: move the selected · wheel: zoom · right button: pan	คลิก: เลือกหน้า (Shift เพิ่ม) · ลาก: ย้ายส่วนที่เลือก · ล้อ: ซูม · ปุ่มขวา: เลื่อน
+Could not keep the views	เก็บมุมมองไม่ได้
+Saved views	มุมมองที่บันทึก
+Places of the map to come back to: Ctrl+1…9 goes to the first nine, Ctrl+Shift+1…9 keeps the view there	ตำแหน่งบนแผนที่ที่จะกลับมา: Ctrl+1…9 ไปที่เก้าอันแรก, Ctrl+Shift+1…9 จำมุมมองไว้ที่นั่น
+Keep this view	จำมุมมองนี้
+None yet	ยังไม่มี
+Go	ไป
+Earlier in the list	ก่อนหน้าในรายการ
+Later in the list	ถัดไปในรายการ
+Take the view now instead	ใช้มุมมองตอนนี้แทน
+Keep proportions	คงสัดส่วน
+Back to its own size	กลับสู่ขนาดเดิม
+Updates	อัปเดต
+This version:	เวอร์ชันนี้:
+New version:	เวอร์ชันใหม่:
+Install and restart	ติดตั้งและรีสตาร์ท
+Not now	ไว้ทีหลัง
+What changed	มีอะไรเปลี่ยนบ้าง
+Downloading and installing	กำลังดาวน์โหลดและติดตั้ง
+Installed version	เวอร์ชันที่ติดตั้ง
+openMapper restarts when you save the map.	openMapper จะรีสตาร์ทเมื่อคุณบันทึกแผนที่
+Looking for a new version…	กำลังหาเวอร์ชันใหม่…
+This is the newest version.	นี่คือเวอร์ชันล่าสุด
+Download it from GitHub by hand	ดาวน์โหลดจาก GitHub ด้วยตนเอง
+When there is a new version:	เมื่อมีเวอร์ชันใหม่:
+Offer it to me	เสนอให้ฉัน
+Install it and restart by itself	ติดตั้งและรีสตาร์ทเอง
+Never look for updates	ไม่ตรวจหาอัปเดตเลย
+Check now	ตรวจสอบตอนนี้
+Never offer updates again	ไม่ต้องเสนออัปเดตอีก
+The release has no package	รุ่นนี้ไม่มีแพ็กเกจ
+No automatic updates for this system.	ไม่มีการอัปเดตอัตโนมัติสำหรับระบบนี้
+No connection to GitHub: are you online?	เชื่อมต่อ GitHub ไม่ได้: ออนไลน์อยู่หรือไม่?
+The release has no SHA256SUMS: not installed.	รุ่นนี้ไม่มี SHA256SUMS: ไม่ได้ติดตั้ง
+The package is not in SHA256SUMS: not installed.	แพ็กเกจไม่อยู่ใน SHA256SUMS: ไม่ได้ติดตั้ง
+The download does not match its checksum: not installed.	ไฟล์ที่ดาวน์โหลดไม่ตรงกับเช็กซัม: ไม่ได้ติดตั้ง
+Could not replace the program	แทนที่โปรแกรมไม่ได้
+The package has no program in it.	ในแพ็กเกจไม่มีโปรแกรม
+openMapper has stopped:	openMapper หยุดทำงาน:
+The log with the details:	บันทึกที่มีรายละเอียด:

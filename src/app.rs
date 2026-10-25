@@ -1244,6 +1244,10 @@ impl App {
             }
             Action::SetLang(l) => {
                 i18n::set(l);
+                // (a script the interface font has not is drawn by a system font)
+                if let Some(g) = &self.gfx {
+                    g.egui_ctx.set_fonts(crate::icons::fonts());
+                }
                 self.prefs.language = i18n::code(l).to_string();
                 self.prefs.save();
                 if let Some(r) = &self.roots {

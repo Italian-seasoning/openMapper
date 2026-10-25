@@ -6,6 +6,19 @@ version from this file.
 
 ## Unreleased
 
+## 0.1.6 - 2026-10-25
+
+### Added
+- **The interface speaks all twenty-eight languages of openOMSI** (View > Language, and the command palette): English, German, French, Russian, Ukrainian, Belarusian, Kazakh, Polish, Czech, Hungarian, Spanish, Catalan, Brazilian and European Portuguese, Italian, Dutch, Swedish, Turkish, Japanese, Traditional and Simplified Chinese, Korean, Thai, Vietnamese, Indonesian, Malay, Filipino and Hindi, every text translated. The system's language is taken when none is chosen (also on Windows and for `pt-BR`, `zh-Hant`...). Chinese, Japanese, Korean, Thai and Hindi are drawn with the system's own font (a system without one keeps those languages' texts in English instead of squares). Translators work in `locales/<code>.tsv` and need no Rust; CI checks that no text lacks a translation (see CONTRIBUTING.md).
+
+### Changed
+- **Quicker names over stops and start points**: looking up an object in the catalogue no longer allocates, and the map picture's file is checked once a second instead of every frame.
+
+### Fixed
+- **Objects were drawn from both sides** ([#20](https://github.com/openOMSI-org/openMapper/issues/20)): text on OMSI's helpers and signs (stop signs, numbers) showed through mirrored, and windows modelled once per side showed twice. The back of a face shows nothing now, as in the game.
+- **A long object name or path broke the properties panel** ([#21](https://github.com/openOMSI-org/openMapper/issues/21)): a name without spaces made the panel wider than its range, its rows were cut off and the view shifted on a click. Long names and paths wrap anywhere, long names on buttons are shortened.
+- **Junction plates are written with both sides** ([#23](https://github.com/openOMSI-org/openMapper/issues/23)): a game that culls back faces by another rule than the one tested no longer leaves a gap where the plate should be. Use Edit > Make the junctions again for junctions made before.
+
 ## 0.1.5 - 2026-10-24
 
 ### Changed

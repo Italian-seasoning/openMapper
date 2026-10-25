@@ -1,0 +1,2129 @@
+Could not open the map	Не ўдалося адкрыць карту
+The next 100 tiles are loaded, the others are hidden	Загружаны наступныя 100 тайлаў, астатнія схаваны
+Find the place in the window and build from it	Знайдзіце месца ў акне і пабудуйце карту па ім
+Your map is ready. Start with a road!	Карта гатовая. Пачніце з дарогі!
+Export the map for sharing	Экспарт карты для абмену
+Exported:	Экспартавана:
+files	файлаў
+files the map names were not found: the readme lists them	файлаў, якія называе карта, не знойдзена: яны пералічаны ў readme
+Could not export	Не ўдалося экспартаваць
+A ring road with line 1 on it: save, then try it in openOMSI (F5).	Кальцавая дарога з лініяй 1: захавайце і паспрабуйце ў openOMSI (F5).
+The sample could not be made	Не ўдалося стварыць прыклад
+In multiplayer the host saves the map. Leave the session to save this as a copy of your own.	У сумеснай праўцы карту захоўвае хост. Выйдзіце з сесіі, каб захаваць копію для сябе.
+Saved:	Захавана:
+Tip: place a start point (Game logic > Start points) so the bus has somewhere to appear	Парада: пастаўце кропку старту (Службовае > Кропкі старту), каб аўтобусу было дзе з'явіцца
+Could not save (the changes are still here, nothing is lost)	Не ўдалося захаваць (змены засталіся тут, нічога не страчана)
+The unsaved changes are back. Save to keep them.	Незахаваныя змены вернуты. Захайце, каб пакінуць іх.
+Could not restore the changes	Не ўдалося вярнуць змены
+openOMSI was not found	openOMSI не знойдзена
+From the start point	З кропкі старту
+The map has no start point: place one with Game logic > Start points	На карце няма кропкі старту: пастаўце яе ў «Службовае» > «Кропкі старту»
+Starting openOMSI…	Запускаем openOMSI…
+To drive the map in OMSI 2 itself it has to be copied into the OMSI 2 folder (Maps, and the objects, roads and textures made for it). Nothing that is there is replaced except earlier copies of this map. Copy it there?	Каб праехаць карту ў самой OMSI 2, яе трэба скапіяваць у тэчку OMSI 2 (Maps, а таксама аб'екты, дарогі і тэкстуры, зробленыя для яе). Нічога з наяўнага не замяняецца, акрамя ранейшых копій гэтай карты. Капіяваць?
+Starting OMSI 2: choose the map	Запускаем OMSI 2: абярыце карту
+The map is copied into the OMSI 2 folder; OMSI 2 itself runs on Windows only:	Карта скапіявана ў тэчку OMSI 2; сама OMSI 2 працуе толькі ў Windows:
+Could not copy the map into OMSI 2	Не ўдалося скапіяваць карту ў OMSI 2
+Click on the map to place it	Пстрыкніце па карце, каб паставіць
+Open a map (its global.cfg)	Адкрыць карту (яе global.cfg)
+The map is back as it was before that save	Карта вернута да выгляду да таго захавання
+Could not go back	Не ўдалося вярнуць
+Export a plan of the map	Экспарт плана карты
+Plan saved:	План захаваны:
+Mods, models and pictures	Модыфікацыі, мадэлі і малюнкі
+Import assets	Імпарт асетаў
+…or choose a mod folder	…або абярыце тэчку мода
+Click on the map to put it there	Пстрыкніце па карце, каб паставіць
+Could not make the shape	Не ўдалося стварыць фігуру
+Choose the OMSI 2 folder	Абярыце тэчку OMSI 2
+That is not an OMSI 2 folder (Omsi.exe, maps and Vehicles must be in it)	Гэта не тэчка OMSI 2 (у ёй павінны быць Omsi.exe, maps і Vehicles)
+This object has no textures to make PBR maps of	У гэтага аб'екта няма тэкстур для PBR-карт
+Could not copy the map	Не ўдалося скапіяваць карту
+Could not move the map	Не ўдалося перанесці карту
+Terrain flattened; splines laid on it:	Рэльеф прыбраны; сплайнаў пакладзена:
+This road type has no textures to make PBR maps of	У гэтага тыпу дарогі няма тэкстур для PBR-карт
+Pictures	Малюнкі
+Only 100 tiles round the camera are loaded; click on the empty zone to load the next 100	Загружаны толькі 100 тайлаў вакол камеры; пстрычка па пустой зоне загрузіць наступныя 100
+All tiles are loaded	Усе тайлы загружаны
+Import the map's thumbnail	Імпарт мініяцюры карты
+The map's thumbnail is set: openOMSI shows it where maps are chosen.	Мініяцюра карты зададзена: openOMSI паказвае яе пры выбары карты.
+Could not use the picture	Не ўдалося выкарыстаць малюнак
+Map camera	Камера карты
+The map opens with this view from now on.	Цяпер карта адкрываецца з гэтым выглядам.
+Add ground texture	Дадаць тэкстуру зямлі
+View kept as	Выгляд запомнены як
+No view kept as	Няма выгляду пад нумарам
+Files changed on disk: the catalogue and models are updated	Файлы на дыску змяніліся: каталог і мадэлі абноўлены
+The track does not run over the map's tiles	Трэк не праходзіць па тайлах карты
+Road along a GPS track	Дарога па GPS-трэку
+Roads built:	Дарог пабудавана:
+junctions:	скрыжаванняў:
+stops:	прыпынкаў:
+Lines from OpenStreetMap	Лініі з OpenStreetMap
+lines:	ліній:
+trips found their way:	рэйсаў са шляхам:
+buildings:	будынкаў:
+trees:	дрэў:
+Start point	Кропка старту
+Start	Старт
+a start point	кропка старту
+From OpenStreetMap	З OpenStreetMap
+Picture saved:	Малюнак захаваны:
+Could not save the picture	Не ўдалося захаваць малюнак
+The graphics could not be started.	Не ўдалося запусціць графіку.
+Flying speed	Хуткасць палёту
+copy	копія
+Only maps of the content folder can be moved	Пераносіць можна толькі карты тэчкі кантэнту
+Only assets of the content folder can be deleted	Выдаляць можна толькі асеты тэчкі кантэнту
+Could not write the object	Не ўдалося запісаць аб'ект
+Select an object to edit its mesh	Вылучыце аб'ект, каб рэдагаваць яго меш
+A copy of its own was made: the original type is unchanged	Створана ўласная копія: зыходны тып не змяніўся
+Cannot edit this object	Гэты аб'ект нельга рэдагаваць
+Point at an edge to cut across its ring of faces	Навядзіце на рабро, каб разрэзаць кольца граней упоперак
+Objects made:	Створана аб'ектаў:
+select the faces to separate	вылучыце грані, якія трэба аддзяліць
+Separated into an object of its own	Аддзелена ў асобны аб'ект
+Add object	Дадаць аб'ект
+select what to export (objects, roads)	вылучыце, што экспартаваць (аб'екты, дарогі)
+Export the selection	Экспарт вылучанага
+unknown format	невядомы фармат
+the models are still loading: try again in a moment	мадэлі яшчэ загружаюцца: паспрабуйце праз імгненне
+this material has no texture	у гэтага матэрыялу няма тэкстуры
+cannot read	не чытаецца
+Export the texture	Экспарт тэкстуры
+Texture saved:	Тэкстура захавана:
+Choose a picture	Абярыце малюнак
+give the material a texture first: its maps go beside it	спачатку задайце матэрыялу тэкстуру: карты ляжаць побач з ёй
+Import materials (an .mtl, a model, or the pictures of one PBR material)	Імпарт матэрыялаў (.mtl, мадэль або малюнкі аднаго PBR-матэрыялу)
+Materials and pictures	Матэрыялы і малюнкі
+no materials found there	матэрыялаў не знойдзена
+Materials added:	Дададзена матэрыялаў:
+nothing to bake	няма чаго запякаць
+the object has no lamps to bake the night light of	у аб'екта няма лямпаў, святло якіх можна запячы
+Baked into	Запечана ў
+select a road or spline first	спачатку вылучыце дарогу або сплайн
+the road's type is still loading: try again in a moment	тып дарогі яшчэ загружаецца: паспрабуйце праз імгненне
+these splines have no shape to see	у гэтых сплайнаў няма бачнай формы
+Replace by an object	Замена аб'ектам
+Made into an object: Tab edits its mesh	Ператворана ў аб'ект: Tab — рэдагаваць меш
+Signal head made: click where it stands (near a crossing with a light program it links to it)	Святлафор створаны: пстрыкніце, дзе ён стаіць (побач са скрыжаваннем са святлафорнай праграмай ён да яе прывяжацца)
+Choose a picture or a texture	Абярыце малюнак або тэкстуру
+cannot read the picture	малюнак не чытаецца
+Picture made: click where it goes (it can be moved, turned and scaled after)	Малюнак створаны: пстрыкніце, куды яго паставіць (потым яго можна рухаць, паварочваць і маштабаваць)
+Light made: click where it shines	Святло створана: пстрыкніце, дзе яно свеціць
+Choose a sound	Абярыце гук
+Sounds	Гукі
+Sound source made: click where it plays	Крыніца гуку створана: пстрыкніце, дзе яна гучыць
+Street lamp made: click where it stands	Ліхтар створаны: пстрыкніце, дзе ён стаіць
+Paint by slope and height	Афарбоўка па ўхіле і вышыні
+By slope and height	Па ўхіле і вышыні
+The chosen layer painted over the whole map where the ground is so steep (and so high)	Абраны пласт па ўсёй карце там, дзе зямля такая крутая (і такая высокая)
+Slope	Укос
+Height	Вышыня
+Fade	Пераход
+Cover	Пакрыццё
+Paint the map	Афарбаваць карту
+Choose a layer above the base ground	Абярыце пласт над асновай
+No ground on the map is like that	Такой зямлі на карце няма
+Painted	Афарбавана
+Missing objects	Няма файлаў аб'ектаў
+Missing roads and splines	Няма файлаў дарог і сплайнаў
+Missing textures	Няма тэкстур
+Road ends not joined	Неэлучаныя канцы дарог
+Links to splines that are gone	Спасылкі на знікшыя сплайны
+Bus stops away from a road	Прыпынкі далёка ад дарогі
+Start points away from a road	Кропкі старту далёка ад дарогі
+Start points without their object	Кропкі старту без аб'екта
+No start point	Няма кропкі старту
+IDCodes used twice	Паўторныя IDCode
+Next IDCode too low	Занадта малы NextIDCode
+Objects off their tile	Аб'екты па-за сваім тайлам
+Tiles without a file	Тайлы без файла
+Tiles without ground	Тайлы без зямлі
+Trips without a way	Рэйсы без шляху
+Tours without departures	Абароты без рэйсаў
+Tours without a depot	Абароты без дэпо
+Traffic groups not in the AI lists	Групы трафіку не ў спісах ШІ
+Stops no trip calls at	Прыпынкі без рэйсаў
+Signal routes naming what is gone	Маршруты сігналаў са знікшым
+Chrono changes of what is gone	Храно-змены знікшага
+Lamps lighting no ground at night	Ліхтары не асвятляюць зямлю ноччу
+Tiles with very many objects	Тайлы з вельмі вялікай колькасцю аб'ектаў
+Objects linked to one that is gone	Аб'екты, звязаныя са знікшым
+Signal heads linked to no crossing	Святлафоры без скрыжавання
+Depot files (destinations)	Файлы дэпо (канчатковыя)
+The map uses an object (.sco) that is not installed. The game leaves it out. Install the mod it comes from, or delete the object. A junction of openMapper's whose file is gone (the map was moved without it) is made again for its roads with "Fix".	Карта выкарыстоўвае аб'ект (.sco), якога няма. Гульня яго прапусціць. Усталюйце мод, з якога ён, або выдаліце аб'ект. Скрыжаванне openMapper, файл якога прапаў (карту перанеслі без яго), «Выправіць» пабудуе нанова для яго дарог.
+The map uses a road or spline type (.sli) that is not installed: that road is missing in the game, and buses cannot drive there.	Карта выкарыстоўвае тып дарогі або сплайна (.sli), якога няма: гэтай дарогі ў гульні не будзе, і аўтобусы там не праедуць.
+An object or road names a picture that cannot be found. It will look white or black in the game.	Аб'ект або дарога спасылаецца на малюнак, якога няма. У гульні ён будзе белым або чорным.
+Two road ends lie on one another but are not joined. Traffic still finds its way (the game joins lanes by their ends), but rows of lamps and posts and the road's texture do not run on across, and the editor does not treat them as one road. "Join" links them.	Два канцы дарог ляжаць адзін на адным, але не злучаны. Транспарт праедзе (гульня злучае паласы па канцах), але рады ліхтароў і слупкоў і тэкстура дарогі не працягваюцца праз стык, а рэдактар не лічыць іх адной дарогай. «Злучыць» звяжа іх.
+A spline says it goes on into another one that no longer exists. "Fix" forgets that link.	Сплайн спасылаецца на працяг, якога больш няма. «Выправіць» прыбярэ гэтую спасылку.
+A bus stop belongs to the lane it stands beside (within about 25 m). This one has none near, so buses cannot stop at it. Move it next to the road, or "Fix" puts it at the kerb of the nearest lane (within 80 m).	Прыпынак адносіцца да паласы, ля якой стаіць (не далей за каля 25 м). У гэтага побач паласы няма, аўтобус не зможа ля яго спыніцца. Перасуньце яго да дарогі або «Выправіць» паставіць яго ля бардзюра бліжэйшай паласы (да 80 м).
+A start point is where the bus appears. This one is away from any lane: fine in a depot yard, otherwise the bus starts off the road.	Кропка старту: дзе з'яўляецца аўтобус. Гэтая далёка ад палос: у дэпо гэта нармальна, інакш аўтобус апынецца па-за дарогай.
+A start point refers to an object that was deleted. "Fix" removes the start point.	Кропка старту спасылаецца на выдалены аб'ект. «Выправіць» выдаліць кропку старту.
+There is nowhere for the bus to appear. Place a start point (Game logic > Start points) on a road, or "Fix" puts one on a lane some 40 m before a bus stop.	Аўтобусу няма дзе з'явіцца. Пастаўце кропку старту (Службовае > Кропкі старту) на дарогу або «Выправіць» паставіць яе на паласу метраў за 40 перад прыпынкам.
+Two things on the map share one IDCode: links, timetables and start points may pick the wrong one.	Дзве рэчы на карце з адным IDCode: сувязі, раскладзы і кропкі старту могуць указаць не на тую.
+The counter for new IDCodes is below codes already used, so new objects would get codes twice. "Fix" raises it.	Лічыльнік новых IDCode ніжэйшы за ўжо занятыя, новыя аб'екты атрымаюць паўторныя коды. «Выправіць» падыме яго.
+An object standing on the ground lies outside its own tile. The game does not show it. Move it a little or put it again.	Аб'ект, што стаіць на зямлі, ляжыць па-за сваім тайлам. Гульня яго не пакажа. Здвіньце яго ці пастаўце нанова.
+global.cfg lists tiles whose file is not there. The game leaves them out; they stay listed, as start points and timetables count tiles by their place in the list.	У global.cfg пазначаны тайлы без файла. Гульня іх прапускае; яны застаюцца ў спісе, бо кропкі старту і раскладзы лічаць тайлы па месцы ў ім.
+A tile has no height file: its ground is flat. Saving writes one.	У тайла няма файла вышынь: зямля плоская. Захаванне запіша яго.
+No way along the roads was found through this trip's stops, so buses cannot drive it. Open it in Map > Lines and timetable to see where it breaks.	Праз прыпынкі гэтага рэйса не знойдзены шлях па дарогах, аўтобусы яго не праедуць. Адкрыйце яго ў Карта > Лініі і расклад, каб убачыць, дзе ён рвецца.
+A tour (a bus's day on the line) has no trips, so no bus runs it.	У абароту (дня аўтобуса на лініі) няма рэйсаў, па ім ніхто не паедзе.
+A tour names no depot or group of the AI lists (or one that is not there): the game has no vehicle to send on it. Choose a depot for it in the Lines window, or "Fix" gives it the map's depot (one of OMSI 2's MAN buses added where the map has none).	Абарот не ўказвае дэпо або групу са спісу ШІ (або ўказвае неіснуючую): гульні няма чым яго абслужыць. Абярыце дэпо ў акне ліній або «Выправіць» прызначыць яму дэпо карты (а калі яго няма, дадасць дэпо з аўтобусамі MAN з OMSI 2).
+The unscheduled traffic names a group that the AI lists do not have: those cars never appear. Add the group in Map > Traffic and AI, or "Fix" copies it from OMSI 2's own maps where they have it.	Вольны рух указвае групу, якой няма ў спісе ШІ: гэтыя машыны не з'явяцца. Дадайце групу ў Карта > Трафік і ШІ або «Выправіць» скапіюе яе з карт OMSI 2, калі яна там ёсць.
+A stop of the timetable that no trip calls at. Nothing is wrong, it is only not used yet.	Прыпынак раскладу, на якім не спыняецца ніводзін рэйс. Нічога страшнага, проста ён пакуль не выкарыстоўваецца.
+A chrono scenario takes away, retypes or relabels something that is no longer on the map (it was deleted or its IDCode changed): that change does nothing. Open Map > Chrono scenarios, the scenario's properties, and take the change out.	Храно-сцэнар прыбірае, змяняе тып або тэксты таго, чаго на карце больш няма (выдалена або змяніўся IDCode): гэта змяненне нічога не робіць. Адкрыйце Карта > Храно-сцэнары, уласцівасці сцэнара, і прыбярыце змяненне.
+A tile holds far more objects than the stock maps' tiles (up to some 600): the game may stutter when it loads it or looks across it. Thin out a wood planted too densely (Plant brush, Clear) or plant it with more space between the trees.	На тайле аб'ектаў значна болей, чым на тайлах стокавых карт (да 600): гульня можа падвісаць, загружаючы яго або гледзячы праз яго. Праредзьце занадта густы лес (пэндзаль раслін, «Прыбіраць») або саджайце радзей.
+Street lamps stand on a tile the game does not light from its lamps ([variable_terrainlightmap] is off): at night the ground under them stays dark (unless the tile's light map file was made by OMSI 2's editor). "Fix" turns it on, as on nearly every tile of the stock maps.	Ліхтары стаяць на тайле, які гульня не асвятляе ад ліхтароў ([variable_terrainlightmap] выключаны): ноччу зямля пад імі цёмная (калі файл карты асвятлення не зроблены рэдактарам OMSI 2). «Выправіць» уключыць яго, як амаль на ўсіх тайлах стокавых карт.
+An object takes its state ([varparent]) from an object no longer on the map: a signal head stays dark, a display blank. Link it to another in its properties (Linked objects), or "Fix" forgets the link.	Аб'ект бярэ стан ([varparent]) ад аб'екта, якога больш няма на карце: святлафор не гарыць, табло пустое. Звяжыце яго з іншым у ўласцівасцях («Звязаныя аб'екты») або «Выправіць» прыбярэ сувязь.
+A traffic light's signal head takes its light from a crossing's program ([varparent]); this one is linked to none while others like it are, so it stays dark in the game. Select it and link it in its properties (Linked objects).	Галоўка святлафора бярэ сігнал з праграмы скрыжавання ([varparent]); гэтая ні з чым не звязана, хоць такія ж звязаны, і ў гульні яна не гарыць. Вылучыце яе і звяжыце ва ўласцівасцях («Звязаныя аб'екты»).
+A depot file (.hof) gives the buses their destinations, the stop names on their displays and the routes their IBIS knows. Without one the signs stay empty and the IBIS knows no line. "Fix" makes it from the map's lines, or adds what the lines need to the map's own (Map > Depot files to see and change it).	Файл дэпо (.hof) дае аўтобусам канчатковыя, назвы прыпынкаў на табло і маршруты, якія ведае IBIS. Без яго паказальнікі пустыя, а IBIS не ведае ніводнай лініі. «Выправіць» створыць яго па лініях карты або дадасць у ўласны файл карты тое, чаго не хапае лініям (Карта > Файлы дэпо, каб паглядзець і змяніць).
+A signal route names a signal or track pieces no longer on the map: the signal may never clear. Open Map > Signal routes and take the track again, or delete the route.	Маршрут сігналу ўказвае сігнал або ўчасткі шляху, якіх больш няма на карце: сігнал можа так і не адкрыцца. Адкрыйце Карта > Маршруты сігналаў і вазьміце шляхі нанова або выдаліце маршрут.
+font	шрыфт
+used	выкарыстоўваецца
+in	у
+a ground texture of the map	тэкстура зямлі карты
+splines	сплайны
+apart	паміж імі
+spline	сплайн
+goes on into	працягваецца ў
+no road near	побач няма дарогі
+from the road	ад дарогі
+start point	кропка старту
+object	аб'ект
+The map has no start point	На карце няма кропкі старту
+things have it	рэчы з ім
+highest in use:	найбольшы заняты:
+tile	тайл
+no .terrain file: flat	няма файла .terrain: плоская
+objects	аб'ектаў
+lamps	ліхтароў
+The map has no depot file	У карты няма файла дэпо
+the buses show no destination	аўтобусы не паказваюць канчатковую
+named by the map's depot, but found nowhere	указана дэпо карты, але нідзе не знойдзена
+knows none of the	не ведае ніводнай з
+lacks	не хапае
+destinations of the lines	канчатковых ліній
+the lines need	лініям не хапае:
+destinations	канчатковых
+stops	прыпынкаў
+routes	маршрутаў
+tour	абарот
+no depot named	дэпо не ўказана
+not in the AI lists:	няма ў спісе ШІ:
+the stop has no object:	у прыпынку няма аб'екта:
+no road beside	няма дарогі ля
+no way	няма шляху
+no way found	шлях не знойдзены
+Route	Маршрут
+gone	знікла
+changes of nothing	змен упустую
+time	раз
+times	разоў
+Fix from the map check	Выпраўленне з праверкі карты
+Car groups from OMSI 2's maps	Групы машын з карт OMSI 2
+A depot for the tour	Дэпо для абароту
+A depot file from the lines	Файл дэпо па лініях
+Depot file: what the lines need	Файл дэпо: што трэба лініям
+Map check	Праверка карты
+Check again	Праверыць зноў
+Checking the map…	Правяраем карту…
+errors	памылак
+warnings	папярэджанняў
+notes	нататак
+Nothing found: the map looks fine.	Нічога не знойдзена: карта ў парадку.
+Fix all	Выправіць усе
+Join	Злучыць
+Fix	Выправіць
+Click to fly there	Пстрычка: даляцець туды
+Fixed:	Выпраўлена:
+it has parts openMapper does not write	у ёй ёсць тое, чаго openMapper не піша
+A host on the internet needs a password of at least	Хосту ў інтэрнэце патрэбны пароль не карацей за
+Type a password, or choose explicitly to host without one	Увядзіце пароль або яўна абярыце адкрыць без пароля
+Could not listen on port	Не ўдалося адкрыць порт
+The way in for the tunnel could not be opened	Не ўдалося адкрыць уваход для тунэля
+Hosting this map: others can join it now	Карта адкрыта для сумеснай праўкі
+Multiplayer ended: another map was opened	Сумесная праўка завершана: адкрыта іншая карта
+Somebody changed this first: your edit was put back	Хтосьці змяніў гэта раней: ваша праўка скасавана
+The host takes no more: the edit is too big, or the session holds as much as it may. Your edit was put back	Хост больш не прымае: праўка занадта вялікая або сесія запоўнена. Ваша праўка скасавана
+That lies too far from the map for this session: your edit was put back	Гэта занадта далёка ад карты для гэтай сесіі: ваша праўка скасавана
+tiles	тайлаў
+changed what you were editing: it is as they left it	змяніў(ла) тое, што вы правілі: пакінута як у яго/яе
+The timetable, the traffic and the descriptions are the host's in multiplayer: your change was put back	Расклад, трафік і апісанні ў сумеснай праўцы — у хоста: ваша змяненне скасавана
+Your conflicting edit was kept	Ваша канфліктная праўка захавана
+Could not keep your conflicting edit; multiplayer stopped	Не ўдалося захаваць канфліктную праўку; сумесная праўка спынена
+Too much of the others' work came in while your edit was held open: multiplayer stopped. The map stays open; it can be saved as a copy.	Пакуль ваша праўка была адкрыта, прыйшло занадта шмат чужых правак: сумесная праўка спынена. Карта застаецца адкрытай, яе можна захаваць як копію.
+The connection to the host was lost. The map stays open; it can be saved as a copy.	Сувязь з хостам страчана. Карта застаецца адкрытай, яе можна захаваць як копію.
+No OMSI 2 installation: the map has nowhere to go	Няма ўсталёўкі OMSI 2: карце няма куды захавацца
+The host sent no map	Хост не даслаў карту
+The host's map could not be read	Не ўдалося прачытаць карту хоста
+No connection	Няма сувязі
+That address is not an openMapper host	Па гэтым адрасе няма хоста openMapper
+Wrong password	Няправільны пароль
+The session is full	Сесія запоўнена
+Type a name (up to 32 letters)	Увядзіце імя (да 32 літар)
+The host has another version of openMapper	У хоста іншая версія openMapper
+Move forward	Наперад
+Move back	Назад
+Move left	Улева
+Move right	Управа
+Turn the camera left	Павярнуць камеру ўлева
+Turn the camera right	Павярнуць камеру ўправа
+Undo	Адрабіць
+Redo	Паўтарыць
+Save	Захаваць
+Copy	Капіяваць
+Cut	Выразаць
+Paste at the cursor	Уставіць каля курсора
+Duplicate	Дублікат
+Select all	Вылучыць усё
+Find in the map	Пошук па карце
+Search for a command	Пошук каманды
+Tool: Select	Інструмент: Вылучэнне
+Tool: Roads	Інструмент: Дарогі
+Tool: Objects	Інструмент: Аб'екты
+Tool: Game logic	Інструмент: Службовае
+Tool: Terrain	Інструмент: Рэльеф
+Tool: Paint	Інструмент: Афарбоўка
+Tool: Tiles	Інструмент: Тайлы
+Turn the object (Shift: the other way)	Павярнуць аб'ект (Shift: у другі бок)
+Ruler	Лінейка
+Knife	Нож
+Move handles	Ручкі перамяшчэння
+Rotate handles	Ручкі павароту
+Scale handles	Ручкі маштабу
+Edit the mesh (vertices, edges, faces)	Рэдагаваць меш (вяршыні, рэбры, грані)
+Join the selected objects into one	Аб'яднаць вылучаныя аб'екты ў адзін
+Build the planned road	Пабудаваць намечаную дарогу
+Tile grid on / off	Сетка тайлаў
+Group the selection	Згрупаваць вылучанае
+Ungroup	Разгрупаваць
+Look straight down, north up	Глядзець зверху, поўнач уверсе
+2D plan view on / off (3D: tilt and turn again)	2D-від зверху ўкл / выкл (3D: зноў нахіл і паварот)
+Catalogue on / off	Каталог
+Overview map on / off	Агляд карты
+Lines window	Акно ліній
+Traffic window	Акно трафіку
+Satellite and terrain window	Акно спадарожніка і рэльефу
+Smaller brush	Пэндзаль меншы
+Larger brush	Пэндзаль большы
+Delete the selection	Выдаліць вылучанае
+Go to the selection	Перайсці да вылучанага
+Test drive in openOMSI (Shift: from the camera)	Тэст-драйв у openOMSI (Shift: ад камеры)
+Save a picture of the view	Захаваць малюнак выгляду
+The map's own (global.cfg)	Уласнае карты (global.cfg)
+Description	Апісанне
+Name in this language	Назва на гэтай мове
+Description in this language	Апісанне на гэтай мове
+Remove this language	Прыбраць гэту мову
+Not written yet: it is saved as soon as you type.	Пакуль не: захаваецца, як толькі вы пачнеце пісаць.
+Edit description	Правіць апісанне
+just now	толькі што
+min ago	хв таму
+h ago	гадз таму
+Unsaved changes found	Знойдзены незахаваныя змены
+openMapper was closed without saving the map	openMapper быў закрыты без захавання карты
+The changes kept by the autosave can be brought back. The map itself was not changed.	Змены, захаваныя аўтазахаваннем, можна вярнуць. Сама карта не змянялася.
+Restore the changes	Вярнуць змены
+Drop them	Адкінуць
+Nothing comes after it to join	За ёй няма чаго далучаць
+The next piece runs the other way: reverse it first	Наступны кавалак ідзе ў другі бок: спачатку разверніце яго
+The next piece lies on another tile	Наступны кавалак ляжыць на іншым тайле
+The two pieces are of different road types	Кавалкі розных тыпаў дарог
+The two pieces have different settings (path rules, ground, skew)	У кавалкаў розныя налады (правілы шляхоў, зямля, пераком)
+A row of objects comes onto the next piece from another tile	На наступны кавалак заходзіць рад аб'ектаў з іншага тайла
+The two pieces do not bend, climb or bank alike: joined they would change shape	Кавалкі выгінаюцца, падымаюцца або нахіляюцца па-рознаму: пры злучэнні змянілася б форма
+Earlier versions	Ранейшыя версіі
+Before every save, the files it replaces are kept (the last 10 saves). Going back puts the map as it was before that save; later changes go.	Перад кожным захаваннем файлы, якія яно замяняе, захоўваюцца (апошнія 10 захаванняў). Вяртанне верне карту да выгляду да таго захавання; больш познія змены знікнуць.
+No earlier versions yet: they appear once the map is saved again.	Ранейшых версій пакуль няма: яны з'явяцца пры наступным захаванні.
+before the save of	да захавання
+Go back to this	Вярнуцца да гэтай
+could not keep a backup, nothing was saved	не ўдалося зрабіць рэзервовую копію, нічога не захавана
+Red	Чырвоны
+Yellow	Жоўты
+Green	Зялёны
+file not found	файл не знойдзены
+this object takes its model from a model file and cannot be edited here	мадэль гэтага аб'екта ляжыць у асобным файле мадэлі: яе нельга рэдагаваць тут
+the object has no mesh to edit	у аб'екта няма меша для рэдагавання
+cannot read the object	аб'ект не чытаецца
+Select	Выбар
+Terrain	Рэльеф
+Paint	Фарбаванне
+Roads	Дарогі
+Objects	Аб'екты
+Game logic	Службовае
+Tiles	Тайлы
+Raise	Падняць
+Lower	Апусціць
+Smooth	Згладзіць
+Flatten	Выраўнаваць
+Roughen	Няроўнасці
+Ramp	Пандус
+Lake / river	Возера / рака
+Start points	Кропкі старту
+Bus stops	Прыпынкі
+Car parks	Паркоўкі
+AI paths	Шляхі ШІ
+Other	Іншае
+Where the bus appears when a drive starts. Put it on a road or in the depot, facing the way to drive.	Дзе з'яўляецца аўтобус у пачатку язды. Ставце на дарогу або ў дэпо, тварам па ходзе руху.
+Where passengers wait. Put it beside the road at the kerb; name it on the right.	Дзе чакаюць пасажыры. Ставце ля бардзюра; імя задаецца справа.
+Where parked cars stand. Click for one; with a row on, click the start and end of a row along the kerb.	Дзе стаяць прыпаркаваныя машыны. Пстрычка: адно месца; з радам: пстрыкніце ў пачатку і ў канцы рада ўздоўж бардзюра.
+Lanes the AI's cars or people follow. Draw like a road: it snaps to lane ends (green: joined, red: dead end) and along lanes. A car path runs the way you draw it.	Паласы, па якіх едуць машыны ШІ або ідуць людзі. Малюецца як дарога: прыліпае да канцоў палос (зялёныя: злучаны, чырвоныя: тупік) і ўздоўж палос. Шлях машын ідзе ў той бок, куды вы яго малюеце.
+Sound sources, help arrows and other helpers the game does not show.	Крыніцы гуку, стрэлкі-падказкі і іншыя памочнікі, якіх не відаць у гульні.
+Move (V): drag an arrow along X, Y or Z, a square in its plane, the circle over the ground	Перамяшчэнне (V): цягніце стрэлку ўздоўж X, Y або Z, квадрат — у яго плоскасці, круг — па зямлі
+Rotate (C): drag a ring to turn about X, Y or Z	Паварот (C): цягніце кольца, каб круціць вакол X, Y або Z
+Scale (X): drag an arrow to scale along that axis, a square for two, the circle for all three	Маштаб (X): цягніце стрэлку для маштабу па восі, квадрат — па дзвюх, круг — па ўсіх трох
+These roads have no lanes of their own to take apart (rails stay as they are)	У гэтых дарог няма палос, якія можна разабраць (рэйкі застаюцца як ёсць)
+Make the lanes editable	Паласы сталі рэдагавальнымі
+Roads whose lanes are now editable:	Дарог з рэдагавальнымі паласамі:
+Flatten the terrain	Выраўнаваць рэльеф
+Select two things or more to group them	Вылучыце два аб'екты або больш, каб згрупаваць
+Group	Група
+Grouped:	Згрупавана:
+Ungrouped	Разгрупавана
+Rename group	Імя групы
+Ground levelled under objects:	Зямля выраўнавана пад аб'ектамі:
+Move	Перамяшчэнне
+No object clicked: nothing linked	Аб'ект не выбраны: нічога не звязана
+Too near the road's end to cut it there	Занадта блізка да канца дарогі, каб разрэзаць яе тут
+No road under the cursor	Пад курсорам няма дарогі
+Ramp:	Пандус:
+Shape terrain	Рэльеф
+Paint ground	Афарбоўка
+Clear plants	Прыбраць расліны
+Plant	Пасадка
+Rotate selection	Паварот вылучанага
+Rotate	Паварот
+Delete object	Выдаленне аб'екта
+Delete road	Выдаленне дарогі
+Delete selection	Выдаленне вылучанага
+Pick an object in the catalogue first	Спачатку абярыце аб'ект у каталогу
+There is no tile here: add one with the Tiles tool	Тут няма тайла: дадайце яго інструментам «Тайлы»
+Place object	Устаноўка аб'екта
+New stop	Новы прыпынак
+Linked to	Звязаны з
+choose its light in its properties	сігнал абярыце ва ўласцівасцях
+Trees from OpenStreetMap	Дрэвы з OpenStreetMap
+Plant an area	Пасадка на ўчастку
+Buildings from OpenStreetMap	Будынкі з OpenStreetMap
+Stops from OpenStreetMap	Прыпынкі з OpenStreetMap
+Stop	Прыпынак
+Pick a car park in the list first	Спачатку абярыце паркоўку ў спісе
+Place car parks	Устаноўка паркоўак
+Car parks placed:	Паркоўак пастаўлена:
+Pick a road type in the catalogue first	Спачатку абярыце тып дарогі ў каталогу
+That bend is too sharp	Занадта круты паварот
+Switch made	Стрэлка створана
+Junctions made:	Скрыжаванняў створана:
+The road leaves the map: add tiles there first	Дарога выходзіць за карту: спачатку дадайце тайлы
+Build road	Будаўніцтва дарогі
+Roads from OpenStreetMap	Дарогі з OpenStreetMap
+Pick a tree in the catalogue (or add some to the mix) first	Спачатку абярыце дрэва ў каталогу (або дадайце ў сумесь)
+Right-click a tile to remove it	Правая пстрычка па тайле: выдаліць яго
+New tiles go next to the map	Новыя тайлы дадаюцца побач з картай
+Add tile	Дадаць тайл
+Water	Вада
+Paint detail	Дэталёвасць афарбоўкі
+Ground layer order	Парадак пластоў зямлі
+Detail texture	Дэталёвая тэкстура
+Ground texture	Тэкстура зямлі
+Lamp light on the ground	Святло ліхтароў на зямлі
+Add tiles	Дадаць тайлы
+A map needs at least one tile	На карце павінен застацца хаця б адзін тайл
+Remove tile	Выдаліць тайл
+Pick a point (a dot at an end or where pieces meet) to take it out	Абярыце кропку (кружок на канцы або на стыку кавалкаў), каб прыбраць яе
+Remove a point of the path	Прыбраць кропку шляху
+Point taken out	Кропка прыбрана
+A path of one piece: Del with nothing picked deletes it	Шлях з аднаго кавалка: Del без абранай кропкі выдаліць яго цалкам
+Extrude	Выдаўліванне
+Inset	Упіска
+Bevel	Фаска
+Loop cut	Разрэз пятлёй
+click: done, right click / Esc: cancel, wheel: segments	пстрычка: гатова, правая пстрычка / Esc: адмена, кола: сегменты
+Scale	Маштаб
+Roads are not scaled: change their length and width in their properties	Дарогі не маштабуюцца: даўжыня і шырыня змяняюцца ў іх уласцівасцях
+Only the objects are scaled, the roads stay	Маштабуюцца толькі аб'екты, дарогі застаюцца
+Could not scale	Не ўдалося змяніць маштаб
+Too near the end: drag the end's dot instead	Занадта блізка да канца: цягніце кропку канца
+Add a point to the path	Кропка ў шляху
+Point added: drag the dot where the pieces meet	Кропка дададзена: цягніце кружок на стыку
+Reshape road	Змена формы дарогі
+Selected:	Вылучана:
+Copied:	Скапіявана:
+Nothing copied yet	Яшчэ нічога не скапіявана
+Paste	Устаўка
+Level the ground	Выраўноўванне зямлі
+Turn objects	Паварот аб'ектаў
+Copies in a row	Копіі ў рад
+Left out (off the map):	Прапушчана (за картай):
+Pasted (the rest is off the map):	Устаўлена (астатняе за картай):
+Edit object	Змена аб'екта
+Lean with the ground	Нахіл па зямлі
+Stand upright	Паставіць роўна
+Change height	Змена вышыні
+Change road type	Змена тыпу дарогі
+The selected roads are not one chain (they branch or leave gaps)	Вылучаныя дарогі не адзін ланцужок (разгаліноўваюцца або з разрывамі)
+Even slope	Роўны ўхіл
+Lay on the ground	Пакласці на зямлю
+Remove the rows of objects along it first (they are measured from its start)	Спачатку прыбярыце рады аб'ектаў удоўж яе (яны адмяраюцца ад яе пачатку)
+Reverse direction	Разварот напрамку
+No road there to cut	Тут няма дарогі, якую можна разрэзаць
+Cut the road	Разрэзаць дарогу
+Cut in two: each piece can now be changed on its own	Разрэзана напалову: кожны кавалак цяпер можна змяняць асобна
+Join the pieces	Злучыць кавалкі
+Joined into one piece	Злучаны ў адзін кавалак
+Parallel copy	Паралельная копія
+Overhead wire	Кантактны провад
+Back into the map	Назад у карту
+Hang an object	Падвесіць аб'ект
+Link to an object	Звязаць з аб'ектам
+Unlink	Развязаць
+That object already takes its state from this one	Той аб'ект сам бярэ стан ад гэтага
+Linked	Звязана
+Signal head's light	Сігнал святлафора
+Path rules	Правілы шляхоў
+Replace objects	Замена аб'ектаў
+Edit road	Змена дарогі
+Roads that could not follow the junction (too sharp a bend):	Дарогі, якія не змаглі пайсці за скрыжаваннем (занадта крутое выгінанне):
+Edit junction	Змена скрыжавання
+Make the junction again	Скрыжаванне нанова
+Make the junctions again	Перабудаваць скрыжаванні
+Pick an object in the Objects tool's catalogue first	Спачатку абярыце аб'ект у каталогу інструмента «Аб'екты»
+The road is too short for that	Дарога для гэтага занадта кароткая
+Objects along the road	Аб'екты ўздоўж дарогі
+Rows of objects added:	Дададзена радоў аб'ектаў:
+Edit row of objects	Змена рада аб'ектаў
+Remove row of objects	Выдаленне рада аб'ектаў
+Remove rows of objects	Выдаленне радоў аб'ектаў
+Roundabout built; roads joined to it:	Кальцо пабудавана; дарог далучана:
+This road type carries traffic both ways: pick a one-way road for a proper roundabout	У гэтага тыпу дарогі рух у абодва бакі: для сапраўднага кальца абярыце аднабаковую дарогу
+Start point: where the bus appears in openOMSI	Кропка старту: тут аўтобус з'яўляецца ў openOMSI
+Bus stop: name it in the panel on the right	Прыпынак: задайце імя ў панэлі справа
+openOMSI stopped with an error	openOMSI завершылася з памылкай
+Check in openOMSI	Праверка ў openOMSI
+The saved map run by the game itself, unseen, with its own checks; the picture is the game's, from your view	Захаваная карта, запушчаная самой гульнёй без акна, з яе ўласнымі праверкамі; малюнак — гульні, з вашага выгляду
+Every tile (slower on a big map)	Усе тайлы (даўжэй на вялікай карце)
+Run again	Запусціць зноў
+openOMSI is loading the map…	openOMSI загружае карту…
+Nothing wrong found	Праблем не знойдзена
+Problems found:	Знойдзена праблем:
+Go there	Перайсці туды
+of the places named lie at the map's edge or a road's dead end (greyed): the game measures a lane's last point on the road's very edge, and a bus at the end stands over it; nothing to mend	з названых месцаў ляжаць на краі карты або ў тупіку дарогі (шэрыя): гульня мярае апошнюю кропку паласы на самым краі дарогі, а аўтобус у канцы стаіць над ёй; папраўляць няма чаго
+The game said nothing about the map	Гульня нічога не сказала пра карту
+The game's whole output	Увесь вывад гульні
+no key entered	ключ не ўведзены
+the server refused the key	сервер не прыняў ключ
+too many requests, try again later	занадта шмат запытаў, паспрабуйце пазней
+No connection to the server: are you online?	Няма сувязі з серверам: ці ёсць інтэрнэт?
+Enter your Google key first	Спачатку ўвядзіце ключ Google
+OpenStreetMap's servers are busy: try again in a minute	Серверы OpenStreetMap занятыя: паспрабуйце праз хвіліну
+The area is too large for this zoom	Занадта вялікая вобласць для гэтага маштабу
+Cancelled	Скасавана
+Stopped by an internal error (see the log)	Спынена ўнутранай памылкай (гл. журнал)
+No source has imagery here	Тут няма здымкаў ні ў адной крыніцы
+drawn from OpenStreetMap data: sharp, with names	малюецца з даных OpenStreetMap: выразна, з назвамі
+terrain heights, no key needed	вышыні рэльефу, ключ не патрэбны
+needs your own free key	патрэбны ваш уласны бясплатны ключ
+no key needed	ключ не патрэбны
+the picture is too small	малюнак занадта малы
+Import height map	Імпарт карты вышынь
+Height map	Карта вышынь
+The ground as a grey picture, to shape in another program and bring back	Зямля як шэры малюнак: апрацаваць у іншай праграме і вярнуць
+Export…	Экспарт…
+Import…	Імпарт…
+over	на
+a pixel	на піксель
+Black adds	Чорны дадае
+Black is	Чорны гэта
+White adds	Белы дадае
+White is	Белы гэта
+Smoothing	Згладжванне
+Replace the ground	Замяніць рэльеф
+Add to it	Дадаць да яго
+Roads and objects keep their heights: best done before building	Дарогі і аб'екты застаюцца на сваёй вышыні: лепш рабіць да будаўніцтва
+An 8-bit picture has only 256 steps of height: smoothing hides them	У 8-бітным малюнку толькі 256 прыступак вышыні: згладжванне іх хавае
+Lay it on the map	Накласці на карту
+Cancel	Скасаваць
+Height map laid over	Карта вышынь накладзена на
+Export the height map	Экспарт карты вышынь
+Height map written	Карта вышынь запісана
+The height map could not be written	Не ўдалося запісаць карту вышынь
+A height map for the whole map	Карта вышынь для ўсёй карты
+The picture could not be read	Не ўдалося прачытаць малюнак
+IBIS and roller blind	IBIS і раліка
+Front sign, line 1	Пярэдні паказальнік, радок 1
+Front sign, line 2	Пярэдні паказальнік, радок 2
+Side sign	Бакавы паказальнік
+Roller blind texture	Тэкстура раліка
+IBIS 2 (20 letters)	IBIS 2 (20 знакаў)
+Extra sign	Дад. таблічка
+Krüger picture	Малюнак Krüger
+Text	Тэкст
+IBIS (16 letters)	IBIS (16 знакаў)
+Display, line 1	Табло, радок 1
+Display, line 2	Табло, радок 2
+Full name (20 letters)	Поўная назва (20 знакаў)
+Service trip	У парк
+Special trip	Спецрэйс
+Blank	Пуста
+openMapper cannot import this kind of file (use a folder, .zip, .obj, .gltf, .glb, .fbx, .x, .o3d or a picture)	Гэты тып файла не імпартуецца (падыходзяць тэчка, .zip, .obj, .gltf, .glb, .fbx, .x, .o3d, малюнак)
+Mod installed, files:	Мод усталяваны, файлаў:
+Objects added to	Аб'екты дададзены ў
+Road types added to	Тыпы дарог дададзены ў
+Models imported:	Імпартавана мадэляў:
+Nothing to import was found in this folder	У гэтай тэчцы няма чаго імпартаваць
+The model has no triangles	У мадэлі няма трохкутнікаў
+Model imported:	Мадэль імпартавана:
+The .obj file has no faces	У файле .obj няма палігонаў
+no base colour picture among them	сярод іх няма малюнка базавага колеру
+The picture cannot be read	Малюнак не ўдалося прачытаць
+Picture made into a standee:	Малюнак стаў фігурай па контуры:
+Picture made into a sign:	Малюнак стаў таблічкай:
+Trees	Дрэвы
+Stops and start points	Прыпынкі і кропкі старту
+Junctions	Скрыжаванні
+Tracks	Рэйкі
+Footpaths	Тратуары
+Fences, walls, kerbs	Платы, сцены, бардзюры
+Technical (AI, helpers)	Тэхнічныя (ШІ, памочнікі)
+This map lies on the world's grid ([worldcoordinates]): its tiles cannot be taken yet	Гэта карта ляжыць на сусветнай сетцы ([worldcoordinates]): яе тайлы пакуль нельга ўзяць
+This map lies on the world's grid ([worldcoordinates]): tiles cannot be added from another yet	Гэта карта ляжыць на сусветнай сетцы ([worldcoordinates]): тайлы з іншай пакуль нельга дадаць
+Tiles from another map	Тайлы з іншай карты
+Union	Аб'яднанне
+Difference (cut out)	Адніманне (выразаць)
+Intersection	Перасячэнне
+Slice (keep both pieces)	Разрэзаць (пакінуць абедзве часткі)
+One object of all the selected, their insides gone	Адзін аб'ект з усіх вылучаных, без унутраных сценак
+The other selected objects cut out of the one shown in the properties	Астатнія вылучаныя аб'екты выразаюцца з таго, што паказаны ва ўласцівасцях
+Only what all the selected share	Толькі агульная частка ўсіх вылучаных
+The first object cut by the others into what is outside them and what is inside	Першы аб'ект разрэзаецца астатнімі на тое, што звонку, і тое, што ўнутры
+select an object first	спачатку вылучыце аб'ект
+Make editable	Зрабіць рэдагавальным
+Make single	Асобная копія
+the object has only one part	у аб'екта толькі адна частка
+Separate parts	Падзяліць на часткі
+select two or more objects to join	вылучыце два або больш аб'ектаў, каб аб'яднаць
+Join objects	Аб'яднаць аб'екты
+select two or more objects: the one shown in the properties and what acts on it	вылучыце два або больш аб'ектаў: той, што ва ўласцівасцях, і тыя, што на яго дзейнічаюць
+nothing is left: the objects do not overlap that way	нічога не засталося: аб'екты так не перасякаюцца
+The file has no scene	У файле няма сцэны
+The FBX file has no meshes	У файле FBX няма мешаў
+Main roads	Галоўныя дарогі
+Streets	Вуліцы
+Service roads	Службовыя праезды
+Tram tracks	Трамвайныя шляхі
+Railway tracks	Чыгуначныя шляхі
+motorway, trunk, primary, secondary	магістралі, галоўныя і другасныя
+tertiary, residential, unclassified	мясцовыя і жылыя вуліцы
+yards, car parks, depots	двары, стаянкі, дэпо
+each track on its own; branches are joined with switches by hand	кожны шлях асобна; адгалінаванні злучаюцца стрэлкамі ўручную
+main lines without sidings; branches are joined with switches by hand	магістралі без пад'язных; адгалінаванні злучаюцца стрэлкамі ўручную
+Water from OpenStreetMap	Вада з OpenStreetMap
+Give a distance	Укажыце адлегласць
+The bend is too tight for that distance on its inner side	Паварот занадта круты для такой адлегласці з унутранага боку
+The copy leaves the map: add tiles there first	Копія выходзіць за карту: спачатку дадайце тайлы
+Made with openMapper	Зроблена ў openMapper
+Low (no shadows, rough edges, 3 km view)	Нізкае (без ценяў, грубыя краі, агляд 3 км)
+Medium (softer shadows, 8 km view)	Сярэдняе (цені прасцейшыя, агляд 8 км)
+High	Высокая
+This end belongs to a junction: select the junction and move it, the road follows	Гэты канец належыць скрыжаванню: вылучыце скрыжаванне і рухайце яго, дарога пойдзе следам
+Paint along the roads	Афарбоўка ўздоўж дарог
+Market	Рынак
+Station	Вакзал
+Depot	Дэпо
+this object takes its model from a model file: it cannot be scaled	мадэль гэтага аб'екта ляжыць у асобным файле мадэлі: яго нельга маштабаваць
+Not a GPX, KML or GeoJSON file	Гэта не файл GPX, KML або GeoJSON
+No lines in the file	У файле няма ліній
+Language	Мова
+Interface size	Памер інтэрфейсу
+File	Файл
+New map…	Новая карта…
+Open map…	Адкрыць карту…
+Controls…	Кіраванне…
+Import assets…	Імпарт асетаў…
+Multiplayer…	Сумесная праўка…
+OMSI 2 folder…	Тэчка OMSI 2…
+Quit	Выйсці
+View	Выгляд
+Help	Даведка
+Updates…	Абнаўленні…
+About openMapper	Пра праграму
+OMSI 2 not found	OMSI 2 не знойдзена
+Map editor for openOMSI	Рэдактар карт для openOMSI
+openMapper builds maps from the content of an installed OMSI 2. Choose its folder (the one with Omsi.exe, maps and Vehicles).	openMapper будуе карты з кантэнту ўсталяванай OMSI 2. Укажыце яе тэчку (дзе ляжаць Omsi.exe, maps і Vehicles).
+Choose OMSI 2 folder…	Абраць тэчку OMSI 2…
+Maps	Карты
+recent · OMSI 2	нядаўняя · OMSI 2
+recent	нядаўняя
+content folder	тэчка змесціва
+OMSI 2 (saved as copy)	OMSI 2 (захав. копіяй)
+Open	Адкрыць
+Make a copy	Зрабіць копію
+A copy of the map in the content folder under a new name, to try something out	Копія карты ў тэчцы кантэнту пад новай назвай, каб нешта паспрабаваць
+Show in the file manager	Паказаць у файлавым менеджары
+Move to openMapper's bin	Прыбраць у кошык openMapper
+Its folder goes into openMapper\\bin in the content folder, from where it can be put back by hand	Яе тэчка пераносіцца ў openMapper\\bin у тэчцы кантэнту, адкуль яе можна вярнуць уручную
+Browse…	Агляд…
+Double-click a map to open it. Maps of OMSI 2 are saved as a copy into openOMSI's content folder; the original stays untouched.	Двайны пстрык: адкрыць карту. Карты OMSI 2 захоўваюцца копіяй у тэчку кантэнту openOMSI; арыгінал не змяняецца.
+A simple map editor for openOMSI.	Просты рэдактар карт для openOMSI.
+Back to the 3D view (0)	Вярнуцца ў 3D (0)
+The plan view from above, north up (0)	Выгляд зверху, поўнач уверсе (0)
+Recent maps	Нядаўнія карты
+(none)	(няма)
+Export map for sharing…	Экспарт карты для абмену…
+Export a plan of the map…	Экспарт плана карты…
+Earlier versions…	Ранейшыя версіі…
+Close map	Закрыць карту
+Edit	Правіцца
+Edit history…	Гісторыя правак…
+Groups for other maps…	Групы для іншых карт…
+Find in map…	Пошук па карце…
+Search for a command…	Пошук каманды…
+Delete	Выдаліць
+Deselect	Зняць вылучэнне
+Tile grid	Сетка тайлаў
+What the game does not show	Тое, чаго не відаць у гульні
+AI lanes	Паласы ШІ
+Names of stops and start points	Назвы прыпынкаў і кропак старту
+Show	Паказваць
+Roads and splines	Дарогі і сплайны
+Overview map (M)	Агляд карты (M)
+Assets (B)	Асеты (B)
+Flatten the terrain (roads follow)	Прыбраць рэльеф (дарогі падладзяцца)
+Saved views…	Захаваныя віды…
+Go to selection	Да вылучанага
+Camera	Камера
+Unity: right button looks round and W A S D fly, middle pans, Alt orbits	Unity: правая кнопка аглядае і W A S D лётаюць, сярэдняя рухае, Alt круціць
+Map editor: right button looks round and W A S D fly (Q down, E up), middle pans, the wheel zooms to the cursor, drag moves the map	Рэдактар карт: правая кнопка аглядае і W A S D лётаюць (Q ўніз, E уверх), сярэдняя рухае, кола набліжае да курсора, перацягванне рухае карту
+Load 100 tiles at a time (like OMSI 2's editor)	Загружаць па 100 тайлаў (як у рэдактары OMSI 2)
+Time of day	Час сутак
+Plain day (as the game by day)	Звычайны дзень (як у гульні днём)
+At an hour	У зададзены час
+Where the sun stands then, today, at the map's place (Map > Calendar and place); by night the moon	Дзе тады стаіць сонца, сёння, у месцы карты (Карта > Каляндар і месца); уначы месяц
+Season	Пара года
+Summer	Лета
+Dry summer	Сухое лета
+Spring	Вясна
+Autumn	Восень
+Winter	Зіма
+Snow	Снег
+Graphics quality	Якасць графікі
+Tools	Інструменты
+Road types and junctions…	Тыпы дарог і скрыжаванні…
+PBR maps for a picture…	PBR-карты для малюнка…
+Map	Карта
+Map settings…	Налады карты…
+Calendar and place…	Каляндар і месца…
+Signal routes…	Маршруты сігналаў…
+Chrono scenarios…	Храно-сцэнары…
+Ground textures…	Тэкстуры зямлі…
+Check map…	Праверыць карту…
+Junctions made again:	Скрыжаванняў перабудавана:
+Lines and timetable…	Лініі і расклад…
+Traffic and AI…	Трафік і ШІ…
+Depot files (destinations)…	Файлы дэпо (канчатковыя)…
+Satellite and terrain…	Спадарожнік і рэльеф…
+From OpenStreetMap…	З OpenStreetMap…
+GPS tracks to trace…	GPS-трэкі для абвядзення…
+Tiles from another map…	Тайлы з іншай карты…
+Test drive in openOMSI	Тэст-драйв у openOMSI
+Test drive in OMSI 2 (the original)…	Тэст-драйв у арыгінальнай OMSI 2…
+Check in openOMSI…	Праверка ў openOMSI…
+Getting started	З чаго пачаць
+New map	Новая карта
+Open a map	Адкрыць карту
+Save (Ctrl+S): there are unsaved changes	Захаваць (Ctrl+S): ёсць незахаваныя змены
+Save (Ctrl+S)	Захаваць (Ctrl+S)
+Import assets: a mod folder or .zip, a .obj / .x / .o3d model (or drop files on the window)	Імпарт асетаў: тэчка мода або .zip, мадэль .obj / .x / .o3d (або перацягніце файлы ў акно)
+Redo (Ctrl+Shift+Z)	Паўтарыць (Ctrl+Shift+Z)
+Tile grid (G)	Сетка тайлаў (G)
+Assets: every object and road type, with pictures (B)	Асеты: усе аб'екты і тыпы дарог з малюнкамі (B)
+Test drive	Тэст-драйв
+Save the map and drive it in openOMSI (F5)	Захаваць карту і праехаць яе ў openOMSI (F5)
+openOMSI was not found: install it to test maps	openOMSI не знойдзена: усталюйце яе, каб правяраць карты
+Test drive from the start point nearest the view	Тэст-драйв з бліжэйшай да выгляду кропкі старту
+See this view in openOMSI	Паглядзець гэты выгляд у openOMSI
+loading	загрузка
+Edit mesh	Рэдагаванне меша
+Shapes and lamps	Фігуры і ліхтары
+Click beside the map to add a 300 × 300 m tile. Right-click a tile to remove it.	Пстрычка побач з картай: дадаць тайл 300 × 300 м. Правая пстрычка па тайле: выдаліць.
+Area	Плошча
+A ring of tiles round the map	Кальцо тайлаў вакол карты
+Every free place beside the map, corners too, gets a tile at the height of its neighbours	Кожнае вольнае месца побач з картай, і кутняя таксама, атрымлівае тайл на вышыні суседзяў
+Tiles added:	Тайлаў дададзена:
+Everything on the map, grouped by the folders its files lie in	Усё, што ёсць на карце, па тэчках файлаў
+Click an object or a road in the view to see and change it on the right.	Пстрыкніце аб'ект або дарогу ў акне выгляду: уласцівасці з'явяцца справа.
+Line up with the nearest road (Shift: put it freely)	Раўняць па бліжэйшай дарозе (Shift: ставіць свабодна)
+On both sides of the road	З абодвух бакоў дарогі
+A stop of the same name also goes at the kerb across the road, facing the other way	Прыпынак з той жа назвай ставіцца і ля бардзюра насупраць, у другі бок
+In a row along a line	Побач удоўж лініі
+Every	Праз кожныя
+Draw new	Маляваць новыя
+Edit existing	Правіць гатовыя
+Click a path to pick it: every point is a dot to drag (the small ones in the middle of a piece bend it). Double-click the path to put a point in. Click a dot, then Del, to take that point out; Del with no dot picked deletes the whole path (Ctrl+Z brings it back). Lanes of roads and junctions belong to their road type: use Edit its AI lanes on the road.	Пстрычка па шляху вылучае яго: кожная кропка — кружок, які можна цягнуць (маленькія ў сярэдзіне кавалка выгінаюць яго). Двайны пстрык па шляху ставіць кропку. Пстрычка па кружку, потым Del: прыбраць гэту кропку; Del без абранай кропкі выдаляе ўвесь шлях (Ctrl+Z верне). Паласы дарог і скрыжаванняў належаць тыпу дарогі: карыстайцеся «Правіць паласы ШІ» ля дарогі.
+Cars	Машыны
+People	Людзі
+Show these in the other tools too	Паказваць гэта і ў іншых інструментах
+Show the AI's lanes in the other tools too	Паказваць паласы ШІ і ў іншых інструментах
+Everything	Усё
+Search	Пошук
+Shape the ground under the road	Падладжваць зямлю пад дарогу
+Go on drawing from the end of the road just built	Працягваць маляваць з канца пабудаванай дарогі
+Join road ends, roads and junction pieces near the cursor	Прыстыкоўваць да канцоў дарог, дарог і дэталей скрыжавання ля курсора
+Make junctions where roads meet	Рабіць скрыжаванні, дзе дарогі сустракаюцца
+Go on with the type of the road I start from	Працягваць тыпам дарогі, ад якой пачынаю
+Building with:	Будуецца:
+nothing chosen	нічога не абрана
+Front at the roadside, back	Фасадам да дарогі, водступ
+Plant brush: sow trees by painting	Пэндзаль раслін: саджаць дрэвы пэндзлем
+Sow	Саджаць
+Clear	Прыбіраць
+With the brush	Пэндзлем
+In an outline	Па контуры
+Click round an area (a wood, a park, a garden) and it is filled at once, or cleared	Абвядзіце ўчастак (лес, парк, сад) пстрычкамі: ён засаджваецца адразу цалкам або ачышчаецца
+About	Каля
+plants (Enter: plant)	раслін (Enter: пасадзіць)
+Size	Памер
+Apart	Адлегласць
+Sows the object chosen below. Right-click entries: "Add to the plant mix" to sow several at random. Clearing takes trees and the mix's objects.	Саджае аб'ект, абраны ніжэй. Правая пстрычка па пунктах: «Дадаць у сумесь», каб саджаць некалькі вперамешку. Рэжым «Прыбіраць» прыбірае дрэвы і аб'екты сумесі.
+Mix (picked at random):	Сумесь (вперамешку):
+reading OMSI 2…	чытанне OMSI 2…
+items	шт.
+Nothing found	Нічога не знойдзена
+mod	мод
+right-click: star it	правая пстрычка: у абранае
+Take out of the plant mix	Прыбраць з сумесі раслін
+Add to the plant mix	Дадаць у сумесь раслін
+Remove from favourites	Прыбраць з абранага
+Add to favourites	Дадаць у абранае
+Favourites	Абранае
+Recently used	Нядаўнія
+(not in a folder)	(па-за тэчкамі)
+Strength	Сіла
+Mode	Рэжым
+Levels the ground to the height where you start dragging	Выраўноўвае зямлю да вышыні кропкі пачатку
+Softens bumps and edges	Змякчае няроўнасці і краі
+Raises the ground under the brush	Падымае зямлю пад пэндзлем
+Lowers the ground under the brush	Апускае зямлю пад пэндзлем
+Gives flat ground the rolls and dips of a natural field; hold longer for more	Надае роўнай зямлі бугры і западзіны, як у полі; трымайце даўжэй: мацней
+Paint a lake or a river: the ground is dug to a bed under the water's level (where you start the stroke, or the tile's water) and the tile gets water at that level. Water in OMSI is one level for a whole tile: another low place on the same tile shows it too	Малюйце возера або раку: зямля капаецца да дна пад узроўнем вады (там, дзе пачаты мазок, або вадой тайла), і тайл атрымлівае ваду на гэтым узроўні. Вада ў OMSI аднаго ўзроўню на ўвесь тайл: іншае нізкае месца на тым жа тайле таксама яе пакажа
+Click where it starts, then where it ends: the ground between becomes one even slope as wide as the brush (an embankment, a ramp, a level bed)	Пстрычка ў пачатку, потым у канцы: зямля паміж імі стане роўным схілам шырынёй з пэндзаль (насып, пандус, роўнае палатно)
+To a height	Да вышыні
+Flatten to the height typed instead of the one where the drag starts (a level square, a platform)	Выраўноўваць да ўведзенай вышыні, а не да вышыні пачатку (роўная плошча, платформа)
+Depth	Глыбіня
+The water's level is set where a stroke starts: start at the bank.	Узровень вады бярэцца там, дзе пачаты мазок: пачынайце ля берага.
+Brush	Пэндзаль
+Flatten the whole terrain	Прыбраць рэльеф з усёй карты
+Every tile's ground levelled to the map's mean height; the roads, the AI paths and the junctions follow it. One undo step brings the relief back. (The satellite picture: View > Satellite overlay.)	Зямля ўсіх тайлаў выраўноўваецца да сярэдняй вышыні карты; дарогі, шляхі ШІ і скрыжаванні падладжваюцца. Адзін крок адмены верне рэльеф. (Спадарожнікавы малюнак: Выгляд > Спадарожнікавая падложка.)
+Ground layers	Пласты зямлі
+base ground	аснова
+layer	пласт
+Add…	Дадаць…
+Remove	Прыбраць
+Up the list: drawn under the layers after it	Вышэй па спісе: малюецца пад наступнымі пластамі
+Down the list: drawn over the layers before it	Ніжэй па спісе: малюецца паверх папярэдніх пластоў
+Texture	Тэкстура
+The layer's picture; its painting stays	Малюнак пласта; яго афарбоўка застаецца
+A fine grain laid over the texture, seen close up (OMSI's detail texture)	Дробная фактура паверх тэкстуры, відаць зблізку (дэталёвая тэкстура OMSI)
+Click to choose another	Пстрыкніце, каб абраць іншую
+Repeats per tile	Паўтораў на тайл
+Detail repeats	Паўтораў дэталёвай
+How finely this layer can be painted: texels across a tile (its masks are made again at the new size)	Наколькі тонка можна фарбаваць гэты пласт: тэкселяў упоперак тайла (маскі пералічваюцца пад новы памер)
+Edit ground texture	Праўка тэкстуры зямлі
+Erase	Сціраць
+Remove ground texture	Выдаленне тэкстуры зямлі
+Tile	Тайл
+A water surface over the whole tile: it shows where the ground lies below it (lower the ground with the Terrain tool for a lake or a river)	Воданая роўнядзь на ўвесь тайл: відаць там, дзе зямля ніжэй за яе (апусціце зямлю інструментам «Рэльеф» для возера ці ракі)
+at 	на
+Lamps light the ground at night	Ліхтары асвятляюць зямлю ноччу
+The game works out the light pools of the street lamps on and round this tile when it loads it ([variable_terrainlightmap]); off, it shows the tile's light map file as it is	Гульня разлічвае плямы святла ліхтароў на гэтым тайле і вакол пры загрузцы ([variable_terrainlightmap]); выключана — паказвае файл карты асвятлення тайла як ёсць
+Edit history	Гісторыя правак
+Click a step to go back to just after it	Пстрычка па кроку: вярнуцца да стану адразу пасля яго
+Opened	Адкрыта
+Properties	Уласцівасці
+Configure PBR	Наладзіць PBR
+Create PBR	Стварыць PBR
+Normal, roughness, metal and shadow maps made from the object's textures, tuned and written as openOMSI reads them	Карты нармаляў, шурпатасці, металу і ценяў з тэкстур аб'екта: наладзіць і запісаць так, як іх чытае openOMSI
+Type	Тып
+Hangs on	Вісіць на
+point	кропка
+Location	Месцазнаходжанне
+East	Усход
+North	Поўнач
+Height above sea level	Вышыня над узроўнем мора
+above the ground:	над зямлёй:
+OMSI keeps this object's height above the ground under it: moved elsewhere it stays as high above the ground there	OMSI захоўвае вышыню гэтага аб'екта над зямлёй пад ім: перанесены ў іншае месца, ён застаецца на той жа вышыні над зямлёй
+Rotation	Паварот
+Tilt forward (pitch)	Нахіл наперад (тангаж)
+Bank to the side (roll)	Крэн убок
+Heading	Напрамак (курс)
+Turn it the way the nearest road runs beside it	Павярнуць па ходзе бліжэйшай дарогі побач
+Stand it upright again	Паставіць роўна
+Picture	Малюнак
+Ratio	Прапорцыі
+Stop name	Назва прыпынку
+This tree	Гэта дрэва
+Texts	Тэксты
+Shown on the object (@ starts a new line)	Бачныя на аб'екце (@ — новы радок)
+Model	Мадэль
+Triangles	Трохкутнікі
+Parts	Часткі
+Part	Частка
+triangles	трохкутнікаў
+colour only	толькі колер
+opaque	непразрысты
+cut out	выразны
+blended	паўпразрысты
+How the texture's transparency is used: cut out for leaves and fences, blended for glass	Як выкарыстоўваецца празрыстасць тэкстуры: выразны — лісты і платы, паўпразрысты — шкло
+Textures	Тэкстуры
+Normal, roughness, metal and shadow maps made from the road type's textures	Карты нармаляў, шурпатасці, металу і ценяў з тэкстур тыпу дарогі
+Length	Даўжыня
+Radius	Радыус
+right	управа
+left	улева
+straight	прамая
+start	пачатак
+end	канец
+Mirrored	Люстэрка
+Skew	Пераком
+The start cut on a slant: 1 is 45° (two fences meeting at a corner: 1 and -1)	Скошаны зрэз у пачатку: 1 — гэта 45° (два платы ў куце: 1 і -1)
+The end cut on a slant	Скошаны зрэз у канцы
+Ground	Зямля
+as it is	як ёсць
+cut away under it	выразаць пад ім
+cut, held at the end	выразаць, да канца
+cut, held at the start	выразаць, ад пачатку
+cut, held at both ends	выразаць, абодва канцы
+A hole in the ground under it, as for a tunnel, an underpass or a pit (OMSI's terrain align)	Дзірка ў зямлі пад ім, як для тунэля, падземнага пераходу або ямы (terrain align у OMSI)
+Select the whole road	Вылучыць усю дарогу
+Every piece linked on from this one (or double-click the road)	Усе кавалкі, звязаныя з гэтым (або двайны пстрык па дарозе)
+Join with the next piece	Злучыць з наступным кавалкам
+One piece again with the one after it, where the two make one curve	Зноў адзін кавалак з наступным, калі разам яны ўтвараюць адну крывую
+Replace with	Замяніць на
+The object chosen in the Objects tool's catalogue takes this one's place	Аб'ект, абраны ў каталогу інструмента «Аб'екты», становіцца на месца гэтага
+Go to	Перайсці
+Level ground	Выраўнаваць зямлю
+The ground under it made level with its foot, blending in 3 m round it (a house on a slope)	Зямля пад ім — роўна на ўзроўні асновы, з плыўным пераходам 3 м вакол (дом на схіле)
+All like it	Усе такія
+Select every one of this type on the map	Вылучыць усе такія на карце
+No road within 60 m	У межах 60 м няма дарогі
+Name	Назва
+Folder	Тэчка
+Traffic	Рух
+left-hand	левабаковае
+No start point yet: place one (Game logic > Start points) so the bus has somewhere to appear in openOMSI.	Няма кропкі старту: пастаўце яе (Службовае > Кропкі старту), каб аўтобусу было дзе з'явіцца ў openOMSI.
+None yet: openOMSI shows it where maps are chosen.	Пакуль няма: openOMSI паказвае яе пры выбары карты.
+Import your thumbnail	Імпартаваць свой малюнак
+Choose a picture: it is cut to 370 × 280 and becomes the map's picture (picture.jpg).	Абярыце малюнак: ён будзе абрэзаны да 370 × 280 і стане малюнкам карты (picture.jpg).
+Open the map with this view	Адкрываць карту з гэтым выглядам
+The camera as it is now is where the map opens (here and in OMSI 2's editor).	Карта будзе адкрывацца з камерай, як цяпер (тут і ў рэдактары OMSI 2).
+Saved to	Захоўваецца ў
+Edit map	Праўка карты
+Change the layer's texture	Змяніць тэкстуру пласта
+Change the layer's detail texture	Змяніць дэталёвую тэкстуру пласта
+Controls	Кіраванне
+Keyboard	Клавіятура
+Click a key, then press the new one (Esc: leave it). A key already in use is taken from its command.	Націсніце клавішу, потым новую (Esc: пакінуць). Занятая клавіша адбіраецца ў сваёй каманды.
+press a key…	націсніце клавішу…
+Also:	Таксама:
+Back to the default key	Вярнуць клавішу па змаўчанні
+Reset all keys	Скінуць усе клавішы
+Mouse	Мыш
+Right button held	Правая кнопка заціснута
+look round; W A S D fly, Q / E down / up, Shift faster, wheel: speed	аглядацца; W A S D: палёт, Q / E: уніз / уверх, Shift: хутчэй, кола: хуткасць
+Middle drag	Сярэдняя кнопка
+pan	зрух выгляду
+Alt + left / right / middle drag	Alt + левая / правая / сярэдняя
+orbit / zoom / pan (as in Unity)	арбіта / зум / зрух (як у Unity)
+Left drag on nothing	Левая па пустым месцы
+select with a box	вылучыць рамкай
+Alt + left drag	Alt + левая кнопка
+orbit round the point under the cursor	арбіта вакол кропкі пад курсорам
+Wheel	Кола
+move towards the cursor	набліжэнне да курсора
+Trackpad	Трэкпад
+Two fingers	Два пальцы
+Pinch / twist	Шчыпок / паварот
+zoom / turn	зум / паварот
+Option + two fingers or drag	Option + два пальцы або drag
+Fixed keys	Пастаянныя клавішы
+Arrow keys	Стрэлкі
+move over the map (Shift: faster)	рухацца па карце (Shift: хутчэй)
+go to a saved view (Shift: keep the view there)	да захаванага выгляду (Shift: запомніць выгляд туды)
+Alt + arrows	Alt + стрэлкі
+move the selection a grid step (Shift: 10 cm)	здвінуць вылучэнне на крок сеткі (Shift: 10 см)
+Alt + Page Up / Down	Alt + Page Up / Down
+selection up / down 10 cm (Shift: 1 m)	вылучэнне вышэй / ніжэй на 10 см (Shift: 1 м)
+add to / take from the selection	дадаць да вылучэння / прыбраць з яго
+Shift / Ctrl + drag on empty ground	Shift / Ctrl + цягнуць па пустой зямлі
+select with a box (Shift adds)	вылучыць рамкай (Shift: дадаць)
+Double-click a road	Двайны пстрык па дарозе
+select all of it	вылучыць яе цалкам
+turn the object	павярнуць аб'ект
+brush size	памер пэндзля
+stop / deselect	адмена / зняць выбар
+Unsaved changes	Незахаваныя змены
+The map has changes that are not saved. Save them first?	На карце ёсць незахаваныя змены. Захаваць іх?
+Don't save	Не захоўваць
+Assets	Асеты
+All	Усе
+Picture size	Памер малюнкаў
+Shapes…	Фігуры…
+Close (B)	Закрыць (B)
+Scenery objects	Аб'екты
+Splines (roads, tracks…)	Сплайны (дарогі, рэйкі…)
+Favourite on / off	Абранае ўкл / выкл
+content folder (mod, import, own)	тэчка кантэнту (мод, імпарт, сваё)
+OMSI 2	OMSI 2
+width	шырыня
+Build with it	Будаваць ім
+Place it	Паставіць
+PBR material…	PBR-матэрыял…
+Delete…	Выдаліць…
+Not seen in the game (a helper).	У гульні не відаць (службовы).
+Delete the asset?	Выдаліць асет?
+Its folder goes into openMapper's bin in the content folder (openMapper\\bin), from where it can be put back by hand. Maps that use it show it missing.	Яго тэчка пераносіцца ў кошык openMapper у тэчцы кантэнту (openMapper\\bin), адкуль яе можна вярнуць уручную. Карты, дзе ён стаіць, пакажуць яго адсутным.
+Calendar and place	Каляндар і месца
+Place and time	Месца і час
+Holidays	Святы і канікулы
+Number plates	Нумары машын
+Latitude	Шырата
+Longitude	Даўгата
+Time zone	Гадзінны пояс
+Where the sun stands and when it rises and sets come from here.	Адсюль бяруцца становішча сонца, усход і захад.
+Summer time	Летні час
+years	гадоў
+none: the clocks are never put forward	няма: гадзіннікі не пераводзяцца
+EU rules for these years	Правілы ЕС на гэтыя гады
+Last Sunday of March to last Sunday of October, replacing what is set for these years	З апошняй нядзелі сакавіка па апошнюю нядзелю кастрычніка, замест зададзенага на гэтыя гады
+None	Няма
+Year	Год
+entries	запісаў
+Public holidays run Sunday's timetable; school holidays the holiday one.	У святы ходзіць нядзельны расклад, у канікулы — канікулярны.
+Public holidays	Святы
+Add a holiday	Дадаць свята
+Holiday	Свята
+School holidays	Школьныя канікулы
+Ends before it starts	Канчаецца раней за пачатак
+Add school holidays	Дадаць канікулы
+The AI's cars carry these, one a line.	Гэтыя нумары носяць машыны ШІ, па адным у радку.
+X: a letter, 9: a digit	X: літара, 9: лічба
+Make	Стварыць
+Replaces the list with plates of the pattern	Замяняе спіс нумарамі па ўзоры
+plates	нумароў
+The scenario's AI lists are written, groups changed:	Спісы ШІ сцэнара запісаны, груп зменена:
+Could not write the scenario	Не ўдалося запісаць сцэнар
+The scenario's timetable is written, files:	Расклад сцэнара запісаны, файлаў:
+Back in the scenario:	Зноў у сцэнары:
+The scenario's things are on the map:	Рэчы сцэнара на карце:
+what you place now is the scenario's too	тое, што вы ставіце цяпер, таксама ў сцэнары
+Editing the scenario	Праўка сцэнара
+Done	Гатова
+Chrono scenarios	Храно-сцэнары
+How the map changes over the years: each scenario from its first day lays its own tiles, lines and tickets over the map. The view shows the map as on the day chosen here; what you edit is always the map itself.	Як карта змяняецца з часам: кожны сцэнар з першага дня накладае на карту свае тайлы, лініі і білеты. Выгляд паказвае карту на абраны тут дзень; правіцца заўсёды сама карта.
+Show the map as on	Паказаць карту на
+Today	Сёння
+Active on that day:	Дзейнічаюць у гэты дзень:
+New scenario's name	Імя новага сцэнара
+New scenario	Новы сцэнар
+A scenario starting on the day shown, after the others	Сцэнар з паказанага дня, пасля астатніх
+From	З
+To	Да
+for good	назаўжды
+Own tickets	Свае білеты
+Own money	Свая валюта
+the map's	мапы
+Takes off	Здымае лініі
+What changes (shown where the date is chosen)	Што змяняецца (відаць пры выбары даты)
+From its first day, the selection in the view:	З яго першага дня — вылучанае ў акне выгляду:
+appears	з'яўляецца
+Taken out of the map into the scenario: it is there from the scenario's first day on (place it first, then press this)	Прыбіраецца з карты ў сцэнар: з'яўляецца з першага дня сцэнара (спачатку пастаўце, потым націсніце)
+is gone	знікае
+Stays in the map, gone from the scenario's first day on	Застаецца ў карце, знікае з першага дня сцэнара
+becomes	становіцца
+its texts become	яго тэксты становяцца
+Write	Запісаць
+Its path rules from that day	Яго правілы шляхоў з гэтага дня
+Add a rule	Дадаць правіла
+Written into the scenario at once (undo does not take it out of the scenario).	Запісваецца ў сцэнар адразу (адмена не прыбірае гэта са сцэнара).
+What it changes	Што ён змяняе
+into the map	у карту
+Out of the scenario into the map itself: there on every day	Са сцэнара ў саму карту: будзе ва ўсе дні
+Take it out of the scenario	Прыбраць са сцэнара
+new texts	новыя тэксты
+rules	правіл
+Nothing yet.	Пакуль нічога.
+Its own things are on the map: select, move, change and place as usual. The map's own things stay the map's.	Яго рэчы на карце: вылучайце, рухайце, змяняйце і ставьце як звычайна. Рэчы самой карты застаюцца ў карце.
+Done: back into the scenario	Гатова: назад у сцэнар
+Edit its own things on the map	Правіць яго рэчы на карце
+What it brings in is put on the map to work with as with anything else; Done writes it back (undo starts afresh)	Тое, што ён дадае, ставіцца на карту, з ім працуюць як з любым іншым; «Гатова» запісвае назад (гісторыя адмены пачынаецца нанова)
+The Lines window shows its timetable (the map's with its own laid over): lines, trips and tours edited there are the scenario's; a line of the map taken away is taken off from its day.	Акно ліній паказвае яго расклад (карты з накладзеным сваім): праўкі ліній, рэйсаў і абаротаў там — сцэнара; прыбраная лінія карты здымаецца з яго дня.
+Done with its timetable	Гатова з раскладам
+Edit its timetable	Правіць яго расклад
+Its own lines, trips and tours in the Lines window; Done writes only what differs from the map's (undo starts afresh)	Яго лініі, рэйсы і абароты ў акне ліній; «Гатова» запісвае толькі адрозненні ад карты (гісторыя адмены пачынаецца нанова)
+The Traffic window shows its AI lists (the map's with its own added): vehicles and type groups added there, and a depot's own depot file, are the scenario's from its day.	Акно трафіку паказвае яго спісы ШІ (карты з дададзеным сваім): дададзеныя там машыны і групы тыпаў і свой файл дэпо — сцэнара з яго дня.
+Done with its AI lists	Гатова са спісамі ШІ
+Edit its AI lists	Правіць яго спісы ШІ
+Vehicles it adds to the groups and depots (OMSI's ailists_#upd.cfg); taking one away is the map's own business	Машыны, якія ён дадае ў групы і дэпо (ailists_#upd.cfg OMSI); прыбіраць машыны — справа самой карты
+Write the scenario	Запісаць сцэнар
+Close	Закрыць
+The map has no chrono scenarios.	У карты няма храно-сцэнараў.
+from	з
+to	па
+takes off	здымае
+own tickets	свае білеты
+Its first day	Першы дзень
+Written into the scenario	Запісана ў сцэнар
+Written into the scenario:	Запісана ў сцэнар:
+Scenario written	Сцэнар запісаны
+The map as on	Карта на
+scenarios:	сцэнараў:
+Multiplayer	Мультыплеер
+Joining… (a big map takes a while to come)	Падключэнне… (вялікая карта перадаецца не адразу)
+Recover a conflicting edit…	Аднавіць канфліктную праўку…
+Recovered your edit; undo is available	Праўка адноўлена; яе можна скасаваць
+Edit one map together: one of you hosts it, the others join. Roads, objects, ground and paint are shared as they are made; the timetable, the traffic and the descriptions stay the host's, and the host saves the map. Everybody needs the same objects and splines installed.	Праўка адной карты разам: адзін адкрывае яе, астатнія падключаюцца. Дарогі, аб'екты, рэльеф і афарбоўка перадаюцца адразу; расклад, трафік і апісанні застаюцца ў хоста, і карту захоўвае хост. Ва ўсіх павінны быць усталяваны тыя ж аб'екты і сплайны.
+Your name	Ваша імя
+Password	Пароль
+Host this map	Адкрыць доступ да гэтай карты
+Others on this network can join	Могуць падключыцца з гэтай сеткі
+Others anywhere can join (a free Cloudflare tunnel, nothing to set up on the router)	Могуць падключыцца адкуль заўгодна (бясплатны тунэль Cloudflare, без налады роўтара)
+Port	Порт
+Over the internet the password must have at least this many letters:	Для інтэрнэту пароль павінен быць не карацей за, літар:
+No password: anybody who reaches this computer's port can join and change the whole map.	Без пароля: любы, хто дастукаецца да порта гэтага кампутара, можа падключыцца і змяніць усю карту.
+Ask for a password after all	Усё ж запытваць пароль
+Host without a password? Anybody on this network who finds the port can join and change the whole map.	Адкрыць без пароля? Любы ў гэтай сетцы, хто знойдзе порт, зможа падключыцца і змяніць усю карту.
+Yes, without a password	Так, без пароля
+No	Не
+Type a password the others will need.	Увядзіце пароль, які спатрэбіцца астатнім.
+Host without a password…	Адкрыць без пароля…
+Host	Стаць гаспадаром
+Open a map, type a name and a password first	Спачатку адкрыйце карту, увядзіце імя і пароль
+Join a map	Падключыцца да карты
+The map open now has unsaved changes: joining closes it. Save it first.	У адкрытай карце ёсць незахаваныя змены: падключэнне закрые яе. Спачатку захайце.
+You host this map. Give the others one of these:	Вы хост гэтай карты. Дайце астатнім адзін з адрасоў:
+On this network the connection is not encrypted: somebody listening in can see the map, and from what they catch try passwords on their own computer. Use a long password, or the internet tunnel (encrypted).	У лакальнай сетцы злучэнне не шыфруецца: той, хто падслухоўвае, бачыць карту і па перахопленым можа падбіраць пароль на сваім кампутары. Выкарыстоўвайце доўгі пароль або тунэль праз інтэрнэт (ён шыфруецца).
+Everybody who joins can change the whole map.	Кожны, хто падключыўся, можа змяніць усю карту.
+Opening the Cloudflare tunnel… (fetched the first time)	Адкрываецца тунэль Cloudflare… (першы раз спампоўваецца)
+internet	інтэрнэт
+Waiting for Cloudflare's address…	Чаканне адраса ад Cloudflare…
+The Cloudflare tunnel could not be opened (no cloudflared, or no internet). The LAN addresses still work.	Не ўдалося адкрыць тунэль Cloudflare (няма cloudflared або інтэрнэту). Адрасы ў лакальнай сетцы працуюць.
+You joined this map. The host saves it.	Вы падключаны да гэтай карты. Захоўвае яе хост.
+Everything of yours is with the others	Усе вашы праўкі ў астатніх
+Sending your edits…	Адпраўка вашых правак…
+In the session	У сесіі
+Say something…	Напісаць…
+Leave	Выйсці
+Knife (K): a click on a road cuts it there, as often as you like; the pieces' lengths shown at the cursor, on whole grid steps with grid snapping on · right-click or Esc: off	Нож (K): пстрычка па дарозе разразае яе ў гэтым месцы, колькі заўгодна разоў; даўжыні кавалкаў відаць ля курсора, з прывязкай да сеткі — па цэлых крокам сеткі · правая пстрычка або Esc: выключыць
+The angle step: what snapping comes to and what R turns by	Крок вугла: да чаго прывязваецца напрамак і на колькі паварочвае R
+Angle	Вугал
+Snap headings to the angle step	Прывязка напрамку да кроку вугла
+Grid	Сетка
+Snap positions to the grid	Прывязка становішча да сеткі
+Click two points to measure the distance and gradient between them (U) · right-click: off	Пстрычка па двух кропках: адлегласць і ўхіл паміж імі (U) · правая пстрычка: выключыць
+Auto-Terrain	Аўта-рэльеф
+What you build follows the ground: roads, paths and tracks take its height (off: they run level from where they start). Only what is built from now on; nothing already there changes	Новае падладжваецца пад рэльеф: дарогі, шляхі і рэйкі бяруць яго вышыню (выкл.: ідуць роўна ад кропкі пачатку). Толькі тое, што будуецца далей; ужо пабудаванае не змяняецца
+Auto-Switch	Аўта-стрэлкі
+Branching a track off another makes a switch there	Адгалінаванне шляху ад іншага стварае стрэлку
+Auto-Junction	Аўта-скрыжаванне
+Auto-Align	Аўта-выраўноўванне
+Line objects up with the nearest road (Shift: put it freely)	Раўняць аб'екты па бліжэйшай дарозе (Shift: ставіць свабодна)
+Selection	Вылучэнне
+A click on one of it selects all of it, Ctrl + click one alone	Пстрычка па любым яе аб'екце вылучае ўсю групу, Ctrl + пстрычка — адзін аб'ект
+Keep these together: a click on one selects all, a drag moves all (Ctrl+G)	Трымаць разам: пстрычка па адным вылучае ўсе, перацягванне рухае ўсе (Ctrl+G)
+Apply	Ужыць
+Turn	Паварот
+Level the ground under them	Выраўнаваць зямлю пад імі
+Each one's outline made level with its foot, blending into the ground 3 m round it	Пад кожным — роўна на ўзроўні яго асновы, з плыўным пераходам 3 м вакол
+Make every object	Зрабіць усе аб'екты
+The object chosen in the Objects tool's catalogue	Аб'ект, абраны ў каталогу інструмента «Аб'екты»
+Random headings	Выпадковыя павароты
+Every selected object turned its own random way (trees, bushes, rocks)	Кожны вылучаны аб'ект павернуты выпадкова (дрэвы, кусты, камяні)
+Along the road	Удоўж дарогі
+Each turned the way the nearest road runs beside it	Кожны павернуты па ходзе бліжэйшай дарогі побач
+Turned:	Павернута:
+All like this one	Усе як гэты
+Every selected object takes the heading of the one in the properties	Усе вылучаныя аб'екты атрымліваюць паварот таго, што ва ўласцівасцях
+Make every road	Зрабіць усе дарогі
+The road type chosen in the Roads tool's catalogue	Тып дарогі, абраны ў каталогу інструмента «Дарогі»
+Lay them on the ground	Пакласці іх на зямлю
+Reverse their direction	Разгарнуць іх напрамак
+Even slope along them	Роўны ўхіл удоўж іх
+One chain of roads: from the height at one end to that at the other, evenly (a bridge, a ramp)	Адзін ланцужок дарог: ад вышыні на адным канцы да вышыні на другім, раўнамерна (мост, пандус)
+Edit its AI lanes	Правіць паласы ШІ
+Its lanes become AI paths of their own (the same lines, the same way) that the Logic tool's Edit existing bends, moves and deletes. The road keeps its look.	Паласы становяцца асобнымі шляхамі ШІ (тыя ж лініі, той жа напрамак): іх можна рухаць, гнуць і выдаляць у Логіцы > Шляхі ШІ > Правіць гатовыя. Выгляд дарогі не змяняецца.
+Ends (joined roads follow)	Канцы (суседнія дарогі ідуць следам)
+height	вышыня
+gradient	ухіл
+cant	віраж
+Banking across the road, %: positive lowers its right side (into a right bend)	Папярочны нахіл, %: плюс апускае правы бок (у правы паварот)
+End	End
+Even slope end to end	Роўны ўхіл ад пачатку да канца
+Both gradients to the straight climb between the ends' heights	Абодва ўхілы: па прамой паміж вышынямі канцоў
+Speed limit, km/h	Абмежаванне хуткасці, км/г
+Traffic density ×	Шчыльнасць трафіку ×
+Priority	Прыярытэт
+Trucks (0: none)	Грузавікі (0: няма)
+No cars	Без легкавых
+Buses only	Толькі аўтобусы
+For the AI and the player on one path (lane) of it, counted from 0: the view shows their numbers	Для ШІ і гульца на адным шляху (паласе) яе, лічачы ад 0: іх нумары відаць у акне выгляду
+Path (lane) number	Нумар шляху (паласы)
+Hanging on it	Вісіць на ім
+Points to hang objects on:	Кропак для мацавання:
+Select it	Вылучыць яго
+Hang	Павесіць
+Choose an object in the Objects catalogue first	Спачатку абярыце аб'ект у каталогу «Аб'екты»
+A fence, a row of houses, an avenue: the selection copied again and again, a step on each time	Плот, рад дамоў, алея: вылучэнне капіруецца зноў і зноў, кожны раз на крок далей
+Copies	Копій
+Step	Крок
+Turn each	Паварот кожнай
+Rows	Радоў
+More than one: a grid (an orchard, a car park), each row a row step on	Болей за адзін: сетка (сад, стаянка), кожны рад на крок радоў далей
+Row step	Крок радоў
+Tilted to the ground under it, the way it slopes forward and to the side (a fence, a bench or a shed on a hillside)	Нахіл па зямлі пад ім, наперад і ўбок (плот, лавачка або сарай на схіле)
+Heights along the ground again, smoothed so it climbs a hill rather than every bump (after shaping the ground or laying a height map over it); where a road not selected joins, its height is kept	Вышыні зноў па зямлі, згладжана: дарога падымаецца на ўзгорак, а не на кожную кочку (пасля праўкі рэльефу або накладання карты вышынь); дзе далучаецца невылучаная дарога, яе вышыня захоўваецца
+Each starts where it ended: the traffic on it goes the other way (a one-way street, a track's direction), the road itself stays where it is	Кожны пачынаецца там, дзе канчаўся: рух па ім ідзе ў адваротны бок (вуліца з аднабаковым рухам, напрамак шляху), сама дарога застаецца на месцы
+A second track or the other carriageway: the selected splines copied alongside, bends kept exact, linked as they are	Другі шлях або сустрэчная палова: вылучаныя сплайны капіруюцца побач, павароты дакладна, сувязі як у арыгінала
+To the left	Злева
+To the right	Справа
+Left and right of the way the road runs (its arrows with AI lanes shown)	Злева і справа па ходзе дарогі (яе стрэлкі пры паказе палос ШІ)
+For trams and electric trains: a wire spline laid on the selected track, piece for piece and linked (its height is the wire spline's own); the masts go in with Objects along the road	Для трамваяў і электрычак: сплайн провада паверх вылучанага шляху, кавалак за кавалкам і са сувязямі (вышыня — свая ў сплайна провада); мачты ставяцца «Аб'ектамі ўздоўж дарогі»
+No wire spline installed (one whose name says Fahrdraht, Oberleitung or wire)	Няма сплайна провада (з Fahrdraht, Oberleitung або wire ў назве)
+Lay it	Пракласці
+Wire pieces laid:	Кавалкаў провада:
+Paint the ground along it	Пафарбаваць зямлю ўздоўж
+Add a ground texture in the Paint tool first: the base ground is under everything	Спачатку дадайце тэкстуру зямлі ў інструменце «Афарбоўка»: аснова ляжыць пад усім
+Layer	Пласт
+Where	Дзе
+beside it	побач
+under it too	і пад ёй
+Out from its edge	Ад краю
+Soft edge	Мяккі край
+A gravel verge, dirt by a track, grass along a path: the brush of the Paint tool touches it up afterwards	Жвіровае ўзбочча, грунт ля шляхоў, трава ўздоўж сцежкі: пэндзаль «Афарбоўкі» паправіць потым
+Beside	Збоку
+Lean with the road	Нахіл разам з дарогай
+Each object leans with the road's gradient and banking (bays and arrows on the road); off, it stands upright	Кожны аб'ект нахіляецца па ўхіле і віражы дарогі (кішэні і стрэлкі на дарозе); выключана — стаіць прама
+A text the row's objects show (@ starts a new line)	Тэкст, які паказваюць аб'екты рада (@ — новы радок)
+Object:	Аб'ект:
+Pick an object (a lamp, a tree, a bollard) in the Objects tool's catalogue	Абярыце аб'ект (ліхтар, дрэва, слупок) у каталогу інструмента «Аб'екты»
+Right of the road's direction; negative: left	Справа па напрамку дарогі; менш за нуль: злева
+Free at start / end	Адступ у пачатку / у канцы
+Both sides	З абодвух бакоў
+Place along the road	Расставіць удоўж дарогі
+Remove all rows	Прыбраць усе рады
+Roundabout: click the centre, then the ring	Кальцо: пстрычка ў цэнтр, потым па кальцы
+A one-way ring of the chosen road type (pick a one-way road); roads inside are cut back to it and joined with junctions	Аднабаковае кальцо абранага тыпу дарогі (абярыце аднабаковую); дарогі ўнутры абразаюцца па кальцы і злучаюцца скрыжаваннямі
+Keep the height (bridge, embankment)	Трымаць вышыню (мост, насып)
+An even gradient from end to end, the ground left as it is; the rise to the end can be typed while drawing. Pillars: select the road and put them along it as objects.	Роўны ўхіл ад пачатку да канца, зямля не змяняецца; подых да канца можна ўвесці пры малюнку. Апоры: вылучыце дарогу і расстаўце іх удоўж яе як аб'екты.
+Rise	Пад'ём
+Shift: straight · Enter: build	Shift: прамая · Enter: пабудаваць
+Junction	Скрыжаванне
+Traffic lights	Святлафоры
+Lights need three roads or more	Святлафорам патрэбна не менш за тры дарогі
+Main road green	Зялёны галоўнай
+Side roads green	Зялёны другасных
+The main road is the pair of roads most in line; red-yellow 2 s, yellow 3 s, 2 s all red between	Галоўная: пара дарог, што ляжаць бліжэй за ўсё да адной лініі; чырвоны з жоўтым 2 с, жоўты 3 с, паміж фазамі 2 с усім чырвоны
+Zebra crossings	Пешаходныя пераходы
+Road	Дарога
+Build it again	Пабудаваць нанова
+Makes the plate, its kerbs and lanes again for the roads as they are now	Нанова будуе пляцоўку, бардзюры і паласы пад дарогі, як яны цяпер
+Linked objects	Звязаныя аб'екты
+An object can take its state from another ([varparent]): a signal head shows a light of its crossing's program, a stop's display its stop.	Аб'ект можа браць стан ад іншага ([varparent]): святлафор паказвае сігнал праграмы свайго скрыжавання, табло прыпынку — свой прыпынак.
+Takes its state from	Бярэ стан ад
+Select it: IDCode	Вылучыць яго: IDCode
+Takes its state from an object that is gone: IDCode	Бярэ стан ад знікшага аб'екта: IDCode
+Takes its state from nothing	Ні ад чаго не бярэ стан
+Light	Святлофор
+Its light is not one of the crossing's: it stays dark	Яго сігналу няма ў скрыжавання: ён не гарыць
+That object runs no traffic lights: link the head to a crossing with a light program	Той аб'ект не кіруе святлафорамі: звяжыце галоўку са скрыжаваннем, дзе ёсць праграма
+A signal head: link it to its crossing to have it light	Галоўка святлафора: звяжыце яе са скрыжаваннем, каб яна гарэла
+Click the object in the view… (Esc)	Пстрыкніце аб'ект у выглядзе… (Esc)
+Link to another…	Звязаць з іншым…
+Link to an object…	Звязаць з аб'ектам…
+Then click the object it is to take its state from (a crossing for a signal head)	Потым пстрыкніце аб'ект, ад якога браць стан (скрыжаванне для святлафора)
+Taking their state from it:	Бяруць стан ад яго:
+light	сігнал
+Click the object it takes its state from	Пстрыкніце аб'ект, ад якога браць стан
+stop	прыпынак
+Find in map	Пошук па карце
+Name, file, IDCode, stop or x, y	Назва, файл, IDCode, прыпынак або x, y
+The point	Кропка
+Spline	Сплайн
+Object	Аб'ект
+Nothing on the map has this IDCode.	На карце няма нічога з такім IDCode.
+kinds	відаў
+on the map	на карце
+Next	Наступны
+Select the next one and go there	Вылучыць наступны і перайсці да яго
+Every one of these becomes the road type chosen in the Roads tool	Усе такія стануць тыпам дарогі, абраным у інструменце «Дарогі»
+Every one of these becomes the object chosen in the catalogue	Усе такія стануць аб'ектам, абраным у каталогу
+More: type to narrow the list	Ёсць яшчэ: удакладніце пошук
+Replaced:	Заменена:
+Satellite overlay	Спадарожнікавая падложка
+Satellite and own pictures	Спадарожнік і свае малюнкі
+Click a tile to see its overlay here.	Пстрыкніце тайл, каб убачыць тут яго падложку.
+Show the overlay	Паказваць падложку
+opacity	непразрыстасць
+Load satellite imagery	Загрузіць спадарожнік
+Place the map on the Earth first (Satellite and terrain…)	Спачатку размесціце карту на Зямлі (Спадарожнік і рэльеф…)
+Load image file…	Загрузіць малюнак…
+Your own picture for this tile (a scan, a screenshot): or drop it on the window	Свой малюнак для гэтага тайла (скан, скрыншот): або перацягніце яго ў акно
+Load the OpenStreetMap map	Загрузіць карту OpenStreetMap
+OpenStreetMap map for all tiles	Карта OpenStreetMap для ўсіх тайлаў
+The map as openstreetmap.org draws it (streets with their names, houses, water, green, stop signs), drawn sharp from OpenStreetMap data and laid on the tile in place of a satellite picture: to build roads and houses over by eye. Nothing is generated from it.	Карта як на openstreetmap.org (вуліцы з назвамі, дамы, вада, зеляніна, значкі прыпынкаў) малюецца выразна з даных OpenStreetMap і кладзецца на тайл замест спадарожніка: каб будаваць дарогі і дамы зверху. Нічога не генеруецца.
+own picture	свой малюнак
+for an earlier placement	для ранейшага размяшчэння
+not kept with the map	не захоўваецца з картай
+, partly coarser	, месцамі грубей
+nothing	нічога
+Place the map on the Earth first.	Спачатку размесціце карту на Зямлі.
+Load terrain heights	Загрузка вышынь рэльефу
+Done:	Гатова:
+with problems	з памылкамі
+A picture for the tiles	Малюнак для тайлаў
+Could not read the picture	Не ўдалося прачытаць малюнак
+Could not copy the picture	Не ўдалося скапіяваць малюнак
+The picture is on the tiles: line it up in Satellite and terrain, Own pictures.	Малюнак на тайлах: падладзьце яго ў «Спадарожнік і рэльеф», «Свае малюнкі».
+Nothing found by that name.	Нічога не знойдзена.
+Some tiles had Google imagery: enter your Google key to see it again (it is not kept with the map).	У некаторых тайлаў былі здымкі Google: увядзіце ключ Google, каб зноў іх бачыць (яны не захоўваюцца з картай).
+Satellite and terrain	Спадарожнік і рэльеф
+Find a place: a town, a street, an address… (Enter)	Знайсці месца: горад, вуліца, адрас… (Enter)
+Searching…	Пошук…
+Search © OpenStreetMap contributors	Пошук © удзельнікі OpenStreetMap
+This map has world coordinates ([worldcoordinates]): it lies on the Earth by itself, its tiles are Web Mercator tiles.	У гэтай карты сусветныя каардынаты ([worldcoordinates]): яна сама ляжыць на Зямлі, яе тайлы — тайлы Web Mercator.
+Click on the map where the orange tile goes…	Пстрыкніце па карце, дзе будзе аранжавы тайл…
+Place the map here	Размясціць карту тут
+Then click on the map: the middle of the orange tile goes there	Потым пстрыкніце па карце: туды стане сярэдзіна аранжавага тайла
+At the view's middle	У цэнтр выгляду
+North turned	Паварот поўначы
+Orange tile	Аранжавы тайл
+click the map to fly there in the view	пстрычка па карце: пералёт туды ў акне выгляду
+1. Find the place.  2. Press "Place the map here" and click on the map: the orange tile (the map's middle) goes there.	1. Знайдзіце месца.  2. Націсніце «Размясціць карту тут» і пстрыкніце па карце: туды стане аранжавы тайл (сярэдзіна карты).
+Imagery	Здымкі
+The sharpest here	Самыя выразныя тут
+cm a pixel here	см на піксель тут
+checking…	праверка…
+is sharper here	тут выразней
+Sharper imagery may be had here with your own free key for Mapbox, MapTiler or Google (Keys below).	Больш выразныя здымкі тут могуць быць з вашым бясплатным ключом Mapbox, MapTiler або Google (ніжэй, «Ключы»).
+Terms of use	Умовы выкарыстання
+Zoom	Маштаб
+the finest here	самы падрабязны тут
+Picture of a tile	Малюнак тайла
+every pixel of the source (up to 4096)	кожны піксель крыніцы (да 4096)
+Loaded at	Загружана з
+cm a pixel	см на піксель
+Also load terrain heights	Загружаць і вышыні рэльефу
+New tiles get imagery by themselves	Новыя тайлы атрымліваюць здымкі самі
+Load for all tiles	Загрузіць для ўсіх тайлаў
+For the selected tile	Для абранага тайла
+Click a tile with the Tiles tool (7)	Пстрыкніце тайл інструментам «Тайлы» (7)
+Terrain heights only	Толькі вышыні рэльефу
+of	з
+tiles beside the loaded heights were not loaded: the ground steps at their edge.	тайлаў побач з загружанымі вышынямі не загружаны: на іх краі прыступка.
+Fit their edges	Падагнаць іх краі
+Their edge takes the loaded heights, fading out 60 m into the tile	Іх край бярэ загружаныя вышыні, сыходзячы на нішто за 60 м углыб тайла
+Leave them	Пакінуць
+Terrain heights	Вышыні рэльефу
+Relative: the orange tile's mean height is 0 m	Адносныя: сярэдняя вышыня аранжавага тайла: 0 м
+Raise everything by	Падняць усё на
+Taken off:	Адняты:
+Measure again	Памераць нанова
+Terrain data attribution	Крыніцы даных рэльефу
+Overlay on the ground	Падложка на зямлі
+Put the imagery into maps exported for sharing (check its licence first)	Класці здымкі ў карты для абмену (спачатку праверце ліцэнзію)
+Fit tile edges	Падгонка краёў тайлаў
+Keys for more sources (optional)	Ключы для іншых крыніц (неабавязкова)
+Everything works without a key. With your own free key these may be sharper in some places; the key stays on this computer.	Усё працуе без ключа. З вашым бясплатным ключом гэтыя крыніцы месцамі выразней; ключ застаецца на гэтым кампутары.
+Google satellite (needs your API key)	Google спадарожнік (патрэбны ваш API-ключ)
+get a key	атрымаць ключ
+In Google Cloud: make a project, enable the Map Tiles API, create an API key, paste it here. Google bills by use above its free amount.	У Google Cloud: стварыце праект, уключыце Map Tiles API, стварыце API-ключ і ўстаўце сюды. Звыш бясплатнага аб'ёму Google бярэ плату.
+key	ключ
+Your own tile server	Свой сервер тайлаў
+URL	URL
+Attribution	Аўтарства
+Finest zoom	Найбольшы маштаб
+Kind	Від
+XYZ / WMTS tiles	тайлы XYZ / WMTS
+Terrarium heights	вышыні Terrarium
+{z} {x} {y} are filled in; a WMS gets {bbox} (EPSG:3857) and {width} {height}; {key} is your key.	Падстаўляюцца {z} {x} {y}; WMS атрымлівае {bbox} (EPSG:3857) і {width} {height}; {key}: ваш ключ.
+Add	Дадаць
+Own pictures	Свае малюнкі
+A scan, a screenshot, an old plan: laid on tiles and lined up by eye. No place on the Earth needed.	Скан, скрыншот, стары план: кладзецца на тайлы і падганяецца на вока. Размяшчэнне на Зямлі не патрэбна.
+Tiles from	Тайлы ад
+Load image file over these tiles…	Загрузіць малюнак на гэтыя тайлы…
+Turn left 90°	Улева на 90°
+Turn right 90°	Управа на 90°
+mirror left-right	адбіць злева направа
+mirror top-bottom	адбіць зверху ўніз
+Reset	Скінуць
+Your own pictures	Вашы малюнкі
+of these tiles have your own pictures. Replace them with satellite imagery?	з гэтых тайлаў з вашымі малюнкамі. Замяніць іх спадарожнікавымі здымкамі?
+Replace them	Замяніць
+Keep my pictures	Пакінуць мае
+Groups for other maps	Групы для іншых карт
+A selection kept under a name, to put down again in any map (a stop with its shelter and signs, a crossing with its lights)	Вылучэнне, захаванае пад імем, каб ставіць яго зноў на любой карце (прыпынак з павільёнам і знакамі, скрыжаванне са святлафорамі)
+Keep the selection	Захаваць вылучэнне
+Group kept	Група захавана
+Select what to keep in the view first.	Спачатку вылучыце ў акне выгляду тое, што захаваць.
+No groups yet.	Груп пакуль няма.
+thing	шт.
+things	шт.
+Delete the group (to openMapper's bin)	Выдаліць групу (у кошык openMapper)
+Use	Узяць
+Into the clipboard: Ctrl+V puts it down at the cursor, as often as wanted	У буфер абмену: Ctrl+V ставіць яе ля курсора, колькі заўгодна разоў
+is in the clipboard: Ctrl+V puts it at the cursor	у буферы абмену: Ctrl+V ставіць яе ля курсора
+The map's tiles: 300 m squares. Add more beside them with the Tiles tool.	Тайлы карты: квадраты па 300 м. Новыя дадаюцца інструментам «Тайлы».
+A road	Дарога
+Roads tool: click where it starts, then where it ends. Click on a road's end to go on from it.	Інструмент «Дарогі»: пстрычка ў пачатку, потым у канцы. Пстрычка па канцы дарогі: працягнуць яе.
+A bus stop by the road	Прыпынак ля дарогі
+Game logic > Bus stops: put one at the kerb, on the side the doors open. Name it on the right.	Службовае > Прыпынкі: ля бардзюра, з боку дзвярэй. Імя: справа.
+A start point	Кропка старту
+Game logic > Start points: where your bus appears, on a road, facing the way to drive.	Службовае > Кропкі старту: дзе з'явіцца аўтобус: на дарозе, тварам па ходзе.
+A line with a trip	Лінія з рэйсам
+Lines window: New line, New trip, then click the stops in order. The way is found along the roads.	Акно «Лініі»: новая лінія, новы рэйс, потым пстрыкайце прыпынкі па парадку. Шлях знойдзецца па дарогах.
+A tour with departures	Абарот з адпраўленнямі
+Lines window > Tours and times: New tour, then Fill from … to … .	Акно «Лініі» > Абароты і час: новы абарот, потым «Запоўніць з … да …».
+Buses for the tours	Аўтобусы для абаротаў
+A depot the tours take their buses from (Tours: Add a depot, or Traffic and AI).	Дэпо, з якога абароты бяруць аўтобусы (Абароты: «Дадаць дэпо» або «Трафік і ШІ»).
+Checked	Правобрана
+Map > Check map: what would go wrong in the game, most of it put right with one click.	Карта > Праверыць карту: што пойдзе не так у гульні; амаль усё выпраўляецца адной пстрычкай.
+Saved	Захавана
+Ctrl+S. Maps are saved into openOMSI's content folder.	Ctrl+S. Карты захоўваюцца ў тэчку кантэнту openOMSI.
+A test drive	Тэст-драйв
+F5 saves and starts openOMSI on the map: pick line 1 and drive.	F5 захоўвае і запускае openOMSI на карце: абярыце лінію і едзьце.
+A map you can drive in service:	Карта, па якой можна ездзіць па раскладзе:
+Show me	Паказаць
+Your stops stand away from the roads: a bus serves a stop within 15 m of its lane.	Прыпынкі стаяць далёка ад дарог: аўтобус абслугоўвае прыпынак у межах 15 м ад паласы.
+A real place? Put the map on the Earth (Map > Satellite and terrain), then Map > From OpenStreetMap brings its streets, stops, lines and trees.	Рэальнае месца? Прывяжыце карту да Зямлі («Карта > Спадарожнік і рэльеф»), потым «Карта > З OpenStreetMap» прывезе яе вуліцы, прыпынкі, лініі і дрэвы.
+Show this for new maps	Паказваць гэта для новых карт
+The map has no depot file.	У карты няма файла дэпо.
+Make one from the lines	Стварыць па лініях
+The map has no trips yet (Map > Lines and timetable)	У карты яшчэ няма рэйсаў (Карта > Лініі і расклад)
+Empty one	Пусты
+New	Новы
+A new depot file from the map's lines	Новы файл дэпо па лініях карты
+Delete this depot file	Выдаліць гэты файл дэпо
+The lines need	Лініям не хапае:
+Add them	Дадаць
+What is there stays as it is	Існуючае не змяняецца
+No depot group uses it.	Ніводная група дэпо яго не выкарыстоўвае.
+Used by the depot	Выкарыстоўваецца дэпо
+Use it for every depot	Для ўсіх дэпо
+The AI's depot groups (Vehicle groups tab) take their buses' destinations from it	Групы дэпо ШІ (укладка «Групы машын») бяруць з яго канчатковыя сваіх аўтобусаў
+Rename	Перайменаваць
+not a usable name	недапушчальнае імя
+The destination a bus shows on its way to and from the depot	Канчатковая, якую аўтобус паказвае па шляху ў дэпо і з яго
+Destinations	Канчатковыя
+Stops	Прыпынкі
+Routes	Маршруты
+nobody gets on	без пасадкі
+Code	Код
+another destination has this code	гэты код ёсць у іншай канчатковай
+As a trip's terminus is named in the timetable: the stop where everybody gets off	Як названа канчатковая рэйса ў раскладзе: прыпынак, дзе ўсе выходзяць
+Nobody gets on (service trip, empty sign)	Без пасадкі (службовы рэйс, пусты паказальнік)
+Delete destination	Выдаліць канчатковую
+Add destination	Дадаць канчатковую
+New destination	Новая канчатковая
+As the timetable names the stop	Як прыпынак названы ў раскладзе
+Delete stop	Выдаліць прыпынак
+Add stop	Дадаць прыпынак
+line	лінія
+What the driver types: the line's number and two digits (7601: line 76, route 01)	Што набірае кіроўца: нумар лініі і дзве лічбы (7601: лінія 76, маршрут 01)
+Line	Лінія
+IBIS text	Тэкст IBIS
+Destination	Канцавы прыпынак
+Stops in order	Прыпынкі па парадку
+Not in the Stops list: the displays have no texts for it	Няма ў спісе прыпынкаў: у табло няма для яго тэкстаў
+Move up	Вышэй
+Move down	Ніжэй
+Take out	Прыбраць
+Add a stop…	Дадаць прыпынак…
+Delete route	Выдаліць маршрут
+Add route	Дадаць маршрут
+No routes: the IBIS knows the destinations' codes only. Add them from the lines above.	Маршрутаў няма: IBIS ведае толькі коды канчатковых. Дадайце іх па лініях вышэй.
+Winter with snow	Зіма са снегам
+Summer (dry)	Лета (сухое)
+Jan	Сту
+Feb	Лют
+Mar	Сак
+Apr	Кра
+May	Мая
+Jun	Чэр
+Jul	Ліп
+Aug	Жні
+Sep	Вер
+Oct	Кас
+Nov	Ліс
+Dec	Сне
+Map settings	Налады карты
+Money	Валюта
+Tickets	Білеты
+none: the map has no depot group (Traffic and AI)	няма: у карты няма групы дэпо (Трафік і ШІ)
+Years	Гады
+Year offset	Зрух года
+Added to today's year when the game starts at the real date (Berlin-Spandau: -25 for the 1980s)	Дадаецца да бягучага года пры старце гульні ў рэальную дату (Berlin-Spandau: -25, каб былі 80-я)
+Repair time	Час рамонту
+ min	 хв
+Rail	Рэйкі
+real rail (trams and trains follow their tracks' switches)	сапраўдныя рэйкі (трамваі і цягнікі ідуць па стрэлках)
+Helper	Памочнік
+dynamic helper active (the original editor's map option, kept as it is)	дынамічны памочнік уключаны (параметр карты з арыгінальнага рэдактара)
+Seasons	Поры года
+Summer where none is set. The days count from 1 January.	Дзе нічога не зададзена — лета. Дні лічацца ад 1 студзеня.
+Add a season	Дадаць пару года
+A season ends before it starts	Пара года канчаецца раней, чым пачынаецца
+Nothing selected	Нічога не вылучана
+Paste here	Уставіць сюды
+Cut the road here	Разрэзаць дарогу тут
+Select all like it	Вылучыць усе такія
+Keep for other maps…	Захаваць для іншых карт…
+Its ground, painting, water, objects and roads, put beside or into this map. Lines, timetable and AI lists stay with the other map.	Яе зямля, афарбоўка, вада, аб'екты і дарогі — побач з гэтай картай або ў яе. Лініі, расклад і спісы ШІ застаюцца ў той карце.
+Choose a map…	Абярыце карту…
+Other…	Іншая…
+A map to take tiles from (its global.cfg)	Карта, з якой узяць тайлы (яе global.cfg)
+Grey: this map · orange: the tiles to add (click to take one or leave it) · red: on a tile of this map, left out	Шэрыя: гэта карта · аранжавыя: тайлы для даслання (пстрычка: узяць або пакінуць) · чырвоныя: на тайле гэтай карты, не бяруцца
+Move:	Зрух:
+west	захад
+east	усход
+north	поўнач
+south	поўдзень
+Raise it by	Падняць на
+Its ground, water, roads and objects at a height of their own	Яе зямля, вада, дарогі і аб'екты на ўласнай вышыні
+Ease the ground where the maps meet	Згладзіць зямлю на стыку карт
+Added	Дададзена
+tiles from the other map	тайлаў з іншай карты
+Cube	Куб
+Plane	Плоскасць
+Circle	Круг
+Triangle	Трохкутнік
+Triangular prism	Трохвугольная прызма
+Wedge	Клін
+Corner wedge	Вуглавы клін
+Pyramid	Піраміда
+Sphere	Сфера
+Icosphere	Ікасфера
+Cylinder	Цыліндр
+Cone	Конус
+Torus	Тор
+Tube	Труба
+Capsule	Капсула
+Stairs	Лесвіца
+Arch	Арка
+Make one and put it on the map with a click (each one can then be edited, scaled, cut and joined)	Стварыць і паставіць на карту пстрычкай (потым яго можна рэдагаваць, маштабаваць, рэзаць і аб'ядноўваць)
+Array	Масіў
+Mirror	Люстэрка
+Solidify	Таўшчыня
+Subdivision surface	Падзел паверхні
+Decimate	Спрашчэнне
+Triangulate	Трыангуляцыя
+Displace	Зрух (шум)
+Wireframe	Каркас
+Screw	Шнэк
+Simple deform	Простая дэфармацыя
+Cast	Адліўка (да формы)
+Weld	Зварка вяршынь
+Edge split	Падзел рэбраў
+Boolean	Булева аперацыя
+Follow the ground	Па рэльефе
+Count	Колькасць
+Relative	Адносна
+Offset	Зрух
+Merge touching ends	Зварыць стыкі
+Distance	Адлегласць
+Cut away the other side first	Спачатку адрэзаць другі бок
+Weld at the mirror	Зварыць на восі
+Thickness	Таўшчыня
+Close the rim	Закрыць край
+Width	Шырыня
+Segments	Сегменты
+Levels	Узроўні
+Smooth (Catmull-Clark)	Згладзіць (Catmull-Clark)
+Factor	Сіла
+Repeat	Паўторы
+Seed	Зерне
+Along the normals	Удоўж нармаляў
+Steps	Крокі
+Axis	Вось
+Twist	Скрутка
+Bend	Выгіб
+Taper	Звужэнне
+Stretch	Расцяжэнне
+Amount	Велічыня
+Box	Куб
+Difference	Адніманне
+With the part	З часткай
+Tip: hide the cutting part (its eye in the list) so only the cut shows	Парада: схавайце рэжучую частку (вока ў спісе), каб быў відаць толькі выраз
+Above the ground	Над зямлёй
+Every vertex follows the terrain under it (in the editor's view and the written files at the place it stands)	Кожная вяршыня ідзе за рэльефам пад ёй
+Mesh (openMapper object)	Меш (аб'ект openMapper)
+Shared by	Выкарыстоўваецца
+objects on the map: changes apply to all	аб'ектамі карты: змены закранаюць усе
+Make this one single	Зрабіць асобнай копіяй
+Leave the edit mode (Tab)	Выйсці з рэдагавання (Tab)
+Edit the mesh (Tab)	Рэдагаваць меш (Tab)
+Write it as OBJ, glTF / GLB, FBX, Collada, USD, STL, PLY, 3MF, OFF, X or O3D	Запісаць у OBJ, glTF / GLB, FBX, Collada, USD, STL, PLY, 3MF, OFF, X або O3D
+Off: its height is kept above the ground under it	Выкл.: вышыня лічыцца ад зямлі пад ім
+Solid (collides)	Цвёрды (сутыкненні)
+The part edited and given modifiers	Частка, якую рэдагуюць і якой задаюць мадыфікатары
+Shown (and written into the object)	Паказана (і запісваецца ў аб'ект)
+faces	граняў
+Duplicate the part	Дубліраваць частку
+Delete the part	Выдаліць частку
+Add a shape as a part	Дадаць фігуру як частку
+Separate parts into objects	Падзяліць часткі на аб'екты
+Each part becomes an object of its own, standing where it stood	Кожная частка становіцца асобным аб'ектам на сваім месцы
+Shape	Фігура
+Modifiers	Мадыфікатары
+Make it part of the mesh	Зрабіць часткай меша
+Add a modifier	Дадаць мадыфікатар
+Materials	Матэрыялы
+Colour (multiplies the texture)	Колер (множыцца на тэкстуру)
+Assign to selected faces	Прызначыць вылучаным граням
+Choose…	Абраць…
+No texture	Без тэкстуры
+Save as…	Захаваць як…
+PNG, JPEG, BMP, TGA, TIFF, WebP or DDS	PNG, JPEG, BMP, TGA, TIFF, WebP або DDS
+Transparency	Празрыстасць
+Opaque	Няма
+Cut out	Выраз
+Blended	Змешванне
+Glows	Свячэнне
+Light of its own: black for none	Уласнае святло: чорны — без свячэння
+Shine	Бляск
+Normal map	Нармалі
+ORM map	ORM
+Night texture	Начная
+Light map	Карта святла
+Remove the material	Выдаліць матэрыял
+Add a material	Дадаць матэрыял
+Import materials…	Імпарт матэрыялаў…
+From an .mtl, a glTF / GLB / FBX, or the pictures of one PBR material (base colour, normal, roughness, metal, AO...)	З .mtl, glTF / GLB / FBX або набору малюнкаў PBR-матэрыялу (колер, нармалі, шурпатасць, метал, AO...)
+Lamps	Крыніцы святла
+Glow	Свячэнне
+Light on the ground	Святло на зямлі
+Colour	Колер
+Reach	Радыус
+On	Укл.
+Always	Заўсёды
+At night	Уначы
+variable	зменная
+Seen from one side	Бачная з аднаго боку
+Star	Зорка
+Facing	Напрамак
+Remove the lamp	Выдаліць крыніцу
+Add a glow	Дадаць свячэнне
+A lamp's bulb, a lit sign: a glow seen at night	Лямпа, святлівая шыльда: свячэнне, відаць уначы
+Add light on the ground	Дадаць святло на зямлю
+The pool of light a street lamp throws at night	Пляма святла ад ліхтара ўначы
+Signal head, lamps	Святлафор, секцыі
+Put it within 40 m of a crossing with a light program: it takes its light from it (or link it in its properties)	Пастаўце яго бліжэй за 40 м да скрыжавання са святлафорнай праграмай: ён возьме святло ад яго (або прывяжыце ва ўласцівасцях)
+Bake	Запяканне
+Its textures and colours painted into one picture on a new UV map (one material: fewer draws in the game), with its own shadows and its lamps' night light if chosen	Тэкстуры і колеры аб'екта малюцца ў адзін малюнак на новай UV-разгортцы (адзін матэрыял: менш выклікаў адмалёўкі ў гульні), па жаданні з уласнымі ценямі і начным святлом лямпаў
+Ambient occlusion	Зацямненне навакольнага асяроддзя
+How far its shadows reach	Як далёка цягнуцца цені
+Lamps' light at night (light map)	Начное святло лямпаў (карта святла)
+The object's last change (Ctrl+Z in the edit mode)	Апошняя змена аб'екта (Ctrl+Z у рэжыме рэдагавання)
+Divisions X	Дзяленні X
+Divisions Y	Дзяленні Y
+Rings	Кольцы
+Subdivisions	Падзелы
+Bottom radius	Ніжні радыус
+Top radius	Верхні радыус
+Tube radius	Радыус трубкі
+Tube segments	Сегменты трубкі
+Outer radius	Знешні радыус
+Inner radius	Унутраны радыус
+Opening	Праём
+Wall	Сценка
+Mesh	Меш
+A copy of this object's type of its own is made for it, with its meshes, materials and lamps to edit; the original stays as it is	Для аб'екта робіцца ўласная копія тыпу з мешамі, матэрыяламі і лямпамі для рэдагавання; арыгінал не змяняецца
+As a mesh	Як меш
+Copy as an object	Копія як аб'ект
+An openMapper object of its shape beside it, to edit as a mesh (vertices, edges, faces)	Аб'ект openMapper той жа формы, каб правіць яго як меш (вяршыні, рэбры, грані)
+The same, the spline taken away (its lanes go with it)	Тое ж, а сплайн выдаляецца (разам з паласамі)
+Splines as a mesh	Сплайны як меш
+Copy as one object	Копія як адзін аб'ект
+Replace by one object	Замяніць адным аб'ектам
+Export the selection…	Экспарт вылучанага…
+As meshes	Як мешы
+Join into one object (Ctrl+J)	Аб'яднаць у адзін аб'ект (Ctrl+J)
+All their parts in the one shown in the properties, the others gone	Усе іх часткі — у аб'екце з уласцівасцяў, астатнія выдаляюцца
+Solid modelling (CSG): the object shown in the properties with the others	Цвёрдацельнае мадэліраванне (CSG): аб'ект з уласцівасцяў з астатнімі
+Keep the cutting objects	Пакінуць рэжучыя аб'екты
+Vertices	Вяршыні
+Edges	Рэбры
+Faces	Грані
+vertices	вяршынь
+edges	рэбраў
+Selected	Вылучана
+X-ray: pick through the mesh	Рэнтген: абіраць скрозь меш
+All (A)	Усё (A)
+None (Alt+A)	Нічога (Alt+A)
+Invert (Ctrl+I)	Інвертаваць (Ctrl+I)
+Linked (Ctrl+L)	Звязанае (Ctrl+L)
+More	Больш
+Less	Менш
+Click, Shift + click to add, drag on nothing for a box, a second click or Alt + click for a loop	Пстрычка, Shift + пстрычка — дадаць, цяга па пустым — рамка, другая пстрычка або Alt + пстрычка — пятля
+Change	Змяніць
+Extrude (E)	Выдавіць (E)
+Inset (I)	Упіска (I)
+Bevel (Ctrl+B)	Фаска (Ctrl+B)
+Loop cut (Ctrl+R)	Разрэз пятлёй (Ctrl+R)
+Point at an edge and press Ctrl+R	Навядзіце на рабро і націсніце Ctrl+R
+Subdivide	Падзяліць
+Fill (F)	Запоўніць (F)
+Bridge loops	Злучыць пятлі
+Connect (J)	Злучыць вяршыні (J)
+Poke	Веер з цэнтра
+Duplicate (Shift+D)	Дубліраваць (Shift+D)
+Split (Y)	Аддзяліць (Y)
+Separate into an object (P)	У асобны аб'ект (P)
+Spin 360°	Кручэнне 360°
+The selection turned round the object's up axis through its middle, in 12 steps	Вылучанае кружыцца вакол вертыкальнай восі аб'екта, 12 крокаў
+Smooth vertices	Згладзіць вяршыні
+Merge (M)	Злучыць (M)
+At the middle	У цэнтры
+At the first	Да першай
+At the last	Да апошняй
+Collapse each piece	Сцягнуць кожны кавалак
+By distance (1 mm)	Па адлегласці (1 мм)
+Delete (X)	Выдаліць (X)
+Only faces	Толькі грані
+Dissolve vertices	Растварыць вяршыні
+Dissolve edges	Растварыць рэбры
+Dissolve faces	Растварыць грані
+Triangulate (Ctrl+T)	Трыянгуляваць (Ctrl+T)
+Triangles to quads (Alt+J)	Трохкутнікі ў чатырохвугольнікі (Alt+J)
+Shade smooth	Згладжанае зацяненне
+Shade flat	Плоскае зацяненне
+Flip normals (Alt+N)	Разгарнуць нармалі (Alt+N)
+Normals outward (Shift+N)	Нармалі вонкі (Shift+N)
+Mark seam	Пазначыць шво
+Clear seam	Зняць шво
+Mark sharp	Пазначыць вострым
+Clear sharp	Зняць востры
+Adjust the last operation	Наладзіць апошнюю аперацыю
+Slide	Зрух
+Cuts	Разрэзы
+UV map	UV-разгортка
+Unwrap	Разгарнуць
+By seams (conformal)	Па швах (канформна)
+Smart project	Разумная праекцыя
+Cube projection (metres)	Кубічная праекцыя (у метрах)
+Cylinder projection	Цыліндрычная праекцыя
+Sphere projection	Сферычная праекцыя
+Project from the view	Праекцыя з выгляду
+Lightmap pack	Упакоўка для карты святла
+Close the UV editor	Закрыць UV-рэдактар
+UV editor	UV-рэдактар
+Faces of the selection (all, with none selected); mark seams on edges first for an unwrap by seams	Грані вылучэння (усе, калі нічога не вылучана); для разгортцы па швах спачатку пазначце швы на рэбрах
+Material of the selected faces	Матэрыял вылучаных граняў
+With lamps	Са святлом
+Street lamp	Ліхтар
+A pole with a lamp that glows and lights the ground at night	Слуп з лямпай, якая свеціць і асвятляе зямлю ўначы
+Signal head	Святлафор
+A traffic light of the lamps below that a crossing's light program drives	Святлафор з секцый ніжэй, якім кіруе праграма скрыжавання
+Lamps:	Секцыі:
+Picture, light, sound	Малюнак, святло, гук
+Picture / pattern…	Малюнак / патэрн…
+Choose a picture or a texture: it becomes an object you place, move, turn and scale like any other. Several repeats make a pattern	Абярыце малюнак або тэкстуру: атрымаецца аб'ект, які ставіцца, рухаецца, паварочваецца і маштабуецца як любы іншы. Некалькі паўтораў даюць патэрн
+Light source	Крыніца святла
+A lamp that glows and lights the ground round it	Лямпа, якая свеціць і асвятляе зямлю вакол
+Sound source…	Крыніца гуку…
+Choose a sound file (.wav): it plays where you put the marker, as far as the radius carries; the marker shows in the editor only	Абярыце гукавы файл (.wav): ён гучыць там, дзе стаіць маркер, на адлегласць радыуса; маркер бачны толькі ў рэдактары
+Picture width, m	Шырыня малюнка, м
+Repeats	Паўтораў
+on the ground	на зямлі
+standing	стаіць
+Light colour	Колер святла
+Light reach, m	Далёкасць святла, м
+at night	уначы
+always	заўсёды
+Sound reach, m	Далёкасць гуку, м
+Sound volume	Гучнасць гуку
+Overview: click or drag to move there · double-click: larger / smaller · M: hide	Агляд: пстрычка або перацягванне: перамясціцца · двайны пстрык: буйней / драбней · M: схаваць
+Name:	Назва:
+My town	Мой горад
+Description:	Апісанне:
+What the map is, for the game's map list	Што гэта за карта (для спісу карт у гульні)
+Size:	Памер:
+Ground height:	Вышыня зямлі:
+ m above sea level	 м над узроўнем мора
+Traffic:	Рух:
+keeps right	правабаковае
+keeps left	левабаковае
+Busy:	Загружанасць:
+cars	машыны
+passengers	пасажыры
+Years:	Гады:
+year offset	зрух года
+Added to today's year when the game starts at the real date	Дадаецца да бягучага года, калі гульня пачынаецца ў рэальную дату
+Money:	Валюта:
+Tickets:	Білеты:
+Seasons:	Поры года:
+four, snowy winter	чатыры, зіма са снегам
+mild winter	мяккая зіма
+summer only	толькі лета
+Rail:	Рэйкі:
+trams and trains follow their tracks' switches	трамваі і цягнікі ідуць па стрэлках
+Ground texture (all tiles):	Тэкстура зямлі (усе тайлы):
+template	шаблон
+More ground layers are painted later (Paint tool); the map's settings can all be changed in Map > Map settings.	Іншыя пласты зямлі малююцца пазней (інструмент «Афарбоўка»); усе налады карты змяняюцца ў «Карта > Налады карты».
+Create	Стварыць
+as the template	як у шаблоне
+ways	шляхоў
+bus routes downloaded	маршрутаў загружана
+not had:	не загружана:
+The streets of the map's place built as roads with junctions where they meet, its bus stops, lines, trees and woods. Best on tiles with no roads yet: roads lying on ones the map has are left out.	Вуліцы месца карты, пабудаваныя дарогамі са скрыжаваннямі, яе прыпынкі, лініі, дрэвы і лясы. Лепш на тайлах без дарог: дарогі паверх ужо наяўных прапускаюцца.
+The map does not lie on the Earth yet: place it in Satellite and terrain (Map menu, I) first.	Карта яшчэ не прывязана да Зямлі: спачатку размесціце яе ў «Спадарожнік і рэльеф» (меню Карта, I).
+Load the terrain heights first (Satellite and terrain): the roads follow the ground as it is when they are built.	Спачатку загрузіце вышыні рэльефу («Спадарожнік і рэльеф»): дарогі кладуцца на зямлю такой, якая яна пры будаўніцтве.
+Download for the map's tiles	Загрузіць для тайлаў карты
+bus routes	маршруты
+trees	дрэвы
+buildings	будынкі
+water	вада
+Downloading…	Загрузка…
+no type chosen	тып не абраны
+Use the chosen	Узяць абраны
+One-way roads	Аднабаковыя
+Each carriageway of a dual road and one-way streets: with a one-way road type they lie side by side as they should; with none chosen they get their kind's	Кожная палова дарогі з раздзяляльнай паласой і вуліцы з аднабаковым рухам: з аднабаковым тыпам яны ляжаць побач, як трэба; без выбару — тып свайго віду
+as their kind	як у іх віду
+no stop object	аб'ект не абраны
+The stop chosen in Game logic > Bus stops	Прыпынак, абраны ў «Службовае > Прыпынкі»
+Bus lines	Аўтобусныя лініі
+Each bus route through two or more of the map's stops a trip of its line, the way found along the roads; a tour from 06:00 to 22:00 for each new line	Кожны маршрут праз дзве або больш прыпынкаў карты: рэйс сваёй лініі, шлях па дарогах знаходзіцца сам; для кожнай новай лініі абарот з 06:00 да 22:00
+Trees and woods	Дрэвы і лясы
+Single trees, rows of them and woods, planted with the plant mix (Objects tool > Plant brush) or the tree chosen; none on a road	Асобныя дрэвы, рады і лясы, засаджаныя сумессю раслін (інструмент «Аб'екты» > Пэндзаль раслін) або абраным дрэвам; не на дарогах
+no plants chosen	расліны не абраны
+kinds of plants	відаў раслін
+apart in woods	крок у лесе
+Buildings	Будынкі
+Each outline filled with the model of the folder chosen whose ground plan comes nearest, its front to the nearest road; an outline no model fits is left out	Кожны контур запаўняецца мадэллю абранай тэчкі з самым падобным планам, фасадам да бліжэйшай дарогі; контуры, якім нічога не падыходзіць, прапускаюцца
+no folder	тэчка не абрана
++ its folder	+ яго тэчка
+Add the folder of the object chosen in the catalogue (Buildings_MC, …)	Дадаць тэчку аб'екта, абранага ў каталогу (Buildings_MC, …)
+Lakes and rivers: the ground inside them lowered below the banks, and the tiles they lie on given water a little under the banks' height (OMSI's water is one level for a tile: low ground elsewhere on it is flooded too)	Азёры і рэкі: зямля ўнутры апускаецца ніжэй за берагі, тайлам ставіцца вада крыху ніжэй за берагі (вада OMSI адна на тайл: нізкія месцы на ім таксама затопіць)
+deep	глыбіня
+a road type (Roads tool), then "Use the chosen"	тып дарогі (інструмент «Дарогі»), потым «Узяць абраны»
+a stop (Game logic > Bus stops), then "Use the chosen"	прыпынак («Службовае > Прыпынкі»), потым «Узяць абраны»
+a tree in the Objects catalogue (or a plant mix)	дрэва ў каталогу аб'ектаў (або сумесь раслін)
+a building in the catalogue, then "+ its folder"	будынак у каталогу, потым «+ яго тэчка»
+To build, choose (or untick):	Каб пабудаваць, абярыце (або здыміце птушку):
+A one-way street is built the way it runs in OpenStreetMap: give it a one-way road type	Вуліца з аднабаковым рухам будуецца ў напрамку OpenStreetMap: дайце ёй аднабаковы тып дарогі
+Build	Пабудаваць
+Name, file or IDCode	Імя, файл або IDCode
+things on the map	аб'ектаў на карце
+Groups	Групы
+Select the group and go there	Вылучыць групу і перайсці
+Select everything in it	Вылучыць усё ў ёй
+Select it and go there	Вылучыць і перайсці
+more: narrow the search	яшчэ: удакладніце пошук
+Select all of them	Вылучыць усе такія
+Go to the first	Перайсці да першага
+Pick a tree in the catalogue, then paint	Абярыце дрэва ў каталогу і вядзіце пэндзлем
+Pick a tree in the catalogue, then click round the area	Абярыце дрэва ў каталогу і абвядзіце ўчастак пстрычкамі
+Pick a road type, click the centre, then the ring	Абярыце тып дарогі, пстрыкніце цэнтр, потым кальцо
+Select a road (double-click: all of it): its properties show its height profile	Абярыце дарогу (двайны пстрык: усю): ва ўласцівасцях профіль вышынь
+Select one of openMapper's junctions: its properties have Traffic lights and crossings	Абярыце скрыжаванне openMapper: ва ўласцівасцях святлафоры і пераходы
+Select the signal head (or a display): Linked objects in its properties, then click its crossing	Абярыце галоўку святлафора (або табло): «Звязаныя аб'екты» ва ўласцівасцях, потым пстрыкніце скрыжаванне
+Select a road, pick an object in the Objects catalogue: Objects along the road in its properties	Абярыце дарогу і аб'ект у каталогу: «Аб'екты ўздоўж дарогі» ў яе ўласцівасцях
+Select a track (double-click: all of it): Overhead wire under Parallel copy in its properties	Абярыце шлях (двайны пстрык: увесь): «Кантактны провад» пад «Паралельнай копіяй» ва ўласцівасцях
+Select a road or a chain: Parallel copy in its properties	Абярыце дарогу або ланцужок: «Паралельная копія» ва ўласцівасцях
+Select a road (double-click: all of it): Paint the ground along it in its properties	Абярыце дарогу (двайны пстрык: усю): «Пафарбаваць зямлю ўздоўж» ў яе ўласцівасцях
+Click a tile: its water is in the panel; lower the ground under it with the Terrain tool	Пстрыкніце тайл: вада ў панэлі; апусціце зямлю пад ім інструментам «Рэльеф»
+Height map: at the end of the Terrain panel	Карта вышынь: у канцы панэлі «Рэльеф»
+By slope and height: at the end of the Paint panel	Па ўхіле і вышыні: у канцы панэлі «Афарбоўка»
+View menu: Time of day, Season	Меню «Выгляд»: час сутак, пара года
+What do you want to do?	Што вы хочаце зрабіць?
+Groups…	Групы…
+Objects on the map by folder	Аб'екты карты па тэчках
+Knife: cut roads	Нож: разрэзаць дарогі
+Test drive in OMSI 2 (the original)	Тэст-драйв у арыгінальнай OMSI 2
+Overview map	Агляд карты
+Place a bus stop	Паставіць прыпынак
+Place a start point	Паставіць кропку старту
+Plant trees with a brush	Саджаць дрэвы пэндзлем
+Plant a wood or a park	Засадзіць лес або парк
+Roundabout	Кальцо
+Height profile of a road	Профіль вышынь дарогі
+Traffic lights and zebra crossings	Святлафоры і зебры
+Link a signal head to its crossing	Звязаць святлафор са скрыжаваннем
+Objects along a road	Аб'екты ўздоўж дарогі
+Overhead wire along a track	Кантактны провад удоўж шляху
+Parallel copy of a road	Паралельная копія дарогі
+Paint the ground along a road	Пафарбаваць зямлю ўздоўж дарогі
+Water, lake, river	Вада, возера, рака
+Ramp in the ground	Пандус у зямлі
+Height map import or export	Імпарт або экспарт карты вышынь
+Time of day and season	Час сутак і пара года
+PBR material	PBR-матэрыял
+none	няма
+Own picture…	Свой малюнак…
+Choose a texture of the object, or a picture of your own.	Абярыце тэкстуру аб'екта або свой малюнак.
+Normals (_nn)	Нармалі (_nn)
+Roughness	Шурпатасць
+Shadow in hollows	Цень у западзінах
+Bumps	Рэльеф
+Only big shapes	Толькі буйныя формы
+Dark parts stand out (not sink in)	Цёмнае выступае (а не ўціснута)
+Bright parts smoother	Светлае гладзей
+Metal	Метал
+Back to the defaults	Вярнуць па змаўчанні
+This texture has PBR maps of its own already: new ones made here are taken instead of them.	У гэтай тэкстуры ўжо ёсць свае PBR-карты: зробленыя тут будуць выкарыстоўвацца замест іх.
+Written as:	Запісваецца як:
+PBR maps made	PBR-карты створаны
+Delete the PBR material	Выдаліць PBR-матэрыял
+PBR maps taken away	PBR-карты выдалены
+Height profile	Профіль вышынь
+over the ground	над зямлёй
+Click: go there in the view · drag a dot (a joint) up or down: its height	Пстрычка: перайсці туды ў акне · цягніце кропку (стык) уверх або ўніз: яе вышыня
+Climbs, falls	Пад'ём, спуск
+Steepest	Самы круты
+at	на
+Highest over the ground	Вышэй за ўсё над зямлёй
+Deepest under it	Глыбей за ўсё пад ёй
+Over 8 % is steep for a bus; over 12 % few streets go	Больш за 8 % крута для аўтобуса; больш за 12 % бывае рэдка
+roadway	праезная частка
+Road types	Тыпы дарог
+Make a new road type…	Стварыць тып дарогі…
+My road	Мая дарога
+ · own	 · уласная
+Create the road type	Стварыць тып дарогі
+Road type made: the Roads tool builds with it	Тып дарогі створаны: інструмент «Дарогі» будуе ім
+Change it in the road maker	Змяніць у канструктары
+Its junctions	Яго скрыжаванні
+Make a junction where it meets another road (else they only cross)	Рабіць скрыжаванне, дзе яна сустракае іншую дарогу (інакш проста перасякаюцца)
+Corners	Вуглы
+× rounder	× круглей
+Traffic lights by themselves	Святлафоры самі
+Zebra crossings on every arm	Пешаходныя пераходы на ўсіх з'ездах
+Used for the junctions made from now on (where several road types meet, the one asking more wins). A junction already made keeps its own settings: select it to change them.	Ужываецца да новых скрыжаванняў (дзе сустракаюцца розныя дарогі, бярэцца большае). Гатовае скрыжаванне захоўвае свае налады: вылучыце яго, каб змяніць.
+Pick a road type on the left, or make a new one.	Абярыце тып дарогі злева або стварыце новы.
+Road maker	Канструктар дарогі
+Lanes	Паласы
+(▼ 0: one-way)	(▼ 0: аднабаковае)
+Lane width	Шырыня паласы
+Middle strip	Раздзяляльнік
+Footways	Тратуары
+Kerb	Бардзюр
+Roadway texture	Тэкстура праезнай часткі
+Footway texture	Тэкстура тратуара
+Own…	Свая…
+The roadway texture is laid once across all its lanes (as OMSI 2's lane textures are painted: pick one with as many lanes); the footway texture's right end is the kerb.	Тэкстура праезнай часткі кладзецца адзін раз упоперак усіх палос (як намаляваны паласныя тэкстуры OMSI 2: бярыце з тым жа ліку палос); правы край тэкстуры тратуара: бардзюр.
+not on the map	няма на карце
+Signal routes	Маршруты сігналаў
+Each railway signal clears when a train wants the track pieces of its route and none stands on them.	Сігнал адкрываецца, калі цягніку патрэбны шляхі яго маршрута і на іх ніхто не стаіць.
+New route for the selected signal	Новы маршрут для вылучанага сігналу
+Select a signal (one object) in the view first	Спачатку вылучыце ў акне выгляду сігнал (адзін аб'ект)
+The selected object does not look like a signal (its name says nothing of one): check it is.	Вылучаны аб'ект не падобны на сігнал (у назве гэтага няма): праверце.
+No routes yet.	Маршрутаў пакуль няма.
+pieces	участкаў
+Signal	Сігнал
+the selected	вылучаны
+Aspect	Паказанне
+What the signal shows when this route is clear: 1 proceed, 2 proceed slowly (with a speed limit)…	Што паказвае сігнал, калі маршрут свабодны: 1 — ехаць, 2 — ехаць павольна (з абмежаваннем)…
+Distant signal	Папярэдні сігнал
+Next signal	Наступны сігнал
+Speed limit	Абмежаванне
+OMSI's route kind (the stock maps have 0 and 1)	Від маршрута OMSI (на стокавых картах 0 і 1)
+Track pieces	Участкі шляху
+Take the selected track	Узяць вылучаныя шляхі
+Every rail path of the selected tracks and switches (double-click a track: all of it); replaces the pieces	Усе рэйкавыя шляхі вылучаных рэек і стрэлак (двайны пстрык па шляху — увесь); замяняе ўчасткі
+Select the signal and its pieces in the view	Вылучыць сігнал і яго ўчасткі ў акне выгляду
+Delete the route	Выдаліць маршрут
+Lines and timetable	Лініі і расклад
+Edit timetable	Праўка раскладу
+No bus stop there: click one of the orange marks	Тут няма прыпынку: пстрыкніце аранжавую метку
+The roads can't be read without the OMSI 2 folder.	Без тэчкі OMSI 2 дарогі не прачытаць.
+A line needs at least two bus stops on the map: place them with Game logic > Bus stops, beside a road.	Лініі патрэбны хаця б два прыпынкі на карце: пастаўце іх праз Службовае > Прыпынкі, побач з дарогай.
+Lines	Лініі
+No lines yet.	Ліній пакуль няма.
+New line	Новая лінія
+Pick a line on the left, or make a new one.\n\nA line has trips (a way from stop to stop) and tours (one bus's day: which trip it drives when).	Абярыце лінію злева або стварыце новую.\n\nУ лініі ёсць рэйсы (шлях ад прыпынку да прыпынку) і абароты (дзень аднаго аўтобуса: які рэйс і калі).
+That name is taken or can't be a file name	Гэта імя занятае або не падыходзіць для файла
+A copy of the line with its trips and tours (a variant to change)	Копія лініі з яе рэйсамі і абаротамі (варыянт для змен)
+Delete the line and its trips	Выдаліць лінію і яе рэйсы
+Players can drive it	Гулец можа яе вадзіць
+Trips	Рэйсы
+Tours and times	Абароты і час
+A tour is one bus's day: the trips it drives, one after the other, and when each leaves.	Абарот — дзень аднаго аўтобуса: рэйсы, якія ён едзе адзін за адным, і час адпраўлення кожнага.
+A trip is one way along the line: its stops in order. Most lines have two, there and back.	Рэйс: адна паездка па лініі: прыпынкі па парадку. Звычайна іх два: туды і назад.
+New trip	Новы рэйс
+Make the way back	Зрабіць зваротны
+A new trip with the same stops the other way round	Новы рэйс з тымі ж прыпынкамі ў адваротным парадку
+Trip	Рэйс
+Delete the trip	Выдаліць рэйс
+Destination sign	Таблічка
+This trip runs on a track of its own (a train): its stops are kept as they are.	Гэты рэйс ідзе па ўласным шляху (цягнік): яго прыпынкі застаюцца як ёсць.
+Show on the map	Паказаць на карце
+No stops yet.	Прыпынкаў пакуль няма.
+Done picking	Гатова
+Pick stops on the map	Абраць на карце
+Click the stops in the view one after the other, in the order the bus calls at them	Пстрыкайце прыпынкі ў акне карты адзін за адным, у тым парадку, у якім іх праязджае аўтобус
+Add stop…	Дадаць…
+Click stops on the map (they are marked orange)…	Пстрыкайце прыпынкі на карце (пазначаны аранжавым)…
+Add two stops or more: the way between them is found along the roads.	Дадайце два прыпынкі або больш: шлях паміж імі знойдзецца па дарогах.
+Finding the way…	Шукаем шлях…
+Route found:	Шлях знойдзены:
+km along the roads (blue in the view)	км па дарогах (сінім на карце)
+the way drives a one-way lane against its direction; is a path drawn the wrong way round?	шлях ідзе па аднабаковай паласе супраць яе напрамку; можа, шлях намаляваны не ў той бок?
+is not on the map	няма на карце
+no road with car lanes within 15 m	у 15 м няма дарогі з паласамі для машын
+No way	Няма шляху
+the roads are not joined, or run the other way (see View > AI lanes)	дарогі не злучаны або ідуць у іншы бок (Выгляд > Паласы ШІ)
+The trip is saved, but its way is not until this is mended	Рэйс захаваецца, а яго шлях: калі гэта будзе выпраўлена
+Trip time	Час у шляху
+Guess:	Ацэнка:
+From the route's length at the pace of a town bus	Па даўжыні шляху і тэмпе гарадскога аўтобуса
+Times at the stops	Час на прыпынках
+Minutes after the trip leaves. They follow the distance between the stops; fix one to keep the bus to it (it waits there when early).	Хвіліны ад адпраўлення рэйса. Яны ідуць за адлегласцю паміж прыпынкамі; замацуйце час, каб аўтобус яго трымаў (калі раней: чакае).
+fixed	замацавана
+Spread all by distance	Размеркаваць па адлегласці
+Holidays and school holidays	Святы і канікулы
+On a public holiday only the tours with Holidays ticked run; school holidays pick the tours for school holidays or school days.	У свята ходзяць толькі абароты з адзнакай «Святы»; канікулы выбіраюць абароты для канікул або вучэбных дзён.
+Copy to	Капіяваць у
+The same days a year later (feasts that move, like Easter, are to be set by hand)	Тыя ж дні годам пазней (пераходныя, як Вялікдзень, паправіце ўручную)
+The map has no depot (ailists.cfg): only you drive these tours, no AI buses.	У карты няма дэпо (ailists.cfg): па абаротах ездзіце толькі вы, аўтобусаў ШІ не будзе.
+Add a depot with OMSI 2's MAN buses	Дадаць дэпо з аўтобусамі MAN з OMSI 2
+Its buses run the tours (Map > Traffic and AI shows it)	Яго аўтобусы ездзяць па абаротах (Карта > Трафік і ШІ)
+Tour	Абарот
+New tour	Новы абарот
+Pick a tour to see its departures.	Абярыце абарот, каб убачыць адпраўленні.
+Make a trip first.	Спачатку стварыце рэйс.
+Number	Нумар
+Buses from	Аўтобусы з
+Delete the tour	Выдаліць абарот
+Runs on	Дні
+Mo	Пн
+Tu	Аў
+We	Ср
+Th	Чц
+Fr	Пт
+Sa	Сб
+Su	Нд
+Every day	Кожны дзень
+Monday to Friday	Пн–Пт
+Weekends and holidays	Выхадныя і святы
+In the school holidays	У канікулы
+On school days	У вучэбныя дні
+Next departure	Наступнае адпраўленне
+The next trip of the line, when the bus is back and has had its break	Наступны рэйс лініі, калі аўтобус вярнуўся і адстаяў перапынак
+Fill from	Запоўніць з
+break	перапынак
+Fill	Запоўніць
+Replace the tour's departures: the line's trips one after the other, a break after each	Замяніць адпраўленні абароту: рэйсы лініі адзін за адным, перапынак пасля кожнага
+No departures yet: add them above.	Адпраўленняў пакуль няма: дадайце іх вышэй.
+Delete the departure	Выдаліць адпраўленне
+GPS tracks to trace	GPS-трэкі для абвядзення
+A route recorded on a phone or drawn elsewhere (GPX, KML, GeoJSON), shown in the view in magenta to draw roads along, or built into a road at once	Маршрут, запісаны тэлефонам або намаляваны ў іншай праграме (GPX, KML, GeoJSON): паказаны ў акне малінавым, каб маляваць дарогі па ім, або адразу будуецца дарогай
+Place the map on the Earth first (Map > Satellite and terrain)	Спачатку змесціце карту на Зямлю (Карта > Спадарожнік і рэльеф)
+Load a file…	Загрузіць файл…
+None loaded	Нічога не загружана
+Forget it	Прыбраць
+Build a road along it:	Пабудаваць дарогу па ім:
+Choose a road type in the Roads tool to build it	Абярыце тып дарогі ў інструменце «Дарогі», каб пабудаваць
+Built as if drawn: corners rounded into arcs, junctions where it meets roads, cut at the map's edge; one undo step	Будуецца як намаляваная: вуглы скругляюцца дугамі, скрыжаванні там, дзе яна сустракае дарогі, абразаецца па краі карты; адзін крок адмены
+Traffic and AI	Трафік і ШІ
+Edit traffic	Праўка трафіку
+Over the day	Па часе сутак
+Vehicle groups	Групы машын
+Parked cars and people	Паркоўкі і людзі
+Depot files	Файлы дэпо
+The AI's vehicles come in groups. A car group drives about on the roads; a depot sends out the buses of the timetable's tours.	Машыны ШІ сабраны ў групы. Група машын ездзіць па дарогах сама; дэпо выпускае аўтобусы на абароты раскладу.
+(This map's ailists.cfg is in OMSI 2's first format: it is written in the second one when changed.)	(ailists.cfg гэтай карты ў першым фармаце OMSI 2: пры змене ён запішацца ў другім.)
+is to drive about, but there is no such group.	павінна ездзіць па дарогах, але такой групы няма.
+Make it with OMSI 2's vehicles	Стварыць з машынамі OMSI 2
+The group of that name from OMSI 2's own maps	Група з гэтым імем з карт OMSI 2
+New car group	Новая група машын
+New depot	Новае дэпо
+Pick a group on the left.	Абярыце групу злева.
+Delete the group (tours still take their buses from it)	Выдаліць групу (абароты яшчэ бяруць з яе аўтобусы)
+Delete the group	Выдаліць групу
+Tours that take their buses from here:	Абаротаў, што бяруць адсюль аўтобусы:
+Drives about on its own	Ездзіць па дарогах сама
+as many:	колькі:
+Times the traffic over the day	Множнік трафіку па часе сутак
+A vehicle with more weight comes along more often.	Машына з большай вагой сустракаецца часцей.
+Add a vehicle…	Дадаць машыну…
+Depot file (.hof)	Файл дэпо (.hof)
+None of its buses has this depot file beside it: they run without their destination signs and fleet data.	Ні ў аднаго аўтобуса няма побач гэтага файла дэпо: яны паедуць без таблічак і даных парка.
+The buses it has: a type of bus and the fleet number and plate of each.	Аўтобусы дэпо: тып аўтобуса, нумар і дзяржнумар кожнага.
+Take this type out	Прыбраць гэты тып
+number	нумар
+plate	дзяржнумар
+Another bus	Яшчэ аўтобус
+Add a type of bus…	Дадаць тып аўтобуса…
+The lists can't be read without the OMSI 2 folder.	Без тэчкі OMSI 2 спісы не прачытаць.
+Parked cars	Прыпаркаваныя аўто
+What stands on the car parks (Game logic > Car parks). A car listed more often stands there more often.	Што стаіць на паркоўках (Службовае > Паркоўкі). Машына, запісаная часцей, сустракаецца часцей.
+Who walks about and waits at the stops.	Хто гуляе і чакае на прыпынках.
+Drivers	Вадзіцелі
+Who drives the AI's buses.	Хто вадзіць аўтобусы ШІ.
+How often it is listed (0 takes it out)	Колькі разоў у спісе (0: прыбраць)
+How busy the map is at each hour: the road traffic, and the passengers at the stops. 1 is normal; the game goes along the line between the points.	Наколькі жывая карта ў кожную гадзіну: машыны на дарогах і пасажыры на прыпынках. 1: звычайна; гульня ідзе па лініі паміж кропкамі.
+Road traffic	Машыны на дарогах
+Passengers	Пасажыры
+Its own traffic over the day	Свой трафік па часе сутак
+Without one the group follows the map's road traffic. A curve can be for some days of the week only.	Без яго група ідзе за трафікам карты. Крывая можа быць толькі для некаторых дзён тыдня.
+Days:	Дні:
+Mo–Fr	Пн–Пт
+Take this curve out	Прыбраць гэтую крывую
+A curve	Крывая
+Typical day…	Тыповы дзень…
+Quiet village	Ціхая вёска
+Town with rush hours	Горад з гадзінамі пік
+The same all day	Увесь дзень аднолькава
+No curve: 1 all day.	Крывой няма: увесь дзень 1.
+Take the point out	Прыбраць кропку
+Point	Кропка
+Smart unwrap	Разумная разгортка
+Every flat side apart in the picture, no faces on top of one another (all faces if none is selected)	Кожны плоскі бок асобна на малюнку, грані не ляжаць адна на адной (усе, калі нічога не вылучана)
+Box unwrap	Разгортка скрынкай
+The six sides of a box apart in the picture	Шэсць бакоў скрынкі асобна на малюнку
+Flip ↔	Адбіць ↔
+Flip ↕	Адбіць ↕
+Scale ×2	Маштаб ×2
+Scale ÷2	Маштаб ÷2
+Fit	Упісаць
+Stretched to fill the picture	Расцягнуць на ўвесь малюнак
+Pack islands	Упакаваць астравы
+Average island scale	Выраўнаваць маштаб астравоў
+Seams from islands	Швы па астравах
+Click: a face (Shift adds) · drag: move the selected · wheel: zoom · right button: pan	Пстрычка: грань (Shift — дадаць) · цяга: рухаць вылучанае · кола: маштаб · правая кнопка: панарама
+Could not keep the views	Не ўдалося захаваць віды
+Saved views	Захаваныя віды
+Places of the map to come back to: Ctrl+1…9 goes to the first nine, Ctrl+Shift+1…9 keeps the view there	Месцы карты, да якіх зручна вяртацца: Ctrl+1…9 вядзе да першых дзевяці, Ctrl+Shift+1…9 запамінае выгляд туды
+Keep this view	Запомніць гэты выгляд
+None yet	Пакуль няма
+Go	Да яго
+Earlier in the list	Вышэй у спісе
+Later in the list	Ніжэй у спісе
+Take the view now instead	Замяніць цяперашнім выглядам
+Keep proportions	Захоўваць прапорцыі
+Back to its own size	Вярнуць зыходны памер
+Updates	Абнаўленні
+This version:	Гэта версія:
+New version:	Новая версія:
+Install and restart	Усталяваць і перазапусціць
+Not now	Не цяпер
+What changed	Што новага
+Downloading and installing	Спампоўка і ўсталёўка
+Installed version	Усталявана версія
+openMapper restarts when you save the map.	openMapper перазапусціцца, калі вы захаваеце карту.
+Looking for a new version…	Пошук новай версіі…
+This is the newest version.	Гэта самая новая версія.
+Download it from GitHub by hand	Спампаваць уручную з GitHub
+When there is a new version:	Калі ёсць новая версія:
+Offer it to me	Прапаноўваць усталяваць
+Install it and restart by itself	Ставіць і перазапускацца самому
+Never look for updates	Не правяраць абнаўленні
+Check now	Праверыць зараз
+Never offer updates again	Больш не прапаноўваць абнаўленні
+The release has no package	У рэлізе няма пакета
+No automatic updates for this system.	Для гэтай сістэмы няма аўтаабнаўлення.
+No connection to GitHub: are you online?	Няма сувязі з GitHub: ці ёсць інтэрнэт?
+The release has no SHA256SUMS: not installed.	У рэлізе няма SHA256SUMS: не ўсталёўваю.
+The package is not in SHA256SUMS: not installed.	Пакета няма ў SHA256SUMS: не ўсталёўваю.
+The download does not match its checksum: not installed.	Спампаванае не супадае з кантрольнай сумай: не ўсталёўваю.
+Could not replace the program	Не ўдалося замяніць праграму
+The package has no program in it.	У пакеце няма праграмы.
+openMapper has stopped:	openMapper спыніўся:
+The log with the details:	Журнал з падрабязнасцямі:

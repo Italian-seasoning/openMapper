@@ -23,6 +23,23 @@ pub(crate) const BG_FIELD: Color32 = Color32::from_rgb(22, 23, 25);
 const BORDER: Color32 = Color32::from_rgb(18, 18, 20);
 const HEADER: Color32 = Color32::from_rgb(45, 46, 50);
 pub(crate) const TEXT_DIM: Color32 = Color32::from_rgb(140, 143, 150);
+
+/// `s` cut to `max` characters with an ellipsis: a button holding a long name would widen its panel.
+pub(crate) fn short(s: &str, max: usize) -> String {
+    if s.chars().count() <= max {
+        return s.to_string();
+    }
+    let cut: String = s.chars().take(max.saturating_sub(1)).collect();
+    format!("{cut}…")
+}
+
+/// A label that breaks anywhere to fit the panel: a long name or path without spaces would
+/// otherwise push the panel wider than its range and break the layout.
+pub(crate) fn long_label(ui: &mut egui::Ui, text: &str, style: egui::TextStyle, color: Color32) -> egui::Response {
+    let mut job = egui::text::LayoutJob::simple(text.to_string(), style.resolve(ui.style()), color, ui.available_width());
+    job.wrap.break_anywhere = true;
+    ui.add(egui::Label::new(job).wrap())
+}
 pub(crate) const SELECT: Color32 = Color32::from_rgb(64, 86, 122);
 
 /// What the interface asks the application to do.
@@ -222,6 +239,9 @@ pub struct UiState {
     pub parent_lights: Option<(String, Vec<String>)>,
     /// The map's `picture.jpg` as shown in the map's properties, with its file time.
     map_picture: Option<(PathBuf, Option<std::time::SystemTime>, Option<egui::TextureHandle>)>,
+    /// When the picture's file was last looked at (once a second: a file system call a frame
+    /// is wasted while nothing changes).
+    map_picture_looked: Option<std::time::Instant>,
     /// The satellite overlay as the View menu and the Tiles tool show it.
     pub geo: crate::ui_geo::Bridge,
     /// The Objects tab of the Select panel: everything on the map by folder.
@@ -280,6 +300,7 @@ impl Default for UiState {
             obj_info: None,
             parent_lights: None,
             map_picture: None,
+            map_picture_looked: None,
             geo: Default::default(),
             outliner: Default::default(),
             view_menu: None,
@@ -478,11 +499,13 @@ fn menu_item(ui: &mut egui::Ui, icon: Option<Icon>, text: &str, shortcut: &str, 
 
 fn lang_menu(ui: &mut egui::Ui, actions: &mut Vec<Action>) {
     ui.menu_button(tr("Language", "Язык"), |ui| {
-        for (l, n) in [(Lang::En, "English"), (Lang::Ru, "Русский")] {
-            if radio(ui, i18n::get() == l, n).clicked() {
-                actions.push(Action::SetLang(l));
+        egui::ScrollArea::vertical().max_height(460.0).show(ui, |ui| {
+            for lg in i18n::LANGUAGES {
+                if radio(ui, i18n::get() == lg.lang, lg.name).clicked() {
+                    actions.push(Action::SetLang(lg.lang));
+                }
             }
-        }
+        });
     });
     ui.menu_button(tr("Interface size", "Размер интерфейса"), |ui| {
         let now = ui.ctx().zoom_factor();
@@ -1918,8 +1941,8 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
                 let Some(o) = crate::selection::any_object(doc, k, id) else { return };
                 let a = lib.find(&o.file);
                 let name = a.map(|a| a.name.clone()).unwrap_or_else(|| o.file.rsplit('\\').next().unwrap_or("").to_string());
-                ui.label(RichText::new(name).strong().color(Color32::WHITE));
-                ui.label(RichText::new(&o.file).small().color(TEXT_DIM));
+                long_label(ui, &name, egui::TextStyle::Body, Color32::WHITE);
+                long_label(ui, &o.file, egui::TextStyle::Small, TEXT_DIM);
                 // its textures' PBR maps: made here (Configure) or not yet (Create)
                 let made = st.pbr_made.as_ref().filter(|(rel, _)| rel.eq_ignore_ascii_case(&o.file)).map(|(_, m)| *m).unwrap_or(false);
                 let label = if made { tr("Configure PBR", "Настроить PBR") } else { tr("Create PBR", "Создать PBR") };
@@ -2497,16 +2520,20 @@ fn map_properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Li
         }
         ui.add_space(8.0);
         ui.label(RichText::new(tr("Picture", "Картинка")).color(TEXT_DIM));
-        let path = doc.dir.join("picture.jpg");
-        let path = if path.is_file() { path } else { doc.source.as_ref().map(|s| s.join("picture.jpg")).unwrap_or(path) };
-        let time = std::fs::metadata(&path).and_then(|m| m.modified()).ok();
-        if st.map_picture.as_ref().map(|(p, t, _)| *p != path || *t != time).unwrap_or(true) {
-            let tex = image::open(&path).ok().map(|img| {
-                let img = img.to_rgba8();
-                let ci = egui::ColorImage::from_rgba_unmultiplied([img.width() as usize, img.height() as usize], img.as_raw());
-                ui.ctx().load_texture("map picture", ci, egui::TextureOptions::LINEAR)
-            });
-            st.map_picture = Some((path, time, tex));
+        let looked = st.map_picture_looked.map(|t| t.elapsed().as_secs_f32() < 1.0).unwrap_or(false);
+        if !looked || st.map_picture.is_none() {
+            st.map_picture_looked = Some(std::time::Instant::now());
+            let path = doc.dir.join("picture.jpg");
+            let path = if path.is_file() { path } else { doc.source.as_ref().map(|s| s.join("picture.jpg")).unwrap_or(path) };
+            let time = std::fs::metadata(&path).and_then(|m| m.modified()).ok();
+            if st.map_picture.as_ref().map(|(p, t, _)| *p != path || *t != time).unwrap_or(true) {
+                let tex = image::open(&path).ok().map(|img| {
+                    let img = img.to_rgba8();
+                    let ci = egui::ColorImage::from_rgba_unmultiplied([img.width() as usize, img.height() as usize], img.as_raw());
+                    ui.ctx().load_texture("map picture", ci, egui::TextureOptions::LINEAR)
+                });
+                st.map_picture = Some((path, time, tex));
+            }
         }
         match st.map_picture.as_ref().and_then(|(_, _, t)| t.as_ref()) {
             Some(t) => {
@@ -2713,5 +2740,40 @@ pub fn confirm_unsaved(ctx: &egui::Context, st: &mut UiState, actions: &mut Vec<
         }
         Some(false) => st.confirm = None,
         None => {}
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    /// The width a label takes in a panel 250 points wide.
+    fn width_in_panel(draw: impl Fn(&mut egui::Ui) -> egui::Response) -> f32 {
+        let ctx = egui::Context::default();
+        let mut w = 0.0;
+        let _ = ctx.run_ui(Default::default(), |ui| {
+            ui.scope(|ui| {
+                ui.set_max_width(250.0);
+                w = draw(ui).rect.width();
+            });
+        });
+        w
+    }
+
+    #[test]
+    fn a_long_name_without_spaces_stays_in_its_panel() {
+        let name = "&#1050;&#1091;&#1073;&#1080;&#1082;&#1050;&#1091;&#1073;&#1080;&#1082;&#1050;&#1091;&#1073;&#1080;&#1082;&#1050;&#1091;&#1073;&#1080;&#1082;";
+        let wrapped = width_in_panel(|ui| long_label(ui, name, egui::TextStyle::Small, Color32::WHITE));
+        assert!(wrapped <= 251.0, "{wrapped}");
+        // (a plain label overflows: that was the bug)
+        let plain = width_in_panel(|ui| ui.label(name));
+        assert!(plain > wrapped);
+    }
+
+    #[test]
+    fn a_long_name_is_cut_short_for_a_button() {
+        assert_eq!(short("abc", 5), "abc");
+        assert_eq!(short("abcdefgh", 5), "abcd…");
+        assert_eq!(short("абвгдежз", 4).chars().count(), 4);
     }
 }

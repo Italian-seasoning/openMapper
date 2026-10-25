@@ -1,0 +1,2129 @@
+Could not open the map	Hindi mabuksan ang mapa
+The next 100 tiles are loaded, the others are hidden	Na-load ang susunod na 100 tile, nakatago ang iba
+Find the place in the window and build from it	Hanapin ang lugar sa window at gumawa mula rito
+Your map is ready. Start with a road!	Handa na ang mapa mo. Magsimula sa kalsada!
+Export the map for sharing	I-export ang mapa para ibahagi
+Exported:	Na-export:
+files	mga file
+files the map names were not found: the readme lists them	mga file na binabanggit ng mapa ay hindi nakita: nakalista ang mga ito sa readme
+Could not export	Hindi ma-export
+A ring road with line 1 on it: save, then try it in openOMSI (F5).	Isang ring road na may linya 1: i-save, saka subukan sa openOMSI (F5).
+The sample could not be made	Hindi nagawa ang sample
+In multiplayer the host saves the map. Leave the session to save this as a copy of your own.	Sa multiplayer, ang host ang nagse-save ng mapa. Umalis sa session para i-save ito bilang sarili mong kopya.
+Saved:	Na-save:
+Tip: place a start point (Game logic > Start points) so the bus has somewhere to appear	Tip: maglagay ng start point (Game logic > Start points) para may mapaglitawan ang bus
+Could not save (the changes are still here, nothing is lost)	Hindi ma-save (nandito pa ang mga pagbabago, walang nawala)
+The unsaved changes are back. Save to keep them.	Bumalik ang mga hindi pa na-save na pagbabago. I-save para mapanatili ang mga ito.
+Could not restore the changes	Hindi maibalik ang mga pagbabago
+openOMSI was not found	Hindi nakita ang openOMSI
+From the start point	Mula sa start point
+The map has no start point: place one with Game logic > Start points	Walang start point ang mapa: maglagay ng isa sa Game logic > Start points
+Starting openOMSI…	Sinisimulan ang openOMSI…
+To drive the map in OMSI 2 itself it has to be copied into the OMSI 2 folder (Maps, and the objects, roads and textures made for it). Nothing that is there is replaced except earlier copies of this map. Copy it there?	Para imaneho ang mapa sa mismong OMSI 2, kailangan itong kopyahin sa folder ng OMSI 2 (Maps, at ang mga object, kalsada at texture na ginawa para rito). Walang papalitan doon maliban sa mga naunang kopya ng mapang ito. Kopyahin doon?
+Starting OMSI 2: choose the map	Sinisimulan ang OMSI 2: piliin ang mapa
+The map is copied into the OMSI 2 folder; OMSI 2 itself runs on Windows only:	Nakopya na ang mapa sa folder ng OMSI 2; sa Windows lang tumatakbo ang OMSI 2:
+Could not copy the map into OMSI 2	Hindi makopya ang mapa sa OMSI 2
+Click on the map to place it	I-click ang mapa para ilagay ito
+Open a map (its global.cfg)	Buksan ang mapa (ang global.cfg nito)
+The map is back as it was before that save	Naibalik ang mapa sa dating anyo bago ang pag-save na iyon
+Could not go back	Hindi makabalik
+Export a plan of the map	I-export ang plano ng mapa
+Plan saved:	Na-save ang plano:
+Mods, models and pictures	Mga mod, model at larawan
+Import assets	Mag-import ng asset
+…or choose a mod folder	…o pumili ng mod folder
+Click on the map to put it there	I-click ang mapa para ilagay ito roon
+Could not make the shape	Hindi nagawa ang hugis
+Choose the OMSI 2 folder	Piliin ang folder ng OMSI 2
+That is not an OMSI 2 folder (Omsi.exe, maps and Vehicles must be in it)	Hindi iyan folder ng OMSI 2 (dapat nandoon ang Omsi.exe, maps at Vehicles)
+This object has no textures to make PBR maps of	Walang texture ang object na ito para gawan ng PBR map
+Could not copy the map	Hindi makopya ang mapa
+Could not move the map	Hindi mailipat ang mapa
+Terrain flattened; splines laid on it:	Napatag ang terrain; mga spline na inilatag dito:
+This road type has no textures to make PBR maps of	Walang texture ang uri ng kalsadang ito para gawan ng PBR map
+Pictures	Mga larawan
+Only 100 tiles round the camera are loaded; click on the empty zone to load the next 100	100 tile lang sa paligid ng camera ang naka-load; i-click ang walang laman na zone para i-load ang susunod na 100
+All tiles are loaded	Naka-load na ang lahat ng tile
+Import the map's thumbnail	I-import ang thumbnail ng mapa
+The map's thumbnail is set: openOMSI shows it where maps are chosen.	Naitakda na ang thumbnail ng mapa: ipinapakita ito ng openOMSI kapag pumipili ng mapa.
+Could not use the picture	Hindi magamit ang larawan
+Map camera	Camera ng mapa
+The map opens with this view from now on.	Magbubukas na ang mapa sa view na ito mula ngayon.
+Add ground texture	Magdagdag ng ground texture
+View kept as	Na-save ang view bilang
+No view kept as	Walang view na naka-save bilang
+Files changed on disk: the catalogue and models are updated	Nagbago ang mga file sa disk: na-update ang catalogue at mga model
+The track does not run over the map's tiles	Hindi dumadaan ang track sa mga tile ng mapa
+Road along a GPS track	Kalsada ayon sa GPS track
+Roads built:	Mga kalsadang nagawa:
+junctions:	mga junction:
+stops:	mga hintuan:
+Lines from OpenStreetMap	Mga linya mula sa OpenStreetMap
+lines:	mga linya:
+trips found their way:	mga biyaheng may daan:
+buildings:	mga gusali:
+trees:	mga puno:
+Start point	Start point
+Start	Simulan
+a start point	isang start point
+From OpenStreetMap	Mula sa OpenStreetMap
+Picture saved:	Na-save ang larawan:
+Could not save the picture	Hindi ma-save ang larawan
+The graphics could not be started.	Hindi masimulan ang graphics.
+Flying speed	Bilis ng paglipad
+copy	kopya
+Only maps of the content folder can be moved	Mga mapa lang sa content folder ang maaaring ilipat
+Only assets of the content folder can be deleted	Mga asset lang sa content folder ang maaaring burahin
+Could not write the object	Hindi maisulat ang object
+Select an object to edit its mesh	Pumili ng object para i-edit ang mesh nito
+A copy of its own was made: the original type is unchanged	Gumawa ng sariling kopya: hindi nagbago ang orihinal na uri
+Cannot edit this object	Hindi ma-edit ang object na ito
+Point at an edge to cut across its ring of faces	Itutok sa isang edge para putulin ang singsing ng mga face
+Objects made:	Mga object na nagawa:
+select the faces to separate	piliin ang mga face na ihihiwalay
+Separated into an object of its own	Inihiwalay sa sariling object
+Add object	Magdagdag ng object
+select what to export (objects, roads)	piliin kung ano ang ie-export (mga object, kalsada)
+Export the selection	I-export ang napili
+unknown format	hindi kilalang format
+the models are still loading: try again in a moment	nilo-load pa ang mga model: subukan ulit sandali
+this material has no texture	walang texture ang material na ito
+cannot read	hindi mabasa
+Export the texture	I-export ang texture
+Texture saved:	Na-save ang texture:
+Choose a picture	Pumili ng larawan
+give the material a texture first: its maps go beside it	maglagay muna ng texture sa material: nasa tabi nito ang mga map
+Import materials (an .mtl, a model, or the pictures of one PBR material)	Mag-import ng mga material (isang .mtl, isang model, o ang mga larawan ng isang PBR material)
+Materials and pictures	Mga material at larawan
+no materials found there	walang nakitang material doon
+Materials added:	Mga material na naidagdag:
+nothing to bake	walang ibe-bake
+the object has no lamps to bake the night light of	walang lamp ang object na ibe-bake ang ilaw sa gabi
+Baked into	Na-bake sa
+select a road or spline first	pumili muna ng kalsada o spline
+the road's type is still loading: try again in a moment	nilo-load pa ang uri ng kalsada: subukan ulit sandali
+these splines have no shape to see	walang makikitang hugis ang mga spline na ito
+Replace by an object	Palitan ng object
+Made into an object: Tab edits its mesh	Ginawang object: Tab para i-edit ang mesh nito
+Signal head made: click where it stands (near a crossing with a light program it links to it)	Nagawa ang signal head: i-click kung saan ito nakatayo (malapit sa crossing na may light program, ika-link ito roon)
+Choose a picture or a texture	Pumili ng larawan o texture
+cannot read the picture	hindi mabasa ang larawan
+Picture made: click where it goes (it can be moved, turned and scaled after)	Nagawa ang larawan: i-click kung saan ilalagay (maaari itong ilipat, paikutin at i-scale pagkatapos)
+Light made: click where it shines	Nagawa ang ilaw: i-click kung saan ito iilaw
+Choose a sound	Pumili ng tunog
+Sounds	Mga tunog
+Sound source made: click where it plays	Nagawa ang sound source: i-click kung saan ito tutunog
+Street lamp made: click where it stands	Nagawa ang street lamp: i-click kung saan ito nakatayo
+Paint by slope and height	Pintahan ayon sa slope at taas
+By slope and height	Ayon sa slope at taas
+The chosen layer painted over the whole map where the ground is so steep (and so high)	Ang napiling layer ay ipipinta sa buong mapa kung saan ganito katarik (at ganito kataas) ang lupa
+Slope	Slope
+Height	Taas
+Fade	Fade
+Cover	Saklaw
+Paint the map	Pintahan ang mapa
+Choose a layer above the base ground	Pumili ng layer sa ibabaw ng base ground
+No ground on the map is like that	Walang ganoong lupa sa mapa
+Painted	Napintahan
+Missing objects	Nawawalang object
+Missing roads and splines	Nawawalang kalsada at spline
+Missing textures	Nawawalang texture
+Road ends not joined	Hindi nakakabit na dulo ng kalsada
+Links to splines that are gone	Mga link sa spline na wala na
+Bus stops away from a road	Mga hintuang malayo sa kalsada
+Start points away from a road	Mga start point na malayo sa kalsada
+Start points without their object	Mga start point na walang object
+No start point	Walang start point
+IDCodes used twice	Mga IDCode na dalawang beses ginamit
+Next IDCode too low	Masyadong mababa ang susunod na IDCode
+Objects off their tile	Mga object na wala sa tile nila
+Tiles without a file	Mga tile na walang file
+Tiles without ground	Mga tile na walang lupa
+Trips without a way	Mga biyaheng walang daan
+Tours without departures	Mga tour na walang departure
+Tours without a depot	Mga tour na walang depot
+Traffic groups not in the AI lists	Mga traffic group na wala sa AI list
+Stops no trip calls at	Mga hintuang walang biyaheng humihinto
+Signal routes naming what is gone	Mga signal route na may binabanggit na wala na
+Chrono changes of what is gone	Mga chrono change ng wala na
+Lamps lighting no ground at night	Mga lamp na walang iniilawang lupa sa gabi
+Tiles with very many objects	Mga tile na napakarami ng object
+Objects linked to one that is gone	Mga object na naka-link sa wala na
+Signal heads linked to no crossing	Mga signal head na walang crossing
+Depot files (destinations)	Mga depot file (destinasyon)
+The map uses an object (.sco) that is not installed. The game leaves it out. Install the mod it comes from, or delete the object. A junction of openMapper's whose file is gone (the map was moved without it) is made again for its roads with "Fix".	Gumagamit ang mapa ng object (.sco) na hindi naka-install. Lalaktawan ito ng laro. I-install ang mod na pinanggalingan nito, o burahin ang object. Ang junction ng openMapper na nawala ang file (nailipat ang mapa nang wala ito) ay muling gagawin para sa mga kalsada nito gamit ang "Ayusin".
+The map uses a road or spline type (.sli) that is not installed: that road is missing in the game, and buses cannot drive there.	Gumagamit ang mapa ng uri ng kalsada o spline (.sli) na hindi naka-install: mawawala ang kalsadang iyon sa laro, at hindi makakadaan ang mga bus doon.
+An object or road names a picture that cannot be found. It will look white or black in the game.	May object o kalsadang bumabanggit ng larawang hindi makita. Magmumukha itong puti o itim sa laro.
+Two road ends lie on one another but are not joined. Traffic still finds its way (the game joins lanes by their ends), but rows of lamps and posts and the road's texture do not run on across, and the editor does not treat them as one road. "Join" links them.	Magkapatong ang dalawang dulo ng kalsada pero hindi nakakabit. Makakadaan pa rin ang trapiko (ikinakabit ng laro ang mga lane sa mga dulo), pero hindi tuloy-tuloy ang hanay ng mga lamp at poste at ang texture ng kalsada, at hindi ito itinuturing ng editor na isang kalsada. Ikakabit ng "Ikabit" ang mga ito.
+A spline says it goes on into another one that no longer exists. "Fix" forgets that link.	May spline na nagsasabing nagpapatuloy ito sa isa pang wala na. Buburahin ng "Ayusin" ang link na iyon.
+A bus stop belongs to the lane it stands beside (within about 25 m). This one has none near, so buses cannot stop at it. Move it next to the road, or "Fix" puts it at the kerb of the nearest lane (within 80 m).	Ang hintuan ay kabilang sa lane na katabi nito (sa loob ng mga 25 m). Walang lane malapit dito, kaya hindi makakahinto ang mga bus. Ilipat ito sa tabi ng kalsada, o ilalagay ito ng "Ayusin" sa kerb ng pinakamalapit na lane (sa loob ng 80 m).
+A start point is where the bus appears. This one is away from any lane: fine in a depot yard, otherwise the bus starts off the road.	Ang start point ay kung saan lumilitaw ang bus. Malayo ito sa anumang lane: ayos lang sa bakuran ng depot, kung hindi, magsisimula ang bus sa labas ng kalsada.
+A start point refers to an object that was deleted. "Fix" removes the start point.	Ang start point ay tumutukoy sa object na nabura na. Aalisin ng "Ayusin" ang start point.
+There is nowhere for the bus to appear. Place a start point (Game logic > Start points) on a road, or "Fix" puts one on a lane some 40 m before a bus stop.	Walang mapaglitawan ang bus. Maglagay ng start point (Game logic > Start points) sa kalsada, o maglalagay ang "Ayusin" ng isa sa lane mga 40 m bago ang hintuan.
+Two things on the map share one IDCode: links, timetables and start points may pick the wrong one.	Dalawang bagay sa mapa ang may iisang IDCode: maaaring magkamali ng mapili ang mga link, timetable at start point.
+The counter for new IDCodes is below codes already used, so new objects would get codes twice. "Fix" raises it.	Mas mababa ang counter ng bagong IDCode kaysa sa mga code na gamit na, kaya dalawang beses ang code ng mga bagong object. Itataas ito ng "Ayusin".
+An object standing on the ground lies outside its own tile. The game does not show it. Move it a little or put it again.	Ang object na nakatayo sa lupa ay nasa labas ng sarili nitong tile. Hindi ito ipapakita ng laro. Ilipat ito nang kaunti o ilagay muli.
+global.cfg lists tiles whose file is not there. The game leaves them out; they stay listed, as start points and timetables count tiles by their place in the list.	Naglilista ang global.cfg ng mga tile na walang file. Nilalaktawan ng laro ang mga ito; nananatili silang nakalista, dahil binibilang ng mga start point at timetable ang tile ayon sa pwesto sa listahan.
+A tile has no height file: its ground is flat. Saving writes one.	Walang height file ang tile: patag ang lupa nito. Magsusulat ng isa ang pag-save.
+No way along the roads was found through this trip's stops, so buses cannot drive it. Open it in Map > Lines and timetable to see where it breaks.	Walang nakitang daan sa mga kalsada sa pagitan ng mga hintuan ng biyaheng ito, kaya hindi ito mapapatakbo ng mga bus. Buksan ito sa Mapa > Mga linya at timetable para makita kung saan ito naputol.
+A tour (a bus's day on the line) has no trips, so no bus runs it.	Walang biyahe ang isang tour (araw ng bus sa linya), kaya walang bus na tatakbo rito.
+A tour names no depot or group of the AI lists (or one that is not there): the game has no vehicle to send on it. Choose a depot for it in the Lines window, or "Fix" gives it the map's depot (one of OMSI 2's MAN buses added where the map has none).	Walang binabanggit na depot o group ng AI list ang tour (o wala ang binanggit): walang sasakyang maipapadala ang laro rito. Pumili ng depot para dito sa Lines window, o ibibigay ng "Ayusin" ang depot ng mapa (isang bus na MAN ng OMSI 2 ang idaragdag kung wala ang mapa).
+The unscheduled traffic names a group that the AI lists do not have: those cars never appear. Add the group in Map > Traffic and AI, or "Fix" copies it from OMSI 2's own maps where they have it.	May group na binabanggit ang trapikong walang iskedyul na wala sa AI list: hindi lilitaw ang mga kotseng iyon. Idagdag ang group sa Mapa > Trapiko at AI, o kokopyahin ito ng "Ayusin" mula sa sariling mga mapa ng OMSI 2 kung nandoon ito.
+A stop of the timetable that no trip calls at. Nothing is wrong, it is only not used yet.	Hintuan sa timetable na walang biyaheng humihinto. Walang mali, hindi pa lang ito ginagamit.
+A chrono scenario takes away, retypes or relabels something that is no longer on the map (it was deleted or its IDCode changed): that change does nothing. Open Map > Chrono scenarios, the scenario's properties, and take the change out.	May chrono scenario na nag-aalis, nagpapalit ng uri o ng label ng bagay na wala na sa mapa (nabura ito o nagbago ang IDCode): walang epekto ang pagbabagong iyon. Buksan ang Mapa > Mga chrono scenario, ang properties ng scenario, at alisin ang pagbabago.
+A tile holds far more objects than the stock maps' tiles (up to some 600): the game may stutter when it loads it or looks across it. Thin out a wood planted too densely (Plant brush, Clear) or plant it with more space between the trees.	Mas marami ang object sa isang tile kaysa sa mga tile ng stock na mapa (hanggang mga 600): maaaring mag-stutter ang laro sa pag-load o pagtanaw rito. Bawasan ang masyadong siksik na kagubatan (Plant brush, Clear) o magtanim na mas maluwag ang pagitan.
+Street lamps stand on a tile the game does not light from its lamps ([variable_terrainlightmap] is off): at night the ground under them stays dark (unless the tile's light map file was made by OMSI 2's editor). "Fix" turns it on, as on nearly every tile of the stock maps.	Nakatayo ang mga street lamp sa tile na hindi iniilawan ng laro mula sa mga lamp ([variable_terrainlightmap] ay naka-off): sa gabi, madilim ang lupa sa ilalim nito (maliban kung ang light map file ng tile ay gawa ng editor ng OMSI 2). Ino-on ito ng "Ayusin", gaya sa halos lahat ng tile ng stock na mapa.
+An object takes its state ([varparent]) from an object no longer on the map: a signal head stays dark, a display blank. Link it to another in its properties (Linked objects), or "Fix" forgets the link.	Kinukuha ng isang object ang state nito ([varparent]) sa object na wala na sa mapa: nananatiling madilim ang signal head, blangko ang display. I-link ito sa iba sa properties nito (Mga naka-link na object), o buburahin ng "Ayusin" ang link.
+A traffic light's signal head takes its light from a crossing's program ([varparent]); this one is linked to none while others like it are, so it stays dark in the game. Select it and link it in its properties (Linked objects).	Kinukuha ng signal head ng traffic light ang ilaw nito sa program ng crossing ([varparent]); ang isang ito ay walang link habang ang mga katulad nito ay mayroon, kaya madilim ito sa laro. Piliin ito at i-link sa properties nito (Mga naka-link na object).
+A depot file (.hof) gives the buses their destinations, the stop names on their displays and the routes their IBIS knows. Without one the signs stay empty and the IBIS knows no line. "Fix" makes it from the map's lines, or adds what the lines need to the map's own (Map > Depot files to see and change it).	Ang depot file (.hof) ang nagbibigay sa mga bus ng destinasyon, pangalan ng hintuan sa display at mga rutang alam ng IBIS. Kung wala nito, walang laman ang mga karatula at walang linyang alam ang IBIS. Gagawin ito ng "Ayusin" mula sa mga linya ng mapa, o idaragdag ang kailangan ng mga linya sa sarili nitong file ng mapa (Mapa > Mga depot file para tingnan at baguhin).
+A signal route names a signal or track pieces no longer on the map: the signal may never clear. Open Map > Signal routes and take the track again, or delete the route.	May signal route na bumabanggit ng signal o piraso ng track na wala na sa mapa: maaaring hindi na mag-clear ang signal. Buksan ang Mapa > Mga signal route at kunin muli ang track, o burahin ang route.
+font	font
+used	ginagamit
+in	sa
+a ground texture of the map	ground texture ng mapa
+splines	mga spline
+apart	pagitan
+spline	spline
+goes on into	nagpapatuloy sa
+no road near	walang kalsada sa malapit
+from the road	mula sa kalsada
+start point	start point
+object	object
+The map has no start point	Walang start point ang mapa
+things have it	mga bagay ang may nito
+highest in use:	pinakamataas na gamit:
+tile	tile
+no .terrain file: flat	walang .terrain file: patag
+objects	mga object
+lamps	mga lamp
+The map has no depot file	Walang depot file ang mapa
+the buses show no destination	walang ipinapakitang destinasyon ang mga bus
+named by the map's depot, but found nowhere	binanggit ng depot ng mapa, pero wala saanman
+knows none of the	walang alam sa
+lacks	kulang
+destinations of the lines	mga destinasyon ng mga linya
+the lines need	kailangan ng mga linya
+destinations	mga destinasyon
+stops	mga hintuan
+routes	mga ruta
+tour	tour
+no depot named	walang binanggit na depot
+not in the AI lists:	wala sa AI list:
+the stop has no object:	walang object ang hintuan:
+no road beside	walang kalsada sa tabi ng
+no way	walang daan
+no way found	walang nakitang daan
+Route	Ruta
+gone	wala na
+changes of nothing	mga pagbabagong walang epekto
+time	beses
+times	beses
+Fix from the map check	Ayos mula sa pagsusuri ng mapa
+Car groups from OMSI 2's maps	Mga car group mula sa mga mapa ng OMSI 2
+A depot for the tour	Depot para sa tour
+A depot file from the lines	Depot file mula sa mga linya
+Depot file: what the lines need	Depot file: ang kailangan ng mga linya
+Map check	Pagsusuri ng mapa
+Check again	Suriin muli
+Checking the map…	Sinusuri ang mapa…
+errors	mga error
+warnings	mga babala
+notes	mga tala
+Nothing found: the map looks fine.	Walang nakita: mukhang maayos ang mapa.
+Fix all	Ayusin lahat
+Join	Pagdugtungin
+Fix	Ayusin
+Click to fly there	I-click para lumipad doon
+Fixed:	Naayos:
+it has parts openMapper does not write	may mga bahagi ito na hindi isinusulat ng openMapper
+A host on the internet needs a password of at least	Kailangan ng host sa internet ng password na hindi bababa sa
+Type a password, or choose explicitly to host without one	Maglagay ng password, o piliing mag-host nang walang password
+Could not listen on port	Hindi makapakinig sa port
+The way in for the tunnel could not be opened	Hindi mabuksan ang daanan para sa tunnel
+Hosting this map: others can join it now	Ibinabahagi ang mapang ito: puwede nang sumali ang iba
+Multiplayer ended: another map was opened	Natapos ang multiplayer: may ibang mapang binuksan
+Somebody changed this first: your edit was put back	May nagbago nito bago ka: ibinalik ang edit mo
+The host takes no more: the edit is too big, or the session holds as much as it may. Your edit was put back	Wala nang tinatanggap ang host: masyadong malaki ang edit, o puno na ang session. Ibinalik ang edit mo
+That lies too far from the map for this session: your edit was put back	Masyadong malayo ito sa mapa para sa session na ito: ibinalik ang edit mo
+tiles	mga tile
+changed what you were editing: it is as they left it	binago ang ine-edit mo: iniwan ito ayon sa ginawa nila
+The timetable, the traffic and the descriptions are the host's in multiplayer: your change was put back	Sa host ang timetable, trapiko at mga paglalarawan sa multiplayer: ibinalik ang pagbabago mo
+Your conflicting edit was kept	Napanatili ang nagkakasalungat mong edit
+Could not keep your conflicting edit; multiplayer stopped	Hindi mapanatili ang nagkakasalungat mong edit; huminto ang multiplayer
+Too much of the others' work came in while your edit was held open: multiplayer stopped. The map stays open; it can be saved as a copy.	Masyadong maraming gawa ng iba ang pumasok habang bukas ang edit mo: huminto ang multiplayer. Nananatiling bukas ang mapa; maaari itong i-save bilang kopya.
+The connection to the host was lost. The map stays open; it can be saved as a copy.	Nawala ang koneksyon sa host. Nananatiling bukas ang mapa; maaari itong i-save bilang kopya.
+No OMSI 2 installation: the map has nowhere to go	Walang installation ng OMSI 2: walang mapupuntahan ang mapa
+The host sent no map	Walang ipinadalang mapa ang host
+The host's map could not be read	Hindi mabasa ang mapa ng host
+No connection	Walang koneksyon
+That address is not an openMapper host	Hindi host ng openMapper ang address na iyon
+Wrong password	Maling password
+The session is full	Puno na ang session
+Type a name (up to 32 letters)	Maglagay ng pangalan (hanggang 32 letra)
+The host has another version of openMapper	Ibang bersyon ng openMapper ang sa host
+Move forward	Pasulong
+Move back	Paatras
+Move left	Pakaliwa
+Move right	Pakanan
+Turn the camera left	Ikutin ang camera pakaliwa
+Turn the camera right	Ikutin ang camera pakanan
+Undo	I-undo
+Redo	I-redo
+Save	I-save
+Copy	Kopyahin
+Cut	I-cut
+Paste at the cursor	I-paste sa cursor
+Duplicate	I-duplicate
+Select all	Piliin lahat
+Find in the map	Hanapin sa mapa
+Search for a command	Maghanap ng command
+Tool: Select	Tool: Select
+Tool: Roads	Tool: Roads
+Tool: Objects	Tool: Objects
+Tool: Game logic	Tool: Game logic
+Tool: Terrain	Tool: Terrain
+Tool: Paint	Tool: Paint
+Tool: Tiles	Tool: Tiles
+Turn the object (Shift: the other way)	Paikutin ang object (Shift: kabilang direksyon)
+Ruler	Ruler
+Knife	Knife
+Move handles	Mga move handle
+Rotate handles	Mga rotate handle
+Scale handles	Mga scale handle
+Edit the mesh (vertices, edges, faces)	I-edit ang mesh (vertex, edge, face)
+Join the selected objects into one	Pagsamahin sa isa ang mga napiling object
+Build the planned road	Buuin ang planong kalsada
+Tile grid on / off	Tile grid naka-on / naka-off
+Group the selection	I-group ang napili
+Ungroup	I-ungroup
+Look straight down, north up	Tumingin pababa, north sa itaas
+2D plan view on / off (3D: tilt and turn again)	2D plan view naka-on / naka-off (3D: ikiling at ikot ulit)
+Catalogue on / off	Catalogue naka-on / naka-off
+Overview map on / off	Overview map naka-on / naka-off
+Lines window	Lines window
+Traffic window	Traffic window
+Satellite and terrain window	Satellite at terrain window
+Smaller brush	Mas maliit na brush
+Larger brush	Mas malaking brush
+Delete the selection	Burahin ang napili
+Go to the selection	Pumunta sa napili
+Test drive in openOMSI (Shift: from the camera)	Test drive sa openOMSI (Shift: mula sa camera)
+Save a picture of the view	I-save ang larawan ng view
+The map's own (global.cfg)	Sariling global.cfg ng mapa
+Description	Paglalarawan
+Name in this language	Pangalan sa wikang ito
+Description in this language	Paglalarawan sa wikang ito
+Remove this language	Alisin ang wikang ito
+Not written yet: it is saved as soon as you type.	Hindi pa naisusulat: ise-save ito sa sandaling mag-type ka.
+Edit description	I-edit ang paglalarawan
+just now	ngayon lang
+min ago	min ang nakalipas
+h ago	oras ang nakalipas
+Unsaved changes found	May nakitang hindi pa na-save na pagbabago
+openMapper was closed without saving the map	Isinara ang openMapper nang hindi na-save ang mapa
+The changes kept by the autosave can be brought back. The map itself was not changed.	Maibabalik ang mga pagbabagong iningatan ng autosave. Hindi nagbago ang mismong mapa.
+Restore the changes	Ibalik ang mga pagbabago
+Drop them	Itapon
+Nothing comes after it to join	Walang kasunod na maikakabit
+The next piece runs the other way: reverse it first	Kabilang direksyon ang susunod na piraso: baligtarin muna ito
+The next piece lies on another tile	Nasa ibang tile ang susunod na piraso
+The two pieces are of different road types	Magkaibang uri ng kalsada ang dalawang piraso
+The two pieces have different settings (path rules, ground, skew)	Magkaiba ang settings ng dalawang piraso (path rules, ground, skew)
+A row of objects comes onto the next piece from another tile	May hanay ng object na pumapasok sa susunod na piraso mula sa ibang tile
+The two pieces do not bend, climb or bank alike: joined they would change shape	Hindi pareho ang liko, akyat o banking ng dalawang piraso: kapag pinagsama, magbabago ang hugis
+Earlier versions	Mga naunang bersyon
+Before every save, the files it replaces are kept (the last 10 saves). Going back puts the map as it was before that save; later changes go.	Bago ang bawat pag-save, iniingatan ang mga file na papalitan nito (huling 10 save). Ibabalik ng pagbalik ang mapa sa dating anyo bago ang save na iyon; mawawala ang mga mas bagong pagbabago.
+No earlier versions yet: they appear once the map is saved again.	Wala pang naunang bersyon: lilitaw ang mga ito kapag na-save ulit ang mapa.
+before the save of	bago ang pag-save ng
+Go back to this	Bumalik dito
+could not keep a backup, nothing was saved	hindi makagawa ng backup, walang na-save
+Red	Pula
+Yellow	Dilaw
+Green	Berde
+file not found	hindi nakita ang file
+this object takes its model from a model file and cannot be edited here	kinukuha ng object na ito ang model nito sa isang model file at hindi ito ma-edit dito
+the object has no mesh to edit	walang mesh na ie-edit ang object
+cannot read the object	hindi mabasa ang object
+Select	Piliin
+Terrain	Terrain
+Paint	Pintura
+Roads	Mga kalsada
+Objects	Mga object
+Game logic	Game logic
+Tiles	Mga tile
+Raise	Itaas
+Lower	Ibaba
+Smooth	Pakinisin
+Flatten	Patagin
+Roughen	Gawing magaspang
+Ramp	Ramp
+Lake / river	Lawa / ilog
+Start points	Mga start point
+Bus stops	Mga hintuan
+Car parks	Mga paradahan
+AI paths	Mga AI path
+Other	Iba pa
+Where the bus appears when a drive starts. Put it on a road or in the depot, facing the way to drive.	Kung saan lilitaw ang bus kapag nagsimula ang drive. Ilagay sa kalsada o sa depot, nakaharap sa direksyon ng takbo.
+Where passengers wait. Put it beside the road at the kerb; name it on the right.	Kung saan naghihintay ang mga pasahero. Ilagay sa tabi ng kalsada sa kerb; pangalanan sa kanan.
+Where parked cars stand. Click for one; with a row on, click the start and end of a row along the kerb.	Kung saan nakaparada ang mga kotse. I-click para sa isa; kung naka-on ang hanay, i-click ang simula at dulo ng hanay sa tabi ng kerb.
+Lanes the AI's cars or people follow. Draw like a road: it snaps to lane ends (green: joined, red: dead end) and along lanes. A car path runs the way you draw it.	Mga lane na sinusundan ng mga kotse o tao ng AI. Iguhit na parang kalsada: kumakapit ito sa mga dulo ng lane (berde: nakakabit, pula: dead end) at sa tabi ng mga lane. Ang path ng kotse ay tumatakbo sa direksyong iginuhit mo.
+Sound sources, help arrows and other helpers the game does not show.	Mga sound source, arrow na gabay at iba pang katulong na hindi ipinapakita ng laro.
+Move (V): drag an arrow along X, Y or Z, a square in its plane, the circle over the ground	Move (V): i-drag ang arrow sa X, Y o Z, ang square sa plane nito, ang bilog sa ibabaw ng lupa
+Rotate (C): drag a ring to turn about X, Y or Z	Rotate (C): i-drag ang singsing para umikot sa X, Y o Z
+Scale (X): drag an arrow to scale along that axis, a square for two, the circle for all three	Scale (X): i-drag ang arrow para mag-scale sa axis na iyon, ang square para sa dalawa, ang bilog para sa lahat ng tatlo
+These roads have no lanes of their own to take apart (rails stay as they are)	Walang sariling lane ang mga kalsadang ito na maaaring hiwalayin (nananatili ang mga riles)
+Make the lanes editable	Gawing editable ang mga lane
+Roads whose lanes are now editable:	Mga kalsadang editable na ang lane:
+Flatten the terrain	Patagin ang terrain
+Select two things or more to group them	Pumili ng dalawa o higit pa para i-group
+Group	Group
+Grouped:	Na-group:
+Ungrouped	Na-ungroup
+Rename group	Palitan ang pangalan ng group
+Ground levelled under objects:	Napatag ang lupa sa ilalim ng mga object:
+Move	Ilipat
+No object clicked: nothing linked	Walang na-click na object: walang na-link
+Too near the road's end to cut it there	Masyadong malapit sa dulo ng kalsada para putulin dito
+No road under the cursor	Walang kalsada sa ilalim ng cursor
+Ramp:	Ramp:
+Shape terrain	Hubugin ang terrain
+Paint ground	Pintahan ang lupa
+Clear plants	Alisin ang mga halaman
+Plant	Magtanim
+Rotate selection	Paikutin ang napili
+Rotate	Ikot
+Delete object	Burahin ang object
+Delete road	Burahin ang kalsada
+Delete selection	Burahin ang napili
+Pick an object in the catalogue first	Pumili muna ng object sa catalogue
+There is no tile here: add one with the Tiles tool	Walang tile dito: magdagdag ng isa gamit ang Tiles tool
+Place object	Ilagay ang object
+New stop	Bagong hintuan
+Linked to	Naka-link sa
+choose its light in its properties	piliin ang ilaw nito sa properties nito
+Trees from OpenStreetMap	Mga puno mula sa OpenStreetMap
+Plant an area	Magtanim sa isang lugar
+Buildings from OpenStreetMap	Mga gusali mula sa OpenStreetMap
+Stops from OpenStreetMap	Mga hintuan mula sa OpenStreetMap
+Stop	Hintuan
+Pick a car park in the list first	Pumili muna ng paradahan sa listahan
+Place car parks	Maglagay ng paradahan
+Car parks placed:	Mga paradahang nailagay:
+Pick a road type in the catalogue first	Pumili muna ng uri ng kalsada sa catalogue
+That bend is too sharp	Masyadong matalim ang liko
+Switch made	Nagawa ang switch
+Junctions made:	Mga junction na nagawa:
+The road leaves the map: add tiles there first	Lumalabas sa mapa ang kalsada: magdagdag muna ng mga tile doon
+Build road	Gumawa ng kalsada
+Roads from OpenStreetMap	Mga kalsada mula sa OpenStreetMap
+Pick a tree in the catalogue (or add some to the mix) first	Pumili muna ng puno sa catalogue (o magdagdag sa mix)
+Right-click a tile to remove it	I-right-click ang tile para alisin ito
+New tiles go next to the map	Idinadagdag ang mga bagong tile sa tabi ng mapa
+Add tile	Magdagdag ng tile
+Water	Tubig
+Paint detail	Detalye ng pintura
+Ground layer order	Pagkakasunod ng ground layer
+Detail texture	Detail texture
+Ground texture	Ground texture
+Lamp light on the ground	Ilaw ng lamp sa lupa
+Add tiles	Magdagdag ng mga tile
+A map needs at least one tile	Kailangan ng mapa ng kahit isang tile
+Remove tile	Alisin ang tile
+Pick a point (a dot at an end or where pieces meet) to take it out	Pumili ng punto (tuldok sa dulo o sa pagdugtong ng mga piraso) para alisin ito
+Remove a point of the path	Alisin ang punto ng path
+Point taken out	Naalis ang punto
+A path of one piece: Del with nothing picked deletes it	Path na iisang piraso: buburahin ito ng Del kapag walang napili
+Extrude	Extrude
+Inset	Inset
+Bevel	Bevel
+Loop cut	Loop cut
+click: done, right click / Esc: cancel, wheel: segments	click: tapos, right click / Esc: kanselahin, wheel: mga segment
+Scale	Scale
+Roads are not scaled: change their length and width in their properties	Hindi sini-scale ang mga kalsada: baguhin ang haba at lapad sa properties nila
+Only the objects are scaled, the roads stay	Mga object lang ang sini-scale, nananatili ang mga kalsada
+Could not scale	Hindi ma-scale
+Too near the end: drag the end's dot instead	Masyadong malapit sa dulo: i-drag na lang ang tuldok ng dulo
+Add a point to the path	Magdagdag ng punto sa path
+Point added: drag the dot where the pieces meet	Naidagdag ang punto: i-drag ang tuldok sa pagdugtong ng mga piraso
+Reshape road	Baguhin ang hugis ng kalsada
+Selected:	Napili:
+Copied:	Nakopya:
+Nothing copied yet	Wala pang nakokopya
+Paste	I-paste
+Level the ground	Patagin ang lupa
+Turn objects	Paikutin ang mga object
+Copies in a row	Mga kopya sa hanay
+Left out (off the map):	Nilaktawan (labas ng mapa):
+Pasted (the rest is off the map):	Na-paste (ang iba ay labas ng mapa):
+Edit object	I-edit ang object
+Lean with the ground	Sumunod sa lupa
+Stand upright	Patayuin nang tuwid
+Change height	Baguhin ang taas
+Change road type	Palitan ang uri ng kalsada
+The selected roads are not one chain (they branch or leave gaps)	Hindi iisang kadena ang mga napiling kalsada (may sanga o may puwang)
+Even slope	Pantay na slope
+Lay on the ground	Ilapat sa lupa
+Remove the rows of objects along it first (they are measured from its start)	Alisin muna ang mga hanay ng object sa tabi nito (sinusukat ang mga ito mula sa simula nito)
+Reverse direction	Baligtarin ang direksyon
+No road there to cut	Walang kalsadang puputulin doon
+Cut the road	Putulin ang kalsada
+Cut in two: each piece can now be changed on its own	Hinati sa dalawa: puwede nang baguhin nang hiwalay ang bawat piraso
+Join the pieces	Pagdugtungin ang mga piraso
+Joined into one piece	Pinagsama sa isang piraso
+Parallel copy	Parallel na kopya
+Overhead wire	Overhead wire
+Back into the map	Ibalik sa mapa
+Hang an object	Isabit ang object
+Link to an object	I-link sa object
+Unlink	I-unlink
+That object already takes its state from this one	Kinukuha na ng object na iyon ang state nito mula rito
+Linked	Naka-link
+Signal head's light	Ilaw ng signal head
+Path rules	Path rules
+Replace objects	Palitan ang mga object
+Edit road	I-edit ang kalsada
+Roads that could not follow the junction (too sharp a bend):	Mga kalsadang hindi nakasunod sa junction (masyadong matalim ang liko):
+Edit junction	I-edit ang junction
+Make the junction again	Gawing muli ang junction
+Make the junctions again	Gawing muli ang mga junction
+Pick an object in the Objects tool's catalogue first	Pumili muna ng object sa catalogue ng Objects tool
+The road is too short for that	Masyadong maikli ang kalsada para diyan
+Objects along the road	Mga object sa tabi ng kalsada
+Rows of objects added:	Mga hanay ng object na naidagdag:
+Edit row of objects	I-edit ang hanay ng object
+Remove row of objects	Alisin ang hanay ng object
+Remove rows of objects	Alisin ang mga hanay ng object
+Roundabout built; roads joined to it:	Nagawa ang rotonda; mga kalsadang nakakabit dito:
+This road type carries traffic both ways: pick a one-way road for a proper roundabout	Dalawang direksyon ang trapiko ng uri ng kalsadang ito: pumili ng one-way na kalsada para sa tamang rotonda
+Start point: where the bus appears in openOMSI	Start point: kung saan lilitaw ang bus sa openOMSI
+Bus stop: name it in the panel on the right	Hintuan: pangalanan sa panel sa kanan
+openOMSI stopped with an error	Huminto ang openOMSI dahil sa error
+Check in openOMSI	Suriin sa openOMSI
+The saved map run by the game itself, unseen, with its own checks; the picture is the game's, from your view	Ang na-save na mapa, pinatakbo ng mismong laro nang hindi nakikita, na may sarili nitong mga check; ang larawan ay mula sa laro, sa view mo
+Every tile (slower on a big map)	Bawat tile (mas mabagal sa malaking mapa)
+Run again	Patakbuhin ulit
+openOMSI is loading the map…	Nilo-load ng openOMSI ang mapa…
+Nothing wrong found	Walang nakitang problema
+Problems found:	Mga problemang nakita:
+Go there	Pumunta roon
+of the places named lie at the map's edge or a road's dead end (greyed): the game measures a lane's last point on the road's very edge, and a bus at the end stands over it; nothing to mend	sa mga binanggit na lugar ay nasa gilid ng mapa o dead end ng kalsada (kulay abo): sinusukat ng laro ang huling punto ng lane sa mismong gilid ng kalsada, at nakatayo ang bus sa dulo sa ibabaw nito; walang aayusin
+The game said nothing about the map	Walang sinabi ang laro tungkol sa mapa
+The game's whole output	Buong output ng laro
+no key entered	walang inilagay na key
+the server refused the key	tinanggihan ng server ang key
+too many requests, try again later	masyadong maraming request, subukan ulit mamaya
+No connection to the server: are you online?	Walang koneksyon sa server: online ka ba?
+Enter your Google key first	Ilagay muna ang Google key mo
+OpenStreetMap's servers are busy: try again in a minute	Abala ang mga server ng OpenStreetMap: subukan ulit sa isang minuto
+The area is too large for this zoom	Masyadong malaki ang lugar para sa zoom na ito
+Cancelled	Kinansela
+Stopped by an internal error (see the log)	Huminto dahil sa internal error (tingnan ang log)
+No source has imagery here	Walang imagery dito ang alinmang source
+drawn from OpenStreetMap data: sharp, with names	iginuguhit mula sa data ng OpenStreetMap: malinaw, may mga pangalan
+terrain heights, no key needed	mga taas ng terrain, hindi kailangan ng key
+needs your own free key	kailangan ng sarili mong libreng key
+no key needed	hindi kailangan ng key
+the picture is too small	masyadong maliit ang larawan
+Import height map	I-import ang height map
+Height map	Height map
+The ground as a grey picture, to shape in another program and bring back	Ang lupa bilang abong larawan, para hubugin sa ibang program at ibalik
+Export…	I-export…
+Import…	I-import…
+over	sa
+a pixel	bawat pixel
+Black adds	Nagdaragdag ang itim
+Black is	Ang itim ay
+White adds	Nagdaragdag ang puti
+White is	Ang puti ay
+Smoothing	Smoothing
+Replace the ground	Palitan ang lupa
+Add to it	Idagdag dito
+Roads and objects keep their heights: best done before building	Nananatili ang taas ng mga kalsada at object: mas mainam gawin bago magtayo
+An 8-bit picture has only 256 steps of height: smoothing hides them	Ang 8-bit na larawan ay may 256 hakbang lang ng taas: itinatago ito ng smoothing
+Lay it on the map	Ilapat sa mapa
+Cancel	Kanselahin
+Height map laid over	Inilapat ang height map sa
+Export the height map	I-export ang height map
+Height map written	Naisulat ang height map
+The height map could not be written	Hindi maisulat ang height map
+A height map for the whole map	Height map para sa buong mapa
+The picture could not be read	Hindi mabasa ang larawan
+IBIS and roller blind	IBIS at roller blind
+Front sign, line 1	Front sign, linya 1
+Front sign, line 2	Front sign, linya 2
+Side sign	Side sign
+Roller blind texture	Texture ng roller blind
+IBIS 2 (20 letters)	IBIS 2 (20 letra)
+Extra sign	Extra sign
+Krüger picture	Larawan ng Krüger
+Text	Teksto
+IBIS (16 letters)	IBIS (16 letra)
+Display, line 1	Display, linya 1
+Display, line 2	Display, linya 2
+Full name (20 letters)	Buong pangalan (20 letra)
+Service trip	Biyahe sa depot
+Special trip	Special trip
+Blank	Blangko
+openMapper cannot import this kind of file (use a folder, .zip, .obj, .gltf, .glb, .fbx, .x, .o3d or a picture)	Hindi ma-import ng openMapper ang ganitong file (gumamit ng folder, .zip, .obj, .gltf, .glb, .fbx, .x, .o3d o larawan)
+Mod installed, files:	Na-install ang mod, mga file:
+Objects added to	Mga object na naidagdag sa
+Road types added to	Mga uri ng kalsadang naidagdag sa
+Models imported:	Mga model na na-import:
+Nothing to import was found in this folder	Walang nakitang ii-import sa folder na ito
+The model has no triangles	Walang triangle ang model
+Model imported:	Na-import ang model:
+The .obj file has no faces	Walang face ang .obj file
+no base colour picture among them	walang larawan ng base colour sa mga iyon
+The picture cannot be read	Hindi mabasa ang larawan
+Picture made into a standee:	Ginawang standee ang larawan:
+Picture made into a sign:	Ginawang sign ang larawan:
+Trees	Mga puno
+Stops and start points	Mga hintuan at start point
+Junctions	Mga junction
+Tracks	Mga track
+Footpaths	Mga footpath
+Fences, walls, kerbs	Mga bakod, pader, kerb
+Technical (AI, helpers)	Teknikal (AI, helper)
+This map lies on the world's grid ([worldcoordinates]): its tiles cannot be taken yet	Nasa world grid ang mapang ito ([worldcoordinates]): hindi pa makukuha ang mga tile nito
+This map lies on the world's grid ([worldcoordinates]): tiles cannot be added from another yet	Nasa world grid ang mapang ito ([worldcoordinates]): hindi pa makakapagdagdag ng tile mula sa iba
+Tiles from another map	Mga tile mula sa ibang mapa
+Union	Union
+Difference (cut out)	Difference (putulin)
+Intersection	Intersection
+Slice (keep both pieces)	Slice (panatilihin ang parehong piraso)
+One object of all the selected, their insides gone	Isang object mula sa lahat ng napili, wala na ang loob ng mga ito
+The other selected objects cut out of the one shown in the properties	Ang iba pang napiling object ay pinuputol mula sa ipinapakita sa properties
+Only what all the selected share	Ang pinagsasaluhan lang ng lahat ng napili
+The first object cut by the others into what is outside them and what is inside	Ang unang object ay hinihiwa ng iba sa nasa labas at nasa loob nila
+select an object first	pumili muna ng object
+Make editable	Gawing editable
+Make single	Gawing single
+the object has only one part	isang bahagi lang ang object
+Separate parts	Paghiwalayin ang mga bahagi
+select two or more objects to join	pumili ng dalawa o higit pang object na pagsasamahin
+Join objects	Pagsamahin ang mga object
+select two or more objects: the one shown in the properties and what acts on it	pumili ng dalawa o higit pang object: ang ipinapakita sa properties at ang mga kumikilos dito
+nothing is left: the objects do not overlap that way	walang natira: hindi nagsasapawan ang mga object sa ganoong paraan
+The file has no scene	Walang scene ang file
+The FBX file has no meshes	Walang mesh ang FBX file
+Main roads	Mga pangunahing kalsada
+Streets	Mga kalye
+Service roads	Mga service road
+Tram tracks	Mga riles ng tram
+Railway tracks	Mga riles ng tren
+motorway, trunk, primary, secondary	motorway, trunk, primary, secondary
+tertiary, residential, unclassified	tertiary, residential, unclassified
+yards, car parks, depots	mga bakuran, paradahan, depot
+each track on its own; branches are joined with switches by hand	bawat track nang hiwalay; ang mga sanga ay pinagdudugtong ng mga switch nang mano-mano
+main lines without sidings; branches are joined with switches by hand	mga main line na walang siding; ang mga sanga ay pinagdudugtong ng mga switch nang mano-mano
+Water from OpenStreetMap	Tubig mula sa OpenStreetMap
+Give a distance	Maglagay ng distansya
+The bend is too tight for that distance on its inner side	Masyadong masikip ang liko para sa distansyang iyon sa loob nito
+The copy leaves the map: add tiles there first	Lumalabas sa mapa ang kopya: magdagdag muna ng mga tile doon
+Made with openMapper	Ginawa gamit ang openMapper
+Low (no shadows, rough edges, 3 km view)	Mababa (walang anino, magaspang na gilid, 3 km na tanaw)
+Medium (softer shadows, 8 km view)	Katamtaman (mas malambot na anino, 8 km na tanaw)
+High	Mataas
+This end belongs to a junction: select the junction and move it, the road follows	Bahagi ng junction ang dulong ito: piliin ang junction at ilipat, susunod ang kalsada
+Paint along the roads	Pintahan sa tabi ng mga kalsada
+Market	Palengke
+Station	Istasyon
+Depot	Depot
+this object takes its model from a model file: it cannot be scaled	kinukuha ng object na ito ang model nito sa isang model file: hindi ito ma-scale
+Not a GPX, KML or GeoJSON file	Hindi GPX, KML o GeoJSON file
+No lines in the file	Walang linya sa file
+Language	Wika
+Interface size	Laki ng interface
+File	File
+New map…	Bagong mapa…
+Open map…	Buksan ang mapa…
+Controls…	Mga kontrol…
+Import assets…	Mag-import ng asset…
+Multiplayer…	Multiplayer…
+OMSI 2 folder…	Folder ng OMSI 2…
+Quit	Lumabas
+View	Tingnan
+Help	Tulong
+Updates…	Mga update…
+About openMapper	Tungkol sa openMapper
+OMSI 2 not found	Hindi nakita ang OMSI 2
+Map editor for openOMSI	Map editor para sa openOMSI
+openMapper builds maps from the content of an installed OMSI 2. Choose its folder (the one with Omsi.exe, maps and Vehicles).	Gumagawa ang openMapper ng mga mapa mula sa content ng naka-install na OMSI 2. Piliin ang folder nito (yung may Omsi.exe, maps at Vehicles).
+Choose OMSI 2 folder…	Piliin ang folder ng OMSI 2…
+Maps	Mga mapa
+recent · OMSI 2	kamakailan · OMSI 2
+recent	kamakailan
+content folder	content folder
+OMSI 2 (saved as copy)	OMSI 2 (na-save bilang kopya)
+Open	Buksan
+Make a copy	Gumawa ng kopya
+A copy of the map in the content folder under a new name, to try something out	Kopya ng mapa sa content folder na may bagong pangalan, para subukan ang isang bagay
+Show in the file manager	Ipakita sa file manager
+Move to openMapper's bin	Ilipat sa bin ng openMapper
+Its folder goes into openMapper\\bin in the content folder, from where it can be put back by hand	Ang folder nito ay mapupunta sa openMapper\\bin sa content folder, kung saan puwede itong ibalik nang mano-mano
+Browse…	Mag-browse…
+Double-click a map to open it. Maps of OMSI 2 are saved as a copy into openOMSI's content folder; the original stays untouched.	I-double-click ang mapa para buksan. Ang mga mapa ng OMSI 2 ay sine-save bilang kopya sa content folder ng openOMSI; hindi nagbabago ang orihinal.
+A simple map editor for openOMSI.	Simpleng map editor para sa openOMSI.
+Back to the 3D view (0)	Bumalik sa 3D view (0)
+The plan view from above, north up (0)	Plan view mula sa itaas, north sa itaas (0)
+Recent maps	Mga kamakailang mapa
+(none)	(wala)
+Export map for sharing…	I-export ang mapa para ibahagi…
+Export a plan of the map…	I-export ang plano ng mapa…
+Earlier versions…	Mga naunang bersyon…
+Close map	Isara ang mapa
+Edit	I-edit
+Edit history…	Kasaysayan ng edit…
+Groups for other maps…	Mga group para sa ibang mapa…
+Find in map…	Hanapin sa mapa…
+Search for a command…	Maghanap ng command…
+Delete	Burahin
+Deselect	I-deselect
+Tile grid	Tile grid
+What the game does not show	Ang hindi ipinapakita ng laro
+AI lanes	Mga AI lane
+Names of stops and start points	Mga pangalan ng hintuan at start point
+Show	Ipakita
+Roads and splines	Mga kalsada at spline
+Overview map (M)	Overview map (M)
+Assets (B)	Mga asset (B)
+Flatten the terrain (roads follow)	Patagin ang terrain (susunod ang mga kalsada)
+Saved views…	Mga naka-save na view…
+Go to selection	Pumunta sa napili
+Camera	Kamera
+Unity: right button looks round and W A S D fly, middle pans, Alt orbits	Unity: ang right button ay tumitingin sa paligid at lumilipad ang W A S D, ang middle ay nagpa-pan, ang Alt ay nag-o-orbit
+Map editor: right button looks round and W A S D fly (Q down, E up), middle pans, the wheel zooms to the cursor, drag moves the map	Map editor: ang right button ay tumitingin sa paligid at lumilipad ang W A S D (Q pababa, E pataas), ang middle ay nagpa-pan, ang wheel ay nagzu-zoom sa cursor, ang drag ay naglilipat ng mapa
+Load 100 tiles at a time (like OMSI 2's editor)	Mag-load ng 100 tile bawat beses (tulad ng editor ng OMSI 2)
+Time of day	Oras ng araw
+Plain day (as the game by day)	Karaniwang araw (tulad ng laro sa araw)
+At an hour	Sa isang oras
+Where the sun stands then, today, at the map's place (Map > Calendar and place); by night the moon	Kung nasaan ang araw noon, ngayon, sa lugar ng mapa (Mapa > Kalendaryo at lugar); sa gabi, ang buwan
+Season	Panahon
+Summer	Tag-init
+Dry summer	Tuyong tag-init
+Spring	Tagsibol
+Autumn	Taglagas
+Winter	Taglamig
+Snow	Niyebe
+Graphics quality	Kalidad ng graphics
+Tools	Mga tool
+Road types and junctions…	Mga uri ng kalsada at junction…
+PBR maps for a picture…	Mga PBR map para sa larawan…
+Map	Mapa
+Map settings…	Mga setting ng mapa…
+Calendar and place…	Kalendaryo at lugar…
+Signal routes…	Mga signal route…
+Chrono scenarios…	Mga chrono scenario…
+Ground textures…	Mga ground texture…
+Check map…	Suriin ang mapa…
+Junctions made again:	Mga junction na muling ginawa:
+Lines and timetable…	Mga linya at timetable…
+Traffic and AI…	Trapiko at AI…
+Depot files (destinations)…	Mga depot file (destinasyon)…
+Satellite and terrain…	Satellite at terrain…
+From OpenStreetMap…	Mula sa OpenStreetMap…
+GPS tracks to trace…	Mga GPS track na susundan…
+Tiles from another map…	Mga tile mula sa ibang mapa…
+Test drive in openOMSI	Test drive sa openOMSI
+Test drive in OMSI 2 (the original)…	Test drive sa OMSI 2 (ang orihinal)…
+Check in openOMSI…	Suriin sa openOMSI…
+Getting started	Pagsisimula
+New map	Bagong mapa
+Open a map	Buksan ang mapa
+Save (Ctrl+S): there are unsaved changes	I-save (Ctrl+S): may mga hindi pa na-save na pagbabago
+Save (Ctrl+S)	I-save (Ctrl+S)
+Import assets: a mod folder or .zip, a .obj / .x / .o3d model (or drop files on the window)	Mag-import ng asset: mod folder o .zip, model na .obj / .x / .o3d (o i-drop ang mga file sa window)
+Redo (Ctrl+Shift+Z)	I-redo (Ctrl+Shift+Z)
+Tile grid (G)	Tile grid (G)
+Assets: every object and road type, with pictures (B)	Mga asset: bawat object at uri ng kalsada, may mga larawan (B)
+Test drive	Test drive
+Save the map and drive it in openOMSI (F5)	I-save ang mapa at imaneho sa openOMSI (F5)
+openOMSI was not found: install it to test maps	Hindi nakita ang openOMSI: i-install ito para masubukan ang mga mapa
+Test drive from the start point nearest the view	Test drive mula sa start point na pinakamalapit sa view
+See this view in openOMSI	Tingnan ang view na ito sa openOMSI
+loading	naglo-load
+Edit mesh	I-edit ang mesh
+Shapes and lamps	Mga hugis at lamp
+Click beside the map to add a 300 × 300 m tile. Right-click a tile to remove it.	I-click sa tabi ng mapa para magdagdag ng 300 × 300 m na tile. I-right-click ang tile para alisin.
+Area	Lugar
+A ring of tiles round the map	Singsing ng mga tile sa paligid ng mapa
+Every free place beside the map, corners too, gets a tile at the height of its neighbours	Bawat bakanteng lugar sa tabi ng mapa, pati mga sulok, ay lalagyan ng tile na kasing-taas ng mga kapitbahay nito
+Tiles added:	Mga tile na naidagdag:
+Everything on the map, grouped by the folders its files lie in	Lahat ng nasa mapa, naka-group ayon sa mga folder ng mga file nito
+Click an object or a road in the view to see and change it on the right.	I-click ang object o kalsada sa view para makita at baguhin ito sa kanan.
+Line up with the nearest road (Shift: put it freely)	Iayon sa pinakamalapit na kalsada (Shift: ilagay nang malaya)
+On both sides of the road	Sa magkabilang gilid ng kalsada
+A stop of the same name also goes at the kerb across the road, facing the other way	Ang hintuang may parehong pangalan ay inilalagay din sa kerb sa kabila ng kalsada, nakaharap sa kabilang direksyon
+In a row along a line	Sunod-sunod sa tabi ng linya
+Every	Bawat
+Draw new	Gumuhit ng bago
+Edit existing	I-edit ang mayroon na
+Click a path to pick it: every point is a dot to drag (the small ones in the middle of a piece bend it). Double-click the path to put a point in. Click a dot, then Del, to take that point out; Del with no dot picked deletes the whole path (Ctrl+Z brings it back). Lanes of roads and junctions belong to their road type: use Edit its AI lanes on the road.	I-click ang path para piliin ito: bawat punto ay tuldok na puwedeng i-drag (ang maliliit sa gitna ng piraso ay nagbabaluktot dito). I-double-click ang path para maglagay ng punto. I-click ang tuldok, saka Del, para alisin ang punto; ang Del na walang napiling tuldok ay buburahin ang buong path (maibabalik ito ng Ctrl+Z). Ang mga lane ng kalsada at junction ay bahagi ng uri ng kalsada nila: gamitin ang I-edit ang AI lane nito sa kalsada.
+Cars	Mga kotse
+People	Mga tao
+Show these in the other tools too	Ipakita rin ang mga ito sa ibang tool
+Show the AI's lanes in the other tools too	Ipakita rin ang mga lane ng AI sa ibang tool
+Everything	Lahat
+Search	Hanapin
+Shape the ground under the road	Hubugin ang lupa sa ilalim ng kalsada
+Go on drawing from the end of the road just built	Ipagpatuloy ang pagguhit mula sa dulo ng kalsadang kagagawa lang
+Join road ends, roads and junction pieces near the cursor	Ikabit sa mga dulo ng kalsada, kalsada at piraso ng junction malapit sa cursor
+Make junctions where roads meet	Gumawa ng junction kung saan nagtatagpo ang mga kalsada
+Go on with the type of the road I start from	Ipagpatuloy gamit ang uri ng kalsadang pinagsimulan ko
+Building with:	Ginagawa gamit ang:
+nothing chosen	walang napili
+Front at the roadside, back	Harap sa gilid ng kalsada, layo
+Plant brush: sow trees by painting	Plant brush: magtanim ng puno sa pagpipinta
+Sow	Magtanim
+Clear	Burahin
+With the brush	Gamit ang brush
+In an outline	Sa balangkas
+Click round an area (a wood, a park, a garden) and it is filled at once, or cleared	Mag-click sa palibot ng lugar (kagubatan, parke, hardin) at mapupunan ito agad, o lilinisin
+About	Mga
+plants (Enter: plant)	halaman (Enter: itanim)
+Size	Laki
+Apart	Pagitan
+Sows the object chosen below. Right-click entries: "Add to the plant mix" to sow several at random. Clearing takes trees and the mix's objects.	Itinatanim ang object na napili sa ibaba. I-right-click ang mga entry: "Idagdag sa plant mix" para magtanim ng ilan nang random. Inaalis ng Clear ang mga puno at object ng mix.
+Mix (picked at random):	Mix (random ang pili):
+reading OMSI 2…	binabasa ang OMSI 2…
+items	item
+Nothing found	Walang nakita
+mod	mod
+right-click: star it	right-click: lagyan ng star
+Take out of the plant mix	Alisin sa plant mix
+Add to the plant mix	Idagdag sa plant mix
+Remove from favourites	Alisin sa mga paborito
+Add to favourites	Idagdag sa mga paborito
+Favourites	Mga paborito
+Recently used	Kamakailang ginamit
+(not in a folder)	(wala sa folder)
+Strength	Lakas
+Mode	Mode
+Levels the ground to the height where you start dragging	Pinapatag ang lupa sa taas kung saan nagsimula ang drag
+Softens bumps and edges	Pinapakinis ang mga bukol at gilid
+Raises the ground under the brush	Itinataas ang lupa sa ilalim ng brush
+Lowers the ground under the brush	Ibinababa ang lupa sa ilalim ng brush
+Gives flat ground the rolls and dips of a natural field; hold longer for more	Binibigyan ang patag na lupa ng mga alon at lubak ng natural na bukid; pindutin nang mas matagal para mas marami
+Paint a lake or a river: the ground is dug to a bed under the water's level (where you start the stroke, or the tile's water) and the tile gets water at that level. Water in OMSI is one level for a whole tile: another low place on the same tile shows it too	Magpinta ng lawa o ilog: huhukayin ang lupa hanggang sa lalim sa ilalim ng lebel ng tubig (kung saan nagsimula ang stroke, o ang tubig ng tile) at magkakaroon ng tubig ang tile sa lebel na iyon. Isang lebel ang tubig sa OMSI para sa buong tile: ipapakita rin ito ng ibang mababang lugar sa parehong tile
+Click where it starts, then where it ends: the ground between becomes one even slope as wide as the brush (an embankment, a ramp, a level bed)	I-click kung saan magsisimula, saka kung saan magtatapos: ang lupa sa pagitan ay magiging pantay na slope na kasinlapad ng brush (embankment, ramp, patag na higaan)
+To a height	Sa isang taas
+Flatten to the height typed instead of the one where the drag starts (a level square, a platform)	Patagin sa taas na itinype sa halip na sa taas kung saan nagsimula ang drag (patag na parisukat, platform)
+Depth	Lalim
+The water's level is set where a stroke starts: start at the bank.	Itinatakda ang lebel ng tubig kung saan nagsimula ang stroke: magsimula sa pampang.
+Brush	Brush
+Flatten the whole terrain	Patagin ang buong terrain
+Every tile's ground levelled to the map's mean height; the roads, the AI paths and the junctions follow it. One undo step brings the relief back. (The satellite picture: View > Satellite overlay.)	Pinapatag ang lupa ng bawat tile sa karaniwang taas ng mapa; sumusunod ang mga kalsada, AI path at junction. Ibabalik ng isang undo step ang relief. (Ang satellite picture: View > Satellite overlay.)
+Ground layers	Mga ground layer
+base ground	base ground
+layer	layer
+Add…	Magdagdag…
+Remove	Alisin
+Up the list: drawn under the layers after it	Pataas sa listahan: iginuguhit sa ilalim ng mga sumusunod na layer
+Down the list: drawn over the layers before it	Pababa sa listahan: iginuguhit sa ibabaw ng mga naunang layer
+Texture	Texture
+The layer's picture; its painting stays	Larawan ng layer; nananatili ang pintura nito
+A fine grain laid over the texture, seen close up (OMSI's detail texture)	Pinong grain sa ibabaw ng texture, makikita sa malapitan (detail texture ng OMSI)
+Click to choose another	I-click para pumili ng iba
+Repeats per tile	Ulit bawat tile
+Detail repeats	Ulit ng detail
+How finely this layer can be painted: texels across a tile (its masks are made again at the new size)	Gaano kapino mapipinturahan ang layer na ito: texel sa kabuuan ng tile (muling ginagawa ang mga mask sa bagong laki)
+Edit ground texture	I-edit ang ground texture
+Erase	Burahin
+Remove ground texture	Alisin ang ground texture
+Tile	Tile
+A water surface over the whole tile: it shows where the ground lies below it (lower the ground with the Terrain tool for a lake or a river)	Ibabaw ng tubig sa buong tile: makikita kung saan mas mababa ang lupa (ibaba ang lupa gamit ang Terrain tool para sa lawa o ilog)
+at 	sa
+Lamps light the ground at night	Iniilawan ng mga lamp ang lupa sa gabi
+The game works out the light pools of the street lamps on and round this tile when it loads it ([variable_terrainlightmap]); off, it shows the tile's light map file as it is	Kinakalkula ng laro ang mga bilog ng ilaw ng street lamp sa tile na ito at sa paligid nito kapag nilo-load ito ([variable_terrainlightmap]); kapag naka-off, ipinapakita ang light map file ng tile kung ano ito
+Edit history	Kasaysayan ng edit
+Click a step to go back to just after it	I-click ang hakbang para bumalik sa kaagad pagkatapos nito
+Opened	Binuksan
+Properties	Properties
+Configure PBR	I-configure ang PBR
+Create PBR	Gumawa ng PBR
+Normal, roughness, metal and shadow maps made from the object's textures, tuned and written as openOMSI reads them	Mga normal, roughness, metal at shadow map na gawa mula sa mga texture ng object, inayos at isinulat ayon sa pagbasa ng openOMSI
+Type	Uri
+Hangs on	Nakasabit sa
+point	punto
+Location	Lokasyon
+East	Silangan
+North	Hilaga
+Height above sea level	Taas mula sa sea level
+above the ground:	sa ibabaw ng lupa:
+OMSI keeps this object's height above the ground under it: moved elsewhere it stays as high above the ground there	Iniingatan ng OMSI ang taas ng object na ito sa ibabaw ng lupa sa ilalim nito: kapag inilipat sa ibang lugar, ganoon pa rin ang taas nito sa ibabaw ng lupa roon
+Rotation	Pag-ikot
+Tilt forward (pitch)	Ikiling pasulong (pitch)
+Bank to the side (roll)	Ikiling sa gilid (roll)
+Heading	Heading
+Turn it the way the nearest road runs beside it	Paikutin ayon sa takbo ng pinakamalapit na kalsada sa tabi nito
+Stand it upright again	Patayuing muli nang tuwid
+Picture	Larawan
+Ratio	Ratio
+Stop name	Pangalan ng hintuan
+This tree	Punong ito
+Texts	Mga teksto
+Shown on the object (@ starts a new line)	Ipinapakita sa object (@ ay nagsisimula ng bagong linya)
+Model	Model
+Triangles	Mga triangle
+Parts	Mga bahagi
+Part	Bahagi
+triangles	mga triangle
+colour only	kulay lang
+opaque	opaque
+cut out	cut out
+blended	blended
+How the texture's transparency is used: cut out for leaves and fences, blended for glass	Paano ginagamit ang transparency ng texture: cut out para sa dahon at bakod, blended para sa salamin
+Textures	Mga texture
+Normal, roughness, metal and shadow maps made from the road type's textures	Mga normal, roughness, metal at shadow map na gawa mula sa mga texture ng uri ng kalsada
+Length	Haba
+Radius	Radius
+right	kanan
+left	kaliwa
+straight	tuwid
+start	simula
+end	dulo
+Mirrored	Naka-mirror
+Skew	Skew
+The start cut on a slant: 1 is 45° (two fences meeting at a corner: 1 and -1)	Pahilig na putol sa simula: ang 1 ay 45° (dalawang bakod na nagtatagpo sa sulok: 1 at -1)
+The end cut on a slant	Pahilig na putol sa dulo
+Ground	Lupa
+as it is	ayon sa dati
+cut away under it	putulin sa ilalim nito
+cut, held at the end	putol, hawak sa dulo
+cut, held at the start	putol, hawak sa simula
+cut, held at both ends	putol, hawak sa magkabilang dulo
+A hole in the ground under it, as for a tunnel, an underpass or a pit (OMSI's terrain align)	Butas sa lupa sa ilalim nito, tulad ng tunnel, underpass o hukay (terrain align ng OMSI)
+Select the whole road	Piliin ang buong kalsada
+Every piece linked on from this one (or double-click the road)	Bawat pirasong naka-link mula rito (o i-double-click ang kalsada)
+Join with the next piece	Pagdugtungin sa susunod na piraso
+One piece again with the one after it, where the two make one curve	Isang piraso ulit kasama ang kasunod nito, kung saan bumubuo ng iisang kurba ang dalawa
+Replace with	Palitan ng
+The object chosen in the Objects tool's catalogue takes this one's place	Ang object na napili sa catalogue ng Objects tool ang papalit dito
+Go to	Pumunta sa
+Level ground	Patagin ang lupa
+The ground under it made level with its foot, blending in 3 m round it (a house on a slope)	Pinapatag ang lupa sa ilalim nito sa antas ng paanan nito, humahalo sa 3 m sa paligid (bahay sa dalisdis)
+All like it	Lahat ng katulad nito
+Select every one of this type on the map	Piliin ang bawat isa sa uri na ito sa mapa
+No road within 60 m	Walang kalsada sa loob ng 60 m
+Name	Pangalan
+Folder	Folder
+Traffic	Trapiko
+left-hand	kaliwang-gilid
+No start point yet: place one (Game logic > Start points) so the bus has somewhere to appear in openOMSI.	Wala pang start point: maglagay ng isa (Game logic > Start points) para may mapaglitawan ang bus sa openOMSI.
+None yet: openOMSI shows it where maps are chosen.	Wala pa: ipinapakita ito ng openOMSI kapag pumipili ng mapa.
+Import your thumbnail	I-import ang thumbnail mo
+Choose a picture: it is cut to 370 × 280 and becomes the map's picture (picture.jpg).	Pumili ng larawan: puputulin ito sa 370 × 280 at magiging larawan ng mapa (picture.jpg).
+Open the map with this view	Buksan ang mapa sa view na ito
+The camera as it is now is where the map opens (here and in OMSI 2's editor).	Ang camera ngayon ang pagbubukasan ng mapa (dito at sa editor ng OMSI 2).
+Saved to	Naka-save sa
+Edit map	I-edit ang mapa
+Change the layer's texture	Palitan ang texture ng layer
+Change the layer's detail texture	Palitan ang detail texture ng layer
+Controls	Mga kontrol
+Keyboard	Keyboard
+Click a key, then press the new one (Esc: leave it). A key already in use is taken from its command.	I-click ang key, saka pindutin ang bago (Esc: iwan). Ang key na gamit na ay kukunin sa command nito.
+press a key…	pindutin ang key…
+Also:	Pati na:
+Back to the default key	Bumalik sa default na key
+Reset all keys	I-reset ang lahat ng key
+Mouse	Mouse
+Right button held	Hawak ang right button
+look round; W A S D fly, Q / E down / up, Shift faster, wheel: speed	tumingin sa paligid; W A S D lipad, Q / E pababa / pataas, Shift mas mabilis, wheel: bilis
+Middle drag	Middle drag
+pan	pan
+Alt + left / right / middle drag	Alt + left / right / middle drag
+orbit / zoom / pan (as in Unity)	orbit / zoom / pan (tulad sa Unity)
+Left drag on nothing	Left drag sa walang laman
+select with a box	pumili gamit ang box
+Alt + left drag	Alt + left drag
+orbit round the point under the cursor	umikot sa paligid ng punto sa ilalim ng cursor
+Wheel	Wheel
+move towards the cursor	lumapit sa cursor
+Trackpad	Trackpad
+Two fingers	Dalawang daliri
+Pinch / twist	Pinch / twist
+zoom / turn	zoom / ikot
+Option + two fingers or drag	Option + dalawang daliri o drag
+Fixed keys	Mga nakapirming key
+Arrow keys	Mga arrow key
+move over the map (Shift: faster)	gumalaw sa mapa (Shift: mas mabilis)
+go to a saved view (Shift: keep the view there)	pumunta sa naka-save na view (Shift: itago ang view doon)
+Alt + arrows	Alt + mga arrow
+move the selection a grid step (Shift: 10 cm)	ilipat ang napili ng isang hakbang ng grid (Shift: 10 cm)
+Alt + Page Up / Down	Alt + Page Up / Down
+selection up / down 10 cm (Shift: 1 m)	taasan / ibaba ang napili ng 10 cm (Shift: 1 m)
+add to / take from the selection	idagdag sa / alisin sa napili
+Shift / Ctrl + drag on empty ground	Shift / Ctrl + drag sa walang lamang lupa
+select with a box (Shift adds)	pumili gamit ang box (Shift: idagdag)
+Double-click a road	I-double-click ang kalsada
+select all of it	piliin ang buo nito
+turn the object	paikutin ang object
+brush size	laki ng brush
+stop / deselect	ihinto / i-deselect
+Unsaved changes	Mga hindi pa na-save na pagbabago
+The map has changes that are not saved. Save them first?	May mga pagbabago ang mapa na hindi pa na-save. I-save muna?
+Don't save	Huwag i-save
+Assets	Mga asset
+All	Lahat
+Picture size	Laki ng larawan
+Shapes…	Mga hugis…
+Close (B)	Isara (B)
+Scenery objects	Mga scenery object
+Splines (roads, tracks…)	Mga spline (kalsada, riles…)
+Favourite on / off	Paborito naka-on / naka-off
+content folder (mod, import, own)	content folder (mod, import, sarili)
+OMSI 2	OMSI 2
+width	lapad
+Build with it	Gumawa gamit ito
+Place it	Ilagay
+PBR material…	PBR material…
+Delete…	Burahin…
+Not seen in the game (a helper).	Hindi nakikita sa laro (helper).
+Delete the asset?	Burahin ang asset?
+Its folder goes into openMapper's bin in the content folder (openMapper\\bin), from where it can be put back by hand. Maps that use it show it missing.	Mapupunta ang folder nito sa bin ng openMapper sa content folder (openMapper\\bin), kung saan puwede itong ibalik nang mano-mano. Ipapakitang nawawala ito sa mga mapang gumagamit nito.
+Calendar and place	Kalendaryo at lugar
+Place and time	Lugar at oras
+Holidays	Mga holiday
+Number plates	Mga plaka
+Latitude	Latitude
+Longitude	Longitude
+Time zone	Time zone
+Where the sun stands and when it rises and sets come from here.	Dito galing ang kinatatayuan ng araw at ang oras ng sikat at lubog nito.
+Summer time	Summer time
+years	taon
+none: the clocks are never put forward	wala: hindi kailanman iniaabante ang orasan
+EU rules for these years	Mga patakaran ng EU para sa mga taong ito
+Last Sunday of March to last Sunday of October, replacing what is set for these years	Mula huling Linggo ng Marso hanggang huling Linggo ng Oktubre, na pumapalit sa itinakda para sa mga taong ito
+None	Wala
+Year	Taon
+entries	mga entry
+Public holidays run Sunday's timetable; school holidays the holiday one.	Sa mga public holiday, ang timetable ng Linggo ang tumatakbo; sa mga school holiday, ang holiday timetable.
+Public holidays	Mga public holiday
+Add a holiday	Magdagdag ng holiday
+Holiday	Holiday
+School holidays	Mga school holiday
+Ends before it starts	Natatapos bago magsimula
+Add school holidays	Magdagdag ng mga school holiday
+The AI's cars carry these, one a line.	Ito ang dala ng mga kotse ng AI, isa bawat linya.
+X: a letter, 9: a digit	X: letra, 9: numero
+Make	Gumawa
+Replaces the list with plates of the pattern	Pinapalitan ang listahan ng mga plakang may ganitong pattern
+plates	mga plaka
+The scenario's AI lists are written, groups changed:	Naisulat ang mga AI list ng scenario, mga group na nagbago:
+Could not write the scenario	Hindi maisulat ang scenario
+The scenario's timetable is written, files:	Naisulat ang timetable ng scenario, mga file:
+Back in the scenario:	Balik sa scenario:
+The scenario's things are on the map:	Nasa mapa ang mga bagay ng scenario:
+what you place now is the scenario's too	ang inilalagay mo ngayon ay bahagi na rin ng scenario
+Editing the scenario	Ine-edit ang scenario
+Done	Tapos na
+Chrono scenarios	Mga chrono scenario
+How the map changes over the years: each scenario from its first day lays its own tiles, lines and tickets over the map. The view shows the map as on the day chosen here; what you edit is always the map itself.	Kung paano nagbabago ang mapa sa paglipas ng mga taon: bawat scenario mula sa unang araw nito ay naglalatag ng sarili nitong mga tile, linya at tiket sa ibabaw ng mapa. Ipinapakita ng view ang mapa sa araw na pinili rito; ang mapa mismo ang palaging ine-edit mo.
+Show the map as on	Ipakita ang mapa sa
+Today	Ngayon
+Active on that day:	Aktibo sa araw na iyon:
+New scenario's name	Pangalan ng bagong scenario
+New scenario	Bagong scenario
+A scenario starting on the day shown, after the others	Scenario na nagsisimula sa araw na ipinapakita, pagkatapos ng iba
+From	Mula
+To	Hanggang
+for good	magpakailanman
+Own tickets	Sariling mga tiket
+Own money	Sariling pera
+the map's	ng mapa
+Takes off	Nag-aalis ng mga linya
+What changes (shown where the date is chosen)	Ang nagbabago (ipinapakita kapag pumipili ng petsa)
+From its first day, the selection in the view:	Mula sa unang araw nito, ang napili sa view:
+appears	lilitaw
+Taken out of the map into the scenario: it is there from the scenario's first day on (place it first, then press this)	Inaalis sa mapa papunta sa scenario: naroon ito mula sa unang araw ng scenario (ilagay muna, saka pindutin ito)
+is gone	mawawala
+Stays in the map, gone from the scenario's first day on	Nananatili sa mapa, wala na mula sa unang araw ng scenario
+becomes	magiging
+its texts become	magiging ang mga teksto nito
+Write	Isulat
+Its path rules from that day	Ang path rules nito mula sa araw na iyon
+Add a rule	Magdagdag ng patakaran
+Written into the scenario at once (undo does not take it out of the scenario).	Agad na isinusulat sa scenario (hindi ito inaalis sa scenario ng undo).
+What it changes	Ang binabago nito
+into the map	sa mapa
+Out of the scenario into the map itself: there on every day	Mula sa scenario papunta sa mismong mapa: nariyan sa bawat araw
+Take it out of the scenario	Alisin sa scenario
+new texts	mga bagong teksto
+rules	mga patakaran
+Nothing yet.	Wala pa.
+Its own things are on the map: select, move, change and place as usual. The map's own things stay the map's.	Nasa mapa ang sarili nitong mga bagay: piliin, ilipat, baguhin at ilagay gaya ng dati. Nananatiling sa mapa ang mga bagay ng mapa.
+Done: back into the scenario	Tapos: bumalik sa scenario
+Edit its own things on the map	I-edit ang sarili nitong mga bagay sa mapa
+What it brings in is put on the map to work with as with anything else; Done writes it back (undo starts afresh)	Ang idinadala nito ay inilalagay sa mapa para gawin gaya ng anupamang bagay; isinusulat itong muli ng Tapos na (nagsisimulang muli ang undo)
+The Lines window shows its timetable (the map's with its own laid over): lines, trips and tours edited there are the scenario's; a line of the map taken away is taken off from its day.	Ipinapakita ng Lines window ang timetable nito (ang sa mapa na may sariling nakapatong): ang mga linya, biyahe at tour na ine-edit doon ay sa scenario; ang linya ng mapa na inalis ay inaalis mula sa araw nito.
+Done with its timetable	Tapos na sa timetable nito
+Edit its timetable	I-edit ang timetable nito
+Its own lines, trips and tours in the Lines window; Done writes only what differs from the map's (undo starts afresh)	Ang sarili nitong mga linya, biyahe at tour sa Lines window; isinusulat lang ng Tapos na ang naiiba sa sa mapa (nagsisimulang muli ang undo)
+The Traffic window shows its AI lists (the map's with its own added): vehicles and type groups added there, and a depot's own depot file, are the scenario's from its day.	Ipinapakita ng Traffic window ang mga AI list nito (ang sa mapa na may idinagdag na sarili): ang mga sasakyan at type group na idinagdag doon, at ang sariling depot file ng depot, ay sa scenario mula sa araw nito.
+Done with its AI lists	Tapos na sa mga AI list nito
+Edit its AI lists	I-edit ang mga AI list nito
+Vehicles it adds to the groups and depots (OMSI's ailists_#upd.cfg); taking one away is the map's own business	Mga sasakyang idinadagdag nito sa mga group at depot (ailists_#upd.cfg ng OMSI); ang pag-alis ng isa ay gawain ng mismong mapa
+Write the scenario	Isulat ang scenario
+Close	Isara
+The map has no chrono scenarios.	Walang chrono scenario ang mapa.
+from	mula
+to	hanggang
+takes off	nag-aalis
+own tickets	sariling mga tiket
+Its first day	Unang araw nito
+Written into the scenario	Naisulat sa scenario
+Written into the scenario:	Naisulat sa scenario:
+Scenario written	Naisulat ang scenario
+The map as on	Ang mapa sa
+scenarios:	mga scenario:
+Multiplayer	Multiplayer
+Joining… (a big map takes a while to come)	Sumasali… (medyo matagal ang malaking mapa)
+Recover a conflicting edit…	Bawiin ang nagkakasalungat na edit…
+Recovered your edit; undo is available	Nabawi ang edit mo; puwede itong i-undo
+Edit one map together: one of you hosts it, the others join. Roads, objects, ground and paint are shared as they are made; the timetable, the traffic and the descriptions stay the host's, and the host saves the map. Everybody needs the same objects and splines installed.	Mag-edit ng isang mapa nang magkakasama: isa sa inyo ang nagho-host, ang iba ay sumasali. Ibinabahagi agad ang mga kalsada, object, lupa at pintura; nananatiling sa host ang timetable, trapiko at paglalarawan, at ang host ang nagse-save ng mapa. Kailangang pareho ang naka-install na object at spline ng lahat.
+Your name	Pangalan mo
+Password	Password
+Host this map	I-host ang mapang ito
+Others on this network can join	Puwedeng sumali ang iba sa network na ito
+Others anywhere can join (a free Cloudflare tunnel, nothing to set up on the router)	Puwedeng sumali ang iba kahit saan (libreng Cloudflare tunnel, walang i-se-setup sa router)
+Port	Port
+Over the internet the password must have at least this many letters:	Sa internet, dapat may ganito karaming letra man lang ang password:
+No password: anybody who reaches this computer's port can join and change the whole map.	Walang password: sinumang makaabot sa port ng computer na ito ay puwedeng sumali at baguhin ang buong mapa.
+Ask for a password after all	Humingi pa rin ng password
+Host without a password? Anybody on this network who finds the port can join and change the whole map.	Mag-host nang walang password? Sinumang nasa network na ito na makakita ng port ay puwedeng sumali at baguhin ang buong mapa.
+Yes, without a password	Oo, walang password
+No	Hindi
+Type a password the others will need.	Maglagay ng password na kakailanganin ng iba.
+Host without a password…	Mag-host nang walang password…
+Host	Mag-host
+Open a map, type a name and a password first	Magbukas muna ng mapa, maglagay ng pangalan at password
+Join a map	Sumali sa mapa
+The map open now has unsaved changes: joining closes it. Save it first.	May mga hindi pa na-save na pagbabago ang bukas na mapa: isasara ito ng pagsali. I-save muna.
+You host this map. Give the others one of these:	Ikaw ang host ng mapang ito. Ibigay sa iba ang isa sa mga ito:
+On this network the connection is not encrypted: somebody listening in can see the map, and from what they catch try passwords on their own computer. Use a long password, or the internet tunnel (encrypted).	Sa network na ito, hindi naka-encrypt ang koneksyon: makikita ng nakikinig ang mapa, at mula sa nakuha nila ay makakasubok ng password sa sarili nilang computer. Gumamit ng mahabang password, o ng internet tunnel (naka-encrypt).
+Everybody who joins can change the whole map.	Sinumang sumali ay puwedeng baguhin ang buong mapa.
+Opening the Cloudflare tunnel… (fetched the first time)	Binubuksan ang Cloudflare tunnel… (dina-download sa unang beses)
+internet	internet
+Waiting for Cloudflare's address…	Hinihintay ang address ng Cloudflare…
+The Cloudflare tunnel could not be opened (no cloudflared, or no internet). The LAN addresses still work.	Hindi mabuksan ang Cloudflare tunnel (walang cloudflared, o walang internet). Gumagana pa rin ang mga LAN address.
+You joined this map. The host saves it.	Sumali ka sa mapang ito. Ang host ang nagse-save.
+Everything of yours is with the others	Nasa iba na ang lahat ng sa iyo
+Sending your edits…	Ipinapadala ang mga edit mo…
+In the session	Sa session
+Say something…	Magsabi ng kahit ano…
+Leave	Umalis
+Knife (K): a click on a road cuts it there, as often as you like; the pieces' lengths shown at the cursor, on whole grid steps with grid snapping on · right-click or Esc: off	Knife (K): ang click sa kalsada ay puputol dito, kahit ilang beses; ipinapakita ang haba ng mga piraso sa cursor, sa buong hakbang ng grid kapag naka-on ang grid snapping · right-click o Esc: patayin
+The angle step: what snapping comes to and what R turns by	Hakbang ng anggulo: kung saan kumakapit ang snapping at kung gaano umiikot ang R
+Angle	Anggulo
+Snap headings to the angle step	I-snap ang heading sa hakbang ng anggulo
+Grid	Grid
+Snap positions to the grid	I-snap ang posisyon sa grid
+Click two points to measure the distance and gradient between them (U) · right-click: off	I-click ang dalawang punto para sukatin ang distansya at gradient sa pagitan nila (U) · right-click: patayin
+Auto-Terrain	Auto-Terrain
+What you build follows the ground: roads, paths and tracks take its height (off: they run level from where they start). Only what is built from now on; nothing already there changes	Sumusunod sa lupa ang itinatayo mo: kinukuha ng mga kalsada, path at track ang taas nito (naka-off: patag mula sa simula). Ang itatayo lang mula ngayon; walang nagbabago sa mayroon na
+Auto-Switch	Auto-Switch
+Branching a track off another makes a switch there	Ang pagsanga ng track sa isa pa ay gumagawa ng switch doon
+Auto-Junction	Auto-Junction
+Auto-Align	Auto-Align
+Line objects up with the nearest road (Shift: put it freely)	Iayon ang mga object sa pinakamalapit na kalsada (Shift: ilagay nang malaya)
+Selection	Seleksyon
+A click on one of it selects all of it, Ctrl + click one alone	Ang click sa isa nito ay pumipili ng lahat, ang Ctrl + click ay isa lang
+Keep these together: a click on one selects all, a drag moves all (Ctrl+G)	Panatilihing magkakasama: ang click sa isa ay pumipili ng lahat, ang drag ay naglilipat ng lahat (Ctrl+G)
+Apply	Ilapat
+Turn	Ikot
+Level the ground under them	Patagin ang lupa sa ilalim nila
+Each one's outline made level with its foot, blending into the ground 3 m round it	Ang balangkas ng bawat isa ay pinapatag sa antas ng paanan nito, humahalo sa lupa sa 3 m sa paligid
+Make every object	Gawing ito ang lahat ng object
+The object chosen in the Objects tool's catalogue	Ang object na napili sa catalogue ng Objects tool
+Random headings	Random na heading
+Every selected object turned its own random way (trees, bushes, rocks)	Bawat napiling object ay pinaikot sa sarili nitong random na direksyon (puno, palumpong, bato)
+Along the road	Sa tabi ng kalsada
+Each turned the way the nearest road runs beside it	Bawat isa ay pinaikot ayon sa takbo ng pinakamalapit na kalsada sa tabi nito
+Turned:	Napaikot:
+All like this one	Lahat ng katulad nito
+Every selected object takes the heading of the one in the properties	Kinukuha ng bawat napiling object ang heading ng nasa properties
+Make every road	Gawing ito ang lahat ng kalsada
+The road type chosen in the Roads tool's catalogue	Ang uri ng kalsadang napili sa catalogue ng Roads tool
+Lay them on the ground	Ilapat sa lupa
+Reverse their direction	Baligtarin ang direksyon nila
+Even slope along them	Pantay na slope sa kahabaan nila
+One chain of roads: from the height at one end to that at the other, evenly (a bridge, a ramp)	Isang kadena ng mga kalsada: mula sa taas sa isang dulo hanggang sa taas sa kabila, nang pantay (tulay, ramp)
+Edit its AI lanes	I-edit ang mga AI lane nito
+Its lanes become AI paths of their own (the same lines, the same way) that the Logic tool's Edit existing bends, moves and deletes. The road keeps its look.	Nagiging sarili nilang AI path ang mga lane nito (parehong linya, parehong direksyon) na binabaluktot, inililipat at binubura ng Edit existing ng Logic tool. Nananatili ang hitsura ng kalsada.
+Ends (joined roads follow)	Mga dulo (sumusunod ang mga nakadugtong na kalsada)
+height	taas
+gradient	gradient
+cant	cant
+Banking across the road, %: positive lowers its right side (into a right bend)	Banking sa kabila ng kalsada, %: ang positibo ay nagpapababa sa kanang gilid (papasok sa kanang liko)
+End	Dulo
+Even slope end to end	Pantay na slope mula dulo hanggang dulo
+Both gradients to the straight climb between the ends' heights	Parehong gradient sa tuwid na akyat sa pagitan ng mga taas ng dulo
+Speed limit, km/h	Limitasyon ng bilis, km/h
+Traffic density ×	Densidad ng trapiko ×
+Priority	Priyoridad
+Trucks (0: none)	Mga trak (0: wala)
+No cars	Walang kotse
+Buses only	Mga bus lang
+For the AI and the player on one path (lane) of it, counted from 0: the view shows their numbers	Para sa AI at sa player sa isang path (lane) nito, bilang mula 0: ipinapakita ng view ang mga numero nila
+Path (lane) number	Numero ng path (lane)
+Hanging on it	Nakasabit dito
+Points to hang objects on:	Mga punto para sabitan ng object:
+Select it	Piliin ito
+Hang	Isabit
+Choose an object in the Objects catalogue first	Pumili muna ng object sa catalogue ng Objects
+A fence, a row of houses, an avenue: the selection copied again and again, a step on each time	Bakod, hanay ng bahay, avenue: paulit-ulit na kinokopya ang napili, may hakbang sa bawat beses
+Copies	Mga kopya
+Step	Hakbang
+Turn each	Ikot ng bawat isa
+Rows	Mga hanay
+More than one: a grid (an orchard, a car park), each row a row step on	Higit sa isa: grid (taniman, paradahan), bawat hanay ay may row step
+Row step	Row step
+Tilted to the ground under it, the way it slopes forward and to the side (a fence, a bench or a shed on a hillside)	Nakatagilid ayon sa lupa sa ilalim nito, sa dalisdis pasulong at patagilid (bakod, bangko o kubo sa burol)
+Heights along the ground again, smoothed so it climbs a hill rather than every bump (after shaping the ground or laying a height map over it); where a road not selected joins, its height is kept	Muling sumusunod ang taas sa lupa, pinakinis para umakyat sa burol sa halip na sa bawat bukol (matapos hubugin ang lupa o lagyan ng height map); kung saan nakadugtong ang hindi napiling kalsada, pinananatili ang taas nito
+Each starts where it ended: the traffic on it goes the other way (a one-way street, a track's direction), the road itself stays where it is	Bawat isa ay nagsisimula kung saan ito natapos: kabilang direksyon ang takbo ng trapiko rito (one-way na kalye, direksyon ng track), nananatili sa lugar ang kalsada
+A second track or the other carriageway: the selected splines copied alongside, bends kept exact, linked as they are	Pangalawang track o kabilang carriageway: kinokopya ang napiling mga spline sa tabi, eksakto ang mga liko, naka-link tulad ng dati
+To the left	Sa kaliwa
+To the right	Sa kanan
+Left and right of the way the road runs (its arrows with AI lanes shown)	Kaliwa at kanan ng takbo ng kalsada (ang mga arrow nito kapag ipinapakita ang AI lane)
+For trams and electric trains: a wire spline laid on the selected track, piece for piece and linked (its height is the wire spline's own); the masts go in with Objects along the road	Para sa tram at electric train: wire spline na inilatag sa napiling track, piraso por piraso at naka-link (sariling taas ng wire spline ang taas nito); ang mga poste ay inilalagay gamit ang Mga object sa tabi ng kalsada
+No wire spline installed (one whose name says Fahrdraht, Oberleitung or wire)	Walang naka-install na wire spline (yung may Fahrdraht, Oberleitung o wire sa pangalan)
+Lay it	Ilatag
+Wire pieces laid:	Mga piraso ng wire na nailatag:
+Paint the ground along it	Pintahan ang lupa sa tabi nito
+Add a ground texture in the Paint tool first: the base ground is under everything	Magdagdag muna ng ground texture sa Paint tool: nasa ilalim ng lahat ang base ground
+Layer	Layer
+Where	Saan
+beside it	sa tabi nito
+under it too	pati sa ilalim nito
+Out from its edge	Mula sa gilid nito
+Soft edge	Malambot na gilid
+A gravel verge, dirt by a track, grass along a path: the brush of the Paint tool touches it up afterwards	Graba sa gilid, lupa sa tabi ng track, damo sa tabi ng daan: aayusin pagkatapos ng brush ng Paint tool
+Beside	Sa tabi
+Lean with the road	Sumandal kasama ng kalsada
+Each object leans with the road's gradient and banking (bays and arrows on the road); off, it stands upright	Bawat object ay sumasandal ayon sa gradient at banking ng kalsada (mga bay at arrow sa kalsada); kapag naka-off, tuwid ang tayo
+A text the row's objects show (@ starts a new line)	Tekstong ipinapakita ng mga object ng hanay (@ ay nagsisimula ng bagong linya)
+Object:	Object:
+Pick an object (a lamp, a tree, a bollard) in the Objects tool's catalogue	Pumili ng object (lamp, puno, bollard) sa catalogue ng Objects tool
+Right of the road's direction; negative: left	Sa kanan ng direksyon ng kalsada; negatibo: kaliwa
+Free at start / end	Libre sa simula / dulo
+Both sides	Magkabilang gilid
+Place along the road	Ilagay sa tabi ng kalsada
+Remove all rows	Alisin ang lahat ng hanay
+Roundabout: click the centre, then the ring	Rotonda: i-click ang gitna, saka ang singsing
+A one-way ring of the chosen road type (pick a one-way road); roads inside are cut back to it and joined with junctions	One-way na singsing ng napiling uri ng kalsada (pumili ng one-way na kalsada); ang mga kalsada sa loob ay pinuputol hanggang dito at pinagdudugtong ng mga junction
+Keep the height (bridge, embankment)	Panatilihin ang taas (tulay, embankment)
+An even gradient from end to end, the ground left as it is; the rise to the end can be typed while drawing. Pillars: select the road and put them along it as objects.	Pantay na gradient mula dulo hanggang dulo, hindi ginagalaw ang lupa; ang pagtaas hanggang dulo ay maaaring i-type habang gumuguhit. Mga haligi: piliin ang kalsada at ilagay sa tabi nito bilang mga object.
+Rise	Pagtaas
+Shift: straight · Enter: build	Shift: tuwid · Enter: buuin
+Junction	Junction
+Traffic lights	Mga traffic light
+Lights need three roads or more	Kailangan ng ilaw ng tatlong kalsada o higit pa
+Main road green	Berde ng pangunahing kalsada
+Side roads green	Berde ng mga side road
+The main road is the pair of roads most in line; red-yellow 2 s, yellow 3 s, 2 s all red between	Ang pangunahing kalsada ay ang pares ng kalsadang pinakatuwid sa isang linya; pula-dilaw 2 s, dilaw 3 s, 2 s na lahat pula sa pagitan
+Zebra crossings	Mga tawiran
+Road	Kalsada
+Build it again	Buuin muli
+Makes the plate, its kerbs and lanes again for the roads as they are now	Muling ginagawa ang plate, mga kerb at lane para sa mga kalsada ayon sa kasalukuyan
+Linked objects	Mga naka-link na object
+An object can take its state from another ([varparent]): a signal head shows a light of its crossing's program, a stop's display its stop.	Maaaring kunin ng object ang state nito sa iba ([varparent]): ang signal head ay nagpapakita ng ilaw mula sa program ng crossing nito, ang display ng hintuan ay ang hintuan nito.
+Takes its state from	Kinukuha ang state mula sa
+Select it: IDCode	Piliin ito: IDCode
+Takes its state from an object that is gone: IDCode	Kinukuha ang state mula sa object na wala na: IDCode
+Takes its state from nothing	Walang pinagkukunan ng state
+Light	Ilaw-trapiko
+Its light is not one of the crossing's: it stays dark	Hindi ito ilaw ng crossing: nananatili itong madilim
+That object runs no traffic lights: link the head to a crossing with a light program	Walang pinatatakbong traffic light ang object na iyon: i-link ang head sa crossing na may light program
+A signal head: link it to its crossing to have it light	Signal head: i-link sa crossing nito para umilaw
+Click the object in the view… (Esc)	I-click ang object sa view… (Esc)
+Link to another…	I-link sa iba…
+Link to an object…	I-link sa object…
+Then click the object it is to take its state from (a crossing for a signal head)	Saka i-click ang object na pagkukunan nito ng state (crossing para sa signal head)
+Taking their state from it:	Kumukuha ng state mula rito:
+light	ilaw
+Click the object it takes its state from	I-click ang object na pagkukunan nito ng state
+stop	hintuan
+Find in map	Hanapin sa mapa
+Name, file, IDCode, stop or x, y	Pangalan, file, IDCode, hintuan o x, y
+The point	Ang punto
+Spline	Spline
+Object	Object
+Nothing on the map has this IDCode.	Walang nasa mapa na may ganitong IDCode.
+kinds	mga uri
+on the map	sa mapa
+Next	Susunod
+Select the next one and go there	Piliin ang susunod at pumunta roon
+Every one of these becomes the road type chosen in the Roads tool	Magiging uri ng kalsadang napili sa Roads tool ang lahat ng ito
+Every one of these becomes the object chosen in the catalogue	Magiging object na napili sa catalogue ang lahat ng ito
+More: type to narrow the list	Mas marami pa: mag-type para paliitin ang listahan
+Replaced:	Napalitan:
+Satellite overlay	Satellite overlay
+Satellite and own pictures	Satellite at sariling mga larawan
+Click a tile to see its overlay here.	Mag-click ng tile para makita rito ang overlay nito.
+Show the overlay	Ipakita ang overlay
+opacity	opacity
+Load satellite imagery	I-load ang satellite imagery
+Place the map on the Earth first (Satellite and terrain…)	Ilagay muna ang mapa sa Earth (Satellite at terrain…)
+Load image file…	I-load ang image file…
+Your own picture for this tile (a scan, a screenshot): or drop it on the window	Sarili mong larawan para sa tile na ito (scan, screenshot): o i-drop ito sa window
+Load the OpenStreetMap map	I-load ang mapa ng OpenStreetMap
+OpenStreetMap map for all tiles	Mapa ng OpenStreetMap para sa lahat ng tile
+The map as openstreetmap.org draws it (streets with their names, houses, water, green, stop signs), drawn sharp from OpenStreetMap data and laid on the tile in place of a satellite picture: to build roads and houses over by eye. Nothing is generated from it.	Ang mapa ayon sa pagguhit ng openstreetmap.org (mga kalye na may pangalan, bahay, tubig, halaman, karatula ng hintuan), malinaw na iginuhit mula sa data ng OpenStreetMap at inilalatag sa tile kapalit ng satellite picture: para magtayo ng kalsada at bahay sa ibabaw nito nang tingin lang. Walang nabubuo mula rito.
+own picture	sariling larawan
+for an earlier placement	para sa naunang pagkakalagay
+not kept with the map	hindi iniingatan kasama ng mapa
+, partly coarser	, bahagyang mas magaspang
+nothing	wala
+Place the map on the Earth first.	Ilagay muna ang mapa sa Earth.
+Load terrain heights	I-load ang taas ng terrain
+Done:	Tapos:
+with problems	may mga problema
+A picture for the tiles	Larawan para sa mga tile
+Could not read the picture	Hindi mabasa ang larawan
+Could not copy the picture	Hindi makopya ang larawan
+The picture is on the tiles: line it up in Satellite and terrain, Own pictures.	Nasa mga tile na ang larawan: ayusin ang pagkakahanay nito sa Satellite at terrain, Sariling mga larawan.
+Nothing found by that name.	Walang nakita sa pangalang iyon.
+Some tiles had Google imagery: enter your Google key to see it again (it is not kept with the map).	May Google imagery ang ilang tile: ilagay ang Google key mo para makita ito ulit (hindi ito iniingatan kasama ng mapa).
+Satellite and terrain	Satellite at terrain
+Find a place: a town, a street, an address… (Enter)	Maghanap ng lugar: bayan, kalye, address… (Enter)
+Searching…	Naghahanap…
+Search © OpenStreetMap contributors	Search © mga contributor ng OpenStreetMap
+This map has world coordinates ([worldcoordinates]): it lies on the Earth by itself, its tiles are Web Mercator tiles.	May world coordinates ang mapang ito ([worldcoordinates]): nasa Earth na ito mismo, ang mga tile nito ay Web Mercator tile.
+Click on the map where the orange tile goes…	I-click sa mapa kung saan ilalagay ang orange na tile…
+Place the map here	Ilagay dito ang mapa
+Then click on the map: the middle of the orange tile goes there	Saka mag-click sa mapa: doon mapupunta ang gitna ng orange na tile
+At the view's middle	Sa gitna ng view
+North turned	Pag-ikot ng north
+Orange tile	Orange na tile
+click the map to fly there in the view	i-click ang mapa para lumipad doon sa view
+1. Find the place.  2. Press "Place the map here" and click on the map: the orange tile (the map's middle) goes there.	1. Hanapin ang lugar.  2. Pindutin ang "Ilagay dito ang mapa" at mag-click sa mapa: doon mapupunta ang orange na tile (gitna ng mapa).
+Imagery	Imagery
+The sharpest here	Pinakamalinaw dito
+cm a pixel here	cm bawat pixel dito
+checking…	sinusuri…
+is sharper here	mas malinaw dito
+Sharper imagery may be had here with your own free key for Mapbox, MapTiler or Google (Keys below).	Maaaring may mas malinaw na imagery dito gamit ang sarili mong libreng key para sa Mapbox, MapTiler o Google (Mga key sa ibaba).
+Terms of use	Mga tuntunin ng paggamit
+Zoom	Zoom
+the finest here	pinakadetalyado rito
+Picture of a tile	Larawan ng tile
+every pixel of the source (up to 4096)	bawat pixel ng source (hanggang 4096)
+Loaded at	Na-load sa
+cm a pixel	cm bawat pixel
+Also load terrain heights	I-load din ang taas ng terrain
+New tiles get imagery by themselves	Kusang nagkakaroon ng imagery ang mga bagong tile
+Load for all tiles	I-load para sa lahat ng tile
+For the selected tile	Para sa napiling tile
+Click a tile with the Tiles tool (7)	Mag-click ng tile gamit ang Tiles tool (7)
+Terrain heights only	Taas ng terrain lang
+of	sa
+tiles beside the loaded heights were not loaded: the ground steps at their edge.	mga tile sa tabi ng na-load na taas ay hindi na-load: may baytang ang lupa sa gilid nila.
+Fit their edges	Iayon ang mga gilid nila
+Their edge takes the loaded heights, fading out 60 m into the tile	Kinukuha ng gilid nila ang na-load na taas, humihina hanggang 60 m papasok ng tile
+Leave them	Iwan ang mga ito
+Terrain heights	Taas ng terrain
+Relative: the orange tile's mean height is 0 m	Relatibo: 0 m ang karaniwang taas ng orange na tile
+Raise everything by	Itaas ang lahat ng
+Taken off:	Ibinawas:
+Measure again	Sukatin muli
+Terrain data attribution	Attribution ng terrain data
+Overlay on the ground	Overlay sa lupa
+Put the imagery into maps exported for sharing (check its licence first)	Isama ang imagery sa mga mapang ie-export para ibahagi (suriin muna ang lisensya nito)
+Fit tile edges	Iayon ang mga gilid ng tile
+Keys for more sources (optional)	Mga key para sa iba pang source (opsyonal)
+Everything works without a key. With your own free key these may be sharper in some places; the key stays on this computer.	Gumagana ang lahat nang walang key. Sa sarili mong libreng key, maaaring mas malinaw ang mga ito sa ilang lugar; nananatili ang key sa computer na ito.
+Google satellite (needs your API key)	Google satellite (kailangan ng API key mo)
+get a key	kumuha ng key
+In Google Cloud: make a project, enable the Map Tiles API, create an API key, paste it here. Google bills by use above its free amount.	Sa Google Cloud: gumawa ng project, i-enable ang Map Tiles API, gumawa ng API key, i-paste dito. Naniningil ang Google ayon sa gamit na lampas sa libreng bahagi.
+key	key
+Your own tile server	Sarili mong tile server
+URL	URL
+Attribution	Attribution
+Finest zoom	Pinakamalapit na zoom
+Kind	Uri
+XYZ / WMTS tiles	mga XYZ / WMTS tile
+Terrarium heights	taas ng Terrarium
+{z} {x} {y} are filled in; a WMS gets {bbox} (EPSG:3857) and {width} {height}; {key} is your key.	Pinupunan ang {z} {x} {y}; ang WMS ay nakakakuha ng {bbox} (EPSG:3857) at {width} {height}; ang {key} ay key mo.
+Add	Idagdag
+Own pictures	Sariling mga larawan
+A scan, a screenshot, an old plan: laid on tiles and lined up by eye. No place on the Earth needed.	Scan, screenshot, lumang plano: inilalatag sa mga tile at inihahanay nang tingin. Hindi kailangang ilagay sa Earth.
+Tiles from	Mga tile mula sa
+Load image file over these tiles…	I-load ang image file sa mga tile na ito…
+Turn left 90°	Ikaliwa nang 90°
+Turn right 90°	Ikanan nang 90°
+mirror left-right	i-mirror kaliwa-kanan
+mirror top-bottom	i-mirror itaas-ibaba
+Reset	I-reset
+Your own pictures	Sariling mga larawan mo
+of these tiles have your own pictures. Replace them with satellite imagery?	sa mga tile na ito ang may sarili mong larawan. Palitan ng satellite imagery?
+Replace them	Palitan ang mga ito
+Keep my pictures	Panatilihin ang mga larawan ko
+Groups for other maps	Mga group para sa ibang mapa
+A selection kept under a name, to put down again in any map (a stop with its shelter and signs, a crossing with its lights)	Napiling itinatabi sa isang pangalan, para ilagay ulit sa anumang mapa (hintuan na may silungan at karatula, crossing na may mga ilaw)
+Keep the selection	Itabi ang napili
+Group kept	Naitabi ang group
+Select what to keep in the view first.	Pumili muna sa view ng itatabi.
+No groups yet.	Wala pang group.
+thing	bagay
+things	bagay
+Delete the group (to openMapper's bin)	Burahin ang group (sa bin ng openMapper)
+Use	Gamitin
+Into the clipboard: Ctrl+V puts it down at the cursor, as often as wanted	Sa clipboard: inilalagay ito ng Ctrl+V sa cursor, kahit ilang beses
+is in the clipboard: Ctrl+V puts it at the cursor	ay nasa clipboard: inilalagay ito ng Ctrl+V sa cursor
+The map's tiles: 300 m squares. Add more beside them with the Tiles tool.	Mga tile ng mapa: 300 m na parisukat. Magdagdag pa sa tabi nito gamit ang Tiles tool.
+A road	Kalsada
+Roads tool: click where it starts, then where it ends. Click on a road's end to go on from it.	Roads tool: i-click kung saan ito magsisimula, saka kung saan magtatapos. I-click ang dulo ng kalsada para ipagpatuloy mula roon.
+A bus stop by the road	Hintuan sa tabi ng kalsada
+Game logic > Bus stops: put one at the kerb, on the side the doors open. Name it on the right.	Game logic > Bus stops: ilagay sa kerb, sa gilid na bumubukas ang pinto. Pangalanan sa kanan.
+A start point	Start point
+Game logic > Start points: where your bus appears, on a road, facing the way to drive.	Game logic > Start points: kung saan lilitaw ang bus mo, sa kalsada, nakaharap sa direksyon ng takbo.
+A line with a trip	Linya na may biyahe
+Lines window: New line, New trip, then click the stops in order. The way is found along the roads.	Lines window: Bagong linya, Bagong biyahe, saka i-click ang mga hintuan nang may pagkakasunod. Hahanapin ang daan sa mga kalsada.
+A tour with departures	Tour na may mga departure
+Lines window > Tours and times: New tour, then Fill from … to … .	Lines window > Mga tour at oras: Bagong tour, saka Punan mula … hanggang … .
+Buses for the tours	Mga bus para sa mga tour
+A depot the tours take their buses from (Tours: Add a depot, or Traffic and AI).	Depot na pinagkukunan ng bus ng mga tour (Mga tour: Magdagdag ng depot, o Trapiko at AI).
+Checked	Nasuri
+Map > Check map: what would go wrong in the game, most of it put right with one click.	Mapa > Suriin ang mapa: ang magiging problema sa laro, halos lahat ay naaayos sa isang click.
+Saved	Na-save
+Ctrl+S. Maps are saved into openOMSI's content folder.	Ctrl+S. Sine-save ang mga mapa sa content folder ng openOMSI.
+A test drive	Test drive
+F5 saves and starts openOMSI on the map: pick line 1 and drive.	Sine-save ng F5 at sinisimulan ang openOMSI sa mapa: piliin ang linya 1 at magmaneho.
+A map you can drive in service:	Mapang puwedeng imaneho sa serbisyo:
+Show me	Ipakita
+Your stops stand away from the roads: a bus serves a stop within 15 m of its lane.	Malayo sa mga kalsada ang mga hintuan mo: nagseserbisyo ang bus sa hintuang nasa loob ng 15 m mula sa lane nito.
+A real place? Put the map on the Earth (Map > Satellite and terrain), then Map > From OpenStreetMap brings its streets, stops, lines and trees.	Totoong lugar? Ilagay ang mapa sa Earth (Mapa > Satellite at terrain), saka dadalhin ng Mapa > Mula sa OpenStreetMap ang mga kalye, hintuan, linya at puno nito.
+Show this for new maps	Ipakita ito para sa mga bagong mapa
+The map has no depot file.	Walang depot file ang mapa.
+Make one from the lines	Gumawa mula sa mga linya
+The map has no trips yet (Map > Lines and timetable)	Wala pang biyahe ang mapa (Mapa > Mga linya at timetable)
+Empty one	Walang laman
+New	Bago
+A new depot file from the map's lines	Bagong depot file mula sa mga linya ng mapa
+Delete this depot file	Burahin ang depot file na ito
+The lines need	Kailangan ng mga linya
+Add them	Idagdag ang mga ito
+What is there stays as it is	Nananatili ang mayroon na
+No depot group uses it.	Walang depot group na gumagamit nito.
+Used by the depot	Ginagamit ng depot
+Use it for every depot	Gamitin para sa bawat depot
+The AI's depot groups (Vehicle groups tab) take their buses' destinations from it	Kinukuha ng mga depot group ng AI (tab na Vehicle groups) ang mga destinasyon ng mga bus nila rito
+Rename	Palitan ang pangalan
+not a usable name	hindi magagamit na pangalan
+The destination a bus shows on its way to and from the depot	Ang destinasyong ipinapakita ng bus papunta at pabalik sa depot
+Destinations	Mga destinasyon
+Stops	Mga hintuan
+Routes	Mga ruta
+nobody gets on	walang sasakay
+Code	Code
+another destination has this code	may ibang destinasyong may ganitong code
+As a trip's terminus is named in the timetable: the stop where everybody gets off	Gaya ng pangalan ng terminus ng biyahe sa timetable: ang hintuan kung saan bumababa ang lahat
+Nobody gets on (service trip, empty sign)	Walang sasakay (service trip, walang laman na karatula)
+Delete destination	Burahin ang destinasyon
+Add destination	Magdagdag ng destinasyon
+New destination	Bagong destinasyon
+As the timetable names the stop	Ayon sa pangalan ng hintuan sa timetable
+Delete stop	Burahin ang hintuan
+Add stop	Magdagdag ng hintuan
+line	linya
+What the driver types: the line's number and two digits (7601: line 76, route 01)	Ang tina-type ng driver: numero ng linya at dalawang digit (7601: linya 76, ruta 01)
+Line	Linya
+IBIS text	IBIS text
+Destination	Destinasyon
+Stops in order	Mga hintuan ayon sa pagkakasunod
+Not in the Stops list: the displays have no texts for it	Wala sa listahan ng Mga hintuan: walang teksto para dito ang mga display
+Move up	Itaas
+Move down	Ibaba
+Take out	Alisin
+Add a stop…	Magdagdag ng hintuan…
+Delete route	Burahin ang ruta
+Add route	Magdagdag ng ruta
+No routes: the IBIS knows the destinations' codes only. Add them from the lines above.	Walang ruta: mga code lang ng destinasyon ang alam ng IBIS. Idagdag mula sa mga linya sa itaas.
+Winter with snow	Taglamig na may niyebe
+Summer (dry)	Tag-init (tuyo)
+Jan	Ene
+Feb	Peb
+Mar	Mar
+Apr	Abr
+May	May
+Jun	Hun
+Jul	Hul
+Aug	Ago
+Sep	Set
+Oct	Okt
+Nov	Nob
+Dec	Dis
+Map settings	Mga setting ng mapa
+Money	Pera
+Tickets	Mga tiket
+none: the map has no depot group (Traffic and AI)	wala: walang depot group ang mapa (Trapiko at AI)
+Years	Mga taon
+Year offset	Offset ng taon
+Added to today's year when the game starts at the real date (Berlin-Spandau: -25 for the 1980s)	Idinadagdag sa kasalukuyang taon kapag nagsimula ang laro sa totoong petsa (Berlin-Spandau: -25 para sa dekada 1980)
+Repair time	Oras ng pagkukumpuni
+ min	 min
+Rail	Riles
+real rail (trams and trains follow their tracks' switches)	totoong riles (sumusunod ang tram at tren sa mga switch ng track nila)
+Helper	Helper
+dynamic helper active (the original editor's map option, kept as it is)	aktibo ang dynamic helper (opsyon sa mapa ng orihinal na editor, iniwan ayon sa dati)
+Seasons	Mga panahon
+Summer where none is set. The days count from 1 January.	Tag-init kung saan walang itinakda. Binibilang ang mga araw mula 1 Enero.
+Add a season	Magdagdag ng panahon
+A season ends before it starts	Natatapos ang panahon bago magsimula
+Nothing selected	Walang napili
+Paste here	I-paste dito
+Cut the road here	Putulin ang kalsada rito
+Select all like it	Piliin lahat ng katulad nito
+Keep for other maps…	Itabi para sa ibang mapa…
+Its ground, painting, water, objects and roads, put beside or into this map. Lines, timetable and AI lists stay with the other map.	Ang lupa, pintura, tubig, object at kalsada nito, inilalagay sa tabi o sa loob ng mapang ito. Nananatili sa kabilang mapa ang mga linya, timetable at AI list.
+Choose a map…	Pumili ng mapa…
+Other…	Iba pa…
+A map to take tiles from (its global.cfg)	Mapang pagkukunan ng tile (global.cfg nito)
+Grey: this map · orange: the tiles to add (click to take one or leave it) · red: on a tile of this map, left out	Abo: ang mapang ito · orange: mga tile na idadagdag (click para kunin o iwan) · pula: nasa tile ng mapang ito, hindi isasama
+Move:	Ilipat:
+west	kanluran
+east	silangan
+north	hilaga
+south	timog
+Raise it by	Itaas ng
+Its ground, water, roads and objects at a height of their own	Ang lupa, tubig, kalsada at object nito sa sarili nilang taas
+Ease the ground where the maps meet	Pakinisin ang lupa kung saan nagtatagpo ang mga mapa
+Added	Naidagdag
+tiles from the other map	mga tile mula sa kabilang mapa
+Cube	Cube
+Plane	Plane
+Circle	Bilog
+Triangle	Tatsulok
+Triangular prism	Triangular prism
+Wedge	Wedge
+Corner wedge	Corner wedge
+Pyramid	Pyramid
+Sphere	Sphere
+Icosphere	Icosphere
+Cylinder	Cylinder
+Cone	Cone
+Torus	Torus
+Tube	Tube
+Capsule	Capsule
+Stairs	Hagdan
+Arch	Arko
+Make one and put it on the map with a click (each one can then be edited, scaled, cut and joined)	Gumawa at ilagay sa mapa sa isang click (maaari itong i-edit, i-scale, putulin at pagsamahin pagkatapos)
+Array	Array
+Mirror	Salamin
+Solidify	Solidify
+Subdivision surface	Subdivision surface
+Decimate	Decimate
+Triangulate	Triangulate
+Displace	Displace
+Wireframe	Wireframe
+Screw	Screw
+Simple deform	Simple deform
+Cast	Cast
+Weld	Weld
+Edge split	Edge split
+Boolean	Boolean
+Follow the ground	Sundan ang lupa
+Count	Bilang
+Relative	Relatibo
+Offset	Offset
+Merge touching ends	Pagdugtungin ang magkadikit na dulo
+Distance	Distansya
+Cut away the other side first	Putulin muna ang kabilang gilid
+Weld at the mirror	I-weld sa mirror
+Thickness	Kapal
+Close the rim	Isara ang gilid
+Width	Lapad
+Segments	Mga segment
+Levels	Mga level
+Smooth (Catmull-Clark)	Smooth (Catmull-Clark)
+Factor	Factor
+Repeat	Ulitin
+Seed	Seed
+Along the normals	Ayon sa mga normal
+Steps	Mga hakbang
+Axis	Axis
+Twist	Twist
+Bend	Bend
+Taper	Taper
+Stretch	Stretch
+Amount	Dami
+Box	Box
+Difference	Difference
+With the part	Kasama ang bahagi
+Tip: hide the cutting part (its eye in the list) so only the cut shows	Tip: itago ang pamputol na bahagi (ang mata nito sa listahan) para ang putol lang ang makita
+Above the ground	Sa ibabaw ng lupa
+Every vertex follows the terrain under it (in the editor's view and the written files at the place it stands)	Sinusundan ng bawat vertex ang terrain sa ilalim nito
+Mesh (openMapper object)	Mesh (object ng openMapper)
+Shared by	Ginagamit ng
+objects on the map: changes apply to all	object sa mapa: ilalapat ang mga pagbabago sa lahat
+Make this one single	Gawing single ito
+Leave the edit mode (Tab)	Lumabas sa edit mode (Tab)
+Edit the mesh (Tab)	I-edit ang mesh (Tab)
+Write it as OBJ, glTF / GLB, FBX, Collada, USD, STL, PLY, 3MF, OFF, X or O3D	Isulat bilang OBJ, glTF / GLB, FBX, Collada, USD, STL, PLY, 3MF, OFF, X o O3D
+Off: its height is kept above the ground under it	Naka-off: pinananatili ang taas nito sa ibabaw ng lupa sa ilalim nito
+Solid (collides)	Solid (may banggaan)
+The part edited and given modifiers	Ang bahaging ine-edit at binibigyan ng modifier
+Shown (and written into the object)	Ipinapakita (at isinusulat sa object)
+faces	mga face
+Duplicate the part	I-duplicate ang bahagi
+Delete the part	Burahin ang bahagi
+Add a shape as a part	Magdagdag ng hugis bilang bahagi
+Separate parts into objects	Paghiwalayin ang mga bahagi bilang object
+Each part becomes an object of its own, standing where it stood	Bawat bahagi ay nagiging sariling object, nasa dating lugar
+Shape	Hugis
+Modifiers	Mga modifier
+Make it part of the mesh	Gawing bahagi ng mesh
+Add a modifier	Magdagdag ng modifier
+Materials	Mga material
+Colour (multiplies the texture)	Kulay (minumultiply ang texture)
+Assign to selected faces	Ilapat sa mga napiling face
+Choose…	Pumili…
+No texture	Walang texture
+Save as…	I-save bilang…
+PNG, JPEG, BMP, TGA, TIFF, WebP or DDS	PNG, JPEG, BMP, TGA, TIFF, WebP o DDS
+Transparency	Transparency
+Opaque	Opaque
+Cut out	Cut out
+Blended	Blended
+Glows	Kumikinang
+Light of its own: black for none	Sariling ilaw: itim kung wala
+Shine	Shine
+Normal map	Normal map
+ORM map	ORM map
+Night texture	Night texture
+Light map	Light map
+Remove the material	Alisin ang material
+Add a material	Magdagdag ng material
+Import materials…	Mag-import ng mga material…
+From an .mtl, a glTF / GLB / FBX, or the pictures of one PBR material (base colour, normal, roughness, metal, AO...)	Mula sa .mtl, glTF / GLB / FBX, o mga larawan ng isang PBR material (base colour, normal, roughness, metal, AO...)
+Lamps	Mga lamp
+Glow	Glow
+Light on the ground	Ilaw sa lupa
+Colour	Kulay
+Reach	Abot
+On	On
+Always	Palagi
+At night	Sa gabi
+variable	variable
+Seen from one side	Nakikita mula sa isang gilid
+Star	Bituin
+Facing	Direksyon
+Remove the lamp	Alisin ang lamp
+Add a glow	Magdagdag ng glow
+A lamp's bulb, a lit sign: a glow seen at night	Bombilya ng lamp, ilaw na karatula: glow na nakikita sa gabi
+Add light on the ground	Magdagdag ng ilaw sa lupa
+The pool of light a street lamp throws at night	Ang bilog ng ilaw na inihahagis ng street lamp sa gabi
+Signal head, lamps	Signal head, mga lamp
+Put it within 40 m of a crossing with a light program: it takes its light from it (or link it in its properties)	Ilagay sa loob ng 40 m ng crossing na may light program: kukunin nito ang ilaw mula roon (o i-link sa properties nito)
+Bake	Bake
+Its textures and colours painted into one picture on a new UV map (one material: fewer draws in the game), with its own shadows and its lamps' night light if chosen	Ang mga texture at kulay nito ay ipinipinta sa iisang larawan sa bagong UV map (iisang material: mas kaunting draw sa laro), kasama ang sarili nitong anino at ilaw sa gabi ng mga lamp kung pipiliin
+Ambient occlusion	Ambient occlusion
+How far its shadows reach	Gaano kalayo aabot ang mga anino nito
+Lamps' light at night (light map)	Ilaw ng mga lamp sa gabi (light map)
+The object's last change (Ctrl+Z in the edit mode)	Huling pagbabago sa object (Ctrl+Z sa edit mode)
+Divisions X	Divisions X
+Divisions Y	Divisions Y
+Rings	Rings
+Subdivisions	Subdivisions
+Bottom radius	Radius sa ibaba
+Top radius	Radius sa itaas
+Tube radius	Radius ng tube
+Tube segments	Mga segment ng tube
+Outer radius	Panlabas na radius
+Inner radius	Panloob na radius
+Opening	Bukas
+Wall	Pader
+Mesh	Mesh
+A copy of this object's type of its own is made for it, with its meshes, materials and lamps to edit; the original stays as it is	Gagawa ng sariling kopya ng uri ng object na ito, kasama ang mga mesh, material at lamp nito para i-edit; hindi nagbabago ang orihinal
+As a mesh	Bilang mesh
+Copy as an object	Kopya bilang object
+An openMapper object of its shape beside it, to edit as a mesh (vertices, edges, faces)	Object ng openMapper na kapareho ng hugis nito sa tabi, para i-edit bilang mesh (vertex, edge, face)
+The same, the spline taken away (its lanes go with it)	Pareho, inalis ang spline (kasama ang mga lane nito)
+Splines as a mesh	Mga spline bilang mesh
+Copy as one object	Kopya bilang isang object
+Replace by one object	Palitan ng isang object
+Export the selection…	I-export ang napili…
+As meshes	Bilang mga mesh
+Join into one object (Ctrl+J)	Pagsamahin sa isang object (Ctrl+J)
+All their parts in the one shown in the properties, the others gone	Lahat ng bahagi nila ay nasa isang ipinapakita sa properties, nawawala ang iba
+Solid modelling (CSG): the object shown in the properties with the others	Solid modelling (CSG): ang object sa properties kasama ang iba
+Keep the cutting objects	Panatilihin ang mga pamputol na object
+Vertices	Mga vertex
+Edges	Mga edge
+Faces	Mga face
+vertices	mga vertex
+edges	mga edge
+Selected	Napili
+X-ray: pick through the mesh	X-ray: pumili sa kabila ng mesh
+All (A)	Lahat (A)
+None (Alt+A)	Wala (Alt+A)
+Invert (Ctrl+I)	Baligtarin (Ctrl+I)
+Linked (Ctrl+L)	Linked (Ctrl+L)
+More	Higit pa
+Less	Bawas
+Click, Shift + click to add, drag on nothing for a box, a second click or Alt + click for a loop	Click, Shift + click para magdagdag, drag sa walang laman para sa box, pangalawang click o Alt + click para sa loop
+Change	Baguhin
+Extrude (E)	Extrude (E)
+Inset (I)	Inset (I)
+Bevel (Ctrl+B)	Bevel (Ctrl+B)
+Loop cut (Ctrl+R)	Loop cut (Ctrl+R)
+Point at an edge and press Ctrl+R	Itutok sa edge at pindutin ang Ctrl+R
+Subdivide	Subdivide
+Fill (F)	Fill (F)
+Bridge loops	Bridge loops
+Connect (J)	Connect (J)
+Poke	Poke
+Duplicate (Shift+D)	I-duplicate (Shift+D)
+Split (Y)	Split (Y)
+Separate into an object (P)	Ihiwalay sa object (P)
+Spin 360°	Spin 360°
+The selection turned round the object's up axis through its middle, in 12 steps	Ang napili ay iniikot sa up axis ng object sa gitna nito, sa 12 hakbang
+Smooth vertices	I-smooth ang mga vertex
+Merge (M)	Merge (M)
+At the middle	Sa gitna
+At the first	Sa una
+At the last	Sa huli
+Collapse each piece	I-collapse ang bawat piraso
+By distance (1 mm)	Ayon sa distansya (1 mm)
+Delete (X)	Burahin (X)
+Only faces	Mga face lang
+Dissolve vertices	I-dissolve ang mga vertex
+Dissolve edges	I-dissolve ang mga edge
+Dissolve faces	I-dissolve ang mga face
+Triangulate (Ctrl+T)	Triangulate (Ctrl+T)
+Triangles to quads (Alt+J)	Mga triangle sa quad (Alt+J)
+Shade smooth	Shade smooth
+Shade flat	Shade flat
+Flip normals (Alt+N)	Baligtarin ang mga normal (Alt+N)
+Normals outward (Shift+N)	Mga normal palabas (Shift+N)
+Mark seam	Markahan ang seam
+Clear seam	Alisin ang seam
+Mark sharp	Markahan bilang sharp
+Clear sharp	Alisin ang sharp
+Adjust the last operation	Ayusin ang huling operasyon
+Slide	Slide
+Cuts	Mga cut
+UV map	UV map
+Unwrap	Unwrap
+By seams (conformal)	Ayon sa mga seam (conformal)
+Smart project	Smart project
+Cube projection (metres)	Cube projection (metro)
+Cylinder projection	Cylinder projection
+Sphere projection	Sphere projection
+Project from the view	Project mula sa view
+Lightmap pack	Lightmap pack
+Close the UV editor	Isara ang UV editor
+UV editor	UV editor
+Faces of the selection (all, with none selected); mark seams on edges first for an unwrap by seams	Mga face ng napili (lahat, kung walang napili); markahan muna ang mga seam sa mga edge para sa unwrap ayon sa seam
+Material of the selected faces	Material ng mga napiling face
+With lamps	May mga lamp
+Street lamp	Street lamp
+A pole with a lamp that glows and lights the ground at night	Poste na may lamp na kumikinang at nag-iilaw sa lupa sa gabi
+Signal head	Signal head
+A traffic light of the lamps below that a crossing's light program drives	Traffic light na gawa sa mga lamp sa ibaba na pinapatakbo ng light program ng crossing
+Lamps:	Mga lamp:
+Picture, light, sound	Larawan, ilaw, tunog
+Picture / pattern…	Larawan / pattern…
+Choose a picture or a texture: it becomes an object you place, move, turn and scale like any other. Several repeats make a pattern	Pumili ng larawan o texture: magiging object ito na ilalagay, ililipat, iikutin at i-scale tulad ng iba. Ang ilang ulit ay gumagawa ng pattern
+Light source	Light source
+A lamp that glows and lights the ground round it	Lamp na kumikinang at nag-iilaw sa lupa sa paligid nito
+Sound source…	Sound source…
+Choose a sound file (.wav): it plays where you put the marker, as far as the radius carries; the marker shows in the editor only	Pumili ng sound file (.wav): tumutunog ito kung saan mo inilagay ang marker, hanggang sa abot ng radius; sa editor lang makikita ang marker
+Picture width, m	Lapad ng larawan, m
+Repeats	Ulit
+on the ground	sa lupa
+standing	nakatayo
+Light colour	Kulay ng ilaw
+Light reach, m	Abot ng ilaw, m
+at night	sa gabi
+always	palagi
+Sound reach, m	Abot ng tunog, m
+Sound volume	Lakas ng tunog
+Overview: click or drag to move there · double-click: larger / smaller · M: hide	Overview: i-click o i-drag para pumunta roon · double-click: mas malaki / mas maliit · M: itago
+Name:	Pangalan:
+My town	Aking bayan
+Description:	Paglalarawan:
+What the map is, for the game's map list	Ano ang mapa, para sa listahan ng mapa ng laro
+Size:	Laki:
+Ground height:	Taas ng lupa:
+ m above sea level	 m sa ibabaw ng sea level
+Traffic:	Trapiko:
+keeps right	kanan ang takbo
+keeps left	kaliwa ang takbo
+Busy:	Dami ng tao:
+cars	mga kotse
+passengers	Mga pasahero
+Years:	Mga taon:
+year offset	offset ng taon
+Added to today's year when the game starts at the real date	Idinadagdag sa kasalukuyang taon kapag nagsimula ang laro sa totoong petsa
+Money:	Pera:
+Tickets:	Mga tiket:
+Seasons:	Mga panahon:
+four, snowy winter	apat, may niyebe sa taglamig
+mild winter	banayad na taglamig
+summer only	tag-init lang
+Rail:	Riles:
+trams and trains follow their tracks' switches	sumusunod ang tram at tren sa mga switch ng track nila
+Ground texture (all tiles):	Ground texture (lahat ng tile):
+template	template
+More ground layers are painted later (Paint tool); the map's settings can all be changed in Map > Map settings.	Mas marami pang ground layer ang ipipinta mamaya (Paint tool); mababago ang lahat ng setting ng mapa sa Mapa > Mga setting ng mapa.
+Create	Gumawa
+as the template	gaya ng template
+ways	mga daan
+bus routes downloaded	mga ruta ng bus na na-download
+not had:	hindi nakuha:
+The streets of the map's place built as roads with junctions where they meet, its bus stops, lines, trees and woods. Best on tiles with no roads yet: roads lying on ones the map has are left out.	Ang mga kalye ng lugar ng mapa na ginawang kalsada na may mga junction kung saan nagtatagpo, ang mga hintuan, linya, puno at kagubatan nito. Pinakamainam sa mga tile na wala pang kalsada: nilalaktawan ang mga kalsadang nasa ibabaw ng mayroon na sa mapa.
+The map does not lie on the Earth yet: place it in Satellite and terrain (Map menu, I) first.	Wala pa sa Earth ang mapa: ilagay muna ito sa Satellite at terrain (Map menu, I).
+Load the terrain heights first (Satellite and terrain): the roads follow the ground as it is when they are built.	I-load muna ang taas ng terrain (Satellite at terrain): sumusunod ang mga kalsada sa lupa kung ano ito kapag itinayo.
+Download for the map's tiles	I-download para sa mga tile ng mapa
+bus routes	mga ruta ng bus
+trees	mga puno
+buildings	mga gusali
+water	tubig
+Downloading…	Nagda-download…
+no type chosen	walang napiling uri
+Use the chosen	Gamitin ang napili
+One-way roads	Mga one-way na kalsada
+Each carriageway of a dual road and one-way streets: with a one-way road type they lie side by side as they should; with none chosen they get their kind's	Bawat carriageway ng dual road at mga one-way na kalye: sa one-way na uri ng kalsada, magkatabi ang mga ito gaya ng dapat; kung walang napili, kukunin ang uri ng kind nila
+as their kind	ayon sa kind nila
+no stop object	walang stop object
+The stop chosen in Game logic > Bus stops	Ang hintuang napili sa Game logic > Bus stops
+Bus lines	Mga linya ng bus
+Each bus route through two or more of the map's stops a trip of its line, the way found along the roads; a tour from 06:00 to 22:00 for each new line	Bawat ruta ng bus na dumadaan sa dalawa o higit pang hintuan ng mapa ay biyahe ng linya nito, ang daan ay hinahanap sa mga kalsada; isang tour mula 06:00 hanggang 22:00 para sa bawat bagong linya
+Trees and woods	Mga puno at kagubatan
+Single trees, rows of them and woods, planted with the plant mix (Objects tool > Plant brush) or the tree chosen; none on a road	Mga solong puno, hanay ng mga ito at kagubatan, itinanim gamit ang plant mix (Objects tool > Plant brush) o ang napiling puno; wala sa kalsada
+no plants chosen	walang napiling halaman
+kinds of plants	uri ng halaman
+apart in woods	pagitan sa kagubatan
+Buildings	Mga gusali
+Each outline filled with the model of the folder chosen whose ground plan comes nearest, its front to the nearest road; an outline no model fits is left out	Bawat balangkas ay pinupunan ng model ng napiling folder na pinakamalapit ang ground plan, nakaharap ang harap sa pinakamalapit na kalsada; nilalaktawan ang balangkas na walang babagay na model
+no folder	walang folder
++ its folder	+ folder nito
+Add the folder of the object chosen in the catalogue (Buildings_MC, …)	Idagdag ang folder ng object na napili sa catalogue (Buildings_MC, …)
+Lakes and rivers: the ground inside them lowered below the banks, and the tiles they lie on given water a little under the banks' height (OMSI's water is one level for a tile: low ground elsewhere on it is flooded too)	Mga lawa at ilog: ibinababa ang lupa sa loob ng mga ito sa ilalim ng mga pampang, at nilalagyan ng tubig ang mga tile nila nang bahagyang mas mababa sa taas ng mga pampang (isang lebel ang tubig ng OMSI bawat tile: babahain din ang mababang lupa sa ibang bahagi nito)
+deep	lalim
+a road type (Roads tool), then "Use the chosen"	uri ng kalsada (Roads tool), saka "Gamitin ang napili"
+a stop (Game logic > Bus stops), then "Use the chosen"	hintuan (Game logic > Bus stops), saka "Gamitin ang napili"
+a tree in the Objects catalogue (or a plant mix)	puno sa catalogue ng Objects (o plant mix)
+a building in the catalogue, then "+ its folder"	gusali sa catalogue, saka "+ folder nito"
+To build, choose (or untick):	Para magtayo, piliin (o alisin ang tsek):
+A one-way street is built the way it runs in OpenStreetMap: give it a one-way road type	Ang one-way na kalye ay itinatayo ayon sa takbo nito sa OpenStreetMap: bigyan ito ng one-way na uri ng kalsada
+Build	Itayo
+Name, file or IDCode	Pangalan, file o IDCode
+things on the map	mga bagay sa mapa
+Groups	Mga group
+Select the group and go there	Piliin ang group at pumunta roon
+Select everything in it	Piliin ang lahat dito
+Select it and go there	Piliin at pumunta roon
+more: narrow the search	mas marami pa: paliitin ang paghahanap
+Select all of them	Piliin silang lahat
+Go to the first	Pumunta sa una
+Pick a tree in the catalogue, then paint	Pumili ng puno sa catalogue, saka magpinta
+Pick a tree in the catalogue, then click round the area	Pumili ng puno sa catalogue, saka mag-click sa palibot ng lugar
+Pick a road type, click the centre, then the ring	Pumili ng uri ng kalsada, i-click ang gitna, saka ang singsing
+Select a road (double-click: all of it): its properties show its height profile	Pumili ng kalsada (double-click: buo): ipinapakita ng properties nito ang height profile
+Select one of openMapper's junctions: its properties have Traffic lights and crossings	Pumili ng isa sa mga junction ng openMapper: may Mga traffic light at tawiran sa properties nito
+Select the signal head (or a display): Linked objects in its properties, then click its crossing	Piliin ang signal head (o display): Mga naka-link na object sa properties nito, saka i-click ang crossing nito
+Select a road, pick an object in the Objects catalogue: Objects along the road in its properties	Pumili ng kalsada, pumili ng object sa catalogue ng Objects: Mga object sa tabi ng kalsada sa properties nito
+Select a track (double-click: all of it): Overhead wire under Parallel copy in its properties	Pumili ng track (double-click: buo): Overhead wire sa ilalim ng Parallel copy sa properties nito
+Select a road or a chain: Parallel copy in its properties	Pumili ng kalsada o kadena: Parallel copy sa properties nito
+Select a road (double-click: all of it): Paint the ground along it in its properties	Pumili ng kalsada (double-click: buo): Pintahan ang lupa sa tabi nito sa properties nito
+Click a tile: its water is in the panel; lower the ground under it with the Terrain tool	Mag-click ng tile: nasa panel ang tubig nito; ibaba ang lupa sa ilalim nito gamit ang Terrain tool
+Height map: at the end of the Terrain panel	Height map: sa dulo ng Terrain panel
+By slope and height: at the end of the Paint panel	Ayon sa slope at taas: sa dulo ng Paint panel
+View menu: Time of day, Season	View menu: Oras ng araw, Panahon
+What do you want to do?	Ano ang gusto mong gawin?
+Groups…	Mga group…
+Objects on the map by folder	Mga object sa mapa ayon sa folder
+Knife: cut roads	Knife: putulin ang mga kalsada
+Test drive in OMSI 2 (the original)	Test drive sa OMSI 2 (ang orihinal)
+Overview map	Overview map
+Place a bus stop	Maglagay ng hintuan
+Place a start point	Maglagay ng start point
+Plant trees with a brush	Magtanim ng puno gamit ang brush
+Plant a wood or a park	Magtanim ng kagubatan o parke
+Roundabout	Rotonda
+Height profile of a road	Height profile ng kalsada
+Traffic lights and zebra crossings	Mga traffic light at tawiran
+Link a signal head to its crossing	I-link ang signal head sa crossing nito
+Objects along a road	Mga object sa tabi ng kalsada
+Overhead wire along a track	Overhead wire sa tabi ng track
+Parallel copy of a road	Parallel copy ng kalsada
+Paint the ground along a road	Pintahan ang lupa sa tabi ng kalsada
+Water, lake, river	Tubig, lawa, ilog
+Ramp in the ground	Ramp sa lupa
+Height map import or export	Pag-import o pag-export ng height map
+Time of day and season	Oras ng araw at panahon
+PBR material	PBR material
+none	wala
+Own picture…	Sariling larawan…
+Choose a texture of the object, or a picture of your own.	Pumili ng texture ng object, o sarili mong larawan.
+Normals (_nn)	Mga normal (_nn)
+Roughness	Roughness
+Shadow in hollows	Anino sa mga lubak
+Bumps	Mga bukol
+Only big shapes	Malalaking hugis lang
+Dark parts stand out (not sink in)	Lumalabas ang madidilim na bahagi (hindi lumulubog)
+Bright parts smoother	Mas makinis ang maliliwanag na bahagi
+Metal	Metal
+Back to the defaults	Ibalik sa default
+This texture has PBR maps of its own already: new ones made here are taken instead of them.	May sarili nang PBR map ang texture na ito: ang mga bagong gawa rito ang gagamitin kapalit ng mga iyon.
+Written as:	Isinusulat bilang:
+PBR maps made	Nagawa ang mga PBR map
+Delete the PBR material	Burahin ang PBR material
+PBR maps taken away	Naalis ang mga PBR map
+Height profile	Height profile
+over the ground	sa ibabaw ng lupa
+Click: go there in the view · drag a dot (a joint) up or down: its height	Click: pumunta roon sa view · i-drag ang tuldok (joint) pataas o pababa: ang taas nito
+Climbs, falls	Akyat, baba
+Steepest	Pinakamatarik
+at	sa
+Highest over the ground	Pinakamataas sa ibabaw ng lupa
+Deepest under it	Pinakamalalim sa ilalim nito
+Over 8 % is steep for a bus; over 12 % few streets go	Ang lampas 8 % ay matarik para sa bus; kakaunti ang kalsadang lampas 12 %
+roadway	daanan
+Road types	Mga uri ng kalsada
+Make a new road type…	Gumawa ng bagong uri ng kalsada…
+My road	Aking kalsada
+ · own	 · sarili
+Create the road type	Gawin ang uri ng kalsada
+Road type made: the Roads tool builds with it	Nagawa ang uri ng kalsada: gagamitin ito ng Roads tool sa pagtatayo
+Change it in the road maker	Baguhin sa road maker
+Its junctions	Mga junction nito
+Make a junction where it meets another road (else they only cross)	Gumawa ng junction kung saan ito nakakasalubong ng ibang kalsada (kung hindi, magkakrus lang)
+Corners	Mga sulok
+× rounder	× mas bilog
+Traffic lights by themselves	Kusang traffic light
+Zebra crossings on every arm	Mga tawiran sa bawat arm
+Used for the junctions made from now on (where several road types meet, the one asking more wins). A junction already made keeps its own settings: select it to change them.	Ginagamit sa mga junction na gagawin mula ngayon (kung saan nagtatagpo ang ilang uri ng kalsada, ang mas hinihingi ang masusunod). Pinananatili ng nagawa nang junction ang sarili nitong setting: piliin ito para baguhin.
+Pick a road type on the left, or make a new one.	Pumili ng uri ng kalsada sa kaliwa, o gumawa ng bago.
+Road maker	Road maker
+Lanes	Mga lane
+(▼ 0: one-way)	(▼ 0: one-way)
+Lane width	Lapad ng lane
+Middle strip	Middle strip
+Footways	Mga footway
+Kerb	Kerb
+Roadway texture	Texture ng daanan
+Footway texture	Texture ng footway
+Own…	Sarili…
+The roadway texture is laid once across all its lanes (as OMSI 2's lane textures are painted: pick one with as many lanes); the footway texture's right end is the kerb.	Isang beses inilalatag ang texture ng daanan sa lahat ng lane (tulad ng pagpipinta ng lane texture ng OMSI 2: pumili ng may kasing-daming lane); ang kanang dulo ng texture ng footway ang kerb.
+not on the map	wala sa mapa
+Signal routes	Mga signal route
+Each railway signal clears when a train wants the track pieces of its route and none stands on them.	Nag-cclear ang bawat railway signal kapag kailangan ng tren ang mga piraso ng track ng ruta nito at walang nakatayo roon.
+New route for the selected signal	Bagong ruta para sa napiling signal
+Select a signal (one object) in the view first	Pumili muna ng signal (isang object) sa view
+The selected object does not look like a signal (its name says nothing of one): check it is.	Hindi mukhang signal ang napiling object (walang sinasabi ang pangalan nito): tiyaking signal ito.
+No routes yet.	Wala pang ruta.
+pieces	mga piraso
+Signal	Signal
+the selected	ang napili
+Aspect	Aspect
+What the signal shows when this route is clear: 1 proceed, 2 proceed slowly (with a speed limit)…	Ang ipinapakita ng signal kapag clear ang rutang ito: 1 tuloy, 2 tuloy nang mabagal (may limitasyon ng bilis)…
+Distant signal	Distant signal
+Next signal	Susunod na signal
+Speed limit	Limitasyon ng bilis
+OMSI's route kind (the stock maps have 0 and 1)	Uri ng ruta ng OMSI (ang stock na mapa ay may 0 at 1)
+Track pieces	Mga piraso ng track
+Take the selected track	Kunin ang napiling track
+Every rail path of the selected tracks and switches (double-click a track: all of it); replaces the pieces	Bawat rail path ng napiling track at switch (double-click ang track: buo); pinapalitan ang mga piraso
+Select the signal and its pieces in the view	Piliin ang signal at mga piraso nito sa view
+Delete the route	Burahin ang ruta
+Lines and timetable	Mga linya at timetable
+Edit timetable	I-edit ang timetable
+No bus stop there: click one of the orange marks	Walang hintuan doon: i-click ang isa sa mga orange na marka
+The roads can't be read without the OMSI 2 folder.	Hindi mabasa ang mga kalsada kung walang folder ng OMSI 2.
+A line needs at least two bus stops on the map: place them with Game logic > Bus stops, beside a road.	Kailangan ng linya ng kahit dalawang hintuan sa mapa: ilagay ang mga ito gamit ang Game logic > Bus stops, sa tabi ng kalsada.
+Lines	Mga linya
+No lines yet.	Wala pang linya.
+New line	Bagong linya
+Pick a line on the left, or make a new one.\n\nA line has trips (a way from stop to stop) and tours (one bus's day: which trip it drives when).	Pumili ng linya sa kaliwa, o gumawa ng bago.\n\nAng linya ay may mga biyahe (daan mula hintuan hanggang hintuan) at mga tour (araw ng isang bus: aling biyahe ang imamaneho at kailan).
+That name is taken or can't be a file name	Gamit na ang pangalang iyon o hindi puwedeng maging pangalan ng file
+A copy of the line with its trips and tours (a variant to change)	Kopya ng linya kasama ang mga biyahe at tour nito (variant na babaguhin)
+Delete the line and its trips	Burahin ang linya at mga biyahe nito
+Players can drive it	Puwede itong imaneho ng mga player
+Trips	Mga biyahe
+Tours and times	Mga tour at oras
+A tour is one bus's day: the trips it drives, one after the other, and when each leaves.	Ang tour ay araw ng isang bus: ang mga biyaheng minamaneho nito, sunod-sunod, at kailan umaalis ang bawat isa.
+A trip is one way along the line: its stops in order. Most lines have two, there and back.	Ang biyahe ay isang daan sa linya: ang mga hintuan nito ayon sa pagkakasunod. Karamihan ng linya ay may dalawa, pabalik-balik.
+New trip	Bagong biyahe
+Make the way back	Gawin ang pabalik
+A new trip with the same stops the other way round	Bagong biyahe na pareho ang mga hintuan pero baligtad
+Trip	Biyahe
+Delete the trip	Burahin ang biyahe
+Destination sign	Destination sign
+This trip runs on a track of its own (a train): its stops are kept as they are.	Tumatakbo ang biyaheng ito sa sarili nitong track (tren): pinananatili ang mga hintuan nito.
+Show on the map	Ipakita sa mapa
+No stops yet.	Wala pang hintuan.
+Done picking	Tapos na sa pagpili
+Pick stops on the map	Pumili sa mapa
+Click the stops in the view one after the other, in the order the bus calls at them	I-click ang mga hintuan sa view nang isa-isa, ayon sa pagkakasunod na hihintuan ng bus
+Add stop…	Magdagdag ng hintuan…
+Click stops on the map (they are marked orange)…	I-click ang mga hintuan sa mapa (may orange na marka)…
+Add two stops or more: the way between them is found along the roads.	Magdagdag ng dalawa o higit pang hintuan: hahanapin ang daan sa pagitan nila sa mga kalsada.
+Finding the way…	Hinahanap ang daan…
+Route found:	Nakita ang ruta:
+km along the roads (blue in the view)	km sa mga kalsada (asul sa view)
+the way drives a one-way lane against its direction; is a path drawn the wrong way round?	dumadaan ang daan sa one-way na lane laban sa direksyon nito; baka nakabaligtad ang path?
+is not on the map	wala sa mapa
+no road with car lanes within 15 m	walang kalsadang may car lane sa loob ng 15 m
+No way	Walang daan
+the roads are not joined, or run the other way (see View > AI lanes)	hindi nakakabit ang mga kalsada, o kabilang direksyon ang takbo (tingnan ang View > Mga AI lane)
+The trip is saved, but its way is not until this is mended	Nase-save ang biyahe, pero ang daan nito ay hindi hangga't hindi ito naaayos
+Trip time	Oras ng biyahe
+Guess:	Tantiya:
+From the route's length at the pace of a town bus	Mula sa haba ng ruta sa bilis ng city bus
+Times at the stops	Oras sa mga hintuan
+Minutes after the trip leaves. They follow the distance between the stops; fix one to keep the bus to it (it waits there when early).	Minuto pagkatapos umalis ng biyahe. Sumusunod ang mga ito sa distansya ng mga hintuan; i-fix ang isa para panatilihin ito ng bus (maghihintay ito roon kung maaga).
+fixed	naka-fix
+Spread all by distance	Ikalat lahat ayon sa distansya
+Holidays and school holidays	Mga holiday at school holiday
+On a public holiday only the tours with Holidays ticked run; school holidays pick the tours for school holidays or school days.	Sa public holiday, ang mga tour lang na may tsek na Holidays ang tumatakbo; ang school holiday ang pumipili ng mga tour para sa school holiday o school day.
+Copy to	Kopyahin sa
+The same days a year later (feasts that move, like Easter, are to be set by hand)	Parehong araw makalipas ang isang taon (ang mga pistang gumagalaw, tulad ng Pasko ng Pagkabuhay, ay ayusin nang mano-mano)
+The map has no depot (ailists.cfg): only you drive these tours, no AI buses.	Walang depot ang mapa (ailists.cfg): ikaw lang ang magmamaneho ng mga tour na ito, walang AI bus.
+Add a depot with OMSI 2's MAN buses	Magdagdag ng depot na may mga MAN bus ng OMSI 2
+Its buses run the tours (Map > Traffic and AI shows it)	Ang mga bus nito ang tumatakbo sa mga tour (ipinapakita ito ng Mapa > Trapiko at AI)
+Tour	Biyahe
+New tour	Bagong tour
+Pick a tour to see its departures.	Pumili ng tour para makita ang mga departure nito.
+Make a trip first.	Gumawa muna ng biyahe.
+Number	Numero
+Buses from	Mga bus mula sa
+Delete the tour	Burahin ang tour
+Runs on	Tumatakbo tuwing
+Mo	Lun
+Tu	Mar
+We	Miy
+Th	Huw
+Fr	Biy
+Sa	Sab
+Su	Lin
+Every day	Araw-araw
+Monday to Friday	Lunes hanggang Biyernes
+Weekends and holidays	Weekend at holiday
+In the school holidays	Sa school holiday
+On school days	Sa mga school day
+Next departure	Susunod na departure
+The next trip of the line, when the bus is back and has had its break	Ang susunod na biyahe ng linya, kapag nakabalik na ang bus at nakapagpahinga
+Fill from	Punan mula
+break	pahinga
+Fill	Punan
+Replace the tour's departures: the line's trips one after the other, a break after each	Palitan ang mga departure ng tour: ang mga biyahe ng linya nang sunod-sunod, may pahinga pagkatapos ng bawat isa
+No departures yet: add them above.	Wala pang departure: idagdag ang mga ito sa itaas.
+Delete the departure	Burahin ang departure
+GPS tracks to trace	Mga GPS track na susundan
+A route recorded on a phone or drawn elsewhere (GPX, KML, GeoJSON), shown in the view in magenta to draw roads along, or built into a road at once	Rutang naitala sa telepono o iginuhit sa iba (GPX, KML, GeoJSON), ipinapakita sa view na magenta para iguhit ang mga kalsada sa tabi nito, o agad gawing kalsada
+Place the map on the Earth first (Map > Satellite and terrain)	Ilagay muna ang mapa sa Earth (Mapa > Satellite at terrain)
+Load a file…	Mag-load ng file…
+None loaded	Walang na-load
+Forget it	Kalimutan ito
+Build a road along it:	Gumawa ng kalsada sa tabi nito:
+Choose a road type in the Roads tool to build it	Pumili ng uri ng kalsada sa Roads tool para itayo ito
+Built as if drawn: corners rounded into arcs, junctions where it meets roads, cut at the map's edge; one undo step	Itinatayo na parang iginuhit: ginagawang arko ang mga sulok, may junction kung saan nakakasalubong ang mga kalsada, pinuputol sa gilid ng mapa; isang undo step
+Traffic and AI	Trapiko at AI
+Edit traffic	I-edit ang trapiko
+Over the day	Sa loob ng araw
+Vehicle groups	Mga vehicle group
+Parked cars and people	Mga nakaparadang kotse at tao
+Depot files	Mga depot file
+The AI's vehicles come in groups. A car group drives about on the roads; a depot sends out the buses of the timetable's tours.	Nakapangkat ang mga sasakyan ng AI. Ang car group ay umiikot sa mga kalsada; ang depot ay nagpapalabas ng mga bus ng mga tour ng timetable.
+(This map's ailists.cfg is in OMSI 2's first format: it is written in the second one when changed.)	(Ang ailists.cfg ng mapang ito ay nasa unang format ng OMSI 2: isusulat ito sa pangalawa kapag binago.)
+is to drive about, but there is no such group.	ay dapat umikot sa mga kalsada, pero walang ganoong group.
+Make it with OMSI 2's vehicles	Gawin gamit ang mga sasakyan ng OMSI 2
+The group of that name from OMSI 2's own maps	Ang group na may ganitong pangalan mula sa sariling mga mapa ng OMSI 2
+New car group	Bagong car group
+New depot	Bagong depot
+Pick a group on the left.	Pumili ng group sa kaliwa.
+Delete the group (tours still take their buses from it)	Burahin ang group (kumukuha pa rin ng bus dito ang mga tour)
+Delete the group	Burahin ang group
+Tours that take their buses from here:	Mga tour na kumukuha ng bus mula rito:
+Drives about on its own	Umiikot nang mag-isa
+as many:	kasing-dami ng:
+Times the traffic over the day	Pinararami ang trapiko sa loob ng araw
+A vehicle with more weight comes along more often.	Mas madalas lumabas ang sasakyang mas mabigat ang weight.
+Add a vehicle…	Magdagdag ng sasakyan…
+Depot file (.hof)	Depot file (.hof)
+None of its buses has this depot file beside it: they run without their destination signs and fleet data.	Walang bus na may ganitong depot file sa tabi: tatakbo sila nang walang destination sign at fleet data.
+The buses it has: a type of bus and the fleet number and plate of each.	Ang mga bus nito: uri ng bus at ang fleet number at plaka ng bawat isa.
+Take this type out	Alisin ang uring ito
+number	numero
+plate	plaka
+Another bus	Isa pang bus
+Add a type of bus…	Magdagdag ng uri ng bus…
+The lists can't be read without the OMSI 2 folder.	Hindi mabasa ang mga listahan kung walang folder ng OMSI 2.
+Parked cars	Mga nakaparadang sasakyan
+What stands on the car parks (Game logic > Car parks). A car listed more often stands there more often.	Ang nakatayo sa mga paradahan (Game logic > Car parks). Mas madalas lumabas ang kotseng mas maraming beses nakalista.
+Who walks about and waits at the stops.	Sino ang naglalakad at naghihintay sa mga hintuan.
+Drivers	Mga driver
+Who drives the AI's buses.	Sino ang nagmamaneho ng mga bus ng AI.
+How often it is listed (0 takes it out)	Ilang beses nakalista (inaalis ng 0)
+How busy the map is at each hour: the road traffic, and the passengers at the stops. 1 is normal; the game goes along the line between the points.	Gaano ka-abala ang mapa sa bawat oras: ang trapiko sa kalsada, at ang mga pasahero sa mga hintuan. Ang 1 ay normal; sumusunod ang laro sa linya sa pagitan ng mga punto.
+Road traffic	Trapiko sa kalsada
+Passengers	Mga pasahero
+Its own traffic over the day	Sariling trapiko sa loob ng araw
+Without one the group follows the map's road traffic. A curve can be for some days of the week only.	Kung wala, sinusunod ng group ang trapiko sa kalsada ng mapa. Maaaring para sa ilang araw lang ng linggo ang kurba.
+Days:	Mga araw:
+Mo–Fr	Lun–Biy
+Take this curve out	Alisin ang kurbang ito
+A curve	Kurba
+Typical day…	Karaniwang araw…
+Quiet village	Tahimik na nayon
+Town with rush hours	Bayan na may rush hour
+The same all day	Pareho buong araw
+No curve: 1 all day.	Walang kurba: 1 buong araw.
+Take the point out	Alisin ang punto
+Point	Punto
+Smart unwrap	Smart unwrap
+Every flat side apart in the picture, no faces on top of one another (all faces if none is selected)	Bawat patag na gilid ay hiwalay sa larawan, walang face na nakapatong sa isa't isa (lahat ng face kung walang napili)
+Box unwrap	Box unwrap
+The six sides of a box apart in the picture	Ang anim na gilid ng box ay hiwalay sa larawan
+Flip ↔	I-flip ↔
+Flip ↕	I-flip ↕
+Scale ×2	Scale ×2
+Scale ÷2	Scale ÷2
+Fit	Fit
+Stretched to fill the picture	Iniunat para punuin ang larawan
+Pack islands	Pack islands
+Average island scale	Average island scale
+Seams from islands	Mga seam mula sa island
+Click: a face (Shift adds) · drag: move the selected · wheel: zoom · right button: pan	Click: face (Shift: idagdag) · drag: ilipat ang napili · wheel: zoom · right button: pan
+Could not keep the views	Hindi mapanatili ang mga view
+Saved views	Mga naka-save na view
+Places of the map to come back to: Ctrl+1…9 goes to the first nine, Ctrl+Shift+1…9 keeps the view there	Mga lugar sa mapa na babalikan: ang Ctrl+1…9 ay pumupunta sa unang siyam, ang Ctrl+Shift+1…9 ay nagtatago ng view doon
+Keep this view	Itago ang view na ito
+None yet	Wala pa
+Go	Pumunta
+Earlier in the list	Mas maaga sa listahan
+Later in the list	Mas huli sa listahan
+Take the view now instead	Kunin na lang ang view ngayon
+Keep proportions	Panatilihin ang proporsyon
+Back to its own size	Ibalik sa sariling laki
+Updates	Mga update
+This version:	Bersyong ito:
+New version:	Bagong bersyon:
+Install and restart	I-install at i-restart
+Not now	Hindi muna
+What changed	Ano ang nagbago
+Downloading and installing	Dina-download at ini-install
+Installed version	Naka-install na bersyon
+openMapper restarts when you save the map.	Magre-restart ang openMapper kapag na-save mo ang mapa.
+Looking for a new version…	Naghahanap ng bagong bersyon…
+This is the newest version.	Ito na ang pinakabagong bersyon.
+Download it from GitHub by hand	I-download sa GitHub nang mano-mano
+When there is a new version:	Kapag may bagong bersyon:
+Offer it to me	I-alok sa akin
+Install it and restart by itself	I-install at mag-restart nang kusa
+Never look for updates	Huwag maghanap ng update
+Check now	Suriin ngayon
+Never offer updates again	Huwag nang mag-alok ng update
+The release has no package	Walang package ang release
+No automatic updates for this system.	Walang awtomatikong update para sa system na ito.
+No connection to GitHub: are you online?	Walang koneksyon sa GitHub: online ka ba?
+The release has no SHA256SUMS: not installed.	Walang SHA256SUMS ang release: hindi na-install.
+The package is not in SHA256SUMS: not installed.	Wala ang package sa SHA256SUMS: hindi na-install.
+The download does not match its checksum: not installed.	Hindi tugma ang na-download sa checksum nito: hindi na-install.
+Could not replace the program	Hindi mapalitan ang program
+The package has no program in it.	Walang program sa package.
+openMapper has stopped:	Huminto ang openMapper:
+The log with the details:	Ang log na may mga detalye:

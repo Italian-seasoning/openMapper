@@ -1,0 +1,2129 @@
+Could not open the map	A térkép nem nyitható meg
+The next 100 tiles are loaded, the others are hidden	A következő 100 csempe betöltve, a többi rejtett
+Find the place in the window and build from it	Keresd meg a helyet az ablakban, és építsd fel belőle
+Your map is ready. Start with a road!	A térkép kész. Kezdd egy úttal!
+Export the map for sharing	Térkép exportálása megosztáshoz
+Exported:	Exportálva:
+files	fájl
+files the map names were not found: the readme lists them	a térkép által megnevezett fájl nem található: a readme felsorolja őket
+Could not export	Az exportálás nem sikerült
+A ring road with line 1 on it: save, then try it in openOMSI (F5).	Körút az 1-es járattal: mentsd el, majd próbáld ki az openOMSI-ban (F5).
+The sample could not be made	A minta nem készíthető el
+In multiplayer the host saves the map. Leave the session to save this as a copy of your own.	Többjátékos módban a hoszt menti a térképet. Lépj ki a munkamenetből, hogy saját másolatként mentsd.
+Saved:	Mentve:
+Tip: place a start point (Game logic > Start points) so the bus has somewhere to appear	Tipp: helyezz el kezdőpontot (Játéklogika > Kezdőpontok), hogy legyen hol megjelennie a busznak
+Could not save (the changes are still here, nothing is lost)	A mentés nem sikerült (a módosítások megmaradtak, semmi sem veszett el)
+The unsaved changes are back. Save to keep them.	A nem mentett módosítások visszaálltak. Mentsd őket.
+Could not restore the changes	A módosítások nem állíthatók vissza
+openOMSI was not found	Az openOMSI nem található
+From the start point	A kezdőpontról
+The map has no start point: place one with Game logic > Start points	A térképen nincs kezdőpont: helyezz el egyet a Játéklogika > Kezdőpontok alatt
+Starting openOMSI…	Az openOMSI indítása…
+To drive the map in OMSI 2 itself it has to be copied into the OMSI 2 folder (Maps, and the objects, roads and textures made for it). Nothing that is there is replaced except earlier copies of this map. Copy it there?	Ahhoz, hogy a térképen magában az OMSI 2-ben vezethess, be kell másolni az OMSI 2 mappába (Maps, valamint a hozzá készült objektumok, utak és textúrák). Semmi sem íródik felül, kivéve a térkép korábbi másolatait. Másolod?
+Starting OMSI 2: choose the map	Az OMSI 2 indítása: válaszd ki a térképet
+The map is copied into the OMSI 2 folder; OMSI 2 itself runs on Windows only:	A térkép bemásolva az OMSI 2 mappába; maga az OMSI 2 csak Windowson fut:
+Could not copy the map into OMSI 2	A térkép nem másolható az OMSI 2-be
+Click on the map to place it	Kattints a térképre az elhelyezéshez
+Open a map (its global.cfg)	Térkép megnyitása (a global.cfg fájlja)
+The map is back as it was before that save	A térkép visszaállt a mentés előtti állapotra
+Could not go back	A visszaállítás nem sikerült
+Export a plan of the map	Térképterv exportálása
+Plan saved:	Terv mentve:
+Mods, models and pictures	Modok, modellek és képek
+Import assets	Eszközök importálása
+…or choose a mod folder	…vagy válassz modmappát
+Click on the map to put it there	Kattints a térképre az elhelyezéshez
+Could not make the shape	Az alakzat nem hozható létre
+Choose the OMSI 2 folder	Az OMSI 2 mappa kiválasztása
+That is not an OMSI 2 folder (Omsi.exe, maps and Vehicles must be in it)	Ez nem OMSI 2 mappa (az Omsi.exe, a maps és a Vehicles kell benne legyen)
+This object has no textures to make PBR maps of	Ennek az objektumnak nincsenek textúrái, amelyekből PBR-térképek készülnének
+Could not copy the map	A térkép nem másolható
+Could not move the map	A térkép nem helyezhető át
+Terrain flattened; splines laid on it:	Terep elsimítva; lerakott splinek:
+This road type has no textures to make PBR maps of	Ennek az úttípusnak nincsenek textúrái, amelyekből PBR-térképek készülnének
+Pictures	Képek
+Only 100 tiles round the camera are loaded; click on the empty zone to load the next 100	Csak a kamera körüli 100 csempe van betöltve; kattints az üres zónára a következő 100 betöltéséhez
+All tiles are loaded	Minden csempe betöltve
+Import the map's thumbnail	A térkép indexképének importálása
+The map's thumbnail is set: openOMSI shows it where maps are chosen.	A térkép indexképe beállítva: az openOMSI a térképválasztónál mutatja.
+Could not use the picture	A kép nem használható
+Map camera	Térképkamera
+The map opens with this view from now on.	A térkép mostantól ezzel a nézettel nyílik meg.
+Add ground texture	Talajtextúra hozzáadása
+View kept as	A nézet elmentve ezen a számon:
+No view kept as	Nincs elmentett nézet ezen a számon:
+Files changed on disk: the catalogue and models are updated	A fájlok megváltoztak a lemezen: a katalógus és a modellek frissültek
+The track does not run over the map's tiles	A nyomvonal nem halad át a térkép csempéin
+Road along a GPS track	Út GPS-nyomvonal mentén
+Roads built:	Megépült utak:
+junctions:	csomópontok:
+stops:	megállók:
+Lines from OpenStreetMap	Járatok az OpenStreetMapből
+lines:	járatok:
+trips found their way:	úttal rendelkező menetek:
+buildings:	épületek:
+trees:	fák:
+Start point	Kezdőpont
+Start	Indítás
+a start point	egy kezdőpont
+From OpenStreetMap	Az OpenStreetMapből
+Picture saved:	Kép mentve:
+Could not save the picture	A kép nem menthető
+The graphics could not be started.	A grafika nem indítható el.
+Flying speed	Repülési sebesség
+copy	másolat
+Only maps of the content folder can be moved	Csak a tartalommappa térképei helyezhetők át
+Only assets of the content folder can be deleted	Csak a tartalommappa eszközei törölhetők
+Could not write the object	Az objektum nem írható ki
+Select an object to edit its mesh	Jelölj ki egy objektumot a hálójának szerkesztéséhez
+A copy of its own was made: the original type is unchanged	Saját másolat készült: az eredeti típus nem változott
+Cannot edit this object	Ez az objektum nem szerkeszthető
+Point at an edge to cut across its ring of faces	Mutass egy élre, hogy elvágd a lapok gyűrűjét keresztben
+Objects made:	Létrehozott objektumok:
+select the faces to separate	jelöld ki a leválasztandó lapokat
+Separated into an object of its own	Önálló objektummá leválasztva
+Add object	Objektum hozzáadása
+select what to export (objects, roads)	jelöld ki, mit exportálsz (objektumok, utak)
+Export the selection	A kijelölés exportálása
+unknown format	ismeretlen formátum
+the models are still loading: try again in a moment	a modellek még töltődnek: próbáld újra egy pillanat múlva
+this material has no texture	ennek az anyagnak nincs textúrája
+cannot read	nem olvasható
+Export the texture	Textúra exportálása
+Texture saved:	Textúra mentve:
+Choose a picture	Válassz képet
+give the material a texture first: its maps go beside it	előbb adj textúrát az anyagnak: a térképei mellé kerülnek
+Import materials (an .mtl, a model, or the pictures of one PBR material)	Anyagok importálása (.mtl, modell vagy egy PBR-anyag képei)
+Materials and pictures	Anyagok és képek
+no materials found there	nem található anyag
+Materials added:	Hozzáadott anyagok:
+nothing to bake	nincs mit beégetni
+the object has no lamps to bake the night light of	az objektumnak nincsenek lámpái, amelyek éjszakai fényét beégetnénk
+Baked into	Beégetve ide:
+select a road or spline first	előbb jelölj ki egy utat vagy splinet
+the road's type is still loading: try again in a moment	az út típusa még töltődik: próbáld újra egy pillanat múlva
+these splines have no shape to see	ezeknek a spline-oknak nincs látható alakjuk
+Replace by an object	Csere objektumra
+Made into an object: Tab edits its mesh	Objektummá alakítva: a Tab a hálóját szerkeszti
+Signal head made: click where it stands (near a crossing with a light program it links to it)	Jelzőfej létrehozva: kattints oda, ahol áll (fényprogramos kereszteződés közelében ahhoz kapcsolódik)
+Choose a picture or a texture	Válassz képet vagy textúrát
+cannot read the picture	a kép nem olvasható
+Picture made: click where it goes (it can be moved, turned and scaled after)	Kép létrehozva: kattints oda, ahová kerül (utána mozgatható, forgatható és méretezhető)
+Light made: click where it shines	Fény létrehozva: kattints oda, ahová világít
+Choose a sound	Válassz hangot
+Sounds	Hangok
+Sound source made: click where it plays	Hangforrás létrehozva: kattints oda, ahol szól
+Street lamp made: click where it stands	Utcai lámpa létrehozva: kattints oda, ahol áll
+Paint by slope and height	Festés lejtés és magasság szerint
+By slope and height	Lejtés és magasság szerint
+The chosen layer painted over the whole map where the ground is so steep (and so high)	A kiválasztott réteg a teljes térképen arra festődik, ahol a talaj ilyen meredek (és ilyen magas)
+Slope	Lejtés
+Height	Magasság
+Fade	Átmenet
+Cover	Fedés
+Paint the map	Térkép festése
+Choose a layer above the base ground	Válassz réteget az alaptalaj felett
+No ground on the map is like that	A térképen nincs ilyen talaj
+Painted	Megfestve
+Missing objects	Hiányzó objektumok
+Missing roads and splines	Hiányzó utak és splinek
+Missing textures	Hiányzó textúrák
+Road ends not joined	Nem összekötött útvégek
+Links to splines that are gone	Hivatkozások megszűnt splinekre
+Bus stops away from a road	Úttól távoli megállók
+Start points away from a road	Úttól távoli kezdőpontok
+Start points without their object	Objektum nélküli kezdőpontok
+No start point	Nincs kezdőpont
+IDCodes used twice	Kétszer használt IDCode-ok
+Next IDCode too low	Túl alacsony következő IDCode
+Objects off their tile	Saját csempéjükön kívüli objektumok
+Tiles without a file	Fájl nélküli csempék
+Tiles without ground	Talaj nélküli csempék
+Trips without a way	Út nélküli menetek
+Tours without departures	Menet nélküli fordák
+Tours without a depot	Telephely nélküli fordák
+Traffic groups not in the AI lists	Az MI-listákban nem szereplő forgalmi csoportok
+Stops no trip calls at	Megállók, ahol egy menet sem áll meg
+Signal routes naming what is gone	Megszűnt elemeket megnevező jelzőútvonalak
+Chrono changes of what is gone	Megszűnt elemek kronológiai változásai
+Lamps lighting no ground at night	Lámpák, amelyek éjjel nem világítanak meg talajt
+Tiles with very many objects	Nagyon sok objektumot tartalmazó csempék
+Objects linked to one that is gone	Megszűnt objektumhoz kapcsolt objektumok
+Signal heads linked to no crossing	Kereszteződés nélküli jelzőfejek
+Depot files (destinations)	Telephelyfájlok (célállomások)
+The map uses an object (.sco) that is not installed. The game leaves it out. Install the mod it comes from, or delete the object. A junction of openMapper's whose file is gone (the map was moved without it) is made again for its roads with "Fix".	A térkép olyan objektumot (.sco) használ, amely nincs telepítve. A játék kihagyja. Telepítsd a modot, amelyből származik, vagy töröld az objektumot. Az openMapper olyan csomópontját, amelynek fájlja eltűnt (a térképet nélküle mozgatták), a „Javítás” újra létrehozza az útjaihoz.
+The map uses a road or spline type (.sli) that is not installed: that road is missing in the game, and buses cannot drive there.	A térkép olyan út- vagy splinetípust (.sli) használ, amely nincs telepítve: ez az út hiányzik a játékban, és a buszok nem tudnak ott közlekedni.
+An object or road names a picture that cannot be found. It will look white or black in the game.	Egy objektum vagy út olyan képre hivatkozik, amely nem található. A játékban fehér vagy fekete lesz.
+Two road ends lie on one another but are not joined. Traffic still finds its way (the game joins lanes by their ends), but rows of lamps and posts and the road's texture do not run on across, and the editor does not treat them as one road. "Join" links them.	Két útvég egymáson fekszik, de nincsenek összekötve. A forgalom így is átjut (a játék a sávokat a végeiknél köti össze), de a lámpa- és oszlopsorok és az út textúrája nem folytatódik át rajta, és a szerkesztő nem tekinti őket egy útnak. Az „Összekötés” összekapcsolja őket.
+A spline says it goes on into another one that no longer exists. "Fix" forgets that link.	Egy spline olyan másikba folytatódik, amely már nem létezik. A „Javítás” elfelejti ezt a kapcsolatot.
+A bus stop belongs to the lane it stands beside (within about 25 m). This one has none near, so buses cannot stop at it. Move it next to the road, or "Fix" puts it at the kerb of the nearest lane (within 80 m).	A megálló ahhoz a sávhoz tartozik, amely mellett áll (kb. 25 m-en belül). Ennek nincs a közelében, ezért a buszok nem tudnak megállni nála. Mozgasd az út mellé, vagy a „Javítás” a legközelebbi sáv szegélyére teszi (80 m-en belül).
+A start point is where the bus appears. This one is away from any lane: fine in a depot yard, otherwise the bus starts off the road.	A kezdőpont az, ahol a busz megjelenik. Ez minden sávtól távol van: telephelyen rendben van, egyébként a busz úton kívül indul.
+A start point refers to an object that was deleted. "Fix" removes the start point.	A kezdőpont egy törölt objektumra hivatkozik. A „Javítás” eltávolítja a kezdőpontot.
+There is nowhere for the bus to appear. Place a start point (Game logic > Start points) on a road, or "Fix" puts one on a lane some 40 m before a bus stop.	A busznak nincs hol megjelennie. Helyezz el kezdőpontot (Játéklogika > Kezdőpontok) egy úton, vagy a „Javítás” egy sávra teszi egyet kb. 40 m-rel egy megálló előtt.
+Two things on the map share one IDCode: links, timetables and start points may pick the wrong one.	A térképen két dolog ugyanazt az IDCode-ot használja: a kapcsolatok, menetrendek és kezdőpontok rossz elemre mutathatnak.
+The counter for new IDCodes is below codes already used, so new objects would get codes twice. "Fix" raises it.	Az új IDCode-ok számlálója a már használt kódok alatt van, így az új objektumok kétszer kapnának kódot. A „Javítás” megemeli.
+An object standing on the ground lies outside its own tile. The game does not show it. Move it a little or put it again.	A talajon álló objektum a saját csempéjén kívül van. A játék nem jeleníti meg. Mozgasd kicsit arrébb, vagy helyezd el újra.
+global.cfg lists tiles whose file is not there. The game leaves them out; they stay listed, as start points and timetables count tiles by their place in the list.	A global.cfg olyan csempéket sorol fel, amelyeknek nincs fájlja. A játék kihagyja őket; a listában maradnak, mert a kezdőpontok és menetrendek a lista sorrendje szerint számolják a csempéket.
+A tile has no height file: its ground is flat. Saving writes one.	A csempének nincs magassági fájlja: a talaja sík. A mentés létrehozza.
+No way along the roads was found through this trip's stops, so buses cannot drive it. Open it in Map > Lines and timetable to see where it breaks.	Ennek a menetnek a megállóin át nem található út az utakon, ezért a buszok nem tudják végigmenni. Nyisd meg a Térkép > Járatok és menetrend alatt, hogy lásd, hol szakad meg.
+A tour (a bus's day on the line) has no trips, so no bus runs it.	A fordának (a busz napja a járaton) nincs menete, ezért egy busz sem közlekedik rajta.
+A tour names no depot or group of the AI lists (or one that is not there): the game has no vehicle to send on it. Choose a depot for it in the Lines window, or "Fix" gives it the map's depot (one of OMSI 2's MAN buses added where the map has none).	A forda nem nevez meg telephelyet vagy az MI-listák csoportját (vagy nem létezőt): a játéknak nincs járműve, amit ráküldhetne. Válassz neki telephelyet a Járatok ablakban, vagy a „Javítás” a térkép telephelyét adja neki (ha nincs, az OMSI 2 egyik MAN buszát adja hozzá).
+The unscheduled traffic names a group that the AI lists do not have: those cars never appear. Add the group in Map > Traffic and AI, or "Fix" copies it from OMSI 2's own maps where they have it.	A menetrenden kívüli forgalom olyan csoportot nevez meg, amely nincs az MI-listákban: ezek az autók soha nem jelennek meg. Add hozzá a csoportot a Térkép > Forgalom és MI alatt, vagy a „Javítás” átmásolja az OMSI 2 saját térképeiről, ha ott megvan.
+A stop of the timetable that no trip calls at. Nothing is wrong, it is only not used yet.	A menetrend egyik megállója, ahol egy menet sem áll meg. Nincs gond, csak még nincs használva.
+A chrono scenario takes away, retypes or relabels something that is no longer on the map (it was deleted or its IDCode changed): that change does nothing. Open Map > Chrono scenarios, the scenario's properties, and take the change out.	Egy kronológiai forgatókönyv olyasmit töröl, típusát vagy feliratát módosítja, ami már nincs a térképen (törölték, vagy megváltozott az IDCode-ja): ez a változás nem csinál semmit. Nyisd meg a Térkép > Kronológiai forgatókönyvek alatt a forgatókönyv tulajdonságait, és vedd ki a változást.
+A tile holds far more objects than the stock maps' tiles (up to some 600): the game may stutter when it loads it or looks across it. Thin out a wood planted too densely (Plant brush, Clear) or plant it with more space between the trees.	A csempén sokkal több objektum van, mint az alaptérképek csempéin (legfeljebb kb. 600): a játék akadozhat a betöltésekor vagy ha átlát rajta. Ritkítsd az túl sűrűn ültetett erdőt (Növénykefe, Törlés), vagy ültess nagyobb térközzel.
+Street lamps stand on a tile the game does not light from its lamps ([variable_terrainlightmap] is off): at night the ground under them stays dark (unless the tile's light map file was made by OMSI 2's editor). "Fix" turns it on, as on nearly every tile of the stock maps.	Utcai lámpák olyan csempén állnak, amelyet a játék nem világít meg a lámpáiból ([variable_terrainlightmap] ki van kapcsolva): éjjel alattuk sötét marad a talaj (hacsak a csempe fénytérkép-fájlját nem az OMSI 2 szerkesztője készítette). A „Javítás” bekapcsolja, mint az alaptérképek szinte minden csempéjén.
+An object takes its state ([varparent]) from an object no longer on the map: a signal head stays dark, a display blank. Link it to another in its properties (Linked objects), or "Fix" forgets the link.	Egy objektum az állapotát ([varparent]) egy olyan objektumtól veszi, amely már nincs a térképen: a jelzőfej sötét marad, a kijelző üres. Kapcsold máshoz a tulajdonságaiban (Kapcsolt objektumok), vagy a „Javítás” elfelejti a kapcsolatot.
+A traffic light's signal head takes its light from a crossing's program ([varparent]); this one is linked to none while others like it are, so it stays dark in the game. Select it and link it in its properties (Linked objects).	A közlekedési lámpa jelzőfeje a fényét egy kereszteződés programjától ([varparent]) kapja; ez egyhez sincs kapcsolva, miközben a hozzá hasonlók igen, ezért a játékban sötét marad. Jelöld ki, és kapcsold a tulajdonságaiban (Kapcsolt objektumok).
+A depot file (.hof) gives the buses their destinations, the stop names on their displays and the routes their IBIS knows. Without one the signs stay empty and the IBIS knows no line. "Fix" makes it from the map's lines, or adds what the lines need to the map's own (Map > Depot files to see and change it).	A telephelyfájl (.hof) adja a buszoknak a célállomásokat, a megállónevek a kijelzőn, és az útvonalakat, amelyeket az IBIS ismer. Nélküle a kijelzők üresek, és az IBIS egy járatot sem ismer. A „Javítás” a térkép járataiból készíti el, vagy hozzáadja a járatoknak szükségeset a térkép saját fájljához (Térkép > Telephelyfájlok a megtekintéshez és módosításhoz).
+A signal route names a signal or track pieces no longer on the map: the signal may never clear. Open Map > Signal routes and take the track again, or delete the route.	A jelzőútvonal olyan jelzőt vagy pályaszakaszokat nevez meg, amelyek már nincsenek a térképen: a jelző talán soha nem nyit. Nyisd meg a Térkép > Jelzőútvonalak alatt, és vedd fel újra a pályát, vagy töröld az útvonalat.
+font	betűtípus
+used	használva
+in	itt:
+a ground texture of the map	a térkép egy talajtextúrája
+splines	splinek
+apart	egymástól
+spline	spline
+goes on into	folytatódik ide:
+no road near	nincs út a közelben
+from the road	úttól
+start point	kezdőpont
+object	objektum
+The map has no start point	A térképen nincs kezdőpont
+things have it	dolog használja
+highest in use:	legnagyobb használt:
+tile	csempe
+no .terrain file: flat	nincs .terrain fájl: sík
+objects	objektum
+lamps	lámpa
+The map has no depot file	A térképnek nincs telephelyfájlja
+the buses show no destination	a buszok nem mutatnak célállomást
+named by the map's depot, but found nowhere	a térkép telephelye megnevezi, de sehol sem található
+knows none of the	egyiket sem ismeri a következők közül:
+lacks	hiányzik
+destinations of the lines	a járatok célállomásai
+the lines need	a járatoknak szükséges:
+destinations	célállomás
+stops	megálló
+routes	útvonal
+tour	forda
+no depot named	nincs telephely megnevezve
+not in the AI lists:	nincs az MI-listákban:
+the stop has no object:	a megállónak nincs objektuma:
+no road beside	nincs út mellette:
+no way	nincs út
+no way found	út nem található
+Route	Útvonal
+gone	megszűnt
+changes of nothing	felesleges változás
+time	alkalommal
+times	alkalommal
+Fix from the map check	Javítás a térképellenőrzésből
+Car groups from OMSI 2's maps	Autócsoportok az OMSI 2 térképeiről
+A depot for the tour	Telephely a fordához
+A depot file from the lines	Telephelyfájl a járatokból
+Depot file: what the lines need	Telephelyfájl: amire a járatoknak szükségük van
+Map check	Térképellenőrzés
+Check again	Ellenőrzés újra
+Checking the map…	A térkép ellenőrzése…
+errors	hiba
+warnings	figyelmeztetés
+notes	megjegyzés
+Nothing found: the map looks fine.	Nincs találat: a térkép rendben van.
+Fix all	Összes javítása
+Join	Összekötés
+Fix	Javítás
+Click to fly there	Kattints az odarepüléshez
+Fixed:	Javítva:
+it has parts openMapper does not write	olyan részei vannak, amelyeket az openMapper nem ír
+A host on the internet needs a password of at least	Az interneten hosztoláshoz legalább ilyen hosszú jelszó kell:
+Type a password, or choose explicitly to host without one	Írj be jelszót, vagy kifejezetten válaszd a jelszó nélküli hosztolást
+Could not listen on port	A port nem hallgatható
+The way in for the tunnel could not be opened	Az alagút bejárata nem nyitható meg
+Hosting this map: others can join it now	A térkép hosztolva: mások most csatlakozhatnak
+Multiplayer ended: another map was opened	A többjátékos mód véget ért: másik térkép nyílt meg
+Somebody changed this first: your edit was put back	Valaki előbb módosította ezt: a szerkesztésed visszaállt
+The host takes no more: the edit is too big, or the session holds as much as it may. Your edit was put back	A hoszt már nem fogad többet: a szerkesztés túl nagy, vagy a munkamenet megtelt. A szerkesztésed visszaállt
+That lies too far from the map for this session: your edit was put back	Ez túl messze van a térképtől ehhez a munkamenethez: a szerkesztésed visszaállt
+tiles	csempe
+changed what you were editing: it is as they left it	módosította, amit szerkesztettél: úgy maradt, ahogy hagyta
+The timetable, the traffic and the descriptions are the host's in multiplayer: your change was put back	A menetrend, a forgalom és a leírások a hoszté többjátékos módban: a módosításod visszaállt
+Your conflicting edit was kept	Az ütköző szerkesztésed megmaradt
+Could not keep your conflicting edit; multiplayer stopped	Az ütköző szerkesztésed nem tartható meg; a többjátékos mód leállt
+Too much of the others' work came in while your edit was held open: multiplayer stopped. The map stays open; it can be saved as a copy.	Túl sok mások munkája érkezett, amíg a szerkesztésed nyitva volt: a többjátékos mód leállt. A térkép nyitva marad; másolatként menthető.
+The connection to the host was lost. The map stays open; it can be saved as a copy.	A kapcsolat a hoszttal megszakadt. A térkép nyitva marad; másolatként menthető.
+No OMSI 2 installation: the map has nowhere to go	Nincs OMSI 2 telepítés: a térképnek nincs hová kerülnie
+The host sent no map	A hoszt nem küldött térképet
+The host's map could not be read	A hoszt térképe nem olvasható
+No connection	Nincs kapcsolat
+That address is not an openMapper host	Ez a cím nem openMapper hoszt
+Wrong password	Hibás jelszó
+The session is full	A munkamenet megtelt
+Type a name (up to 32 letters)	Írj be nevet (legfeljebb 32 betű)
+The host has another version of openMapper	A hoszton az openMapper másik verziója van
+Move forward	Előre
+Move back	Hátra
+Move left	Balra
+Move right	Jobbra
+Turn the camera left	Kamera forgatása balra
+Turn the camera right	Kamera forgatása jobbra
+Undo	Visszavonás
+Redo	Újra
+Save	Mentés
+Copy	Másolás
+Cut	Kivágás
+Paste at the cursor	Beillesztés a kurzornál
+Duplicate	Kettőzés
+Select all	Összes kijelölése
+Find in the map	Keresés a térképen
+Search for a command	Parancs keresése
+Tool: Select	Eszköz: Kijelölés
+Tool: Roads	Eszköz: Utak
+Tool: Objects	Eszköz: Objektumok
+Tool: Game logic	Eszköz: Játéklogika
+Tool: Terrain	Eszköz: Terep
+Tool: Paint	Eszköz: Festés
+Tool: Tiles	Eszköz: Csempék
+Turn the object (Shift: the other way)	Objektum forgatása (Shift: másik irányba)
+Ruler	Vonalzó
+Knife	Kés
+Move handles	Mozgatófogantyúk
+Rotate handles	Forgatófogantyúk
+Scale handles	Méretezőfogantyúk
+Edit the mesh (vertices, edges, faces)	Háló szerkesztése (csúcsok, élek, lapok)
+Join the selected objects into one	A kijelölt objektumok egyesítése eggyé
+Build the planned road	A tervezett út megépítése
+Tile grid on / off	Csempeháló be / ki
+Group the selection	A kijelölés csoportosítása
+Ungroup	Csoport bontása
+Look straight down, north up	Nézet felülről, észak felül
+2D plan view on / off (3D: tilt and turn again)	2D felülnézet be / ki (3D: döntsd és forgasd újra)
+Catalogue on / off	Katalógus be / ki
+Overview map on / off	Áttekintő térkép be / ki
+Lines window	Járatok ablak
+Traffic window	Forgalom ablak
+Satellite and terrain window	Műhold és terep ablak
+Smaller brush	Kisebb ecset
+Larger brush	Nagyobb ecset
+Delete the selection	A kijelölés törlése
+Go to the selection	Ugrás a kijelöléshez
+Test drive in openOMSI (Shift: from the camera)	Tesztvezetés az openOMSI-ban (Shift: a kamerától)
+Save a picture of the view	A nézet képének mentése
+The map's own (global.cfg)	A térkép sajátja (global.cfg)
+Description	Leírás
+Name in this language	Név ezen a nyelven
+Description in this language	Leírás ezen a nyelven
+Remove this language	Nyelv eltávolítása
+Not written yet: it is saved as soon as you type.	Még nincs kiírva: gépelés közben mentődik.
+Edit description	Leírás szerkesztése
+just now	épp most
+min ago	perce
+h ago	órája
+Unsaved changes found	Nem mentett módosítások találhatók
+openMapper was closed without saving the map	Az openMapper a térkép mentése nélkül lett bezárva
+The changes kept by the autosave can be brought back. The map itself was not changed.	Az automatikus mentés által megőrzött módosítások visszaállíthatók. Maga a térkép nem változott.
+Restore the changes	Módosítások visszaállítása
+Drop them	Elvetés
+Nothing comes after it to join	Nincs mit hozzákapcsolni utána
+The next piece runs the other way: reverse it first	A következő darab ellenkező irányba megy: előbb fordítsd meg
+The next piece lies on another tile	A következő darab másik csempén fekszik
+The two pieces are of different road types	A két darab különböző úttípusú
+The two pieces have different settings (path rules, ground, skew)	A két darab beállításai eltérnek (pályaszabályok, talaj, dőlés)
+A row of objects comes onto the next piece from another tile	Egy objektumsor másik csempéről lép a következő darabra
+The two pieces do not bend, climb or bank alike: joined they would change shape	A két darab nem kanyarodik, emelkedik vagy dől egyformán: összekötve megváltozna az alakjuk
+Earlier versions	Korábbi verziók
+Before every save, the files it replaces are kept (the last 10 saves). Going back puts the map as it was before that save; later changes go.	Minden mentés előtt megmaradnak a felülírt fájlok (az utolsó 10 mentés). A visszalépés a térképet a mentés előtti állapotra állítja; a későbbi módosítások elvesznek.
+No earlier versions yet: they appear once the map is saved again.	Még nincs korábbi verzió: a térkép következő mentésekor jelennek meg.
+before the save of	a mentés előtt:
+Go back to this	Visszalépés ide
+could not keep a backup, nothing was saved	nem készült biztonsági másolat, semmi sem lett mentve
+Red	Piros
+Yellow	Sárga
+Green	Zöld
+file not found	a fájl nem található
+this object takes its model from a model file and cannot be edited here	ez az objektum a modelljét külön modellfájlból veszi, itt nem szerkeszthető
+the object has no mesh to edit	az objektumnak nincs szerkeszthető hálója
+cannot read the object	az objektum nem olvasható
+Select	Kijelölés
+Terrain	Terep
+Paint	Festés
+Roads	Utak
+Objects	Objektumok
+Game logic	Játéklogika
+Tiles	Csempék
+Raise	Emelés
+Lower	Süllyesztés
+Smooth	Simítás
+Flatten	Elsimítás
+Roughen	Érdesítés
+Ramp	Rámpa
+Lake / river	Tó / folyó
+Start points	Kezdőpontok
+Bus stops	Megállók
+Car parks	Parkolók
+AI paths	MI-útvonalak
+Other	Egyéb
+Where the bus appears when a drive starts. Put it on a road or in the depot, facing the way to drive.	Ahol a busz megjelenik a vezetés kezdetén. Tedd útra vagy telephelyre, a menetirányba nézve.
+Where passengers wait. Put it beside the road at the kerb; name it on the right.	Ahol az utasok várnak. Tedd az út mellé a szegélyhez; a nevet jobbra add meg.
+Where parked cars stand. Click for one; with a row on, click the start and end of a row along the kerb.	Ahol a parkoló autók állnak. Kattintás: egy hely; sorral bekapcsolva kattints a sor elejére és végére a szegély mentén.
+Lanes the AI's cars or people follow. Draw like a road: it snaps to lane ends (green: joined, red: dead end) and along lanes. A car path runs the way you draw it.	Sávok, amelyeken az MI autói vagy emberei haladnak. Rajzold úgy, mint az utat: a sávvégekhez (zöld: összekötve, piros: zsákutca) és a sávok mentén illeszkedik. Az autók útja a rajzolás irányába halad.
+Sound sources, help arrows and other helpers the game does not show.	Hangforrások, segédnyilak és más segédeszközök, amelyeket a játék nem mutat.
+Move (V): drag an arrow along X, Y or Z, a square in its plane, the circle over the ground	Mozgatás (V): húzz egy nyilat X, Y vagy Z mentén, a négyzetet a síkjában, a kört a talajon
+Rotate (C): drag a ring to turn about X, Y or Z	Forgatás (C): húzz egy gyűrűt az X, Y vagy Z körüli forgatáshoz
+Scale (X): drag an arrow to scale along that axis, a square for two, the circle for all three	Méretezés (X): húzz egy nyilat az adott tengely mentén, négyzetet kettőhöz, kört mindhárom tengelyhez
+These roads have no lanes of their own to take apart (rails stay as they are)	Ezeknek az utaknak nincsenek saját sávjaik, amelyeket szét lehetne szedni (a sínek változatlanok maradnak)
+Make the lanes editable	A sávok szerkeszthetők lettek
+Roads whose lanes are now editable:	Utak, amelyeknek a sávjai most szerkeszthetők:
+Flatten the terrain	Terep elsimítása
+Select two things or more to group them	Jelölj ki két vagy több dolgot a csoportosításhoz
+Group	Csoport
+Grouped:	Csoportosítva:
+Ungrouped	Csoport bontva
+Rename group	Csoport neve
+Ground levelled under objects:	Talaj kiegyenlítve az objektumok alatt:
+Move	Mozgatás
+No object clicked: nothing linked	Nem kattintottál objektumra: nincs kapcsolat
+Too near the road's end to cut it there	Túl közel van az út végéhez, hogy itt elvágd
+No road under the cursor	Nincs út a kurzor alatt
+Ramp:	Rámpa:
+Shape terrain	Terep formázása
+Paint ground	Talaj festése
+Clear plants	Növények törlése
+Plant	Ültetés
+Rotate selection	Kijelölés forgatása
+Rotate	Forgatás
+Delete object	Objektum törlése
+Delete road	Út törlése
+Delete selection	Kijelölés törlése
+Pick an object in the catalogue first	Előbb válassz objektumot a katalógusban
+There is no tile here: add one with the Tiles tool	Itt nincs csempe: adj hozzá egyet a Csempék eszközzel
+Place object	Objektum elhelyezése
+New stop	Új megálló
+Linked to	Kapcsolva ehhez:
+choose its light in its properties	a fényét a tulajdonságaiban válaszd ki
+Trees from OpenStreetMap	Fák az OpenStreetMapből
+Plant an area	Terület beültetése
+Buildings from OpenStreetMap	Épületek az OpenStreetMapből
+Stops from OpenStreetMap	Megállók az OpenStreetMapből
+Stop	Megálló
+Pick a car park in the list first	Előbb válassz parkolót a listában
+Place car parks	Parkolók elhelyezése
+Car parks placed:	Elhelyezett parkolók:
+Pick a road type in the catalogue first	Előbb válassz úttípust a katalógusban
+That bend is too sharp	Ez a kanyar túl éles
+Switch made	Váltó létrehozva
+Junctions made:	Létrehozott csomópontok:
+The road leaves the map: add tiles there first	Az út elhagyja a térképet: előbb adj hozzá csempéket
+Build road	Út építése
+Roads from OpenStreetMap	Utak az OpenStreetMapből
+Pick a tree in the catalogue (or add some to the mix) first	Előbb válassz fát a katalógusban (vagy adj hozzá a keverékhez)
+Right-click a tile to remove it	Jobb kattintás egy csempén: eltávolítás
+New tiles go next to the map	Az új csempék a térkép mellé kerülnek
+Add tile	Csempe hozzáadása
+Water	Víz
+Paint detail	Festés részletessége
+Ground layer order	Talajrétegek sorrendje
+Detail texture	Részlettextúra
+Ground texture	Talajtextúra
+Lamp light on the ground	Lámpafény a talajon
+Add tiles	Csempék hozzáadása
+A map needs at least one tile	A térképen legalább egy csempének maradnia kell
+Remove tile	Csempe eltávolítása
+Pick a point (a dot at an end or where pieces meet) to take it out	Válassz pontot (kört a végén vagy a darabok találkozásánál) az eltávolításhoz
+Remove a point of the path	Útvonalpont eltávolítása
+Point taken out	Pont eltávolítva
+A path of one piece: Del with nothing picked deletes it	Egydarabos útvonal: a Del kijelölt pont nélkül törli
+Extrude	Kihúzás
+Inset	Behúzás
+Bevel	Letörés
+Loop cut	Hurokvágás
+click: done, right click / Esc: cancel, wheel: segments	kattintás: kész, jobb kattintás / Esc: mégse, görgő: szegmensek
+Scale	Méretezés
+Roads are not scaled: change their length and width in their properties	Az utakat nem lehet méretezni: a hosszukat és szélességüket a tulajdonságaikban változtasd
+Only the objects are scaled, the roads stay	Csak az objektumok méreteződnek, az utak maradnak
+Could not scale	A méretezés nem sikerült
+Too near the end: drag the end's dot instead	Túl közel a véghez: húzd inkább a vég pontját
+Add a point to the path	Pont hozzáadása az útvonalhoz
+Point added: drag the dot where the pieces meet	Pont hozzáadva: húzd a darabok találkozásánál lévő kört
+Reshape road	Út átformálása
+Selected:	Kijelölve:
+Copied:	Másolva:
+Nothing copied yet	Még nincs semmi másolva
+Paste	Beillesztés
+Level the ground	Talaj elsimítása
+Turn objects	Objektumok forgatása
+Copies in a row	Másolatok sorban
+Left out (off the map):	Kihagyva (a térképen kívül):
+Pasted (the rest is off the map):	Beillesztve (a többi a térképen kívül van):
+Edit object	Objektum szerkesztése
+Lean with the ground	Dőlés a talajjal
+Stand upright	Egyenesre állítás
+Change height	Magasság módosítása
+Change road type	Úttípus módosítása
+The selected roads are not one chain (they branch or leave gaps)	A kijelölt utak nem alkotnak egy láncot (elágaznak vagy hézagosak)
+Even slope	Egyenletes lejtés
+Lay on the ground	Ráfektetés a talajra
+Remove the rows of objects along it first (they are measured from its start)	Előbb távolítsd el az objektumsorokat mellőle (az elejétől mérődnek)
+Reverse direction	Irány megfordítása
+No road there to cut	Itt nincs elvágható út
+Cut the road	Út elvágása
+Cut in two: each piece can now be changed on its own	Kettévágva: mindegyik darab külön módosítható
+Join the pieces	Darabok egyesítése
+Joined into one piece	Egy darabbá egyesítve
+Parallel copy	Párhuzamos másolat
+Overhead wire	Felsővezeték
+Back into the map	Vissza a térképre
+Hang an object	Objektum felakasztása
+Link to an object	Kapcsolás objektumhoz
+Unlink	Leválasztás
+That object already takes its state from this one	Az az objektum már ettől veszi az állapotát
+Linked	Kapcsolva
+Signal head's light	Jelzőfej fénye
+Path rules	Pályaszabályok
+Replace objects	Objektumok cseréje
+Edit road	Út szerkesztése
+Roads that could not follow the junction (too sharp a bend):	Utak, amelyek nem tudták követni a csomópontot (túl éles kanyar):
+Edit junction	Csomópont szerkesztése
+Make the junction again	Csomópont újraépítése
+Make the junctions again	Csomópontok újraépítése
+Pick an object in the Objects tool's catalogue first	Előbb válassz objektumot az Objektumok eszköz katalógusában
+The road is too short for that	Az út ehhez túl rövid
+Objects along the road	Objektumok az út mentén
+Rows of objects added:	Hozzáadott objektumsorok:
+Edit row of objects	Objektumsor szerkesztése
+Remove row of objects	Objektumsor eltávolítása
+Remove rows of objects	Objektumsorok eltávolítása
+Roundabout built; roads joined to it:	Körforgalom megépítve; hozzákapcsolt utak:
+This road type carries traffic both ways: pick a one-way road for a proper roundabout	Ez az úttípus mindkét irányban forgalmat visz: valódi körforgalomhoz válassz egyirányú utat
+Start point: where the bus appears in openOMSI	Kezdőpont: ahol a busz megjelenik az openOMSI-ban
+Bus stop: name it in the panel on the right	Megálló: nevezd el a jobb oldali panelen
+openOMSI stopped with an error	Az openOMSI hibával leállt
+Check in openOMSI	Ellenőrzés az openOMSI-ban
+The saved map run by the game itself, unseen, with its own checks; the picture is the game's, from your view	A mentett térkép magán a játékon fut, láthatatlanul, saját ellenőrzésekkel; a kép a játéké, a te nézetedből
+Every tile (slower on a big map)	Minden csempe (nagy térképen lassabb)
+Run again	Futtatás újra
+openOMSI is loading the map…	Az openOMSI betölti a térképet…
+Nothing wrong found	Hiba nem található
+Problems found:	Talált problémák:
+Go there	Odamegyek
+of the places named lie at the map's edge or a road's dead end (greyed): the game measures a lane's last point on the road's very edge, and a bus at the end stands over it; nothing to mend	a megnevezett helyek a térkép szélén vagy egy út zsákutcájában vannak (szürke): a játék a sáv utolsó pontját az út legszélén méri, és a busz a végén fölötte áll; nincs mit javítani
+The game said nothing about the map	A játék nem mondott semmit a térképről
+The game's whole output	A játék teljes kimenete
+no key entered	nincs kulcs megadva
+the server refused the key	a szerver elutasította a kulcsot
+too many requests, try again later	túl sok kérés, próbáld később
+No connection to the server: are you online?	Nincs kapcsolat a szerverrel: van internet?
+Enter your Google key first	Előbb add meg a Google-kulcsodat
+OpenStreetMap's servers are busy: try again in a minute	Az OpenStreetMap szerverei foglaltak: próbáld egy perc múlva
+The area is too large for this zoom	A terület túl nagy ehhez a nagyításhoz
+Cancelled	Megszakítva
+Stopped by an internal error (see the log)	Belső hiba állította le (lásd a naplót)
+No source has imagery here	Egyik forrásnak sincs képe erről a helyről
+drawn from OpenStreetMap data: sharp, with names	OpenStreetMap-adatokból rajzolva: éles, nevekkel
+terrain heights, no key needed	terepmagasságok, kulcs nem kell
+needs your own free key	saját ingyenes kulcs kell
+no key needed	kulcs nem kell
+the picture is too small	a kép túl kicsi
+Import height map	Magassági térkép importálása
+Height map	Magassági térkép
+The ground as a grey picture, to shape in another program and bring back	A talaj szürke képként, hogy másik programban alakítsd, és hozd vissza
+Export…	Exportálás…
+Import…	Importálás…
+over	ennyin:
+a pixel	pixelenként
+Black adds	A fekete hozzáad
+Black is	A fekete ennyi:
+White adds	A fehér hozzáad
+White is	A fehér ennyi:
+Smoothing	Simítás
+Replace the ground	Talaj cseréje
+Add to it	Hozzáadás
+Roads and objects keep their heights: best done before building	Az utak és objektumok megtartják magasságukat: építés előtt érdemes
+An 8-bit picture has only 256 steps of height: smoothing hides them	A 8 bites képnek csak 256 magassági lépcsője van: a simítás elrejti őket
+Lay it on the map	Ráhelyezés a térképre
+Cancel	Mégse
+Height map laid over	Magassági térkép ráhelyezve:
+Export the height map	Magassági térkép exportálása
+Height map written	Magassági térkép kiírva
+The height map could not be written	A magassági térkép nem írható ki
+A height map for the whole map	Magassági térkép az egész térképhez
+The picture could not be read	A kép nem olvasható
+IBIS and roller blind	IBIS és görgős célfelirat
+Front sign, line 1	Első tábla, 1. sor
+Front sign, line 2	Első tábla, 2. sor
+Side sign	Oldaltábla
+Roller blind texture	Görgős célfelirat textúrája
+IBIS 2 (20 letters)	IBIS 2 (20 karakter)
+Extra sign	Kiegészítő tábla
+Krüger picture	Krüger-kép
+Text	Szöveg
+IBIS (16 letters)	IBIS (16 karakter)
+Display, line 1	Kijelző, 1. sor
+Display, line 2	Kijelző, 2. sor
+Full name (20 letters)	Teljes név (20 karakter)
+Service trip	Kocsiszínbe
+Special trip	Különjárat
+Blank	Üres
+openMapper cannot import this kind of file (use a folder, .zip, .obj, .gltf, .glb, .fbx, .x, .o3d or a picture)	Az openMapper nem importálja ezt a fájltípust (használj mappát, .zip, .obj, .gltf, .glb, .fbx, .x, .o3d fájlt vagy képet)
+Mod installed, files:	Mod telepítve, fájlok:
+Objects added to	Objektumok hozzáadva ide:
+Road types added to	Úttípusok hozzáadva ide:
+Models imported:	Importált modellek:
+Nothing to import was found in this folder	Ebben a mappában nincs importálható
+The model has no triangles	A modellnek nincsenek háromszögei
+Model imported:	Modell importálva:
+The .obj file has no faces	Az .obj fájlnak nincsenek lapjai
+no base colour picture among them	nincs köztük alapszínkép
+The picture cannot be read	A kép nem olvasható
+Picture made into a standee:	A képből kontúros figura lett:
+Picture made into a sign:	A képből tábla lett:
+Trees	Fák
+Stops and start points	Megállók és kezdőpontok
+Junctions	Csomópontok
+Tracks	Sínek
+Footpaths	Gyalogutak
+Fences, walls, kerbs	Kerítések, falak, szegélyek
+Technical (AI, helpers)	Műszaki (MI, segédek)
+This map lies on the world's grid ([worldcoordinates]): its tiles cannot be taken yet	Ez a térkép a világrácson fekszik ([worldcoordinates]): a csempéi még nem vehetők át
+This map lies on the world's grid ([worldcoordinates]): tiles cannot be added from another yet	Ez a térkép a világrácson fekszik ([worldcoordinates]): másikról még nem adhatók hozzá csempék
+Tiles from another map	Csempék másik térképről
+Union	Egyesítés
+Difference (cut out)	Különbség (kivágás)
+Intersection	Metszet
+Slice (keep both pieces)	Szeletelés (mindkét rész marad)
+One object of all the selected, their insides gone	Egyetlen objektum az összes kijelöltből, belső falak nélkül
+The other selected objects cut out of the one shown in the properties	A többi kijelölt objektum kivágódik a tulajdonságokban látottból
+Only what all the selected share	Csak ami az összes kijelöltben közös
+The first object cut by the others into what is outside them and what is inside	Az első objektumot a többi kettévágja a rajtuk kívüli és a bennük lévő részre
+select an object first	előbb jelölj ki egy objektumot
+Make editable	Szerkeszthetővé tétel
+Make single	Különálló másolat
+the object has only one part	az objektumnak csak egy része van
+Separate parts	Részekre bontás
+select two or more objects to join	jelölj ki két vagy több objektumot az egyesítéshez
+Join objects	Objektumok egyesítése
+select two or more objects: the one shown in the properties and what acts on it	jelölj ki két vagy több objektumot: a tulajdonságokban láthatót és ami rá hat
+nothing is left: the objects do not overlap that way	nem maradt semmi: az objektumok így nem fedik egymást
+The file has no scene	A fájlban nincs jelenet
+The FBX file has no meshes	Az FBX fájlban nincsenek hálók
+Main roads	Főutak
+Streets	Utcák
+Service roads	Szervizutak
+Tram tracks	Villamospályák
+Railway tracks	Vasúti pályák
+motorway, trunk, primary, secondary	autópálya, gyorsforgalmi, fő- és mellékút
+tertiary, residential, unclassified	gyűjtő-, lakó- és egyéb utcák
+yards, car parks, depots	udvarok, parkolók, telephelyek
+each track on its own; branches are joined with switches by hand	minden pálya külön; az elágazásokat kézzel kösd váltókkal
+main lines without sidings; branches are joined with switches by hand	fővonalak vágányok nélkül; az elágazásokat kézzel kösd váltókkal
+Water from OpenStreetMap	Víz az OpenStreetMapből
+Give a distance	Adj meg távolságot
+The bend is too tight for that distance on its inner side	A kanyar túl szűk ekkora távolsághoz a belső oldalán
+The copy leaves the map: add tiles there first	A másolat elhagyja a térképet: előbb adj hozzá csempéket
+Made with openMapper	Készült az openMapperrel
+Low (no shadows, rough edges, 3 km view)	Alacsony (árnyékok nélkül, durva élek, 3 km látótáv)
+Medium (softer shadows, 8 km view)	Közepes (lágyabb árnyékok, 8 km látótáv)
+High	Magas
+This end belongs to a junction: select the junction and move it, the road follows	Ez a vég egy csomóponthoz tartozik: jelöld ki és mozgasd a csomópontot, az út követi
+Paint along the roads	Festés utak mentén
+Market	Piac
+Station	Pályaudvar
+Depot	Telephely
+this object takes its model from a model file: it cannot be scaled	ez az objektum a modelljét modellfájlból veszi: nem méretezhető
+Not a GPX, KML or GeoJSON file	Nem GPX, KML vagy GeoJSON fájl
+No lines in the file	Nincsenek vonalak a fájlban
+Language	Nyelv
+Interface size	Felület mérete
+File	Fájl
+New map…	Új térkép…
+Open map…	Térkép megnyitása…
+Controls…	Vezérlés…
+Import assets…	Eszközök importálása…
+Multiplayer…	Többjátékos…
+OMSI 2 folder…	OMSI 2 mappa…
+Quit	Kilépés
+View	Nézet
+Help	Súgó
+Updates…	Frissítések…
+About openMapper	Az openMapperről
+OMSI 2 not found	Az OMSI 2 nem található
+Map editor for openOMSI	Térképszerkesztő az openOMSI-hoz
+openMapper builds maps from the content of an installed OMSI 2. Choose its folder (the one with Omsi.exe, maps and Vehicles).	Az openMapper a telepített OMSI 2 tartalmából épít térképeket. Válaszd ki a mappáját (amelyikben az Omsi.exe, a maps és a Vehicles van).
+Choose OMSI 2 folder…	OMSI 2 mappa kiválasztása…
+Maps	Térképek
+recent · OMSI 2	legutóbbi · OMSI 2
+recent	legutóbbi
+content folder	tartalommappa
+OMSI 2 (saved as copy)	OMSI 2 (másolatként mentve)
+Open	Megnyitás
+Make a copy	Másolat készítése
+A copy of the map in the content folder under a new name, to try something out	A térkép másolata a tartalommappában új néven, kipróbáláshoz
+Show in the file manager	Megjelenítés a fájlkezelőben
+Move to openMapper's bin	Áthelyezés az openMapper kukájába
+Its folder goes into openMapper\\bin in the content folder, from where it can be put back by hand	A mappája az openMapper\\bin mappába kerül a tartalommappában, ahonnan kézzel visszatehető
+Browse…	Tallózás…
+Double-click a map to open it. Maps of OMSI 2 are saved as a copy into openOMSI's content folder; the original stays untouched.	Dupla kattintás egy térképre: megnyitás. Az OMSI 2 térképei másolatként kerülnek az openOMSI tartalommappájába; az eredeti érintetlen marad.
+A simple map editor for openOMSI.	Egyszerű térképszerkesztő az openOMSI-hoz.
+Back to the 3D view (0)	Vissza a 3D nézetbe (0)
+The plan view from above, north up (0)	Felülnézet, észak felül (0)
+Recent maps	Legutóbbi térképek
+(none)	(nincs)
+Export map for sharing…	Térkép exportálása megosztáshoz…
+Export a plan of the map…	Térképterv exportálása…
+Earlier versions…	Korábbi verziók…
+Close map	Térkép bezárása
+Edit	Szerkesztés
+Edit history…	Szerkesztési előzmények…
+Groups for other maps…	Csoportok más térképekhez…
+Find in map…	Keresés a térképen…
+Search for a command…	Parancs keresése…
+Delete	Törlés
+Deselect	Kijelölés megszüntetése
+Tile grid	Csempeháló
+What the game does not show	Ami a játékban nem látszik
+AI lanes	MI-sávok
+Names of stops and start points	Megállók és kezdőpontok nevei
+Show	Megjelenítés
+Roads and splines	Utak és splinek
+Overview map (M)	Áttekintő térkép (M)
+Assets (B)	Eszközök (B)
+Flatten the terrain (roads follow)	Terep elsimítása (az utak követik)
+Saved views…	Mentett nézetek…
+Go to selection	Ugrás a kijelöléshez
+Camera	Kamera
+Unity: right button looks round and W A S D fly, middle pans, Alt orbits	Unity: jobb gomb körbenéz és W A S D repül, középső görget, Alt keringet
+Map editor: right button looks round and W A S D fly (Q down, E up), middle pans, the wheel zooms to the cursor, drag moves the map	Térképszerkesztő: jobb gomb körbenéz és W A S D repül (Q le, E fel), középső görget, a görgő a kurzorra nagyít, húzás mozgatja a térképet
+Load 100 tiles at a time (like OMSI 2's editor)	100 csempe betöltése egyszerre (mint az OMSI 2 szerkesztőjében)
+Time of day	Napszak
+Plain day (as the game by day)	Sima nap (mint a játék nappal)
+At an hour	Adott órában
+Where the sun stands then, today, at the map's place (Map > Calendar and place); by night the moon	Hol áll akkor a nap ma, a térkép helyén (Térkép > Naptár és hely); éjjel a hold
+Season	Évszak
+Summer	Nyár
+Dry summer	Száraz nyár
+Spring	Tavasz
+Autumn	Ősz
+Winter	Tél
+Snow	Hó
+Graphics quality	Grafikai minőség
+Tools	Eszközök
+Road types and junctions…	Úttípusok és csomópontok…
+PBR maps for a picture…	PBR-térképek képhez…
+Map	Térkép
+Map settings…	Térképbeállítások…
+Calendar and place…	Naptár és hely…
+Signal routes…	Jelzőútvonalak…
+Chrono scenarios…	Kronológiai forgatókönyvek…
+Ground textures…	Talajtextúrák…
+Check map…	Térkép ellenőrzése…
+Junctions made again:	Újraépített csomópontok:
+Lines and timetable…	Járatok és menetrend…
+Traffic and AI…	Forgalom és MI…
+Depot files (destinations)…	Telephelyfájlok (célállomások)…
+Satellite and terrain…	Műhold és terep…
+From OpenStreetMap…	Az OpenStreetMapből…
+GPS tracks to trace…	GPS-nyomvonalak követéshez…
+Tiles from another map…	Csempék másik térképről…
+Test drive in openOMSI	Tesztvezetés az openOMSI-ban
+Test drive in OMSI 2 (the original)…	Tesztvezetés az OMSI 2-ben (az eredetiben)…
+Check in openOMSI…	Ellenőrzés az openOMSI-ban…
+Getting started	Első lépések
+New map	Új térkép
+Open a map	Térkép megnyitása
+Save (Ctrl+S): there are unsaved changes	Mentés (Ctrl+S): vannak nem mentett módosítások
+Save (Ctrl+S)	Mentés (Ctrl+S)
+Import assets: a mod folder or .zip, a .obj / .x / .o3d model (or drop files on the window)	Eszközök importálása: modmappa vagy .zip, .obj / .x / .o3d modell (vagy húzd a fájlokat az ablakra)
+Redo (Ctrl+Shift+Z)	Újra (Ctrl+Shift+Z)
+Tile grid (G)	Csempeháló (G)
+Assets: every object and road type, with pictures (B)	Eszközök: minden objektum és úttípus, képekkel (B)
+Test drive	Tesztvezetés
+Save the map and drive it in openOMSI (F5)	Térkép mentése és vezetése az openOMSI-ban (F5)
+openOMSI was not found: install it to test maps	Az openOMSI nem található: telepítsd a térképek teszteléséhez
+Test drive from the start point nearest the view	Tesztvezetés a nézethez legközelebbi kezdőpontról
+See this view in openOMSI	Ennek a nézetnek a megtekintése az openOMSI-ban
+loading	betöltés
+Edit mesh	Háló szerkesztése
+Shapes and lamps	Alakzatok és lámpák
+Click beside the map to add a 300 × 300 m tile. Right-click a tile to remove it.	Kattints a térkép mellé egy 300 × 300 m-es csempe hozzáadásához. Jobb kattintás egy csempén: eltávolítás.
+Area	Terület
+A ring of tiles round the map	Csempegyűrű a térkép körül
+Every free place beside the map, corners too, gets a tile at the height of its neighbours	A térkép melletti minden szabad hely, a sarkok is, csempét kap a szomszédok magasságában
+Tiles added:	Hozzáadott csempék:
+Everything on the map, grouped by the folders its files lie in	Minden a térképen, a fájljaik mappái szerint csoportosítva
+Click an object or a road in the view to see and change it on the right.	Kattints egy objektumra vagy útra a nézetben, hogy jobbra láthasd és módosíthasd.
+Line up with the nearest road (Shift: put it freely)	Igazítás a legközelebbi úthoz (Shift: szabad elhelyezés)
+On both sides of the road	Az út mindkét oldalán
+A stop of the same name also goes at the kerb across the road, facing the other way	Az azonos nevű megálló a túloldali szegélyre is kerül, a másik irányba nézve
+In a row along a line	Sorban egy vonal mentén
+Every	Minden
+Draw new	Újak rajzolása
+Edit existing	Meglévők szerkesztése
+Click a path to pick it: every point is a dot to drag (the small ones in the middle of a piece bend it). Double-click the path to put a point in. Click a dot, then Del, to take that point out; Del with no dot picked deletes the whole path (Ctrl+Z brings it back). Lanes of roads and junctions belong to their road type: use Edit its AI lanes on the road.	Kattints egy útvonalra a kijelöléséhez: minden pont egy húzható kör (a darabok közepén lévő kicsik meghajlítják). Dupla kattintás az útvonalon pontot ad hozzá. Kattints egy körre, majd Del: a pont eltávolítása; a Del kijelölt pont nélkül az egész útvonalat törli (a Ctrl+Z visszahozza). Az utak és csomópontok sávjai az úttípushoz tartoznak: használd az út „MI-sávok szerkesztése” parancsát.
+Cars	Autók
+People	Emberek
+Show these in the other tools too	Mutassa ezeket a többi eszközben is
+Show the AI's lanes in the other tools too	Mutassa az MI sávjait a többi eszközben is
+Everything	Minden
+Search	Keresés
+Shape the ground under the road	Talaj formázása az út alatt
+Go on drawing from the end of the road just built	Rajzolás folytatása az épp megépített út végéről
+Join road ends, roads and junction pieces near the cursor	Csatlakozás útvégekhez, utakhoz és csomópontdarabokhoz a kurzor közelében
+Make junctions where roads meet	Csomópontok készítése, ahol az utak találkoznak
+Go on with the type of the road I start from	Folytatás annak az útnak a típusával, ahonnan indulok
+Building with:	Építés ezzel:
+nothing chosen	nincs kiválasztva
+Front at the roadside, back	Homlokzat az útnál, hátrébb
+Plant brush: sow trees by painting	Növénykefe: fák ültetése festéssel
+Sow	Ültetés
+Clear	Törlés
+With the brush	Kefével
+In an outline	Körvonallal
+Click round an area (a wood, a park, a garden) and it is filled at once, or cleared	Kattintsd körbe a területet (erdő, park, kert): azonnal beültetődik vagy kitisztul
+About	Kb.
+plants (Enter: plant)	növény (Enter: ültetés)
+Size	Méret
+Apart	Távolság
+Sows the object chosen below. Right-click entries: "Add to the plant mix" to sow several at random. Clearing takes trees and the mix's objects.	A lent kiválasztott objektumot ülteti. Jobb kattintás a tételeken: „Hozzáadás a növénykeverékhez”, hogy többet ültess véletlenszerűen. A törlés a fákat és a keverék objektumait viszi.
+Mix (picked at random):	Keverék (véletlenszerűen):
+reading OMSI 2…	az OMSI 2 beolvasása…
+items	db
+Nothing found	Nem található semmi
+mod	mod
+right-click: star it	jobb kattintás: kedvenc
+Take out of the plant mix	Eltávolítás a növénykeverékből
+Add to the plant mix	Hozzáadás a növénykeverékhez
+Remove from favourites	Eltávolítás a kedvencek közül
+Add to favourites	Hozzáadás a kedvencekhez
+Favourites	Kedvencek
+Recently used	Legutóbb használt
+(not in a folder)	(mappán kívül)
+Strength	Erősség
+Mode	Mód
+Levels the ground to the height where you start dragging	A talajt a húzás kezdőpontjának magasságára egyenlíti
+Softens bumps and edges	Lágyítja a dudorokat és éleket
+Raises the ground under the brush	Megemeli a talajt a kefe alatt
+Lowers the ground under the brush	Lesüllyeszti a talajt a kefe alatt
+Gives flat ground the rolls and dips of a natural field; hold longer for more	A sík talajnak természetes mező hullámait és mélyedéseit adja; tartsd tovább az erősebbhez
+Paint a lake or a river: the ground is dug to a bed under the water's level (where you start the stroke, or the tile's water) and the tile gets water at that level. Water in OMSI is one level for a whole tile: another low place on the same tile shows it too	Fesd a tavat vagy folyót: a talaj a víz szintje alatti mederig kiásódik (ahol a vonást kezded, vagy a csempe vizének szintjéig), és a csempe vizet kap ezen a szinten. Az OMSI-ban a víz csempénként egy szint: ugyanazon csempe másik mélyedése is mutatja
+Click where it starts, then where it ends: the ground between becomes one even slope as wide as the brush (an embankment, a ramp, a level bed)	Kattints az elejére, majd a végére: a köztük lévő talaj egyenletes lejtővé válik a kefe szélességében (töltés, rámpa, sík meder)
+To a height	Magasságig
+Flatten to the height typed instead of the one where the drag starts (a level square, a platform)	Elsimítás a megadott magasságra a húzás kezdetének magassága helyett (sík terület, peron)
+Depth	Mélység
+The water's level is set where a stroke starts: start at the bank.	A víz szintjét a vonás kezdete adja: kezdd a parton.
+Brush	Kefe
+Flatten the whole terrain	Az egész terep elsimítása
+Every tile's ground levelled to the map's mean height; the roads, the AI paths and the junctions follow it. One undo step brings the relief back. (The satellite picture: View > Satellite overlay.)	Minden csempe talaja a térkép átlagmagasságára kerül; az utak, az MI-útvonalak és a csomópontok követik. Egy visszavonási lépés visszahozza a domborzatot. (A műholdkép: Nézet > Műholdas réteg.)
+Ground layers	Talajrétegek
+base ground	alaptalaj
+layer	réteg
+Add…	Hozzáadás…
+Remove	Eltávolítás
+Up the list: drawn under the layers after it	Feljebb a listán: a következő rétegek alatt rajzolódik
+Down the list: drawn over the layers before it	Lejjebb a listán: az előző rétegek fölött rajzolódik
+Texture	Textúra
+The layer's picture; its painting stays	A réteg képe; a festése megmarad
+A fine grain laid over the texture, seen close up (OMSI's detail texture)	Finom szemcsézet a textúra fölött, közelről látszik (az OMSI részlettextúrája)
+Click to choose another	Kattints másik választásához
+Repeats per tile	Ismétlés csempénként
+Detail repeats	Részlet ismétlése
+How finely this layer can be painted: texels across a tile (its masks are made again at the new size)	Milyen finoman festhető ez a réteg: texelek a csempe szélességében (a maszkjai az új méretre újraszámolódnak)
+Edit ground texture	Talajtextúra szerkesztése
+Erase	Törlés
+Remove ground texture	Talajtextúra eltávolítása
+Tile	Csempe
+A water surface over the whole tile: it shows where the ground lies below it (lower the ground with the Terrain tool for a lake or a river)	Vízfelület az egész csempén: ott látszik, ahol a talaj alatta van (süllyeszd a talajt a Terep eszközzel tóhoz vagy folyóhoz)
+at 	itt:
+Lamps light the ground at night	A lámpák éjjel megvilágítják a talajt
+The game works out the light pools of the street lamps on and round this tile when it loads it ([variable_terrainlightmap]); off, it shows the tile's light map file as it is	A játék betöltéskor kiszámolja az utcai lámpák fényfoltjait ezen a csempén és körülötte ([variable_terrainlightmap]); kikapcsolva a csempe fénytérkép-fájlját mutatja úgy, ahogy van
+Edit history	Szerkesztési előzmények
+Click a step to go back to just after it	Kattints egy lépésre, hogy közvetlenül utána állapotra térj vissza
+Opened	Megnyitva
+Properties	Tulajdonságok
+Configure PBR	PBR beállítása
+Create PBR	PBR létrehozása
+Normal, roughness, metal and shadow maps made from the object's textures, tuned and written as openOMSI reads them	Normál-, érdességi, fém- és árnyéktérképek az objektum textúráiból, finomhangolva és úgy kiírva, ahogy az openOMSI olvassa
+Type	Típus
+Hangs on	Függ ezen:
+point	pont
+Location	Hely
+East	Kelet
+North	Észak
+Height above sea level	Tengerszint feletti magasság
+above the ground:	a talaj felett:
+OMSI keeps this object's height above the ground under it: moved elsewhere it stays as high above the ground there	Az OMSI az objektum alatti talaj feletti magasságát tárolja: máshová helyezve ugyanolyan magasan marad az ottani talaj felett
+Rotation	Forgatás
+Tilt forward (pitch)	Előre dőlés (pitch)
+Bank to the side (roll)	Oldalra dőlés (roll)
+Heading	Irány (heading)
+Turn it the way the nearest road runs beside it	Forgatás a közelében futó legközelebbi út irányába
+Stand it upright again	Újra egyenesre állítás
+Picture	Kép
+Ratio	Arány
+Stop name	Megálló neve
+This tree	Ez a fa
+Texts	Szövegek
+Shown on the object (@ starts a new line)	Az objektumon látszanak (@ új sort kezd)
+Model	Modell
+Triangles	Háromszögek
+Parts	Részek
+Part	Rész
+triangles	háromszög
+colour only	csak szín
+opaque	átlátszatlan
+cut out	kivágott
+blended	áttetsző
+How the texture's transparency is used: cut out for leaves and fences, blended for glass	A textúra átlátszóságának használata: kivágott levelekhez és kerítésekhez, áttetsző üveghez
+Textures	Textúrák
+Normal, roughness, metal and shadow maps made from the road type's textures	Normál-, érdességi, fém- és árnyéktérképek az úttípus textúráiból
+Length	Hossz
+Radius	Sugár
+right	jobbra
+left	balra
+straight	egyenes
+start	eleje
+end	vége
+Mirrored	Tükrözött
+Skew	Ferdeség
+The start cut on a slant: 1 is 45° (two fences meeting at a corner: 1 and -1)	Ferdén vágott eleje: az 1 45° (két kerítés a sarokban: 1 és -1)
+The end cut on a slant	Ferdén vágott vége
+Ground	Talaj
+as it is	változatlan
+cut away under it	kivágás alatta
+cut, held at the end	kivágás, a végén tartva
+cut, held at the start	kivágás, az elején tartva
+cut, held at both ends	kivágás, mindkét végén tartva
+A hole in the ground under it, as for a tunnel, an underpass or a pit (OMSI's terrain align)	Lyuk a talajban alatta, mint alagúthoz, aluljáróhoz vagy gödörhöz (az OMSI terrain align)
+Select the whole road	Az egész út kijelölése
+Every piece linked on from this one (or double-click the road)	Az összes ehhez kapcsolódó darab (vagy dupla kattintás az úton)
+Join with the next piece	Egyesítés a következő darabbal
+One piece again with the one after it, where the two make one curve	Újra egy darab a következővel, ha ketten egy ívet alkotnak
+Replace with	Csere erre:
+The object chosen in the Objects tool's catalogue takes this one's place	Az Objektumok eszköz katalógusában kiválasztott objektum veszi át ennek a helyét
+Go to	Ugrás
+Level ground	Talaj kiegyenlítése
+The ground under it made level with its foot, blending in 3 m round it (a house on a slope)	Az alatta lévő talaj az alapjával egy szintre kerül, 3 m-en át simulva körülötte (ház lejtőn)
+All like it	Mind ilyen
+Select every one of this type on the map	A térképen minden ilyen típusú kijelölése
+No road within 60 m	60 m-en belül nincs út
+Name	Név
+Folder	Mappa
+Traffic	Forgalom
+left-hand	bal oldali
+No start point yet: place one (Game logic > Start points) so the bus has somewhere to appear in openOMSI.	Még nincs kezdőpont: helyezz el egyet (Játéklogika > Kezdőpontok), hogy legyen hol megjelennie a busznak az openOMSI-ban.
+None yet: openOMSI shows it where maps are chosen.	Még nincs: az openOMSI a térképválasztónál mutatja.
+Import your thumbnail	Saját indexkép importálása
+Choose a picture: it is cut to 370 × 280 and becomes the map's picture (picture.jpg).	Válassz képet: 370 × 280-ra vágódik, és a térkép képe lesz (picture.jpg).
+Open the map with this view	Térkép megnyitása ezzel a nézettel
+The camera as it is now is where the map opens (here and in OMSI 2's editor).	A kamera mostani állása az, ahol a térkép megnyílik (itt és az OMSI 2 szerkesztőjében).
+Saved to	Mentés ide:
+Edit map	Térkép szerkesztése
+Change the layer's texture	A réteg textúrájának cseréje
+Change the layer's detail texture	A réteg részlettextúrájának cseréje
+Controls	Vezérlés
+Keyboard	Billentyűzet
+Click a key, then press the new one (Esc: leave it). A key already in use is taken from its command.	Kattints egy billentyűre, majd nyomd le az újat (Esc: marad). A foglalt billentyű elvétetik a parancsától.
+press a key…	nyomj meg egy billentyűt…
+Also:	Még:
+Back to the default key	Vissza az alapértelmezett billentyűre
+Reset all keys	Minden billentyű visszaállítása
+Mouse	Egér
+Right button held	Jobb gomb lenyomva
+look round; W A S D fly, Q / E down / up, Shift faster, wheel: speed	körbenézés; W A S D: repülés, Q / E: le / fel, Shift: gyorsabb, görgő: sebesség
+Middle drag	Középső húzás
+pan	eltolás
+Alt + left / right / middle drag	Alt + bal / jobb / középső húzás
+orbit / zoom / pan (as in Unity)	keringés / nagyítás / eltolás (mint a Unityben)
+Left drag on nothing	Bal húzás az üres helyen
+select with a box	kijelölés kerettel
+Alt + left drag	Alt + bal húzás
+orbit round the point under the cursor	keringés a kurzor alatti pont körül
+Wheel	Görgő
+move towards the cursor	közelítés a kurzorhoz
+Trackpad	Érintőpad
+Two fingers	Két ujj
+Pinch / twist	Összecsípés / csavarás
+zoom / turn	nagyítás / forgatás
+Option + two fingers or drag	Option + két ujj vagy húzás
+Fixed keys	Rögzített billentyűk
+Arrow keys	Nyilak
+move over the map (Shift: faster)	mozgás a térképen (Shift: gyorsabb)
+go to a saved view (Shift: keep the view there)	ugrás egy mentett nézetre (Shift: a nézet megjegyzése oda)
+Alt + arrows	Alt + nyilak
+move the selection a grid step (Shift: 10 cm)	a kijelölés mozgatása egy rácslépéssel (Shift: 10 cm)
+Alt + Page Up / Down	Alt + Page Up / Down
+selection up / down 10 cm (Shift: 1 m)	a kijelölés fel / le 10 cm-rel (Shift: 1 m)
+add to / take from the selection	hozzáadás a kijelöléshez / elvétel belőle
+Shift / Ctrl + drag on empty ground	Shift / Ctrl + húzás az üres talajon
+select with a box (Shift adds)	kijelölés kerettel (Shift: hozzáad)
+Double-click a road	Dupla kattintás egy úton
+select all of it	az egész kijelölése
+turn the object	az objektum forgatása
+brush size	kefeméret
+stop / deselect	megszakítás / kijelölés megszüntetése
+Unsaved changes	Nem mentett módosítások
+The map has changes that are not saved. Save them first?	A térképen vannak nem mentett módosítások. Mented őket?
+Don't save	Ne mentsd
+Assets	Eszközök
+All	Mind
+Picture size	Képméret
+Shapes…	Alakzatok…
+Close (B)	Bezárás (B)
+Scenery objects	Díszletobjektumok
+Splines (roads, tracks…)	Splinek (utak, sínek…)
+Favourite on / off	Kedvenc be / ki
+content folder (mod, import, own)	tartalommappa (mod, import, saját)
+OMSI 2	OMSI 2
+width	szélesség
+Build with it	Építés vele
+Place it	Elhelyezés
+PBR material…	PBR-anyag…
+Delete…	Törlés…
+Not seen in the game (a helper).	A játékban nem látszik (segédobjektum).
+Delete the asset?	Törlöd az eszközt?
+Its folder goes into openMapper's bin in the content folder (openMapper\\bin), from where it can be put back by hand. Maps that use it show it missing.	A mappája az openMapper kukájába kerül a tartalommappában (openMapper\\bin), ahonnan kézzel visszatehető. Az azt használó térképeken hiányzónak látszik.
+Calendar and place	Naptár és hely
+Place and time	Hely és idő
+Holidays	Ünnepek
+Number plates	Rendszámok
+Latitude	Szélesség
+Longitude	Hosszúság
+Time zone	Időzóna
+Where the sun stands and when it rises and sets come from here.	Innen jön a nap állása, valamint a napkelte és napnyugta.
+Summer time	Nyári időszámítás
+years	év
+none: the clocks are never put forward	nincs: az órákat soha nem állítják előre
+EU rules for these years	EU-szabályok ezekre az évekre
+Last Sunday of March to last Sunday of October, replacing what is set for these years	Március utolsó vasárnapjától október utolsó vasárnapjáig, felváltva az ezekre az évekre megadottat
+None	Nincs
+Year	Év
+entries	bejegyzés
+Public holidays run Sunday's timetable; school holidays the holiday one.	Munkaszüneti napokon a vasárnapi menetrend közlekedik; iskolai szünetekben a szünidei.
+Public holidays	Munkaszüneti napok
+Add a holiday	Ünnep hozzáadása
+Holiday	Ünnep
+School holidays	Iskolai szünetek
+Ends before it starts	Hamarabb ér véget, mint kezdődik
+Add school holidays	Iskolai szünet hozzáadása
+The AI's cars carry these, one a line.	Az MI autói ezeket viselik, soronként egyet.
+X: a letter, 9: a digit	X: betű, 9: számjegy
+Make	Létrehozás
+Replaces the list with plates of the pattern	A listát a minta szerinti rendszámokra cseréli
+plates	rendszám
+The scenario's AI lists are written, groups changed:	A forgatókönyv MI-listái kiírva, módosított csoportok:
+Could not write the scenario	A forgatókönyv nem írható ki
+The scenario's timetable is written, files:	A forgatókönyv menetrendje kiírva, fájlok:
+Back in the scenario:	Vissza a forgatókönyvben:
+The scenario's things are on the map:	A forgatókönyv elemei a térképen:
+what you place now is the scenario's too	amit most elhelyezel, az is a forgatókönyvé
+Editing the scenario	Forgatókönyv szerkesztése
+Done	Kész
+Chrono scenarios	Kronológiai forgatókönyvek
+How the map changes over the years: each scenario from its first day lays its own tiles, lines and tickets over the map. The view shows the map as on the day chosen here; what you edit is always the map itself.	Hogyan változik a térkép az évek során: minden forgatókönyv az első napjától a saját csempéit, járatait és jegyeit rakja a térképre. A nézet a térképet az itt választott napon mutatja; amit szerkesztesz, mindig maga a térkép.
+Show the map as on	A térkép megjelenítése ekkor:
+Today	Ma
+Active on that day:	Aktív ezen a napon:
+New scenario's name	Új forgatókönyv neve
+New scenario	Új forgatókönyv
+A scenario starting on the day shown, after the others	A látható naptól induló forgatókönyv, a többi után
+From	Ettől
+To	Ig
+for good	végleg
+Own tickets	Saját jegyek
+Own money	Saját pénz
+the map's	a térkép
+Takes off	Leveszi a járatokat
+What changes (shown where the date is chosen)	Mi változik (a dátum kiválasztásánál látszik)
+From its first day, the selection in the view:	Az első napjától a nézetben kijelölt:
+appears	megjelenik
+Taken out of the map into the scenario: it is there from the scenario's first day on (place it first, then press this)	A térképről a forgatókönyvbe kerül: a forgatókönyv első napjától van ott (előbb helyezd el, aztán nyomd meg ezt)
+is gone	eltűnik
+Stays in the map, gone from the scenario's first day on	A térképen marad, a forgatókönyv első napjától eltűnik
+becomes	lesz
+its texts become	a szövegei lesznek
+Write	Kiírás
+Its path rules from that day	Pályaszabályai erről a naptól
+Add a rule	Szabály hozzáadása
+Written into the scenario at once (undo does not take it out of the scenario).	Azonnal a forgatókönyvbe íródik (a visszavonás nem veszi ki onnan).
+What it changes	Mit változtat
+into the map	a térképre
+Out of the scenario into the map itself: there on every day	A forgatókönyvből magába a térképbe: minden napon ott lesz
+Take it out of the scenario	Kivétel a forgatókönyvből
+new texts	új szövegek
+rules	szabály
+Nothing yet.	Még semmi.
+Its own things are on the map: select, move, change and place as usual. The map's own things stay the map's.	A saját elemei a térképen vannak: jelöld ki, mozgasd, módosítsd és helyezd el a szokásos módon. A térkép saját elemei a térképéi maradnak.
+Done: back into the scenario	Kész: vissza a forgatókönyvbe
+Edit its own things on the map	Saját elemeinek szerkesztése a térképen
+What it brings in is put on the map to work with as with anything else; Done writes it back (undo starts afresh)	Amit behoz, a térképre kerül, hogy bárminek megfelelően dolgozz vele; a Kész visszaírja (a visszavonás előzményei újrakezdődnek)
+The Lines window shows its timetable (the map's with its own laid over): lines, trips and tours edited there are the scenario's; a line of the map taken away is taken off from its day.	A Járatok ablak a menetrendjét mutatja (a térképét a sajátjával rétegezve): az ott szerkesztett járatok, menetek és fordák a forgatókönyvéi; a térkép elvett járata az adott naptól lekerül.
+Done with its timetable	Kész a menetrenddel
+Edit its timetable	Menetrend szerkesztése
+Its own lines, trips and tours in the Lines window; Done writes only what differs from the map's (undo starts afresh)	Saját járatai, menetei és fordái a Járatok ablakban; a Kész csak a térképtől eltérőt írja ki (a visszavonás előzményei újrakezdődnek)
+The Traffic window shows its AI lists (the map's with its own added): vehicles and type groups added there, and a depot's own depot file, are the scenario's from its day.	A Forgalom ablak az MI-listáit mutatja (a térképét a sajátjával kiegészítve): az ott hozzáadott járművek és típuscsoportok, valamint a telephely saját telephelyfájlja a forgatókönyv napjától érvényesek.
+Done with its AI lists	Kész az MI-listákkal
+Edit its AI lists	MI-listák szerkesztése
+Vehicles it adds to the groups and depots (OMSI's ailists_#upd.cfg); taking one away is the map's own business	A csoportokhoz és telephelyekhez adott járművek (az OMSI ailists_#upd.cfg-je); elvétel a térkép saját dolga
+Write the scenario	Forgatókönyv kiírása
+Close	Bezárás
+The map has no chrono scenarios.	A térképnek nincsenek kronológiai forgatókönyvei.
+from	ettől
+to	eddig
+takes off	leveszi
+own tickets	saját jegyek
+Its first day	Első napja
+Written into the scenario	Kiírva a forgatókönyvbe
+Written into the scenario:	Kiírva a forgatókönyvbe:
+Scenario written	Forgatókönyv kiírva
+The map as on	A térkép ekkor:
+scenarios:	forgatókönyv:
+Multiplayer	Többjátékos mód
+Joining… (a big map takes a while to come)	Csatlakozás… (a nagy térkép átvitele eltart egy ideig)
+Recover a conflicting edit…	Ütköző szerkesztés visszaállítása…
+Recovered your edit; undo is available	A szerkesztésed visszaállt; a visszavonás elérhető
+Edit one map together: one of you hosts it, the others join. Roads, objects, ground and paint are shared as they are made; the timetable, the traffic and the descriptions stay the host's, and the host saves the map. Everybody needs the same objects and splines installed.	Egy térkép közös szerkesztése: egyikőtök hosztolja, a többiek csatlakoznak. Az utak, objektumok, talaj és festés elkészültükkel megosztódnak; a menetrend, a forgalom és a leírások a hoszténál maradnak, és a hoszt menti a térképet. Mindenkinek ugyanazok az objektumok és splinek legyenek telepítve.
+Your name	A neved
+Password	Jelszó
+Host this map	Ennek a térképnek a hosztolása
+Others on this network can join	Ezen a hálózaton mások csatlakozhatnak
+Others anywhere can join (a free Cloudflare tunnel, nothing to set up on the router)	Bárhonnan csatlakozhatnak (ingyenes Cloudflare-alagút, a routeren nem kell beállítani semmit)
+Port	Port
+Over the internet the password must have at least this many letters:	Interneten a jelszónak legalább ennyi betűsnek kell lennie:
+No password: anybody who reaches this computer's port can join and change the whole map.	Jelszó nélkül: bárki, aki eléri ennek a gépnek a portját, csatlakozhat és módosíthatja az egész térképet.
+Ask for a password after all	Mégis kérjen jelszót
+Host without a password? Anybody on this network who finds the port can join and change the whole map.	Hosztolás jelszó nélkül? Bárki ezen a hálózaton, aki megtalálja a portot, csatlakozhat és módosíthatja az egész térképet.
+Yes, without a password	Igen, jelszó nélkül
+No	Nem
+Type a password the others will need.	Írj be jelszót, amelyre a többieknek szükségük lesz.
+Host without a password…	Hosztolás jelszó nélkül…
+Host	Házigazda lesz
+Open a map, type a name and a password first	Előbb nyiss meg térképet, írj be nevet és jelszót
+Join a map	Csatlakozás térképhez
+The map open now has unsaved changes: joining closes it. Save it first.	A most nyitott térképen vannak nem mentett módosítások: a csatlakozás bezárja. Előbb mentsd.
+You host this map. Give the others one of these:	Te hosztolod ezt a térképet. Add meg a többieknek az egyiket:
+On this network the connection is not encrypted: somebody listening in can see the map, and from what they catch try passwords on their own computer. Use a long password, or the internet tunnel (encrypted).	Ezen a hálózaton a kapcsolat nincs titkosítva: aki lehallgat, láthatja a térképet, és az elfogottakból a saját gépén próbálgathatja a jelszavakat. Használj hosszú jelszót vagy az internetes alagutat (titkosított).
+Everybody who joins can change the whole map.	Mindenki, aki csatlakozik, módosíthatja az egész térképet.
+Opening the Cloudflare tunnel… (fetched the first time)	A Cloudflare-alagút megnyitása… (első alkalommal letöltődik)
+internet	internet
+Waiting for Cloudflare's address…	Várakozás a Cloudflare címére…
+The Cloudflare tunnel could not be opened (no cloudflared, or no internet). The LAN addresses still work.	A Cloudflare-alagút nem nyitható meg (nincs cloudflared vagy internet). A LAN-címek továbbra is működnek.
+You joined this map. The host saves it.	Csatlakoztál ehhez a térképhez. A hoszt menti.
+Everything of yours is with the others	Minden módosításod megvan a többieknél
+Sending your edits…	A módosításaid küldése…
+In the session	A munkamenetben
+Say something…	Írj valamit…
+Leave	Kilépés
+Knife (K): a click on a road cuts it there, as often as you like; the pieces' lengths shown at the cursor, on whole grid steps with grid snapping on · right-click or Esc: off	Kés (K): kattintás egy úton ott elvágja, ahányszor csak akarod; a darabok hossza a kurzornál látszik, rácsillesztéssel egész rácslépésekben · jobb kattintás vagy Esc: ki
+The angle step: what snapping comes to and what R turns by	A szöglépés: amihez az illesztés igazít, és amennyit az R forgat
+Angle	Szög
+Snap headings to the angle step	Irányok illesztése a szöglépéshez
+Grid	Rács
+Snap positions to the grid	Pozíciók illesztése a rácshoz
+Click two points to measure the distance and gradient between them (U) · right-click: off	Kattints két pontra, hogy megmérd köztük a távolságot és a lejtést (U) · jobb kattintás: ki
+Auto-Terrain	Auto-terep
+What you build follows the ground: roads, paths and tracks take its height (off: they run level from where they start). Only what is built from now on; nothing already there changes	Amit építesz, követi a talajt: az utak, ösvények és sínek átveszik a magasságát (ki: a kezdőponttól vízszintesen futnak). Csak a mostantól építettre; ami már megvan, nem változik
+Auto-Switch	Auto-váltó
+Branching a track off another makes a switch there	Egy pálya elágaztatása másikról ott váltót hoz létre
+Auto-Junction	Auto-csomópont
+Auto-Align	Auto-igazítás
+Line objects up with the nearest road (Shift: put it freely)	Objektumok igazítása a legközelebbi úthoz (Shift: szabad elhelyezés)
+Selection	Kijelölés
+A click on one of it selects all of it, Ctrl + click one alone	Egyre kattintva az egész kijelölődik, Ctrl + kattintás egyet jelöl ki
+Keep these together: a click on one selects all, a drag moves all (Ctrl+G)	Együtt tartás: egyre kattintva mind kijelölődik, húzásra mind mozog (Ctrl+G)
+Apply	Alkalmaz
+Turn	Forgatás
+Level the ground under them	Talaj kiegyenlítése alattuk
+Each one's outline made level with its foot, blending into the ground 3 m round it	Mindegyik körvonala az alapjával egy szintre kerül, 3 m-en át simulva a talajba körülötte
+Make every object	Minden objektum cseréje
+The object chosen in the Objects tool's catalogue	Az Objektumok eszköz katalógusában kiválasztott objektum
+Random headings	Véletlen irányok
+Every selected object turned its own random way (trees, bushes, rocks)	Minden kijelölt objektum saját véletlen irányba fordul (fák, bokrok, sziklák)
+Along the road	Az út mentén
+Each turned the way the nearest road runs beside it	Mindegyik a közelében futó legközelebbi út irányába fordul
+Turned:	Elforgatva:
+All like this one	Mind mint ez
+Every selected object takes the heading of the one in the properties	Minden kijelölt objektum átveszi a tulajdonságokban látható irányát
+Make every road	Minden út cseréje
+The road type chosen in the Roads tool's catalogue	Az Utak eszköz katalógusában kiválasztott úttípus
+Lay them on the ground	Ráfektetés a talajra
+Reverse their direction	Irányuk megfordítása
+Even slope along them	Egyenletes lejtés mentükön
+One chain of roads: from the height at one end to that at the other, evenly (a bridge, a ramp)	Egy útlánc: az egyik vég magasságától a másikéig egyenletesen (híd, rámpa)
+Edit its AI lanes	MI-sávok szerkesztése
+Its lanes become AI paths of their own (the same lines, the same way) that the Logic tool's Edit existing bends, moves and deletes. The road keeps its look.	A sávjai önálló MI-útvonalak lesznek (ugyanazok a vonalak, ugyanaz az irány), amelyeket a Logika eszköz Meglévők szerkesztése hajlít, mozgat és töröl. Az út kinézete nem változik.
+Ends (joined roads follow)	Végek (a csatlakozó utak követik)
+height	magasság
+gradient	lejtés
+cant	áttétel
+Banking across the road, %: positive lowers its right side (into a right bend)	Keresztirányú dőlés, %: pozitív esetén a jobb oldal lesüllyed (jobb kanyarba)
+End	End
+Even slope end to end	Egyenletes lejtés elejétől végéig
+Both gradients to the straight climb between the ends' heights	Mindkét lejtés a végek magassága közötti egyenes emelkedőre
+Speed limit, km/h	Sebességkorlát, km/h
+Traffic density ×	Forgalomsűrűség ×
+Priority	Elsőbbség
+Trucks (0: none)	Teherautók (0: nincs)
+No cars	Nincs személyautó
+Buses only	Csak buszok
+For the AI and the player on one path (lane) of it, counted from 0: the view shows their numbers	Az MI-nek és a játékosnak az egyik útvonalán (sávján), 0-tól számolva: a nézet mutatja a számaikat
+Path (lane) number	Útvonal (sáv) száma
+Hanging on it	Rajta függ
+Points to hang objects on:	Pontok objektumok felakasztásához:
+Select it	Kijelölés
+Hang	Felakasztás
+Choose an object in the Objects catalogue first	Előbb válassz objektumot az Objektumok katalógusában
+A fence, a row of houses, an avenue: the selection copied again and again, a step on each time	Kerítés, házsor, fasor: a kijelölés újra és újra másolódik, minden alkalommal egy lépéssel odébb
+Copies	Másolatok
+Step	Lépés
+Turn each	Mindegyik forgatása
+Rows	Sorok
+More than one: a grid (an orchard, a car park), each row a row step on	Egynél több: rács (gyümölcsös, parkoló), minden sor egy sorlépéssel odébb
+Row step	Sorlépés
+Tilted to the ground under it, the way it slopes forward and to the side (a fence, a bench or a shed on a hillside)	A talajhoz dőlve alatta, ahogy előre és oldalra lejt (kerítés, pad vagy fészer domboldalon)
+Heights along the ground again, smoothed so it climbs a hill rather than every bump (after shaping the ground or laying a height map over it); where a road not selected joins, its height is kept	A magasságok újra a talajon, simítva, hogy az út dombra emelkedjen, ne minden dudorra (a talaj formázása vagy magassági térkép ráhelyezése után); ahol kijelöletlen út csatlakozik, a magassága megmarad
+Each starts where it ended: the traffic on it goes the other way (a one-way street, a track's direction), the road itself stays where it is	Mindegyik ott kezdődik, ahol véget ért: a rajta lévő forgalom a másik irányba megy (egyirányú utca, pálya iránya), maga az út a helyén marad
+A second track or the other carriageway: the selected splines copied alongside, bends kept exact, linked as they are	Második pálya vagy a másik úttest: a kijelölt splinek mellé másolódnak, a kanyarok pontosan, a kapcsolatok változatlanul
+To the left	Balra
+To the right	Jobbra
+Left and right of the way the road runs (its arrows with AI lanes shown)	Az út haladási irányától balra és jobbra (nyilai az MI-sávok megjelenítésekor)
+For trams and electric trains: a wire spline laid on the selected track, piece for piece and linked (its height is the wire spline's own); the masts go in with Objects along the road	Villamosokhoz és villamos vonatokhoz: vezetékspline a kijelölt pályán, darabról darabra és összekapcsolva (a magassága a vezetékspline sajátja); az oszlopok az Objektumok az út mentén paranccsal kerülnek fel
+No wire spline installed (one whose name says Fahrdraht, Oberleitung or wire)	Nincs telepítve vezetékspline (olyan, amelynek nevében Fahrdraht, Oberleitung vagy wire szerepel)
+Lay it	Lefektetés
+Wire pieces laid:	Lefektetett vezetékdarabok:
+Paint the ground along it	A talaj festése mellette
+Add a ground texture in the Paint tool first: the base ground is under everything	Előbb adj hozzá talajtextúrát a Festés eszközben: az alaptalaj mindennek az alján van
+Layer	Réteg
+Where	Hol
+beside it	mellette
+under it too	alatta is
+Out from its edge	A szélétől kifelé
+Soft edge	Lágy él
+A gravel verge, dirt by a track, grass along a path: the brush of the Paint tool touches it up afterwards	Kavicsos pad, föld a pálya mellett, fű az ösvény mentén: a Festés eszköz keféje utána kijavítja
+Beside	Mellette
+Lean with the road	Dőlés az úttal
+Each object leans with the road's gradient and banking (bays and arrows on the road); off, it stands upright	Minden objektum dől az út lejtésével és áttételével (öblök és nyilak az úton); kikapcsolva egyenesen áll
+A text the row's objects show (@ starts a new line)	A sor objektumai által mutatott szöveg (@ új sort kezd)
+Object:	Objektum:
+Pick an object (a lamp, a tree, a bollard) in the Objects tool's catalogue	Válassz objektumot (lámpa, fa, oszlop) az Objektumok eszköz katalógusában
+Right of the road's direction; negative: left	Az út irányától jobbra; negatív: balra
+Free at start / end	Szabad hely az elején / végén
+Both sides	Mindkét oldalon
+Place along the road	Elhelyezés az út mentén
+Remove all rows	Minden sor eltávolítása
+Roundabout: click the centre, then the ring	Körforgalom: kattints a közepére, majd a gyűrűre
+A one-way ring of the chosen road type (pick a one-way road); roads inside are cut back to it and joined with junctions	A kiválasztott úttípus egyirányú gyűrűje (válassz egyirányú utat); a belül lévő utak visszavágódnak hozzá, és csomópontokkal csatlakoznak
+Keep the height (bridge, embankment)	Magasság megtartása (híd, töltés)
+An even gradient from end to end, the ground left as it is; the rise to the end can be typed while drawing. Pillars: select the road and put them along it as objects.	Egyenletes lejtés elejétől végéig, a talaj változatlan; a végéig tartó emelkedés rajzolás közben beírható. Pillérek: jelöld ki az utat, és tedd mellé objektumként.
+Rise	Emelkedés
+Shift: straight · Enter: build	Shift: egyenes · Enter: építés
+Junction	Csomópont
+Traffic lights	Jelzőlámpák
+Lights need three roads or more	A lámpákhoz legalább három út kell
+Main road green	Zöld a főútnak
+Side roads green	Zöld a mellékutaknak
+The main road is the pair of roads most in line; red-yellow 2 s, yellow 3 s, 2 s all red between	A főút az egy vonalhoz legközelebb eső útpár; piros-sárga 2 mp, sárga 3 mp, köztük 2 mp mindenütt piros
+Zebra crossings	Gyalogátkelők
+Road	Út
+Build it again	Újraépítés
+Makes the plate, its kerbs and lanes again for the roads as they are now	Újra elkészíti a lapot, a szegélyeket és a sávokat az utakhoz, ahogy most vannak
+Linked objects	Kapcsolt objektumok
+An object can take its state from another ([varparent]): a signal head shows a light of its crossing's program, a stop's display its stop.	Egy objektum átveheti az állapotát egy másiktól ([varparent]): a jelzőfej a kereszteződés programjának fényét mutatja, a megálló kijelzője a megállóját.
+Takes its state from	Az állapotát innen veszi:
+Select it: IDCode	Kijelölése: IDCode
+Takes its state from an object that is gone: IDCode	Az állapotát megszűnt objektumtól veszi: IDCode
+Takes its state from nothing	Az állapotát semmitől sem veszi
+Light	Jelzőlámpa
+Its light is not one of the crossing's: it stays dark	A fénye nem a kereszteződés egyike: sötét marad
+That object runs no traffic lights: link the head to a crossing with a light program	Az az objektum nem vezérel jelzőlámpákat: kapcsold a fejet fényprogramos kereszteződéshez
+A signal head: link it to its crossing to have it light	Jelzőfej: kapcsold a kereszteződéséhez, hogy világítson
+Click the object in the view… (Esc)	Kattints az objektumra a nézetben… (Esc)
+Link to another…	Kapcsolás máshoz…
+Link to an object…	Kapcsolás objektumhoz…
+Then click the object it is to take its state from (a crossing for a signal head)	Majd kattints arra az objektumra, amelytől az állapotát veszi (jelzőfejnél a kereszteződés)
+Taking their state from it:	Tőle veszik az állapotukat:
+light	fény
+Click the object it takes its state from	Kattints arra az objektumra, amelytől az állapotát veszi
+stop	megálló
+Find in map	Keresés a térképen
+Name, file, IDCode, stop or x, y	Név, fájl, IDCode, megálló vagy x, y
+The point	A pont
+Spline	Spline
+Object	Objektum
+Nothing on the map has this IDCode.	A térképen semminek sincs ilyen IDCode-ja.
+kinds	fajta
+on the map	a térképen
+Next	Következő
+Select the next one and go there	A következő kijelölése és odaugrás
+Every one of these becomes the road type chosen in the Roads tool	Mindegyik az Utak eszközben kiválasztott úttípus lesz
+Every one of these becomes the object chosen in the catalogue	Mindegyik a katalógusban kiválasztott objektum lesz
+More: type to narrow the list	Több is van: szűkítsd a listát gépeléssel
+Replaced:	Lecserélve:
+Satellite overlay	Műholdas réteg
+Satellite and own pictures	Műhold és saját képek
+Click a tile to see its overlay here.	Kattints egy csempére, hogy itt lásd a rétegét.
+Show the overlay	Réteg megjelenítése
+opacity	átlátszatlanság
+Load satellite imagery	Műholdkép betöltése
+Place the map on the Earth first (Satellite and terrain…)	Előbb helyezd el a térképet a Földön (Műhold és terep…)
+Load image file…	Képfájl betöltése…
+Your own picture for this tile (a scan, a screenshot): or drop it on the window	Saját kép ehhez a csempéhez (szkennelés, képernyőkép): vagy húzd az ablakra
+Load the OpenStreetMap map	OpenStreetMap-térkép betöltése
+OpenStreetMap map for all tiles	OpenStreetMap-térkép minden csempéhez
+The map as openstreetmap.org draws it (streets with their names, houses, water, green, stop signs), drawn sharp from OpenStreetMap data and laid on the tile in place of a satellite picture: to build roads and houses over by eye. Nothing is generated from it.	A térkép úgy, ahogy az openstreetmap.org rajzolja (utcák nevekkel, házak, víz, zöld, megállótáblák), élesen az OpenStreetMap-adatokból rajzolva és műholdkép helyett a csempére téve: hogy a szemed szerint építs rá utakat és házakat. Semmi sem generálódik belőle.
+own picture	saját kép
+for an earlier placement	korábbi elhelyezéshez
+not kept with the map	nem tárolódik a térképpel
+, partly coarser	, részben durvább
+nothing	semmi
+Place the map on the Earth first.	Előbb helyezd el a térképet a Földön.
+Load terrain heights	Terepmagasságok betöltése
+Done:	Kész:
+with problems	hibákkal
+A picture for the tiles	Kép a csempékhez
+Could not read the picture	A kép nem olvasható
+Could not copy the picture	A kép nem másolható
+The picture is on the tiles: line it up in Satellite and terrain, Own pictures.	A kép a csempéken van: igazítsd a Műhold és terep, Saját képek alatt.
+Nothing found by that name.	Ilyen névvel nincs találat.
+Some tiles had Google imagery: enter your Google key to see it again (it is not kept with the map).	Néhány csempe Google-képet használt: add meg a Google-kulcsodat, hogy újra lásd (nem tárolódik a térképpel).
+Satellite and terrain	Műhold és terep
+Find a place: a town, a street, an address… (Enter)	Hely keresése: város, utca, cím… (Enter)
+Searching…	Keresés…
+Search © OpenStreetMap contributors	Keresés © OpenStreetMap közreműködők
+This map has world coordinates ([worldcoordinates]): it lies on the Earth by itself, its tiles are Web Mercator tiles.	Ennek a térképnek világkoordinátái vannak ([worldcoordinates]): maga fekszik a Földön, a csempéi Web Mercator csempék.
+Click on the map where the orange tile goes…	Kattints a térképen arra, ahová a narancs csempe kerül…
+Place the map here	Térkép elhelyezése itt
+Then click on the map: the middle of the orange tile goes there	Majd kattints a térképen: a narancs csempe közepe oda kerül
+At the view's middle	A nézet közepére
+North turned	Észak elforgatása
+Orange tile	Narancs csempe
+click the map to fly there in the view	kattints a térképre, hogy a nézet odarepüljön
+1. Find the place.  2. Press "Place the map here" and click on the map: the orange tile (the map's middle) goes there.	1. Keresd meg a helyet.  2. Nyomd meg a „Térkép elhelyezése itt” gombot, és kattints a térképen: a narancs csempe (a térkép közepe) oda kerül.
+Imagery	Képek
+The sharpest here	Itt a legélesebb
+cm a pixel here	cm pixelenként itt
+checking…	ellenőrzés…
+is sharper here	itt élesebb
+Sharper imagery may be had here with your own free key for Mapbox, MapTiler or Google (Keys below).	Élesebb képek lehetnek itt a saját ingyenes Mapbox, MapTiler vagy Google kulcsoddal (Kulcsok alább).
+Terms of use	Felhasználási feltételek
+Zoom	Nagyítás
+the finest here	itt a legfinomabb
+Picture of a tile	Csempe képe
+every pixel of the source (up to 4096)	a forrás minden pixele (4096-ig)
+Loaded at	Betöltve ekkora felbontással:
+cm a pixel	cm pixelenként
+Also load terrain heights	Terepmagasságok betöltése is
+New tiles get imagery by themselves	Az új csempék maguktól kapnak képet
+Load for all tiles	Betöltés minden csempéhez
+For the selected tile	A kijelölt csempéhez
+Click a tile with the Tiles tool (7)	Kattints egy csempére a Csempék eszközzel (7)
+Terrain heights only	Csak terepmagasságok
+of	/
+tiles beside the loaded heights were not loaded: the ground steps at their edge.	csempe a betöltött magasságok mellett nem töltődött be: a talaj lépcsőzik a szélükön.
+Fit their edges	Szélek illesztése
+Their edge takes the loaded heights, fading out 60 m into the tile	A szélük átveszi a betöltött magasságokat, 60 m-en át halványulva a csempe belseje felé
+Leave them	Meghagyás
+Terrain heights	Terepmagasságok
+Relative: the orange tile's mean height is 0 m	Relatív: a narancs csempe átlagmagassága 0 m
+Raise everything by	Minden emelése ennyivel:
+Taken off:	Levonva:
+Measure again	Újramérés
+Terrain data attribution	Terepadatok forrásai
+Overlay on the ground	Réteg a talajon
+Put the imagery into maps exported for sharing (check its licence first)	Képek betétele a megosztásra exportált térképekbe (előbb ellenőrizd a licencét)
+Fit tile edges	Csempeszélek illesztése
+Keys for more sources (optional)	Kulcsok további forrásokhoz (nem kötelező)
+Everything works without a key. With your own free key these may be sharper in some places; the key stays on this computer.	Minden kulcs nélkül is működik. Saját ingyenes kulccsal ezek néhol élesebbek lehetnek; a kulcs ezen a gépen marad.
+Google satellite (needs your API key)	Google műhold (saját API-kulcs kell)
+get a key	kulcs kérése
+In Google Cloud: make a project, enable the Map Tiles API, create an API key, paste it here. Google bills by use above its free amount.	A Google Cloudban: hozz létre projektet, kapcsold be a Map Tiles API-t, hozz létre API-kulcsot, és illeszd be ide. A Google az ingyenes keret felett használat szerint számláz.
+key	kulcs
+Your own tile server	Saját csempeszerver
+URL	URL
+Attribution	Forrásjelzés
+Finest zoom	Legfinomabb nagyítás
+Kind	Fajta
+XYZ / WMTS tiles	XYZ / WMTS csempék
+Terrarium heights	Terrarium magasságok
+{z} {x} {y} are filled in; a WMS gets {bbox} (EPSG:3857) and {width} {height}; {key} is your key.	A {z} {x} {y} behelyettesítődik; a WMS {bbox}-ot (EPSG:3857) és {width} {height}-ot kap; a {key} a kulcsod.
+Add	Hozzáadás
+Own pictures	Saját képek
+A scan, a screenshot, an old plan: laid on tiles and lined up by eye. No place on the Earth needed.	Szkennelés, képernyőkép, régi terv: csempékre téve, szemre igazítva. A Földön való elhelyezés nem kell.
+Tiles from	Csempék innen:
+Load image file over these tiles…	Képfájl betöltése ezekre a csempékre…
+Turn left 90°	Balra 90°
+Turn right 90°	Jobbra 90°
+mirror left-right	tükrözés balról jobbra
+mirror top-bottom	tükrözés fentről lefelé
+Reset	Visszaállítás
+Your own pictures	Saját képeid
+of these tiles have your own pictures. Replace them with satellite imagery?	ezek közül a csempék közül saját képpel rendelkezik. Lecseréled műholdképre?
+Replace them	Cserélem
+Keep my pictures	Képeim megtartása
+Groups for other maps	Csoportok más térképekhez
+A selection kept under a name, to put down again in any map (a stop with its shelter and signs, a crossing with its lights)	Névvel megőrzött kijelölés, hogy bármely térképen újra lerakhasd (megálló esővédővel és táblákkal, kereszteződés lámpákkal)
+Keep the selection	Kijelölés megőrzése
+Group kept	Csoport megőrizve
+Select what to keep in the view first.	Előbb jelöld ki a nézetben, mit őrizzél meg.
+No groups yet.	Még nincsenek csoportok.
+thing	db
+things	db
+Delete the group (to openMapper's bin)	Csoport törlése (az openMapper kukájába)
+Use	Használat
+Into the clipboard: Ctrl+V puts it down at the cursor, as often as wanted	A vágólapra: a Ctrl+V a kurzornál leteszi, ahányszor csak akarod
+is in the clipboard: Ctrl+V puts it at the cursor	a vágólapon van: a Ctrl+V a kurzornál leteszi
+The map's tiles: 300 m squares. Add more beside them with the Tiles tool.	A térkép csempéi: 300 m-es négyzetek. További csempék a Csempék eszközzel adhatók mellé.
+A road	Egy út
+Roads tool: click where it starts, then where it ends. Click on a road's end to go on from it.	Utak eszköz: kattints a kezdetére, majd a végére. Kattints egy út végére, hogy onnan folytasd.
+A bus stop by the road	Megálló az út mellett
+Game logic > Bus stops: put one at the kerb, on the side the doors open. Name it on the right.	Játéklogika > Megállók: tedd a szegélyhez, az ajtónyitás oldalán. Nevezd el jobbra.
+A start point	Kezdőpont
+Game logic > Start points: where your bus appears, on a road, facing the way to drive.	Játéklogika > Kezdőpontok: ahol a busz megjelenik, úton, menetirányba nézve.
+A line with a trip	Járat menettel
+Lines window: New line, New trip, then click the stops in order. The way is found along the roads.	Járatok ablak: Új járat, Új menet, majd kattints a megállókra sorban. Az út az utakon megtalálódik.
+A tour with departures	Forda indulásokkal
+Lines window > Tours and times: New tour, then Fill from … to … .	Járatok ablak > Fordák és idők: Új forda, majd Kitöltés … és … között.
+Buses for the tours	Buszok a fordákhoz
+A depot the tours take their buses from (Tours: Add a depot, or Traffic and AI).	Telephely, ahonnan a fordák a buszaikat veszik (Fordák: Telephely hozzáadása, vagy Forgalom és MI).
+Checked	Ellenőrizve
+Map > Check map: what would go wrong in the game, most of it put right with one click.	Térkép > Térkép ellenőrzése: mi romolna el a játékban; a legtöbb egy kattintással kijavítható.
+Saved	Mentve
+Ctrl+S. Maps are saved into openOMSI's content folder.	Ctrl+S. A térképek az openOMSI tartalommappájába mentődnek.
+A test drive	Tesztvezetés
+F5 saves and starts openOMSI on the map: pick line 1 and drive.	Az F5 elment, és elindítja az openOMSI-t a térképpel: válaszd az 1-es járatot, és indulj.
+A map you can drive in service:	Térkép, amelyen menetrend szerint vezethetsz:
+Show me	Megmutatom
+Your stops stand away from the roads: a bus serves a stop within 15 m of its lane.	A megállóid messze vannak az utaktól: a busz a sávjától 15 m-en belüli megállót szolgál ki.
+A real place? Put the map on the Earth (Map > Satellite and terrain), then Map > From OpenStreetMap brings its streets, stops, lines and trees.	Valódi hely? Helyezd a térképet a Földre (Térkép > Műhold és terep), majd a Térkép > Az OpenStreetMapből behozza az utcákat, megállókat, járatokat és fákat.
+Show this for new maps	Mutassa új térképeknél
+The map has no depot file.	A térképnek nincs telephelyfájlja.
+Make one from the lines	Létrehozás a járatokból
+The map has no trips yet (Map > Lines and timetable)	A térképnek még nincsenek menetei (Térkép > Járatok és menetrend)
+Empty one	Üres
+New	Új
+A new depot file from the map's lines	Új telephelyfájl a térkép járataiból
+Delete this depot file	A telephelyfájl törlése
+The lines need	A járatoknak szükséges:
+Add them	Hozzáadás
+What is there stays as it is	Ami megvan, változatlan marad
+No depot group uses it.	Egy telephelycsoport sem használja.
+Used by the depot	A telephely használja:
+Use it for every depot	Használat minden telephelyhez
+The AI's depot groups (Vehicle groups tab) take their buses' destinations from it	Az MI telephelycsoportjai (Járműcsoportok fül) ebből veszik a buszaik célállomásait
+Rename	Átnevezés
+not a usable name	nem használható név
+The destination a bus shows on its way to and from the depot	A célállomás, amelyet a busz a telephelyre és onnan menet közben mutat
+Destinations	Célállomások
+Stops	Megállók
+Routes	Útvonalak
+nobody gets on	nincs felszállás
+Code	Kód
+another destination has this code	másik célállomásnak is ez a kódja
+As a trip's terminus is named in the timetable: the stop where everybody gets off	Ahogy a menet végállomása a menetrendben szerepel: a megálló, ahol mindenki leszáll
+Nobody gets on (service trip, empty sign)	Nincs felszállás (kocsiszínmenet, üres tábla)
+Delete destination	Célállomás törlése
+Add destination	Célállomás hozzáadása
+New destination	Új célállomás
+As the timetable names the stop	Ahogy a megállót a menetrend nevezi
+Delete stop	Megálló törlése
+Add stop	Megálló hozzáadása
+line	járat
+What the driver types: the line's number and two digits (7601: line 76, route 01)	Amit a sofőr beír: a járat száma és két számjegy (7601: 76-os járat, 01 útvonal)
+Line	Vonal
+IBIS text	IBIS szöveg
+Destination	Végállomás
+Stops in order	Megállók sorrendben
+Not in the Stops list: the displays have no texts for it	Nincs a Megállók listán: a kijelzőknek nincs hozzá szövegük
+Move up	Feljebb
+Move down	Lejjebb
+Take out	Kivétel
+Add a stop…	Megálló hozzáadása…
+Delete route	Útvonal törlése
+Add route	Útvonal hozzáadása
+No routes: the IBIS knows the destinations' codes only. Add them from the lines above.	Nincsenek útvonalak: az IBIS csak a célállomások kódjait ismeri. Add hozzá őket a fenti járatokból.
+Winter with snow	Havas tél
+Summer (dry)	Nyár (száraz)
+Jan	Jan
+Feb	Feb
+Mar	Már
+Apr	Ápr
+May	Máj
+Jun	Jún
+Jul	Júl
+Aug	Aug
+Sep	Szep
+Oct	Okt
+Nov	Nov
+Dec	Dec
+Map settings	Térképbeállítások
+Money	Pénz
+Tickets	Jegyek
+none: the map has no depot group (Traffic and AI)	nincs: a térképnek nincs telephelycsoportja (Forgalom és MI)
+Years	Évek
+Year offset	Évek eltolása
+Added to today's year when the game starts at the real date (Berlin-Spandau: -25 for the 1980s)	Hozzáadódik a mai évhez, ha a játék a valódi dátumon indul (Berlin-Spandau: -25 a 80-as évekhez)
+Repair time	Javítási idő
+ min	 perc
+Rail	Sín
+real rail (trams and trains follow their tracks' switches)	valódi sín (a villamosok és vonatok a pályájuk váltóit követik)
+Helper	Segéd
+dynamic helper active (the original editor's map option, kept as it is)	dinamikus segéd aktív (az eredeti szerkesztő térképopciója, változatlanul)
+Seasons	Évszakok
+Summer where none is set. The days count from 1 January.	Nyár, ahol nincs megadva. A napok január 1-jétől számítanak.
+Add a season	Évszak hozzáadása
+A season ends before it starts	Az évszak hamarabb ér véget, mint kezdődik
+Nothing selected	Nincs kijelölve semmi
+Paste here	Beillesztés ide
+Cut the road here	Út elvágása itt
+Select all like it	Mind ilyen kijelölése
+Keep for other maps…	Megőrzés más térképekhez…
+Its ground, painting, water, objects and roads, put beside or into this map. Lines, timetable and AI lists stay with the other map.	A talaja, festése, vize, objektumai és útjai, e térkép mellé vagy bele téve. A járatok, menetrend és MI-listák a másik térképnél maradnak.
+Choose a map…	Válassz térképet…
+Other…	Másik…
+A map to take tiles from (its global.cfg)	Térkép, amelyből csempéket veszel (a global.cfg-je)
+Grey: this map · orange: the tiles to add (click to take one or leave it) · red: on a tile of this map, left out	Szürke: ez a térkép · narancs: a hozzáadandó csempék (kattintás: elvétel vagy kihagyás) · piros: e térkép csempéjén van, kihagyva
+Move:	Eltolás:
+west	nyugat
+east	kelet
+north	észak
+south	dél
+Raise it by	Emelés ennyivel:
+Its ground, water, roads and objects at a height of their own	A talaja, vize, útjai és objektumai saját magasságon
+Ease the ground where the maps meet	Talaj simítása, ahol a térképek találkoznak
+Added	Hozzáadva
+tiles from the other map	csempe a másik térképről
+Cube	Kocka
+Plane	Sík
+Circle	Kör
+Triangle	Háromszög
+Triangular prism	Háromszög hasáb
+Wedge	Ék
+Corner wedge	Sarokék
+Pyramid	Piramis
+Sphere	Gömb
+Icosphere	Ikoszféra
+Cylinder	Henger
+Cone	Kúp
+Torus	Tórusz
+Tube	Cső
+Capsule	Kapszula
+Stairs	Lépcső
+Arch	Boltív
+Make one and put it on the map with a click (each one can then be edited, scaled, cut and joined)	Készítsd el, és kattintással tedd a térképre (utána mindegyik szerkeszthető, méretezhető, vágható és egyesíthető)
+Array	Tömb
+Mirror	Tükör
+Solidify	Vastagítás
+Subdivision surface	Felosztott felület
+Decimate	Egyszerűsítés
+Triangulate	Háromszögelés
+Displace	Elmozdítás
+Wireframe	Drótváz
+Screw	Csavar
+Simple deform	Egyszerű deformáció
+Cast	Alakra vetítés
+Weld	Összeforrasztás
+Edge split	Élfelosztás
+Boolean	Boole
+Follow the ground	A talajt követi
+Count	Darab
+Relative	Relatív
+Offset	Eltolás
+Merge touching ends	Érintkező végek összeforrasztása
+Distance	Távolság
+Cut away the other side first	Előbb a másik oldal levágása
+Weld at the mirror	Összeforrasztás a tükörnél
+Thickness	Vastagság
+Close the rim	Perem lezárása
+Width	Szélesség
+Segments	Szegmensek
+Levels	Szintek
+Smooth (Catmull-Clark)	Simítás (Catmull-Clark)
+Factor	Tényező
+Repeat	Ismétlések
+Seed	Mag
+Along the normals	A normálok mentén
+Steps	Lépések
+Axis	Tengely
+Twist	Csavarás
+Bend	Hajlítás
+Taper	Szűkítés
+Stretch	Nyújtás
+Amount	Mennyiség
+Box	Doboz
+Difference	Különbség
+With the part	A résszel
+Tip: hide the cutting part (its eye in the list) so only the cut shows	Tipp: rejtsd el a vágó részt (szeme a listában), hogy csak a vágás látszódjon
+Above the ground	A talaj felett
+Every vertex follows the terrain under it (in the editor's view and the written files at the place it stands)	Minden csúcs követi alatta a terepet (a szerkesztő nézetében és a kiírt fájlokban a helyén)
+Mesh (openMapper object)	Háló (openMapper-objektum)
+Shared by	Közös használat:
+objects on the map: changes apply to all	objektum a térképen: a változások mindegyikre érvényesek
+Make this one single	Különálló másolat
+Leave the edit mode (Tab)	Kilépés a szerkesztésből (Tab)
+Edit the mesh (Tab)	Háló szerkesztése (Tab)
+Write it as OBJ, glTF / GLB, FBX, Collada, USD, STL, PLY, 3MF, OFF, X or O3D	Kiírás OBJ, glTF / GLB, FBX, Collada, USD, STL, PLY, 3MF, OFF, X vagy O3D formátumban
+Off: its height is kept above the ground under it	Ki: a magassága az alatta lévő talajhoz képest marad
+Solid (collides)	Szilárd (ütközik)
+The part edited and given modifiers	A szerkesztett és módosítókkal ellátott rész
+Shown (and written into the object)	Látható (és az objektumba íródik)
+faces	lap
+Duplicate the part	Rész kettőzése
+Delete the part	Rész törlése
+Add a shape as a part	Alakzat hozzáadása részként
+Separate parts into objects	Részek leválasztása objektumokká
+Each part becomes an object of its own, standing where it stood	Minden rész önálló objektummá válik a saját helyén
+Shape	Alakzat
+Modifiers	Módosítók
+Make it part of the mesh	A háló részévé tétel
+Add a modifier	Módosító hozzáadása
+Materials	Anyagok
+Colour (multiplies the texture)	Szín (szorozza a textúrát)
+Assign to selected faces	Hozzárendelés a kijelölt lapokhoz
+Choose…	Választás…
+No texture	Nincs textúra
+Save as…	Mentés másként…
+PNG, JPEG, BMP, TGA, TIFF, WebP or DDS	PNG, JPEG, BMP, TGA, TIFF, WebP vagy DDS
+Transparency	Átlátszóság
+Opaque	Átlátszatlan
+Cut out	Kivágott
+Blended	Áttetsző
+Glows	Világít
+Light of its own: black for none	Saját fény: fekete = nincs
+Shine	Fény
+Normal map	Normáltérkép
+ORM map	ORM-térkép
+Night texture	Éjszakai textúra
+Light map	Fénytérkép
+Remove the material	Anyag eltávolítása
+Add a material	Anyag hozzáadása
+Import materials…	Anyagok importálása…
+From an .mtl, a glTF / GLB / FBX, or the pictures of one PBR material (base colour, normal, roughness, metal, AO...)	.mtl-ből, glTF / GLB / FBX-ből vagy egy PBR-anyag képeiből (alapszín, normál, érdesség, fém, AO...)
+Lamps	Lámpák
+Glow	Fényfolt
+Light on the ground	Fény a talajon
+Colour	Szín
+Reach	Hatótávolság
+On	Be
+Always	Mindig
+At night	Éjjel
+variable	változó
+Seen from one side	Egy oldalról látszik
+Star	Csillag
+Facing	Irány
+Remove the lamp	Lámpa eltávolítása
+Add a glow	Fényfolt hozzáadása
+A lamp's bulb, a lit sign: a glow seen at night	Lámpaizzó, kivilágított tábla: éjjel látszó fényfolt
+Add light on the ground	Fény hozzáadása a talajra
+The pool of light a street lamp throws at night	Az utcai lámpa éjjeli fénykörének foltja
+Signal head, lamps	Jelzőfej, lámpák
+Put it within 40 m of a crossing with a light program: it takes its light from it (or link it in its properties)	Tedd 40 m-en belülre egy fényprogramos kereszteződéshez: onnan veszi a fényét (vagy kapcsold a tulajdonságaiban)
+Bake	Beégetés
+Its textures and colours painted into one picture on a new UV map (one material: fewer draws in the game), with its own shadows and its lamps' night light if chosen	A textúrái és színei egy képbe festve egy új UV-térképen (egy anyag: kevesebb rajzolás a játékban), saját árnyékokkal és kívánság szerint a lámpái éjszakai fényével
+Ambient occlusion	Mélységélesség/AO
+How far its shadows reach	Meddig érnek az árnyékai
+Lamps' light at night (light map)	A lámpák éjszakai fénye (fénytérkép)
+The object's last change (Ctrl+Z in the edit mode)	Az objektum utolsó módosítása (Ctrl+Z szerkesztő módban)
+Divisions X	X felosztások
+Divisions Y	Y felosztások
+Rings	Gyűrűk
+Subdivisions	Felosztások
+Bottom radius	Alsó sugár
+Top radius	Felső sugár
+Tube radius	Csősugár
+Tube segments	Cső szegmensei
+Outer radius	Külső sugár
+Inner radius	Belső sugár
+Opening	Nyílás
+Wall	Fal
+Mesh	Háló
+A copy of this object's type of its own is made for it, with its meshes, materials and lamps to edit; the original stays as it is	Az objektum típusáról saját másolat készül hálókkal, anyagokkal és lámpákkal a szerkesztéshez; az eredeti változatlan marad
+As a mesh	Hálóként
+Copy as an object	Másolat objektumként
+An openMapper object of its shape beside it, to edit as a mesh (vertices, edges, faces)	Az alakjának megfelelő openMapper-objektum mellette, hálóként szerkeszthető (csúcsok, élek, lapok)
+The same, the spline taken away (its lanes go with it)	Ugyanez, a spline eltávolítva (a sávjaival együtt)
+Splines as a mesh	Splinek hálóként
+Copy as one object	Másolat egy objektumként
+Replace by one object	Csere egy objektumra
+Export the selection…	A kijelölés exportálása…
+As meshes	Hálóként
+Join into one object (Ctrl+J)	Egyesítés egy objektummá (Ctrl+J)
+All their parts in the one shown in the properties, the others gone	Minden részük a tulajdonságokban látott objektumba kerül, a többi eltűnik
+Solid modelling (CSG): the object shown in the properties with the others	Szilárdtest-modellezés (CSG): a tulajdonságokban látott objektum a többivel
+Keep the cutting objects	A vágó objektumok megtartása
+Vertices	Csúcsok
+Edges	Élek
+Faces	Lapok
+vertices	csúcs
+edges	él
+Selected	Kijelölve
+X-ray: pick through the mesh	Röntgen: kijelölés a hálón át
+All (A)	Mind (A)
+None (Alt+A)	Semmi (Alt+A)
+Invert (Ctrl+I)	Megfordítás (Ctrl+I)
+Linked (Ctrl+L)	Kapcsolódó (Ctrl+L)
+More	Több
+Less	Kevesebb
+Click, Shift + click to add, drag on nothing for a box, a second click or Alt + click for a loop	Kattintás, Shift + kattintás: hozzáad, húzás az üres helyen: keret, második kattintás vagy Alt + kattintás: hurok
+Change	Módosítás
+Extrude (E)	Kihúzás (E)
+Inset (I)	Behúzás (I)
+Bevel (Ctrl+B)	Letörés (Ctrl+B)
+Loop cut (Ctrl+R)	Hurokvágás (Ctrl+R)
+Point at an edge and press Ctrl+R	Mutass egy élre, és nyomd meg a Ctrl+R-t
+Subdivide	Felosztás
+Fill (F)	Kitöltés (F)
+Bridge loops	Hurkok összekötése
+Connect (J)	Összekötés (J)
+Poke	Legyező a középpontból
+Duplicate (Shift+D)	Kettőzés (Shift+D)
+Split (Y)	Szétválasztás (Y)
+Separate into an object (P)	Leválasztás objektummá (P)
+Spin 360°	Forgatás 360°
+The selection turned round the object's up axis through its middle, in 12 steps	A kijelölés az objektum függőleges tengelye körül forog a közepén át, 12 lépésben
+Smooth vertices	Csúcsok simítása
+Merge (M)	Egyesítés (M)
+At the middle	Középre
+At the first	Az elsőre
+At the last	Az utolsóra
+Collapse each piece	Minden darab összehúzása
+By distance (1 mm)	Távolság szerint (1 mm)
+Delete (X)	Törlés (X)
+Only faces	Csak lapok
+Dissolve vertices	Csúcsok feloldása
+Dissolve edges	Élek feloldása
+Dissolve faces	Lapok feloldása
+Triangulate (Ctrl+T)	Háromszögelés (Ctrl+T)
+Triangles to quads (Alt+J)	Háromszögek négyszögekké (Alt+J)
+Shade smooth	Sima árnyalás
+Shade flat	Lapos árnyalás
+Flip normals (Alt+N)	Normálok megfordítása (Alt+N)
+Normals outward (Shift+N)	Normálok kifelé (Shift+N)
+Mark seam	Varrat jelölése
+Clear seam	Varrat törlése
+Mark sharp	Élesnek jelölés
+Clear sharp	Élesség törlése
+Adjust the last operation	Az utolsó művelet finomhangolása
+Slide	Csúsztatás
+Cuts	Vágások
+UV map	UV-térkép
+Unwrap	Kiterítés
+By seams (conformal)	Varratok szerint (konform)
+Smart project	Okos vetítés
+Cube projection (metres)	Kockavetítés (méterben)
+Cylinder projection	Hengervetítés
+Sphere projection	Gömbvetítés
+Project from the view	Vetítés a nézetből
+Lightmap pack	Fénytérkép-csomagolás
+Close the UV editor	UV-szerkesztő bezárása
+UV editor	UV-szerkesztő
+Faces of the selection (all, with none selected); mark seams on edges first for an unwrap by seams	A kijelölés lapjai (mind, ha semmi sincs kijelölve); varratok szerinti kiterítéshez előbb jelölj varratokat az éleken
+Material of the selected faces	A kijelölt lapok anyaga
+With lamps	Lámpákkal
+Street lamp	Utcai lámpa
+A pole with a lamp that glows and lights the ground at night	Oszlop lámpával, amely éjjel világít és megvilágítja a talajt
+Signal head	Jelzőfej
+A traffic light of the lamps below that a crossing's light program drives	Az alábbi lámpákból álló közlekedési lámpa, amelyet a kereszteződés fényprogramja vezérel
+Lamps:	Lámpák:
+Picture, light, sound	Kép, fény, hang
+Picture / pattern…	Kép / minta…
+Choose a picture or a texture: it becomes an object you place, move, turn and scale like any other. Several repeats make a pattern	Válassz képet vagy textúrát: objektummá válik, amelyet úgy helyezel el, mozgatsz, forgatsz és méretezel, mint bármelyiket. Több ismétlés mintát ad
+Light source	Fényforrás
+A lamp that glows and lights the ground round it	Lámpa, amely világít, és megvilágítja körülötte a talajt
+Sound source…	Hangforrás…
+Choose a sound file (.wav): it plays where you put the marker, as far as the radius carries; the marker shows in the editor only	Válassz hangfájlt (.wav): ott szól, ahová a jelölőt teszed, a sugár hatótávolságáig; a jelölő csak a szerkesztőben látszik
+Picture width, m	Kép szélessége, m
+Repeats	Ismétlés
+on the ground	a talajon
+standing	áll
+Light colour	Fény színe
+Light reach, m	Fény hatótávolsága, m
+at night	éjjel
+always	mindig
+Sound reach, m	Hang hatótávolsága, m
+Sound volume	Hangerő
+Overview: click or drag to move there · double-click: larger / smaller · M: hide	Áttekintés: kattintás vagy húzás: odaugrás · dupla kattintás: nagyobb / kisebb · M: elrejtés
+Name:	Név:
+My town	A városom
+Description:	Leírás:
+What the map is, for the game's map list	Mi ez a térkép, a játék térképlistájához
+Size:	Méret:
+Ground height:	Talaj magassága:
+ m above sea level	 m tengerszint felett
+Traffic:	Forgalom:
+keeps right	jobbra hajt
+keeps left	balra hajt
+Busy:	Forgalmasság:
+cars	autó
+passengers	utasok
+Years:	Évek:
+year offset	évek eltolása
+Added to today's year when the game starts at the real date	Hozzáadódik a mai évhez, ha a játék a valódi dátumon indul
+Money:	Pénz:
+Tickets:	Jegyek:
+Seasons:	Évszakok:
+four, snowy winter	négy, havas tél
+mild winter	enyhe tél
+summer only	csak nyár
+Rail:	Sín:
+trams and trains follow their tracks' switches	a villamosok és vonatok a pályájuk váltóit követik
+Ground texture (all tiles):	Talajtextúra (minden csempe):
+template	sablon
+More ground layers are painted later (Paint tool); the map's settings can all be changed in Map > Map settings.	További talajrétegek később festhetők (Festés eszköz); a térkép beállításai mind módosíthatók a Térkép > Térképbeállítások alatt.
+Create	Létrehozás
+as the template	mint a sablon
+ways	út
+bus routes downloaded	letöltött buszútvonal
+not had:	nem kapott:
+The streets of the map's place built as roads with junctions where they meet, its bus stops, lines, trees and woods. Best on tiles with no roads yet: roads lying on ones the map has are left out.	A térkép helyének utcái utakként megépítve, ahol találkoznak, ott csomópontokkal, a megállói, járatai, fái és erdői. Utak nélküli csempéken a legjobb: a térkép meglévő útjain fekvő utak kimaradnak.
+The map does not lie on the Earth yet: place it in Satellite and terrain (Map menu, I) first.	A térkép még nem fekszik a Földön: előbb helyezd el a Műhold és terep alatt (Térkép menü, I).
+Load the terrain heights first (Satellite and terrain): the roads follow the ground as it is when they are built.	Előbb töltsd be a terepmagasságokat (Műhold és terep): az utak úgy fekszenek a talajon, ahogy az épp van.
+Download for the map's tiles	Letöltés a térkép csempéihez
+bus routes	buszútvonalak
+trees	fák
+buildings	épületek
+water	víz
+Downloading…	Letöltés…
+no type chosen	nincs típus kiválasztva
+Use the chosen	A kiválasztott használata
+One-way roads	Egyirányú utak
+Each carriageway of a dual road and one-way streets: with a one-way road type they lie side by side as they should; with none chosen they get their kind's	A kétpályás utak mindkét fele és az egyirányú utcák: egyirányú úttípussal egymás mellett fekszenek, ahogy kell; kiválasztás nélkül a fajtájuk típusát kapják
+as their kind	a fajtájuk szerint
+no stop object	nincs megálló-objektum
+The stop chosen in Game logic > Bus stops	A Játéklogika > Megállók alatt kiválasztott megálló
+Bus lines	Buszjáratok
+Each bus route through two or more of the map's stops a trip of its line, the way found along the roads; a tour from 06:00 to 22:00 for each new line	A térkép két vagy több megállóján át haladó minden buszútvonal a járatának egy menete, az út az utakon megtalálódik; minden új járathoz egy 06:00 és 22:00 közötti forda
+Trees and woods	Fák és erdők
+Single trees, rows of them and woods, planted with the plant mix (Objects tool > Plant brush) or the tree chosen; none on a road	Egyes fák, fasorok és erdők, a növénykeverékkel (Objektumok eszköz > Növénykefe) vagy a kiválasztott fával beültetve; utakra nem
+no plants chosen	nincs növény kiválasztva
+kinds of plants	növényfajta
+apart in woods	térköz az erdőkben
+Buildings	Épületek
+Each outline filled with the model of the folder chosen whose ground plan comes nearest, its front to the nearest road; an outline no model fits is left out	Minden körvonalat a kiválasztott mappa leghasonlóbb alaprajzú modellje tölt ki, homlokzatával a legközelebbi út felé; amelyikhez nincs illő modell, az kimarad
+no folder	nincs mappa
++ its folder	+ a mappája
+Add the folder of the object chosen in the catalogue (Buildings_MC, …)	A katalógusban kiválasztott objektum mappájának hozzáadása (Buildings_MC, …)
+Lakes and rivers: the ground inside them lowered below the banks, and the tiles they lie on given water a little under the banks' height (OMSI's water is one level for a tile: low ground elsewhere on it is flooded too)	Tavak és folyók: a bennük lévő talaj a partok alá süllyed, és a csempék, amelyeken fekszenek, a partok magassága alatt kicsivel vizet kapnak (az OMSI vize csempénként egy szint: az ottani más mélyedéseket is elönti)
+deep	mély
+a road type (Roads tool), then "Use the chosen"	úttípus (Utak eszköz), majd „A kiválasztott használata”
+a stop (Game logic > Bus stops), then "Use the chosen"	megálló (Játéklogika > Megállók), majd „A kiválasztott használata”
+a tree in the Objects catalogue (or a plant mix)	fa az Objektumok katalógusában (vagy növénykeverék)
+a building in the catalogue, then "+ its folder"	épület a katalógusban, majd „+ a mappája”
+To build, choose (or untick):	Az építéshez válassz (vagy vedd ki a pipát):
+A one-way street is built the way it runs in OpenStreetMap: give it a one-way road type	Az egyirányú utca az OpenStreetMap szerinti irányban épül: adj neki egyirányú úttípust
+Build	Építés
+Name, file or IDCode	Név, fájl vagy IDCode
+things on the map	elem a térképen
+Groups	Csoportok
+Select the group and go there	A csoport kijelölése és odaugrás
+Select everything in it	Minden kijelölése benne
+Select it and go there	Kijelölés és odaugrás
+more: narrow the search	több van: szűkítsd a keresést
+Select all of them	Mind kijelölése
+Go to the first	Ugrás az elsőre
+Pick a tree in the catalogue, then paint	Válassz fát a katalógusban, majd fesd
+Pick a tree in the catalogue, then click round the area	Válassz fát a katalógusban, majd kattints körbe a területet
+Pick a road type, click the centre, then the ring	Válassz úttípust, kattints a közepére, majd a gyűrűre
+Select a road (double-click: all of it): its properties show its height profile	Jelölj ki egy utat (dupla kattintás: az egészet): a tulajdonságaiban a magasságprofilja látszik
+Select one of openMapper's junctions: its properties have Traffic lights and crossings	Jelölj ki egy openMapper-csomópontot: a tulajdonságaiban a jelzőlámpák és átkelők vannak
+Select the signal head (or a display): Linked objects in its properties, then click its crossing	Jelöld ki a jelzőfejet (vagy kijelzőt): a tulajdonságaiban a Kapcsolt objektumok, majd kattints a kereszteződésére
+Select a road, pick an object in the Objects catalogue: Objects along the road in its properties	Jelölj ki egy utat, és válassz objektumot a katalógusban: az Objektumok az út mentén a tulajdonságaiban
+Select a track (double-click: all of it): Overhead wire under Parallel copy in its properties	Jelölj ki egy pályát (dupla kattintás: az egészet): a Felsővezeték a Párhuzamos másolat alatt a tulajdonságaiban
+Select a road or a chain: Parallel copy in its properties	Jelölj ki egy utat vagy láncot: a Párhuzamos másolat a tulajdonságaiban
+Select a road (double-click: all of it): Paint the ground along it in its properties	Jelölj ki egy utat (dupla kattintás: az egészet): a Talaj festése mellette a tulajdonságaiban
+Click a tile: its water is in the panel; lower the ground under it with the Terrain tool	Kattints egy csempére: a vize a panelen van; süllyeszd alatta a talajt a Terep eszközzel
+Height map: at the end of the Terrain panel	Magassági térkép: a Terep panel végén
+By slope and height: at the end of the Paint panel	Lejtés és magasság szerint: a Festés panel végén
+View menu: Time of day, Season	Nézet menü: napszak, évszak
+What do you want to do?	Mit szeretnél csinálni?
+Groups…	Csoportok…
+Objects on the map by folder	A térkép objektumai mappák szerint
+Knife: cut roads	Kés: utak elvágása
+Test drive in OMSI 2 (the original)	Tesztvezetés az eredeti OMSI 2-ben
+Overview map	Áttekintő térkép
+Place a bus stop	Megálló elhelyezése
+Place a start point	Kezdőpont elhelyezése
+Plant trees with a brush	Fák ültetése kefével
+Plant a wood or a park	Erdő vagy park ültetése
+Roundabout	Körforgalom
+Height profile of a road	Út magasságprofilja
+Traffic lights and zebra crossings	Jelzőlámpák és zebrák
+Link a signal head to its crossing	Jelzőfej kapcsolása a kereszteződéséhez
+Objects along a road	Objektumok az út mentén
+Overhead wire along a track	Felsővezeték a pálya mentén
+Parallel copy of a road	Út párhuzamos másolata
+Paint the ground along a road	Talaj festése út mentén
+Water, lake, river	Víz, tó, folyó
+Ramp in the ground	Rámpa a talajban
+Height map import or export	Magassági térkép importálása vagy exportálása
+Time of day and season	Napszak és évszak
+PBR material	PBR-anyag
+none	nincs
+Own picture…	Saját kép…
+Choose a texture of the object, or a picture of your own.	Válassz az objektum textúrái közül, vagy saját képet.
+Normals (_nn)	Normálok (_nn)
+Roughness	Érdesség
+Shadow in hollows	Árnyék a mélyedésekben
+Bumps	Dudorok
+Only big shapes	Csak nagy formák
+Dark parts stand out (not sink in)	A sötét részek kiállnak (nem süllyednek be)
+Bright parts smoother	A világos részek simábbak
+Metal	Fém
+Back to the defaults	Vissza az alapértékekhez
+This texture has PBR maps of its own already: new ones made here are taken instead of them.	Ennek a textúrának már vannak saját PBR-térképei: az itt készítettek lépnek a helyükbe.
+Written as:	Kiírva mint:
+PBR maps made	PBR-térképek elkészültek
+Delete the PBR material	PBR-anyag törlése
+PBR maps taken away	PBR-térképek eltávolítva
+Height profile	Magasságprofil
+over the ground	a talaj felett
+Click: go there in the view · drag a dot (a joint) up or down: its height	Kattintás: odaugrás a nézetben · húzz egy pontot (illesztést) fel vagy le: a magassága
+Climbs, falls	Emelkedők, lejtők
+Steepest	Legmeredekebb
+at	itt:
+Highest over the ground	Legmagasabban a talaj felett
+Deepest under it	Legmélyebben alatta
+Over 8 % is steep for a bus; over 12 % few streets go	8 % felett meredek egy busznak; 12 % felett kevés utca megy
+roadway	úttest
+Road types	Úttípusok
+Make a new road type…	Új úttípus készítése…
+My road	Az utam
+ · own	 · saját
+Create the road type	Úttípus létrehozása
+Road type made: the Roads tool builds with it	Úttípus elkészült: az Utak eszköz ezzel épít
+Change it in the road maker	Módosítás az útkészítőben
+Its junctions	Csomópontjai
+Make a junction where it meets another road (else they only cross)	Csomópont készítése, ahol másik úttal találkozik (különben csak keresztezik egymást)
+Corners	Sarkok
+× rounder	× kerekebb
+Traffic lights by themselves	Jelzőlámpák maguktól
+Zebra crossings on every arm	Gyalogátkelők minden ágon
+Used for the junctions made from now on (where several road types meet, the one asking more wins). A junction already made keeps its own settings: select it to change them.	A mostantól készülő csomópontokra érvényes (ahol több úttípus találkozik, az igényesebb nyer). A kész csomópont megtartja a saját beállításait: jelöld ki a módosításukhoz.
+Pick a road type on the left, or make a new one.	Válassz úttípust balra, vagy készíts újat.
+Road maker	Útkészítő
+Lanes	Sávok
+(▼ 0: one-way)	(▼ 0: egyirányú)
+Lane width	Sávszélesség
+Middle strip	Középső sáv
+Footways	Járdák
+Kerb	Szegély
+Roadway texture	Úttest textúrája
+Footway texture	Járda textúrája
+Own…	Saját…
+The roadway texture is laid once across all its lanes (as OMSI 2's lane textures are painted: pick one with as many lanes); the footway texture's right end is the kerb.	Az úttest textúrája egyszer fekszik végig az összes sávon (ahogy az OMSI 2 sávtextúrái festve vannak: válassz ugyanennyi sávosat); a járdatextúra jobb széle a szegély.
+not on the map	nincs a térképen
+Signal routes	Jelzőútvonalak
+Each railway signal clears when a train wants the track pieces of its route and none stands on them.	Minden vasúti jelző kinyit, ha a vonatnak kellenek az útvonala pályadarabjai, és senki sem áll rajtuk.
+New route for the selected signal	Új útvonal a kijelölt jelzőhöz
+Select a signal (one object) in the view first	Előbb jelölj ki egy jelzőt (egy objektumot) a nézetben
+The selected object does not look like a signal (its name says nothing of one): check it is.	A kijelölt objektum nem látszik jelzőnek (a neve nem utal rá): ellenőrizd.
+No routes yet.	Még nincsenek útvonalak.
+pieces	darab
+Signal	Jelző
+the selected	a kijelölt
+Aspect	Jelzés
+What the signal shows when this route is clear: 1 proceed, 2 proceed slowly (with a speed limit)…	Mit mutat a jelző, ha ez az útvonal szabad: 1 menj, 2 menj lassan (sebességkorláttal)…
+Distant signal	Előjelző
+Next signal	Következő jelző
+Speed limit	Sebességkorlát
+OMSI's route kind (the stock maps have 0 and 1)	Az OMSI útvonalfajtája (az alaptérképeken 0 és 1 van)
+Track pieces	Pályadarabok
+Take the selected track	A kijelölt pálya átvétele
+Every rail path of the selected tracks and switches (double-click a track: all of it); replaces the pieces	A kijelölt pályák és váltók minden sínútja (dupla kattintás egy pályán: az egész); lecseréli a darabokat
+Select the signal and its pieces in the view	A jelző és darabjai kijelölése a nézetben
+Delete the route	Útvonal törlése
+Lines and timetable	Járatok és menetrend
+Edit timetable	Menetrend szerkesztése
+No bus stop there: click one of the orange marks	Itt nincs megálló: kattints az egyik narancs jelölésre
+The roads can't be read without the OMSI 2 folder.	Az OMSI 2 mappa nélkül az utak nem olvashatók.
+A line needs at least two bus stops on the map: place them with Game logic > Bus stops, beside a road.	A járathoz legalább két megálló kell a térképen: helyezd el őket a Játéklogika > Megállók alatt, út mellett.
+Lines	Járatok
+No lines yet.	Még nincsenek járatok.
+New line	Új járat
+Pick a line on the left, or make a new one.\n\nA line has trips (a way from stop to stop) and tours (one bus's day: which trip it drives when).	Válassz járatot balra, vagy készíts újat.\n\nA járatnak vannak menetei (út megállótól megállóig) és fordái (egy busz napja: melyik menetet mikor vezeti).
+That name is taken or can't be a file name	Ez a név foglalt, vagy nem lehet fájlnév
+A copy of the line with its trips and tours (a variant to change)	A járat másolata a meneteivel és fordáival (módosítandó változat)
+Delete the line and its trips	A járat és a menetei törlése
+Players can drive it	A játékosok vezethetik
+Trips	Menetek
+Tours and times	Fordák és idők
+A tour is one bus's day: the trips it drives, one after the other, and when each leaves.	A forda egy busz napja: a menetek, amelyeket egymás után vezet, és mindegyik indulási ideje.
+A trip is one way along the line: its stops in order. Most lines have two, there and back.	A menet egy út a járaton: a megállói sorrendben. A legtöbb járatnak kettő van, oda és vissza.
+New trip	Új menet
+Make the way back	Visszaút készítése
+A new trip with the same stops the other way round	Új menet ugyanazokkal a megállókkal fordított sorrendben
+Trip	Menet
+Delete the trip	Menet törlése
+Destination sign	Célfelirat
+This trip runs on a track of its own (a train): its stops are kept as they are.	Ez a menet saját pályán fut (vonat): a megállói változatlanok maradnak.
+Show on the map	Megjelenítés a térképen
+No stops yet.	Még nincsenek megállók.
+Done picking	Kész a választással
+Pick stops on the map	Kiválasztás a térképen
+Click the stops in the view one after the other, in the order the bus calls at them	Kattints a megállókra a nézetben egymás után, abban a sorrendben, ahogy a busz érinti őket
+Add stop…	Hozzáadás…
+Click stops on the map (they are marked orange)…	Kattints a térképen a megállókra (narancssárgával jelöltek)…
+Add two stops or more: the way between them is found along the roads.	Adj hozzá két vagy több megállót: köztük az út az utakon megtalálódik.
+Finding the way…	Út keresése…
+Route found:	Út megtalálva:
+km along the roads (blue in the view)	km az utakon (kék a nézetben)
+the way drives a one-way lane against its direction; is a path drawn the wrong way round?	az út egyirányú sávon halad az iránya ellen; nem rossz irányban rajzolt útvonal ez?
+is not on the map	nincs a térképen
+no road with car lanes within 15 m	15 m-en belül nincs autósávos út
+No way	Nincs út
+the roads are not joined, or run the other way (see View > AI lanes)	az utak nincsenek összekötve, vagy másfelé futnak (lásd Nézet > MI-sávok)
+The trip is saved, but its way is not until this is mended	A menet mentődik, de az útja nem, amíg ezt ki nem javítják
+Trip time	Menetidő
+Guess:	Becslés:
+From the route's length at the pace of a town bus	Az út hosszából egy városi busz tempójával
+Times at the stops	Idők a megállókban
+Minutes after the trip leaves. They follow the distance between the stops; fix one to keep the bus to it (it waits there when early).	Percek a menet indulása után. A megállók közti távolságot követik; rögzíts egyet, hogy a busz tartsa (korábban ott vár).
+fixed	rögzítve
+Spread all by distance	Mind elosztása távolság szerint
+Holidays and school holidays	Ünnepek és iskolai szünetek
+On a public holiday only the tours with Holidays ticked run; school holidays pick the tours for school holidays or school days.	Munkaszüneti napon csak a Ünnepek jelölésű fordák közlekednek; iskolai szünetben a szünidei vagy tanítási napi fordák.
+Copy to	Másolás ide:
+The same days a year later (feasts that move, like Easter, are to be set by hand)	Ugyanazok a napok egy évvel később (a mozgó ünnepeket, mint a húsvét, kézzel állítsd)
+The map has no depot (ailists.cfg): only you drive these tours, no AI buses.	A térképnek nincs telephelye (ailists.cfg): ezeket a fordákat csak te vezeted, MI-buszok nincsenek.
+Add a depot with OMSI 2's MAN buses	Telephely hozzáadása az OMSI 2 MAN buszaival
+Its buses run the tours (Map > Traffic and AI shows it)	A buszai közlekednek a fordákon (a Térkép > Forgalom és MI mutatja)
+Tour	Forda
+New tour	Új forda
+Pick a tour to see its departures.	Válassz fordát az indulások megtekintéséhez.
+Make a trip first.	Előbb készíts menetet.
+Number	Szám
+Buses from	Buszok innen:
+Delete the tour	Forda törlése
+Runs on	Közlekedik:
+Mo	H
+Tu	K
+We	Sze
+Th	Cs
+Fr	P
+Sa	Szo
+Su	V
+Every day	Minden nap
+Monday to Friday	Hétfőtől péntekig
+Weekends and holidays	Hétvégén és ünnepnapokon
+In the school holidays	Iskolai szünetben
+On school days	Tanítási napokon
+Next departure	Következő indulás
+The next trip of the line, when the bus is back and has had its break	A járat következő menete, amikor a busz visszaért, és megvolt a szünete
+Fill from	Kitöltés ettől:
+break	szünet
+Fill	Kitöltés
+Replace the tour's departures: the line's trips one after the other, a break after each	A forda indulásainak cseréje: a járat menetei egymás után, mindegyik után szünet
+No departures yet: add them above.	Még nincsenek indulások: add hozzá őket fent.
+Delete the departure	Indulás törlése
+GPS tracks to trace	GPS-nyomvonalak követéshez
+A route recorded on a phone or drawn elsewhere (GPX, KML, GeoJSON), shown in the view in magenta to draw roads along, or built into a road at once	Telefonnal rögzített vagy máshol rajzolt útvonal (GPX, KML, GeoJSON), a nézetben bíborral mutatva, hogy mentén utakat rajzolj, vagy azonnal úttá építve
+Place the map on the Earth first (Map > Satellite and terrain)	Előbb helyezd el a térképet a Földön (Térkép > Műhold és terep)
+Load a file…	Fájl betöltése…
+None loaded	Nincs betöltve semmi
+Forget it	Elfelejtés
+Build a road along it:	Út építése mentén:
+Choose a road type in the Roads tool to build it	Az építéshez válassz úttípust az Utak eszközben
+Built as if drawn: corners rounded into arcs, junctions where it meets roads, cut at the map's edge; one undo step	Úgy épül, mintha rajzolták volna: a sarkok ívekké kerekítve, csomópontok, ahol utakkal találkozik, a térkép szélén elvágva; egy visszavonási lépés
+Traffic and AI	Forgalom és MI
+Edit traffic	Forgalom szerkesztése
+Over the day	A nap folyamán
+Vehicle groups	Járműcsoportok
+Parked cars and people	Parkoló autók és emberek
+Depot files	Telephelyfájlok
+The AI's vehicles come in groups. A car group drives about on the roads; a depot sends out the buses of the timetable's tours.	Az MI járművei csoportokba tartoznak. Az autócsoport magától jár az utakon; a telephely kiküldi a menetrend fordáinak buszait.
+(This map's ailists.cfg is in OMSI 2's first format: it is written in the second one when changed.)	(Ennek a térképnek az ailists.cfg-je az OMSI 2 első formátumában van: módosításkor a másodikban íródik ki.)
+is to drive about, but there is no such group.	járnia kellene, de nincs ilyen csoport.
+Make it with OMSI 2's vehicles	Létrehozás az OMSI 2 járműveivel
+The group of that name from OMSI 2's own maps	Az ilyen nevű csoport az OMSI 2 saját térképeiről
+New car group	Új autócsoport
+New depot	Új telephely
+Pick a group on the left.	Válassz csoportot balra.
+Delete the group (tours still take their buses from it)	Csoport törlése (a fordák még innen veszik a buszaikat)
+Delete the group	Csoport törlése
+Tours that take their buses from here:	Fordák, amelyek innen veszik a buszaikat:
+Drives about on its own	Magától jár
+as many:	ennyi:
+Times the traffic over the day	A forgalom szorzója a nap folyamán
+A vehicle with more weight comes along more often.	A nagyobb súlyú jármű gyakrabban jön.
+Add a vehicle…	Jármű hozzáadása…
+Depot file (.hof)	Telephelyfájl (.hof)
+None of its buses has this depot file beside it: they run without their destination signs and fleet data.	Egyik buszának sincs mellette ez a telephelyfájl: célfeliratok és flottaadatok nélkül közlekednek.
+The buses it has: a type of bus and the fleet number and plate of each.	Buszai: a busz típusa, valamint mindegyik flottaszáma és rendszáma.
+Take this type out	Ennek a típusnak az eltávolítása
+number	szám
+plate	rendszám
+Another bus	Még egy busz
+Add a type of bus…	Busztípus hozzáadása…
+The lists can't be read without the OMSI 2 folder.	Az OMSI 2 mappa nélkül a listák nem olvashatók.
+Parked cars	Parkoló autók
+What stands on the car parks (Game logic > Car parks). A car listed more often stands there more often.	Ami a parkolókon áll (Játéklogika > Parkolók). A gyakrabban felsorolt autó gyakrabban áll ott.
+Who walks about and waits at the stops.	Ki sétál és vár a megállókban.
+Drivers	Sofőrök
+Who drives the AI's buses.	Ki vezeti az MI buszait.
+How often it is listed (0 takes it out)	Hányszor szerepel a listán (0 kiveszi)
+How busy the map is at each hour: the road traffic, and the passengers at the stops. 1 is normal; the game goes along the line between the points.	Mennyire forgalmas a térkép óránként: a közúti forgalom és az utasok a megállókban. 1 a szokásos; a játék a pontok közti vonalat követi.
+Road traffic	Közúti forgalom
+Passengers	Utasok
+Its own traffic over the day	Saját forgalom a nap folyamán
+Without one the group follows the map's road traffic. A curve can be for some days of the week only.	Nélküle a csoport a térkép közúti forgalmát követi. A görbe lehet a hét csak bizonyos napjaira.
+Days:	Napok:
+Mo–Fr	H–P
+Take this curve out	Ennek a görbének az eltávolítása
+A curve	Görbe
+Typical day…	Tipikus nap…
+Quiet village	Csendes falu
+Town with rush hours	Város csúcsidőkkel
+The same all day	Egész nap ugyanaz
+No curve: 1 all day.	Nincs görbe: egész nap 1.
+Take the point out	Pont eltávolítása
+Point	Pont
+Smart unwrap	Okos kiterítés
+Every flat side apart in the picture, no faces on top of one another (all faces if none is selected)	Minden sík oldal külön a képen, a lapok nem fedik egymást (mind, ha nincs kijelölve semmi)
+Box unwrap	Dobozos kiterítés
+The six sides of a box apart in the picture	A doboz hat oldala külön a képen
+Flip ↔	Tükrözés ↔
+Flip ↕	Tükrözés ↕
+Scale ×2	Méretezés ×2
+Scale ÷2	Méretezés ÷2
+Fit	Illesztés
+Stretched to fill the picture	Széthúzás a teljes képre
+Pack islands	Szigetek csomagolása
+Average island scale	Szigetméret kiegyenlítése
+Seams from islands	Varratok a szigetekből
+Click: a face (Shift adds) · drag: move the selected · wheel: zoom · right button: pan	Kattintás: lap (Shift: hozzáad) · húzás: a kijelölt mozgatása · görgő: nagyítás · jobb gomb: eltolás
+Could not keep the views	A nézetek nem menthetők
+Saved views	Mentett nézetek
+Places of the map to come back to: Ctrl+1…9 goes to the first nine, Ctrl+Shift+1…9 keeps the view there	A térkép helyei, ahová visszatérhetsz: a Ctrl+1…9 az első kilencre ugrik, a Ctrl+Shift+1…9 megjegyzi oda a nézetet
+Keep this view	Ennek a nézetnek a megjegyzése
+None yet	Még nincs
+Go	Ugrás
+Earlier in the list	Feljebb a listán
+Later in the list	Lejjebb a listán
+Take the view now instead	Cserélje a mostani nézetre
+Keep proportions	Arányok megtartása
+Back to its own size	Vissza az eredeti méretre
+Updates	Frissítések
+This version:	Ez a verzió:
+New version:	Új verzió:
+Install and restart	Telepítés és újraindítás
+Not now	Most nem
+What changed	Újdonságok
+Downloading and installing	Letöltés és telepítés
+Installed version	Telepített verzió
+openMapper restarts when you save the map.	Az openMapper újraindul, amikor elmented a térképet.
+Looking for a new version…	Új verzió keresése…
+This is the newest version.	Ez a legújabb verzió.
+Download it from GitHub by hand	Letöltés kézzel a GitHubról
+When there is a new version:	Ha új verzió van:
+Offer it to me	Ajánlja fel
+Install it and restart by itself	Telepítse és induljon újra magától
+Never look for updates	Soha ne keressen frissítést
+Check now	Ellenőrzés most
+Never offer updates again	Soha többé ne ajánljon frissítést
+The release has no package	A kiadásban nincs csomag
+No automatic updates for this system.	Ehhez a rendszerhez nincs automatikus frissítés.
+No connection to GitHub: are you online?	Nincs kapcsolat a GitHubbal: van internet?
+The release has no SHA256SUMS: not installed.	A kiadásban nincs SHA256SUMS: nem telepítve.
+The package is not in SHA256SUMS: not installed.	A csomag nincs az SHA256SUMS-ban: nem telepítve.
+The download does not match its checksum: not installed.	A letöltött fájl nem egyezik az ellenőrzőösszegével: nem telepítve.
+Could not replace the program	A program nem cserélhető le
+The package has no program in it.	A csomagban nincs program.
+openMapper has stopped:	Az openMapper leállt:
+The log with the details:	A részleteket tartalmazó napló:

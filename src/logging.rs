@@ -67,7 +67,7 @@ pub fn init(filter: &str) {
                 rfd::MessageDialog::new()
                     .set_level(rfd::MessageLevel::Error)
                     .set_title("openMapper")
-                    .set_description(format!("openMapper has stopped: {message}\n\nThe log with the details: {}", p.display()))
+                    .set_description(format!("{} {message}\n\n{} {}", crate::i18n::tr("openMapper has stopped:", "openMapper остановился:"), crate::i18n::tr("The log with the details:", "Журнал с подробностями:"), p.display()))
                     .show();
             }
         }

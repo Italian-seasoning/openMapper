@@ -123,7 +123,29 @@ pub struct Library {
     rx: Option<mpsc::Receiver<ScanMsg>>,
     /// Where each asset is in `assets`, by its lower-case path (`find` is asked many times
     /// a frame).
-    index: HashMap<String, usize>,
+    index: HashMap<String, usize, std::hash::BuildHasherDefault<Fx>>,
+}
+
+/// The hash of the index: Fx's multiply and rotate, a good deal quicker than SipHash on a
+/// path of fifty bytes asked for thousands of times a frame.
+#[derive(Default)]
+pub struct Fx(u64);
+
+impl std::hash::Hasher for Fx {
+    fn write(&mut self, bytes: &[u8]) {
+        const K: u64 = 0x517c_c1b7_2722_0a95;
+        let mut chunks = bytes.chunks_exact(8);
+        for c in &mut chunks {
+            self.0 = (self.0.rotate_left(5) ^ u64::from_le_bytes(c.try_into().unwrap())).wrapping_mul(K);
+        }
+        for &b in chunks.remainder() {
+            self.0 = (self.0.rotate_left(5) ^ b as u64).wrapping_mul(K);
+        }
+    }
+
+    fn finish(&self) -> u64 {
+        self.0
+    }
 }
 
 impl Library {
@@ -168,7 +190,17 @@ impl Library {
     }
 
     pub fn find(&self, rel: &str) -> Option<&Asset> {
-        self.index.get(&rel.to_lowercase()).and_then(|&i| self.assets.get(i))
+        // (an ASCII path, nearly all of them, is lower-cased on the stack: no allocation)
+        let mut buf = [0u8; 192];
+        let i = if rel.is_ascii() && rel.len() <= buf.len() {
+            let low = &mut buf[..rel.len()];
+            low.copy_from_slice(rel.as_bytes());
+            low.make_ascii_lowercase();
+            self.index.get(std::str::from_utf8(low).unwrap_or(""))
+        } else {
+            self.index.get(&rel.to_lowercase())
+        };
+        i.and_then(|&i| self.assets.get(i))
     }
 
     /// Assets of a kind and category matching a search (words in any order).

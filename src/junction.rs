@@ -566,36 +566,49 @@ fn kerb_round(a: DVec2, out_a: f64, b: DVec2, out_b: f64) -> Vec<Seg> {
 }
 
 /// The mesh as a DirectX `.x` text file in OMSI's frame (x right, y up, z forward).
-/// (Seen from the side a triangle faces, OMSI's front faces turn clockwise.)
+/// (Seen from the side a triangle faces, OMSI's front faces turn clockwise.) Every triangle
+/// is there twice, the second one facing the other way: a game that culls back faces by a
+/// rule of its own (the winding the version reads, the normals it trusts) shows the plate
+/// from above either way, as OMSI's own crossings are modelled.
 fn mesh_x(m: &Mesh, names: &[String]) -> String {
     let mut x = String::from("xof 0302txt 0032\n\nMesh {\n");
     let nv = m.verts.len();
-    let _ = writeln!(x, " {nv};");
-    for (i, (p, _, _)) in m.verts.iter().enumerate() {
-        let _ = writeln!(x, " {:.4};{:.4};{:.4};{}", p[0], p[2], p[1], if i + 1 == nv { ";" } else { "," });
-    }
     let nf = m.tris.len();
-    let _ = writeln!(x, " {nf};");
-    for (i, (f, _)) in m.tris.iter().enumerate() {
-        let _ = writeln!(x, " 3;{},{},{};{}", f[0], f[2], f[1], if i + 1 == nf { ";" } else { "," });
+    let _ = writeln!(x, " {};", nv * 2);
+    for pass in 0..2 {
+        for (i, (p, _, _)) in m.verts.iter().enumerate() {
+            let _ = writeln!(x, " {:.4};{:.4};{:.4};{}", p[0], p[2], p[1], if pass == 1 && i + 1 == nv { ";" } else { "," });
+        }
     }
-    let _ = writeln!(x, " MeshNormals {{\n  {nv};");
-    for (i, (_, n, _)) in m.verts.iter().enumerate() {
-        let _ = writeln!(x, "  {:.4};{:.4};{:.4};{}", n[0], n[2], n[1], if i + 1 == nv { ";" } else { "," });
+    let _ = writeln!(x, " {};", nf * 2);
+    // (front: the order turned for the swapped axes; back: the order as it stands, on its own vertices)
+    let faces = |x: &mut String, last: bool| {
+        for (i, (f, _)) in m.tris.iter().enumerate() {
+            let _ = writeln!(x, " 3;{},{},{};,", f[0], f[2], f[1]);
+            let _ = writeln!(x, " 3;{},{},{};{}", nv + f[0], nv + f[1], nv + f[2], if last && i + 1 == nf { ";" } else { "," });
+        }
+    };
+    faces(&mut x, true);
+    let _ = writeln!(x, " MeshNormals {{\n  {};", nv * 2);
+    for pass in 0..2 {
+        let sign = if pass == 0 { 1.0 } else { -1.0 };
+        for (i, (_, n, _)) in m.verts.iter().enumerate() {
+            let _ = writeln!(x, "  {:.4};{:.4};{:.4};{}", n[0] * sign, n[2] * sign, n[1] * sign, if pass == 1 && i + 1 == nv { ";" } else { "," });
+        }
     }
-    let _ = writeln!(x, "  {nf};");
-    for (i, (f, _)) in m.tris.iter().enumerate() {
-        let _ = writeln!(x, "  3;{},{},{};{}", f[0], f[2], f[1], if i + 1 == nf { ";" } else { "," });
+    let _ = writeln!(x, "  {};", nf * 2);
+    faces(&mut x, true);
+    x.push_str(" }\n");
+    let _ = writeln!(x, " MeshTextureCoords {{\n  {};", nv * 2);
+    for pass in 0..2 {
+        for (i, (_, _, t)) in m.verts.iter().enumerate() {
+            let _ = writeln!(x, "  {:.5};{:.5};{}", t[0], t[1], if pass == 1 && i + 1 == nv { ";" } else { "," });
+        }
     }
     x.push_str(" }\n");
-    let _ = writeln!(x, " MeshTextureCoords {{\n  {nv};");
-    for (i, (_, _, t)) in m.verts.iter().enumerate() {
-        let _ = writeln!(x, "  {:.5};{:.5};{}", t[0], t[1], if i + 1 == nv { ";" } else { "," });
-    }
-    x.push_str(" }\n");
-    let _ = writeln!(x, " MeshMaterialList {{\n  {};\n  {nf};", names.len().max(1));
+    let _ = writeln!(x, " MeshMaterialList {{\n  {};\n  {};", names.len().max(1), nf * 2);
     for (i, (_, mat)) in m.tris.iter().enumerate() {
-        let _ = writeln!(x, "  {}{}", mat, if i + 1 == nf { ";" } else { "," });
+        let _ = writeln!(x, "  {mat},\n  {mat}{}", if i + 1 == nf { ";" } else { "," });
     }
     for n in names {
         let _ = writeln!(x, "  Material {{\n   1.0;1.0;1.0;1.0;;\n   10.0;\n   0.0;0.0;0.0;;\n   0.0;0.0;0.0;;");
@@ -985,7 +998,7 @@ mod tests {
         std::fs::create_dir_all(&dir).unwrap();
         std::fs::write(dir.join("j.x"), x).unwrap();
         let m = omsi_o3d::load_mesh(&dir.join("j.x")).unwrap();
-        assert_eq!(m.triangles.len(), mesh.tris.len());
+        assert_eq!(m.triangles.len(), mesh.tris.len() * 2);
         let _ = std::fs::remove_dir_all(&dir);
     }
 }

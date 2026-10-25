@@ -1,0 +1,2129 @@
+Could not open the map	No s'ha pogut obrir el mapa
+The next 100 tiles are loaded, the others are hidden	S'han carregat les 100 tessel·les següents; les altres estan amagades
+Find the place in the window and build from it	Cerca el lloc a la finestra i construeix-hi el mapa
+Your map is ready. Start with a road!	El mapa és a punt. Comença per una carretera!
+Export the map for sharing	Exporta el mapa per compartir-lo
+Exported:	Exportat:
+files	fitxers
+files the map names were not found: the readme lists them	no s'han trobat fitxers que el mapa esmenta: el readme els enumera
+Could not export	No s'ha pogut exportar
+A ring road with line 1 on it: save, then try it in openOMSI (F5).	Una ronda amb la línia 1: desa i prova-ho a openOMSI (F5).
+The sample could not be made	No s'ha pogut crear l'exemple
+In multiplayer the host saves the map. Leave the session to save this as a copy of your own.	En multijugador el mapa el desa l'amfitrió. Surt de la sessió per desar-ne una còpia pròpia.
+Saved:	Desat:
+Tip: place a start point (Game logic > Start points) so the bus has somewhere to appear	Consell: posa un punt d'inici (Lògica de joc > Punts d'inici) perquè l'autobús tingui on aparèixer
+Could not save (the changes are still here, nothing is lost)	No s'ha pogut desar (els canvis encara hi són, no s'ha perdut res)
+The unsaved changes are back. Save to keep them.	Els canvis sense desar s'han recuperat. Desa per conservar-los.
+Could not restore the changes	No s'han pogut recuperar els canvis
+openOMSI was not found	No s'ha trobat openOMSI
+From the start point	Des del punt d'inici
+The map has no start point: place one with Game logic > Start points	El mapa no té cap punt d'inici: posa'n un a Lògica de joc > Punts d'inici
+Starting openOMSI…	Iniciant openOMSI…
+To drive the map in OMSI 2 itself it has to be copied into the OMSI 2 folder (Maps, and the objects, roads and textures made for it). Nothing that is there is replaced except earlier copies of this map. Copy it there?	Per conduir el mapa a OMSI 2 cal copiar-lo a la carpeta d'OMSI 2 (Maps, i els objectes, carreteres i textures fets per a ell). No se substitueix res del que hi ha, excepte còpies anteriors d'aquest mapa. Hi vols copiar-lo?
+Starting OMSI 2: choose the map	Iniciant OMSI 2: tria el mapa
+The map is copied into the OMSI 2 folder; OMSI 2 itself runs on Windows only:	El mapa s'ha copiat a la carpeta d'OMSI 2; OMSI 2 només funciona a Windows:
+Could not copy the map into OMSI 2	No s'ha pogut copiar el mapa a OMSI 2
+Click on the map to place it	Fes clic al mapa per col·locar-lo
+Open a map (its global.cfg)	Obre un mapa (el seu global.cfg)
+The map is back as it was before that save	El mapa torna a ser com abans d'aquell desament
+Could not go back	No s'ha pogut tornar enrere
+Export a plan of the map	Exporta un pla del mapa
+Plan saved:	Pla desat:
+Mods, models and pictures	Mods, models i imatges
+Import assets	Importa recursos
+…or choose a mod folder	…o tria una carpeta de mod
+Click on the map to put it there	Fes clic al mapa per posar-lo allà
+Could not make the shape	No s'ha pogut crear la forma
+Choose the OMSI 2 folder	Tria la carpeta d'OMSI 2
+That is not an OMSI 2 folder (Omsi.exe, maps and Vehicles must be in it)	Aquesta no és una carpeta d'OMSI 2 (hi han de ser Omsi.exe, maps i Vehicles)
+This object has no textures to make PBR maps of	Aquest objecte no té textures per fer-ne mapes PBR
+Could not copy the map	No s'ha pogut copiar el mapa
+Could not move the map	No s'ha pogut moure el mapa
+Terrain flattened; splines laid on it:	Terreny aplanat; splines col·locats:
+This road type has no textures to make PBR maps of	Aquest tipus de carretera no té textures per fer-ne mapes PBR
+Pictures	Imatges
+Only 100 tiles round the camera are loaded; click on the empty zone to load the next 100	Només es carreguen 100 tessel·les al voltant de la càmera; fes clic a la zona buida per carregar-ne 100 més
+All tiles are loaded	Totes les tessel·les estan carregades
+Import the map's thumbnail	Importa la miniatura del mapa
+The map's thumbnail is set: openOMSI shows it where maps are chosen.	La miniatura del mapa està definida: openOMSI la mostra on es trien els mapes.
+Could not use the picture	No s'ha pogut usar la imatge
+Map camera	Càmera del mapa
+The map opens with this view from now on.	A partir d'ara el mapa s'obre amb aquesta vista.
+Add ground texture	Afegeix una textura de terra
+View kept as	Vista desada com a
+No view kept as	Cap vista desada com a
+Files changed on disk: the catalogue and models are updated	Els fitxers han canviat al disc: el catàleg i els models s'han actualitzat
+The track does not run over the map's tiles	El traçat no passa per les tessel·les del mapa
+Road along a GPS track	Carretera segons un traçat GPS
+Roads built:	Carreteres construïdes:
+junctions:	creuaments:
+stops:	parades:
+Lines from OpenStreetMap	Línies d'OpenStreetMap
+lines:	línies:
+trips found their way:	viatges amb camí trobat:
+buildings:	edificis:
+trees:	arbres:
+Start point	Punt d'inici
+Start	Inici
+a start point	un punt d'inici
+From OpenStreetMap	D'OpenStreetMap
+Picture saved:	Imatge desada:
+Could not save the picture	No s'ha pogut desar la imatge
+The graphics could not be started.	No s'han pogut iniciar els gràfics.
+Flying speed	Velocitat de vol
+copy	còpia
+Only maps of the content folder can be moved	Només es poden moure mapes de la carpeta de contingut
+Only assets of the content folder can be deleted	Només es poden eliminar recursos de la carpeta de contingut
+Could not write the object	No s'ha pogut escriure l'objecte
+Select an object to edit its mesh	Selecciona un objecte per editar-ne la malla
+A copy of its own was made: the original type is unchanged	S'ha fet una còpia pròpia: el tipus original no ha canviat
+Cannot edit this object	Aquest objecte no es pot editar
+Point at an edge to cut across its ring of faces	Apunta a una aresta per tallar l'anell de cares de través
+Objects made:	Objectes creats:
+select the faces to separate	selecciona les cares que cal separar
+Separated into an object of its own	Separat en un objecte propi
+Add object	Afegeix un objecte
+select what to export (objects, roads)	selecciona què exportar (objectes, carreteres)
+Export the selection	Exporta la selecció
+unknown format	format desconegut
+the models are still loading: try again in a moment	els models encara es carreguen: torna-ho a provar d'aquí a un moment
+this material has no texture	aquest material no té textura
+cannot read	no es pot llegir
+Export the texture	Exporta la textura
+Texture saved:	Textura desada:
+Choose a picture	Tria una imatge
+give the material a texture first: its maps go beside it	primer dona una textura al material: els seus mapes van al costat
+Import materials (an .mtl, a model, or the pictures of one PBR material)	Importa materials (un .mtl, un model o les imatges d'un material PBR)
+Materials and pictures	Materials i imatges
+no materials found there	no s'ha trobat cap material
+Materials added:	Materials afegits:
+nothing to bake	no hi ha res per precuinar
+the object has no lamps to bake the night light of	l'objecte no té llums amb què precuinar la llum de nit
+Baked into	Precuinat a
+select a road or spline first	primer selecciona una carretera o un spline
+the road's type is still loading: try again in a moment	el tipus de carretera encara es carrega: torna-ho a provar d'aquí a un moment
+these splines have no shape to see	aquests splines no tenen cap forma visible
+Replace by an object	Substitueix per un objecte
+Made into an object: Tab edits its mesh	Convertit en objecte: Tab en edita la malla
+Signal head made: click where it stands (near a crossing with a light program it links to it)	Semàfor creat: fes clic on es posa (a prop d'un creuament amb programa de llums s'hi enllaça)
+Choose a picture or a texture	Tria una imatge o una textura
+cannot read the picture	no es pot llegir la imatge
+Picture made: click where it goes (it can be moved, turned and scaled after)	Imatge creada: fes clic on va (després es pot moure, girar i escalar)
+Light made: click where it shines	Llum creada: fes clic on il·lumina
+Choose a sound	Tria un so
+Sounds	Sons
+Sound source made: click where it plays	Font de so creada: fes clic on sona
+Street lamp made: click where it stands	Fanal creat: fes clic on es posa
+Paint by slope and height	Pinta segons pendent i alçada
+By slope and height	Per pendent i alçada
+The chosen layer painted over the whole map where the ground is so steep (and so high)	La capa triada pintada per tot el mapa allà on el terreny és així d'empinat (i així d'alt)
+Slope	Pendent
+Height	Alçada
+Fade	Degradat
+Cover	Cobertura
+Paint the map	Pinta el mapa
+Choose a layer above the base ground	Tria una capa sobre el terra base
+No ground on the map is like that	Al mapa no hi ha cap terra així
+Painted	Pintat
+Missing objects	Falten objectes
+Missing roads and splines	Falten carreteres i splines
+Missing textures	Falten textures
+Road ends not joined	Extrems de carretera sense unir
+Links to splines that are gone	Enllaços a splines que ja no hi són
+Bus stops away from a road	Parades lluny d'una carretera
+Start points away from a road	Punts d'inici lluny d'una carretera
+Start points without their object	Punts d'inici sense el seu objecte
+No start point	Sense punt d'inici
+IDCodes used twice	IDCode repetits
+Next IDCode too low	NextIDCode massa baix
+Objects off their tile	Objectes fora de la seva tessel·la
+Tiles without a file	Tessel·les sense fitxer
+Tiles without ground	Tessel·les sense terra
+Trips without a way	Viatges sense camí
+Tours without departures	Torns sense sortides
+Tours without a depot	Torns sense cotxera
+Traffic groups not in the AI lists	Grups de trànsit que no són a les llistes d'IA
+Stops no trip calls at	Parades on no para cap viatge
+Signal routes naming what is gone	Rutes de senyals amb elements que ja no hi són
+Chrono changes of what is gone	Canvis cronològics d'elements que ja no hi són
+Lamps lighting no ground at night	Fanals que de nit no il·luminen el terra
+Tiles with very many objects	Tessel·les amb molts objectes
+Objects linked to one that is gone	Objectes enllaçats amb un que ja no hi és
+Signal heads linked to no crossing	Semàfors sense creuament enllaçat
+Depot files (destinations)	Fitxers de cotxera (destinacions)
+The map uses an object (.sco) that is not installed. The game leaves it out. Install the mod it comes from, or delete the object. A junction of openMapper's whose file is gone (the map was moved without it) is made again for its roads with "Fix".	El mapa usa un objecte (.sco) que no està instal·lat. El joc l'omet. Instal·la el mod d'on prové o elimina l'objecte. Un creuament d'openMapper que ha perdut el fitxer (el mapa es va moure sense ell) es torna a crear per a les seves carreteres amb «Arregla».
+The map uses a road or spline type (.sli) that is not installed: that road is missing in the game, and buses cannot drive there.	El mapa usa un tipus de carretera o spline (.sli) que no està instal·lat: aquesta carretera no hi serà al joc i els autobusos no hi podran circular.
+An object or road names a picture that cannot be found. It will look white or black in the game.	Un objecte o carretera esmenta una imatge que no es troba. Al joc es veurà blanc o negre.
+Two road ends lie on one another but are not joined. Traffic still finds its way (the game joins lanes by their ends), but rows of lamps and posts and the road's texture do not run on across, and the editor does not treat them as one road. "Join" links them.	Dos extrems de carretera es troben l'un sobre l'altre però no estan units. El trànsit hi passa igualment (el joc uneix els carrils pels extrems), però les fileres de fanals i pals i la textura de la carretera no hi continuen, i l'editor no els considera una sola carretera. «Uneix» els enllaça.
+A spline says it goes on into another one that no longer exists. "Fix" forgets that link.	Un spline diu que continua en un altre que ja no existeix. «Arregla» oblida aquest enllaç.
+A bus stop belongs to the lane it stands beside (within about 25 m). This one has none near, so buses cannot stop at it. Move it next to the road, or "Fix" puts it at the kerb of the nearest lane (within 80 m).	Una parada pertany al carril que té al costat (a uns 25 m com a molt). Aquesta no en té cap a prop, així que els autobusos no hi poden parar. Mou-la vora la carretera o «Arregla» la posa a la vorera del carril més proper (fins a 80 m).
+A start point is where the bus appears. This one is away from any lane: fine in a depot yard, otherwise the bus starts off the road.	Un punt d'inici és on apareix l'autobús. Aquest és lluny de qualsevol carril: correcte en un pati de cotxera, si no l'autobús sortirà fora de la carretera.
+A start point refers to an object that was deleted. "Fix" removes the start point.	Un punt d'inici fa referència a un objecte eliminat. «Arregla» elimina el punt d'inici.
+There is nowhere for the bus to appear. Place a start point (Game logic > Start points) on a road, or "Fix" puts one on a lane some 40 m before a bus stop.	L'autobús no té on aparèixer. Posa un punt d'inici (Lògica de joc > Punts d'inici) en una carretera o «Arregla» en posa un en un carril uns 40 m abans d'una parada.
+Two things on the map share one IDCode: links, timetables and start points may pick the wrong one.	Dues coses del mapa comparteixen un IDCode: els enllaços, horaris i punts d'inici poden triar la incorrecta.
+The counter for new IDCodes is below codes already used, so new objects would get codes twice. "Fix" raises it.	El comptador de nous IDCode és per sota de codis ja usats, així que els objectes nous rebrien codis repetits. «Arregla» el puja.
+An object standing on the ground lies outside its own tile. The game does not show it. Move it a little or put it again.	Un objecte sobre el terra queda fora de la seva tessel·la. El joc no el mostra. Mou-lo una mica o torna'l a posar.
+global.cfg lists tiles whose file is not there. The game leaves them out; they stay listed, as start points and timetables count tiles by their place in the list.	global.cfg llista tessel·les sense fitxer. El joc les omet; continuen a la llista, ja que els punts d'inici i horaris compten les tessel·les per la seva posició a la llista.
+A tile has no height file: its ground is flat. Saving writes one.	Una tessel·la no té fitxer d'altures: el seu terra és pla. En desar se n'escriu un.
+No way along the roads was found through this trip's stops, so buses cannot drive it. Open it in Map > Lines and timetable to see where it breaks.	No s'ha trobat cap camí per les carreteres entre les parades d'aquest viatge, així que els autobusos no el poden fer. Obre'l a Mapa > Línies i horari per veure on es trenca.
+A tour (a bus's day on the line) has no trips, so no bus runs it.	Un torn (el dia d'un autobús a la línia) no té viatges, així que cap autobús el fa.
+A tour names no depot or group of the AI lists (or one that is not there): the game has no vehicle to send on it. Choose a depot for it in the Lines window, or "Fix" gives it the map's depot (one of OMSI 2's MAN buses added where the map has none).	Un torn no indica cap cotxera ni grup de les llistes d'IA (o n'indica un que no hi és): el joc no té cap vehicle per enviar-hi. Tria-li una cotxera a la finestra de Línies o «Arregla» li dona la del mapa (afegint un autobús MAN d'OMSI 2 si el mapa no en té).
+The unscheduled traffic names a group that the AI lists do not have: those cars never appear. Add the group in Map > Traffic and AI, or "Fix" copies it from OMSI 2's own maps where they have it.	El trànsit lliure esmenta un grup que les llistes d'IA no tenen: aquests cotxes no apareixen mai. Afegeix el grup a Mapa > Trànsit i IA o «Arregla» el copia dels mapes d'OMSI 2 si hi és.
+A stop of the timetable that no trip calls at. Nothing is wrong, it is only not used yet.	Una parada de l'horari on no para cap viatge. No hi ha cap problema, simplement encara no s'usa.
+A chrono scenario takes away, retypes or relabels something that is no longer on the map (it was deleted or its IDCode changed): that change does nothing. Open Map > Chrono scenarios, the scenario's properties, and take the change out.	Un escenari cronològic lleva, canvia de tipus o reetiqueta alguna cosa que ja no és al mapa (s'ha eliminat o ha canviat el seu IDCode): aquest canvi no fa res. Obre Mapa > Escenaris cronològics, les propietats de l'escenari, i treu el canvi.
+A tile holds far more objects than the stock maps' tiles (up to some 600): the game may stutter when it loads it or looks across it. Thin out a wood planted too densely (Plant brush, Clear) or plant it with more space between the trees.	Una tessel·la té molts més objectes que les dels mapes originals (fins a uns 600): el joc pot anar a batzegades en carregar-la o mirar-hi a través. Aclareix un bosc plantat massa dens (pinzell de plantes, Esborra) o planta'l amb més espai entre els arbres.
+Street lamps stand on a tile the game does not light from its lamps ([variable_terrainlightmap] is off): at night the ground under them stays dark (unless the tile's light map file was made by OMSI 2's editor). "Fix" turns it on, as on nearly every tile of the stock maps.	Hi ha fanals en una tessel·la que el joc no il·lumina amb els seus llums ([variable_terrainlightmap] desactivat): de nit el terra de sota queda fosc (tret que el fitxer del mapa de llum de la tessel·la sigui fet per l'editor d'OMSI 2). «Arregla» l'activa, com a gairebé totes les tessel·les dels mapes originals.
+An object takes its state ([varparent]) from an object no longer on the map: a signal head stays dark, a display blank. Link it to another in its properties (Linked objects), or "Fix" forgets the link.	Un objecte pren el seu estat ([varparent]) d'un objecte que ja no és al mapa: un semàfor queda apagat, una pantalla en blanc. Enllaça'l amb un altre a les propietats (Objectes enllaçats) o «Arregla» oblida l'enllaç.
+A traffic light's signal head takes its light from a crossing's program ([varparent]); this one is linked to none while others like it are, so it stays dark in the game. Select it and link it in its properties (Linked objects).	El cap d'un semàfor pren la llum del programa d'un creuament ([varparent]); aquest no està enllaçat amb cap mentre altres de semblants sí, així que al joc queda apagat. Selecciona'l i enllaça'l a les propietats (Objectes enllaçats).
+A depot file (.hof) gives the buses their destinations, the stop names on their displays and the routes their IBIS knows. Without one the signs stay empty and the IBIS knows no line. "Fix" makes it from the map's lines, or adds what the lines need to the map's own (Map > Depot files to see and change it).	Un fitxer de cotxera (.hof) dona als autobusos les destinacions, els noms de parada a les pantalles i les rutes que coneix l'IBIS. Sense un, els rètols queden buits i l'IBIS no coneix cap línia. «Arregla» el crea a partir de les línies del mapa, o afegeix al propi del mapa el que les línies necessiten (Mapa > Fitxers de cotxera per veure'l i canviar-lo).
+A signal route names a signal or track pieces no longer on the map: the signal may never clear. Open Map > Signal routes and take the track again, or delete the route.	Una ruta de senyal esmenta un senyal o trams de via que ja no són al mapa: el senyal potser no s'obrirà mai. Obre Mapa > Rutes de senyals i torna a agafar la via, o elimina la ruta.
+font	tipus de lletra
+used	usat
+in	a
+a ground texture of the map	una textura de terra del mapa
+splines	splines
+apart	entre ells
+spline	spline
+goes on into	continua en
+no road near	cap carretera a prop
+from the road	de la carretera
+start point	punt d'inici
+object	objecte
+The map has no start point	El mapa no té cap punt d'inici
+things have it	coses el tenen
+highest in use:	el més alt en ús:
+tile	tessel·la
+no .terrain file: flat	sense fitxer .terrain: pla
+objects	objectes
+lamps	fanals
+The map has no depot file	El mapa no té fitxer de cotxera
+the buses show no destination	els autobusos no mostren destinació
+named by the map's depot, but found nowhere	indicat per la cotxera del mapa, però no es troba enlloc
+knows none of the	no coneix cap de les
+lacks	falta
+destinations of the lines	destinacions de les línies
+the lines need	les línies necessiten
+destinations	destinacions
+stops	parades
+routes	rutes
+tour	torn
+no depot named	cap cotxera indicada
+not in the AI lists:	no és a les llistes d'IA:
+the stop has no object:	la parada no té objecte:
+no road beside	cap carretera al costat de
+no way	sense camí
+no way found	camí no trobat
+Route	Ruta
+gone	ja no hi és
+changes of nothing	canvis de res
+time	vegada
+times	vegades
+Fix from the map check	Arreglament des de la revisió del mapa
+Car groups from OMSI 2's maps	Grups de cotxes dels mapes d'OMSI 2
+A depot for the tour	Una cotxera per al torn
+A depot file from the lines	Un fitxer de cotxera a partir de les línies
+Depot file: what the lines need	Fitxer de cotxera: el que necessiten les línies
+Map check	Revisió del mapa
+Check again	Revisa de nou
+Checking the map…	Revisant el mapa…
+errors	errors
+warnings	avisos
+notes	notes
+Nothing found: the map looks fine.	No s'ha trobat res: el mapa està bé.
+Fix all	Arregla-ho tot
+Join	Uneix
+Fix	Arregla
+Click to fly there	Clic: vola-hi
+Fixed:	Arreglat:
+it has parts openMapper does not write	conté parts que openMapper no escriu
+A host on the internet needs a password of at least	Un amfitrió a internet necessita una contrasenya d'almenys
+Type a password, or choose explicitly to host without one	Escriu una contrasenya o tria explícitament obrir sense
+Could not listen on port	No s'ha pogut escoltar al port
+The way in for the tunnel could not be opened	No s'ha pogut obrir l'entrada del túnel
+Hosting this map: others can join it now	El mapa està obert per editar-lo en grup
+Multiplayer ended: another map was opened	Multijugador finalitzat: s'ha obert un altre mapa
+Somebody changed this first: your edit was put back	Algú ho ha canviat abans: la teva edició s'ha revertit
+The host takes no more: the edit is too big, or the session holds as much as it may. Your edit was put back	L'amfitrió no n'accepta més: l'edició és massa gran o la sessió està plena. La teva edició s'ha revertit
+That lies too far from the map for this session: your edit was put back	Això és massa lluny del mapa per a aquesta sessió: la teva edició s'ha revertit
+tiles	tessel·les
+changed what you were editing: it is as they left it	ha canviat el que editaves: queda com ho va deixar
+The timetable, the traffic and the descriptions are the host's in multiplayer: your change was put back	L'horari, el trànsit i les descripcions són de l'amfitrió en multijugador: el teu canvi s'ha revertit
+Your conflicting edit was kept	La teva edició en conflicte s'ha conservat
+Could not keep your conflicting edit; multiplayer stopped	No s'ha pogut conservar la teva edició en conflicte; multijugador aturat
+Too much of the others' work came in while your edit was held open: multiplayer stopped. The map stays open; it can be saved as a copy.	Han entrat massa canvis dels altres mentre la teva edició era oberta: multijugador aturat. El mapa continua obert; es pot desar com a còpia.
+The connection to the host was lost. The map stays open; it can be saved as a copy.	S'ha perdut la connexió amb l'amfitrió. El mapa continua obert; es pot desar com a còpia.
+No OMSI 2 installation: the map has nowhere to go	No hi ha cap instal·lació d'OMSI 2: el mapa no té on anar
+The host sent no map	L'amfitrió no ha enviat cap mapa
+The host's map could not be read	No s'ha pogut llegir el mapa de l'amfitrió
+No connection	Sense connexió
+That address is not an openMapper host	Aquesta adreça no és un amfitrió d'openMapper
+Wrong password	Contrasenya incorrecta
+The session is full	La sessió és plena
+Type a name (up to 32 letters)	Escriu un nom (fins a 32 lletres)
+The host has another version of openMapper	L'amfitrió té una altra versió d'openMapper
+Move forward	Avança
+Move back	Retrocedeix
+Move left	Mou a l'esquerra
+Move right	Mou a la dreta
+Turn the camera left	Gira la càmera a l'esquerra
+Turn the camera right	Gira la càmera a la dreta
+Undo	Desfés
+Redo	Refés
+Save	Desa
+Copy	Copia
+Cut	Retalla
+Paste at the cursor	Enganxa al cursor
+Duplicate	Duplica
+Select all	Selecciona-ho tot
+Find in the map	Cerca al mapa
+Search for a command	Cerca una ordre
+Tool: Select	Eina: Selecció
+Tool: Roads	Eina: Carreteres
+Tool: Objects	Eina: Objectes
+Tool: Game logic	Eina: Lògica de joc
+Tool: Terrain	Eina: Terreny
+Tool: Paint	Eina: Pintura
+Tool: Tiles	Eina: Tessel·les
+Turn the object (Shift: the other way)	Gira l'objecte (Maj: l'altre sentit)
+Ruler	Regle
+Knife	Ganivet
+Move handles	Nanses de moviment
+Rotate handles	Nanses de gir
+Scale handles	Nanses d'escala
+Edit the mesh (vertices, edges, faces)	Edita la malla (vèrtexs, arestes, cares)
+Join the selected objects into one	Uneix els objectes seleccionats en un
+Build the planned road	Construeix la carretera planificada
+Tile grid on / off	Quadrícula de tessel·les sí / no
+Group the selection	Agrupa la selecció
+Ungroup	Desagrupa
+Look straight down, north up	Mira cap avall, nord amunt
+2D plan view on / off (3D: tilt and turn again)	Vista 2D des de dalt sí / no (3D: inclina i gira de nou)
+Catalogue on / off	Catàleg
+Overview map on / off	Mapa general
+Lines window	Finestra de línies
+Traffic window	Finestra de trànsit
+Satellite and terrain window	Finestra de satèl·lit i terreny
+Smaller brush	Pinzell més petit
+Larger brush	Pinzell més gran
+Delete the selection	Elimina la selecció
+Go to the selection	Ves a la selecció
+Test drive in openOMSI (Shift: from the camera)	Prova de conducció a openOMSI (Maj: des de la càmera)
+Save a picture of the view	Desa una imatge de la vista
+The map's own (global.cfg)	El propi del mapa (global.cfg)
+Description	Descripció
+Name in this language	Nom en aquest idioma
+Description in this language	Descripció en aquest idioma
+Remove this language	Treu aquest idioma
+Not written yet: it is saved as soon as you type.	Encara no escrit: es desa tan bon punt escriguis.
+Edit description	Edita la descripció
+just now	ara mateix
+min ago	min enrere
+h ago	h enrere
+Unsaved changes found	S'han trobat canvis sense desar
+openMapper was closed without saving the map	openMapper s'ha tancat sense desar el mapa
+The changes kept by the autosave can be brought back. The map itself was not changed.	Els canvis conservats per l'autodesament es poden recuperar. El mapa en si no ha canviat.
+Restore the changes	Recupera els canvis
+Drop them	Descarta'ls
+Nothing comes after it to join	Després no hi ha res per unir
+The next piece runs the other way: reverse it first	El tram següent va en sentit contrari: gira'l primer
+The next piece lies on another tile	El tram següent és en una altra tessel·la
+The two pieces are of different road types	Els dos trams són de tipus de carretera diferents
+The two pieces have different settings (path rules, ground, skew)	Els dos trams tenen ajustos diferents (regles de camins, terra, biaix)
+A row of objects comes onto the next piece from another tile	Una filera d'objectes entra al tram següent des d'una altra tessel·la
+The two pieces do not bend, climb or bank alike: joined they would change shape	Els dos trams no giren, pugen ni s'inclinen igual: units canviarien de forma
+Earlier versions	Versions anteriors
+Before every save, the files it replaces are kept (the last 10 saves). Going back puts the map as it was before that save; later changes go.	Abans de cada desament es conserven els fitxers que substitueix (els últims 10 desaments). Tornar enrere deixa el mapa com era abans d'aquell desament; els canvis posteriors es perden.
+No earlier versions yet: they appear once the map is saved again.	Encara no hi ha versions anteriors: apareixen quan es torni a desar el mapa.
+before the save of	abans del desament de
+Go back to this	Torna a aquesta
+could not keep a backup, nothing was saved	no s'ha pogut fer còpia de seguretat, no s'ha desat res
+Red	Vermell
+Yellow	Groc
+Green	Verd
+file not found	fitxer no trobat
+this object takes its model from a model file and cannot be edited here	aquest objecte pren el model d'un fitxer de model i no es pot editar aquí
+the object has no mesh to edit	l'objecte no té malla per editar
+cannot read the object	no es pot llegir l'objecte
+Select	Selecciona
+Terrain	Terreny
+Paint	Pintura
+Roads	Carreteres
+Objects	Objectes
+Game logic	Lògica de joc
+Tiles	Tessel·les
+Raise	Eleva
+Lower	Baixa
+Smooth	Suavitza
+Flatten	Aplana
+Roughen	Rugositat
+Ramp	Rampa
+Lake / river	Llac / riu
+Start points	Punts d'inici
+Bus stops	Parades
+Car parks	Aparcaments
+AI paths	Camins d'IA
+Other	Altres
+Where the bus appears when a drive starts. Put it on a road or in the depot, facing the way to drive.	On apareix l'autobús en començar una conducció. Posa'l en una carretera o a la cotxera, mirant en el sentit de la marxa.
+Where passengers wait. Put it beside the road at the kerb; name it on the right.	On esperen els passatgers. Posa-la vora la carretera, a la vorera; posa-li nom a la dreta.
+Where parked cars stand. Click for one; with a row on, click the start and end of a row along the kerb.	On hi ha els cotxes aparcats. Clic: un de sol; amb filera activada, fes clic a l'inici i al final d'una filera vora la vorera.
+Lanes the AI's cars or people follow. Draw like a road: it snaps to lane ends (green: joined, red: dead end) and along lanes. A car path runs the way you draw it.	Carrils que segueixen els cotxes o les persones de la IA. Es dibuixa com una carretera: s'enganxa als extrems dels carrils (verd: units, vermell: sense sortida) i al llarg dels carrils. Un camí de cotxes va en el sentit en què el dibuixes.
+Sound sources, help arrows and other helpers the game does not show.	Fonts de so, fletxes d'ajuda i altres ajudes que el joc no mostra.
+Move (V): drag an arrow along X, Y or Z, a square in its plane, the circle over the ground	Mou (V): arrossega una fletxa al llarg de X, Y o Z, un quadrat en el seu pla, el cercle sobre el terra
+Rotate (C): drag a ring to turn about X, Y or Z	Gira (C): arrossega un anell per girar entorn de X, Y o Z
+Scale (X): drag an arrow to scale along that axis, a square for two, the circle for all three	Escala (X): arrossega una fletxa per escalar en aquest eix, un quadrat per dos, el cercle per als tres
+These roads have no lanes of their own to take apart (rails stay as they are)	Aquestes carreteres no tenen carrils propis per desmuntar (els rails es queden com són)
+Make the lanes editable	Fes els carrils editables
+Roads whose lanes are now editable:	Carreteres amb carrils ja editables:
+Flatten the terrain	Aplana el terreny
+Select two things or more to group them	Selecciona dues coses o més per agrupar-les
+Group	Grup
+Grouped:	Agrupat:
+Ungrouped	Desagrupat
+Rename group	Nom del grup
+Ground levelled under objects:	Terra anivellat sota els objectes:
+Move	Mou
+No object clicked: nothing linked	Cap objecte clicat: res enllaçat
+Too near the road's end to cut it there	Massa a prop de l'extrem de la carretera per tallar-la aquí
+No road under the cursor	No hi ha cap carretera sota el cursor
+Ramp:	Rampa:
+Shape terrain	Modela el terreny
+Paint ground	Pinta el terra
+Clear plants	Esborra plantes
+Plant	Planta
+Rotate selection	Gira la selecció
+Rotate	Gira
+Delete object	Elimina l'objecte
+Delete road	Elimina la carretera
+Delete selection	Elimina la selecció
+Pick an object in the catalogue first	Primer tria un objecte al catàleg
+There is no tile here: add one with the Tiles tool	Aquí no hi ha cap tessel·la: afegeix-ne una amb l'eina «Tessel·les»
+Place object	Col·loca l'objecte
+New stop	Parada nova
+Linked to	Enllaçat amb
+choose its light in its properties	tria'n la llum a les propietats
+Trees from OpenStreetMap	Arbres d'OpenStreetMap
+Plant an area	Planta una àrea
+Buildings from OpenStreetMap	Edificis d'OpenStreetMap
+Stops from OpenStreetMap	Parades d'OpenStreetMap
+Stop	Parada
+Pick a car park in the list first	Primer tria un aparcament a la llista
+Place car parks	Col·loca aparcaments
+Car parks placed:	Aparcaments col·locats:
+Pick a road type in the catalogue first	Primer tria un tipus de carretera al catàleg
+That bend is too sharp	Aquesta corba és massa tancada
+Switch made	Canvi d'agulla creat
+Junctions made:	Creuaments creats:
+The road leaves the map: add tiles there first	La carretera surt del mapa: afegeix-hi primer tessel·les
+Build road	Construeix la carretera
+Roads from OpenStreetMap	Carreteres d'OpenStreetMap
+Pick a tree in the catalogue (or add some to the mix) first	Primer tria un arbre al catàleg (o afegeix-ne a la barreja)
+Right-click a tile to remove it	Clic dret en una tessel·la per eliminar-la
+New tiles go next to the map	Les tessel·les noves van al costat del mapa
+Add tile	Afegeix una tessel·la
+Water	Aigua
+Paint detail	Detall de pintura
+Ground layer order	Ordre de capes del terra
+Detail texture	Textura de detall
+Ground texture	Textura de terra
+Lamp light on the ground	Llum dels fanals al terra
+Add tiles	Afegeix tessel·les
+A map needs at least one tile	Un mapa necessita almenys una tessel·la
+Remove tile	Elimina la tessel·la
+Pick a point (a dot at an end or where pieces meet) to take it out	Tria un punt (un punt a l'extrem o on s'ajunten els trams) per treure'l
+Remove a point of the path	Treu un punt del camí
+Point taken out	Punt tret
+A path of one piece: Del with nothing picked deletes it	Un camí d'un sol tram: Del sense cap punt triat l'elimina
+Extrude	Extrusió
+Inset	Cara interior
+Bevel	Xamfrà
+Loop cut	Tall en bucle
+click: done, right click / Esc: cancel, wheel: segments	clic: fet, clic dret / Esc: cancel·la, roda: segments
+Scale	Escala
+Roads are not scaled: change their length and width in their properties	Les carreteres no s'escalen: canvia'n la llargada i l'amplada a les propietats
+Only the objects are scaled, the roads stay	Només s'escalen els objectes, les carreteres es queden
+Could not scale	No s'ha pogut escalar
+Too near the end: drag the end's dot instead	Massa a prop de l'extrem: arrossega el punt de l'extrem
+Add a point to the path	Afegeix un punt al camí
+Point added: drag the dot where the pieces meet	Punt afegit: arrossega el punt on s'ajunten els trams
+Reshape road	Remodela la carretera
+Selected:	Seleccionat:
+Copied:	Copiat:
+Nothing copied yet	Encara no s'ha copiat res
+Paste	Enganxa
+Level the ground	Anivella el terra
+Turn objects	Gira els objectes
+Copies in a row	Còpies en filera
+Left out (off the map):	Omès (fora del mapa):
+Pasted (the rest is off the map):	Enganxat (la resta és fora del mapa):
+Edit object	Edita l'objecte
+Lean with the ground	Inclina amb el terra
+Stand upright	Posa dret
+Change height	Canvia l'alçada
+Change road type	Canvia el tipus de carretera
+The selected roads are not one chain (they branch or leave gaps)	Les carreteres seleccionades no són una cadena (es ramifiquen o tenen buits)
+Even slope	Pendent uniforme
+Lay on the ground	Posa sobre el terra
+Remove the rows of objects along it first (they are measured from its start)	Treu primer les fileres d'objectes que la voregen (es mesuren des de l'inici)
+Reverse direction	Inverteix el sentit
+No road there to cut	Aquí no hi ha cap carretera per tallar
+Cut the road	Talla la carretera
+Cut in two: each piece can now be changed on its own	Tallada en dos: ara cada tram es pot canviar per separat
+Join the pieces	Uneix els trams
+Joined into one piece	Units en un sol tram
+Parallel copy	Còpia paral·lela
+Overhead wire	Cable aeri
+Back into the map	De tornada al mapa
+Hang an object	Penja un objecte
+Link to an object	Enllaça amb un objecte
+Unlink	Desenllaça
+That object already takes its state from this one	Aquell objecte ja pren l'estat d'aquest
+Linked	Enllaçat
+Signal head's light	Llum del cap del semàfor
+Path rules	Regles de camins
+Replace objects	Substitueix objectes
+Edit road	Edita la carretera
+Roads that could not follow the junction (too sharp a bend):	Carreteres que no han pogut seguir el creuament (corba massa tancada):
+Edit junction	Edita el creuament
+Make the junction again	Refés el creuament
+Make the junctions again	Refés els creuaments
+Pick an object in the Objects tool's catalogue first	Primer tria un objecte al catàleg de l'eina Objectes
+The road is too short for that	La carretera és massa curta per a això
+Objects along the road	Objectes al llarg de la carretera
+Rows of objects added:	Fileres d'objectes afegides:
+Edit row of objects	Edita la filera d'objectes
+Remove row of objects	Elimina la filera d'objectes
+Remove rows of objects	Elimina les fileres d'objectes
+Roundabout built; roads joined to it:	Rotonda construïda; carreteres unides:
+This road type carries traffic both ways: pick a one-way road for a proper roundabout	Aquest tipus de carretera porta trànsit en tots dos sentits: tria una carretera d'un sol sentit per a una rotonda correcta
+Start point: where the bus appears in openOMSI	Punt d'inici: on apareix l'autobús a openOMSI
+Bus stop: name it in the panel on the right	Parada: posa-li nom al tauler de la dreta
+openOMSI stopped with an error	openOMSI s'ha aturat amb un error
+Check in openOMSI	Comprovació a openOMSI
+The saved map run by the game itself, unseen, with its own checks; the picture is the game's, from your view	El mapa desat executat pel joc mateix, sense veure's, amb les seves comprovacions; la imatge és del joc, des de la teva vista
+Every tile (slower on a big map)	Totes les tessel·les (més lent en un mapa gran)
+Run again	Executa de nou
+openOMSI is loading the map…	openOMSI carrega el mapa…
+Nothing wrong found	No s'ha trobat cap problema
+Problems found:	Problemes trobats:
+Go there	Ves-hi
+of the places named lie at the map's edge or a road's dead end (greyed): the game measures a lane's last point on the road's very edge, and a bus at the end stands over it; nothing to mend	dels llocs esmentats són a la vora del mapa o en un carrer sense sortida (en gris): el joc mesura l'últim punt d'un carril a la mateixa vora de la carretera, i un autobús a l'extrem hi queda a sobre; no cal arreglar res
+The game said nothing about the map	El joc no ha dit res sobre el mapa
+The game's whole output	Tota la sortida del joc
+no key entered	no s'ha introduït cap clau
+the server refused the key	el servidor ha rebutjat la clau
+too many requests, try again later	massa sol·licituds, torna-ho a provar més tard
+No connection to the server: are you online?	Sense connexió amb el servidor: tens internet?
+Enter your Google key first	Primer introdueix la teva clau de Google
+OpenStreetMap's servers are busy: try again in a minute	Els servidors d'OpenStreetMap estan ocupats: torna-ho a provar d'aquí a un minut
+The area is too large for this zoom	L'àrea és massa gran per a aquest zoom
+Cancelled	Cancel·lat
+Stopped by an internal error (see the log)	Aturat per un error intern (consulta el registre)
+No source has imagery here	Cap font té imatges aquí
+drawn from OpenStreetMap data: sharp, with names	dibuixat amb dades d'OpenStreetMap: nítid, amb noms
+terrain heights, no key needed	altures del terreny, no cal clau
+needs your own free key	cal la teva pròpia clau gratuïta
+no key needed	no cal clau
+the picture is too small	la imatge és massa petita
+Import height map	Importa un mapa d'altures
+Height map	Mapa d'altures
+The ground as a grey picture, to shape in another program and bring back	El terreny com a imatge grisa, per modelar-lo en un altre programa i tornar-lo
+Export…	Exporta…
+Import…	Importa…
+over	sobre
+a pixel	per píxel
+Black adds	El negre afegeix
+Black is	El negre és
+White adds	El blanc afegeix
+White is	El blanc és
+Smoothing	Suavitzat
+Replace the ground	Substitueix el terreny
+Add to it	Afegeix-hi
+Roads and objects keep their heights: best done before building	Carreteres i objectes mantenen les seves altures: millor fer-ho abans de construir
+An 8-bit picture has only 256 steps of height: smoothing hides them	Una imatge de 8 bits només té 256 graons d'altura: el suavitzat els amaga
+Lay it on the map	Posa-ho al mapa
+Cancel	Cancel|la
+Height map laid over	Mapa d'altures posat sobre
+Export the height map	Exporta el mapa d'altures
+Height map written	Mapa d'altures escrit
+The height map could not be written	No s'ha pogut escriure el mapa d'altures
+A height map for the whole map	Un mapa d'altures per a tot el mapa
+The picture could not be read	No s'ha pogut llegir la imatge
+IBIS and roller blind	IBIS i rètol enrotllable
+Front sign, line 1	Rètol frontal, línia 1
+Front sign, line 2	Rètol frontal, línia 2
+Side sign	Rètol lateral
+Roller blind texture	Textura del rètol enrotllable
+IBIS 2 (20 letters)	IBIS 2 (20 lletres)
+Extra sign	Rètol addicional
+Krüger picture	Imatge Krüger
+Text	Text
+IBIS (16 letters)	IBIS (16 lletres)
+Display, line 1	Pantalla, línia 1
+Display, line 2	Pantalla, línia 2
+Full name (20 letters)	Nom complet (20 lletres)
+Service trip	Servei a cotxera
+Special trip	Servei especial
+Blank	Buit
+openMapper cannot import this kind of file (use a folder, .zip, .obj, .gltf, .glb, .fbx, .x, .o3d or a picture)	openMapper no pot importar aquest tipus de fitxer (usa una carpeta, .zip, .obj, .gltf, .glb, .fbx, .x, .o3d o una imatge)
+Mod installed, files:	Mod instal·lat, fitxers:
+Objects added to	Objectes afegits a
+Road types added to	Tipus de carretera afegits a
+Models imported:	Models importats:
+Nothing to import was found in this folder	No s'ha trobat res per importar en aquesta carpeta
+The model has no triangles	El model no té triangles
+Model imported:	Model importat:
+The .obj file has no faces	El fitxer .obj no té cares
+no base colour picture among them	cap és una imatge de color base
+The picture cannot be read	No es pot llegir la imatge
+Picture made into a standee:	Imatge convertida en silueta:
+Picture made into a sign:	Imatge convertida en rètol:
+Trees	Arbres
+Stops and start points	Parades i punts d'inici
+Junctions	Creuaments
+Tracks	Vies
+Footpaths	Voreres
+Fences, walls, kerbs	Tanques, murs, vorades
+Technical (AI, helpers)	Tècnic (IA, ajudes)
+This map lies on the world's grid ([worldcoordinates]): its tiles cannot be taken yet	Aquest mapa és a la quadrícula del món ([worldcoordinates]): encara no se'n poden agafar les tessel·les
+This map lies on the world's grid ([worldcoordinates]): tiles cannot be added from another yet	Aquest mapa és a la quadrícula del món ([worldcoordinates]): encara no s'hi poden afegir tessel·les d'un altre
+Tiles from another map	Tessel·les d'un altre mapa
+Union	Unió
+Difference (cut out)	Diferència (retalla)
+Intersection	Intersecció
+Slice (keep both pieces)	Divideix (conserva les dues parts)
+One object of all the selected, their insides gone	Un sol objecte de tots els seleccionats, sense l'interior
+The other selected objects cut out of the one shown in the properties	Els altres objectes seleccionats es retallen de l'objecte mostrat a les propietats
+Only what all the selected share	Només el que comparteixen tots els seleccionats
+The first object cut by the others into what is outside them and what is inside	El primer objecte tallat pels altres en el que és fora i el que és dins
+select an object first	primer selecciona un objecte
+Make editable	Fes-ho editable
+Make single	Fes-ho únic
+the object has only one part	l'objecte només té una part
+Separate parts	Separa les parts
+select two or more objects to join	selecciona dos o més objectes per unir
+Join objects	Uneix objectes
+select two or more objects: the one shown in the properties and what acts on it	selecciona dos o més objectes: el que es mostra a les propietats i els que hi actuen
+nothing is left: the objects do not overlap that way	no queda res: els objectes no se superposen així
+The file has no scene	El fitxer no té cap escena
+The FBX file has no meshes	El fitxer FBX no té malles
+Main roads	Carreteres principals
+Streets	Carrers
+Service roads	Vies de servei
+Tram tracks	Vies de tramvia
+Railway tracks	Vies de ferrocarril
+motorway, trunk, primary, secondary	autopista, via ràpida, primària, secundària
+tertiary, residential, unclassified	terciària, residencial, sense classificar
+yards, car parks, depots	patis, aparcaments, cotxeres
+each track on its own; branches are joined with switches by hand	cada via per separat; les bifurcacions s'uneixen amb agulles a mà
+main lines without sidings; branches are joined with switches by hand	línies principals sense vies mortes; les bifurcacions s'uneixen amb agulles a mà
+Water from OpenStreetMap	Aigua d'OpenStreetMap
+Give a distance	Indica una distància
+The bend is too tight for that distance on its inner side	La corba és massa tancada per a aquesta distància pel costat interior
+The copy leaves the map: add tiles there first	La còpia surt del mapa: afegeix-hi primer tessel·les
+Made with openMapper	Fet amb openMapper
+Low (no shadows, rough edges, 3 km view)	Baixa (sense ombres, vores aspres, vista de 3 km)
+Medium (softer shadows, 8 km view)	Mitjana (ombres més suaus, vista de 8 km)
+High	Alt
+This end belongs to a junction: select the junction and move it, the road follows	Aquest extrem pertany a un creuament: selecciona el creuament i mou-lo, la carretera el segueix
+Paint along the roads	Pinta al llarg de les carreteres
+Market	Mercat
+Station	Estació
+Depot	Cotxeres
+this object takes its model from a model file: it cannot be scaled	aquest objecte pren el model d'un fitxer de model: no es pot escalar
+Not a GPX, KML or GeoJSON file	No és un fitxer GPX, KML ni GeoJSON
+No lines in the file	No hi ha cap línia al fitxer
+Language	Idioma
+Interface size	Mida de la interfície
+File	Fitxer
+New map…	Mapa nou…
+Open map…	Obre un mapa…
+Controls…	Controls…
+Import assets…	Importa recursos…
+Multiplayer…	Multijugador…
+OMSI 2 folder…	Carpeta d'OMSI 2…
+Quit	Surt
+View	Visualitza
+Help	Ajuda
+Updates…	Actualitzacions…
+About openMapper	Quant a openMapper
+OMSI 2 not found	No s'ha trobat OMSI 2
+Map editor for openOMSI	Editor de mapes per a openOMSI
+openMapper builds maps from the content of an installed OMSI 2. Choose its folder (the one with Omsi.exe, maps and Vehicles).	openMapper construeix mapes amb el contingut d'un OMSI 2 instal·lat. Tria'n la carpeta (la que té Omsi.exe, maps i Vehicles).
+Choose OMSI 2 folder…	Tria la carpeta d'OMSI 2…
+Maps	Mapes
+recent · OMSI 2	recent · OMSI 2
+recent	recent
+content folder	carpeta de contingut
+OMSI 2 (saved as copy)	OMSI 2 (desat com a còpia)
+Open	Obre
+Make a copy	Fes una còpia
+A copy of the map in the content folder under a new name, to try something out	Una còpia del mapa a la carpeta de contingut amb un altre nom, per provar coses
+Show in the file manager	Mostra al gestor de fitxers
+Move to openMapper's bin	Mou a la paperera d'openMapper
+Its folder goes into openMapper\\bin in the content folder, from where it can be put back by hand	La seva carpeta va a openMapper\\bin dins la carpeta de contingut, d'on es pot recuperar a mà
+Browse…	Explora…
+Double-click a map to open it. Maps of OMSI 2 are saved as a copy into openOMSI's content folder; the original stays untouched.	Doble clic en un mapa per obrir-lo. Els mapes d'OMSI 2 es desen com a còpia a la carpeta de contingut d'openOMSI; l'original no es toca.
+A simple map editor for openOMSI.	Un editor de mapes senzill per a openOMSI.
+Back to the 3D view (0)	Torna a la vista 3D (0)
+The plan view from above, north up (0)	Vista en planta des de dalt, nord amunt (0)
+Recent maps	Mapes recents
+(none)	(cap)
+Export map for sharing…	Exporta el mapa per compartir-lo…
+Export a plan of the map…	Exporta un pla del mapa…
+Earlier versions…	Versions anteriors…
+Close map	Tanca el mapa
+Edit	Edita
+Edit history…	Historial d'edicions…
+Groups for other maps…	Grups per a altres mapes…
+Find in map…	Cerca al mapa…
+Search for a command…	Cerca una ordre…
+Delete	Suprimeix
+Deselect	Desselecciona
+Tile grid	Quadrícula de tessel·les
+What the game does not show	El que el joc no mostra
+AI lanes	Carrils d'IA
+Names of stops and start points	Noms de parades i punts d'inici
+Show	Mostra
+Roads and splines	Carreteres i splines
+Overview map (M)	Mapa general (M)
+Assets (B)	Recursos (B)
+Flatten the terrain (roads follow)	Aplana el terreny (les carreteres el segueixen)
+Saved views…	Vistes desades…
+Go to selection	Ves a la selecció
+Camera	Càmera
+Unity: right button looks round and W A S D fly, middle pans, Alt orbits	Unity: el botó dret mira al voltant i W A S D volen, el del mig desplaça, Alt orbita
+Map editor: right button looks round and W A S D fly (Q down, E up), middle pans, the wheel zooms to the cursor, drag moves the map	Editor de mapes: el botó dret mira al voltant i W A S D volen (Q avall, E amunt), el del mig desplaça, la roda fa zoom al cursor, arrossegar mou el mapa
+Load 100 tiles at a time (like OMSI 2's editor)	Carrega 100 tessel·les alhora (com l'editor d'OMSI 2)
+Time of day	Hora del dia
+Plain day (as the game by day)	Dia normal (com el joc de dia)
+At an hour	A una hora
+Where the sun stands then, today, at the map's place (Map > Calendar and place); by night the moon	On és el sol aleshores, avui, al lloc del mapa (Mapa > Calendari i lloc); de nit, la lluna
+Season	Estació de l'any
+Summer	Estiu
+Dry summer	Estiu sec
+Spring	Primavera
+Autumn	Tardor
+Winter	Hivern
+Snow	Neu
+Graphics quality	Qualitat gràfica
+Tools	Eines
+Road types and junctions…	Tipus de carretera i creuaments…
+PBR maps for a picture…	Mapes PBR per a una imatge…
+Map	Mapa
+Map settings…	Configuració del mapa…
+Calendar and place…	Calendari i lloc…
+Signal routes…	Rutes de senyals…
+Chrono scenarios…	Escenaris cronològics…
+Ground textures…	Textures de terra…
+Check map…	Revisa el mapa…
+Junctions made again:	Creuaments refets:
+Lines and timetable…	Línies i horari…
+Traffic and AI…	Trànsit i IA…
+Depot files (destinations)…	Fitxers de cotxera (destinacions)…
+Satellite and terrain…	Satèl·lit i terreny…
+From OpenStreetMap…	D'OpenStreetMap…
+GPS tracks to trace…	Traçats GPS per seguir…
+Tiles from another map…	Tessel·les d'un altre mapa…
+Test drive in openOMSI	Prova de conducció a openOMSI
+Test drive in OMSI 2 (the original)…	Prova de conducció a OMSI 2 (l'original)…
+Check in openOMSI…	Comprova a openOMSI…
+Getting started	Per començar
+New map	Mapa nou
+Open a map	Obre un mapa
+Save (Ctrl+S): there are unsaved changes	Desa (Ctrl+S): hi ha canvis sense desar
+Save (Ctrl+S)	Desa (Ctrl+S)
+Import assets: a mod folder or .zip, a .obj / .x / .o3d model (or drop files on the window)	Importa recursos: una carpeta de mod o .zip, un model .obj / .x / .o3d (o deixa anar fitxers a la finestra)
+Redo (Ctrl+Shift+Z)	Refés (Ctrl+Maj+Z)
+Tile grid (G)	Quadrícula de tessel·les (G)
+Assets: every object and road type, with pictures (B)	Recursos: tots els objectes i tipus de carretera, amb imatges (B)
+Test drive	Prova de conducció
+Save the map and drive it in openOMSI (F5)	Desa el mapa i condueix-lo a openOMSI (F5)
+openOMSI was not found: install it to test maps	No s'ha trobat openOMSI: instal·la'l per provar mapes
+Test drive from the start point nearest the view	Prova de conducció des del punt d'inici més proper a la vista
+See this view in openOMSI	Mira aquesta vista a openOMSI
+loading	carregant
+Edit mesh	Edita la malla
+Shapes and lamps	Formes i llums
+Click beside the map to add a 300 × 300 m tile. Right-click a tile to remove it.	Fes clic al costat del mapa per afegir una tessel·la de 300 × 300 m. Clic dret en una tessel·la per eliminar-la.
+Area	Àrea
+A ring of tiles round the map	Un anell de tessel·les al voltant del mapa
+Every free place beside the map, corners too, gets a tile at the height of its neighbours	Cada lloc lliure al costat del mapa, també les cantonades, rep una tessel·la a l'altura dels veïns
+Tiles added:	Tessel·les afegides:
+Everything on the map, grouped by the folders its files lie in	Tot el del mapa, agrupat per les carpetes on són els fitxers
+Click an object or a road in the view to see and change it on the right.	Fes clic en un objecte o carretera a la vista per veure'l i canviar-lo a la dreta.
+Line up with the nearest road (Shift: put it freely)	Alinea amb la carretera més propera (Maj: posa-ho lliurement)
+On both sides of the road	A tots dos costats de la carretera
+A stop of the same name also goes at the kerb across the road, facing the other way	Una parada amb el mateix nom també es posa a la vorera de davant, mirant a l'altre costat
+In a row along a line	En fila al llarg d'una línia
+Every	Cada
+Draw new	Dibuixa de nous
+Edit existing	Edita els existents
+Click a path to pick it: every point is a dot to drag (the small ones in the middle of a piece bend it). Double-click the path to put a point in. Click a dot, then Del, to take that point out; Del with no dot picked deletes the whole path (Ctrl+Z brings it back). Lanes of roads and junctions belong to their road type: use Edit its AI lanes on the road.	Fes clic en un camí per triar-lo: cada punt és un cercle que es pot arrossegar (els petits al mig d'un tram el doblegen). Doble clic al camí per posar-hi un punt. Clic en un punt i Del per treure'l; Del sense cap punt triat elimina tot el camí (Ctrl+Z el recupera). Els carrils de carreteres i creuaments pertanyen al seu tipus de carretera: usa Edita els carrils d'IA a la carretera.
+Cars	Cotxes
+People	Persones
+Show these in the other tools too	Mostra-ho també a les altres eines
+Show the AI's lanes in the other tools too	Mostra els carrils d'IA també a les altres eines
+Everything	Tot
+Search	Cerca
+Shape the ground under the road	Modela el terra sota la carretera
+Go on drawing from the end of the road just built	Continua dibuixant des de l'extrem de la carretera que acabes de fer
+Join road ends, roads and junction pieces near the cursor	Uneix a extrems de carretera, carreteres i peces de creuament a prop del cursor
+Make junctions where roads meet	Fes creuaments on es troben les carreteres
+Go on with the type of the road I start from	Continua amb el tipus de la carretera des d'on començo
+Building with:	Es construeix amb:
+nothing chosen	res triat
+Front at the roadside, back	Façana a la vora de la carretera, enrere
+Plant brush: sow trees by painting	Pinzell de plantes: sembra arbres pintant
+Sow	Sembra
+Clear	Esborra
+With the brush	Amb el pinzell
+In an outline	En un contorn
+Click round an area (a wood, a park, a garden) and it is filled at once, or cleared	Fes clic al voltant d'una àrea (un bosc, un parc, un jardí) i s'omple de seguida, o s'esborra
+About	Uns
+plants (Enter: plant)	plantes (Retorn: planta)
+Size	Mida
+Apart	Separació
+Sows the object chosen below. Right-click entries: "Add to the plant mix" to sow several at random. Clearing takes trees and the mix's objects.	Sembra l'objecte triat a sota. Clic dret en les entrades: «Afegeix a la barreja de plantes» per sembrar-ne diversos a l'atzar. Esborrar treu arbres i els objectes de la barreja.
+Mix (picked at random):	Barreja (triada a l'atzar):
+reading OMSI 2…	llegint OMSI 2…
+items	elements
+Nothing found	No s'ha trobat res
+mod	mod
+right-click: star it	clic dret: marca-ho
+Take out of the plant mix	Treu de la barreja de plantes
+Add to the plant mix	Afegeix a la barreja de plantes
+Remove from favourites	Treu dels preferits
+Add to favourites	Afegeix als preferits
+Favourites	Preferits
+Recently used	Usats recentment
+(not in a folder)	(sense carpeta)
+Strength	Força
+Mode	Mode
+Levels the ground to the height where you start dragging	Anivella el terra a l'altura d'on comences a arrossegar
+Softens bumps and edges	Suavitza protuberàncies i vores
+Raises the ground under the brush	Eleva el terra sota el pinzell
+Lowers the ground under the brush	Baixa el terra sota el pinzell
+Gives flat ground the rolls and dips of a natural field; hold longer for more	Dona al terra pla els ondulats i enfonsaments d'un camp natural; mantén més temps per a més efecte
+Paint a lake or a river: the ground is dug to a bed under the water's level (where you start the stroke, or the tile's water) and the tile gets water at that level. Water in OMSI is one level for a whole tile: another low place on the same tile shows it too	Pinta un llac o un riu: el terra s'excava fins a un llit sota el nivell de l'aigua (on comences el traç, o l'aigua de la tessel·la) i la tessel·la rep aigua a aquest nivell. L'aigua a OMSI és d'un sol nivell per tessel·la: un altre lloc baix de la mateixa tessel·la també la mostra
+Click where it starts, then where it ends: the ground between becomes one even slope as wide as the brush (an embankment, a ramp, a level bed)	Fes clic on comença i després on acaba: el terra entremig esdevé un pendent uniforme tan ample com el pinzell (un terraplè, una rampa, una plataforma plana)
+To a height	A una altura
+Flatten to the height typed instead of the one where the drag starts (a level square, a platform)	Aplana a l'altura escrita en lloc de la d'on comença l'arrossegament (una plaça plana, una plataforma)
+Depth	Profunditat
+The water's level is set where a stroke starts: start at the bank.	El nivell de l'aigua es fixa on comença un traç: comença a la riba.
+Brush	Pinzell
+Flatten the whole terrain	Aplana tot el terreny
+Every tile's ground levelled to the map's mean height; the roads, the AI paths and the junctions follow it. One undo step brings the relief back. (The satellite picture: View > Satellite overlay.)	El terra de totes les tessel·les s'anivella a l'altura mitjana del mapa; carreteres, camins d'IA i creuaments el segueixen. Un pas de desfer recupera el relleu. (La imatge de satèl·lit: Vista > Capa de satèl·lit.)
+Ground layers	Capes de terra
+base ground	terra base
+layer	capa
+Add…	Afegeix…
+Remove	Elimina
+Up the list: drawn under the layers after it	Amunt a la llista: es dibuixa sota les capes següents
+Down the list: drawn over the layers before it	Avall a la llista: es dibuixa sobre les capes anteriors
+Texture	Textura
+The layer's picture; its painting stays	La imatge de la capa; la seva pintura es manté
+A fine grain laid over the texture, seen close up (OMSI's detail texture)	Un gra fi sobre la textura, visible de prop (la textura de detall d'OMSI)
+Click to choose another	Fes clic per triar-ne una altra
+Repeats per tile	Repeticions per tessel·la
+Detail repeats	Repeticions de detall
+How finely this layer can be painted: texels across a tile (its masks are made again at the new size)	Com de fi es pot pintar aquesta capa: texels a través d'una tessel·la (les màscares es refan a la mida nova)
+Edit ground texture	Edita la textura de terra
+Erase	Esborra
+Remove ground texture	Elimina la textura de terra
+Tile	Tessel·la
+A water surface over the whole tile: it shows where the ground lies below it (lower the ground with the Terrain tool for a lake or a river)	Una superfície d'aigua sobre tota la tessel·la: es veu on el terra és més avall (baixa el terra amb l'eina Terreny per fer un llac o un riu)
+at 	a
+Lamps light the ground at night	Els fanals il·luminen el terra de nit
+The game works out the light pools of the street lamps on and round this tile when it loads it ([variable_terrainlightmap]); off, it shows the tile's light map file as it is	El joc calcula les taques de llum dels fanals en aquesta tessel·la i al voltant en carregar-la ([variable_terrainlightmap]); desactivat, mostra el fitxer de mapa de llum de la tessel·la tal com és
+Edit history	Historial d'edicions
+Click a step to go back to just after it	Fes clic en un pas per tornar just després d'ell
+Opened	Obert
+Properties	Propietats
+Configure PBR	Configura PBR
+Create PBR	Crea PBR
+Normal, roughness, metal and shadow maps made from the object's textures, tuned and written as openOMSI reads them	Mapes de normals, rugositat, metall i ombra fets a partir de les textures de l'objecte, ajustats i escrits tal com els llegeix openOMSI
+Type	Tipus
+Hangs on	Penja de
+point	punt
+Location	Posició
+East	Est
+North	Nord
+Height above sea level	Altura sobre el nivell del mar
+above the ground:	sobre el terra:
+OMSI keeps this object's height above the ground under it: moved elsewhere it stays as high above the ground there	OMSI conserva l'altura d'aquest objecte sobre el terra de sota: si es mou a un altre lloc, hi queda a la mateixa altura sobre el terra
+Rotation	Rotació
+Tilt forward (pitch)	Inclinació cap endavant (capcineig)
+Bank to the side (roll)	Inclinació lateral (balanceig)
+Heading	Direcció (rumb)
+Turn it the way the nearest road runs beside it	Gira'l segons com va la carretera més propera
+Stand it upright again	Posa'l dret de nou
+Picture	Imatge
+Ratio	Proporció
+Stop name	Nom de la parada
+This tree	Aquest arbre
+Texts	Textos
+Shown on the object (@ starts a new line)	Es mostren a l'objecte (@ inicia una línia nova)
+Model	Model
+Triangles	Triangles
+Parts	Parts
+Part	Part
+triangles	triangles
+colour only	només color
+opaque	opac
+cut out	retallat
+blended	barrejat
+How the texture's transparency is used: cut out for leaves and fences, blended for glass	Com s'usa la transparència de la textura: retallat per a fulles i tanques, barrejat per al vidre
+Textures	Textures
+Normal, roughness, metal and shadow maps made from the road type's textures	Mapes de normals, rugositat, metall i ombra fets a partir de les textures del tipus de carretera
+Length	Longitud
+Radius	Radi
+right	dreta
+left	esquerra
+straight	recta
+start	inici
+end	final
+Mirrored	Emmirallat
+Skew	Biaix
+The start cut on a slant: 1 is 45° (two fences meeting at a corner: 1 and -1)	El tall inicial en biaix: 1 és 45° (dues tanques que es troben en un racó: 1 i -1)
+The end cut on a slant	El tall final en biaix
+Ground	Terra
+as it is	tal com és
+cut away under it	retalla a sota
+cut, held at the end	retalla, fix al final
+cut, held at the start	retalla, fix a l'inici
+cut, held at both ends	retalla, fix als dos extrems
+A hole in the ground under it, as for a tunnel, an underpass or a pit (OMSI's terrain align)	Un forat al terra a sota, com per a un túnel, un pas inferior o un clot (l'alineació de terreny d'OMSI)
+Select the whole road	Selecciona tota la carretera
+Every piece linked on from this one (or double-click the road)	Tots els trams enllaçats a aquest (o doble clic a la carretera)
+Join with the next piece	Uneix amb el tram següent
+One piece again with the one after it, where the two make one curve	De nou un sol tram amb el següent, quan tots dos formen una sola corba
+Replace with	Substitueix per
+The object chosen in the Objects tool's catalogue takes this one's place	L'objecte triat al catàleg de l'eina Objectes pren el lloc d'aquest
+Go to	Ves-hi
+Level ground	Aplana el terra
+The ground under it made level with its foot, blending in 3 m round it (a house on a slope)	El terra de sota queda pla amb la seva base, amb una transició de 3 m al voltant (una casa en un pendent)
+All like it	Tots els iguals
+Select every one of this type on the map	Selecciona tots els d'aquest tipus del mapa
+No road within 60 m	Cap carretera en 60 m
+Name	Nom
+Folder	Carpeta
+Traffic	Trànsit
+left-hand	de conducció per l'esquerra
+No start point yet: place one (Game logic > Start points) so the bus has somewhere to appear in openOMSI.	Encara no hi ha punt d'inici: posa'n un (Lògica de joc > Punts d'inici) perquè l'autobús tingui on aparèixer a openOMSI.
+None yet: openOMSI shows it where maps are chosen.	Encara no: openOMSI la mostra on es trien els mapes.
+Import your thumbnail	Importa la teva miniatura
+Choose a picture: it is cut to 370 × 280 and becomes the map's picture (picture.jpg).	Tria una imatge: es retalla a 370 × 280 i passa a ser la imatge del mapa (picture.jpg).
+Open the map with this view	Obre el mapa amb aquesta vista
+The camera as it is now is where the map opens (here and in OMSI 2's editor).	La càmera tal com és ara és on s'obre el mapa (aquí i a l'editor d'OMSI 2).
+Saved to	Es desa a
+Edit map	Edita el mapa
+Change the layer's texture	Canvia la textura de la capa
+Change the layer's detail texture	Canvia la textura de detall de la capa
+Controls	Controls
+Keyboard	Teclat
+Click a key, then press the new one (Esc: leave it). A key already in use is taken from its command.	Fes clic en una tecla i prem la nova (Esc: deixa-la). Una tecla ja en ús es treu a la seva ordre.
+press a key…	prem una tecla…
+Also:	També:
+Back to the default key	Torna a la tecla per defecte
+Reset all keys	Restableix totes les tecles
+Mouse	Ratolí
+Right button held	Botó dret premut
+look round; W A S D fly, Q / E down / up, Shift faster, wheel: speed	mira al voltant; W A S D volen, Q / E avall / amunt, Maj: més ràpid, roda: velocitat
+Middle drag	Arrossegar amb el del mig
+pan	desplaça
+Alt + left / right / middle drag	Alt + arrossegar esquerre / dret / mig
+orbit / zoom / pan (as in Unity)	òrbita / zoom / desplaçament (com a Unity)
+Left drag on nothing	Arrossegar esquerre en buit
+select with a box	selecciona amb un requadre
+Alt + left drag	Alt + arrossegar esquerre
+orbit round the point under the cursor	òrbita al voltant del punt sota el cursor
+Wheel	Roda
+move towards the cursor	mou cap al cursor
+Trackpad	Trackpad
+Two fingers	Dos dits
+Pinch / twist	Pessic / gir
+zoom / turn	zoom / gir
+Option + two fingers or drag	Option + dos dits o arrossegar
+Fixed keys	Tecles fixes
+Arrow keys	Tecles de fletxa
+move over the map (Shift: faster)	mou-te pel mapa (Maj: més ràpid)
+go to a saved view (Shift: keep the view there)	ves a una vista desada (Maj: desa-hi la vista)
+Alt + arrows	Alt + fletxes
+move the selection a grid step (Shift: 10 cm)	mou la selecció un pas de quadrícula (Maj: 10 cm)
+Alt + Page Up / Down	Alt + Re Pàg / Av Pàg
+selection up / down 10 cm (Shift: 1 m)	selecció amunt / avall 10 cm (Maj: 1 m)
+add to / take from the selection	afegeix a la selecció / treu-ne
+Shift / Ctrl + drag on empty ground	Maj / Ctrl + arrossegar en terra buit
+select with a box (Shift adds)	selecciona amb un requadre (Maj afegeix)
+Double-click a road	Doble clic en una carretera
+select all of it	selecciona-la sencera
+turn the object	gira l'objecte
+brush size	mida del pinzell
+stop / deselect	atura / desselecciona
+Unsaved changes	Canvis sense desar
+The map has changes that are not saved. Save them first?	El mapa té canvis sense desar. Els vols desar primer?
+Don't save	No desis
+Assets	Recursos
+All	Tots
+Picture size	Mida de les imatges
+Shapes…	Formes…
+Close (B)	Tanca (B)
+Scenery objects	Objectes de l'escenari
+Splines (roads, tracks…)	Splines (carreteres, vies…)
+Favourite on / off	Preferit sí / no
+content folder (mod, import, own)	carpeta de contingut (mod, importat, propi)
+OMSI 2	OMSI 2
+width	amplada
+Build with it	Construeix-hi
+Place it	Col·loca'l
+PBR material…	Material PBR…
+Delete…	Elimina…
+Not seen in the game (a helper).	No es veu al joc (una ajuda).
+Delete the asset?	Vols eliminar el recurs?
+Its folder goes into openMapper's bin in the content folder (openMapper\\bin), from where it can be put back by hand. Maps that use it show it missing.	La seva carpeta va a la paperera d'openMapper a la carpeta de contingut (openMapper\\bin), d'on es pot recuperar a mà. Els mapes que l'usen el mostraran com a absent.
+Calendar and place	Calendari i lloc
+Place and time	Lloc i hora
+Holidays	Festius
+Number plates	Matrícules
+Latitude	Latitud
+Longitude	Longitud
+Time zone	Fus horari
+Where the sun stands and when it rises and sets come from here.	D'aquí surten la posició del sol i les hores de sortida i posta.
+Summer time	Hora d'estiu
+years	anys
+none: the clocks are never put forward	cap: el rellotge no s'avança mai
+EU rules for these years	Regles de la UE per a aquests anys
+Last Sunday of March to last Sunday of October, replacing what is set for these years	De l'últim diumenge de març a l'últim diumenge d'octubre, substituint el que hi ha per a aquests anys
+None	Cap
+Year	Any
+entries	entrades
+Public holidays run Sunday's timetable; school holidays the holiday one.	Els festius fan l'horari de diumenge; les vacances escolars, el de vacances.
+Public holidays	Festius
+Add a holiday	Afegeix un festiu
+Holiday	Festiu
+School holidays	Vacances escolars
+Ends before it starts	Acaba abans de començar
+Add school holidays	Afegeix vacances escolars
+The AI's cars carry these, one a line.	Els cotxes d'IA en porten, una per línia.
+X: a letter, 9: a digit	X: una lletra, 9: un dígit
+Make	Crea
+Replaces the list with plates of the pattern	Substitueix la llista per matrícules del patró
+plates	matrícules
+The scenario's AI lists are written, groups changed:	Les llistes d'IA de l'escenari s'han escrit, grups canviats:
+Could not write the scenario	No s'ha pogut escriure l'escenari
+The scenario's timetable is written, files:	L'horari de l'escenari s'ha escrit, fitxers:
+Back in the scenario:	De nou a l'escenari:
+The scenario's things are on the map:	Les coses de l'escenari són al mapa:
+what you place now is the scenario's too	el que col·loquis ara també és de l'escenari
+Editing the scenario	Edició de l'escenari
+Done	Fet
+Chrono scenarios	Escenaris cronològics
+How the map changes over the years: each scenario from its first day lays its own tiles, lines and tickets over the map. The view shows the map as on the day chosen here; what you edit is always the map itself.	Com canvia el mapa amb els anys: cada escenari, des del primer dia, posa damunt del mapa les seves tessel·les, línies i bitllets. La vista mostra el mapa tal com és el dia triat aquí; el que edites és sempre el mapa mateix.
+Show the map as on	Mostra el mapa com a
+Today	Avui
+Active on that day:	Actius aquell dia:
+New scenario's name	Nom de l'escenari nou
+New scenario	Escenari nou
+A scenario starting on the day shown, after the others	Un escenari que comença el dia mostrat, després dels altres
+From	Des de
+To	A
+for good	per sempre
+Own tickets	Bitllets propis
+Own money	Moneda pròpia
+the map's	el del mapa
+Takes off	Lleva línies
+What changes (shown where the date is chosen)	Què canvia (es mostra on es tria la data)
+From its first day, the selection in the view:	Des del primer dia, la selecció a la vista:
+appears	apareix
+Taken out of the map into the scenario: it is there from the scenario's first day on (place it first, then press this)	Es treu del mapa a l'escenari: hi és des del primer dia de l'escenari (col·loca-ho primer i després prem això)
+is gone	desapareix
+Stays in the map, gone from the scenario's first day on	Es queda al mapa, desapareix des del primer dia de l'escenari
+becomes	esdevé
+its texts become	els seus textos esdevenen
+Write	Escriu
+Its path rules from that day	Les seves regles de camins des d'aquell dia
+Add a rule	Afegeix una regla
+Written into the scenario at once (undo does not take it out of the scenario).	S'escriu a l'escenari de seguida (desfer no ho treu de l'escenari).
+What it changes	Què canvia
+into the map	al mapa
+Out of the scenario into the map itself: there on every day	De l'escenari al mapa mateix: hi és tots els dies
+Take it out of the scenario	Treu-ho de l'escenari
+new texts	textos nous
+rules	regles
+Nothing yet.	Encara res.
+Its own things are on the map: select, move, change and place as usual. The map's own things stay the map's.	Les seves coses són al mapa: selecciona, mou, canvia i col·loca com sempre. Les coses del mapa continuen sent del mapa.
+Done: back into the scenario	Fet: de nou a l'escenari
+Edit its own things on the map	Edita les seves coses al mapa
+What it brings in is put on the map to work with as with anything else; Done writes it back (undo starts afresh)	El que aporta es posa al mapa per treballar-hi com amb qualsevol altra cosa; Fet ho torna a escriure (desfer comença de nou)
+The Lines window shows its timetable (the map's with its own laid over): lines, trips and tours edited there are the scenario's; a line of the map taken away is taken off from its day.	La finestra de línies mostra el seu horari (el del mapa amb el propi damunt): línies, viatges i torns editats allà són de l'escenari; una línia del mapa que es lleva se lleva des del seu dia.
+Done with its timetable	Fet amb l'horari
+Edit its timetable	Edita el seu horari
+Its own lines, trips and tours in the Lines window; Done writes only what differs from the map's (undo starts afresh)	Les seves línies, viatges i torns a la finestra de línies; Fet només escriu el que difereix del mapa (desfer comença de nou)
+The Traffic window shows its AI lists (the map's with its own added): vehicles and type groups added there, and a depot's own depot file, are the scenario's from its day.	La finestra de trànsit mostra les seves llistes d'IA (les del mapa amb les pròpies afegides): vehicles i grups de tipus afegits allà, i el fitxer de cotxera propi d'una cotxera, són de l'escenari des del seu dia.
+Done with its AI lists	Fet amb les llistes d'IA
+Edit its AI lists	Edita les seves llistes d'IA
+Vehicles it adds to the groups and depots (OMSI's ailists_#upd.cfg); taking one away is the map's own business	Vehicles que afegeix als grups i cotxeres (ailists_#upd.cfg d'OMSI); retirar-ne un és cosa del mapa mateix
+Write the scenario	Escriu l'escenari
+Close	Tanca
+The map has no chrono scenarios.	El mapa no té escenaris cronològics.
+from	des de
+to	fins a
+takes off	lleva
+own tickets	bitllets propis
+Its first day	El primer dia
+Written into the scenario	Escrit a l'escenari
+Written into the scenario:	Escrit a l'escenari:
+Scenario written	Escenari escrit
+The map as on	El mapa com a
+scenarios:	escenaris:
+Multiplayer	Multijugador
+Joining… (a big map takes a while to come)	Connectant… (un mapa gran triga a arribar)
+Recover a conflicting edit…	Recupera una edició en conflicte…
+Recovered your edit; undo is available	S'ha recuperat la teva edició; es pot desfer
+Edit one map together: one of you hosts it, the others join. Roads, objects, ground and paint are shared as they are made; the timetable, the traffic and the descriptions stay the host's, and the host saves the map. Everybody needs the same objects and splines installed.	Edita un mapa en grup: un de vosaltres l'allotja i els altres s'hi uneixen. Carreteres, objectes, terreny i pintura es comparteixen a mesura que es fan; l'horari, el trànsit i les descripcions queden a l'amfitrió, i l'amfitrió desa el mapa. Tothom necessita els mateixos objectes i splines instal·lats.
+Your name	El teu nom
+Password	Contrasenya
+Host this map	Allotja aquest mapa
+Others on this network can join	Altres d'aquesta xarxa s'hi poden unir
+Others anywhere can join (a free Cloudflare tunnel, nothing to set up on the router)	Qualsevol des d'on sigui s'hi pot unir (un túnel gratuït de Cloudflare, sense configurar el router)
+Port	Port
+Over the internet the password must have at least this many letters:	Per internet la contrasenya ha de tenir almenys aquestes lletres:
+No password: anybody who reaches this computer's port can join and change the whole map.	Sense contrasenya: qui arribi al port d'aquest ordinador s'hi pot unir i canviar tot el mapa.
+Ask for a password after all	Demana una contrasenya igualment
+Host without a password? Anybody on this network who finds the port can join and change the whole map.	Allotjar sense contrasenya? Qualsevol d'aquesta xarxa que trobi el port s'hi podrà unir i canviar tot el mapa.
+Yes, without a password	Sí, sense contrasenya
+No	No
+Type a password the others will need.	Escriu una contrasenya que necessitaran els altres.
+Host without a password…	Allotja sense contrasenya…
+Host	Fes d'amfitrió
+Open a map, type a name and a password first	Primer obre un mapa i escriu un nom i una contrasenya
+Join a map	Uneix-te a un mapa
+The map open now has unsaved changes: joining closes it. Save it first.	El mapa obert té canvis sense desar: unir-s'hi el tanca. Desa'l primer.
+You host this map. Give the others one of these:	Allotges aquest mapa. Dona als altres una d'aquestes adreces:
+On this network the connection is not encrypted: somebody listening in can see the map, and from what they catch try passwords on their own computer. Use a long password, or the internet tunnel (encrypted).	En aquesta xarxa la connexió no està xifrada: algú que escolti pot veure el mapa i, amb el que capti, provar contrasenyes al seu ordinador. Usa una contrasenya llarga o el túnel d'internet (xifrat).
+Everybody who joins can change the whole map.	Tothom qui s'hi uneixi pot canviar tot el mapa.
+Opening the Cloudflare tunnel… (fetched the first time)	Obrint el túnel de Cloudflare… (es descarrega la primera vegada)
+internet	internet
+Waiting for Cloudflare's address…	Esperant l'adreça de Cloudflare…
+The Cloudflare tunnel could not be opened (no cloudflared, or no internet). The LAN addresses still work.	No s'ha pogut obrir el túnel de Cloudflare (sense cloudflared o sense internet). Les adreces de la xarxa local continuen funcionant.
+You joined this map. The host saves it.	T'has unit a aquest mapa. L'amfitrió el desa.
+Everything of yours is with the others	Tot el teu és als altres
+Sending your edits…	Enviant les teves edicions…
+In the session	A la sessió
+Say something…	Digues alguna cosa…
+Leave	Surt
+Knife (K): a click on a road cuts it there, as often as you like; the pieces' lengths shown at the cursor, on whole grid steps with grid snapping on · right-click or Esc: off	Ganivet (K): un clic en una carretera la talla allà, tantes vegades com vulguis; les llargades dels trams es mostren al cursor, en passos sencers de quadrícula amb l'ajust activat · clic dret o Esc: desactiva
+The angle step: what snapping comes to and what R turns by	El pas d'angle: a què s'ajusta i quant gira R
+Angle	Angle
+Snap headings to the angle step	Ajusta els rumbs al pas d'angle
+Grid	Quadrícula
+Snap positions to the grid	Ajusta les posicions a la quadrícula
+Click two points to measure the distance and gradient between them (U) · right-click: off	Fes clic en dos punts per mesurar la distància i el pendent entre ells (U) · clic dret: desactiva
+Auto-Terrain	Auto-terreny
+What you build follows the ground: roads, paths and tracks take its height (off: they run level from where they start). Only what is built from now on; nothing already there changes	El que construeixes segueix el terreny: carreteres, camins i vies prenen la seva altura (desactivat: van plans des d'on comencen). Només el que es construeix d'ara endavant; el que ja hi és no canvia
+Auto-Switch	Auto-agulles
+Branching a track off another makes a switch there	Una bifurcació d'una via en crea una agulla
+Auto-Junction	Auto-creuament
+Auto-Align	Auto-alineació
+Line objects up with the nearest road (Shift: put it freely)	Alinea els objectes amb la carretera més propera (Maj: posa'ls lliurement)
+Selection	Selecció
+A click on one of it selects all of it, Ctrl + click one alone	Un clic en un l'agafa tot, Ctrl + clic en un de sol
+Keep these together: a click on one selects all, a drag moves all (Ctrl+G)	Manté-ho junt: un clic en un selecciona tots, arrossegar els mou tots (Ctrl+G)
+Apply	Aplica
+Turn	Gira
+Level the ground under them	Aplana el terra sota ells
+Each one's outline made level with its foot, blending into the ground 3 m round it	El contorn de cadascun queda pla amb la seva base, amb transició al terra a 3 m al voltant
+Make every object	Fes que tots els objectes siguin
+The object chosen in the Objects tool's catalogue	L'objecte triat al catàleg de l'eina Objectes
+Random headings	Rumbs aleatoris
+Every selected object turned its own random way (trees, bushes, rocks)	Cada objecte seleccionat girat a l'atzar (arbres, arbustos, roques)
+Along the road	Al llarg de la carretera
+Each turned the way the nearest road runs beside it	Cadascun girat segons com va la carretera més propera
+Turned:	Girats:
+All like this one	Tots com aquest
+Every selected object takes the heading of the one in the properties	Tots els objectes seleccionats prenen el rumb del de les propietats
+Make every road	Fes que totes les carreteres siguin
+The road type chosen in the Roads tool's catalogue	El tipus de carretera triat al catàleg de l'eina Carreteres
+Lay them on the ground	Posa-les sobre el terra
+Reverse their direction	Inverteix-ne el sentit
+Even slope along them	Pendent uniforme al llarg seu
+One chain of roads: from the height at one end to that at the other, evenly (a bridge, a ramp)	Una cadena de carreteres: de l'altura d'un extrem a la de l'altre, uniformement (un pont, una rampa)
+Edit its AI lanes	Edita els seus carrils d'IA
+Its lanes become AI paths of their own (the same lines, the same way) that the Logic tool's Edit existing bends, moves and deletes. The road keeps its look.	Els seus carrils passen a ser camins d'IA propis (les mateixes línies, el mateix sentit) que Edita els existents de l'eina Lògica corba, mou i elimina. La carretera conserva l'aspecte.
+Ends (joined roads follow)	Extrems (les carreteres unides segueixen)
+height	altura
+gradient	pendent
+cant	peralt
+Banking across the road, %: positive lowers its right side (into a right bend)	Inclinació transversal de la carretera, %: positiu baixa el costat dret (en una corba a la dreta)
+End	Fi
+Even slope end to end	Pendent uniforme d'un extrem a l'altre
+Both gradients to the straight climb between the ends' heights	Els dos pendents a la pujada recta entre les altures dels extrems
+Speed limit, km/h	Límit de velocitat, km/h
+Traffic density ×	Densitat de trànsit ×
+Priority	Prioritat
+Trucks (0: none)	Camions (0: cap)
+No cars	Sense turismes
+Buses only	Només autobusos
+For the AI and the player on one path (lane) of it, counted from 0: the view shows their numbers	Per a la IA i el jugador en un camí (carril) seu, comptant des de 0: la vista en mostra els números
+Path (lane) number	Número de camí (carril)
+Hanging on it	Hi penja
+Points to hang objects on:	Punts on penjar objectes:
+Select it	Selecciona'l
+Hang	Penja
+Choose an object in the Objects catalogue first	Primer tria un objecte al catàleg d'Objectes
+A fence, a row of houses, an avenue: the selection copied again and again, a step on each time	Una tanca, una filera de cases, una avinguda: la selecció copiada una vegada i una altra, un pas més enllà cada cop
+Copies	Còpies
+Step	Pas
+Turn each	Gir de cadascuna
+Rows	Fileres
+More than one: a grid (an orchard, a car park), each row a row step on	Més d'una: una quadrícula (un hort, un aparcament), cada filera un pas de filera més enllà
+Row step	Pas de filera
+Tilted to the ground under it, the way it slopes forward and to the side (a fence, a bench or a shed on a hillside)	Inclinat segons el terra de sota, com s'inclina cap endavant i de costat (una tanca, un banc o un cobert en un vessant)
+Heights along the ground again, smoothed so it climbs a hill rather than every bump (after shaping the ground or laying a height map over it); where a road not selected joins, its height is kept	Altures de nou segons el terra, suavitzades perquè pugi un turó i no cada bony (després de modelar el terra o posar-hi un mapa d'altures); on s'uneix una carretera no seleccionada, se'n manté l'altura
+Each starts where it ended: the traffic on it goes the other way (a one-way street, a track's direction), the road itself stays where it is	Cadascuna comença on acabava: el trànsit hi va en sentit contrari (un carrer d'un sol sentit, el sentit d'una via), la carretera mateixa es queda on és
+A second track or the other carriageway: the selected splines copied alongside, bends kept exact, linked as they are	Una segona via o l'altra calçada: els splines seleccionats es copien al costat, amb les corbes exactes, enllaçats tal com són
+To the left	A l'esquerra
+To the right	A la dreta
+Left and right of the way the road runs (its arrows with AI lanes shown)	Esquerra i dreta del sentit de la carretera (les seves fletxes amb carrils d'IA visibles)
+For trams and electric trains: a wire spline laid on the selected track, piece for piece and linked (its height is the wire spline's own); the masts go in with Objects along the road	Per a tramvies i trens elèctrics: un spline de cable damunt la via seleccionada, tram per tram i enllaçat (la seva altura és la pròpia de l'spline de cable); els pals es posen amb Objectes al llarg de la carretera
+No wire spline installed (one whose name says Fahrdraht, Oberleitung or wire)	Cap spline de cable instal·lat (un amb Fahrdraht, Oberleitung o wire al nom)
+Lay it	Posa'l
+Wire pieces laid:	Trams de cable posats:
+Paint the ground along it	Pinta el terra al llarg seu
+Add a ground texture in the Paint tool first: the base ground is under everything	Primer afegeix una textura de terra a l'eina Pintura: el terra base és sota de tot
+Layer	Capa
+Where	On
+beside it	al costat
+under it too	també a sota
+Out from its edge	Des de la vora
+Soft edge	Vora suau
+A gravel verge, dirt by a track, grass along a path: the brush of the Paint tool touches it up afterwards	Un vorell de grava, terra al costat d'una via, herba vora un camí: el pinzell de l'eina Pintura ho retoca després
+Beside	Al costat
+Lean with the road	Inclina amb la carretera
+Each object leans with the road's gradient and banking (bays and arrows on the road); off, it stands upright	Cada objecte s'inclina amb el pendent i el peralt de la carretera (badies i fletxes a la carretera); desactivat, queda dret
+A text the row's objects show (@ starts a new line)	Un text que mostren els objectes de la filera (@ inicia una línia nova)
+Object:	Objecte:
+Pick an object (a lamp, a tree, a bollard) in the Objects tool's catalogue	Tria un objecte (un fanal, un arbre, un pilona) al catàleg de l'eina Objectes
+Right of the road's direction; negative: left	A la dreta del sentit de la carretera; negatiu: a l'esquerra
+Free at start / end	Lliure a l'inici / final
+Both sides	Als dos costats
+Place along the road	Col·loca al llarg de la carretera
+Remove all rows	Treu totes les fileres
+Roundabout: click the centre, then the ring	Rotonda: fes clic al centre i després a l'anell
+A one-way ring of the chosen road type (pick a one-way road); roads inside are cut back to it and joined with junctions	Un anell d'un sol sentit del tipus de carretera triat (tria una carretera d'un sol sentit); les carreteres de dins es retallen fins a ell i s'uneixen amb creuaments
+Keep the height (bridge, embankment)	Mantén l'altura (pont, terraplè)
+An even gradient from end to end, the ground left as it is; the rise to the end can be typed while drawing. Pillars: select the road and put them along it as objects.	Un pendent uniforme d'un extrem a l'altre, el terra es queda com és; la pujada fins a l'extrem es pot escriure mentre dibuixes. Pilars: selecciona la carretera i posa'ls al llarg com a objectes.
+Rise	Pujada
+Shift: straight · Enter: build	Maj: recta · Retorn: construeix
+Junction	Creuament
+Traffic lights	Semàfors
+Lights need three roads or more	Els semàfors necessiten tres carreteres o més
+Main road green	Verd a la principal
+Side roads green	Verd a les secundàries
+The main road is the pair of roads most in line; red-yellow 2 s, yellow 3 s, 2 s all red between	La principal és el parell de carreteres més alineades; vermell-groc 2 s, groc 3 s, 2 s tot en vermell entre fases
+Zebra crossings	Passos de vianants
+Road	Carretera
+Build it again	Construeix-lo de nou
+Makes the plate, its kerbs and lanes again for the roads as they are now	Refà la placa, les seves vorades i carrils per a les carreteres tal com són ara
+Linked objects	Objectes enllaçats
+An object can take its state from another ([varparent]): a signal head shows a light of its crossing's program, a stop's display its stop.	Un objecte pot prendre el seu estat d'un altre ([varparent]): un cap de semàfor mostra una llum del programa del seu creuament, la pantalla d'una parada la seva parada.
+Takes its state from	Pren l'estat de
+Select it: IDCode	Selecciona'l: IDCode
+Takes its state from an object that is gone: IDCode	Pren l'estat d'un objecte que ja no hi és: IDCode
+Takes its state from nothing	No pren l'estat de res
+Light	Semàfor
+Its light is not one of the crossing's: it stays dark	La seva llum no és una del creuament: queda apagat
+That object runs no traffic lights: link the head to a crossing with a light program	Aquell objecte no governa semàfors: enllaça el cap amb un creuament que tingui programa de llums
+A signal head: link it to its crossing to have it light	Un cap de semàfor: enllaça'l amb el seu creuament perquè s'il·lumini
+Click the object in the view… (Esc)	Fes clic a l'objecte a la vista… (Esc)
+Link to another…	Enllaça amb un altre…
+Link to an object…	Enllaça amb un objecte…
+Then click the object it is to take its state from (a crossing for a signal head)	Després fes clic a l'objecte del qual ha de prendre l'estat (un creuament per a un cap de semàfor)
+Taking their state from it:	Prenen l'estat d'ell:
+light	llum
+Click the object it takes its state from	Fes clic a l'objecte del qual pren l'estat
+stop	parada
+Find in map	Cerca al mapa
+Name, file, IDCode, stop or x, y	Nom, fitxer, IDCode, parada o x, y
+The point	El punt
+Spline	Spline
+Object	Objecte
+Nothing on the map has this IDCode.	Res del mapa té aquest IDCode.
+kinds	tipus
+on the map	al mapa
+Next	Següent
+Select the next one and go there	Selecciona el següent i ves-hi
+Every one of these becomes the road type chosen in the Roads tool	Tots aquests passaran al tipus de carretera triat a l'eina Carreteres
+Every one of these becomes the object chosen in the catalogue	Tots aquests passaran a l'objecte triat al catàleg
+More: type to narrow the list	N'hi ha més: escriu per reduir la llista
+Replaced:	Substituït:
+Satellite overlay	Capa de satèl·lit
+Satellite and own pictures	Satèl·lit i imatges pròpies
+Click a tile to see its overlay here.	Fes clic en una tessel·la per veure'n aquí la capa.
+Show the overlay	Mostra la capa
+opacity	opacitat
+Load satellite imagery	Carrega imatges de satèl·lit
+Place the map on the Earth first (Satellite and terrain…)	Primer situa el mapa a la Terra (Satèl·lit i terreny…)
+Load image file…	Carrega un fitxer d'imatge…
+Your own picture for this tile (a scan, a screenshot): or drop it on the window	La teva pròpia imatge per a aquesta tessel·la (un escàner, una captura): o deixa-la anar a la finestra
+Load the OpenStreetMap map	Carrega el mapa d'OpenStreetMap
+OpenStreetMap map for all tiles	Mapa d'OpenStreetMap per a totes les tessel·les
+The map as openstreetmap.org draws it (streets with their names, houses, water, green, stop signs), drawn sharp from OpenStreetMap data and laid on the tile in place of a satellite picture: to build roads and houses over by eye. Nothing is generated from it.	El mapa tal com el dibuixa openstreetmap.org (carrers amb noms, cases, aigua, verd, senyals de parada), dibuixat nítid a partir de dades d'OpenStreetMap i posat a la tessel·la en lloc d'una imatge de satèl·lit: per construir carreteres i cases a ull. No se'n genera res.
+own picture	imatge pròpia
+for an earlier placement	per a un emplaçament anterior
+not kept with the map	no es conserva amb el mapa
+, partly coarser	, en part més groller
+nothing	res
+Place the map on the Earth first.	Primer situa el mapa a la Terra.
+Load terrain heights	Carrega altures del terreny
+Done:	Fet:
+with problems	amb problemes
+A picture for the tiles	Una imatge per a les tessel·les
+Could not read the picture	No s'ha pogut llegir la imatge
+Could not copy the picture	No s'ha pogut copiar la imatge
+The picture is on the tiles: line it up in Satellite and terrain, Own pictures.	La imatge és a les tessel·les: ajusta-la a Satèl·lit i terreny, Imatges pròpies.
+Nothing found by that name.	No s'ha trobat res amb aquest nom.
+Some tiles had Google imagery: enter your Google key to see it again (it is not kept with the map).	Algunes tessel·les tenien imatges de Google: introdueix la teva clau de Google per tornar-les a veure (no es conserva amb el mapa).
+Satellite and terrain	Satèl·lit i terreny
+Find a place: a town, a street, an address… (Enter)	Cerca un lloc: un poble, un carrer, una adreça… (Retorn)
+Searching…	Cercant…
+Search © OpenStreetMap contributors	Cerca © col·laboradors d'OpenStreetMap
+This map has world coordinates ([worldcoordinates]): it lies on the Earth by itself, its tiles are Web Mercator tiles.	Aquest mapa té coordenades mundials ([worldcoordinates]): es posa sol a la Terra, les seves tessel·les són tessel·les Web Mercator.
+Click on the map where the orange tile goes…	Fes clic al mapa on va la tessel·la taronja…
+Place the map here	Situa el mapa aquí
+Then click on the map: the middle of the orange tile goes there	Després fes clic al mapa: el centre de la tessel·la taronja hi va
+At the view's middle	Al centre de la vista
+North turned	Gir del nord
+Orange tile	Tessel·la taronja
+click the map to fly there in the view	clic al mapa per volar-hi a la vista
+1. Find the place.  2. Press "Place the map here" and click on the map: the orange tile (the map's middle) goes there.	1. Cerca el lloc.  2. Prem «Situa el mapa aquí» i fes clic al mapa: la tessel·la taronja (el centre del mapa) hi va.
+Imagery	Imatges
+The sharpest here	Les més nítides aquí
+cm a pixel here	cm per píxel aquí
+checking…	comprovant…
+is sharper here	és més nítid aquí
+Sharper imagery may be had here with your own free key for Mapbox, MapTiler or Google (Keys below).	Aquí es poden tenir imatges més nítides amb la teva clau gratuïta de Mapbox, MapTiler o Google (Claus, a sota).
+Terms of use	Condicions d'ús
+Zoom	Zoom
+the finest here	el més fi aquí
+Picture of a tile	Imatge d'una tessel·la
+every pixel of the source (up to 4096)	cada píxel de l'origen (fins a 4096)
+Loaded at	Carregat a
+cm a pixel	cm per píxel
+Also load terrain heights	Carrega també altures del terreny
+New tiles get imagery by themselves	Les tessel·les noves obtenen imatges soles
+Load for all tiles	Carrega per a totes les tessel·les
+For the selected tile	Per a la tessel·la seleccionada
+Click a tile with the Tiles tool (7)	Fes clic en una tessel·la amb l'eina Tessel·les (7)
+Terrain heights only	Només altures del terreny
+of	de
+tiles beside the loaded heights were not loaded: the ground steps at their edge.	tessel·les al costat de les altures carregades no s'han carregat: el terra fa un esglaó a la vora.
+Fit their edges	Ajusta-ne les vores
+Their edge takes the loaded heights, fading out 60 m into the tile	La seva vora pren les altures carregades, esvaint-se 60 m endins de la tessel·la
+Leave them	Deixa-ho
+Terrain heights	Altures del terreny
+Relative: the orange tile's mean height is 0 m	Relatives: l'altura mitjana de la tessel·la taronja és 0 m
+Raise everything by	Eleva-ho tot
+Taken off:	Restat:
+Measure again	Mesura de nou
+Terrain data attribution	Atribució de les dades del terreny
+Overlay on the ground	Capa sobre el terra
+Put the imagery into maps exported for sharing (check its licence first)	Posa les imatges als mapes exportats per compartir (comprova'n primer la llicència)
+Fit tile edges	Ajusta les vores de les tessel·les
+Keys for more sources (optional)	Claus per a més fonts (opcional)
+Everything works without a key. With your own free key these may be sharper in some places; the key stays on this computer.	Tot funciona sense clau. Amb la teva clau gratuïta aquestes poden ser més nítides en alguns llocs; la clau es queda en aquest ordinador.
+Google satellite (needs your API key)	Satèl·lit de Google (cal la teva clau d'API)
+get a key	obtén una clau
+In Google Cloud: make a project, enable the Map Tiles API, create an API key, paste it here. Google bills by use above its free amount.	A Google Cloud: crea un projecte, activa l'API Map Tiles, crea una clau d'API i enganxa-la aquí. Google cobra per ús per sobre de la quantitat gratuïta.
+key	clau
+Your own tile server	El teu propi servidor de tessel·les
+URL	URL
+Attribution	Atribució
+Finest zoom	Zoom màxim
+Kind	Tipus
+XYZ / WMTS tiles	Tessel·les XYZ / WMTS
+Terrarium heights	Altures Terrarium
+{z} {x} {y} are filled in; a WMS gets {bbox} (EPSG:3857) and {width} {height}; {key} is your key.	S'omplen {z} {x} {y}; un WMS rep {bbox} (EPSG:3857) i {width} {height}; {key} és la teva clau.
+Add	Afegeix
+Own pictures	Imatges pròpies
+A scan, a screenshot, an old plan: laid on tiles and lined up by eye. No place on the Earth needed.	Un escàner, una captura, un pla antic: posat damunt de tessel·les i alineat a ull. No cal situar-lo a la Terra.
+Tiles from	Tessel·les de
+Load image file over these tiles…	Carrega un fitxer d'imatge damunt d'aquestes tessel·les…
+Turn left 90°	Gira a l'esquerra 90°
+Turn right 90°	Gira a la dreta 90°
+mirror left-right	emmiralla d'esquerra a dreta
+mirror top-bottom	emmiralla de dalt a baix
+Reset	Restableix
+Your own pictures	Les teves imatges
+of these tiles have your own pictures. Replace them with satellite imagery?	d'aquestes tessel·les tenen imatges pròpies. Les vols substituir per imatges de satèl·lit?
+Replace them	Substitueix-les
+Keep my pictures	Conserva les meves imatges
+Groups for other maps	Grups per a altres mapes
+A selection kept under a name, to put down again in any map (a stop with its shelter and signs, a crossing with its lights)	Una selecció desada amb un nom, per tornar-la a posar en qualsevol mapa (una parada amb la seva marquesina i senyals, un creuament amb els seus semàfors)
+Keep the selection	Desa la selecció
+Group kept	Grup desat
+Select what to keep in the view first.	Primer selecciona a la vista què vols desar.
+No groups yet.	Encara no hi ha grups.
+thing	cosa
+things	coses
+Delete the group (to openMapper's bin)	Elimina el grup (a la paperera d'openMapper)
+Use	Usa
+Into the clipboard: Ctrl+V puts it down at the cursor, as often as wanted	Al porta-retalls: Ctrl+V la posa al cursor, tantes vegades com calgui
+is in the clipboard: Ctrl+V puts it at the cursor	és al porta-retalls: Ctrl+V la posa al cursor
+The map's tiles: 300 m squares. Add more beside them with the Tiles tool.	Les tessel·les del mapa: quadrats de 300 m. N'afegeixes més al costat amb l'eina Tessel·les.
+A road	Una carretera
+Roads tool: click where it starts, then where it ends. Click on a road's end to go on from it.	Eina Carreteres: fes clic on comença i després on acaba. Fes clic a l'extrem d'una carretera per continuar-la.
+A bus stop by the road	Una parada vora la carretera
+Game logic > Bus stops: put one at the kerb, on the side the doors open. Name it on the right.	Lògica de joc > Parades: posa'n una a la vorera, pel costat on s'obren les portes. Posa-li nom a la dreta.
+A start point	Un punt d'inici
+Game logic > Start points: where your bus appears, on a road, facing the way to drive.	Lògica de joc > Punts d'inici: on apareix el teu autobús, en una carretera, mirant en el sentit de la marxa.
+A line with a trip	Una línia amb un viatge
+Lines window: New line, New trip, then click the stops in order. The way is found along the roads.	Finestra de línies: Línia nova, Viatge nou i després fes clic a les parades per ordre. El camí es troba per les carreteres.
+A tour with departures	Un torn amb sortides
+Lines window > Tours and times: New tour, then Fill from … to … .	Finestra de línies > Torns i hores: Torn nou i després Omple de … a … .
+Buses for the tours	Autobusos per als torns
+A depot the tours take their buses from (Tours: Add a depot, or Traffic and AI).	Una cotxera d'on els torns treuen els autobusos (Torns: Afegeix una cotxera, o Trànsit i IA).
+Checked	Revisat
+Map > Check map: what would go wrong in the game, most of it put right with one click.	Mapa > Revisa el mapa: què aniria malament al joc, gairebé tot es corregeix amb un clic.
+Saved	Desat
+Ctrl+S. Maps are saved into openOMSI's content folder.	Ctrl+S. Els mapes es desen a la carpeta de contingut d'openOMSI.
+A test drive	Una prova de conducció
+F5 saves and starts openOMSI on the map: pick line 1 and drive.	F5 desa i inicia openOMSI amb el mapa: tria la línia 1 i condueix.
+A map you can drive in service:	Un mapa que pots conduir en servei:
+Show me	Mostra-m'ho
+Your stops stand away from the roads: a bus serves a stop within 15 m of its lane.	Les teves parades són lluny de les carreteres: un autobús serveix una parada a menys de 15 m del seu carril.
+A real place? Put the map on the Earth (Map > Satellite and terrain), then Map > From OpenStreetMap brings its streets, stops, lines and trees.	Un lloc real? Situa el mapa a la Terra (Mapa > Satèl·lit i terreny) i després Mapa > D'OpenStreetMap n'aporta carrers, parades, línies i arbres.
+Show this for new maps	Mostra això per als mapes nous
+The map has no depot file.	El mapa no té fitxer de cotxera.
+Make one from the lines	Crea'n un a partir de les línies
+The map has no trips yet (Map > Lines and timetable)	El mapa encara no té viatges (Mapa > Línies i horari)
+Empty one	Buit
+New	Nou
+A new depot file from the map's lines	Un fitxer de cotxera nou a partir de les línies del mapa
+Delete this depot file	Elimina aquest fitxer de cotxera
+The lines need	Les línies necessiten
+Add them	Afegeix-les
+What is there stays as it is	El que hi ha es queda com és
+No depot group uses it.	Cap grup de cotxera l'usa.
+Used by the depot	Usat per la cotxera
+Use it for every depot	Usa'l per a totes les cotxeres
+The AI's depot groups (Vehicle groups tab) take their buses' destinations from it	Els grups de cotxera de la IA (pestanya Grups de vehicles) en prenen les destinacions dels seus autobusos
+Rename	Canvia el nom
+not a usable name	nom no vàlid
+The destination a bus shows on its way to and from the depot	La destinació que mostra un autobús camí de la cotxera i en tornar
+Destinations	Destinacions
+Stops	Parades
+Routes	Rutes
+nobody gets on	no hi puja ningú
+Code	Codi
+another destination has this code	una altra destinació té aquest codi
+As a trip's terminus is named in the timetable: the stop where everybody gets off	Com s'anomena la destinació d'un viatge a l'horari: la parada on tothom baixa
+Nobody gets on (service trip, empty sign)	No hi puja ningú (viatge de servei, rètol buit)
+Delete destination	Elimina la destinació
+Add destination	Afegeix una destinació
+New destination	Destinació nova
+As the timetable names the stop	Com l'horari anomena la parada
+Delete stop	Elimina la parada
+Add stop	Afegeix una parada
+line	línia
+What the driver types: the line's number and two digits (7601: line 76, route 01)	El que escriu el conductor: el número de la línia i dos dígits (7601: línia 76, ruta 01)
+Line	Línia
+IBIS text	Text IBIS
+Destination	Destinació
+Stops in order	Parades per ordre
+Not in the Stops list: the displays have no texts for it	No és a la llista de parades: les pantalles no hi tenen textos
+Move up	Amunt
+Move down	Avall
+Take out	Treu
+Add a stop…	Afegeix una parada…
+Delete route	Elimina la ruta
+Add route	Afegeix una ruta
+No routes: the IBIS knows the destinations' codes only. Add them from the lines above.	Cap ruta: l'IBIS només coneix els codis de les destinacions. Afegeix-les de les línies de dalt.
+Winter with snow	Hivern amb neu
+Summer (dry)	Estiu (sec)
+Jan	gen.
+Feb	febr.
+Mar	març
+Apr	abr.
+May	maig
+Jun	juny
+Jul	jul.
+Aug	ag.
+Sep	set.
+Oct	oct.
+Nov	nov.
+Dec	des.
+Map settings	Configuració del mapa
+Money	Moneda
+Tickets	Bitllets
+none: the map has no depot group (Traffic and AI)	cap: el mapa no té grup de cotxera (Trànsit i IA)
+Years	Anys
+Year offset	Desplaçament d'any
+Added to today's year when the game starts at the real date (Berlin-Spandau: -25 for the 1980s)	S'afegeix a l'any actual quan el joc comença a la data real (Berlin-Spandau: -25 per als anys 80)
+Repair time	Temps de reparació
+ min	 min
+Rail	Via
+real rail (trams and trains follow their tracks' switches)	via real (tramvies i trens segueixen les agulles de les seves vies)
+Helper	Ajuda
+dynamic helper active (the original editor's map option, kept as it is)	ajuda dinàmica activa (opció de mapa de l'editor original, es manté tal com és)
+Seasons	Estacions de l'any
+Summer where none is set. The days count from 1 January.	Estiu on no n'hi ha cap de definida. Els dies es compten des de l'1 de gener.
+Add a season	Afegeix una estació
+A season ends before it starts	Una estació acaba abans de començar
+Nothing selected	Res seleccionat
+Paste here	Enganxa aquí
+Cut the road here	Talla la carretera aquí
+Select all like it	Selecciona tots els iguals
+Keep for other maps…	Desa per a altres mapes…
+Its ground, painting, water, objects and roads, put beside or into this map. Lines, timetable and AI lists stay with the other map.	El seu terra, pintura, aigua, objectes i carreteres, posats al costat d'aquest mapa o dins. Línies, horari i llistes d'IA es queden amb l'altre mapa.
+Choose a map…	Tria un mapa…
+Other…	Un altre…
+A map to take tiles from (its global.cfg)	Un mapa d'on agafar tessel·les (el seu global.cfg)
+Grey: this map · orange: the tiles to add (click to take one or leave it) · red: on a tile of this map, left out	Gris: aquest mapa · taronja: les tessel·les per afegir (clic per agafar-ne una o deixar-la) · vermell: en una tessel·la d'aquest mapa, omès
+Move:	Desplaça:
+west	oest
+east	est
+north	nord
+south	sud
+Raise it by	Eleva-ho
+Its ground, water, roads and objects at a height of their own	El seu terra, aigua, carreteres i objectes a una altura pròpia
+Ease the ground where the maps meet	Suavitza el terra on es troben els mapes
+Added	Afegit
+tiles from the other map	tessel·les de l'altre mapa
+Cube	Cub
+Plane	Pla
+Circle	Cercle
+Triangle	Triangle
+Triangular prism	Prisma triangular
+Wedge	Falca
+Corner wedge	Falca de cantonada
+Pyramid	Piràmide
+Sphere	Esfera
+Icosphere	Icosfera
+Cylinder	Cilindre
+Cone	Con
+Torus	Tor
+Tube	Tub
+Capsule	Càpsula
+Stairs	Escales
+Arch	Arc
+Make one and put it on the map with a click (each one can then be edited, scaled, cut and joined)	Crea'n un i posa'l al mapa amb un clic (després es pot editar, escalar, tallar i unir)
+Array	Matriu
+Mirror	Mirall
+Solidify	Solidifica
+Subdivision surface	Subdivisió de superfície
+Decimate	Decima
+Triangulate	Triangula
+Displace	Desplaça
+Wireframe	Filferro
+Screw	Cargol
+Simple deform	Deformació simple
+Cast	Projecta
+Weld	Solda
+Edge split	Divisió d'arestes
+Boolean	Booleà
+Follow the ground	Segueix el terra
+Count	Nombre
+Relative	Relatiu
+Offset	Desplaçament
+Merge touching ends	Solda els extrems que es toquen
+Distance	Distància
+Cut away the other side first	Talla primer l'altre costat
+Weld at the mirror	Solda al mirall
+Thickness	Gruix
+Close the rim	Tanca la vora
+Width	Amplada
+Segments	Segments
+Levels	Nivells
+Smooth (Catmull-Clark)	Suavitza (Catmull-Clark)
+Factor	Factor
+Repeat	Repeticions
+Seed	Llavor
+Along the normals	Segons les normals
+Steps	Passos
+Axis	Eix
+Twist	Torsió
+Bend	Doblec
+Taper	Estretiment
+Stretch	Estirament
+Amount	Quantitat
+Box	Caixa
+Difference	Diferència
+With the part	Amb la part
+Tip: hide the cutting part (its eye in the list) so only the cut shows	Consell: amaga la part que talla (l'ull a la llista) perquè només es vegi el tall
+Above the ground	Sobre el terra
+Every vertex follows the terrain under it (in the editor's view and the written files at the place it stands)	Cada vèrtex segueix el terreny de sota
+Mesh (openMapper object)	Malla (objecte openMapper)
+Shared by	Compartit per
+objects on the map: changes apply to all	objectes del mapa: els canvis s'apliquen a tots
+Make this one single	Fes-ne un d'únic
+Leave the edit mode (Tab)	Surt del mode d'edició (Tab)
+Edit the mesh (Tab)	Edita la malla (Tab)
+Write it as OBJ, glTF / GLB, FBX, Collada, USD, STL, PLY, 3MF, OFF, X or O3D	Escriu-lo com a OBJ, glTF / GLB, FBX, Collada, USD, STL, PLY, 3MF, OFF, X o O3D
+Off: its height is kept above the ground under it	Desactivat: se'n manté l'altura sobre el terra de sota
+Solid (collides)	Sòlid (col·lisiona)
+The part edited and given modifiers	La part editada i amb modificadors
+Shown (and written into the object)	Visible (i escrita a l'objecte)
+faces	cares
+Duplicate the part	Duplica la part
+Delete the part	Elimina la part
+Add a shape as a part	Afegeix una forma com a part
+Separate parts into objects	Separa les parts en objectes
+Each part becomes an object of its own, standing where it stood	Cada part esdevé un objecte propi, al lloc on era
+Shape	Forma
+Modifiers	Modificadors
+Make it part of the mesh	Fes-ho part de la malla
+Add a modifier	Afegeix un modificador
+Materials	Materials
+Colour (multiplies the texture)	Color (multiplica la textura)
+Assign to selected faces	Assigna a les cares seleccionades
+Choose…	Tria…
+No texture	Sense textura
+Save as…	Desa com a…
+PNG, JPEG, BMP, TGA, TIFF, WebP or DDS	PNG, JPEG, BMP, TGA, TIFF, WebP o DDS
+Transparency	Transparència
+Opaque	Opac
+Cut out	Retallat
+Blended	Barrejat
+Glows	Resplendeix
+Light of its own: black for none	Llum pròpia: negre per a cap
+Shine	Brillantor
+Normal map	Mapa de normals
+ORM map	Mapa ORM
+Night texture	Textura de nit
+Light map	Mapa de llum
+Remove the material	Elimina el material
+Add a material	Afegeix un material
+Import materials…	Importa materials…
+From an .mtl, a glTF / GLB / FBX, or the pictures of one PBR material (base colour, normal, roughness, metal, AO...)	D'un .mtl, un glTF / GLB / FBX o les imatges d'un material PBR (color base, normals, rugositat, metall, AO...)
+Lamps	Llums
+Glow	Resplendor
+Light on the ground	Llum al terra
+Colour	Color
+Reach	Abast
+On	Activat
+Always	Sempre
+At night	De nit
+variable	variable
+Seen from one side	Vist per un costat
+Star	Estrella
+Facing	Orientació
+Remove the lamp	Elimina el llum
+Add a glow	Afegeix un resplendor
+A lamp's bulb, a lit sign: a glow seen at night	La bombeta d'un llum, un rètol il·luminat: un resplendor visible de nit
+Add light on the ground	Afegeix llum al terra
+The pool of light a street lamp throws at night	La taca de llum que llança un fanal de nit
+Signal head, lamps	Cap de semàfor, llums
+Put it within 40 m of a crossing with a light program: it takes its light from it (or link it in its properties)	Posa'l a menys de 40 m d'un creuament amb programa de llums: en pren la llum (o enllaça'l a les propietats)
+Bake	Precuina
+Its textures and colours painted into one picture on a new UV map (one material: fewer draws in the game), with its own shadows and its lamps' night light if chosen	Les seves textures i colors pintats en una sola imatge en un mapa UV nou (un material: menys dibuixats al joc), amb les seves ombres i la llum de nit dels llums si es tria
+Ambient occlusion	Oclusió ambiental
+How far its shadows reach	Fins on arriben les ombres
+Lamps' light at night (light map)	Llum dels llums de nit (mapa de llum)
+The object's last change (Ctrl+Z in the edit mode)	L'últim canvi de l'objecte (Ctrl+Z al mode d'edició)
+Divisions X	Divisions X
+Divisions Y	Divisions Y
+Rings	Anells
+Subdivisions	Subdivisions
+Bottom radius	Radi inferior
+Top radius	Radi superior
+Tube radius	Radi del tub
+Tube segments	Segments del tub
+Outer radius	Radi exterior
+Inner radius	Radi interior
+Opening	Obertura
+Wall	Paret
+Mesh	Malla
+A copy of this object's type of its own is made for it, with its meshes, materials and lamps to edit; the original stays as it is	Es fa per a l'objecte una còpia pròpia del seu tipus, amb les seves malles, materials i llums per editar; l'original es queda com és
+As a mesh	Com a malla
+Copy as an object	Còpia com a objecte
+An openMapper object of its shape beside it, to edit as a mesh (vertices, edges, faces)	Un objecte openMapper de la seva forma al costat, per editar-lo com a malla (vèrtexs, arestes, cares)
+The same, the spline taken away (its lanes go with it)	El mateix, i l'spline s'elimina (amb els seus carrils)
+Splines as a mesh	Splines com a malla
+Copy as one object	Còpia com a un sol objecte
+Replace by one object	Substitueix per un sol objecte
+Export the selection…	Exporta la selecció…
+As meshes	Com a malles
+Join into one object (Ctrl+J)	Uneix en un sol objecte (Ctrl+J)
+All their parts in the one shown in the properties, the others gone	Totes les parts a l'objecte de les propietats, els altres desapareixen
+Solid modelling (CSG): the object shown in the properties with the others	Modelatge sòlid (CSG): l'objecte de les propietats amb els altres
+Keep the cutting objects	Conserva els objectes de tall
+Vertices	Vèrtexs
+Edges	Arestes
+Faces	Cares
+vertices	vèrtexs
+edges	arestes
+Selected	Seleccionat
+X-ray: pick through the mesh	Raigs X: tria a través de la malla
+All (A)	Tot (A)
+None (Alt+A)	Res (Alt+A)
+Invert (Ctrl+I)	Inverteix (Ctrl+I)
+Linked (Ctrl+L)	Enllaçat (Ctrl+L)
+More	Més
+Less	Menys
+Click, Shift + click to add, drag on nothing for a box, a second click or Alt + click for a loop	Clic, Maj + clic per afegir, arrossega en buit per fer un requadre, un segon clic o Alt + clic per a un bucle
+Change	Canvia
+Extrude (E)	Extrusió (E)
+Inset (I)	Cara interior (I)
+Bevel (Ctrl+B)	Xamfrà (Ctrl+B)
+Loop cut (Ctrl+R)	Tall en bucle (Ctrl+R)
+Point at an edge and press Ctrl+R	Apunta a una aresta i prem Ctrl+R
+Subdivide	Subdivideix
+Fill (F)	Omple (F)
+Bridge loops	Pont entre bucles
+Connect (J)	Connecta (J)
+Poke	Punxa
+Duplicate (Shift+D)	Duplica (Maj+D)
+Split (Y)	Divideix (Y)
+Separate into an object (P)	Separa en un objecte (P)
+Spin 360°	Gir 360°
+The selection turned round the object's up axis through its middle, in 12 steps	La selecció girada al voltant de l'eix vertical de l'objecte pel seu mig, en 12 passos
+Smooth vertices	Suavitza els vèrtexs
+Merge (M)	Fusiona (M)
+At the middle	Al centre
+At the first	Al primer
+At the last	A l'últim
+Collapse each piece	Col·lapsa cada tros
+By distance (1 mm)	Per distància (1 mm)
+Delete (X)	Elimina (X)
+Only faces	Només cares
+Dissolve vertices	Dissol vèrtexs
+Dissolve edges	Dissol arestes
+Dissolve faces	Dissol cares
+Triangulate (Ctrl+T)	Triangula (Ctrl+T)
+Triangles to quads (Alt+J)	Triangles a quadrilàters (Alt+J)
+Shade smooth	Ombrejat suau
+Shade flat	Ombrejat pla
+Flip normals (Alt+N)	Inverteix les normals (Alt+N)
+Normals outward (Shift+N)	Normals cap enfora (Maj+N)
+Mark seam	Marca una costura
+Clear seam	Esborra la costura
+Mark sharp	Marca com a aguda
+Clear sharp	Esborra l'aguda
+Adjust the last operation	Ajusta l'última operació
+Slide	Lliscament
+Cuts	Talls
+UV map	Mapa UV
+Unwrap	Desplega
+By seams (conformal)	Per costures (conforme)
+Smart project	Projecció intel·ligent
+Cube projection (metres)	Projecció cúbica (metres)
+Cylinder projection	Projecció cilíndrica
+Sphere projection	Projecció esfèrica
+Project from the view	Projecta des de la vista
+Lightmap pack	Empaqueta per al mapa de llum
+Close the UV editor	Tanca l'editor UV
+UV editor	Editor UV
+Faces of the selection (all, with none selected); mark seams on edges first for an unwrap by seams	Cares de la selecció (totes, si no n'hi ha cap de seleccionada); marca primer costures a les arestes per desplegar per costures
+Material of the selected faces	Material de les cares seleccionades
+With lamps	Amb llums
+Street lamp	Fanal
+A pole with a lamp that glows and lights the ground at night	Un pal amb un llum que resplendeix i il·lumina el terra de nit
+Signal head	Cap de semàfor
+A traffic light of the lamps below that a crossing's light program drives	Un semàfor dels llums de sota governat pel programa de llums d'un creuament
+Lamps:	Llums:
+Picture, light, sound	Imatge, llum, so
+Picture / pattern…	Imatge / patró…
+Choose a picture or a texture: it becomes an object you place, move, turn and scale like any other. Several repeats make a pattern	Tria una imatge o una textura: esdevé un objecte que col·loques, mous, gires i escales com qualsevol altre. Diverses repeticions fan un patró
+Light source	Font de llum
+A lamp that glows and lights the ground round it	Un llum que resplendeix i il·lumina el terra al voltant
+Sound source…	Font de so…
+Choose a sound file (.wav): it plays where you put the marker, as far as the radius carries; the marker shows in the editor only	Tria un fitxer de so (.wav): sona on posis el marcador, fins on arriba el radi; el marcador només es veu a l'editor
+Picture width, m	Amplada de la imatge, m
+Repeats	Repeticions
+on the ground	al terra
+standing	dret
+Light colour	Color de la llum
+Light reach, m	Abast de la llum, m
+at night	de nit
+always	sempre
+Sound reach, m	Abast del so, m
+Sound volume	Volum del so
+Overview: click or drag to move there · double-click: larger / smaller · M: hide	Vista general: clic o arrossega per anar-hi · doble clic: més gran / més petit · M: amaga
+Name:	Nom:
+My town	La meva ciutat
+Description:	Descripció:
+What the map is, for the game's map list	Què és el mapa, per a la llista de mapes del joc
+Size:	Mida:
+Ground height:	Altura del terra:
+ m above sea level	 m sobre el nivell del mar
+Traffic:	Trànsit:
+keeps right	per la dreta
+keeps left	per l'esquerra
+Busy:	Activitat:
+cars	cotxes
+passengers	passatgers
+Years:	Anys:
+year offset	desplaçament d'any
+Added to today's year when the game starts at the real date	S'afegeix a l'any actual quan el joc comença a la data real
+Money:	Moneda:
+Tickets:	Bitllets:
+Seasons:	Estacions de l'any:
+four, snowy winter	quatre, hivern amb neu
+mild winter	hivern suau
+summer only	només estiu
+Rail:	Via:
+trams and trains follow their tracks' switches	tramvies i trens segueixen les agulles de les seves vies
+Ground texture (all tiles):	Textura de terra (totes les tessel·les):
+template	plantilla
+More ground layers are painted later (Paint tool); the map's settings can all be changed in Map > Map settings.	Més capes de terra es pinten després (eina Pintura); tota la configuració del mapa es pot canviar a Mapa > Configuració del mapa.
+Create	Crea
+as the template	com la plantilla
+ways	camins
+bus routes downloaded	rutes d'autobús baixades
+not had:	no obtingut:
+The streets of the map's place built as roads with junctions where they meet, its bus stops, lines, trees and woods. Best on tiles with no roads yet: roads lying on ones the map has are left out.	Els carrers del lloc del mapa construïts com a carreteres amb creuaments on es troben, les seves parades, línies, arbres i boscos. Millor en tessel·les sense carreteres: les que cauen sobre les que el mapa ja té s'ometen.
+The map does not lie on the Earth yet: place it in Satellite and terrain (Map menu, I) first.	El mapa encara no és a la Terra: primer situa'l a Satèl·lit i terreny (menú Mapa, I).
+Load the terrain heights first (Satellite and terrain): the roads follow the ground as it is when they are built.	Primer carrega les altures del terreny (Satèl·lit i terreny): les carreteres segueixen el terra tal com és quan es construeixen.
+Download for the map's tiles	Baixa per a les tessel·les del mapa
+bus routes	rutes d'autobús
+trees	arbres
+buildings	edificis
+water	aigua
+Downloading…	Baixant…
+no type chosen	cap tipus triat
+Use the chosen	Usa el triat
+One-way roads	Carreteres d'un sol sentit
+Each carriageway of a dual road and one-way streets: with a one-way road type they lie side by side as they should; with none chosen they get their kind's	Cada calçada d'una via doble i els carrers d'un sol sentit: amb un tipus de carretera d'un sol sentit van un al costat de l'altre com cal; sense cap de triat, reben el del seu tipus
+as their kind	com el seu tipus
+no stop object	cap objecte de parada
+The stop chosen in Game logic > Bus stops	La parada triada a Lògica de joc > Parades
+Bus lines	Línies d'autobús
+Each bus route through two or more of the map's stops a trip of its line, the way found along the roads; a tour from 06:00 to 22:00 for each new line	Cada ruta d'autobús per dues o més parades del mapa, un viatge de la seva línia, el camí trobat per les carreteres; un torn de 06:00 a 22:00 per a cada línia nova
+Trees and woods	Arbres i boscos
+Single trees, rows of them and woods, planted with the plant mix (Objects tool > Plant brush) or the tree chosen; none on a road	Arbres sols, fileres i boscos, plantats amb la barreja de plantes (eina Objectes > Pinzell de plantes) o l'arbre triat; cap en una carretera
+no plants chosen	cap planta triada
+kinds of plants	tipus de plantes
+apart in woods	de separació als boscos
+Buildings	Edificis
+Each outline filled with the model of the folder chosen whose ground plan comes nearest, its front to the nearest road; an outline no model fits is left out	Cada contorn s'omple amb el model de la carpeta triada la planta del qual s'hi acosta més, amb la façana a la carretera més propera; un contorn on no encaixa cap model s'omet
+no folder	cap carpeta
++ its folder	+ la seva carpeta
+Add the folder of the object chosen in the catalogue (Buildings_MC, …)	Afegeix la carpeta de l'objecte triat al catàleg (Buildings_MC, …)
+Lakes and rivers: the ground inside them lowered below the banks, and the tiles they lie on given water a little under the banks' height (OMSI's water is one level for a tile: low ground elsewhere on it is flooded too)	Llacs i rius: el terra de dins baixat per sota de les ribes, i les tessel·les on són reben aigua una mica sota l'altura de les ribes (l'aigua d'OMSI és d'un sol nivell per tessel·la: el terra baix d'un altre lloc també s'inunda)
+deep	fons
+a road type (Roads tool), then "Use the chosen"	un tipus de carretera (eina Carreteres) i després «Usa el triat»
+a stop (Game logic > Bus stops), then "Use the chosen"	una parada (Lògica de joc > Parades) i després «Usa el triat»
+a tree in the Objects catalogue (or a plant mix)	un arbre al catàleg d'objectes (o una barreja de plantes)
+a building in the catalogue, then "+ its folder"	un edifici al catàleg i després «+ la seva carpeta»
+To build, choose (or untick):	Per construir, tria (o desmarca):
+A one-way street is built the way it runs in OpenStreetMap: give it a one-way road type	Un carrer d'un sol sentit es construeix com va a OpenStreetMap: dona-li un tipus de carretera d'un sol sentit
+Build	Construeix
+Name, file or IDCode	Nom, fitxer o IDCode
+things on the map	coses al mapa
+Groups	Grups
+Select the group and go there	Selecciona el grup i ves-hi
+Select everything in it	Selecciona-ho tot
+Select it and go there	Selecciona'l i ves-hi
+more: narrow the search	més: redueix la cerca
+Select all of them	Selecciona'ls tots
+Go to the first	Ves al primer
+Pick a tree in the catalogue, then paint	Tria un arbre al catàleg i després pinta
+Pick a tree in the catalogue, then click round the area	Tria un arbre al catàleg i després fes clic al voltant de l'àrea
+Pick a road type, click the centre, then the ring	Tria un tipus de carretera, fes clic al centre i després a l'anell
+Select a road (double-click: all of it): its properties show its height profile	Selecciona una carretera (doble clic: tota): les propietats mostren el seu perfil d'altures
+Select one of openMapper's junctions: its properties have Traffic lights and crossings	Selecciona un creuament d'openMapper: les propietats tenen Semàfors i passos
+Select the signal head (or a display): Linked objects in its properties, then click its crossing	Selecciona el cap de semàfor (o una pantalla): Objectes enllaçats a les propietats i després fes clic al seu creuament
+Select a road, pick an object in the Objects catalogue: Objects along the road in its properties	Selecciona una carretera i tria un objecte al catàleg d'Objectes: Objectes al llarg de la carretera a les propietats
+Select a track (double-click: all of it): Overhead wire under Parallel copy in its properties	Selecciona una via (doble clic: tota): Cable aeri sota Còpia paral·lela a les propietats
+Select a road or a chain: Parallel copy in its properties	Selecciona una carretera o una cadena: Còpia paral·lela a les propietats
+Select a road (double-click: all of it): Paint the ground along it in its properties	Selecciona una carretera (doble clic: tota): Pinta el terra al llarg seu a les propietats
+Click a tile: its water is in the panel; lower the ground under it with the Terrain tool	Fes clic en una tessel·la: l'aigua és al tauler; baixa el terra de sota amb l'eina Terreny
+Height map: at the end of the Terrain panel	Mapa d'altures: al final del tauler Terreny
+By slope and height: at the end of the Paint panel	Per pendent i alçada: al final del tauler Pintura
+View menu: Time of day, Season	Menú Vista: hora del dia, estació
+What do you want to do?	Què vols fer?
+Groups…	Grups…
+Objects on the map by folder	Objectes del mapa per carpeta
+Knife: cut roads	Ganivet: talla carreteres
+Test drive in OMSI 2 (the original)	Prova de conducció a OMSI 2 (l'original)
+Overview map	Mapa general
+Place a bus stop	Col·loca una parada
+Place a start point	Col·loca un punt d'inici
+Plant trees with a brush	Planta arbres amb un pinzell
+Plant a wood or a park	Planta un bosc o un parc
+Roundabout	Rotonda
+Height profile of a road	Perfil d'altures d'una carretera
+Traffic lights and zebra crossings	Semàfors i passos de vianants
+Link a signal head to its crossing	Enllaça un cap de semàfor amb el seu creuament
+Objects along a road	Objectes al llarg d'una carretera
+Overhead wire along a track	Cable aeri al llarg d'una via
+Parallel copy of a road	Còpia paral·lela d'una carretera
+Paint the ground along a road	Pinta el terra al llarg d'una carretera
+Water, lake, river	Aigua, llac, riu
+Ramp in the ground	Rampa al terra
+Height map import or export	Importa o exporta un mapa d'altures
+Time of day and season	Hora del dia i estació
+PBR material	Material PBR
+none	cap
+Own picture…	Imatge pròpia…
+Choose a texture of the object, or a picture of your own.	Tria una textura de l'objecte o una imatge pròpia.
+Normals (_nn)	Normals (_nn)
+Roughness	Rugositat
+Shadow in hollows	Ombra als forats
+Bumps	Relleus
+Only big shapes	Només formes grans
+Dark parts stand out (not sink in)	Les parts fosques sobresurten (no s'enfonsen)
+Bright parts smoother	Les parts clares més llises
+Metal	Metall
+Back to the defaults	Torna als valors per defecte
+This texture has PBR maps of its own already: new ones made here are taken instead of them.	Aquesta textura ja té mapes PBR propis: els nous fets aquí s'agafen en lloc seu.
+Written as:	S'escriu com a:
+PBR maps made	Mapes PBR creats
+Delete the PBR material	Elimina el material PBR
+PBR maps taken away	Mapes PBR retirats
+Height profile	Perfil d'altures
+over the ground	sobre el terra
+Click: go there in the view · drag a dot (a joint) up or down: its height	Clic: ves-hi a la vista · arrossega un punt (una unió) amunt o avall: la seva altura
+Climbs, falls	Puja, baixa
+Steepest	El més empinat
+at	a
+Highest over the ground	El més alt sobre el terra
+Deepest under it	El més profund sota seu
+Over 8 % is steep for a bus; over 12 % few streets go	Més del 8 % és empinat per a un autobús; més del 12 % pocs carrers ho tenen
+roadway	calçada
+Road types	Tipus de carretera
+Make a new road type…	Crea un tipus de carretera…
+My road	La meva carretera
+ · own	 · pròpia
+Create the road type	Crea el tipus de carretera
+Road type made: the Roads tool builds with it	Tipus de carretera creat: l'eina Carreteres construeix amb ell
+Change it in the road maker	Canvia'l al creador de carreteres
+Its junctions	Els seus creuaments
+Make a junction where it meets another road (else they only cross)	Fes un creuament on troba una altra carretera (si no, només s'encreuen)
+Corners	Cantonades
+× rounder	× més arrodonides
+Traffic lights by themselves	Semàfors automàtics
+Zebra crossings on every arm	Passos de vianants a totes les entrades
+Used for the junctions made from now on (where several road types meet, the one asking more wins). A junction already made keeps its own settings: select it to change them.	S'usa per als creuaments fets d'ara endavant (on es troben diversos tipus de carretera, guanya el més exigent). Un creuament ja fet conserva la seva configuració: selecciona'l per canviar-la.
+Pick a road type on the left, or make a new one.	Tria un tipus de carretera a l'esquerra o crea'n un de nou.
+Road maker	Creador de carreteres
+Lanes	Carrils
+(▼ 0: one-way)	(▼ 0: un sol sentit)
+Lane width	Amplada del carril
+Middle strip	Franja central
+Footways	Voreres
+Kerb	Vorada
+Roadway texture	Textura de la calçada
+Footway texture	Textura de la vorera
+Own…	Pròpia…
+The roadway texture is laid once across all its lanes (as OMSI 2's lane textures are painted: pick one with as many lanes); the footway texture's right end is the kerb.	La textura de la calçada es posa una vegada a través de tots els carrils (com es pinten les textures de carril d'OMSI 2: tria'n una amb tants carrils); l'extrem dret de la textura de la vorera és la vorada.
+not on the map	no és al mapa
+Signal routes	Rutes de senyals
+Each railway signal clears when a train wants the track pieces of its route and none stands on them.	Cada senyal ferroviari s'obre quan un tren vol els trams de via de la seva ruta i no hi ha res aturat.
+New route for the selected signal	Ruta nova per al senyal seleccionat
+Select a signal (one object) in the view first	Primer selecciona un senyal (un objecte) a la vista
+The selected object does not look like a signal (its name says nothing of one): check it is.	L'objecte seleccionat no sembla un senyal (el seu nom no ho diu): comprova que ho és.
+No routes yet.	Encara no hi ha rutes.
+pieces	trams
+Signal	Senyal
+the selected	el seleccionat
+Aspect	Aspecte
+What the signal shows when this route is clear: 1 proceed, 2 proceed slowly (with a speed limit)…	Què mostra el senyal quan aquesta ruta és lliure: 1 via lliure, 2 via lliure lenta (amb límit de velocitat)…
+Distant signal	Senyal avançat
+Next signal	Senyal següent
+Speed limit	Límit de velocitat
+OMSI's route kind (the stock maps have 0 and 1)	Tipus de ruta d'OMSI (els mapes originals tenen 0 i 1)
+Track pieces	Trams de via
+Take the selected track	Agafa la via seleccionada
+Every rail path of the selected tracks and switches (double-click a track: all of it); replaces the pieces	Tots els camins de rails de les vies i agulles seleccionades (doble clic en una via: tota); substitueix els trams
+Select the signal and its pieces in the view	Selecciona el senyal i els seus trams a la vista
+Delete the route	Elimina la ruta
+Lines and timetable	Línies i horari
+Edit timetable	Edita l'horari
+No bus stop there: click one of the orange marks	Aquí no hi ha cap parada: fes clic en una de les marques taronges
+The roads can't be read without the OMSI 2 folder.	Les carreteres no es poden llegir sense la carpeta d'OMSI 2.
+A line needs at least two bus stops on the map: place them with Game logic > Bus stops, beside a road.	Una línia necessita almenys dues parades al mapa: posa-les amb Lògica de joc > Parades, vora una carretera.
+Lines	Línies
+No lines yet.	Encara no hi ha línies.
+New line	Línia nova
+Pick a line on the left, or make a new one.\n\nA line has trips (a way from stop to stop) and tours (one bus's day: which trip it drives when).	Tria una línia a l'esquerra o crea'n una de nova.\n\nUna línia té viatges (un camí de parada a parada) i torns (el dia d'un autobús: quin viatge fa i quan).
+That name is taken or can't be a file name	Aquest nom ja és pres o no pot ser un nom de fitxer
+A copy of the line with its trips and tours (a variant to change)	Una còpia de la línia amb els seus viatges i torns (una variant per canviar)
+Delete the line and its trips	Elimina la línia i els seus viatges
+Players can drive it	Els jugadors la poden conduir
+Trips	Viatges
+Tours and times	Torns i hores
+A tour is one bus's day: the trips it drives, one after the other, and when each leaves.	Un torn és el dia d'un autobús: els viatges que fa, l'un després de l'altre, i quan surt cadascun.
+A trip is one way along the line: its stops in order. Most lines have two, there and back.	Un viatge és un sentit de la línia: les seves parades per ordre. La majoria de línies en tenen dos, anada i tornada.
+New trip	Viatge nou
+Make the way back	Fes el de tornada
+A new trip with the same stops the other way round	Un viatge nou amb les mateixes parades en sentit contrari
+Trip	Trajecte
+Delete the trip	Elimina el viatge
+Destination sign	Rètol de destinació
+This trip runs on a track of its own (a train): its stops are kept as they are.	Aquest viatge va per una via pròpia (un tren): les seves parades es queden com són.
+Show on the map	Mostra al mapa
+No stops yet.	Encara no hi ha parades.
+Done picking	Fet
+Pick stops on the map	Tria al mapa
+Click the stops in the view one after the other, in the order the bus calls at them	Fes clic a les parades de la vista l'una després de l'altra, en l'ordre en què l'autobús hi para
+Add stop…	Afegeix una parada…
+Click stops on the map (they are marked orange)…	Fes clic a les parades del mapa (estan marcades en taronja)…
+Add two stops or more: the way between them is found along the roads.	Afegeix dues parades o més: el camí entre elles es troba per les carreteres.
+Finding the way…	Cercant el camí…
+Route found:	Camí trobat:
+km along the roads (blue in the view)	km per les carreteres (en blau a la vista)
+the way drives a one-way lane against its direction; is a path drawn the wrong way round?	el camí va per un carril d'un sol sentit en sentit contrari; hi ha un camí dibuixat al revés?
+is not on the map	no és al mapa
+no road with car lanes within 15 m	cap carretera amb carrils per a cotxes a menys de 15 m
+No way	Sense camí
+the roads are not joined, or run the other way (see View > AI lanes)	les carreteres no estan unides o van en sentit contrari (vegeu Vista > Carrils d'IA)
+The trip is saved, but its way is not until this is mended	El viatge es desa, però el seu camí no fins que s'arregli això
+Trip time	Durada del viatge
+Guess:	Estimació:
+From the route's length at the pace of a town bus	A partir de la longitud de la ruta al ritme d'un autobús urbà
+Times at the stops	Hores a les parades
+Minutes after the trip leaves. They follow the distance between the stops; fix one to keep the bus to it (it waits there when early).	Minuts després que surti el viatge. Segueixen la distància entre parades; fixa'n una perquè l'autobús la mantingui (si arriba abans, espera).
+fixed	fixat
+Spread all by distance	Reparteix-ho tot per distància
+Holidays and school holidays	Festius i vacances escolars
+On a public holiday only the tours with Holidays ticked run; school holidays pick the tours for school holidays or school days.	En un festiu només fan els torns amb Festius marcat; les vacances escolars trien els torns per a vacances o per a dies lectius.
+Copy to	Copia a
+The same days a year later (feasts that move, like Easter, are to be set by hand)	Els mateixos dies un any més tard (les festes mòbils, com Pasqua, s'han d'ajustar a mà)
+The map has no depot (ailists.cfg): only you drive these tours, no AI buses.	El mapa no té cotxera (ailists.cfg): només tu condueixes aquests torns, sense autobusos d'IA.
+Add a depot with OMSI 2's MAN buses	Afegeix una cotxera amb autobusos MAN d'OMSI 2
+Its buses run the tours (Map > Traffic and AI shows it)	Els seus autobusos fan els torns (Mapa > Trànsit i IA el mostra)
+Tour	Torn
+New tour	Torn nou
+Pick a tour to see its departures.	Tria un torn per veure'n les sortides.
+Make a trip first.	Primer crea un viatge.
+Number	Número
+Buses from	Autobusos de
+Delete the tour	Elimina el torn
+Runs on	Funciona
+Mo	dl.
+Tu	dt.
+We	dc.
+Th	dj.
+Fr	dv.
+Sa	ds.
+Su	dg.
+Every day	Cada dia
+Monday to Friday	De dilluns a divendres
+Weekends and holidays	Caps de setmana i festius
+In the school holidays	En vacances escolars
+On school days	En dies lectius
+Next departure	Sortida següent
+The next trip of the line, when the bus is back and has had its break	El viatge següent de la línia, quan l'autobús és de tornada i ha fet la seva pausa
+Fill from	Omple de
+break	pausa
+Fill	Omple
+Replace the tour's departures: the line's trips one after the other, a break after each	Substitueix les sortides del torn: els viatges de la línia l'un després de l'altre, amb una pausa després de cadascun
+No departures yet: add them above.	Encara no hi ha sortides: afegeix-les a dalt.
+Delete the departure	Elimina la sortida
+GPS tracks to trace	Traçats GPS per seguir
+A route recorded on a phone or drawn elsewhere (GPX, KML, GeoJSON), shown in the view in magenta to draw roads along, or built into a road at once	Una ruta gravada amb un mòbil o dibuixada en un altre lloc (GPX, KML, GeoJSON), mostrada a la vista en magenta per dibuixar carreteres al llarg seu, o construïda de seguida com a carretera
+Place the map on the Earth first (Map > Satellite and terrain)	Primer situa el mapa a la Terra (Mapa > Satèl·lit i terreny)
+Load a file…	Carrega un fitxer…
+None loaded	Cap de carregat
+Forget it	Oblida'l
+Build a road along it:	Construeix una carretera al llarg seu:
+Choose a road type in the Roads tool to build it	Tria un tipus de carretera a l'eina Carreteres per construir-la
+Built as if drawn: corners rounded into arcs, junctions where it meets roads, cut at the map's edge; one undo step	Es construeix com si estigués dibuixada: cantonades arrodonides en arcs, creuaments on troba carreteres, tallada a la vora del mapa; un sol pas de desfer
+Traffic and AI	Trànsit i IA
+Edit traffic	Edita el trànsit
+Over the day	Al llarg del dia
+Vehicle groups	Grups de vehicles
+Parked cars and people	Cotxes aparcats i persones
+Depot files	Fitxers de cotxera
+The AI's vehicles come in groups. A car group drives about on the roads; a depot sends out the buses of the timetable's tours.	Els vehicles de la IA vénen en grups. Un grup de cotxes circula per les carreteres; una cotxera treu els autobusos dels torns de l'horari.
+(This map's ailists.cfg is in OMSI 2's first format: it is written in the second one when changed.)	(L'ailists.cfg d'aquest mapa és al primer format d'OMSI 2: s'escriu al segon quan es canvia.)
+is to drive about, but there is no such group.	ha de circular, però no hi ha aquest grup.
+Make it with OMSI 2's vehicles	Crea'l amb vehicles d'OMSI 2
+The group of that name from OMSI 2's own maps	El grup d'aquest nom dels mapes d'OMSI 2
+New car group	Grup de cotxes nou
+New depot	Cotxera nova
+Pick a group on the left.	Tria un grup a l'esquerra.
+Delete the group (tours still take their buses from it)	Elimina el grup (els torns encara en treuen autobusos)
+Delete the group	Elimina el grup
+Tours that take their buses from here:	Torns que en treuen els autobusos:
+Drives about on its own	Circula sol
+as many:	tants:
+Times the traffic over the day	Multiplicador del trànsit al llarg del dia
+A vehicle with more weight comes along more often.	Un vehicle amb més pes surt més sovint.
+Add a vehicle…	Afegeix un vehicle…
+Depot file (.hof)	Fitxer de cotxera (.hof)
+None of its buses has this depot file beside it: they run without their destination signs and fleet data.	Cap dels seus autobusos té aquest fitxer de cotxera al costat: circularan sense rètols de destinació ni dades de flota.
+The buses it has: a type of bus and the fleet number and plate of each.	Els autobusos que té: un tipus d'autobús i el número de flota i la matrícula de cadascun.
+Take this type out	Treu aquest tipus
+number	número
+plate	matrícula
+Another bus	Un altre autobús
+Add a type of bus…	Afegeix un tipus d'autobús…
+The lists can't be read without the OMSI 2 folder.	Les llistes no es poden llegir sense la carpeta d'OMSI 2.
+Parked cars	Cotxes aparcats
+What stands on the car parks (Game logic > Car parks). A car listed more often stands there more often.	El que hi ha als aparcaments (Lògica de joc > Aparcaments). Un cotxe llistat més sovint hi surt més sovint.
+Who walks about and waits at the stops.	Qui camina i espera a les parades.
+Drivers	Conductors
+Who drives the AI's buses.	Qui condueix els autobusos de la IA.
+How often it is listed (0 takes it out)	Quantes vegades surt a la llista (0 el treu)
+How busy the map is at each hour: the road traffic, and the passengers at the stops. 1 is normal; the game goes along the line between the points.	Com d'activa és el mapa a cada hora: el trànsit de carretera i els passatgers a les parades. 1 és normal; el joc segueix la línia entre els punts.
+Road traffic	Trànsit de carretera
+Passengers	Passatgers
+Its own traffic over the day	El seu propi trànsit al llarg del dia
+Without one the group follows the map's road traffic. A curve can be for some days of the week only.	Sense, el grup segueix el trànsit del mapa. Una corba pot ser només per a alguns dies de la setmana.
+Days:	Dies:
+Mo–Fr	Dl–Dv
+Take this curve out	Treu aquesta corba
+A curve	Una corba
+Typical day…	Dia típic…
+Quiet village	Poble tranquil
+Town with rush hours	Ciutat amb hores punta
+The same all day	Igual tot el dia
+No curve: 1 all day.	Cap corba: 1 tot el dia.
+Take the point out	Treu el punt
+Point	Punt
+Smart unwrap	Desplegament intel·ligent
+Every flat side apart in the picture, no faces on top of one another (all faces if none is selected)	Cada costat pla per separat a la imatge, sense cares l'una sobre l'altra (totes, si no n'hi ha cap de seleccionada)
+Box unwrap	Desplegament en caixa
+The six sides of a box apart in the picture	Els sis costats d'una caixa per separat a la imatge
+Flip ↔	Gira ↔
+Flip ↕	Gira ↕
+Scale ×2	Escala ×2
+Scale ÷2	Escala ÷2
+Fit	Ajusta
+Stretched to fill the picture	Estirat per omplir la imatge
+Pack islands	Empaqueta illes
+Average island scale	Iguala l'escala de les illes
+Seams from islands	Costures a partir d'illes
+Click: a face (Shift adds) · drag: move the selected · wheel: zoom · right button: pan	Clic: una cara (Maj afegeix) · arrossega: mou la selecció · roda: zoom · botó dret: desplaça
+Could not keep the views	No s'han pogut desar les vistes
+Saved views	Vistes desades
+Places of the map to come back to: Ctrl+1…9 goes to the first nine, Ctrl+Shift+1…9 keeps the view there	Llocs del mapa als quals tornar: Ctrl+1…9 va als nou primers, Ctrl+Maj+1…9 hi desa la vista
+Keep this view	Desa aquesta vista
+None yet	Encara cap
+Go	Ves-hi
+Earlier in the list	Abans a la llista
+Later in the list	Després a la llista
+Take the view now instead	Pren la vista actual en lloc seu
+Keep proportions	Conserva les proporcions
+Back to its own size	Torna a la mida pròpia
+Updates	Actualitzacions
+This version:	Aquesta versió:
+New version:	Versió nova:
+Install and restart	Instal·la i reinicia
+Not now	Ara no
+What changed	Què ha canviat
+Downloading and installing	Baixant i instal·lant
+Installed version	Versió instal·lada
+openMapper restarts when you save the map.	openMapper es reinicia quan desis el mapa.
+Looking for a new version…	Cercant una versió nova…
+This is the newest version.	Aquesta és la versió més nova.
+Download it from GitHub by hand	Baixa-la de GitHub a mà
+When there is a new version:	Quan hi ha una versió nova:
+Offer it to me	Ofereix-me-la
+Install it and restart by itself	Instal·la-la i reinicia sol
+Never look for updates	No cerquis mai actualitzacions
+Check now	Comprova ara
+Never offer updates again	No m'ofereixis més actualitzacions
+The release has no package	La versió no té cap paquet
+No automatic updates for this system.	No hi ha actualitzacions automàtiques per a aquest sistema.
+No connection to GitHub: are you online?	Sense connexió amb GitHub: tens internet?
+The release has no SHA256SUMS: not installed.	La versió no té SHA256SUMS: no s'ha instal·lat.
+The package is not in SHA256SUMS: not installed.	El paquet no és a SHA256SUMS: no s'ha instal·lat.
+The download does not match its checksum: not installed.	La baixada no coincideix amb la suma de verificació: no s'ha instal·lat.
+Could not replace the program	No s'ha pogut substituir el programa
+The package has no program in it.	El paquet no conté cap programa.
+openMapper has stopped:	openMapper s'ha aturat:
+The log with the details:	El registre amb els detalls:

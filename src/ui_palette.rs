@@ -27,6 +27,12 @@ macro_rules! cmd {
     };
 }
 
+macro_rules! lang_cmd {
+    ($l:ident, $name:literal, $words:literal) => {
+        Command { icon: Icon::Settings, name: $name, words: concat!("language interface язык интерфейс ", $words), key: "", run: |_, _, a| a.push(Action::SetLang(crate::i18n::Lang::$l)) }
+    };
+}
+
 fn commands() -> Vec<Command> {
     vec![
         // File
@@ -101,10 +107,35 @@ fn commands() -> Vec<Command> {
         // Help
         cmd!(Icon::CheckCircle, "Getting started", "С чего начать", "guide tutorial help учебник помощь", "", |_, _, a| a.push(Action::Guide)),
         cmd!(Icon::Help, "Controls", "Управление", "keys mouse shortcuts клавиши мышь", "", |st, _, _| st.help_open = true),
-        cmd!(Icon::Settings, "Русский язык", "English language", "language interface язык интерфейс", "", |_, _, a| {
-            let other = if crate::i18n::get() == crate::i18n::Lang::Ru { crate::i18n::Lang::En } else { crate::i18n::Lang::Ru };
-            a.push(Action::SetLang(other))
-        }),
+        // (a language is named in itself: the list does not change with the one chosen)
+        lang_cmd!(En, "English", "english"),
+        lang_cmd!(De, "Deutsch", "german"),
+        lang_cmd!(Fr, "Français", "french francais"),
+        lang_cmd!(Ru, "Русский", "russian русский"),
+        lang_cmd!(Uk, "Українська", "ukrainian українська"),
+        lang_cmd!(Be, "Беларуская", "belarusian беларуская"),
+        lang_cmd!(Kk, "Қазақша", "kazakh қазақша"),
+        lang_cmd!(Pl, "Polski", "polish"),
+        lang_cmd!(Cs, "Čeština", "czech cestina"),
+        lang_cmd!(Hu, "Magyar", "hungarian"),
+        lang_cmd!(Es, "Español", "spanish espanol"),
+        lang_cmd!(Ca, "Català", "catalan catala"),
+        lang_cmd!(Pt, "Português (Brasil)", "portuguese brazil brasil"),
+        lang_cmd!(PtPt, "Português (Portugal)", "portuguese portugal"),
+        lang_cmd!(It, "Italiano", "italian"),
+        lang_cmd!(Nl, "Nederlands", "dutch"),
+        lang_cmd!(Sv, "Svenska", "swedish"),
+        lang_cmd!(Tr, "Türkçe", "turkish turkce"),
+        lang_cmd!(Ja, "日本語", "japanese"),
+        lang_cmd!(ZhTw, "繁體中文", "traditional chinese taiwan hong kong"),
+        lang_cmd!(Ko, "한국어", "korean"),
+        lang_cmd!(Th, "ไทย", "thai"),
+        lang_cmd!(Vi, "Tiếng Việt", "vietnamese"),
+        lang_cmd!(Id, "Bahasa Indonesia", "indonesian"),
+        lang_cmd!(Ms, "Bahasa Melayu", "malay"),
+        lang_cmd!(Tl, "Filipino", "tagalog"),
+        lang_cmd!(Zh, "中文 (简体)", "chinese simplified"),
+        lang_cmd!(Hi, "हिन्दी", "hindi"),
         // where features live
         cmd!(Icon::Bus, "Place a bus stop", "Поставить остановку", "stop busstop остановка", "", |_, ed, _| {
             ed.set_tool(Tool::Logic);

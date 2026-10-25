@@ -1,0 +1,2129 @@
+Could not open the map	मैप नहीं खुल सका
+The next 100 tiles are loaded, the others are hidden	अगली 100 टाइलें लोड हो गईं, बाकी छिपी हैं
+Find the place in the window and build from it	विंडो में जगह खोजें और वहीं से बनाएँ
+Your map is ready. Start with a road!	आपका मैप तैयार है। सड़क से शुरू करें!
+Export the map for sharing	साझा करने के लिए मैप एक्सपोर्ट करें
+Exported:	एक्सपोर्ट हुआ:
+files	फ़ाइलें
+files the map names were not found: the readme lists them	मैप में बताई गई फ़ाइलें नहीं मिलीं: readme में उनकी सूची है
+Could not export	एक्सपोर्ट नहीं हो सका
+A ring road with line 1 on it: save, then try it in openOMSI (F5).	लाइन 1 वाली रिंग रोड: सेव करें, फिर openOMSI (F5) में आज़माएँ।
+The sample could not be made	नमूना नहीं बन सका
+In multiplayer the host saves the map. Leave the session to save this as a copy of your own.	मल्टीप्लेयर में मैप होस्ट सेव करता है। अपनी कॉपी सेव करने के लिए सेशन छोड़ें।
+Saved:	सहेजा गया:
+Tip: place a start point (Game logic > Start points) so the bus has somewhere to appear	सुझाव: स्टार्ट पॉइंट रखें (गेम लॉजिक > स्टार्ट पॉइंट) ताकि बस के प्रकट होने की जगह हो
+Could not save (the changes are still here, nothing is lost)	सेव नहीं हो सका (बदलाव यहीं हैं, कुछ खोया नहीं)
+The unsaved changes are back. Save to keep them.	बिना सेव किए बदलाव वापस आ गए। रखने के लिए सेव करें।
+Could not restore the changes	बदलाव वापस नहीं लाए जा सके
+openOMSI was not found	openOMSI नहीं मिला
+From the start point	स्टार्ट पॉइंट से
+The map has no start point: place one with Game logic > Start points	मैप में स्टार्ट पॉइंट नहीं है: गेम लॉजिक > स्टार्ट पॉइंट से रखें
+Starting openOMSI…	openOMSI शुरू हो रहा है…
+To drive the map in OMSI 2 itself it has to be copied into the OMSI 2 folder (Maps, and the objects, roads and textures made for it). Nothing that is there is replaced except earlier copies of this map. Copy it there?	OMSI 2 में ही मैप चलाने के लिए उसे OMSI 2 फ़ोल्डर में कॉपी करना होगा (Maps, और उसके लिए बने ऑब्जेक्ट, सड़कें और टेक्सचर)। वहाँ मौजूद कुछ भी नहीं बदलेगा, सिर्फ़ इस मैप की पिछली कॉपियाँ बदलेंगी। वहाँ कॉपी करें?
+Starting OMSI 2: choose the map	OMSI 2 शुरू हो रहा है: मैप चुनें
+The map is copied into the OMSI 2 folder; OMSI 2 itself runs on Windows only:	मैप OMSI 2 फ़ोल्डर में कॉपी हो गया; OMSI 2 सिर्फ़ Windows पर चलता है:
+Could not copy the map into OMSI 2	मैप को OMSI 2 में कॉपी नहीं किया जा सका
+Click on the map to place it	रखने के लिए मैप पर क्लिक करें
+Open a map (its global.cfg)	मैप खोलें (उसकी global.cfg)
+The map is back as it was before that save	मैप उस सेव से पहले जैसा हो गया
+Could not go back	वापस नहीं जाया जा सका
+Export a plan of the map	मैप का प्लान एक्सपोर्ट करें
+Plan saved:	प्लान सेव हुआ:
+Mods, models and pictures	मॉड, मॉडल और तस्वीरें
+Import assets	एसेट इम्पोर्ट करें
+…or choose a mod folder	…या मॉड फ़ोल्डर चुनें
+Click on the map to put it there	वहाँ रखने के लिए मैप पर क्लिक करें
+Could not make the shape	आकार नहीं बन सका
+Choose the OMSI 2 folder	OMSI 2 फ़ोल्डर चुनें
+That is not an OMSI 2 folder (Omsi.exe, maps and Vehicles must be in it)	यह OMSI 2 फ़ोल्डर नहीं है (उसमें Omsi.exe, maps और Vehicles होने चाहिए)
+This object has no textures to make PBR maps of	इस ऑब्जेक्ट में PBR मैप बनाने के लिए टेक्सचर नहीं हैं
+Could not copy the map	मैप कॉपी नहीं हो सका
+Could not move the map	मैप स्थानांतरित नहीं हो सका
+Terrain flattened; splines laid on it:	भूभाग समतल हुआ; बिछाए गए स्प्लाइन:
+This road type has no textures to make PBR maps of	इस सड़क प्रकार में PBR मैप बनाने के लिए टेक्सचर नहीं हैं
+Pictures	तस्वीरें
+Only 100 tiles round the camera are loaded; click on the empty zone to load the next 100	कैमरे के आसपास की सिर्फ़ 100 टाइलें लोड हैं; अगली 100 लोड करने के लिए खाली क्षेत्र पर क्लिक करें
+All tiles are loaded	सभी टाइलें लोड हैं
+Import the map's thumbnail	मैप का थंबनेल इम्पोर्ट करें
+The map's thumbnail is set: openOMSI shows it where maps are chosen.	मैप का थंबनेल सेट हो गया: openOMSI मैप चुनते समय उसे दिखाता है।
+Could not use the picture	तस्वीर इस्तेमाल नहीं हो सकी
+Map camera	मैप कैमरा
+The map opens with this view from now on.	अब से मैप इसी व्यू में खुलेगा।
+Add ground texture	ज़मीन का टेक्सचर जोड़ें
+View kept as	व्यू इस नाम से रखा गया:
+No view kept as	इस नाम से कोई व्यू नहीं रखा:
+Files changed on disk: the catalogue and models are updated	डिस्क पर फ़ाइलें बदलीं: कैटलॉग और मॉडल अपडेट हो गए
+The track does not run over the map's tiles	ट्रैक मैप की टाइलों पर से नहीं गुज़रता
+Road along a GPS track	GPS ट्रैक के साथ सड़क
+Roads built:	बनी सड़कें:
+junctions:	जंक्शन:
+stops:	स्टॉप:
+Lines from OpenStreetMap	OpenStreetMap से लाइनें
+lines:	लाइनें:
+trips found their way:	रास्ता मिलने वाले ट्रिप:
+buildings:	इमारतें:
+trees:	पेड़:
+Start point	स्टार्ट पॉइंट
+Start	शुरू करें
+a start point	एक स्टार्ट पॉइंट
+From OpenStreetMap	OpenStreetMap से
+Picture saved:	तस्वीर सेव हुई:
+Could not save the picture	तस्वीर सेव नहीं हो सकी
+The graphics could not be started.	ग्राफ़िक्स शुरू नहीं हो सका।
+Flying speed	उड़ान की गति
+copy	कॉपी
+Only maps of the content folder can be moved	सिर्फ़ कंटेंट फ़ोल्डर के मैप स्थानांतरित हो सकते हैं
+Only assets of the content folder can be deleted	सिर्फ़ कंटेंट फ़ोल्डर के एसेट हटाए जा सकते हैं
+Could not write the object	ऑब्जेक्ट लिखा नहीं जा सका
+Select an object to edit its mesh	मेश बदलने के लिए ऑब्जेक्ट चुनें
+A copy of its own was made: the original type is unchanged	इसकी अपनी कॉपी बनी: मूल प्रकार नहीं बदला
+Cannot edit this object	इस ऑब्जेक्ट को बदला नहीं जा सकता
+Point at an edge to cut across its ring of faces	फ़ेस की रिंग को आर-पार काटने के लिए किनारे पर इंगित करें
+Objects made:	बने ऑब्जेक्ट:
+select the faces to separate	अलग करने के लिए फ़ेस चुनें
+Separated into an object of its own	अलग ऑब्जेक्ट में बाँटा गया
+Add object	ऑब्जेक्ट जोड़ें
+select what to export (objects, roads)	एक्सपोर्ट के लिए चुनें (ऑब्जेक्ट, सड़कें)
+Export the selection	चयन एक्सपोर्ट करें
+unknown format	अज्ञात फ़ॉर्मैट
+the models are still loading: try again in a moment	मॉडल अभी लोड हो रहे हैं: थोड़ी देर में फिर कोशिश करें
+this material has no texture	इस मटीरियल में टेक्सचर नहीं है
+cannot read	पढ़ा नहीं जा सकता
+Export the texture	टेक्सचर एक्सपोर्ट करें
+Texture saved:	टेक्सचर सेव हुआ:
+Choose a picture	तस्वीर चुनें
+give the material a texture first: its maps go beside it	पहले मटीरियल को टेक्सचर दें: उसके मैप उसके पास रखे जाते हैं
+Import materials (an .mtl, a model, or the pictures of one PBR material)	मटीरियल इम्पोर्ट करें (.mtl, मॉडल, या एक PBR मटीरियल की तस्वीरें)
+Materials and pictures	मटीरियल और तस्वीरें
+no materials found there	वहाँ कोई मटीरियल नहीं मिला
+Materials added:	जोड़े गए मटीरियल:
+nothing to bake	बेक करने को कुछ नहीं
+the object has no lamps to bake the night light of	ऑब्जेक्ट में कोई लैंप नहीं है जिसकी रात की रोशनी बेक हो सके
+Baked into	बेक हुआ:
+select a road or spline first	पहले सड़क या स्प्लाइन चुनें
+the road's type is still loading: try again in a moment	सड़क का प्रकार अभी लोड हो रहा है: थोड़ी देर में फिर कोशिश करें
+these splines have no shape to see	इन स्प्लाइन का कोई दिखने वाला आकार नहीं है
+Replace by an object	ऑब्जेक्ट से बदलें
+Made into an object: Tab edits its mesh	ऑब्जेक्ट बन गया: Tab से उसका मेश बदलें
+Signal head made: click where it stands (near a crossing with a light program it links to it)	सिग्नल हेड बना: क्लिक करके रखें कि कहाँ है (लाइट प्रोग्राम वाले चौराहे के पास यह उससे जुड़ जाएगा)
+Choose a picture or a texture	तस्वीर या टेक्सचर चुनें
+cannot read the picture	तस्वीर पढ़ी नहीं जा सकती
+Picture made: click where it goes (it can be moved, turned and scaled after)	तस्वीर बनी: क्लिक करके रखें कि कहाँ जाएगी (बाद में इसे हिला, घुमा और स्केल कर सकते हैं)
+Light made: click where it shines	लाइट बनी: क्लिक करके रखें कि कहाँ चमकेगी
+Choose a sound	आवाज़ चुनें
+Sounds	आवाज़ें
+Sound source made: click where it plays	साउंड सोर्स बना: क्लिक करके रखें कि कहाँ बजेगा
+Street lamp made: click where it stands	स्ट्रीट लैंप बना: क्लिक करके रखें कि कहाँ खड़ा है
+Paint by slope and height	ढलान और ऊँचाई से पेंट करें
+By slope and height	ढलान और ऊँचाई से
+The chosen layer painted over the whole map where the ground is so steep (and so high)	चुनी हुई लेयर पूरे मैप पर वहाँ पेंट होती है जहाँ ज़मीन इतनी तीखी (और इतनी ऊँची) है
+Slope	ढलान
+Height	ऊँचाई
+Fade	फ़ेड
+Cover	कवर
+Paint the map	मैप पेंट करें
+Choose a layer above the base ground	बेस ज़मीन के ऊपर की लेयर चुनें
+No ground on the map is like that	मैप पर ऐसी कोई ज़मीन नहीं है
+Painted	पेंट हुआ
+Missing objects	ऑब्जेक्ट फ़ाइलें गायब
+Missing roads and splines	सड़क और स्प्लाइन फ़ाइलें गायब
+Missing textures	टेक्सचर गायब
+Road ends not joined	सड़कों के जुड़े न होने वाले सिरे
+Links to splines that are gone	गायब हुए स्प्लाइन के लिंक
+Bus stops away from a road	सड़क से दूर बस स्टॉप
+Start points away from a road	सड़क से दूर स्टार्ट पॉइंट
+Start points without their object	बिना ऑब्जेक्ट वाले स्टार्ट पॉइंट
+No start point	स्टार्ट पॉइंट नहीं है
+IDCodes used twice	दो बार इस्तेमाल हुए IDCode
+Next IDCode too low	अगला IDCode बहुत कम है
+Objects off their tile	अपनी टाइल से बाहर ऑब्जेक्ट
+Tiles without a file	बिना फ़ाइल की टाइलें
+Tiles without ground	बिना ज़मीन की टाइलें
+Trips without a way	बिना रास्ते के ट्रिप
+Tours without departures	बिना डिपार्चर के टूर
+Tours without a depot	बिना डिपो के टूर
+Traffic groups not in the AI lists	AI सूचियों में न होने वाले ट्रैफ़िक ग्रुप
+Stops no trip calls at	जहाँ कोई ट्रिप नहीं रुकता वे स्टॉप
+Signal routes naming what is gone	गायब चीज़ों के नाम वाले सिग्नल रूट
+Chrono changes of what is gone	गायब चीज़ों के क्रोनो बदलाव
+Lamps lighting no ground at night	रात में ज़मीन को रोशन न करने वाले लैंप
+Tiles with very many objects	बहुत ज़्यादा ऑब्जेक्ट वाली टाइलें
+Objects linked to one that is gone	गायब ऑब्जेक्ट से जुड़े ऑब्जेक्ट
+Signal heads linked to no crossing	बिना चौराहे से जुड़े सिग्नल हेड
+Depot files (destinations)	डिपो फ़ाइलें (गंतव्य)
+The map uses an object (.sco) that is not installed. The game leaves it out. Install the mod it comes from, or delete the object. A junction of openMapper's whose file is gone (the map was moved without it) is made again for its roads with "Fix".	मैप ऐसा ऑब्जेक्ट (.sco) इस्तेमाल करता है जो इंस्टॉल नहीं है। गेम उसे छोड़ देगा। जिस मॉड से वह आता है उसे इंस्टॉल करें या ऑब्जेक्ट हटाएँ। openMapper का जंक्शन जिसकी फ़ाइल गायब है (मैप उसके बिना ले जाया गया) उसकी सड़कों के लिए "ठीक करें" से फिर बन जाता है।
+The map uses a road or spline type (.sli) that is not installed: that road is missing in the game, and buses cannot drive there.	मैप ऐसा सड़क या स्प्लाइन प्रकार (.sli) इस्तेमाल करता है जो इंस्टॉल नहीं है: वह सड़क गेम में नहीं होगी और बसें वहाँ नहीं चल सकेंगी।
+An object or road names a picture that cannot be found. It will look white or black in the game.	कोई ऑब्जेक्ट या सड़क ऐसी तस्वीर बताती है जो नहीं मिल रही। गेम में वह सफ़ेद या काली दिखेगी।
+Two road ends lie on one another but are not joined. Traffic still finds its way (the game joins lanes by their ends), but rows of lamps and posts and the road's texture do not run on across, and the editor does not treat them as one road. "Join" links them.	दो सड़कों के सिरे एक-दूसरे पर हैं पर जुड़े नहीं हैं। ट्रैफ़िक फिर भी रास्ता खोज लेगा (गेम लेन को सिरों से जोड़ता है), पर लैंप और खंभों की कतारें और सड़क का टेक्सचर आगे नहीं जाते, और एडिटर इन्हें एक सड़क नहीं मानता। "जोड़ें" इन्हें जोड़ देता है।
+A spline says it goes on into another one that no longer exists. "Fix" forgets that link.	एक स्प्लाइन कहता है कि वह किसी दूसरे में जाता है जो अब नहीं है। "ठीक करें" वह लिंक हटा देता है।
+A bus stop belongs to the lane it stands beside (within about 25 m). This one has none near, so buses cannot stop at it. Move it next to the road, or "Fix" puts it at the kerb of the nearest lane (within 80 m).	बस स्टॉप उस लेन का होता है जिसके पास वह खड़ा है (करीब 25 m के भीतर)। इसके पास कोई नहीं है, इसलिए बसें यहाँ नहीं रुक सकतीं। इसे सड़क के पास ले जाएँ, या "ठीक करें" इसे सबसे नज़दीकी लेन (80 m के भीतर) के किनारे रख देता है।
+A start point is where the bus appears. This one is away from any lane: fine in a depot yard, otherwise the bus starts off the road.	स्टार्ट पॉइंट वह जगह है जहाँ बस प्रकट होती है। यह किसी लेन से दूर है: डिपो यार्ड में ठीक है, वरना बस सड़क से बाहर शुरू होगी।
+A start point refers to an object that was deleted. "Fix" removes the start point.	स्टार्ट पॉइंट हटाए गए ऑब्जेक्ट का हवाला देता है। "ठीक करें" स्टार्ट पॉइंट हटा देता है।
+There is nowhere for the bus to appear. Place a start point (Game logic > Start points) on a road, or "Fix" puts one on a lane some 40 m before a bus stop.	बस के प्रकट होने की कोई जगह नहीं है। सड़क पर स्टार्ट पॉइंट रखें (गेम लॉजिक > स्टार्ट पॉइंट), या "ठीक करें" इसे बस स्टॉप से करीब 40 m पहले लेन पर रख देता है।
+Two things on the map share one IDCode: links, timetables and start points may pick the wrong one.	मैप की दो चीज़ें एक IDCode साझा करती हैं: लिंक, टाइमटेबल और स्टार्ट पॉइंट गलत वाली चीज़ चुन सकते हैं।
+The counter for new IDCodes is below codes already used, so new objects would get codes twice. "Fix" raises it.	नए IDCode का काउंटर पहले से इस्तेमाल हुए कोड से कम है, इसलिए नए ऑब्जेक्ट को दोहराए कोड मिलेंगे। "ठीक करें" उसे बढ़ा देता है।
+An object standing on the ground lies outside its own tile. The game does not show it. Move it a little or put it again.	ज़मीन पर खड़ा ऑब्जेक्ट अपनी टाइल से बाहर है। गेम उसे नहीं दिखाएगा। उसे थोड़ा हिलाएँ या फिर से रखें।
+global.cfg lists tiles whose file is not there. The game leaves them out; they stay listed, as start points and timetables count tiles by their place in the list.	global.cfg में ऐसी टाइलें हैं जिनकी फ़ाइल नहीं है। गेम उन्हें छोड़ देता है; वे सूची में रहती हैं क्योंकि स्टार्ट पॉइंट और टाइमटेबल टाइलों को सूची में उनकी जगह से गिनते हैं।
+A tile has no height file: its ground is flat. Saving writes one.	टाइल की ऊँचाई फ़ाइल नहीं है: उसकी ज़मीन समतल है। सेव करने पर एक लिखी जाती है।
+No way along the roads was found through this trip's stops, so buses cannot drive it. Open it in Map > Lines and timetable to see where it breaks.	इस ट्रिप के स्टॉप से होकर सड़कों पर कोई रास्ता नहीं मिला, इसलिए बसें इस पर नहीं चल सकतीं। कहाँ टूटता है देखने के लिए इसे मैप > लाइनें और टाइमटेबल में खोलें।
+A tour (a bus's day on the line) has no trips, so no bus runs it.	टूर (लाइन पर बस का एक दिन) में कोई ट्रिप नहीं है, इसलिए कोई बस इसे नहीं चलाती।
+A tour names no depot or group of the AI lists (or one that is not there): the game has no vehicle to send on it. Choose a depot for it in the Lines window, or "Fix" gives it the map's depot (one of OMSI 2's MAN buses added where the map has none).	टूर किसी डिपो या AI सूची के ग्रुप का नाम नहीं देता (या जो है वह मौजूद नहीं): गेम के पास इसके लिए भेजने को वाहन नहीं है। लाइन विंडो में इसके लिए डिपो चुनें, या "ठीक करें" इसे मैप का डिपो दे देता है (जहाँ मैप में नहीं है वहाँ OMSI 2 की MAN बसें जोड़ी जाती हैं)।
+The unscheduled traffic names a group that the AI lists do not have: those cars never appear. Add the group in Map > Traffic and AI, or "Fix" copies it from OMSI 2's own maps where they have it.	बिना शेड्यूल का ट्रैफ़िक ऐसा ग्रुप बताता है जो AI सूचियों में नहीं है: वे कारें कभी नहीं आएँगी। ग्रुप मैप > ट्रैफ़िक और AI में जोड़ें, या "ठीक करें" उसे OMSI 2 के अपने मैप से कॉपी कर देता है जहाँ वह है।
+A stop of the timetable that no trip calls at. Nothing is wrong, it is only not used yet.	टाइमटेबल का ऐसा स्टॉप जहाँ कोई ट्रिप नहीं रुकता। कुछ गलत नहीं है, बस अभी इस्तेमाल नहीं हो रहा।
+A chrono scenario takes away, retypes or relabels something that is no longer on the map (it was deleted or its IDCode changed): that change does nothing. Open Map > Chrono scenarios, the scenario's properties, and take the change out.	क्रोनो परिदृश्य ऐसी चीज़ हटाता, बदलता या उसका नाम बदलता है जो अब मैप पर नहीं है (हटा दी गई या उसका IDCode बदल गया): वह बदलाव कुछ नहीं करता। मैप > क्रोनो परिदृश्य में परिदृश्य के गुण खोलें और वह बदलाव हटा दें।
+A tile holds far more objects than the stock maps' tiles (up to some 600): the game may stutter when it loads it or looks across it. Thin out a wood planted too densely (Plant brush, Clear) or plant it with more space between the trees.	टाइल में स्टॉक मैप की टाइलों (करीब 600 तक) से कहीं ज़्यादा ऑब्जेक्ट हैं: उसे लोड करते या उसके पार देखते समय गेम अटक सकता है। बहुत घने जंगल को विरल करें (प्लांट ब्रश, हटाएँ) या पेड़ दूर-दूर लगाएँ।
+Street lamps stand on a tile the game does not light from its lamps ([variable_terrainlightmap] is off): at night the ground under them stays dark (unless the tile's light map file was made by OMSI 2's editor). "Fix" turns it on, as on nearly every tile of the stock maps.	स्ट्रीट लैंप ऐसी टाइल पर हैं जिसे गेम अपने लैंप से रोशन नहीं करता ([variable_terrainlightmap] बंद है): रात में उनके नीचे की ज़मीन अँधेरी रहती है (जब तक टाइल की लाइट मैप फ़ाइल OMSI 2 के एडिटर ने न बनाई हो)। "ठीक करें" इसे चालू कर देता है, जैसा स्टॉक मैप की लगभग हर टाइल पर है।
+An object takes its state ([varparent]) from an object no longer on the map: a signal head stays dark, a display blank. Link it to another in its properties (Linked objects), or "Fix" forgets the link.	एक ऑब्जेक्ट अपनी स्थिति ([varparent]) ऐसे ऑब्जेक्ट से लेता है जो अब मैप पर नहीं है: सिग्नल हेड बुझा रहता है, डिस्प्ले खाली। इसके गुणों (जुड़े ऑब्जेक्ट) में इसे किसी दूसरे से जोड़ें, या "ठीक करें" लिंक हटा देता है।
+A traffic light's signal head takes its light from a crossing's program ([varparent]); this one is linked to none while others like it are, so it stays dark in the game. Select it and link it in its properties (Linked objects).	ट्रैफ़िक लाइट का सिग्नल हेड अपनी रोशनी चौराहे के प्रोग्राम ([varparent]) से लेता है; यह किसी से जुड़ा नहीं है जबकि इसके जैसे दूसरे जुड़े हैं, इसलिए गेम में यह बुझा रहता है। इसे चुनें और गुणों (जुड़े ऑब्जेक्ट) में जोड़ें।
+A depot file (.hof) gives the buses their destinations, the stop names on their displays and the routes their IBIS knows. Without one the signs stay empty and the IBIS knows no line. "Fix" makes it from the map's lines, or adds what the lines need to the map's own (Map > Depot files to see and change it).	डिपो फ़ाइल (.hof) बसों को उनके गंतव्य, डिस्प्ले पर स्टॉप के नाम और वे रूट देती है जो उनका IBIS जानता है। इसके बिना बोर्ड खाली रहते हैं और IBIS कोई लाइन नहीं जानता। "ठीक करें" इसे मैप की लाइनों से बनाता है, या लाइनों को जो चाहिए उसे मैप की अपनी फ़ाइल में जोड़ता है (देखने और बदलने के लिए मैप > डिपो फ़ाइलें)।
+A signal route names a signal or track pieces no longer on the map: the signal may never clear. Open Map > Signal routes and take the track again, or delete the route.	सिग्नल रूट ऐसा सिग्नल या ट्रैक के हिस्से बताता है जो अब मैप पर नहीं हैं: सिग्नल शायद कभी न खुले। मैप > सिग्नल रूट खोलकर ट्रैक फिर से लें, या रूट हटाएँ।
+font	फ़ॉन्ट
+used	इस्तेमाल में
+in	में
+a ground texture of the map	मैप की ज़मीन का टेक्सचर
+splines	स्प्लाइन
+apart	की दूरी पर
+spline	स्प्लाइन
+goes on into	आगे जाता है
+no road near	पास में सड़क नहीं
+from the road	सड़क से
+start point	स्टार्ट पॉइंट
+object	ऑब्जेक्ट
+The map has no start point	मैप में स्टार्ट पॉइंट नहीं है
+things have it	के पास यह है
+highest in use:	सबसे ऊँचा इस्तेमाल में:
+tile	टाइल
+no .terrain file: flat	.terrain फ़ाइल नहीं: समतल
+objects	ऑब्जेक्ट
+lamps	लैंप
+The map has no depot file	मैप में डिपो फ़ाइल नहीं है
+the buses show no destination	बसें गंतव्य नहीं दिखातीं
+named by the map's depot, but found nowhere	मैप के डिपो में नाम है, पर कहीं नहीं मिला
+knows none of the	इनमें से किसी को नहीं जानता
+lacks	की कमी है
+destinations of the lines	लाइनों के गंतव्य
+the lines need	लाइनों को चाहिए
+destinations	गंतव्य
+stops	स्टॉप
+routes	रूट
+tour	टूर
+no depot named	डिपो नहीं बताया
+not in the AI lists:	AI सूचियों में नहीं:
+the stop has no object:	स्टॉप में ऑब्जेक्ट नहीं:
+no road beside	पास में सड़क नहीं:
+no way	रास्ता नहीं
+no way found	रास्ता नहीं मिला
+Route	मार्ग
+gone	गायब
+changes of nothing	बेकार बदलाव
+time	बार
+times	बार
+Fix from the map check	मैप जाँच से सुधार
+Car groups from OMSI 2's maps	OMSI 2 के मैप से कार ग्रुप
+A depot for the tour	टूर के लिए डिपो
+A depot file from the lines	लाइनों से डिपो फ़ाइल
+Depot file: what the lines need	डिपो फ़ाइल: लाइनों को क्या चाहिए
+Map check	मैप जाँच
+Check again	फिर जाँचें
+Checking the map…	मैप जाँचा जा रहा है…
+errors	त्रुटियाँ
+warnings	चेतावनियाँ
+notes	टिप्पणियाँ
+Nothing found: the map looks fine.	कुछ नहीं मिला: मैप ठीक दिखता है।
+Fix all	सभी ठीक करें
+Join	जोड़ें
+Fix	ठीक करें
+Click to fly there	वहाँ उड़कर जाने के लिए क्लिक करें
+Fixed:	ठीक किया:
+it has parts openMapper does not write	इसमें ऐसा हिस्सा है जो openMapper नहीं लिखता
+A host on the internet needs a password of at least	इंटरनेट पर होस्ट को कम से कम इतना लंबा पासवर्ड चाहिए
+Type a password, or choose explicitly to host without one	पासवर्ड लिखें, या बिना पासवर्ड के होस्ट करना स्पष्ट रूप से चुनें
+Could not listen on port	पोर्ट पर सुन नहीं सका
+The way in for the tunnel could not be opened	टनल का प्रवेश नहीं खुल सका
+Hosting this map: others can join it now	मैप होस्ट हो रहा है: अब दूसरे जुड़ सकते हैं
+Multiplayer ended: another map was opened	मल्टीप्लेयर खत्म: दूसरा मैप खोला गया
+Somebody changed this first: your edit was put back	किसी ने इसे पहले बदला: आपका बदलाव वापस कर दिया गया
+The host takes no more: the edit is too big, or the session holds as much as it may. Your edit was put back	होस्ट अब और नहीं लेता: बदलाव बहुत बड़ा है, या सेशन अपनी सीमा तक भर चुका है। आपका बदलाव वापस कर दिया गया
+That lies too far from the map for this session: your edit was put back	यह इस सेशन के लिए मैप से बहुत दूर है: आपका बदलाव वापस कर दिया गया
+tiles	टाइलें
+changed what you were editing: it is as they left it	ने वह बदल दिया जिसे आप बदल रहे थे: वह वैसा ही है जैसा उन्होंने छोड़ा
+The timetable, the traffic and the descriptions are the host's in multiplayer: your change was put back	मल्टीप्लेयर में टाइमटेबल, ट्रैफ़िक और विवरण होस्ट के होते हैं: आपका बदलाव वापस कर दिया गया
+Your conflicting edit was kept	आपका टकराने वाला बदलाव रखा गया
+Could not keep your conflicting edit; multiplayer stopped	आपका टकराने वाला बदलाव रखा नहीं जा सका; मल्टीप्लेयर रुक गया
+Too much of the others' work came in while your edit was held open: multiplayer stopped. The map stays open; it can be saved as a copy.	आपका बदलाव खुला रहते हुए दूसरों का बहुत ज़्यादा काम आ गया: मल्टीप्लेयर रुक गया। मैप खुला रहता है; उसे कॉपी के रूप में सेव किया जा सकता है।
+The connection to the host was lost. The map stays open; it can be saved as a copy.	होस्ट से कनेक्शन टूट गया। मैप खुला रहता है; उसे कॉपी के रूप में सेव किया जा सकता है।
+No OMSI 2 installation: the map has nowhere to go	OMSI 2 इंस्टॉल नहीं है: मैप के जाने की कोई जगह नहीं
+The host sent no map	होस्ट ने मैप नहीं भेजा
+The host's map could not be read	होस्ट का मैप पढ़ा नहीं जा सका
+No connection	कनेक्शन नहीं
+That address is not an openMapper host	इस पते पर openMapper होस्ट नहीं है
+Wrong password	गलत पासवर्ड
+The session is full	सेशन भरा हुआ है
+Type a name (up to 32 letters)	नाम लिखें (32 अक्षर तक)
+The host has another version of openMapper	होस्ट के पास openMapper का दूसरा संस्करण है
+Move forward	आगे
+Move back	पीछे
+Move left	बाएँ
+Move right	दाएँ
+Turn the camera left	कैमरा बाएँ घुमाएँ
+Turn the camera right	कैमरा दाएँ घुमाएँ
+Undo	पूर्ववत करें
+Redo	फिर करें
+Save	सेव करें
+Copy	कॉपी करें
+Cut	काटें
+Paste at the cursor	कर्सर पर चिपकाएँ
+Duplicate	डुप्लिकेट करें
+Select all	सब चुनें
+Find in the map	मैप में खोजें
+Search for a command	कमांड खोजें
+Tool: Select	टूल: चयन
+Tool: Roads	टूल: सड़कें
+Tool: Objects	टूल: ऑब्जेक्ट
+Tool: Game logic	टूल: गेम लॉजिक
+Tool: Terrain	टूल: भूभाग
+Tool: Paint	टूल: पेंट
+Tool: Tiles	टूल: टाइलें
+Turn the object (Shift: the other way)	ऑब्जेक्ट घुमाएँ (Shift: उल्टी दिशा में)
+Ruler	रूलर
+Knife	चाकू
+Move handles	मूव हैंडल
+Rotate handles	रोटेट हैंडल
+Scale handles	स्केल हैंडल
+Edit the mesh (vertices, edges, faces)	मेश बदलें (वर्टेक्स, एज, फ़ेस)
+Join the selected objects into one	चुने हुए ऑब्जेक्ट को एक में जोड़ें
+Build the planned road	योजनाबद्ध सड़क बनाएँ
+Tile grid on / off	टाइल ग्रिड चालू / बंद
+Group the selection	चयन को ग्रुप करें
+Ungroup	अनग्रुप करें
+Look straight down, north up	सीधे नीचे देखें, उत्तर ऊपर
+2D plan view on / off (3D: tilt and turn again)	2D टॉप व्यू चालू / बंद (3D: फिर झुकाएँ और घुमाएँ)
+Catalogue on / off	कैटलॉग चालू / बंद
+Overview map on / off	ओवरव्यू मैप चालू / बंद
+Lines window	लाइन विंडो
+Traffic window	ट्रैफ़िक विंडो
+Satellite and terrain window	सैटेलाइट और भूभाग विंडो
+Smaller brush	छोटा ब्रश
+Larger brush	बड़ा ब्रश
+Delete the selection	चयन हटाएँ
+Go to the selection	चयन पर जाएँ
+Test drive in openOMSI (Shift: from the camera)	openOMSI में टेस्ट ड्राइव (Shift: कैमरे से)
+Save a picture of the view	व्यू की तस्वीर सेव करें
+The map's own (global.cfg)	मैप का अपना (global.cfg)
+Description	विवरण
+Name in this language	इस भाषा में नाम
+Description in this language	इस भाषा में विवरण
+Remove this language	यह भाषा हटाएँ
+Not written yet: it is saved as soon as you type.	अभी लिखा नहीं गया: टाइप करते ही सेव हो जाएगा।
+Edit description	विवरण बदलें
+just now	अभी-अभी
+min ago	मिनट पहले
+h ago	घंटे पहले
+Unsaved changes found	बिना सेव किए बदलाव मिले
+openMapper was closed without saving the map	openMapper मैप सेव किए बिना बंद हुआ
+The changes kept by the autosave can be brought back. The map itself was not changed.	ऑटोसेव में रखे बदलाव वापस लाए जा सकते हैं। मैप खुद नहीं बदला।
+Restore the changes	बदलाव वापस लाएँ
+Drop them	छोड़ दें
+Nothing comes after it to join	इसके बाद जोड़ने को कुछ नहीं है
+The next piece runs the other way: reverse it first	अगला टुकड़ा उल्टी दिशा में है: पहले उसे पलटें
+The next piece lies on another tile	अगला टुकड़ा दूसरी टाइल पर है
+The two pieces are of different road types	दोनों टुकड़े अलग सड़क प्रकार के हैं
+The two pieces have different settings (path rules, ground, skew)	दोनों टुकड़ों की सेटिंग अलग हैं (पाथ नियम, ज़मीन, तिरछापन)
+A row of objects comes onto the next piece from another tile	वस्तुओं की एक कतार दूसरी टाइल से अगले टुकड़े पर आती है
+The two pieces do not bend, climb or bank alike: joined they would change shape	दोनों टुकड़े एक जैसे नहीं मुड़ते, चढ़ते या झुकते: जोड़ने पर आकार बदल जाएगा
+Earlier versions	पिछले संस्करण
+Before every save, the files it replaces are kept (the last 10 saves). Going back puts the map as it was before that save; later changes go.	हर सेव से पहले, वह जिन फ़ाइलों को बदलता है वे रखी जाती हैं (आखिरी 10 सेव)। वापस जाने पर मैप उस सेव से पहले जैसा हो जाता है; बाद के बदलाव चले जाते हैं।
+No earlier versions yet: they appear once the map is saved again.	अभी कोई पिछला संस्करण नहीं: मैप फिर सेव होने पर वे दिखेंगे।
+before the save of	इस सेव से पहले का:
+Go back to this	इस पर वापस जाएँ
+could not keep a backup, nothing was saved	बैकअप नहीं रखा जा सका, कुछ सेव नहीं हुआ
+Red	लाल
+Yellow	पीला
+Green	हरा
+file not found	फ़ाइल नहीं मिली
+this object takes its model from a model file and cannot be edited here	इस ऑब्जेक्ट का मॉडल अलग मॉडल फ़ाइल से आता है और यहाँ बदला नहीं जा सकता
+the object has no mesh to edit	ऑब्जेक्ट में बदलने के लिए मेश नहीं है
+cannot read the object	ऑब्जेक्ट पढ़ा नहीं जा सकता
+Select	चुनें
+Terrain	भूभाग
+Paint	रंगाई
+Roads	सड़कें
+Objects	ऑब्जेक्ट
+Game logic	गेम लॉजिक
+Tiles	टाइलें
+Raise	ऊपर उठाएँ
+Lower	नीचे करें
+Smooth	चिकना करें
+Flatten	समतल करें
+Roughen	खुरदरा करें
+Ramp	रैंप
+Lake / river	झील / नदी
+Start points	स्टार्ट पॉइंट
+Bus stops	बस स्टॉप
+Car parks	पार्किंग
+AI paths	AI पाथ
+Other	अन्य
+Where the bus appears when a drive starts. Put it on a road or in the depot, facing the way to drive.	ड्राइव शुरू होने पर बस जहाँ प्रकट होती है। इसे सड़क पर या डिपो में, गाड़ी चलाने की दिशा में रखें।
+Where passengers wait. Put it beside the road at the kerb; name it on the right.	जहाँ यात्री इंतज़ार करते हैं। इसे सड़क के किनारे रखें; नाम दाईं ओर दें।
+Where parked cars stand. Click for one; with a row on, click the start and end of a row along the kerb.	जहाँ खड़ी कारें रहती हैं। एक के लिए क्लिक करें; कतार चालू हो तो किनारे के साथ कतार की शुरुआत और अंत पर क्लिक करें।
+Lanes the AI's cars or people follow. Draw like a road: it snaps to lane ends (green: joined, red: dead end) and along lanes. A car path runs the way you draw it.	वे लेन जिन पर AI की कारें या लोग चलते हैं। सड़क की तरह बनाएँ: यह लेन के सिरों से (हरा: जुड़ा, लाल: बंद सिरा) और लेन के साथ चिपकता है। कार का पाथ उसी दिशा में चलता है जिसमें आप बनाते हैं।
+Sound sources, help arrows and other helpers the game does not show.	साउंड सोर्स, मदद के तीर और दूसरे सहायक जो गेम में नहीं दिखते।
+Move (V): drag an arrow along X, Y or Z, a square in its plane, the circle over the ground	मूव (V): तीर को X, Y या Z के साथ खींचें, चौकोर को उसके तल में, गोले को ज़मीन पर
+Rotate (C): drag a ring to turn about X, Y or Z	रोटेट (C): X, Y या Z के चारों ओर घुमाने के लिए रिंग खींचें
+Scale (X): drag an arrow to scale along that axis, a square for two, the circle for all three	स्केल (X): उस अक्ष पर स्केल करने के लिए तीर खींचें, दो के लिए चौकोर, तीनों के लिए गोला
+These roads have no lanes of their own to take apart (rails stay as they are)	इन सड़कों की अपनी लेन नहीं हैं जिन्हें अलग किया जा सके (रेल जैसी हैं वैसी रहती हैं)
+Make the lanes editable	लेन बदलने योग्य बनाएँ
+Roads whose lanes are now editable:	जिन सड़कों की लेन अब बदली जा सकती हैं:
+Flatten the terrain	भूभाग समतल करें
+Select two things or more to group them	ग्रुप करने के लिए दो या अधिक चीज़ें चुनें
+Group	ग्रुप
+Grouped:	ग्रुप हुआ:
+Ungrouped	अनग्रुप हुआ
+Rename group	ग्रुप का नाम बदलें
+Ground levelled under objects:	ऑब्जेक्ट के नीचे ज़मीन समतल हुई:
+Move	मूव
+No object clicked: nothing linked	कोई ऑब्जेक्ट क्लिक नहीं हुआ: कुछ नहीं जुड़ा
+Too near the road's end to cut it there	सड़क के सिरे के बहुत पास, यहाँ काटा नहीं जा सकता
+No road under the cursor	कर्सर के नीचे सड़क नहीं है
+Ramp:	रैंप:
+Shape terrain	भूभाग आकार दें
+Paint ground	ज़मीन पेंट करें
+Clear plants	पौधे हटाएँ
+Plant	पौधे लगाएँ
+Rotate selection	चयन घुमाएँ
+Rotate	घुमाएँ
+Delete object	ऑब्जेक्ट हटाएँ
+Delete road	सड़क हटाएँ
+Delete selection	चयन हटाएँ
+Pick an object in the catalogue first	पहले कैटलॉग में ऑब्जेक्ट चुनें
+There is no tile here: add one with the Tiles tool	यहाँ टाइल नहीं है: "टाइलें" टूल से जोड़ें
+Place object	ऑब्जेक्ट रखें
+New stop	नया स्टॉप
+Linked to	इससे जुड़ा:
+choose its light in its properties	इसकी प्रॉपर्टी में इसकी लाइट चुनें
+Trees from OpenStreetMap	OpenStreetMap से पेड़
+Plant an area	क्षेत्र में पौधे लगाएँ
+Buildings from OpenStreetMap	OpenStreetMap से इमारतें
+Stops from OpenStreetMap	OpenStreetMap से स्टॉप
+Stop	बस स्टॉप
+Pick a car park in the list first	पहले सूची में पार्किंग चुनें
+Place car parks	पार्किंग रखें
+Car parks placed:	पार्किंग रखी गईं:
+Pick a road type in the catalogue first	पहले कैटलॉग में सड़क का प्रकार चुनें
+That bend is too sharp	यह मोड़ बहुत तीखा है
+Switch made	स्विच बना
+Junctions made:	बने जंक्शन:
+The road leaves the map: add tiles there first	सड़क मैप से बाहर जाती है: पहले वहाँ टाइलें जोड़ें
+Build road	सड़क बनाएँ
+Roads from OpenStreetMap	OpenStreetMap से सड़कें
+Pick a tree in the catalogue (or add some to the mix) first	पहले कैटलॉग में पेड़ चुनें (या मिश्रण में कुछ जोड़ें)
+Right-click a tile to remove it	टाइल हटाने के लिए उस पर राइट-क्लिक करें
+New tiles go next to the map	नई टाइलें मैप के बगल में जुड़ती हैं
+Add tile	टाइल जोड़ें
+Water	पानी
+Paint detail	पेंट का विवरण
+Ground layer order	ज़मीन की लेयर का क्रम
+Detail texture	डिटेल टेक्सचर
+Ground texture	ज़मीन का टेक्सचर
+Lamp light on the ground	ज़मीन पर लैंप की रोशनी
+Add tiles	टाइलें जोड़ें
+A map needs at least one tile	मैप में कम से कम एक टाइल रहनी चाहिए
+Remove tile	टाइल हटाएँ
+Pick a point (a dot at an end or where pieces meet) to take it out	हटाने के लिए बिंदु चुनें (सिरे पर या टुकड़ों के मिलने की जगह का गोला)
+Remove a point of the path	पाथ का बिंदु हटाएँ
+Point taken out	बिंदु हटा दिया गया
+A path of one piece: Del with nothing picked deletes it	एक टुकड़े का पाथ: कुछ चुने बिना Del उसे हटा देता है
+Extrude	एक्सट्रूड
+Inset	इनसेट
+Bevel	बेवल
+Loop cut	लूप कट
+click: done, right click / Esc: cancel, wheel: segments	क्लिक: हो गया, राइट-क्लिक / Esc: रद्द, व्हील: सेगमेंट
+Scale	स्केल
+Roads are not scaled: change their length and width in their properties	सड़कें स्केल नहीं होतीं: उनकी लंबाई और चौड़ाई उनके गुणों में बदलें
+Only the objects are scaled, the roads stay	सिर्फ़ ऑब्जेक्ट स्केल होते हैं, सड़कें वैसी ही रहती हैं
+Could not scale	स्केल नहीं हो सका
+Too near the end: drag the end's dot instead	सिरे के बहुत पास: इसके बजाय सिरे का बिंदु खींचें
+Add a point to the path	पाथ में बिंदु जोड़ें
+Point added: drag the dot where the pieces meet	बिंदु जुड़ा: टुकड़ों के मिलने की जगह का गोला खींचें
+Reshape road	सड़क का आकार बदलें
+Selected:	चुना गया:
+Copied:	कॉपी हुआ:
+Nothing copied yet	अभी कुछ कॉपी नहीं हुआ
+Paste	चिपकाएँ
+Level the ground	ज़मीन समतल करें
+Turn objects	ऑब्जेक्ट घुमाएँ
+Copies in a row	कतार में कॉपियाँ
+Left out (off the map):	छोड़ा गया (मैप से बाहर):
+Pasted (the rest is off the map):	चिपकाया गया (बाकी मैप से बाहर है):
+Edit object	ऑब्जेक्ट बदलें
+Lean with the ground	ज़मीन के साथ झुकाएँ
+Stand upright	सीधा खड़ा करें
+Change height	ऊँचाई बदलें
+Change road type	सड़क का प्रकार बदलें
+The selected roads are not one chain (they branch or leave gaps)	चुनी हुई सड़कें एक शृंखला नहीं हैं (शाखाएँ हैं या बीच में खाली जगह)
+Even slope	एकसमान ढलान
+Lay on the ground	ज़मीन पर बिछाएँ
+Remove the rows of objects along it first (they are measured from its start)	पहले इसके साथ ऑब्जेक्ट की कतारें हटाएँ (वे इसकी शुरुआत से नापी जाती हैं)
+Reverse direction	दिशा पलटें
+No road there to cut	यहाँ काटने के लिए सड़क नहीं है
+Cut the road	सड़क काटें
+Cut in two: each piece can now be changed on its own	दो में कटी: अब हर टुकड़ा अलग से बदला जा सकता है
+Join the pieces	टुकड़े जोड़ें
+Joined into one piece	एक टुकड़े में जुड़े
+Parallel copy	समानांतर कॉपी
+Overhead wire	ओवरहेड तार
+Back into the map	वापस मैप में
+Hang an object	ऑब्जेक्ट लटकाएँ
+Link to an object	ऑब्जेक्ट से जोड़ें
+Unlink	लिंक हटाएँ
+That object already takes its state from this one	वह ऑब्जेक्ट पहले से अपनी स्थिति इससे लेता है
+Linked	जुड़ा
+Signal head's light	सिग्नल हेड की रोशनी
+Path rules	पाथ नियम
+Replace objects	ऑब्जेक्ट बदलें
+Edit road	सड़क बदलें
+Roads that could not follow the junction (too sharp a bend):	वे सड़कें जो जंक्शन के साथ नहीं चल सकीं (मोड़ बहुत तीखा):
+Edit junction	जंक्शन बदलें
+Make the junction again	जंक्शन फिर से बनाएँ
+Make the junctions again	जंक्शन फिर से बनाएँ
+Pick an object in the Objects tool's catalogue first	पहले "ऑब्जेक्ट" टूल के कैटलॉग में ऑब्जेक्ट चुनें
+The road is too short for that	सड़क इसके लिए बहुत छोटी है
+Objects along the road	सड़क के साथ ऑब्जेक्ट
+Rows of objects added:	जोड़ी गई ऑब्जेक्ट कतारें:
+Edit row of objects	ऑब्जेक्ट कतार बदलें
+Remove row of objects	ऑब्जेक्ट कतार हटाएँ
+Remove rows of objects	ऑब्जेक्ट कतारें हटाएँ
+Roundabout built; roads joined to it:	राउंडअबाउट बना; इससे जुड़ी सड़कें:
+This road type carries traffic both ways: pick a one-way road for a proper roundabout	इस सड़क प्रकार पर दोनों ओर ट्रैफ़िक चलता है: सही राउंडअबाउट के लिए एकतरफ़ा सड़क चुनें
+Start point: where the bus appears in openOMSI	स्टार्ट पॉइंट: जहाँ openOMSI में बस प्रकट होती है
+Bus stop: name it in the panel on the right	बस स्टॉप: दाईं ओर के पैनल में नाम दें
+openOMSI stopped with an error	openOMSI त्रुटि के साथ रुक गया
+Check in openOMSI	openOMSI में जाँच
+The saved map run by the game itself, unseen, with its own checks; the picture is the game's, from your view	सेव किया मैप खुद गेम ने बिना विंडो के अपनी जाँचों के साथ चलाया; तस्वीर गेम की है, आपके व्यू से
+Every tile (slower on a big map)	सभी टाइलें (बड़े मैप पर धीमा)
+Run again	फिर चलाएँ
+openOMSI is loading the map…	openOMSI मैप लोड कर रहा है…
+Nothing wrong found	कोई समस्या नहीं मिली
+Problems found:	मिली समस्याएँ:
+Go there	वहाँ जाएँ
+of the places named lie at the map's edge or a road's dead end (greyed): the game measures a lane's last point on the road's very edge, and a bus at the end stands over it; nothing to mend	बताई गई जगहों में से मैप के किनारे या सड़क के बंद सिरे पर हैं (धूसर): गेम लेन का आखिरी बिंदु सड़क के ठीक किनारे पर नापता है, और अंत की बस उसके ऊपर खड़ी होती है; ठीक करने को कुछ नहीं
+The game said nothing about the map	गेम ने मैप के बारे में कुछ नहीं कहा
+The game's whole output	गेम का पूरा आउटपुट
+no key entered	कुंजी नहीं डाली गई
+the server refused the key	सर्वर ने कुंजी नहीं मानी
+too many requests, try again later	बहुत ज़्यादा अनुरोध, बाद में फिर कोशिश करें
+No connection to the server: are you online?	सर्वर से कनेक्शन नहीं: क्या आप ऑनलाइन हैं?
+Enter your Google key first	पहले अपनी Google कुंजी डालें
+OpenStreetMap's servers are busy: try again in a minute	OpenStreetMap के सर्वर व्यस्त हैं: एक मिनट में फिर कोशिश करें
+The area is too large for this zoom	इस ज़ूम के लिए क्षेत्र बहुत बड़ा है
+Cancelled	रद्द किया गया
+Stopped by an internal error (see the log)	आंतरिक त्रुटि से रुका (लॉग देखें)
+No source has imagery here	यहाँ किसी स्रोत के पास इमेजरी नहीं है
+drawn from OpenStreetMap data: sharp, with names	OpenStreetMap डेटा से बनता है: तेज़, नामों के साथ
+terrain heights, no key needed	भूभाग की ऊँचाई, कुंजी की ज़रूरत नहीं
+needs your own free key	आपकी अपनी मुफ़्त कुंजी चाहिए
+no key needed	कुंजी की ज़रूरत नहीं
+the picture is too small	तस्वीर बहुत छोटी है
+Import height map	हाइट मैप इम्पोर्ट करें
+Height map	हाइट मैप
+The ground as a grey picture, to shape in another program and bring back	ज़मीन धूसर तस्वीर के रूप में, दूसरे प्रोग्राम में आकार देकर वापस लाने के लिए
+Export…	एक्सपोर्ट…
+Import…	इम्पोर्ट…
+over	पर
+a pixel	प्रति पिक्सल
+Black adds	काला जोड़ता है
+Black is	काला है
+White adds	सफ़ेद जोड़ता है
+White is	सफ़ेद है
+Smoothing	स्मूदिंग
+Replace the ground	ज़मीन बदलें
+Add to it	इसमें जोड़ें
+Roads and objects keep their heights: best done before building	सड़कें और ऑब्जेक्ट अपनी ऊँचाई पर रहते हैं: बनाने से पहले करना बेहतर
+An 8-bit picture has only 256 steps of height: smoothing hides them	8-बिट तस्वीर में ऊँचाई के सिर्फ़ 256 स्तर होते हैं: स्मूदिंग उन्हें छिपा देती है
+Lay it on the map	मैप पर लगाएँ
+Cancel	रद्द करें
+Height map laid over	हाइट मैप इस पर लगाया गया:
+Export the height map	हाइट मैप एक्सपोर्ट करें
+Height map written	हाइट मैप लिखा गया
+The height map could not be written	हाइट मैप लिखा नहीं जा सका
+A height map for the whole map	पूरे मैप के लिए हाइट मैप
+The picture could not be read	तस्वीर पढ़ी नहीं जा सकी
+IBIS and roller blind	IBIS और रोलर ब्लाइंड
+Front sign, line 1	आगे का बोर्ड, पंक्ति 1
+Front sign, line 2	आगे का बोर्ड, पंक्ति 2
+Side sign	साइड बोर्ड
+Roller blind texture	रोलर ब्लाइंड टेक्सचर
+IBIS 2 (20 letters)	IBIS 2 (20 अक्षर)
+Extra sign	अतिरिक्त बोर्ड
+Krüger picture	Krüger तस्वीर
+Text	टेक्स्ट
+IBIS (16 letters)	IBIS (16 अक्षर)
+Display, line 1	डिस्प्ले, पंक्ति 1
+Display, line 2	डिस्प्ले, पंक्ति 2
+Full name (20 letters)	पूरा नाम (20 अक्षर)
+Service trip	डिपो ट्रिप
+Special trip	विशेष ट्रिप
+Blank	खाली
+openMapper cannot import this kind of file (use a folder, .zip, .obj, .gltf, .glb, .fbx, .x, .o3d or a picture)	openMapper इस तरह की फ़ाइल इम्पोर्ट नहीं कर सकता (फ़ोल्डर, .zip, .obj, .gltf, .glb, .fbx, .x, .o3d या तस्वीर इस्तेमाल करें)
+Mod installed, files:	मॉड इंस्टॉल हुआ, फ़ाइलें:
+Objects added to	ऑब्जेक्ट जोड़े गए:
+Road types added to	सड़क प्रकार जोड़े गए:
+Models imported:	इम्पोर्ट हुए मॉडल:
+Nothing to import was found in this folder	इस फ़ोल्डर में इम्पोर्ट करने को कुछ नहीं मिला
+The model has no triangles	मॉडल में कोई त्रिभुज नहीं है
+Model imported:	मॉडल इम्पोर्ट हुआ:
+The .obj file has no faces	.obj फ़ाइल में कोई फ़ेस नहीं है
+no base colour picture among them	उनमें बेस कलर की तस्वीर नहीं है
+The picture cannot be read	तस्वीर पढ़ी नहीं जा सकती
+Picture made into a standee:	तस्वीर कटआउट आकृति बनी:
+Picture made into a sign:	तस्वीर बोर्ड बनी:
+Trees	पेड़
+Stops and start points	स्टॉप और स्टार्ट पॉइंट
+Junctions	जंक्शन
+Tracks	ट्रैक
+Footpaths	फ़ुटपाथ
+Fences, walls, kerbs	बाड़, दीवारें, कर्ब
+Technical (AI, helpers)	तकनीकी (AI, सहायक)
+This map lies on the world's grid ([worldcoordinates]): its tiles cannot be taken yet	यह मैप दुनिया की ग्रिड ([worldcoordinates]) पर है: इसकी टाइलें अभी नहीं ली जा सकतीं
+This map lies on the world's grid ([worldcoordinates]): tiles cannot be added from another yet	यह मैप दुनिया की ग्रिड ([worldcoordinates]) पर है: दूसरे मैप से टाइलें अभी नहीं जोड़ी जा सकतीं
+Tiles from another map	दूसरे मैप से टाइलें
+Union	यूनियन
+Difference (cut out)	डिफ़रेंस (काटना)
+Intersection	इंटरसेक्शन
+Slice (keep both pieces)	स्लाइस (दोनों टुकड़े रखें)
+One object of all the selected, their insides gone	सभी चुने हुए से एक ऑब्जेक्ट, भीतरी हिस्से हटे हुए
+The other selected objects cut out of the one shown in the properties	बाकी चुने हुए ऑब्जेक्ट गुणों में दिखाए ऑब्जेक्ट से कट जाते हैं
+Only what all the selected share	सिर्फ़ वह जो सभी चुने हुए में साझा है
+The first object cut by the others into what is outside them and what is inside	पहला ऑब्जेक्ट बाकियों से कटकर बाहर और भीतर के हिस्सों में बँटता है
+select an object first	पहले ऑब्जेक्ट चुनें
+Make editable	संपादन योग्य बनाएँ
+Make single	अलग कॉपी बनाएँ
+the object has only one part	ऑब्जेक्ट में सिर्फ़ एक हिस्सा है
+Separate parts	हिस्सों में अलग करें
+select two or more objects to join	जोड़ने के लिए दो या अधिक ऑब्जेक्ट चुनें
+Join objects	ऑब्जेक्ट जोड़ें
+select two or more objects: the one shown in the properties and what acts on it	दो या अधिक ऑब्जेक्ट चुनें: गुणों में दिखाया ऑब्जेक्ट और जो उस पर असर डालते हैं
+nothing is left: the objects do not overlap that way	कुछ नहीं बचा: ऑब्जेक्ट इस तरह नहीं मिलते
+The file has no scene	फ़ाइल में कोई सीन नहीं है
+The FBX file has no meshes	FBX फ़ाइल में कोई मेश नहीं है
+Main roads	मुख्य सड़कें
+Streets	गलियाँ
+Service roads	सर्विस रोड
+Tram tracks	ट्राम ट्रैक
+Railway tracks	रेल ट्रैक
+motorway, trunk, primary, secondary	मोटरवे, ट्रंक, प्राइमरी, सेकेंडरी
+tertiary, residential, unclassified	टर्शरी, रिहायशी, अवर्गीकृत
+yards, car parks, depots	आँगन, पार्किंग, डिपो
+each track on its own; branches are joined with switches by hand	हर ट्रैक अलग; शाखाएँ स्विच से हाथ से जोड़ें
+main lines without sidings; branches are joined with switches by hand	साइडिंग के बिना मुख्य लाइनें; शाखाएँ स्विच से हाथ से जोड़ें
+Water from OpenStreetMap	OpenStreetMap से पानी
+Give a distance	दूरी दें
+The bend is too tight for that distance on its inner side	भीतरी ओर इस दूरी के लिए मोड़ बहुत तंग है
+The copy leaves the map: add tiles there first	कॉपी मैप से बाहर जाती है: पहले वहाँ टाइलें जोड़ें
+Made with openMapper	openMapper से बना
+Low (no shadows, rough edges, 3 km view)	कम (कोई छाया नहीं, खुरदरे किनारे, 3 km व्यू)
+Medium (softer shadows, 8 km view)	मध्यम (नरम छाया, 8 km व्यू)
+High	हाई
+This end belongs to a junction: select the junction and move it, the road follows	यह सिरा जंक्शन का है: जंक्शन चुनकर उसे हिलाएँ, सड़क साथ चलेगी
+Paint along the roads	सड़कों के साथ पेंट करें
+Market	बाज़ार
+Station	रेलवे स्टेशन
+Depot	डिपो
+this object takes its model from a model file: it cannot be scaled	इस ऑब्जेक्ट का मॉडल मॉडल फ़ाइल से आता है: इसे स्केल नहीं किया जा सकता
+Not a GPX, KML or GeoJSON file	GPX, KML या GeoJSON फ़ाइल नहीं है
+No lines in the file	फ़ाइल में कोई लाइन नहीं
+Language	भाषा
+Interface size	इंटरफ़ेस का आकार
+File	फ़ाइल
+New map…	नया मैप…
+Open map…	मैप खोलें…
+Controls…	कंट्रोल…
+Import assets…	एसेट इम्पोर्ट करें…
+Multiplayer…	मल्टीप्लेयर…
+OMSI 2 folder…	OMSI 2 फ़ोल्डर…
+Quit	बाहर निकलें
+View	दृश्य
+Help	मदद
+Updates…	अपडेट…
+About openMapper	openMapper के बारे में
+OMSI 2 not found	OMSI 2 नहीं मिला
+Map editor for openOMSI	openOMSI के लिए मैप एडिटर
+openMapper builds maps from the content of an installed OMSI 2. Choose its folder (the one with Omsi.exe, maps and Vehicles).	openMapper इंस्टॉल किए OMSI 2 की सामग्री से मैप बनाता है। उसका फ़ोल्डर चुनें (जिसमें Omsi.exe, maps और Vehicles हैं)।
+Choose OMSI 2 folder…	OMSI 2 फ़ोल्डर चुनें…
+Maps	नक्शे
+recent · OMSI 2	हाल का · OMSI 2
+recent	हाल का
+content folder	कंटेंट फ़ोल्डर
+OMSI 2 (saved as copy)	OMSI 2 (कॉपी के रूप में सेव)
+Open	खोलें
+Make a copy	कॉपी बनाएँ
+A copy of the map in the content folder under a new name, to try something out	कंटेंट फ़ोल्डर में नए नाम से मैप की कॉपी, कुछ आज़माने के लिए
+Show in the file manager	फ़ाइल मैनेजर में दिखाएँ
+Move to openMapper's bin	openMapper के बिन में डालें
+Its folder goes into openMapper\\bin in the content folder, from where it can be put back by hand	इसका फ़ोल्डर कंटेंट फ़ोल्डर में openMapper\\bin में चला जाता है, जहाँ से उसे हाथ से वापस रखा जा सकता है
+Browse…	ब्राउज़…
+Double-click a map to open it. Maps of OMSI 2 are saved as a copy into openOMSI's content folder; the original stays untouched.	मैप खोलने के लिए डबल-क्लिक करें। OMSI 2 के मैप openOMSI के कंटेंट फ़ोल्डर में कॉपी के रूप में सेव होते हैं; मूल अछूता रहता है।
+A simple map editor for openOMSI.	openOMSI के लिए सरल मैप एडिटर।
+Back to the 3D view (0)	3D व्यू पर वापस (0)
+The plan view from above, north up (0)	ऊपर से प्लान व्यू, उत्तर ऊपर (0)
+Recent maps	हाल के मैप
+(none)	(कोई नहीं)
+Export map for sharing…	साझा करने के लिए मैप एक्सपोर्ट करें…
+Export a plan of the map…	मैप का प्लान एक्सपोर्ट करें…
+Earlier versions…	पिछले संस्करण…
+Close map	मैप बंद करें
+Edit	संपादन
+Edit history…	संपादन इतिहास…
+Groups for other maps…	दूसरे मैप के लिए ग्रुप…
+Find in map…	मैप में खोजें…
+Search for a command…	कमांड खोजें…
+Delete	हटाएँ
+Deselect	चयन हटाएँ
+Tile grid	टाइल ग्रिड
+What the game does not show	जो गेम में नहीं दिखता
+AI lanes	AI लेन
+Names of stops and start points	स्टॉप और स्टार्ट पॉइंट के नाम
+Show	दिखाएँ
+Roads and splines	सड़कें और स्प्लाइन
+Overview map (M)	ओवरव्यू मैप (M)
+Assets (B)	एसेट (B)
+Flatten the terrain (roads follow)	भूभाग समतल करें (सड़कें साथ चलेंगी)
+Saved views…	सहेजे हुए व्यू…
+Go to selection	चयन पर जाएँ
+Camera	कैमरा
+Unity: right button looks round and W A S D fly, middle pans, Alt orbits	Unity: राइट बटन से इधर-उधर देखें और W A S D से उड़ें, बीच का बटन पैन करता है, Alt घुमाता है
+Map editor: right button looks round and W A S D fly (Q down, E up), middle pans, the wheel zooms to the cursor, drag moves the map	मैप एडिटर: राइट बटन से इधर-उधर देखें और W A S D से उड़ें (Q नीचे, E ऊपर), बीच का बटन पैन करता है, व्हील कर्सर की ओर ज़ूम करता है, खींचने से मैप हिलता है
+Load 100 tiles at a time (like OMSI 2's editor)	100-100 टाइलें लोड करें (OMSI 2 के एडिटर जैसे)
+Time of day	दिन का समय
+Plain day (as the game by day)	सादा दिन (गेम में दिन जैसा)
+At an hour	किसी घंटे पर
+Where the sun stands then, today, at the map's place (Map > Calendar and place); by night the moon	तब सूरज कहाँ होता है, आज, मैप की जगह पर (मैप > कैलेंडर और जगह); रात में चाँद
+Season	मौसम
+Summer	गर्मी
+Dry summer	सूखी गर्मी
+Spring	वसंत
+Autumn	पतझड़
+Winter	सर्दी
+Snow	बर्फ़
+Graphics quality	ग्राफ़िक्स गुणवत्ता
+Tools	उपकरण
+Road types and junctions…	सड़क प्रकार और जंक्शन…
+PBR maps for a picture…	तस्वीर के लिए PBR मैप…
+Map	नक्शा
+Map settings…	मैप सेटिंग्स…
+Calendar and place…	कैलेंडर और जगह…
+Signal routes…	सिग्नल रूट…
+Chrono scenarios…	क्रोनो परिदृश्य…
+Ground textures…	ज़मीन के टेक्सचर…
+Check map…	मैप जाँचें…
+Junctions made again:	फिर से बने जंक्शन:
+Lines and timetable…	लाइनें और टाइमटेबल…
+Traffic and AI…	ट्रैफ़िक और AI…
+Depot files (destinations)…	डिपो फ़ाइलें (गंतव्य)…
+Satellite and terrain…	सैटेलाइट और भूभाग…
+From OpenStreetMap…	OpenStreetMap से…
+GPS tracks to trace…	ट्रेस करने के लिए GPS ट्रैक…
+Tiles from another map…	दूसरे मैप से टाइलें…
+Test drive in openOMSI	openOMSI में टेस्ट ड्राइव
+Test drive in OMSI 2 (the original)…	OMSI 2 (मूल) में टेस्ट ड्राइव…
+Check in openOMSI…	openOMSI में जाँच…
+Getting started	शुरुआत
+New map	नया मैप
+Open a map	मैप खोलें
+Save (Ctrl+S): there are unsaved changes	सेव करें (Ctrl+S): बिना सेव किए बदलाव हैं
+Save (Ctrl+S)	सेव करें (Ctrl+S)
+Import assets: a mod folder or .zip, a .obj / .x / .o3d model (or drop files on the window)	एसेट इम्पोर्ट करें: मॉड फ़ोल्डर या .zip, .obj / .x / .o3d मॉडल (या फ़ाइलें विंडो पर छोड़ें)
+Redo (Ctrl+Shift+Z)	फिर करें (Ctrl+Shift+Z)
+Tile grid (G)	टाइल ग्रिड (G)
+Assets: every object and road type, with pictures (B)	एसेट: हर ऑब्जेक्ट और सड़क प्रकार, तस्वीरों के साथ (B)
+Test drive	टेस्ट ड्राइव
+Save the map and drive it in openOMSI (F5)	मैप सेव करें और openOMSI में चलाएँ (F5)
+openOMSI was not found: install it to test maps	openOMSI नहीं मिला: मैप जाँचने के लिए इसे इंस्टॉल करें
+Test drive from the start point nearest the view	व्यू के सबसे नज़दीकी स्टार्ट पॉइंट से टेस्ट ड्राइव
+See this view in openOMSI	यह व्यू openOMSI में देखें
+loading	लोड हो रहा है
+Edit mesh	मेश बदलें
+Shapes and lamps	आकृतियाँ और लैंप
+Click beside the map to add a 300 × 300 m tile. Right-click a tile to remove it.	300 × 300 m की टाइल जोड़ने के लिए मैप के बगल में क्लिक करें। हटाने के लिए टाइल पर राइट-क्लिक करें।
+Area	क्षेत्र
+A ring of tiles round the map	मैप के चारों ओर टाइलों की रिंग
+Every free place beside the map, corners too, gets a tile at the height of its neighbours	मैप के बगल की हर खाली जगह, कोनों समेत, पड़ोसियों की ऊँचाई पर टाइल पाती है
+Tiles added:	जोड़ी गई टाइलें:
+Everything on the map, grouped by the folders its files lie in	मैप की हर चीज़, फ़ाइलों के फ़ोल्डर के अनुसार ग्रुप में
+Click an object or a road in the view to see and change it on the right.	व्यू में ऑब्जेक्ट या सड़क पर क्लिक करें, दाईं ओर उसे देखें और बदलें।
+Line up with the nearest road (Shift: put it freely)	सबसे नज़दीकी सड़क के साथ सीध में रखें (Shift: खुला रखें)
+On both sides of the road	सड़क के दोनों ओर
+A stop of the same name also goes at the kerb across the road, facing the other way	उसी नाम का स्टॉप सड़क के उस पार किनारे पर भी, उल्टी दिशा में लगता है
+In a row along a line	लाइन के साथ कतार में
+Every	हर
+Draw new	नए बनाएँ
+Edit existing	मौजूदा बदलें
+Click a path to pick it: every point is a dot to drag (the small ones in the middle of a piece bend it). Double-click the path to put a point in. Click a dot, then Del, to take that point out; Del with no dot picked deletes the whole path (Ctrl+Z brings it back). Lanes of roads and junctions belong to their road type: use Edit its AI lanes on the road.	पाथ चुनने के लिए उस पर क्लिक करें: हर बिंदु खींचने योग्य गोला है (टुकड़े के बीच के छोटे गोले उसे मोड़ते हैं)। बिंदु जोड़ने के लिए पाथ पर डबल-क्लिक करें। बिंदु हटाने के लिए गोले पर क्लिक करें, फिर Del; बिना बिंदु चुने Del पूरा पाथ हटा देता है (Ctrl+Z वापस लाता है)। सड़कों और जंक्शन की लेन उनके सड़क प्रकार की होती हैं: सड़क पर "AI लेन बदलें" इस्तेमाल करें।
+Cars	कारें
+People	लोग
+Show these in the other tools too	इन्हें दूसरे टूल में भी दिखाएँ
+Show the AI's lanes in the other tools too	AI की लेन दूसरे टूल में भी दिखाएँ
+Everything	सब कुछ
+Search	खोजें
+Shape the ground under the road	सड़क के नीचे ज़मीन को आकार दें
+Go on drawing from the end of the road just built	अभी बनी सड़क के सिरे से ड्रॉइंग जारी रखें
+Join road ends, roads and junction pieces near the cursor	कर्सर के पास सड़क के सिरों, सड़कों और जंक्शन के हिस्सों से जोड़ें
+Make junctions where roads meet	जहाँ सड़कें मिलती हैं वहाँ जंक्शन बनाएँ
+Go on with the type of the road I start from	जिस सड़क से शुरू करूँ उसी के प्रकार से जारी रखें
+Building with:	इससे बन रहा है:
+nothing chosen	कुछ चुना नहीं
+Front at the roadside, back	सड़क किनारे सामने, पीछे
+Plant brush: sow trees by painting	प्लांट ब्रश: ब्रश से पेड़ बोएँ
+Sow	बोएँ
+Clear	हटाएँ
+With the brush	ब्रश से
+In an outline	रूपरेखा में
+Click round an area (a wood, a park, a garden) and it is filled at once, or cleared	क्षेत्र (जंगल, पार्क, बाग) के चारों ओर क्लिक करें: वह तुरंत भर जाता है, या साफ़ हो जाता है
+About	लगभग
+plants (Enter: plant)	पौधे (Enter: लगाएँ)
+Size	आकार
+Apart	दूरी
+Sows the object chosen below. Right-click entries: "Add to the plant mix" to sow several at random. Clearing takes trees and the mix's objects.	नीचे चुना ऑब्जेक्ट बोता है। कई को बेतरतीब बोने के लिए एंट्री पर राइट-क्लिक करें: "प्लांट मिश्रण में जोड़ें"। हटाने पर पेड़ और मिश्रण के ऑब्जेक्ट हटते हैं।
+Mix (picked at random):	मिश्रण (बेतरतीब चुने):
+reading OMSI 2…	OMSI 2 पढ़ा जा रहा है…
+items	आइटम
+Nothing found	कुछ नहीं मिला
+mod	मॉड
+right-click: star it	राइट-क्लिक: पसंदीदा में डालें
+Take out of the plant mix	प्लांट मिश्रण से हटाएँ
+Add to the plant mix	प्लांट मिश्रण में जोड़ें
+Remove from favourites	पसंदीदा से हटाएँ
+Add to favourites	पसंदीदा में जोड़ें
+Favourites	पसंदीदा
+Recently used	हाल में इस्तेमाल
+(not in a folder)	(फ़ोल्डर में नहीं)
+Strength	तीव्रता
+Mode	मोड
+Levels the ground to the height where you start dragging	ड्रैग शुरू करने की जगह की ऊँचाई तक ज़मीन समतल करता है
+Softens bumps and edges	उभार और किनारे नरम करता है
+Raises the ground under the brush	ब्रश के नीचे ज़मीन ऊपर उठाता है
+Lowers the ground under the brush	ब्रश के नीचे ज़मीन नीचे करता है
+Gives flat ground the rolls and dips of a natural field; hold longer for more	समतल ज़मीन को प्राकृतिक खेत जैसे उभार और गड्ढे देता है; ज़्यादा के लिए देर तक दबाएँ
+Paint a lake or a river: the ground is dug to a bed under the water's level (where you start the stroke, or the tile's water) and the tile gets water at that level. Water in OMSI is one level for a whole tile: another low place on the same tile shows it too	झील या नदी बनाएँ: ज़मीन पानी के स्तर से नीचे तल तक खुदती है (जहाँ स्ट्रोक शुरू करें, या टाइल का पानी), और टाइल को उसी स्तर का पानी मिलता है। OMSI में पानी पूरी टाइल के लिए एक ही स्तर का होता है: उसी टाइल की दूसरी नीची जगह भी उसे दिखाएगी
+Click where it starts, then where it ends: the ground between becomes one even slope as wide as the brush (an embankment, a ramp, a level bed)	जहाँ से शुरू हो वहाँ क्लिक करें, फिर जहाँ खत्म हो: बीच की ज़मीन ब्रश जितनी चौड़ी एकसमान ढलान बन जाती है (तटबंध, रैंप, समतल बिस्तर)
+To a height	ऊँचाई तक
+Flatten to the height typed instead of the one where the drag starts (a level square, a platform)	ड्रैग की शुरुआत की ऊँचाई के बजाय लिखी ऊँचाई तक समतल करें (समतल चौक, प्लेटफ़ॉर्म)
+Depth	गहराई
+The water's level is set where a stroke starts: start at the bank.	पानी का स्तर वहाँ तय होता है जहाँ स्ट्रोक शुरू होता है: किनारे से शुरू करें।
+Brush	ब्रश
+Flatten the whole terrain	पूरा भूभाग समतल करें
+Every tile's ground levelled to the map's mean height; the roads, the AI paths and the junctions follow it. One undo step brings the relief back. (The satellite picture: View > Satellite overlay.)	हर टाइल की ज़मीन मैप की औसत ऊँचाई तक समतल होती है; सड़कें, AI पाथ और जंक्शन साथ चलते हैं। एक अनडू स्टेप राहत वापस ले आता है। (सैटेलाइट तस्वीर: व्यू > सैटेलाइट ओवरले।)
+Ground layers	ज़मीन की लेयर
+base ground	बेस ज़मीन
+layer	लेयर
+Add…	जोड़ें…
+Remove	हटाएँ
+Up the list: drawn under the layers after it	सूची में ऊपर: बाद वाली लेयर के नीचे बनती है
+Down the list: drawn over the layers before it	सूची में नीचे: पहले वाली लेयर के ऊपर बनती है
+Texture	टेक्सचर
+The layer's picture; its painting stays	लेयर की तस्वीर; उसकी पेंटिंग रहती है
+A fine grain laid over the texture, seen close up (OMSI's detail texture)	टेक्सचर पर बारीक दाने, पास से दिखते हैं (OMSI का डिटेल टेक्सचर)
+Click to choose another	दूसरा चुनने के लिए क्लिक करें
+Repeats per tile	प्रति टाइल दोहराव
+Detail repeats	डिटेल दोहराव
+How finely this layer can be painted: texels across a tile (its masks are made again at the new size)	इस लेयर को कितनी बारीकी से पेंट किया जा सकता है: टाइल के आर-पार टेक्सल (मास्क नए आकार में फिर बनते हैं)
+Edit ground texture	ज़मीन का टेक्सचर बदलें
+Erase	मिटाएँ
+Remove ground texture	ज़मीन का टेक्सचर हटाएँ
+Tile	टाइल
+A water surface over the whole tile: it shows where the ground lies below it (lower the ground with the Terrain tool for a lake or a river)	पूरी टाइल पर पानी की सतह: वह वहाँ दिखती है जहाँ ज़मीन उसके नीचे है (झील या नदी के लिए "भूभाग" टूल से ज़मीन नीची करें)
+at 	पर
+Lamps light the ground at night	लैंप रात में ज़मीन रोशन करते हैं
+The game works out the light pools of the street lamps on and round this tile when it loads it ([variable_terrainlightmap]); off, it shows the tile's light map file as it is	लोड करते समय गेम इस टाइल पर और आसपास स्ट्रीट लैंप की रोशनी के धब्बे निकालता है ([variable_terrainlightmap]); बंद होने पर वह टाइल की लाइट मैप फ़ाइल जैसी है वैसी दिखाता है
+Edit history	संपादन इतिहास
+Click a step to go back to just after it	किसी स्टेप पर क्लिक करें: ठीक उसके बाद की स्थिति पर लौटें
+Opened	खोला गया
+Properties	गुण
+Configure PBR	PBR सेट करें
+Create PBR	PBR बनाएँ
+Normal, roughness, metal and shadow maps made from the object's textures, tuned and written as openOMSI reads them	ऑब्जेक्ट के टेक्सचर से बने नॉर्मल, रफ़नेस, मेटल और शैडो मैप: openOMSI जैसे पढ़ता है वैसे सेट और लिखें
+Type	प्रकार
+Hangs on	इस पर लटका है
+point	बिंदु
+Location	स्थान
+East	पूर्व
+North	उत्तर
+Height above sea level	समुद्र तल से ऊँचाई
+above the ground:	ज़मीन से ऊपर:
+OMSI keeps this object's height above the ground under it: moved elsewhere it stays as high above the ground there	OMSI इस ऑब्जेक्ट की ज़मीन से ऊँचाई याद रखता है: कहीं और ले जाने पर वह वहाँ की ज़मीन से उतना ही ऊँचा रहता है
+Rotation	घुमाव
+Tilt forward (pitch)	आगे झुकाव (पिच)
+Bank to the side (roll)	बगल में झुकाव (रोल)
+Heading	दिशा (हेडिंग)
+Turn it the way the nearest road runs beside it	इसे बगल की सबसे नज़दीकी सड़क की दिशा में घुमाएँ
+Stand it upright again	फिर सीधा खड़ा करें
+Picture	तस्वीर
+Ratio	अनुपात
+Stop name	स्टॉप का नाम
+This tree	यह पेड़
+Texts	टेक्स्ट
+Shown on the object (@ starts a new line)	ऑब्जेक्ट पर दिखता है (@ से नई पंक्ति)
+Model	मॉडल
+Triangles	त्रिभुज
+Parts	हिस्से
+Part	हिस्सा
+triangles	त्रिभुज
+colour only	सिर्फ़ रंग
+opaque	अपारदर्शी
+cut out	कटआउट
+blended	ब्लेंड
+How the texture's transparency is used: cut out for leaves and fences, blended for glass	टेक्सचर की पारदर्शिता कैसे इस्तेमाल हो: पत्तियों और बाड़ के लिए कटआउट, काँच के लिए ब्लेंड
+Textures	टेक्सचर
+Normal, roughness, metal and shadow maps made from the road type's textures	सड़क प्रकार के टेक्सचर से बने नॉर्मल, रफ़नेस, मेटल और शैडो मैप
+Length	लंबाई
+Radius	त्रिज्या
+right	दाएँ
+left	बाएँ
+straight	सीधा
+start	शुरू
+end	अंत
+Mirrored	मिरर
+Skew	तिरछापन
+The start cut on a slant: 1 is 45° (two fences meeting at a corner: 1 and -1)	शुरुआत का तिरछा कट: 1 यानी 45° (कोने पर मिलती दो बाड़ें: 1 और -1)
+The end cut on a slant	अंत का तिरछा कट
+Ground	ज़मीन
+as it is	जैसी है
+cut away under it	इसके नीचे काटें
+cut, held at the end	काटें, अंत पर रोकें
+cut, held at the start	काटें, शुरू पर रोकें
+cut, held at both ends	काटें, दोनों सिरों पर रोकें
+A hole in the ground under it, as for a tunnel, an underpass or a pit (OMSI's terrain align)	इसके नीचे ज़मीन में छेद, जैसे सुरंग, अंडरपास या गड्ढे के लिए (OMSI का terrain align)
+Select the whole road	पूरी सड़क चुनें
+Every piece linked on from this one (or double-click the road)	इससे जुड़े सभी टुकड़े (या सड़क पर डबल-क्लिक)
+Join with the next piece	अगले टुकड़े से जोड़ें
+One piece again with the one after it, where the two make one curve	अगले के साथ फिर एक टुकड़ा, जहाँ दोनों मिलकर एक वक्र बनाते हैं
+Replace with	इससे बदलें
+The object chosen in the Objects tool's catalogue takes this one's place	"ऑब्जेक्ट" टूल के कैटलॉग में चुना ऑब्जेक्ट इसकी जगह लेता है
+Go to	जाएँ
+Level ground	ज़मीन समतल करें
+The ground under it made level with its foot, blending in 3 m round it (a house on a slope)	इसके नीचे की ज़मीन इसके आधार के स्तर पर समतल, चारों ओर 3 m में घुलती हुई (ढलान पर घर)
+All like it	सभी ऐसे
+Select every one of this type on the map	मैप पर इस प्रकार के सभी चुनें
+No road within 60 m	60 m के भीतर कोई सड़क नहीं
+Name	नाम
+Folder	फ़ोल्डर
+Traffic	यातायात
+left-hand	बाएँ हाथ का
+No start point yet: place one (Game logic > Start points) so the bus has somewhere to appear in openOMSI.	अभी स्टार्ट पॉइंट नहीं: एक रखें (गेम लॉजिक > स्टार्ट पॉइंट) ताकि openOMSI में बस के प्रकट होने की जगह हो।
+None yet: openOMSI shows it where maps are chosen.	अभी नहीं: openOMSI मैप चुनते समय इसे दिखाता है।
+Import your thumbnail	अपना थंबनेल इम्पोर्ट करें
+Choose a picture: it is cut to 370 × 280 and becomes the map's picture (picture.jpg).	तस्वीर चुनें: वह 370 × 280 में कटकर मैप की तस्वीर (picture.jpg) बनती है।
+Open the map with this view	मैप को इस व्यू के साथ खोलें
+The camera as it is now is where the map opens (here and in OMSI 2's editor).	कैमरा जैसा अभी है वहीं मैप खुलता है (यहाँ और OMSI 2 के एडिटर में)।
+Saved to	इसमें सेव होता है
+Edit map	मैप बदलें
+Change the layer's texture	लेयर का टेक्सचर बदलें
+Change the layer's detail texture	लेयर का डिटेल टेक्सचर बदलें
+Controls	नियंत्रण
+Keyboard	कीबोर्ड
+Click a key, then press the new one (Esc: leave it). A key already in use is taken from its command.	किसी कुंजी पर क्लिक करें, फिर नई दबाएँ (Esc: रहने दें)। इस्तेमाल में कुंजी उसकी कमांड से ले ली जाती है।
+press a key…	कुंजी दबाएँ…
+Also:	और:
+Back to the default key	डिफ़ॉल्ट कुंजी पर लौटें
+Reset all keys	सभी कुंजियाँ रीसेट करें
+Mouse	माउस
+Right button held	राइट बटन दबाए रखें
+look round; W A S D fly, Q / E down / up, Shift faster, wheel: speed	इधर-उधर देखें; W A S D: उड़ान, Q / E: नीचे / ऊपर, Shift: तेज़, व्हील: गति
+Middle drag	बीच का बटन ड्रैग
+pan	पैन
+Alt + left / right / middle drag	Alt + लेफ़्ट / राइट / बीच का ड्रैग
+orbit / zoom / pan (as in Unity)	ऑर्बिट / ज़ूम / पैन (Unity जैसा)
+Left drag on nothing	खाली जगह पर लेफ़्ट ड्रैग
+select with a box	बॉक्स से चुनें
+Alt + left drag	Alt + लेफ़्ट ड्रैग
+orbit round the point under the cursor	कर्सर के नीचे के बिंदु के चारों ओर ऑर्बिट
+Wheel	व्हील
+move towards the cursor	कर्सर की ओर बढ़ें
+Trackpad	ट्रैकपैड
+Two fingers	दो उंगलियाँ
+Pinch / twist	पिंच / ट्विस्ट
+zoom / turn	ज़ूम / घुमाव
+Option + two fingers or drag	Option + दो उंगलियाँ या ड्रैग
+Fixed keys	तय कुंजियाँ
+Arrow keys	ऐरो कुंजियाँ
+move over the map (Shift: faster)	मैप पर चलें (Shift: तेज़)
+go to a saved view (Shift: keep the view there)	सहेजे व्यू पर जाएँ (Shift: वहाँ व्यू रखें)
+Alt + arrows	Alt + ऐरो
+move the selection a grid step (Shift: 10 cm)	चयन को ग्रिड के एक कदम से हिलाएँ (Shift: 10 cm)
+Alt + Page Up / Down	Alt + Page Up / Down
+selection up / down 10 cm (Shift: 1 m)	चयन 10 cm ऊपर / नीचे (Shift: 1 m)
+add to / take from the selection	चयन में जोड़ें / हटाएँ
+Shift / Ctrl + drag on empty ground	Shift / Ctrl + खाली ज़मीन पर ड्रैग
+select with a box (Shift adds)	बॉक्स से चुनें (Shift: जोड़ता है)
+Double-click a road	सड़क पर डबल-क्लिक
+select all of it	उसे पूरा चुनें
+turn the object	ऑब्जेक्ट घुमाएँ
+brush size	ब्रश का आकार
+stop / deselect	रोकें / चयन हटाएँ
+Unsaved changes	बिना सेव किए बदलाव
+The map has changes that are not saved. Save them first?	मैप में बिना सेव किए बदलाव हैं। पहले सेव करें?
+Don't save	सेव न करें
+Assets	एसेट
+All	सभी
+Picture size	तस्वीरों का आकार
+Shapes…	आकृतियाँ…
+Close (B)	बंद करें (B)
+Scenery objects	ऑब्जेक्ट
+Splines (roads, tracks…)	स्प्लाइन (सड़कें, ट्रैक…)
+Favourite on / off	पसंदीदा चालू / बंद
+content folder (mod, import, own)	कंटेंट फ़ोल्डर (मॉड, इम्पोर्ट, अपना)
+OMSI 2	OMSI 2
+width	चौड़ाई
+Build with it	इससे बनाएँ
+Place it	रखें
+PBR material…	PBR मटीरियल…
+Delete…	हटाएँ…
+Not seen in the game (a helper).	गेम में नहीं दिखता (सहायक)।
+Delete the asset?	एसेट हटाएँ?
+Its folder goes into openMapper's bin in the content folder (openMapper\\bin), from where it can be put back by hand. Maps that use it show it missing.	इसका फ़ोल्डर कंटेंट फ़ोल्डर में openMapper के बिन (openMapper\\bin) में चला जाता है, जहाँ से उसे हाथ से वापस रखा जा सकता है। जिन मैप में यह है वे इसे गायब दिखाएँगे।
+Calendar and place	कैलेंडर और जगह
+Place and time	जगह और समय
+Holidays	छुट्टियाँ
+Number plates	नंबर प्लेट
+Latitude	अक्षांश
+Longitude	देशांतर
+Time zone	समय क्षेत्र
+Where the sun stands and when it rises and sets come from here.	सूरज की स्थिति और उसका उगना-डूबना यहीं से आता है।
+Summer time	डेलाइट सेविंग टाइम
+years	वर्ष
+none: the clocks are never put forward	नहीं: घड़ियाँ कभी आगे नहीं की जातीं
+EU rules for these years	इन वर्षों के लिए EU नियम
+Last Sunday of March to last Sunday of October, replacing what is set for these years	मार्च के आखिरी रविवार से अक्टूबर के आखिरी रविवार तक, इन वर्षों के लिए तय किए गए को बदलकर
+None	कोई नहीं
+Year	वर्ष
+entries	प्रविष्टियाँ
+Public holidays run Sunday's timetable; school holidays the holiday one.	सार्वजनिक छुट्टियों में रविवार का टाइमटेबल चलता है; स्कूल की छुट्टियों में छुट्टी वाला।
+Public holidays	सार्वजनिक छुट्टियाँ
+Add a holiday	छुट्टी जोड़ें
+Holiday	छुट्टी
+School holidays	स्कूल की छुट्टियाँ
+Ends before it starts	शुरू होने से पहले खत्म होती है
+Add school holidays	स्कूल की छुट्टियाँ जोड़ें
+The AI's cars carry these, one a line.	AI की कारों पर ये लगती हैं, हर पंक्ति में एक।
+X: a letter, 9: a digit	X: अक्षर, 9: अंक
+Make	बनाएँ
+Replaces the list with plates of the pattern	सूची को नमूने की प्लेटों से बदलता है
+plates	प्लेटें
+The scenario's AI lists are written, groups changed:	परिदृश्य की AI सूचियाँ लिखी गईं, बदले ग्रुप:
+Could not write the scenario	परिदृश्य लिखा नहीं जा सका
+The scenario's timetable is written, files:	परिदृश्य का टाइमटेबल लिखा गया, फ़ाइलें:
+Back in the scenario:	फिर परिदृश्य में:
+The scenario's things are on the map:	परिदृश्य की चीज़ें मैप पर हैं:
+what you place now is the scenario's too	अब जो आप रखते हैं वह भी परिदृश्य का है
+Editing the scenario	परिदृश्य बदल रहे हैं
+Done	हो गया
+Chrono scenarios	क्रोनो परिदृश्य
+How the map changes over the years: each scenario from its first day lays its own tiles, lines and tickets over the map. The view shows the map as on the day chosen here; what you edit is always the map itself.	मैप सालों में कैसे बदलता है: हर परिदृश्य अपने पहले दिन से मैप पर अपनी टाइलें, लाइनें और टिकट बिछाता है। व्यू यहाँ चुने दिन का मैप दिखाता है; आप जो बदलते हैं वह हमेशा मैप ही होता है।
+Show the map as on	मैप दिखाएँ इस दिन का
+Today	आज
+Active on that day:	उस दिन सक्रिय:
+New scenario's name	नए परिदृश्य का नाम
+New scenario	नया परिदृश्य
+A scenario starting on the day shown, after the others	दिखाए दिन से शुरू होने वाला परिदृश्य, बाकियों के बाद
+From	से
+To	तक
+for good	हमेशा के लिए
+Own tickets	अपने टिकट
+Own money	अपनी मुद्रा
+the map's	मैप का
+Takes off	लाइनें हटाता है
+What changes (shown where the date is chosen)	क्या बदलता है (तारीख चुनने की जगह दिखता है)
+From its first day, the selection in the view:	इसके पहले दिन से, व्यू में चयन:
+appears	प्रकट होता है
+Taken out of the map into the scenario: it is there from the scenario's first day on (place it first, then press this)	मैप से निकालकर परिदृश्य में: वह परिदृश्य के पहले दिन से वहाँ है (पहले रखें, फिर यह दबाएँ)
+is gone	गायब हो जाता है
+Stays in the map, gone from the scenario's first day on	मैप में रहता है, परिदृश्य के पहले दिन से गायब
+becomes	बन जाता है
+its texts become	इसके टेक्स्ट बन जाते हैं
+Write	लिखें
+Its path rules from that day	उस दिन से इसके पाथ नियम
+Add a rule	नियम जोड़ें
+Written into the scenario at once (undo does not take it out of the scenario).	तुरंत परिदृश्य में लिखा जाता है (अनडू इसे परिदृश्य से नहीं हटाता)।
+What it changes	यह क्या बदलता है
+into the map	मैप में
+Out of the scenario into the map itself: there on every day	परिदृश्य से मैप में ही: हर दिन वहाँ रहेगा
+Take it out of the scenario	परिदृश्य से हटाएँ
+new texts	नए टेक्स्ट
+rules	नियम
+Nothing yet.	अभी कुछ नहीं।
+Its own things are on the map: select, move, change and place as usual. The map's own things stay the map's.	इसकी अपनी चीज़ें मैप पर हैं: हमेशा की तरह चुनें, हिलाएँ, बदलें और रखें। मैप की अपनी चीज़ें मैप की रहती हैं।
+Done: back into the scenario	हो गया: वापस परिदृश्य में
+Edit its own things on the map	मैप पर इसकी अपनी चीज़ें बदलें
+What it brings in is put on the map to work with as with anything else; Done writes it back (undo starts afresh)	जो यह लाता है वह मैप पर रखा जाता है ताकि बाकी की तरह उस पर काम हो; "हो गया" उसे वापस लिख देता है (अनडू नए सिरे से शुरू होता है)
+The Lines window shows its timetable (the map's with its own laid over): lines, trips and tours edited there are the scenario's; a line of the map taken away is taken off from its day.	लाइन विंडो इसका टाइमटेबल दिखाती है (मैप का, अपने के साथ): वहाँ बदली लाइनें, ट्रिप और टूर परिदृश्य के हैं; मैप की हटाई लाइन उसके दिन से हट जाती है।
+Done with its timetable	टाइमटेबल पूरा हुआ
+Edit its timetable	इसका टाइमटेबल बदलें
+Its own lines, trips and tours in the Lines window; Done writes only what differs from the map's (undo starts afresh)	लाइन विंडो में इसकी अपनी लाइनें, ट्रिप और टूर; "हो गया" सिर्फ़ मैप से फ़र्क लिखता है (अनडू नए सिरे से शुरू होता है)
+The Traffic window shows its AI lists (the map's with its own added): vehicles and type groups added there, and a depot's own depot file, are the scenario's from its day.	ट्रैफ़िक विंडो इसकी AI सूचियाँ दिखाती है (मैप की, अपनी जोड़कर): वहाँ जोड़े वाहन और प्रकार ग्रुप, और डिपो की अपनी डिपो फ़ाइल, उसके दिन से परिदृश्य के हैं।
+Done with its AI lists	AI सूचियाँ पूरी हुईं
+Edit its AI lists	इसकी AI सूचियाँ बदलें
+Vehicles it adds to the groups and depots (OMSI's ailists_#upd.cfg); taking one away is the map's own business	ग्रुप और डिपो में यह जो वाहन जोड़ता है (OMSI की ailists_#upd.cfg); हटाना मैप का अपना काम है
+Write the scenario	परिदृश्य लिखें
+Close	बंद करें
+The map has no chrono scenarios.	मैप में कोई क्रोनो परिदृश्य नहीं है।
+from	से
+to	तक
+takes off	हटाता है
+own tickets	अपने टिकट
+Its first day	पहला दिन
+Written into the scenario	परिदृश्य में लिखा गया
+Written into the scenario:	परिदृश्य में लिखा गया:
+Scenario written	परिदृश्य लिखा गया
+The map as on	मैप इस दिन का
+scenarios:	परिदृश्य:
+Multiplayer	मल्टीप्लेयर
+Joining… (a big map takes a while to come)	जुड़ रहा है… (बड़ा मैप आने में समय लेता है)
+Recover a conflicting edit…	टकराने वाली बदलाव को वापस पाएँ…
+Recovered your edit; undo is available	आपकी बदलाव वापस मिल गया; अनडू उपलब्ध है
+Edit one map together: one of you hosts it, the others join. Roads, objects, ground and paint are shared as they are made; the timetable, the traffic and the descriptions stay the host's, and the host saves the map. Everybody needs the same objects and splines installed.	एक मैप साथ मिलकर बदलें: एक होस्ट करता है, बाकी जुड़ते हैं। सड़कें, ऑब्जेक्ट, ज़मीन और पेंट बनते ही साझा होते हैं; टाइमटेबल, ट्रैफ़िक और विवरण होस्ट के रहते हैं, और मैप होस्ट सेव करता है। सभी के पास वही ऑब्जेक्ट और स्प्लाइन इंस्टॉल होने चाहिए।
+Your name	आपका नाम
+Password	पासवर्ड
+Host this map	इस मैप को होस्ट करें
+Others on this network can join	इस नेटवर्क के दूसरे जुड़ सकते हैं
+Others anywhere can join (a free Cloudflare tunnel, nothing to set up on the router)	कहीं से भी दूसरे जुड़ सकते हैं (मुफ़्त Cloudflare टनल, राउटर पर कुछ सेट नहीं करना)
+Port	पोर्ट
+Over the internet the password must have at least this many letters:	इंटरनेट पर पासवर्ड में कम से कम इतने अक्षर होने चाहिए:
+No password: anybody who reaches this computer's port can join and change the whole map.	बिना पासवर्ड: इस कंप्यूटर के पोर्ट तक पहुँचने वाला कोई भी जुड़कर पूरा मैप बदल सकता है।
+Ask for a password after all	फिर भी पासवर्ड माँगें
+Host without a password? Anybody on this network who finds the port can join and change the whole map.	बिना पासवर्ड होस्ट करें? इस नेटवर्क पर पोर्ट खोजने वाला कोई भी जुड़कर पूरा मैप बदल सकता है।
+Yes, without a password	हाँ, बिना पासवर्ड
+No	नहीं
+Type a password the others will need.	वह पासवर्ड लिखें जो बाकियों को चाहिए होगा।
+Host without a password…	बिना पासवर्ड होस्ट करें…
+Host	होस्ट बनें
+Open a map, type a name and a password first	पहले मैप खोलें, नाम और पासवर्ड लिखें
+Join a map	मैप से जुड़ें
+The map open now has unsaved changes: joining closes it. Save it first.	अभी खुले मैप में बिना सेव किए बदलाव हैं: जुड़ने पर वह बंद हो जाएगा। पहले सेव करें।
+You host this map. Give the others one of these:	आप इस मैप के होस्ट हैं। बाकियों को इनमें से एक दें:
+On this network the connection is not encrypted: somebody listening in can see the map, and from what they catch try passwords on their own computer. Use a long password, or the internet tunnel (encrypted).	इस नेटवर्क पर कनेक्शन एन्क्रिप्टेड नहीं है: सुनने वाला मैप देख सकता है, और पकड़े गए डेटा से अपने कंप्यूटर पर पासवर्ड आज़मा सकता है। लंबा पासवर्ड या इंटरनेट टनल (एन्क्रिप्टेड) इस्तेमाल करें।
+Everybody who joins can change the whole map.	जुड़ने वाला हर कोई पूरा मैप बदल सकता है।
+Opening the Cloudflare tunnel… (fetched the first time)	Cloudflare टनल खुल रही है… (पहली बार डाउनलोड होती है)
+internet	इंटरनेट
+Waiting for Cloudflare's address…	Cloudflare के पते का इंतज़ार…
+The Cloudflare tunnel could not be opened (no cloudflared, or no internet). The LAN addresses still work.	Cloudflare टनल नहीं खुल सकी (cloudflared या इंटरनेट नहीं है)। LAN के पते अब भी काम करते हैं।
+You joined this map. The host saves it.	आप इस मैप से जुड़ गए। इसे होस्ट सेव करता है।
+Everything of yours is with the others	आपका सब कुछ बाकियों के पास है
+Sending your edits…	आपके बदलाव भेजे जा रहे हैं…
+In the session	सेशन में
+Say something…	कुछ लिखें…
+Leave	छोड़ें
+Knife (K): a click on a road cuts it there, as often as you like; the pieces' lengths shown at the cursor, on whole grid steps with grid snapping on · right-click or Esc: off	चाकू (K): सड़क पर क्लिक वहीं काट देता है, जितनी बार चाहें; टुकड़ों की लंबाई कर्सर पर दिखती है, ग्रिड स्नैप चालू हो तो ग्रिड के पूरे कदमों पर · राइट-क्लिक या Esc: बंद
+The angle step: what snapping comes to and what R turns by	कोण का कदम: दिशा किस पर स्नैप होती है और R कितना घुमाता है
+Angle	कोण
+Snap headings to the angle step	दिशा को कोण के कदम पर स्नैप करें
+Grid	ग्रिड
+Snap positions to the grid	स्थिति को ग्रिड पर स्नैप करें
+Click two points to measure the distance and gradient between them (U) · right-click: off	दो बिंदुओं पर क्लिक करें, उनके बीच की दूरी और ढलान नापने के लिए (U) · राइट-क्लिक: बंद
+Auto-Terrain	ऑटो-टेरेन
+What you build follows the ground: roads, paths and tracks take its height (off: they run level from where they start). Only what is built from now on; nothing already there changes	जो आप बनाते हैं वह ज़मीन के साथ चलता है: सड़कें, पाथ और ट्रैक उसकी ऊँचाई लेते हैं (बंद: वे शुरुआत से समतल चलते हैं)। सिर्फ़ अब से बनने वाला; जो पहले से है वह नहीं बदलता
+Auto-Switch	ऑटो-स्विच
+Branching a track off another makes a switch there	ट्रैक को दूसरे से अलग करने पर वहाँ स्विच बनता है
+Auto-Junction	ऑटो-जंक्शन
+Auto-Align	ऑटो-अलाइन
+Line objects up with the nearest road (Shift: put it freely)	ऑब्जेक्ट को सबसे नज़दीकी सड़क के साथ सीध में रखें (Shift: खुला रखें)
+Selection	चयन
+A click on one of it selects all of it, Ctrl + click one alone	उसके किसी एक पर क्लिक सभी चुन लेता है, Ctrl + क्लिक सिर्फ़ एक
+Keep these together: a click on one selects all, a drag moves all (Ctrl+G)	इन्हें साथ रखें: एक पर क्लिक सब चुनता है, ड्रैग सब हिलाता है (Ctrl+G)
+Apply	लागू करें
+Turn	घुमाव
+Level the ground under them	इनके नीचे ज़मीन समतल करें
+Each one's outline made level with its foot, blending into the ground 3 m round it	हर एक की रूपरेखा उसके आधार के स्तर पर समतल, चारों ओर 3 m में ज़मीन में घुलती हुई
+Make every object	सभी ऑब्जेक्ट बनाएँ
+The object chosen in the Objects tool's catalogue	"ऑब्जेक्ट" टूल के कैटलॉग में चुना ऑब्जेक्ट
+Random headings	बेतरतीब दिशाएँ
+Every selected object turned its own random way (trees, bushes, rocks)	हर चुना ऑब्जेक्ट अपनी अलग बेतरतीब दिशा में घुमाया गया (पेड़, झाड़ियाँ, पत्थर)
+Along the road	सड़क के साथ
+Each turned the way the nearest road runs beside it	हर एक बगल की सबसे नज़दीकी सड़क की दिशा में घुमाया
+Turned:	घुमाए गए:
+All like this one	सभी इसके जैसे
+Every selected object takes the heading of the one in the properties	सभी चुने ऑब्जेक्ट गुणों वाले ऑब्जेक्ट की दिशा ले लेते हैं
+Make every road	सभी सड़कें बनाएँ
+The road type chosen in the Roads tool's catalogue	"सड़कें" टूल के कैटलॉग में चुना सड़क प्रकार
+Lay them on the ground	इन्हें ज़मीन पर बिछाएँ
+Reverse their direction	इनकी दिशा पलटें
+Even slope along them	इनके साथ एकसमान ढलान
+One chain of roads: from the height at one end to that at the other, evenly (a bridge, a ramp)	सड़कों की एक शृंखला: एक सिरे की ऊँचाई से दूसरे की ऊँचाई तक, बराबर (पुल, रैंप)
+Edit its AI lanes	इसकी AI लेन बदलें
+Its lanes become AI paths of their own (the same lines, the same way) that the Logic tool's Edit existing bends, moves and deletes. The road keeps its look.	इसकी लेन अपने AI पाथ बन जाती हैं (वही रेखाएँ, वही दिशा) जिन्हें लॉजिक > AI पाथ > मौजूदा बदलें मोड़ता, हिलाता और हटाता है। सड़क का रूप वैसा ही रहता है।
+Ends (joined roads follow)	सिरे (जुड़ी सड़कें साथ चलती हैं)
+height	ऊँचाई
+gradient	ढलान
+cant	कैंट
+Banking across the road, %: positive lowers its right side (into a right bend)	सड़क के आर-पार झुकाव, %: धन दाईं ओर नीची करता है (दाएँ मोड़ में)
+End	End
+Even slope end to end	सिरे से सिरे तक एकसमान ढलान
+Both gradients to the straight climb between the ends' heights	दोनों ढलान सिरों की ऊँचाइयों के बीच सीधी चढ़ाई पर
+Speed limit, km/h	गति सीमा, km/h
+Traffic density ×	ट्रैफ़िक घनत्व ×
+Priority	प्राथमिकता
+Trucks (0: none)	ट्रक (0: कोई नहीं)
+No cars	कारें नहीं
+Buses only	सिर्फ़ बसें
+For the AI and the player on one path (lane) of it, counted from 0: the view shows their numbers	AI और खिलाड़ी के लिए इसके एक पाथ (लेन) पर, 0 से गिनकर: व्यू में उनके नंबर दिखते हैं
+Path (lane) number	पाथ (लेन) संख्या
+Hanging on it	इस पर लटके
+Points to hang objects on:	लटकाने के बिंदु:
+Select it	इसे चुनें
+Hang	लटकाएँ
+Choose an object in the Objects catalogue first	पहले "ऑब्जेक्ट" कैटलॉग में ऑब्जेक्ट चुनें
+A fence, a row of houses, an avenue: the selection copied again and again, a step on each time	बाड़, घरों की कतार, वृक्ष-मार्ग: चयन बार-बार कॉपी होता है, हर बार एक कदम आगे
+Copies	कॉपियाँ
+Step	कदम
+Turn each	हर एक का घुमाव
+Rows	पंक्तियाँ
+More than one: a grid (an orchard, a car park), each row a row step on	एक से ज़्यादा: ग्रिड (बाग, पार्किंग), हर पंक्ति पंक्ति-कदम आगे
+Row step	पंक्ति कदम
+Tilted to the ground under it, the way it slopes forward and to the side (a fence, a bench or a shed on a hillside)	इसके नीचे की ज़मीन के साथ झुका, जैसे वह आगे और बगल में ढलती है (ढलान पर बाड़, बेंच या शेड)
+Heights along the ground again, smoothed so it climbs a hill rather than every bump (after shaping the ground or laying a height map over it); where a road not selected joins, its height is kept	ऊँचाइयाँ फिर ज़मीन के साथ, चिकनी ताकि वह हर उभार के बजाय पहाड़ी पर चढ़े (ज़मीन को आकार देने या हाइट मैप लगाने के बाद); जहाँ न चुनी सड़क जुड़ती है, उसकी ऊँचाई रहती है
+Each starts where it ended: the traffic on it goes the other way (a one-way street, a track's direction), the road itself stays where it is	हर एक वहीं से शुरू होता है जहाँ खत्म होता था: उस पर ट्रैफ़िक उल्टा चलता है (एकतरफ़ा गली, ट्रैक की दिशा), सड़क खुद वहीं रहती है
+A second track or the other carriageway: the selected splines copied alongside, bends kept exact, linked as they are	दूसरा ट्रैक या दूसरी कैरिजवे: चुने स्प्लाइन बगल में कॉपी होते हैं, मोड़ सटीक, लिंक वैसे ही
+To the left	बाईं ओर
+To the right	दाईं ओर
+Left and right of the way the road runs (its arrows with AI lanes shown)	सड़क की दिशा के बाएँ और दाएँ (AI लेन दिखाने पर उसके तीर)
+For trams and electric trains: a wire spline laid on the selected track, piece for piece and linked (its height is the wire spline's own); the masts go in with Objects along the road	ट्राम और बिजली की ट्रेनों के लिए: चुने ट्रैक पर तार का स्प्लाइन, टुकड़े-टुकड़े और जुड़ा (उसकी ऊँचाई तार के स्प्लाइन की अपनी है); खंभे "सड़क के साथ ऑब्जेक्ट" से लगते हैं
+No wire spline installed (one whose name says Fahrdraht, Oberleitung or wire)	कोई तार स्प्लाइन इंस्टॉल नहीं (जिसके नाम में Fahrdraht, Oberleitung या wire हो)
+Lay it	बिछाएँ
+Wire pieces laid:	बिछाए तार के टुकड़े:
+Paint the ground along it	इसके साथ ज़मीन पेंट करें
+Add a ground texture in the Paint tool first: the base ground is under everything	पहले "पेंट" टूल में ज़मीन का टेक्सचर जोड़ें: बेस ज़मीन सबके नीचे है
+Layer	लेयर
+Where	कहाँ
+beside it	बगल में
+under it too	इसके नीचे भी
+Out from its edge	किनारे से बाहर
+Soft edge	नरम किनारा
+A gravel verge, dirt by a track, grass along a path: the brush of the Paint tool touches it up afterwards	बजरी की पटरी, ट्रैक के पास मिट्टी, पगडंडी के साथ घास: बाद में "पेंट" का ब्रश उसे सँवारता है
+Beside	बगल में
+Lean with the road	सड़क के साथ झुकें
+Each object leans with the road's gradient and banking (bays and arrows on the road); off, it stands upright	हर ऑब्जेक्ट सड़क की ढलान और झुकाव के साथ झुकता है (सड़क पर बे और तीर); बंद होने पर वह सीधा खड़ा रहता है
+A text the row's objects show (@ starts a new line)	पंक्ति के ऑब्जेक्ट जो टेक्स्ट दिखाते हैं (@ से नई पंक्ति)
+Object:	ऑब्जेक्ट:
+Pick an object (a lamp, a tree, a bollard) in the Objects tool's catalogue	"ऑब्जेक्ट" टूल के कैटलॉग में ऑब्जेक्ट चुनें (लैंप, पेड़, बोलार्ड)
+Right of the road's direction; negative: left	सड़क की दिशा के दाएँ; ऋणात्मक: बाएँ
+Free at start / end	शुरू / अंत पर छूट
+Both sides	दोनों तरफ़
+Place along the road	सड़क के साथ रखें
+Remove all rows	सभी कतारें हटाएँ
+Roundabout: click the centre, then the ring	राउंडअबाउट: केंद्र पर क्लिक करें, फिर रिंग पर
+A one-way ring of the chosen road type (pick a one-way road); roads inside are cut back to it and joined with junctions	चुने सड़क प्रकार की एकतरफ़ा रिंग (एकतरफ़ा सड़क चुनें); भीतर की सड़कें उस तक काटी जाती हैं और जंक्शन से जुड़ती हैं
+Keep the height (bridge, embankment)	ऊँचाई रखें (पुल, तटबंध)
+An even gradient from end to end, the ground left as it is; the rise to the end can be typed while drawing. Pillars: select the road and put them along it as objects.	सिरे से सिरे तक एकसमान ढलान, ज़मीन जैसी है वैसी; अंत तक की चढ़ाई ड्रॉइंग के समय लिखी जा सकती है। खंभे: सड़क चुनें और ऑब्जेक्ट के रूप में उसके साथ रखें।
+Rise	चढ़ाई
+Shift: straight · Enter: build	Shift: सीधा · Enter: बनाएँ
+Junction	जंक्शन
+Traffic lights	ट्रैफ़िक लाइटें
+Lights need three roads or more	लाइटों के लिए तीन या अधिक सड़कें चाहिए
+Main road green	मुख्य सड़क हरी
+Side roads green	सहायक सड़कें हरी
+The main road is the pair of roads most in line; red-yellow 2 s, yellow 3 s, 2 s all red between	मुख्य सड़क वह जोड़ी है जो एक रेखा के सबसे पास हो; लाल-पीला 2 s, पीला 3 s, बीच में 2 s सब लाल
+Zebra crossings	ज़ेब्रा क्रॉसिंग
+Road	सड़क
+Build it again	फिर से बनाएँ
+Makes the plate, its kerbs and lanes again for the roads as they are now	सड़कों के अभी के रूप के हिसाब से प्लेट, उसके कर्ब और लेन फिर से बनाता है
+Linked objects	जुड़े ऑब्जेक्ट
+An object can take its state from another ([varparent]): a signal head shows a light of its crossing's program, a stop's display its stop.	ऑब्जेक्ट दूसरे से अपनी स्थिति ले सकता है ([varparent]): सिग्नल हेड अपने चौराहे के प्रोग्राम की रोशनी दिखाता है, स्टॉप का डिस्प्ले अपना स्टॉप।
+Takes its state from	स्थिति लेता है
+Select it: IDCode	उसे चुनें: IDCode
+Takes its state from an object that is gone: IDCode	गायब ऑब्जेक्ट से स्थिति लेता है: IDCode
+Takes its state from nothing	किसी से स्थिति नहीं लेता
+Light	सिग्नल
+Its light is not one of the crossing's: it stays dark	इसकी रोशनी चौराहे की नहीं है: यह बुझा रहता है
+That object runs no traffic lights: link the head to a crossing with a light program	वह ऑब्जेक्ट कोई ट्रैफ़िक लाइट नहीं चलाता: हेड को लाइट प्रोग्राम वाले चौराहे से जोड़ें
+A signal head: link it to its crossing to have it light	सिग्नल हेड: जलाने के लिए इसे अपने चौराहे से जोड़ें
+Click the object in the view… (Esc)	व्यू में ऑब्जेक्ट पर क्लिक करें… (Esc)
+Link to another…	दूसरे से जोड़ें…
+Link to an object…	ऑब्जेक्ट से जोड़ें…
+Then click the object it is to take its state from (a crossing for a signal head)	फिर उस ऑब्जेक्ट पर क्लिक करें जिससे यह स्थिति लेगा (सिग्नल हेड के लिए चौराहा)
+Taking their state from it:	इससे स्थिति लेने वाले:
+light	रोशनी
+Click the object it takes its state from	उस ऑब्जेक्ट पर क्लिक करें जिससे यह स्थिति लेता है
+stop	स्टॉप
+Find in map	मैप में खोजें
+Name, file, IDCode, stop or x, y	नाम, फ़ाइल, IDCode, स्टॉप या x, y
+The point	बिंदु
+Spline	स्प्लाइन
+Object	ऑब्जेक्ट
+Nothing on the map has this IDCode.	मैप पर इस IDCode वाला कुछ नहीं है।
+kinds	प्रकार
+on the map	मैप पर
+Next	अगला
+Select the next one and go there	अगला चुनें और वहाँ जाएँ
+Every one of these becomes the road type chosen in the Roads tool	ऐसे सभी "सड़कें" टूल में चुने सड़क प्रकार के बन जाएँगे
+Every one of these becomes the object chosen in the catalogue	ऐसे सभी कैटलॉग में चुने ऑब्जेक्ट के बन जाएँगे
+More: type to narrow the list	और भी हैं: सूची छोटी करने के लिए टाइप करें
+Replaced:	बदला गया:
+Satellite overlay	सैटेलाइट ओवरले
+Satellite and own pictures	सैटेलाइट और अपनी तस्वीरें
+Click a tile to see its overlay here.	यहाँ उसका ओवरले देखने के लिए टाइल पर क्लिक करें।
+Show the overlay	ओवरले दिखाएँ
+opacity	अपारदर्शिता
+Load satellite imagery	सैटेलाइट इमेजरी लोड करें
+Place the map on the Earth first (Satellite and terrain…)	पहले मैप को पृथ्वी पर रखें (सैटेलाइट और भूभाग…)
+Load image file…	तस्वीर फ़ाइल लोड करें…
+Your own picture for this tile (a scan, a screenshot): or drop it on the window	इस टाइल की अपनी तस्वीर (स्कैन, स्क्रीनशॉट): या उसे विंडो पर छोड़ें
+Load the OpenStreetMap map	OpenStreetMap का मैप लोड करें
+OpenStreetMap map for all tiles	सभी टाइलों के लिए OpenStreetMap मैप
+The map as openstreetmap.org draws it (streets with their names, houses, water, green, stop signs), drawn sharp from OpenStreetMap data and laid on the tile in place of a satellite picture: to build roads and houses over by eye. Nothing is generated from it.	मैप जैसा openstreetmap.org बनाता है (नाम वाली गलियाँ, घर, पानी, हरियाली, स्टॉप के चिह्न), OpenStreetMap डेटा से तेज़ बना और सैटेलाइट तस्वीर की जगह टाइल पर बिछा: आँख से सड़कें और घर बनाने के लिए। इससे कुछ जनरेट नहीं होता।
+own picture	अपनी तस्वीर
+for an earlier placement	पिछली जगह के लिए
+not kept with the map	मैप के साथ नहीं रखी
+, partly coarser	, कहीं-कहीं मोटी
+nothing	कुछ नहीं
+Place the map on the Earth first.	पहले मैप को पृथ्वी पर रखें।
+Load terrain heights	भूभाग की ऊँचाइयाँ लोड करें
+Done:	हो गया:
+with problems	समस्याओं के साथ
+A picture for the tiles	टाइलों के लिए तस्वीर
+Could not read the picture	तस्वीर पढ़ी नहीं जा सकी
+Could not copy the picture	तस्वीर कॉपी नहीं हो सकी
+The picture is on the tiles: line it up in Satellite and terrain, Own pictures.	तस्वीर टाइलों पर है: उसे "सैटेलाइट और भूभाग", "अपनी तस्वीरें" में सीध में लाएँ।
+Nothing found by that name.	उस नाम से कुछ नहीं मिला।
+Some tiles had Google imagery: enter your Google key to see it again (it is not kept with the map).	कुछ टाइलों पर Google इमेजरी थी: उसे फिर देखने के लिए अपनी Google कुंजी डालें (वह मैप के साथ नहीं रखी जाती)।
+Satellite and terrain	सैटेलाइट और भूभाग
+Find a place: a town, a street, an address… (Enter)	जगह खोजें: शहर, गली, पता… (Enter)
+Searching…	खोज रहे हैं…
+Search © OpenStreetMap contributors	खोज © OpenStreetMap योगदानकर्ता
+This map has world coordinates ([worldcoordinates]): it lies on the Earth by itself, its tiles are Web Mercator tiles.	इस मैप में विश्व निर्देशांक ([worldcoordinates]) हैं: वह खुद पृथ्वी पर बैठा है, उसकी टाइलें Web Mercator टाइलें हैं।
+Click on the map where the orange tile goes…	मैप पर क्लिक करें जहाँ नारंगी टाइल जाएगी…
+Place the map here	मैप यहाँ रखें
+Then click on the map: the middle of the orange tile goes there	फिर मैप पर क्लिक करें: नारंगी टाइल का बीच वहाँ जाएगा
+At the view's middle	व्यू के बीच में
+North turned	उत्तर का घुमाव
+Orange tile	नारंगी टाइल
+click the map to fly there in the view	मैप पर क्लिक करें: व्यू वहाँ उड़ जाएगा
+1. Find the place.  2. Press "Place the map here" and click on the map: the orange tile (the map's middle) goes there.	1. जगह खोजें।  2. "मैप यहाँ रखें" दबाएँ और मैप पर क्लिक करें: नारंगी टाइल (मैप का बीच) वहाँ जाएगी।
+Imagery	इमेजरी
+The sharpest here	यहाँ सबसे तेज़
+cm a pixel here	cm प्रति पिक्सल यहाँ
+checking…	जाँच हो रही है…
+is sharper here	यहाँ ज़्यादा तेज़ है
+Sharper imagery may be had here with your own free key for Mapbox, MapTiler or Google (Keys below).	Mapbox, MapTiler या Google की आपकी अपनी मुफ़्त कुंजी से यहाँ ज़्यादा तेज़ इमेजरी मिल सकती है (नीचे कुंजियाँ)।
+Terms of use	उपयोग की शर्तें
+Zoom	ज़ूम
+the finest here	यहाँ सबसे बारीक
+Picture of a tile	टाइल की तस्वीर
+every pixel of the source (up to 4096)	स्रोत का हर पिक्सल (4096 तक)
+Loaded at	इस पर लोड हुआ
+cm a pixel	cm प्रति पिक्सल
+Also load terrain heights	भूभाग की ऊँचाइयाँ भी लोड करें
+New tiles get imagery by themselves	नई टाइलें खुद इमेजरी पाती हैं
+Load for all tiles	सभी टाइलों के लिए लोड करें
+For the selected tile	चुनी हुई टाइल के लिए
+Click a tile with the Tiles tool (7)	"टाइलें" टूल (7) से टाइल पर क्लिक करें
+Terrain heights only	सिर्फ़ भूभाग की ऊँचाइयाँ
+of	में से
+tiles beside the loaded heights were not loaded: the ground steps at their edge.	लोड की ऊँचाइयों के बगल की टाइलें लोड नहीं हुईं: उनके किनारे पर ज़मीन में सीढ़ी है।
+Fit their edges	उनके किनारे मिलाएँ
+Their edge takes the loaded heights, fading out 60 m into the tile	उनका किनारा लोड की ऊँचाइयाँ लेता है, टाइल के भीतर 60 m में घुल जाता है
+Leave them	उन्हें रहने दें
+Terrain heights	भूभाग की ऊँचाइयाँ
+Relative: the orange tile's mean height is 0 m	सापेक्ष: नारंगी टाइल की औसत ऊँचाई 0 m है
+Raise everything by	सब कुछ इतना उठाएँ
+Taken off:	घटाया गया:
+Measure again	फिर नापें
+Terrain data attribution	भूभाग डेटा के स्रोत
+Overlay on the ground	ज़मीन पर ओवरले
+Put the imagery into maps exported for sharing (check its licence first)	साझा करने के लिए एक्सपोर्ट मैप में इमेजरी डालें (पहले उसका लाइसेंस जाँचें)
+Fit tile edges	टाइल किनारे मिलाना
+Keys for more sources (optional)	और स्रोतों की कुंजियाँ (वैकल्पिक)
+Everything works without a key. With your own free key these may be sharper in some places; the key stays on this computer.	बिना कुंजी के सब चलता है। आपकी अपनी मुफ़्त कुंजी से ये कुछ जगह ज़्यादा तेज़ हो सकते हैं; कुंजी इसी कंप्यूटर पर रहती है।
+Google satellite (needs your API key)	Google सैटेलाइट (आपकी API कुंजी चाहिए)
+get a key	कुंजी पाएँ
+In Google Cloud: make a project, enable the Map Tiles API, create an API key, paste it here. Google bills by use above its free amount.	Google Cloud में: प्रोजेक्ट बनाएँ, Map Tiles API चालू करें, API कुंजी बनाएँ, यहाँ चिपकाएँ। मुफ़्त सीमा से ऊपर Google उपयोग के हिसाब से बिल लेता है।
+key	कुंजी
+Your own tile server	आपका अपना टाइल सर्वर
+URL	URL
+Attribution	श्रेय
+Finest zoom	सबसे बारीक ज़ूम
+Kind	प्रकार
+XYZ / WMTS tiles	XYZ / WMTS टाइलें
+Terrarium heights	Terrarium ऊँचाइयाँ
+{z} {x} {y} are filled in; a WMS gets {bbox} (EPSG:3857) and {width} {height}; {key} is your key.	{z} {x} {y} भरे जाते हैं; WMS को {bbox} (EPSG:3857) और {width} {height} मिलते हैं; {key} आपकी कुंजी है।
+Add	जोड़ें
+Own pictures	अपनी तस्वीरें
+A scan, a screenshot, an old plan: laid on tiles and lined up by eye. No place on the Earth needed.	स्कैन, स्क्रीनशॉट, पुराना प्लान: टाइलों पर बिछता है और आँख से सीध में लाया जाता है। पृथ्वी पर जगह की ज़रूरत नहीं।
+Tiles from	इनसे टाइलें
+Load image file over these tiles…	इन टाइलों पर तस्वीर फ़ाइल लोड करें…
+Turn left 90°	90° बाएँ घुमाएँ
+Turn right 90°	90° दाएँ घुमाएँ
+mirror left-right	बाएँ-दाएँ पलटें
+mirror top-bottom	ऊपर-नीचे पलटें
+Reset	रीसेट
+Your own pictures	आपकी अपनी तस्वीरें
+of these tiles have your own pictures. Replace them with satellite imagery?	इन टाइलों में आपकी अपनी तस्वीरें हैं। उन्हें सैटेलाइट इमेजरी से बदलें?
+Replace them	उन्हें बदलें
+Keep my pictures	मेरी तस्वीरें रखें
+Groups for other maps	दूसरे मैप के लिए ग्रुप
+A selection kept under a name, to put down again in any map (a stop with its shelter and signs, a crossing with its lights)	नाम से रखा चयन, किसी भी मैप में फिर रखने के लिए (शेल्टर और बोर्ड वाला स्टॉप, लाइटों वाला चौराहा)
+Keep the selection	चयन रखें
+Group kept	ग्रुप रखा गया
+Select what to keep in the view first.	पहले व्यू में वह चुनें जो रखना है।
+No groups yet.	अभी कोई ग्रुप नहीं।
+thing	चीज़
+things	चीज़ें
+Delete the group (to openMapper's bin)	ग्रुप हटाएँ (openMapper के बिन में)
+Use	लें
+Into the clipboard: Ctrl+V puts it down at the cursor, as often as wanted	क्लिपबोर्ड में: Ctrl+V उसे कर्सर पर रखता है, जितनी बार चाहें
+is in the clipboard: Ctrl+V puts it at the cursor	क्लिपबोर्ड में है: Ctrl+V उसे कर्सर पर रखता है
+The map's tiles: 300 m squares. Add more beside them with the Tiles tool.	मैप की टाइलें: 300 m के वर्ग। "टाइलें" टूल से उनके बगल में और जोड़ें।
+A road	सड़क
+Roads tool: click where it starts, then where it ends. Click on a road's end to go on from it.	"सड़कें" टूल: शुरुआत पर क्लिक करें, फिर अंत पर। किसी सड़क के सिरे पर क्लिक करके वहाँ से आगे बढ़ें।
+A bus stop by the road	सड़क किनारे बस स्टॉप
+Game logic > Bus stops: put one at the kerb, on the side the doors open. Name it on the right.	गेम लॉजिक > बस स्टॉप: कर्ब पर रखें, उस तरफ़ जहाँ दरवाज़े खुलते हैं। नाम दाईं ओर दें।
+A start point	स्टार्ट पॉइंट
+Game logic > Start points: where your bus appears, on a road, facing the way to drive.	गेम लॉजिक > स्टार्ट पॉइंट: जहाँ आपकी बस प्रकट होती है, सड़क पर, चलने की दिशा में।
+A line with a trip	ट्रिप वाली लाइन
+Lines window: New line, New trip, then click the stops in order. The way is found along the roads.	लाइन विंडो: नई लाइन, नया ट्रिप, फिर स्टॉप पर क्रम से क्लिक करें। रास्ता सड़कों के साथ खुद मिल जाता है।
+A tour with departures	डिपार्चर वाला टूर
+Lines window > Tours and times: New tour, then Fill from … to … .	लाइन विंडो > टूर और समय: नया टूर, फिर "… से … तक भरें"।
+Buses for the tours	टूर के लिए बसें
+A depot the tours take their buses from (Tours: Add a depot, or Traffic and AI).	वह डिपो जिससे टूर अपनी बसें लेते हैं (टूर: "डिपो जोड़ें", या ट्रैफ़िक और AI)।
+Checked	जाँचा गया
+Map > Check map: what would go wrong in the game, most of it put right with one click.	मैप > मैप जाँचें: गेम में क्या बिगड़ेगा; ज़्यादातर एक क्लिक में ठीक हो जाता है।
+Saved	सेव हुआ
+Ctrl+S. Maps are saved into openOMSI's content folder.	Ctrl+S. मैप openOMSI के कंटेंट फ़ोल्डर में सेव होते हैं।
+A test drive	टेस्ट ड्राइव
+F5 saves and starts openOMSI on the map: pick line 1 and drive.	F5 सेव करके मैप पर openOMSI शुरू करता है: लाइन 1 चुनें और चलाएँ।
+A map you can drive in service:	ऐसा मैप जिस पर आप सेवा में चल सकते हैं:
+Show me	मुझे दिखाएँ
+Your stops stand away from the roads: a bus serves a stop within 15 m of its lane.	आपके स्टॉप सड़कों से दूर हैं: बस अपनी लेन से 15 m के भीतर के स्टॉप पर ही सेवा देती है।
+A real place? Put the map on the Earth (Map > Satellite and terrain), then Map > From OpenStreetMap brings its streets, stops, lines and trees.	असली जगह? मैप को पृथ्वी पर रखें (मैप > सैटेलाइट और भूभाग), फिर मैप > OpenStreetMap से उसकी गलियाँ, स्टॉप, लाइनें और पेड़ ले आता है।
+Show this for new maps	नए मैप के लिए यह दिखाएँ
+The map has no depot file.	मैप में डिपो फ़ाइल नहीं है।
+Make one from the lines	लाइनों से बनाएँ
+The map has no trips yet (Map > Lines and timetable)	मैप में अभी कोई ट्रिप नहीं (मैप > लाइनें और टाइमटेबल)
+Empty one	खाली
+New	नया
+A new depot file from the map's lines	मैप की लाइनों से नई डिपो फ़ाइल
+Delete this depot file	यह डिपो फ़ाइल हटाएँ
+The lines need	लाइनों को चाहिए
+Add them	जोड़ें
+What is there stays as it is	जो है वह वैसा ही रहता है
+No depot group uses it.	कोई डिपो ग्रुप इसे इस्तेमाल नहीं करता।
+Used by the depot	इस डिपो में इस्तेमाल
+Use it for every depot	सभी डिपो के लिए इस्तेमाल करें
+The AI's depot groups (Vehicle groups tab) take their buses' destinations from it	AI के डिपो ग्रुप ("वाहन ग्रुप" टैब) अपनी बसों के गंतव्य इससे लेते हैं
+Rename	नाम बदलें
+not a usable name	इस्तेमाल योग्य नाम नहीं
+The destination a bus shows on its way to and from the depot	डिपो जाते और आते समय बस जो गंतव्य दिखाती है
+Destinations	गंतव्य
+Stops	स्टॉप
+Routes	रूट
+nobody gets on	कोई नहीं चढ़ता
+Code	कोड
+another destination has this code	दूसरे गंतव्य का यही कोड है
+As a trip's terminus is named in the timetable: the stop where everybody gets off	जैसे टाइमटेबल में ट्रिप का अंतिम स्टॉप नामित है: जहाँ सब उतरते हैं
+Nobody gets on (service trip, empty sign)	कोई नहीं चढ़ता (डिपो ट्रिप, खाली बोर्ड)
+Delete destination	गंतव्य हटाएँ
+Add destination	गंतव्य जोड़ें
+New destination	नया गंतव्य
+As the timetable names the stop	जैसे टाइमटेबल में स्टॉप का नाम है
+Delete stop	स्टॉप हटाएँ
+Add stop	स्टॉप जोड़ें
+line	लाइन
+What the driver types: the line's number and two digits (7601: line 76, route 01)	ड्राइवर जो टाइप करता है: लाइन का नंबर और दो अंक (7601: लाइन 76, रूट 01)
+Line	रेखा
+IBIS text	IBIS टेक्स्ट
+Destination	गंतव्य
+Stops in order	क्रम से स्टॉप
+Not in the Stops list: the displays have no texts for it	स्टॉप सूची में नहीं: डिस्प्ले में इसके लिए टेक्स्ट नहीं हैं
+Move up	ऊपर
+Move down	नीचे
+Take out	हटाएँ
+Add a stop…	स्टॉप जोड़ें…
+Delete route	रूट हटाएँ
+Add route	रूट जोड़ें
+No routes: the IBIS knows the destinations' codes only. Add them from the lines above.	कोई रूट नहीं: IBIS सिर्फ़ गंतव्यों के कोड जानता है। ऊपर की लाइनों से जोड़ें।
+Winter with snow	बर्फ़ वाली सर्दी
+Summer (dry)	गर्मी (सूखी)
+Jan	जन
+Feb	फ़र
+Mar	मार्च
+Apr	अप्रैल
+May	मई
+Jun	जून
+Jul	जुल
+Aug	अग
+Sep	सित
+Oct	अक्टू
+Nov	नव
+Dec	दिस
+Map settings	मैप सेटिंग्स
+Money	मुद्रा
+Tickets	टिकट
+none: the map has no depot group (Traffic and AI)	नहीं: मैप में डिपो ग्रुप नहीं है (ट्रैफ़िक और AI)
+Years	वर्ष
+Year offset	वर्ष का अंतर
+Added to today's year when the game starts at the real date (Berlin-Spandau: -25 for the 1980s)	गेम असली तारीख पर शुरू हो तो आज के वर्ष में जुड़ता है (Berlin-Spandau: 1980 के दशक के लिए -25)
+Repair time	मरम्मत का समय
+ min	 मिनट
+Rail	रेल
+real rail (trams and trains follow their tracks' switches)	असली रेल (ट्राम और ट्रेनें अपने ट्रैक के स्विच के हिसाब से चलती हैं)
+Helper	सहायक
+dynamic helper active (the original editor's map option, kept as it is)	डायनेमिक हेल्पर चालू (मूल एडिटर का मैप विकल्प, जैसा है वैसा)
+Seasons	मौसम
+Summer where none is set. The days count from 1 January.	जहाँ कुछ तय नहीं वहाँ गर्मी। दिन 1 जनवरी से गिने जाते हैं।
+Add a season	मौसम जोड़ें
+A season ends before it starts	मौसम शुरू होने से पहले खत्म होता है
+Nothing selected	कुछ चुना नहीं
+Paste here	यहाँ चिपकाएँ
+Cut the road here	सड़क यहाँ काटें
+Select all like it	ऐसे सभी चुनें
+Keep for other maps…	दूसरे मैप के लिए रखें…
+Its ground, painting, water, objects and roads, put beside or into this map. Lines, timetable and AI lists stay with the other map.	इसकी ज़मीन, पेंट, पानी, ऑब्जेक्ट और सड़कें, इस मैप के बगल में या उसमें रखी जाती हैं। लाइनें, टाइमटेबल और AI सूचियाँ दूसरे मैप के पास रहती हैं।
+Choose a map…	मैप चुनें…
+Other…	अन्य…
+A map to take tiles from (its global.cfg)	टाइलें लेने के लिए मैप (उसकी global.cfg)
+Grey: this map · orange: the tiles to add (click to take one or leave it) · red: on a tile of this map, left out	धूसर: यह मैप · नारंगी: जोड़ने की टाइलें (क्लिक: लें या छोड़ें) · लाल: इस मैप की टाइल पर, छोड़ी गई
+Move:	खिसकाएँ:
+west	पश्चिम
+east	पूर्व
+north	उत्तर
+south	दक्षिण
+Raise it by	इतना उठाएँ
+Its ground, water, roads and objects at a height of their own	इसकी ज़मीन, पानी, सड़कें और ऑब्जेक्ट अपनी ऊँचाई पर
+Ease the ground where the maps meet	मैपों के मिलने पर ज़मीन को नरम करें
+Added	जोड़ा गया
+tiles from the other map	दूसरे मैप से टाइलें
+Cube	क्यूब
+Plane	प्लेन
+Circle	वृत्त
+Triangle	त्रिभुज
+Triangular prism	त्रिकोणीय प्रिज़्म
+Wedge	वेज
+Corner wedge	कोने का वेज
+Pyramid	पिरामिड
+Sphere	स्फ़ियर
+Icosphere	आइकोस्फ़ियर
+Cylinder	सिलिंडर
+Cone	कोन
+Torus	टोरस
+Tube	ट्यूब
+Capsule	कैप्सूल
+Stairs	सीढ़ियाँ
+Arch	मेहराब
+Make one and put it on the map with a click (each one can then be edited, scaled, cut and joined)	एक बनाएँ और क्लिक से मैप पर रखें (फिर हर एक को बदला, स्केल, काटा और जोड़ा जा सकता है)
+Array	ऐरे
+Mirror	दर्पण
+Solidify	सॉलिडिफ़ाई
+Subdivision surface	सबडिविज़न सरफ़ेस
+Decimate	डिसिमेट
+Triangulate	ट्राएंगुलेट
+Displace	डिस्प्लेस
+Wireframe	वायरफ़्रेम
+Screw	स्क्रू
+Simple deform	सिंपल डिफ़ॉर्म
+Cast	कास्ट
+Weld	वेल्ड
+Edge split	एज स्प्लिट
+Boolean	बूलियन
+Follow the ground	ज़मीन के साथ चलें
+Count	गिनती
+Relative	सापेक्ष
+Offset	ऑफ़सेट
+Merge touching ends	छूते सिरे जोड़ें
+Distance	दूरी
+Cut away the other side first	पहले दूसरी तरफ़ काट दें
+Weld at the mirror	मिरर पर जोड़ें
+Thickness	मोटाई
+Close the rim	किनारा बंद करें
+Width	चौड़ाई
+Segments	सेगमेंट
+Levels	लेवल
+Smooth (Catmull-Clark)	स्मूद (Catmull-Clark)
+Factor	फ़ैक्टर
+Repeat	दोहराव
+Seed	सीड
+Along the normals	नॉर्मल के साथ
+Steps	स्टेप
+Axis	अक्ष
+Twist	ट्विस्ट
+Bend	मोड़
+Taper	टेपर
+Stretch	स्ट्रेच
+Amount	मात्रा
+Box	बॉक्स
+Difference	डिफ़रेंस
+With the part	हिस्से के साथ
+Tip: hide the cutting part (its eye in the list) so only the cut shows	सुझाव: काटने वाला हिस्सा छिपाएँ (सूची में उसकी आँख) ताकि सिर्फ़ कट दिखे
+Above the ground	ज़मीन से ऊपर
+Every vertex follows the terrain under it (in the editor's view and the written files at the place it stands)	हर वर्टेक्स अपने नीचे के भूभाग के साथ चलता है
+Mesh (openMapper object)	मेश (openMapper ऑब्जेक्ट)
+Shared by	साझा है
+objects on the map: changes apply to all	मैप के ऑब्जेक्ट में: बदलाव सब पर लागू होंगे
+Make this one single	इसे अलग कॉपी बनाएँ
+Leave the edit mode (Tab)	संपादन मोड से बाहर (Tab)
+Edit the mesh (Tab)	मेश बदलें (Tab)
+Write it as OBJ, glTF / GLB, FBX, Collada, USD, STL, PLY, 3MF, OFF, X or O3D	OBJ, glTF / GLB, FBX, Collada, USD, STL, PLY, 3MF, OFF, X या O3D में लिखें
+Off: its height is kept above the ground under it	बंद: उसके नीचे की ज़मीन से उसकी ऊँचाई रखी जाती है
+Solid (collides)	ठोस (टकराता है)
+The part edited and given modifiers	वह हिस्सा जिसे बदला जाता है और मॉडिफ़ायर दिए जाते हैं
+Shown (and written into the object)	दिखता है (और ऑब्जेक्ट में लिखा जाता है)
+faces	फ़ेस
+Duplicate the part	हिस्सा डुप्लिकेट करें
+Delete the part	हिस्सा हटाएँ
+Add a shape as a part	हिस्से के रूप में आकृति जोड़ें
+Separate parts into objects	हिस्सों को ऑब्जेक्ट में अलग करें
+Each part becomes an object of its own, standing where it stood	हर हिस्सा अपनी जगह पर अलग ऑब्जेक्ट बन जाता है
+Shape	आकृति
+Modifiers	मॉडिफ़ायर
+Make it part of the mesh	इसे मेश का हिस्सा बनाएँ
+Add a modifier	मॉडिफ़ायर जोड़ें
+Materials	मटीरियल
+Colour (multiplies the texture)	रंग (टेक्सचर से गुणा होता है)
+Assign to selected faces	चुने फ़ेस को दें
+Choose…	चुनें…
+No texture	टेक्सचर नहीं
+Save as…	ऐसे सेव करें…
+PNG, JPEG, BMP, TGA, TIFF, WebP or DDS	PNG, JPEG, BMP, TGA, TIFF, WebP या DDS
+Transparency	पारदर्शिता
+Opaque	अपारदर्शी
+Cut out	कटआउट
+Blended	ब्लेंड
+Glows	चमक
+Light of its own: black for none	अपनी रोशनी: काला यानी कोई नहीं
+Shine	शाइन
+Normal map	नॉर्मल मैप
+ORM map	ORM मैप
+Night texture	रात का टेक्सचर
+Light map	लाइट मैप
+Remove the material	मटीरियल हटाएँ
+Add a material	मटीरियल जोड़ें
+Import materials…	मटीरियल इम्पोर्ट करें…
+From an .mtl, a glTF / GLB / FBX, or the pictures of one PBR material (base colour, normal, roughness, metal, AO...)	.mtl, glTF / GLB / FBX, या एक PBR मटीरियल की तस्वीरों (बेस कलर, नॉर्मल, रफ़नेस, मेटल, AO...) से
+Lamps	लैंप
+Glow	ग्लो
+Light on the ground	ज़मीन पर रोशनी
+Colour	रंग
+Reach	पहुँच
+On	चालू
+Always	हमेशा
+At night	रात में
+variable	परिवर्तनशील
+Seen from one side	एक तरफ़ से दिखता है
+Star	तारा
+Facing	दिशा
+Remove the lamp	लैंप हटाएँ
+Add a glow	ग्लो जोड़ें
+A lamp's bulb, a lit sign: a glow seen at night	लैंप का बल्ब, चमकता बोर्ड: रात में दिखने वाली चमक
+Add light on the ground	ज़मीन पर रोशनी जोड़ें
+The pool of light a street lamp throws at night	स्ट्रीट लैंप की रात में पड़ने वाली रोशनी का धब्बा
+Signal head, lamps	सिग्नल हेड, लैंप
+Put it within 40 m of a crossing with a light program: it takes its light from it (or link it in its properties)	इसे लाइट प्रोग्राम वाले चौराहे के 40 m के भीतर रखें: यह रोशनी उससे लेगा (या गुणों में जोड़ें)
+Bake	बेक
+Its textures and colours painted into one picture on a new UV map (one material: fewer draws in the game), with its own shadows and its lamps' night light if chosen	इसके टेक्सचर और रंग नए UV मैप पर एक तस्वीर में पेंट होते हैं (एक मटीरियल: गेम में कम ड्रॉ), चुनने पर अपनी छायाओं और लैंप की रात की रोशनी के साथ
+Ambient occlusion	एम्बिएंट ऑक्लूज़न
+How far its shadows reach	इसकी छायाएँ कितनी दूर जाती हैं
+Lamps' light at night (light map)	रात में लैंप की रोशनी (लाइट मैप)
+The object's last change (Ctrl+Z in the edit mode)	ऑब्जेक्ट का आखिरी बदलाव (संपादन मोड में Ctrl+Z)
+Divisions X	विभाजन X
+Divisions Y	विभाजन Y
+Rings	रिंग
+Subdivisions	उप-विभाजन
+Bottom radius	निचली त्रिज्या
+Top radius	ऊपरी त्रिज्या
+Tube radius	ट्यूब की त्रिज्या
+Tube segments	ट्यूब के सेगमेंट
+Outer radius	बाहरी त्रिज्या
+Inner radius	भीतरी त्रिज्या
+Opening	खुलाव
+Wall	दीवार
+Mesh	मेश
+A copy of this object's type of its own is made for it, with its meshes, materials and lamps to edit; the original stays as it is	इस ऑब्जेक्ट के प्रकार की अपनी कॉपी बनती है, बदलने के लिए उसके मेश, मटीरियल और लैंप के साथ; मूल जैसा है वैसा रहता है
+As a mesh	मेश के रूप में
+Copy as an object	ऑब्जेक्ट के रूप में कॉपी
+An openMapper object of its shape beside it, to edit as a mesh (vertices, edges, faces)	उसी आकार का openMapper ऑब्जेक्ट उसके बगल में, मेश (वर्टेक्स, एज, फ़ेस) के रूप में बदलने के लिए
+The same, the spline taken away (its lanes go with it)	वही, स्प्लाइन हटा दिया जाता है (उसकी लेन भी साथ जाती हैं)
+Splines as a mesh	मेश के रूप में स्प्लाइन
+Copy as one object	एक ऑब्जेक्ट के रूप में कॉपी
+Replace by one object	एक ऑब्जेक्ट से बदलें
+Export the selection…	चयन एक्सपोर्ट करें…
+As meshes	मेश के रूप में
+Join into one object (Ctrl+J)	एक ऑब्जेक्ट में जोड़ें (Ctrl+J)
+All their parts in the one shown in the properties, the others gone	उनके सारे हिस्से गुणों में दिखाए ऑब्जेक्ट में, बाकी हट जाते हैं
+Solid modelling (CSG): the object shown in the properties with the others	सॉलिड मॉडलिंग (CSG): गुणों में दिखाया ऑब्जेक्ट बाकियों के साथ
+Keep the cutting objects	काटने वाले ऑब्जेक्ट रखें
+Vertices	वर्टेक्स
+Edges	एज
+Faces	फ़ेस
+vertices	वर्टेक्स
+edges	एज
+Selected	चुना गया
+X-ray: pick through the mesh	एक्स-रे: मेश के आर-पार चुनें
+All (A)	सब (A)
+None (Alt+A)	कुछ नहीं (Alt+A)
+Invert (Ctrl+I)	उलटें (Ctrl+I)
+Linked (Ctrl+L)	जुड़ा (Ctrl+L)
+More	अधिक
+Less	कम
+Click, Shift + click to add, drag on nothing for a box, a second click or Alt + click for a loop	क्लिक, जोड़ने के लिए Shift + क्लिक, बॉक्स के लिए खाली जगह पर ड्रैग, लूप के लिए दूसरा क्लिक या Alt + क्लिक
+Change	बदलें
+Extrude (E)	एक्सट्रूड (E)
+Inset (I)	इनसेट (I)
+Bevel (Ctrl+B)	बेवल (Ctrl+B)
+Loop cut (Ctrl+R)	लूप कट (Ctrl+R)
+Point at an edge and press Ctrl+R	किनारे पर इंगित करें और Ctrl+R दबाएँ
+Subdivide	सबडिवाइड
+Fill (F)	भरें (F)
+Bridge loops	लूप जोड़ें
+Connect (J)	कनेक्ट (J)
+Poke	पोक
+Duplicate (Shift+D)	डुप्लिकेट (Shift+D)
+Split (Y)	स्प्लिट (Y)
+Separate into an object (P)	अलग ऑब्जेक्ट में (P)
+Spin 360°	360° स्पिन
+The selection turned round the object's up axis through its middle, in 12 steps	चयन ऑब्जेक्ट की ऊर्ध्व अक्ष के चारों ओर, उसके बीच से, 12 कदमों में घूमता है
+Smooth vertices	वर्टेक्स स्मूद करें
+Merge (M)	मर्ज (M)
+At the middle	बीच में
+At the first	पहले पर
+At the last	आखिरी पर
+Collapse each piece	हर टुकड़ा सिकोड़ें
+By distance (1 mm)	दूरी से (1 mm)
+Delete (X)	हटाएँ (X)
+Only faces	सिर्फ़ फ़ेस
+Dissolve vertices	वर्टेक्स घोलें
+Dissolve edges	एज घोलें
+Dissolve faces	फ़ेस घोलें
+Triangulate (Ctrl+T)	ट्राएंगुलेट (Ctrl+T)
+Triangles to quads (Alt+J)	त्रिभुज से चतुर्भुज (Alt+J)
+Shade smooth	शेड स्मूद
+Shade flat	शेड फ़्लैट
+Flip normals (Alt+N)	नॉर्मल पलटें (Alt+N)
+Normals outward (Shift+N)	नॉर्मल बाहर की ओर (Shift+N)
+Mark seam	सीम चिह्नित करें
+Clear seam	सीम हटाएँ
+Mark sharp	शार्प चिह्नित करें
+Clear sharp	शार्प हटाएँ
+Adjust the last operation	आखिरी ऑपरेशन समायोजित करें
+Slide	स्लाइड
+Cuts	कट
+UV map	UV मैप
+Unwrap	अनरैप
+By seams (conformal)	सीम से (कन्फ़ॉर्मल)
+Smart project	स्मार्ट प्रोजेक्ट
+Cube projection (metres)	क्यूब प्रोजेक्शन (मीटर में)
+Cylinder projection	सिलिंडर प्रोजेक्शन
+Sphere projection	स्फ़ियर प्रोजेक्शन
+Project from the view	व्यू से प्रोजेक्ट
+Lightmap pack	लाइटमैप पैक
+Close the UV editor	UV एडिटर बंद करें
+UV editor	UV एडिटर
+Faces of the selection (all, with none selected); mark seams on edges first for an unwrap by seams	चयन के फ़ेस (कुछ न चुना हो तो सब); सीम से अनरैप के लिए पहले एज पर सीम चिह्नित करें
+Material of the selected faces	चुने फ़ेस का मटीरियल
+With lamps	लैंप के साथ
+Street lamp	स्ट्रीट लैंप
+A pole with a lamp that glows and lights the ground at night	लैंप वाला खंभा जो रात में चमकता है और ज़मीन रोशन करता है
+Signal head	सिग्नल हेड
+A traffic light of the lamps below that a crossing's light program drives	नीचे के लैंप का ट्रैफ़िक सिग्नल जिसे चौराहे का लाइट प्रोग्राम चलाता है
+Lamps:	लैंप:
+Picture, light, sound	तस्वीर, रोशनी, आवाज़
+Picture / pattern…	तस्वीर / पैटर्न…
+Choose a picture or a texture: it becomes an object you place, move, turn and scale like any other. Several repeats make a pattern	तस्वीर या टेक्सचर चुनें: वह ऑब्जेक्ट बनता है जिसे बाकियों की तरह रखा, हिलाया, घुमाया और स्केल किया जाता है। कई दोहराव से पैटर्न बनता है
+Light source	रोशनी का स्रोत
+A lamp that glows and lights the ground round it	लैंप जो चमकता है और आसपास की ज़मीन रोशन करता है
+Sound source…	साउंड सोर्स…
+Choose a sound file (.wav): it plays where you put the marker, as far as the radius carries; the marker shows in the editor only	साउंड फ़ाइल (.wav) चुनें: वह मार्कर की जगह त्रिज्या जितनी दूर तक बजती है; मार्कर सिर्फ़ एडिटर में दिखता है
+Picture width, m	तस्वीर की चौड़ाई, m
+Repeats	दोहराव
+on the ground	ज़मीन पर
+standing	खड़ा
+Light colour	रोशनी का रंग
+Light reach, m	रोशनी की पहुँच, m
+at night	रात में
+always	हमेशा
+Sound reach, m	आवाज़ की पहुँच, m
+Sound volume	आवाज़ की तेज़ी
+Overview: click or drag to move there · double-click: larger / smaller · M: hide	ओवरव्यू: वहाँ जाने के लिए क्लिक या ड्रैग करें · डबल-क्लिक: बड़ा / छोटा · M: छिपाएँ
+Name:	नाम:
+My town	मेरा शहर
+Description:	विवरण:
+What the map is, for the game's map list	मैप क्या है, गेम की मैप सूची के लिए
+Size:	आकार:
+Ground height:	ज़मीन की ऊँचाई:
+ m above sea level	 m समुद्र तल से ऊपर
+Traffic:	ट्रैफ़िक:
+keeps right	दाएँ चलता है
+keeps left	बाएँ चलता है
+Busy:	व्यस्तता:
+cars	कारें
+passengers	यात्री
+Years:	वर्ष:
+year offset	वर्ष का अंतर
+Added to today's year when the game starts at the real date	गेम असली तारीख पर शुरू हो तो आज के वर्ष में जुड़ता है
+Money:	मुद्रा:
+Tickets:	टिकट:
+Seasons:	मौसम:
+four, snowy winter	चार, बर्फ़ीली सर्दी
+mild winter	नरम सर्दी
+summer only	सिर्फ़ गर्मी
+Rail:	रेल:
+trams and trains follow their tracks' switches	ट्राम और ट्रेनें स्विच के हिसाब से चलती हैं
+Ground texture (all tiles):	ज़मीन का टेक्सचर (सभी टाइलें):
+template	टेम्पलेट
+More ground layers are painted later (Paint tool); the map's settings can all be changed in Map > Map settings.	ज़मीन की और लेयर बाद में पेंट होती हैं ("पेंट" टूल); मैप की सभी सेटिंग मैप > मैप सेटिंग्स में बदली जा सकती हैं।
+Create	बनाएँ
+as the template	टेम्पलेट जैसा
+ways	रास्ते
+bus routes downloaded	डाउनलोड हुए बस रूट
+not had:	नहीं मिले:
+The streets of the map's place built as roads with junctions where they meet, its bus stops, lines, trees and woods. Best on tiles with no roads yet: roads lying on ones the map has are left out.	मैप की जगह की गलियाँ सड़कों के रूप में बनती हैं, जहाँ मिलती हैं वहाँ जंक्शन के साथ, साथ में उसके बस स्टॉप, लाइनें, पेड़ और जंगल। बिना सड़कों वाली टाइलों पर सबसे अच्छा: मैप की मौजूदा सड़कों पर पड़ने वाली सड़कें छोड़ दी जाती हैं।
+The map does not lie on the Earth yet: place it in Satellite and terrain (Map menu, I) first.	मैप अभी पृथ्वी पर नहीं है: पहले उसे "सैटेलाइट और भूभाग" (मैप मेनू, I) में रखें।
+Load the terrain heights first (Satellite and terrain): the roads follow the ground as it is when they are built.	पहले भूभाग की ऊँचाइयाँ लोड करें (सैटेलाइट और भूभाग): सड़कें बनते समय की ज़मीन के हिसाब से बैठती हैं।
+Download for the map's tiles	मैप की टाइलों के लिए डाउनलोड करें
+bus routes	बस रूट
+trees	पेड़
+buildings	इमारतें
+water	पानी
+Downloading…	डाउनलोड हो रहा है…
+no type chosen	प्रकार नहीं चुना
+Use the chosen	चुना हुआ लें
+One-way roads	एकतरफ़ा सड़कें
+Each carriageway of a dual road and one-way streets: with a one-way road type they lie side by side as they should; with none chosen they get their kind's	डिवाइडर वाली सड़क की हर तरफ़ और एकतरफ़ा गलियाँ: एकतरफ़ा सड़क प्रकार से वे साथ-साथ ठीक से बैठती हैं; कुछ न चुनने पर उन्हें अपने किस्म का प्रकार मिलता है
+as their kind	अपने किस्म जैसा
+no stop object	स्टॉप ऑब्जेक्ट नहीं
+The stop chosen in Game logic > Bus stops	"गेम लॉजिक > बस स्टॉप" में चुना स्टॉप
+Bus lines	बस लाइनें
+Each bus route through two or more of the map's stops a trip of its line, the way found along the roads; a tour from 06:00 to 22:00 for each new line	मैप के दो या अधिक स्टॉप से गुज़रने वाला हर बस रूट अपनी लाइन का एक ट्रिप बनता है, रास्ता सड़कों के साथ मिलता है; हर नई लाइन के लिए 06:00 से 22:00 तक का टूर
+Trees and woods	पेड़ और जंगल
+Single trees, rows of them and woods, planted with the plant mix (Objects tool > Plant brush) or the tree chosen; none on a road	अकेले पेड़, उनकी कतारें और जंगल, प्लांट मिश्रण ("ऑब्जेक्ट" टूल > प्लांट ब्रश) या चुने पेड़ से लगाए; सड़क पर नहीं
+no plants chosen	पौधे नहीं चुने
+kinds of plants	पौधों के प्रकार
+apart in woods	जंगल में दूरी
+Buildings	इमारतें
+Each outline filled with the model of the folder chosen whose ground plan comes nearest, its front to the nearest road; an outline no model fits is left out	हर रूपरेखा चुने फ़ोल्डर के उस मॉडल से भरती है जिसका नक्शा सबसे मिलता है, सामने सबसे नज़दीकी सड़क की ओर; जिस रूपरेखा में कोई मॉडल नहीं बैठता वह छोड़ दी जाती है
+no folder	फ़ोल्डर नहीं
++ its folder	+ उसका फ़ोल्डर
+Add the folder of the object chosen in the catalogue (Buildings_MC, …)	कैटलॉग में चुने ऑब्जेक्ट का फ़ोल्डर जोड़ें (Buildings_MC, …)
+Lakes and rivers: the ground inside them lowered below the banks, and the tiles they lie on given water a little under the banks' height (OMSI's water is one level for a tile: low ground elsewhere on it is flooded too)	झीलें और नदियाँ: उनके भीतर की ज़मीन किनारों से नीची की जाती है, और जिन टाइलों पर वे हैं उन्हें किनारों की ऊँचाई से ज़रा नीचे पानी मिलता है (OMSI में पानी टाइल के लिए एक स्तर का है: उस पर कहीं और की नीची ज़मीन भी डूबेगी)
+deep	गहरा
+a road type (Roads tool), then "Use the chosen"	सड़क प्रकार ("सड़कें" टूल), फिर "चुना हुआ लें"
+a stop (Game logic > Bus stops), then "Use the chosen"	स्टॉप ("गेम लॉजिक > बस स्टॉप"), फिर "चुना हुआ लें"
+a tree in the Objects catalogue (or a plant mix)	ऑब्जेक्ट कैटलॉग में पेड़ (या प्लांट मिश्रण)
+a building in the catalogue, then "+ its folder"	कैटलॉग में इमारत, फिर "+ उसका फ़ोल्डर"
+To build, choose (or untick):	बनाने के लिए चुनें (या टिक हटाएँ):
+A one-way street is built the way it runs in OpenStreetMap: give it a one-way road type	एकतरफ़ा गली OpenStreetMap की दिशा में बनती है: उसे एकतरफ़ा सड़क प्रकार दें
+Build	बनाएँ
+Name, file or IDCode	नाम, फ़ाइल या IDCode
+things on the map	मैप पर चीज़ें
+Groups	ग्रुप
+Select the group and go there	ग्रुप चुनें और वहाँ जाएँ
+Select everything in it	उसमें सब कुछ चुनें
+Select it and go there	चुनें और वहाँ जाएँ
+more: narrow the search	और: खोज छोटी करें
+Select all of them	उन सभी को चुनें
+Go to the first	पहले पर जाएँ
+Pick a tree in the catalogue, then paint	कैटलॉग में पेड़ चुनें, फिर पेंट करें
+Pick a tree in the catalogue, then click round the area	कैटलॉग में पेड़ चुनें, फिर क्षेत्र के चारों ओर क्लिक करें
+Pick a road type, click the centre, then the ring	सड़क प्रकार चुनें, केंद्र पर क्लिक करें, फिर रिंग पर
+Select a road (double-click: all of it): its properties show its height profile	सड़क चुनें (डबल-क्लिक: पूरी): उसके गुणों में उसकी ऊँचाई प्रोफ़ाइल है
+Select one of openMapper's junctions: its properties have Traffic lights and crossings	openMapper का जंक्शन चुनें: उसके गुणों में ट्रैफ़िक लाइटें और क्रॉसिंग हैं
+Select the signal head (or a display): Linked objects in its properties, then click its crossing	सिग्नल हेड (या डिस्प्ले) चुनें: गुणों में "जुड़े ऑब्जेक्ट", फिर उसके चौराहे पर क्लिक करें
+Select a road, pick an object in the Objects catalogue: Objects along the road in its properties	सड़क चुनें, ऑब्जेक्ट कैटलॉग में ऑब्जेक्ट चुनें: उसके गुणों में "सड़क के साथ ऑब्जेक्ट"
+Select a track (double-click: all of it): Overhead wire under Parallel copy in its properties	ट्रैक चुनें (डबल-क्लिक: पूरा): उसके गुणों में "समानांतर कॉपी" के नीचे "ओवरहेड तार"
+Select a road or a chain: Parallel copy in its properties	सड़क या शृंखला चुनें: उसके गुणों में "समानांतर कॉपी"
+Select a road (double-click: all of it): Paint the ground along it in its properties	सड़क चुनें (डबल-क्लिक: पूरी): उसके गुणों में "इसके साथ ज़मीन पेंट करें"
+Click a tile: its water is in the panel; lower the ground under it with the Terrain tool	टाइल पर क्लिक करें: उसका पानी पैनल में है; "भूभाग" टूल से उसके नीचे ज़मीन नीची करें
+Height map: at the end of the Terrain panel	हाइट मैप: "भूभाग" पैनल के अंत में
+By slope and height: at the end of the Paint panel	ढलान और ऊँचाई से: "पेंट" पैनल के अंत में
+View menu: Time of day, Season	"व्यू" मेनू: दिन का समय, मौसम
+What do you want to do?	आप क्या करना चाहते हैं?
+Groups…	ग्रुप…
+Objects on the map by folder	फ़ोल्डर के अनुसार मैप के ऑब्जेक्ट
+Knife: cut roads	चाकू: सड़कें काटें
+Test drive in OMSI 2 (the original)	OMSI 2 (मूल) में टेस्ट ड्राइव
+Overview map	ओवरव्यू मैप
+Place a bus stop	बस स्टॉप रखें
+Place a start point	स्टार्ट पॉइंट रखें
+Plant trees with a brush	ब्रश से पेड़ लगाएँ
+Plant a wood or a park	जंगल या पार्क लगाएँ
+Roundabout	राउंडअबाउट
+Height profile of a road	सड़क की ऊँचाई प्रोफ़ाइल
+Traffic lights and zebra crossings	ट्रैफ़िक लाइटें और ज़ेब्रा क्रॉसिंग
+Link a signal head to its crossing	सिग्नल हेड को उसके चौराहे से जोड़ें
+Objects along a road	सड़क के साथ ऑब्जेक्ट
+Overhead wire along a track	ट्रैक के साथ ओवरहेड तार
+Parallel copy of a road	सड़क की समानांतर कॉपी
+Paint the ground along a road	सड़क के साथ ज़मीन पेंट करें
+Water, lake, river	पानी, झील, नदी
+Ramp in the ground	ज़मीन में रैंप
+Height map import or export	हाइट मैप इम्पोर्ट या एक्सपोर्ट
+Time of day and season	दिन का समय और मौसम
+PBR material	PBR मटीरियल
+none	कोई नहीं
+Own picture…	अपनी तस्वीर…
+Choose a texture of the object, or a picture of your own.	ऑब्जेक्ट का टेक्सचर चुनें, या अपनी तस्वीर।
+Normals (_nn)	नॉर्मल (_nn)
+Roughness	रफ़नेस
+Shadow in hollows	गड्ढों में छाया
+Bumps	उभार
+Only big shapes	सिर्फ़ बड़े आकार
+Dark parts stand out (not sink in)	गहरे हिस्से उभरते हैं (धँसते नहीं)
+Bright parts smoother	चमकीले हिस्से चिकने
+Metal	मेटल
+Back to the defaults	डिफ़ॉल्ट पर लौटें
+This texture has PBR maps of its own already: new ones made here are taken instead of them.	इस टेक्सचर के अपने PBR मैप पहले से हैं: यहाँ बने नए उनकी जगह इस्तेमाल होंगे।
+Written as:	ऐसे लिखा जाता है:
+PBR maps made	PBR मैप बने
+Delete the PBR material	PBR मटीरियल हटाएँ
+PBR maps taken away	PBR मैप हटाए गए
+Height profile	ऊँचाई प्रोफ़ाइल
+over the ground	ज़मीन के ऊपर
+Click: go there in the view · drag a dot (a joint) up or down: its height	क्लिक: व्यू में वहाँ जाएँ · बिंदु (जोड़) ऊपर या नीचे खींचें: उसकी ऊँचाई
+Climbs, falls	चढ़ाई, उतराई
+Steepest	सबसे तीखा
+at	पर
+Highest over the ground	ज़मीन से सबसे ऊँचा
+Deepest under it	उसके नीचे सबसे गहरा
+Over 8 % is steep for a bus; over 12 % few streets go	बस के लिए 8 % से ज़्यादा तीखा है; 12 % से ऊपर कम गलियाँ जाती हैं
+roadway	सड़क का तल
+Road types	सड़क प्रकार
+Make a new road type…	नया सड़क प्रकार बनाएँ…
+My road	मेरी सड़क
+ · own	 · अपना
+Create the road type	सड़क प्रकार बनाएँ
+Road type made: the Roads tool builds with it	सड़क प्रकार बना: "सड़कें" टूल इसी से बनाता है
+Change it in the road maker	रोड मेकर में बदलें
+Its junctions	इसके जंक्शन
+Make a junction where it meets another road (else they only cross)	जहाँ यह दूसरी सड़क से मिले वहाँ जंक्शन बनाएँ (वरना सिर्फ़ पार करती हैं)
+Corners	कोने
+× rounder	× ज़्यादा गोल
+Traffic lights by themselves	ट्रैफ़िक लाइटें अपने आप
+Zebra crossings on every arm	हर तरफ़ ज़ेब्रा क्रॉसिंग
+Used for the junctions made from now on (where several road types meet, the one asking more wins). A junction already made keeps its own settings: select it to change them.	अब से बनने वाले जंक्शन के लिए इस्तेमाल होता है (जहाँ कई सड़क प्रकार मिलें, ज़्यादा माँगने वाला जीतता है)। बन चुका जंक्शन अपनी सेटिंग रखता है: बदलने के लिए उसे चुनें।
+Pick a road type on the left, or make a new one.	बाईं ओर सड़क प्रकार चुनें, या नया बनाएँ।
+Road maker	रोड मेकर
+Lanes	लेन
+(▼ 0: one-way)	(▼ 0: एकतरफ़ा)
+Lane width	लेन की चौड़ाई
+Middle strip	बीच की पट्टी
+Footways	फ़ुटपाथ
+Kerb	कर्ब
+Roadway texture	सड़क तल का टेक्सचर
+Footway texture	फ़ुटपाथ का टेक्सचर
+Own…	अपना…
+The roadway texture is laid once across all its lanes (as OMSI 2's lane textures are painted: pick one with as many lanes); the footway texture's right end is the kerb.	सड़क तल का टेक्सचर सभी लेन के आर-पार एक बार बिछता है (जैसे OMSI 2 के लेन टेक्सचर पेंट होते हैं: उतनी ही लेन वाला चुनें); फ़ुटपाथ टेक्सचर का दायाँ सिरा कर्ब है।
+not on the map	मैप पर नहीं
+Signal routes	सिग्नल रूट
+Each railway signal clears when a train wants the track pieces of its route and none stands on them.	हर रेलवे सिग्नल तब खुलता है जब ट्रेन को उसके रूट के ट्रैक चाहिए हों और उन पर कोई खड़ा न हो।
+New route for the selected signal	चुने सिग्नल के लिए नया रूट
+Select a signal (one object) in the view first	पहले व्यू में सिग्नल (एक ऑब्जेक्ट) चुनें
+The selected object does not look like a signal (its name says nothing of one): check it is.	चुना ऑब्जेक्ट सिग्नल जैसा नहीं दिखता (उसके नाम में ऐसा कुछ नहीं): जाँचें कि वही है।
+No routes yet.	अभी कोई रूट नहीं।
+pieces	टुकड़े
+Signal	सिग्नल
+the selected	चुना हुआ
+Aspect	संकेत
+What the signal shows when this route is clear: 1 proceed, 2 proceed slowly (with a speed limit)…	रूट खाली होने पर सिग्नल क्या दिखाता है: 1 चलो, 2 धीरे चलो (गति सीमा के साथ)…
+Distant signal	डिस्टेंट सिग्नल
+Next signal	अगला सिग्नल
+Speed limit	गति सीमा
+OMSI's route kind (the stock maps have 0 and 1)	OMSI का रूट प्रकार (स्टॉक मैप में 0 और 1 हैं)
+Track pieces	ट्रैक के टुकड़े
+Take the selected track	चुने ट्रैक लें
+Every rail path of the selected tracks and switches (double-click a track: all of it); replaces the pieces	चुने ट्रैक और स्विच के सभी रेल पाथ (ट्रैक पर डबल-क्लिक: पूरा); टुकड़ों को बदलता है
+Select the signal and its pieces in the view	व्यू में सिग्नल और उसके टुकड़े चुनें
+Delete the route	रूट हटाएँ
+Lines and timetable	लाइनें और टाइमटेबल
+Edit timetable	टाइमटेबल बदलें
+No bus stop there: click one of the orange marks	वहाँ कोई बस स्टॉप नहीं: नारंगी निशानों में से एक पर क्लिक करें
+The roads can't be read without the OMSI 2 folder.	OMSI 2 फ़ोल्डर के बिना सड़कें पढ़ी नहीं जा सकतीं।
+A line needs at least two bus stops on the map: place them with Game logic > Bus stops, beside a road.	लाइन के लिए मैप पर कम से कम दो बस स्टॉप चाहिए: उन्हें सड़क के पास गेम लॉजिक > बस स्टॉप से रखें।
+Lines	लाइनें
+No lines yet.	अभी कोई लाइन नहीं।
+New line	नई लाइन
+Pick a line on the left, or make a new one.\n\nA line has trips (a way from stop to stop) and tours (one bus's day: which trip it drives when).	बाईं ओर लाइन चुनें, या नई बनाएँ।\n\nलाइन के ट्रिप होते हैं (स्टॉप से स्टॉप तक रास्ता) और टूर (एक बस का दिन: कौन-सा ट्रिप कब चलाती है)।
+That name is taken or can't be a file name	यह नाम लिया जा चुका है या फ़ाइल का नाम नहीं हो सकता
+A copy of the line with its trips and tours (a variant to change)	लाइन की उसके ट्रिप और टूर समेत कॉपी (बदलाव के लिए एक रूप)
+Delete the line and its trips	लाइन और उसके ट्रिप हटाएँ
+Players can drive it	खिलाड़ी इसे चला सकते हैं
+Trips	ट्रिप
+Tours and times	टूर और समय
+A tour is one bus's day: the trips it drives, one after the other, and when each leaves.	टूर एक बस का दिन है: जो ट्रिप वह एक के बाद एक चलाती है, और हर एक कब निकलता है।
+A trip is one way along the line: its stops in order. Most lines have two, there and back.	ट्रिप लाइन पर एक दिशा का सफ़र है: क्रम से उसके स्टॉप। ज़्यादातर लाइनों के दो होते हैं, जाना और आना।
+New trip	नया ट्रिप
+Make the way back	वापसी का बनाएँ
+A new trip with the same stops the other way round	उन्हीं स्टॉप का नया ट्रिप उल्टी दिशा में
+Trip	ट्रिप
+Delete the trip	ट्रिप हटाएँ
+Destination sign	गंतव्य बोर्ड
+This trip runs on a track of its own (a train): its stops are kept as they are.	यह ट्रिप अपने ट्रैक पर चलता है (ट्रेन): इसके स्टॉप जैसे हैं वैसे रहते हैं।
+Show on the map	मैप पर दिखाएँ
+No stops yet.	अभी कोई स्टॉप नहीं।
+Done picking	चुनना पूरा
+Pick stops on the map	मैप पर चुनें
+Click the stops in the view one after the other, in the order the bus calls at them	व्यू में स्टॉप पर एक के बाद एक क्लिक करें, उसी क्रम में जिसमें बस उन पर रुकती है
+Add stop…	स्टॉप जोड़ें…
+Click stops on the map (they are marked orange)…	मैप पर स्टॉप पर क्लिक करें (वे नारंगी चिह्नित हैं)…
+Add two stops or more: the way between them is found along the roads.	दो या अधिक स्टॉप जोड़ें: उनके बीच का रास्ता सड़कों के साथ मिलता है।
+Finding the way…	रास्ता खोजा जा रहा है…
+Route found:	रास्ता मिला:
+km along the roads (blue in the view)	km सड़कों के साथ (व्यू में नीला)
+the way drives a one-way lane against its direction; is a path drawn the wrong way round?	रास्ता एकतरफ़ा लेन पर उसकी दिशा के विरुद्ध चलता है; क्या पाथ उल्टा बना है?
+is not on the map	मैप पर नहीं है
+no road with car lanes within 15 m	15 m के भीतर कार लेन वाली सड़क नहीं
+No way	रास्ता नहीं
+the roads are not joined, or run the other way (see View > AI lanes)	सड़कें जुड़ी नहीं हैं, या उल्टी दिशा में हैं (व्यू > AI लेन देखें)
+The trip is saved, but its way is not until this is mended	ट्रिप सेव है, पर इसे ठीक किए जाने तक उसका रास्ता नहीं
+Trip time	ट्रिप का समय
+Guess:	अंदाज़ा:
+From the route's length at the pace of a town bus	रूट की लंबाई से, शहरी बस की रफ़्तार पर
+Times at the stops	स्टॉप पर समय
+Minutes after the trip leaves. They follow the distance between the stops; fix one to keep the bus to it (it waits there when early).	ट्रिप निकलने के बाद के मिनट। वे स्टॉप की दूरी के हिसाब से चलते हैं; बस को उस पर रखने के लिए कोई समय पक्का करें (जल्दी हो तो वहाँ रुकती है)।
+fixed	पक्का
+Spread all by distance	सबको दूरी के हिसाब से फैलाएँ
+Holidays and school holidays	छुट्टियाँ और स्कूल की छुट्टियाँ
+On a public holiday only the tours with Holidays ticked run; school holidays pick the tours for school holidays or school days.	सार्वजनिक छुट्टी पर सिर्फ़ वे टूर चलते हैं जिनमें "छुट्टियाँ" टिक है; स्कूल की छुट्टियाँ स्कूल की छुट्टी या स्कूल के दिनों के टूर चुनती हैं।
+Copy to	इसमें कॉपी करें
+The same days a year later (feasts that move, like Easter, are to be set by hand)	वही दिन एक साल बाद (ईस्टर जैसे खिसकने वाले त्योहार हाथ से सेट करें)
+The map has no depot (ailists.cfg): only you drive these tours, no AI buses.	मैप में डिपो नहीं है (ailists.cfg): ये टूर सिर्फ़ आप चलाते हैं, AI बसें नहीं।
+Add a depot with OMSI 2's MAN buses	OMSI 2 की MAN बसों वाला डिपो जोड़ें
+Its buses run the tours (Map > Traffic and AI shows it)	इसकी बसें टूर चलाती हैं (मैप > ट्रैफ़िक और AI में दिखता है)
+Tour	टूर
+New tour	नया टूर
+Pick a tour to see its departures.	डिपार्चर देखने के लिए टूर चुनें।
+Make a trip first.	पहले ट्रिप बनाएँ।
+Number	संख्या
+Buses from	बसें यहाँ से
+Delete the tour	टूर हटाएँ
+Runs on	चलता है
+Mo	सो
+Tu	मं
+We	बु
+Th	गु
+Fr	शु
+Sa	श
+Su	र
+Every day	हर दिन
+Monday to Friday	सोम से शुक्र
+Weekends and holidays	सप्ताहांत और छुट्टियाँ
+In the school holidays	स्कूल की छुट्टियों में
+On school days	स्कूल के दिनों में
+Next departure	अगला डिपार्चर
+The next trip of the line, when the bus is back and has had its break	लाइन का अगला ट्रिप, जब बस लौट आए और उसका ब्रेक हो चुका हो
+Fill from	यहाँ से भरें
+break	ब्रेक
+Fill	भरें
+Replace the tour's departures: the line's trips one after the other, a break after each	टूर के डिपार्चर बदलें: लाइन के ट्रिप एक के बाद एक, हर एक के बाद ब्रेक
+No departures yet: add them above.	अभी कोई डिपार्चर नहीं: ऊपर जोड़ें।
+Delete the departure	डिपार्चर हटाएँ
+GPS tracks to trace	ट्रेस करने के लिए GPS ट्रैक
+A route recorded on a phone or drawn elsewhere (GPX, KML, GeoJSON), shown in the view in magenta to draw roads along, or built into a road at once	फ़ोन पर रिकॉर्ड किया या कहीं और बनाया रूट (GPX, KML, GeoJSON), व्यू में मैजेंटा में दिखता है ताकि उसके साथ सड़कें बनाई जाएँ, या तुरंत सड़क में बनाया जाए
+Place the map on the Earth first (Map > Satellite and terrain)	पहले मैप को पृथ्वी पर रखें (मैप > सैटेलाइट और भूभाग)
+Load a file…	फ़ाइल लोड करें…
+None loaded	कुछ लोड नहीं
+Forget it	हटाएँ
+Build a road along it:	इसके साथ सड़क बनाएँ:
+Choose a road type in the Roads tool to build it	बनाने के लिए "सड़कें" टूल में सड़क प्रकार चुनें
+Built as if drawn: corners rounded into arcs, junctions where it meets roads, cut at the map's edge; one undo step	जैसे खींची गई हो वैसे बनता है: कोने चापों में गोल, जहाँ सड़कों से मिले वहाँ जंक्शन, मैप के किनारे पर कटा हुआ; एक अनडू स्टेप
+Traffic and AI	ट्रैफ़िक और AI
+Edit traffic	ट्रैफ़िक बदलें
+Over the day	दिन भर
+Vehicle groups	वाहन ग्रुप
+Parked cars and people	खड़ी कारें और लोग
+Depot files	डिपो फ़ाइलें
+The AI's vehicles come in groups. A car group drives about on the roads; a depot sends out the buses of the timetable's tours.	AI के वाहन ग्रुप में आते हैं। कार ग्रुप सड़कों पर घूमता है; डिपो टाइमटेबल के टूर की बसें निकालता है।
+(This map's ailists.cfg is in OMSI 2's first format: it is written in the second one when changed.)	(इस मैप की ailists.cfg OMSI 2 के पहले फ़ॉर्मैट में है: बदलने पर वह दूसरे में लिखी जाएगी।)
+is to drive about, but there is no such group.	सड़कों पर घूमना चाहिए, पर ऐसा कोई ग्रुप नहीं है।
+Make it with OMSI 2's vehicles	OMSI 2 के वाहनों से बनाएँ
+The group of that name from OMSI 2's own maps	OMSI 2 के अपने मैप से उस नाम का ग्रुप
+New car group	नया कार ग्रुप
+New depot	नया डिपो
+Pick a group on the left.	बाईं ओर ग्रुप चुनें।
+Delete the group (tours still take their buses from it)	ग्रुप हटाएँ (टूर अब भी इससे बसें लेते हैं)
+Delete the group	ग्रुप हटाएँ
+Tours that take their buses from here:	जो टूर यहाँ से बसें लेते हैं:
+Drives about on its own	अपने आप घूमता है
+as many:	कितनी:
+Times the traffic over the day	दिन भर ट्रैफ़िक का गुणक
+A vehicle with more weight comes along more often.	ज़्यादा वज़न वाला वाहन ज़्यादा बार आता है।
+Add a vehicle…	वाहन जोड़ें…
+Depot file (.hof)	डिपो फ़ाइल (.hof)
+None of its buses has this depot file beside it: they run without their destination signs and fleet data.	इसकी किसी बस के पास यह डिपो फ़ाइल नहीं है: वे गंतव्य बोर्ड और फ़्लीट डेटा के बिना चलेंगी।
+The buses it has: a type of bus and the fleet number and plate of each.	इसकी बसें: बस का प्रकार और हर एक का फ़्लीट नंबर और प्लेट।
+Take this type out	यह प्रकार हटाएँ
+number	नंबर
+plate	प्लेट
+Another bus	एक और बस
+Add a type of bus…	बस का प्रकार जोड़ें…
+The lists can't be read without the OMSI 2 folder.	OMSI 2 फ़ोल्डर के बिना सूचियाँ पढ़ी नहीं जा सकतीं।
+Parked cars	पार्क की गई कारें
+What stands on the car parks (Game logic > Car parks). A car listed more often stands there more often.	पार्किंग में क्या खड़ा है (गेम लॉजिक > पार्किंग)। ज़्यादा बार लिखी कार वहाँ ज़्यादा बार खड़ी होती है।
+Who walks about and waits at the stops.	कौन घूमता है और स्टॉप पर इंतज़ार करता है।
+Drivers	ड्राइवर
+Who drives the AI's buses.	AI की बसें कौन चलाता है।
+How often it is listed (0 takes it out)	सूची में कितनी बार (0 हटा देता है)
+How busy the map is at each hour: the road traffic, and the passengers at the stops. 1 is normal; the game goes along the line between the points.	हर घंटे मैप कितना व्यस्त है: सड़क का ट्रैफ़िक और स्टॉप पर यात्री। 1 सामान्य है; गेम बिंदुओं के बीच रेखा के साथ चलता है।
+Road traffic	सड़क का ट्रैफ़िक
+Passengers	यात्री
+Its own traffic over the day	दिन भर इसका अपना ट्रैफ़िक
+Without one the group follows the map's road traffic. A curve can be for some days of the week only.	इसके बिना ग्रुप मैप के सड़क ट्रैफ़िक के साथ चलता है। वक्र सिर्फ़ सप्ताह के कुछ दिनों के लिए हो सकता है।
+Days:	दिन:
+Mo–Fr	सोम–शुक्र
+Take this curve out	यह वक्र हटाएँ
+A curve	एक वक्र
+Typical day…	सामान्य दिन…
+Quiet village	शांत गाँव
+Town with rush hours	भीड़ के घंटों वाला शहर
+The same all day	पूरे दिन एक जैसा
+No curve: 1 all day.	कोई वक्र नहीं: पूरे दिन 1।
+Take the point out	बिंदु हटाएँ
+Point	बिंदु
+Smart unwrap	स्मार्ट अनरैप
+Every flat side apart in the picture, no faces on top of one another (all faces if none is selected)	तस्वीर में हर सपाट तरफ़ अलग, कोई फ़ेस एक-दूसरे पर नहीं (कुछ न चुना हो तो सब फ़ेस)
+Box unwrap	बॉक्स अनरैप
+The six sides of a box apart in the picture	तस्वीर में बॉक्स की छह तरफ़ें अलग
+Flip ↔	पलटें ↔
+Flip ↕	पलटें ↕
+Scale ×2	स्केल ×2
+Scale ÷2	स्केल ÷2
+Fit	फ़िट
+Stretched to fill the picture	तस्वीर भरने तक खींचा गया
+Pack islands	आइलैंड पैक करें
+Average island scale	आइलैंड का औसत स्केल
+Seams from islands	आइलैंड से सीम
+Click: a face (Shift adds) · drag: move the selected · wheel: zoom · right button: pan	क्लिक: फ़ेस (Shift जोड़ता है) · ड्रैग: चुना हुआ हिलाएँ · व्हील: ज़ूम · राइट बटन: पैन
+Could not keep the views	व्यू सेव नहीं हो सके
+Saved views	सहेजे हुए व्यू
+Places of the map to come back to: Ctrl+1…9 goes to the first nine, Ctrl+Shift+1…9 keeps the view there	मैप की वे जगहें जहाँ लौटना हो: Ctrl+1…9 पहले नौ पर ले जाता है, Ctrl+Shift+1…9 वहाँ व्यू रखता है
+Keep this view	यह व्यू रखें
+None yet	अभी कोई नहीं
+Go	जाएँ
+Earlier in the list	सूची में पहले
+Later in the list	सूची में बाद में
+Take the view now instead	अभी का व्यू इसकी जगह रखें
+Keep proportions	अनुपात बनाए रखें
+Back to its own size	अपने आकार पर लौटें
+Updates	अपडेट
+This version:	यह संस्करण:
+New version:	नया संस्करण:
+Install and restart	इंस्टॉल करें और रीस्टार्ट करें
+Not now	अभी नहीं
+What changed	क्या बदला
+Downloading and installing	डाउनलोड और इंस्टॉल हो रहा है
+Installed version	इंस्टॉल किया संस्करण
+openMapper restarts when you save the map.	मैप सेव करने पर openMapper रीस्टार्ट होगा।
+Looking for a new version…	नया संस्करण खोजा जा रहा है…
+This is the newest version.	यह सबसे नया संस्करण है।
+Download it from GitHub by hand	GitHub से हाथ से डाउनलोड करें
+When there is a new version:	जब नया संस्करण हो:
+Offer it to me	मुझे सुझाएँ
+Install it and restart by itself	खुद इंस्टॉल करें और रीस्टार्ट करें
+Never look for updates	अपडेट कभी न खोजें
+Check now	अभी जाँचें
+Never offer updates again	अपडेट फिर कभी न सुझाएँ
+The release has no package	रिलीज़ में कोई पैकेज नहीं है
+No automatic updates for this system.	इस सिस्टम के लिए ऑटो अपडेट नहीं हैं।
+No connection to GitHub: are you online?	GitHub से कनेक्शन नहीं: क्या आप ऑनलाइन हैं?
+The release has no SHA256SUMS: not installed.	रिलीज़ में SHA256SUMS नहीं है: इंस्टॉल नहीं किया।
+The package is not in SHA256SUMS: not installed.	पैकेज SHA256SUMS में नहीं है: इंस्टॉल नहीं किया।
+The download does not match its checksum: not installed.	डाउनलोड चेकसम से मेल नहीं खाता: इंस्टॉल नहीं किया।
+Could not replace the program	प्रोग्राम बदला नहीं जा सका
+The package has no program in it.	पैकेज में कोई प्रोग्राम नहीं है।
+openMapper has stopped:	openMapper रुक गया:
+The log with the details:	विवरण वाला लॉग:

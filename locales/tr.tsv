@@ -1,0 +1,2129 @@
+Could not open the map	Harita açılamadı
+The next 100 tiles are loaded, the others are hidden	Sonraki 100 karo yüklendi, diğerleri gizli
+Find the place in the window and build from it	Pencerede yeri bulun ve haritayı oradan oluşturun
+Your map is ready. Start with a road!	Haritanız hazır. Bir yolla başlayın!
+Export the map for sharing	Haritayı paylaşmak için dışa aktar
+Exported:	Dışa aktarıldı:
+files	dosya
+files the map names were not found: the readme lists them	haritanın adını verdiği dosyalar bulunamadı: readme içinde listelenir
+Could not export	Dışa aktarılamadı
+A ring road with line 1 on it: save, then try it in openOMSI (F5).	Üzerinde 1. hat olan bir çevre yolu: kaydedin, sonra openOMSI'de deneyin (F5).
+The sample could not be made	Örnek oluşturulamadı
+In multiplayer the host saves the map. Leave the session to save this as a copy of your own.	Çok oyunculuda haritayı ana bilgisayar kaydeder. Bunu kendi kopyanız olarak kaydetmek için oturumdan çıkın.
+Saved:	Kaydedildi:
+Tip: place a start point (Game logic > Start points) so the bus has somewhere to appear	İpucu: otobüsün çıkabileceği bir başlangıç noktası koyun (Oyun mantığı > Başlangıç noktaları)
+Could not save (the changes are still here, nothing is lost)	Kaydedilemedi (değişiklikler duruyor, hiçbir şey kaybolmadı)
+The unsaved changes are back. Save to keep them.	Kaydedilmemiş değişiklikler geri geldi. Saklamak için kaydedin.
+Could not restore the changes	Değişiklikler geri yüklenemedi
+openOMSI was not found	openOMSI bulunamadı
+From the start point	Başlangıç noktasından
+The map has no start point: place one with Game logic > Start points	Haritada başlangıç noktası yok: Oyun mantığı > Başlangıç noktaları ile bir tane koyun
+Starting openOMSI…	openOMSI başlatılıyor…
+To drive the map in OMSI 2 itself it has to be copied into the OMSI 2 folder (Maps, and the objects, roads and textures made for it). Nothing that is there is replaced except earlier copies of this map. Copy it there?	Haritada OMSI 2'nin kendisinde sürmek için, haritanın OMSI 2 klasörüne kopyalanması gerekir (Maps ile bunun için yapılan nesneler, yollar ve dokular). Bu haritanın önceki kopyaları dışında orada hiçbir şey değiştirilmez. Oraya kopyalansın mı?
+Starting OMSI 2: choose the map	OMSI 2 başlatılıyor: haritayı seçin
+The map is copied into the OMSI 2 folder; OMSI 2 itself runs on Windows only:	Harita OMSI 2 klasörüne kopyalandı; OMSI 2 yalnızca Windows'ta çalışır:
+Could not copy the map into OMSI 2	Harita OMSI 2'ye kopyalanamadı
+Click on the map to place it	Yerleştirmek için haritaya tıklayın
+Open a map (its global.cfg)	Haritayı aç (global.cfg dosyası)
+The map is back as it was before that save	Harita o kayıttan önceki haline döndü
+Could not go back	Geri dönülemedi
+Export a plan of the map	Haritanın planını dışa aktar
+Plan saved:	Plan kaydedildi:
+Mods, models and pictures	Modlar, modeller ve resimler
+Import assets	Varlıkları içe aktar
+…or choose a mod folder	…ya da bir mod klasörü seçin
+Click on the map to put it there	Koymak için haritaya tıklayın
+Could not make the shape	Şekil oluşturulamadı
+Choose the OMSI 2 folder	OMSI 2 klasörünü seçin
+That is not an OMSI 2 folder (Omsi.exe, maps and Vehicles must be in it)	Bu bir OMSI 2 klasörü değil (içinde Omsi.exe, maps ve Vehicles bulunmalı)
+This object has no textures to make PBR maps of	Bu nesnenin PBR haritası çıkarılacak dokusu yok
+Could not copy the map	Harita kopyalanamadı
+Could not move the map	Harita taşınamadı
+Terrain flattened; splines laid on it:	Arazi düzleştirildi; üzerine döşenen spline sayısı:
+This road type has no textures to make PBR maps of	Bu yol türünün PBR haritası çıkarılacak dokusu yok
+Pictures	Resimler
+Only 100 tiles round the camera are loaded; click on the empty zone to load the next 100	Yalnızca kameranın çevresindeki 100 karo yüklü; sonraki 100'ü yüklemek için boş alana tıklayın
+All tiles are loaded	Tüm karolar yüklendi
+Import the map's thumbnail	Harita küçük resmini içe aktar
+The map's thumbnail is set: openOMSI shows it where maps are chosen.	Harita küçük resmi ayarlandı: openOMSI harita seçilirken bunu gösterir.
+Could not use the picture	Resim kullanılamadı
+Map camera	Harita kamerası
+The map opens with this view from now on.	Harita bundan sonra bu görünümle açılır.
+Add ground texture	Zemin dokusu ekle
+View kept as	Görünüm şu numarayla saklandı:
+No view kept as	Şu numarayla saklı görünüm yok:
+Files changed on disk: the catalogue and models are updated	Diskteki dosyalar değişti: katalog ve modeller güncellendi
+The track does not run over the map's tiles	İz, haritanın karolarının üzerinden geçmiyor
+Road along a GPS track	GPS izi boyunca yol
+Roads built:	Oluşturulan yol:
+junctions:	kavşak:
+stops:	durak:
+Lines from OpenStreetMap	OpenStreetMap hatları
+lines:	hat:
+trips found their way:	yolu bulunan sefer:
+buildings:	bina:
+trees:	ağaç:
+Start point	Başlangıç noktası
+Start	Başlat
+a start point	bir başlangıç noktası
+From OpenStreetMap	OpenStreetMap'ten
+Picture saved:	Resim kaydedildi:
+Could not save the picture	Resim kaydedilemedi
+The graphics could not be started.	Grafikler başlatılamadı.
+Flying speed	Uçuş hızı
+copy	kopya
+Only maps of the content folder can be moved	Yalnızca içerik klasöründeki haritalar taşınabilir
+Only assets of the content folder can be deleted	Yalnızca içerik klasöründeki varlıklar silinebilir
+Could not write the object	Nesne yazılamadı
+Select an object to edit its mesh	Ağını düzenlemek için bir nesne seçin
+A copy of its own was made: the original type is unchanged	Kendine ait bir kopya oluşturuldu: asıl tür değişmedi
+Cannot edit this object	Bu nesne düzenlenemez
+Point at an edge to cut across its ring of faces	Yüz halkasını enine kesmek için bir kenarı gösterin
+Objects made:	Oluşturulan nesne:
+select the faces to separate	ayrılacak yüzleri seçin
+Separated into an object of its own	Ayrı bir nesneye ayrıldı
+Add object	Nesne ekle
+select what to export (objects, roads)	dışa aktarılacakları seçin (nesneler, yollar)
+Export the selection	Seçimi dışa aktar
+unknown format	bilinmeyen biçim
+the models are still loading: try again in a moment	modeller hâlâ yükleniyor: birazdan tekrar deneyin
+this material has no texture	bu malzemenin dokusu yok
+cannot read	okunamıyor
+Export the texture	Dokuyu dışa aktar
+Texture saved:	Doku kaydedildi:
+Choose a picture	Bir resim seçin
+give the material a texture first: its maps go beside it	önce malzemeye bir doku verin: haritaları onun yanına konur
+Import materials (an .mtl, a model, or the pictures of one PBR material)	Malzemeleri içe aktar (bir .mtl, bir model veya tek PBR malzemesinin resimleri)
+Materials and pictures	Malzemeler ve resimler
+no materials found there	orada malzeme bulunamadı
+Materials added:	Eklenen malzeme:
+nothing to bake	pişirilecek bir şey yok
+the object has no lamps to bake the night light of	nesnede gece ışığı pişirilecek lamba yok
+Baked into	Şuraya pişirildi:
+select a road or spline first	önce bir yol veya spline seçin
+the road's type is still loading: try again in a moment	yol türü hâlâ yükleniyor: birazdan tekrar deneyin
+these splines have no shape to see	bu spline'ların görülecek şekli yok
+Replace by an object	Nesneyle değiştir
+Made into an object: Tab edits its mesh	Nesneye dönüştürüldü: Tab ağını düzenler
+Signal head made: click where it stands (near a crossing with a light program it links to it)	Sinyal başlığı oluşturuldu: durduğu yere tıklayın (ışık programlı bir kavşağın yakınında ona bağlanır)
+Choose a picture or a texture	Bir resim veya doku seçin
+cannot read the picture	resim okunamıyor
+Picture made: click where it goes (it can be moved, turned and scaled after)	Resim oluşturuldu: gideceği yere tıklayın (sonra taşınabilir, döndürülebilir ve ölçeklenebilir)
+Light made: click where it shines	Işık oluşturuldu: ışık vereceği yere tıklayın
+Choose a sound	Bir ses seçin
+Sounds	Sesler
+Sound source made: click where it plays	Ses kaynağı oluşturuldu: çalacağı yere tıklayın
+Street lamp made: click where it stands	Sokak lambası oluşturuldu: durduğu yere tıklayın
+Paint by slope and height	Eğime ve yüksekliğe göre boya
+By slope and height	Eğime ve yüksekliğe göre
+The chosen layer painted over the whole map where the ground is so steep (and so high)	Seçilen katman, zeminin bu kadar dik (ve bu kadar yüksek) olduğu her yerde tüm haritaya boyanır
+Slope	Eğim
+Height	Yükseklik
+Fade	Geçiş
+Cover	Kaplama
+Paint the map	Haritayı boya
+Choose a layer above the base ground	Temel zeminin üstünde bir katman seçin
+No ground on the map is like that	Haritada böyle bir zemin yok
+Painted	Boyandı
+Missing objects	Eksik nesneler
+Missing roads and splines	Eksik yollar ve spline'lar
+Missing textures	Eksik dokular
+Road ends not joined	Birleşmemiş yol uçları
+Links to splines that are gone	Kaybolmuş spline'lara bağlantılar
+Bus stops away from a road	Yoldan uzak duraklar
+Start points away from a road	Yoldan uzak başlangıç noktaları
+Start points without their object	Nesnesiz başlangıç noktaları
+No start point	Başlangıç noktası yok
+IDCodes used twice	İki kez kullanılan IDCode'lar
+Next IDCode too low	Sonraki IDCode çok düşük
+Objects off their tile	Karosunun dışındaki nesneler
+Tiles without a file	Dosyasız karolar
+Tiles without ground	Zeminsiz karolar
+Trips without a way	Yolsuz seferler
+Tours without departures	Seferi olmayan sefer turları
+Tours without a depot	Garajsız sefer turları
+Traffic groups not in the AI lists	YZ listelerinde olmayan trafik grupları
+Stops no trip calls at	Hiçbir seferin uğramadığı duraklar
+Signal routes naming what is gone	Kaybolmuş şeyleri adlandıran sinyal güzergâhları
+Chrono changes of what is gone	Kaybolmuş şeylerin kronolojik değişiklikleri
+Lamps lighting no ground at night	Geceleyin zemini aydınlatmayan lambalar
+Tiles with very many objects	Çok fazla nesneli karolar
+Objects linked to one that is gone	Kaybolmuş bir nesneye bağlı nesneler
+Signal heads linked to no crossing	Kavşağa bağlı olmayan sinyal başlıkları
+Depot files (destinations)	Garaj dosyaları (varış yerleri)
+The map uses an object (.sco) that is not installed. The game leaves it out. Install the mod it comes from, or delete the object. A junction of openMapper's whose file is gone (the map was moved without it) is made again for its roads with "Fix".	Harita kurulu olmayan bir nesne (.sco) kullanıyor. Oyun onu atlar. Geldiği modu kurun veya nesneyi silin. openMapper'a ait, dosyası kaybolmuş bir kavşak (harita onsuz taşınmış) "Düzelt" ile yolları için yeniden yapılır.
+The map uses a road or spline type (.sli) that is not installed: that road is missing in the game, and buses cannot drive there.	Harita kurulu olmayan bir yol veya spline türü (.sli) kullanıyor: o yol oyunda eksik olur ve otobüsler orada gidemez.
+An object or road names a picture that cannot be found. It will look white or black in the game.	Bir nesne veya yol bulunamayan bir resmi adlandırıyor. Oyunda beyaz ya da siyah görünür.
+Two road ends lie on one another but are not joined. Traffic still finds its way (the game joins lanes by their ends), but rows of lamps and posts and the road's texture do not run on across, and the editor does not treat them as one road. "Join" links them.	İki yol ucu üst üste duruyor ama birleşmemiş. Trafik yine de yolunu bulur (oyun şeritleri uçlarından birleştirir), ancak lamba ve direk sıraları ile yolun dokusu karşıya devam etmez ve düzenleyici bunları tek yol saymaz. "Birleştir" bunları bağlar.
+A spline says it goes on into another one that no longer exists. "Fix" forgets that link.	Bir spline, artık var olmayan bir başkasına devam ettiğini söylüyor. "Düzelt" bu bağlantıyı unutturur.
+A bus stop belongs to the lane it stands beside (within about 25 m). This one has none near, so buses cannot stop at it. Move it next to the road, or "Fix" puts it at the kerb of the nearest lane (within 80 m).	Bir durak, yanında durduğu şeride aittir (yaklaşık 25 m içinde). Bunun yakınında şerit yok, bu yüzden otobüsler burada duramaz. Yolun yanına taşıyın ya da "Düzelt" onu en yakın şeridin kaldırım kenarına koyar (80 m içinde).
+A start point is where the bus appears. This one is away from any lane: fine in a depot yard, otherwise the bus starts off the road.	Başlangıç noktası otobüsün çıktığı yerdir. Bu, hiçbir şeride yakın değil: garaj sahasında sorun olmaz, aksi halde otobüs yolun dışında başlar.
+A start point refers to an object that was deleted. "Fix" removes the start point.	Bir başlangıç noktası silinmiş bir nesneye bağlı. "Düzelt" başlangıç noktasını kaldırır.
+There is nowhere for the bus to appear. Place a start point (Game logic > Start points) on a road, or "Fix" puts one on a lane some 40 m before a bus stop.	Otobüsün çıkabileceği bir yer yok. Yola bir başlangıç noktası koyun (Oyun mantığı > Başlangıç noktaları) ya da "Düzelt" onu bir durağın yaklaşık 40 m öncesindeki şeride koyar.
+Two things on the map share one IDCode: links, timetables and start points may pick the wrong one.	Haritada iki şey aynı IDCode'u paylaşıyor: bağlantılar, tarifeler ve başlangıç noktaları yanlış olanı seçebilir.
+The counter for new IDCodes is below codes already used, so new objects would get codes twice. "Fix" raises it.	Yeni IDCode sayacı kullanılmış kodların altında, bu yüzden yeni nesneler aynı kodu alır. "Düzelt" onu yükseltir.
+An object standing on the ground lies outside its own tile. The game does not show it. Move it a little or put it again.	Zemindeki bir nesne kendi karosunun dışında kalıyor. Oyun onu göstermez. Biraz kaydırın veya yeniden koyun.
+global.cfg lists tiles whose file is not there. The game leaves them out; they stay listed, as start points and timetables count tiles by their place in the list.	global.cfg dosyası olmayan karoları listeliyor. Oyun bunları atlar; listede kalırlar, çünkü başlangıç noktaları ve tarifeler karoları listedeki sırasıyla sayar.
+A tile has no height file: its ground is flat. Saving writes one.	Bir karonun yükseklik dosyası yok: zemini düz. Kaydetmek bir tane yazar.
+No way along the roads was found through this trip's stops, so buses cannot drive it. Open it in Map > Lines and timetable to see where it breaks.	Bu seferin durakları arasında yollar üzerinde bir güzergâh bulunamadı, bu yüzden otobüsler gidemez. Nerede koptuğunu görmek için Harita > Hatlar ve tarife içinde açın.
+A tour (a bus's day on the line) has no trips, so no bus runs it.	Bir sefer turunun (otobüsün hat üzerindeki günü) seferi yok, bu yüzden onu hiçbir otobüs yapmaz.
+A tour names no depot or group of the AI lists (or one that is not there): the game has no vehicle to send on it. Choose a depot for it in the Lines window, or "Fix" gives it the map's depot (one of OMSI 2's MAN buses added where the map has none).	Bir sefer turu bir garaj veya YZ listelerindeki grubu adlandırmıyor (ya da orada olmayan birini): oyunun göndereceği araç yok. Hatlar penceresinde ona bir garaj seçin ya da "Düzelt" ona haritanın garajını versin (haritada yoksa OMSI 2'nin MAN otobüslerinden biri eklenir).
+The unscheduled traffic names a group that the AI lists do not have: those cars never appear. Add the group in Map > Traffic and AI, or "Fix" copies it from OMSI 2's own maps where they have it.	Tarifesiz trafik, YZ listelerinde olmayan bir grubu adlandırıyor: bu araçlar hiç çıkmaz. Grubu Harita > Trafik ve YZ içinde ekleyin ya da "Düzelt" onu OMSI 2'nin kendi haritalarından kopyalasın (orada varsa).
+A stop of the timetable that no trip calls at. Nothing is wrong, it is only not used yet.	Hiçbir seferin uğramadığı bir tarife durağı. Bir sorun yok, henüz kullanılmıyor.
+A chrono scenario takes away, retypes or relabels something that is no longer on the map (it was deleted or its IDCode changed): that change does nothing. Open Map > Chrono scenarios, the scenario's properties, and take the change out.	Bir kronolojik senaryo, artık haritada olmayan bir şeyi kaldırıyor, türünü ya da etiketini değiştiriyor (silinmiş veya IDCode'u değişmiş): bu değişiklik hiçbir şey yapmaz. Harita > Kronolojik senaryolar içinde senaryonun özelliklerini açıp değişikliği çıkarın.
+A tile holds far more objects than the stock maps' tiles (up to some 600): the game may stutter when it loads it or looks across it. Thin out a wood planted too densely (Plant brush, Clear) or plant it with more space between the trees.	Bir karoda stok haritaların karolarından çok daha fazla nesne var (en çok 600 kadar): oyun onu yüklerken veya içinden bakarken takılabilir. Çok sık dikilmiş ormanı seyreltin (Bitki fırçası, Temizle) ya da ağaçları daha seyrek dikin.
+Street lamps stand on a tile the game does not light from its lamps ([variable_terrainlightmap] is off): at night the ground under them stays dark (unless the tile's light map file was made by OMSI 2's editor). "Fix" turns it on, as on nearly every tile of the stock maps.	Sokak lambaları, oyunun lambalarından aydınlatmadığı bir karoda duruyor ([variable_terrainlightmap] kapalı): geceleyin altlarındaki zemin karanlık kalır (karonun ışık haritası dosyası OMSI 2'nin düzenleyicisiyle yapılmadıysa). "Düzelt" onu açar, stok haritaların neredeyse her karosunda olduğu gibi.
+An object takes its state ([varparent]) from an object no longer on the map: a signal head stays dark, a display blank. Link it to another in its properties (Linked objects), or "Fix" forgets the link.	Bir nesne durumunu ([varparent]) artık haritada olmayan bir nesneden alıyor: sinyal başlığı sönük kalır, ekran boş. Özelliklerinde başka bir nesneye bağlayın (Bağlı nesneler) ya da "Düzelt" bağlantıyı unutturur.
+A traffic light's signal head takes its light from a crossing's program ([varparent]); this one is linked to none while others like it are, so it stays dark in the game. Select it and link it in its properties (Linked objects).	Trafik ışığının sinyal başlığı ışığını bir kavşağın programından alır ([varparent]); bu hiçbirine bağlı değil, benzerleri ise bağlı, bu yüzden oyunda sönük kalır. Seçin ve özelliklerinde bağlayın (Bağlı nesneler).
+A depot file (.hof) gives the buses their destinations, the stop names on their displays and the routes their IBIS knows. Without one the signs stay empty and the IBIS knows no line. "Fix" makes it from the map's lines, or adds what the lines need to the map's own (Map > Depot files to see and change it).	Bir garaj dosyası (.hof) otobüslere varış yerlerini, ekranlardaki durak adlarını ve IBIS'in bildiği güzergâhları verir. Olmazsa tabelalar boş kalır ve IBIS hiçbir hattı bilmez. "Düzelt" onu haritanın hatlarından yapar ya da hatların ihtiyacı olanı haritanın kendi dosyasına ekler (görmek ve değiştirmek için Harita > Garaj dosyaları).
+A signal route names a signal or track pieces no longer on the map: the signal may never clear. Open Map > Signal routes and take the track again, or delete the route.	Bir sinyal güzergâhı artık haritada olmayan bir sinyal ya da ray parçalarını adlandırıyor: sinyal hiç açılmayabilir. Harita > Sinyal güzergâhları içinde rayı yeniden alın ya da güzergâhı silin.
+font	yazı tipi
+used	kullanılıyor
+in	içinde
+a ground texture of the map	haritanın bir zemin dokusu
+splines	spline
+apart	aralarında
+spline	spline
+goes on into	şuraya devam ediyor:
+no road near	yakında yol yok
+from the road	yoldan
+start point	başlangıç noktası
+object	nesne
+The map has no start point	Haritada başlangıç noktası yok
+things have it	şey buna sahip
+highest in use:	kullanılan en yüksek:
+tile	karo
+no .terrain file: flat	.terrain dosyası yok: düz
+objects	nesne
+lamps	lamba
+The map has no depot file	Haritanın garaj dosyası yok
+the buses show no destination	otobüsler varış yeri göstermiyor
+named by the map's depot, but found nowhere	haritanın garajı adlandırıyor ama hiçbir yerde bulunamadı
+knows none of the	şunlardan hiçbirini bilmiyor:
+lacks	eksik
+destinations of the lines	hatların varış yerleri
+the lines need	hatların ihtiyacı olan
+destinations	varış yeri
+stops	durak
+routes	güzergâh
+tour	sefer turu
+no depot named	garaj adlandırılmamış
+not in the AI lists:	YZ listelerinde yok:
+the stop has no object:	durağın nesnesi yok:
+no road beside	yanında yol yok:
+no way	yol yok
+no way found	yol bulunamadı
+Route	Güzergâh
+gone	kayıp
+changes of nothing	boşuna değişiklik
+time	kez
+times	kez
+Fix from the map check	Harita denetiminden düzeltme
+Car groups from OMSI 2's maps	OMSI 2 haritalarından araç grupları
+A depot for the tour	Sefer turu için bir garaj
+A depot file from the lines	Hatlardan bir garaj dosyası
+Depot file: what the lines need	Garaj dosyası: hatların ihtiyacı olan
+Map check	Harita denetimi
+Check again	Yeniden denetle
+Checking the map…	Harita denetleniyor…
+errors	hata
+warnings	uyarı
+notes	not
+Nothing found: the map looks fine.	Hiçbir şey bulunamadı: harita düzgün görünüyor.
+Fix all	Tümünü düzelt
+Join	Birleştir
+Fix	Düzelt
+Click to fly there	Oraya uçmak için tıklayın
+Fixed:	Düzeltildi:
+it has parts openMapper does not write	openMapper'ın yazmadığı kısımlar içeriyor
+A host on the internet needs a password of at least	İnternetteki bir ana bilgisayarın parolası en az şu uzunlukta olmalı:
+Type a password, or choose explicitly to host without one	Bir parola yazın ya da parolasız açmayı açıkça seçin
+Could not listen on port	Bağlantı noktası dinlenemedi
+The way in for the tunnel could not be opened	Tünelin giriş kapısı açılamadı
+Hosting this map: others can join it now	Bu harita açıldı: diğerleri şimdi katılabilir
+Multiplayer ended: another map was opened	Çok oyunculu sona erdi: başka bir harita açıldı
+Somebody changed this first: your edit was put back	Bunu biri sizden önce değiştirdi: düzenlemeniz geri alındı
+The host takes no more: the edit is too big, or the session holds as much as it may. Your edit was put back	Ana bilgisayar artık kabul etmiyor: düzenleme çok büyük ya da oturum alabileceği kadar dolu. Düzenlemeniz geri alındı
+That lies too far from the map for this session: your edit was put back	Bu, bu oturum için haritadan çok uzakta: düzenlemeniz geri alındı
+tiles	karo
+changed what you were editing: it is as they left it	düzenlediğiniz şeyi değiştirdi: onun bıraktığı gibi duruyor
+The timetable, the traffic and the descriptions are the host's in multiplayer: your change was put back	Çok oyunculuda tarife, trafik ve açıklamalar ana bilgisayara aittir: değişikliğiniz geri alındı
+Your conflicting edit was kept	Çakışan düzenlemeniz saklandı
+Could not keep your conflicting edit; multiplayer stopped	Çakışan düzenlemeniz saklanamadı; çok oyunculu durduruldu
+Too much of the others' work came in while your edit was held open: multiplayer stopped. The map stays open; it can be saved as a copy.	Düzenlemeniz açık beklerken diğerlerinin çok fazla işi geldi: çok oyunculu durduruldu. Harita açık kalır; kopya olarak kaydedilebilir.
+The connection to the host was lost. The map stays open; it can be saved as a copy.	Ana bilgisayarla bağlantı koptu. Harita açık kalır; kopya olarak kaydedilebilir.
+No OMSI 2 installation: the map has nowhere to go	OMSI 2 kurulumu yok: haritanın gidecek yeri yok
+The host sent no map	Ana bilgisayar harita göndermedi
+The host's map could not be read	Ana bilgisayarın haritası okunamadı
+No connection	Bağlantı yok
+That address is not an openMapper host	Bu adreste bir openMapper ana bilgisayarı yok
+Wrong password	Yanlış parola
+The session is full	Oturum dolu
+Type a name (up to 32 letters)	Bir ad yazın (en çok 32 harf)
+The host has another version of openMapper	Ana bilgisayarda openMapper'ın başka bir sürümü var
+Move forward	İleri git
+Move back	Geri git
+Move left	Sola git
+Move right	Sağa git
+Turn the camera left	Kamerayı sola döndür
+Turn the camera right	Kamerayı sağa döndür
+Undo	Geri al
+Redo	Yinele
+Save	Kaydet
+Copy	Kopyala
+Cut	Kes
+Paste at the cursor	İmleçte yapıştır
+Duplicate	Çoğalt
+Select all	Tümünü seç
+Find in the map	Haritada ara
+Search for a command	Komut ara
+Tool: Select	Araç: Seçim
+Tool: Roads	Araç: Yollar
+Tool: Objects	Araç: Nesneler
+Tool: Game logic	Araç: Oyun mantığı
+Tool: Terrain	Araç: Arazi
+Tool: Paint	Araç: Boyama
+Tool: Tiles	Araç: Karolar
+Turn the object (Shift: the other way)	Nesneyi döndür (Shift: ters yöne)
+Ruler	Cetvel
+Knife	Bıçak
+Move handles	Taşıma tutamaçları
+Rotate handles	Döndürme tutamaçları
+Scale handles	Ölçek tutamaçları
+Edit the mesh (vertices, edges, faces)	Ağı düzenle (köşeler, kenarlar, yüzler)
+Join the selected objects into one	Seçili nesneleri tek nesnede birleştir
+Build the planned road	Planlanan yolu yap
+Tile grid on / off	Karo ızgarası açık / kapalı
+Group the selection	Seçimi grupla
+Ungroup	Grubu çöz
+Look straight down, north up	Dümdüz aşağı bak, kuzey yukarıda
+2D plan view on / off (3D: tilt and turn again)	2B plan görünümü açık / kapalı (3B: tekrar eğ ve döndür)
+Catalogue on / off	Katalog açık / kapalı
+Overview map on / off	Genel bakış haritası açık / kapalı
+Lines window	Hatlar penceresi
+Traffic window	Trafik penceresi
+Satellite and terrain window	Uydu ve arazi penceresi
+Smaller brush	Daha küçük fırça
+Larger brush	Daha büyük fırça
+Delete the selection	Seçimi sil
+Go to the selection	Seçime git
+Test drive in openOMSI (Shift: from the camera)	openOMSI'de test sürüşü (Shift: kameradan)
+Save a picture of the view	Görünümün resmini kaydet
+The map's own (global.cfg)	Haritanın kendisi (global.cfg)
+Description	Açıklama
+Name in this language	Bu dildeki ad
+Description in this language	Bu dildeki açıklama
+Remove this language	Bu dili kaldır
+Not written yet: it is saved as soon as you type.	Henüz yazılmadı: yazar yazmaz kaydedilir.
+Edit description	Açıklamayı düzenle
+just now	az önce
+min ago	dk önce
+h ago	sa önce
+Unsaved changes found	Kaydedilmemiş değişiklikler bulundu
+openMapper was closed without saving the map	openMapper harita kaydedilmeden kapatıldı
+The changes kept by the autosave can be brought back. The map itself was not changed.	Otomatik kayıtta saklanan değişiklikler geri getirilebilir. Haritanın kendisi değişmedi.
+Restore the changes	Değişiklikleri geri yükle
+Drop them	Vazgeç
+Nothing comes after it to join	Ondan sonra birleştirilecek bir şey yok
+The next piece runs the other way: reverse it first	Sonraki parça ters yöne gidiyor: önce onu ters çevirin
+The next piece lies on another tile	Sonraki parça başka bir karoda
+The two pieces are of different road types	İki parça farklı yol türünde
+The two pieces have different settings (path rules, ground, skew)	İki parçanın ayarları farklı (yol kuralları, zemin, eğiklik)
+A row of objects comes onto the next piece from another tile	Sonraki parçaya başka bir karodan bir nesne sırası giriyor
+The two pieces do not bend, climb or bank alike: joined they would change shape	İki parça aynı şekilde bükülmüyor, yükselmiyor ya da yatmıyor: birleşince şekli değişirdi
+Earlier versions	Önceki sürümler
+Before every save, the files it replaces are kept (the last 10 saves). Going back puts the map as it was before that save; later changes go.	Her kayıttan önce, değiştirdiği dosyalar saklanır (son 10 kayıt). Geri dönmek haritayı o kayıttan önceki haline getirir; sonraki değişiklikler gider.
+No earlier versions yet: they appear once the map is saved again.	Henüz önceki sürüm yok: harita tekrar kaydedilince görünürler.
+before the save of	şu kayıttan önce:
+Go back to this	Buna geri dön
+could not keep a backup, nothing was saved	yedek alınamadı, hiçbir şey kaydedilmedi
+Red	Kırmızı
+Yellow	Sarı
+Green	Yeşil
+file not found	dosya bulunamadı
+this object takes its model from a model file and cannot be edited here	bu nesne modelini bir model dosyasından alıyor ve burada düzenlenemez
+the object has no mesh to edit	nesnenin düzenlenecek ağı yok
+cannot read the object	nesne okunamıyor
+Select	Seç
+Terrain	Arazi
+Paint	Boyama
+Roads	Yollar
+Objects	Nesneler
+Game logic	Oyun mantığı
+Tiles	Karolar
+Raise	Yükselt
+Lower	Alçalt
+Smooth	Yumuşat
+Flatten	Düzleştir
+Roughen	Pürüzlendir
+Ramp	Rampa
+Lake / river	Göl / nehir
+Start points	Başlangıç noktaları
+Bus stops	Duraklar
+Car parks	Otoparklar
+AI paths	YZ yolları
+Other	Diğer
+Where the bus appears when a drive starts. Put it on a road or in the depot, facing the way to drive.	Otobüsün sürüş başlarken çıktığı yer. Yola ya da garaja, gidilecek yöne bakacak şekilde koyun.
+Where passengers wait. Put it beside the road at the kerb; name it on the right.	Yolcuların beklediği yer. Yolun yanına, kaldırım kenarına koyun; adını sağdan verin.
+Where parked cars stand. Click for one; with a row on, click the start and end of a row along the kerb.	Park etmiş arabaların durduğu yer. Tıklayın: tek yer; sıra açıkken kaldırım boyunca sıranın başına ve sonuna tıklayın.
+Lanes the AI's cars or people follow. Draw like a road: it snaps to lane ends (green: joined, red: dead end) and along lanes. A car path runs the way you draw it.	YZ'nin arabalarının veya insanlarının izlediği şeritler. Yol gibi çizilir: şerit uçlarına (yeşil: bağlı, kırmızı: çıkmaz) ve şeritler boyunca yapışır. Araç yolu çizdiğiniz yöne gider.
+Sound sources, help arrows and other helpers the game does not show.	Ses kaynakları, yardımcı oklar ve oyunun göstermediği diğer yardımcılar.
+Move (V): drag an arrow along X, Y or Z, a square in its plane, the circle over the ground	Taşı (V): oku X, Y veya Z boyunca sürükleyin, kareyi kendi düzleminde, daireyi zemin üzerinde
+Rotate (C): drag a ring to turn about X, Y or Z	Döndür (C): X, Y veya Z etrafında çevirmek için halkayı sürükleyin
+Scale (X): drag an arrow to scale along that axis, a square for two, the circle for all three	Ölçekle (X): o eksen boyunca ölçeklemek için oku, iki eksen için kareyi, üçü için daireyi sürükleyin
+These roads have no lanes of their own to take apart (rails stay as they are)	Bu yolların ayrılacak kendi şeritleri yok (raylar olduğu gibi kalır)
+Make the lanes editable	Şeritleri düzenlenebilir yap
+Roads whose lanes are now editable:	Şeritleri artık düzenlenebilir yollar:
+Flatten the terrain	Araziyi düzleştir
+Select two things or more to group them	Gruplamak için iki veya daha fazla şey seçin
+Group	Grup
+Grouped:	Gruplandı:
+Ungrouped	Grup çözüldü
+Rename group	Grubu yeniden adlandır
+Ground levelled under objects:	Nesnelerin altında zemin düzleştirildi:
+Move	Taşı
+No object clicked: nothing linked	Hiçbir nesneye tıklanmadı: bir şey bağlanmadı
+Too near the road's end to cut it there	Yolun ucuna çok yakın, orada kesilemez
+No road under the cursor	İmlecin altında yol yok
+Ramp:	Rampa:
+Shape terrain	Araziyi şekillendir
+Paint ground	Zemini boya
+Clear plants	Bitkileri temizle
+Plant	Dik
+Rotate selection	Seçimi döndür
+Rotate	Döndür
+Delete object	Nesneyi sil
+Delete road	Yolu sil
+Delete selection	Seçimi sil
+Pick an object in the catalogue first	Önce katalogdan bir nesne seçin
+There is no tile here: add one with the Tiles tool	Burada karo yok: Karolar aracıyla bir tane ekleyin
+Place object	Nesne yerleştir
+New stop	Yeni durak
+Linked to	Bağlı:
+choose its light in its properties	ışığı özelliklerinden seçin
+Trees from OpenStreetMap	OpenStreetMap ağaçları
+Plant an area	Bir alana dik
+Buildings from OpenStreetMap	OpenStreetMap binaları
+Stops from OpenStreetMap	OpenStreetMap durakları
+Stop	Durak
+Pick a car park in the list first	Önce listeden bir otopark seçin
+Place car parks	Otoparkları yerleştir
+Car parks placed:	Yerleştirilen otopark:
+Pick a road type in the catalogue first	Önce katalogdan bir yol türü seçin
+That bend is too sharp	Bu viraj çok keskin
+Switch made	Makas oluşturuldu
+Junctions made:	Oluşturulan kavşak:
+The road leaves the map: add tiles there first	Yol haritadan çıkıyor: önce oraya karo ekleyin
+Build road	Yol yap
+Roads from OpenStreetMap	OpenStreetMap yolları
+Pick a tree in the catalogue (or add some to the mix) first	Önce katalogdan bir ağaç seçin (ya da karışıma ekleyin)
+Right-click a tile to remove it	Kaldırmak için bir karoya sağ tıklayın
+New tiles go next to the map	Yeni karolar haritanın yanına eklenir
+Add tile	Karo ekle
+Water	Su
+Paint detail	Boyama ayrıntısı
+Ground layer order	Zemin katmanı sırası
+Detail texture	Ayrıntı dokusu
+Ground texture	Zemin dokusu
+Lamp light on the ground	Zeminde lamba ışığı
+Add tiles	Karo ekle
+A map needs at least one tile	Haritada en az bir karo olmalı
+Remove tile	Karoyu kaldır
+Pick a point (a dot at an end or where pieces meet) to take it out	Çıkarmak için bir nokta seçin (uçtaki ya da parçaların birleştiği yerdeki nokta)
+Remove a point of the path	Yoldan nokta çıkar
+Point taken out	Nokta çıkarıldı
+A path of one piece: Del with nothing picked deletes it	Tek parçalık yol: nokta seçmeden Del onu siler
+Extrude	Çıkıntı yap
+Inset	İçe kes
+Bevel	Pah
+Loop cut	Halka kesim
+click: done, right click / Esc: cancel, wheel: segments	tıkla: bitti, sağ tık / Esc: iptal, tekerlek: dilim sayısı
+Scale	Ölçek
+Roads are not scaled: change their length and width in their properties	Yollar ölçeklenmez: uzunluk ve genişlikleri özelliklerinde değiştirin
+Only the objects are scaled, the roads stay	Yalnızca nesneler ölçeklenir, yollar kalır
+Could not scale	Ölçeklenemedi
+Too near the end: drag the end's dot instead	Uca çok yakın: onun yerine ucun noktasını sürükleyin
+Add a point to the path	Yola nokta ekle
+Point added: drag the dot where the pieces meet	Nokta eklendi: parçaların birleştiği noktayı sürükleyin
+Reshape road	Yolu yeniden şekillendir
+Selected:	Seçilen:
+Copied:	Kopyalanan:
+Nothing copied yet	Henüz bir şey kopyalanmadı
+Paste	Yapıştır
+Level the ground	Zemini düzle
+Turn objects	Nesneleri döndür
+Copies in a row	Sıralı kopyalar
+Left out (off the map):	Atlanan (haritanın dışında):
+Pasted (the rest is off the map):	Yapıştırılan (kalanı haritanın dışında):
+Edit object	Nesneyi düzenle
+Lean with the ground	Zemine göre eğ
+Stand upright	Dik durdur
+Change height	Yüksekliği değiştir
+Change road type	Yol türünü değiştir
+The selected roads are not one chain (they branch or leave gaps)	Seçilen yollar tek zincir değil (dallanıyor veya boşlukları var)
+Even slope	Düzgün eğim
+Lay on the ground	Zemine yatır
+Remove the rows of objects along it first (they are measured from its start)	Önce boyunca uzanan nesne sıralarını kaldırın (başından ölçülürler)
+Reverse direction	Yönü ters çevir
+No road there to cut	Orada kesilecek yol yok
+Cut the road	Yolu kes
+Cut in two: each piece can now be changed on its own	İkiye kesildi: her parça artık ayrı değiştirilebilir
+Join the pieces	Parçaları birleştir
+Joined into one piece	Tek parçada birleştirildi
+Parallel copy	Paralel kopya
+Overhead wire	Havai hat
+Back into the map	Haritaya geri
+Hang an object	Nesne as
+Link to an object	Nesneye bağla
+Unlink	Bağlantıyı kes
+That object already takes its state from this one	O nesne durumunu zaten bundan alıyor
+Linked	Bağlandı
+Signal head's light	Sinyal başlığının ışığı
+Path rules	Yol kuralları
+Replace objects	Nesneleri değiştir
+Edit road	Yolu düzenle
+Roads that could not follow the junction (too sharp a bend):	Kavşağı izleyemeyen yollar (viraj çok keskin):
+Edit junction	Kavşağı düzenle
+Make the junction again	Kavşağı yeniden yap
+Make the junctions again	Kavşakları yeniden yap
+Pick an object in the Objects tool's catalogue first	Önce Nesneler aracının kataloğundan bir nesne seçin
+The road is too short for that	Yol bunun için çok kısa
+Objects along the road	Yol boyunca nesneler
+Rows of objects added:	Eklenen nesne sırası:
+Edit row of objects	Nesne sırasını düzenle
+Remove row of objects	Nesne sırasını kaldır
+Remove rows of objects	Nesne sıralarını kaldır
+Roundabout built; roads joined to it:	Dönel kavşak yapıldı; ona bağlanan yol:
+This road type carries traffic both ways: pick a one-way road for a proper roundabout	Bu yol türü iki yönde trafik taşır: düzgün bir dönel kavşak için tek yönlü yol seçin
+Start point: where the bus appears in openOMSI	Başlangıç noktası: otobüsün openOMSI'de çıktığı yer
+Bus stop: name it in the panel on the right	Durak: adını sağdaki panelde verin
+openOMSI stopped with an error	openOMSI bir hatayla durdu
+Check in openOMSI	openOMSI'de denetle
+The saved map run by the game itself, unseen, with its own checks; the picture is the game's, from your view	Kaydedilmiş harita, oyunun kendisi tarafından görünmeden ve kendi denetimleriyle çalıştırılır; resim oyunundur, sizin görünümünüzden
+Every tile (slower on a big map)	Tüm karolar (büyük haritada daha yavaş)
+Run again	Yeniden çalıştır
+openOMSI is loading the map…	openOMSI haritayı yüklüyor…
+Nothing wrong found	Sorun bulunmadı
+Problems found:	Bulunan sorun:
+Go there	Oraya git
+of the places named lie at the map's edge or a road's dead end (greyed): the game measures a lane's last point on the road's very edge, and a bus at the end stands over it; nothing to mend	adı geçen yerlerden haritanın kenarında veya yolun çıkmaz ucunda (gri): oyun şeridin son noktasını yolun tam kenarında ölçer, uçtaki otobüs de onun üstünde durur; düzeltilecek bir şey yok
+The game said nothing about the map	Oyun harita hakkında bir şey söylemedi
+The game's whole output	Oyunun tüm çıktısı
+no key entered	anahtar girilmedi
+the server refused the key	sunucu anahtarı kabul etmedi
+too many requests, try again later	çok fazla istek, sonra tekrar deneyin
+No connection to the server: are you online?	Sunucuyla bağlantı yok: çevrimiçi misiniz?
+Enter your Google key first	Önce Google anahtarınızı girin
+OpenStreetMap's servers are busy: try again in a minute	OpenStreetMap sunucuları meşgul: bir dakika sonra tekrar deneyin
+The area is too large for this zoom	Alan bu yakınlaştırma için çok büyük
+Cancelled	İptal edildi
+Stopped by an internal error (see the log)	Dahili bir hata nedeniyle durdu (günlüğe bakın)
+No source has imagery here	Burada hiçbir kaynakta görüntü yok
+drawn from OpenStreetMap data: sharp, with names	OpenStreetMap verisinden çizilir: net, adlarla
+terrain heights, no key needed	arazi yükseklikleri, anahtar gerekmez
+needs your own free key	kendi ücretsiz anahtarınız gerekir
+no key needed	anahtar gerekmez
+the picture is too small	resim çok küçük
+Import height map	Yükseklik haritasını içe aktar
+Height map	Yükseklik haritası
+The ground as a grey picture, to shape in another program and bring back	Zemin gri bir resim olarak: başka bir programda şekillendirip geri getirin
+Export…	Dışa aktar…
+Import…	İçe aktar…
+over	üzerinde
+a pixel	piksel başına
+Black adds	Siyah ekler
+Black is	Siyah şudur
+White adds	Beyaz ekler
+White is	Beyaz şudur
+Smoothing	Yumuşatma
+Replace the ground	Zemini değiştir
+Add to it	Üzerine ekle
+Roads and objects keep their heights: best done before building	Yollar ve nesneler yüksekliklerini korur: yapmadan önce yapmak en iyisi
+An 8-bit picture has only 256 steps of height: smoothing hides them	8 bitlik resimde yalnızca 256 yükseklik basamağı var: yumuşatma bunları gizler
+Lay it on the map	Haritaya uygula
+Cancel	İptal
+Height map laid over	Yükseklik haritası şunun üzerine uygulandı:
+Export the height map	Yükseklik haritasını dışa aktar
+Height map written	Yükseklik haritası yazıldı
+The height map could not be written	Yükseklik haritası yazılamadı
+A height map for the whole map	Tüm harita için yükseklik haritası
+The picture could not be read	Resim okunamadı
+IBIS and roller blind	IBIS ve rulo tabela
+Front sign, line 1	Ön tabela, satır 1
+Front sign, line 2	Ön tabela, satır 2
+Side sign	Yan tabela
+Roller blind texture	Rulo tabela dokusu
+IBIS 2 (20 letters)	IBIS 2 (20 harf)
+Extra sign	Ek tabela
+Krüger picture	Krüger resmi
+Text	Metin
+IBIS (16 letters)	IBIS (16 harf)
+Display, line 1	Ekran, satır 1
+Display, line 2	Ekran, satır 2
+Full name (20 letters)	Tam ad (20 harf)
+Service trip	Garaja dönüş seferi
+Special trip	Özel sefer
+Blank	Boş
+openMapper cannot import this kind of file (use a folder, .zip, .obj, .gltf, .glb, .fbx, .x, .o3d or a picture)	openMapper bu tür dosyayı içe aktaramaz (klasör, .zip, .obj, .gltf, .glb, .fbx, .x, .o3d veya resim kullanın)
+Mod installed, files:	Mod kuruldu, dosya:
+Objects added to	Nesneler şuraya eklendi:
+Road types added to	Yol türleri şuraya eklendi:
+Models imported:	İçe aktarılan model:
+Nothing to import was found in this folder	Bu klasörde içe aktarılacak bir şey bulunamadı
+The model has no triangles	Modelde üçgen yok
+Model imported:	Model içe aktarıldı:
+The .obj file has no faces	.obj dosyasında yüz yok
+no base colour picture among them	aralarında temel renk resmi yok
+The picture cannot be read	Resim okunamıyor
+Picture made into a standee:	Resim ayakta duran figür oldu:
+Picture made into a sign:	Resim tabela oldu:
+Trees	Ağaçlar
+Stops and start points	Duraklar ve başlangıç noktaları
+Junctions	Kavşaklar
+Tracks	Raylar
+Footpaths	Yaya yolları
+Fences, walls, kerbs	Çitler, duvarlar, kaldırım kenarları
+Technical (AI, helpers)	Teknik (YZ, yardımcılar)
+This map lies on the world's grid ([worldcoordinates]): its tiles cannot be taken yet	Bu harita dünya ızgarasında duruyor ([worldcoordinates]): karoları henüz alınamaz
+This map lies on the world's grid ([worldcoordinates]): tiles cannot be added from another yet	Bu harita dünya ızgarasında duruyor ([worldcoordinates]): başka bir haritadan karo henüz eklenemez
+Tiles from another map	Başka bir haritadan karolar
+Union	Birleşim
+Difference (cut out)	Fark (kes çıkar)
+Intersection	Kesişim
+Slice (keep both pieces)	Dilimle (iki parçayı da tut)
+One object of all the selected, their insides gone	Seçilenlerin hepsinden tek nesne, iç yüzleri gitmiş
+The other selected objects cut out of the one shown in the properties	Seçilen diğer nesneler, özelliklerde gösterilenden kesilip çıkarılır
+Only what all the selected share	Yalnızca tüm seçilenlerin ortak kısmı
+The first object cut by the others into what is outside them and what is inside	İlk nesne, diğerleri tarafından dışarıda kalan ve içeride kalan olarak kesilir
+select an object first	önce bir nesne seçin
+Make editable	Düzenlenebilir yap
+Make single	Tekil yap
+the object has only one part	nesnenin yalnızca bir parçası var
+Separate parts	Parçalara ayır
+select two or more objects to join	birleştirmek için iki veya daha fazla nesne seçin
+Join objects	Nesneleri birleştir
+select two or more objects: the one shown in the properties and what acts on it	iki veya daha fazla nesne seçin: özelliklerde gösterilen ve ona etki edenler
+nothing is left: the objects do not overlap that way	hiçbir şey kalmadı: nesneler bu şekilde kesişmiyor
+The file has no scene	Dosyada sahne yok
+The FBX file has no meshes	FBX dosyasında ağ yok
+Main roads	Ana yollar
+Streets	Sokaklar
+Service roads	Servis yolları
+Tram tracks	Tramvay yolları
+Railway tracks	Demiryolları
+motorway, trunk, primary, secondary	otoyol, ana yol, birinci ve ikinci derece
+tertiary, residential, unclassified	üçüncü derece, konut ve sınıfsız yollar
+yards, car parks, depots	avlular, otoparklar, garajlar
+each track on its own; branches are joined with switches by hand	her ray ayrı; dallar makaslarla elle bağlanır
+main lines without sidings; branches are joined with switches by hand	yan hatsız ana hatlar; dallar makaslarla elle bağlanır
+Water from OpenStreetMap	OpenStreetMap suyu
+Give a distance	Bir mesafe verin
+The bend is too tight for that distance on its inner side	Viraj, bu mesafe için iç tarafta çok dar
+The copy leaves the map: add tiles there first	Kopya haritadan çıkıyor: önce oraya karo ekleyin
+Made with openMapper	openMapper ile yapıldı
+Low (no shadows, rough edges, 3 km view)	Düşük (gölgesiz, pürüzlü kenarlar, 3 km görüş)
+Medium (softer shadows, 8 km view)	Orta (yumuşak gölgeler, 8 km görüş)
+High	Yüksek
+This end belongs to a junction: select the junction and move it, the road follows	Bu uç bir kavşağa ait: kavşağı seçip taşıyın, yol onu izler
+Paint along the roads	Yollar boyunca boya
+Market	Pazar
+Station	İstasyon
+Depot	Garaj
+this object takes its model from a model file: it cannot be scaled	bu nesne modelini bir model dosyasından alıyor: ölçeklenemez
+Not a GPX, KML or GeoJSON file	GPX, KML veya GeoJSON dosyası değil
+No lines in the file	Dosyada çizgi yok
+Language	Dil
+Interface size	Arayüz boyutu
+File	Dosya
+New map…	Yeni harita…
+Open map…	Haritayı aç…
+Controls…	Kontroller…
+Import assets…	Varlıkları içe aktar…
+Multiplayer…	Çok oyunculu…
+OMSI 2 folder…	OMSI 2 klasörü…
+Quit	Çık
+View	Görünüm
+Help	Yardım
+Updates…	Güncellemeler…
+About openMapper	openMapper hakkında
+OMSI 2 not found	OMSI 2 bulunamadı
+Map editor for openOMSI	openOMSI için harita düzenleyici
+openMapper builds maps from the content of an installed OMSI 2. Choose its folder (the one with Omsi.exe, maps and Vehicles).	openMapper, kurulu bir OMSI 2'nin içeriğinden harita yapar. Klasörünü seçin (Omsi.exe, maps ve Vehicles olan).
+Choose OMSI 2 folder…	OMSI 2 klasörünü seç…
+Maps	Haritalar
+recent · OMSI 2	son · OMSI 2
+recent	son
+content folder	içerik klasörü
+OMSI 2 (saved as copy)	OMSI 2 (kopya olarak kaydedildi)
+Open	Aç
+Make a copy	Kopya yap
+A copy of the map in the content folder under a new name, to try something out	Bir şey denemek için haritanın içerik klasöründe yeni adla kopyası
+Show in the file manager	Dosya yöneticisinde göster
+Move to openMapper's bin	openMapper çöp kutusuna taşı
+Its folder goes into openMapper\\bin in the content folder, from where it can be put back by hand	Klasörü içerik klasöründeki openMapper\\bin içine taşınır, oradan elle geri konabilir
+Browse…	Gözat…
+Double-click a map to open it. Maps of OMSI 2 are saved as a copy into openOMSI's content folder; the original stays untouched.	Açmak için haritaya çift tıklayın. OMSI 2 haritaları openOMSI'nin içerik klasörüne kopya olarak kaydedilir; asıl harita değişmez.
+A simple map editor for openOMSI.	openOMSI için basit bir harita düzenleyici.
+Back to the 3D view (0)	3B görünüme dön (0)
+The plan view from above, north up (0)	Yukarıdan plan görünümü, kuzey yukarıda (0)
+Recent maps	Son haritalar
+(none)	(yok)
+Export map for sharing…	Haritayı paylaşmak için dışa aktar…
+Export a plan of the map…	Haritanın planını dışa aktar…
+Earlier versions…	Önceki sürümler…
+Close map	Haritayı kapat
+Edit	Düzen
+Edit history…	Düzenleme geçmişi…
+Groups for other maps…	Diğer haritalar için gruplar…
+Find in map…	Haritada ara…
+Search for a command…	Komut ara…
+Delete	Sil
+Deselect	Seçimi kaldır
+Tile grid	Karo ızgarası
+What the game does not show	Oyunun göstermedikleri
+AI lanes	YZ şeritleri
+Names of stops and start points	Durak ve başlangıç noktası adları
+Show	Göster
+Roads and splines	Yollar ve spline'lar
+Overview map (M)	Genel bakış haritası (M)
+Assets (B)	Varlıklar (B)
+Flatten the terrain (roads follow)	Araziyi düzleştir (yollar uyar)
+Saved views…	Kayıtlı görünümler…
+Go to selection	Seçime git
+Camera	Kamera
+Unity: right button looks round and W A S D fly, middle pans, Alt orbits	Unity: sağ tuş etrafa bakar ve W A S D uçar, orta tuş kaydırır, Alt yörüngede döndürür
+Map editor: right button looks round and W A S D fly (Q down, E up), middle pans, the wheel zooms to the cursor, drag moves the map	Harita düzenleyici: sağ tuş etrafa bakar ve W A S D uçar (Q aşağı, E yukarı), orta tuş kaydırır, tekerlek imlece yakınlaştırır, sürükleme haritayı taşır
+Load 100 tiles at a time (like OMSI 2's editor)	100 karoyu birden yükle (OMSI 2'nin düzenleyicisi gibi)
+Time of day	Günün saati
+Plain day (as the game by day)	Düz gün (oyundaki gündüz gibi)
+At an hour	Belirli bir saatte
+Where the sun stands then, today, at the map's place (Map > Calendar and place); by night the moon	Güneşin o zaman, bugün, haritanın bulunduğu yerde durduğu yer (Harita > Takvim ve yer); geceleri ay
+Season	Mevsim
+Summer	Yaz
+Dry summer	Kuru yaz
+Spring	İlkbahar
+Autumn	Sonbahar
+Winter	Kış
+Snow	Kar
+Graphics quality	Grafik kalitesi
+Tools	Araçlar
+Road types and junctions…	Yol türleri ve kavşaklar…
+PBR maps for a picture…	Resim için PBR haritaları…
+Map	Harita
+Map settings…	Harita ayarları…
+Calendar and place…	Takvim ve yer…
+Signal routes…	Sinyal güzergâhları…
+Chrono scenarios…	Kronolojik senaryolar…
+Ground textures…	Zemin dokuları…
+Check map…	Haritayı denetle…
+Junctions made again:	Yeniden yapılan kavşak:
+Lines and timetable…	Hatlar ve tarife…
+Traffic and AI…	Trafik ve YZ…
+Depot files (destinations)…	Garaj dosyaları (varış yerleri)…
+Satellite and terrain…	Uydu ve arazi…
+From OpenStreetMap…	OpenStreetMap'ten…
+GPS tracks to trace…	İzlenecek GPS izleri…
+Tiles from another map…	Başka haritadan karolar…
+Test drive in openOMSI	openOMSI'de test sürüşü
+Test drive in OMSI 2 (the original)…	OMSI 2'de test sürüşü (orijinal)…
+Check in openOMSI…	openOMSI'de denetle…
+Getting started	Başlarken
+New map	Yeni harita
+Open a map	Haritayı aç
+Save (Ctrl+S): there are unsaved changes	Kaydet (Ctrl+S): kaydedilmemiş değişiklikler var
+Save (Ctrl+S)	Kaydet (Ctrl+S)
+Import assets: a mod folder or .zip, a .obj / .x / .o3d model (or drop files on the window)	Varlıkları içe aktar: mod klasörü veya .zip, .obj / .x / .o3d modeli (ya da dosyaları pencereye bırakın)
+Redo (Ctrl+Shift+Z)	Yinele (Ctrl+Shift+Z)
+Tile grid (G)	Karo ızgarası (G)
+Assets: every object and road type, with pictures (B)	Varlıklar: tüm nesneler ve yol türleri, resimleriyle (B)
+Test drive	Test sürüşü
+Save the map and drive it in openOMSI (F5)	Haritayı kaydet ve openOMSI'de sür (F5)
+openOMSI was not found: install it to test maps	openOMSI bulunamadı: haritaları denemek için kurun
+Test drive from the start point nearest the view	Görünüme en yakın başlangıç noktasından test sürüşü
+See this view in openOMSI	Bu görünümü openOMSI'de gör
+loading	yükleniyor
+Edit mesh	Ağı düzenle
+Shapes and lamps	Şekiller ve lambalar
+Click beside the map to add a 300 × 300 m tile. Right-click a tile to remove it.	300 × 300 m karo eklemek için haritanın yanına tıklayın. Kaldırmak için karoya sağ tıklayın.
+Area	Alan
+A ring of tiles round the map	Haritanın çevresinde bir karo halkası
+Every free place beside the map, corners too, gets a tile at the height of its neighbours	Haritanın yanındaki her boş yere, köşeler de dahil, komşularının yüksekliğinde karo eklenir
+Tiles added:	Eklenen karo:
+Everything on the map, grouped by the folders its files lie in	Haritadaki her şey, dosyalarının bulunduğu klasörlere göre gruplu
+Click an object or a road in the view to see and change it on the right.	Görünümde bir nesne veya yola tıklayın, sağda görüp değiştirin.
+Line up with the nearest road (Shift: put it freely)	En yakın yola hizala (Shift: serbest koy)
+On both sides of the road	Yolun iki yanında
+A stop of the same name also goes at the kerb across the road, facing the other way	Aynı adlı durak, karşı taraftaki kaldırım kenarına da, ters yöne bakacak şekilde konur
+In a row along a line	Bir çizgi boyunca sıralı
+Every	Her
+Draw new	Yenisini çiz
+Edit existing	Mevcutları düzenle
+Click a path to pick it: every point is a dot to drag (the small ones in the middle of a piece bend it). Double-click the path to put a point in. Click a dot, then Del, to take that point out; Del with no dot picked deletes the whole path (Ctrl+Z brings it back). Lanes of roads and junctions belong to their road type: use Edit its AI lanes on the road.	Seçmek için bir yola tıklayın: her nokta sürüklenebilir bir daire (parçanın ortasındaki küçükler onu bükler). Nokta eklemek için yola çift tıklayın. Bir noktaya tıklayıp Del'e basarsanız o nokta çıkar; nokta seçmeden Del tüm yolu siler (Ctrl+Z geri getirir). Yol ve kavşak şeritleri yol türüne aittir: yoldaki "YZ şeritlerini düzenle"yi kullanın.
+Cars	Arabalar
+People	İnsanlar
+Show these in the other tools too	Bunları diğer araçlarda da göster
+Show the AI's lanes in the other tools too	YZ şeritlerini diğer araçlarda da göster
+Everything	Her şey
+Search	Ara
+Shape the ground under the road	Zemini yolun altına uydur
+Go on drawing from the end of the road just built	Yeni yapılan yolun ucundan çizmeye devam et
+Join road ends, roads and junction pieces near the cursor	Yol uçlarına, yollara ve imlecin yanındaki kavşak parçalarına bağla
+Make junctions where roads meet	Yollar buluştuğunda kavşak yap
+Go on with the type of the road I start from	Başladığım yolun türüyle devam et
+Building with:	Şununla yapılıyor:
+nothing chosen	hiçbir şey seçilmedi
+Front at the roadside, back	Cephe yola dönük, geri çekilme
+Plant brush: sow trees by painting	Bitki fırçası: fırçayla ağaç ek
+Sow	Ek
+Clear	Temizle
+With the brush	Fırçayla
+In an outline	Çevreyle
+Click round an area (a wood, a park, a garden) and it is filled at once, or cleared	Bir alanın (orman, park, bahçe) çevresine tıklayın, hemen doldurulur ya da temizlenir
+About	Yaklaşık
+plants (Enter: plant)	bitki (Enter: dik)
+Size	Boyut
+Apart	Aralık
+Sows the object chosen below. Right-click entries: "Add to the plant mix" to sow several at random. Clearing takes trees and the mix's objects.	Aşağıda seçilen nesneyi eker. Öğelere sağ tıklayın: birkaçını rastgele ekmek için "Bitki karışımına ekle". Temizleme ağaçları ve karışımın nesnelerini alır.
+Mix (picked at random):	Karışım (rastgele seçilir):
+reading OMSI 2…	OMSI 2 okunuyor…
+items	öğe
+Nothing found	Hiçbir şey bulunamadı
+mod	mod
+right-click: star it	sağ tık: yıldızla
+Take out of the plant mix	Bitki karışımından çıkar
+Add to the plant mix	Bitki karışımına ekle
+Remove from favourites	Sık kullanılanlardan çıkar
+Add to favourites	Sık kullanılanlara ekle
+Favourites	Sık kullanılanlar
+Recently used	Son kullanılanlar
+(not in a folder)	(klasör dışı)
+Strength	Güç
+Mode	Mod
+Levels the ground to the height where you start dragging	Zemini sürüklemeye başladığınız yüksekliğe düzler
+Softens bumps and edges	Tümsekleri ve kenarları yumuşatır
+Raises the ground under the brush	Fırçanın altındaki zemini yükseltir
+Lowers the ground under the brush	Fırçanın altındaki zemini alçaltır
+Gives flat ground the rolls and dips of a natural field; hold longer for more	Düz zemine doğal bir tarlanın tümsek ve çukurlarını verir; daha uzun basılı tutun: daha fazla
+Paint a lake or a river: the ground is dug to a bed under the water's level (where you start the stroke, or the tile's water) and the tile gets water at that level. Water in OMSI is one level for a whole tile: another low place on the same tile shows it too	Göl veya nehir çizin: zemin su seviyesinin altında bir yatağa kazılır (fırça darbesini başlattığınız yer ya da karonun suyu) ve karoya o seviyede su gelir. OMSI'de su tüm karo için tek seviyedir: aynı karodaki başka bir alçak yer de onu gösterir
+Click where it starts, then where it ends: the ground between becomes one even slope as wide as the brush (an embankment, a ramp, a level bed)	Başladığı yere tıklayın, sonra bittiği yere: aradaki zemin fırça kadar geniş düzgün bir eğim olur (set, rampa, düz yatak)
+To a height	Yüksekliğe
+Flatten to the height typed instead of the one where the drag starts (a level square, a platform)	Sürüklemenin başladığı yükseklik yerine yazılan yüksekliğe düzle (düz alan, platform)
+Depth	Derinlik
+The water's level is set where a stroke starts: start at the bank.	Su seviyesi darbenin başladığı yerde belirlenir: kıyıdan başlayın.
+Brush	Fırça
+Flatten the whole terrain	Tüm araziyi düzleştir
+Every tile's ground levelled to the map's mean height; the roads, the AI paths and the junctions follow it. One undo step brings the relief back. (The satellite picture: View > Satellite overlay.)	Her karonun zemini haritanın ortalama yüksekliğine düzlenir; yollar, YZ yolları ve kavşaklar uyar. Tek geri alma adımı kabartıyı geri getirir. (Uydu resmi: Görünüm > Uydu katmanı.)
+Ground layers	Zemin katmanları
+base ground	temel zemin
+layer	katman
+Add…	Ekle…
+Remove	Kaldır
+Up the list: drawn under the layers after it	Listede yukarı: sonrakilerin altında çizilir
+Down the list: drawn over the layers before it	Listede aşağı: öncekilerin üstünde çizilir
+Texture	Doku
+The layer's picture; its painting stays	Katmanın resmi; boyaması kalır
+A fine grain laid over the texture, seen close up (OMSI's detail texture)	Dokunun üzerine serilmiş, yakından görülen ince doku (OMSI'nin ayrıntı dokusu)
+Click to choose another	Başkasını seçmek için tıklayın
+Repeats per tile	Karo başına tekrar
+Detail repeats	Ayrıntı tekrarı
+How finely this layer can be painted: texels across a tile (its masks are made again at the new size)	Bu katman ne kadar ince boyanabilir: karo boyunca doku pikseli (maskeleri yeni boyuta göre yeniden yapılır)
+Edit ground texture	Zemin dokusunu düzenle
+Erase	Sil
+Remove ground texture	Zemin dokusunu kaldır
+Tile	Karo
+A water surface over the whole tile: it shows where the ground lies below it (lower the ground with the Terrain tool for a lake or a river)	Tüm karonun üstünde bir su yüzeyi: altında zemin daha aşağıda olan yerlerde görünür (göl veya nehir için Arazi aracıyla zemini alçaltın)
+at 	şurada
+Lamps light the ground at night	Lambalar geceleyin zemini aydınlatır
+The game works out the light pools of the street lamps on and round this tile when it loads it ([variable_terrainlightmap]); off, it shows the tile's light map file as it is	Oyun, karoyu yüklerken bu karodaki ve çevresindeki sokak lambalarının ışık lekelerini hesaplar ([variable_terrainlightmap]); kapalıyken karonun ışık haritası dosyasını olduğu gibi gösterir
+Edit history	Düzenleme geçmişi
+Click a step to go back to just after it	Bir adıma tıklayın: hemen sonrasına geri dönülür
+Opened	Açıldı
+Properties	Özellikler
+Configure PBR	PBR ayarla
+Create PBR	PBR oluştur
+Normal, roughness, metal and shadow maps made from the object's textures, tuned and written as openOMSI reads them	Nesnenin dokularından yapılan normal, pürüzlülük, metal ve gölge haritaları: ayarlayıp openOMSI'nin okuduğu biçimde yazın
+Type	Tür
+Hangs on	Şuraya asılı:
+point	nokta
+Location	Konum
+East	Doğu
+North	Kuzey
+Height above sea level	Deniz seviyesinden yükseklik
+above the ground:	zeminden yukarıda:
+OMSI keeps this object's height above the ground under it: moved elsewhere it stays as high above the ground there	OMSI bu nesnenin altındaki zeminden yüksekliğini saklar: başka yere taşınırsa orada da zeminden aynı yükseklikte kalır
+Rotation	Döndürme
+Tilt forward (pitch)	Öne eğim (pitch)
+Bank to the side (roll)	Yana yatma (roll)
+Heading	Yön (heading)
+Turn it the way the nearest road runs beside it	Yanından geçen en yakın yolun yönüne çevir
+Stand it upright again	Yeniden dik durdur
+Picture	Resim
+Ratio	Oran
+Stop name	Durak adı
+This tree	Bu ağaç
+Texts	Metinler
+Shown on the object (@ starts a new line)	Nesne üzerinde gösterilir (@ yeni satır başlatır)
+Model	Model
+Triangles	Üçgenler
+Parts	Parçalar
+Part	Parça
+triangles	üçgen
+colour only	yalnızca renk
+opaque	opak
+cut out	kesilmiş
+blended	karışık
+How the texture's transparency is used: cut out for leaves and fences, blended for glass	Dokunun saydamlığı nasıl kullanılır: yapraklar ve çitler için kesilmiş, cam için karışık
+Textures	Dokular
+Normal, roughness, metal and shadow maps made from the road type's textures	Yol türünün dokularından yapılan normal, pürüzlülük, metal ve gölge haritaları
+Length	Uzunluk
+Radius	Yarıçap
+right	sağ
+left	sol
+straight	düz
+start	başlangıç
+end	bitiş
+Mirrored	Aynalı
+Skew	Eğiklik
+The start cut on a slant: 1 is 45° (two fences meeting at a corner: 1 and -1)	Eğik kesilmiş başlangıç: 1, 45° demektir (köşede buluşan iki çit: 1 ve -1)
+The end cut on a slant	Eğik kesilmiş bitiş
+Ground	Zemin
+as it is	olduğu gibi
+cut away under it	altından kes
+cut, held at the end	kes, sonda tut
+cut, held at the start	kes, başta tut
+cut, held at both ends	kes, iki uçta tut
+A hole in the ground under it, as for a tunnel, an underpass or a pit (OMSI's terrain align)	Altındaki zeminde bir delik, tünel, alt geçit veya çukur gibi (OMSI'nin terrain align'ı)
+Select the whole road	Tüm yolu seç
+Every piece linked on from this one (or double-click the road)	Bundan sonra bağlı her parça (veya yola çift tıklayın)
+Join with the next piece	Sonraki parçayla birleştir
+One piece again with the one after it, where the two make one curve	İkisi tek bir eğri oluşturuyorsa, sonrakiyle yeniden tek parça
+Replace with	Şununla değiştir
+The object chosen in the Objects tool's catalogue takes this one's place	Nesneler aracının kataloğunda seçilen nesne bunun yerine geçer
+Go to	Git
+Level ground	Zemini düzle
+The ground under it made level with its foot, blending in 3 m round it (a house on a slope)	Altındaki zemin tabanıyla aynı seviyeye getirilir, çevresinde 3 m yumuşak geçişle (yamaçtaki ev)
+All like it	Benzer hepsi
+Select every one of this type on the map	Haritadaki bu türden her nesneyi seç
+No road within 60 m	60 m içinde yol yok
+Name	Ad
+Folder	Klasör
+Traffic	Trafik
+left-hand	sol trafik
+No start point yet: place one (Game logic > Start points) so the bus has somewhere to appear in openOMSI.	Henüz başlangıç noktası yok: openOMSI'de otobüsün çıkabileceği bir yer olması için bir tane koyun (Oyun mantığı > Başlangıç noktaları).
+None yet: openOMSI shows it where maps are chosen.	Henüz yok: openOMSI harita seçilirken bunu gösterir.
+Import your thumbnail	Küçük resminizi içe aktarın
+Choose a picture: it is cut to 370 × 280 and becomes the map's picture (picture.jpg).	Bir resim seçin: 370 × 280'e kesilir ve haritanın resmi olur (picture.jpg).
+Open the map with this view	Haritayı bu görünümle aç
+The camera as it is now is where the map opens (here and in OMSI 2's editor).	Kameranın şu anki hali haritanın açılacağı yerdir (burada ve OMSI 2'nin düzenleyicisinde).
+Saved to	Şuraya kaydedilir:
+Edit map	Haritayı düzenle
+Change the layer's texture	Katmanın dokusunu değiştir
+Change the layer's detail texture	Katmanın ayrıntı dokusunu değiştir
+Controls	Kontroller
+Keyboard	Klavye
+Click a key, then press the new one (Esc: leave it). A key already in use is taken from its command.	Bir tuşa tıklayın, sonra yenisine basın (Esc: bırak). Kullanımdaki tuş komutundan alınır.
+press a key…	bir tuşa basın…
+Also:	Ayrıca:
+Back to the default key	Varsayılan tuşa dön
+Reset all keys	Tüm tuşları sıfırla
+Mouse	Fare
+Right button held	Sağ tuş basılı
+look round; W A S D fly, Q / E down / up, Shift faster, wheel: speed	etrafa bak; W A S D: uç, Q / E: aşağı / yukarı, Shift: daha hızlı, tekerlek: hız
+Middle drag	Orta tuşla sürükle
+pan	kaydır
+Alt + left / right / middle drag	Alt + sol / sağ / orta sürükle
+orbit / zoom / pan (as in Unity)	yörünge / yakınlaştır / kaydır (Unity'deki gibi)
+Left drag on nothing	Boşlukta sol sürükle
+select with a box	kutuyla seç
+Alt + left drag	Alt + sol tuşla sürükle
+orbit round the point under the cursor	imlecin altındaki nokta etrafında döndür
+Wheel	Tekerlek
+move towards the cursor	imlece doğru yaklaş
+Trackpad	İzleme dörtgeni
+Two fingers	İki parmak
+Pinch / twist	Sıkıştır / bük
+zoom / turn	yakınlaştır / döndür
+Option + two fingers or drag	Option + iki parmak veya sürükle
+Fixed keys	Sabit tuşlar
+Arrow keys	Ok tuşları
+move over the map (Shift: faster)	harita üzerinde gez (Shift: daha hızlı)
+go to a saved view (Shift: keep the view there)	kayıtlı görünüme git (Shift: görünümü oraya kaydet)
+Alt + arrows	Alt + oklar
+move the selection a grid step (Shift: 10 cm)	seçimi bir ızgara adımı taşı (Shift: 10 cm)
+Alt + Page Up / Down	Alt + Page Up / Down
+selection up / down 10 cm (Shift: 1 m)	seçimi 10 cm yukarı / aşağı (Shift: 1 m)
+add to / take from the selection	seçime ekle / seçimden çıkar
+Shift / Ctrl + drag on empty ground	Boş zeminde Shift / Ctrl + sürükle
+select with a box (Shift adds)	kutuyla seç (Shift ekler)
+Double-click a road	Yola çift tıkla
+select all of it	hepsini seç
+turn the object	nesneyi döndür
+brush size	fırça boyutu
+stop / deselect	dur / seçimi kaldır
+Unsaved changes	Kaydedilmemiş değişiklikler
+The map has changes that are not saved. Save them first?	Haritada kaydedilmemiş değişiklikler var. Önce kaydedilsin mi?
+Don't save	Kaydetme
+Assets	Varlıklar
+All	Tümü
+Picture size	Resim boyutu
+Shapes…	Şekiller…
+Close (B)	Kapat (B)
+Scenery objects	Sahne nesneleri
+Splines (roads, tracks…)	Spline'lar (yollar, raylar…)
+Favourite on / off	Sık kullanılan açık / kapalı
+content folder (mod, import, own)	içerik klasörü (mod, içe aktarılan, kendi)
+OMSI 2	OMSI 2
+width	genişlik
+Build with it	Bununla yap
+Place it	Yerleştir
+PBR material…	PBR malzemesi…
+Delete…	Sil…
+Not seen in the game (a helper).	Oyunda görünmez (yardımcı).
+Delete the asset?	Varlık silinsin mi?
+Its folder goes into openMapper's bin in the content folder (openMapper\\bin), from where it can be put back by hand. Maps that use it show it missing.	Klasörü içerik klasöründeki openMapper çöp kutusuna taşınır (openMapper\\bin), oradan elle geri konabilir. Bunu kullanan haritalarda eksik görünür.
+Calendar and place	Takvim ve yer
+Place and time	Yer ve saat
+Holidays	Tatiller
+Number plates	Plakalar
+Latitude	Enlem
+Longitude	Boylam
+Time zone	Saat dilimi
+Where the sun stands and when it rises and sets come from here.	Güneşin konumu, doğuşu ve batışı buradan gelir.
+Summer time	Yaz saati
+years	yıl
+none: the clocks are never put forward	yok: saatler hiç ileri alınmaz
+EU rules for these years	Bu yıllar için AB kuralları
+Last Sunday of March to last Sunday of October, replacing what is set for these years	Mart'ın son pazarından Ekim'in son pazarına kadar, bu yıllar için ayarlananın yerine
+None	Yok
+Year	Yıl
+entries	kayıt
+Public holidays run Sunday's timetable; school holidays the holiday one.	Resmî tatillerde pazar tarifesi, okul tatillerinde tatil tarifesi çalışır.
+Public holidays	Resmî tatiller
+Add a holiday	Tatil ekle
+Holiday	Tatil
+School holidays	Okul tatilleri
+Ends before it starts	Başlamadan önce bitiyor
+Add school holidays	Okul tatili ekle
+The AI's cars carry these, one a line.	YZ'nin arabaları bunları taşır, her satıra bir tane.
+X: a letter, 9: a digit	X: bir harf, 9: bir rakam
+Make	Oluştur
+Replaces the list with plates of the pattern	Listeyi kalıba uyan plakalarla değiştirir
+plates	plaka
+The scenario's AI lists are written, groups changed:	Senaryonun YZ listeleri yazıldı, değişen grup:
+Could not write the scenario	Senaryo yazılamadı
+The scenario's timetable is written, files:	Senaryonun tarifesi yazıldı, dosya:
+Back in the scenario:	Senaryoya geri döndü:
+The scenario's things are on the map:	Senaryonun öğeleri haritada:
+what you place now is the scenario's too	şimdi yerleştirdikleriniz de senaryonun
+Editing the scenario	Senaryo düzenleniyor
+Done	Bitti
+Chrono scenarios	Kronolojik senaryolar
+How the map changes over the years: each scenario from its first day lays its own tiles, lines and tickets over the map. The view shows the map as on the day chosen here; what you edit is always the map itself.	Harita yıllar içinde nasıl değişir: her senaryo ilk gününden itibaren kendi karolarını, hatlarını ve biletlerini haritanın üzerine koyar. Görünüm haritayı burada seçilen günkü haliyle gösterir; düzenlediğiniz her zaman haritanın kendisidir.
+Show the map as on	Haritayı şu tarihteki haliyle göster
+Today	Bugün
+Active on that day:	O gün geçerli olanlar:
+New scenario's name	Yeni senaryo adı
+New scenario	Yeni senaryo
+A scenario starting on the day shown, after the others	Gösterilen günden başlayan, diğerlerinden sonraki senaryo
+From	Başlangıç
+To	Varış
+for good	süresiz
+Own tickets	Kendi biletleri
+Own money	Kendi parası
+the map's	haritanın
+Takes off	Kaldırdığı hatlar
+What changes (shown where the date is chosen)	Ne değişir (tarih seçilen yerde gösterilir)
+From its first day, the selection in the view:	İlk gününden itibaren, görünümde seçili olanlar:
+appears	ortaya çıkar
+Taken out of the map into the scenario: it is there from the scenario's first day on (place it first, then press this)	Haritadan senaryoya alınır: senaryonun ilk gününden itibaren orada olur (önce yerleştirin, sonra buna basın)
+is gone	kaybolur
+Stays in the map, gone from the scenario's first day on	Haritada kalır, senaryonun ilk gününden itibaren yok olur
+becomes	şuna dönüşür
+its texts become	metinleri şuna dönüşür
+Write	Yaz
+Its path rules from that day	O günden itibaren yol kuralları
+Add a rule	Kural ekle
+Written into the scenario at once (undo does not take it out of the scenario).	Hemen senaryoya yazılır (geri alma bunu senaryodan çıkarmaz).
+What it changes	Neyi değiştirir
+into the map	haritaya
+Out of the scenario into the map itself: there on every day	Senaryodan haritanın kendisine: her gün orada olur
+Take it out of the scenario	Senaryodan çıkar
+new texts	yeni metinler
+rules	kural
+Nothing yet.	Henüz hiçbir şey yok.
+Its own things are on the map: select, move, change and place as usual. The map's own things stay the map's.	Kendi öğeleri haritada: her zamanki gibi seçin, taşıyın, değiştirin ve yerleştirin. Haritanın kendi öğeleri haritanın kalır.
+Done: back into the scenario	Bitti: senaryoya geri
+Edit its own things on the map	Kendi öğelerini haritada düzenle
+What it brings in is put on the map to work with as with anything else; Done writes it back (undo starts afresh)	Getirdikleri her şey gibi çalışmak için haritaya konur; Bitti bunları geri yazar (geri alma geçmişi sıfırlanır)
+The Lines window shows its timetable (the map's with its own laid over): lines, trips and tours edited there are the scenario's; a line of the map taken away is taken off from its day.	Hatlar penceresi onun tarifesini gösterir (haritanınki, üzerine kendisininki bindirilmiş): orada düzenlenen hatlar, seferler ve sefer turları senaryonundur; haritanın kaldırılan hattı kendi gününden itibaren çıkarılır.
+Done with its timetable	Tarifesi bitti
+Edit its timetable	Tarifesini düzenle
+Its own lines, trips and tours in the Lines window; Done writes only what differs from the map's (undo starts afresh)	Hatlar penceresinde kendi hatları, seferleri ve sefer turları; Bitti yalnızca haritadan farklı olanı yazar (geri alma geçmişi sıfırlanır)
+The Traffic window shows its AI lists (the map's with its own added): vehicles and type groups added there, and a depot's own depot file, are the scenario's from its day.	Trafik penceresi onun YZ listelerini gösterir (haritanınki, kendisininki eklenmiş): orada eklenen araçlar ve tür grupları ile bir garajın kendi garaj dosyası günüyle birlikte senaryonundur.
+Done with its AI lists	YZ listeleri bitti
+Edit its AI lists	YZ listelerini düzenle
+Vehicles it adds to the groups and depots (OMSI's ailists_#upd.cfg); taking one away is the map's own business	Gruplara ve garajlara eklediği araçlar (OMSI'nin ailists_#upd.cfg dosyası); birini kaldırmak haritanın kendi işidir
+Write the scenario	Senaryoyu yaz
+Close	Kapat
+The map has no chrono scenarios.	Haritada kronolojik senaryo yok.
+from	başlangıç
+to	bitiş
+takes off	kaldırır
+own tickets	kendi biletleri
+Its first day	İlk günü
+Written into the scenario	Senaryoya yazıldı
+Written into the scenario:	Senaryoya yazıldı:
+Scenario written	Senaryo yazıldı
+The map as on	Haritanın şu tarihteki hali:
+scenarios:	senaryo:
+Multiplayer	Çok oyunculu
+Joining… (a big map takes a while to come)	Katılınıyor… (büyük haritanın gelmesi biraz sürer)
+Recover a conflicting edit…	Çakışan düzenlemeyi kurtar…
+Recovered your edit; undo is available	Düzenlemeniz kurtarıldı; geri alınabilir
+Edit one map together: one of you hosts it, the others join. Roads, objects, ground and paint are shared as they are made; the timetable, the traffic and the descriptions stay the host's, and the host saves the map. Everybody needs the same objects and splines installed.	Tek haritayı birlikte düzenleyin: biriniz ana bilgisayar olur, diğerleri katılır. Yollar, nesneler, zemin ve boya yapıldıkça paylaşılır; tarife, trafik ve açıklamalar ana bilgisayarda kalır ve haritayı ana bilgisayar kaydeder. Herkeste aynı nesneler ve spline'lar kurulu olmalı.
+Your name	Adınız
+Password	Parola
+Host this map	Bu haritayı sun
+Others on this network can join	Bu ağdaki diğerleri katılabilir
+Others anywhere can join (a free Cloudflare tunnel, nothing to set up on the router)	Her yerden herkes katılabilir (ücretsiz bir Cloudflare tüneli, yönlendiricide ayar gerekmez)
+Port	Bağlantı noktası
+Over the internet the password must have at least this many letters:	İnternet üzerinden parola en az şu kadar harf olmalı:
+No password: anybody who reaches this computer's port can join and change the whole map.	Parolasız: bu bilgisayarın bağlantı noktasına ulaşan herkes katılıp tüm haritayı değiştirebilir.
+Ask for a password after all	Yine de parola iste
+Host without a password? Anybody on this network who finds the port can join and change the whole map.	Parolasız sunulsun mu? Bu ağda bağlantı noktasını bulan herkes katılıp tüm haritayı değiştirebilir.
+Yes, without a password	Evet, parolasız
+No	Hayır
+Type a password the others will need.	Diğerlerinin gireceği bir parola yazın.
+Host without a password…	Parolasız sun…
+Host	Sunucu ol
+Open a map, type a name and a password first	Önce bir harita açın, ad ve parola yazın
+Join a map	Bir haritaya katıl
+The map open now has unsaved changes: joining closes it. Save it first.	Açık haritada kaydedilmemiş değişiklikler var: katılmak onu kapatır. Önce kaydedin.
+You host this map. Give the others one of these:	Bu haritanın ana bilgisayarı sizsiniz. Diğerlerine bunlardan birini verin:
+On this network the connection is not encrypted: somebody listening in can see the map, and from what they catch try passwords on their own computer. Use a long password, or the internet tunnel (encrypted).	Bu ağda bağlantı şifrelenmez: dinleyen biri haritayı görebilir ve yakaladığından kendi bilgisayarında parola deneyebilir. Uzun bir parola ya da internet tünelini (şifreli) kullanın.
+Everybody who joins can change the whole map.	Katılan herkes tüm haritayı değiştirebilir.
+Opening the Cloudflare tunnel… (fetched the first time)	Cloudflare tüneli açılıyor… (ilk seferde indirilir)
+internet	internet
+Waiting for Cloudflare's address…	Cloudflare adresi bekleniyor…
+The Cloudflare tunnel could not be opened (no cloudflared, or no internet). The LAN addresses still work.	Cloudflare tüneli açılamadı (cloudflared yok ya da internet yok). Yerel ağ adresleri yine de çalışır.
+You joined this map. The host saves it.	Bu haritaya katıldınız. Kaydı ana bilgisayar yapar.
+Everything of yours is with the others	Sizin her şeyiniz diğerlerinde
+Sending your edits…	Düzenlemeleriniz gönderiliyor…
+In the session	Oturumda
+Say something…	Bir şey yazın…
+Leave	Ayrıl
+Knife (K): a click on a road cuts it there, as often as you like; the pieces' lengths shown at the cursor, on whole grid steps with grid snapping on · right-click or Esc: off	Bıçak (K): yola tıklamak onu orada keser, istediğiniz kadar; parçaların uzunlukları imlecin yanında görünür, ızgara yakalama açıksa tam ızgara adımlarında · sağ tık veya Esc: kapat
+The angle step: what snapping comes to and what R turns by	Açı adımı: yakalamanın vardığı yer ve R'nin döndürdüğü miktar
+Angle	Açı
+Snap headings to the angle step	Yönleri açı adımına yakala
+Grid	Izgara
+Snap positions to the grid	Konumları ızgaraya yakala
+Click two points to measure the distance and gradient between them (U) · right-click: off	Aralarındaki mesafe ve eğimi ölçmek için iki noktaya tıklayın (U) · sağ tık: kapat
+Auto-Terrain	Oto-Arazi
+What you build follows the ground: roads, paths and tracks take its height (off: they run level from where they start). Only what is built from now on; nothing already there changes	Yaptığınız şey zemini izler: yollar, patikalar ve raylar onun yüksekliğini alır (kapalı: başladıkları yerden düz giderler). Yalnızca bundan sonra yapılanlar; zaten var olanlar değişmez
+Auto-Switch	Oto-Makas
+Branching a track off another makes a switch there	Bir rayı başka bir raydan ayırmak orada makas yapar
+Auto-Junction	Oto-Kavşak
+Auto-Align	Oto-Hizalama
+Line objects up with the nearest road (Shift: put it freely)	Nesneleri en yakın yola hizala (Shift: serbest koy)
+Selection	Seçim
+A click on one of it selects all of it, Ctrl + click one alone	Birine tıklamak hepsini seçer, Ctrl + tık yalnız birini
+Keep these together: a click on one selects all, a drag moves all (Ctrl+G)	Bunları bir arada tut: birine tıklamak hepsini seçer, sürüklemek hepsini taşır (Ctrl+G)
+Apply	Uygula
+Turn	Döndür
+Level the ground under them	Altlarındaki zemini düzle
+Each one's outline made level with its foot, blending into the ground 3 m round it	Her birinin taban hatları ile aynı seviyeye getirilir, çevresindeki 3 m zeminle yumuşak geçişle
+Make every object	Tüm nesneleri yap
+The object chosen in the Objects tool's catalogue	Nesneler aracının kataloğunda seçilen nesne
+Random headings	Rastgele yönler
+Every selected object turned its own random way (trees, bushes, rocks)	Seçilen her nesne kendi rastgele yönüne döner (ağaçlar, çalılar, kayalar)
+Along the road	Yol boyunca
+Each turned the way the nearest road runs beside it	Her biri yanından geçen en yakın yolun yönüne döner
+Turned:	Döndürülen:
+All like this one	Bunun gibi hepsi
+Every selected object takes the heading of the one in the properties	Seçilen her nesne özelliklerdeki nesnenin yönünü alır
+Make every road	Tüm yolları yap
+The road type chosen in the Roads tool's catalogue	Yollar aracının kataloğunda seçilen yol türü
+Lay them on the ground	Zemine yatır
+Reverse their direction	Yönlerini ters çevir
+Even slope along them	Boyunca düzgün eğim
+One chain of roads: from the height at one end to that at the other, evenly (a bridge, a ramp)	Tek yol zinciri: bir uçtaki yükseklikten diğer uçtakine eşit şekilde (köprü, rampa)
+Edit its AI lanes	YZ şeritlerini düzenle
+Its lanes become AI paths of their own (the same lines, the same way) that the Logic tool's Edit existing bends, moves and deletes. The road keeps its look.	Şeritleri kendi YZ yolları olur (aynı çizgiler, aynı yön); Mantık aracının Mevcutları düzenle özelliği bunları bükebilir, taşıyabilir ve silebilir. Yolun görünümü değişmez.
+Ends (joined roads follow)	Uçlar (bağlı yollar izler)
+height	yükseklik
+gradient	eğim
+cant	yan eğim
+Banking across the road, %: positive lowers its right side (into a right bend)	Yol boyunca yan eğim, %: artı, sağ tarafı alçaltır (sağ virajda)
+End	End
+Even slope end to end	Baştan sona düzgün eğim
+Both gradients to the straight climb between the ends' heights	Her iki eğim de uçların yükseklikleri arasındaki düz yokuşa
+Speed limit, km/h	Hız sınırı, km/sa
+Traffic density ×	Trafik yoğunluğu ×
+Priority	Öncelik
+Trucks (0: none)	Kamyonlar (0: yok)
+No cars	Otomobil yok
+Buses only	Yalnızca otobüsler
+For the AI and the player on one path (lane) of it, counted from 0: the view shows their numbers	YZ ve oyuncu için bunun tek yolunda (şeridinde), 0'dan sayılır: numaraları görünümde gösterilir
+Path (lane) number	Yol (şerit) numarası
+Hanging on it	Üzerine asılı
+Points to hang objects on:	Nesne asılacak nokta:
+Select it	Seç
+Hang	As
+Choose an object in the Objects catalogue first	Önce Nesneler kataloğundan bir nesne seçin
+A fence, a row of houses, an avenue: the selection copied again and again, a step on each time	Çit, ev sırası, ağaçlı yol: seçim tekrar tekrar kopyalanır, her seferinde bir adım ileri
+Copies	Kopya
+Step	Adım
+Turn each	Her birini döndür
+Rows	Sıra
+More than one: a grid (an orchard, a car park), each row a row step on	Birden fazla: ızgara (meyve bahçesi, otopark), her sıra sıra adımı kadar ileride
+Row step	Sıra adımı
+Tilted to the ground under it, the way it slopes forward and to the side (a fence, a bench or a shed on a hillside)	Altındaki zemine eğilir, ileri ve yana eğimine göre (yamaçta çit, bank veya baraka)
+Heights along the ground again, smoothed so it climbs a hill rather than every bump (after shaping the ground or laying a height map over it); where a road not selected joins, its height is kept	Yükseklikler yeniden zemin boyunca, yumuşatılmış: yol her tümseğe değil tepeye çıkar (zemini şekillendirdikten ya da üzerine yükseklik haritası koyduktan sonra); seçili olmayan bir yolun bağlandığı yerde yüksekliği korunur
+Each starts where it ended: the traffic on it goes the other way (a one-way street, a track's direction), the road itself stays where it is	Her biri bittiği yerden başlar: üzerindeki trafik ters yöne gider (tek yönlü sokak, rayın yönü), yolun kendisi yerinde kalır
+A second track or the other carriageway: the selected splines copied alongside, bends kept exact, linked as they are	İkinci bir ray ya da karşı şerit: seçilen spline'lar yanına kopyalanır, virajlar tam, bağlantılar olduğu gibi
+To the left	Sola
+To the right	Sağa
+Left and right of the way the road runs (its arrows with AI lanes shown)	Yolun gidiş yönüne göre sol ve sağ (YZ şeritleri gösterilince okları)
+For trams and electric trains: a wire spline laid on the selected track, piece for piece and linked (its height is the wire spline's own); the masts go in with Objects along the road	Tramvaylar ve elektrikli trenler için: seçilen rayın üzerine parça parça ve bağlantılı bir tel spline'ı döşenir (yüksekliği telin kendi splineınındır); direkler Yol boyunca nesnelerle konur
+No wire spline installed (one whose name says Fahrdraht, Oberleitung or wire)	Kurulu tel spline'ı yok (adında Fahrdraht, Oberleitung veya wire geçen)
+Lay it	Döşe
+Wire pieces laid:	Döşenen tel parçası:
+Paint the ground along it	Boyunca zemini boya
+Add a ground texture in the Paint tool first: the base ground is under everything	Önce Boyama aracında bir zemin dokusu ekleyin: temel zemin her şeyin altındadır
+Layer	Katman
+Where	Nerede
+beside it	yanında
+under it too	altında da
+Out from its edge	Kenardan dışarı
+Soft edge	Yumuşak kenar
+A gravel verge, dirt by a track, grass along a path: the brush of the Paint tool touches it up afterwards	Çakıllı banket, yol kenarında toprak, patika boyunca çimen: Boyama aracının fırçası sonradan rötuşlar
+Beside	Yanında
+Lean with the road	Yolla birlikte eğil
+Each object leans with the road's gradient and banking (bays and arrows on the road); off, it stands upright	Her nesne yolun eğimi ve yan eğimiyle eğilir (yoldaki cepler ve oklar); kapalıyken dik durur
+A text the row's objects show (@ starts a new line)	Sıradaki nesnelerin gösterdiği metin (@ yeni satır başlatır)
+Object:	Nesne:
+Pick an object (a lamp, a tree, a bollard) in the Objects tool's catalogue	Nesneler aracının kataloğundan bir nesne seçin (lamba, ağaç, bariyer direği)
+Right of the road's direction; negative: left	Yolun yönüne göre sağ; eksi: sol
+Free at start / end	Başta / sonda boşluk
+Both sides	İki yanda
+Place along the road	Yol boyunca yerleştir
+Remove all rows	Tüm sıraları kaldır
+Roundabout: click the centre, then the ring	Dönel kavşak: merkeze, sonra halkaya tıklayın
+A one-way ring of the chosen road type (pick a one-way road); roads inside are cut back to it and joined with junctions	Seçilen yol türünden tek yönlü halka (tek yönlü yol seçin); içindeki yollar halkaya kadar kısaltılıp kavşaklarla bağlanır
+Keep the height (bridge, embankment)	Yüksekliği koru (köprü, set)
+An even gradient from end to end, the ground left as it is; the rise to the end can be typed while drawing. Pillars: select the road and put them along it as objects.	Baştan sona düzgün eğim, zemin olduğu gibi kalır; uca yükselme çizerken yazılabilir. Ayaklar: yolu seçip nesne olarak boyunca koyun.
+Rise	Yükselme
+Shift: straight · Enter: build	Shift: düz · Enter: yap
+Junction	Kavşak
+Traffic lights	Trafik ışıkları
+Lights need three roads or more	Işıklar için en az üç yol gerekir
+Main road green	Ana yol yeşil
+Side roads green	Yan yollar yeşil
+The main road is the pair of roads most in line; red-yellow 2 s, yellow 3 s, 2 s all red between	Ana yol, en çok aynı doğrultudaki yol çiftidir; kırmızı-sarı 2 sn, sarı 3 sn, arada 2 sn hepsi kırmızı
+Zebra crossings	Yaya geçitleri
+Road	Yol
+Build it again	Yeniden yap
+Makes the plate, its kerbs and lanes again for the roads as they are now	Yolların şu anki haline göre platformu, kaldırım kenarlarını ve şeritleri yeniden yapar
+Linked objects	Bağlı nesneler
+An object can take its state from another ([varparent]): a signal head shows a light of its crossing's program, a stop's display its stop.	Bir nesne durumunu başkasından alabilir ([varparent]): sinyal başlığı kavşağın programından bir ışık gösterir, durak ekranı kendi durağını.
+Takes its state from	Durumu şundan alır:
+Select it: IDCode	Seç: IDCode
+Takes its state from an object that is gone: IDCode	Durumu kaybolmuş bir nesneden alır: IDCode
+Takes its state from nothing	Durumu hiçbir şeyden almaz
+Light	Trafik ışığı
+Its light is not one of the crossing's: it stays dark	Işığı kavşağınkilerden biri değil: sönük kalır
+That object runs no traffic lights: link the head to a crossing with a light program	O nesne trafik ışığı çalıştırmıyor: başlığı ışık programlı bir kavşağa bağlayın
+A signal head: link it to its crossing to have it light	Sinyal başlığı: yanması için kavşağına bağlayın
+Click the object in the view… (Esc)	Görünümde nesneye tıklayın… (Esc)
+Link to another…	Başkasına bağla…
+Link to an object…	Nesneye bağla…
+Then click the object it is to take its state from (a crossing for a signal head)	Sonra durumu alacağı nesneye tıklayın (sinyal başlığı için bir kavşak)
+Taking their state from it:	Durumunu ondan alanlar:
+light	ışık
+Click the object it takes its state from	Durumu alacağı nesneye tıklayın
+stop	durak
+Find in map	Haritada ara
+Name, file, IDCode, stop or x, y	Ad, dosya, IDCode, durak veya x, y
+The point	Nokta
+Spline	Spline
+Object	Nesne
+Nothing on the map has this IDCode.	Haritada bu IDCode'a sahip hiçbir şey yok.
+kinds	tür
+on the map	haritada
+Next	Sonraki
+Select the next one and go there	Sonrakini seç ve oraya git
+Every one of these becomes the road type chosen in the Roads tool	Bunların hepsi Yollar aracında seçilen yol türü olur
+Every one of these becomes the object chosen in the catalogue	Bunların hepsi katalogda seçilen nesne olur
+More: type to narrow the list	Daha var: listeyi daraltmak için yazın
+Replaced:	Değiştirildi:
+Satellite overlay	Uydu katmanı
+Satellite and own pictures	Uydu ve kendi resimleriniz
+Click a tile to see its overlay here.	Katmanını burada görmek için bir karoya tıklayın.
+Show the overlay	Katmanı göster
+opacity	opaklık
+Load satellite imagery	Uydu görüntüsünü yükle
+Place the map on the Earth first (Satellite and terrain…)	Önce haritayı Dünya'ya yerleştirin (Uydu ve arazi…)
+Load image file…	Resim dosyası yükle…
+Your own picture for this tile (a scan, a screenshot): or drop it on the window	Bu karo için kendi resminiz (tarama, ekran görüntüsü): ya da pencereye bırakın
+Load the OpenStreetMap map	OpenStreetMap haritasını yükle
+OpenStreetMap map for all tiles	Tüm karolar için OpenStreetMap haritası
+The map as openstreetmap.org draws it (streets with their names, houses, water, green, stop signs), drawn sharp from OpenStreetMap data and laid on the tile in place of a satellite picture: to build roads and houses over by eye. Nothing is generated from it.	openstreetmap.org'un çizdiği gibi harita (adlı sokaklar, evler, su, yeşillik, durak işaretleri), OpenStreetMap verisinden net çizilir ve uydu resmi yerine karoya konur: üzerine gözle yol ve ev yapmak için. Ondan hiçbir şey üretilmez.
+own picture	kendi resmi
+for an earlier placement	önceki yerleşim için
+not kept with the map	harita ile birlikte saklanmaz
+, partly coarser	, kısmen daha kaba
+nothing	hiçbir şey
+Place the map on the Earth first.	Önce haritayı Dünya'ya yerleştirin.
+Load terrain heights	Arazi yüksekliklerini yükle
+Done:	Bitti:
+with problems	sorunlarla
+A picture for the tiles	Karolar için bir resim
+Could not read the picture	Resim okunamadı
+Could not copy the picture	Resim kopyalanamadı
+The picture is on the tiles: line it up in Satellite and terrain, Own pictures.	Resim karolarda: Uydu ve arazi, Kendi resimleriniz bölümünde hizalayın.
+Nothing found by that name.	Bu adla hiçbir şey bulunamadı.
+Some tiles had Google imagery: enter your Google key to see it again (it is not kept with the map).	Bazı karolarda Google görüntüsü vardı: yeniden görmek için Google anahtarınızı girin (harita ile saklanmaz).
+Satellite and terrain	Uydu ve arazi
+Find a place: a town, a street, an address… (Enter)	Bir yer bulun: şehir, sokak, adres… (Enter)
+Searching…	Aranıyor…
+Search © OpenStreetMap contributors	Arama © OpenStreetMap katkıcıları
+This map has world coordinates ([worldcoordinates]): it lies on the Earth by itself, its tiles are Web Mercator tiles.	Bu haritanın dünya koordinatları var ([worldcoordinates]): kendi başına Dünya üzerinde durur, karoları Web Mercator karolarıdır.
+Click on the map where the orange tile goes…	Turuncu karonun yeri için haritaya tıklayın…
+Place the map here	Haritayı buraya yerleştir
+Then click on the map: the middle of the orange tile goes there	Sonra haritaya tıklayın: turuncu karonun ortası oraya gelir
+At the view's middle	Görünümün ortasına
+North turned	Kuzeyin dönüşü
+Orange tile	Turuncu karo
+click the map to fly there in the view	haritaya tıklayın: görünümde oraya uçar
+1. Find the place.  2. Press "Place the map here" and click on the map: the orange tile (the map's middle) goes there.	1. Yeri bulun.  2. "Haritayı buraya yerleştir"e basıp haritaya tıklayın: turuncu karo (haritanın ortası) oraya gelir.
+Imagery	Görüntüler
+The sharpest here	Buradaki en net
+cm a pixel here	cm / piksel burada
+checking…	denetleniyor…
+is sharper here	burada daha net
+Sharper imagery may be had here with your own free key for Mapbox, MapTiler or Google (Keys below).	Burada Mapbox, MapTiler veya Google için kendi ücretsiz anahtarınızla daha net görüntü olabilir (aşağıda Anahtarlar).
+Terms of use	Kullanım koşulları
+Zoom	Yakınlaştırma
+the finest here	buradaki en ayrıntılı
+Picture of a tile	Karonun resmi
+every pixel of the source (up to 4096)	kaynağın her pikseli (4096'ya kadar)
+Loaded at	Şu çözünürlükte yüklendi:
+cm a pixel	cm / piksel
+Also load terrain heights	Arazi yüksekliklerini de yükle
+New tiles get imagery by themselves	Yeni karolar görüntüyü kendiliğinden alır
+Load for all tiles	Tüm karolar için yükle
+For the selected tile	Seçili karo için
+Click a tile with the Tiles tool (7)	Karolar aracıyla (7) bir karoya tıklayın
+Terrain heights only	Yalnızca arazi yükseklikleri
+of	/
+tiles beside the loaded heights were not loaded: the ground steps at their edge.	karo, yüklenen yüksekliklerin yanında yüklenmedi: kenarlarında zemin basamak yapıyor.
+Fit their edges	Kenarlarını uydur
+Their edge takes the loaded heights, fading out 60 m into the tile	Kenarları yüklenen yükseklikleri alır, karonun içinde 60 m boyunca silinir
+Leave them	Bırak
+Terrain heights	Arazi yükseklikleri
+Relative: the orange tile's mean height is 0 m	Göreli: turuncu karonun ortalama yüksekliği 0 m
+Raise everything by	Hepsini şu kadar yükselt:
+Taken off:	Çıkarılan:
+Measure again	Yeniden ölç
+Terrain data attribution	Arazi verisi kaynakları
+Overlay on the ground	Zeminde katman
+Put the imagery into maps exported for sharing (check its licence first)	Paylaşılacak haritalara görüntüleri koy (önce lisansına bakın)
+Fit tile edges	Karo kenarlarını uydur
+Keys for more sources (optional)	Diğer kaynaklar için anahtarlar (isteğe bağlı)
+Everything works without a key. With your own free key these may be sharper in some places; the key stays on this computer.	Her şey anahtarsız çalışır. Kendi ücretsiz anahtarınızla bunlar bazı yerlerde daha net olabilir; anahtar bu bilgisayarda kalır.
+Google satellite (needs your API key)	Google uydu (API anahtarınız gerekir)
+get a key	anahtar al
+In Google Cloud: make a project, enable the Map Tiles API, create an API key, paste it here. Google bills by use above its free amount.	Google Cloud'da: bir proje yapın, Map Tiles API'yi etkinleştirin, API anahtarı oluşturup buraya yapıştırın. Google, ücretsiz kotanın üstünü kullanıma göre faturalar.
+key	anahtar
+Your own tile server	Kendi karo sunucunuz
+URL	URL
+Attribution	Atıf
+Finest zoom	En ince yakınlaştırma
+Kind	Tür
+XYZ / WMTS tiles	XYZ / WMTS karoları
+Terrarium heights	Terrarium yükseklikleri
+{z} {x} {y} are filled in; a WMS gets {bbox} (EPSG:3857) and {width} {height}; {key} is your key.	{z} {x} {y} doldurulur; WMS {bbox} (EPSG:3857) ve {width} {height} alır; {key} sizin anahtarınızdır.
+Add	Ekle
+Own pictures	Kendi resimleriniz
+A scan, a screenshot, an old plan: laid on tiles and lined up by eye. No place on the Earth needed.	Bir tarama, ekran görüntüsü, eski plan: karolara konur ve gözle hizalanır. Dünya üzerinde yer gerekmez.
+Tiles from	Karolar:
+Load image file over these tiles…	Resim dosyasını bu karoların üzerine yükle…
+Turn left 90°	90° sola çevir
+Turn right 90°	90° sağa çevir
+mirror left-right	soldan sağa yansıt
+mirror top-bottom	yukarıdan aşağıya yansıt
+Reset	Sıfırla
+Your own pictures	Kendi resimleriniz
+of these tiles have your own pictures. Replace them with satellite imagery?	karoda kendi resimleriniz var. Uydu görüntüsüyle değiştirilsin mi?
+Replace them	Değiştir
+Keep my pictures	Resimlerimi tut
+Groups for other maps	Diğer haritalar için gruplar
+A selection kept under a name, to put down again in any map (a stop with its shelter and signs, a crossing with its lights)	Bir ad altında saklanan seçim, her haritaya yeniden konabilir (barınaklı ve işaretli durak, ışıklı kavşak)
+Keep the selection	Seçimi sakla
+Group kept	Grup saklandı
+Select what to keep in the view first.	Önce görünümde saklanacakları seçin.
+No groups yet.	Henüz grup yok.
+thing	öğe
+things	öğe
+Delete the group (to openMapper's bin)	Grubu sil (openMapper çöp kutusuna)
+Use	Kullan
+Into the clipboard: Ctrl+V puts it down at the cursor, as often as wanted	Panoya: Ctrl+V imlecin olduğu yere, istediğiniz kadar koyar
+is in the clipboard: Ctrl+V puts it at the cursor	panoda: Ctrl+V imlecin olduğu yere koyar
+The map's tiles: 300 m squares. Add more beside them with the Tiles tool.	Haritanın karoları: 300 m'lik kareler. Yenilerini Karolar aracıyla yanlarına ekleyin.
+A road	Bir yol
+Roads tool: click where it starts, then where it ends. Click on a road's end to go on from it.	Yollar aracı: başladığı yere, sonra bittiği yere tıklayın. Devam etmek için yolun ucuna tıklayın.
+A bus stop by the road	Yol kenarında bir durak
+Game logic > Bus stops: put one at the kerb, on the side the doors open. Name it on the right.	Oyun mantığı > Duraklar: kaldırım kenarına, kapıların açıldığı tarafa koyun. Adını sağda verin.
+A start point	Bir başlangıç noktası
+Game logic > Start points: where your bus appears, on a road, facing the way to drive.	Oyun mantığı > Başlangıç noktaları: otobüsünüzün çıktığı yer, yolda, gidiş yönüne bakacak şekilde.
+A line with a trip	Seferli bir hat
+Lines window: New line, New trip, then click the stops in order. The way is found along the roads.	Hatlar penceresi: Yeni hat, Yeni sefer, sonra durakları sırayla tıklayın. Yol, yollar boyunca bulunur.
+A tour with departures	Kalkışlı bir sefer turu
+Lines window > Tours and times: New tour, then Fill from … to … .	Hatlar penceresi > Sefer turları ve saatler: Yeni sefer turu, sonra "… ile … arası doldur".
+Buses for the tours	Sefer turları için otobüsler
+A depot the tours take their buses from (Tours: Add a depot, or Traffic and AI).	Sefer turlarının otobüslerini aldığı bir garaj (Sefer turları: Garaj ekle ya da Trafik ve YZ).
+Checked	Denetlendi
+Map > Check map: what would go wrong in the game, most of it put right with one click.	Harita > Haritayı denetle: oyunda neyin ters gideceği, çoğu tek tıkla düzeltilir.
+Saved	Kaydedildi
+Ctrl+S. Maps are saved into openOMSI's content folder.	Ctrl+S. Haritalar openOMSI'nin içerik klasörüne kaydedilir.
+A test drive	Bir test sürüşü
+F5 saves and starts openOMSI on the map: pick line 1 and drive.	F5 kaydeder ve openOMSI'yi haritada başlatır: 1. hattı seçip sürün.
+A map you can drive in service:	Seferli sürülebilen bir harita:
+Show me	Göster
+Your stops stand away from the roads: a bus serves a stop within 15 m of its lane.	Durakların yollardan uzak: otobüs, şeridine 15 m içindeki durağa hizmet verir.
+A real place? Put the map on the Earth (Map > Satellite and terrain), then Map > From OpenStreetMap brings its streets, stops, lines and trees.	Gerçek bir yer mi? Haritayı Dünya'ya yerleştirin (Harita > Uydu ve arazi), sonra Harita > OpenStreetMap'ten sokaklarını, duraklarını, hatlarını ve ağaçlarını getirir.
+Show this for new maps	Bunu yeni haritalar için göster
+The map has no depot file.	Haritada garaj dosyası yok.
+Make one from the lines	Hatlardan yap
+The map has no trips yet (Map > Lines and timetable)	Haritada henüz sefer yok (Harita > Hatlar ve tarife)
+Empty one	Boş olan
+New	Yeni
+A new depot file from the map's lines	Haritanın hatlarından yeni bir garaj dosyası
+Delete this depot file	Bu garaj dosyasını sil
+The lines need	Hatların ihtiyacı olan
+Add them	Ekle
+What is there stays as it is	Mevcut olan olduğu gibi kalır
+No depot group uses it.	Hiçbir garaj grubu bunu kullanmıyor.
+Used by the depot	Kullanan garaj
+Use it for every depot	Tüm garajlar için kullan
+The AI's depot groups (Vehicle groups tab) take their buses' destinations from it	YZ'nin garaj grupları (Araç grupları sekmesi) otobüslerinin varış yerlerini bundan alır
+Rename	Yeniden adlandır
+not a usable name	kullanılabilir bir ad değil
+The destination a bus shows on its way to and from the depot	Otobüsün garaja giderken ve garajdan çıkarken gösterdiği varış yeri
+Destinations	Varış yerleri
+Stops	Duraklar
+Routes	Güzergâhlar
+nobody gets on	kimse binmez
+Code	Kod
+another destination has this code	başka bir varış yerinde bu kod var
+As a trip's terminus is named in the timetable: the stop where everybody gets off	Seferin son durağının tarifede adlandırıldığı gibi: herkesin indiği durak
+Nobody gets on (service trip, empty sign)	Kimse binmez (servis seferi, boş tabela)
+Delete destination	Varış yerini sil
+Add destination	Varış yeri ekle
+New destination	Yeni varış yeri
+As the timetable names the stop	Durağın tarifede adlandırıldığı gibi
+Delete stop	Durağı sil
+Add stop	Durak ekle
+line	hat
+What the driver types: the line's number and two digits (7601: line 76, route 01)	Sürücünün girdiği: hat numarası ve iki rakam (7601: hat 76, güzergâh 01)
+Line	Çizgi
+IBIS text	IBIS metni
+Destination	Varış noktası
+Stops in order	Duraklar sırayla
+Not in the Stops list: the displays have no texts for it	Duraklar listesinde yok: ekranlarda onun için metin yok
+Move up	Yukarı taşı
+Move down	Aşağı taşı
+Take out	Çıkar
+Add a stop…	Durak ekle…
+Delete route	Güzergâhı sil
+Add route	Güzergâh ekle
+No routes: the IBIS knows the destinations' codes only. Add them from the lines above.	Güzergâh yok: IBIS yalnızca varış yeri kodlarını bilir. Yukarıdaki hatlardan ekleyin.
+Winter with snow	Karlı kış
+Summer (dry)	Yaz (kuru)
+Jan	Oca
+Feb	Şub
+Mar	Mar
+Apr	Nis
+May	May
+Jun	Haz
+Jul	Tem
+Aug	Ağu
+Sep	Eyl
+Oct	Eki
+Nov	Kas
+Dec	Ara
+Map settings	Harita ayarları
+Money	Para birimi
+Tickets	Biletler
+none: the map has no depot group (Traffic and AI)	yok: haritada garaj grubu yok (Trafik ve YZ)
+Years	Yıllar
+Year offset	Yıl kayması
+Added to today's year when the game starts at the real date (Berlin-Spandau: -25 for the 1980s)	Oyun gerçek tarihte başlarken bugünün yılına eklenir (Berlin-Spandau: 1980'ler için -25)
+Repair time	Onarım süresi
+ min	 dk
+Rail	Ray
+real rail (trams and trains follow their tracks' switches)	gerçek ray (tramvaylar ve trenler rayların makaslarını izler)
+Helper	Yardımcı
+dynamic helper active (the original editor's map option, kept as it is)	dinamik yardımcı etkin (özgün düzenleyicinin harita seçeneği, olduğu gibi bırakıldı)
+Seasons	Mevsimler
+Summer where none is set. The days count from 1 January.	Hiçbiri ayarlanmadığı yerde yaz. Günler 1 Ocak'tan sayılır.
+Add a season	Mevsim ekle
+A season ends before it starts	Bir mevsim başlamadan önce bitiyor
+Nothing selected	Hiçbir şey seçilmedi
+Paste here	Buraya yapıştır
+Cut the road here	Yolu burada kes
+Select all like it	Benzerlerinin hepsini seç
+Keep for other maps…	Diğer haritalar için sakla…
+Its ground, painting, water, objects and roads, put beside or into this map. Lines, timetable and AI lists stay with the other map.	Zemini, boyaması, suyu, nesneleri ve yolları bu haritanın yanına ya da içine konur. Hatlar, tarife ve YZ listeleri diğer haritada kalır.
+Choose a map…	Bir harita seçin…
+Other…	Diğer…
+A map to take tiles from (its global.cfg)	Karoların alınacağı harita (global.cfg dosyası)
+Grey: this map · orange: the tiles to add (click to take one or leave it) · red: on a tile of this map, left out	Gri: bu harita · turuncu: eklenecek karolar (almak ya da bırakmak için tıklayın) · kırmızı: bu haritanın bir karosunun üzerinde, dışarıda bırakıldı
+Move:	Kaydır:
+west	batı
+east	doğu
+north	kuzey
+south	güney
+Raise it by	Şu kadar yükselt:
+Its ground, water, roads and objects at a height of their own	Zemini, suyu, yolları ve nesneleri kendi yüksekliğinde
+Ease the ground where the maps meet	Haritaların buluştuğu yerde zemini yumuşat
+Added	Eklendi
+tiles from the other map	karo diğer haritadan
+Cube	Küp
+Plane	Düzlem
+Circle	Daire
+Triangle	Üçgen
+Triangular prism	Üçgen prizma
+Wedge	Kama
+Corner wedge	Köşe kaması
+Pyramid	Piramit
+Sphere	Küre
+Icosphere	İkosfer
+Cylinder	Silindir
+Cone	Koni
+Torus	Simit
+Tube	Boru
+Capsule	Kapsül
+Stairs	Merdiven
+Arch	Kemer
+Make one and put it on the map with a click (each one can then be edited, scaled, cut and joined)	Bir tane yapıp tıklayarak haritaya koyun (sonra her biri düzenlenebilir, ölçeklenebilir, kesilebilir ve birleştirilebilir)
+Array	Dizi
+Mirror	Ayna
+Solidify	Kalınlaştır
+Subdivision surface	Yüzey bölme
+Decimate	Sadeleştir
+Triangulate	Üçgenle
+Displace	Kaydır (gürültü)
+Wireframe	Tel kafes
+Screw	Vida
+Simple deform	Basit deformasyon
+Cast	Şekle yaklaştır
+Weld	Köşe kaynağı
+Edge split	Kenar ayır
+Boolean	Boolean
+Follow the ground	Araziyi izle
+Count	Sayı
+Relative	Göreli
+Offset	Kayma
+Merge touching ends	Değen uçları birleştir
+Distance	Mesafe
+Cut away the other side first	Önce diğer tarafı kes
+Weld at the mirror	Ayna ekseninde kaynakla
+Thickness	Kalınlık
+Close the rim	Kenarı kapat
+Width	Genişlik
+Segments	Dilim
+Levels	Seviyeler
+Smooth (Catmull-Clark)	Yumuşat (Catmull-Clark)
+Factor	Etki
+Repeat	Tekrar
+Seed	Tohum
+Along the normals	Normaller boyunca
+Steps	Adım
+Axis	Eksen
+Twist	Burulma
+Bend	Bükme
+Taper	Daralma
+Stretch	Esnetme
+Amount	Miktar
+Box	Kutu
+Difference	Fark
+With the part	Parça ile
+Tip: hide the cutting part (its eye in the list) so only the cut shows	İpucu: yalnızca kesik görünsün diye kesen parçayı gizleyin (listedeki göz simgesi)
+Above the ground	Zeminin üstünde
+Every vertex follows the terrain under it (in the editor's view and the written files at the place it stands)	Her köşe altındaki araziyi izler
+Mesh (openMapper object)	Ağ (openMapper nesnesi)
+Shared by	Paylaşan:
+objects on the map: changes apply to all	haritadaki nesne: değişiklikler hepsini etkiler
+Make this one single	Bunu tekil yap
+Leave the edit mode (Tab)	Düzenleme modundan çık (Tab)
+Edit the mesh (Tab)	Ağı düzenle (Tab)
+Write it as OBJ, glTF / GLB, FBX, Collada, USD, STL, PLY, 3MF, OFF, X or O3D	OBJ, glTF / GLB, FBX, Collada, USD, STL, PLY, 3MF, OFF, X veya O3D olarak yaz
+Off: its height is kept above the ground under it	Kapalı: yüksekliği altındaki zeminden hesaplanır
+Solid (collides)	Katı (çarpışır)
+The part edited and given modifiers	Düzenlenen ve değiştiriciler verilen parça
+Shown (and written into the object)	Gösterilir (ve nesneye yazılır)
+faces	yüz
+Duplicate the part	Parçayı çoğalt
+Delete the part	Parçayı sil
+Add a shape as a part	Parça olarak şekil ekle
+Separate parts into objects	Parçaları nesnelere ayır
+Each part becomes an object of its own, standing where it stood	Her parça, durduğu yerde ayrı bir nesne olur
+Shape	Şekil
+Modifiers	Değiştiriciler
+Make it part of the mesh	Ağın parçası yap
+Add a modifier	Değiştirici ekle
+Materials	Malzemeler
+Colour (multiplies the texture)	Renk (dokuyla çarpılır)
+Assign to selected faces	Seçili yüzlere ata
+Choose…	Seç…
+No texture	Doku yok
+Save as…	Farklı kaydet…
+PNG, JPEG, BMP, TGA, TIFF, WebP or DDS	PNG, JPEG, BMP, TGA, TIFF, WebP veya DDS
+Transparency	Saydamlık
+Opaque	Opak
+Cut out	Kesilmiş
+Blended	Karışık
+Glows	Parlar
+Light of its own: black for none	Kendi ışığı: ışık yoksa siyah
+Shine	Parlaklık
+Normal map	Normal haritası
+ORM map	ORM haritası
+Night texture	Gece dokusu
+Light map	Işık haritası
+Remove the material	Malzemeyi kaldır
+Add a material	Malzeme ekle
+Import materials…	Malzemeleri içe aktar…
+From an .mtl, a glTF / GLB / FBX, or the pictures of one PBR material (base colour, normal, roughness, metal, AO...)	Bir .mtl, glTF / GLB / FBX veya tek PBR malzemesinin resimlerinden (temel renk, normal, pürüzlülük, metal, AO...)
+Lamps	Lambalar
+Glow	Parıltı
+Light on the ground	Zeminde ışık
+Colour	Renk
+Reach	Menzil
+On	Açık
+Always	Her zaman
+At night	Geceleyin
+variable	değişken
+Seen from one side	Tek yönden görünür
+Star	Yıldız
+Facing	Yön
+Remove the lamp	Lambayı kaldır
+Add a glow	Parıltı ekle
+A lamp's bulb, a lit sign: a glow seen at night	Lamba ampulü, ışıklı tabela: geceleyin görülen parıltı
+Add light on the ground	Zemine ışık ekle
+The pool of light a street lamp throws at night	Sokak lambasının geceleyin saçtığı ışık lekesi
+Signal head, lamps	Sinyal başlığı, lambalar
+Put it within 40 m of a crossing with a light program: it takes its light from it (or link it in its properties)	Işık programlı bir kavşağın 40 m yakınına koyun: ışığını ondan alır (ya da özelliklerinde bağlayın)
+Bake	Pişir
+Its textures and colours painted into one picture on a new UV map (one material: fewer draws in the game), with its own shadows and its lamps' night light if chosen	Dokuları ve renkleri yeni bir UV haritasında tek resme çizilir (tek malzeme: oyunda daha az çizim), seçilirse kendi gölgeleri ve lambalarının gece ışığıyla
+Ambient occlusion	Ortam tıkanıklığı (AO)
+How far its shadows reach	Gölgeleri ne kadar uzağa uzanır
+Lamps' light at night (light map)	Lambaların gece ışığı (ışık haritası)
+The object's last change (Ctrl+Z in the edit mode)	Nesnenin son değişikliği (düzenleme modunda Ctrl+Z)
+Divisions X	X bölünmeleri
+Divisions Y	Y bölünmeleri
+Rings	Halkalar
+Subdivisions	Alt bölümler
+Bottom radius	Alt yarıçap
+Top radius	Üst yarıçap
+Tube radius	Boru yarıçapı
+Tube segments	Boru dilimleri
+Outer radius	Dış yarıçap
+Inner radius	İç yarıçap
+Opening	Açıklık
+Wall	Duvar
+Mesh	Ağ
+A copy of this object's type of its own is made for it, with its meshes, materials and lamps to edit; the original stays as it is	Bu nesne için türünün kendine ait bir kopyası yapılır, düzenlenecek ağları, malzemeleri ve lambalarıyla; özgün olan olduğu gibi kalır
+As a mesh	Ağ olarak
+Copy as an object	Nesne olarak kopyala
+An openMapper object of its shape beside it, to edit as a mesh (vertices, edges, faces)	Yanında şeklinin bir openMapper nesnesi, ağ olarak düzenlemek için (köşeler, kenarlar, yüzler)
+The same, the spline taken away (its lanes go with it)	Aynısı, spline kaldırılır (şeritleriyle birlikte)
+Splines as a mesh	Spline'lar ağ olarak
+Copy as one object	Tek nesne olarak kopyala
+Replace by one object	Tek nesneyle değiştir
+Export the selection…	Seçimi dışa aktar…
+As meshes	Ağ olarak
+Join into one object (Ctrl+J)	Tek nesnede birleştir (Ctrl+J)
+All their parts in the one shown in the properties, the others gone	Tüm parçaları özelliklerde gösterilen nesnede, diğerleri gider
+Solid modelling (CSG): the object shown in the properties with the others	Katı modelleme (CSG): özelliklerde gösterilen nesne diğerleriyle
+Keep the cutting objects	Kesen nesneleri tut
+Vertices	Köşeler
+Edges	Kenarlar
+Faces	Yüzler
+vertices	köşe
+edges	kenar
+Selected	Seçili
+X-ray: pick through the mesh	X-ışını: ağın içinden seç
+All (A)	Hepsi (A)
+None (Alt+A)	Hiçbiri (Alt+A)
+Invert (Ctrl+I)	Ters çevir (Ctrl+I)
+Linked (Ctrl+L)	Bağlı (Ctrl+L)
+More	Daha fazla
+Less	Daha az
+Click, Shift + click to add, drag on nothing for a box, a second click or Alt + click for a loop	Tıkla, Shift + tık ekler, boşta sürükle: kutu, ikinci tık veya Alt + tık: halka
+Change	Değiştir
+Extrude (E)	Çıkıntı yap (E)
+Inset (I)	İçe kes (I)
+Bevel (Ctrl+B)	Pah (Ctrl+B)
+Loop cut (Ctrl+R)	Halka kesim (Ctrl+R)
+Point at an edge and press Ctrl+R	Bir kenarı gösterip Ctrl+R'ye basın
+Subdivide	Böl
+Fill (F)	Doldur (F)
+Bridge loops	Halkaları birleştir
+Connect (J)	Bağla (J)
+Poke	Merkezden yelpaze
+Duplicate (Shift+D)	Çoğalt (Shift+D)
+Split (Y)	Ayır (Y)
+Separate into an object (P)	Ayrı nesneye ayır (P)
+Spin 360°	360° döndür
+The selection turned round the object's up axis through its middle, in 12 steps	Seçim, nesnenin yukarı ekseni etrafında, ortasından geçerek 12 adımda döndürülür
+Smooth vertices	Köşeleri yumuşat
+Merge (M)	Birleştir (M)
+At the middle	Ortada
+At the first	İlkinde
+At the last	Sonuncuda
+Collapse each piece	Her parçayı büz
+By distance (1 mm)	Mesafeye göre (1 mm)
+Delete (X)	Sil (X)
+Only faces	Yalnızca yüzler
+Dissolve vertices	Köşeleri erit
+Dissolve edges	Kenarları erit
+Dissolve faces	Yüzleri erit
+Triangulate (Ctrl+T)	Üçgenle (Ctrl+T)
+Triangles to quads (Alt+J)	Üçgenleri dörtgene çevir (Alt+J)
+Shade smooth	Yumuşak gölgeleme
+Shade flat	Düz gölgeleme
+Flip normals (Alt+N)	Normalleri ters çevir (Alt+N)
+Normals outward (Shift+N)	Normaller dışa (Shift+N)
+Mark seam	Dikiş işaretle
+Clear seam	Dikişi kaldır
+Mark sharp	Keskin işaretle
+Clear sharp	Keskini kaldır
+Adjust the last operation	Son işlemi ayarla
+Slide	Kaydır
+Cuts	Kesimler
+UV map	UV haritası
+Unwrap	Aç
+By seams (conformal)	Dikişlere göre (konform)
+Smart project	Akıllı izdüşüm
+Cube projection (metres)	Küp izdüşümü (metre)
+Cylinder projection	Silindir izdüşümü
+Sphere projection	Küre izdüşümü
+Project from the view	Görünümden izdüşüm
+Lightmap pack	Işık haritası paketi
+Close the UV editor	UV düzenleyiciyi kapat
+UV editor	UV düzenleyici
+Faces of the selection (all, with none selected); mark seams on edges first for an unwrap by seams	Seçimin yüzleri (hiçbiri seçili değilse hepsi); dikişlere göre açmak için önce kenarlara dikiş işaretleyin
+Material of the selected faces	Seçili yüzlerin malzemesi
+With lamps	Işıklı
+Street lamp	Sokak lambası
+A pole with a lamp that glows and lights the ground at night	Geceleyin parlayan ve zemini aydınlatan lambalı direk
+Signal head	Sinyal başlığı
+A traffic light of the lamps below that a crossing's light program drives	Kavşağın ışık programının yönettiği, aşağıdaki lambalardan oluşan trafik ışığı
+Lamps:	Lambalar:
+Picture, light, sound	Resim, ışık, ses
+Picture / pattern…	Resim / desen…
+Choose a picture or a texture: it becomes an object you place, move, turn and scale like any other. Several repeats make a pattern	Bir resim veya doku seçin: diğerleri gibi yerleştirdiğiniz, taşıdığınız, döndürdüğünüz ve ölçeklediğiniz bir nesne olur. Birkaç tekrar bir desen verir
+Light source	Işık kaynağı
+A lamp that glows and lights the ground round it	Parlayan ve çevresindeki zemini aydınlatan lamba
+Sound source…	Ses kaynağı…
+Choose a sound file (.wav): it plays where you put the marker, as far as the radius carries; the marker shows in the editor only	Bir ses dosyası (.wav) seçin: işareti koyduğunuz yerde, yarıçapın taşıdığı kadar uzağa çalar; işaret yalnızca düzenleyicide görünür
+Picture width, m	Resim genişliği, m
+Repeats	Tekrar
+on the ground	zeminde
+standing	ayakta
+Light colour	Işık rengi
+Light reach, m	Işık menzili, m
+at night	geceleyin
+always	her zaman
+Sound reach, m	Ses menzili, m
+Sound volume	Ses düzeyi
+Overview: click or drag to move there · double-click: larger / smaller · M: hide	Genel bakış: oraya gitmek için tıklayın veya sürükleyin · çift tık: büyüt / küçült · M: gizle
+Name:	Ad:
+My town	Benim şehrim
+Description:	Açıklama:
+What the map is, for the game's map list	Haritanın ne olduğu, oyunun harita listesi için
+Size:	Boyut:
+Ground height:	Zemin yüksekliği:
+ m above sea level	 m deniz seviyesinden yukarıda
+Traffic:	Trafik:
+keeps right	sağdan akar
+keeps left	soldan akar
+Busy:	Yoğunluk:
+cars	araba
+passengers	yolcular
+Years:	Yıllar:
+year offset	yıl kayması
+Added to today's year when the game starts at the real date	Oyun gerçek tarihte başladığında bugünün yılına eklenir
+Money:	Para birimi:
+Tickets:	Biletler:
+Seasons:	Mevsimler:
+four, snowy winter	dört, karlı kış
+mild winter	ılık kış
+summer only	yalnızca yaz
+Rail:	Ray:
+trams and trains follow their tracks' switches	tramvaylar ve trenler rayların makaslarını izler
+Ground texture (all tiles):	Zemin dokusu (tüm karolar):
+template	şablon
+More ground layers are painted later (Paint tool); the map's settings can all be changed in Map > Map settings.	Diğer zemin katmanları sonra boyanır (Boyama aracı); haritanın tüm ayarları Harita > Harita ayarları'ndan değiştirilebilir.
+Create	Oluştur
+as the template	şablondaki gibi
+ways	yol
+bus routes downloaded	güzergâh indirildi
+not had:	alınamayan:
+The streets of the map's place built as roads with junctions where they meet, its bus stops, lines, trees and woods. Best on tiles with no roads yet: roads lying on ones the map has are left out.	Haritanın bulunduğu yerin sokakları, buluştukları yerde kavşaklarla yol olarak yapılır; durakları, hatları, ağaçları ve ormanları da. Henüz yolu olmayan karolarda en iyisi: haritada zaten olan yolların üzerindeki yollar atlanır.
+The map does not lie on the Earth yet: place it in Satellite and terrain (Map menu, I) first.	Harita henüz Dünya üzerinde değil: önce Uydu ve arazi'de yerleştirin (Harita menüsü, I).
+Load the terrain heights first (Satellite and terrain): the roads follow the ground as it is when they are built.	Önce arazi yüksekliklerini yükleyin (Uydu ve arazi): yollar yapıldıkları andaki zemini izler.
+Download for the map's tiles	Haritanın karoları için indir
+bus routes	otobüs güzergâhı
+trees	ağaç
+buildings	bina
+water	su
+Downloading…	İndiriliyor…
+no type chosen	tür seçilmedi
+Use the chosen	Seçileni kullan
+One-way roads	Tek yönlü yollar
+Each carriageway of a dual road and one-way streets: with a one-way road type they lie side by side as they should; with none chosen they get their kind's	Ayrık yolun her yönü ve tek yönlü sokaklar: tek yönlü yol türüyle olması gerektiği gibi yan yana durur; hiçbiri seçilmezse kendi türlerini alırlar
+as their kind	kendi türü gibi
+no stop object	durak nesnesi yok
+The stop chosen in Game logic > Bus stops	Oyun mantığı > Duraklar'da seçilen durak
+Bus lines	Otobüs hatları
+Each bus route through two or more of the map's stops a trip of its line, the way found along the roads; a tour from 06:00 to 22:00 for each new line	Haritanın iki veya daha fazla durağından geçen her otobüs güzergâhı hattının bir seferi olur, yol yollar boyunca bulunur; her yeni hat için 06:00–22:00 arası bir sefer turu
+Trees and woods	Ağaçlar ve ormanlar
+Single trees, rows of them and woods, planted with the plant mix (Objects tool > Plant brush) or the tree chosen; none on a road	Tek ağaçlar, sıralar ve ormanlar, bitki karışımıyla (Nesneler aracı > Bitki fırçası) veya seçilen ağaçla dikilir; yollara değil
+no plants chosen	bitki seçilmedi
+kinds of plants	bitki türü
+apart in woods	ormanda aralık
+Buildings	Binalar
+Each outline filled with the model of the folder chosen whose ground plan comes nearest, its front to the nearest road; an outline no model fits is left out	Her kontur, seçilen klasörün planı en yakın modeliyle doldurulur, cephesi en yakın yola dönük; hiçbir modelin uymadığı kontur atlanır
+no folder	klasör yok
++ its folder	+ klasörü
+Add the folder of the object chosen in the catalogue (Buildings_MC, …)	Katalogda seçilen nesnenin klasörünü ekle (Buildings_MC, …)
+Lakes and rivers: the ground inside them lowered below the banks, and the tiles they lie on given water a little under the banks' height (OMSI's water is one level for a tile: low ground elsewhere on it is flooded too)	Göller ve nehirler: içlerindeki zemin kıyıların altına indirilir, üzerlerindeki karolara kıyı yüksekliğinin biraz altında su verilir (OMSI'de su karo başına tek seviyedir: üzerindeki diğer alçak yerler de sular altında kalır)
+deep	derin
+a road type (Roads tool), then "Use the chosen"	bir yol türü (Yollar aracı), sonra "Seçileni kullan"
+a stop (Game logic > Bus stops), then "Use the chosen"	bir durak (Oyun mantığı > Duraklar), sonra "Seçileni kullan"
+a tree in the Objects catalogue (or a plant mix)	Nesneler kataloğunda bir ağaç (veya bitki karışımı)
+a building in the catalogue, then "+ its folder"	katalogda bir bina, sonra "+ klasörü"
+To build, choose (or untick):	Yapmak için seçin (veya işareti kaldırın):
+A one-way street is built the way it runs in OpenStreetMap: give it a one-way road type	Tek yönlü sokak OpenStreetMap'teki yönünde yapılır: ona tek yönlü bir yol türü verin
+Build	Yap
+Name, file or IDCode	Ad, dosya veya IDCode
+things on the map	haritadaki öğe
+Groups	Gruplar
+Select the group and go there	Grubu seç ve oraya git
+Select everything in it	İçindeki her şeyi seç
+Select it and go there	Seç ve oraya git
+more: narrow the search	daha fazla: aramayı daraltın
+Select all of them	Hepsini seç
+Go to the first	İlkine git
+Pick a tree in the catalogue, then paint	Katalogdan bir ağaç seçin, sonra boyayın
+Pick a tree in the catalogue, then click round the area	Katalogdan bir ağaç seçin, sonra alanın çevresine tıklayın
+Pick a road type, click the centre, then the ring	Bir yol türü seçin, merkeze, sonra halkaya tıklayın
+Select a road (double-click: all of it): its properties show its height profile	Bir yol seçin (çift tık: tamamı): özellikleri yükseklik profilini gösterir
+Select one of openMapper's junctions: its properties have Traffic lights and crossings	openMapper'ın bir kavşağını seçin: özelliklerinde Trafik ışıkları ve geçitler var
+Select the signal head (or a display): Linked objects in its properties, then click its crossing	Sinyal başlığını (veya ekranı) seçin: özelliklerinde Bağlı nesneler, sonra kavşağına tıklayın
+Select a road, pick an object in the Objects catalogue: Objects along the road in its properties	Bir yol seçin, Nesneler kataloğundan bir nesne seçin: özelliklerinde Yol boyunca nesneler
+Select a track (double-click: all of it): Overhead wire under Parallel copy in its properties	Bir ray seçin (çift tık: tamamı): özelliklerinde Paralel kopya altında Havai hat
+Select a road or a chain: Parallel copy in its properties	Bir yol veya zincir seçin: özelliklerinde Paralel kopya
+Select a road (double-click: all of it): Paint the ground along it in its properties	Bir yol seçin (çift tık: tamamı): özelliklerinde Boyunca zemini boya
+Click a tile: its water is in the panel; lower the ground under it with the Terrain tool	Bir karoya tıklayın: suyu panelde; altındaki zemini Arazi aracıyla alçaltın
+Height map: at the end of the Terrain panel	Yükseklik haritası: Arazi panelinin sonunda
+By slope and height: at the end of the Paint panel	Eğime ve yüksekliğe göre: Boyama panelinin sonunda
+View menu: Time of day, Season	Görünüm menüsü: Günün saati, Mevsim
+What do you want to do?	Ne yapmak istiyorsunuz?
+Groups…	Gruplar…
+Objects on the map by folder	Haritadaki nesneler klasöre göre
+Knife: cut roads	Bıçak: yolları kes
+Test drive in OMSI 2 (the original)	OMSI 2'de test sürüşü (orijinal)
+Overview map	Genel bakış haritası
+Place a bus stop	Durak yerleştir
+Place a start point	Başlangıç noktası yerleştir
+Plant trees with a brush	Fırçayla ağaç dik
+Plant a wood or a park	Orman veya park dik
+Roundabout	Dönel kavşak
+Height profile of a road	Yolun yükseklik profili
+Traffic lights and zebra crossings	Trafik ışıkları ve yaya geçitleri
+Link a signal head to its crossing	Sinyal başlığını kavşağa bağla
+Objects along a road	Yol boyunca nesneler
+Overhead wire along a track	Ray boyunca havai hat
+Parallel copy of a road	Yolun paralel kopyası
+Paint the ground along a road	Yol boyunca zemini boya
+Water, lake, river	Su, göl, nehir
+Ramp in the ground	Zeminde rampa
+Height map import or export	Yükseklik haritası içe veya dışa aktarma
+Time of day and season	Günün saati ve mevsim
+PBR material	PBR malzemesi
+none	yok
+Own picture…	Kendi resmi…
+Choose a texture of the object, or a picture of your own.	Nesnenin bir dokusunu ya da kendi resminizi seçin.
+Normals (_nn)	Normaller (_nn)
+Roughness	Pürüzlülük
+Shadow in hollows	Çukurlarda gölge
+Bumps	Kabarıklık
+Only big shapes	Yalnızca büyük şekiller
+Dark parts stand out (not sink in)	Koyu kısımlar öne çıkar (çökmez)
+Bright parts smoother	Parlak kısımlar daha düzgün
+Metal	Metal
+Back to the defaults	Varsayılanlara dön
+This texture has PBR maps of its own already: new ones made here are taken instead of them.	Bu dokunun zaten kendi PBR haritaları var: burada yapılanlar onların yerine kullanılır.
+Written as:	Şu olarak yazılır:
+PBR maps made	PBR haritaları oluşturuldu
+Delete the PBR material	PBR malzemesini sil
+PBR maps taken away	PBR haritaları kaldırıldı
+Height profile	Yükseklik profili
+over the ground	zeminin üstünde
+Click: go there in the view · drag a dot (a joint) up or down: its height	Tıkla: görünümde oraya git · bir noktayı (bağlantı) yukarı veya aşağı sürükle: yüksekliği
+Climbs, falls	Yokuş yukarı, aşağı
+Steepest	En dik
+at	şurada
+Highest over the ground	Zeminden en yüksek
+Deepest under it	Altında en derin
+Over 8 % is steep for a bus; over 12 % few streets go	%8'in üstü otobüs için diktir; %12'nin üstüne az sokak çıkar
+roadway	yol yüzeyi
+Road types	Yol türleri
+Make a new road type…	Yeni yol türü yap…
+My road	Benim yolum
+ · own	 · özel
+Create the road type	Yol türünü oluştur
+Road type made: the Roads tool builds with it	Yol türü yapıldı: Yollar aracı bununla yapar
+Change it in the road maker	Yol yapıcıda değiştir
+Its junctions	Kavşakları
+Make a junction where it meets another road (else they only cross)	Başka bir yolla buluştuğu yerde kavşak yap (yoksa yalnızca kesişirler)
+Corners	Köşeler
+× rounder	× daha yuvarlak
+Traffic lights by themselves	Kendiliğinden trafik ışıkları
+Zebra crossings on every arm	Her kolda yaya geçidi
+Used for the junctions made from now on (where several road types meet, the one asking more wins). A junction already made keeps its own settings: select it to change them.	Bundan sonra yapılan kavşaklar için kullanılır (farklı yol türleri buluşunca fazlasını isteyen kazanır). Yapılmış kavşak kendi ayarlarını korur: değiştirmek için seçin.
+Pick a road type on the left, or make a new one.	Soldan bir yol türü seçin ya da yenisini yapın.
+Road maker	Yol yapıcı
+Lanes	Şeritler
+(▼ 0: one-way)	(▼ 0: tek yönlü)
+Lane width	Şerit genişliği
+Middle strip	Orta şerit
+Footways	Kaldırımlar
+Kerb	Kaldırım kenarı
+Roadway texture	Yol yüzeyi dokusu
+Footway texture	Kaldırım dokusu
+Own…	Kendi…
+The roadway texture is laid once across all its lanes (as OMSI 2's lane textures are painted: pick one with as many lanes); the footway texture's right end is the kerb.	Yol yüzeyi dokusu tüm şeritlerine bir kez serilir (OMSI 2'nin şerit dokuları gibi boyanmıştır: aynı şerit sayılısını seçin); kaldırım dokusunun sağ ucu kaldırım kenarıdır.
+not on the map	haritada yok
+Signal routes	Sinyal güzergâhları
+Each railway signal clears when a train wants the track pieces of its route and none stands on them.	Demiryolu sinyali, tren güzergâhının ray parçalarını istediğinde ve üzerlerinde kimse yokken açılır.
+New route for the selected signal	Seçili sinyal için yeni güzergâh
+Select a signal (one object) in the view first	Önce görünümde bir sinyal (tek nesne) seçin
+The selected object does not look like a signal (its name says nothing of one): check it is.	Seçilen nesne sinyale benzemiyor (adında sinyal geçmiyor): öyle olup olmadığına bakın.
+No routes yet.	Henüz güzergâh yok.
+pieces	parça
+Signal	Sinyal
+the selected	seçili
+Aspect	Gösterge
+What the signal shows when this route is clear: 1 proceed, 2 proceed slowly (with a speed limit)…	Bu güzergâh serbestken sinyalin gösterdiği: 1 geç, 2 yavaş geç (hız sınırıyla)…
+Distant signal	Ön sinyal
+Next signal	Sonraki sinyal
+Speed limit	Hız sınırı
+OMSI's route kind (the stock maps have 0 and 1)	OMSI'nin güzergâh türü (stok haritalarda 0 ve 1 var)
+Track pieces	Ray parçaları
+Take the selected track	Seçili rayı al
+Every rail path of the selected tracks and switches (double-click a track: all of it); replaces the pieces	Seçili ray ve makasların her ray yolu (bir raya çift tık: tamamı); parçaların yerine geçer
+Select the signal and its pieces in the view	Sinyali ve parçalarını görünümde seç
+Delete the route	Güzergâhı sil
+Lines and timetable	Hatlar ve tarife
+Edit timetable	Tarifeyi düzenle
+No bus stop there: click one of the orange marks	Orada durak yok: turuncu işaretlerden birine tıklayın
+The roads can't be read without the OMSI 2 folder.	OMSI 2 klasörü olmadan yollar okunamaz.
+A line needs at least two bus stops on the map: place them with Game logic > Bus stops, beside a road.	Bir hat için haritada en az iki durak gerekir: yolun yanına Oyun mantığı > Duraklar ile koyun.
+Lines	Hatlar
+No lines yet.	Henüz hat yok.
+New line	Yeni hat
+Pick a line on the left, or make a new one.\n\nA line has trips (a way from stop to stop) and tours (one bus's day: which trip it drives when).	Soldan bir hat seçin ya da yenisini yapın.\n\nHattın seferleri (duraktan durağa bir yol) ve sefer turları (bir otobüsün günü: hangi seferi ne zaman yaptığı) vardır.
+That name is taken or can't be a file name	Bu ad alınmış ya da dosya adı olamaz
+A copy of the line with its trips and tours (a variant to change)	Hattın seferleri ve sefer turlarıyla kopyası (değiştirmek için bir varyant)
+Delete the line and its trips	Hattı ve seferlerini sil
+Players can drive it	Oyuncular sürebilir
+Trips	Seferler
+Tours and times	Sefer turları ve saatler
+A tour is one bus's day: the trips it drives, one after the other, and when each leaves.	Sefer turu bir otobüsün günüdür: art arda yaptığı seferler ve her birinin kalkış saati.
+A trip is one way along the line: its stops in order. Most lines have two, there and back.	Sefer, hat boyunca tek bir gidiştir: durakları sırayla. Çoğu hatta iki tane vardır, gidiş ve dönüş.
+New trip	Yeni sefer
+Make the way back	Dönüşü yap
+A new trip with the same stops the other way round	Aynı durakları ters sırayla içeren yeni sefer
+Trip	Sefer
+Delete the trip	Seferi sil
+Destination sign	Hedef tabelası
+This trip runs on a track of its own (a train): its stops are kept as they are.	Bu sefer kendi rayında gider (tren): durakları olduğu gibi kalır.
+Show on the map	Haritada göster
+No stops yet.	Henüz durak yok.
+Done picking	Seçim bitti
+Pick stops on the map	Haritada durak seç
+Click the stops in the view one after the other, in the order the bus calls at them	Görünümde durakları otobüsün uğradığı sırayla art arda tıklayın
+Add stop…	Durak ekle…
+Click stops on the map (they are marked orange)…	Haritada duraklara tıklayın (turuncu işaretli)…
+Add two stops or more: the way between them is found along the roads.	İki veya daha fazla durak ekleyin: aralarındaki yol, yollar boyunca bulunur.
+Finding the way…	Yol bulunuyor…
+Route found:	Güzergâh bulundu:
+km along the roads (blue in the view)	km, yollar boyunca (görünümde mavi)
+the way drives a one-way lane against its direction; is a path drawn the wrong way round?	yol, tek yönlü şeridi yönüne ters gidiyor; bir yol ters çizilmiş olabilir mi?
+is not on the map	haritada yok
+no road with car lanes within 15 m	15 m içinde araç şeritli yol yok
+No way	Yol yok
+the roads are not joined, or run the other way (see View > AI lanes)	yollar bağlı değil ya da ters yöne gidiyor (Görünüm > YZ şeritleri)
+The trip is saved, but its way is not until this is mended	Sefer kaydedilir, ama bu düzeltilene dek yolu kaydedilmez
+Trip time	Sefer süresi
+Guess:	Tahmin:
+From the route's length at the pace of a town bus	Güzergâh uzunluğundan, şehir otobüsü hızıyla
+Times at the stops	Duraklarda saatler
+Minutes after the trip leaves. They follow the distance between the stops; fix one to keep the bus to it (it waits there when early).	Seferin kalkışından sonraki dakikalar. Duraklar arası mesafeyi izler; otobüsün ona uyması için birini sabitleyin (erken gelirse orada bekler).
+fixed	sabit
+Spread all by distance	Hepsini mesafeye göre dağıt
+Holidays and school holidays	Tatiller ve okul tatilleri
+On a public holiday only the tours with Holidays ticked run; school holidays pick the tours for school holidays or school days.	Resmî tatilde yalnızca Tatiller işaretli sefer turları çalışır; okul tatilleri okul tatili ya da okul günleri için olanları seçer.
+Copy to	Kopyala:
+The same days a year later (feasts that move, like Easter, are to be set by hand)	Bir yıl sonraki aynı günler (Paskalya gibi kayan bayramları elle ayarlayın)
+The map has no depot (ailists.cfg): only you drive these tours, no AI buses.	Haritada garaj (ailists.cfg) yok: bu sefer turlarını yalnızca siz sürersiniz, YZ otobüsü yok.
+Add a depot with OMSI 2's MAN buses	OMSI 2'nin MAN otobüsleriyle garaj ekle
+Its buses run the tours (Map > Traffic and AI shows it)	Otobüsleri sefer turlarında çalışır (Harita > Trafik ve YZ gösterir)
+Tour	Sefer turu
+New tour	Yeni sefer turu
+Pick a tour to see its departures.	Kalkışlarını görmek için bir sefer turu seçin.
+Make a trip first.	Önce bir sefer yapın.
+Number	Numara
+Buses from	Otobüsler şuradan:
+Delete the tour	Sefer turunu sil
+Runs on	Çalıştığı günler
+Mo	Pt
+Tu	Sa
+We	Ça
+Th	Pe
+Fr	Cu
+Sa	Ct
+Su	Pz
+Every day	Her gün
+Monday to Friday	Pazartesi–Cuma
+Weekends and holidays	Hafta sonları ve tatiller
+In the school holidays	Okul tatillerinde
+On school days	Okul günlerinde
+Next departure	Sonraki kalkış
+The next trip of the line, when the bus is back and has had its break	Hattın sonraki seferi, otobüs döndüğünde ve molasını verdiğinde
+Fill from	Doldur, başlangıç
+break	mola
+Fill	Doldur
+Replace the tour's departures: the line's trips one after the other, a break after each	Sefer turunun kalkışlarını değiştir: hattın seferleri art arda, her birinden sonra mola
+No departures yet: add them above.	Henüz kalkış yok: yukarıdan ekleyin.
+Delete the departure	Kalkışı sil
+GPS tracks to trace	İzlenecek GPS izleri
+A route recorded on a phone or drawn elsewhere (GPX, KML, GeoJSON), shown in the view in magenta to draw roads along, or built into a road at once	Telefonla kaydedilmiş ya da başka yerde çizilmiş bir güzergâh (GPX, KML, GeoJSON), görünümde macenta renkte gösterilir: boyunca yol çizmek için ya da hemen yola dönüştürülür
+Place the map on the Earth first (Map > Satellite and terrain)	Önce haritayı Dünya'ya yerleştirin (Harita > Uydu ve arazi)
+Load a file…	Dosya yükle…
+None loaded	Hiçbiri yüklenmedi
+Forget it	Unut
+Build a road along it:	Boyunca yol yap:
+Choose a road type in the Roads tool to build it	Yapmak için Yollar aracında bir yol türü seçin
+Built as if drawn: corners rounded into arcs, junctions where it meets roads, cut at the map's edge; one undo step	Çizilmiş gibi yapılır: köşeler yaylara yuvarlanır, yollarla buluştuğu yerde kavşaklar, haritanın kenarında kesilir; tek geri alma adımı
+Traffic and AI	Trafik ve YZ
+Edit traffic	Trafiği düzenle
+Over the day	Gün boyunca
+Vehicle groups	Araç grupları
+Parked cars and people	Park etmiş arabalar ve insanlar
+Depot files	Garaj dosyaları
+The AI's vehicles come in groups. A car group drives about on the roads; a depot sends out the buses of the timetable's tours.	YZ araçları gruplar halindedir. Araba grubu yollarda dolaşır; garaj tarifenin sefer turları için otobüs çıkarır.
+(This map's ailists.cfg is in OMSI 2's first format: it is written in the second one when changed.)	(Bu haritanın ailists.cfg dosyası OMSI 2'nin ilk biçiminde: değiştirilince ikinci biçimde yazılır.)
+is to drive about, but there is no such group.	dolaşmalı, ama böyle bir grup yok.
+Make it with OMSI 2's vehicles	OMSI 2'nin araçlarıyla yap
+The group of that name from OMSI 2's own maps	OMSI 2'nin kendi haritalarındaki o adlı grup
+New car group	Yeni araba grubu
+New depot	Yeni garaj
+Pick a group on the left.	Soldan bir grup seçin.
+Delete the group (tours still take their buses from it)	Grubu sil (sefer turları otobüslerini hâlâ ondan alıyor)
+Delete the group	Grubu sil
+Tours that take their buses from here:	Otobüslerini buradan alan sefer turları:
+Drives about on its own	Kendi başına dolaşır
+as many:	o kadar:
+Times the traffic over the day	Trafiği gün boyunca çarpar
+A vehicle with more weight comes along more often.	Daha ağırlıklı araç daha sık çıkar.
+Add a vehicle…	Araç ekle…
+Depot file (.hof)	Garaj dosyası (.hof)
+None of its buses has this depot file beside it: they run without their destination signs and fleet data.	Hiçbir otobüsün yanında bu garaj dosyası yok: varış tabelaları ve filo verileri olmadan çalışırlar.
+The buses it has: a type of bus and the fleet number and plate of each.	Sahip olduğu otobüsler: otobüs türü ve her birinin filo numarası ile plakası.
+Take this type out	Bu türü çıkar
+number	numara
+plate	plaka
+Another bus	Bir otobüs daha
+Add a type of bus…	Otobüs türü ekle…
+The lists can't be read without the OMSI 2 folder.	OMSI 2 klasörü olmadan listeler okunamaz.
+Parked cars	Park halindeki araçlar
+What stands on the car parks (Game logic > Car parks). A car listed more often stands there more often.	Otoparklarda ne durur (Oyun mantığı > Otoparklar). Daha sık listelenen araba orada daha sık durur.
+Who walks about and waits at the stops.	Kim dolaşır ve duraklarda bekler.
+Drivers	Sürücüler
+Who drives the AI's buses.	YZ'nin otobüslerini kim sürer.
+How often it is listed (0 takes it out)	Listede kaç kez geçtiği (0 onu çıkarır)
+How busy the map is at each hour: the road traffic, and the passengers at the stops. 1 is normal; the game goes along the line between the points.	Haritanın her saatteki yoğunluğu: yol trafiği ve duraklardaki yolcular. 1 normal; oyun noktalar arasında çizgiyi izler.
+Road traffic	Yol trafiği
+Passengers	Yolcular
+Its own traffic over the day	Gün boyunca kendi trafiği
+Without one the group follows the map's road traffic. A curve can be for some days of the week only.	Olmazsa grup haritanın yol trafiğini izler. Eğri yalnızca haftanın bazı günleri için olabilir.
+Days:	Günler:
+Mo–Fr	Pzt–Cum
+Take this curve out	Bu eğriyi çıkar
+A curve	Eğri
+Typical day…	Tipik gün…
+Quiet village	Sakin köy
+Town with rush hours	Yoğun saatli şehir
+The same all day	Gün boyu aynı
+No curve: 1 all day.	Eğri yok: gün boyu 1.
+Take the point out	Noktayı çıkar
+Point	Nokta
+Smart unwrap	Akıllı açma
+Every flat side apart in the picture, no faces on top of one another (all faces if none is selected)	Her düz yan resimde ayrı, yüzler üst üste binmez (hiçbiri seçili değilse hepsi)
+Box unwrap	Kutu açma
+The six sides of a box apart in the picture	Kutunun altı yüzü resimde ayrı
+Flip ↔	Çevir ↔
+Flip ↕	Çevir ↕
+Scale ×2	Ölçek ×2
+Scale ÷2	Ölçek ÷2
+Fit	Sığdır
+Stretched to fill the picture	Resmi dolduracak şekilde uzat
+Pack islands	Adaları paketle
+Average island scale	Ada ölçeğini eşitle
+Seams from islands	Adalardan dikişler
+Click: a face (Shift adds) · drag: move the selected · wheel: zoom · right button: pan	Tıkla: yüz (Shift ekler) · sürükle: seçileni taşı · tekerlek: yakınlaştır · sağ tuş: kaydır
+Could not keep the views	Görünümler saklanamadı
+Saved views	Kayıtlı görünümler
+Places of the map to come back to: Ctrl+1…9 goes to the first nine, Ctrl+Shift+1…9 keeps the view there	Haritada dönülecek yerler: Ctrl+1…9 ilk dokuza gider, Ctrl+Shift+1…9 görünümü oraya kaydeder
+Keep this view	Bu görünümü sakla
+None yet	Henüz yok
+Go	Git
+Earlier in the list	Listede daha yukarı
+Later in the list	Listede daha aşağı
+Take the view now instead	Bunun yerine şimdiki görünümü al
+Keep proportions	Oranları koru
+Back to its own size	Kendi boyutuna dön
+Updates	Güncellemeler
+This version:	Bu sürüm:
+New version:	Yeni sürüm:
+Install and restart	Kur ve yeniden başlat
+Not now	Şimdi değil
+What changed	Neler değişti
+Downloading and installing	İndiriliyor ve kuruluyor
+Installed version	Kurulu sürüm
+openMapper restarts when you save the map.	Haritayı kaydettiğinizde openMapper yeniden başlar.
+Looking for a new version…	Yeni sürüm aranıyor…
+This is the newest version.	Bu en yeni sürüm.
+Download it from GitHub by hand	GitHub'dan elle indir
+When there is a new version:	Yeni sürüm olduğunda:
+Offer it to me	Bana öner
+Install it and restart by itself	Kendiliğinden kur ve yeniden başlat
+Never look for updates	Güncellemeleri hiç arama
+Check now	Şimdi denetle
+Never offer updates again	Bir daha güncelleme önerme
+The release has no package	Sürümde paket yok
+No automatic updates for this system.	Bu sistem için otomatik güncelleme yok.
+No connection to GitHub: are you online?	GitHub ile bağlantı yok: çevrimiçi misiniz?
+The release has no SHA256SUMS: not installed.	Sürümde SHA256SUMS yok: kurulmadı.
+The package is not in SHA256SUMS: not installed.	Paket SHA256SUMS içinde yok: kurulmadı.
+The download does not match its checksum: not installed.	İndirilen dosya sağlama toplamıyla eşleşmiyor: kurulmadı.
+Could not replace the program	Program değiştirilemedi
+The package has no program in it.	Pakette program yok.
+openMapper has stopped:	openMapper durdu:
+The log with the details:	Ayrıntıları içeren günlük:

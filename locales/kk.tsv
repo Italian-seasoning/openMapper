@@ -1,0 +1,2129 @@
+Could not open the map	Картаны ашу мүмкін болмады
+The next 100 tiles are loaded, the others are hidden	Келесі 100 тайл жүктелді, қалғандары жасырылған
+Find the place in the window and build from it	Терезеден орынды тауып, сол жерден карта құрыңыз
+Your map is ready. Start with a road!	Картаңыз дайын. Жолдан бастаңыз!
+Export the map for sharing	Картаны бөлісу үшін экспорттау
+Exported:	Экспортталды:
+files	файл
+files the map names were not found: the readme lists them	картада аталған файлдар табылмады: олар readme ішінде тізімделген
+Could not export	Экспорттау мүмкін болмады
+A ring road with line 1 on it: save, then try it in openOMSI (F5).	1-желісі бар шеңбер жол: сақтап, openOMSI-де сынап көріңіз (F5).
+The sample could not be made	Үлгіні жасау мүмкін болмады
+In multiplayer the host saves the map. Leave the session to save this as a copy of your own.	Бірлескен өңдеуде картаны хост сақтайды. Өз көшірмеңізді сақтау үшін сеанстан шығыңыз.
+Saved:	Сақталды:
+Tip: place a start point (Game logic > Start points) so the bus has somewhere to appear	Кеңес: автобус пайда болатын жер болуы үшін старт нүктесін қойыңыз (Ойын логикасы > Старт нүктелері)
+Could not save (the changes are still here, nothing is lost)	Сақтау мүмкін болмады (өзгерістер осында қалды, ештеңе жоғалған жоқ)
+The unsaved changes are back. Save to keep them.	Сақталмаған өзгерістер қайтарылды. Сақтап қойыңыз.
+Could not restore the changes	Өзгерістерді қайтару мүмкін болмады
+openOMSI was not found	openOMSI табылмады
+From the start point	Старт нүктесінен
+The map has no start point: place one with Game logic > Start points	Картада старт нүктесі жоқ: оны Ойын логикасы > Старт нүктелері арқылы қойыңыз
+Starting openOMSI…	openOMSI іске қосылуда…
+To drive the map in OMSI 2 itself it has to be copied into the OMSI 2 folder (Maps, and the objects, roads and textures made for it). Nothing that is there is replaced except earlier copies of this map. Copy it there?	Картаны OMSI 2-нің өзінде жүргізу үшін оны OMSI 2 қалтасына көшіру керек (Maps, сондай-ақ оған арналған нысандар, жолдар мен текстуралар). Осы картаның бұрынғы көшірмелерінен басқа ештеңе ауыстырылмайды. Көшірейік пе?
+Starting OMSI 2: choose the map	OMSI 2 іске қосылуда: картаны таңдаңыз
+The map is copied into the OMSI 2 folder; OMSI 2 itself runs on Windows only:	Карта OMSI 2 қалтасына көшірілді; OMSI 2 тек Windows жүйесінде жұмыс істейді:
+Could not copy the map into OMSI 2	Картаны OMSI 2-ге көшіру мүмкін болмады
+Click on the map to place it	Орналастыру үшін картаны басыңыз
+Open a map (its global.cfg)	Картаны ашу (оның global.cfg файлы)
+The map is back as it was before that save	Карта сол сақтауға дейінгі күйіне қайтарылды
+Could not go back	Қайтару мүмкін болмады
+Export a plan of the map	Карта жоспарын экспорттау
+Plan saved:	Жоспар сақталды:
+Mods, models and pictures	Модтар, модельдер және суреттер
+Import assets	Ассеттерді импорттау
+…or choose a mod folder	…немесе мод қалтасын таңдаңыз
+Click on the map to put it there	Қою үшін картаны басыңыз
+Could not make the shape	Пішінді жасау мүмкін болмады
+Choose the OMSI 2 folder	OMSI 2 қалтасын таңдау
+That is not an OMSI 2 folder (Omsi.exe, maps and Vehicles must be in it)	Бұл OMSI 2 қалтасы емес (онда Omsi.exe, maps және Vehicles болуы керек)
+This object has no textures to make PBR maps of	Бұл нысанда PBR-карталарын жасайтын текстуралар жоқ
+Could not copy the map	Картаны көшіру мүмкін болмады
+Could not move the map	Картаны көшіру мүмкін болмады
+Terrain flattened; splines laid on it:	Жер бедері тегістелді; төселген сплайндар:
+This road type has no textures to make PBR maps of	Бұл жол түрінде PBR-карталарын жасайтын текстуралар жоқ
+Pictures	Суреттер
+Only 100 tiles round the camera are loaded; click on the empty zone to load the next 100	Камераның айналасындағы тек 100 тайл жүктелген; келесі 100-ді жүктеу үшін бос аймақты басыңыз
+All tiles are loaded	Барлық тайлдар жүктелді
+Import the map's thumbnail	Карта нобайын импорттау
+The map's thumbnail is set: openOMSI shows it where maps are chosen.	Карта нобайы қойылды: openOMSI оны карта таңдау кезінде көрсетеді.
+Could not use the picture	Суретті пайдалану мүмкін болмады
+Map camera	Карта камерасы
+The map opens with this view from now on.	Енді карта осы көріністен ашылады.
+Add ground texture	Жер текстурасын қосу
+View kept as	Көрініс былай сақталды:
+No view kept as	Көрініс сақталмаған:
+Files changed on disk: the catalogue and models are updated	Файлдар дискіде өзгерді: каталог пен модельдер жаңартылды
+The track does not run over the map's tiles	Трек картаның тайлдары арқылы өтпейді
+Road along a GPS track	GPS-трек бойынша жол
+Roads built:	Жолдар салынды:
+junctions:	қиылыстар:
+stops:	аялдамалар:
+Lines from OpenStreetMap	OpenStreetMap желілері
+lines:	желілер:
+trips found their way:	жолы табылған рейстер:
+buildings:	ғимараттар:
+trees:	ағаштар:
+Start point	Старт нүктесі
+Start	Бастау
+a start point	старт нүктесі
+From OpenStreetMap	OpenStreetMap-тан
+Picture saved:	Сурет сақталды:
+Could not save the picture	Суретті сақтау мүмкін болмады
+The graphics could not be started.	Графиканы іске қосу мүмкін болмады.
+Flying speed	Ұшу жылдамдығы
+copy	көшірме
+Only maps of the content folder can be moved	Тек контент қалтасындағы карталарды ауыстыруға болады
+Only assets of the content folder can be deleted	Тек контент қалтасындағы ассеттерді жоюға болады
+Could not write the object	Нысанды жазу мүмкін болмады
+Select an object to edit its mesh	Мешін өңдеу үшін нысанды таңдаңыз
+A copy of its own was made: the original type is unchanged	Өз көшірмесі жасалды: бастапқы түр өзгермеді
+Cannot edit this object	Бұл нысанды өңдеуге болмайды
+Point at an edge to cut across its ring of faces	Жақтар сақинасын көлденеңінен кесу үшін қырды көрсетіңіз
+Objects made:	Жасалған нысандар:
+select the faces to separate	бөлетін жақтарды таңдаңыз
+Separated into an object of its own	Жеке нысанға бөлінді
+Add object	Нысан қосу
+select what to export (objects, roads)	экспорттайтынды таңдаңыз (нысандар, жолдар)
+Export the selection	Таңдалғанды экспорттау
+unknown format	белгісіз формат
+the models are still loading: try again in a moment	модельдер әлі жүктелуде: сәлден кейін қайталаңыз
+this material has no texture	бұл материалда текстура жоқ
+cannot read	оқылмайды
+Export the texture	Текстураны экспорттау
+Texture saved:	Текстура сақталды:
+Choose a picture	Суретті таңдаңыз
+give the material a texture first: its maps go beside it	алдымен материалға текстура беріңіз: карталар оның қасына қойылады
+Import materials (an .mtl, a model, or the pictures of one PBR material)	Материалдарды импорттау (.mtl, модель немесе бір PBR-материалдың суреттері)
+Materials and pictures	Материалдар мен суреттер
+no materials found there	онда материал табылмады
+Materials added:	Қосылған материалдар:
+nothing to bake	пісіретін ештеңе жоқ
+the object has no lamps to bake the night light of	нысанда түнгі жарығын пісіруге болатын шамдар жоқ
+Baked into	Пісірілді:
+select a road or spline first	алдымен жолды немесе сплайнды таңдаңыз
+the road's type is still loading: try again in a moment	жол түрі әлі жүктелуде: сәлден кейін қайталаңыз
+these splines have no shape to see	бұл сплайндарда көрінетін пішін жоқ
+Replace by an object	Нысанмен ауыстыру
+Made into an object: Tab edits its mesh	Нысанға айналдырылды: Tab мешін өңдейді
+Signal head made: click where it stands (near a crossing with a light program it links to it)	Бағдаршам жасалды: тұратын жерін басыңыз (жарық бағдарламасы бар қиылысқа жақын болса, соған байланады)
+Choose a picture or a texture	Сурет немесе текстура таңдаңыз
+cannot read the picture	сурет оқылмайды
+Picture made: click where it goes (it can be moved, turned and scaled after)	Сурет жасалды: қоятын жерін басыңыз (кейін оны жылжытуға, бұруға және масштабтауға болады)
+Light made: click where it shines	Жарық жасалды: жарқырайтын жерін басыңыз
+Choose a sound	Дыбысты таңдаңыз
+Sounds	Дыбыстар
+Sound source made: click where it plays	Дыбыс көзі жасалды: ойнайтын жерін басыңыз
+Street lamp made: click where it stands	Көше шамы жасалды: тұратын жерін басыңыз
+Paint by slope and height	Еңіс пен биіктік бойынша бояу
+By slope and height	Еңіс пен биіктік бойынша
+The chosen layer painted over the whole map where the ground is so steep (and so high)	Таңдалған қабат бүкіл картада жер осындай тік (және осындай биік) жерлерге боялады
+Slope	Еңіс
+Height	Биіктік
+Fade	Өту
+Cover	Жабын
+Paint the map	Картаны бояу
+Choose a layer above the base ground	Негізгі жердің үстіндегі қабатты таңдаңыз
+No ground on the map is like that	Картада мұндай жер жоқ
+Painted	Боялды
+Missing objects	Нысан файлдары жоқ
+Missing roads and splines	Жол және сплайн файлдары жоқ
+Missing textures	Текстуралар жоқ
+Road ends not joined	Жалғанбаған жол ұштары
+Links to splines that are gone	Жоғалған сплайндарға сілтемелер
+Bus stops away from a road	Жолдан алыс аялдамалар
+Start points away from a road	Жолдан алыс старт нүктелері
+Start points without their object	Нысаны жоқ старт нүктелері
+No start point	Старт нүктесі жоқ
+IDCodes used twice	Екі рет қолданылған IDCode
+Next IDCode too low	Келесі IDCode тым аз
+Objects off their tile	Өз тайлынан тыс нысандар
+Tiles without a file	Файлы жоқ тайлдар
+Tiles without ground	Жері жоқ тайлдар
+Trips without a way	Жолы жоқ рейстер
+Tours without departures	Рейстері жоқ шығулар
+Tours without a depot	Депосы жоқ шығулар
+Traffic groups not in the AI lists	ЖИ тізімдерінде жоқ трафик топтары
+Stops no trip calls at	Ешбір рейс тоқтамайтын аялдамалар
+Signal routes naming what is gone	Жоғалғанды атайтын сигнал маршруттары
+Chrono changes of what is gone	Жоғалғанның хроно-өзгерістері
+Lamps lighting no ground at night	Түнде жерді жарықтандырмайтын шамдар
+Tiles with very many objects	Нысандары өте көп тайлдар
+Objects linked to one that is gone	Жоғалған нысанмен байланысқан нысандар
+Signal heads linked to no crossing	Қиылысы жоқ бағдаршамдар
+Depot files (destinations)	Депо файлдары (соңғы аялдамалар)
+The map uses an object (.sco) that is not installed. The game leaves it out. Install the mod it comes from, or delete the object. A junction of openMapper's whose file is gone (the map was moved without it) is made again for its roads with "Fix".	Карта орнатылмаған нысанды (.sco) пайдаланады. Ойын оны өткізіп жібереді. Ол кіретін модты орнатыңыз немесе нысанды жойыңыз. Файлы жоғалған openMapper қиылысын (карта онсыз көшірілген) «Түзету» оның жолдары үшін қайта жасайды.
+The map uses a road or spline type (.sli) that is not installed: that road is missing in the game, and buses cannot drive there.	Карта орнатылмаған жол немесе сплайн түрін (.sli) пайдаланады: ойында ол жол болмайды, автобустар онда жүре алмайды.
+An object or road names a picture that cannot be found. It will look white or black in the game.	Нысан немесе жол табылмайтын суретке сілтейді. Ойында ол ақ немесе қара көрінеді.
+Two road ends lie on one another but are not joined. Traffic still finds its way (the game joins lanes by their ends), but rows of lamps and posts and the road's texture do not run on across, and the editor does not treat them as one road. "Join" links them.	Екі жол ұшы бір-біріне түсіп тұр, бірақ жалғанбаған. Көлік бәрібір жүре алады (ойын жолақтарды ұштары бойынша жалғайды), бірақ шамдар мен бағандар қатарлары және жол текстурасы арғы жаққа жалғаспайды, ал редактор оларды бір жол деп санамайды. «Қосу» оларды байланыстырады.
+A spline says it goes on into another one that no longer exists. "Fix" forgets that link.	Сплайн енді жоқ басқа сплайнға жалғасады деп көрсетеді. «Түзету» бұл сілтемені ұмыттырады.
+A bus stop belongs to the lane it stands beside (within about 25 m). This one has none near, so buses cannot stop at it. Move it next to the road, or "Fix" puts it at the kerb of the nearest lane (within 80 m).	Аялдама қасында тұрған жолаққа (шамамен 25 м-ге дейін) тиесілі. Мұның қасында жолақ жоқ, сондықтан автобус тоқтай алмайды. Оны жолға жақындатыңыз немесе «Түзету» оны ең жақын жолақтың жиегіне қояды (80 м-ге дейін).
+A start point is where the bus appears. This one is away from any lane: fine in a depot yard, otherwise the bus starts off the road.	Старт нүктесі — автобус пайда болатын жер. Бұл ешбір жолақтан алыс: депо ауласында бұл қалыпты, әйтпесе автобус жолдан тыс басталады.
+A start point refers to an object that was deleted. "Fix" removes the start point.	Старт нүктесі жойылған нысанға сілтейді. «Түзету» старт нүктесін жояды.
+There is nowhere for the bus to appear. Place a start point (Game logic > Start points) on a road, or "Fix" puts one on a lane some 40 m before a bus stop.	Автобус пайда болатын жер жоқ. Жолға старт нүктесін қойыңыз (Ойын логикасы > Старт нүктелері) немесе «Түзету» оны аялдамаға дейін шамамен 40 м жердегі жолаққа қояды.
+Two things on the map share one IDCode: links, timetables and start points may pick the wrong one.	Картадағы екі нәрсе бір IDCode-ты бөліседі: байланыстар, кестелер және старт нүктелері дұрыс емесін таңдауы мүмкін.
+The counter for new IDCodes is below codes already used, so new objects would get codes twice. "Fix" raises it.	Жаңа IDCode есептегіші қолданыстағы кодтардан төмен, сондықтан жаңа нысандар қайталанатын код алады. «Түзету» оны көтереді.
+An object standing on the ground lies outside its own tile. The game does not show it. Move it a little or put it again.	Жерде тұрған нысан өз тайлының сыртында жатыр. Ойын оны көрсетпейді. Оны сәл жылжытыңыз немесе қайта қойыңыз.
+global.cfg lists tiles whose file is not there. The game leaves them out; they stay listed, as start points and timetables count tiles by their place in the list.	global.cfg файлы файлы жоқ тайлдарды тізімдейді. Ойын оларды өткізіп жібереді; олар тізімде қалады, өйткені старт нүктелері мен кестелер тайлдарды тізімдегі орны бойынша санайды.
+A tile has no height file: its ground is flat. Saving writes one.	Тайлда биіктік файлы жоқ: оның жері тегіс. Сақтау оны жазады.
+No way along the roads was found through this trip's stops, so buses cannot drive it. Open it in Map > Lines and timetable to see where it breaks.	Бұл рейстің аялдамалары арқылы жол бойынша жол табылмады, сондықтан автобустар жүре алмайды. Қай жерде үзілетінін көру үшін оны Карта > Желілер және кесте арқылы ашыңыз.
+A tour (a bus's day on the line) has no trips, so no bus runs it.	Шығуда (автобустың желідегі күні) рейстер жоқ, сондықтан оны ешкім жүрмейді.
+A tour names no depot or group of the AI lists (or one that is not there): the game has no vehicle to send on it. Choose a depot for it in the Lines window, or "Fix" gives it the map's depot (one of OMSI 2's MAN buses added where the map has none).	Шығу ЖИ тізімдеріндегі депоны немесе топты көрсетпейді (немесе жоқ біреуін көрсетеді): ойында оған жіберетін көлік жоқ. Желілер терезесінде оған депо таңдаңыз немесе «Түзету» оған картаның депосын береді (карта депосы жоқ болса, OMSI 2-нің MAN автобустары қосылады).
+The unscheduled traffic names a group that the AI lists do not have: those cars never appear. Add the group in Map > Traffic and AI, or "Fix" copies it from OMSI 2's own maps where they have it.	Кестесіз трафик ЖИ тізімдерінде жоқ топты атайды: ол көліктер пайда болмайды. Топты Карта > Трафик және ЖИ арқылы қосыңыз немесе «Түзету» оны OMSI 2-нің өз карталарынан көшіреді, егер онда болса.
+A stop of the timetable that no trip calls at. Nothing is wrong, it is only not used yet.	Ешбір рейс тоқтамайтын кесте аялдамасы. Еш қателік жоқ, ол жай әзірге қолданылмайды.
+A chrono scenario takes away, retypes or relabels something that is no longer on the map (it was deleted or its IDCode changed): that change does nothing. Open Map > Chrono scenarios, the scenario's properties, and take the change out.	Хроно-сценарий картада енді жоқ нәрсені алып тастайды, түрін немесе жазуын өзгертеді (ол жойылған немесе IDCode-ы өзгерген): бұл өзгерістің еш әсері жоқ. Карта > Хроно-сценарийлер, сценарий қасиеттерін ашып, өзгерісті алып тастаңыз.
+A tile holds far more objects than the stock maps' tiles (up to some 600): the game may stutter when it loads it or looks across it. Thin out a wood planted too densely (Plant brush, Clear) or plant it with more space between the trees.	Тайлда стандартты карталардың тайлдарынан әлдеқайда көп нысан бар (шамамен 600-ге дейін): ойын оны жүктегенде немесе оған қарағанда тоқтап қалуы мүмкін. Тым тығыз отырғызылған орманды сиретіңіз (Өсімдік қылқаламы, «Тазалау») немесе ағаштарды сиректеу отырғызыңыз.
+Street lamps stand on a tile the game does not light from its lamps ([variable_terrainlightmap] is off): at night the ground under them stays dark (unless the tile's light map file was made by OMSI 2's editor). "Fix" turns it on, as on nearly every tile of the stock maps.	Көше шамдары ойын шамдардан жарықтандырмайтын тайлда тұр ([variable_terrainlightmap] өшірулі): түнде олардың астындағы жер қараңғы қалады (тайлдың жарық картасы файлы OMSI 2 редакторымен жасалмаса). «Түзету» оны қосады, стандартты карталардың барлық дерлік тайлдарындағыдай.
+An object takes its state ([varparent]) from an object no longer on the map: a signal head stays dark, a display blank. Link it to another in its properties (Linked objects), or "Fix" forgets the link.	Нысан өз күйін ([varparent]) картада енді жоқ нысаннан алады: бағдаршам сөніп тұрады, табло бос. Оны қасиеттерінде басқасымен байланыстырыңыз («Байланысқан нысандар») немесе «Түзету» байланысты ұмыттырады.
+A traffic light's signal head takes its light from a crossing's program ([varparent]); this one is linked to none while others like it are, so it stays dark in the game. Select it and link it in its properties (Linked objects).	Бағдаршам басы жарығын қиылыс бағдарламасынан ([varparent]) алады; бұл ешқайсымен байланыспаған, ал ұқсастары байланысқан, сондықтан ойында ол сөніп тұрады. Оны таңдап, қасиеттерінде байланыстырыңыз («Байланысқан нысандар»).
+A depot file (.hof) gives the buses their destinations, the stop names on their displays and the routes their IBIS knows. Without one the signs stay empty and the IBIS knows no line. "Fix" makes it from the map's lines, or adds what the lines need to the map's own (Map > Depot files to see and change it).	Депо файлы (.hof) автобустарға соңғы аялдамаларды, табломен аялдама атауларын және IBIS білетін маршруттарды береді. Онсыз көрсеткіштер бос, ал IBIS бірде-бір желіні білмейді. «Түзету» оны картаның желілерінен жасайды немесе желілерге қажеттіні картаның өз файлына қосады (көру және өзгерту үшін Карта > Депо файлдары).
+A signal route names a signal or track pieces no longer on the map: the signal may never clear. Open Map > Signal routes and take the track again, or delete the route.	Сигнал маршруты картада енді жоқ сигналды немесе жол бөліктерін атайды: сигнал ашылмауы мүмкін. Карта > Сигнал маршруттары арқылы ашып, жолды қайта алыңыз немесе маршрутты жойыңыз.
+font	қаріп
+used	қолданылады
+in	мұнда:
+a ground texture of the map	картаның жер текстурасы
+splines	сплайндар
+apart	аралығы
+spline	сплайн
+goes on into	жалғасады:
+no road near	жақын жерде жол жоқ
+from the road	жолдан
+start point	старт нүктесі
+object	нысан
+The map has no start point	Картада старт нүктесі жоқ
+things have it	нәрседе бар
+highest in use:	ең жоғары қолданылатыны:
+tile	тайл
+no .terrain file: flat	.terrain файлы жоқ: тегіс
+objects	нысан
+lamps	шам
+The map has no depot file	Картада депо файлы жоқ
+the buses show no destination	автобустар соңғы аялдаманы көрсетпейді
+named by the map's depot, but found nowhere	картаның депосында аталған, бірақ еш жерде табылмады
+knows none of the	мыналардың ешқайсысын білмейді:
+lacks	жетіспейді:
+destinations of the lines	желілердің соңғы аялдамалары
+the lines need	желілерге жетіспейді:
+destinations	соңғы аялдама
+stops	аялдама
+routes	маршрут
+tour	шығу
+no depot named	депо көрсетілмеген:
+not in the AI lists:	ЖИ тізімдерінде жоқ:
+the stop has no object:	аялдамада нысан жоқ:
+no road beside	жанында жол жоқ:
+no way	жол жоқ
+no way found	жол табылмады
+Route	Бағыт
+gone	картада жоқ
+changes of nothing	бос өзгеріс
+time	рет
+times	рет
+Fix from the map check	Карта тексеруінен түзету
+Car groups from OMSI 2's maps	OMSI 2 карталарындағы көлік топтары
+A depot for the tour	Шығу үшін депо
+A depot file from the lines	Желілер бойынша депо файлы
+Depot file: what the lines need	Депо файлы: желілерге қажеттісі
+Map check	Картаны тексеру
+Check again	Қайта тексеру
+Checking the map…	Карта тексерілуде…
+errors	қате
+warnings	ескерту
+notes	жазба
+Nothing found: the map looks fine.	Ештеңе табылмады: карта дұрыс.
+Fix all	Барлығын түзету
+Join	Қосу
+Fix	Түзету
+Click to fly there	Сол жерге ұшу үшін басыңыз
+Fixed:	Түзетілді:
+it has parts openMapper does not write	онда openMapper жазбайтын бөліктер бар
+A host on the internet needs a password of at least	Интернеттегі хостқа құпия сөз керек, кемінде
+Type a password, or choose explicitly to host without one	Құпия сөзді енгізіңіз немесе құпия сөзсіз ашуды нақты таңдаңыз
+Could not listen on port	Портты ашу мүмкін болмады
+The way in for the tunnel could not be opened	Туннельге кіру жолын ашу мүмкін болмады
+Hosting this map: others can join it now	Карта бірлесіп өңдеуге ашылды: басқалар қосыла алады
+Multiplayer ended: another map was opened	Бірлескен өңдеу аяқталды: басқа карта ашылды
+Somebody changed this first: your edit was put back	Мұны біреу бұрын өзгертті: сіздің өзгерісіңіз қайтарылды
+The host takes no more: the edit is too big, or the session holds as much as it may. Your edit was put back	Хост енді қабылдамайды: өзгеріс тым үлкен немесе сеанс толы. Өзгерісіңіз қайтарылды
+That lies too far from the map for this session: your edit was put back	Бұл осы сеанс үшін картадан тым алыс: өзгерісіңіз қайтарылды
+tiles	тайл
+changed what you were editing: it is as they left it	сіз өңдеп жатқанды өзгертті: ол олар қалдырғандай
+The timetable, the traffic and the descriptions are the host's in multiplayer: your change was put back	Бірлескен өңдеуде кесте, трафик және сипаттамалар хостқа тиесілі: өзгерісіңіз қайтарылды
+Your conflicting edit was kept	Қайшы өзгерісіңіз сақталды
+Could not keep your conflicting edit; multiplayer stopped	Қайшы өзгерісті сақтау мүмкін болмады; бірлескен өңдеу тоқтатылды
+Too much of the others' work came in while your edit was held open: multiplayer stopped. The map stays open; it can be saved as a copy.	Сіздің өзгерісіңіз ашық тұрғанда басқалардың тым көп жұмысы келді: бірлескен өңдеу тоқтатылды. Карта ашық қалады; оны көшірме ретінде сақтауға болады.
+The connection to the host was lost. The map stays open; it can be saved as a copy.	Хостпен байланыс үзілді. Карта ашық қалады; оны көшірме ретінде сақтауға болады.
+No OMSI 2 installation: the map has nowhere to go	OMSI 2 орнатылмаған: картаны сақтайтын жер жоқ
+The host sent no map	Хост картаны жіберген жоқ
+The host's map could not be read	Хост картасын оқу мүмкін болмады
+No connection	Байланыс жоқ
+That address is not an openMapper host	Бұл мекенжайда openMapper хосты жоқ
+Wrong password	Құпия сөз қате
+The session is full	Сеанс толы
+Type a name (up to 32 letters)	Атыңызды енгізіңіз (32 әріпке дейін)
+The host has another version of openMapper	Хосттың openMapper нұсқасы басқа
+Move forward	Алға жылжу
+Move back	Артқа жылжу
+Move left	Солға жылжу
+Move right	Оңға жылжу
+Turn the camera left	Камераны солға бұру
+Turn the camera right	Камераны оңға бұру
+Undo	Болдырмау
+Redo	Қайталау
+Save	Сақтау
+Copy	Көшіру
+Cut	Қиып алу
+Paste at the cursor	Курсор жанына қою
+Duplicate	Телнұсқа жасау
+Select all	Барлығын таңдау
+Find in the map	Картадан іздеу
+Search for a command	Команданы іздеу
+Tool: Select	Құрал: Таңдау
+Tool: Roads	Құрал: Жолдар
+Tool: Objects	Құрал: Нысандар
+Tool: Game logic	Құрал: Ойын логикасы
+Tool: Terrain	Құрал: Жер бедері
+Tool: Paint	Құрал: Бояу
+Tool: Tiles	Құрал: Тайлдар
+Turn the object (Shift: the other way)	Нысанды бұру (Shift: қарсы жаққа)
+Ruler	Сызғыш
+Knife	Пышақ
+Move handles	Жылжыту тұтқалары
+Rotate handles	Бұру тұтқалары
+Scale handles	Масштаб тұтқалары
+Edit the mesh (vertices, edges, faces)	Мешті өңдеу (төбелер, қырлар, жақтар)
+Join the selected objects into one	Таңдалған нысандарды біреуге біріктіру
+Build the planned road	Жоспарланған жолды салу
+Tile grid on / off	Тайл торы қосу / өшіру
+Group the selection	Таңдалғанды топтау
+Ungroup	Топты ажырату
+Look straight down, north up	Жоғарыдан қарау, солтүстік жоғарыда
+2D plan view on / off (3D: tilt and turn again)	2D жоспар көрінісі қосу / өшіру (3D: қайта еңкейту және бұру)
+Catalogue on / off	Каталог
+Overview map on / off	Шолу картасы
+Lines window	Желілер терезесі
+Traffic window	Трафик терезесі
+Satellite and terrain window	Спутник және жер бедері терезесі
+Smaller brush	Кіші қылқалам
+Larger brush	Үлкен қылқалам
+Delete the selection	Таңдалғанды жою
+Go to the selection	Таңдалғанға өту
+Test drive in openOMSI (Shift: from the camera)	openOMSI-де сынақ жүру (Shift: камерадан)
+Save a picture of the view	Көріністің суретін сақтау
+The map's own (global.cfg)	Картаның өзінікі (global.cfg)
+Description	Сипаттама
+Name in this language	Осы тілдегі атауы
+Description in this language	Осы тілдегі сипаттамасы
+Remove this language	Бұл тілді алып тастау
+Not written yet: it is saved as soon as you type.	Әзірге жазылмаған: теріп бастағанда сақталады.
+Edit description	Сипаттаманы өңдеу
+just now	дәл қазір
+min ago	мин бұрын
+h ago	сағ бұрын
+Unsaved changes found	Сақталмаған өзгерістер табылды
+openMapper was closed without saving the map	openMapper картаны сақтамай жабылды
+The changes kept by the autosave can be brought back. The map itself was not changed.	Автосақтау сақтаған өзгерістерді қайтаруға болады. Картаның өзі өзгерген жоқ.
+Restore the changes	Өзгерістерді қайтару
+Drop them	Тастау
+Nothing comes after it to join	Одан кейін қосатын ештеңе жоқ
+The next piece runs the other way: reverse it first	Келесі бөлік қарама-қарсы жаққа кетеді: алдымен оны кері бұрыңыз
+The next piece lies on another tile	Келесі бөлік басқа тайлда жатыр
+The two pieces are of different road types	Екі бөлік әртүрлі жол түрлерінен
+The two pieces have different settings (path rules, ground, skew)	Екі бөліктің баптаулары әртүрлі (жол ережелері, жер, қиғаштық)
+A row of objects comes onto the next piece from another tile	Келесі бөлікке басқа тайлдан нысандар қатары кіреді
+The two pieces do not bend, climb or bank alike: joined they would change shape	Екі бөлік бірдей имеймейді, көтерілмейді немесе еңкеймейді: қосылса, пішіні өзгеріп кетер еді
+Earlier versions	Алдыңғы нұсқалар
+Before every save, the files it replaces are kept (the last 10 saves). Going back puts the map as it was before that save; later changes go.	Әр сақтау алдында ол ауыстыратын файлдар сақталады (соңғы 10 сақтау). Қайту картаны сол сақтауға дейінгі күйіне келтіреді; кейінгі өзгерістер жойылады.
+No earlier versions yet: they appear once the map is saved again.	Алдыңғы нұсқалар әзірге жоқ: карта қайта сақталғанда пайда болады.
+before the save of	сақтау алдындағы:
+Go back to this	Осыған қайту
+could not keep a backup, nothing was saved	резервтік көшірмені сақтау мүмкін болмады, ештеңе сақталмады
+Red	Қызыл
+Yellow	Сары
+Green	Жасыл
+file not found	файл табылмады
+this object takes its model from a model file and cannot be edited here	бұл нысан моделін бөлек модель файлынан алады және мұнда өңделмейді
+the object has no mesh to edit	нысанда өңдейтін меш жоқ
+cannot read the object	нысан оқылмайды
+Select	Таңдау
+Terrain	Жер бедері
+Paint	Бояу
+Roads	Жолдар
+Objects	Нысандар
+Game logic	Ойын логикасы
+Tiles	Тайлдар
+Raise	Көтеру
+Lower	Түсіру
+Smooth	Тегістеу
+Flatten	Теңестіру
+Roughen	Бұдырлау
+Ramp	Пандус
+Lake / river	Көл / өзен
+Start points	Старт нүктелері
+Bus stops	Аялдамалар
+Car parks	Тұрақтар
+AI paths	ЖИ жолдары
+Other	Басқа
+Where the bus appears when a drive starts. Put it on a road or in the depot, facing the way to drive.	Жүру басталғанда автобус пайда болатын жер. Жолға немесе депоға, жүру бағытына қаратып қойыңыз.
+Where passengers wait. Put it beside the road at the kerb; name it on the right.	Жолаушылар күтетін жер. Жол жиегіне қойыңыз; атауы оң жақта беріледі.
+Where parked cars stand. Click for one; with a row on, click the start and end of a row along the kerb.	Тұрақ көліктері тұратын жер. Басу: біреу; қатар қосулы болса, жиек бойымен қатардың басы мен соңын басыңыз.
+Lanes the AI's cars or people follow. Draw like a road: it snaps to lane ends (green: joined, red: dead end) and along lanes. A car path runs the way you draw it.	ЖИ көліктері немесе адамдары жүретін жолақтар. Жол сияқты салынады: жолақ ұштарына (жасыл: жалғанған, қызыл: тұйық) және жолақтар бойымен жабысады. Көлік жолы сіз салған бағытта жүреді.
+Sound sources, help arrows and other helpers the game does not show.	Дыбыс көздері, көмекші көрсеткілер және ойында көрінбейтін басқа көмекшілер.
+Move (V): drag an arrow along X, Y or Z, a square in its plane, the circle over the ground	Жылжыту (V): көрсеткіні X, Y немесе Z бойымен, шаршыны оның жазықтығында, шеңберді жер бойымен сүйреңіз
+Rotate (C): drag a ring to turn about X, Y or Z	Бұру (C): X, Y немесе Z айналасында бұру үшін сақинаны сүйреңіз
+Scale (X): drag an arrow to scale along that axis, a square for two, the circle for all three	Масштаб (X): ось бойымен масштабтау үшін көрсеткіні, екеуі үшін шаршыны, үшеуі үшін шеңберді сүйреңіз
+These roads have no lanes of their own to take apart (rails stay as they are)	Бұл жолдарда бөлшектейтін жеке жолақтар жоқ (рельстер өзгеріссіз қалады)
+Make the lanes editable	Жолақтар өңделетін болды
+Roads whose lanes are now editable:	Жолақтары енді өңделетін жолдар:
+Flatten the terrain	Жер бедерін теңестіру
+Select two things or more to group them	Топтау үшін екі немесе одан көп затты таңдаңыз
+Group	Топ
+Grouped:	Топталды:
+Ungrouped	Топ ажыратылды
+Rename group	Топ атауы
+Ground levelled under objects:	Нысандар астындағы жер теңестірілді:
+Move	Жылжыту
+No object clicked: nothing linked	Нысан басылмады: ештеңе байланыспады
+Too near the road's end to cut it there	Жолды осы жерден кесу үшін оның ұшына тым жақын
+No road under the cursor	Курсор астында жол жоқ
+Ramp:	Пандус:
+Shape terrain	Жер бедерін қалыптау
+Paint ground	Жерді бояу
+Clear plants	Өсімдіктерді тазалау
+Plant	Отырғызу
+Rotate selection	Таңдалғанды бұру
+Rotate	Бұру
+Delete object	Нысанды жою
+Delete road	Жолды жою
+Delete selection	Таңдалғанды жою
+Pick an object in the catalogue first	Алдымен каталогтан нысанды таңдаңыз
+There is no tile here: add one with the Tiles tool	Мұнда тайл жоқ: оны «Тайлдар» құралымен қосыңыз
+Place object	Нысанды қою
+New stop	Жаңа аялдама
+Linked to	Байланысқан:
+choose its light in its properties	жарығын қасиеттерінен таңдаңыз
+Trees from OpenStreetMap	OpenStreetMap ағаштары
+Plant an area	Аумаққа отырғызу
+Buildings from OpenStreetMap	OpenStreetMap ғимараттары
+Stops from OpenStreetMap	OpenStreetMap аялдамалары
+Stop	Аялдама
+Pick a car park in the list first	Алдымен тізімнен тұрақты таңдаңыз
+Place car parks	Тұрақтарды қою
+Car parks placed:	Қойылған тұрақтар:
+Pick a road type in the catalogue first	Алдымен каталогтан жол түрін таңдаңыз
+That bend is too sharp	Бұл бұрылыс тым тік
+Switch made	Бұрмалағыш жасалды
+Junctions made:	Жасалған қиылыстар:
+The road leaves the map: add tiles there first	Жол картадан шығып кетеді: алдымен сол жерге тайлдар қосыңыз
+Build road	Жол салу
+Roads from OpenStreetMap	OpenStreetMap жолдары
+Pick a tree in the catalogue (or add some to the mix) first	Алдымен каталогтан ағашты таңдаңыз (немесе қоспаға қосыңыз)
+Right-click a tile to remove it	Алып тастау үшін тайлды тінтуірдің оң жағымен басыңыз
+New tiles go next to the map	Жаңа тайлдар картаның жанына қосылады
+Add tile	Тайл қосу
+Water	Су
+Paint detail	Бояу егжей-тегжейі
+Ground layer order	Жер қабаттарының реті
+Detail texture	Детальді текстура
+Ground texture	Жер текстурасы
+Lamp light on the ground	Жердегі шам жарығы
+Add tiles	Тайлдар қосу
+A map needs at least one tile	Картада кемінде бір тайл болуы керек
+Remove tile	Тайлды алып тастау
+Pick a point (a dot at an end or where pieces meet) to take it out	Алып тастау үшін нүктені таңдаңыз (ұштағы немесе бөліктер түйісетін жердегі нүкте)
+Remove a point of the path	Жол нүктесін алып тастау
+Point taken out	Нүкте алынды
+A path of one piece: Del with nothing picked deletes it	Бір бөліктен тұратын жол: нүкте таңдалмағанда Del оны түгел жояды
+Extrude	Экструзия
+Inset	Ішке кіргізу
+Bevel	Фаска
+Loop cut	Ілмекпен кесу
+click: done, right click / Esc: cancel, wheel: segments	басу: дайын, оң жақпен басу / Esc: бас тарту, дөңгелек: сегменттер
+Scale	Масштаб
+Roads are not scaled: change their length and width in their properties	Жолдар масштабталмайды: олардың ұзындығы мен енін қасиеттерінен өзгертіңіз
+Only the objects are scaled, the roads stay	Тек нысандар масштабталады, жолдар қалады
+Could not scale	Масштабтау мүмкін болмады
+Too near the end: drag the end's dot instead	Ұшына тым жақын: орнына ұш нүктесін сүйреңіз
+Add a point to the path	Жолға нүкте қосу
+Point added: drag the dot where the pieces meet	Нүкте қосылды: бөліктер түйісетін жердегі нүктені сүйреңіз
+Reshape road	Жол пішінін өзгерту
+Selected:	Таңдалды:
+Copied:	Көшірілді:
+Nothing copied yet	Әзірге ештеңе көшірілмеген
+Paste	Қою
+Level the ground	Жерді теңестіру
+Turn objects	Нысандарды бұру
+Copies in a row	Қатар көшірмелер
+Left out (off the map):	Өткізіп жіберілді (картадан тыс):
+Pasted (the rest is off the map):	Қойылды (қалғаны картадан тыс):
+Edit object	Нысанды өзгерту
+Lean with the ground	Жер бойымен еңкейту
+Stand upright	Тік қою
+Change height	Биіктікті өзгерту
+Change road type	Жол түрін өзгерту
+The selected roads are not one chain (they branch or leave gaps)	Таңдалған жолдар бір тізбек емес (тармақталады немесе үзілістері бар)
+Even slope	Біркелкі еңіс
+Lay on the ground	Жерге жату
+Remove the rows of objects along it first (they are measured from its start)	Алдымен бойындағы нысан қатарларын алып тастаңыз (олар оның басынан өлшенеді)
+Reverse direction	Бағытты кері бұру
+No road there to cut	Мұнда кесетін жол жоқ
+Cut the road	Жолды кесу
+Cut in two: each piece can now be changed on its own	Екіге кесілді: енді әр бөлікті бөлек өзгертуге болады
+Join the pieces	Бөліктерді қосу
+Joined into one piece	Бір бөлікке қосылды
+Parallel copy	Параллель көшірме
+Overhead wire	Байланыс желісі
+Back into the map	Картаға қайту
+Hang an object	Нысанды іліп қою
+Link to an object	Нысанмен байланыстыру
+Unlink	Байланысты ажырату
+That object already takes its state from this one	Ол нысан күйін қазірдің өзінде осыдан алады
+Linked	Байланыстырылды
+Signal head's light	Бағдаршам жарығы
+Path rules	Жол ережелері
+Replace objects	Нысандарды ауыстыру
+Edit road	Жолды өзгерту
+Roads that could not follow the junction (too sharp a bend):	Қиылысты ере алмаған жолдар (тым тік иілу):
+Edit junction	Қиылысты өзгерту
+Make the junction again	Қиылысты қайта жасау
+Make the junctions again	Қиылыстарды қайта жасау
+Pick an object in the Objects tool's catalogue first	Алдымен «Нысандар» құралының каталогынан нысанды таңдаңыз
+The road is too short for that	Жол бұған тым қысқа
+Objects along the road	Жол бойындағы нысандар
+Rows of objects added:	Қосылған нысан қатарлары:
+Edit row of objects	Нысан қатарын өзгерту
+Remove row of objects	Нысан қатарын жою
+Remove rows of objects	Нысан қатарларын жою
+Roundabout built; roads joined to it:	Айналма салынды; қосылған жолдар:
+This road type carries traffic both ways: pick a one-way road for a proper roundabout	Бұл жол түрінде қозғалыс екі бағытта: дұрыс айналма үшін бір бағытты жолды таңдаңыз
+Start point: where the bus appears in openOMSI	Старт нүктесі: openOMSI-де автобус осы жерде пайда болады
+Bus stop: name it in the panel on the right	Аялдама: атын оң жақ панельде беріңіз
+openOMSI stopped with an error	openOMSI қатемен тоқтады
+Check in openOMSI	openOMSI-де тексеру
+The saved map run by the game itself, unseen, with its own checks; the picture is the game's, from your view	Сақталған картаны ойынның өзі терезесіз, өз тексерулерімен іске қосады; сурет — ойынның, сіздің көрінісіңізден
+Every tile (slower on a big map)	Барлық тайлдар (үлкен картада баяуырақ)
+Run again	Қайта іске қосу
+openOMSI is loading the map…	openOMSI картаны жүктеп жатыр…
+Nothing wrong found	Ешқандай мәселе табылмады
+Problems found:	Табылған мәселелер:
+Go there	Сол жерге өту
+of the places named lie at the map's edge or a road's dead end (greyed): the game measures a lane's last point on the road's very edge, and a bus at the end stands over it; nothing to mend	аталған орындар картаның шетінде немесе жолдың тұйығында жатыр (сұр): ойын жолақтың соңғы нүктесін жолдың дәл шетінде өлшейді, ал соңындағы автобус оның үстінде тұрады; түзететін ештеңе жоқ
+The game said nothing about the map	Ойын карта туралы ештеңе айтпады
+The game's whole output	Ойынның барлық шығысы
+no key entered	кілт енгізілмеген
+the server refused the key	сервер кілтті қабылдамады
+too many requests, try again later	сұрау тым көп, кейінірек қайталаңыз
+No connection to the server: are you online?	Серверге қосылу жоқ: интернет бар ма?
+Enter your Google key first	Алдымен Google кілтін енгізіңіз
+OpenStreetMap's servers are busy: try again in a minute	OpenStreetMap серверлері бос емес: бір минуттан кейін қайталаңыз
+The area is too large for this zoom	Бұл масштаб үшін аумақ тым үлкен
+Cancelled	Бас тартылды
+Stopped by an internal error (see the log)	Ішкі қатемен тоқтатылды (журналды қараңыз)
+No source has imagery here	Мұнда ешбір көзде суреттер жоқ
+drawn from OpenStreetMap data: sharp, with names	OpenStreetMap деректерінен салынады: анық, атаулармен
+terrain heights, no key needed	жер бедерінің биіктіктері, кілт қажет емес
+needs your own free key	өзіңіздің тегін кілтіңіз қажет
+no key needed	кілт қажет емес
+the picture is too small	сурет тым кішкентай
+Import height map	Биіктік картасын импорттау
+Height map	Биіктік картасы
+The ground as a grey picture, to shape in another program and bring back	Жер сұр сурет түрінде: басқа бағдарламада өңдеп, қайтарыңыз
+Export…	Экспорттау…
+Import…	Импорттау…
+over	үстінде
+a pixel	бір пиксель
+Black adds	Қара қосады
+Black is	Қара — бұл
+White adds	Ақ қосады
+White is	Ақ — бұл
+Smoothing	Тегістеу
+Replace the ground	Жерді ауыстыру
+Add to it	Оған қосу
+Roads and objects keep their heights: best done before building	Жолдар мен нысандар өз биіктігінде қалады: құрылыстан бұрын жасаған дұрыс
+An 8-bit picture has only 256 steps of height: smoothing hides them	8 биттік суретте биіктіктің тек 256 сатысы бар: тегістеу оларды жасырады
+Lay it on the map	Картаға жабу
+Cancel	Бас тарту
+Height map laid over	Биіктік картасы жабылды:
+Export the height map	Биіктік картасын экспорттау
+Height map written	Биіктік картасы жазылды
+The height map could not be written	Биіктік картасын жазу мүмкін болмады
+A height map for the whole map	Бүкіл карта үшін биіктік картасы
+The picture could not be read	Суретті оқу мүмкін болмады
+IBIS and roller blind	IBIS және роллбанд
+Front sign, line 1	Алдыңғы көрсеткіш, 1-жол
+Front sign, line 2	Алдыңғы көрсеткіш, 2-жол
+Side sign	Бүйір көрсеткіші
+Roller blind texture	Роллбанд текстурасы
+IBIS 2 (20 letters)	IBIS 2 (20 таңба)
+Extra sign	Қосымша тақтайша
+Krüger picture	Krüger суреті
+Text	Мәтін
+IBIS (16 letters)	IBIS (16 таңба)
+Display, line 1	Табло, 1-жол
+Display, line 2	Табло, 2-жол
+Full name (20 letters)	Толық атауы (20 таңба)
+Service trip	Паркке
+Special trip	Тапсырыс рейсі
+Blank	Бос
+openMapper cannot import this kind of file (use a folder, .zip, .obj, .gltf, .glb, .fbx, .x, .o3d or a picture)	openMapper бұл файл түрін импорттай алмайды (қалта, .zip, .obj, .gltf, .glb, .fbx, .x, .o3d немесе сурет қолданыңыз)
+Mod installed, files:	Мод орнатылды, файлдар:
+Objects added to	Нысандар қосылды:
+Road types added to	Жол түрлері қосылды:
+Models imported:	Импортталған модельдер:
+Nothing to import was found in this folder	Бұл қалтада импорттайтын ештеңе табылмады
+The model has no triangles	Модельде үшбұрыштар жоқ
+Model imported:	Модель импортталды:
+The .obj file has no faces	.obj файлында жақтар жоқ
+no base colour picture among them	олардың арасында негізгі түс суреті жоқ
+The picture cannot be read	Суретті оқу мүмкін болмады
+Picture made into a standee:	Сурет контур бойынша фигураға айналды:
+Picture made into a sign:	Сурет тақтайшаға айналды:
+Trees	Ағаштар
+Stops and start points	Аялдамалар мен старт нүктелері
+Junctions	Қиылыстар
+Tracks	Рельстер
+Footpaths	Жаяу жолдар
+Fences, walls, kerbs	Қоршаулар, қабырғалар, жиектер
+Technical (AI, helpers)	Техникалық (ЖИ, көмекшілер)
+This map lies on the world's grid ([worldcoordinates]): its tiles cannot be taken yet	Бұл карта әлемдік торда жатыр ([worldcoordinates]): оның тайлдарын әзірге алуға болмайды
+This map lies on the world's grid ([worldcoordinates]): tiles cannot be added from another yet	Бұл карта әлемдік торда жатыр ([worldcoordinates]): басқасынан тайлдарды әзірге қосуға болмайды
+Tiles from another map	Басқа картадан тайлдар
+Union	Бірігу
+Difference (cut out)	Айырма (қиып алу)
+Intersection	Қиылысу
+Slice (keep both pieces)	Кесу (екі бөлікті қалдыру)
+One object of all the selected, their insides gone	Таңдалғандардың барлығынан бір нысан, ішкі қабырғаларсыз
+The other selected objects cut out of the one shown in the properties	Қалған таңдалған нысандар қасиеттерде көрсетілгеннен қиып алынады
+Only what all the selected share	Тек барлық таңдалғандарға ортақ бөлік
+The first object cut by the others into what is outside them and what is inside	Бірінші нысанды қалғандары сыртқы және ішкі бөліктерге кеседі
+select an object first	алдымен нысанды таңдаңыз
+Make editable	Өңделетін ету
+Make single	Жеке көшірме
+the object has only one part	нысанда тек бір бөлік бар
+Separate parts	Бөліктерге бөлу
+select two or more objects to join	біріктіру үшін екі немесе одан көп нысанды таңдаңыз
+Join objects	Нысандарды біріктіру
+select two or more objects: the one shown in the properties and what acts on it	екі немесе одан көп нысанды таңдаңыз: қасиеттердегі және оған әсер ететіндер
+nothing is left: the objects do not overlap that way	ештеңе қалмады: нысандар олай қиылыспайды
+The file has no scene	Файлда сахна жоқ
+The FBX file has no meshes	FBX файлында мештер жоқ
+Main roads	Негізгі жолдар
+Streets	Көшелер
+Service roads	Қызметтік өтетін жолдар
+Tram tracks	Трамвай жолдары
+Railway tracks	Теміржол жолдары
+motorway, trunk, primary, secondary	магистральдар, негізгі және қосымша жолдар
+tertiary, residential, unclassified	жергілікті және тұрғын көшелер
+yards, car parks, depots	аулалар, тұрақтар, депо
+each track on its own; branches are joined with switches by hand	әр жол бөлек; тармақтар бұрмалағыштармен қолмен жалғанады
+main lines without sidings; branches are joined with switches by hand	бекет жолдарынсыз магистральдар; тармақтар бұрмалағыштармен қолмен жалғанады
+Water from OpenStreetMap	OpenStreetMap суы
+Give a distance	Қашықтықты көрсетіңіз
+The bend is too tight for that distance on its inner side	Бұрылыс ішкі жағында мұндай қашықтық үшін тым тік
+The copy leaves the map: add tiles there first	Көшірме картадан шығып кетеді: алдымен сол жерге тайлдар қосыңыз
+Made with openMapper	openMapper-де жасалған
+Low (no shadows, rough edges, 3 km view)	Төмен (көлеңкесіз, дөрекі қырлар, 3 км көрініс)
+Medium (softer shadows, 8 km view)	Орташа (жұмсақ көлеңкелер, 8 км көрініс)
+High	Жоғары
+This end belongs to a junction: select the junction and move it, the road follows	Бұл ұш қиылысқа тиесілі: қиылысты таңдап жылжытыңыз, жол соңынан еріп жүреді
+Paint along the roads	Жолдар бойымен бояу
+Market	Нарық
+Station	Вокзал
+Depot	Депо
+this object takes its model from a model file: it cannot be scaled	бұл нысан моделін бөлек модель файлынан алады: оны масштабтауға болмайды
+Not a GPX, KML or GeoJSON file	GPX, KML немесе GeoJSON файлы емес
+No lines in the file	Файлда сызықтар жоқ
+Language	Тіл
+Interface size	Интерфейс өлшемі
+File	Файл
+New map…	Жаңа карта…
+Open map…	Картаны ашу…
+Controls…	Басқару…
+Import assets…	Ассеттерді импорттау…
+Multiplayer…	Бірлескен өңдеу…
+OMSI 2 folder…	OMSI 2 қалтасы…
+Quit	Шығу
+View	Көрініс
+Help	Анықтама
+Updates…	Жаңартулар…
+About openMapper	Бағдарлама туралы
+OMSI 2 not found	OMSI 2 табылмады
+Map editor for openOMSI	openOMSI үшін карта редакторы
+openMapper builds maps from the content of an installed OMSI 2. Choose its folder (the one with Omsi.exe, maps and Vehicles).	openMapper карталарды орнатылған OMSI 2 контентінен құрады. Оның қалтасын көрсетіңіз (Omsi.exe, maps және Vehicles бар жер).
+Choose OMSI 2 folder…	OMSI 2 қалтасын таңдау…
+Maps	Карталар
+recent · OMSI 2	соңғы · OMSI 2
+recent	соңғы
+content folder	контент қалтасы
+OMSI 2 (saved as copy)	OMSI 2 (көшірме ретінде сақт.)
+Open	Ашу
+Make a copy	Көшірме жасау
+A copy of the map in the content folder under a new name, to try something out	Бір нәрсені байқап көру үшін контент қалтасындағы картаның жаңа атпен жасалған көшірмесі
+Show in the file manager	Файл менеджерінде көрсету
+Move to openMapper's bin	openMapper себетіне салу
+Its folder goes into openMapper\\bin in the content folder, from where it can be put back by hand	Оның қалтасы контент қалтасындағы openMapper\\bin ішіне ауысады, ол жерден оны қолмен қайтаруға болады
+Browse…	Шолу…
+Double-click a map to open it. Maps of OMSI 2 are saved as a copy into openOMSI's content folder; the original stays untouched.	Картаны ашу үшін екі рет басыңыз. OMSI 2 карталары openOMSI контент қалтасына көшірме ретінде сақталады; түпнұсқа өзгермейді.
+A simple map editor for openOMSI.	openOMSI үшін қарапайым карта редакторы.
+Back to the 3D view (0)	3D көрінісіне оралу (0)
+The plan view from above, north up (0)	Жоғарыдан жоспар көрінісі, солтүстік жоғарыда (0)
+Recent maps	Соңғы карталар
+(none)	(жоқ)
+Export map for sharing…	Картаны бөлісу үшін экспорттау…
+Export a plan of the map…	Карта жоспарын экспорттау…
+Earlier versions…	Алдыңғы нұсқалар…
+Close map	Картаны жабу
+Edit	Өңдеу
+Edit history…	Өзгерістер тарихы…
+Groups for other maps…	Басқа карталарға арналған топтар…
+Find in map…	Картадан іздеу…
+Search for a command…	Команданы іздеу…
+Delete	Жою
+Deselect	Таңдауды алу
+Tile grid	Тайл торы
+What the game does not show	Ойында көрінбейтіндер
+AI lanes	ЖИ жолақтары
+Names of stops and start points	Аялдамалар мен старт нүктелерінің атаулары
+Show	Көрсету
+Roads and splines	Жолдар мен сплайндар
+Overview map (M)	Шолу картасы (M)
+Assets (B)	Ассеттер (B)
+Flatten the terrain (roads follow)	Жер бедерін алып тастау (жолдар бейімделеді)
+Saved views…	Сақталған көріністер…
+Go to selection	Таңдалғанға
+Camera	Камера
+Unity: right button looks round and W A S D fly, middle pans, Alt orbits	Unity: оң жақ батырма айналаға қарайды және W A S D ұшады, ортаңғысы жылжытады, Alt айналдырады
+Map editor: right button looks round and W A S D fly (Q down, E up), middle pans, the wheel zooms to the cursor, drag moves the map	Карта редакторы: оң жақ батырма айналаға қарайды және W A S D ұшады (Q төмен, E жоғары), ортаңғысы жылжытады, дөңгелек курсорға жақындатады, сүйреу картаны жылжытады
+Load 100 tiles at a time (like OMSI 2's editor)	100 тайлдан жүктеу (OMSI 2 редакторы сияқты)
+Time of day	Тәулік уақыты
+Plain day (as the game by day)	Қарапайым күн (ойындағы күндізгідей)
+At an hour	Белгілі сағатта
+Where the sun stands then, today, at the map's place (Map > Calendar and place); by night the moon	Күн сол кезде картаның орнында бүгін қай жерде тұрады (Карта > Күнтізбе және орын); түнде ай
+Season	Жыл мезгілі
+Summer	Жаз
+Dry summer	Құрғақ жаз
+Spring	Көктем
+Autumn	Күз
+Winter	Қыс
+Snow	Қар
+Graphics quality	График сапасы
+Tools	Құралдар
+Road types and junctions…	Жол түрлері және қиылыстар…
+PBR maps for a picture…	Сурет үшін PBR-карталары…
+Map	Карта
+Map settings…	Карта баптаулары…
+Calendar and place…	Күнтізбе және орын…
+Signal routes…	Сигнал маршруттары…
+Chrono scenarios…	Хроно-сценарийлер…
+Ground textures…	Жер текстуралары…
+Check map…	Картаны тексеру…
+Junctions made again:	Қайта жасалған қиылыстар:
+Lines and timetable…	Желілер және кесте…
+Traffic and AI…	Трафик және ЖИ…
+Depot files (destinations)…	Депо файлдары (соңғы аялдамалар)…
+Satellite and terrain…	Спутник және жер бедері…
+From OpenStreetMap…	OpenStreetMap-тан…
+GPS tracks to trace…	Іздеу үшін GPS-тректер…
+Tiles from another map…	Басқа картадан тайлдар…
+Test drive in openOMSI	openOMSI-де сынақ жүру
+Test drive in OMSI 2 (the original)…	OMSI 2-де (түпнұсқа) сынақ жүру…
+Check in openOMSI…	openOMSI-де тексеру…
+Getting started	Бастау
+New map	Жаңа карта
+Open a map	Картаны ашу
+Save (Ctrl+S): there are unsaved changes	Сақтау (Ctrl+S): сақталмаған өзгерістер бар
+Save (Ctrl+S)	Сақтау (Ctrl+S)
+Import assets: a mod folder or .zip, a .obj / .x / .o3d model (or drop files on the window)	Ассеттерді импорттау: мод қалтасы немесе .zip, .obj / .x / .o3d моделі (немесе файлдарды терезеге сүйреңіз)
+Redo (Ctrl+Shift+Z)	Қайталау (Ctrl+Shift+Z)
+Tile grid (G)	Тайл торы (G)
+Assets: every object and road type, with pictures (B)	Ассеттер: барлық нысандар мен жол түрлері, суреттерімен (B)
+Test drive	Сынақ жүру
+Save the map and drive it in openOMSI (F5)	Картаны сақтап, openOMSI-де жүріп өту (F5)
+openOMSI was not found: install it to test maps	openOMSI табылмады: карталарды сынау үшін оны орнатыңыз
+Test drive from the start point nearest the view	Көрініске ең жақын старт нүктесінен сынақ жүру
+See this view in openOMSI	Бұл көріністі openOMSI-де көру
+loading	жүктелуде
+Edit mesh	Мешті өңдеу
+Shapes and lamps	Пішіндер мен шамдар
+Click beside the map to add a 300 × 300 m tile. Right-click a tile to remove it.	300 × 300 м тайл қосу үшін картаның жанын басыңыз. Алып тастау үшін тайлды оң жақпен басыңыз.
+Area	Аумақ
+A ring of tiles round the map	Картаның айналасындағы тайлдар сақинасы
+Every free place beside the map, corners too, gets a tile at the height of its neighbours	Картаның жанындағы әр бос орын, бұрыштарды қоса, көршілерінің биіктігінде тайл алады
+Tiles added:	Қосылған тайлдар:
+Everything on the map, grouped by the folders its files lie in	Картадағының бәрі, файлдары жатқан қалталар бойынша
+Click an object or a road in the view to see and change it on the right.	Қасиеттерін көру және өзгерту үшін көріністегі нысанды немесе жолды басыңыз. Олар оң жақта шығады.
+Line up with the nearest road (Shift: put it freely)	Ең жақын жол бойымен тураландыру (Shift: еркін қою)
+On both sides of the road	Жолдың екі жағына
+A stop of the same name also goes at the kerb across the road, facing the other way	Дәл сондай атаулы аялдама жолдың арғы жағындағы жиекке де, қарсы бағытта қойылады
+In a row along a line	Желі бойымен қатар
+Every	Әрбір
+Draw new	Жаңасын салу
+Edit existing	Бар жолдарды өңдеу
+Click a path to pick it: every point is a dot to drag (the small ones in the middle of a piece bend it). Double-click the path to put a point in. Click a dot, then Del, to take that point out; Del with no dot picked deletes the whole path (Ctrl+Z brings it back). Lanes of roads and junctions belong to their road type: use Edit its AI lanes on the road.	Жолды таңдау үшін оны басыңыз: әр нүкте сүйрейтін шеңбер (бөлік ортасындағы кішілері оны иеді). Нүкте қосу үшін жолды екі рет басыңыз. Нүктені алып тастау үшін оны басып, Del басыңыз; нүкте таңдалмай Del бүкіл жолды жояды (Ctrl+Z қайтарады). Жолдар мен қиылыстардың жолақтары жол түріне тиесілі: жолдағы «ЖИ жолақтарын өзгерту» қолданыңыз.
+Cars	Көліктер
+People	Адамдар
+Show these in the other tools too	Мұны басқа құралдарда да көрсету
+Show the AI's lanes in the other tools too	ЖИ жолақтарын басқа құралдарда да көрсету
+Everything	Бәрі
+Search	Іздеу
+Shape the ground under the road	Жерді жолға бейімдеу
+Go on drawing from the end of the road just built	Салынған жолдың соңынан салуды жалғастыру
+Join road ends, roads and junction pieces near the cursor	Курсор жанындағы жол ұштарына, жолдарға және қиылыс бөліктеріне жалғау
+Make junctions where roads meet	Жолдар түйіскен жерде қиылыстар жасау
+Go on with the type of the road I start from	Бастаған жолымның түрімен жалғастыру
+Building with:	Салынуда:
+nothing chosen	ештеңе таңдалмаған
+Front at the roadside, back	Беті жолға, шегініс
+Plant brush: sow trees by painting	Өсімдік қылқаламы: қылқаламмен ағаш егу
+Sow	Егу
+Clear	Тазалау
+With the brush	Қылқаламмен
+In an outline	Контур бойынша
+Click round an area (a wood, a park, a garden) and it is filled at once, or cleared	Аумақты (орман, саябақ, бақ) басып айналып шығыңыз: ол бірден толтырылады немесе тазаланады
+About	Шамамен
+plants (Enter: plant)	өсімдік (Enter: отырғызу)
+Size	Өлшем
+Apart	Аралық
+Sows the object chosen below. Right-click entries: "Add to the plant mix" to sow several at random. Clearing takes trees and the mix's objects.	Төменде таңдалған нысанды егеді. Тізім тармақтарын оң жақпен басыңыз: бірнешеуін араластырып егу үшін «Қоспаға қосу». Тазалау ағаштарды және қоспа нысандарын алады.
+Mix (picked at random):	Қоспа (кездейсоқ):
+reading OMSI 2…	OMSI 2 оқылуда…
+items	дана
+Nothing found	Ештеңе табылмады
+mod	мод
+right-click: star it	оң жақпен басу: таңдаулыға қосу
+Take out of the plant mix	Өсімдік қоспасынан алып тастау
+Add to the plant mix	Өсімдік қоспасына қосу
+Remove from favourites	Таңдаулылардан алып тастау
+Add to favourites	Таңдаулыға қосу
+Favourites	Таңдаулылар
+Recently used	Жуырда қолданылған
+(not in a folder)	(қалтадан тыс)
+Strength	Күш
+Mode	Режим
+Levels the ground to the height where you start dragging	Жерді сүйрей бастаған нүктенің биіктігіне дейін теңестіреді
+Softens bumps and edges	Бұдырлар мен қырларды жұмсартады
+Raises the ground under the brush	Қылқалам астындағы жерді көтереді
+Lowers the ground under the brush	Қылқалам астындағы жерді түсіреді
+Gives flat ground the rolls and dips of a natural field; hold longer for more	Тегіс жерге табиғи алаңның төбешіктері мен ойпаңдарын береді; ұзағырақ ұстаңыз: күштірек
+Paint a lake or a river: the ground is dug to a bed under the water's level (where you start the stroke, or the tile's water) and the tile gets water at that level. Water in OMSI is one level for a whole tile: another low place on the same tile shows it too	Көл немесе өзен салыңыз: жер су деңгейінен төмен табанға дейін қазылады (соққы басталған жерде немесе тайлдың суы бойынша) және тайл сол деңгейде су алады. OMSI-де су бүкіл тайлға бір деңгейде: сол тайлдағы басқа төмен жер де оны көрсетеді
+Click where it starts, then where it ends: the ground between becomes one even slope as wide as the brush (an embankment, a ramp, a level bed)	Басталуын, содан кейін аяқталуын басыңыз: арасындағы жер қылқалам енідей біркелкі еңіске айналады (үйінді, пандус, тегіс төсем)
+To a height	Биіктікке дейін
+Flatten to the height typed instead of the one where the drag starts (a level square, a platform)	Сүйреу басталған биіктікке емес, енгізілген биіктікке теңестіру (тегіс алаң, платформа)
+Depth	Тереңдік
+The water's level is set where a stroke starts: start at the bank.	Су деңгейі соққы басталған жерде алынады: жағадан бастаңыз.
+Brush	Қылқалам
+Flatten the whole terrain	Бүкіл жер бедерін алып тастау
+Every tile's ground levelled to the map's mean height; the roads, the AI paths and the junctions follow it. One undo step brings the relief back. (The satellite picture: View > Satellite overlay.)	Барлық тайлдардың жері картаның орташа биіктігіне теңестіріледі; жолдар, ЖИ жолдары мен қиылыстар бейімделеді. Бір болдырмау қадамы бедерді қайтарады. (Спутник суреті: Көрініс > Спутник астары.)
+Ground layers	Жер қабаттары
+base ground	негізгі жер
+layer	қабат
+Add…	Қосу…
+Remove	Алып тастау
+Up the list: drawn under the layers after it	Тізімде жоғары: келесі қабаттардың астына салынады
+Down the list: drawn over the layers before it	Тізімде төмен: алдыңғы қабаттардың үстіне салынады
+Texture	Текстура
+The layer's picture; its painting stays	Қабат суреті; оның бояуы қалады
+A fine grain laid over the texture, seen close up (OMSI's detail texture)	Текстура үстіндегі жақыннан көрінетін ұсақ құрылым (OMSI детальді текстурасы)
+Click to choose another	Басқасын таңдау үшін басыңыз
+Repeats per tile	Тайлдағы қайталау
+Detail repeats	Детальді қайталау
+How finely this layer can be painted: texels across a tile (its masks are made again at the new size)	Бұл қабатты қаншалықты нәзік бояуға болады: тайл бойындағы тексельдер (маскалар жаңа өлшемге қайта есептеледі)
+Edit ground texture	Жер текстурасын өңдеу
+Erase	Өшіру
+Remove ground texture	Жер текстурасын алып тастау
+Tile	Тайл
+A water surface over the whole tile: it shows where the ground lies below it (lower the ground with the Terrain tool for a lake or a river)	Бүкіл тайлға су беті: жер одан төмен жатқан жерде көрінеді (көл немесе өзен үшін жерді «Жер бедері» құралымен түсіріңіз)
+at 	мұнда:
+Lamps light the ground at night	Шамдар түнде жерді жарықтандырады
+The game works out the light pools of the street lamps on and round this tile when it loads it ([variable_terrainlightmap]); off, it shows the tile's light map file as it is	Ойын осы тайл мен оның төңірегіндегі көше шамдарының жарық дақтарын жүктегенде есептейді ([variable_terrainlightmap]); өшірулі болса, тайлдың жарық картасы файлын сол күйінде көрсетеді
+Edit history	Өзгерістер тарихы
+Click a step to go back to just after it	Қадамды басу: сосын дәл сол күйге қайту
+Opened	Ашылды
+Properties	Қасиеттер
+Configure PBR	PBR баптау
+Create PBR	PBR жасау
+Normal, roughness, metal and shadow maps made from the object's textures, tuned and written as openOMSI reads them	Нысан текстураларынан жасалған нормаль, кедір-бұдыр, металл және көлеңке карталары: openOMSI оқитындай баптап жазыңыз
+Type	Түрі
+Hangs on	Ілінген жері
+point	нүкте
+Location	Орны
+East	Шығыс
+North	Солтүстік
+Height above sea level	Теңіз деңгейінен биіктік
+above the ground:	жерден жоғары:
+OMSI keeps this object's height above the ground under it: moved elsewhere it stays as high above the ground there	OMSI бұл нысанның астындағы жерден биіктігін сақтайды: басқа жерге көшірілсе, ол сол жердегі жерден сондай биіктікте қалады
+Rotation	Бұру
+Tilt forward (pitch)	Алға еңкею (тангаж)
+Bank to the side (roll)	Бүйірге аудару (крен)
+Heading	Бағыт (курс)
+Turn it the way the nearest road runs beside it	Оны қасындағы ең жақын жол бағытымен бұру
+Stand it upright again	Қайта тік қою
+Picture	Сурет
+Ratio	Қатынас
+Stop name	Аялдама атауы
+This tree	Бұл ағаш
+Texts	Мәтіндер
+Shown on the object (@ starts a new line)	Нысанда көрінеді (@ — жаңа жол)
+Model	Модель
+Triangles	Үшбұрыштар
+Parts	Бөліктер
+Part	Бөлік
+triangles	үшбұрыш
+colour only	тек түс
+opaque	мөлдір емес
+cut out	қиылған
+blended	жартылай мөлдір
+How the texture's transparency is used: cut out for leaves and fences, blended for glass	Текстура мөлдірлігі қалай қолданылады: қиылған — жапырақтар мен қоршаулар, жартылай мөлдір — әйнек
+Textures	Текстуралар
+Normal, roughness, metal and shadow maps made from the road type's textures	Жол түрінің текстураларынан жасалған нормаль, кедір-бұдыр, металл және көлеңке карталары
+Length	Ұзындығы
+Radius	Радиус
+right	оңға
+left	солға
+straight	түзу
+start	басы
+end	соңы
+Mirrored	Айна
+Skew	Қиғаш
+The start cut on a slant: 1 is 45° (two fences meeting at a corner: 1 and -1)	Басындағы қиғаш кесік: 1 — 45° (бұрыштағы екі қоршау: 1 және -1)
+The end cut on a slant	Соңындағы қиғаш кесік
+Ground	Жер
+as it is	сол күйінде
+cut away under it	астынан қиып алу
+cut, held at the end	қиып алу, соңына дейін ұстау
+cut, held at the start	қиып алу, басынан ұстау
+cut, held at both ends	қиып алу, екі ұшын ұстау
+A hole in the ground under it, as for a tunnel, an underpass or a pit (OMSI's terrain align)	Астындағы жерде тесік, туннель, жерасты өткелі немесе шұңқыр сияқты (OMSI terrain align)
+Select the whole road	Бүкіл жолды таңдау
+Every piece linked on from this one (or double-click the road)	Осыдан жалғасқан барлық бөліктер (немесе жолды екі рет басыңыз)
+Join with the next piece	Келесі бөлікпен қосу
+One piece again with the one after it, where the two make one curve	Екеуі бір қисық құрайтын жерде келесісімен қайтадан бір бөлік
+Replace with	Мынаған ауыстыру
+The object chosen in the Objects tool's catalogue takes this one's place	«Нысандар» құралының каталогында таңдалған нысан мұның орнына тұрады
+Go to	Өту
+Level ground	Жерді теңестіру
+The ground under it made level with its foot, blending in 3 m round it (a house on a slope)	Астындағы жер оның табанымен бір деңгейде жасалады, айналасында 3 м-ге біртіндеп ауысады (беткейдегі үй)
+All like it	Дәл осындай барлығы
+Select every one of this type on the map	Картадағы осы түрдің барлығын таңдау
+No road within 60 m	60 м ішінде жол жоқ
+Name	Атауы
+Folder	Қалта
+Traffic	Қозғалыс
+left-hand	сол жақты қозғалыс
+No start point yet: place one (Game logic > Start points) so the bus has somewhere to appear in openOMSI.	Старт нүктесі жоқ: openOMSI-де автобус пайда болатын жер болуы үшін оны қойыңыз (Ойын логикасы > Старт нүктелері).
+None yet: openOMSI shows it where maps are chosen.	Әзірге жоқ: openOMSI оны карта таңдау кезінде көрсетеді.
+Import your thumbnail	Өз нобайыңызды импорттау
+Choose a picture: it is cut to 370 × 280 and becomes the map's picture (picture.jpg).	Суретті таңдаңыз: ол 370 × 280 өлшеміне кесіліп, картаның суреті болады (picture.jpg).
+Open the map with this view	Картаны осы көріністен ашу
+The camera as it is now is where the map opens (here and in OMSI 2's editor).	Қазіргі камера — картаның ашылатын көрінісі (мұнда және OMSI 2 редакторында).
+Saved to	Сақталатын жері:
+Edit map	Картаны өңдеу
+Change the layer's texture	Қабат текстурасын ауыстыру
+Change the layer's detail texture	Қабаттың детальді текстурасын ауыстыру
+Controls	Басқару
+Keyboard	Пернетақта
+Click a key, then press the new one (Esc: leave it). A key already in use is taken from its command.	Пернені басыңыз, сосын жаңасын басыңыз (Esc: қалдыру). Бос емес перне өз командасынан алынады.
+press a key…	пернені басыңыз…
+Also:	Сондай-ақ:
+Back to the default key	Әдепкі пернеге қайтару
+Reset all keys	Барлық пернелерді тастау
+Mouse	Тінтуір
+Right button held	Оң жақ батырма басулы
+look round; W A S D fly, Q / E down / up, Shift faster, wheel: speed	айналаға қарау; W A S D: ұшу, Q / E: төмен / жоғары, Shift: жылдамырақ, дөңгелек: жылдамдық
+Middle drag	Ортаңғы батырма
+pan	көріністі жылжыту
+Alt + left / right / middle drag	Alt + сол / оң / ортаңғы батырма
+orbit / zoom / pan (as in Unity)	айналу / масштаб / жылжыту (Unity сияқты)
+Left drag on nothing	Бос жерде сол батырма
+select with a box	жақтаумен таңдау
+Alt + left drag	Alt + сол батырма
+orbit round the point under the cursor	курсор астындағы нүктені айнала бұрылу
+Wheel	Дөңгелек
+move towards the cursor	курсорға жақындау
+Trackpad	Трекпад
+Two fingers	Екі саусақ
+Pinch / twist	Шымшу / бұру
+zoom / turn	масштаб / бұру
+Option + two fingers or drag	Option + екі саусақ немесе сүйреу
+Fixed keys	Тұрақты пернелер
+Arrow keys	Көрсеткілер
+move over the map (Shift: faster)	карта бойымен жылжу (Shift: жылдамырақ)
+go to a saved view (Shift: keep the view there)	сақталған көрінісіне өту (Shift: көріністі сонда сақтау)
+Alt + arrows	Alt + көрсеткілер
+move the selection a grid step (Shift: 10 cm)	таңдауды тор қадамына жылжыту (Shift: 10 см)
+Alt + Page Up / Down	Alt + Page Up / Down
+selection up / down 10 cm (Shift: 1 m)	таңдауды 10 см жоғары / төмен (Shift: 1 м)
+add to / take from the selection	таңдауға қосу / одан алу
+Shift / Ctrl + drag on empty ground	Shift / Ctrl + бос жерді сүйреу
+select with a box (Shift adds)	жақтаумен таңдау (Shift: қосу)
+Double-click a road	Жолды екі рет басу
+select all of it	оны түгел таңдау
+turn the object	нысанды бұру
+brush size	қылқалам өлшемі
+stop / deselect	бас тарту / таңдауды алу
+Unsaved changes	Сақталмаған өзгерістер
+The map has changes that are not saved. Save them first?	Картада сақталмаған өзгерістер бар. Алдымен сақтайсыз ба?
+Don't save	Сақтамау
+Assets	Ассеттер
+All	Барлығы
+Picture size	Суреттер өлшемі
+Shapes…	Пішіндер…
+Close (B)	Жабу (B)
+Scenery objects	Нысандар
+Splines (roads, tracks…)	Сплайндар (жолдар, рельстер…)
+Favourite on / off	Таңдаулы қосу / өшіру
+content folder (mod, import, own)	контент қалтасы (мод, импорт, өзіндік)
+OMSI 2	OMSI 2
+width	ені
+Build with it	Осымен салу
+Place it	Қою
+PBR material…	PBR материалы…
+Delete…	Жою…
+Not seen in the game (a helper).	Ойында көрінбейді (көмекші).
+Delete the asset?	Ассетті жою керек пе?
+Its folder goes into openMapper's bin in the content folder (openMapper\\bin), from where it can be put back by hand. Maps that use it show it missing.	Оның қалтасы контент қалтасындағы openMapper себетіне ауысады (openMapper\\bin), ол жерден оны қолмен қайтаруға болады. Оны қолданатын карталарда ол жоқ болып көрінеді.
+Calendar and place	Күнтізбе және орын
+Place and time	Орын және уақыт
+Holidays	Мерекелер
+Number plates	Көлік нөмірлері
+Latitude	Ендік
+Longitude	Бойлық
+Time zone	Уақыт белдеуі
+Where the sun stands and when it rises and sets come from here.	Күннің орны, шығуы мен батуы осы жерден алынады.
+Summer time	Жазғы уақыт
+years	жыл
+none: the clocks are never put forward	жоқ: сағат ауыстырылмайды
+EU rules for these years	Осы жылдарға арналған ЕО ережелері
+Last Sunday of March to last Sunday of October, replacing what is set for these years	Наурыздың соңғы жексенбісінен қазанның соңғы жексенбісіне дейін, осы жылдарға берілгеннің орнына
+None	Жоқ
+Year	Жыл
+entries	жазба
+Public holidays run Sunday's timetable; school holidays the holiday one.	Мереке күндері жексенбілік кесте жүреді; мектеп демалысында — демалыс кестесі.
+Public holidays	Мереке күндері
+Add a holiday	Мереке қосу
+Holiday	Мереке
+School holidays	Мектеп демалысы
+Ends before it starts	Басталуынан бұрын аяқталады
+Add school holidays	Мектеп демалысын қосу
+The AI's cars carry these, one a line.	ЖИ көліктері осыларды тасиды, әр жолға біреуден.
+X: a letter, 9: a digit	X: әріп, 9: сан
+Make	Жасау
+Replaces the list with plates of the pattern	Тізімді үлгі бойынша нөмірлермен ауыстырады
+plates	нөмір
+The scenario's AI lists are written, groups changed:	Сценарийдің ЖИ тізімдері жазылды, өзгерген топтар:
+Could not write the scenario	Сценарийді жазу мүмкін болмады
+The scenario's timetable is written, files:	Сценарий кестесі жазылды, файлдар:
+Back in the scenario:	Сценарийге қайта оралды:
+The scenario's things are on the map:	Сценарий заттары картада:
+what you place now is the scenario's too	қазір қойғаныңыз да сценарийдікі
+Editing the scenario	Сценарийді өңдеу
+Done	Дайын
+Chrono scenarios	Хроно-сценарийлер
+How the map changes over the years: each scenario from its first day lays its own tiles, lines and tickets over the map. The view shows the map as on the day chosen here; what you edit is always the map itself.	Карта жылдар бойы қалай өзгереді: әр сценарий бірінші күннен бастап картаға өз тайлдарын, желілерін және билеттерін қояды. Көрініс картаны осы жерде таңдалған күндегідей көрсетеді; әрқашан картаның өзі өңделеді.
+Show the map as on	Картаны мына күндегідей көрсету
+Today	Бүгін
+Active on that day:	Сол күні жұмыс істейді:
+New scenario's name	Жаңа сценарий атауы
+New scenario	Жаңа сценарий
+A scenario starting on the day shown, after the others	Көрсетілген күннен басталатын, қалғандарынан кейінгі сценарий
+From	Басталуы
+To	Дейін
+for good	мәңгіге
+Own tickets	Өз билеттері
+Own money	Өз валютасы
+the map's	картаның
+Takes off	Желілерді алады
+What changes (shown where the date is chosen)	Не өзгереді (күнді таңдағанда көрінеді)
+From its first day, the selection in the view:	Бірінші күнінен бастап көріністегі таңдалған нәрсе:
+appears	пайда болады
+Taken out of the map into the scenario: it is there from the scenario's first day on (place it first, then press this)	Картадан сценарийге шығарылады: сценарийдің бірінші күнінен бастап болады (алдымен қойыңыз, сосын осыны басыңыз)
+is gone	жоғалады
+Stays in the map, gone from the scenario's first day on	Картада қалады, сценарийдің бірінші күнінен бастап жоғалады
+becomes	болады
+its texts become	оның мәтіндері болады
+Write	Жазу
+Its path rules from that day	Сол күннен бастап оның жол ережелері
+Add a rule	Ереже қосу
+Written into the scenario at once (undo does not take it out of the scenario).	Сценарийге бірден жазылады (болдырмау оны сценарийден алмайды).
+What it changes	Нені өзгертеді
+into the map	картаға
+Out of the scenario into the map itself: there on every day	Сценарийден картаның өзіне: барлық күндері болады
+Take it out of the scenario	Сценарийден алып тастау
+new texts	жаңа мәтіндер
+rules	ереже
+Nothing yet.	Әзірге ештеңе жоқ.
+Its own things are on the map: select, move, change and place as usual. The map's own things stay the map's.	Оның заттары картада: әдеттегідей таңдаңыз, жылжытыңыз, өзгертіңіз және қойыңыз. Картаның өз заттары картада қалады.
+Done: back into the scenario	Дайын: сценарийге қайту
+Edit its own things on the map	Оның заттарын картада өңдеу
+What it brings in is put on the map to work with as with anything else; Done writes it back (undo starts afresh)	Ол қосатынды картаға қойып, басқа нәрсе сияқты жұмыс істейді; «Дайын» оны кері жазады (болдырмау тарихы қайта басталады)
+The Lines window shows its timetable (the map's with its own laid over): lines, trips and tours edited there are the scenario's; a line of the map taken away is taken off from its day.	Желілер терезесі оның кестесін көрсетеді (картаныкі, үстіне өзінікі салынған): ондағы желілер, рейстер және шығулардың өзгерістері сценарийдікі; картаның алынған желісі оның күнінен алынады.
+Done with its timetable	Кесте дайын
+Edit its timetable	Оның кестесін өңдеу
+Its own lines, trips and tours in the Lines window; Done writes only what differs from the map's (undo starts afresh)	Желілер терезесіндегі оның өз желілері, рейстері және шығулары; «Дайын» тек картадан айырмашылықтарды жазады (болдырмау тарихы қайта басталады)
+The Traffic window shows its AI lists (the map's with its own added): vehicles and type groups added there, and a depot's own depot file, are the scenario's from its day.	Трафик терезесі оның ЖИ тізімдерін көрсетеді (картаныкі, өзі қосылған): ондағы қосылған көліктер мен түр топтары және депоның өз депо файлы оның күнінен бастап сценарийдікі.
+Done with its AI lists	ЖИ тізімдері дайын
+Edit its AI lists	Оның ЖИ тізімдерін өңдеу
+Vehicles it adds to the groups and depots (OMSI's ailists_#upd.cfg); taking one away is the map's own business	Топтар мен деполарға қосатын көліктері (OMSI ailists_#upd.cfg); көлікті алу — картаның өз ісі
+Write the scenario	Сценарийді жазу
+Close	Жабу
+The map has no chrono scenarios.	Картада хроно-сценарийлер жоқ.
+from	бастап
+to	дейін
+takes off	алады
+own tickets	өз билеттері
+Its first day	Бірінші күні
+Written into the scenario	Сценарийге жазылды
+Written into the scenario:	Сценарийге жазылды:
+Scenario written	Сценарий жазылды
+The map as on	Картаның күйі:
+scenarios:	сценарий:
+Multiplayer	Мультиплеер
+Joining… (a big map takes a while to come)	Қосылуда… (үлкен карта бірден келмейді)
+Recover a conflicting edit…	Қайшы өзгерісті қалпына келтіру…
+Recovered your edit; undo is available	Өзгерісіңіз қалпына келтірілді; болдырмауға болады
+Edit one map together: one of you hosts it, the others join. Roads, objects, ground and paint are shared as they are made; the timetable, the traffic and the descriptions stay the host's, and the host saves the map. Everybody needs the same objects and splines installed.	Бір картаны бірге өңдеу: біреуі ашады, қалғандары қосылады. Жолдар, нысандар, жер және бояу жасалған бойда бөлісіледі; кесте, трафик және сипаттамалар хостта қалады, картаны хост сақтайды. Барлығында бірдей нысандар мен сплайндар орнатылған болуы керек.
+Your name	Атыңыз
+Password	Құпия сөз
+Host this map	Бұл картаны ашу
+Others on this network can join	Осы желідегі басқалар қосыла алады
+Others anywhere can join (a free Cloudflare tunnel, nothing to set up on the router)	Кез келген жердегілер қосыла алады (тегін Cloudflare туннелі, роутерді баптау қажет емес)
+Port	Порт
+Over the internet the password must have at least this many letters:	Интернет арқылы құпия сөз кемінде мынша әріптен тұруы керек:
+No password: anybody who reaches this computer's port can join and change the whole map.	Құпия сөзсіз: осы компьютердің портына жеткен кез келген адам қосылып, бүкіл картаны өзгерте алады.
+Ask for a password after all	Бәрібір құпия сөз сұрау
+Host without a password? Anybody on this network who finds the port can join and change the whole map.	Құпия сөзсіз ашу керек пе? Осы желідегі портты тапқан кез келген адам қосылып, бүкіл картаны өзгерте алады.
+Yes, without a password	Иә, құпия сөзсіз
+No	Жоқ
+Type a password the others will need.	Басқаларға керек құпия сөзді енгізіңіз.
+Host without a password…	Құпия сөзсіз ашу…
+Host	Хост болу
+Open a map, type a name and a password first	Алдымен картаны ашып, атыңыз бен құпия сөзді енгізіңіз
+Join a map	Картаға қосылу
+The map open now has unsaved changes: joining closes it. Save it first.	Қазір ашық картада сақталмаған өзгерістер бар: қосылу оны жабады. Алдымен сақтаңыз.
+You host this map. Give the others one of these:	Сіз бұл картаның хостысыз. Басқаларға осы мекенжайлардың бірін беріңіз:
+On this network the connection is not encrypted: somebody listening in can see the map, and from what they catch try passwords on their own computer. Use a long password, or the internet tunnel (encrypted).	Бұл желіде байланыс шифрланбаған: тыңдап отырған адам картаны көре алады және ұсталғаннан өз компьютерінде құпия сөзді іріктей алады. Ұзын құпия сөзді немесе интернет туннелін (шифрланған) қолданыңыз.
+Everybody who joins can change the whole map.	Қосылған әркім бүкіл картаны өзгерте алады.
+Opening the Cloudflare tunnel… (fetched the first time)	Cloudflare туннелі ашылуда… (алғаш рет жүктеледі)
+internet	интернет
+Waiting for Cloudflare's address…	Cloudflare мекенжайы күтілуде…
+The Cloudflare tunnel could not be opened (no cloudflared, or no internet). The LAN addresses still work.	Cloudflare туннелін ашу мүмкін болмады (cloudflared немесе интернет жоқ). Жергілікті желі мекенжайлары жұмыс істейді.
+You joined this map. The host saves it.	Сіз бұл картаға қосылдыңыз. Оны хост сақтайды.
+Everything of yours is with the others	Сіздің барлық өзгерістеріңіз басқаларда бар
+Sending your edits…	Өзгерістеріңіз жіберілуде…
+In the session	Сеанста
+Say something…	Бірдеңе жазу…
+Leave	Шығу
+Knife (K): a click on a road cuts it there, as often as you like; the pieces' lengths shown at the cursor, on whole grid steps with grid snapping on · right-click or Esc: off	Пышақ (K): жолды басу оны сол жерден кеседі, қанша рет болса да; бөлік ұзындықтары курсор жанында көрінеді, тор бекітуі қосулы болса — тордың тұтас қадамдарымен · оң жақпен басу немесе Esc: өшіру
+The angle step: what snapping comes to and what R turns by	Бұрыш қадамы: бағыт неге бекітіледі және R неше градусқа бұрады
+Angle	Бұрыш
+Snap headings to the angle step	Бағытты бұрыш қадамына бекіту
+Grid	Тор
+Snap positions to the grid	Орынды торға бекіту
+Click two points to measure the distance and gradient between them (U) · right-click: off	Арақашықтық пен еңісті өлшеу үшін екі нүктені басыңыз (U) · оң жақпен басу: өшіру
+Auto-Terrain	Авто-бедер
+What you build follows the ground: roads, paths and tracks take its height (off: they run level from where they start). Only what is built from now on; nothing already there changes	Салынатын нәрсе жерді ереді: жолдар, жолақтар мен рельстер оның биіктігін алады (өшірулі: басталған жерден тегіс жүреді). Тек бұдан былай салынатын; бар нәрсе өзгермейді
+Auto-Switch	Авто-бұрмалағыш
+Branching a track off another makes a switch there	Жолдың басқасынан тарамдалуы онда бұрмалағыш жасайды
+Auto-Junction	Авто-қиылыс
+Auto-Align	Авто-тураландыру
+Line objects up with the nearest road (Shift: put it freely)	Нысандарды ең жақын жолға тураландыру (Shift: еркін қою)
+Selection	Таңдау
+A click on one of it selects all of it, Ctrl + click one alone	Оның біреуін басу бәрін таңдайды, Ctrl + басу біреуін ғана
+Keep these together: a click on one selects all, a drag moves all (Ctrl+G)	Осыларды бірге ұстау: біреуін басу бәрін таңдайды, сүйреу бәрін жылжытады (Ctrl+G)
+Apply	Қолдану
+Turn	Бұру
+Level the ground under them	Астындағы жерді теңестіру
+Each one's outline made level with its foot, blending into the ground 3 m round it	Әрқайсысының контуры табанымен бір деңгейде жасалады, айналасында 3 м-ге біртіндеп ауысады
+Make every object	Барлық нысанды жасау
+The object chosen in the Objects tool's catalogue	«Нысандар» құралының каталогында таңдалған нысан
+Random headings	Кездейсоқ бағыттар
+Every selected object turned its own random way (trees, bushes, rocks)	Әрбір таңдалған нысан кездейсоқ бұрылады (ағаштар, бұталар, тастар)
+Along the road	Жол бойымен
+Each turned the way the nearest road runs beside it	Әрқайсысы қасындағы ең жақын жол бағытымен бұрылады
+Turned:	Бұрылды:
+All like this one	Барлығы осыған ұқсас
+Every selected object takes the heading of the one in the properties	Барлық таңдалған нысандар қасиеттердегі нысанның бағытын алады
+Make every road	Барлық жолды жасау
+The road type chosen in the Roads tool's catalogue	«Жолдар» құралының каталогында таңдалған жол түрі
+Lay them on the ground	Оларды жерге жатқызу
+Reverse their direction	Олардың бағытын кері бұру
+Even slope along them	Бойымен біркелкі еңіс
+One chain of roads: from the height at one end to that at the other, evenly (a bridge, a ramp)	Бір жол тізбегі: бір ұшындағы биіктіктен екінші ұшындағыға дейін біркелкі (көпір, пандус)
+Edit its AI lanes	ЖИ жолақтарын өңдеу
+Its lanes become AI paths of their own (the same lines, the same way) that the Logic tool's Edit existing bends, moves and deletes. The road keeps its look.	Оның жолақтары өз алдына ЖИ жолдарына айналады (сол сызықтар, сол бағыт): оларды Логика > ЖИ жолдары > Бар жолдарды өңдеу арқылы иіп, жылжытып, жоюға болады. Жолдың көрінісі өзгермейді.
+Ends (joined roads follow)	Ұштары (жалғанған жолдар еріп жүреді)
+height	биіктік
+gradient	еңіс
+cant	вираж
+Banking across the road, %: positive lowers its right side (into a right bend)	Жол бойындағы көлденең еңкею, %: плюс оң жағын түсіреді (оң бұрылысқа)
+End	End
+Even slope end to end	Басынан аяғына дейін біркелкі еңіс
+Both gradients to the straight climb between the ends' heights	Екі еңіс те ұштардың биіктіктері арасындағы түзу өрлеуге
+Speed limit, km/h	Жылдамдық шектеуі, км/сағ
+Traffic density ×	Трафик тығыздығы ×
+Priority	Басымдық
+Trucks (0: none)	Жүк көліктері (0: жоқ)
+No cars	Жеңіл көліктерсіз
+Buses only	Тек автобустар
+For the AI and the player on one path (lane) of it, counted from 0: the view shows their numbers	ЖИ және ойыншы үшін оның бір жолында (жолақ), 0-ден бастап санағанда: нөмірлері көрініс терезесінде көрінеді
+Path (lane) number	Жол (жолақ) нөмірі
+Hanging on it	Оған ілінген
+Points to hang objects on:	Нысан іліп қоятын нүктелер:
+Select it	Оны таңдау
+Hang	Іліп қою
+Choose an object in the Objects catalogue first	Алдымен «Нысандар» каталогынан нысанды таңдаңыз
+A fence, a row of houses, an avenue: the selection copied again and again, a step on each time	Қоршау, үйлер қатары, аллея: таңдау қайта-қайта көшіріледі, әр жолы бір қадам ары
+Copies	Көшірме
+Step	Қадам
+Turn each	Әрқайсысын бұру
+Rows	Қатар
+More than one: a grid (an orchard, a car park), each row a row step on	Біреуден көп: тор (бақ, тұрақ), әр қатар қатар қадамына ары жатады
+Row step	Қатар қадамы
+Tilted to the ground under it, the way it slopes forward and to the side (a fence, a bench or a shed on a hillside)	Астындағы жерге еңкейтілген, алға және бүйірге еңіске сай (беткейдегі қоршау, орындық немесе сарай)
+Heights along the ground again, smoothed so it climbs a hill rather than every bump (after shaping the ground or laying a height map over it); where a road not selected joins, its height is kept	Биіктіктер қайтадан жер бойынша, тегістелген: жол әр шұңқырға емес, төбеге көтеріледі (жерді өңдегеннен немесе биіктік картасын жапқаннан кейін); таңдалмаған жол жалғасатын жерде оның биіктігі сақталады
+Each starts where it ended: the traffic on it goes the other way (a one-way street, a track's direction), the road itself stays where it is	Әрқайсысы аяқталған жерден басталады: ондағы қозғалыс кері жүреді (бір жақты көше, жол бағыты), жолдың өзі орнында қалады
+A second track or the other carriageway: the selected splines copied alongside, bends kept exact, linked as they are	Екінші жол немесе қарсы жүріс бөлігі: таңдалған сплайндар қасына көшіріледі, бұрылыстар дәл, байланыстар түпнұсқадағыдай
+To the left	Солға
+To the right	Оңға
+Left and right of the way the road runs (its arrows with AI lanes shown)	Жолдың жүру бағытынан солға және оңға (ЖИ жолақтары көрсетілгенде оның көрсеткілері)
+For trams and electric trains: a wire spline laid on the selected track, piece for piece and linked (its height is the wire spline's own); the masts go in with Objects along the road	Трамвайлар мен электр пойыздары үшін: таңдалған жолдың үстіне сым сплайны, бөлікпен бөлік және байланыстармен (биіктігі — сым сплайнының өз биіктігі); діңгектер «Жол бойындағы нысандармен» қойылады
+No wire spline installed (one whose name says Fahrdraht, Oberleitung or wire)	Сым сплайны орнатылмаған (атында Fahrdraht, Oberleitung немесе wire бар)
+Lay it	Төсеу
+Wire pieces laid:	Төселген сым бөліктері:
+Paint the ground along it	Бойына жерді бояу
+Add a ground texture in the Paint tool first: the base ground is under everything	Алдымен «Бояу» құралында жер текстурасын қосыңыз: негізгі жер барлығының астында жатыр
+Layer	Қабат
+Where	Қайда
+beside it	қасында
+under it too	астында да
+Out from its edge	Жиегінен
+Soft edge	Жұмсақ жиек
+A gravel verge, dirt by a track, grass along a path: the brush of the Paint tool touches it up afterwards	Қиыршық тас жиегі, жол жанындағы топырақ, соқпақ бойындағы шөп: «Бояу» қылқаламы оны кейін түзетеді
+Beside	Бүйірінде
+Lean with the road	Жолмен бірге еңкею
+Each object leans with the road's gradient and banking (bays and arrows on the road); off, it stands upright	Әрбір нысан жолдың еңісі мен виражына қарай еңкейеді (қалталар мен көрсеткілер); өшірулі болса, тік тұрады
+A text the row's objects show (@ starts a new line)	Қатар нысандары көрсететін мәтін (@ — жаңа жол)
+Object:	Нысан:
+Pick an object (a lamp, a tree, a bollard) in the Objects tool's catalogue	«Нысандар» құралының каталогынан нысанды (шам, ағаш, бағана) таңдаңыз
+Right of the road's direction; negative: left	Жол бағытының оң жағы; теріс: сол жақ
+Free at start / end	Басындағы / соңындағы бос орын
+Both sides	Екі жағынан
+Place along the road	Жол бойына орналастыру
+Remove all rows	Барлық қатарларды алып тастау
+Roundabout: click the centre, then the ring	Айналма: орталықты, сосын сақинаны басыңыз
+A one-way ring of the chosen road type (pick a one-way road); roads inside are cut back to it and joined with junctions	Таңдалған жол түрінің бір жақты сақинасы (бір жақты жолды таңдаңыз); ішіндегі жолдар сақинаға дейін қысқартылып, қиылыстармен жалғанады
+Keep the height (bridge, embankment)	Биіктікті сақтау (көпір, үйінді)
+An even gradient from end to end, the ground left as it is; the rise to the end can be typed while drawing. Pillars: select the road and put them along it as objects.	Басынан аяғына дейін біркелкі еңіс, жер өзгермейді; соңына дейінгі өрлеуді сызу кезінде енгізуге болады. Тіректер: жолды таңдап, оның бойына нысан ретінде қойыңыз.
+Rise	Өрлеу
+Shift: straight · Enter: build	Shift: түзу · Enter: салу
+Junction	Қиылыс
+Traffic lights	Бағдаршамдар
+Lights need three roads or more	Бағдаршамдарға кемінде үш жол керек
+Main road green	Негізгі жолға жасыл
+Side roads green	Қосымша жолдарға жасыл
+The main road is the pair of roads most in line; red-yellow 2 s, yellow 3 s, 2 s all red between	Негізгі жол — бір сызыққа ең жақын екі жол; қызыл-сары 2 с, сары 3 с, фазалар арасында 2 с бәріне қызыл
+Zebra crossings	Жаяу жүргіншілер өткелдері
+Road	Жол
+Build it again	Қайта салу
+Makes the plate, its kerbs and lanes again for the roads as they are now	Алаңды, оның жиектері мен жолақтарын жолдарға қазіргі күйінде қайта жасайды
+Linked objects	Байланысқан нысандар
+An object can take its state from another ([varparent]): a signal head shows a light of its crossing's program, a stop's display its stop.	Нысан күйін басқасынан алуы мүмкін ([varparent]): бағдаршам басы өз қиылысы бағдарламасының жарығын көрсетеді, аялдама табло — өз аялдамасын.
+Takes its state from	Күйін мұнан алады
+Select it: IDCode	Оны таңдау: IDCode
+Takes its state from an object that is gone: IDCode	Күйін жоғалған нысаннан алады: IDCode
+Takes its state from nothing	Күйін ештеңеден алмайды
+Light	Бағдаршам
+Its light is not one of the crossing's: it stays dark	Оның жарығы қиылыс жарықтарының бірі емес: сөніп тұрады
+That object runs no traffic lights: link the head to a crossing with a light program	Ол нысан бағдаршамдарды басқармайды: басты жарық бағдарламасы бар қиылыспен байланыстырыңыз
+A signal head: link it to its crossing to have it light	Бағдаршам басы: жануы үшін оны өз қиылысымен байланыстырыңыз
+Click the object in the view… (Esc)	Көріністегі нысанды басыңыз… (Esc)
+Link to another…	Басқамен байланыстыру…
+Link to an object…	Нысанмен байланыстыру…
+Then click the object it is to take its state from (a crossing for a signal head)	Сосын күйін алатын нысанды басыңыз (бағдаршам басы үшін қиылыс)
+Taking their state from it:	Күйін содан алады:
+light	жарық
+Click the object it takes its state from	Күйін алатын нысанды басыңыз
+stop	аялдама
+Find in map	Картадан іздеу
+Name, file, IDCode, stop or x, y	Атауы, файл, IDCode, аялдама немесе x, y
+The point	Нүкте
+Spline	Сплайн
+Object	Нысан
+Nothing on the map has this IDCode.	Картада мұндай IDCode бар ештеңе жоқ.
+kinds	түр
+on the map	картада
+Next	Келесі
+Select the next one and go there	Келесісін таңдап, соған өту
+Every one of these becomes the road type chosen in the Roads tool	Мұндай барлығы «Жолдар» құралында таңдалған жол түрі болады
+Every one of these becomes the object chosen in the catalogue	Мұндай барлығы каталогта таңдалған нысан болады
+More: type to narrow the list	Тағы бар: тізімді тарылту үшін теріңіз
+Replaced:	Ауыстырылды:
+Satellite overlay	Спутник астары
+Satellite and own pictures	Спутник және өз суреттері
+Click a tile to see its overlay here.	Астарын осында көру үшін тайлды басыңыз.
+Show the overlay	Астарын көрсету
+opacity	мөлдір еместік
+Load satellite imagery	Спутникті жүктеу
+Place the map on the Earth first (Satellite and terrain…)	Алдымен картаны Жерге орналастырыңыз (Спутник және жер бедері…)
+Load image file…	Сурет файлын жүктеу…
+Your own picture for this tile (a scan, a screenshot): or drop it on the window	Осы тайл үшін өз суретіңіз (скан, скриншот): немесе оны терезеге сүйреңіз
+Load the OpenStreetMap map	OpenStreetMap картасын жүктеу
+OpenStreetMap map for all tiles	Барлық тайлдар үшін OpenStreetMap картасы
+The map as openstreetmap.org draws it (streets with their names, houses, water, green, stop signs), drawn sharp from OpenStreetMap data and laid on the tile in place of a satellite picture: to build roads and houses over by eye. Nothing is generated from it.	openstreetmap.org-тағыдай карта (атаулы көшелер, үйлер, су, жасыл аймақ, аялдама белгілері), OpenStreetMap деректерінен анық салынып, спутник суретінің орнына тайлға салынады: үстінен көзбен жол мен үй салу үшін. Одан ештеңе жасалмайды.
+own picture	өз суреті
+for an earlier placement	бұрынғы орналастыру үшін
+not kept with the map	картамен бірге сақталмайды
+, partly coarser	, жартылай дөрекірек
+nothing	ештеңе
+Place the map on the Earth first.	Алдымен картаны Жерге орналастырыңыз.
+Load terrain heights	Жер бедері биіктіктерін жүктеу
+Done:	Дайын:
+with problems	қателермен
+A picture for the tiles	Тайлдарға арналған сурет
+Could not read the picture	Суретті оқу мүмкін болмады
+Could not copy the picture	Суретті көшіру мүмкін болмады
+The picture is on the tiles: line it up in Satellite and terrain, Own pictures.	Сурет тайлдарда: оны «Спутник және жер бедері», «Өз суреттері» бөлімінде тураландырыңыз.
+Nothing found by that name.	Бұл атпен ештеңе табылмады.
+Some tiles had Google imagery: enter your Google key to see it again (it is not kept with the map).	Кейбір тайлдарда Google суреттері болды: оларды қайта көру үшін Google кілтін енгізіңіз (олар картамен бірге сақталмайды).
+Satellite and terrain	Спутник және жер бедері
+Find a place: a town, a street, an address… (Enter)	Орынды табу: қала, көше, мекенжай… (Enter)
+Searching…	Іздеу…
+Search © OpenStreetMap contributors	Іздеу © OpenStreetMap contributors
+This map has world coordinates ([worldcoordinates]): it lies on the Earth by itself, its tiles are Web Mercator tiles.	Бұл картада әлемдік координаттар бар ([worldcoordinates]): ол Жерде өзі жатыр, оның тайлдары — Web Mercator тайлдары.
+Click on the map where the orange tile goes…	Қызғылт сары тайл қойылатын жерді картадан басыңыз…
+Place the map here	Картаны осында орналастыру
+Then click on the map: the middle of the orange tile goes there	Сосын картаны басыңыз: қызғылт сары тайлдың ортасы сонда қойылады
+At the view's middle	Көрініс ортасына
+North turned	Солтүстікті бұру
+Orange tile	Қызғылт сары тайл
+click the map to fly there in the view	картаны басу: көрініс терезесінде сонда ұшу
+1. Find the place.  2. Press "Place the map here" and click on the map: the orange tile (the map's middle) goes there.	1. Орынды табыңыз.  2. «Картаны осында орналастыру» түймесін басып, картаны басыңыз: қызғылт сары тайл (картаның ортасы) сонда қойылады.
+Imagery	Суреттер
+The sharpest here	Мұндағы ең анығы
+cm a pixel here	см пиксельге осында
+checking…	тексерілуде…
+is sharper here	осында анығырақ
+Sharper imagery may be had here with your own free key for Mapbox, MapTiler or Google (Keys below).	Мұнда Mapbox, MapTiler немесе Google-дің өз тегін кілтіңізбен анығырақ суреттер болуы мүмкін (төмендегі «Кілттер»).
+Terms of use	Пайдалану шарттары
+Zoom	Масштаб
+the finest here	осындағы ең егжей-тегжейлісі
+Picture of a tile	Тайл суреті
+every pixel of the source (up to 4096)	көздің әр пикселі (4096-ға дейін)
+Loaded at	Жүктелген ажыратымдылық:
+cm a pixel	см пиксельге
+Also load terrain heights	Жер бедері биіктіктерін де жүктеу
+New tiles get imagery by themselves	Жаңа тайлдар суреттерді өзі алады
+Load for all tiles	Барлық тайлдар үшін жүктеу
+For the selected tile	Таңдалған тайл үшін
+Click a tile with the Tiles tool (7)	«Тайлдар» құралымен (7) тайлды басыңыз
+Terrain heights only	Тек жер бедері биіктіктері
+of	/
+tiles beside the loaded heights were not loaded: the ground steps at their edge.	жүктелген биіктіктер жанындағы тайлдар жүктелмеді: олардың жиегінде жер баспалдақ жасайды.
+Fit their edges	Жиектерін үйлестіру
+Their edge takes the loaded heights, fading out 60 m into the tile	Олардың жиегі жүктелген биіктіктерді алып, тайл ішіне қарай 60 м-де өшеді
+Leave them	Қалдыру
+Terrain heights	Жер бедері биіктіктері
+Relative: the orange tile's mean height is 0 m	Салыстырмалы: қызғылт сары тайлдың орташа биіктігі 0 м
+Raise everything by	Барлығын мынаған көтеру
+Taken off:	Алынды:
+Measure again	Қайта өлшеу
+Terrain data attribution	Жер бедері деректерінің дереккөздері
+Overlay on the ground	Жердегі астар
+Put the imagery into maps exported for sharing (check its licence first)	Суреттерді бөлісуге арналған карталарға салу (алдымен лицензиясын тексеріңіз)
+Fit tile edges	Тайл жиектерін үйлестіру
+Keys for more sources (optional)	Басқа дереккөздерге арналған кілттер (міндетті емес)
+Everything works without a key. With your own free key these may be sharper in some places; the key stays on this computer.	Барлығы кілтсіз жұмыс істейді. Тегін өз кілтіңізбен бұлар кей жерде анығырақ болуы мүмкін; кілт осы компьютерде қалады.
+Google satellite (needs your API key)	Google спутнигі (API кілті қажет)
+get a key	кілт алу
+In Google Cloud: make a project, enable the Map Tiles API, create an API key, paste it here. Google bills by use above its free amount.	Google Cloud-та: жоба жасаңыз, Map Tiles API қосыңыз, API кілтін жасап, осында қойыңыз. Тегін көлемнен асқанда Google ақы алады.
+key	кілт
+Your own tile server	Өз тайл серверіңіз
+URL	URL
+Attribution	Авторлық
+Finest zoom	Ең жақын масштаб
+Kind	Түрі
+XYZ / WMTS tiles	XYZ / WMTS тайлдары
+Terrarium heights	Terrarium биіктіктері
+{z} {x} {y} are filled in; a WMS gets {bbox} (EPSG:3857) and {width} {height}; {key} is your key.	{z} {x} {y} толтырылады; WMS {bbox} (EPSG:3857) және {width} {height} алады; {key} — сіздің кілтіңіз.
+Add	Қосу
+Own pictures	Өз суреттері
+A scan, a screenshot, an old plan: laid on tiles and lined up by eye. No place on the Earth needed.	Скан, скриншот, ескі жоспар: тайлдарға салынып, көзбен тураланады. Жерге орналастыру қажет емес.
+Tiles from	Тайлдар:
+Load image file over these tiles…	Осы тайлдарға сурет файлын жүктеу…
+Turn left 90°	Солға 90°
+Turn right 90°	Оңға 90°
+mirror left-right	солдан оңға шағылыстыру
+mirror top-bottom	жоғарыдан төменге шағылыстыру
+Reset	Қалпына келтіру
+Your own pictures	Сіздің суреттеріңіз
+of these tiles have your own pictures. Replace them with satellite imagery?	осы тайлдардың өз суреттеріңіз бар. Оларды спутник суреттерімен ауыстыру керек пе?
+Replace them	Ауыстыру
+Keep my pictures	Менікін қалдыру
+Groups for other maps	Басқа карталарға арналған топтар
+A selection kept under a name, to put down again in any map (a stop with its shelter and signs, a crossing with its lights)	Атпен сақталған таңдау, оны кез келген картаға қайта қою үшін (павильоны мен белгілері бар аялдама, бағдаршамдары бар қиылыс)
+Keep the selection	Таңдауды сақтау
+Group kept	Топ сақталды
+Select what to keep in the view first.	Алдымен көріністе сақтайтынды таңдаңыз.
+No groups yet.	Әзірге топтар жоқ.
+thing	зат
+things	зат
+Delete the group (to openMapper's bin)	Топты жою (openMapper себетіне)
+Use	Алу
+Into the clipboard: Ctrl+V puts it down at the cursor, as often as wanted	Алмасу буферіне: Ctrl+V оны курсорға қояды, қанша рет болса да
+is in the clipboard: Ctrl+V puts it at the cursor	алмасу буферінде: Ctrl+V оны курсорға қояды
+The map's tiles: 300 m squares. Add more beside them with the Tiles tool.	Картаның тайлдары: 300 м шаршылар. Жаңаларын «Тайлдар» құралымен қосыңыз.
+A road	Жол
+Roads tool: click where it starts, then where it ends. Click on a road's end to go on from it.	«Жолдар» құралы: басталуын, содан кейін аяқталуын басыңыз. Жалғастыру үшін жол ұшын басыңыз.
+A bus stop by the road	Жол жанындағы аялдама
+Game logic > Bus stops: put one at the kerb, on the side the doors open. Name it on the right.	Ойын логикасы > Аялдамалар: есік ашылатын жақта жиекке қойыңыз. Атауы оң жақта.
+A start point	Старт нүктесі
+Game logic > Start points: where your bus appears, on a road, facing the way to drive.	Ойын логикасы > Старт нүктелері: автобус пайда болатын жер, жолда, жүру бағытына қаратып.
+A line with a trip	Рейсі бар желі
+Lines window: New line, New trip, then click the stops in order. The way is found along the roads.	«Желілер» терезесі: Жаңа желі, Жаңа рейс, сосын аялдамаларды ретімен басыңыз. Жол жолдар бойымен табылады.
+A tour with departures	Жөнелтулері бар шығу
+Lines window > Tours and times: New tour, then Fill from … to … .	«Желілер» терезесі > Шығулар және уақыт: Жаңа шығу, сосын «… бастап … дейін толтыру».
+Buses for the tours	Шығуларға арналған автобустар
+A depot the tours take their buses from (Tours: Add a depot, or Traffic and AI).	Шығулар автобустарын алатын депо (Шығулар: «Депо қосу» немесе «Трафик және ЖИ»).
+Checked	Тексерілді
+Map > Check map: what would go wrong in the game, most of it put right with one click.	Карта > Картаны тексеру: ойында не дұрыс болмайды, көбі бір басумен түзетіледі.
+Saved	Сақталды
+Ctrl+S. Maps are saved into openOMSI's content folder.	Ctrl+S. Карталар openOMSI контент қалтасына сақталады.
+A test drive	Сынақ жүру
+F5 saves and starts openOMSI on the map: pick line 1 and drive.	F5 картаны сақтап, openOMSI-ді іске қосады: желіні таңдап, жүріңіз.
+A map you can drive in service:	Кесте бойынша жүруге болатын карта:
+Show me	Көрсету
+Your stops stand away from the roads: a bus serves a stop within 15 m of its lane.	Аялдамаларыңыз жолдардан алыс тұр: автобус жолақтан 15 м ішіндегі аялдамаға қызмет көрсетеді.
+A real place? Put the map on the Earth (Map > Satellite and terrain), then Map > From OpenStreetMap brings its streets, stops, lines and trees.	Нақты жер ме? Картаны Жерге байлаңыз (Карта > Спутник және жер бедері), сосын Карта > OpenStreetMap-тан оның көшелерін, аялдамаларын, желілерін және ағаштарын әкеледі.
+Show this for new maps	Жаңа карталарға мұны көрсету
+The map has no depot file.	Картада депо файлы жоқ.
+Make one from the lines	Желілер бойынша жасау
+The map has no trips yet (Map > Lines and timetable)	Картада әлі рейстер жоқ (Карта > Желілер және кесте)
+Empty one	Бос
+New	Жаңа
+A new depot file from the map's lines	Картаның желілері бойынша жаңа депо файлы
+Delete this depot file	Бұл депо файлын жою
+The lines need	Желілерге жетіспейді:
+Add them	Қосу
+What is there stays as it is	Бар нәрсе өзгермейді
+No depot group uses it.	Ешбір депо тобы оны қолданбайды.
+Used by the depot	Депо қолданады
+Use it for every depot	Барлық депо үшін қолдану
+The AI's depot groups (Vehicle groups tab) take their buses' destinations from it	ЖИ депо топтары («Көлік топтары» қойындысы) автобустарының соңғы аялдамаларын одан алады
+Rename	Атын өзгерту
+not a usable name	жарамсыз атау
+The destination a bus shows on its way to and from the depot	Автобустың депоға және деподан жолда көрсететін соңғы аялдамасы
+Destinations	Соңғы аялдамалар
+Stops	Аялдамалар
+Routes	Маршруттар
+nobody gets on	ешкім мінбейді
+Code	Код
+another destination has this code	бұл код басқа соңғы аялдамада бар
+As a trip's terminus is named in the timetable: the stop where everybody gets off	Рейстің соңғы аялдамасы кестеде қалай аталса: бәрі түсетін аялдама
+Nobody gets on (service trip, empty sign)	Ешкім мінбейді (қызметтік рейс, бос көрсеткіш)
+Delete destination	Соңғы аялдаманы жою
+Add destination	Соңғы аялдама қосу
+New destination	Жаңа соңғы аялдама
+As the timetable names the stop	Аялдама кестеде қалай аталса
+Delete stop	Аялдаманы жою
+Add stop	Аялдама қосу
+line	желі
+What the driver types: the line's number and two digits (7601: line 76, route 01)	Жүргізуші не теретіні: желі нөмірі және екі сан (7601: 76-желі, 01-маршрут)
+Line	Сызық
+IBIS text	IBIS мәтіні
+Destination	Соңғы аялдама
+Stops in order	Аялдамалар ретімен
+Not in the Stops list: the displays have no texts for it	Аялдамалар тізімінде жоқ: табло үшін оның мәтіндері жоқ
+Move up	Жоғары
+Move down	Төмен
+Take out	Алып тастау
+Add a stop…	Аялдама қосу…
+Delete route	Маршрутты жою
+Add route	Маршрут қосу
+No routes: the IBIS knows the destinations' codes only. Add them from the lines above.	Маршруттар жоқ: IBIS тек соңғы аялдамалар кодтарын біледі. Оларды жоғарыдағы желілерден қосыңыз.
+Winter with snow	Қарлы қыс
+Summer (dry)	Жаз (құрғақ)
+Jan	Қаң
+Feb	Ақп
+Mar	Нау
+Apr	Сәу
+May	Мам
+Jun	Мау
+Jul	Шіл
+Aug	Там
+Sep	Қыр
+Oct	Қаз
+Nov	Қар
+Dec	Жел
+Map settings	Карта баптаулары
+Money	Валюта
+Tickets	Билеттер
+none: the map has no depot group (Traffic and AI)	жоқ: картада депо тобы жоқ (Трафик және ЖИ)
+Years	Жылдар
+Year offset	Жыл ығысуы
+Added to today's year when the game starts at the real date (Berlin-Spandau: -25 for the 1980s)	Ойын нақты күннен басталғанда ағымдағы жылға қосылады (Berlin-Spandau: 80-жылдар үшін -25)
+Repair time	Жөндеу уақыты
+ min	 мин
+Rail	Рельстер
+real rail (trams and trains follow their tracks' switches)	нақты рельстер (трамвайлар мен пойыздар рельс бұрмалағыштарымен жүреді)
+Helper	Көмекші
+dynamic helper active (the original editor's map option, kept as it is)	динамикалық көмекші қосулы (түпнұсқа редактордың карта параметрі, сол күйінде)
+Seasons	Жыл мезгілдері
+Summer where none is set. The days count from 1 January.	Ештеңе берілмеген жерде — жаз. Күндер 1 қаңтардан саналады.
+Add a season	Жыл мезгілін қосу
+A season ends before it starts	Жыл мезгілі басталмай жатып аяқталады
+Nothing selected	Ештеңе таңдалмаған
+Paste here	Осында қою
+Cut the road here	Жолды осы жерден кесу
+Select all like it	Дәл осындай барлығын таңдау
+Keep for other maps…	Басқа карталар үшін сақтау…
+Its ground, painting, water, objects and roads, put beside or into this map. Lines, timetable and AI lists stay with the other map.	Оның жері, бояуы, суы, нысандары мен жолдары осы картаның жанына немесе ішіне қойылады. Желілер, кесте және ЖИ тізімдері басқа картада қалады.
+Choose a map…	Картаны таңдаңыз…
+Other…	Басқа…
+A map to take tiles from (its global.cfg)	Тайлдар алатын карта (оның global.cfg файлы)
+Grey: this map · orange: the tiles to add (click to take one or leave it) · red: on a tile of this map, left out	Сұр: осы карта · қызғылт сары: қосылатын тайлдар (басу: алу немесе қалдыру) · қызыл: осы картаның тайлында, алынбайды
+Move:	Жылжыту:
+west	батыс
+east	шығыс
+north	солтүстік
+south	оңтүстік
+Raise it by	Мынаған көтеру
+Its ground, water, roads and objects at a height of their own	Оның жері, суы, жолдары мен нысандары өз биіктігінде
+Ease the ground where the maps meet	Карталар түйісетін жердегі жерді тегістеу
+Added	Қосылды
+tiles from the other map	басқа картадан тайл
+Cube	Куб
+Plane	Жазықтық
+Circle	Шеңбер
+Triangle	Үшбұрыш
+Triangular prism	Үшбұрышты призма
+Wedge	Сына
+Corner wedge	Бұрыштық сына
+Pyramid	Пирамида
+Sphere	Сфера
+Icosphere	Икосфера
+Cylinder	Цилиндр
+Cone	Конус
+Torus	Тор
+Tube	Құбыр
+Capsule	Капсула
+Stairs	Баспалдақ
+Arch	Арка
+Make one and put it on the map with a click (each one can then be edited, scaled, cut and joined)	Жасап, картаға басумен қойыңыз (кейін оны өңдеуге, масштабтауға, кесуге және біріктіруге болады)
+Array	Массив
+Mirror	Айна
+Solidify	Қалыңдату
+Subdivision surface	Бетті бөлу
+Decimate	Жеңілдету
+Triangulate	Триангуляция
+Displace	Ығыстыру (шу)
+Wireframe	Жақтау
+Screw	Бұранда
+Simple deform	Қарапайым деформация
+Cast	Құю (пішінге)
+Weld	Төбелерді дәнекерлеу
+Edge split	Қырларды бөлу
+Boolean	Булев операциясы
+Follow the ground	Жер бедерін ілесу
+Count	Саны
+Relative	Салыстырмалы
+Offset	Ығысу
+Merge touching ends	Жалғасқан ұштарды дәнекерлеу
+Distance	Қашықтық
+Cut away the other side first	Алдымен екінші жағын кесіп тастау
+Weld at the mirror	Осьте дәнекерлеу
+Thickness	Қалыңдық
+Close the rim	Жиекті жабу
+Width	Ені
+Segments	Сегменттер
+Levels	Деңгейлер
+Smooth (Catmull-Clark)	Тегістеу (Catmull-Clark)
+Factor	Күш
+Repeat	Қайталау
+Seed	Тұқым
+Along the normals	Нормальдар бойымен
+Steps	Қадамдар
+Axis	Ось
+Twist	Бұрау
+Bend	Иілу
+Taper	Тарылту
+Stretch	Созу
+Amount	Шама
+Box	Куб
+Difference	Айырма
+With the part	Бөлікпен
+Tip: hide the cutting part (its eye in the list) so only the cut shows	Кеңес: тек кесік көрінуі үшін кесетін бөлікті жасырыңыз (тізімдегі көз)
+Above the ground	Жерден жоғары
+Every vertex follows the terrain under it (in the editor's view and the written files at the place it stands)	Әр төбе астындағы жер бедерін ереді
+Mesh (openMapper object)	Меш (openMapper нысаны)
+Shared by	Қолданады
+objects on the map: changes apply to all	картадағы нысандар: өзгерістер барлығына әсер етеді
+Make this one single	Мұны жеке көшірме ету
+Leave the edit mode (Tab)	Өңдеу режимінен шығу (Tab)
+Edit the mesh (Tab)	Мешті өңдеу (Tab)
+Write it as OBJ, glTF / GLB, FBX, Collada, USD, STL, PLY, 3MF, OFF, X or O3D	OBJ, glTF / GLB, FBX, Collada, USD, STL, PLY, 3MF, OFF, X немесе O3D ретінде жазу
+Off: its height is kept above the ground under it	Өшірулі: биіктік астындағы жерден есептеледі
+Solid (collides)	Қатты (соқтығысады)
+The part edited and given modifiers	Өңделетін және модификаторлар берілетін бөлік
+Shown (and written into the object)	Көрсетілген (және нысанға жазылады)
+faces	жақ
+Duplicate the part	Бөлікті телнұсқалау
+Delete the part	Бөлікті жою
+Add a shape as a part	Пішінді бөлік ретінде қосу
+Separate parts into objects	Бөліктерді нысандарға бөлу
+Each part becomes an object of its own, standing where it stood	Әр бөлік өз орнында жеке нысан болады
+Shape	Пішін
+Modifiers	Модификаторлар
+Make it part of the mesh	Меш бөлігі ету
+Add a modifier	Модификатор қосу
+Materials	Материалдар
+Colour (multiplies the texture)	Түс (текстураға көбейтіледі)
+Assign to selected faces	Таңдалған жақтарға тағайындау
+Choose…	Таңдау…
+No texture	Текстурасыз
+Save as…	Басқаша сақтау…
+PNG, JPEG, BMP, TGA, TIFF, WebP or DDS	PNG, JPEG, BMP, TGA, TIFF, WebP немесе DDS
+Transparency	Мөлдірлік
+Opaque	Жоқ
+Cut out	Қию
+Blended	Араластыру
+Glows	Жарқырау
+Light of its own: black for none	Өз жарығы: қара — жарықсыз
+Shine	Жылтыр
+Normal map	Нормаль картасы
+ORM map	ORM
+Night texture	Түнгі
+Light map	Жарық картасы
+Remove the material	Материалды жою
+Add a material	Материал қосу
+Import materials…	Материалдарды импорттау…
+From an .mtl, a glTF / GLB / FBX, or the pictures of one PBR material (base colour, normal, roughness, metal, AO...)	.mtl, glTF / GLB / FBX немесе бір PBR материалының суреттерінен (негізгі түс, нормаль, кедір-бұдыр, металл, AO...)
+Lamps	Шамдар
+Glow	Жарқырау
+Light on the ground	Жердегі жарық
+Colour	Түс
+Reach	Радиус
+On	Қосулы
+Always	Әрқашан
+At night	Түнде
+variable	айнымалы
+Seen from one side	Бір жағынан көрінеді
+Star	Жұлдыз
+Facing	Бағыты
+Remove the lamp	Шамды жою
+Add a glow	Жарқырау қосу
+A lamp's bulb, a lit sign: a glow seen at night	Шам шамы, жарықты көрсеткіш: түнде көрінетін жарқырау
+Add light on the ground	Жерге жарық қосу
+The pool of light a street lamp throws at night	Көше шамы түнде түсіретін жарық дағы
+Signal head, lamps	Бағдаршам басы, шамдар
+Put it within 40 m of a crossing with a light program: it takes its light from it (or link it in its properties)	Оны жарық бағдарламасы бар қиылыстан 40 м ішінде қойыңыз: ол жарықты содан алады (немесе қасиеттерінде байланыстырыңыз)
+Bake	Пісіру
+Its textures and colours painted into one picture on a new UV map (one material: fewer draws in the game), with its own shadows and its lamps' night light if chosen	Нысан текстуралары мен түстері жаңа UV картасындағы бір суретке салынады (бір материал: ойында аз сурет салу), қалауыңызша өз көлеңкелерімен және шамдардың түнгі жарығымен
+Ambient occlusion	Ambient occlusion
+How far its shadows reach	Көлеңкелері қаншалықты алысқа созылады
+Lamps' light at night (light map)	Шамдардың түнгі жарығы (жарық картасы)
+The object's last change (Ctrl+Z in the edit mode)	Нысанның соңғы өзгерісі (өңдеу режимінде Ctrl+Z)
+Divisions X	X бөлімдері
+Divisions Y	Y бөлімдері
+Rings	Сақиналар
+Subdivisions	Бөлімдер
+Bottom radius	Төменгі радиус
+Top radius	Жоғарғы радиус
+Tube radius	Түтік радиусы
+Tube segments	Түтік сегменттері
+Outer radius	Сыртқы радиус
+Inner radius	Ішкі радиус
+Opening	Тесік
+Wall	Қабырға
+Mesh	Меш
+A copy of this object's type of its own is made for it, with its meshes, materials and lamps to edit; the original stays as it is	Нысан үшін мештері, материалдары және шамдары бар түрдің өз көшірмесі жасалады; түпнұсқа өзгермейді
+As a mesh	Меш ретінде
+Copy as an object	Нысан ретінде көшіру
+An openMapper object of its shape beside it, to edit as a mesh (vertices, edges, faces)	Оның жанында сол пішінді openMapper нысаны, мештей өңдеу үшін (төбелер, қырлар, жақтар)
+The same, the spline taken away (its lanes go with it)	Дәл сондай, сплайн жойылады (жолақтарымен бірге)
+Splines as a mesh	Сплайндар меш ретінде
+Copy as one object	Бір нысан ретінде көшіру
+Replace by one object	Бір нысанмен ауыстыру
+Export the selection…	Таңдалғанды экспорттау…
+As meshes	Мештер ретінде
+Join into one object (Ctrl+J)	Бір нысанға біріктіру (Ctrl+J)
+All their parts in the one shown in the properties, the others gone	Олардың барлық бөліктері қасиеттердегі нысанда, қалғандары жойылады
+Solid modelling (CSG): the object shown in the properties with the others	Қатты денелерді модельдеу (CSG): қасиеттердегі нысан қалғандарымен
+Keep the cutting objects	Кесетін нысандарды қалдыру
+Vertices	Төбелер
+Edges	Қырлар
+Faces	Жақтар
+vertices	төбе
+edges	қыр
+Selected	Таңдалды
+X-ray: pick through the mesh	Рентген: мешті аралап таңдау
+All (A)	Барлығы (A)
+None (Alt+A)	Ешқайсысы (Alt+A)
+Invert (Ctrl+I)	Инверсия (Ctrl+I)
+Linked (Ctrl+L)	Байланысқаны (Ctrl+L)
+More	Көбірек
+Less	Азырақ
+Click, Shift + click to add, drag on nothing for a box, a second click or Alt + click for a loop	Басу, Shift + басу — қосу, бос жерде сүйреу — жақтау, екінші басу немесе Alt + басу — ілмек
+Change	Өзгерту
+Extrude (E)	Экструзия (E)
+Inset (I)	Ішке кіргізу (I)
+Bevel (Ctrl+B)	Фаска (Ctrl+B)
+Loop cut (Ctrl+R)	Ілмекпен кесу (Ctrl+R)
+Point at an edge and press Ctrl+R	Қырды көрсетіп, Ctrl+R басыңыз
+Subdivide	Бөлу
+Fill (F)	Толтыру (F)
+Bridge loops	Ілмектерді жалғау
+Connect (J)	Төбелерді жалғау (J)
+Poke	Орталықтан желпуіш
+Duplicate (Shift+D)	Телнұсқалау (Shift+D)
+Split (Y)	Ажырату (Y)
+Separate into an object (P)	Жеке нысанға (P)
+Spin 360°	360° айналдыру
+The selection turned round the object's up axis through its middle, in 12 steps	Таңдалған нысанның тік осі бойымен 12 қадаммен айналады
+Smooth vertices	Төбелерді тегістеу
+Merge (M)	Біріктіру (M)
+At the middle	Ортасына
+At the first	Біріншіге
+At the last	Соңғыға
+Collapse each piece	Әр бөлікті қысу
+By distance (1 mm)	Қашықтық бойынша (1 мм)
+Delete (X)	Жою (X)
+Only faces	Тек жақтар
+Dissolve vertices	Төбелерді ерітіп жіберу
+Dissolve edges	Қырларды ерітіп жіберу
+Dissolve faces	Жақтарды ерітіп жіберу
+Triangulate (Ctrl+T)	Үшбұрыштау (Ctrl+T)
+Triangles to quads (Alt+J)	Үшбұрыштарды төртбұрышқа (Alt+J)
+Shade smooth	Тегіс көлеңкелеу
+Shade flat	Жалпақ көлеңкелеу
+Flip normals (Alt+N)	Нормальдарды аудару (Alt+N)
+Normals outward (Shift+N)	Нормальдар сыртқа (Shift+N)
+Mark seam	Тігісті белгілеу
+Clear seam	Тігісті алу
+Mark sharp	Өткір деп белгілеу
+Clear sharp	Өткірді алу
+Adjust the last operation	Соңғы әрекетті баптау
+Slide	Жылжыту
+Cuts	Кесулер
+UV map	UV картасы
+Unwrap	Жазу
+By seams (conformal)	Тігістер бойынша (конформды)
+Smart project	Ақылды проекция
+Cube projection (metres)	Кубтық проекция (метр)
+Cylinder projection	Цилиндрлік проекция
+Sphere projection	Сфералық проекция
+Project from the view	Көріністен проекциялау
+Lightmap pack	Жарық картасына жинау
+Close the UV editor	UV редакторын жабу
+UV editor	UV редакторы
+Faces of the selection (all, with none selected); mark seams on edges first for an unwrap by seams	Таңдалған жақтар (ештеңе таңдалмаса, барлығы); тігістер бойынша жазу үшін алдымен қырларда тігістерді белгілеңіз
+Material of the selected faces	Таңдалған жақтардың материалы
+With lamps	Жарықпен
+Street lamp	Көше шамы
+A pole with a lamp that glows and lights the ground at night	Түнде жарқырап, жерді жарықтандыратын шамы бар бағана
+Signal head	Бағдаршам басы
+A traffic light of the lamps below that a crossing's light program drives	Төмендегі шамдардан тұратын, қиылыс жарық бағдарламасы басқаратын бағдаршам
+Lamps:	Шамдар:
+Picture, light, sound	Сурет, жарық, дыбыс
+Picture / pattern…	Сурет / өрнек…
+Choose a picture or a texture: it becomes an object you place, move, turn and scale like any other. Several repeats make a pattern	Сурет немесе текстураны таңдаңыз: ол кез келген басқасы сияқты қойылатын, жылжытылатын, бұрылатын және масштабталатын нысан болады. Бірнеше қайталау өрнек береді
+Light source	Жарық көзі
+A lamp that glows and lights the ground round it	Жарқырайтын және айналасындағы жерді жарықтандыратын шам
+Sound source…	Дыбыс көзі…
+Choose a sound file (.wav): it plays where you put the marker, as far as the radius carries; the marker shows in the editor only	Дыбыс файлын (.wav) таңдаңыз: ол маркер тұрған жерде радиус жеткенше естіледі; маркер тек редакторда көрінеді
+Picture width, m	Сурет ені, м
+Repeats	Қайталау
+on the ground	жерде
+standing	тұр
+Light colour	Жарық түсі
+Light reach, m	Жарық қашықтығы, м
+at night	түнде
+always	әрқашан
+Sound reach, m	Дыбыс қашықтығы, м
+Sound volume	Дыбыс деңгейі
+Overview: click or drag to move there · double-click: larger / smaller · M: hide	Шолу: көшу үшін басыңыз немесе сүйреңіз · екі рет басу: үлкен / кіші · M: жасыру
+Name:	Атауы:
+My town	Менің қалам
+Description:	Сипаттамасы:
+What the map is, for the game's map list	Бұл қандай карта (ойындағы карталар тізімі үшін)
+Size:	Өлшемі:
+Ground height:	Жер биіктігі:
+ m above sea level	 м теңіз деңгейінен
+Traffic:	Қозғалыс:
+keeps right	оң жақты
+keeps left	сол жақты
+Busy:	Жүктеме:
+cars	көліктер
+passengers	жолаушылар
+Years:	Жылдар:
+year offset	жыл ығысуы
+Added to today's year when the game starts at the real date	Ойын нақты күннен басталғанда ағымдағы жылға қосылады
+Money:	Валюта:
+Tickets:	Билеттер:
+Seasons:	Жыл мезгілдері:
+four, snowy winter	төрт, қарлы қыс
+mild winter	жұмсақ қыс
+summer only	тек жаз
+Rail:	Рельстер:
+trams and trains follow their tracks' switches	трамвайлар мен пойыздар бұрмалағыштармен жүреді
+Ground texture (all tiles):	Жер текстурасы (барлық тайлдар):
+template	үлгі
+More ground layers are painted later (Paint tool); the map's settings can all be changed in Map > Map settings.	Басқа жер қабаттары кейін салынады («Бояу» құралы); картаның барлық баптауларын «Карта > Карта баптаулары» арқылы өзгертуге болады.
+Create	Жасау
+as the template	үлгідегідей
+ways	жол
+bus routes downloaded	маршрут жүктелді
+not had:	жүктелмеді:
+The streets of the map's place built as roads with junctions where they meet, its bus stops, lines, trees and woods. Best on tiles with no roads yet: roads lying on ones the map has are left out.	Картаның орнындағы көшелер, түйісетін жерлерінде қиылыстары бар жолдар, аялдамалары, желілері, ағаштары мен ормандары салынады. Жолдары жоқ тайлдарда жақсы: картада барларға түсетін жолдар өткізіліп жіберіледі.
+The map does not lie on the Earth yet: place it in Satellite and terrain (Map menu, I) first.	Карта әлі Жерге байланбаған: алдымен оны «Спутник және жер бедері» арқылы орналастырыңыз (Карта мәзірі, I).
+Load the terrain heights first (Satellite and terrain): the roads follow the ground as it is when they are built.	Алдымен жер бедері биіктіктерін жүктеңіз («Спутник және жер бедері»): жолдар салынғанда жердің қазіргі күйіне жатады.
+Download for the map's tiles	Карта тайлдары үшін жүктеу
+bus routes	маршруттар
+trees	ағаштар
+buildings	ғимараттар
+water	су
+Downloading…	Жүктелуде…
+no type chosen	түр таңдалмаған
+Use the chosen	Таңдалғанды алу
+One-way roads	Бір жақты жолдар
+Each carriageway of a dual road and one-way streets: with a one-way road type they lie side by side as they should; with none chosen they get their kind's	Бөлгіш жолағы бар жолдың әр жарты бөлігі және бір жақты көшелер: бір жақты түрмен олар қатар жатады, қалай болу керек; таңдалмаса — өз түрінің түрін алады
+as their kind	өз түріндей
+no stop object	аялдама нысаны жоқ
+The stop chosen in Game logic > Bus stops	«Ойын логикасы > Аялдамалар» бөлімінде таңдалған аялдама
+Bus lines	Автобус желілері
+Each bus route through two or more of the map's stops a trip of its line, the way found along the roads; a tour from 06:00 to 22:00 for each new line	Картаның екі немесе одан көп аялдамасы арқылы өтетін әр маршрут — өз желісінің рейсі, жол жолдар бойымен өзі табылады; әр жаңа желіге 06:00-ден 22:00-ге дейінгі шығу
+Trees and woods	Ағаштар мен ормандар
+Single trees, rows of them and woods, planted with the plant mix (Objects tool > Plant brush) or the tree chosen; none on a road	Жеке ағаштар, олардың қатарлары және ормандар, өсімдік қоспасымен («Нысандар» құралы > Өсімдік қылқаламы) немесе таңдалған ағашпен отырғызылады; жолдарға емес
+no plants chosen	өсімдіктер таңдалмаған
+kinds of plants	өсімдік түрі
+apart in woods	ормандағы аралық
+Buildings	Ғимараттар
+Each outline filled with the model of the folder chosen whose ground plan comes nearest, its front to the nearest road; an outline no model fits is left out	Әр контур жоспары ең ұқсас таңдалған қалтаның моделімен толтырылады, беті ең жақын жолға қараған; ешбір модель сай келмейтін контур өткізіліп жіберіледі
+no folder	қалта таңдалмаған
++ its folder	+ оның қалтасы
+Add the folder of the object chosen in the catalogue (Buildings_MC, …)	Каталогта таңдалған нысанның қалтасын қосу (Buildings_MC, …)
+Lakes and rivers: the ground inside them lowered below the banks, and the tiles they lie on given water a little under the banks' height (OMSI's water is one level for a tile: low ground elsewhere on it is flooded too)	Көлдер мен өзендер: ішіндегі жер жағалаудан төмен түсіріледі, ал олар жатқан тайлдарға жағалау биіктігінен сәл төмен су беріледі (OMSI суы тайлға бір: ондағы басқа төмен жерлер де су астында қалады)
+deep	тереңдік
+a road type (Roads tool), then "Use the chosen"	жол түрі («Жолдар» құралы), сосын «Таңдалғанды алу»
+a stop (Game logic > Bus stops), then "Use the chosen"	аялдама («Ойын логикасы > Аялдамалар»), сосын «Таңдалғанды алу»
+a tree in the Objects catalogue (or a plant mix)	нысандар каталогындағы ағаш (немесе өсімдік қоспасы)
+a building in the catalogue, then "+ its folder"	каталогтағы ғимарат, сосын «+ оның қалтасы»
+To build, choose (or untick):	Салу үшін таңдаңыз (немесе белгіні алыңыз):
+A one-way street is built the way it runs in OpenStreetMap: give it a one-way road type	Бір жақты көше OpenStreetMap-тағы бағытымен салынады: оған бір жақты жол түрін беріңіз
+Build	Салу
+Name, file or IDCode	Атауы, файл немесе IDCode
+things on the map	картадағы нәрселер
+Groups	Топтар
+Select the group and go there	Топты таңдап, соған өту
+Select everything in it	Ондағының бәрін таңдау
+Select it and go there	Таңдап, соған өту
+more: narrow the search	тағы бар: іздеуді нақтылаңыз
+Select all of them	Барлығын таңдау
+Go to the first	Біріншісіне өту
+Pick a tree in the catalogue, then paint	Каталогтан ағашты таңдап, қылқаламмен жүріңіз
+Pick a tree in the catalogue, then click round the area	Каталогтан ағашты таңдап, аумақты басып айналып шығыңыз
+Pick a road type, click the centre, then the ring	Жол түрін таңдаңыз, орталықты, сосын сақинаны басыңыз
+Select a road (double-click: all of it): its properties show its height profile	Жолды таңдаңыз (екі рет басу: түгел): қасиеттерінде биіктік профилі бар
+Select one of openMapper's junctions: its properties have Traffic lights and crossings	openMapper қиылысын таңдаңыз: қасиеттерінде бағдаршамдар мен өткелдер бар
+Select the signal head (or a display): Linked objects in its properties, then click its crossing	Бағдаршам басын (немесе таблоны) таңдаңыз: қасиеттерінде «Байланысқан нысандар», сосын қиылысты басыңыз
+Select a road, pick an object in the Objects catalogue: Objects along the road in its properties	Жолды таңдап, «Нысандар» каталогынан нысанды таңдаңыз: қасиеттерінде «Жол бойындағы нысандар»
+Select a track (double-click: all of it): Overhead wire under Parallel copy in its properties	Жолды таңдаңыз (екі рет басу: түгел): қасиеттерінде «Параллель көшірме» астындағы «Байланыс желісі»
+Select a road or a chain: Parallel copy in its properties	Жолды немесе тізбекті таңдаңыз: қасиеттерінде «Параллель көшірме»
+Select a road (double-click: all of it): Paint the ground along it in its properties	Жолды таңдаңыз (екі рет басу: түгел): қасиеттерінде «Бойына жерді бояу»
+Click a tile: its water is in the panel; lower the ground under it with the Terrain tool	Тайлды басыңыз: оның суы панельде; астындағы жерді «Жер бедері» құралымен түсіріңіз
+Height map: at the end of the Terrain panel	Биіктік картасы: «Жер бедері» панелінің соңында
+By slope and height: at the end of the Paint panel	Еңіс пен биіктік бойынша: «Бояу» панелінің соңында
+View menu: Time of day, Season	«Көрініс» мәзірі: тәулік уақыты, жыл мезгілі
+What do you want to do?	Не істегіңіз келеді?
+Groups…	Топтар…
+Objects on the map by folder	Карта нысандары қалталар бойынша
+Knife: cut roads	Пышақ: жолдарды кесу
+Test drive in OMSI 2 (the original)	Түпнұсқа OMSI 2-де сынақ жүру
+Overview map	Шолу картасы
+Place a bus stop	Аялдама қою
+Place a start point	Старт нүктесін қою
+Plant trees with a brush	Қылқаламмен ағаш отырғызу
+Plant a wood or a park	Орман немесе саябақ отырғызу
+Roundabout	Айналма
+Height profile of a road	Жолдың биіктік профилі
+Traffic lights and zebra crossings	Бағдаршамдар мен зебралар
+Link a signal head to its crossing	Бағдаршамды қиылыспен байланыстыру
+Objects along a road	Жол бойындағы нысандар
+Overhead wire along a track	Жол бойындағы байланыс желісі
+Parallel copy of a road	Жолдың параллель көшірмесі
+Paint the ground along a road	Жол бойына жерді бояу
+Water, lake, river	Су, көл, өзен
+Ramp in the ground	Жердегі пандус
+Height map import or export	Биіктік картасын импорттау немесе экспорттау
+Time of day and season	Тәулік және жыл уақыты
+PBR material	PBR материалы
+none	жоқ
+Own picture…	Өз суреті…
+Choose a texture of the object, or a picture of your own.	Нысан текстурасын немесе өз суретіңізді таңдаңыз.
+Normals (_nn)	Нормальдар (_nn)
+Roughness	Кедір-бұдыр
+Shadow in hollows	Ойыстардағы көлеңке
+Bumps	Бедер
+Only big shapes	Тек ірі пішіндер
+Dark parts stand out (not sink in)	Қараңғы бөліктер шығып тұрады (батып емес)
+Bright parts smoother	Жарық бөліктер тегісірек
+Metal	Металл
+Back to the defaults	Әдепкіге қайтару
+This texture has PBR maps of its own already: new ones made here are taken instead of them.	Бұл текстураның өз PBR карталары бар: мұнда жасалғандар олардың орнына қолданылады.
+Written as:	Былай жазылады:
+PBR maps made	PBR карталары жасалды
+Delete the PBR material	PBR материалын жою
+PBR maps taken away	PBR карталары алынды
+Height profile	Биіктік профилі
+over the ground	жерден жоғары
+Click: go there in the view · drag a dot (a joint) up or down: its height	Басу: көріністе сонда өту · нүктені (түйіспені) жоғары не төмен сүйреу: оның биіктігі
+Climbs, falls	Өрлеу, түсу
+Steepest	Ең тік
+at	мұнда:
+Highest over the ground	Жерден ең жоғары
+Deepest under it	Астындағы ең терең
+Over 8 % is steep for a bus; over 12 % few streets go	8 %-дан жоғары автобусқа тік; 12 %-дан жоғарысы сирек
+roadway	жүріс бөлігі
+Road types	Жол түрлері
+Make a new road type…	Жаңа жол түрін жасау…
+My road	Менің жолым
+ · own	 · өзіндік
+Create the road type	Жол түрін жасау
+Road type made: the Roads tool builds with it	Жол түрі жасалды: «Жолдар» құралы онымен салады
+Change it in the road maker	Конструкторда өзгерту
+Its junctions	Оның қиылыстары
+Make a junction where it meets another road (else they only cross)	Басқа жолмен түйіскен жерде қиылыс жасау (әйтпесе тек қиылысады)
+Corners	Бұрыштар
+× rounder	× дөңгелегірек
+Traffic lights by themselves	Бағдаршамдар өздігінен
+Zebra crossings on every arm	Барлық кіреберісте жаяу жүргіншілер өткелдері
+Used for the junctions made from now on (where several road types meet, the one asking more wins). A junction already made keeps its own settings: select it to change them.	Бұдан былай жасалатын қиылыстарға қолданылады (әртүрлі жол түрлері түйісетін жерде көбірек талап ететіні алынады). Дайын қиылыс өз баптауларын сақтайды: өзгерту үшін оны таңдаңыз.
+Pick a road type on the left, or make a new one.	Сол жақтан жол түрін таңдаңыз немесе жаңасын жасаңыз.
+Road maker	Жол конструкторы
+Lanes	Жолақтар
+(▼ 0: one-way)	(▼ 0: бір жақты)
+Lane width	Жолақ ені
+Middle strip	Бөлгіш
+Footways	Жаяу жолдар
+Kerb	Жиек
+Roadway texture	Жүріс бөлігінің текстурасы
+Footway texture	Жаяу жол текстурасы
+Own…	Өзіндік…
+The roadway texture is laid once across all its lanes (as OMSI 2's lane textures are painted: pick one with as many lanes); the footway texture's right end is the kerb.	Жүріс бөлігінің текстурасы барлық жолақтар бойымен бір рет салынады (OMSI 2 жолақ текстуралары қалай боялған болса: жолақ саны бірдей біреуін алыңыз); жаяу жол текстурасының оң жақ шеті — жиек.
+not on the map	картада жоқ
+Signal routes	Сигнал маршруттары
+Each railway signal clears when a train wants the track pieces of its route and none stands on them.	Әр теміржол сигналы пойызға маршруттың жол бөліктері керек болғанда және онда ешкім тұрмағанда ашылады.
+New route for the selected signal	Таңдалған сигнал үшін жаңа маршрут
+Select a signal (one object) in the view first	Алдымен көріністе сигналды (бір нысан) таңдаңыз
+The selected object does not look like a signal (its name says nothing of one): check it is.	Таңдалған нысан сигналға ұқсамайды (атауында ол туралы ештеңе жоқ): оның сигнал екенін тексеріңіз.
+No routes yet.	Әзірге маршруттар жоқ.
+pieces	бөлік
+Signal	Сигнал
+the selected	таңдалған
+Aspect	Көрсеткіш
+What the signal shows when this route is clear: 1 proceed, 2 proceed slowly (with a speed limit)…	Бұл маршрут бос болғанда сигнал не көрсетеді: 1 жүру, 2 баяу жүру (шектеумен)…
+Distant signal	Алдын ала сигнал
+Next signal	Келесі сигнал
+Speed limit	Шектеу
+OMSI's route kind (the stock maps have 0 and 1)	OMSI маршрут түрі (стандартты карталарда 0 және 1)
+Track pieces	Жол бөліктері
+Take the selected track	Таңдалған жолдарды алу
+Every rail path of the selected tracks and switches (double-click a track: all of it); replaces the pieces	Таңдалған рельстер мен бұрмалағыштардың барлық рельс жолдары (жолды екі рет басу — түгел); бөліктерді ауыстырады
+Select the signal and its pieces in the view	Сигнал мен оның бөліктерін көріністе таңдау
+Delete the route	Маршрутты жою
+Lines and timetable	Желілер және кесте
+Edit timetable	Кестені өңдеу
+No bus stop there: click one of the orange marks	Мұнда аялдама жоқ: қызғылт сары белгілердің бірін басыңыз
+The roads can't be read without the OMSI 2 folder.	OMSI 2 қалтасынсыз жолдарды оқу мүмкін емес.
+A line needs at least two bus stops on the map: place them with Game logic > Bus stops, beside a road.	Желіге картада кемінде екі аялдама керек: оларды жол жанына Ойын логикасы > Аялдамалар арқылы қойыңыз.
+Lines	Желілер
+No lines yet.	Әзірге желілер жоқ.
+New line	Жаңа желі
+Pick a line on the left, or make a new one.\n\nA line has trips (a way from stop to stop) and tours (one bus's day: which trip it drives when).	Сол жақтан желіні таңдаңыз немесе жаңасын жасаңыз.\n\nЖелінің рейстері (аялдамадан аялдамаға дейінгі жол) және шығулары (бір автобустың күні: қай рейсті қашан жүреді) бар.
+That name is taken or can't be a file name	Бұл атау бос емес немесе файл атауы бола алмайды
+A copy of the line with its trips and tours (a variant to change)	Желінің рейстері мен шығулары бар көшірмесі (өзгертуге арналған нұсқа)
+Delete the line and its trips	Желі мен оның рейстерін жою
+Players can drive it	Ойыншы оны жүргізе алады
+Trips	Рейстер
+Tours and times	Шығулар және уақыт
+A tour is one bus's day: the trips it drives, one after the other, and when each leaves.	Шығу — бір автобустың күні: ол бірінен соң бірін жүретін рейстер және әрқайсысының жөнелу уақыты.
+A trip is one way along the line: its stops in order. Most lines have two, there and back.	Рейс — желі бойымен бір сапар: аялдамалары ретімен. Көбіне екеу болады: барып-келу.
+New trip	Жаңа рейс
+Make the way back	Кері рейс жасау
+A new trip with the same stops the other way round	Сол аялдамалары бар, кері бағыттағы жаңа рейс
+Trip	Рейс
+Delete the trip	Рейсті жою
+Destination sign	Көрсеткіш тақта
+This trip runs on a track of its own (a train): its stops are kept as they are.	Бұл рейс өз жолымен жүреді (пойыз): оның аялдамалары сол күйінде қалады.
+Show on the map	Картада көрсету
+No stops yet.	Әзірге аялдамалар жоқ.
+Done picking	Дайын
+Pick stops on the map	Картадан таңдау
+Click the stops in the view one after the other, in the order the bus calls at them	Автобус тоқтайтын ретімен аялдамаларды карта терезесінен бірінен соң бірін басыңыз
+Add stop…	Қосу…
+Click stops on the map (they are marked orange)…	Картадағы аялдамаларды басыңыз (олар қызғылт сарыменен белгіленген)…
+Add two stops or more: the way between them is found along the roads.	Екі немесе одан көп аялдама қосыңыз: арасындағы жол жолдар бойымен табылады.
+Finding the way…	Жол ізделуде…
+Route found:	Жол табылды:
+km along the roads (blue in the view)	км жолдар бойымен (көріністе көк)
+the way drives a one-way lane against its direction; is a path drawn the wrong way round?	жол бір жақты жолақпен оның бағытына қарсы жүреді; жол кері бағытта салынбаған ба?
+is not on the map	картада жоқ
+no road with car lanes within 15 m	15 м ішінде көлік жолақтары бар жол жоқ
+No way	Жол жоқ
+the roads are not joined, or run the other way (see View > AI lanes)	жолдар жалғанбаған немесе кері жаққа кетеді (Көрініс > ЖИ жолақтары қараңыз)
+The trip is saved, but its way is not until this is mended	Рейс сақталады, бірақ оның жолы бұл түзетілгенше сақталмайды
+Trip time	Жол уақыты
+Guess:	Бағалау:
+From the route's length at the pace of a town bus	Жол ұзындығы және қалалық автобус қарқыны бойынша
+Times at the stops	Аялдамалардағы уақыт
+Minutes after the trip leaves. They follow the distance between the stops; fix one to keep the bus to it (it waits there when early).	Рейс жөнелгеннен кейінгі минуттар. Олар аялдамалар арасындағы қашықтықты ереді; автобус оны ұстануы үшін уақытты бекітіңіз (ертерек келсе, күтеді).
+fixed	бекітілген
+Spread all by distance	Барлығын қашықтық бойынша бөлу
+Holidays and school holidays	Мерекелер мен демалыстар
+On a public holiday only the tours with Holidays ticked run; school holidays pick the tours for school holidays or school days.	Мереке күні тек «Мерекелер» белгісі бар шығулар жүреді; мектеп демалысында демалысқа немесе оқу күндеріне арналған шығулар таңдалады.
+Copy to	Көшіру:
+The same days a year later (feasts that move, like Easter, are to be set by hand)	Бір жылдан кейінгі сол күндер (Пасха сияқты ауысатын мерекелерді қолмен түзетіңіз)
+The map has no depot (ailists.cfg): only you drive these tours, no AI buses.	Картада депо жоқ (ailists.cfg): бұл шығуларды тек сіз жүргізесіз, ЖИ автобустары болмайды.
+Add a depot with OMSI 2's MAN buses	OMSI 2 MAN автобустары бар депо қосу
+Its buses run the tours (Map > Traffic and AI shows it)	Оның автобустары шығулар бойынша жүреді (Карта > Трафик және ЖИ көрсетеді)
+Tour	Рейстер тізбегі
+New tour	Жаңа шығу
+Pick a tour to see its departures.	Жөнелтулерді көру үшін шығуды таңдаңыз.
+Make a trip first.	Алдымен рейс жасаңыз.
+Number	Нөмір
+Buses from	Автобустар қайдан:
+Delete the tour	Шығуды жою
+Runs on	Күндері
+Mo	Дс
+Tu	Сс
+We	Ср
+Th	Бс
+Fr	Жм
+Sa	Сб
+Su	Жс
+Every day	Күн сайын
+Monday to Friday	Дс–Жм
+Weekends and holidays	Демалыс және мереке күндері
+In the school holidays	Мектеп демалысында
+On school days	Оқу күндері
+Next departure	Келесі жөнелту
+The next trip of the line, when the bus is back and has had its break	Автобус оралып, үзіліс алған кезде желінің келесі рейсі
+Fill from	Мынадан толтыру:
+break	үзіліс
+Fill	Толтыру
+Replace the tour's departures: the line's trips one after the other, a break after each	Шығудың жөнелтулерін ауыстыру: желі рейстері бірінен соң бірі, әрқайсысынан кейін үзіліс
+No departures yet: add them above.	Әзірге жөнелтулер жоқ: оларды жоғарыда қосыңыз.
+Delete the departure	Жөнелтуді жою
+GPS tracks to trace	Іздеу үшін GPS-тректер
+A route recorded on a phone or drawn elsewhere (GPX, KML, GeoJSON), shown in the view in magenta to draw roads along, or built into a road at once	Телефонмен жазылған немесе басқа жерде салынған маршрут (GPX, KML, GeoJSON): жол салу үшін көріністе қошқыл қызылмен көрсетіледі немесе бірден жол болып салынады
+Place the map on the Earth first (Map > Satellite and terrain)	Алдымен картаны Жерге орналастырыңыз (Карта > Спутник және жер бедері)
+Load a file…	Файлды жүктеу…
+None loaded	Ештеңе жүктелмеген
+Forget it	Алып тастау
+Build a road along it:	Бойымен жол салу:
+Choose a road type in the Roads tool to build it	Салу үшін «Жолдар» құралында жол түрін таңдаңыз
+Built as if drawn: corners rounded into arcs, junctions where it meets roads, cut at the map's edge; one undo step	Салынған сияқты құрылады: бұрыштар доғамен дөңгелектенеді, жолдармен түйіскен жерде қиылыстар, картаның шетінде кесіледі; бір болдырмау қадамы
+Traffic and AI	Трафик және ЖИ
+Edit traffic	Трафикті өңдеу
+Over the day	Тәулік бойы
+Vehicle groups	Көлік топтары
+Parked cars and people	Тұрақтар және адамдар
+Depot files	Депо файлдары
+The AI's vehicles come in groups. A car group drives about on the roads; a depot sends out the buses of the timetable's tours.	ЖИ көліктері топтарға бөлінген. Көлік тобы жолдармен өзі жүреді; депо кестенің шығуларына автобустар шығарады.
+(This map's ailists.cfg is in OMSI 2's first format: it is written in the second one when changed.)	(Бұл картаның ailists.cfg файлы OMSI 2-нің бірінші форматында: өзгерткенде екіншісінде жазылады.)
+is to drive about, but there is no such group.	жолдармен жүруі керек, бірақ мұндай топ жоқ.
+Make it with OMSI 2's vehicles	OMSI 2 көліктерімен жасау
+The group of that name from OMSI 2's own maps	OMSI 2-нің өз карталарындағы осы атаулы топ
+New car group	Жаңа көлік тобы
+New depot	Жаңа депо
+Pick a group on the left.	Сол жақтан топты таңдаңыз.
+Delete the group (tours still take their buses from it)	Топты жою (шығулар одан автобустарды әлі алады)
+Delete the group	Топты жою
+Tours that take their buses from here:	Автобустарды осыдан алатын шығулар:
+Drives about on its own	Өзі жолдармен жүреді
+as many:	саны:
+Times the traffic over the day	Тәулік бойы трафик көбейткіші
+A vehicle with more weight comes along more often.	Салмағы көп көлік жиірек кездеседі.
+Add a vehicle…	Көлік қосу…
+Depot file (.hof)	Депо файлы (.hof)
+None of its buses has this depot file beside it: they run without their destination signs and fleet data.	Оның ешбір автобусының қасында бұл депо файлы жоқ: олар көрсеткіш тақталарсыз және парк деректерінсіз жүреді.
+The buses it has: a type of bus and the fleet number and plate of each.	Оның автобустары: автобус түрі және әрқайсысының парк нөмірі мен мемлекеттік нөмірі.
+Take this type out	Бұл түрді алып тастау
+number	нөмір
+plate	мемлекеттік нөмір
+Another bus	Тағы автобус
+Add a type of bus…	Автобус түрін қосу…
+The lists can't be read without the OMSI 2 folder.	OMSI 2 қалтасынсыз тізімдерді оқу мүмкін емес.
+Parked cars	Тұрған көліктер
+What stands on the car parks (Game logic > Car parks). A car listed more often stands there more often.	Тұрақтарда не тұрады (Ойын логикасы > Тұрақтар). Көп жазылған көлік жиірек тұрады.
+Who walks about and waits at the stops.	Кім қыдырады және аялдамаларда күтеді.
+Drivers	Жүргізушілер
+Who drives the AI's buses.	ЖИ автобустарын кім жүргізеді.
+How often it is listed (0 takes it out)	Тізімде неше рет (0: алып тастау)
+How busy the map is at each hour: the road traffic, and the passengers at the stops. 1 is normal; the game goes along the line between the points.	Карта әр сағатта қаншалықты жандана түседі: жолдардағы көліктер және аялдамалардағы жолаушылар. 1: қалыпты; ойын нүктелер арасындағы сызық бойымен жүреді.
+Road traffic	Жолдағы көліктер
+Passengers	Жолаушылар
+Its own traffic over the day	Тәулік бойы өз трафигі
+Without one the group follows the map's road traffic. A curve can be for some days of the week only.	Онсыз топ картаның жол трафигін ереді. Қисық тек апта күндерінің біразына болуы мүмкін.
+Days:	Күндер:
+Mo–Fr	Дс–Жм
+Take this curve out	Бұл қисықты алып тастау
+A curve	Қисық
+Typical day…	Типтік күн…
+Quiet village	Тыныш ауыл
+Town with rush hours	Шыңғы сағаттары бар қала
+The same all day	Күні бойы бірдей
+No curve: 1 all day.	Қисық жоқ: күні бойы 1.
+Take the point out	Нүктені алып тастау
+Point	Нүкте
+Smart unwrap	Ақылды жазу
+Every flat side apart in the picture, no faces on top of one another (all faces if none is selected)	Әр жалпақ жағы суретте бөлек, грандар бір-бірінің үстінде жатпайды (ештеңе таңдалмаса, барлығы)
+Box unwrap	Қорапшамен жазу
+The six sides of a box apart in the picture	Қораптың алты жағы суретте бөлек
+Flip ↔	Шағылыстыру ↔
+Flip ↕	Шағылыстыру ↕
+Scale ×2	Масштаб ×2
+Scale ÷2	Масштаб ÷2
+Fit	Сыйғызу
+Stretched to fill the picture	Бүкіл суретке созу
+Pack islands	Аралдарды жинау
+Average island scale	Аралдар масштабын теңестіру
+Seams from islands	Аралдардан тігістер
+Click: a face (Shift adds) · drag: move the selected · wheel: zoom · right button: pan	Басу: жақ (Shift — қосу) · сүйреу: таңдалғанды жылжыту · дөңгелек: масштаб · оң батырма: жылжыту
+Could not keep the views	Көріністерді сақтау мүмкін болмады
+Saved views	Сақталған көріністер
+Places of the map to come back to: Ctrl+1…9 goes to the first nine, Ctrl+Shift+1…9 keeps the view there	Қайта оралатын карта орындары: Ctrl+1…9 алғашқы тоғызына апарады, Ctrl+Shift+1…9 көріністі сонда сақтайды
+Keep this view	Осы көріністі сақтау
+None yet	Әзірге жоқ
+Go	Өту
+Earlier in the list	Тізімде жоғары
+Later in the list	Тізімде төмен
+Take the view now instead	Орнына қазіргі көріністі қою
+Keep proportions	Пропорцияны сақтау
+Back to its own size	Бастапқы өлшемге қайтару
+Updates	Жаңартулар
+This version:	Осы нұсқа:
+New version:	Жаңа нұсқа:
+Install and restart	Орнату және қайта іске қосу
+Not now	Қазір емес
+What changed	Не жаңа
+Downloading and installing	Жүктеу және орнату
+Installed version	Орнатылған нұсқа
+openMapper restarts when you save the map.	Картаны сақтағанда openMapper қайта іске қосылады.
+Looking for a new version…	Жаңа нұсқа ізделуде…
+This is the newest version.	Бұл ең жаңа нұсқа.
+Download it from GitHub by hand	GitHub-тан қолмен жүктеу
+When there is a new version:	Жаңа нұсқа болғанда:
+Offer it to me	Орнатуды ұсыну
+Install it and restart by itself	Өзі орнатып, қайта іске қосу
+Never look for updates	Жаңартуларды ешқашан іздемеу
+Check now	Қазір тексеру
+Never offer updates again	Жаңартуларды енді ұсынбау
+The release has no package	Релизде пакет жоқ
+No automatic updates for this system.	Бұл жүйе үшін автожаңарту жоқ.
+No connection to GitHub: are you online?	GitHub-пен байланыс жоқ: интернет бар ма?
+The release has no SHA256SUMS: not installed.	Релизде SHA256SUMS жоқ: орнатылмады.
+The package is not in SHA256SUMS: not installed.	Пакет SHA256SUMS ішінде жоқ: орнатылмады.
+The download does not match its checksum: not installed.	Жүктелген файл бақылау сомасына сәйкес келмейді: орнатылмады.
+Could not replace the program	Бағдарламаны ауыстыру мүмкін болмады
+The package has no program in it.	Пакетте бағдарлама жоқ.
+openMapper has stopped:	openMapper тоқтады:
+The log with the details:	Мәліметтері бар журнал:

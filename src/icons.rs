@@ -156,6 +156,27 @@ impl Icon {
 pub fn fonts() -> FontDefinitions {
     let mut f = FontDefinitions::default();
     f.font_data.insert(FAMILY.into(), std::sync::Arc::new(FontData::from_static(include_bytes!("../assets/fonts/MaterialSymbolsSubset.ttf"))));
+    // the system's font for a script the interface font has not (else the language shows
+    // English rather than squares)
+    let lang = crate::i18n::get();
+    let mut drawable = true;
+    if crate::sysfont::needed(lang) {
+        match crate::sysfont::find(lang) {
+            Some((data, index)) => {
+                let mut font = FontData::from_owned(data);
+                font.index = index;
+                f.font_data.insert("system".into(), std::sync::Arc::new(font));
+                for fam in [FontFamily::Proportional, FontFamily::Monospace] {
+                    f.families.entry(fam).or_default().push("system".into());
+                }
+            }
+            None => {
+                log::warn!("no system font for {}: its texts stay in English", lang.info().name);
+                drawable = false;
+            }
+        }
+    }
+    crate::i18n::set_drawable(drawable);
     // (a text font behind the icons: egui wants its replacement character in every family)
     let text = f.families.get(&FontFamily::Proportional).cloned().unwrap_or_default();
     f.families.insert(FontFamily::Name(FAMILY.into()), std::iter::once(FAMILY.to_string()).chain(text).collect());

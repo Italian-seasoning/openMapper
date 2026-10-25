@@ -1,0 +1,2129 @@
+Could not open the map	Kunde inte öppna kartan
+The next 100 tiles are loaded, the others are hidden	De nästa 100 kartrutorna är inlästa, de andra är dolda
+Find the place in the window and build from it	Hitta platsen i fönstret och bygg från den
+Your map is ready. Start with a road!	Din karta är klar. Börja med en väg!
+Export the map for sharing	Exportera kartan för delning
+Exported:	Exporterat:
+files	filer
+files the map names were not found: the readme lists them	filer som kartan nämner hittades inte: readme-filen listar dem
+Could not export	Kunde inte exportera
+A ring road with line 1 on it: save, then try it in openOMSI (F5).	En ringled med linje 1: spara och prova den i openOMSI (F5).
+The sample could not be made	Exemplet kunde inte skapas
+In multiplayer the host saves the map. Leave the session to save this as a copy of your own.	I multiplayer sparar värden kartan. Lämna sessionen för att spara den som en egen kopia.
+Saved:	Sparat:
+Tip: place a start point (Game logic > Start points) so the bus has somewhere to appear	Tips: placera en startpunkt (Spellogik > Startpunkter) så att bussen har någonstans att dyka upp
+Could not save (the changes are still here, nothing is lost)	Kunde inte spara (ändringarna finns kvar här, inget går förlorat)
+The unsaved changes are back. Save to keep them.	De osparade ändringarna är tillbaka. Spara för att behålla dem.
+Could not restore the changes	Kunde inte återställa ändringarna
+openOMSI was not found	openOMSI hittades inte
+From the start point	Från startpunkten
+The map has no start point: place one with Game logic > Start points	Kartan har ingen startpunkt: placera en med Spellogik > Startpunkter
+Starting openOMSI…	Startar openOMSI…
+To drive the map in OMSI 2 itself it has to be copied into the OMSI 2 folder (Maps, and the objects, roads and textures made for it). Nothing that is there is replaced except earlier copies of this map. Copy it there?	För att köra kartan i själva OMSI 2 måste den kopieras till OMSI 2-mappen (Maps samt de objekt, vägar och texturer som gjorts för den). Inget som finns där ersätts utom tidigare kopior av den här kartan. Kopiera dit?
+Starting OMSI 2: choose the map	Startar OMSI 2: välj kartan
+The map is copied into the OMSI 2 folder; OMSI 2 itself runs on Windows only:	Kartan är kopierad till OMSI 2-mappen; själva OMSI 2 körs bara på Windows:
+Could not copy the map into OMSI 2	Kunde inte kopiera kartan till OMSI 2
+Click on the map to place it	Klicka på kartan för att placera den
+Open a map (its global.cfg)	Öppna en karta (dess global.cfg)
+The map is back as it was before that save	Kartan är tillbaka som den var före den sparningen
+Could not go back	Kunde inte gå tillbaka
+Export a plan of the map	Exportera en plan av kartan
+Plan saved:	Plan sparad:
+Mods, models and pictures	Moddar, modeller och bilder
+Import assets	Importera tillgångar
+…or choose a mod folder	…eller välj en modd-mapp
+Click on the map to put it there	Klicka på kartan för att placera det där
+Could not make the shape	Kunde inte skapa formen
+Choose the OMSI 2 folder	Välj OMSI 2-mappen
+That is not an OMSI 2 folder (Omsi.exe, maps and Vehicles must be in it)	Det är inte en OMSI 2-mapp (Omsi.exe, maps och Vehicles måste finnas i den)
+This object has no textures to make PBR maps of	Det här objektet har inga texturer att göra PBR-kartor av
+Could not copy the map	Kunde inte kopiera kartan
+Could not move the map	Kunde inte flytta kartan
+Terrain flattened; splines laid on it:	Terrängen jämnad ut; splines lagda på den:
+This road type has no textures to make PBR maps of	Den här vägtypen har inga texturer att göra PBR-kartor av
+Pictures	Bilder
+Only 100 tiles round the camera are loaded; click on the empty zone to load the next 100	Bara 100 kartrutor runt kameran är inlästa; klicka på den tomma zonen för att läsa in nästa 100
+All tiles are loaded	Alla kartrutor är inlästa
+Import the map's thumbnail	Importera kartans miniatyrbild
+The map's thumbnail is set: openOMSI shows it where maps are chosen.	Kartans miniatyrbild är inställd: openOMSI visar den där kartor väljs.
+Could not use the picture	Kunde inte använda bilden
+Map camera	Kartkamera
+The map opens with this view from now on.	Kartan öppnas nu med den här vyn.
+Add ground texture	Lägg till marktextur
+View kept as	Vyn sparad som
+No view kept as	Ingen vy sparad som
+Files changed on disk: the catalogue and models are updated	Filer ändrades på disken: katalogen och modellerna är uppdaterade
+The track does not run over the map's tiles	Spåret går inte över kartans kartrutor
+Road along a GPS track	Väg längs ett GPS-spår
+Roads built:	Vägar byggda:
+junctions:	korsningar:
+stops:	hållplatser:
+Lines from OpenStreetMap	Linjer från OpenStreetMap
+lines:	linjer:
+trips found their way:	turer fick en väg:
+buildings:	byggnader:
+trees:	träd:
+Start point	Startpunkt
+Start	Start
+a start point	en startpunkt
+From OpenStreetMap	Från OpenStreetMap
+Picture saved:	Bild sparad:
+Could not save the picture	Kunde inte spara bilden
+The graphics could not be started.	Grafiken kunde inte startas.
+Flying speed	Flyghastighet
+copy	kopia
+Only maps of the content folder can be moved	Bara kartor i innehållsmappen kan flyttas
+Only assets of the content folder can be deleted	Bara tillgångar i innehållsmappen kan tas bort
+Could not write the object	Kunde inte skriva objektet
+Select an object to edit its mesh	Markera ett objekt för att redigera dess mesh
+A copy of its own was made: the original type is unchanged	En egen kopia skapades: originaltypen är oförändrad
+Cannot edit this object	Det här objektet kan inte redigeras
+Point at an edge to cut across its ring of faces	Peka på en kant för att skära tvärs över dess ring av ytor
+Objects made:	Objekt skapade:
+select the faces to separate	markera ytorna som ska separeras
+Separated into an object of its own	Separerat till ett eget objekt
+Add object	Lägg till objekt
+select what to export (objects, roads)	markera vad som ska exporteras (objekt, vägar)
+Export the selection	Exportera markeringen
+unknown format	okänt format
+the models are still loading: try again in a moment	modellerna läses fortfarande in: försök igen om en stund
+this material has no texture	det här materialet har ingen textur
+cannot read	kan inte läsas
+Export the texture	Exportera texturen
+Texture saved:	Textur sparad:
+Choose a picture	Välj en bild
+give the material a texture first: its maps go beside it	ge materialet en textur först: dess kartor hamnar bredvid den
+Import materials (an .mtl, a model, or the pictures of one PBR material)	Importera material (en .mtl, en modell eller bilderna till ett PBR-material)
+Materials and pictures	Material och bilder
+no materials found there	inga material hittades där
+Materials added:	Material tillagda:
+nothing to bake	inget att baka
+the object has no lamps to bake the night light of	objektet har inga lampor att baka nattljuset av
+Baked into	Bakat i
+select a road or spline first	markera en väg eller spline först
+the road's type is still loading: try again in a moment	vägtypen läses fortfarande in: försök igen om en stund
+these splines have no shape to see	de här splinerna har ingen form att se
+Replace by an object	Ersätt med ett objekt
+Made into an object: Tab edits its mesh	Gjort till ett objekt: Tab redigerar dess mesh
+Signal head made: click where it stands (near a crossing with a light program it links to it)	Signalhuvud skapat: klicka där det ska stå (nära en korsning med ett ljusprogram länkas det till den)
+Choose a picture or a texture	Välj en bild eller en textur
+cannot read the picture	kan inte läsa bilden
+Picture made: click where it goes (it can be moved, turned and scaled after)	Bild skapad: klicka där den ska vara (den kan flyttas, vridas och skalas efteråt)
+Light made: click where it shines	Ljus skapat: klicka dit det ska lysa
+Choose a sound	Välj ett ljud
+Sounds	Ljud
+Sound source made: click where it plays	Ljudkälla skapad: klicka där den ska spelas
+Street lamp made: click where it stands	Gatlykta skapad: klicka där den ska stå
+Paint by slope and height	Måla efter lutning och höjd
+By slope and height	Efter lutning och höjd
+The chosen layer painted over the whole map where the ground is so steep (and so high)	Det valda lagret målat över hela kartan där marken är så brant (och så hög)
+Slope	Lutning
+Height	Höjd
+Fade	Toning
+Cover	Täckning
+Paint the map	Måla kartan
+Choose a layer above the base ground	Välj ett lager ovanför baslagret
+No ground on the map is like that	Ingen mark på kartan är sådan
+Painted	Målat
+Missing objects	Saknade objekt
+Missing roads and splines	Saknade vägar och splines
+Missing textures	Saknade texturer
+Road ends not joined	Vägändar som inte är sammanfogade
+Links to splines that are gone	Länkar till splines som är borta
+Bus stops away from a road	Hållplatser långt från en väg
+Start points away from a road	Startpunkter långt från en väg
+Start points without their object	Startpunkter utan sitt objekt
+No start point	Ingen startpunkt
+IDCodes used twice	IDCode som används två gånger
+Next IDCode too low	Nästa IDCode för låg
+Objects off their tile	Objekt utanför sin kartruta
+Tiles without a file	Kartrutor utan fil
+Tiles without ground	Kartrutor utan mark
+Trips without a way	Turer utan väg
+Tours without departures	Omlopp utan avgångar
+Tours without a depot	Omlopp utan depå
+Traffic groups not in the AI lists	Trafikgrupper som inte finns i AI-listorna
+Stops no trip calls at	Hållplatser som ingen tur stannar vid
+Signal routes naming what is gone	Signalvägar som nämner något borta
+Chrono changes of what is gone	Kronoändringar av något borta
+Lamps lighting no ground at night	Lampor som inte lyser upp mark på natten
+Tiles with very many objects	Kartrutor med mycket många objekt
+Objects linked to one that is gone	Objekt länkade till ett som är borta
+Signal heads linked to no crossing	Signalhuvuden länkade till ingen korsning
+Depot files (destinations)	Depåfiler (destinationer)
+The map uses an object (.sco) that is not installed. The game leaves it out. Install the mod it comes from, or delete the object. A junction of openMapper's whose file is gone (the map was moved without it) is made again for its roads with "Fix".	Kartan använder ett objekt (.sco) som inte är installerat. Spelet utelämnar det. Installera modden det kommer från, eller ta bort objektet. En openMapper-korsning vars fil är borta (kartan flyttades utan den) görs om för sina vägar med ”Åtgärda”.
+The map uses a road or spline type (.sli) that is not installed: that road is missing in the game, and buses cannot drive there.	Kartan använder en väg- eller splinetyp (.sli) som inte är installerad: vägen saknas i spelet och bussar kan inte köra där.
+An object or road names a picture that cannot be found. It will look white or black in the game.	Ett objekt eller en väg anger en bild som inte hittas. Den blir vit eller svart i spelet.
+Two road ends lie on one another but are not joined. Traffic still finds its way (the game joins lanes by their ends), but rows of lamps and posts and the road's texture do not run on across, and the editor does not treat them as one road. "Join" links them.	Två vägändar ligger på varandra men är inte sammanfogade. Trafiken hittar ändå fram (spelet kopplar ihop filer via deras ändar), men rader av lyktor och stolpar och vägens textur fortsätter inte över, och redigeraren behandlar dem inte som en väg. ”Sammanfoga” länkar dem.
+A spline says it goes on into another one that no longer exists. "Fix" forgets that link.	En spline säger att den fortsätter i en annan som inte längre finns. ”Åtgärda” glömmer den länken.
+A bus stop belongs to the lane it stands beside (within about 25 m). This one has none near, so buses cannot stop at it. Move it next to the road, or "Fix" puts it at the kerb of the nearest lane (within 80 m).	En hållplats tillhör det körfält den står intill (inom cirka 25 m). Den här har inget i närheten, så bussar kan inte stanna vid den. Flytta den intill vägen, eller så sätter ”Åtgärda” den vid närmaste körfälts trottoarkant (inom 80 m).
+A start point is where the bus appears. This one is away from any lane: fine in a depot yard, otherwise the bus starts off the road.	En startpunkt är där bussen dyker upp. Den här ligger långt från alla körfält: bra på en depåplan, annars startar bussen utanför vägen.
+A start point refers to an object that was deleted. "Fix" removes the start point.	En startpunkt hänvisar till ett objekt som har tagits bort. ”Åtgärda” tar bort startpunkten.
+There is nowhere for the bus to appear. Place a start point (Game logic > Start points) on a road, or "Fix" puts one on a lane some 40 m before a bus stop.	Det finns ingenstans för bussen att dyka upp. Placera en startpunkt (Spellogik > Startpunkter) på en väg, eller så lägger ”Åtgärda” en på ett körfält cirka 40 m före en hållplats.
+Two things on the map share one IDCode: links, timetables and start points may pick the wrong one.	Två saker på kartan delar en IDCode: länkar, tidtabeller och startpunkter kan välja fel.
+The counter for new IDCodes is below codes already used, so new objects would get codes twice. "Fix" raises it.	Räknaren för nya IDCode ligger under redan använda koder, så nya objekt skulle få koder två gånger. ”Åtgärda” höjer den.
+An object standing on the ground lies outside its own tile. The game does not show it. Move it a little or put it again.	Ett objekt som står på marken ligger utanför sin egen kartruta. Spelet visar det inte. Flytta det lite eller placera det igen.
+global.cfg lists tiles whose file is not there. The game leaves them out; they stay listed, as start points and timetables count tiles by their place in the list.	global.cfg listar kartrutor vars fil saknas. Spelet utelämnar dem; de förblir listade, eftersom startpunkter och tidtabeller räknar kartrutor efter deras plats i listan.
+A tile has no height file: its ground is flat. Saving writes one.	En kartruta har ingen höjdfil: dess mark är platt. Sparning skriver en.
+No way along the roads was found through this trip's stops, so buses cannot drive it. Open it in Map > Lines and timetable to see where it breaks.	Ingen väg längs vägarna hittades genom den här turens hållplatser, så bussar kan inte köra den. Öppna den i Karta > Linjer och tidtabell för att se var den bryts.
+A tour (a bus's day on the line) has no trips, so no bus runs it.	Ett omlopp (en busss dag på linjen) har inga turer, så ingen buss kör det.
+A tour names no depot or group of the AI lists (or one that is not there): the game has no vehicle to send on it. Choose a depot for it in the Lines window, or "Fix" gives it the map's depot (one of OMSI 2's MAN buses added where the map has none).	Ett omlopp anger ingen depå eller grupp i AI-listorna (eller en som inte finns): spelet har inget fordon att skicka. Välj en depå åt det i Linjefönstret, eller så ger ”Åtgärda” det kartans depå (en av OMSI 2:s MAN-bussar läggs till där kartan saknar en).
+The unscheduled traffic names a group that the AI lists do not have: those cars never appear. Add the group in Map > Traffic and AI, or "Fix" copies it from OMSI 2's own maps where they have it.	Den icke tidtabellsbundna trafiken anger en grupp som AI-listorna saknar: de bilarna dyker aldrig upp. Lägg till gruppen i Karta > Trafik och AI, eller så kopierar ”Åtgärda” den från OMSI 2:s egna kartor där den finns.
+A stop of the timetable that no trip calls at. Nothing is wrong, it is only not used yet.	En hållplats i tidtabellen som ingen tur stannar vid. Inget är fel, den används bara inte ännu.
+A chrono scenario takes away, retypes or relabels something that is no longer on the map (it was deleted or its IDCode changed): that change does nothing. Open Map > Chrono scenarios, the scenario's properties, and take the change out.	Ett kronoscenario tar bort, byter typ på eller byter text på något som inte längre finns på kartan (det togs bort eller dess IDCode ändrades): ändringen gör ingenting. Öppna Karta > Kronoscenarier, scenariots egenskaper, och ta bort ändringen.
+A tile holds far more objects than the stock maps' tiles (up to some 600): the game may stutter when it loads it or looks across it. Thin out a wood planted too densely (Plant brush, Clear) or plant it with more space between the trees.	En kartruta har långt fler objekt än originalkartornas kartrutor (upp till cirka 600): spelet kan hacka när det läser in den eller tittar över den. Gallra en för tätt planterad skog (Planteringspensel, Rensa) eller plantera med mer utrymme mellan träden.
+Street lamps stand on a tile the game does not light from its lamps ([variable_terrainlightmap] is off): at night the ground under them stays dark (unless the tile's light map file was made by OMSI 2's editor). "Fix" turns it on, as on nearly every tile of the stock maps.	Gatlyktor står på en kartruta som spelet inte belyser från sina lampor ([variable_terrainlightmap] är av): på natten förblir marken under dem mörk (om inte kartrutans ljuskartefil gjordes av OMSI 2:s redigerare). ”Åtgärda” slår på den, som på nästan alla originalkartors kartrutor.
+An object takes its state ([varparent]) from an object no longer on the map: a signal head stays dark, a display blank. Link it to another in its properties (Linked objects), or "Fix" forgets the link.	Ett objekt tar sitt tillstånd ([varparent]) från ett objekt som inte längre finns på kartan: ett signalhuvud förblir mörkt, en display tom. Länka det till ett annat i dess egenskaper (Länkade objekt), eller så glömmer ”Åtgärda” länken.
+A traffic light's signal head takes its light from a crossing's program ([varparent]); this one is linked to none while others like it are, so it stays dark in the game. Select it and link it in its properties (Linked objects).	Ett trafikljuss signalhuvud får sitt ljus från en korsnings program ([varparent]); det här är länkat till inget medan andra likadana är det, så det förblir mörkt i spelet. Markera det och länka det i dess egenskaper (Länkade objekt).
+A depot file (.hof) gives the buses their destinations, the stop names on their displays and the routes their IBIS knows. Without one the signs stay empty and the IBIS knows no line. "Fix" makes it from the map's lines, or adds what the lines need to the map's own (Map > Depot files to see and change it).	En depåfil (.hof) ger bussarna deras destinationer, hållplatsnamnen på deras displayer och de rutter deras IBIS känner till. Utan en förblir skyltarna tomma och IBIS känner ingen linje. ”Åtgärda” gör den av kartans linjer, eller lägger till det linjerna behöver i kartans egen (Karta > Depåfiler för att se och ändra den).
+A signal route names a signal or track pieces no longer on the map: the signal may never clear. Open Map > Signal routes and take the track again, or delete the route.	En signalväg nämner en signal eller spårdelar som inte längre finns på kartan: signalen kanske aldrig släpper fram. Öppna Karta > Signalvägar och ta spåret igen, eller ta bort vägen.
+font	typsnitt
+used	används
+in	i
+a ground texture of the map	en marktextur på kartan
+splines	splines
+apart	ifrån varandra
+spline	spline
+goes on into	fortsätter i
+no road near	ingen väg i närheten
+from the road	från vägen
+start point	startpunkt
+object	objekt
+The map has no start point	Kartan har ingen startpunkt
+things have it	saker har den
+highest in use:	högsta i bruk:
+tile	kartruta
+no .terrain file: flat	ingen .terrain-fil: platt
+objects	objekt
+lamps	lampor
+The map has no depot file	Kartan har ingen depåfil
+the buses show no destination	bussarna visar ingen destination
+named by the map's depot, but found nowhere	anges av kartans depå, men hittas ingenstans
+knows none of the	känner ingen av
+lacks	saknar
+destinations of the lines	linjernas destinationer
+the lines need	linjerna behöver
+destinations	destinationer
+stops	hållplatser
+routes	rutter
+tour	omlopp
+no depot named	ingen depå angiven
+not in the AI lists:	finns inte i AI-listorna:
+the stop has no object:	hållplatsen har inget objekt:
+no road beside	ingen väg vid
+no way	ingen väg
+no way found	ingen väg hittades
+Route	Rutt
+gone	borta
+changes of nothing	ändringar av ingenting
+time	gång
+times	gånger
+Fix from the map check	Åtgärd från kartkontrollen
+Car groups from OMSI 2's maps	Bilgrupper från OMSI 2:s kartor
+A depot for the tour	En depå för omloppet
+A depot file from the lines	En depåfil från linjerna
+Depot file: what the lines need	Depåfil: vad linjerna behöver
+Map check	Kartkontroll
+Check again	Kontrollera igen
+Checking the map…	Kontrollerar kartan…
+errors	fel
+warnings	varningar
+notes	anmärkningar
+Nothing found: the map looks fine.	Inget hittades: kartan ser bra ut.
+Fix all	Åtgärda alla
+Join	Sammanfoga
+Fix	Åtgärda
+Click to fly there	Klicka för att flyga dit
+Fixed:	Åtgärdat:
+it has parts openMapper does not write	den har delar som openMapper inte skriver
+A host on the internet needs a password of at least	En värd på internet behöver ett lösenord på minst
+Type a password, or choose explicitly to host without one	Skriv ett lösenord, eller välj uttryckligen att vara värd utan ett
+Could not listen on port	Kunde inte lyssna på port
+The way in for the tunnel could not be opened	Ingången för tunneln kunde inte öppnas
+Hosting this map: others can join it now	Kartan hostas: andra kan gå med nu
+Multiplayer ended: another map was opened	Multiplayer avslutad: en annan karta öppnades
+Somebody changed this first: your edit was put back	Någon ändrade det här först: din ändring lades tillbaka
+The host takes no more: the edit is too big, or the session holds as much as it may. Your edit was put back	Värden tar inte emot mer: ändringen är för stor, eller så rymmer sessionen så mycket den får. Din ändring lades tillbaka
+That lies too far from the map for this session: your edit was put back	Det ligger för långt från kartan för den här sessionen: din ändring lades tillbaka
+tiles	kartrutor
+changed what you were editing: it is as they left it	ändrade det du redigerade: det är som de lämnade det
+The timetable, the traffic and the descriptions are the host's in multiplayer: your change was put back	Tidtabellen, trafiken och beskrivningarna tillhör värden i multiplayer: din ändring lades tillbaka
+Your conflicting edit was kept	Din motstridiga ändring behölls
+Could not keep your conflicting edit; multiplayer stopped	Kunde inte behålla din motstridiga ändring; multiplayer stoppades
+Too much of the others' work came in while your edit was held open: multiplayer stopped. The map stays open; it can be saved as a copy.	För mycket av andras arbete kom in medan din ändring hölls öppen: multiplayer stoppades. Kartan förblir öppen; den kan sparas som en kopia.
+The connection to the host was lost. The map stays open; it can be saved as a copy.	Anslutningen till värden förlorades. Kartan förblir öppen; den kan sparas som en kopia.
+No OMSI 2 installation: the map has nowhere to go	Ingen OMSI 2-installation: kartan har ingenstans att hamna
+The host sent no map	Värden skickade ingen karta
+The host's map could not be read	Värdens karta kunde inte läsas
+No connection	Ingen anslutning
+That address is not an openMapper host	Den adressen är ingen openMapper-värd
+Wrong password	Fel lösenord
+The session is full	Sessionen är full
+Type a name (up to 32 letters)	Skriv ett namn (upp till 32 bokstäver)
+The host has another version of openMapper	Värden har en annan version av openMapper
+Move forward	Flytta framåt
+Move back	Flytta bakåt
+Move left	Flytta åt vänster
+Move right	Flytta åt höger
+Turn the camera left	Vrid kameran åt vänster
+Turn the camera right	Vrid kameran åt höger
+Undo	Ångra
+Redo	Gör om
+Save	Spara
+Copy	Kopiera
+Cut	Klipp ut
+Paste at the cursor	Klistra in vid markören
+Duplicate	Duplicera
+Select all	Markera allt
+Find in the map	Sök i kartan
+Search for a command	Sök efter ett kommando
+Tool: Select	Verktyg: Markera
+Tool: Roads	Verktyg: Vägar
+Tool: Objects	Verktyg: Objekt
+Tool: Game logic	Verktyg: Spellogik
+Tool: Terrain	Verktyg: Terräng
+Tool: Paint	Verktyg: Måla
+Tool: Tiles	Verktyg: Kartrutor
+Turn the object (Shift: the other way)	Vrid objektet (Shift: åt andra hållet)
+Ruler	Linjal
+Knife	Kniv
+Move handles	Flyttningshandtag
+Rotate handles	Rotationshandtag
+Scale handles	Skalningshandtag
+Edit the mesh (vertices, edges, faces)	Redigera mesh (hörn, kanter, ytor)
+Join the selected objects into one	Sammanfoga de markerade objekten till ett
+Build the planned road	Bygg den planerade vägen
+Tile grid on / off	Rutnät för kartrutor på / av
+Group the selection	Gruppera markeringen
+Ungroup	Avgruppera
+Look straight down, north up	Titta rakt ned, norr uppåt
+2D plan view on / off (3D: tilt and turn again)	2D-planvy på / av (3D: luta och vrid igen)
+Catalogue on / off	Katalog på / av
+Overview map on / off	Översiktskarta på / av
+Lines window	Linjefönster
+Traffic window	Trafikfönster
+Satellite and terrain window	Fönster för satellit och terräng
+Smaller brush	Mindre pensel
+Larger brush	Större pensel
+Delete the selection	Ta bort markeringen
+Go to the selection	Gå till markeringen
+Test drive in openOMSI (Shift: from the camera)	Provkör i openOMSI (Shift: från kameran)
+Save a picture of the view	Spara en bild av vyn
+The map's own (global.cfg)	Kartans egen (global.cfg)
+Description	Beskrivning
+Name in this language	Namn på det här språket
+Description in this language	Beskrivning på det här språket
+Remove this language	Ta bort det här språket
+Not written yet: it is saved as soon as you type.	Inte skrivet ännu: det sparas så fort du skriver.
+Edit description	Redigera beskrivning
+just now	nyss
+min ago	min sedan
+h ago	tim sedan
+Unsaved changes found	Osparade ändringar hittades
+openMapper was closed without saving the map	openMapper stängdes utan att spara kartan
+The changes kept by the autosave can be brought back. The map itself was not changed.	Ändringarna som autosparningen behöll kan återställas. Själva kartan ändrades inte.
+Restore the changes	Återställ ändringarna
+Drop them	Släng dem
+Nothing comes after it to join	Inget följer efter den att sammanfoga
+The next piece runs the other way: reverse it first	Nästa del går åt andra hållet: vänd den först
+The next piece lies on another tile	Nästa del ligger på en annan kartruta
+The two pieces are of different road types	De två delarna har olika vägtyper
+The two pieces have different settings (path rules, ground, skew)	De två delarna har olika inställningar (färdvägsregler, mark, snedställning)
+A row of objects comes onto the next piece from another tile	En rad av objekt kommer in på nästa del från en annan kartruta
+The two pieces do not bend, climb or bank alike: joined they would change shape	De två delarna svänger, stiger eller lutar inte likadant: sammanfogade skulle de ändra form
+Earlier versions	Tidigare versioner
+Before every save, the files it replaces are kept (the last 10 saves). Going back puts the map as it was before that save; later changes go.	Före varje sparning behålls filerna den ersätter (de senaste 10 sparningarna). Att gå tillbaka sätter kartan som den var före den sparningen; senare ändringar försvinner.
+No earlier versions yet: they appear once the map is saved again.	Inga tidigare versioner ännu: de dyker upp när kartan sparas igen.
+before the save of	före sparningen av
+Go back to this	Gå tillbaka till den här
+could not keep a backup, nothing was saved	kunde inte behålla en säkerhetskopia, inget sparades
+Red	Röd
+Yellow	Gul
+Green	Grön
+file not found	filen hittades inte
+this object takes its model from a model file and cannot be edited here	det här objektet hämtar sin modell från en modellfil och kan inte redigeras här
+the object has no mesh to edit	objektet har ingen mesh att redigera
+cannot read the object	kan inte läsa objektet
+Select	Markera
+Terrain	Terräng
+Paint	Måla
+Roads	Vägar
+Objects	Objekt
+Game logic	Spellogik
+Tiles	Kartrutor
+Raise	Höj
+Lower	Sänk
+Smooth	Mjuka upp
+Flatten	Jämna ut
+Roughen	Gör ojämn
+Ramp	Ramp
+Lake / river	Sjö / flod
+Start points	Startpunkter
+Bus stops	Hållplatser
+Car parks	Parkeringar
+AI paths	AI-vägar
+Other	Övrigt
+Where the bus appears when a drive starts. Put it on a road or in the depot, facing the way to drive.	Där bussen dyker upp när en körning startar. Placera den på en väg eller i depån, vänd i körriktningen.
+Where passengers wait. Put it beside the road at the kerb; name it on the right.	Där passagerare väntar. Placera den bredvid vägen vid trottoarkanten; namnge den till höger.
+Where parked cars stand. Click for one; with a row on, click the start and end of a row along the kerb.	Där parkerade bilar står. Klicka för en; med rad på, klicka på radens start och slut längs trottoarkanten.
+Lanes the AI's cars or people follow. Draw like a road: it snaps to lane ends (green: joined, red: dead end) and along lanes. A car path runs the way you draw it.	Körfält som AI:ns bilar eller människor följer. Rita som en väg: den fäster vid körfältsändar (grön: ansluten, röd: återvändsgränd) och längs körfält. En bilväg går åt det håll du ritar den.
+Sound sources, help arrows and other helpers the game does not show.	Ljudkällor, hjälppilar och andra hjälpmedel som spelet inte visar.
+Move (V): drag an arrow along X, Y or Z, a square in its plane, the circle over the ground	Flytta (V): dra en pil längs X, Y eller Z, en kvadrat i dess plan, cirkeln över marken
+Rotate (C): drag a ring to turn about X, Y or Z	Rotera (C): dra en ring för att vrida kring X, Y eller Z
+Scale (X): drag an arrow to scale along that axis, a square for two, the circle for all three	Skala (X): dra en pil för att skala längs den axeln, en kvadrat för två, cirkeln för alla tre
+These roads have no lanes of their own to take apart (rails stay as they are)	De här vägarna har inga egna körfält att ta isär (räls förblir som den är)
+Make the lanes editable	Gör körfälten redigerbara
+Roads whose lanes are now editable:	Vägar vars körfält nu är redigerbara:
+Flatten the terrain	Jämna ut terrängen
+Select two things or more to group them	Markera två saker eller fler för att gruppera dem
+Group	Grupp
+Grouped:	Grupperat:
+Ungrouped	Avgrupperat
+Rename group	Byt namn på gruppen
+Ground levelled under objects:	Marken planad under objekt:
+Move	Flytta
+No object clicked: nothing linked	Inget objekt klickat: inget länkat
+Too near the road's end to cut it there	För nära vägens slut för att skära den där
+No road under the cursor	Ingen väg under markören
+Ramp:	Ramp:
+Shape terrain	Forma terräng
+Paint ground	Måla mark
+Clear plants	Rensa växter
+Plant	Plantera
+Rotate selection	Rotera markeringen
+Rotate	Rotera
+Delete object	Ta bort objekt
+Delete road	Ta bort väg
+Delete selection	Ta bort markering
+Pick an object in the catalogue first	Välj ett objekt i katalogen först
+There is no tile here: add one with the Tiles tool	Det finns ingen kartruta här: lägg till en med verktyget Kartrutor
+Place object	Placera objekt
+New stop	Ny hållplats
+Linked to	Länkad till
+choose its light in its properties	välj dess ljus i dess egenskaper
+Trees from OpenStreetMap	Träd från OpenStreetMap
+Plant an area	Plantera ett område
+Buildings from OpenStreetMap	Byggnader från OpenStreetMap
+Stops from OpenStreetMap	Hållplatser från OpenStreetMap
+Stop	Hållplats
+Pick a car park in the list first	Välj en parkering i listan först
+Place car parks	Placera parkeringar
+Car parks placed:	Parkeringar placerade:
+Pick a road type in the catalogue first	Välj en vägtyp i katalogen först
+That bend is too sharp	Den kurvan är för skarp
+Switch made	Växel skapad
+Junctions made:	Korsningar skapade:
+The road leaves the map: add tiles there first	Vägen lämnar kartan: lägg till kartrutor där först
+Build road	Bygg väg
+Roads from OpenStreetMap	Vägar från OpenStreetMap
+Pick a tree in the catalogue (or add some to the mix) first	Välj ett träd i katalogen (eller lägg till några i blandningen) först
+Right-click a tile to remove it	Högerklicka på en kartruta för att ta bort den
+New tiles go next to the map	Nya kartrutor läggs intill kartan
+Add tile	Lägg till kartruta
+Water	Vatten
+Paint detail	Målningsdetalj
+Ground layer order	Ordning på marklager
+Detail texture	Detaljtextur
+Ground texture	Marktextur
+Lamp light on the ground	Lyktljus på marken
+Add tiles	Lägg till kartrutor
+A map needs at least one tile	En karta behöver minst en kartruta
+Remove tile	Ta bort kartruta
+Pick a point (a dot at an end or where pieces meet) to take it out	Välj en punkt (en prick i en ände eller där delar möts) för att ta bort den
+Remove a point of the path	Ta bort en punkt på vägen
+Point taken out	Punkt borttagen
+A path of one piece: Del with nothing picked deletes it	En väg av en del: Del utan vald punkt tar bort den
+Extrude	Extrudera
+Inset	Inset
+Bevel	Avfasa
+Loop cut	Slingsnitt
+click: done, right click / Esc: cancel, wheel: segments	klick: klart, högerklick / Esc: avbryt, hjul: segment
+Scale	Skala
+Roads are not scaled: change their length and width in their properties	Vägar skalas inte: ändra deras längd och bredd i deras egenskaper
+Only the objects are scaled, the roads stay	Bara objekten skalas, vägarna förblir
+Could not scale	Kunde inte skala
+Too near the end: drag the end's dot instead	För nära änden: dra ändens prick i stället
+Add a point to the path	Lägg till en punkt på vägen
+Point added: drag the dot where the pieces meet	Punkt tillagd: dra pricken där delarna möts
+Reshape road	Forma om väg
+Selected:	Markerat:
+Copied:	Kopierat:
+Nothing copied yet	Inget kopierat ännu
+Paste	Klistra in
+Level the ground	Jämna ut marken
+Turn objects	Vrid objekt
+Copies in a row	Kopior i rad
+Left out (off the map):	Utelämnade (utanför kartan):
+Pasted (the rest is off the map):	Inklistrat (resten är utanför kartan):
+Edit object	Redigera objekt
+Lean with the ground	Luta med marken
+Stand upright	Ställ upprätt
+Change height	Ändra höjd
+Change road type	Byt vägtyp
+The selected roads are not one chain (they branch or leave gaps)	De markerade vägarna är inte en kedja (de grenar sig eller har luckor)
+Even slope	Jämn lutning
+Lay on the ground	Lägg på marken
+Remove the rows of objects along it first (they are measured from its start)	Ta bort objektraderna längs den först (de mäts från dess start)
+Reverse direction	Vänd riktning
+No road there to cut	Ingen väg där att skära
+Cut the road	Skär vägen
+Cut in two: each piece can now be changed on its own	Delad i två: varje del kan nu ändras för sig
+Join the pieces	Sammanfoga delarna
+Joined into one piece	Sammanfogade till en del
+Parallel copy	Parallell kopia
+Overhead wire	Kontaktledning
+Back into the map	Tillbaka i kartan
+Hang an object	Häng upp ett objekt
+Link to an object	Länka till ett objekt
+Unlink	Avlänka
+That object already takes its state from this one	Det objektet tar redan sitt tillstånd från det här
+Linked	Länkat
+Signal head's light	Signalhuvudets ljus
+Path rules	Färdvägsregler
+Replace objects	Ersätt objekt
+Edit road	Redigera väg
+Roads that could not follow the junction (too sharp a bend):	Vägar som inte kunde följa korsningen (för skarp kurva):
+Edit junction	Redigera korsning
+Make the junction again	Gör korsningen igen
+Make the junctions again	Gör korsningarna igen
+Pick an object in the Objects tool's catalogue first	Välj ett objekt i Objekt-verktygets katalog först
+The road is too short for that	Vägen är för kort för det
+Objects along the road	Objekt längs vägen
+Rows of objects added:	Objektrader tillagda:
+Edit row of objects	Redigera objektrad
+Remove row of objects	Ta bort objektrad
+Remove rows of objects	Ta bort objektrader
+Roundabout built; roads joined to it:	Rondell byggd; vägar anslutna till den:
+This road type carries traffic both ways: pick a one-way road for a proper roundabout	Den här vägtypen leder trafik åt båda håll: välj en enkelriktad väg för en riktig rondell
+Start point: where the bus appears in openOMSI	Startpunkt: där bussen dyker upp i openOMSI
+Bus stop: name it in the panel on the right	Hållplats: namnge den i panelen till höger
+openOMSI stopped with an error	openOMSI stoppades med ett fel
+Check in openOMSI	Kontroll i openOMSI
+The saved map run by the game itself, unseen, with its own checks; the picture is the game's, from your view	Den sparade kartan körs av själva spelet, osynligt, med dess egna kontroller; bilden är spelets, från din vy
+Every tile (slower on a big map)	Varje kartruta (långsammare på en stor karta)
+Run again	Kör igen
+openOMSI is loading the map…	openOMSI läser in kartan…
+Nothing wrong found	Inget fel hittades
+Problems found:	Problem hittade:
+Go there	Gå dit
+of the places named lie at the map's edge or a road's dead end (greyed): the game measures a lane's last point on the road's very edge, and a bus at the end stands over it; nothing to mend	av platserna som nämns ligger vid kartans kant eller i en vägs återvändsgränd (gråtonade): spelet mäter ett körfälts sista punkt på vägens allra yttersta kant, och en buss i slutet står över den; inget att åtgärda
+The game said nothing about the map	Spelet sa ingenting om kartan
+The game's whole output	Spelets hela utdata
+no key entered	ingen nyckel angiven
+the server refused the key	servern vägrade nyckeln
+too many requests, try again later	för många förfrågningar, försök igen senare
+No connection to the server: are you online?	Ingen anslutning till servern: är du online?
+Enter your Google key first	Ange din Google-nyckel först
+OpenStreetMap's servers are busy: try again in a minute	OpenStreetMaps servrar är upptagna: försök igen om en minut
+The area is too large for this zoom	Området är för stort för den här zoomen
+Cancelled	Avbrutet
+Stopped by an internal error (see the log)	Stoppades av ett internt fel (se loggen)
+No source has imagery here	Ingen källa har bilder här
+drawn from OpenStreetMap data: sharp, with names	ritas från OpenStreetMap-data: skarpt, med namn
+terrain heights, no key needed	terränghöjder, ingen nyckel behövs
+needs your own free key	kräver din egen gratis nyckel
+no key needed	ingen nyckel behövs
+the picture is too small	bilden är för liten
+Import height map	Importera höjdkarta
+Height map	Höjdkarta
+The ground as a grey picture, to shape in another program and bring back	Marken som en grå bild, att formas i ett annat program och tas tillbaka
+Export…	Exportera…
+Import…	Importera…
+over	över
+a pixel	per pixel
+Black adds	Svart lägger till
+Black is	Svart är
+White adds	Vitt lägger till
+White is	Vitt är
+Smoothing	Utjämning
+Replace the ground	Ersätt marken
+Add to it	Lägg till den
+Roads and objects keep their heights: best done before building	Vägar och objekt behåller sina höjder: görs bäst före bygget
+An 8-bit picture has only 256 steps of height: smoothing hides them	En 8-bitars bild har bara 256 höjdsteg: utjämning döljer dem
+Lay it on the map	Lägg den på kartan
+Cancel	Avbryt
+Height map laid over	Höjdkarta lagd över
+Export the height map	Exportera höjdkartan
+Height map written	Höjdkarta skriven
+The height map could not be written	Höjdkartan kunde inte skrivas
+A height map for the whole map	En höjdkarta för hela kartan
+The picture could not be read	Bilden kunde inte läsas
+IBIS and roller blind	IBIS och rullgardinsskylt
+Front sign, line 1	Frontskylt, rad 1
+Front sign, line 2	Frontskylt, rad 2
+Side sign	Sidoskylt
+Roller blind texture	Rullgardinstextur
+IBIS 2 (20 letters)	IBIS 2 (20 tecken)
+Extra sign	Extra skylt
+Krüger picture	Krüger-bild
+Text	Text
+IBIS (16 letters)	IBIS (16 tecken)
+Display, line 1	Display, rad 1
+Display, line 2	Display, rad 2
+Full name (20 letters)	Fullständigt namn (20 tecken)
+Service trip	Tur till depån
+Special trip	Specialtur
+Blank	Tom
+openMapper cannot import this kind of file (use a folder, .zip, .obj, .gltf, .glb, .fbx, .x, .o3d or a picture)	openMapper kan inte importera den här filtypen (använd en mapp, .zip, .obj, .gltf, .glb, .fbx, .x, .o3d eller en bild)
+Mod installed, files:	Modd installerad, filer:
+Objects added to	Objekt tillagda i
+Road types added to	Vägtyper tillagda i
+Models imported:	Modeller importerade:
+Nothing to import was found in this folder	Inget att importera hittades i den här mappen
+The model has no triangles	Modellen har inga trianglar
+Model imported:	Modell importerad:
+The .obj file has no faces	.obj-filen har inga ytor
+no base colour picture among them	ingen basfärgsbild bland dem
+The picture cannot be read	Bilden kan inte läsas
+Picture made into a standee:	Bilden gjord till en uppställd figur:
+Picture made into a sign:	Bilden gjord till en skylt:
+Trees	Träd
+Stops and start points	Hållplatser och startpunkter
+Junctions	Korsningar
+Tracks	Spår
+Footpaths	Gångvägar
+Fences, walls, kerbs	Staket, murar, trottoarkanter
+Technical (AI, helpers)	Tekniskt (AI, hjälpmedel)
+This map lies on the world's grid ([worldcoordinates]): its tiles cannot be taken yet	Den här kartan ligger på världsrutnätet ([worldcoordinates]): dess kartrutor kan inte tas ännu
+This map lies on the world's grid ([worldcoordinates]): tiles cannot be added from another yet	Den här kartan ligger på världsrutnätet ([worldcoordinates]): kartrutor kan inte läggas till från en annan ännu
+Tiles from another map	Kartrutor från en annan karta
+Union	Union
+Difference (cut out)	Differens (skär ut)
+Intersection	Snitt
+Slice (keep both pieces)	Dela (behåll båda delarna)
+One object of all the selected, their insides gone	Ett objekt av alla markerade, deras insidor borta
+The other selected objects cut out of the one shown in the properties	De andra markerade objekten skärs ut ur det som visas i egenskaperna
+Only what all the selected share	Bara det alla markerade delar
+The first object cut by the others into what is outside them and what is inside	Det första objektet skärs av de andra i det som är utanför dem och det som är innanför
+select an object first	markera ett objekt först
+Make editable	Gör redigerbart
+Make single	Gör enskilt
+the object has only one part	objektet har bara en del
+Separate parts	Separera delar
+select two or more objects to join	markera två eller fler objekt att sammanfoga
+Join objects	Sammanfoga objekt
+select two or more objects: the one shown in the properties and what acts on it	markera två eller fler objekt: det som visas i egenskaperna och det som verkar på det
+nothing is left: the objects do not overlap that way	inget blev kvar: objekten överlappar inte så
+The file has no scene	Filen har ingen scen
+The FBX file has no meshes	FBX-filen har inga meshar
+Main roads	Huvudvägar
+Streets	Gator
+Service roads	Servicevägar
+Tram tracks	Spårvägsspår
+Railway tracks	Järnvägsspår
+motorway, trunk, primary, secondary	motorväg, stamväg, primär, sekundär
+tertiary, residential, unclassified	tertiär, bostad, oklassificerad
+yards, car parks, depots	gårdar, parkeringar, depåer
+each track on its own; branches are joined with switches by hand	varje spår för sig; grenar förbinds med växlar för hand
+main lines without sidings; branches are joined with switches by hand	huvudlinjer utan sidospår; grenar förbinds med växlar för hand
+Water from OpenStreetMap	Vatten från OpenStreetMap
+Give a distance	Ange ett avstånd
+The bend is too tight for that distance on its inner side	Kurvan är för snäv för det avståndet på sin insida
+The copy leaves the map: add tiles there first	Kopian lämnar kartan: lägg till kartrutor där först
+Made with openMapper	Gjord med openMapper
+Low (no shadows, rough edges, 3 km view)	Låg (inga skuggor, grova kanter, 3 km sikt)
+Medium (softer shadows, 8 km view)	Medel (mjukare skuggor, 8 km sikt)
+High	Hög
+This end belongs to a junction: select the junction and move it, the road follows	Den här änden hör till en korsning: markera korsningen och flytta den, vägen följer
+Paint along the roads	Måla längs vägarna
+Market	Marknad
+Station	Station
+Depot	Depå
+this object takes its model from a model file: it cannot be scaled	det här objektet hämtar sin modell från en modellfil: det kan inte skalas
+Not a GPX, KML or GeoJSON file	Inte en GPX-, KML- eller GeoJSON-fil
+No lines in the file	Inga linjer i filen
+Language	Språk
+Interface size	Gränssnittsstorlek
+File	Arkiv
+New map…	Ny karta…
+Open map…	Öppna karta…
+Controls…	Kontroller…
+Import assets…	Importera tillgångar…
+Multiplayer…	Multiplayer…
+OMSI 2 folder…	OMSI 2-mapp…
+Quit	Avsluta
+View	Visa
+Help	Hjälp
+Updates…	Uppdateringar…
+About openMapper	Om openMapper
+OMSI 2 not found	OMSI 2 hittades inte
+Map editor for openOMSI	Kartredigerare för openOMSI
+openMapper builds maps from the content of an installed OMSI 2. Choose its folder (the one with Omsi.exe, maps and Vehicles).	openMapper bygger kartor av innehållet i en installerad OMSI 2. Välj dess mapp (den med Omsi.exe, maps och Vehicles).
+Choose OMSI 2 folder…	Välj OMSI 2-mapp…
+Maps	Kartor
+recent · OMSI 2	senaste · OMSI 2
+recent	senaste
+content folder	innehållsmapp
+OMSI 2 (saved as copy)	OMSI 2 (sparad som kopia)
+Open	Öppna
+Make a copy	Gör en kopia
+A copy of the map in the content folder under a new name, to try something out	En kopia av kartan i innehållsmappen under ett nytt namn, för att prova något
+Show in the file manager	Visa i filhanteraren
+Move to openMapper's bin	Flytta till openMapper-papperskorgen
+Its folder goes into openMapper\\bin in the content folder, from where it can be put back by hand	Dess mapp flyttas till openMapper\\bin i innehållsmappen, varifrån den kan sättas tillbaka för hand
+Browse…	Bläddra…
+Double-click a map to open it. Maps of OMSI 2 are saved as a copy into openOMSI's content folder; the original stays untouched.	Dubbelklicka på en karta för att öppna den. OMSI 2:s kartor sparas som en kopia i openOMSI:s innehållsmapp; originalet förblir orört.
+A simple map editor for openOMSI.	En enkel kartredigerare för openOMSI.
+Back to the 3D view (0)	Tillbaka till 3D-vyn (0)
+The plan view from above, north up (0)	Planvyn uppifrån, norr uppåt (0)
+Recent maps	Senaste kartor
+(none)	(inga)
+Export map for sharing…	Exportera karta för delning…
+Export a plan of the map…	Exportera en plan av kartan…
+Earlier versions…	Tidigare versioner…
+Close map	Stäng kartan
+Edit	Redigera
+Edit history…	Redigeringshistorik…
+Groups for other maps…	Grupper för andra kartor…
+Find in map…	Sök i kartan…
+Search for a command…	Sök efter ett kommando…
+Delete	Ta bort
+Deselect	Avmarkera
+Tile grid	Kartrutnät
+What the game does not show	Det spelet inte visar
+AI lanes	AI-körfält
+Names of stops and start points	Namn på hållplatser och startpunkter
+Show	Visa
+Roads and splines	Vägar och splines
+Overview map (M)	Översiktskarta (M)
+Assets (B)	Tillgångar (B)
+Flatten the terrain (roads follow)	Jämna ut terrängen (vägarna följer)
+Saved views…	Sparade vyer…
+Go to selection	Gå till markeringen
+Camera	Kamera
+Unity: right button looks round and W A S D fly, middle pans, Alt orbits	Unity: höger knapp tittar runt och W A S D flyger, mitten panorerar, Alt kretsar
+Map editor: right button looks round and W A S D fly (Q down, E up), middle pans, the wheel zooms to the cursor, drag moves the map	Kartredigerare: höger knapp tittar runt och W A S D flyger (Q ned, E upp), mitten panorerar, hjulet zoomar mot markören, dra flyttar kartan
+Load 100 tiles at a time (like OMSI 2's editor)	Läs in 100 kartrutor åt gången (som OMSI 2:s redigerare)
+Time of day	Tid på dygnet
+Plain day (as the game by day)	Vanlig dag (som spelet på dagen)
+At an hour	Vid en timme
+Where the sun stands then, today, at the map's place (Map > Calendar and place); by night the moon	Där solen står då, i dag, på kartans plats (Karta > Kalender och plats); på natten månen
+Season	Årstid
+Summer	Sommar
+Dry summer	Torr sommar
+Spring	Vår
+Autumn	Höst
+Winter	Vinter
+Snow	Snö
+Graphics quality	Grafikkvalitet
+Tools	Verktyg
+Road types and junctions…	Vägtyper och korsningar…
+PBR maps for a picture…	PBR-kartor för en bild…
+Map	Karta
+Map settings…	Kartinställningar…
+Calendar and place…	Kalender och plats…
+Signal routes…	Signalvägar…
+Chrono scenarios…	Kronoscenarier…
+Ground textures…	Marktexturer…
+Check map…	Kontrollera kartan…
+Junctions made again:	Korsningar gjorda om:
+Lines and timetable…	Linjer och tidtabell…
+Traffic and AI…	Trafik och AI…
+Depot files (destinations)…	Depåfiler (destinationer)…
+Satellite and terrain…	Satellit och terräng…
+From OpenStreetMap…	Från OpenStreetMap…
+GPS tracks to trace…	GPS-spår att följa…
+Tiles from another map…	Kartrutor från en annan karta…
+Test drive in openOMSI	Provkör i openOMSI
+Test drive in OMSI 2 (the original)…	Provkör i OMSI 2 (originalet)…
+Check in openOMSI…	Kontroll i openOMSI…
+Getting started	Komma igång
+New map	Ny karta
+Open a map	Öppna en karta
+Save (Ctrl+S): there are unsaved changes	Spara (Ctrl+S): det finns osparade ändringar
+Save (Ctrl+S)	Spara (Ctrl+S)
+Import assets: a mod folder or .zip, a .obj / .x / .o3d model (or drop files on the window)	Importera tillgångar: en modd-mapp eller .zip, en .obj- / .x- / .o3d-modell (eller släpp filer på fönstret)
+Redo (Ctrl+Shift+Z)	Gör om (Ctrl+Shift+Z)
+Tile grid (G)	Kartrutnät (G)
+Assets: every object and road type, with pictures (B)	Tillgångar: alla objekt och vägtyper, med bilder (B)
+Test drive	Provkör
+Save the map and drive it in openOMSI (F5)	Spara kartan och kör den i openOMSI (F5)
+openOMSI was not found: install it to test maps	openOMSI hittades inte: installera den för att testa kartor
+Test drive from the start point nearest the view	Provkör från startpunkten närmast vyn
+See this view in openOMSI	Se den här vyn i openOMSI
+loading	läser in
+Edit mesh	Redigera mesh
+Shapes and lamps	Former och lampor
+Click beside the map to add a 300 × 300 m tile. Right-click a tile to remove it.	Klicka bredvid kartan för att lägga till en kartruta på 300 × 300 m. Högerklicka på en kartruta för att ta bort den.
+Area	Område
+A ring of tiles round the map	En ring av kartrutor runt kartan
+Every free place beside the map, corners too, gets a tile at the height of its neighbours	Varje ledig plats bredvid kartan, hörn också, får en kartruta på grannarnas höjd
+Tiles added:	Kartrutor tillagda:
+Everything on the map, grouped by the folders its files lie in	Allt på kartan, grupperat efter mapparna dess filer ligger i
+Click an object or a road in the view to see and change it on the right.	Klicka på ett objekt eller en väg i vyn för att se och ändra det till höger.
+Line up with the nearest road (Shift: put it freely)	Rikta in mot närmaste väg (Shift: placera fritt)
+On both sides of the road	På båda sidor om vägen
+A stop of the same name also goes at the kerb across the road, facing the other way	En hållplats med samma namn läggs också vid kanten mittemot, vänd åt andra hållet
+In a row along a line	I rad längs en linje
+Every	Var
+Draw new	Rita nya
+Edit existing	Redigera befintliga
+Click a path to pick it: every point is a dot to drag (the small ones in the middle of a piece bend it). Double-click the path to put a point in. Click a dot, then Del, to take that point out; Del with no dot picked deletes the whole path (Ctrl+Z brings it back). Lanes of roads and junctions belong to their road type: use Edit its AI lanes on the road.	Klicka på en väg för att välja den: varje punkt är en prick att dra (de små i mitten av en del böjer den). Dubbelklicka på vägen för att lägga in en punkt. Klicka på en prick och sedan Del för att ta bort den punkten; Del utan vald punkt tar bort hela vägen (Ctrl+Z tar tillbaka den). Körfält för vägar och korsningar hör till sin vägtyp: använd Redigera dess AI-körfält på vägen.
+Cars	Bilar
+People	Människor
+Show these in the other tools too	Visa dessa i de andra verktygen också
+Show the AI's lanes in the other tools too	Visa AI:ns körfält i de andra verktygen också
+Everything	Allt
+Search	Sök
+Shape the ground under the road	Forma marken under vägen
+Go on drawing from the end of the road just built	Fortsätt rita från änden av vägen som just byggdes
+Join road ends, roads and junction pieces near the cursor	Anslut till vägändar, vägar och korsningsdelar nära markören
+Make junctions where roads meet	Gör korsningar där vägar möts
+Go on with the type of the road I start from	Fortsätt med typen på vägen jag startar från
+Building with:	Bygger med:
+nothing chosen	inget valt
+Front at the roadside, back	Fasad mot vägen, avstånd bakåt
+Plant brush: sow trees by painting	Planteringspensel: så träd genom att måla
+Sow	Så
+Clear	Rensa
+With the brush	Med penseln
+In an outline	I en kontur
+Click round an area (a wood, a park, a garden) and it is filled at once, or cleared	Klicka runt ett område (en skog, en park, en trädgård) så fylls det direkt, eller rensas
+About	Cirka
+plants (Enter: plant)	växter (Enter: plantera)
+Size	Storlek
+Apart	Avstånd
+Sows the object chosen below. Right-click entries: "Add to the plant mix" to sow several at random. Clearing takes trees and the mix's objects.	Sår objektet som valts nedan. Högerklicka på poster: ”Lägg till i planteringsblandningen” för att så flera blandat. Rensning tar träd och blandningens objekt.
+Mix (picked at random):	Blandning (slumpvis):
+reading OMSI 2…	läser OMSI 2…
+items	st.
+Nothing found	Inget hittades
+mod	modd
+right-click: star it	högerklick: stjärnmärk
+Take out of the plant mix	Ta bort från planteringsblandningen
+Add to the plant mix	Lägg till i planteringsblandningen
+Remove from favourites	Ta bort från favoriter
+Add to favourites	Lägg till i favoriter
+Favourites	Favoriter
+Recently used	Nyligen använda
+(not in a folder)	(inte i en mapp)
+Strength	Styrka
+Mode	Läge
+Levels the ground to the height where you start dragging	Jämnar ut marken till höjden där du börjar dra
+Softens bumps and edges	Mjukar upp ojämnheter och kanter
+Raises the ground under the brush	Höjer marken under penseln
+Lowers the ground under the brush	Sänker marken under penseln
+Gives flat ground the rolls and dips of a natural field; hold longer for more	Ger platt mark ett naturligt fälts puckel och svackor; håll längre för mer
+Paint a lake or a river: the ground is dug to a bed under the water's level (where you start the stroke, or the tile's water) and the tile gets water at that level. Water in OMSI is one level for a whole tile: another low place on the same tile shows it too	Måla en sjö eller en flod: marken grävs till en botten under vattnets nivå (där du startar strecket, eller kartrutans vatten) och kartrutan får vatten på den nivån. Vatten i OMSI är en nivå för en hel kartruta: en annan låg plats på samma kartruta visar det också
+Click where it starts, then where it ends: the ground between becomes one even slope as wide as the brush (an embankment, a ramp, a level bed)	Klicka där den börjar, sedan där den slutar: marken emellan blir en jämn lutning lika bred som penseln (en vall, en ramp, ett plant underlag)
+To a height	Till en höjd
+Flatten to the height typed instead of the one where the drag starts (a level square, a platform)	Jämna ut till den inskrivna höjden i stället för den där draget startar (en plan yta, en plattform)
+Depth	Djup
+The water's level is set where a stroke starts: start at the bank.	Vattnets nivå sätts där ett streck startar: börja vid stranden.
+Brush	Pensel
+Flatten the whole terrain	Jämna ut hela terrängen
+Every tile's ground levelled to the map's mean height; the roads, the AI paths and the junctions follow it. One undo step brings the relief back. (The satellite picture: View > Satellite overlay.)	Varje kartrutas mark jämnas ut till kartans medelhöjd; vägarna, AI-vägarna och korsningarna följer med. Ett ångra-steg tar tillbaka reliefen. (Satellitbilden: Visa > Satellitöverlägg.)
+Ground layers	Marklager
+base ground	basmark
+layer	lager
+Add…	Lägg till…
+Remove	Ta bort
+Up the list: drawn under the layers after it	Uppåt i listan: ritas under lagren efter den
+Down the list: drawn over the layers before it	Nedåt i listan: ritas över lagren före den
+Texture	Textur
+The layer's picture; its painting stays	Lagrets bild; dess målning finns kvar
+A fine grain laid over the texture, seen close up (OMSI's detail texture)	En fin struktur lagd över texturen, synlig på nära håll (OMSI:s detaljtextur)
+Click to choose another	Klicka för att välja en annan
+Repeats per tile	Upprepningar per kartruta
+Detail repeats	Detaljupprepningar
+How finely this layer can be painted: texels across a tile (its masks are made again at the new size)	Hur fint det här lagret kan målas: texlar tvärs över en kartruta (dess masker görs om i den nya storleken)
+Edit ground texture	Redigera marktextur
+Erase	Radera
+Remove ground texture	Ta bort marktextur
+Tile	Kartruta
+A water surface over the whole tile: it shows where the ground lies below it (lower the ground with the Terrain tool for a lake or a river)	En vattenyta över hela kartrutan: den syns där marken ligger under den (sänk marken med Terräng-verktyget för en sjö eller en flod)
+at 	vid
+Lamps light the ground at night	Lampor lyser upp marken på natten
+The game works out the light pools of the street lamps on and round this tile when it loads it ([variable_terrainlightmap]); off, it shows the tile's light map file as it is	Spelet räknar ut gatlyktornas ljuspölar på och runt den här kartrutan när det läser in den ([variable_terrainlightmap]); av visar det kartrutans ljuskartefil som den är
+Edit history	Redigeringshistorik
+Click a step to go back to just after it	Klicka på ett steg för att gå tillbaka till strax efter det
+Opened	Öppnad
+Properties	Egenskaper
+Configure PBR	Konfigurera PBR
+Create PBR	Skapa PBR
+Normal, roughness, metal and shadow maps made from the object's textures, tuned and written as openOMSI reads them	Normal-, skrovlighets-, metall- och skuggkartor gjorda av objektets texturer, justerade och skrivna så som openOMSI läser dem
+Type	Typ
+Hangs on	Hänger på
+point	punkt
+Location	Plats
+East	Öst
+North	Nord
+Height above sea level	Höjd över havet
+above the ground:	över marken:
+OMSI keeps this object's height above the ground under it: moved elsewhere it stays as high above the ground there	OMSI behåller det här objektets höjd över marken under det: flyttas det någon annanstans står det lika högt över marken där
+Rotation	Rotation
+Tilt forward (pitch)	Lutning framåt (pitch)
+Bank to the side (roll)	Lutning åt sidan (roll)
+Heading	Riktning (kurs)
+Turn it the way the nearest road runs beside it	Vrid det åt det håll närmaste väg går bredvid det
+Stand it upright again	Ställ det upprätt igen
+Picture	Bild
+Ratio	Proportion
+Stop name	Hållplatsnamn
+This tree	Det här trädet
+Texts	Texter
+Shown on the object (@ starts a new line)	Visas på objektet (@ börjar ny rad)
+Model	Modell
+Triangles	Trianglar
+Parts	Delar
+Part	Del
+triangles	trianglar
+colour only	bara färg
+opaque	ogenomskinlig
+cut out	utskuren
+blended	blandad
+How the texture's transparency is used: cut out for leaves and fences, blended for glass	Hur texturens transparens används: utskuren för löv och staket, blandad för glas
+Textures	Texturer
+Normal, roughness, metal and shadow maps made from the road type's textures	Normal-, skrovlighets-, metall- och skuggkartor gjorda av vägtypens texturer
+Length	Längd
+Radius	Radie
+right	höger
+left	vänster
+straight	rak
+start	start
+end	slut
+Mirrored	Speglad
+Skew	Snedställning
+The start cut on a slant: 1 is 45° (two fences meeting at a corner: 1 and -1)	Snedskuren start: 1 är 45° (två staket som möts i ett hörn: 1 och -1)
+The end cut on a slant	Snedskuret slut
+Ground	Mark
+as it is	som den är
+cut away under it	skär bort under den
+cut, held at the end	skär, hålls vid slutet
+cut, held at the start	skär, hålls vid starten
+cut, held at both ends	skär, hålls vid båda ändar
+A hole in the ground under it, as for a tunnel, an underpass or a pit (OMSI's terrain align)	Ett hål i marken under den, som för en tunnel, en underfart eller en grop (OMSI:s terrain align)
+Select the whole road	Markera hela vägen
+Every piece linked on from this one (or double-click the road)	Varje del länkad vidare från den här (eller dubbelklicka på vägen)
+Join with the next piece	Sammanfoga med nästa del
+One piece again with the one after it, where the two make one curve	Åter en del med den efter, där de två bildar en kurva
+Replace with	Ersätt med
+The object chosen in the Objects tool's catalogue takes this one's place	Objektet som valts i Objekt-verktygets katalog tar den här platsen
+Go to	Gå till
+Level ground	Jämna ut marken
+The ground under it made level with its foot, blending in 3 m round it (a house on a slope)	Marken under det jämnas ut med dess fot, med 3 m mjuk övergång runt det (ett hus i en sluttning)
+All like it	Alla likadana
+Select every one of this type on the map	Markera alla av den här typen på kartan
+No road within 60 m	Ingen väg inom 60 m
+Name	Namn
+Folder	Mapp
+Traffic	Trafik
+left-hand	vänstertrafik
+No start point yet: place one (Game logic > Start points) so the bus has somewhere to appear in openOMSI.	Ingen startpunkt ännu: placera en (Spellogik > Startpunkter) så att bussen har någonstans att dyka upp i openOMSI.
+None yet: openOMSI shows it where maps are chosen.	Ingen ännu: openOMSI visar den där kartor väljs.
+Import your thumbnail	Importera din miniatyrbild
+Choose a picture: it is cut to 370 × 280 and becomes the map's picture (picture.jpg).	Välj en bild: den beskärs till 370 × 280 och blir kartans bild (picture.jpg).
+Open the map with this view	Öppna kartan med den här vyn
+The camera as it is now is where the map opens (here and in OMSI 2's editor).	Kameran som den är nu är där kartan öppnas (här och i OMSI 2:s redigerare).
+Saved to	Sparas i
+Edit map	Redigera karta
+Change the layer's texture	Byt lagrets textur
+Change the layer's detail texture	Byt lagrets detaljtextur
+Controls	Kontroller
+Keyboard	Tangentbord
+Click a key, then press the new one (Esc: leave it). A key already in use is taken from its command.	Klicka på en tangent och tryck sedan på den nya (Esc: lämna). En tangent som redan används tas från sitt kommando.
+press a key…	tryck på en tangent…
+Also:	Även:
+Back to the default key	Tillbaka till standardtangenten
+Reset all keys	Återställ alla tangenter
+Mouse	Mus
+Right button held	Höger knapp nedtryckt
+look round; W A S D fly, Q / E down / up, Shift faster, wheel: speed	titta runt; W A S D flyger, Q / E ned / upp, Shift snabbare, hjul: hastighet
+Middle drag	Dra med mitten
+pan	panorera
+Alt + left / right / middle drag	Alt + dra med vänster / höger / mitten
+orbit / zoom / pan (as in Unity)	kretsa / zooma / panorera (som i Unity)
+Left drag on nothing	Dra med vänster på ingenting
+select with a box	markera med ruta
+Alt + left drag	Alt + dra med vänster
+orbit round the point under the cursor	kretsa runt punkten under markören
+Wheel	Hjul
+move towards the cursor	flytta mot markören
+Trackpad	Styrplatta
+Two fingers	Två fingrar
+Pinch / twist	Nyp / vrid
+zoom / turn	zooma / vrid
+Option + two fingers or drag	Option + två fingrar eller dra
+Fixed keys	Fasta tangenter
+Arrow keys	Piltangenter
+move over the map (Shift: faster)	flytta över kartan (Shift: snabbare)
+go to a saved view (Shift: keep the view there)	gå till en sparad vy (Shift: spara vyn där)
+Alt + arrows	Alt + piltangenter
+move the selection a grid step (Shift: 10 cm)	flytta markeringen ett rutnätssteg (Shift: 10 cm)
+Alt + Page Up / Down	Alt + Page Up / Down
+selection up / down 10 cm (Shift: 1 m)	markeringen upp / ned 10 cm (Shift: 1 m)
+add to / take from the selection	lägg till i / ta bort från markeringen
+Shift / Ctrl + drag on empty ground	Shift / Ctrl + dra på tom mark
+select with a box (Shift adds)	markera med ruta (Shift lägger till)
+Double-click a road	Dubbelklicka på en väg
+select all of it	markera hela den
+turn the object	vrid objektet
+brush size	penselstorlek
+stop / deselect	stopp / avmarkera
+Unsaved changes	Osparade ändringar
+The map has changes that are not saved. Save them first?	Kartan har ändringar som inte är sparade. Spara dem först?
+Don't save	Spara inte
+Assets	Tillgångar
+All	Alla
+Picture size	Bildstorlek
+Shapes…	Former…
+Close (B)	Stäng (B)
+Scenery objects	Scenobjekt
+Splines (roads, tracks…)	Splines (vägar, spår…)
+Favourite on / off	Favorit på / av
+content folder (mod, import, own)	innehållsmapp (modd, import, eget)
+OMSI 2	OMSI 2
+width	bredd
+Build with it	Bygg med den
+Place it	Placera den
+PBR material…	PBR-material…
+Delete…	Ta bort…
+Not seen in the game (a helper).	Syns inte i spelet (ett hjälpmedel).
+Delete the asset?	Ta bort tillgången?
+Its folder goes into openMapper's bin in the content folder (openMapper\\bin), from where it can be put back by hand. Maps that use it show it missing.	Dess mapp flyttas till openMapper-papperskorgen i innehållsmappen (openMapper\\bin), varifrån den kan sättas tillbaka för hand. Kartor som använder den visar den som saknad.
+Calendar and place	Kalender och plats
+Place and time	Plats och tid
+Holidays	Helgdagar
+Number plates	Registreringsskyltar
+Latitude	Latitud
+Longitude	Longitud
+Time zone	Tidszon
+Where the sun stands and when it rises and sets come from here.	Solens läge och när den går upp och ner kommer härifrån.
+Summer time	Sommartid
+years	år
+none: the clocks are never put forward	ingen: klockorna ställs aldrig fram
+EU rules for these years	EU-regler för de här åren
+Last Sunday of March to last Sunday of October, replacing what is set for these years	Sista söndagen i mars till sista söndagen i oktober, ersätter det som är satt för de här åren
+None	Ingen
+Year	År
+entries	poster
+Public holidays run Sunday's timetable; school holidays the holiday one.	Helgdagar kör söndagens tidtabell; skolloven lovtidtabellen.
+Public holidays	Helgdagar
+Add a holiday	Lägg till en helgdag
+Holiday	Helgdag
+School holidays	Skollov
+Ends before it starts	Slutar före det börjar
+Add school holidays	Lägg till skollov
+The AI's cars carry these, one a line.	AI:ns bilar bär de här, en per rad.
+X: a letter, 9: a digit	X: en bokstav, 9: en siffra
+Make	Skapa
+Replaces the list with plates of the pattern	Ersätter listan med skyltar enligt mönstret
+plates	skyltar
+The scenario's AI lists are written, groups changed:	Scenariots AI-listor är skrivna, grupper ändrade:
+Could not write the scenario	Kunde inte skriva scenariot
+The scenario's timetable is written, files:	Scenariots tidtabell är skriven, filer:
+Back in the scenario:	Tillbaka i scenariot:
+The scenario's things are on the map:	Scenariots saker finns på kartan:
+what you place now is the scenario's too	det du placerar nu hör också till scenariot
+Editing the scenario	Redigerar scenariot
+Done	Klart
+Chrono scenarios	Kronoscenarier
+How the map changes over the years: each scenario from its first day lays its own tiles, lines and tickets over the map. The view shows the map as on the day chosen here; what you edit is always the map itself.	Hur kartan förändras över åren: varje scenario lägger från sin första dag sina egna kartrutor, linjer och biljetter över kartan. Vyn visar kartan som på dagen som väljs här; det du redigerar är alltid själva kartan.
+Show the map as on	Visa kartan som den
+Today	I dag
+Active on that day:	Aktiva den dagen:
+New scenario's name	Det nya scenariots namn
+New scenario	Nytt scenario
+A scenario starting on the day shown, after the others	Ett scenario som startar på den visade dagen, efter de andra
+From	Från
+To	To
+for good	för alltid
+Own tickets	Egna biljetter
+Own money	Egna pengar
+the map's	kartans
+Takes off	Tar bort
+What changes (shown where the date is chosen)	Vad som ändras (visas där datumet väljs)
+From its first day, the selection in the view:	Från dess första dag, markeringen i vyn:
+appears	dyker upp
+Taken out of the map into the scenario: it is there from the scenario's first day on (place it first, then press this)	Tas ut ur kartan till scenariot: den finns där från scenariots första dag (placera den först, tryck sedan här)
+is gone	försvinner
+Stays in the map, gone from the scenario's first day on	Finns kvar i kartan, borta från scenariots första dag
+becomes	blir
+its texts become	dess texter blir
+Write	Skriv
+Its path rules from that day	Dess färdvägsregler från den dagen
+Add a rule	Lägg till en regel
+Written into the scenario at once (undo does not take it out of the scenario).	Skrivs in i scenariot direkt (ångra tar inte bort det ur scenariot).
+What it changes	Vad det ändrar
+into the map	in i kartan
+Out of the scenario into the map itself: there on every day	Ut ur scenariot till själva kartan: finns där alla dagar
+Take it out of the scenario	Ta ut ur scenariot
+new texts	nya texter
+rules	regler
+Nothing yet.	Inget ännu.
+Its own things are on the map: select, move, change and place as usual. The map's own things stay the map's.	Dess egna saker finns på kartan: markera, flytta, ändra och placera som vanligt. Kartans egna saker förblir kartans.
+Done: back into the scenario	Klart: tillbaka till scenariot
+Edit its own things on the map	Redigera dess egna saker på kartan
+What it brings in is put on the map to work with as with anything else; Done writes it back (undo starts afresh)	Det det tillför placeras på kartan att arbeta med som med allt annat; Klart skriver tillbaka det (ångra börjar om)
+The Lines window shows its timetable (the map's with its own laid over): lines, trips and tours edited there are the scenario's; a line of the map taken away is taken off from its day.	Linjefönstret visar dess tidtabell (kartans med dess egen över): linjer, turer och omlopp som redigeras där är scenariots; en borttagen linje från kartan tas bort från dess dag.
+Done with its timetable	Klart med dess tidtabell
+Edit its timetable	Redigera dess tidtabell
+Its own lines, trips and tours in the Lines window; Done writes only what differs from the map's (undo starts afresh)	Dess egna linjer, turer och omlopp i Linjefönstret; Klart skriver bara det som skiljer sig från kartans (ångra börjar om)
+The Traffic window shows its AI lists (the map's with its own added): vehicles and type groups added there, and a depot's own depot file, are the scenario's from its day.	Trafikfönstret visar dess AI-listor (kartans med dess egna tillagda): fordon och typgrupper som läggs till där, och en depås egen depåfil, är scenariots från dess dag.
+Done with its AI lists	Klart med dess AI-listor
+Edit its AI lists	Redigera dess AI-listor
+Vehicles it adds to the groups and depots (OMSI's ailists_#upd.cfg); taking one away is the map's own business	Fordon det lägger till i grupperna och depåerna (OMSI:s ailists_#upd.cfg); att ta bort ett är kartans egen sak
+Write the scenario	Skriv scenariot
+Close	Stäng
+The map has no chrono scenarios.	Kartan har inga kronoscenarier.
+from	från
+to	till
+takes off	tar bort
+own tickets	egna biljetter
+Its first day	Dess första dag
+Written into the scenario	Skrivet i scenariot
+Written into the scenario:	Skrivet i scenariot:
+Scenario written	Scenario skrivet
+The map as on	Kartan den
+scenarios:	scenarier:
+Multiplayer	Flerspelarläge
+Joining… (a big map takes a while to come)	Ansluter… (en stor karta tar en stund att komma)
+Recover a conflicting edit…	Återställ en motstridig ändring…
+Recovered your edit; undo is available	Din ändring återställd; ångra är tillgängligt
+Edit one map together: one of you hosts it, the others join. Roads, objects, ground and paint are shared as they are made; the timetable, the traffic and the descriptions stay the host's, and the host saves the map. Everybody needs the same objects and splines installed.	Redigera en karta tillsammans: en av er är värd, de andra går med. Vägar, objekt, mark och färg delas allteftersom de görs; tidtabellen, trafiken och beskrivningarna förblir värdens, och värden sparar kartan. Alla behöver samma objekt och splines installerade.
+Your name	Ditt namn
+Password	Lösenord
+Host this map	Var värd för den här kartan
+Others on this network can join	Andra i det här nätverket kan gå med
+Others anywhere can join (a free Cloudflare tunnel, nothing to set up on the router)	Andra var som helst kan gå med (en gratis Cloudflare-tunnel, inget att ställa in i routern)
+Port	Port
+Over the internet the password must have at least this many letters:	Över internet måste lösenordet ha minst så många tecken:
+No password: anybody who reaches this computer's port can join and change the whole map.	Inget lösenord: vem som helst som når den här datorns port kan gå med och ändra hela kartan.
+Ask for a password after all	Be om ett lösenord ändå
+Host without a password? Anybody on this network who finds the port can join and change the whole map.	Vara värd utan lösenord? Vem som helst i det här nätverket som hittar porten kan gå med och ändra hela kartan.
+Yes, without a password	Ja, utan lösenord
+No	Nej
+Type a password the others will need.	Skriv ett lösenord som de andra behöver.
+Host without a password…	Vara värd utan lösenord…
+Host	Värd
+Open a map, type a name and a password first	Öppna en karta, skriv först ett namn och ett lösenord
+Join a map	Gå med i en karta
+The map open now has unsaved changes: joining closes it. Save it first.	Kartan som är öppen nu har osparade ändringar: att gå med stänger den. Spara den först.
+You host this map. Give the others one of these:	Du är värd för den här kartan. Ge de andra en av dessa:
+On this network the connection is not encrypted: somebody listening in can see the map, and from what they catch try passwords on their own computer. Use a long password, or the internet tunnel (encrypted).	I det här nätverket är anslutningen inte krypterad: någon som lyssnar kan se kartan och av det de fångar prova lösenord på sin egen dator. Använd ett långt lösenord, eller internettunneln (krypterad).
+Everybody who joins can change the whole map.	Alla som går med kan ändra hela kartan.
+Opening the Cloudflare tunnel… (fetched the first time)	Öppnar Cloudflare-tunneln… (hämtas första gången)
+internet	internet
+Waiting for Cloudflare's address…	Väntar på Cloudflares adress…
+The Cloudflare tunnel could not be opened (no cloudflared, or no internet). The LAN addresses still work.	Cloudflare-tunneln kunde inte öppnas (ingen cloudflared, eller inget internet). LAN-adresserna fungerar fortfarande.
+You joined this map. The host saves it.	Du gick med i den här kartan. Värden sparar den.
+Everything of yours is with the others	Allt ditt finns hos de andra
+Sending your edits…	Skickar dina ändringar…
+In the session	I sessionen
+Say something…	Säg något…
+Leave	Lämna
+Knife (K): a click on a road cuts it there, as often as you like; the pieces' lengths shown at the cursor, on whole grid steps with grid snapping on · right-click or Esc: off	Kniv (K): ett klick på en väg skär den där, hur ofta du vill; delarnas längder visas vid markören, i hela rutnätssteg med rutnätsfästning på · högerklick eller Esc: av
+The angle step: what snapping comes to and what R turns by	Vinkelsteget: vad fästningen går till och hur mycket R vrider
+Angle	Vinkel
+Snap headings to the angle step	Fäst riktningar vid vinkelsteget
+Grid	Rutnät
+Snap positions to the grid	Fäst positioner vid rutnätet
+Click two points to measure the distance and gradient between them (U) · right-click: off	Klicka på två punkter för att mäta avstånd och lutning mellan dem (U) · högerklick: av
+Auto-Terrain	Auto-terräng
+What you build follows the ground: roads, paths and tracks take its height (off: they run level from where they start). Only what is built from now on; nothing already there changes	Det du bygger följer marken: vägar, stigar och spår tar dess höjd (av: de löper plant från startpunkten). Bara det som byggs från nu; inget som redan finns ändras
+Auto-Switch	Auto-växel
+Branching a track off another makes a switch there	Att grena ett spår från ett annat gör en växel där
+Auto-Junction	Auto-korsning
+Auto-Align	Auto-justering
+Line objects up with the nearest road (Shift: put it freely)	Rikta in objekt mot närmaste väg (Shift: placera fritt)
+Selection	Markering
+A click on one of it selects all of it, Ctrl + click one alone	Ett klick på en av dem markerar alla, Ctrl + klick en ensam
+Keep these together: a click on one selects all, a drag moves all (Ctrl+G)	Håll ihop dessa: ett klick på en markerar alla, ett drag flyttar alla (Ctrl+G)
+Apply	Verkställ
+Turn	Vrid
+Level the ground under them	Jämna ut marken under dem
+Each one's outline made level with its foot, blending into the ground 3 m round it	Varje kontur jämnas ut med dess fot, med mjuk övergång till marken 3 m runt
+Make every object	Gör alla objekt till
+The object chosen in the Objects tool's catalogue	Objektet som valts i Objekt-verktygets katalog
+Random headings	Slumpmässiga riktningar
+Every selected object turned its own random way (trees, bushes, rocks)	Varje markerat objekt vridet åt sitt eget slumpmässiga håll (träd, buskar, stenar)
+Along the road	Längs vägen
+Each turned the way the nearest road runs beside it	Var och en vriden åt det håll närmaste väg går bredvid
+Turned:	Vridna:
+All like this one	Alla som den här
+Every selected object takes the heading of the one in the properties	Varje markerat objekt får riktningen från det i egenskaperna
+Make every road	Gör alla vägar till
+The road type chosen in the Roads tool's catalogue	Vägtypen som valts i Väg-verktygets katalog
+Lay them on the ground	Lägg dem på marken
+Reverse their direction	Vänd deras riktning
+Even slope along them	Jämn lutning längs dem
+One chain of roads: from the height at one end to that at the other, evenly (a bridge, a ramp)	En kedja av vägar: från höjden vid ena änden till den vid andra, jämnt (en bro, en ramp)
+Edit its AI lanes	Redigera dess AI-körfält
+Its lanes become AI paths of their own (the same lines, the same way) that the Logic tool's Edit existing bends, moves and deletes. The road keeps its look.	Dess körfält blir egna AI-vägar (samma linjer, samma håll) som Logik-verktygets Redigera befintliga böjer, flyttar och tar bort. Vägen behåller sitt utseende.
+Ends (joined roads follow)	Ändar (anslutna vägar följer)
+height	höjd
+gradient	lutning
+cant	överhöjning
+Banking across the road, %: positive lowers its right side (into a right bend)	Lutning tvärs vägen, %: plus sänker dess högra sida (in i en högerkurva)
+End	End
+Even slope end to end	Jämn lutning från ände till ände
+Both gradients to the straight climb between the ends' heights	Båda lutningarna till den raka stigningen mellan ändarnas höjder
+Speed limit, km/h	Hastighetsgräns, km/h
+Traffic density ×	Trafiktäthet ×
+Priority	Prioritet
+Trucks (0: none)	Lastbilar (0: inga)
+No cars	Inga bilar
+Buses only	Bara bussar
+For the AI and the player on one path (lane) of it, counted from 0: the view shows their numbers	För AI och spelaren på en av dess vägar (körfält), räknat från 0: vyn visar deras nummer
+Path (lane) number	Väg- (körfälts-) nummer
+Hanging on it	Hänger på den
+Points to hang objects on:	Punkter att hänga objekt på:
+Select it	Markera den
+Hang	Häng
+Choose an object in the Objects catalogue first	Välj ett objekt i Objekt-katalogen först
+A fence, a row of houses, an avenue: the selection copied again and again, a step on each time	Ett staket, en husrad, en allé: markeringen kopieras om och om igen, ett steg längre varje gång
+Copies	Kopior
+Step	Steg
+Turn each	Vrid varje
+Rows	Rader
+More than one: a grid (an orchard, a car park), each row a row step on	Fler än en: ett rutnät (en fruktträdgård, en parkering), varje rad ett radsteg längre
+Row step	Radsteg
+Tilted to the ground under it, the way it slopes forward and to the side (a fence, a bench or a shed on a hillside)	Lutad mot marken under det, så som den sluttar framåt och åt sidan (ett staket, en bänk eller ett skjul i en backe)
+Heights along the ground again, smoothed so it climbs a hill rather than every bump (after shaping the ground or laying a height map over it); where a road not selected joins, its height is kept	Höjder längs marken igen, utjämnade så att den stiger över en kulle snarare än varje ojämnhet (efter att marken formats eller en höjdkarta lagts över); där en omarkerad väg ansluter behålls dess höjd
+Each starts where it ended: the traffic on it goes the other way (a one-way street, a track's direction), the road itself stays where it is	Varje börjar där den slutade: trafiken på den går åt andra hållet (en enkelriktad gata, ett spårs riktning), själva vägen stannar där den är
+A second track or the other carriageway: the selected splines copied alongside, bends kept exact, linked as they are	Ett andra spår eller andra körbanan: de markerade splinerna kopieras bredvid, kurvor exakta, länkade som de är
+To the left	Åt vänster
+To the right	Åt höger
+Left and right of the way the road runs (its arrows with AI lanes shown)	Vänster och höger om vägens riktning (dess pilar med AI-körfält visade)
+For trams and electric trains: a wire spline laid on the selected track, piece for piece and linked (its height is the wire spline's own); the masts go in with Objects along the road	För spårvagnar och eltåg: en ledningsspline lagd på det markerade spåret, del för del och länkad (dess höjd är ledningssplinens egen); stolparna sätts in med Objekt längs vägen
+No wire spline installed (one whose name says Fahrdraht, Oberleitung or wire)	Ingen ledningsspline installerad (en vars namn säger Fahrdraht, Oberleitung eller wire)
+Lay it	Lägg den
+Wire pieces laid:	Ledningsdelar lagda:
+Paint the ground along it	Måla marken längs den
+Add a ground texture in the Paint tool first: the base ground is under everything	Lägg till en marktextur i Måla-verktyget först: basmarken ligger under allt
+Layer	Lager
+Where	Var
+beside it	bredvid den
+under it too	även under den
+Out from its edge	Ut från dess kant
+Soft edge	Mjuk kant
+A gravel verge, dirt by a track, grass along a path: the brush of the Paint tool touches it up afterwards	En grusren, jord vid ett spår, gräs längs en stig: Måla-verktygets pensel finjusterar det efteråt
+Beside	Bredvid
+Lean with the road	Luta med vägen
+Each object leans with the road's gradient and banking (bays and arrows on the road); off, it stands upright	Varje objekt lutar med vägens lutning och överhöjning (fickor och pilar på vägen); av: det står upprätt
+A text the row's objects show (@ starts a new line)	En text som radens objekt visar (@ börjar ny rad)
+Object:	Objekt:
+Pick an object (a lamp, a tree, a bollard) in the Objects tool's catalogue	Välj ett objekt (en lykta, ett träd, en pollare) i Objekt-verktygets katalog
+Right of the road's direction; negative: left	Till höger om vägens riktning; negativt: vänster
+Free at start / end	Fritt vid start / slut
+Both sides	Båda sidor
+Place along the road	Placera längs vägen
+Remove all rows	Ta bort alla rader
+Roundabout: click the centre, then the ring	Rondell: klicka i mitten, sedan på ringen
+A one-way ring of the chosen road type (pick a one-way road); roads inside are cut back to it and joined with junctions	En enkelriktad ring av vald vägtyp (välj en enkelriktad väg); vägar innanför kortas till den och förbinds med korsningar
+Keep the height (bridge, embankment)	Behåll höjden (bro, vall)
+An even gradient from end to end, the ground left as it is; the rise to the end can be typed while drawing. Pillars: select the road and put them along it as objects.	En jämn lutning från ände till ände, marken lämnas som den är; stigningen till änden kan skrivas in under ritningen. Pelare: markera vägen och sätt dem längs den som objekt.
+Rise	Stigning
+Shift: straight · Enter: build	Shift: rak · Enter: bygg
+Junction	Korsning
+Traffic lights	Trafikljus
+Lights need three roads or more	Ljus behöver tre vägar eller fler
+Main road green	Grönt för huvudvägen
+Side roads green	Grönt för sidovägarna
+The main road is the pair of roads most in line; red-yellow 2 s, yellow 3 s, 2 s all red between	Huvudvägen är det vägpar som ligger närmast en linje; rött-gult 2 s, gult 3 s, 2 s helt rött emellan
+Zebra crossings	Övergångsställen
+Road	Väg
+Build it again	Bygg den igen
+Makes the plate, its kerbs and lanes again for the roads as they are now	Gör plattan, dess trottoarkanter och körfält igen för vägarna som de är nu
+Linked objects	Länkade objekt
+An object can take its state from another ([varparent]): a signal head shows a light of its crossing's program, a stop's display its stop.	Ett objekt kan ta sitt tillstånd från ett annat ([varparent]): ett signalhuvud visar ett ljus från sin korsnings program, en hållplatsdisplay sin hållplats.
+Takes its state from	Tar sitt tillstånd från
+Select it: IDCode	Markera den: IDCode
+Takes its state from an object that is gone: IDCode	Tar sitt tillstånd från ett objekt som är borta: IDCode
+Takes its state from nothing	Tar sitt tillstånd från ingenting
+Light	Trafiksignal
+Its light is not one of the crossing's: it stays dark	Dess ljus finns inte hos korsningen: det förblir mörkt
+That object runs no traffic lights: link the head to a crossing with a light program	Det objektet styr inga trafikljus: länka huvudet till en korsning med ett ljusprogram
+A signal head: link it to its crossing to have it light	Ett signalhuvud: länka det till sin korsning för att få det att lysa
+Click the object in the view… (Esc)	Klicka på objektet i vyn… (Esc)
+Link to another…	Länka till ett annat…
+Link to an object…	Länka till ett objekt…
+Then click the object it is to take its state from (a crossing for a signal head)	Klicka sedan på objektet det ska ta sitt tillstånd från (en korsning för ett signalhuvud)
+Taking their state from it:	Tar sitt tillstånd från det:
+light	ljus
+Click the object it takes its state from	Klicka på objektet det tar sitt tillstånd från
+stop	hållplats
+Find in map	Sök i kartan
+Name, file, IDCode, stop or x, y	Namn, fil, IDCode, hållplats eller x, y
+The point	Punkten
+Spline	Spline
+Object	Objekt
+Nothing on the map has this IDCode.	Inget på kartan har den här IDCode.
+kinds	slag
+on the map	på kartan
+Next	Nästa
+Select the next one and go there	Markera nästa och gå dit
+Every one of these becomes the road type chosen in the Roads tool	Alla dessa blir vägtypen som valts i Väg-verktyget
+Every one of these becomes the object chosen in the catalogue	Alla dessa blir objektet som valts i katalogen
+More: type to narrow the list	Fler: skriv för att avgränsa listan
+Replaced:	Ersatt:
+Satellite overlay	Satellitöverlägg
+Satellite and own pictures	Satellit och egna bilder
+Click a tile to see its overlay here.	Klicka på en kartruta för att se dess överlägg här.
+Show the overlay	Visa överlägget
+opacity	opacitet
+Load satellite imagery	Läs in satellitbilder
+Place the map on the Earth first (Satellite and terrain…)	Placera kartan på jorden först (Satellit och terräng…)
+Load image file…	Läs in bildfil…
+Your own picture for this tile (a scan, a screenshot): or drop it on the window	Din egen bild för den här kartrutan (en skanning, en skärmdump): eller släpp den på fönstret
+Load the OpenStreetMap map	Läs in OpenStreetMap-kartan
+OpenStreetMap map for all tiles	OpenStreetMap-karta för alla kartrutor
+The map as openstreetmap.org draws it (streets with their names, houses, water, green, stop signs), drawn sharp from OpenStreetMap data and laid on the tile in place of a satellite picture: to build roads and houses over by eye. Nothing is generated from it.	Kartan som openstreetmap.org ritar den (gator med namn, hus, vatten, grönt, hållplatsskyltar), ritad skarpt från OpenStreetMap-data och lagd på kartrutan i stället för en satellitbild: för att bygga vägar och hus över på ögonmått. Inget genereras av den.
+own picture	egen bild
+for an earlier placement	för en tidigare placering
+not kept with the map	sparas inte med kartan
+, partly coarser	, delvis grövre
+nothing	ingenting
+Place the map on the Earth first.	Placera kartan på jorden först.
+Load terrain heights	Läs in terränghöjder
+Done:	Klart:
+with problems	med problem
+A picture for the tiles	En bild till kartrutorna
+Could not read the picture	Kunde inte läsa bilden
+Could not copy the picture	Kunde inte kopiera bilden
+The picture is on the tiles: line it up in Satellite and terrain, Own pictures.	Bilden ligger på kartrutorna: rikta in den i Satellit och terräng, Egna bilder.
+Nothing found by that name.	Inget hittades med det namnet.
+Some tiles had Google imagery: enter your Google key to see it again (it is not kept with the map).	Vissa kartrutor hade Google-bilder: ange din Google-nyckel för att se dem igen (den sparas inte med kartan).
+Satellite and terrain	Satellit och terräng
+Find a place: a town, a street, an address… (Enter)	Hitta en plats: en stad, en gata, en adress… (Enter)
+Searching…	Söker…
+Search © OpenStreetMap contributors	Sökning © OpenStreetMap-bidragsgivare
+This map has world coordinates ([worldcoordinates]): it lies on the Earth by itself, its tiles are Web Mercator tiles.	Den här kartan har världskoordinater ([worldcoordinates]): den ligger på jorden av sig själv, dess kartrutor är Web Mercator-rutor.
+Click on the map where the orange tile goes…	Klicka på kartan där den orange kartrutan ska ligga…
+Place the map here	Placera kartan här
+Then click on the map: the middle of the orange tile goes there	Klicka sedan på kartan: den orange kartrutans mitt hamnar där
+At the view's middle	I vyns mitt
+North turned	Nords vridning
+Orange tile	Orange kartruta
+click the map to fly there in the view	klicka på kartan för att flyga dit i vyn
+1. Find the place.  2. Press "Place the map here" and click on the map: the orange tile (the map's middle) goes there.	1. Hitta platsen.  2. Tryck på ”Placera kartan här” och klicka på kartan: den orange kartrutan (kartans mitt) hamnar där.
+Imagery	Bilder
+The sharpest here	De skarpaste här
+cm a pixel here	cm per pixel här
+checking…	kontrollerar…
+is sharper here	är skarpare här
+Sharper imagery may be had here with your own free key for Mapbox, MapTiler or Google (Keys below).	Skarpare bilder kan finnas här med din egen gratis nyckel för Mapbox, MapTiler eller Google (Nycklar nedan).
+Terms of use	Användarvillkor
+Zoom	Zoom
+the finest here	den finaste här
+Picture of a tile	Bild av en kartruta
+every pixel of the source (up to 4096)	varje pixel i källan (upp till 4096)
+Loaded at	Inläst med
+cm a pixel	cm per pixel
+Also load terrain heights	Läs också in terränghöjder
+New tiles get imagery by themselves	Nya kartrutor får bilder av sig själva
+Load for all tiles	Läs in för alla kartrutor
+For the selected tile	För den markerade kartrutan
+Click a tile with the Tiles tool (7)	Klicka på en kartruta med Kartruteverktyget (7)
+Terrain heights only	Bara terränghöjder
+of	av
+tiles beside the loaded heights were not loaded: the ground steps at their edge.	kartrutor bredvid de inlästa höjderna lästes inte in: marken får ett steg vid deras kant.
+Fit their edges	Anpassa deras kanter
+Their edge takes the loaded heights, fading out 60 m into the tile	Deras kant tar de inlästa höjderna och tonar ut över 60 m in i kartrutan
+Leave them	Lämna dem
+Terrain heights	Terränghöjder
+Relative: the orange tile's mean height is 0 m	Relativa: den orange kartrutans medelhöjd är 0 m
+Raise everything by	Höj allt med
+Taken off:	Avdraget:
+Measure again	Mät igen
+Terrain data attribution	Källor för terrängdata
+Overlay on the ground	Överlägg på marken
+Put the imagery into maps exported for sharing (check its licence first)	Lägg bilderna i kartor som exporteras för delning (kontrollera licensen först)
+Fit tile edges	Anpassa kartrutekanter
+Keys for more sources (optional)	Nycklar för fler källor (valfritt)
+Everything works without a key. With your own free key these may be sharper in some places; the key stays on this computer.	Allt fungerar utan nyckel. Med din egen gratis nyckel kan dessa vara skarpare på vissa platser; nyckeln stannar på den här datorn.
+Google satellite (needs your API key)	Google satellit (kräver din API-nyckel)
+get a key	skaffa en nyckel
+In Google Cloud: make a project, enable the Map Tiles API, create an API key, paste it here. Google bills by use above its free amount.	I Google Cloud: skapa ett projekt, aktivera Map Tiles API, skapa en API-nyckel och klistra in den här. Google debiterar efter användning över sin gratisgräns.
+key	nyckel
+Your own tile server	Din egen kartruteserver
+URL	URL
+Attribution	Källhänvisning
+Finest zoom	Finaste zoom
+Kind	Slag
+XYZ / WMTS tiles	XYZ / WMTS-rutor
+Terrarium heights	Terrarium-höjder
+{z} {x} {y} are filled in; a WMS gets {bbox} (EPSG:3857) and {width} {height}; {key} is your key.	{z} {x} {y} fylls i; en WMS får {bbox} (EPSG:3857) och {width} {height}; {key} är din nyckel.
+Add	Lägg till
+Own pictures	Egna bilder
+A scan, a screenshot, an old plan: laid on tiles and lined up by eye. No place on the Earth needed.	En skanning, en skärmdump, en gammal plan: läggs på kartrutor och passas in på ögonmått. Ingen plats på jorden behövs.
+Tiles from	Kartrutor från
+Load image file over these tiles…	Läs in bildfil över de här kartrutorna…
+Turn left 90°	Vrid 90° åt vänster
+Turn right 90°	Vrid 90° åt höger
+mirror left-right	spegla vänster-höger
+mirror top-bottom	spegla upp-ned
+Reset	Återställ
+Your own pictures	Dina egna bilder
+of these tiles have your own pictures. Replace them with satellite imagery?	av de här kartrutorna har dina egna bilder. Ersätta dem med satellitbilder?
+Replace them	Ersätt dem
+Keep my pictures	Behåll mina bilder
+Groups for other maps	Grupper för andra kartor
+A selection kept under a name, to put down again in any map (a stop with its shelter and signs, a crossing with its lights)	En markering sparad under ett namn, att sätta ned igen i vilken karta som helst (en hållplats med väntkur och skyltar, en korsning med trafikljus)
+Keep the selection	Spara markeringen
+Group kept	Grupp sparad
+Select what to keep in the view first.	Markera först i vyn det som ska sparas.
+No groups yet.	Inga grupper ännu.
+thing	sak
+things	saker
+Delete the group (to openMapper's bin)	Ta bort gruppen (till openMapper-papperskorgen)
+Use	Använd
+Into the clipboard: Ctrl+V puts it down at the cursor, as often as wanted	Till urklipp: Ctrl+V sätter ned den vid markören, så ofta du vill
+is in the clipboard: Ctrl+V puts it at the cursor	finns i urklipp: Ctrl+V sätter den vid markören
+The map's tiles: 300 m squares. Add more beside them with the Tiles tool.	Kartans kartrutor: rutor på 300 m. Lägg till fler bredvid med Kartruteverktyget.
+A road	En väg
+Roads tool: click where it starts, then where it ends. Click on a road's end to go on from it.	Väg-verktyget: klicka där den börjar, sedan där den slutar. Klicka på en vägände för att fortsätta därifrån.
+A bus stop by the road	En hållplats vid vägen
+Game logic > Bus stops: put one at the kerb, on the side the doors open. Name it on the right.	Spellogik > Hållplatser: sätt en vid trottoarkanten, på sidan dörrarna öppnas. Namnge den till höger.
+A start point	En startpunkt
+Game logic > Start points: where your bus appears, on a road, facing the way to drive.	Spellogik > Startpunkter: där din buss dyker upp, på en väg, vänd i körriktningen.
+A line with a trip	En linje med en tur
+Lines window: New line, New trip, then click the stops in order. The way is found along the roads.	Linjefönstret: Ny linje, Ny tur, klicka sedan på hållplatserna i ordning. Vägen hittas längs vägarna.
+A tour with departures	Ett omlopp med avgångar
+Lines window > Tours and times: New tour, then Fill from … to … .	Linjefönstret > Omlopp och tider: Nytt omlopp, sedan Fyll från … till … .
+Buses for the tours	Bussar till omloppen
+A depot the tours take their buses from (Tours: Add a depot, or Traffic and AI).	En depå som omloppen tar sina bussar från (Omlopp: Lägg till en depå, eller Trafik och AI).
+Checked	Kontrollerad
+Map > Check map: what would go wrong in the game, most of it put right with one click.	Karta > Kontrollera kartan: vad som skulle gå fel i spelet, det mesta rättas med ett klick.
+Saved	Sparat
+Ctrl+S. Maps are saved into openOMSI's content folder.	Ctrl+S. Kartor sparas i openOMSI:s innehållsmapp.
+A test drive	En provkörning
+F5 saves and starts openOMSI on the map: pick line 1 and drive.	F5 sparar och startar openOMSI på kartan: välj linje 1 och kör.
+A map you can drive in service:	En karta du kan köra i trafik på:
+Show me	Visa mig
+Your stops stand away from the roads: a bus serves a stop within 15 m of its lane.	Dina hållplatser står långt från vägarna: en buss trafikerar en hållplats inom 15 m från sitt körfält.
+A real place? Put the map on the Earth (Map > Satellite and terrain), then Map > From OpenStreetMap brings its streets, stops, lines and trees.	En riktig plats? Placera kartan på jorden (Karta > Satellit och terräng), sedan hämtar Karta > Från OpenStreetMap dess gator, hållplatser, linjer och träd.
+Show this for new maps	Visa det här för nya kartor
+The map has no depot file.	Kartan har ingen depåfil.
+Make one from the lines	Gör en av linjerna
+The map has no trips yet (Map > Lines and timetable)	Kartan har inga turer ännu (Karta > Linjer och tidtabell)
+Empty one	En tom
+New	Ny
+A new depot file from the map's lines	En ny depåfil av kartans linjer
+Delete this depot file	Ta bort den här depåfilen
+The lines need	Linjerna behöver
+Add them	Lägg till dem
+What is there stays as it is	Det som finns förblir som det är
+No depot group uses it.	Ingen depågrupp använder den.
+Used by the depot	Används av depån
+Use it for every depot	Använd den för alla depåer
+The AI's depot groups (Vehicle groups tab) take their buses' destinations from it	AI:ns depågrupper (fliken Fordonsgrupper) tar sina bussars destinationer från den
+Rename	Byt namn
+not a usable name	inte ett användbart namn
+The destination a bus shows on its way to and from the depot	Destinationen en buss visar på väg till och från depån
+Destinations	Destinationer
+Stops	Hållplatser
+Routes	Rutter
+nobody gets on	ingen går på
+Code	Kod
+another destination has this code	en annan destination har den här koden
+As a trip's terminus is named in the timetable: the stop where everybody gets off	Så som en turs ändhållplats heter i tidtabellen: hållplatsen där alla går av
+Nobody gets on (service trip, empty sign)	Ingen går på (servicetur, tom skylt)
+Delete destination	Ta bort destination
+Add destination	Lägg till destination
+New destination	Ny destination
+As the timetable names the stop	Så som tidtabellen namnger hållplatsen
+Delete stop	Ta bort hållplats
+Add stop	Lägg till hållplats
+line	linje
+What the driver types: the line's number and two digits (7601: line 76, route 01)	Vad föraren skriver in: linjens nummer och två siffror (7601: linje 76, rutt 01)
+Line	Linje
+IBIS text	IBIS-text
+Destination	Destination
+Stops in order	Hållplatser i ordning
+Not in the Stops list: the displays have no texts for it	Finns inte i Hållplatslistan: displayerna har inga texter för den
+Move up	Flytta upp
+Move down	Flytta ned
+Take out	Ta ut
+Add a stop…	Lägg till en hållplats…
+Delete route	Ta bort rutt
+Add route	Lägg till rutt
+No routes: the IBIS knows the destinations' codes only. Add them from the lines above.	Inga rutter: IBIS känner bara destinationernas koder. Lägg till dem från linjerna ovan.
+Winter with snow	Vinter med snö
+Summer (dry)	Sommar (torr)
+Jan	jan
+Feb	feb
+Mar	mar
+Apr	apr
+May	maj
+Jun	jun
+Jul	jul
+Aug	aug
+Sep	sep
+Oct	okt
+Nov	nov
+Dec	dec
+Map settings	Kartinställningar
+Money	Pengar
+Tickets	Biljetter
+none: the map has no depot group (Traffic and AI)	ingen: kartan har ingen depågrupp (Trafik och AI)
+Years	År
+Year offset	Årsförskjutning
+Added to today's year when the game starts at the real date (Berlin-Spandau: -25 for the 1980s)	Läggs till innevarande år när spelet startar på riktigt datum (Berlin-Spandau: -25 för 1980-talet)
+Repair time	Reparationstid
+ min	 min
+Rail	Räls
+real rail (trams and trains follow their tracks' switches)	riktig räls (spårvagnar och tåg följer sina spårs växlar)
+Helper	Hjälpmedel
+dynamic helper active (the original editor's map option, kept as it is)	dynamiskt hjälpmedel aktivt (den ursprungliga redigerarens kartalternativ, behållet som det är)
+Seasons	Årstider
+Summer where none is set. The days count from 1 January.	Sommar där ingen är satt. Dagarna räknas från 1 januari.
+Add a season	Lägg till en årstid
+A season ends before it starts	En årstid slutar före den börjar
+Nothing selected	Inget markerat
+Paste here	Klistra in här
+Cut the road here	Skär vägen här
+Select all like it	Markera alla likadana
+Keep for other maps…	Spara för andra kartor…
+Its ground, painting, water, objects and roads, put beside or into this map. Lines, timetable and AI lists stay with the other map.	Dess mark, målning, vatten, objekt och vägar, satta bredvid eller in i den här kartan. Linjer, tidtabell och AI-listor stannar hos den andra kartan.
+Choose a map…	Välj en karta…
+Other…	Annan…
+A map to take tiles from (its global.cfg)	En karta att ta kartrutor från (dess global.cfg)
+Grey: this map · orange: the tiles to add (click to take one or leave it) · red: on a tile of this map, left out	Grå: den här kartan · orange: kartrutorna att lägga till (klicka för att ta eller lämna en) · röd: på en kartruta i den här kartan, utelämnad
+Move:	Flytta:
+west	väst
+east	öst
+north	nord
+south	syd
+Raise it by	Höj den med
+Its ground, water, roads and objects at a height of their own	Dess mark, vatten, vägar och objekt på en egen höjd
+Ease the ground where the maps meet	Mjuka upp marken där kartorna möts
+Added	Tillagt
+tiles from the other map	kartrutor från den andra kartan
+Cube	Kub
+Plane	Plan
+Circle	Cirkel
+Triangle	Triangel
+Triangular prism	Triangulärt prisma
+Wedge	Kil
+Corner wedge	Hörnkil
+Pyramid	Pyramid
+Sphere	Sfär
+Icosphere	Icosfär
+Cylinder	Cylinder
+Cone	Kon
+Torus	Torus
+Tube	Rör
+Capsule	Kapsel
+Stairs	Trappa
+Arch	Båge
+Make one and put it on the map with a click (each one can then be edited, scaled, cut and joined)	Skapa en och placera den på kartan med ett klick (varje kan sedan redigeras, skalas, skäras och sammanfogas)
+Array	Array
+Mirror	Spegel
+Solidify	Solidify
+Subdivision surface	Subdivision surface
+Decimate	Decimate
+Triangulate	Triangulera
+Displace	Displace
+Wireframe	Trådmodell
+Screw	Skruv
+Simple deform	Enkel deformering
+Cast	Cast
+Weld	Weld
+Edge split	Edge split
+Boolean	Boolesk
+Follow the ground	Följ marken
+Count	Antal
+Relative	Relativt
+Offset	Förskjutning
+Merge touching ends	Sammansmält mötande ändar
+Distance	Avstånd
+Cut away the other side first	Skär bort andra sidan först
+Weld at the mirror	Sammansmält vid spegeln
+Thickness	Tjocklek
+Close the rim	Stäng kanten
+Width	Bredd
+Segments	Segment
+Levels	Nivåer
+Smooth (Catmull-Clark)	Jämna ut (Catmull-Clark)
+Factor	Faktor
+Repeat	Upprepningar
+Seed	Frö
+Along the normals	Längs normalerna
+Steps	Steg
+Axis	Axel
+Twist	Vridning
+Bend	Böj
+Taper	Avsmalning
+Stretch	Sträckning
+Amount	Mängd
+Box	Låda
+Difference	Differens
+With the part	Med delen
+Tip: hide the cutting part (its eye in the list) so only the cut shows	Tips: dölj den skärande delen (dess öga i listan) så att bara snittet syns
+Above the ground	Över marken
+Every vertex follows the terrain under it (in the editor's view and the written files at the place it stands)	Varje hörn följer terrängen under det
+Mesh (openMapper object)	Mesh (openMapper-objekt)
+Shared by	Delas av
+objects on the map: changes apply to all	objekt på kartan: ändringar gäller alla
+Make this one single	Gör den här enskild
+Leave the edit mode (Tab)	Lämna redigeringsläget (Tab)
+Edit the mesh (Tab)	Redigera mesh (Tab)
+Write it as OBJ, glTF / GLB, FBX, Collada, USD, STL, PLY, 3MF, OFF, X or O3D	Skriv som OBJ, glTF / GLB, FBX, Collada, USD, STL, PLY, 3MF, OFF, X eller O3D
+Off: its height is kept above the ground under it	Av: dess höjd hålls över marken under det
+Solid (collides)	Fast (kolliderar)
+The part edited and given modifiers	Delen som redigeras och ges modifierare
+Shown (and written into the object)	Visad (och skriven i objektet)
+faces	ytor
+Duplicate the part	Duplicera delen
+Delete the part	Ta bort delen
+Add a shape as a part	Lägg till en form som en del
+Separate parts into objects	Separera delar till objekt
+Each part becomes an object of its own, standing where it stood	Varje del blir ett eget objekt, där den stod
+Shape	Form
+Modifiers	Modifierare
+Make it part of the mesh	Gör den till en del av meshen
+Add a modifier	Lägg till en modifierare
+Materials	Material
+Colour (multiplies the texture)	Färg (multipliceras med texturen)
+Assign to selected faces	Tilldela markerade ytor
+Choose…	Välj…
+No texture	Ingen textur
+Save as…	Spara som…
+PNG, JPEG, BMP, TGA, TIFF, WebP or DDS	PNG, JPEG, BMP, TGA, TIFF, WebP eller DDS
+Transparency	Transparens
+Opaque	Ogenomskinlig
+Cut out	Utskuren
+Blended	Blandad
+Glows	Lyser
+Light of its own: black for none	Eget ljus: svart för inget
+Shine	Glans
+Normal map	Normalkarta
+ORM map	ORM-karta
+Night texture	Nattextur
+Light map	Ljuskarta
+Remove the material	Ta bort materialet
+Add a material	Lägg till ett material
+Import materials…	Importera material…
+From an .mtl, a glTF / GLB / FBX, or the pictures of one PBR material (base colour, normal, roughness, metal, AO...)	Från en .mtl, en glTF / GLB / FBX, eller bilderna till ett PBR-material (basfärg, normal, skrovlighet, metall, AO...)
+Lamps	Lampor
+Glow	Sken
+Light on the ground	Ljus på marken
+Colour	Färg
+Reach	Räckvidd
+On	På
+Always	Alltid
+At night	På natten
+variable	variabel
+Seen from one side	Syns från ena sidan
+Star	Stjärna
+Facing	Riktning
+Remove the lamp	Ta bort lampan
+Add a glow	Lägg till ett sken
+A lamp's bulb, a lit sign: a glow seen at night	En lampas glödlampa, en upplyst skylt: ett sken som syns på natten
+Add light on the ground	Lägg till ljus på marken
+The pool of light a street lamp throws at night	Ljuspölen en gatlykta kastar på natten
+Signal head, lamps	Signalhuvud, lampor
+Put it within 40 m of a crossing with a light program: it takes its light from it (or link it in its properties)	Placera det inom 40 m från en korsning med ett ljusprogram: det tar sitt ljus därifrån (eller länka det i dess egenskaper)
+Bake	Baka
+Its textures and colours painted into one picture on a new UV map (one material: fewer draws in the game), with its own shadows and its lamps' night light if chosen	Dess texturer och färger målade i en bild på en ny UV-karta (ett material: färre ritanrop i spelet), med egna skuggor och lampornas nattljus om valt
+Ambient occlusion	Omgivningsskuggning
+How far its shadows reach	Hur långt dess skuggor når
+Lamps' light at night (light map)	Lampornas ljus på natten (ljuskarta)
+The object's last change (Ctrl+Z in the edit mode)	Objektets senaste ändring (Ctrl+Z i redigeringsläget)
+Divisions X	Delningar X
+Divisions Y	Delningar Y
+Rings	Ringar
+Subdivisions	Underindelningar
+Bottom radius	Nedre radie
+Top radius	Övre radie
+Tube radius	Rörets radie
+Tube segments	Rörets segment
+Outer radius	Yttre radie
+Inner radius	Inre radie
+Opening	Öppning
+Wall	Vägg
+Mesh	Mesh
+A copy of this object's type of its own is made for it, with its meshes, materials and lamps to edit; the original stays as it is	En egen kopia av det här objektets typ görs åt det, med dess meshar, material och lampor att redigera; originalet förblir som det är
+As a mesh	Som mesh
+Copy as an object	Kopia som objekt
+An openMapper object of its shape beside it, to edit as a mesh (vertices, edges, faces)	Ett openMapper-objekt med dess form bredvid den, att redigera som mesh (hörn, kanter, ytor)
+The same, the spline taken away (its lanes go with it)	Samma, splinen tas bort (dess körfält försvinner med den)
+Splines as a mesh	Splines som mesh
+Copy as one object	Kopia som ett objekt
+Replace by one object	Ersätt med ett objekt
+Export the selection…	Exportera markeringen…
+As meshes	Som meshar
+Join into one object (Ctrl+J)	Sammanfoga till ett objekt (Ctrl+J)
+All their parts in the one shown in the properties, the others gone	Alla deras delar i det som visas i egenskaperna, de andra försvinner
+Solid modelling (CSG): the object shown in the properties with the others	Solid modellering (CSG): objektet som visas i egenskaperna med de andra
+Keep the cutting objects	Behåll de skärande objekten
+Vertices	Hörn
+Edges	Kanter
+Faces	Ytor
+vertices	hörn
+edges	kanter
+Selected	Markerat
+X-ray: pick through the mesh	Röntgen: välj genom meshen
+All (A)	Alla (A)
+None (Alt+A)	Inga (Alt+A)
+Invert (Ctrl+I)	Invertera (Ctrl+I)
+Linked (Ctrl+L)	Länkat (Ctrl+L)
+More	Mer
+Less	Mindre
+Click, Shift + click to add, drag on nothing for a box, a second click or Alt + click for a loop	Klicka, Shift + klick för att lägga till, dra på ingenting för en ruta, ett andra klick eller Alt + klick för en slinga
+Change	Ändra
+Extrude (E)	Extrudera (E)
+Inset (I)	Inset (I)
+Bevel (Ctrl+B)	Avfasa (Ctrl+B)
+Loop cut (Ctrl+R)	Slingsnitt (Ctrl+R)
+Point at an edge and press Ctrl+R	Peka på en kant och tryck Ctrl+R
+Subdivide	Dela upp
+Fill (F)	Fyll (F)
+Bridge loops	Brygga slingor
+Connect (J)	Förbind (J)
+Poke	Poke
+Duplicate (Shift+D)	Duplicera (Shift+D)
+Split (Y)	Dela (Y)
+Separate into an object (P)	Separera till ett objekt (P)
+Spin 360°	Spin 360°
+The selection turned round the object's up axis through its middle, in 12 steps	Markeringen vriden runt objektets upp-axel genom dess mitt, i 12 steg
+Smooth vertices	Jämna ut hörn
+Merge (M)	Sammansmält (M)
+At the middle	I mitten
+At the first	Till den första
+At the last	Till den sista
+Collapse each piece	Kollapsa varje del
+By distance (1 mm)	Efter avstånd (1 mm)
+Delete (X)	Ta bort (X)
+Only faces	Bara ytor
+Dissolve vertices	Lös upp hörn
+Dissolve edges	Lös upp kanter
+Dissolve faces	Lös upp ytor
+Triangulate (Ctrl+T)	Triangulera (Ctrl+T)
+Triangles to quads (Alt+J)	Trianglar till fyrhörningar (Alt+J)
+Shade smooth	Jämn skuggning
+Shade flat	Platt skuggning
+Flip normals (Alt+N)	Vänd normaler (Alt+N)
+Normals outward (Shift+N)	Normaler utåt (Shift+N)
+Mark seam	Markera söm
+Clear seam	Rensa söm
+Mark sharp	Markera skarp
+Clear sharp	Rensa skarp
+Adjust the last operation	Justera den senaste operationen
+Slide	Glid
+Cuts	Snitt
+UV map	UV-karta
+Unwrap	Veckla ut
+By seams (conformal)	Efter sömmar (konformt)
+Smart project	Smart projektion
+Cube projection (metres)	Kubprojektion (meter)
+Cylinder projection	Cylinderprojektion
+Sphere projection	Sfärprojektion
+Project from the view	Projicera från vyn
+Lightmap pack	Ljuskartepackning
+Close the UV editor	Stäng UV-redigeraren
+UV editor	UV-redigerare
+Faces of the selection (all, with none selected); mark seams on edges first for an unwrap by seams	Markeringens ytor (alla, om ingen är markerad); markera först sömmar på kanter för en utvecklning efter sömmar
+Material of the selected faces	Material för de markerade ytorna
+With lamps	Med lampor
+Street lamp	Gatlykta
+A pole with a lamp that glows and lights the ground at night	En stolpe med en lampa som lyser och belyser marken på natten
+Signal head	Signalhuvud
+A traffic light of the lamps below that a crossing's light program drives	Ett trafikljus av lamporna nedan som en korsnings ljusprogram styr
+Lamps:	Lampor:
+Picture, light, sound	Bild, ljus, ljud
+Picture / pattern…	Bild / mönster…
+Choose a picture or a texture: it becomes an object you place, move, turn and scale like any other. Several repeats make a pattern	Välj en bild eller en textur: den blir ett objekt du placerar, flyttar, vrider och skalar som vilket annat som helst. Flera upprepningar ger ett mönster
+Light source	Ljuskälla
+A lamp that glows and lights the ground round it	En lampa som lyser och belyser marken runt den
+Sound source…	Ljudkälla…
+Choose a sound file (.wav): it plays where you put the marker, as far as the radius carries; the marker shows in the editor only	Välj en ljudfil (.wav): den spelas där du sätter markören, så långt radien bär; markören syns bara i redigeraren
+Picture width, m	Bildbredd, m
+Repeats	Upprepningar
+on the ground	på marken
+standing	stående
+Light colour	Ljusfärg
+Light reach, m	Ljusets räckvidd, m
+at night	på natten
+always	alltid
+Sound reach, m	Ljudets räckvidd, m
+Sound volume	Ljudvolym
+Overview: click or drag to move there · double-click: larger / smaller · M: hide	Översikt: klicka eller dra för att flytta dit · dubbelklicka: större / mindre · M: dölj
+Name:	Namn:
+My town	Min stad
+Description:	Beskrivning:
+What the map is, for the game's map list	Vad kartan är, för spelets kartlista
+Size:	Storlek:
+Ground height:	Markhöjd:
+ m above sea level	 m över havet
+Traffic:	Trafik:
+keeps right	högertrafik
+keeps left	vänstertrafik
+Busy:	Trafikmängd:
+cars	bilar
+passengers	passagerare
+Years:	År:
+year offset	årsförskjutning
+Added to today's year when the game starts at the real date	Läggs till innevarande år när spelet startar på riktigt datum
+Money:	Pengar:
+Tickets:	Biljetter:
+Seasons:	Årstider:
+four, snowy winter	fyra, snöig vinter
+mild winter	mild vinter
+summer only	bara sommar
+Rail:	Räls:
+trams and trains follow their tracks' switches	spårvagnar och tåg följer sina spårs växlar
+Ground texture (all tiles):	Marktextur (alla kartrutor):
+template	mall
+More ground layers are painted later (Paint tool); the map's settings can all be changed in Map > Map settings.	Fler marklager målas senare (Måla-verktyget); kartans inställningar kan alla ändras i Karta > Kartinställningar.
+Create	Skapa
+as the template	som mallen
+ways	vägar
+bus routes downloaded	busslinjer hämtade
+not had:	inte hämtat:
+The streets of the map's place built as roads with junctions where they meet, its bus stops, lines, trees and woods. Best on tiles with no roads yet: roads lying on ones the map has are left out.	Gatorna på kartans plats byggda som vägar med korsningar där de möts, dess hållplatser, linjer, träd och skogar. Bäst på kartrutor utan vägar ännu: vägar som ligger på sådana kartan har utelämnas.
+The map does not lie on the Earth yet: place it in Satellite and terrain (Map menu, I) first.	Kartan ligger inte på jorden ännu: placera den först i Satellit och terräng (Karta-menyn, I).
+Load the terrain heights first (Satellite and terrain): the roads follow the ground as it is when they are built.	Läs in terränghöjderna först (Satellit och terräng): vägarna följer marken som den är när de byggs.
+Download for the map's tiles	Hämta för kartans kartrutor
+bus routes	busslinjer
+trees	träd
+buildings	byggnader
+water	vatten
+Downloading…	Hämtar…
+no type chosen	ingen typ vald
+Use the chosen	Använd den valda
+One-way roads	Enkelriktade vägar
+Each carriageway of a dual road and one-way streets: with a one-way road type they lie side by side as they should; with none chosen they get their kind's	Varje körbana på en dubbelväg och enkelriktade gator: med en enkelriktad vägtyp ligger de sida vid sida som de ska; med ingen vald får de sin slags typ
+as their kind	som deras slag
+no stop object	inget hållplatsobjekt
+The stop chosen in Game logic > Bus stops	Hållplatsen som valts i Spellogik > Hållplatser
+Bus lines	Busslinjer
+Each bus route through two or more of the map's stops a trip of its line, the way found along the roads; a tour from 06:00 to 22:00 for each new line	Varje bussrutt genom två eller fler av kartans hållplatser en tur på sin linje, vägen hittas längs vägarna; ett omlopp från 06:00 till 22:00 för varje ny linje
+Trees and woods	Träd och skogar
+Single trees, rows of them and woods, planted with the plant mix (Objects tool > Plant brush) or the tree chosen; none on a road	Enstaka träd, rader av dem och skogar, planterade med planteringsblandningen (Objekt-verktyget > Planteringspensel) eller det valda trädet; inga på en väg
+no plants chosen	inga växter valda
+kinds of plants	slags växter
+apart in woods	avstånd i skogar
+Buildings	Byggnader
+Each outline filled with the model of the folder chosen whose ground plan comes nearest, its front to the nearest road; an outline no model fits is left out	Varje kontur fylls med modellen från den valda mappen vars grundplan ligger närmast, med framsidan mot närmaste väg; en kontur som ingen modell passar utelämnas
+no folder	ingen mapp
++ its folder	+ dess mapp
+Add the folder of the object chosen in the catalogue (Buildings_MC, …)	Lägg till mappen för objektet som valts i katalogen (Buildings_MC, …)
+Lakes and rivers: the ground inside them lowered below the banks, and the tiles they lie on given water a little under the banks' height (OMSI's water is one level for a tile: low ground elsewhere on it is flooded too)	Sjöar och floder: marken innanför sänks under stränderna, och kartrutorna de ligger på får vatten en bit under strändernas höjd (OMSI:s vatten är en nivå per kartruta: låg mark på andra ställen där översvämmas också)
+deep	djup
+a road type (Roads tool), then "Use the chosen"	en vägtyp (Väg-verktyget), sedan ”Använd den valda”
+a stop (Game logic > Bus stops), then "Use the chosen"	en hållplats (Spellogik > Hållplatser), sedan ”Använd den valda”
+a tree in the Objects catalogue (or a plant mix)	ett träd i Objekt-katalogen (eller en planteringsblandning)
+a building in the catalogue, then "+ its folder"	en byggnad i katalogen, sedan ”+ dess mapp”
+To build, choose (or untick):	För att bygga, välj (eller avmarkera):
+A one-way street is built the way it runs in OpenStreetMap: give it a one-way road type	En enkelriktad gata byggs så som den går i OpenStreetMap: ge den en enkelriktad vägtyp
+Build	Bygg
+Name, file or IDCode	Namn, fil eller IDCode
+things on the map	saker på kartan
+Groups	Grupper
+Select the group and go there	Markera gruppen och gå dit
+Select everything in it	Markera allt i den
+Select it and go there	Markera den och gå dit
+more: narrow the search	fler: avgränsa sökningen
+Select all of them	Markera alla
+Go to the first	Gå till den första
+Pick a tree in the catalogue, then paint	Välj ett träd i katalogen och måla sedan
+Pick a tree in the catalogue, then click round the area	Välj ett träd i katalogen och klicka sedan runt området
+Pick a road type, click the centre, then the ring	Välj en vägtyp, klicka i mitten, sedan på ringen
+Select a road (double-click: all of it): its properties show its height profile	Markera en väg (dubbelklicka: hela): dess egenskaper visar dess höjdprofil
+Select one of openMapper's junctions: its properties have Traffic lights and crossings	Markera en av openMappers korsningar: dess egenskaper har Trafikljus och övergångsställen
+Select the signal head (or a display): Linked objects in its properties, then click its crossing	Markera signalhuvudet (eller en display): Länkade objekt i dess egenskaper, klicka sedan på dess korsning
+Select a road, pick an object in the Objects catalogue: Objects along the road in its properties	Markera en väg, välj ett objekt i Objekt-katalogen: Objekt längs vägen i dess egenskaper
+Select a track (double-click: all of it): Overhead wire under Parallel copy in its properties	Markera ett spår (dubbelklicka: hela): Kontaktledning under Parallell kopia i dess egenskaper
+Select a road or a chain: Parallel copy in its properties	Markera en väg eller en kedja: Parallell kopia i dess egenskaper
+Select a road (double-click: all of it): Paint the ground along it in its properties	Markera en väg (dubbelklicka: hela): Måla marken längs den i dess egenskaper
+Click a tile: its water is in the panel; lower the ground under it with the Terrain tool	Klicka på en kartruta: dess vatten finns i panelen; sänk marken under den med Terräng-verktyget
+Height map: at the end of the Terrain panel	Höjdkarta: i slutet av Terräng-panelen
+By slope and height: at the end of the Paint panel	Efter lutning och höjd: i slutet av Måla-panelen
+View menu: Time of day, Season	Vy-menyn: Tid på dygnet, Årstid
+What do you want to do?	Vad vill du göra?
+Groups…	Grupper…
+Objects on the map by folder	Objekt på kartan efter mapp
+Knife: cut roads	Kniv: skär vägar
+Test drive in OMSI 2 (the original)	Provkör i OMSI 2 (originalet)
+Overview map	Översiktskarta
+Place a bus stop	Placera en hållplats
+Place a start point	Placera en startpunkt
+Plant trees with a brush	Plantera träd med en pensel
+Plant a wood or a park	Plantera en skog eller en park
+Roundabout	Rondell
+Height profile of a road	Höjdprofil för en väg
+Traffic lights and zebra crossings	Trafikljus och övergångsställen
+Link a signal head to its crossing	Länka ett signalhuvud till sin korsning
+Objects along a road	Objekt längs en väg
+Overhead wire along a track	Kontaktledning längs ett spår
+Parallel copy of a road	Parallell kopia av en väg
+Paint the ground along a road	Måla marken längs en väg
+Water, lake, river	Vatten, sjö, flod
+Ramp in the ground	Ramp i marken
+Height map import or export	Import eller export av höjdkarta
+Time of day and season	Tid på dygnet och årstid
+PBR material	PBR-material
+none	ingen
+Own picture…	Egen bild…
+Choose a texture of the object, or a picture of your own.	Välj en av objektets texturer eller en egen bild.
+Normals (_nn)	Normaler (_nn)
+Roughness	Skrovlighet
+Shadow in hollows	Skugga i fördjupningar
+Bumps	Ojämnheter
+Only big shapes	Bara stora former
+Dark parts stand out (not sink in)	Mörka delar sticker ut (sjunker inte in)
+Bright parts smoother	Ljusa delar jämnare
+Metal	Metall
+Back to the defaults	Tillbaka till standard
+This texture has PBR maps of its own already: new ones made here are taken instead of them.	Den här texturen har redan egna PBR-kartor: nya som görs här används i stället för dem.
+Written as:	Skrivs som:
+PBR maps made	PBR-kartor skapade
+Delete the PBR material	Ta bort PBR-materialet
+PBR maps taken away	PBR-kartor borttagna
+Height profile	Höjdprofil
+over the ground	över marken
+Click: go there in the view · drag a dot (a joint) up or down: its height	Klicka: gå dit i vyn · dra en prick (en led) upp eller ned: dess höjd
+Climbs, falls	Stiger, faller
+Steepest	Brantast
+at	vid
+Highest over the ground	Högst över marken
+Deepest under it	Djupast under den
+Over 8 % is steep for a bus; over 12 % few streets go	Över 8 % är brant för en buss; över 12 % går få gator
+roadway	vägbana
+Road types	Vägtyper
+Make a new road type…	Skapa en ny vägtyp…
+My road	Min väg
+ · own	 · egen
+Create the road type	Skapa vägtypen
+Road type made: the Roads tool builds with it	Vägtyp skapad: Väg-verktyget bygger med den
+Change it in the road maker	Ändra den i väggeneratorn
+Its junctions	Dess korsningar
+Make a junction where it meets another road (else they only cross)	Gör en korsning där den möter en annan väg (annars korsar de bara)
+Corners	Hörn
+× rounder	× rundare
+Traffic lights by themselves	Trafikljus av sig själva
+Zebra crossings on every arm	Övergångsställen på alla armar
+Used for the junctions made from now on (where several road types meet, the one asking more wins). A junction already made keeps its own settings: select it to change them.	Används för korsningar som görs från nu (där flera vägtyper möts vinner den som kräver mer). En redan gjord korsning behåller sina egna inställningar: markera den för att ändra dem.
+Pick a road type on the left, or make a new one.	Välj en vägtyp till vänster, eller skapa en ny.
+Road maker	Väggenerator
+Lanes	Körfält
+(▼ 0: one-way)	(▼ 0: enkelriktad)
+Lane width	Körfältsbredd
+Middle strip	Mittremsa
+Footways	Gångbanor
+Kerb	Trottoarkant
+Roadway texture	Vägbanetextur
+Footway texture	Gångbanetextur
+Own…	Egen…
+The roadway texture is laid once across all its lanes (as OMSI 2's lane textures are painted: pick one with as many lanes); the footway texture's right end is the kerb.	Vägbanetexturen läggs en gång tvärs över alla körfält (som OMSI 2:s körfältstexturer är målade: välj en med lika många körfält); gångbanetexturens högra ände är trottoarkanten.
+not on the map	inte på kartan
+Signal routes	Signalvägar
+Each railway signal clears when a train wants the track pieces of its route and none stands on them.	Varje järnvägssignal släpper fram när ett tåg vill ha spårdelarna i sin väg och inget står på dem.
+New route for the selected signal	Ny väg för den markerade signalen
+Select a signal (one object) in the view first	Markera en signal (ett objekt) i vyn först
+The selected object does not look like a signal (its name says nothing of one): check it is.	Det markerade objektet ser inte ut som en signal (dess namn säger inget om en): kontrollera att det är en.
+No routes yet.	Inga vägar ännu.
+pieces	delar
+Signal	Signal
+the selected	den markerade
+Aspect	Signalbild
+What the signal shows when this route is clear: 1 proceed, 2 proceed slowly (with a speed limit)…	Vad signalen visar när den här vägen är fri: 1 kör, 2 kör sakta (med hastighetsgräns)…
+Distant signal	Försignal
+Next signal	Nästa signal
+Speed limit	Hastighetsgräns
+OMSI's route kind (the stock maps have 0 and 1)	OMSI:s vägslag (originalkartorna har 0 och 1)
+Track pieces	Spårdelar
+Take the selected track	Ta det markerade spåret
+Every rail path of the selected tracks and switches (double-click a track: all of it); replaces the pieces	Varje rälsväg i de markerade spåren och växlarna (dubbelklicka på ett spår: hela); ersätter delarna
+Select the signal and its pieces in the view	Markera signalen och dess delar i vyn
+Delete the route	Ta bort vägen
+Lines and timetable	Linjer och tidtabell
+Edit timetable	Redigera tidtabell
+No bus stop there: click one of the orange marks	Ingen hållplats där: klicka på ett av de orange märkena
+The roads can't be read without the OMSI 2 folder.	Vägarna kan inte läsas utan OMSI 2-mappen.
+A line needs at least two bus stops on the map: place them with Game logic > Bus stops, beside a road.	En linje behöver minst två hållplatser på kartan: placera dem med Spellogik > Hållplatser, bredvid en väg.
+Lines	Linjer
+No lines yet.	Inga linjer ännu.
+New line	Ny linje
+Pick a line on the left, or make a new one.\n\nA line has trips (a way from stop to stop) and tours (one bus's day: which trip it drives when).	Välj en linje till vänster, eller skapa en ny.\n\nEn linje har turer (en väg från hållplats till hållplats) och omlopp (en busss dag: vilken tur den kör när).
+That name is taken or can't be a file name	Det namnet är upptaget eller kan inte vara ett filnamn
+A copy of the line with its trips and tours (a variant to change)	En kopia av linjen med dess turer och omlopp (en variant att ändra)
+Delete the line and its trips	Ta bort linjen och dess turer
+Players can drive it	Spelare kan köra den
+Trips	Turer
+Tours and times	Omlopp och tider
+A tour is one bus's day: the trips it drives, one after the other, and when each leaves.	Ett omlopp är en busss dag: turerna den kör, den ena efter den andra, och när var och en går.
+A trip is one way along the line: its stops in order. Most lines have two, there and back.	En tur är en väg längs linjen: dess hållplatser i ordning. De flesta linjer har två, dit och tillbaka.
+New trip	Ny tur
+Make the way back	Gör återvägen
+A new trip with the same stops the other way round	En ny tur med samma hållplatser åt andra hållet
+Trip	Tur
+Delete the trip	Ta bort turen
+Destination sign	Destinationsskylt
+This trip runs on a track of its own (a train): its stops are kept as they are.	Den här turen går på ett eget spår (ett tåg): dess hållplatser behålls som de är.
+Show on the map	Visa på kartan
+No stops yet.	Inga hållplatser ännu.
+Done picking	Klart med valet
+Pick stops on the map	Välj på kartan
+Click the stops in the view one after the other, in the order the bus calls at them	Klicka på hållplatserna i vyn efter varandra, i den ordning bussen stannar vid dem
+Add stop…	Lägg till hållplats…
+Click stops on the map (they are marked orange)…	Klicka på hållplatser på kartan (de är markerade orange)…
+Add two stops or more: the way between them is found along the roads.	Lägg till två hållplatser eller fler: vägen mellan dem hittas längs vägarna.
+Finding the way…	Hittar vägen…
+Route found:	Väg hittad:
+km along the roads (blue in the view)	km längs vägarna (blått i vyn)
+the way drives a one-way lane against its direction; is a path drawn the wrong way round?	vägen kör ett enkelriktat körfält mot dess riktning; är en väg ritad åt fel håll?
+is not on the map	finns inte på kartan
+no road with car lanes within 15 m	ingen väg med bilkörfält inom 15 m
+No way	Ingen väg
+the roads are not joined, or run the other way (see View > AI lanes)	vägarna är inte sammanfogade, eller går åt andra hållet (se Visa > AI-körfält)
+The trip is saved, but its way is not until this is mended	Turen sparas, men dess väg inte förrän det här är åtgärdat
+Trip time	Restid
+Guess:	Gissning:
+From the route's length at the pace of a town bus	Från vägens längd i en stadsbusss takt
+Times at the stops	Tider vid hållplatserna
+Minutes after the trip leaves. They follow the distance between the stops; fix one to keep the bus to it (it waits there when early).	Minuter efter att turen går. De följer avståndet mellan hållplatserna; fäst en för att hålla bussen till den (den väntar där om den är tidig).
+fixed	fast
+Spread all by distance	Fördela alla efter avstånd
+Holidays and school holidays	Helgdagar och skollov
+On a public holiday only the tours with Holidays ticked run; school holidays pick the tours for school holidays or school days.	På en helgdag går bara omloppen med Helgdagar ikryssat; skollov väljer omloppen för skollov eller skoldagar.
+Copy to	Kopiera till
+The same days a year later (feasts that move, like Easter, are to be set by hand)	Samma dagar ett år senare (rörliga högtider som påsk ställer du in för hand)
+The map has no depot (ailists.cfg): only you drive these tours, no AI buses.	Kartan har ingen depå (ailists.cfg): bara du kör de här omloppen, inga AI-bussar.
+Add a depot with OMSI 2's MAN buses	Lägg till en depå med OMSI 2:s MAN-bussar
+Its buses run the tours (Map > Traffic and AI shows it)	Dess bussar kör omloppen (Karta > Trafik och AI visar den)
+Tour	Omlopp
+New tour	Nytt omlopp
+Pick a tour to see its departures.	Välj ett omlopp för att se dess avgångar.
+Make a trip first.	Gör en tur först.
+Number	Nummer
+Buses from	Bussar från
+Delete the tour	Ta bort omloppet
+Runs on	Går
+Mo	Må
+Tu	Ti
+We	On
+Th	To
+Fr	Fr
+Sa	Lö
+Su	Sö
+Every day	Varje dag
+Monday to Friday	Måndag till fredag
+Weekends and holidays	Helger och helgdagar
+In the school holidays	På skollov
+On school days	På skoldagar
+Next departure	Nästa avgång
+The next trip of the line, when the bus is back and has had its break	Linjens nästa tur, när bussen är tillbaka och har haft sin rast
+Fill from	Fyll från
+break	rast
+Fill	Fyll
+Replace the tour's departures: the line's trips one after the other, a break after each	Ersätt omloppets avgångar: linjens turer efter varandra, en rast efter varje
+No departures yet: add them above.	Inga avgångar ännu: lägg till dem ovan.
+Delete the departure	Ta bort avgången
+GPS tracks to trace	GPS-spår att följa
+A route recorded on a phone or drawn elsewhere (GPX, KML, GeoJSON), shown in the view in magenta to draw roads along, or built into a road at once	En rutt inspelad på en telefon eller ritad någon annanstans (GPX, KML, GeoJSON), visad i vyn i magenta för att rita vägar längs, eller byggd till en väg direkt
+Place the map on the Earth first (Map > Satellite and terrain)	Placera kartan på jorden först (Karta > Satellit och terräng)
+Load a file…	Läs in en fil…
+None loaded	Inget inläst
+Forget it	Glöm det
+Build a road along it:	Bygg en väg längs det:
+Choose a road type in the Roads tool to build it	Välj en vägtyp i Väg-verktyget för att bygga den
+Built as if drawn: corners rounded into arcs, junctions where it meets roads, cut at the map's edge; one undo step	Byggs som om ritad: hörn rundas till bågar, korsningar där den möter vägar, skärs vid kartans kant; ett ångra-steg
+Traffic and AI	Trafik och AI
+Edit traffic	Redigera trafik
+Over the day	Under dygnet
+Vehicle groups	Fordonsgrupper
+Parked cars and people	Parkerade bilar och människor
+Depot files	Depåfiler
+The AI's vehicles come in groups. A car group drives about on the roads; a depot sends out the buses of the timetable's tours.	AI:ns fordon kommer i grupper. En bilgrupp kör omkring på vägarna; en depå skickar ut bussarna för tidtabellens omlopp.
+(This map's ailists.cfg is in OMSI 2's first format: it is written in the second one when changed.)	(Den här kartans ailists.cfg är i OMSI 2:s första format: den skrivs i det andra när den ändras.)
+is to drive about, but there is no such group.	ska köra omkring, men det finns ingen sådan grupp.
+Make it with OMSI 2's vehicles	Skapa den med OMSI 2:s fordon
+The group of that name from OMSI 2's own maps	Gruppen med det namnet från OMSI 2:s egna kartor
+New car group	Ny bilgrupp
+New depot	Ny depå
+Pick a group on the left.	Välj en grupp till vänster.
+Delete the group (tours still take their buses from it)	Ta bort gruppen (omloppen tar fortfarande sina bussar från den)
+Delete the group	Ta bort gruppen
+Tours that take their buses from here:	Omlopp som tar sina bussar härifrån:
+Drives about on its own	Kör omkring på egen hand
+as many:	så många:
+Times the traffic over the day	Tidsätter trafiken under dygnet
+A vehicle with more weight comes along more often.	Ett fordon med mer vikt dyker upp oftare.
+Add a vehicle…	Lägg till ett fordon…
+Depot file (.hof)	Depåfil (.hof)
+None of its buses has this depot file beside it: they run without their destination signs and fleet data.	Ingen av dess bussar har den här depåfilen bredvid sig: de kör utan destinationsskyltar och flottdata.
+The buses it has: a type of bus and the fleet number and plate of each.	Bussarna den har: en busstyp och varje bils flottnummer och skylt.
+Take this type out	Ta bort den här typen
+number	nummer
+plate	skylt
+Another bus	Ännu en buss
+Add a type of bus…	Lägg till en busstyp…
+The lists can't be read without the OMSI 2 folder.	Listorna kan inte läsas utan OMSI 2-mappen.
+Parked cars	Parkerade bilar
+What stands on the car parks (Game logic > Car parks). A car listed more often stands there more often.	Vad som står på parkeringarna (Spellogik > Parkeringar). En bil som listas oftare står där oftare.
+Who walks about and waits at the stops.	Vem som går omkring och väntar vid hållplatserna.
+Drivers	Förare
+Who drives the AI's buses.	Vem som kör AI:ns bussar.
+How often it is listed (0 takes it out)	Hur ofta den listas (0 tar bort den)
+How busy the map is at each hour: the road traffic, and the passengers at the stops. 1 is normal; the game goes along the line between the points.	Hur livlig kartan är varje timme: vägtrafiken och passagerarna vid hållplatserna. 1 är normalt; spelet följer linjen mellan punkterna.
+Road traffic	Vägtrafik
+Passengers	Passagerare
+Its own traffic over the day	Egen trafik under dygnet
+Without one the group follows the map's road traffic. A curve can be for some days of the week only.	Utan en följer gruppen kartans vägtrafik. En kurva kan gälla bara vissa veckodagar.
+Days:	Dagar:
+Mo–Fr	Må–Fr
+Take this curve out	Ta bort den här kurvan
+A curve	En kurva
+Typical day…	Typisk dag…
+Quiet village	Lugn by
+Town with rush hours	Stad med rusningstid
+The same all day	Likadant hela dagen
+No curve: 1 all day.	Ingen kurva: 1 hela dagen.
+Take the point out	Ta bort punkten
+Point	Punkt
+Smart unwrap	Smart utveckling
+Every flat side apart in the picture, no faces on top of one another (all faces if none is selected)	Varje plan sida för sig i bilden, inga ytor ovanpå varandra (alla ytor om ingen är markerad)
+Box unwrap	Lådutveckling
+The six sides of a box apart in the picture	En lådas sex sidor för sig i bilden
+Flip ↔	Vänd ↔
+Flip ↕	Vänd ↕
+Scale ×2	Skala ×2
+Scale ÷2	Skala ÷2
+Fit	Anpassa
+Stretched to fill the picture	Sträckt för att fylla bilden
+Pack islands	Packa öar
+Average island scale	Jämna ut öarnas skala
+Seams from islands	Sömmar från öar
+Click: a face (Shift adds) · drag: move the selected · wheel: zoom · right button: pan	Klicka: en yta (Shift lägger till) · dra: flytta det markerade · hjul: zooma · höger knapp: panorera
+Could not keep the views	Kunde inte spara vyerna
+Saved views	Sparade vyer
+Places of the map to come back to: Ctrl+1…9 goes to the first nine, Ctrl+Shift+1…9 keeps the view there	Platser på kartan att komma tillbaka till: Ctrl+1…9 går till de första nio, Ctrl+Shift+1…9 sparar vyn där
+Keep this view	Spara den här vyn
+None yet	Inga ännu
+Go	Gå
+Earlier in the list	Tidigare i listan
+Later in the list	Senare i listan
+Take the view now instead	Ta vyn nu i stället
+Keep proportions	Behåll proportioner
+Back to its own size	Tillbaka till egen storlek
+Updates	Uppdateringar
+This version:	Den här versionen:
+New version:	Ny version:
+Install and restart	Installera och starta om
+Not now	Inte nu
+What changed	Vad som ändrats
+Downloading and installing	Laddar ned och installerar
+Installed version	Installerad version
+openMapper restarts when you save the map.	openMapper startar om när du sparar kartan.
+Looking for a new version…	Söker efter en ny version…
+This is the newest version.	Det här är den senaste versionen.
+Download it from GitHub by hand	Ladda ned den från GitHub för hand
+When there is a new version:	När det finns en ny version:
+Offer it to me	Erbjud mig den
+Install it and restart by itself	Installera och starta om av sig själv
+Never look for updates	Sök aldrig efter uppdateringar
+Check now	Sök nu
+Never offer updates again	Erbjud aldrig uppdateringar igen
+The release has no package	Utgåvan har inget paket
+No automatic updates for this system.	Inga automatiska uppdateringar för det här systemet.
+No connection to GitHub: are you online?	Ingen anslutning till GitHub: är du online?
+The release has no SHA256SUMS: not installed.	Utgåvan har ingen SHA256SUMS: inte installerad.
+The package is not in SHA256SUMS: not installed.	Paketet finns inte i SHA256SUMS: inte installerad.
+The download does not match its checksum: not installed.	Nedladdningen stämmer inte med sin kontrollsumma: inte installerad.
+Could not replace the program	Kunde inte ersätta programmet
+The package has no program in it.	Paketet innehåller inget program.
+openMapper has stopped:	openMapper har stoppat:
+The log with the details:	Loggen med detaljerna:

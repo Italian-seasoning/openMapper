@@ -1,0 +1,2129 @@
+Could not open the map	マップを開けませんでした
+The next 100 tiles are loaded, the others are hidden	次の100タイルを読み込みました。それ以外は非表示です
+Find the place in the window and build from it	ウィンドウで場所を探して、そこから作成します
+Your map is ready. Start with a road!	マップの準備ができました。まず道路を作りましょう！
+Export the map for sharing	共有用にマップをエクスポート
+Exported:	エクスポート完了：
+files	ファイル
+files the map names were not found: the readme lists them	マップが参照するファイルが見つかりません。readmeに一覧があります
+Could not export	エクスポートできませんでした
+A ring road with line 1 on it: save, then try it in openOMSI (F5).	系統1が走る環状道路です。保存してからopenOMSI（F5）で試してください。
+The sample could not be made	サンプルを作成できませんでした
+In multiplayer the host saves the map. Leave the session to save this as a copy of your own.	マルチプレイではホストがマップを保存します。セッションを抜けると、自分用のコピーとして保存できます。
+Saved:	保存しました：
+Tip: place a start point (Game logic > Start points) so the bus has somewhere to appear	ヒント：バスの出現場所として開始地点（ゲームロジック > 開始地点）を配置してください
+Could not save (the changes are still here, nothing is lost)	保存できませんでした（変更はここに残っています。失われていません）
+The unsaved changes are back. Save to keep them.	未保存の変更を復元しました。保存して保持してください。
+Could not restore the changes	変更を復元できませんでした
+openOMSI was not found	openOMSIが見つかりません
+From the start point	開始地点から
+The map has no start point: place one with Game logic > Start points	マップに開始地点がありません：ゲームロジック > 開始地点 で配置してください
+Starting openOMSI…	openOMSIを起動中…
+To drive the map in OMSI 2 itself it has to be copied into the OMSI 2 folder (Maps, and the objects, roads and textures made for it). Nothing that is there is replaced except earlier copies of this map. Copy it there?	OMSI 2でマップを走行するには、OMSI 2フォルダ（Maps、およびマップ用のオブジェクト・道路・テクスチャ）へコピーする必要があります。このマップの以前のコピー以外は上書きされません。コピーしますか？
+Starting OMSI 2: choose the map	OMSI 2を起動中：マップを選んでください
+The map is copied into the OMSI 2 folder; OMSI 2 itself runs on Windows only:	マップをOMSI 2フォルダにコピーしました。OMSI 2自体はWindowsでのみ動作します：
+Could not copy the map into OMSI 2	マップをOMSI 2にコピーできませんでした
+Click on the map to place it	マップをクリックして配置
+Open a map (its global.cfg)	マップを開く（global.cfg）
+The map is back as it was before that save	マップを保存前の状態に戻しました
+Could not go back	戻せませんでした
+Export a plan of the map	マップの平面図をエクスポート
+Plan saved:	平面図を保存しました：
+Mods, models and pictures	MOD、モデル、画像
+Import assets	アセットをインポート
+…or choose a mod folder	…またはMODフォルダを選択
+Click on the map to put it there	マップをクリックして配置
+Could not make the shape	形状を作成できませんでした
+Choose the OMSI 2 folder	OMSI 2フォルダを選択
+That is not an OMSI 2 folder (Omsi.exe, maps and Vehicles must be in it)	OMSI 2フォルダではありません（Omsi.exe、maps、Vehiclesが必要です）
+This object has no textures to make PBR maps of	このオブジェクトにはPBRマップ用のテクスチャがありません
+Could not copy the map	マップをコピーできませんでした
+Could not move the map	マップを移動できませんでした
+Terrain flattened; splines laid on it:	地形を平坦化しました。敷設したスプライン：
+This road type has no textures to make PBR maps of	この道路タイプにはPBRマップ用のテクスチャがありません
+Pictures	画像
+Only 100 tiles round the camera are loaded; click on the empty zone to load the next 100	カメラ周辺の100タイルのみ読み込み済み。空の領域をクリックすると次の100タイルを読み込みます
+All tiles are loaded	すべてのタイルを読み込みました
+Import the map's thumbnail	マップのサムネイルをインポート
+The map's thumbnail is set: openOMSI shows it where maps are chosen.	マップのサムネイルを設定しました。openOMSIのマップ選択画面に表示されます。
+Could not use the picture	画像を使用できませんでした
+Map camera	マップカメラ
+The map opens with this view from now on.	今後、マップはこの視点で開きます。
+Add ground texture	地面テクスチャを追加
+View kept as	視点を保存：
+No view kept as	保存された視点なし：
+Files changed on disk: the catalogue and models are updated	ディスク上のファイルが変更されました。カタログとモデルを更新しました
+The track does not run over the map's tiles	トラックがマップのタイル上を通っていません
+Road along a GPS track	GPSトラックに沿った道路
+Roads built:	作成した道路：
+junctions:	交差点：
+stops:	停留所：
+Lines from OpenStreetMap	OpenStreetMapの系統
+lines:	系統：
+trips found their way:	経路が見つかった便：
+buildings:	建物：
+trees:	樹木：
+Start point	開始地点
+Start	開始
+a start point	開始地点
+From OpenStreetMap	OpenStreetMapから
+Picture saved:	画像を保存しました：
+Could not save the picture	画像を保存できませんでした
+The graphics could not be started.	グラフィックスを起動できませんでした。
+Flying speed	飛行速度
+copy	コピー
+Only maps of the content folder can be moved	移動できるのはコンテンツフォルダ内のマップのみです
+Only assets of the content folder can be deleted	削除できるのはコンテンツフォルダ内のアセットのみです
+Could not write the object	オブジェクトを書き込めませんでした
+Select an object to edit its mesh	オブジェクトを選択してメッシュを編集
+A copy of its own was made: the original type is unchanged	専用のコピーを作成しました。元のタイプは変更されていません
+Cannot edit this object	このオブジェクトは編集できません
+Point at an edge to cut across its ring of faces	辺をポイントすると、面のリングを横断してカットします
+Objects made:	作成したオブジェクト：
+select the faces to separate	分離する面を選択してください
+Separated into an object of its own	別のオブジェクトとして分離しました
+Add object	オブジェクトを追加
+select what to export (objects, roads)	エクスポートする対象（オブジェクト、道路）を選択してください
+Export the selection	選択範囲をエクスポート
+unknown format	不明な形式
+the models are still loading: try again in a moment	モデルを読み込み中です。しばらくしてから再試行してください
+this material has no texture	このマテリアルにはテクスチャがありません
+cannot read	読み取れません
+Export the texture	テクスチャをエクスポート
+Texture saved:	テクスチャを保存しました：
+Choose a picture	画像を選択
+give the material a texture first: its maps go beside it	先にマテリアルにテクスチャを設定してください。マップは隣に配置されます
+Import materials (an .mtl, a model, or the pictures of one PBR material)	マテリアルをインポート（.mtl、モデル、または1つのPBRマテリアルの画像）
+Materials and pictures	マテリアルと画像
+no materials found there	マテリアルが見つかりません
+Materials added:	追加したマテリアル：
+nothing to bake	ベイクするものがありません
+the object has no lamps to bake the night light of	オブジェクトに夜間照明をベイクするランプがありません
+Baked into	ベイク先：
+select a road or spline first	先に道路またはスプラインを選択してください
+the road's type is still loading: try again in a moment	道路タイプを読み込み中です。しばらくしてから再試行してください
+these splines have no shape to see	これらのスプラインには表示できる形状がありません
+Replace by an object	オブジェクトに置換
+Made into an object: Tab edits its mesh	オブジェクトに変換しました：Tabでメッシュを編集
+Signal head made: click where it stands (near a crossing with a light program it links to it)	信号灯器を作成しました：設置場所をクリック（信号プログラムのある交差点の近くでは自動的に連携します）
+Choose a picture or a texture	画像またはテクスチャを選択
+cannot read the picture	画像を読み取れません
+Picture made: click where it goes (it can be moved, turned and scaled after)	画像を作成しました：配置場所をクリック（後で移動・回転・拡大縮小できます）
+Light made: click where it shines	ライトを作成しました：照らす場所をクリック
+Choose a sound	サウンドを選択
+Sounds	サウンド
+Sound source made: click where it plays	音源を作成しました：鳴らす場所をクリック
+Street lamp made: click where it stands	街灯を作成しました：設置場所をクリック
+Paint by slope and height	傾斜と高さで塗装
+By slope and height	傾斜と高さ
+The chosen layer painted over the whole map where the ground is so steep (and so high)	地面がこの傾斜（かつこの高さ）になる場所すべてに、選択したレイヤーを塗ります
+Slope	傾斜
+Height	高さ
+Fade	フェード
+Cover	被覆
+Paint the map	マップを塗装
+Choose a layer above the base ground	ベース地面より上のレイヤーを選択してください
+No ground on the map is like that	マップ上にそのような地面はありません
+Painted	塗装しました
+Missing objects	オブジェクトファイルなし
+Missing roads and splines	道路・スプラインファイルなし
+Missing textures	テクスチャなし
+Road ends not joined	未接続の道路端
+Links to splines that are gone	消えたスプラインへのリンク
+Bus stops away from a road	道路から離れた停留所
+Start points away from a road	道路から離れた開始地点
+Start points without their object	オブジェクトのない開始地点
+No start point	開始地点なし
+IDCodes used twice	重複したIDCode
+Next IDCode too low	NextIDCodeが小さすぎます
+Objects off their tile	タイル外のオブジェクト
+Tiles without a file	ファイルのないタイル
+Tiles without ground	地面のないタイル
+Trips without a way	経路のない便
+Tours without departures	運行のない行路
+Tours without a depot	車庫のない行路
+Traffic groups not in the AI lists	AIリストにない交通グループ
+Stops no trip calls at	どの便も停車しない停留所
+Signal routes naming what is gone	消えたものを指す信号経路
+Chrono changes of what is gone	消えたものに対するクロノ変更
+Lamps lighting no ground at night	夜に地面を照らさないランプ
+Tiles with very many objects	オブジェクトが非常に多いタイル
+Objects linked to one that is gone	消えたオブジェクトへのリンク
+Signal heads linked to no crossing	交差点にリンクされていない信号灯器
+Depot files (destinations)	車庫ファイル（行先）
+The map uses an object (.sco) that is not installed. The game leaves it out. Install the mod it comes from, or delete the object. A junction of openMapper's whose file is gone (the map was moved without it) is made again for its roads with "Fix".	マップがインストールされていないオブジェクト（.sco）を使用しています。ゲームでは省略されます。元のMODをインストールするか、オブジェクトを削除してください。ファイルが失われたopenMapperの交差点（ファイルなしでマップを移動した場合）は、「修正」で道路から再作成されます。
+The map uses a road or spline type (.sli) that is not installed: that road is missing in the game, and buses cannot drive there.	マップがインストールされていない道路またはスプラインタイプ（.sli）を使用しています。その道路はゲームに存在せず、バスは走行できません。
+An object or road names a picture that cannot be found. It will look white or black in the game.	オブジェクトまたは道路が見つからない画像を参照しています。ゲームでは白または黒に見えます。
+Two road ends lie on one another but are not joined. Traffic still finds its way (the game joins lanes by their ends), but rows of lamps and posts and the road's texture do not run on across, and the editor does not treat them as one road. "Join" links them.	2つの道路端が重なっていますが接続されていません。交通は通行できます（ゲームは端で車線をつなぎます）が、街灯や支柱の列や道路のテクスチャは先へ続かず、エディタも1本の道路とは見なしません。「接続」でつなぎます。
+A spline says it goes on into another one that no longer exists. "Fix" forgets that link.	スプラインが、すでに存在しない別のスプラインへ続くと指定しています。「修正」でそのリンクを解除します。
+A bus stop belongs to the lane it stands beside (within about 25 m). This one has none near, so buses cannot stop at it. Move it next to the road, or "Fix" puts it at the kerb of the nearest lane (within 80 m).	バス停は隣接する車線（約25 m以内）に属します。これには近くに車線がなく、バスは停車できません。道路の横へ移動するか、「修正」で最寄りの車線の縁石（80 m以内）に配置します。
+A start point is where the bus appears. This one is away from any lane: fine in a depot yard, otherwise the bus starts off the road.	開始地点はバスが出現する場所です。これはどの車線からも離れています。車庫の敷地内なら問題ありませんが、それ以外では道路外から開始します。
+A start point refers to an object that was deleted. "Fix" removes the start point.	開始地点が削除されたオブジェクトを参照しています。「修正」で開始地点を削除します。
+There is nowhere for the bus to appear. Place a start point (Game logic > Start points) on a road, or "Fix" puts one on a lane some 40 m before a bus stop.	バスが出現できる場所がありません。道路上に開始地点（ゲームロジック > 開始地点）を配置するか、「修正」でバス停の約40 m手前の車線に配置します。
+Two things on the map share one IDCode: links, timetables and start points may pick the wrong one.	マップ上の2つが同じIDCodeを持っています。リンク、時刻表、開始地点が誤ったものを指す可能性があります。
+The counter for new IDCodes is below codes already used, so new objects would get codes twice. "Fix" raises it.	新規IDCodeのカウンターが使用済みコードより小さいため、新しいオブジェクトに重複コードが付きます。「修正」で引き上げます。
+An object standing on the ground lies outside its own tile. The game does not show it. Move it a little or put it again.	地面上のオブジェクトが自身のタイルの外にあります。ゲームでは表示されません。少し動かすか、置き直してください。
+global.cfg lists tiles whose file is not there. The game leaves them out; they stay listed, as start points and timetables count tiles by their place in the list.	global.cfgにファイルのないタイルが記載されています。ゲームはそれらを省略します。開始地点と時刻表はリスト内の位置でタイルを数えるため、リストには残します。
+A tile has no height file: its ground is flat. Saving writes one.	タイルに高さファイルがないため、地面は平らです。保存すると作成されます。
+No way along the roads was found through this trip's stops, so buses cannot drive it. Open it in Map > Lines and timetable to see where it breaks.	この便の停留所を通る道路上の経路が見つからず、バスは走行できません。マップ > 系統と時刻表 で開いて、途切れる場所を確認してください。
+A tour (a bus's day on the line) has no trips, so no bus runs it.	行路（バスの1日の運行）に便がなく、走るバスがありません。
+A tour names no depot or group of the AI lists (or one that is not there): the game has no vehicle to send on it. Choose a depot for it in the Lines window, or "Fix" gives it the map's depot (one of OMSI 2's MAN buses added where the map has none).	行路が車庫またはAIリストのグループを指定していません（または存在しません）。ゲームに送り出す車両がありません。系統ウィンドウで車庫を選ぶか、「修正」でマップの車庫（マップにない場合はOMSI 2のMANバスの車庫を追加）を割り当てます。
+The unscheduled traffic names a group that the AI lists do not have: those cars never appear. Add the group in Map > Traffic and AI, or "Fix" copies it from OMSI 2's own maps where they have it.	時刻表に載らない交通が、AIリストにないグループを指定しています。その車は出現しません。マップ > 交通とAI でグループを追加するか、「修正」でOMSI 2のマップにあれば、そこからコピーします。
+A stop of the timetable that no trip calls at. Nothing is wrong, it is only not used yet.	どの便も停車しない時刻表の停留所です。問題ありませんが、まだ使われていません。
+A chrono scenario takes away, retypes or relabels something that is no longer on the map (it was deleted or its IDCode changed): that change does nothing. Open Map > Chrono scenarios, the scenario's properties, and take the change out.	クロノシナリオが、マップ上にもうないもの（削除済み、またはIDCode変更）を削除・タイプ変更・ラベル変更しています。この変更は何もしません。マップ > クロノシナリオ でシナリオのプロパティを開き、変更を削除してください。
+A tile holds far more objects than the stock maps' tiles (up to some 600): the game may stutter when it loads it or looks across it. Thin out a wood planted too densely (Plant brush, Clear) or plant it with more space between the trees.	タイルのオブジェクト数が標準マップのタイル（最大約600）よりはるかに多く、読み込み時や見渡した時にゲームがカクつく可能性があります。密集しすぎた森を間引く（植栽ブラシの「消去」）か、木の間隔を広げて植えてください。
+Street lamps stand on a tile the game does not light from its lamps ([variable_terrainlightmap] is off): at night the ground under them stays dark (unless the tile's light map file was made by OMSI 2's editor). "Fix" turns it on, as on nearly every tile of the stock maps.	街灯が、ゲームがランプで照らさないタイル（[variable_terrainlightmap]がオフ）にあります。夜間は下の地面が暗いままです（タイルのライトマップがOMSI 2のエディタで作られている場合を除く）。「修正」でオンにします。標準マップのほぼすべてのタイルと同じです。
+An object takes its state ([varparent]) from an object no longer on the map: a signal head stays dark, a display blank. Link it to another in its properties (Linked objects), or "Fix" forgets the link.	オブジェクトが、マップにもうないオブジェクトから状態（[varparent]）を取得しています。信号灯器は消灯し、表示器は空白のままです。プロパティ（リンクされたオブジェクト）で別のものにリンクするか、「修正」でリンクを解除します。
+A traffic light's signal head takes its light from a crossing's program ([varparent]); this one is linked to none while others like it are, so it stays dark in the game. Select it and link it in its properties (Linked objects).	信号灯器は交差点のプログラム（[varparent]）から点灯を取得しますが、これは何にもリンクされていません（同種は他にリンクあり）。ゲームでは消灯のままです。選択してプロパティ（リンクされたオブジェクト）でリンクしてください。
+A depot file (.hof) gives the buses their destinations, the stop names on their displays and the routes their IBIS knows. Without one the signs stay empty and the IBIS knows no line. "Fix" makes it from the map's lines, or adds what the lines need to the map's own (Map > Depot files to see and change it).	車庫ファイル（.hof）は、バスの行先、表示器の停留所名、IBISが知る経路を与えます。ないと表示は空になり、IBISは系統を認識しません。「修正」でマップの系統から作成するか、系統に必要なものをマップ自身のファイルに追加します（マップ > 車庫ファイル で確認・変更）。
+A signal route names a signal or track pieces no longer on the map: the signal may never clear. Open Map > Signal routes and take the track again, or delete the route.	信号経路が、マップにもうない信号または線路部分を指しています。信号が現示されない可能性があります。マップ > 信号経路 で線路を選び直すか、経路を削除してください。
+font	フォント
+used	使用中
+in	場所：
+a ground texture of the map	マップの地面テクスチャ
+splines	スプライン
+apart	の間隔
+spline	スプライン
+goes on into	の続き：
+no road near	近くに道路なし
+from the road	道路から
+start point	開始地点
+object	オブジェクト
+The map has no start point	マップに開始地点がありません
+things have it	件が使用
+highest in use:	使用中の最大：
+tile	タイル
+no .terrain file: flat	.terrainファイルなし：平坦
+objects	オブジェクト
+lamps	ランプ
+The map has no depot file	マップに車庫ファイルがありません
+the buses show no destination	バスに行先が表示されません
+named by the map's depot, but found nowhere	マップの車庫で指定されていますが、どこにも見つかりません
+knows none of the	次のいずれも認識しません：
+lacks	不足：
+destinations of the lines	系統の行先
+the lines need	系統に必要：
+destinations	行先
+stops	停留所
+routes	経路
+tour	行路
+no depot named	車庫の指定なし：
+not in the AI lists:	AIリストにありません：
+the stop has no object:	停留所にオブジェクトがありません：
+no road beside	道路なし：
+no way	経路なし
+no way found	経路が見つかりません
+Route	ルート
+gone	存在しません
+changes of nothing	無効な変更
+time	回
+times	回
+Fix from the map check	マップチェックからの修正
+Car groups from OMSI 2's maps	OMSI 2のマップの車グループ
+A depot for the tour	行路用の車庫
+A depot file from the lines	系統から作る車庫ファイル
+Depot file: what the lines need	車庫ファイル：系統に必要なもの
+Map check	マップチェック
+Check again	再チェック
+Checking the map…	マップをチェック中…
+errors	エラー
+warnings	警告
+notes	メモ
+Nothing found: the map looks fine.	問題は見つかりませんでした。マップは良好です。
+Fix all	すべて修正
+Join	接続
+Fix	修正
+Click to fly there	クリックでそこへ移動
+Fixed:	修正しました：
+it has parts openMapper does not write	openMapperが書き出せない部分があります
+A host on the internet needs a password of at least	インターネット上のホストには次の長さ以上のパスワードが必要です：
+Type a password, or choose explicitly to host without one	パスワードを入力するか、パスワードなしで開始することを明示的に選んでください
+Could not listen on port	ポートで待ち受けできませんでした
+The way in for the tunnel could not be opened	トンネルの入口を開けませんでした
+Hosting this map: others can join it now	このマップを公開中：他の人が参加できます
+Multiplayer ended: another map was opened	マルチプレイを終了しました：別のマップが開かれました
+Somebody changed this first: your edit was put back	先に他の人が変更しました。あなたの編集は元に戻されました
+The host takes no more: the edit is too big, or the session holds as much as it may. Your edit was put back	ホストはこれ以上受け付けません。編集が大きすぎるか、セッションが上限です。あなたの編集は元に戻されました
+That lies too far from the map for this session: your edit was put back	このセッションではマップから遠すぎます。あなたの編集は元に戻されました
+tiles	タイル
+changed what you were editing: it is as they left it	が編集中の内容を変更しました。相手の変更が優先されています
+The timetable, the traffic and the descriptions are the host's in multiplayer: your change was put back	マルチプレイでは時刻表、交通、説明文はホストのものです。あなたの変更は元に戻されました
+Your conflicting edit was kept	競合したあなたの編集を保持しました
+Could not keep your conflicting edit; multiplayer stopped	競合した編集を保持できませんでした。マルチプレイを停止しました
+Too much of the others' work came in while your edit was held open: multiplayer stopped. The map stays open; it can be saved as a copy.	編集を開いている間に他の人の作業が多く入りすぎたため、マルチプレイを停止しました。マップは開いたままで、コピーとして保存できます。
+The connection to the host was lost. The map stays open; it can be saved as a copy.	ホストとの接続が切れました。マップは開いたままで、コピーとして保存できます。
+No OMSI 2 installation: the map has nowhere to go	OMSI 2がインストールされていません：マップの保存先がありません
+The host sent no map	ホストがマップを送信しませんでした
+The host's map could not be read	ホストのマップを読み込めませんでした
+No connection	接続できません
+That address is not an openMapper host	そのアドレスはopenMapperのホストではありません
+Wrong password	パスワードが違います
+The session is full	セッションが満員です
+Type a name (up to 32 letters)	名前を入力（32文字まで）
+The host has another version of openMapper	ホストのopenMapperのバージョンが異なります
+Move forward	前進
+Move back	後退
+Move left	左へ移動
+Move right	右へ移動
+Turn the camera left	カメラを左へ回転
+Turn the camera right	カメラを右へ回転
+Undo	元に戻す
+Redo	やり直し
+Save	保存
+Copy	コピー
+Cut	切り取り
+Paste at the cursor	カーソル位置に貼り付け
+Duplicate	複製
+Select all	すべて選択
+Find in the map	マップ内を検索
+Search for a command	コマンドを検索
+Tool: Select	ツール：選択
+Tool: Roads	ツール：道路
+Tool: Objects	ツール：オブジェクト
+Tool: Game logic	ツール：ゲームロジック
+Tool: Terrain	ツール：地形
+Tool: Paint	ツール：塗装
+Tool: Tiles	ツール：タイル
+Turn the object (Shift: the other way)	オブジェクトを回転（Shift：逆方向）
+Ruler	定規
+Knife	ナイフ
+Move handles	移動ハンドル
+Rotate handles	回転ハンドル
+Scale handles	拡大縮小ハンドル
+Edit the mesh (vertices, edges, faces)	メッシュを編集（頂点、辺、面）
+Join the selected objects into one	選択したオブジェクトを1つに結合
+Build the planned road	計画した道路を作成
+Tile grid on / off	タイルグリッド オン／オフ
+Group the selection	選択範囲をグループ化
+Ungroup	グループ解除
+Look straight down, north up	真上から見る（北が上）
+2D plan view on / off (3D: tilt and turn again)	2D平面ビュー オン／オフ（3D：再度傾けて回転）
+Catalogue on / off	カタログ オン／オフ
+Overview map on / off	全体マップ オン／オフ
+Lines window	系統ウィンドウ
+Traffic window	交通ウィンドウ
+Satellite and terrain window	衛星画像と地形ウィンドウ
+Smaller brush	ブラシを小さく
+Larger brush	ブラシを大きく
+Delete the selection	選択範囲を削除
+Go to the selection	選択範囲へ移動
+Test drive in openOMSI (Shift: from the camera)	openOMSIでテスト走行（Shift：カメラ位置から）
+Save a picture of the view	ビューの画像を保存
+The map's own (global.cfg)	マップ独自（global.cfg）
+Description	説明
+Name in this language	この言語での名前
+Description in this language	この言語での説明
+Remove this language	この言語を削除
+Not written yet: it is saved as soon as you type.	まだ書き込まれていません：入力するとすぐ保存されます。
+Edit description	説明を編集
+just now	たった今
+min ago	分前
+h ago	時間前
+Unsaved changes found	未保存の変更が見つかりました
+openMapper was closed without saving the map	openMapperはマップを保存せずに終了しました
+The changes kept by the autosave can be brought back. The map itself was not changed.	自動保存された変更を復元できます。マップ自体は変更されていません。
+Restore the changes	変更を復元
+Drop them	破棄
+Nothing comes after it to join	この先に接続するものがありません
+The next piece runs the other way: reverse it first	次の部分が逆向きです。先に反転してください
+The next piece lies on another tile	次の部分は別のタイルにあります
+The two pieces are of different road types	2つの部分の道路タイプが異なります
+The two pieces have different settings (path rules, ground, skew)	2つの部分の設定（経路ルール、地面、スキュー）が異なります
+A row of objects comes onto the next piece from another tile	別のタイルのオブジェクト列が次の部分に入り込んでいます
+The two pieces do not bend, climb or bank alike: joined they would change shape	2つの部分の曲がり・勾配・バンクが異なります。接続すると形状が変わります
+Earlier versions	以前のバージョン
+Before every save, the files it replaces are kept (the last 10 saves). Going back puts the map as it was before that save; later changes go.	保存のたびに、置き換えられるファイルを保持します（直近10回）。戻すと、その保存前のマップになり、以降の変更は失われます。
+No earlier versions yet: they appear once the map is saved again.	以前のバージョンはまだありません。次回保存すると作成されます。
+before the save of	保存前：
+Go back to this	これに戻す
+could not keep a backup, nothing was saved	バックアップを保持できず、何も保存されませんでした
+Red	赤
+Yellow	黄
+Green	緑
+file not found	ファイルが見つかりません
+this object takes its model from a model file and cannot be edited here	このオブジェクトはモデルファイルからモデルを取得するため、ここでは編集できません
+the object has no mesh to edit	オブジェクトに編集できるメッシュがありません
+cannot read the object	オブジェクトを読み取れません
+Select	選択
+Terrain	地形
+Paint	ペイント
+Roads	道路
+Objects	オブジェクト
+Game logic	ゲームロジック
+Tiles	タイル
+Raise	上げる
+Lower	下げる
+Smooth	スムーズ
+Flatten	平坦化
+Roughen	凹凸
+Ramp	スロープ
+Lake / river	湖／川
+Start points	開始地点
+Bus stops	バス停
+Car parks	駐車場
+AI paths	AI経路
+Other	その他
+Where the bus appears when a drive starts. Put it on a road or in the depot, facing the way to drive.	運転開始時にバスが出現する場所です。道路上か車庫に、進行方向を向けて配置してください。
+Where passengers wait. Put it beside the road at the kerb; name it on the right.	乗客が待つ場所です。道路脇の縁石に置き、名前は右側で設定します。
+Where parked cars stand. Click for one; with a row on, click the start and end of a row along the kerb.	駐車車両が止まる場所です。クリックで1台分。列をオンにすると、縁石に沿って列の始点と終点をクリックします。
+Lanes the AI's cars or people follow. Draw like a road: it snaps to lane ends (green: joined, red: dead end) and along lanes. A car path runs the way you draw it.	AIの車や人が通る車線です。道路と同様に描くと、車線の端（緑：接続済み、赤：行き止まり）や車線に沿ってスナップします。車の経路は描いた向きに進みます。
+Sound sources, help arrows and other helpers the game does not show.	音源、ヘルプ矢印など、ゲームには表示されない補助要素です。
+Move (V): drag an arrow along X, Y or Z, a square in its plane, the circle over the ground	移動（V）：矢印をX・Y・Z方向にドラッグ、四角はその平面内、円は地面上で移動
+Rotate (C): drag a ring to turn about X, Y or Z	回転（C）：リングをドラッグしてX・Y・Z軸まわりに回転
+Scale (X): drag an arrow to scale along that axis, a square for two, the circle for all three	拡大縮小（X）：矢印で軸方向、四角で2軸、円で3軸すべてを拡大縮小
+These roads have no lanes of their own to take apart (rails stay as they are)	これらの道路には分解できる独自の車線がありません（レールはそのままです）
+Make the lanes editable	車線を編集可能にしました
+Roads whose lanes are now editable:	車線が編集可能になった道路：
+Flatten the terrain	地形を平坦化
+Select two things or more to group them	グループ化するには2つ以上選択してください
+Group	グループ
+Grouped:	グループ化しました：
+Ungrouped	グループを解除しました
+Rename group	グループ名を変更
+Ground levelled under objects:	オブジェクトの下の地面を整地しました：
+Move	移動
+No object clicked: nothing linked	オブジェクトが選択されていません：リンクなし
+Too near the road's end to cut it there	道路の端に近すぎてここでは切断できません
+No road under the cursor	カーソルの下に道路がありません
+Ramp:	スロープ：
+Shape terrain	地形を整形
+Paint ground	地面を塗装
+Clear plants	植物を消去
+Plant	植栽
+Rotate selection	選択範囲を回転
+Rotate	回転
+Delete object	オブジェクトを削除
+Delete road	道路を削除
+Delete selection	選択範囲を削除
+Pick an object in the catalogue first	先にカタログでオブジェクトを選んでください
+There is no tile here: add one with the Tiles tool	ここにはタイルがありません：「タイル」ツールで追加してください
+Place object	オブジェクトを配置
+New stop	新しい停留所
+Linked to	リンク先
+choose its light in its properties	信号はプロパティで選択してください
+Trees from OpenStreetMap	OpenStreetMapの樹木
+Plant an area	範囲に植栽
+Buildings from OpenStreetMap	OpenStreetMapの建物
+Stops from OpenStreetMap	OpenStreetMapの停留所
+Stop	バス停
+Pick a car park in the list first	先にリストから駐車場を選んでください
+Place car parks	駐車場を配置
+Car parks placed:	配置した駐車場：
+Pick a road type in the catalogue first	先にカタログで道路タイプを選んでください
+That bend is too sharp	カーブが急すぎます
+Switch made	ポイントを作成しました
+Junctions made:	作成した交差点：
+The road leaves the map: add tiles there first	道路がマップの外に出ます：先にタイルを追加してください
+Build road	道路を建設
+Roads from OpenStreetMap	OpenStreetMapの道路
+Pick a tree in the catalogue (or add some to the mix) first	先にカタログで樹木を選んでください（またはミックスに追加）
+Right-click a tile to remove it	タイルを右クリックで削除
+New tiles go next to the map	新しいタイルはマップの隣に追加されます
+Add tile	タイルを追加
+Water	水
+Paint detail	塗装の細かさ
+Ground layer order	地面レイヤーの順序
+Detail texture	ディテールテクスチャ
+Ground texture	地面テクスチャ
+Lamp light on the ground	地面へのランプの光
+Add tiles	タイルを追加
+A map needs at least one tile	マップには少なくとも1つのタイルが必要です
+Remove tile	タイルを削除
+Pick a point (a dot at an end or where pieces meet) to take it out	取り除く点（端や部品の継ぎ目の点）を選んでください
+Remove a point of the path	経路の点を削除
+Point taken out	点を削除しました
+A path of one piece: Del with nothing picked deletes it	1部品の経路：点を選ばずにDelを押すと経路全体を削除します
+Extrude	押し出し
+Inset	インセット
+Bevel	ベベル
+Loop cut	ループカット
+click: done, right click / Esc: cancel, wheel: segments	クリック：確定、右クリック／Esc：キャンセル、ホイール：分割数
+Scale	拡大縮小
+Roads are not scaled: change their length and width in their properties	道路は拡大縮小されません。長さと幅はプロパティで変更してください
+Only the objects are scaled, the roads stay	オブジェクトのみ拡大縮小されます。道路はそのままです
+Could not scale	拡大縮小できませんでした
+Too near the end: drag the end's dot instead	端に近すぎます：代わりに端の点をドラッグしてください
+Add a point to the path	経路に点を追加
+Point added: drag the dot where the pieces meet	点を追加しました：部品の継ぎ目の点をドラッグしてください
+Reshape road	道路の形状を変更
+Selected:	選択：
+Copied:	コピーしました：
+Nothing copied yet	まだ何もコピーされていません
+Paste	貼り付け
+Level the ground	地面を整地
+Turn objects	オブジェクトを回転
+Copies in a row	列状にコピー
+Left out (off the map):	省略（マップ外）：
+Pasted (the rest is off the map):	貼り付け済み（残りはマップ外）：
+Edit object	オブジェクトを編集
+Lean with the ground	地面に沿って傾ける
+Stand upright	垂直に立てる
+Change height	高さを変更
+Change road type	道路タイプを変更
+The selected roads are not one chain (they branch or leave gaps)	選択した道路は1本のつながりではありません（分岐しているか途切れています）
+Even slope	均一な勾配
+Lay on the ground	地面に置く
+Remove the rows of objects along it first (they are measured from its start)	先に沿って並ぶオブジェクト列を削除してください（始点から測られます）
+Reverse direction	方向を反転
+No road there to cut	そこには切断する道路がありません
+Cut the road	道路を切断
+Cut in two: each piece can now be changed on its own	2つに切断しました：各部分を個別に変更できます
+Join the pieces	部品を接続
+Joined into one piece	1つの部品に接続しました
+Parallel copy	平行コピー
+Overhead wire	架線
+Back into the map	マップに戻す
+Hang an object	オブジェクトを吊り下げ
+Link to an object	オブジェクトにリンク
+Unlink	リンク解除
+That object already takes its state from this one	そのオブジェクトはすでにこれから状態を取得しています
+Linked	リンクしました
+Signal head's light	信号灯器の点灯
+Path rules	経路ルール
+Replace objects	オブジェクトを置換
+Edit road	道路を編集
+Roads that could not follow the junction (too sharp a bend):	交差点に追従できなかった道路（カーブが急すぎます）：
+Edit junction	交差点を編集
+Make the junction again	交差点を再作成
+Make the junctions again	交差点を再作成
+Pick an object in the Objects tool's catalogue first	先にオブジェクトツールのカタログでオブジェクトを選んでください
+The road is too short for that	道路が短すぎます
+Objects along the road	道路沿いのオブジェクト
+Rows of objects added:	追加したオブジェクト列：
+Edit row of objects	オブジェクト列を編集
+Remove row of objects	オブジェクト列を削除
+Remove rows of objects	オブジェクト列を削除
+Roundabout built; roads joined to it:	ロータリーを作成しました。接続された道路：
+This road type carries traffic both ways: pick a one-way road for a proper roundabout	この道路タイプは両方向通行です：本格的なロータリーには一方通行の道路を選んでください
+Start point: where the bus appears in openOMSI	開始地点：openOMSIでバスが出現する場所
+Bus stop: name it in the panel on the right	バス停：右のパネルで名前を設定
+openOMSI stopped with an error	openOMSIがエラーで停止しました
+Check in openOMSI	openOMSIでチェック
+The saved map run by the game itself, unseen, with its own checks; the picture is the game's, from your view	保存したマップをゲーム自体が非表示で実行し、独自のチェックを行います。画像はゲームのもので、現在の視点からです
+Every tile (slower on a big map)	すべてのタイル（大きなマップでは遅くなります）
+Run again	再実行
+openOMSI is loading the map…	openOMSIがマップを読み込み中…
+Nothing wrong found	問題は見つかりませんでした
+Problems found:	見つかった問題：
+Go there	そこへ移動
+of the places named lie at the map's edge or a road's dead end (greyed): the game measures a lane's last point on the road's very edge, and a bus at the end stands over it; nothing to mend	挙げた場所のうち、マップの端や道路の行き止まりにあるもの（グレー）：ゲームは車線の最後の点を道路のちょうど端で測り、末端のバスはその上に立ちます。修正は不要です
+The game said nothing about the map	ゲームはマップについて何も報告しませんでした
+The game's whole output	ゲームの全出力
+no key entered	キーが入力されていません
+the server refused the key	サーバーがキーを拒否しました
+too many requests, try again later	リクエストが多すぎます。後でもう一度お試しください
+No connection to the server: are you online?	サーバーに接続できません：オンラインですか？
+Enter your Google key first	先にGoogleのキーを入力してください
+OpenStreetMap's servers are busy: try again in a minute	OpenStreetMapのサーバーが混雑しています。1分後にもう一度お試しください
+The area is too large for this zoom	このズームでは範囲が大きすぎます
+Cancelled	キャンセルしました
+Stopped by an internal error (see the log)	内部エラーで停止しました（ログを参照）
+No source has imagery here	ここに画像を提供するソースがありません
+drawn from OpenStreetMap data: sharp, with names	OpenStreetMapのデータから描画：鮮明で名前付き
+terrain heights, no key needed	地形の高さ、キー不要
+needs your own free key	ご自身の無料キーが必要です
+no key needed	キー不要
+the picture is too small	画像が小さすぎます
+Import height map	ハイトマップをインポート
+Height map	ハイトマップ
+The ground as a grey picture, to shape in another program and bring back	地面をグレーの画像として扱い、他のプログラムで整形して戻せます
+Export…	エクスポート…
+Import…	インポート…
+over	範囲
+a pixel	1ピクセルあたり
+Black adds	黒で加算
+Black is	黒は
+White adds	白で加算
+White is	白は
+Smoothing	スムージング
+Replace the ground	地面を置換
+Add to it	地面に追加
+Roads and objects keep their heights: best done before building	道路とオブジェクトは高さを保持します：建設前に行うのが最適です
+An 8-bit picture has only 256 steps of height: smoothing hides them	8ビット画像には256段階の高さしかありません：スムージングで目立たなくなります
+Lay it on the map	マップに適用
+Cancel	キャンセル
+Height map laid over	ハイトマップを適用しました：
+Export the height map	ハイトマップをエクスポート
+Height map written	ハイトマップを書き出しました
+The height map could not be written	ハイトマップを書き出せませんでした
+A height map for the whole map	マップ全体のハイトマップ
+The picture could not be read	画像を読み取れませんでした
+IBIS and roller blind	IBISとロールサイン
+Front sign, line 1	前面表示、1行目
+Front sign, line 2	前面表示、2行目
+Side sign	側面表示
+Roller blind texture	ロールサインのテクスチャ
+IBIS 2 (20 letters)	IBIS 2（20文字）
+Extra sign	追加表示
+Krüger picture	Krüger画像
+Text	テキスト
+IBIS (16 letters)	IBIS（16文字）
+Display, line 1	表示器、1行目
+Display, line 2	表示器、2行目
+Full name (20 letters)	正式名称（20文字）
+Service trip	回送
+Special trip	臨時便
+Blank	空白
+openMapper cannot import this kind of file (use a folder, .zip, .obj, .gltf, .glb, .fbx, .x, .o3d or a picture)	このファイル形式はインポートできません（フォルダ、.zip、.obj、.gltf、.glb、.fbx、.x、.o3d、または画像を使用）
+Mod installed, files:	MODをインストールしました。ファイル数：
+Objects added to	オブジェクトを追加先：
+Road types added to	道路タイプを追加先：
+Models imported:	インポートしたモデル：
+Nothing to import was found in this folder	このフォルダにインポートできるものはありませんでした
+The model has no triangles	モデルに三角形がありません
+Model imported:	モデルをインポートしました：
+The .obj file has no faces	.objファイルに面がありません
+no base colour picture among them	ベースカラーの画像がありません
+The picture cannot be read	画像を読み取れません
+Picture made into a standee:	画像を切り抜き立て看板にしました：
+Picture made into a sign:	画像を看板にしました：
+Trees	樹木
+Stops and start points	停留所と開始地点
+Junctions	交差点
+Tracks	線路
+Footpaths	歩道
+Fences, walls, kerbs	フェンス、壁、縁石
+Technical (AI, helpers)	技術用（AI、ヘルパー）
+This map lies on the world's grid ([worldcoordinates]): its tiles cannot be taken yet	このマップは世界グリッド（[worldcoordinates]）上にあります：タイルはまだ取り込めません
+This map lies on the world's grid ([worldcoordinates]): tiles cannot be added from another yet	このマップは世界グリッド（[worldcoordinates]）上にあります：他のマップのタイルはまだ追加できません
+Tiles from another map	他のマップのタイル
+Union	和集合
+Difference (cut out)	差集合（切り抜き）
+Intersection	交差
+Slice (keep both pieces)	スライス（両方残す）
+One object of all the selected, their insides gone	選択したすべてから1つのオブジェクトを作成し、内側は除去
+The other selected objects cut out of the one shown in the properties	他の選択オブジェクトを、プロパティに表示中のものから切り抜く
+Only what all the selected share	選択したすべてに共通する部分のみ
+The first object cut by the others into what is outside them and what is inside	最初のオブジェクトを他で切り、外側と内側に分ける
+select an object first	先にオブジェクトを選択してください
+Make editable	編集可能にする
+Make single	単独にする
+the object has only one part	オブジェクトには1つのパートしかありません
+Separate parts	パートに分離
+select two or more objects to join	結合するには2つ以上のオブジェクトを選択してください
+Join objects	オブジェクトを結合
+select two or more objects: the one shown in the properties and what acts on it	2つ以上のオブジェクトを選択：プロパティに表示中のものと、それに作用するもの
+nothing is left: the objects do not overlap that way	何も残りません：オブジェクトはその方法では重なりません
+The file has no scene	ファイルにシーンがありません
+The FBX file has no meshes	FBXファイルにメッシュがありません
+Main roads	幹線道路
+Streets	街路
+Service roads	サービス道路
+Tram tracks	路面電車の線路
+Railway tracks	鉄道の線路
+motorway, trunk, primary, secondary	高速道路、幹線、主要・二次道路
+tertiary, residential, unclassified	三次道路、住宅道路、未分類
+yards, car parks, depots	構内、駐車場、車庫
+each track on its own; branches are joined with switches by hand	各線路を個別に作成。分岐はポイントで手動接続します
+main lines without sidings; branches are joined with switches by hand	側線なしの本線。分岐はポイントで手動接続します
+Water from OpenStreetMap	OpenStreetMapの水域
+Give a distance	距離を指定してください
+The bend is too tight for that distance on its inner side	この距離では内側のカーブがきつすぎます
+The copy leaves the map: add tiles there first	コピーがマップの外に出ます：先にタイルを追加してください
+Made with openMapper	openMapperで作成
+Low (no shadows, rough edges, 3 km view)	低（影なし、粗いエッジ、視程3 km）
+Medium (softer shadows, 8 km view)	中（影は軽め、視程8 km）
+High	高
+This end belongs to a junction: select the junction and move it, the road follows	この端は交差点に属します：交差点を選んで動かすと道路も追従します
+Paint along the roads	道路沿いに塗装
+Market	市場
+Station	駅
+Depot	車庫
+this object takes its model from a model file: it cannot be scaled	このオブジェクトはモデルファイルからモデルを取得するため、拡大縮小できません
+Not a GPX, KML or GeoJSON file	GPX、KML、GeoJSONファイルではありません
+No lines in the file	ファイルに線がありません
+Language	言語
+Interface size	インターフェースサイズ
+File	ファイル
+New map…	新規マップ…
+Open map…	マップを開く…
+Controls…	操作…
+Import assets…	アセットをインポート…
+Multiplayer…	マルチプレイ…
+OMSI 2 folder…	OMSI 2フォルダ…
+Quit	終了
+View	表示
+Help	ヘルプ
+Updates…	アップデート…
+About openMapper	openMapperについて
+OMSI 2 not found	OMSI 2が見つかりません
+Map editor for openOMSI	openOMSI用マップエディタ
+openMapper builds maps from the content of an installed OMSI 2. Choose its folder (the one with Omsi.exe, maps and Vehicles).	openMapperはインストール済みのOMSI 2のコンテンツからマップを作成します。そのフォルダ（Omsi.exe、maps、Vehiclesがある場所）を選択してください。
+Choose OMSI 2 folder…	OMSI 2フォルダを選択…
+Maps	マップ一覧
+recent · OMSI 2	最近・OMSI 2
+recent	最近
+content folder	コンテンツフォルダ
+OMSI 2 (saved as copy)	OMSI 2（コピーとして保存）
+Open	開く
+Make a copy	コピーを作成
+A copy of the map in the content folder under a new name, to try something out	試用のため、コンテンツフォルダ内に新しい名前でマップのコピーを作成します
+Show in the file manager	ファイルマネージャーで表示
+Move to openMapper's bin	openMapperのごみ箱へ移動
+Its folder goes into openMapper\\bin in the content folder, from where it can be put back by hand	フォルダはコンテンツフォルダ内のopenMapper\\binへ移動され、手動で元に戻せます
+Browse…	参照…
+Double-click a map to open it. Maps of OMSI 2 are saved as a copy into openOMSI's content folder; the original stays untouched.	マップをダブルクリックで開きます。OMSI 2のマップはopenOMSIのコンテンツフォルダにコピーとして保存され、元は変更されません。
+A simple map editor for openOMSI.	openOMSI用のシンプルなマップエディタ。
+Back to the 3D view (0)	3Dビューに戻る（0）
+The plan view from above, north up (0)	真上からの平面ビュー、北が上（0）
+Recent maps	最近のマップ
+(none)	（なし）
+Export map for sharing…	共有用にマップをエクスポート…
+Export a plan of the map…	マップの平面図をエクスポート…
+Earlier versions…	以前のバージョン…
+Close map	マップを閉じる
+Edit	編集
+Edit history…	編集履歴…
+Groups for other maps…	他のマップ用グループ…
+Find in map…	マップ内を検索…
+Search for a command…	コマンドを検索…
+Delete	削除
+Deselect	選択解除
+Tile grid	タイルグリッド
+What the game does not show	ゲームに表示されないもの
+AI lanes	AI車線
+Names of stops and start points	停留所と開始地点の名前
+Show	表示する
+Roads and splines	道路とスプライン
+Overview map (M)	全体マップ（M）
+Assets (B)	アセット（B）
+Flatten the terrain (roads follow)	地形を平坦化（道路も追従）
+Saved views…	保存した視点…
+Go to selection	選択範囲へ移動
+Camera	カメラ
+Unity: right button looks round and W A S D fly, middle pans, Alt orbits	Unity：右ボタンで見回し、W A S D で飛行、中ボタンでパン、Altで周回
+Map editor: right button looks round and W A S D fly (Q down, E up), middle pans, the wheel zooms to the cursor, drag moves the map	マップエディタ：右ボタンで見回し、W A S D で飛行（Q 下降、E 上昇）、中ボタンでパン、ホイールでカーソルへズーム、ドラッグでマップ移動
+Load 100 tiles at a time (like OMSI 2's editor)	100タイルずつ読み込む（OMSI 2のエディタと同様）
+Time of day	時刻
+Plain day (as the game by day)	通常の昼（ゲームの昼と同じ）
+At an hour	指定の時刻
+Where the sun stands then, today, at the map's place (Map > Calendar and place); by night the moon	その時刻の今日の太陽の位置（マップの場所）。マップ > カレンダーと場所 を参照。夜は月
+Season	季節
+Summer	夏
+Dry summer	乾燥した夏
+Spring	春
+Autumn	秋
+Winter	冬
+Snow	雪
+Graphics quality	グラフィックス品質
+Tools	ツール
+Road types and junctions…	道路タイプと交差点…
+PBR maps for a picture…	画像のPBRマップ…
+Map	マップ
+Map settings…	マップ設定…
+Calendar and place…	カレンダーと場所…
+Signal routes…	信号経路…
+Chrono scenarios…	クロノシナリオ…
+Ground textures…	地面テクスチャ…
+Check map…	マップをチェック…
+Junctions made again:	再作成した交差点：
+Lines and timetable…	系統と時刻表…
+Traffic and AI…	交通とAI…
+Depot files (destinations)…	車庫ファイル（行先）…
+Satellite and terrain…	衛星画像と地形…
+From OpenStreetMap…	OpenStreetMapから…
+GPS tracks to trace…	トレース用GPSトラック…
+Tiles from another map…	他のマップのタイル…
+Test drive in openOMSI	openOMSIでテスト走行
+Test drive in OMSI 2 (the original)…	OMSI 2（オリジナル）でテスト走行…
+Check in openOMSI…	openOMSIでチェック…
+Getting started	はじめに
+New map	新規マップ
+Open a map	マップを開く
+Save (Ctrl+S): there are unsaved changes	保存（Ctrl+S）：未保存の変更があります
+Save (Ctrl+S)	保存（Ctrl+S）
+Import assets: a mod folder or .zip, a .obj / .x / .o3d model (or drop files on the window)	アセットをインポート：MODフォルダまたは.zip、.obj / .x / .o3dモデル（またはウィンドウにドロップ）
+Redo (Ctrl+Shift+Z)	やり直し（Ctrl+Shift+Z）
+Tile grid (G)	タイルグリッド（G）
+Assets: every object and road type, with pictures (B)	アセット：画像付きのすべてのオブジェクトと道路タイプ（B）
+Test drive	テスト走行
+Save the map and drive it in openOMSI (F5)	マップを保存してopenOMSIで走行（F5）
+openOMSI was not found: install it to test maps	openOMSIが見つかりません：マップをテストするにはインストールしてください
+Test drive from the start point nearest the view	視点に最も近い開始地点からテスト走行
+See this view in openOMSI	この視点をopenOMSIで見る
+loading	読み込み中
+Edit mesh	メッシュを編集
+Shapes and lamps	図形とランプ
+Click beside the map to add a 300 × 300 m tile. Right-click a tile to remove it.	マップの隣をクリックして300 × 300 mのタイルを追加。タイルを右クリックで削除。
+Area	範囲
+A ring of tiles round the map	マップの周囲にタイルのリング
+Every free place beside the map, corners too, gets a tile at the height of its neighbours	マップの隣の空きスペース（角も）すべてに、隣接タイルと同じ高さのタイルを追加します
+Tiles added:	追加したタイル：
+Everything on the map, grouped by the folders its files lie in	マップ上のすべてを、ファイルのあるフォルダ別に表示
+Click an object or a road in the view to see and change it on the right.	ビュー内のオブジェクトまたは道路をクリックすると、右側で確認・変更できます。
+Line up with the nearest road (Shift: put it freely)	最寄りの道路に揃える（Shift：自由に配置）
+On both sides of the road	道路の両側に
+A stop of the same name also goes at the kerb across the road, facing the other way	同名の停留所は道路の反対側の縁石にも、逆向きに配置されます
+In a row along a line	線に沿って並べる
+Every	間隔
+Draw new	新規描画
+Edit existing	既存を編集
+Click a path to pick it: every point is a dot to drag (the small ones in the middle of a piece bend it). Double-click the path to put a point in. Click a dot, then Del, to take that point out; Del with no dot picked deletes the whole path (Ctrl+Z brings it back). Lanes of roads and junctions belong to their road type: use Edit its AI lanes on the road.	経路をクリックで選択：各点はドラッグできる丸印です（部品中央の小さな丸は曲げます）。経路をダブルクリックで点を追加。丸印をクリックしてDelでその点を削除。点を選ばずにDelで経路全体を削除（Ctrl+Zで復元）。道路と交差点の車線は道路タイプに属します：道路の「AI車線を編集」を使用してください。
+Cars	車
+People	人
+Show these in the other tools too	他のツールでも表示
+Show the AI's lanes in the other tools too	他のツールでもAI車線を表示
+Everything	すべて
+Search	検索
+Shape the ground under the road	道路の下の地面を整形
+Go on drawing from the end of the road just built	建設した道路の端から続けて描く
+Join road ends, roads and junction pieces near the cursor	カーソル付近の道路端・道路・交差点部品に接続
+Make junctions where roads meet	道路が交わる場所に交差点を作成
+Go on with the type of the road I start from	開始した道路のタイプで続ける
+Building with:	使用中：
+nothing chosen	未選択
+Front at the roadside, back	道路側に正面、奥行き
+Plant brush: sow trees by painting	植栽ブラシ：ブラシで木を植える
+Sow	植える
+Clear	消去
+With the brush	ブラシで
+In an outline	輪郭で
+Click round an area (a wood, a park, a garden) and it is filled at once, or cleared	範囲（森、公園、庭）の周囲をクリックすると、一度に植えるか消去します
+About	約
+plants (Enter: plant)	本の植物（Enter：植える）
+Size	サイズ
+Apart	間隔
+Sows the object chosen below. Right-click entries: "Add to the plant mix" to sow several at random. Clearing takes trees and the mix's objects.	下で選んだオブジェクトを植えます。項目を右クリック：「植栽ミックスに追加」で複数をランダムに植えます。消去は木とミックスのオブジェクトを除去します。
+Mix (picked at random):	ミックス（ランダム）：
+reading OMSI 2…	OMSI 2を読み込み中…
+items	件
+Nothing found	見つかりませんでした
+mod	MOD
+right-click: star it	右クリック：お気に入り
+Take out of the plant mix	植栽ミックスから外す
+Add to the plant mix	植栽ミックスに追加
+Remove from favourites	お気に入りから削除
+Add to favourites	お気に入りに追加
+Favourites	お気に入り
+Recently used	最近使用
+(not in a folder)	（フォルダなし）
+Strength	強さ
+Mode	モード
+Levels the ground to the height where you start dragging	ドラッグ開始点の高さに地面を平らにします
+Softens bumps and edges	凹凸と角を和らげます
+Raises the ground under the brush	ブラシの下の地面を上げます
+Lowers the ground under the brush	ブラシの下の地面を下げます
+Gives flat ground the rolls and dips of a natural field; hold longer for more	平らな地面に自然な野原のうねりや窪みを付けます。長く押すほど強くなります
+Paint a lake or a river: the ground is dug to a bed under the water's level (where you start the stroke, or the tile's water) and the tile gets water at that level. Water in OMSI is one level for a whole tile: another low place on the same tile shows it too	湖や川を描きます：地面が水位より下の川底まで掘られ（ストローク開始位置またはタイルの水位）、タイルにその高さの水が設定されます。OMSIの水位はタイル全体で1つ：同じタイルの別の低地にも水が表示されます
+Click where it starts, then where it ends: the ground between becomes one even slope as wide as the brush (an embankment, a ramp, a level bed)	始点、次に終点をクリック：間の地面がブラシ幅の均一な斜面になります（盛土、スロープ、平らな路床）
+To a height	指定の高さに
+Flatten to the height typed instead of the one where the drag starts (a level square, a platform)	ドラッグ開始点ではなく、入力した高さに平らにします（平地、プラットフォーム）
+Depth	深さ
+The water's level is set where a stroke starts: start at the bank.	水位はストローク開始位置で決まります：岸から始めてください。
+Brush	ブラシ
+Flatten the whole terrain	地形全体を平坦化
+Every tile's ground levelled to the map's mean height; the roads, the AI paths and the junctions follow it. One undo step brings the relief back. (The satellite picture: View > Satellite overlay.)	全タイルの地面をマップの平均高さに整地し、道路、AI経路、交差点も追従します。元に戻す1回で地形が戻ります。（衛星画像：表示 > 衛星オーバーレイ）
+Ground layers	地面レイヤー
+base ground	ベース地面
+layer	レイヤー
+Add…	追加…
+Remove	削除
+Up the list: drawn under the layers after it	上へ：後のレイヤーの下に描画されます
+Down the list: drawn over the layers before it	下へ：前のレイヤーの上に描画されます
+Texture	テクスチャ
+The layer's picture; its painting stays	レイヤーの画像。塗装は残ります
+A fine grain laid over the texture, seen close up (OMSI's detail texture)	テクスチャの上に重ねる細かい粒状感で、近くで見えます（OMSIのディテールテクスチャ）
+Click to choose another	クリックで別のものを選択
+Repeats per tile	タイルあたりの繰り返し
+Detail repeats	ディテールの繰り返し
+How finely this layer can be painted: texels across a tile (its masks are made again at the new size)	このレイヤーを塗れる細かさ：タイル幅のテクセル数（マスクは新しいサイズで作り直されます）
+Edit ground texture	地面テクスチャを編集
+Erase	消去
+Remove ground texture	地面テクスチャを削除
+Tile	タイル
+A water surface over the whole tile: it shows where the ground lies below it (lower the ground with the Terrain tool for a lake or a river)	タイル全体を覆う水面：下に地面がある場所で見えます（湖や川には地形ツールで地面を下げます）
+at 	高さ
+Lamps light the ground at night	夜間にランプが地面を照らす
+The game works out the light pools of the street lamps on and round this tile when it loads it ([variable_terrainlightmap]); off, it shows the tile's light map file as it is	ゲームは読み込み時に、このタイルと周辺の街灯の光だまりを計算します（[variable_terrainlightmap]）。オフの場合はタイルのライトマップファイルをそのまま表示します
+Edit history	編集履歴
+Click a step to go back to just after it	ステップをクリックすると、その直後の状態に戻ります
+Opened	開いた
+Properties	プロパティ
+Configure PBR	PBRを設定
+Create PBR	PBRを作成
+Normal, roughness, metal and shadow maps made from the object's textures, tuned and written as openOMSI reads them	オブジェクトのテクスチャから作った法線・粗さ・金属・影マップを調整し、openOMSIが読む形式で書き出します
+Type	タイプ
+Hangs on	取り付け先
+point	点
+Location	位置
+East	東
+North	北
+Height above sea level	海抜高度
+above the ground:	地面からの高さ：
+OMSI keeps this object's height above the ground under it: moved elsewhere it stays as high above the ground there	OMSIはこのオブジェクトの下の地面からの高さを保持します：別の場所へ移すと、そこでも同じ高さで地面の上に留まります
+Rotation	回転
+Tilt forward (pitch)	前傾（ピッチ）
+Bank to the side (roll)	横傾斜（ロール）
+Heading	向き（ヘディング）
+Turn it the way the nearest road runs beside it	隣を通る最寄りの道路の向きに合わせる
+Stand it upright again	再び垂直に立てる
+Picture	画像
+Ratio	比率
+Stop name	停留所名
+This tree	この木
+Texts	テキスト
+Shown on the object (@ starts a new line)	オブジェクトに表示（@ で改行）
+Model	モデル
+Triangles	三角形
+Parts	パーツ
+Part	パーツ
+triangles	三角形
+colour only	色のみ
+opaque	不透明
+cut out	切り抜き
+blended	半透明
+How the texture's transparency is used: cut out for leaves and fences, blended for glass	テクスチャの透明度の使い方：葉やフェンスは切り抜き、ガラスは半透明
+Textures	テクスチャ
+Normal, roughness, metal and shadow maps made from the road type's textures	道路タイプのテクスチャから作った法線・粗さ・金属・影マップ
+Length	長さ
+Radius	半径
+right	右
+left	左
+straight	直線
+start	始点
+end	終点
+Mirrored	ミラー
+Skew	スキュー
+The start cut on a slant: 1 is 45° (two fences meeting at a corner: 1 and -1)	始点の斜め切り：1は45°（角で合う2本のフェンスは1と-1）
+The end cut on a slant	終点の斜め切り
+Ground	地面
+as it is	そのまま
+cut away under it	下を切り抜く
+cut, held at the end	切り抜き、終点で保持
+cut, held at the start	切り抜き、始点で保持
+cut, held at both ends	切り抜き、両端で保持
+A hole in the ground under it, as for a tunnel, an underpass or a pit (OMSI's terrain align)	トンネル、アンダーパス、ピットのように、下の地面に穴を開けます（OMSIのterrain align）
+Select the whole road	道路全体を選択
+Every piece linked on from this one (or double-click the road)	これにつながるすべての部品（または道路をダブルクリック）
+Join with the next piece	次の部品と結合
+One piece again with the one after it, where the two make one curve	2つで1本の曲線になる場合、次の部品と1つの部品に戻します
+Replace with	置換
+The object chosen in the Objects tool's catalogue takes this one's place	オブジェクトツールのカタログで選択したオブジェクトがこれの代わりになります
+Go to	移動
+Level ground	地面を平坦化
+The ground under it made level with its foot, blending in 3 m round it (a house on a slope)	下の地面を基礎の高さで水平にし、周囲3 mでなじませます（斜面の家）
+All like it	同じものすべて
+Select every one of this type on the map	マップ上のこのタイプをすべて選択
+No road within 60 m	60 m以内に道路がありません
+Name	名前
+Folder	フォルダ
+Traffic	交通
+left-hand	左側通行
+No start point yet: place one (Game logic > Start points) so the bus has somewhere to appear in openOMSI.	開始地点がありません：openOMSIでバスが出現できるよう、配置してください（ゲームロジック > 開始地点）。
+None yet: openOMSI shows it where maps are chosen.	まだありません：openOMSIのマップ選択画面に表示されます。
+Import your thumbnail	サムネイルをインポート
+Choose a picture: it is cut to 370 × 280 and becomes the map's picture (picture.jpg).	画像を選択：370 × 280に切り抜かれ、マップの画像（picture.jpg）になります。
+Open the map with this view	この視点でマップを開く
+The camera as it is now is where the map opens (here and in OMSI 2's editor).	現在のカメラ位置で、マップが開きます（ここでもOMSI 2のエディタでも）。
+Saved to	保存先
+Edit map	マップを編集
+Change the layer's texture	レイヤーのテクスチャを変更
+Change the layer's detail texture	レイヤーのディテールテクスチャを変更
+Controls	操作
+Keyboard	キーボード
+Click a key, then press the new one (Esc: leave it). A key already in use is taken from its command.	キーをクリックし、新しいキーを押してください（Esc：そのまま）。使用中のキーは元のコマンドから外れます。
+press a key…	キーを押してください…
+Also:	他に：
+Back to the default key	既定のキーに戻す
+Reset all keys	すべてのキーをリセット
+Mouse	マウス
+Right button held	右ボタン押しっぱなし
+look round; W A S D fly, Q / E down / up, Shift faster, wheel: speed	見回し。W A S D：飛行、Q / E：下降／上昇、Shift：高速、ホイール：速度
+Middle drag	中ボタンドラッグ
+pan	パン
+Alt + left / right / middle drag	Alt + 左／右／中ドラッグ
+orbit / zoom / pan (as in Unity)	周回／ズーム／パン（Unityと同様）
+Left drag on nothing	何もない場所で左ドラッグ
+select with a box	矩形選択
+Alt + left drag	Alt + 左ドラッグ
+orbit round the point under the cursor	カーソル下の点を中心に周回
+Wheel	ホイール
+move towards the cursor	カーソルへ向かって移動
+Trackpad	トラックパッド
+Two fingers	2本指
+Pinch / twist	ピンチ／ひねり
+zoom / turn	ズーム／回転
+Option + two fingers or drag	Option + 2本指またはドラッグ
+Fixed keys	固定キー
+Arrow keys	矢印キー
+move over the map (Shift: faster)	マップ上を移動（Shift：高速）
+go to a saved view (Shift: keep the view there)	保存した視点へ移動（Shift：そこに視点を保存）
+Alt + arrows	Alt + 矢印
+move the selection a grid step (Shift: 10 cm)	選択範囲をグリッド1ステップ移動（Shift：10 cm）
+Alt + Page Up / Down	Alt + Page Up / Down
+selection up / down 10 cm (Shift: 1 m)	選択範囲を10 cm上／下へ（Shift：1 m）
+add to / take from the selection	選択に追加／選択から除外
+Shift / Ctrl + drag on empty ground	Shift / Ctrl + 空き地をドラッグ
+select with a box (Shift adds)	矩形選択（Shiftで追加）
+Double-click a road	道路をダブルクリック
+select all of it	その全体を選択
+turn the object	オブジェクトを回転
+brush size	ブラシサイズ
+stop / deselect	中止／選択解除
+Unsaved changes	未保存の変更
+The map has changes that are not saved. Save them first?	マップに未保存の変更があります。先に保存しますか？
+Don't save	保存しない
+Assets	アセット
+All	すべて
+Picture size	画像サイズ
+Shapes…	図形…
+Close (B)	閉じる（B）
+Scenery objects	オブジェクト
+Splines (roads, tracks…)	スプライン（道路、線路…）
+Favourite on / off	お気に入り オン／オフ
+content folder (mod, import, own)	コンテンツフォルダ（MOD、インポート、自作）
+OMSI 2	OMSI 2
+width	幅
+Build with it	これで建設
+Place it	配置
+PBR material…	PBRマテリアル…
+Delete…	削除…
+Not seen in the game (a helper).	ゲームでは表示されません（ヘルパー）。
+Delete the asset?	アセットを削除しますか？
+Its folder goes into openMapper's bin in the content folder (openMapper\\bin), from where it can be put back by hand. Maps that use it show it missing.	そのフォルダはコンテンツフォルダ内のopenMapperのごみ箱（openMapper\\bin）へ移動され、手動で元に戻せます。これを使うマップでは欠落と表示されます。
+Calendar and place	カレンダーと場所
+Place and time	場所と時刻
+Holidays	祝日と休暇
+Number plates	ナンバープレート
+Latitude	緯度
+Longitude	経度
+Time zone	タイムゾーン
+Where the sun stands and when it rises and sets come from here.	太陽の位置と日の出・日の入りはここから決まります。
+Summer time	夏時間
+years	年
+none: the clocks are never put forward	なし：時計は進められません
+EU rules for these years	これらの年にEU規則を適用
+Last Sunday of March to last Sunday of October, replacing what is set for these years	3月最終日曜から10月最終日曜まで。これらの年の既存設定を置き換えます
+None	なし
+Year	年
+entries	件
+Public holidays run Sunday's timetable; school holidays the holiday one.	祝日は日曜の時刻表、学校休暇は休暇用の時刻表で運行します。
+Public holidays	祝日
+Add a holiday	祝日を追加
+Holiday	祝日
+School holidays	学校休暇
+Ends before it starts	終了が開始より前です
+Add school holidays	学校休暇を追加
+The AI's cars carry these, one a line.	AIの車がこれらを付けます。1行に1つ。
+X: a letter, 9: a digit	X：文字、9：数字
+Make	作成
+Replaces the list with plates of the pattern	リストをパターンのプレートで置き換えます
+plates	プレート
+The scenario's AI lists are written, groups changed:	シナリオのAIリストを書き込みました。変更したグループ：
+Could not write the scenario	シナリオを書き込めませんでした
+The scenario's timetable is written, files:	シナリオの時刻表を書き込みました。ファイル数：
+Back in the scenario:	シナリオに戻りました：
+The scenario's things are on the map:	シナリオの要素がマップ上にあります：
+what you place now is the scenario's too	今配置するものもシナリオのものになります
+Editing the scenario	シナリオを編集中
+Done	完了
+Chrono scenarios	クロノシナリオ
+How the map changes over the years: each scenario from its first day lays its own tiles, lines and tickets over the map. The view shows the map as on the day chosen here; what you edit is always the map itself.	マップが年月とともにどう変わるか：各シナリオは初日から、独自のタイル、系統、チケットをマップに重ねます。ビューにはここで選んだ日のマップが表示され、編集対象は常にマップ自体です。
+Show the map as on	表示するマップの日付
+Today	今日
+Active on that day:	その日に有効：
+New scenario's name	新規シナリオの名前
+New scenario	新規シナリオ
+A scenario starting on the day shown, after the others	表示中の日から始まるシナリオを、他の後に追加
+From	開始
+To	行先
+for good	恒久
+Own tickets	独自チケット
+Own money	独自通貨
+the map's	マップの
+Takes off	運休する系統
+What changes (shown where the date is chosen)	変更内容（日付選択時に表示）
+From its first day, the selection in the view:	初日から、ビューでの選択範囲：
+appears	出現する
+Taken out of the map into the scenario: it is there from the scenario's first day on (place it first, then press this)	マップからシナリオへ移します：シナリオの初日から存在します（先に配置してからこれを押します）
+is gone	消える
+Stays in the map, gone from the scenario's first day on	マップには残り、シナリオの初日から消えます
+becomes	変更後
+its texts become	テキストが変わる
+Write	書き込み
+Its path rules from that day	その日からの経路ルール
+Add a rule	ルールを追加
+Written into the scenario at once (undo does not take it out of the scenario).	すぐシナリオに書き込まれます（元に戻してもシナリオからは外れません）。
+What it changes	変更内容
+into the map	マップへ
+Out of the scenario into the map itself: there on every day	シナリオからマップ自体へ：すべての日に存在します
+Take it out of the scenario	シナリオから外す
+new texts	新しいテキスト
+rules	ルール
+Nothing yet.	まだありません。
+Its own things are on the map: select, move, change and place as usual. The map's own things stay the map's.	その要素はマップ上にあります：通常どおり選択・移動・変更・配置できます。マップ自体の要素はマップのままです。
+Done: back into the scenario	完了：シナリオに戻す
+Edit its own things on the map	マップ上でその要素を編集
+What it brings in is put on the map to work with as with anything else; Done writes it back (undo starts afresh)	追加される要素は他と同様に作業できるようマップに配置されます。「完了」で書き戻します（元に戻す履歴は新しく始まります）
+The Lines window shows its timetable (the map's with its own laid over): lines, trips and tours edited there are the scenario's; a line of the map taken away is taken off from its day.	系統ウィンドウにシナリオの時刻表（マップのものに自身を重ねたもの）が表示されます。そこで編集した系統・便・行路はシナリオのものになり、外したマップの系統はその日から除かれます。
+Done with its timetable	時刻表の編集を完了
+Edit its timetable	時刻表を編集
+Its own lines, trips and tours in the Lines window; Done writes only what differs from the map's (undo starts afresh)	系統ウィンドウでシナリオ独自の系統・便・行路。「完了」でマップとの差分のみ書き込みます（元に戻す履歴は新しく始まります）
+The Traffic window shows its AI lists (the map's with its own added): vehicles and type groups added there, and a depot's own depot file, are the scenario's from its day.	交通ウィンドウにシナリオのAIリスト（マップのものに自身を追加したもの）が表示されます。そこで追加した車両とタイプグループ、および車庫独自の車庫ファイルは、その日からシナリオのものになります。
+Done with its AI lists	AIリストの編集を完了
+Edit its AI lists	AIリストを編集
+Vehicles it adds to the groups and depots (OMSI's ailists_#upd.cfg); taking one away is the map's own business	グループと車庫に追加する車両（OMSIのailists_#upd.cfg）。削除はマップ自体の管轄です
+Write the scenario	シナリオを書き込み
+Close	閉じる
+The map has no chrono scenarios.	マップにクロノシナリオがありません。
+from	開始
+to	終了
+takes off	運休
+own tickets	独自チケット
+Its first day	初日
+Written into the scenario	シナリオに書き込みました
+Written into the scenario:	シナリオに書き込みました：
+Scenario written	シナリオを書き込みました
+The map as on	マップの日付：
+scenarios:	シナリオ：
+Multiplayer	マルチプレイ
+Joining… (a big map takes a while to come)	接続中…（大きなマップは時間がかかります）
+Recover a conflicting edit…	競合した編集を復元…
+Recovered your edit; undo is available	編集を復元しました。元に戻せます
+Edit one map together: one of you hosts it, the others join. Roads, objects, ground and paint are shared as they are made; the timetable, the traffic and the descriptions stay the host's, and the host saves the map. Everybody needs the same objects and splines installed.	1つのマップを共同編集：1人がホストになり、他の人が参加します。道路、オブジェクト、地面、塗装は作成と同時に共有されます。時刻表、交通、説明文はホストのままで、保存もホストが行います。全員に同じオブジェクトとスプラインのインストールが必要です。
+Your name	あなたの名前
+Password	パスワード
+Host this map	このマップを公開
+Others on this network can join	このネットワーク内の他の人が参加可能
+Others anywhere can join (a free Cloudflare tunnel, nothing to set up on the router)	どこからでも参加可能（無料のCloudflareトンネル、ルーター設定不要）
+Port	ポート
+Over the internet the password must have at least this many letters:	インターネット経由ではパスワードの最小文字数：
+No password: anybody who reaches this computer's port can join and change the whole map.	パスワードなし：このコンピューターのポートに到達できる人は誰でも参加してマップ全体を変更できます。
+Ask for a password after all	やはりパスワードを求める
+Host without a password? Anybody on this network who finds the port can join and change the whole map.	パスワードなしで公開しますか？このネットワーク内でポートを見つけた人は誰でも参加してマップ全体を変更できます。
+Yes, without a password	はい、パスワードなし
+No	いいえ
+Type a password the others will need.	他の人に必要なパスワードを入力してください。
+Host without a password…	パスワードなしで公開…
+Host	ホストになる
+Open a map, type a name and a password first	先にマップを開き、名前とパスワードを入力してください
+Join a map	マップに参加
+The map open now has unsaved changes: joining closes it. Save it first.	現在開いているマップに未保存の変更があります：参加すると閉じられます。先に保存してください。
+You host this map. Give the others one of these:	あなたはこのマップのホストです。他の人に次のいずれかを伝えてください：
+On this network the connection is not encrypted: somebody listening in can see the map, and from what they catch try passwords on their own computer. Use a long password, or the internet tunnel (encrypted).	このネットワークでは接続が暗号化されません：盗聴者はマップを見られ、傍受した内容から自分のPCでパスワードを試せます。長いパスワードか、インターネットトンネル（暗号化）を使ってください。
+Everybody who joins can change the whole map.	参加者は全員マップ全体を変更できます。
+Opening the Cloudflare tunnel… (fetched the first time)	Cloudflareトンネルを開いています…（初回はダウンロード）
+internet	インターネット
+Waiting for Cloudflare's address…	Cloudflareのアドレスを待っています…
+The Cloudflare tunnel could not be opened (no cloudflared, or no internet). The LAN addresses still work.	Cloudflareトンネルを開けませんでした（cloudflaredがないか、インターネット未接続）。LANアドレスは使用できます。
+You joined this map. The host saves it.	このマップに参加しました。保存はホストが行います。
+Everything of yours is with the others	あなたの変更はすべて他の人に反映済み
+Sending your edits…	編集を送信中…
+In the session	セッション内
+Say something…	メッセージを入力…
+Leave	退出
+Knife (K): a click on a road cuts it there, as often as you like; the pieces' lengths shown at the cursor, on whole grid steps with grid snapping on · right-click or Esc: off	ナイフ（K）：道路をクリックするとその場で切断、何度でも可能。部品の長さがカーソルに表示され、グリッドスナップ時はグリッド単位 · 右クリックまたはEsc：オフ
+The angle step: what snapping comes to and what R turns by	角度ステップ：スナップの単位とRの回転量
+Angle	角度
+Snap headings to the angle step	向きを角度ステップにスナップ
+Grid	グリッド
+Snap positions to the grid	位置をグリッドにスナップ
+Click two points to measure the distance and gradient between them (U) · right-click: off	2点をクリックして間の距離と勾配を測定（U） · 右クリック：オフ
+Auto-Terrain	自動地形
+What you build follows the ground: roads, paths and tracks take its height (off: they run level from where they start). Only what is built from now on; nothing already there changes	作成するものが地面に追従します：道路、経路、線路が地面の高さを取ります（オフ：始点から水平）。今後作成するものだけで、既存のものは変わりません
+Auto-Switch	自動ポイント
+Branching a track off another makes a switch there	線路を別の線路から分岐させるとポイントを作成します
+Auto-Junction	自動交差点
+Auto-Align	自動整列
+Line objects up with the nearest road (Shift: put it freely)	最寄りの道路に合わせて整列（Shift：自由に配置）
+Selection	選択
+A click on one of it selects all of it, Ctrl + click one alone	1つをクリックすると全体を選択、Ctrl + クリックで1つだけ
+Keep these together: a click on one selects all, a drag moves all (Ctrl+G)	まとめて保持：1つをクリックで全選択、ドラッグで全移動（Ctrl+G）
+Apply	適用
+Turn	回転
+Level the ground under them	その下の地面を平坦化
+Each one's outline made level with its foot, blending into the ground 3 m round it	それぞれの輪郭を基礎の高さで水平にし、周囲3 mで地面になじませます
+Make every object	すべてのオブジェクトを置換
+The object chosen in the Objects tool's catalogue	オブジェクトツールのカタログで選択したオブジェクト
+Random headings	ランダムな向き
+Every selected object turned its own random way (trees, bushes, rocks)	選択した各オブジェクトをランダムな向きに回転（木、茂み、岩）
+Along the road	道路に沿って
+Each turned the way the nearest road runs beside it	それぞれ隣を通る最寄りの道路の向きに回転
+Turned:	回転済み：
+All like this one	これと同じものすべて
+Every selected object takes the heading of the one in the properties	選択したすべてのオブジェクトにプロパティのものと同じ向きを適用
+Make every road	すべての道路を置換
+The road type chosen in the Roads tool's catalogue	道路ツールのカタログで選択した道路タイプ
+Lay them on the ground	地面に置く
+Reverse their direction	方向を反転
+Even slope along them	沿って均一な勾配
+One chain of roads: from the height at one end to that at the other, evenly (a bridge, a ramp)	道路の1本のつながり：一方の端の高さからもう一方の端の高さまで均等に（橋、スロープ）
+Edit its AI lanes	AI車線を編集
+Its lanes become AI paths of their own (the same lines, the same way) that the Logic tool's Edit existing bends, moves and deletes. The road keeps its look.	車線が独立したAI経路（同じ線、同じ向き）になり、ロジックツールの「既存を編集」で曲げ・移動・削除できます。道路の見た目は変わりません。
+Ends (joined roads follow)	端（接続された道路も追従）
+height	高さ
+gradient	勾配
+cant	カント
+Banking across the road, %: positive lowers its right side (into a right bend)	道路の横断勾配（%）：正の値で右側が下がります（右カーブ向き）
+End	End
+Even slope end to end	端から端まで均一な勾配
+Both gradients to the straight climb between the ends' heights	両方の勾配を、両端の高さを結ぶ直線の登りにします
+Speed limit, km/h	制限速度（km/h）
+Traffic density ×	交通密度 ×
+Priority	優先度
+Trucks (0: none)	トラック（0：なし）
+No cars	乗用車なし
+Buses only	バスのみ
+For the AI and the player on one path (lane) of it, counted from 0: the view shows their numbers	AIとプレイヤー用に、その1本の経路（車線）、0から数えます：番号はビューに表示されます
+Path (lane) number	経路（車線）番号
+Hanging on it	取り付け済み
+Points to hang objects on:	オブジェクトを取り付ける点：
+Select it	選択
+Hang	取り付け
+Choose an object in the Objects catalogue first	先にオブジェクトのカタログでオブジェクトを選んでください
+A fence, a row of houses, an avenue: the selection copied again and again, a step on each time	フェンス、家並み、並木道：選択をステップずつずらして繰り返しコピーします
+Copies	コピー数
+Step	ステップ
+Turn each	各回転
+Rows	列数
+More than one: a grid (an orchard, a car park), each row a row step on	2以上：グリッド（果樹園、駐車場）。各列は列ステップずつ離れます
+Row step	列ステップ
+Tilted to the ground under it, the way it slopes forward and to the side (a fence, a bench or a shed on a hillside)	下の地面に合わせて前後左右に傾けます（丘の斜面のフェンス、ベンチ、小屋）
+Heights along the ground again, smoothed so it climbs a hill rather than every bump (after shaping the ground or laying a height map over it); where a road not selected joins, its height is kept	高さを再び地面に沿わせ、1つ1つの凹凸ではなく丘を登るよう滑らかにします（地形の整形やハイトマップ適用後）。選択外の道路が接続する場所では、その高さを保持します
+Each starts where it ended: the traffic on it goes the other way (a one-way street, a track's direction), the road itself stays where it is	それぞれ終点から始まります：交通は逆向きに流れ（一方通行、線路の方向）、道路自体はそのままです
+A second track or the other carriageway: the selected splines copied alongside, bends kept exact, linked as they are	第2の線路や反対側の車道：選択したスプラインを並べてコピーし、カーブは正確に、リンクは元のとおりにします
+To the left	左側
+To the right	右側
+Left and right of the way the road runs (its arrows with AI lanes shown)	道路の進行方向の左右（AI車線表示時はその矢印）
+For trams and electric trains: a wire spline laid on the selected track, piece for piece and linked (its height is the wire spline's own); the masts go in with Objects along the road	路面電車と電車用：選択した線路に重ねて、部品ごとにリンクしたワイヤースプラインを敷きます（高さはワイヤースプライン固有）。支柱は「道路沿いのオブジェクト」で配置します
+No wire spline installed (one whose name says Fahrdraht, Oberleitung or wire)	ワイヤースプラインがインストールされていません（名前にFahrdraht、Oberleitung、wireのいずれかを含むもの）
+Lay it	敷設
+Wire pieces laid:	敷設したワイヤー部品：
+Paint the ground along it	沿って地面を塗装
+Add a ground texture in the Paint tool first: the base ground is under everything	先に塗装ツールで地面テクスチャを追加してください：ベース地面はすべての下にあります
+Layer	レイヤー
+Where	場所
+beside it	その隣
+under it too	その下も
+Out from its edge	縁から
+Soft edge	ソフトエッジ
+A gravel verge, dirt by a track, grass along a path: the brush of the Paint tool touches it up afterwards	砂利の路肩、線路脇の土、小道沿いの草：後で塗装ツールのブラシで調整できます
+Beside	側面
+Lean with the road	道路に合わせて傾ける
+Each object leans with the road's gradient and banking (bays and arrows on the road); off, it stands upright	各オブジェクトが道路の勾配とバンクに合わせて傾きます（道路上のベイや矢印）。オフにすると垂直に立ちます
+A text the row's objects show (@ starts a new line)	列のオブジェクトに表示するテキスト（@ で改行）
+Object:	オブジェクト：
+Pick an object (a lamp, a tree, a bollard) in the Objects tool's catalogue	オブジェクトツールのカタログでオブジェクト（街灯、木、ボラード）を選んでください
+Right of the road's direction; negative: left	道路の進行方向の右。負の値：左
+Free at start / end	始点／終点の余白
+Both sides	両側
+Place along the road	道路沿いに配置
+Remove all rows	すべての列を削除
+Roundabout: click the centre, then the ring	ロータリー：中心をクリックし、次にリングをクリック
+A one-way ring of the chosen road type (pick a one-way road); roads inside are cut back to it and joined with junctions	選択した道路タイプの一方通行リング（一方通行の道路を選択）。内側の道路はリングまで短縮され、交差点で接続されます
+Keep the height (bridge, embankment)	高さを保つ（橋、盛土）
+An even gradient from end to end, the ground left as it is; the rise to the end can be typed while drawing. Pillars: select the road and put them along it as objects.	端から端まで均一な勾配で、地面はそのまま。終点までの上り量は描画中に入力できます。橋脚：道路を選択し、オブジェクトとして沿って配置してください。
+Rise	上り量
+Shift: straight · Enter: build	Shift：直線 · Enter：作成
+Junction	交差点
+Traffic lights	信号機
+Lights need three roads or more	信号には3本以上の道路が必要です
+Main road green	主道路が青
+Side roads green	従道路が青
+The main road is the pair of roads most in line; red-yellow 2 s, yellow 3 s, 2 s all red between	主道路は最も一直線に近い道路のペアです。赤黄2秒、黄3秒、間に全赤2秒
+Zebra crossings	横断歩道
+Road	道路
+Build it again	再作成
+Makes the plate, its kerbs and lanes again for the roads as they are now	現在の道路に合わせて、プレート、縁石、車線を作り直します
+Linked objects	リンクされたオブジェクト
+An object can take its state from another ([varparent]): a signal head shows a light of its crossing's program, a stop's display its stop.	オブジェクトは別のオブジェクトから状態を取得できます（[varparent]）：信号灯器は交差点のプログラムの点灯、停留所の表示器はその停留所を表示します。
+Takes its state from	状態の取得元
+Select it: IDCode	選択：IDCode
+Takes its state from an object that is gone: IDCode	消えたオブジェクトから状態を取得：IDCode
+Takes its state from nothing	何からも状態を取得しません
+Light	信号
+Its light is not one of the crossing's: it stays dark	その点灯は交差点のものではありません：消灯のままです
+That object runs no traffic lights: link the head to a crossing with a light program	そのオブジェクトは信号機を制御しません：信号プログラムのある交差点に灯器をリンクしてください
+A signal head: link it to its crossing to have it light	信号灯器：点灯させるには交差点にリンクしてください
+Click the object in the view… (Esc)	ビューでオブジェクトをクリック…（Esc）
+Link to another…	他のものにリンク…
+Link to an object…	オブジェクトにリンク…
+Then click the object it is to take its state from (a crossing for a signal head)	次に、状態の取得元のオブジェクトをクリック（信号灯器なら交差点）
+Taking their state from it:	これから状態を取得するもの：
+light	点灯
+Click the object it takes its state from	状態の取得元のオブジェクトをクリック
+stop	停留所
+Find in map	マップ内を検索
+Name, file, IDCode, stop or x, y	名前、ファイル、IDCode、停留所、またはx, y
+The point	点
+Spline	スプライン
+Object	オブジェクト
+Nothing on the map has this IDCode.	マップ上にこのIDCodeのものはありません。
+kinds	種類
+on the map	マップ上
+Next	次へ
+Select the next one and go there	次を選択して移動
+Every one of these becomes the road type chosen in the Roads tool	これらすべてが道路ツールで選択した道路タイプになります
+Every one of these becomes the object chosen in the catalogue	これらすべてがカタログで選択したオブジェクトになります
+More: type to narrow the list	他にもあります：入力して絞り込んでください
+Replaced:	置換しました：
+Satellite overlay	衛星オーバーレイ
+Satellite and own pictures	衛星画像と自作画像
+Click a tile to see its overlay here.	タイルをクリックすると、そのオーバーレイがここに表示されます。
+Show the overlay	オーバーレイを表示
+opacity	不透明度
+Load satellite imagery	衛星画像を読み込む
+Place the map on the Earth first (Satellite and terrain…)	先にマップを地球上に配置してください（衛星画像と地形…）
+Load image file…	画像ファイルを読み込み…
+Your own picture for this tile (a scan, a screenshot): or drop it on the window	このタイル用の自作画像（スキャン、スクリーンショット）：またはウィンドウにドロップ
+Load the OpenStreetMap map	OpenStreetMapの地図を読み込む
+OpenStreetMap map for all tiles	全タイルにOpenStreetMapの地図
+The map as openstreetmap.org draws it (streets with their names, houses, water, green, stop signs), drawn sharp from OpenStreetMap data and laid on the tile in place of a satellite picture: to build roads and houses over by eye. Nothing is generated from it.	openstreetmap.orgの描画と同じ地図（地名付き街路、家、水、緑、停留所標識）をOpenStreetMapデータから鮮明に描き、衛星画像の代わりにタイルへ敷きます。目視で道路や家を作るためのもので、そこから何かが生成されることはありません。
+own picture	自作画像
+for an earlier placement	以前の配置用
+not kept with the map	マップには保存されません
+, partly coarser	、一部は粗い
+nothing	なし
+Place the map on the Earth first.	先にマップを地球上に配置してください。
+Load terrain heights	地形の高さを読み込み
+Done:	完了：
+with problems	問題あり
+A picture for the tiles	タイル用の画像
+Could not read the picture	画像を読み取れませんでした
+Could not copy the picture	画像をコピーできませんでした
+The picture is on the tiles: line it up in Satellite and terrain, Own pictures.	画像をタイルに配置しました：衛星画像と地形の「自作画像」で位置を合わせてください。
+Nothing found by that name.	その名前では見つかりませんでした。
+Some tiles had Google imagery: enter your Google key to see it again (it is not kept with the map).	一部のタイルにGoogleの画像がありました：再表示するにはGoogleキーを入力してください（マップには保存されません）。
+Satellite and terrain	衛星画像と地形
+Find a place: a town, a street, an address… (Enter)	場所を検索：町、通り、住所…（Enter）
+Searching…	検索中…
+Search © OpenStreetMap contributors	検索 © OpenStreetMap contributors
+This map has world coordinates ([worldcoordinates]): it lies on the Earth by itself, its tiles are Web Mercator tiles.	このマップには世界座標（[worldcoordinates]）があります：自動で地球上に置かれ、タイルはWebメルカトルのタイルです。
+Click on the map where the orange tile goes…	オレンジのタイルを置く場所をマップ上でクリック…
+Place the map here	ここにマップを配置
+Then click on the map: the middle of the orange tile goes there	次にマップをクリック：オレンジのタイルの中心がそこに置かれます
+At the view's middle	ビューの中心に
+North turned	北の回転
+Orange tile	オレンジのタイル
+click the map to fly there in the view	マップをクリックするとビューがそこへ移動
+1. Find the place.  2. Press "Place the map here" and click on the map: the orange tile (the map's middle) goes there.	1. 場所を探します。  2.「ここにマップを配置」を押してマップをクリック：オレンジのタイル（マップの中心）がそこに置かれます。
+Imagery	画像
+The sharpest here	ここで最も鮮明
+cm a pixel here	cm/ピクセル（ここ）
+checking…	確認中…
+is sharper here	ここではより鮮明
+Sharper imagery may be had here with your own free key for Mapbox, MapTiler or Google (Keys below).	Mapbox、MapTiler、Googleの無料キーを使うと、ここでより鮮明な画像が得られる場合があります（下の「キー」）。
+Terms of use	利用規約
+Zoom	ズーム
+the finest here	ここで最も詳細
+Picture of a tile	タイルの画像
+every pixel of the source (up to 4096)	ソースの全ピクセル（最大4096）
+Loaded at	読み込み解像度
+cm a pixel	cm/ピクセル
+Also load terrain heights	地形の高さも読み込む
+New tiles get imagery by themselves	新しいタイルに自動で画像を適用
+Load for all tiles	全タイルに読み込み
+For the selected tile	選択したタイル用
+Click a tile with the Tiles tool (7)	タイルツール（7）でタイルをクリック
+Terrain heights only	地形の高さのみ
+of	/
+tiles beside the loaded heights were not loaded: the ground steps at their edge.	読み込んだ高さに隣接するタイルが未読み込みです：その境界で地面に段差が出ます。
+Fit their edges	境界を合わせる
+Their edge takes the loaded heights, fading out 60 m into the tile	その端は読み込んだ高さになり、タイル内側60 mでフェードアウトします
+Leave them	そのまま
+Terrain heights	地形の高さ
+Relative: the orange tile's mean height is 0 m	相対：オレンジのタイルの平均高さが0 m
+Raise everything by	すべてを上げる量
+Taken off:	差し引き：
+Measure again	再測定
+Terrain data attribution	地形データの出典
+Overlay on the ground	地面へのオーバーレイ
+Put the imagery into maps exported for sharing (check its licence first)	共有用にエクスポートするマップに画像を含める（先にライセンスを確認）
+Fit tile edges	タイル境界を合わせる
+Keys for more sources (optional)	その他のソース用キー（任意）
+Everything works without a key. With your own free key these may be sharper in some places; the key stays on this computer.	キーなしですべて動作します。ご自身の無料キーを使うと一部の場所でより鮮明になります。キーはこのコンピューターに保存されます。
+Google satellite (needs your API key)	Google衛星画像（APIキーが必要）
+get a key	キーを取得
+In Google Cloud: make a project, enable the Map Tiles API, create an API key, paste it here. Google bills by use above its free amount.	Google Cloudでプロジェクトを作成し、Map Tiles APIを有効にしてAPIキーを作成し、ここに貼り付けます。無料枠を超えるとGoogleが従量課金します。
+key	キー
+Your own tile server	独自のタイルサーバー
+URL	URL
+Attribution	著作権表示
+Finest zoom	最大ズーム
+Kind	種類
+XYZ / WMTS tiles	XYZ / WMTSタイル
+Terrarium heights	Terrarium高度
+{z} {x} {y} are filled in; a WMS gets {bbox} (EPSG:3857) and {width} {height}; {key} is your key.	{z} {x} {y} が置換されます。WMSには {bbox}（EPSG:3857）と {width} {height} が渡され、{key} はあなたのキーです。
+Add	追加
+Own pictures	自作画像
+A scan, a screenshot, an old plan: laid on tiles and lined up by eye. No place on the Earth needed.	スキャン、スクリーンショット、古い地図：タイルに敷いて目視で位置を合わせます。地球上への配置は不要です。
+Tiles from	タイル元：
+Load image file over these tiles…	これらのタイルに画像ファイルを読み込み…
+Turn left 90°	左に90°回転
+Turn right 90°	右に90°回転
+mirror left-right	左右反転
+mirror top-bottom	上下反転
+Reset	リセット
+Your own pictures	自作画像
+of these tiles have your own pictures. Replace them with satellite imagery?	これらのタイルには自作画像があります。衛星画像で置き換えますか？
+Replace them	置き換える
+Keep my pictures	自作画像を残す
+Groups for other maps	他のマップ用グループ
+A selection kept under a name, to put down again in any map (a stop with its shelter and signs, a crossing with its lights)	名前を付けて保存した選択範囲を、どのマップにも再配置できます（屋根と標識付きの停留所、信号付きの交差点）
+Keep the selection	選択範囲を保存
+Group kept	グループを保存しました
+Select what to keep in the view first.	先にビューで保存するものを選択してください。
+No groups yet.	グループはまだありません。
+thing	個
+things	個
+Delete the group (to openMapper's bin)	グループを削除（openMapperのごみ箱へ）
+Use	使用
+Into the clipboard: Ctrl+V puts it down at the cursor, as often as wanted	クリップボードへ：Ctrl+Vでカーソル位置に何度でも配置できます
+is in the clipboard: Ctrl+V puts it at the cursor	がクリップボードにあります：Ctrl+Vでカーソル位置に配置
+The map's tiles: 300 m squares. Add more beside them with the Tiles tool.	マップのタイル：300 m四方。タイルツールで隣に追加できます。
+A road	道路
+Roads tool: click where it starts, then where it ends. Click on a road's end to go on from it.	道路ツール：始点をクリックし、次に終点をクリック。道路の端をクリックするとそこから続けられます。
+A bus stop by the road	道路沿いのバス停
+Game logic > Bus stops: put one at the kerb, on the side the doors open. Name it on the right.	ゲームロジック > バス停：ドアが開く側の縁石に配置し、名前は右側で設定します。
+A start point	開始地点
+Game logic > Start points: where your bus appears, on a road, facing the way to drive.	ゲームロジック > 開始地点：バスが出現する場所。道路上で進行方向に向けます。
+A line with a trip	便のある系統
+Lines window: New line, New trip, then click the stops in order. The way is found along the roads.	系統ウィンドウ：新規系統、新規便の後、停留所を順にクリック。経路は道路沿いに自動で見つかります。
+A tour with departures	運行のある行路
+Lines window > Tours and times: New tour, then Fill from … to … .	系統ウィンドウ > 行路と時刻：新規行路の後、「…から…まで埋める」。
+Buses for the tours	行路用のバス
+A depot the tours take their buses from (Tours: Add a depot, or Traffic and AI).	行路がバスを受け取る車庫（行路：「車庫を追加」または「交通とAI」）。
+Checked	チェック済み
+Map > Check map: what would go wrong in the game, most of it put right with one click.	マップ > マップをチェック：ゲームで問題になる点を検出し、ほとんどはワンクリックで修正できます。
+Saved	保存済み
+Ctrl+S. Maps are saved into openOMSI's content folder.	Ctrl+S。マップはopenOMSIのコンテンツフォルダに保存されます。
+A test drive	テスト走行
+F5 saves and starts openOMSI on the map: pick line 1 and drive.	F5で保存してマップ上でopenOMSIを起動：系統1を選んで運転します。
+A map you can drive in service:	営業運行できるマップ：
+Show me	表示
+Your stops stand away from the roads: a bus serves a stop within 15 m of its lane.	停留所が道路から離れています：バスは車線から15 m以内の停留所に対応します。
+A real place? Put the map on the Earth (Map > Satellite and terrain), then Map > From OpenStreetMap brings its streets, stops, lines and trees.	実在の場所ですか？マップを地球上に配置（マップ > 衛星画像と地形）してから、マップ > OpenStreetMapからで街路、停留所、系統、樹木を取り込めます。
+Show this for new maps	新規マップで表示
+The map has no depot file.	マップに車庫ファイルがありません。
+Make one from the lines	系統から作成
+The map has no trips yet (Map > Lines and timetable)	マップにはまだ便がありません（マップ > 系統と時刻表）
+Empty one	空のファイル
+New	新規
+A new depot file from the map's lines	マップの系統から新しい車庫ファイルを作成
+Delete this depot file	この車庫ファイルを削除
+The lines need	系統に必要：
+Add them	追加
+What is there stays as it is	既存のものは変更されません
+No depot group uses it.	このファイルを使う車庫グループはありません。
+Used by the depot	使用中の車庫：
+Use it for every depot	すべての車庫で使用
+The AI's depot groups (Vehicle groups tab) take their buses' destinations from it	AIの車庫グループ（車両グループタブ）は、このファイルからバスの行先を取得します
+Rename	名前を変更
+not a usable name	使用できない名前です
+The destination a bus shows on its way to and from the depot	バスが車庫への往復で表示する行先
+Destinations	行先
+Stops	停留所
+Routes	経路
+nobody gets on	乗車なし
+Code	コード
+another destination has this code	他の行先がこのコードを使用しています
+As a trip's terminus is named in the timetable: the stop where everybody gets off	時刻表での便の終点の名称：全員が降りる停留所
+Nobody gets on (service trip, empty sign)	乗車なし（回送便、空表示）
+Delete destination	行先を削除
+Add destination	行先を追加
+New destination	新しい行先
+As the timetable names the stop	時刻表での停留所の名称
+Delete stop	停留所を削除
+Add stop	停留所を追加
+line	系統
+What the driver types: the line's number and two digits (7601: line 76, route 01)	運転手が入力する値：系統番号と2桁（7601：系統76、経路01）
+Line	線
+IBIS text	IBISテキスト
+Destination	行先
+Stops in order	停留所の順序
+Not in the Stops list: the displays have no texts for it	停留所リストにありません：表示器にこの停留所のテキストがありません
+Move up	上へ
+Move down	下へ
+Take out	外す
+Add a stop…	停留所を追加…
+Delete route	経路を削除
+Add route	経路を追加
+No routes: the IBIS knows the destinations' codes only. Add them from the lines above.	経路がありません：IBISは行先コードしか知りません。上の系統から追加してください。
+Winter with snow	雪の冬
+Summer (dry)	夏（乾燥）
+Jan	1月
+Feb	2月
+Mar	3月
+Apr	4月
+May	5月
+Jun	6月
+Jul	7月
+Aug	8月
+Sep	9月
+Oct	10月
+Nov	11月
+Dec	12月
+Map settings	マップ設定
+Money	通貨
+Tickets	チケット
+none: the map has no depot group (Traffic and AI)	なし：マップに車庫グループがありません（交通とAI）
+Years	年
+Year offset	年のオフセット
+Added to today's year when the game starts at the real date (Berlin-Spandau: -25 for the 1980s)	ゲームを実際の日付で開始するとき、今年に加算されます（Berlin-Spandau：1980年代なら-25）
+Repair time	修理時間
+ min	 分
+Rail	レール
+real rail (trams and trains follow their tracks' switches)	実際のレール（路面電車と電車は線路のポイントに従う）
+Helper	ヘルパー
+dynamic helper active (the original editor's map option, kept as it is)	ダイナミックヘルパー有効（元のエディタのマップオプション、そのまま保持）
+Seasons	季節
+Summer where none is set. The days count from 1 January.	設定のない期間は夏です。日数は1月1日から数えます。
+Add a season	季節を追加
+A season ends before it starts	季節の終了が開始より前です
+Nothing selected	何も選択されていません
+Paste here	ここに貼り付け
+Cut the road here	ここで道路を切断
+Select all like it	同じものをすべて選択
+Keep for other maps…	他のマップ用に保存…
+Its ground, painting, water, objects and roads, put beside or into this map. Lines, timetable and AI lists stay with the other map.	その地面、塗装、水、オブジェクト、道路を、このマップの隣または中に配置します。系統、時刻表、AIリストは元のマップに残ります。
+Choose a map…	マップを選択…
+Other…	その他…
+A map to take tiles from (its global.cfg)	タイルを取り込むマップ（そのglobal.cfg）
+Grey: this map · orange: the tiles to add (click to take one or leave it) · red: on a tile of this map, left out	グレー：このマップ · オレンジ：追加するタイル（クリックで取り込む／外す） · 赤：このマップのタイル上にあり、除外
+Move:	移動：
+west	西
+east	東
+north	北
+south	南
+Raise it by	上げる量
+Its ground, water, roads and objects at a height of their own	その地面、水、道路、オブジェクトを独自の高さに
+Ease the ground where the maps meet	マップの境界で地面をなだらかにする
+Added	追加しました：
+tiles from the other map	他のマップからのタイル
+Cube	立方体
+Plane	平面
+Circle	円
+Triangle	三角形
+Triangular prism	三角柱
+Wedge	くさび
+Corner wedge	コーナーくさび
+Pyramid	ピラミッド
+Sphere	球
+Icosphere	アイコスフィア
+Cylinder	円柱
+Cone	円錐
+Torus	トーラス
+Tube	チューブ
+Capsule	カプセル
+Stairs	階段
+Arch	アーチ
+Make one and put it on the map with a click (each one can then be edited, scaled, cut and joined)	作成してクリックでマップに配置（その後、編集・拡大縮小・切断・結合できます）
+Array	配列
+Mirror	ミラー
+Solidify	ソリッド化
+Subdivision surface	サブディビジョンサーフェス
+Decimate	デシメート
+Triangulate	三角形化
+Displace	ディスプレイス
+Wireframe	ワイヤーフレーム
+Screw	スクリュー
+Simple deform	シンプル変形
+Cast	キャスト
+Weld	ウェルド
+Edge split	エッジ分割
+Boolean	ブーリアン
+Follow the ground	地形に沿う
+Count	数
+Relative	相対
+Offset	オフセット
+Merge touching ends	接する端をマージ
+Distance	距離
+Cut away the other side first	先に反対側を切り落とす
+Weld at the mirror	ミラー軸でウェルド
+Thickness	厚み
+Close the rim	縁を閉じる
+Width	幅
+Segments	分割数
+Levels	レベル
+Smooth (Catmull-Clark)	スムーズ（Catmull-Clark）
+Factor	係数
+Repeat	繰り返し
+Seed	シード
+Along the normals	法線方向
+Steps	ステップ
+Axis	軸
+Twist	ねじれ
+Bend	曲げ
+Taper	先細り
+Stretch	引き伸ばし
+Amount	量
+Box	ボックス
+Difference	差分
+With the part	パーツ指定
+Tip: hide the cutting part (its eye in the list) so only the cut shows	ヒント：切り抜きパーツを非表示（リストの目のアイコン）にすると切り抜き結果だけが見えます
+Above the ground	地面からの高さ
+Every vertex follows the terrain under it (in the editor's view and the written files at the place it stands)	各頂点がその下の地形に追従します
+Mesh (openMapper object)	メッシュ（openMapperオブジェクト）
+Shared by	共有数：
+objects on the map: changes apply to all	マップのオブジェクト：変更はすべてに適用されます
+Make this one single	これを単独にする
+Leave the edit mode (Tab)	編集モードを終了（Tab）
+Edit the mesh (Tab)	メッシュを編集（Tab）
+Write it as OBJ, glTF / GLB, FBX, Collada, USD, STL, PLY, 3MF, OFF, X or O3D	OBJ、glTF / GLB、FBX、Collada、USD、STL、PLY、3MF、OFF、X、O3Dで書き出し
+Off: its height is kept above the ground under it	オフ：その下の地面からの高さを保持
+Solid (collides)	ソリッド（衝突あり）
+The part edited and given modifiers	編集とモディファイアの対象パーツ
+Shown (and written into the object)	表示（オブジェクトにも書き込み）
+faces	面
+Duplicate the part	パーツを複製
+Delete the part	パーツを削除
+Add a shape as a part	図形をパーツとして追加
+Separate parts into objects	パーツをオブジェクトに分離
+Each part becomes an object of its own, standing where it stood	各パーツが元の位置で独立したオブジェクトになります
+Shape	図形
+Modifiers	モディファイアー
+Make it part of the mesh	メッシュの一部にする
+Add a modifier	モディファイアーを追加
+Materials	マテリアル
+Colour (multiplies the texture)	色（テクスチャに乗算）
+Assign to selected faces	選択した面に割り当て
+Choose…	選択…
+No texture	テクスチャなし
+Save as…	名前を付けて保存…
+PNG, JPEG, BMP, TGA, TIFF, WebP or DDS	PNG、JPEG、BMP、TGA、TIFF、WebP、DDS
+Transparency	透明度
+Opaque	不透明
+Cut out	切り抜き
+Blended	ブレンド
+Glows	発光
+Light of its own: black for none	独自の光：黒は発光なし
+Shine	光沢
+Normal map	法線マップ
+ORM map	ORMマップ
+Night texture	夜用テクスチャ
+Light map	ライトマップ
+Remove the material	マテリアルを削除
+Add a material	マテリアルを追加
+Import materials…	マテリアルをインポート…
+From an .mtl, a glTF / GLB / FBX, or the pictures of one PBR material (base colour, normal, roughness, metal, AO...)	.mtl、glTF / GLB / FBX、または1つのPBRマテリアルの画像（ベースカラー、法線、粗さ、金属、AO...）から
+Lamps	ランプ
+Glow	グロー
+Light on the ground	地面への光
+Colour	色
+Reach	到達距離
+On	オン
+Always	常に
+At night	夜間
+variable	変数
+Seen from one side	片側から見える
+Star	星形
+Facing	向き
+Remove the lamp	ランプを削除
+Add a glow	グローを追加
+A lamp's bulb, a lit sign: a glow seen at night	ランプの電球、光る看板：夜に見えるグロー
+Add light on the ground	地面への光を追加
+The pool of light a street lamp throws at night	夜間に街灯が投げかける光だまり
+Signal head, lamps	信号灯器、ランプ
+Put it within 40 m of a crossing with a light program: it takes its light from it (or link it in its properties)	信号プログラムのある交差点から40 m以内に置くと、そこから点灯を取得します（またはプロパティでリンク）
+Bake	ベイク
+Its textures and colours painted into one picture on a new UV map (one material: fewer draws in the game), with its own shadows and its lamps' night light if chosen	テクスチャと色を新しいUVマップ上の1枚の画像にまとめます（1マテリアル：ゲームでの描画が減る）。選択すれば自身の影とランプの夜間光も含みます
+Ambient occlusion	アンビエントオクルージョン
+How far its shadows reach	影が届く距離
+Lamps' light at night (light map)	夜間のランプの光（ライトマップ）
+The object's last change (Ctrl+Z in the edit mode)	オブジェクトの直前の変更（編集モードではCtrl+Z）
+Divisions X	X方向の分割
+Divisions Y	Y方向の分割
+Rings	リング
+Subdivisions	分割
+Bottom radius	下の半径
+Top radius	上の半径
+Tube radius	チューブの半径
+Tube segments	チューブの分割数
+Outer radius	外半径
+Inner radius	内半径
+Opening	開口
+Wall	壁
+Mesh	メッシュ
+A copy of this object's type of its own is made for it, with its meshes, materials and lamps to edit; the original stays as it is	このオブジェクトの専用のタイプのコピーを、編集用のメッシュ、マテリアル、ランプごと作成します。元のものは変更されません
+As a mesh	メッシュとして
+Copy as an object	オブジェクトとしてコピー
+An openMapper object of its shape beside it, to edit as a mesh (vertices, edges, faces)	同じ形のopenMapperオブジェクトを隣に作成し、メッシュ（頂点、辺、面）として編集できます
+The same, the spline taken away (its lanes go with it)	同上、ただしスプラインは削除（車線も一緒に）
+Splines as a mesh	スプラインをメッシュに
+Copy as one object	1つのオブジェクトとしてコピー
+Replace by one object	1つのオブジェクトで置換
+Export the selection…	選択範囲をエクスポート…
+As meshes	メッシュとして
+Join into one object (Ctrl+J)	1つのオブジェクトに結合（Ctrl+J）
+All their parts in the one shown in the properties, the others gone	すべてのパーツをプロパティに表示中のオブジェクトにまとめ、他は削除
+Solid modelling (CSG): the object shown in the properties with the others	ソリッドモデリング（CSG）：プロパティのオブジェクトを他のものと演算
+Keep the cutting objects	切り抜き用オブジェクトを残す
+Vertices	頂点
+Edges	辺
+Faces	面
+vertices	頂点
+edges	辺
+Selected	選択
+X-ray: pick through the mesh	X線：メッシュを透過して選択
+All (A)	すべて（A）
+None (Alt+A)	なし（Alt+A）
+Invert (Ctrl+I)	反転（Ctrl+I）
+Linked (Ctrl+L)	連結（Ctrl+L）
+More	その他
+Less	縮小
+Click, Shift + click to add, drag on nothing for a box, a second click or Alt + click for a loop	クリック、Shift+クリックで追加、何もない所をドラッグで矩形選択、再クリックまたはAlt+クリックでループ
+Change	変更
+Extrude (E)	押し出し（E）
+Inset (I)	インセット（I）
+Bevel (Ctrl+B)	ベベル（Ctrl+B）
+Loop cut (Ctrl+R)	ループカット（Ctrl+R）
+Point at an edge and press Ctrl+R	辺をポイントしてCtrl+Rを押してください
+Subdivide	細分化
+Fill (F)	面を作成（F）
+Bridge loops	ループをブリッジ
+Connect (J)	頂点を接続（J）
+Poke	ポーク
+Duplicate (Shift+D)	複製（Shift+D）
+Split (Y)	分離（Y）
+Separate into an object (P)	別オブジェクトに分離（P）
+Spin 360°	360°スピン
+The selection turned round the object's up axis through its middle, in 12 steps	選択範囲を、オブジェクトの中心を通る上方向の軸まわりに12ステップで回転します
+Smooth vertices	頂点をスムーズ
+Merge (M)	マージ（M）
+At the middle	中心に
+At the first	最初に
+At the last	最後に
+Collapse each piece	各部分を潰す
+By distance (1 mm)	距離で（1 mm）
+Delete (X)	削除（X）
+Only faces	面のみ
+Dissolve vertices	頂点を溶解
+Dissolve edges	辺を溶解
+Dissolve faces	面を溶解
+Triangulate (Ctrl+T)	三角形化（Ctrl+T）
+Triangles to quads (Alt+J)	三角形を四角形に（Alt+J）
+Shade smooth	スムーズシェード
+Shade flat	フラットシェード
+Flip normals (Alt+N)	法線を反転（Alt+N）
+Normals outward (Shift+N)	法線を外向きに（Shift+N）
+Mark seam	シームを付ける
+Clear seam	シームを解除
+Mark sharp	シャープを付ける
+Clear sharp	シャープを解除
+Adjust the last operation	直前の操作を調整
+Slide	スライド
+Cuts	カット数
+UV map	UVマップ
+Unwrap	展開
+By seams (conformal)	シームで（等角）
+Smart project	スマートUV投影
+Cube projection (metres)	キューブ投影（メートル）
+Cylinder projection	円柱投影
+Sphere projection	球投影
+Project from the view	ビューから投影
+Lightmap pack	ライトマップパック
+Close the UV editor	UVエディタを閉じる
+UV editor	UVエディタ
+Faces of the selection (all, with none selected); mark seams on edges first for an unwrap by seams	選択範囲の面（未選択なら全面）。シームで展開する場合は、先に辺にシームを付けてください
+Material of the selected faces	選択した面のマテリアル
+With lamps	ランプ付き
+Street lamp	街灯
+A pole with a lamp that glows and lights the ground at night	夜に光って地面を照らすランプ付きのポール
+Signal head	信号灯器
+A traffic light of the lamps below that a crossing's light program drives	交差点の信号プログラムで動く、下記のランプ構成の信号機
+Lamps:	ランプ：
+Picture, light, sound	画像、光、サウンド
+Picture / pattern…	画像／パターン…
+Choose a picture or a texture: it becomes an object you place, move, turn and scale like any other. Several repeats make a pattern	画像またはテクスチャを選択：他と同様に配置・移動・回転・拡大縮小できるオブジェクトになります。繰り返し数を増やすとパターンになります
+Light source	光源
+A lamp that glows and lights the ground round it	光って周囲の地面を照らすランプ
+Sound source…	音源…
+Choose a sound file (.wav): it plays where you put the marker, as far as the radius carries; the marker shows in the editor only	サウンドファイル（.wav）を選択：マーカーを置いた場所で、半径の範囲に聞こえます。マーカーはエディタ内のみに表示されます
+Picture width, m	画像の幅（m）
+Repeats	繰り返し
+on the ground	地面に
+standing	立てる
+Light colour	光の色
+Light reach, m	光の到達距離（m）
+at night	夜間
+always	常時
+Sound reach, m	音の到達距離（m）
+Sound volume	音量
+Overview: click or drag to move there · double-click: larger / smaller · M: hide	全体図：クリックまたはドラッグで移動 · ダブルクリック：拡大／縮小 · M：非表示
+Name:	名前：
+My town	私の町
+Description:	説明：
+What the map is, for the game's map list	ゲームのマップ一覧に表示される、マップの説明
+Size:	サイズ：
+Ground height:	地面の高さ：
+ m above sea level	 m（海抜）
+Traffic:	交通：
+keeps right	右側通行
+keeps left	左側通行
+Busy:	混雑度：
+cars	車
+passengers	乗客
+Years:	年：
+year offset	年のオフセット
+Added to today's year when the game starts at the real date	ゲームを実際の日付で開始するとき、今年に加算されます
+Money:	通貨：
+Tickets:	チケット：
+Seasons:	季節：
+four, snowy winter	四季、雪の冬
+mild winter	穏やかな冬
+summer only	夏のみ
+Rail:	レール：
+trams and trains follow their tracks' switches	路面電車と電車は線路のポイントに従う
+Ground texture (all tiles):	地面テクスチャ（全タイル）：
+template	テンプレート
+More ground layers are painted later (Paint tool); the map's settings can all be changed in Map > Map settings.	その他の地面レイヤーは後で塗装します（塗装ツール）。マップ設定はすべて マップ > マップ設定 で変更できます。
+Create	作成
+as the template	テンプレートと同じ
+ways	経路
+bus routes downloaded	バス路線をダウンロード済み
+not had:	未取得：
+The streets of the map's place built as roads with junctions where they meet, its bus stops, lines, trees and woods. Best on tiles with no roads yet: roads lying on ones the map has are left out.	マップの場所の街路を、交わる所に交差点を設けた道路として作成し、バス停、系統、樹木、森も取り込みます。道路がまだないタイルが最適：マップに既にある道路と重なる道路は除外されます。
+The map does not lie on the Earth yet: place it in Satellite and terrain (Map menu, I) first.	マップはまだ地球上に配置されていません：先に「衛星画像と地形」（マップメニュー、I）で配置してください。
+Load the terrain heights first (Satellite and terrain): the roads follow the ground as it is when they are built.	先に地形の高さを読み込んでください（衛星画像と地形）：道路は作成時の地面に沿って敷設されます。
+Download for the map's tiles	マップのタイル用にダウンロード
+bus routes	バス路線
+trees	樹木
+buildings	建物
+water	水域
+Downloading…	ダウンロード中…
+no type chosen	タイプ未選択
+Use the chosen	選択中のものを使用
+One-way roads	一方通行の道路
+Each carriageway of a dual road and one-way streets: with a one-way road type they lie side by side as they should; with none chosen they get their kind's	分離帯のある道路の各車道と一方通行の街路：一方通行の道路タイプなら適切に並んで配置され、未選択なら種別に応じたタイプになります
+as their kind	種別に応じて
+no stop object	停留所オブジェクトなし
+The stop chosen in Game logic > Bus stops	ゲームロジック > バス停 で選択した停留所
+Bus lines	バス路線
+Each bus route through two or more of the map's stops a trip of its line, the way found along the roads; a tour from 06:00 to 22:00 for each new line	マップの2つ以上の停留所を通る各バス路線は、その系統の便になります。経路は道路沿いに自動で見つかり、新しい系統ごとに06:00から22:00の行路を作成します
+Trees and woods	樹木と森
+Single trees, rows of them and woods, planted with the plant mix (Objects tool > Plant brush) or the tree chosen; none on a road	単独の木、並木、森を、植栽ミックス（オブジェクトツール > 植栽ブラシ）または選択した木で植えます。道路上には植えません
+no plants chosen	植物未選択
+kinds of plants	植物の種類
+apart in woods	森での間隔
+Buildings	建物
+Each outline filled with the model of the folder chosen whose ground plan comes nearest, its front to the nearest road; an outline no model fits is left out	各輪郭を、選択したフォルダのうち平面形が最も近いモデルで埋め、正面を最寄りの道路に向けます。合うモデルがない輪郭は除外されます
+no folder	フォルダなし
++ its folder	+ そのフォルダ
+Add the folder of the object chosen in the catalogue (Buildings_MC, …)	カタログで選択したオブジェクトのフォルダを追加（Buildings_MC、…）
+Lakes and rivers: the ground inside them lowered below the banks, and the tiles they lie on given water a little under the banks' height (OMSI's water is one level for a tile: low ground elsewhere on it is flooded too)	湖と川：内側の地面を岸より低くし、それらがあるタイルには岸の高さよりわずかに低い水を設定します（OMSIの水位はタイルごとに1つ：同じタイルの他の低地も水没します）
+deep	深さ
+a road type (Roads tool), then "Use the chosen"	道路タイプ（道路ツール）を選び、「選択中のものを使用」
+a stop (Game logic > Bus stops), then "Use the chosen"	停留所（ゲームロジック > バス停）を選び、「選択中のものを使用」
+a tree in the Objects catalogue (or a plant mix)	オブジェクトカタログの木（または植栽ミックス）
+a building in the catalogue, then "+ its folder"	カタログの建物を選び、「+ そのフォルダ」
+To build, choose (or untick):	作成するには選択（またはチェックを外す）：
+A one-way street is built the way it runs in OpenStreetMap: give it a one-way road type	一方通行の街路はOpenStreetMapでの向きどおりに作成されます：一方通行の道路タイプを指定してください
+Build	作成
+Name, file or IDCode	名前、ファイル、またはIDCode
+things on the map	マップ上のオブジェクト
+Groups	グループ
+Select the group and go there	グループを選択して移動
+Select everything in it	その中のすべてを選択
+Select it and go there	選択して移動
+more: narrow the search	他にもあります：検索を絞り込んでください
+Select all of them	すべて選択
+Go to the first	最初のものへ移動
+Pick a tree in the catalogue, then paint	カタログで木を選び、ブラシで塗ります
+Pick a tree in the catalogue, then click round the area	カタログで木を選び、エリアの周囲をクリックします
+Pick a road type, click the centre, then the ring	道路タイプを選び、中心をクリックし、次にリングをクリック
+Select a road (double-click: all of it): its properties show its height profile	道路を選択（ダブルクリック：全体）：プロパティに高さプロファイルが表示されます
+Select one of openMapper's junctions: its properties have Traffic lights and crossings	openMapperの交差点を選択：プロパティに信号機と横断歩道があります
+Select the signal head (or a display): Linked objects in its properties, then click its crossing	信号灯器（または表示器）を選択：プロパティの「リンクされたオブジェクト」で、その交差点をクリック
+Select a road, pick an object in the Objects catalogue: Objects along the road in its properties	道路を選択し、オブジェクトカタログでオブジェクトを選択：プロパティの「道路沿いのオブジェクト」
+Select a track (double-click: all of it): Overhead wire under Parallel copy in its properties	線路を選択（ダブルクリック：全体）：プロパティの「平行コピー」の下の「架線」
+Select a road or a chain: Parallel copy in its properties	道路または連続した道路を選択：プロパティの「平行コピー」
+Select a road (double-click: all of it): Paint the ground along it in its properties	道路を選択（ダブルクリック：全体）：プロパティの「沿って地面を塗装」
+Click a tile: its water is in the panel; lower the ground under it with the Terrain tool	タイルをクリック：水はパネルにあります。地形ツールでその下の地面を下げてください
+Height map: at the end of the Terrain panel	ハイトマップ：地形パネルの末尾
+By slope and height: at the end of the Paint panel	傾斜と高さ：塗装パネルの末尾
+View menu: Time of day, Season	表示メニュー：時刻、季節
+What do you want to do?	何をしたいですか？
+Groups…	グループ…
+Objects on the map by folder	フォルダ別のマップ上のオブジェクト
+Knife: cut roads	ナイフ：道路を切断
+Test drive in OMSI 2 (the original)	OMSI 2（オリジナル）でテスト走行
+Overview map	全体マップ
+Place a bus stop	バス停を配置
+Place a start point	開始地点を配置
+Plant trees with a brush	ブラシで木を植える
+Plant a wood or a park	森や公園を植える
+Roundabout	ロータリー
+Height profile of a road	道路の高さプロファイル
+Traffic lights and zebra crossings	信号機と横断歩道
+Link a signal head to its crossing	信号灯器を交差点にリンク
+Objects along a road	道路沿いのオブジェクト
+Overhead wire along a track	線路沿いの架線
+Parallel copy of a road	道路の平行コピー
+Paint the ground along a road	道路沿いの地面を塗装
+Water, lake, river	水、湖、川
+Ramp in the ground	地面のスロープ
+Height map import or export	ハイトマップのインポート／エクスポート
+Time of day and season	時刻と季節
+PBR material	PBRマテリアル
+none	なし
+Own picture…	自作画像…
+Choose a texture of the object, or a picture of your own.	オブジェクトのテクスチャ、または自分の画像を選択してください。
+Normals (_nn)	法線（_nn）
+Roughness	粗さ
+Shadow in hollows	くぼみの影
+Bumps	凹凸
+Only big shapes	大きな形状のみ
+Dark parts stand out (not sink in)	暗い部分が突き出す（沈み込まない）
+Bright parts smoother	明るい部分をより滑らかに
+Metal	金属
+Back to the defaults	既定に戻す
+This texture has PBR maps of its own already: new ones made here are taken instead of them.	このテクスチャには既に専用のPBRマップがあります：ここで作成したものがそれに代わって使用されます。
+Written as:	書き込み形式：
+PBR maps made	PBRマップを作成しました
+Delete the PBR material	PBRマテリアルを削除
+PBR maps taken away	PBRマップを削除しました
+Height profile	高さプロファイル
+over the ground	地面からの高さ
+Click: go there in the view · drag a dot (a joint) up or down: its height	クリック：ビューでそこへ移動 · 点（継ぎ目）を上下にドラッグ：その高さ
+Climbs, falls	上り、下り
+Steepest	最急勾配
+at	場所：
+Highest over the ground	地面からの最大高さ
+Deepest under it	地面下の最大深さ
+Over 8 % is steep for a bus; over 12 % few streets go	8 %超はバスには急です。12 %超の道はほとんどありません
+roadway	車道
+Road types	道路タイプ
+Make a new road type…	新しい道路タイプを作成…
+My road	私の道路
+ · own	 · 自作
+Create the road type	道路タイプを作成
+Road type made: the Roads tool builds with it	道路タイプを作成しました：道路ツールで使用できます
+Change it in the road maker	道路メーカーで変更
+Its junctions	その交差点
+Make a junction where it meets another road (else they only cross)	他の道路と出会う所に交差点を作成（オフなら単に交差）
+Corners	角
+× rounder	× 丸く
+Traffic lights by themselves	信号を自動設置
+Zebra crossings on every arm	すべての流入路に横断歩道
+Used for the junctions made from now on (where several road types meet, the one asking more wins). A junction already made keeps its own settings: select it to change them.	今後作成する交差点に適用されます（異なる道路タイプが出会う場合は、より要求の高い方が優先）。作成済みの交差点は独自の設定を保持します：選択して変更してください。
+Pick a road type on the left, or make a new one.	左で道路タイプを選ぶか、新しく作成してください。
+Road maker	道路メーカー
+Lanes	車線
+(▼ 0: one-way)	（▼ 0：一方通行）
+Lane width	車線幅
+Middle strip	中央分離帯
+Footways	歩道
+Kerb	縁石
+Roadway texture	車道のテクスチャ
+Footway texture	歩道のテクスチャ
+Own…	自作…
+The roadway texture is laid once across all its lanes (as OMSI 2's lane textures are painted: pick one with as many lanes); the footway texture's right end is the kerb.	車道のテクスチャは全車線にまたがって1回敷かれます（OMSI 2の車線テクスチャの描き方と同様：車線数が同じものを選択）。歩道テクスチャの右端が縁石です。
+not on the map	マップ上にありません
+Signal routes	信号経路
+Each railway signal clears when a train wants the track pieces of its route and none stands on them.	各鉄道信号は、列車が経路の線路部分を必要とし、その上に何もいない時に現示されます。
+New route for the selected signal	選択した信号の新しい経路
+Select a signal (one object) in the view first	先にビューで信号（オブジェクト1つ）を選択してください
+The selected object does not look like a signal (its name says nothing of one): check it is.	選択したオブジェクトは信号に見えません（名前に信号を示すものがありません）：確認してください。
+No routes yet.	経路はまだありません。
+pieces	区間
+Signal	信号
+the selected	選択中
+Aspect	現示
+What the signal shows when this route is clear: 1 proceed, 2 proceed slowly (with a speed limit)…	この経路が空いている時に信号が示すもの：1 進行、2 減速進行（速度制限あり）…
+Distant signal	予告信号
+Next signal	次の信号
+Speed limit	速度制限
+OMSI's route kind (the stock maps have 0 and 1)	OMSIの経路種別（標準マップでは0と1）
+Track pieces	線路部分
+Take the selected track	選択した線路を取得
+Every rail path of the selected tracks and switches (double-click a track: all of it); replaces the pieces	選択した線路とポイントのすべてのレール経路（線路をダブルクリック：全体）。区間を置き換えます
+Select the signal and its pieces in the view	ビューで信号とその区間を選択
+Delete the route	経路を削除
+Lines and timetable	系統と時刻表
+Edit timetable	時刻表を編集
+No bus stop there: click one of the orange marks	そこに停留所がありません：オレンジのマークをクリックしてください
+The roads can't be read without the OMSI 2 folder.	OMSI 2フォルダがないと道路を読み取れません。
+A line needs at least two bus stops on the map: place them with Game logic > Bus stops, beside a road.	系統にはマップ上に少なくとも2つの停留所が必要です：道路の脇に ゲームロジック > バス停 で配置してください。
+Lines	系統
+No lines yet.	系統はまだありません。
+New line	新規系統
+Pick a line on the left, or make a new one.\n\nA line has trips (a way from stop to stop) and tours (one bus's day: which trip it drives when).	左で系統を選ぶか、新しく作成してください。\n\n系統には便（停留所から停留所への経路）と行路（1台のバスの1日：どの便をいつ走るか）があります。
+That name is taken or can't be a file name	その名前は使用済み、またはファイル名にできません
+A copy of the line with its trips and tours (a variant to change)	系統を便と行路ごとコピー（変更用のバリエーション）
+Delete the line and its trips	系統とその便を削除
+Players can drive it	プレイヤーが運転可能
+Trips	便
+Tours and times	行路と時刻
+A tour is one bus's day: the trips it drives, one after the other, and when each leaves.	行路は1台のバスの1日です：順に走る便と、それぞれの出発時刻。
+A trip is one way along the line: its stops in order. Most lines have two, there and back.	便は系統に沿った一方向の運行で、停留所を順に並べたものです。ほとんどの系統には往路と復路の2つがあります。
+New trip	新規便
+Make the way back	復路を作成
+A new trip with the same stops the other way round	同じ停留所を逆順にした新しい便
+Trip	便
+Delete the trip	便を削除
+Destination sign	行先表示
+This trip runs on a track of its own (a train): its stops are kept as they are.	この便は専用の線路（列車）を走ります：停留所はそのまま保持されます。
+Show on the map	マップに表示
+No stops yet.	停留所はまだありません。
+Done picking	選択完了
+Pick stops on the map	マップで選択
+Click the stops in the view one after the other, in the order the bus calls at them	バスが停車する順に、ビューで停留所を次々にクリックしてください
+Add stop…	停留所を追加…
+Click stops on the map (they are marked orange)…	マップの停留所（オレンジで表示）をクリック…
+Add two stops or more: the way between them is found along the roads.	停留所を2つ以上追加してください：間の経路は道路沿いに自動で見つかります。
+Finding the way…	経路を探索中…
+Route found:	経路が見つかりました：
+km along the roads (blue in the view)	km（道路沿い、ビューでは青）
+the way drives a one-way lane against its direction; is a path drawn the wrong way round?	経路が一方通行の車線を逆走しています。経路の向きが逆に描かれていませんか？
+is not on the map	マップ上にありません
+no road with car lanes within 15 m	15 m以内に車用車線のある道路がありません
+No way	経路なし
+the roads are not joined, or run the other way (see View > AI lanes)	道路が接続されていないか、逆向きです（表示 > AI車線を参照）
+The trip is saved, but its way is not until this is mended	便は保存されますが、これが修正されるまで経路は保存されません
+Trip time	所要時間
+Guess:	推定：
+From the route's length at the pace of a town bus	経路の長さと市内バスのペースから算出
+Times at the stops	停留所での時刻
+Minutes after the trip leaves. They follow the distance between the stops; fix one to keep the bus to it (it waits there when early).	便の出発からの分。停留所間の距離に応じて決まります。固定するとバスはその時刻を守ります（早く着いたら待機）。
+fixed	固定
+Spread all by distance	距離で一括配分
+Holidays and school holidays	祝日と学校休暇
+On a public holiday only the tours with Holidays ticked run; school holidays pick the tours for school holidays or school days.	祝日には「祝日」にチェックの入った行路のみ運行します。学校休暇では、休暇用または授業日用の行路が選ばれます。
+Copy to	コピー先
+The same days a year later (feasts that move, like Easter, are to be set by hand)	1年後の同じ日（復活祭のような移動祝日は手動で設定してください）
+The map has no depot (ailists.cfg): only you drive these tours, no AI buses.	マップに車庫（ailists.cfg）がありません：これらの行路はあなただけが運転し、AIバスは走りません。
+Add a depot with OMSI 2's MAN buses	OMSI 2のMANバスで車庫を追加
+Its buses run the tours (Map > Traffic and AI shows it)	そのバスが行路を運行します（マップ > 交通とAI で確認）
+Tour	行路
+New tour	新規行路
+Pick a tour to see its departures.	行路を選ぶと出発時刻が表示されます。
+Make a trip first.	先に便を作成してください。
+Number	番号
+Buses from	バスの車庫：
+Delete the tour	行路を削除
+Runs on	運行日
+Mo	月
+Tu	火
+We	水
+Th	木
+Fr	金
+Sa	土
+Su	日
+Every day	毎日
+Monday to Friday	月〜金
+Weekends and holidays	週末と祝日
+In the school holidays	学校休暇中
+On school days	授業日
+Next departure	次の出発
+The next trip of the line, when the bus is back and has had its break	バスが戻って休憩を取った後の、系統の次の便
+Fill from	埋める：開始
+break	休憩
+Fill	埋める
+Replace the tour's departures: the line's trips one after the other, a break after each	行路の出発を置き換えます：系統の便を順に並べ、各便の後に休憩を入れます
+No departures yet: add them above.	出発はまだありません：上で追加してください。
+Delete the departure	出発を削除
+GPS tracks to trace	トレース用GPSトラック
+A route recorded on a phone or drawn elsewhere (GPX, KML, GeoJSON), shown in the view in magenta to draw roads along, or built into a road at once	スマートフォンで記録した、または他で描いた経路（GPX、KML、GeoJSON）。ビューにマゼンタで表示され、沿って道路を描いたり、すぐ道路にしたりできます
+Place the map on the Earth first (Map > Satellite and terrain)	先にマップを地球上に配置してください（マップ > 衛星画像と地形）
+Load a file…	ファイルを読み込み…
+None loaded	未読み込み
+Forget it	解除
+Build a road along it:	沿って道路を作成：
+Choose a road type in the Roads tool to build it	作成するには道路ツールで道路タイプを選択してください
+Built as if drawn: corners rounded into arcs, junctions where it meets roads, cut at the map's edge; one undo step	描いたのと同様に作成：角は円弧に丸められ、道路と出会う所に交差点、マップの端で切断。元に戻すは1ステップ
+Traffic and AI	交通とAI
+Edit traffic	交通を編集
+Over the day	時間帯別
+Vehicle groups	車両グループ
+Parked cars and people	駐車車両と人
+Depot files	車庫ファイル
+The AI's vehicles come in groups. A car group drives about on the roads; a depot sends out the buses of the timetable's tours.	AIの車両はグループにまとめられます。車グループは道路を走り回り、車庫は時刻表の行路にバスを送り出します。
+(This map's ailists.cfg is in OMSI 2's first format: it is written in the second one when changed.)	（このマップのailists.cfgはOMSI 2の第1形式です：変更すると第2形式で書き込まれます。）
+is to drive about, but there is no such group.	走り回るはずですが、そのようなグループがありません。
+Make it with OMSI 2's vehicles	OMSI 2の車両で作成
+The group of that name from OMSI 2's own maps	OMSI 2自身のマップにある同名のグループ
+New car group	新規車グループ
+New depot	新規車庫
+Pick a group on the left.	左でグループを選択してください。
+Delete the group (tours still take their buses from it)	グループを削除（行路は引き続きここからバスを取得します）
+Delete the group	グループを削除
+Tours that take their buses from here:	ここからバスを取得する行路：
+Drives about on its own	自動で走り回る
+as many:	台数：
+Times the traffic over the day	時間帯別の交通量倍率
+A vehicle with more weight comes along more often.	重みの大きい車両ほど頻繁に現れます。
+Add a vehicle…	車両を追加…
+Depot file (.hof)	車庫ファイル（.hof）
+None of its buses has this depot file beside it: they run without their destination signs and fleet data.	どのバスの隣にもこの車庫ファイルがありません：行先表示と車両データなしで走ります。
+The buses it has: a type of bus and the fleet number and plate of each.	車庫のバス：バスのタイプと、各車両の車番とナンバー。
+Take this type out	このタイプを外す
+number	車番
+plate	ナンバー
+Another bus	もう1台
+Add a type of bus…	バスのタイプを追加…
+The lists can't be read without the OMSI 2 folder.	OMSI 2フォルダがないとリストを読み取れません。
+Parked cars	駐車車両
+What stands on the car parks (Game logic > Car parks). A car listed more often stands there more often.	駐車場に停まる車（ゲームロジック > 駐車場）。多く記載された車ほど頻繁に停まります。
+Who walks about and waits at the stops.	歩き回ったり停留所で待ったりする人。
+Drivers	運転手
+Who drives the AI's buses.	AIのバスを運転する人。
+How often it is listed (0 takes it out)	リストへの記載回数（0で外す）
+How busy the map is at each hour: the road traffic, and the passengers at the stops. 1 is normal; the game goes along the line between the points.	各時刻のマップの混雑度：道路の交通と停留所の乗客。1が標準で、ゲームは点の間を線でつなぎます。
+Road traffic	道路交通
+Passengers	乗客
+Its own traffic over the day	時間帯別の独自交通
+Without one the group follows the map's road traffic. A curve can be for some days of the week only.	なければグループはマップの道路交通に従います。曲線は曜日を限定できます。
+Days:	曜日：
+Mo–Fr	月〜金
+Take this curve out	この曲線を外す
+A curve	曲線
+Typical day…	典型的な1日…
+Quiet village	静かな村
+Town with rush hours	ラッシュのある町
+The same all day	終日同じ
+No curve: 1 all day.	曲線なし：終日1。
+Take the point out	点を削除
+Point	点
+Smart unwrap	スマート展開
+Every flat side apart in the picture, no faces on top of one another (all faces if none is selected)	平らな面ごとに画像上で分離し、面が重ならないようにします（未選択なら全面）
+Box unwrap	ボックス展開
+The six sides of a box apart in the picture	ボックスの6面を画像上で分離
+Flip ↔	反転 ↔
+Flip ↕	反転 ↕
+Scale ×2	拡大 ×2
+Scale ÷2	縮小 ÷2
+Fit	フィット
+Stretched to fill the picture	画像全体に引き伸ばす
+Pack islands	アイランドをパック
+Average island scale	アイランドのスケールを平均化
+Seams from islands	アイランドからシーム
+Click: a face (Shift adds) · drag: move the selected · wheel: zoom · right button: pan	クリック：面（Shiftで追加） · ドラッグ：選択を移動 · ホイール：ズーム · 右ボタン：パン
+Could not keep the views	ビューを保存できませんでした
+Saved views	保存した視点
+Places of the map to come back to: Ctrl+1…9 goes to the first nine, Ctrl+Shift+1…9 keeps the view there	戻りたいマップ上の場所：Ctrl+1…9で最初の9つへ移動、Ctrl+Shift+1…9でそこへ視点を保存
+Keep this view	この視点を保存
+None yet	まだありません
+Go	移動
+Earlier in the list	リストの上へ
+Later in the list	リストの下へ
+Take the view now instead	代わりに現在の視点を保存
+Keep proportions	縦横比を保持
+Back to its own size	元のサイズに戻す
+Updates	アップデート
+This version:	このバージョン：
+New version:	新しいバージョン：
+Install and restart	インストールして再起動
+Not now	今はしない
+What changed	変更内容
+Downloading and installing	ダウンロードとインストール中
+Installed version	インストール済みバージョン
+openMapper restarts when you save the map.	マップを保存するとopenMapperが再起動します。
+Looking for a new version…	新しいバージョンを確認中…
+This is the newest version.	これは最新バージョンです。
+Download it from GitHub by hand	GitHubから手動でダウンロード
+When there is a new version:	新しいバージョンがあるとき：
+Offer it to me	通知する
+Install it and restart by itself	自動でインストールして再起動
+Never look for updates	アップデートを確認しない
+Check now	今すぐ確認
+Never offer updates again	今後アップデートを通知しない
+The release has no package	リリースにパッケージがありません
+No automatic updates for this system.	このシステムは自動アップデートに対応していません。
+No connection to GitHub: are you online?	GitHubに接続できません：オンラインですか？
+The release has no SHA256SUMS: not installed.	リリースにSHA256SUMSがありません：インストールしません。
+The package is not in SHA256SUMS: not installed.	パッケージがSHA256SUMSにありません：インストールしません。
+The download does not match its checksum: not installed.	ダウンロードしたファイルがチェックサムと一致しません：インストールしません。
+Could not replace the program	プログラムを置き換えられませんでした
+The package has no program in it.	パッケージにプログラムが含まれていません。
+openMapper has stopped:	openMapper が停止しました：
+The log with the details:	詳細を記録したログ：

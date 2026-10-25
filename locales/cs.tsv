@@ -1,0 +1,2129 @@
+Could not open the map	Mapu se nepodařilo otevřít
+The next 100 tiles are loaded, the others are hidden	Načteno dalších 100 dlaždic, ostatní jsou skryté
+Find the place in the window and build from it	Najděte místo v okně a postavte mapu od něj
+Your map is ready. Start with a road!	Mapa je připravena. Začněte silnicí!
+Export the map for sharing	Export mapy ke sdílení
+Exported:	Exportováno:
+files	souborů
+files the map names were not found: the readme lists them	souborů, které mapa uvádí, nebylo nalezeno: jsou vypsány v readme
+Could not export	Export se nezdařil
+A ring road with line 1 on it: save, then try it in openOMSI (F5).	Okružní silnice s linkou 1: uložte a vyzkoušejte v openOMSI (F5).
+The sample could not be made	Ukázku se nepodařilo vytvořit
+In multiplayer the host saves the map. Leave the session to save this as a copy of your own.	Při společné úpravě mapu ukládá hostitel. Opusťte relaci, abyste uložili vlastní kopii.
+Saved:	Uloženo:
+Tip: place a start point (Game logic > Start points) so the bus has somewhere to appear	Tip: umístěte startovní bod (Logika hry > Startovní body), aby se měl autobus kde objevit
+Could not save (the changes are still here, nothing is lost)	Uložení se nezdařilo (změny zůstaly zachovány, nic se neztratilo)
+The unsaved changes are back. Save to keep them.	Neuložené změny jsou zpět. Uložte je, abyste je zachovali.
+Could not restore the changes	Změny se nepodařilo obnovit
+openOMSI was not found	openOMSI nebyla nalezena
+From the start point	Od startovního bodu
+The map has no start point: place one with Game logic > Start points	Mapa nemá startovní bod: umístěte ho v Logika hry > Startovní body
+Starting openOMSI…	Spouštím openOMSI…
+To drive the map in OMSI 2 itself it has to be copied into the OMSI 2 folder (Maps, and the objects, roads and textures made for it). Nothing that is there is replaced except earlier copies of this map. Copy it there?	Aby se mapa dala projet přímo v OMSI 2, musí se zkopírovat do složky OMSI 2 (Maps a také objekty, silnice a textury vytvořené pro ni). Nic stávajícího se nepřepíše kromě dřívějších kopií této mapy. Zkopírovat?
+Starting OMSI 2: choose the map	Spouštím OMSI 2: vyberte mapu
+The map is copied into the OMSI 2 folder; OMSI 2 itself runs on Windows only:	Mapa je zkopírována do složky OMSI 2; samotná OMSI 2 běží jen ve Windows:
+Could not copy the map into OMSI 2	Mapu se nepodařilo zkopírovat do OMSI 2
+Click on the map to place it	Kliknutím na mapu ji umístíte
+Open a map (its global.cfg)	Otevřít mapu (její global.cfg)
+The map is back as it was before that save	Mapa je vrácena do stavu před tím uložením
+Could not go back	Návrat se nezdařil
+Export a plan of the map	Export plánu mapy
+Plan saved:	Plán uložen:
+Mods, models and pictures	Mody, modely a obrázky
+Import assets	Import assetů
+…or choose a mod folder	…nebo vyberte složku modu
+Click on the map to put it there	Kliknutím na mapu to umístíte
+Could not make the shape	Tvar se nepodařilo vytvořit
+Choose the OMSI 2 folder	Vyberte složku OMSI 2
+That is not an OMSI 2 folder (Omsi.exe, maps and Vehicles must be in it)	Toto není složka OMSI 2 (musí v ní být Omsi.exe, maps a Vehicles)
+This object has no textures to make PBR maps of	Tento objekt nemá textury, ze kterých lze vytvořit PBR mapy
+Could not copy the map	Mapu se nepodařilo zkopírovat
+Could not move the map	Mapu se nepodařilo přesunout
+Terrain flattened; splines laid on it:	Terén vyrovnán; položených splinů:
+This road type has no textures to make PBR maps of	Tento typ silnice nemá textury, ze kterých lze vytvořit PBR mapy
+Pictures	Obrázky
+Only 100 tiles round the camera are loaded; click on the empty zone to load the next 100	Načteno je jen 100 dlaždic kolem kamery; kliknutím na prázdnou zónu načtete dalších 100
+All tiles are loaded	Všechny dlaždice jsou načteny
+Import the map's thumbnail	Import náhledu mapy
+The map's thumbnail is set: openOMSI shows it where maps are chosen.	Náhled mapy je nastaven: openOMSI ho zobrazí při výběru mapy.
+Could not use the picture	Obrázek se nepodařilo použít
+Map camera	Kamera mapy
+The map opens with this view from now on.	Mapa se od teď otevírá s tímto pohledem.
+Add ground texture	Přidání textury země
+View kept as	Pohled uložen jako
+No view kept as	Pohled není uložen jako
+Files changed on disk: the catalogue and models are updated	Soubory na disku se změnily: katalog a modely jsou aktualizovány
+The track does not run over the map's tiles	Trasa nevede přes dlaždice mapy
+Road along a GPS track	Silnice podle GPS trasy
+Roads built:	Postaveno silnic:
+junctions:	křižovatek:
+stops:	zastávek:
+Lines from OpenStreetMap	Linky z OpenStreetMap
+lines:	linek:
+trips found their way:	spojů s nalezenou trasou:
+buildings:	budov:
+trees:	stromů:
+Start point	Startovní bod
+Start	Start
+a start point	startovní bod
+From OpenStreetMap	Z OpenStreetMap
+Picture saved:	Obrázek uložen:
+Could not save the picture	Obrázek se nepodařilo uložit
+The graphics could not be started.	Grafiku se nepodařilo spustit.
+Flying speed	Rychlost letu
+copy	kopie
+Only maps of the content folder can be moved	Přesouvat lze jen mapy ze složky obsahu
+Only assets of the content folder can be deleted	Mazat lze jen assety ze složky obsahu
+Could not write the object	Objekt se nepodařilo zapsat
+Select an object to edit its mesh	Vyberte objekt, abyste upravili jeho mesh
+A copy of its own was made: the original type is unchanged	Vytvořena vlastní kopie: původní typ zůstal beze změny
+Cannot edit this object	Tento objekt nelze upravovat
+Point at an edge to cut across its ring of faces	Najeďte na hranu, abyste příčně rozřízli prstenec stěn
+Objects made:	Vytvořeno objektů:
+select the faces to separate	vyberte stěny k oddělení
+Separated into an object of its own	Odděleno do vlastního objektu
+Add object	Přidání objektu
+select what to export (objects, roads)	vyberte, co exportovat (objekty, silnice)
+Export the selection	Export výběru
+unknown format	neznámý formát
+the models are still loading: try again in a moment	modely se ještě načítají: zkuste to za chvíli
+this material has no texture	tento materiál nemá texturu
+cannot read	nelze přečíst
+Export the texture	Export textury
+Texture saved:	Textura uložena:
+Choose a picture	Vyberte obrázek
+give the material a texture first: its maps go beside it	nejprve materiálu přiřaďte texturu: mapy se uloží vedle ní
+Import materials (an .mtl, a model, or the pictures of one PBR material)	Import materiálů (.mtl, model nebo obrázky jednoho PBR materiálu)
+Materials and pictures	Materiály a obrázky
+no materials found there	nebyly nalezeny žádné materiály
+Materials added:	Přidáno materiálů:
+nothing to bake	není co vypálit
+the object has no lamps to bake the night light of	objekt nemá žádné lampy, jejichž noční světlo by šlo vypálit
+Baked into	Vypáleno do
+select a road or spline first	nejprve vyberte silnici nebo spline
+the road's type is still loading: try again in a moment	typ silnice se ještě načítá: zkuste to za chvíli
+these splines have no shape to see	tyto spliny nemají žádný viditelný tvar
+Replace by an object	Nahrazení objektem
+Made into an object: Tab edits its mesh	Změněno na objekt: Tab upraví jeho mesh
+Signal head made: click where it stands (near a crossing with a light program it links to it)	Návěstidlo vytvořeno: kliknutím určete, kde stojí (u křižovatky se světelným programem se na něj napojí)
+Choose a picture or a texture	Vyberte obrázek nebo texturu
+cannot read the picture	obrázek nelze přečíst
+Picture made: click where it goes (it can be moved, turned and scaled after)	Obrázek vytvořen: kliknutím určete, kam patří (poté jej lze přesouvat, otáčet a měnit jeho velikost)
+Light made: click where it shines	Světlo vytvořeno: kliknutím určete, kam svítí
+Choose a sound	Vyberte zvuk
+Sounds	Zvuky
+Sound source made: click where it plays	Zdroj zvuku vytvořen: kliknutím určete, kde hraje
+Street lamp made: click where it stands	Pouliční lampa vytvořena: kliknutím určete, kde stojí
+Paint by slope and height	Malování podle sklonu a výšky
+By slope and height	Podle sklonu a výšky
+The chosen layer painted over the whole map where the ground is so steep (and so high)	Zvolená vrstva namalovaná po celé mapě všude, kde je země tak strmá (a tak vysoká)
+Slope	Sklon
+Height	Výška
+Fade	Přechod
+Cover	Pokrytí
+Paint the map	Namalovat mapu
+Choose a layer above the base ground	Vyberte vrstvu nad základní zemí
+No ground on the map is like that	Taková země na mapě není
+Painted	Namalováno
+Missing objects	Chybějící objekty
+Missing roads and splines	Chybějící silnice a spliny
+Missing textures	Chybějící textury
+Road ends not joined	Nespojené konce silnic
+Links to splines that are gone	Odkazy na zmizelé spliny
+Bus stops away from a road	Zastávky daleko od silnice
+Start points away from a road	Startovní body daleko od silnice
+Start points without their object	Startovní body bez objektu
+No start point	Žádný startovní bod
+IDCodes used twice	IDCode použité dvakrát
+Next IDCode too low	Příliš nízký další IDCode
+Objects off their tile	Objekty mimo svou dlaždici
+Tiles without a file	Dlaždice bez souboru
+Tiles without ground	Dlaždice bez země
+Trips without a way	Spoje bez trasy
+Tours without departures	Turnusy bez odjezdů
+Tours without a depot	Turnusy bez vozovny
+Traffic groups not in the AI lists	Skupiny provozu mimo seznamy AI
+Stops no trip calls at	Zastávky bez spojů
+Signal routes naming what is gone	Signální cesty s odkazem na zmizelé
+Chrono changes of what is gone	Chrono změny zmizelého
+Lamps lighting no ground at night	Lampy neosvětlující v noci zem
+Tiles with very many objects	Dlaždice s velmi mnoha objekty
+Objects linked to one that is gone	Objekty provázané se zmizelým
+Signal heads linked to no crossing	Návěstidla bez křižovatky
+Depot files (destinations)	Soubory vozoven (cílové stanice)
+The map uses an object (.sco) that is not installed. The game leaves it out. Install the mod it comes from, or delete the object. A junction of openMapper's whose file is gone (the map was moved without it) is made again for its roads with "Fix".	Mapa používá objekt (.sco), který není nainstalován. Hra ho vynechá. Nainstalujte mod, ze kterého pochází, nebo objekt smažte. Křižovatku openMapper, jejíž soubor zmizel (mapa byla přenesena bez něj), „Opravit“ znovu vytvoří pro její silnice.
+The map uses a road or spline type (.sli) that is not installed: that road is missing in the game, and buses cannot drive there.	Mapa používá typ silnice nebo splinu (.sli), který není nainstalován: tato silnice ve hře chybí a autobusy tudy nepojedou.
+An object or road names a picture that cannot be found. It will look white or black in the game.	Objekt nebo silnice odkazuje na obrázek, který nelze najít. Ve hře bude bílý nebo černý.
+Two road ends lie on one another but are not joined. Traffic still finds its way (the game joins lanes by their ends), but rows of lamps and posts and the road's texture do not run on across, and the editor does not treat them as one road. "Join" links them.	Dva konce silnic leží na sobě, ale nejsou spojeny. Provoz si cestu stále najde (hra spojuje pruhy podle konců), ale řady lamp a sloupků ani textura silnice se přes spoj nepřenášejí a editor je nepovažuje za jednu silnici. „Spojit“ je propojí.
+A spline says it goes on into another one that no longer exists. "Fix" forgets that link.	Spline uvádí, že pokračuje do jiného, který už neexistuje. „Opravit“ tento odkaz zapomene.
+A bus stop belongs to the lane it stands beside (within about 25 m). This one has none near, so buses cannot stop at it. Move it next to the road, or "Fix" puts it at the kerb of the nearest lane (within 80 m).	Zastávka patří k pruhu, vedle kterého stojí (do cca 25 m). Tato žádný poblíž nemá, takže u ní autobusy nemohou zastavit. Přesuňte ji k silnici, nebo ji „Opravit“ umístí k obrubníku nejbližšího pruhu (do 80 m).
+A start point is where the bus appears. This one is away from any lane: fine in a depot yard, otherwise the bus starts off the road.	Startovní bod je místo, kde se objeví autobus. Tento je daleko od všech pruhů: ve dvoře vozovny je to v pořádku, jinak autobus začne mimo silnici.
+A start point refers to an object that was deleted. "Fix" removes the start point.	Startovní bod odkazuje na smazaný objekt. „Opravit“ startovní bod odstraní.
+There is nowhere for the bus to appear. Place a start point (Game logic > Start points) on a road, or "Fix" puts one on a lane some 40 m before a bus stop.	Autobus se nemá kde objevit. Umístěte startovní bod (Logika hry > Startovní body) na silnici, nebo ho „Opravit“ umístí na pruh asi 40 m před zastávkou.
+Two things on the map share one IDCode: links, timetables and start points may pick the wrong one.	Dvě věci na mapě sdílejí jeden IDCode: odkazy, jízdní řády a startovní body mohou vybrat špatnou.
+The counter for new IDCodes is below codes already used, so new objects would get codes twice. "Fix" raises it.	Počítadlo nových IDCode je pod již použitými kódy, takže by nové objekty dostaly kódy podruhé. „Opravit“ ho zvýší.
+An object standing on the ground lies outside its own tile. The game does not show it. Move it a little or put it again.	Objekt stojící na zemi leží mimo svou dlaždici. Hra ho nezobrazí. Trochu ho posuňte nebo umístěte znovu.
+global.cfg lists tiles whose file is not there. The game leaves them out; they stay listed, as start points and timetables count tiles by their place in the list.	global.cfg uvádí dlaždice, jejichž soubor chybí. Hra je vynechá; zůstanou v seznamu, protože startovní body a jízdní řády počítají dlaždice podle pořadí v něm.
+A tile has no height file: its ground is flat. Saving writes one.	Dlaždice nemá soubor výšek: její země je plochá. Uložení jej zapíše.
+No way along the roads was found through this trip's stops, so buses cannot drive it. Open it in Map > Lines and timetable to see where it breaks.	Přes zastávky tohoto spoje nebyla nalezena trasa po silnicích, takže jej autobusy nemohou jet. Otevřete jej v Mapa > Linky a jízdní řád a uvidíte, kde se přerušuje.
+A tour (a bus's day on the line) has no trips, so no bus runs it.	Turnus (den autobusu na lince) nemá žádné spoje, takže jej nejede žádný autobus.
+A tour names no depot or group of the AI lists (or one that is not there): the game has no vehicle to send on it. Choose a depot for it in the Lines window, or "Fix" gives it the map's depot (one of OMSI 2's MAN buses added where the map has none).	Turnus neuvádí vozovnu ani skupinu ze seznamů AI (nebo uvádí neexistující): hra pro něj nemá žádné vozidlo. Vyberte mu vozovnu v okně linek, nebo mu „Opravit“ přiřadí vozovnu mapy (přidá autobusy MAN z OMSI 2, pokud ji mapa nemá).
+The unscheduled traffic names a group that the AI lists do not have: those cars never appear. Add the group in Map > Traffic and AI, or "Fix" copies it from OMSI 2's own maps where they have it.	Nenaplánovaný provoz uvádí skupinu, kterou seznamy AI nemají: tato auta se nikdy neobjeví. Přidejte skupinu v Mapa > Provoz a AI, nebo ji „Opravit“ zkopíruje z map OMSI 2, kde ji mají.
+A stop of the timetable that no trip calls at. Nothing is wrong, it is only not used yet.	Zastávka jízdního řádu, na které nezastavuje žádný spoj. Nic není špatně, jen se zatím nepoužívá.
+A chrono scenario takes away, retypes or relabels something that is no longer on the map (it was deleted or its IDCode changed): that change does nothing. Open Map > Chrono scenarios, the scenario's properties, and take the change out.	Chrono scénář odebírá, přetypovává nebo přejmenovává něco, co už na mapě není (bylo smazáno nebo se změnil jeho IDCode): tato změna nic nedělá. Otevřete Mapa > Chrono scénáře, vlastnosti scénáře, a změnu odstraňte.
+A tile holds far more objects than the stock maps' tiles (up to some 600): the game may stutter when it loads it or looks across it. Thin out a wood planted too densely (Plant brush, Clear) or plant it with more space between the trees.	Dlaždice obsahuje mnohem víc objektů než dlaždice standardních map (až cca 600): hra může při jejím načítání nebo pohledu přes ni sekat. Prořeďte příliš hustě zasazený les (štětec Sázení, Mazat) nebo stromy sázejte řidčeji.
+Street lamps stand on a tile the game does not light from its lamps ([variable_terrainlightmap] is off): at night the ground under them stays dark (unless the tile's light map file was made by OMSI 2's editor). "Fix" turns it on, as on nearly every tile of the stock maps.	Pouliční lampy stojí na dlaždici, kterou hra nasvěcuje z lamp ([variable_terrainlightmap] je vypnuto): v noci zůstává země pod nimi tmavá (pokud soubor světelné mapy dlaždice nevytvořil editor OMSI 2). „Opravit“ jej zapne, jako téměř na všech dlaždicích standardních map.
+An object takes its state ([varparent]) from an object no longer on the map: a signal head stays dark, a display blank. Link it to another in its properties (Linked objects), or "Fix" forgets the link.	Objekt přebírá svůj stav ([varparent]) od objektu, který už na mapě není: návěstidlo zůstává tmavé, displej prázdný. Provažte jej s jiným v jeho vlastnostech (Provázané objekty), nebo „Opravit“ vazbu zapomene.
+A traffic light's signal head takes its light from a crossing's program ([varparent]); this one is linked to none while others like it are, so it stays dark in the game. Select it and link it in its properties (Linked objects).	Hlava návěstidla přebírá světlo z programu křižovatky ([varparent]); tato není provázána s žádným, zatímco ostatní stejné ano, takže ve hře zůstává tmavá. Vyberte ji a provažte v jejích vlastnostech (Provázané objekty).
+A depot file (.hof) gives the buses their destinations, the stop names on their displays and the routes their IBIS knows. Without one the signs stay empty and the IBIS knows no line. "Fix" makes it from the map's lines, or adds what the lines need to the map's own (Map > Depot files to see and change it).	Soubor vozovny (.hof) dává autobusům cílové stanice, názvy zastávek na displejích a trasy, které zná jejich IBIS. Bez něj zůstávají tabule prázdné a IBIS nezná žádnou linku. „Opravit“ jej vytvoří z linek mapy nebo doplní do vlastního souboru mapy, co linky potřebují (Mapa > Soubory vozoven pro zobrazení a úpravu).
+A signal route names a signal or track pieces no longer on the map: the signal may never clear. Open Map > Signal routes and take the track again, or delete the route.	Signální cesta uvádí návěstidlo nebo úseky trati, které už na mapě nejsou: návěstidlo se nemusí nikdy uvolnit. Otevřete Mapa > Signální cesty a zvolte trať znovu, nebo cestu smažte.
+font	písmo
+used	používá se
+in	v
+a ground texture of the map	textura země mapy
+splines	spliny
+apart	od sebe
+spline	spline
+goes on into	pokračuje do
+no road near	poblíž není silnice
+from the road	od silnice
+start point	startovní bod
+object	objekt
+The map has no start point	Mapa nemá startovní bod
+things have it	věcí ho má
+highest in use:	nejvyšší použitý:
+tile	dlaždice
+no .terrain file: flat	žádný soubor .terrain: plochá
+objects	objektů
+lamps	lamp
+The map has no depot file	Mapa nemá soubor vozovny
+the buses show no destination	autobusy nezobrazují cílovou stanici
+named by the map's depot, but found nowhere	uvedeno ve vozovně mapy, ale nikde nenalezeno
+knows none of the	nezná žádnou z
+lacks	chybí
+destinations of the lines	cílových stanic linek
+the lines need	linky potřebují
+destinations	cílových stanic
+stops	zastávek
+routes	tras
+tour	turnus
+no depot named	není uvedena vozovna
+not in the AI lists:	není v seznamech AI:
+the stop has no object:	zastávka nemá objekt:
+no road beside	žádná silnice vedle
+no way	žádná trasa
+no way found	trasa nenalezena
+Route	Trasa
+gone	zmizelé
+changes of nothing	změn naprázdno
+time	krát
+times	krát
+Fix from the map check	Oprava z kontroly mapy
+Car groups from OMSI 2's maps	Skupiny aut z map OMSI 2
+A depot for the tour	Vozovna pro turnus
+A depot file from the lines	Soubor vozovny podle linek
+Depot file: what the lines need	Soubor vozovny: co linky potřebují
+Map check	Kontrola mapy
+Check again	Zkontrolovat znovu
+Checking the map…	Kontroluji mapu…
+errors	chyb
+warnings	varování
+notes	poznámek
+Nothing found: the map looks fine.	Nic nenalezeno: mapa vypadá v pořádku.
+Fix all	Opravit vše
+Join	Spojit
+Fix	Opravit
+Click to fly there	Kliknutím tam přeletíte
+Fixed:	Opraveno:
+it has parts openMapper does not write	obsahuje části, které openMapper nezapisuje
+A host on the internet needs a password of at least	Hostitel na internetu potřebuje heslo o délce alespoň
+Type a password, or choose explicitly to host without one	Zadejte heslo, nebo výslovně zvolte hostování bez hesla
+Could not listen on port	Nepodařilo se naslouchat na portu
+The way in for the tunnel could not be opened	Vstup pro tunel se nepodařilo otevřít
+Hosting this map: others can join it now	Tato mapa je hostována: ostatní se nyní mohou připojit
+Multiplayer ended: another map was opened	Multiplayer skončil: byla otevřena jiná mapa
+Somebody changed this first: your edit was put back	Někdo to změnil dříve: vaše úprava byla vrácena
+The host takes no more: the edit is too big, or the session holds as much as it may. Your edit was put back	Hostitel už nepřijímá: úprava je příliš velká, nebo relace obsahuje maximum. Vaše úprava byla vrácena
+That lies too far from the map for this session: your edit was put back	To leží příliš daleko od mapy pro tuto relaci: vaše úprava byla vrácena
+tiles	dlaždic
+changed what you were editing: it is as they left it	změnil(a) to, co jste upravovali: ponecháno tak, jak to nechal(a)
+The timetable, the traffic and the descriptions are the host's in multiplayer: your change was put back	Jízdní řád, provoz a popisy patří při multiplayeru hostiteli: vaše změna byla vrácena
+Your conflicting edit was kept	Vaše kolidující úprava byla zachována
+Could not keep your conflicting edit; multiplayer stopped	Kolidující úpravu se nepodařilo zachovat; multiplayer zastaven
+Too much of the others' work came in while your edit was held open: multiplayer stopped. The map stays open; it can be saved as a copy.	Během otevřené úpravy přišlo příliš mnoho cizí práce: multiplayer zastaven. Mapa zůstává otevřená; lze ji uložit jako kopii.
+The connection to the host was lost. The map stays open; it can be saved as a copy.	Spojení s hostitelem bylo ztraceno. Mapa zůstává otevřená; lze ji uložit jako kopii.
+No OMSI 2 installation: the map has nowhere to go	Žádná instalace OMSI 2: mapa nemá kam jít
+The host sent no map	Hostitel neposlal žádnou mapu
+The host's map could not be read	Mapu hostitele se nepodařilo přečíst
+No connection	Žádné spojení
+That address is not an openMapper host	Na této adrese není hostitel openMapper
+Wrong password	Špatné heslo
+The session is full	Relace je plná
+Type a name (up to 32 letters)	Zadejte jméno (nejvýše 32 písmen)
+The host has another version of openMapper	Hostitel má jinou verzi openMapper
+Move forward	Vpřed
+Move back	Vzad
+Move left	Doleva
+Move right	Doprava
+Turn the camera left	Otočit kameru doleva
+Turn the camera right	Otočit kameru doprava
+Undo	Zpět
+Redo	Znovu
+Save	Uložit
+Copy	Kopírovat
+Cut	Vyjmout
+Paste at the cursor	Vložit na kurzor
+Duplicate	Duplikovat
+Select all	Vybrat vše
+Find in the map	Hledat v mapě
+Search for a command	Hledat příkaz
+Tool: Select	Nástroj: Výběr
+Tool: Roads	Nástroj: Silnice
+Tool: Objects	Nástroj: Objekty
+Tool: Game logic	Nástroj: Logika hry
+Tool: Terrain	Nástroj: Terén
+Tool: Paint	Nástroj: Malování
+Tool: Tiles	Nástroj: Dlaždice
+Turn the object (Shift: the other way)	Otočit objekt (Shift: opačným směrem)
+Ruler	Pravítko
+Knife	Nůž
+Move handles	Úchyty posunu
+Rotate handles	Úchyty otáčení
+Scale handles	Úchyty měřítka
+Edit the mesh (vertices, edges, faces)	Upravit mesh (vrcholy, hrany, stěny)
+Join the selected objects into one	Spojit vybrané objekty do jednoho
+Build the planned road	Postavit plánovanou silnici
+Tile grid on / off	Mřížka dlaždic zap / vyp
+Group the selection	Seskupit výběr
+Ungroup	Zrušit seskupení
+Look straight down, north up	Pohled přímo shora, sever nahoře
+2D plan view on / off (3D: tilt and turn again)	2D pohled shora zap / vyp (3D: znovu náklon a otočení)
+Catalogue on / off	Katalog zap / vyp
+Overview map on / off	Přehledová mapa zap / vyp
+Lines window	Okno linek
+Traffic window	Okno provozu
+Satellite and terrain window	Okno satelitu a terénu
+Smaller brush	Menší štětec
+Larger brush	Větší štětec
+Delete the selection	Smazat výběr
+Go to the selection	Přejít na výběr
+Test drive in openOMSI (Shift: from the camera)	Zkušební jízda v openOMSI (Shift: od kamery)
+Save a picture of the view	Uložit obrázek pohledu
+The map's own (global.cfg)	Vlastní údaje mapy (global.cfg)
+Description	Popis
+Name in this language	Název v tomto jazyce
+Description in this language	Popis v tomto jazyce
+Remove this language	Odebrat tento jazyk
+Not written yet: it is saved as soon as you type.	Zatím nezapsáno: uloží se, jakmile začnete psát.
+Edit description	Úprava popisu
+just now	právě teď
+min ago	min zpět
+h ago	h zpět
+Unsaved changes found	Nalezeny neuložené změny
+openMapper was closed without saving the map	openMapper byl zavřen bez uložení mapy
+The changes kept by the autosave can be brought back. The map itself was not changed.	Změny zachované automatickým ukládáním lze obnovit. Samotná mapa se nezměnila.
+Restore the changes	Obnovit změny
+Drop them	Zahodit
+Nothing comes after it to join	Za ní není co připojit
+The next piece runs the other way: reverse it first	Další kus vede opačným směrem: nejprve jej obraťte
+The next piece lies on another tile	Další kus leží na jiné dlaždici
+The two pieces are of different road types	Oba kusy jsou různých typů silnic
+The two pieces have different settings (path rules, ground, skew)	Oba kusy mají různá nastavení (pravidla cest, země, zešikmení)
+A row of objects comes onto the next piece from another tile	Na další kus zasahuje řada objektů z jiné dlaždice
+The two pieces do not bend, climb or bank alike: joined they would change shape	Oba kusy se neohýbají, nestoupají ani nenaklánějí stejně: po spojení by se změnil jejich tvar
+Earlier versions	Dřívější verze
+Before every save, the files it replaces are kept (the last 10 saves). Going back puts the map as it was before that save; later changes go.	Před každým uložením se soubory, které přepisuje, zachovají (posledních 10 uložení). Návrat vrátí mapu do stavu před tím uložením; pozdější změny zmizí.
+No earlier versions yet: they appear once the map is saved again.	Zatím žádné dřívější verze: objeví se po dalším uložení mapy.
+before the save of	před uložením
+Go back to this	Vrátit se k této
+could not keep a backup, nothing was saved	nepodařilo se vytvořit zálohu, nic nebylo uloženo
+Red	Červená
+Yellow	Žlutá
+Green	Zelená
+file not found	soubor nenalezen
+this object takes its model from a model file and cannot be edited here	tento objekt přebírá model ze souboru modelu a nelze jej zde upravovat
+the object has no mesh to edit	objekt nemá mesh k úpravě
+cannot read the object	objekt nelze přečíst
+Select	Výběr
+Terrain	Terén
+Paint	Malování
+Roads	Silnice
+Objects	Objekty
+Game logic	Logika hry
+Tiles	Dlaždice
+Raise	Zvednout
+Lower	Snížit
+Smooth	Vyhladit
+Flatten	Vyrovnat
+Roughen	Zdrsnit
+Ramp	Rampa
+Lake / river	Jezero / řeka
+Start points	Startovní body
+Bus stops	Zastávky
+Car parks	Parkoviště
+AI paths	Cesty AI
+Other	Ostatní
+Where the bus appears when a drive starts. Put it on a road or in the depot, facing the way to drive.	Kde se objeví autobus při zahájení jízdy. Umístěte ho na silnici nebo do vozovny, čelem ve směru jízdy.
+Where passengers wait. Put it beside the road at the kerb; name it on the right.	Kde čekají cestující. Umístěte ji k obrubníku vedle silnice; název zadejte vpravo.
+Where parked cars stand. Click for one; with a row on, click the start and end of a row along the kerb.	Kde stojí zaparkovaná auta. Kliknutí: jedno místo; se zapnutou řadou klikněte na začátek a konec řady podél obrubníku.
+Lanes the AI's cars or people follow. Draw like a road: it snaps to lane ends (green: joined, red: dead end) and along lanes. A car path runs the way you draw it.	Pruhy, po kterých jezdí auta AI nebo chodí lidé. Kreslí se jako silnice: přichytává se ke koncům pruhů (zelená: spojeno, červená: slepý konec) i podél pruhů. Cesta aut vede tím směrem, jakým ji nakreslíte.
+Sound sources, help arrows and other helpers the game does not show.	Zdroje zvuku, pomocné šipky a další pomůcky, které hra nezobrazuje.
+Move (V): drag an arrow along X, Y or Z, a square in its plane, the circle over the ground	Posun (V): táhněte šipku podél X, Y nebo Z, čtverec v jeho rovině, kruh po zemi
+Rotate (C): drag a ring to turn about X, Y or Z	Otáčení (C): táhněte kruh a otáčejte kolem X, Y nebo Z
+Scale (X): drag an arrow to scale along that axis, a square for two, the circle for all three	Měřítko (X): táhněte šipku pro změnu měřítka podél osy, čtverec pro dvě, kruh pro všechny tři
+These roads have no lanes of their own to take apart (rails stay as they are)	Tyto silnice nemají vlastní pruhy, které by šlo rozebrat (koleje zůstávají, jak jsou)
+Make the lanes editable	Pruhy jsou nyní upravitelné
+Roads whose lanes are now editable:	Silnic s nyní upravitelnými pruhy:
+Flatten the terrain	Vyrovnat terén
+Select two things or more to group them	Vyberte dvě věci nebo více, abyste je seskupili
+Group	Skupina
+Grouped:	Seskupeno:
+Ungrouped	Seskupení zrušeno
+Rename group	Název skupiny
+Ground levelled under objects:	Země vyrovnána pod objekty:
+Move	Posun
+No object clicked: nothing linked	Nebyl kliknut žádný objekt: nic nebylo propojeno
+Too near the road's end to cut it there	Příliš blízko konce silnice, aby se zde dala rozříznout
+No road under the cursor	Pod kurzorem není silnice
+Ramp:	Rampa:
+Shape terrain	Tvarování terénu
+Paint ground	Malování země
+Clear plants	Odstranit rostliny
+Plant	Sázení
+Rotate selection	Otočení výběru
+Rotate	Otočení
+Delete object	Smazání objektu
+Delete road	Smazání silnice
+Delete selection	Smazání výběru
+Pick an object in the catalogue first	Nejprve vyberte objekt v katalogu
+There is no tile here: add one with the Tiles tool	Zde není dlaždice: přidejte ji nástrojem „Dlaždice“
+Place object	Umístění objektu
+New stop	Nová zastávka
+Linked to	Provázáno s
+choose its light in its properties	světlo zvolte v jeho vlastnostech
+Trees from OpenStreetMap	Stromy z OpenStreetMap
+Plant an area	Sázení na ploše
+Buildings from OpenStreetMap	Budovy z OpenStreetMap
+Stops from OpenStreetMap	Zastávky z OpenStreetMap
+Stop	Zastávka
+Pick a car park in the list first	Nejprve vyberte parkoviště v seznamu
+Place car parks	Umístění parkovišť
+Car parks placed:	Parkovišť umístěno:
+Pick a road type in the catalogue first	Nejprve vyberte typ silnice v katalogu
+That bend is too sharp	Ta zatáčka je příliš ostrá
+Switch made	Výhybka vytvořena
+Junctions made:	Vytvořeno křižovatek:
+The road leaves the map: add tiles there first	Silnice opouští mapu: nejprve tam přidejte dlaždice
+Build road	Stavba silnice
+Roads from OpenStreetMap	Silnice z OpenStreetMap
+Pick a tree in the catalogue (or add some to the mix) first	Nejprve vyberte strom v katalogu (nebo nějaké přidejte do směsi)
+Right-click a tile to remove it	Pravým kliknutím na dlaždici ji odstraníte
+New tiles go next to the map	Nové dlaždice se přidávají vedle mapy
+Add tile	Přidání dlaždice
+Water	Voda
+Paint detail	Detail malování
+Ground layer order	Pořadí vrstev země
+Detail texture	Detailní textura
+Ground texture	Textura země
+Lamp light on the ground	Světlo lamp na zemi
+Add tiles	Přidání dlaždic
+A map needs at least one tile	Mapa potřebuje alespoň jednu dlaždici
+Remove tile	Odebrání dlaždice
+Pick a point (a dot at an end or where pieces meet) to take it out	Vyberte bod (tečku na konci nebo ve spoji kusů), abyste ho odebrali
+Remove a point of the path	Odebrat bod cesty
+Point taken out	Bod odebrán
+A path of one piece: Del with nothing picked deletes it	Cesta z jednoho kusu: Del bez vybraného bodu ji smaže
+Extrude	Vytažení
+Inset	Odsazení
+Bevel	Zkosení
+Loop cut	Řez smyčkou
+click: done, right click / Esc: cancel, wheel: segments	klik: hotovo, pravý klik / Esc: zrušit, kolečko: segmenty
+Scale	Měřítko
+Roads are not scaled: change their length and width in their properties	Silnice se nezvětšují: změňte jejich délku a šířku ve vlastnostech
+Only the objects are scaled, the roads stay	Mění se měřítko jen objektů, silnice zůstávají
+Could not scale	Měřítko se nepodařilo změnit
+Too near the end: drag the end's dot instead	Příliš blízko konce: táhněte raději tečku konce
+Add a point to the path	Přidat bod do cesty
+Point added: drag the dot where the pieces meet	Bod přidán: táhněte tečku ve spoji kusů
+Reshape road	Změna tvaru silnice
+Selected:	Vybráno:
+Copied:	Zkopírováno:
+Nothing copied yet	Zatím nic nezkopírováno
+Paste	Vložení
+Level the ground	Vyrovnání země
+Turn objects	Otočení objektů
+Copies in a row	Kopie v řadě
+Left out (off the map):	Vynecháno (mimo mapu):
+Pasted (the rest is off the map):	Vloženo (zbytek je mimo mapu):
+Edit object	Úprava objektu
+Lean with the ground	Naklonit podle země
+Stand upright	Postavit rovně
+Change height	Změna výšky
+Change road type	Změna typu silnice
+The selected roads are not one chain (they branch or leave gaps)	Vybrané silnice netvoří jeden řetěz (větví se nebo mají mezery)
+Even slope	Rovnoměrný sklon
+Lay on the ground	Položit na zem
+Remove the rows of objects along it first (they are measured from its start)	Nejprve odstraňte řady objektů podél ní (měří se od jejího začátku)
+Reverse direction	Obrácení směru
+No road there to cut	Není tu silnice k rozříznutí
+Cut the road	Rozříznout silnici
+Cut in two: each piece can now be changed on its own	Rozříznuto na dvě: každý kus lze nyní měnit zvlášť
+Join the pieces	Spojit kusy
+Joined into one piece	Spojeno do jednoho kusu
+Parallel copy	Rovnoběžná kopie
+Overhead wire	Trolejové vedení
+Back into the map	Zpět do mapy
+Hang an object	Zavěsit objekt
+Link to an object	Provázat s objektem
+Unlink	Zrušit vazbu
+That object already takes its state from this one	Tento objekt už přebírá stav od tohoto
+Linked	Provázáno
+Signal head's light	Světlo návěstidla
+Path rules	Pravidla cest
+Replace objects	Nahrazení objektů
+Edit road	Úprava silnice
+Roads that could not follow the junction (too sharp a bend):	Silnice, které nemohly následovat křižovatku (příliš ostrá zatáčka):
+Edit junction	Úprava křižovatky
+Make the junction again	Vytvořit křižovatku znovu
+Make the junctions again	Vytvořit křižovatky znovu
+Pick an object in the Objects tool's catalogue first	Nejprve vyberte objekt v katalogu nástroje Objekty
+The road is too short for that	Silnice je na to příliš krátká
+Objects along the road	Objekty podél silnice
+Rows of objects added:	Přidáno řad objektů:
+Edit row of objects	Úprava řady objektů
+Remove row of objects	Odebrání řady objektů
+Remove rows of objects	Odebrání řad objektů
+Roundabout built; roads joined to it:	Okružní křižovatka postavena; připojeno silnic:
+This road type carries traffic both ways: pick a one-way road for a proper roundabout	Tento typ silnice vede provoz oběma směry: pro správný kruhový objezd vyberte jednosměrnou silnici
+Start point: where the bus appears in openOMSI	Startovní bod: kde se autobus objeví v openOMSI
+Bus stop: name it in the panel on the right	Zastávka: pojmenujte ji v panelu vpravo
+openOMSI stopped with an error	openOMSI skončila chybou
+Check in openOMSI	Kontrola v openOMSI
+The saved map run by the game itself, unseen, with its own checks; the picture is the game's, from your view	Uložená mapa spuštěná samotnou hrou bez okna, s jejími vlastními kontrolami; obrázek je ze hry, z vašeho pohledu
+Every tile (slower on a big map)	Všechny dlaždice (na velké mapě pomalejší)
+Run again	Spustit znovu
+openOMSI is loading the map…	openOMSI načítá mapu…
+Nothing wrong found	Nic špatného nenalezeno
+Problems found:	Nalezeno problémů:
+Go there	Přejít tam
+of the places named lie at the map's edge or a road's dead end (greyed): the game measures a lane's last point on the road's very edge, and a bus at the end stands over it; nothing to mend	z uvedených míst leží na okraji mapy nebo ve slepém konci silnice (šedě): hra měří poslední bod pruhu na samém okraji silnice a autobus na konci stojí nad ním; není co opravovat
+The game said nothing about the map	Hra o mapě nic neřekla
+The game's whole output	Celý výstup hry
+no key entered	nebyl zadán klíč
+the server refused the key	server klíč odmítl
+too many requests, try again later	příliš mnoho požadavků, zkuste to později
+No connection to the server: are you online?	Žádné spojení se serverem: jste online?
+Enter your Google key first	Nejprve zadejte klíč Google
+OpenStreetMap's servers are busy: try again in a minute	Servery OpenStreetMap jsou vytížené: zkuste to za minutu
+The area is too large for this zoom	Oblast je pro toto přiblížení příliš velká
+Cancelled	Zrušeno
+Stopped by an internal error (see the log)	Zastaveno interní chybou (viz log)
+No source has imagery here	Žádný zdroj tu nemá snímky
+drawn from OpenStreetMap data: sharp, with names	kreslí se z dat OpenStreetMap: ostře, s názvy
+terrain heights, no key needed	výšky terénu, klíč není potřeba
+needs your own free key	potřebuje váš vlastní bezplatný klíč
+no key needed	klíč není potřeba
+the picture is too small	obrázek je příliš malý
+Import height map	Import výškové mapy
+Height map	Výšková mapa
+The ground as a grey picture, to shape in another program and bring back	Země jako šedý obrázek, k úpravě v jiném programu a návratu zpět
+Export…	Export…
+Import…	Import…
+over	na
+a pixel	na pixel
+Black adds	Černá přidává
+Black is	Černá je
+White adds	Bílá přidává
+White is	Bílá je
+Smoothing	Vyhlazení
+Replace the ground	Nahradit zem
+Add to it	Přidat k ní
+Roads and objects keep their heights: best done before building	Silnice a objekty si ponechají své výšky: nejlépe udělat před stavbou
+An 8-bit picture has only 256 steps of height: smoothing hides them	8bitový obrázek má jen 256 stupňů výšky: vyhlazení je skryje
+Lay it on the map	Položit na mapu
+Cancel	Zrušit
+Height map laid over	Výšková mapa položena na
+Export the height map	Export výškové mapy
+Height map written	Výšková mapa zapsána
+The height map could not be written	Výškovou mapu se nepodařilo zapsat
+A height map for the whole map	Výšková mapa pro celou mapu
+The picture could not be read	Obrázek se nepodařilo přečíst
+IBIS and roller blind	IBIS a pás s cílem
+Front sign, line 1	Přední tabule, řádek 1
+Front sign, line 2	Přední tabule, řádek 2
+Side sign	Boční tabule
+Roller blind texture	Textura pásu s cílem
+IBIS 2 (20 letters)	IBIS 2 (20 znaků)
+Extra sign	Přídavná tabulka
+Krüger picture	Obrázek Krüger
+Text	Text
+IBIS (16 letters)	IBIS (16 znaků)
+Display, line 1	Displej, řádek 1
+Display, line 2	Displej, řádek 2
+Full name (20 letters)	Úplný název (20 znaků)
+Service trip	Přejezd do vozovny
+Special trip	Zvláštní jízda
+Blank	Prázdné
+openMapper cannot import this kind of file (use a folder, .zip, .obj, .gltf, .glb, .fbx, .x, .o3d or a picture)	openMapper tento druh souboru neimportuje (použijte složku, .zip, .obj, .gltf, .glb, .fbx, .x, .o3d nebo obrázek)
+Mod installed, files:	Mod nainstalován, souborů:
+Objects added to	Objekty přidány do
+Road types added to	Typy silnic přidány do
+Models imported:	Importováno modelů:
+Nothing to import was found in this folder	V této složce nebylo nalezeno nic k importu
+The model has no triangles	Model nemá žádné trojúhelníky
+Model imported:	Model importován:
+The .obj file has no faces	Soubor .obj nemá žádné stěny
+no base colour picture among them	mezi nimi není obrázek základní barvy
+The picture cannot be read	Obrázek nelze přečíst
+Picture made into a standee:	Obrázek změněn na siluetu:
+Picture made into a sign:	Obrázek změněn na tabuli:
+Trees	Stromy
+Stops and start points	Zastávky a startovní body
+Junctions	Křižovatky
+Tracks	Koleje
+Footpaths	Chodníky
+Fences, walls, kerbs	Ploty, zdi, obrubníky
+Technical (AI, helpers)	Technické (AI, pomůcky)
+This map lies on the world's grid ([worldcoordinates]): its tiles cannot be taken yet	Tato mapa leží na světové mřížce ([worldcoordinates]): její dlaždice zatím nelze převzít
+This map lies on the world's grid ([worldcoordinates]): tiles cannot be added from another yet	Tato mapa leží na světové mřížce ([worldcoordinates]): dlaždice z jiné zatím nelze přidat
+Tiles from another map	Dlaždice z jiné mapy
+Union	Sjednocení
+Difference (cut out)	Rozdíl (vyříznout)
+Intersection	Průnik
+Slice (keep both pieces)	Rozříznout (ponechat oba kusy)
+One object of all the selected, their insides gone	Jeden objekt ze všech vybraných, bez vnitřních stěn
+The other selected objects cut out of the one shown in the properties	Ostatní vybrané objekty se vyříznou z toho, který je ve vlastnostech
+Only what all the selected share	Jen to, co mají všechny vybrané společné
+The first object cut by the others into what is outside them and what is inside	První objekt rozříznutý ostatními na to, co je mimo ně, a to, co je uvnitř
+select an object first	nejprve vyberte objekt
+Make editable	Umožnit úpravy
+Make single	Samostatná kopie
+the object has only one part	objekt má jen jednu část
+Separate parts	Rozdělit na části
+select two or more objects to join	vyberte dva nebo více objektů ke spojení
+Join objects	Spojit objekty
+select two or more objects: the one shown in the properties and what acts on it	vyberte dva nebo více objektů: ten ve vlastnostech a ty, které na něj působí
+nothing is left: the objects do not overlap that way	nic nezbylo: objekty se tak nepřekrývají
+The file has no scene	Soubor neobsahuje scénu
+The FBX file has no meshes	Soubor FBX nemá žádné meshe
+Main roads	Hlavní silnice
+Streets	Ulice
+Service roads	Obslužné komunikace
+Tram tracks	Tramvajové koleje
+Railway tracks	Železniční koleje
+motorway, trunk, primary, secondary	dálnice, rychlostní, silnice I., II. třídy
+tertiary, residential, unclassified	silnice III. třídy, obytné, ostatní
+yards, car parks, depots	dvory, parkoviště, vozovny
+each track on its own; branches are joined with switches by hand	každá kolej zvlášť; odbočky se spojují výhybkami ručně
+main lines without sidings; branches are joined with switches by hand	hlavní tratě bez vleček; odbočky se spojují výhybkami ručně
+Water from OpenStreetMap	Voda z OpenStreetMap
+Give a distance	Zadejte vzdálenost
+The bend is too tight for that distance on its inner side	Zatáčka je pro tuto vzdálenost na vnitřní straně příliš ostrá
+The copy leaves the map: add tiles there first	Kopie opouští mapu: nejprve tam přidejte dlaždice
+Made with openMapper	Vytvořeno v openMapper
+Low (no shadows, rough edges, 3 km view)	Nízká (bez stínů, hrubé hrany, dohled 3 km)
+Medium (softer shadows, 8 km view)	Střední (jemnější stíny, dohled 8 km)
+High	Vysoká
+This end belongs to a junction: select the junction and move it, the road follows	Tento konec patří křižovatce: vyberte křižovatku a posuňte ji, silnice ji následuje
+Paint along the roads	Malování podél silnic
+Market	Tržnice
+Station	Nádraží
+Depot	Vozovna
+this object takes its model from a model file: it cannot be scaled	tento objekt přebírá model ze souboru modelu: nelze měnit jeho měřítko
+Not a GPX, KML or GeoJSON file	Není to soubor GPX, KML ani GeoJSON
+No lines in the file	V souboru nejsou žádné linie
+Language	Jazyk
+Interface size	Velikost rozhraní
+File	Soubor
+New map…	Nová mapa…
+Open map…	Otevřít mapu…
+Controls…	Ovládání…
+Import assets…	Import assetů…
+Multiplayer…	Multiplayer…
+OMSI 2 folder…	Složka OMSI 2…
+Quit	Ukončit
+View	Zobrazení
+Help	Nápověda
+Updates…	Aktualizace…
+About openMapper	O openMapper
+OMSI 2 not found	OMSI 2 nenalezena
+Map editor for openOMSI	Editor map pro openOMSI
+openMapper builds maps from the content of an installed OMSI 2. Choose its folder (the one with Omsi.exe, maps and Vehicles).	openMapper staví mapy z obsahu nainstalované OMSI 2. Vyberte její složku (tu s Omsi.exe, maps a Vehicles).
+Choose OMSI 2 folder…	Vybrat složku OMSI 2…
+Maps	Mapy
+recent · OMSI 2	nedávná · OMSI 2
+recent	nedávná
+content folder	složka obsahu
+OMSI 2 (saved as copy)	OMSI 2 (uloženo jako kopie)
+Open	Otevřít
+Make a copy	Vytvořit kopii
+A copy of the map in the content folder under a new name, to try something out	Kopie mapy ve složce obsahu pod novým názvem, abyste si mohli něco vyzkoušet
+Show in the file manager	Zobrazit ve správci souborů
+Move to openMapper's bin	Přesunout do koše openMapper
+Its folder goes into openMapper\\bin in the content folder, from where it can be put back by hand	Její složka se přesune do openMapper\\bin ve složce obsahu, odkud ji lze ručně vrátit
+Browse…	Procházet…
+Double-click a map to open it. Maps of OMSI 2 are saved as a copy into openOMSI's content folder; the original stays untouched.	Mapu otevřete dvojitým kliknutím. Mapy OMSI 2 se ukládají jako kopie do složky obsahu openOMSI; originál zůstává nedotčen.
+A simple map editor for openOMSI.	Jednoduchý editor map pro openOMSI.
+Back to the 3D view (0)	Zpět do 3D pohledu (0)
+The plan view from above, north up (0)	Pohled shora, sever nahoře (0)
+Recent maps	Nedávné mapy
+(none)	(žádné)
+Export map for sharing…	Export mapy ke sdílení…
+Export a plan of the map…	Export plánu mapy…
+Earlier versions…	Dřívější verze…
+Close map	Zavřít mapu
+Edit	Úpravy
+Edit history…	Historie úprav…
+Groups for other maps…	Skupiny pro jiné mapy…
+Find in map…	Hledat v mapě…
+Search for a command…	Hledat příkaz…
+Delete	Smazat
+Deselect	Zrušit výběr
+Tile grid	Mřížka dlaždic
+What the game does not show	Co hra nezobrazuje
+AI lanes	Pruhy AI
+Names of stops and start points	Názvy zastávek a startovních bodů
+Show	Zobrazit
+Roads and splines	Silnice a spliny
+Overview map (M)	Přehledová mapa (M)
+Assets (B)	Assety (B)
+Flatten the terrain (roads follow)	Odstranit terén (silnice se přizpůsobí)
+Saved views…	Uložené pohledy…
+Go to selection	K výběru
+Camera	Kamera
+Unity: right button looks round and W A S D fly, middle pans, Alt orbits	Unity: pravé tlačítko rozhlíží a W A S D létají, prostřední posouvá, Alt otáčí
+Map editor: right button looks round and W A S D fly (Q down, E up), middle pans, the wheel zooms to the cursor, drag moves the map	Editor map: pravé tlačítko rozhlíží a W A S D létají (Q dolů, E nahoru), prostřední posouvá, kolečko přibližuje ke kurzoru, tažení posouvá mapu
+Load 100 tiles at a time (like OMSI 2's editor)	Načítat po 100 dlaždicích (jako editor OMSI 2)
+Time of day	Denní doba
+Plain day (as the game by day)	Obyčejný den (jako ve hře ve dne)
+At an hour	V určitou hodinu
+Where the sun stands then, today, at the map's place (Map > Calendar and place); by night the moon	Kde pak stojí slunce, dnes, na místě mapy (Mapa > Kalendář a místo); v noci měsíc
+Season	Roční období
+Summer	Léto
+Dry summer	Suché léto
+Spring	Jaro
+Autumn	Podzim
+Winter	Zima
+Snow	Sníh
+Graphics quality	Kvalita grafiky
+Tools	Nástroje
+Road types and junctions…	Typy silnic a křižovatky…
+PBR maps for a picture…	PBR mapy pro obrázek…
+Map	Mapa
+Map settings…	Nastavení mapy…
+Calendar and place…	Kalendář a místo…
+Signal routes…	Signální cesty…
+Chrono scenarios…	Chrono scénáře…
+Ground textures…	Textury země…
+Check map…	Zkontrolovat mapu…
+Junctions made again:	Křižovatek vytvořeno znovu:
+Lines and timetable…	Linky a jízdní řád…
+Traffic and AI…	Provoz a AI…
+Depot files (destinations)…	Soubory vozoven (cílové stanice)…
+Satellite and terrain…	Satelit a terén…
+From OpenStreetMap…	Z OpenStreetMap…
+GPS tracks to trace…	GPS trasy k obkreslení…
+Tiles from another map…	Dlaždice z jiné mapy…
+Test drive in openOMSI	Zkušební jízda v openOMSI
+Test drive in OMSI 2 (the original)…	Zkušební jízda v OMSI 2 (originál)…
+Check in openOMSI…	Kontrola v openOMSI…
+Getting started	Začínáme
+New map	Nová mapa
+Open a map	Otevřít mapu
+Save (Ctrl+S): there are unsaved changes	Uložit (Ctrl+S): jsou neuložené změny
+Save (Ctrl+S)	Uložit (Ctrl+S)
+Import assets: a mod folder or .zip, a .obj / .x / .o3d model (or drop files on the window)	Import assetů: složka modu nebo .zip, model .obj / .x / .o3d (nebo přetáhněte soubory do okna)
+Redo (Ctrl+Shift+Z)	Znovu (Ctrl+Shift+Z)
+Tile grid (G)	Mřížka dlaždic (G)
+Assets: every object and road type, with pictures (B)	Assety: všechny objekty a typy silnic s obrázky (B)
+Test drive	Zkušební jízda
+Save the map and drive it in openOMSI (F5)	Uložit mapu a projet ji v openOMSI (F5)
+openOMSI was not found: install it to test maps	openOMSI nenalezena: nainstalujte ji, abyste mohli mapy zkoušet
+Test drive from the start point nearest the view	Zkušební jízda od startovního bodu nejblíže pohledu
+See this view in openOMSI	Zobrazit tento pohled v openOMSI
+loading	načítání
+Edit mesh	Úprava meshe
+Shapes and lamps	Tvary a svítidla
+Click beside the map to add a 300 × 300 m tile. Right-click a tile to remove it.	Kliknutím vedle mapy přidáte dlaždici 300 × 300 m. Pravým kliknutím dlaždici odstraníte.
+Area	Oblast
+A ring of tiles round the map	Prstenec dlaždic kolem mapy
+Every free place beside the map, corners too, gets a tile at the height of its neighbours	Každé volné místo vedle mapy, i rohy, dostane dlaždici ve výšce sousedů
+Tiles added:	Dlaždic přidáno:
+Everything on the map, grouped by the folders its files lie in	Vše na mapě, seskupené podle složek, ve kterých leží soubory
+Click an object or a road in the view to see and change it on the right.	Klikněte na objekt nebo silnici v pohledu a vpravo je uvidíte a změníte.
+Line up with the nearest road (Shift: put it freely)	Zarovnat s nejbližší silnicí (Shift: umístit volně)
+On both sides of the road	Po obou stranách silnice
+A stop of the same name also goes at the kerb across the road, facing the other way	Zastávka stejného názvu se umístí i k obrubníku na protější straně, čelem opačným směrem
+In a row along a line	V řadě podél linie
+Every	Každých
+Draw new	Kreslit nové
+Edit existing	Upravit existující
+Click a path to pick it: every point is a dot to drag (the small ones in the middle of a piece bend it). Double-click the path to put a point in. Click a dot, then Del, to take that point out; Del with no dot picked deletes the whole path (Ctrl+Z brings it back). Lanes of roads and junctions belong to their road type: use Edit its AI lanes on the road.	Kliknutím na cestu ji vyberete: každý bod je tečka, kterou lze táhnout (malé uprostřed kusu jej ohýbají). Dvojitým kliknutím na cestu vložíte bod. Klik na tečku a pak Del odebere ten bod; Del bez vybrané tečky smaže celou cestu (Ctrl+Z ji vrátí). Pruhy silnic a křižovatek patří k jejich typu silnice: použijte Upravit pruhy AI na silnici.
+Cars	Auta
+People	Lidé
+Show these in the other tools too	Zobrazit i v ostatních nástrojích
+Show the AI's lanes in the other tools too	Zobrazit pruhy AI i v ostatních nástrojích
+Everything	Vše
+Search	Hledat
+Shape the ground under the road	Přizpůsobit zem pod silnicí
+Go on drawing from the end of the road just built	Pokračovat v kreslení od konce právě postavené silnice
+Join road ends, roads and junction pieces near the cursor	Napojit na konce silnic, silnice a části křižovatek u kurzoru
+Make junctions where roads meet	Vytvářet křižovatky, kde se silnice potkávají
+Go on with the type of the road I start from	Pokračovat typem silnice, od které začínám
+Building with:	Staví se:
+nothing chosen	nic nevybráno
+Front at the roadside, back	Průčelím k silnici, odstup
+Plant brush: sow trees by painting	Štětec rostlin: sázejte stromy malováním
+Sow	Sázet
+Clear	Mazat
+With the brush	Štětcem
+In an outline	Podle obrysu
+Click round an area (a wood, a park, a garden) and it is filled at once, or cleared	Obkliknutím plochy (les, park, zahrada) se hned celá osází nebo vyčistí
+About	Asi
+plants (Enter: plant)	rostlin (Enter: zasadit)
+Size	Velikost
+Apart	Rozestup
+Sows the object chosen below. Right-click entries: "Add to the plant mix" to sow several at random. Clearing takes trees and the mix's objects.	Sází objekt vybraný níže. Pravý klik na položky: „Přidat do směsi“ pro náhodné sázení více. Mazání odstraňuje stromy a objekty směsi.
+Mix (picked at random):	Směs (náhodně):
+reading OMSI 2…	čtu OMSI 2…
+items	ks
+Nothing found	Nic nenalezeno
+mod	mod
+right-click: star it	pravý klik: oblíbit
+Take out of the plant mix	Odebrat ze směsi rostlin
+Add to the plant mix	Přidat do směsi rostlin
+Remove from favourites	Odebrat z oblíbených
+Add to favourites	Přidat do oblíbených
+Favourites	Oblíbené
+Recently used	Nedávno použité
+(not in a folder)	(mimo složky)
+Strength	Síla
+Mode	Režim
+Levels the ground to the height where you start dragging	Vyrovná zem na výšku místa, kde začnete táhnout
+Softens bumps and edges	Zjemňuje nerovnosti a hrany
+Raises the ground under the brush	Zvedá zem pod štětcem
+Lowers the ground under the brush	Snižuje zem pod štětcem
+Gives flat ground the rolls and dips of a natural field; hold longer for more	Dává rovné zemi vlny a prohlubně jako přirozené pole; držte déle pro víc
+Paint a lake or a river: the ground is dug to a bed under the water's level (where you start the stroke, or the tile's water) and the tile gets water at that level. Water in OMSI is one level for a whole tile: another low place on the same tile shows it too	Malujte jezero nebo řeku: zem se vykope na dno pod hladinou vody (kde začnete tah, nebo vodou dlaždice) a dlaždice dostane vodu v této výšce. Voda v OMSI má jednu hladinu pro celou dlaždici: další nízké místo na téže dlaždici ji také ukáže
+Click where it starts, then where it ends: the ground between becomes one even slope as wide as the brush (an embankment, a ramp, a level bed)	Klikněte na začátek a pak na konec: zem mezi nimi se změní v rovnoměrný sklon široký jako štětec (násyp, rampa, rovné lože)
+To a height	Na výšku
+Flatten to the height typed instead of the one where the drag starts (a level square, a platform)	Vyrovnat na zadanou výšku místo výšky počátku tahu (rovná plocha, plošina)
+Depth	Hloubka
+The water's level is set where a stroke starts: start at the bank.	Hladina vody se určuje tam, kde tah začíná: začněte u břehu.
+Brush	Štětec
+Flatten the whole terrain	Odstranit terén z celé mapy
+Every tile's ground levelled to the map's mean height; the roads, the AI paths and the junctions follow it. One undo step brings the relief back. (The satellite picture: View > Satellite overlay.)	Zem všech dlaždic se vyrovná na střední výšku mapy; silnice, cesty AI a křižovatky ji následují. Jeden krok zpět vrátí reliéf. (Satelitní obrázek: Zobrazení > Satelitní podklad.)
+Ground layers	Vrstvy země
+base ground	základní zem
+layer	vrstva
+Add…	Přidat…
+Remove	Odebrat
+Up the list: drawn under the layers after it	Výš v seznamu: kreslí se pod následujícími vrstvami
+Down the list: drawn over the layers before it	Níž v seznamu: kreslí se přes předchozí vrstvy
+Texture	Textura
+The layer's picture; its painting stays	Obrázek vrstvy; její malba zůstává
+A fine grain laid over the texture, seen close up (OMSI's detail texture)	Jemná struktura položená přes texturu, vidět zblízka (detailní textura OMSI)
+Click to choose another	Kliknutím vyberete jinou
+Repeats per tile	Opakování na dlaždici
+Detail repeats	Opakování detailu
+How finely this layer can be painted: texels across a tile (its masks are made again at the new size)	Jak jemně lze tuto vrstvu malovat: texelů napříč dlaždicí (masky se přepočítají na novou velikost)
+Edit ground texture	Úprava textury země
+Erase	Mazat
+Remove ground texture	Odebrání textury země
+Tile	Dlaždice
+A water surface over the whole tile: it shows where the ground lies below it (lower the ground with the Terrain tool for a lake or a river)	Vodní hladina přes celou dlaždici: je vidět tam, kde je pod ní země níž (zem snížíte nástrojem Terén pro jezero nebo řeku)
+at 	v
+Lamps light the ground at night	Lampy v noci osvětlují zem
+The game works out the light pools of the street lamps on and round this tile when it loads it ([variable_terrainlightmap]); off, it shows the tile's light map file as it is	Hra při načtení dlaždice počítá kužely světla pouličních lamp na ní i kolem ní ([variable_terrainlightmap]); vypnuto, zobrazí soubor světelné mapy dlaždice tak, jak je
+Edit history	Historie úprav
+Click a step to go back to just after it	Kliknutím na krok se vrátíte do stavu hned po něm
+Opened	Otevřeno
+Properties	Vlastnosti
+Configure PBR	Nastavit PBR
+Create PBR	Vytvořit PBR
+Normal, roughness, metal and shadow maps made from the object's textures, tuned and written as openOMSI reads them	Mapy normál, drsnosti, kovu a stínů vytvořené z textur objektu, upravené a zapsané tak, jak je čte openOMSI
+Type	Typ
+Hangs on	Visí na
+point	bod
+Location	Poloha
+East	Východ
+North	Sever
+Height above sea level	Nadmořská výška
+above the ground:	nad zemí:
+OMSI keeps this object's height above the ground under it: moved elsewhere it stays as high above the ground there	OMSI uchovává výšku tohoto objektu nad zemí pod ním: po přesunu jinam zůstane ve stejné výšce nad zemí
+Rotation	Otočení
+Tilt forward (pitch)	Náklon dopředu (pitch)
+Bank to the side (roll)	Náklon do strany (roll)
+Heading	Směr (heading)
+Turn it the way the nearest road runs beside it	Otočit ve směru nejbližší silnice vedle něj
+Stand it upright again	Znovu postavit rovně
+Picture	Obrázek
+Ratio	Poměr
+Stop name	Název zastávky
+This tree	Tento strom
+Texts	Texty
+Shown on the object (@ starts a new line)	Zobrazují se na objektu (@ začíná nový řádek)
+Model	Model
+Triangles	Trojúhelníky
+Parts	Části
+Part	Část
+triangles	trojúhelníků
+colour only	jen barva
+opaque	neprůhledný
+cut out	vyřezaný
+blended	průsvitný
+How the texture's transparency is used: cut out for leaves and fences, blended for glass	Jak se využívá průhlednost textury: vyřezaný pro listy a ploty, průsvitný pro sklo
+Textures	Textury
+Normal, roughness, metal and shadow maps made from the road type's textures	Mapy normál, drsnosti, kovu a stínů vytvořené z textur typu silnice
+Length	Délka
+Radius	Poloměr
+right	doprava
+left	doleva
+straight	rovně
+start	začátek
+end	konec
+Mirrored	Zrcadlově
+Skew	Zešikmení
+The start cut on a slant: 1 is 45° (two fences meeting at a corner: 1 and -1)	Zešikmený řez na začátku: 1 je 45° (dva ploty v rohu: 1 a -1)
+The end cut on a slant	Zešikmený řez na konci
+Ground	Země
+as it is	beze změny
+cut away under it	vyříznout pod ním
+cut, held at the end	vyříznout, držet na konci
+cut, held at the start	vyříznout, držet na začátku
+cut, held at both ends	vyříznout, držet na obou koncích
+A hole in the ground under it, as for a tunnel, an underpass or a pit (OMSI's terrain align)	Díra v zemi pod ním jako pro tunel, podchod nebo jámu (terrain align v OMSI)
+Select the whole road	Vybrat celou silnici
+Every piece linked on from this one (or double-click the road)	Všechny kusy navazující na tento (nebo dvojklik na silnici)
+Join with the next piece	Spojit s dalším kusem
+One piece again with the one after it, where the two make one curve	Opět jeden kus s následujícím, pokud spolu tvoří jednu křivku
+Replace with	Nahradit
+The object chosen in the Objects tool's catalogue takes this one's place	Objekt vybraný v katalogu nástroje Objekty zaujme místo tohoto
+Go to	Přejít
+Level ground	Vyrovnat zem
+The ground under it made level with its foot, blending in 3 m round it (a house on a slope)	Zem pod ním vyrovnaná s jeho patou, plynule se napojí na okolí v okruhu 3 m (dům na svahu)
+All like it	Všechny takové
+Select every one of this type on the map	Vybrat všechny tohoto typu na mapě
+No road within 60 m	Do 60 m není silnice
+Name	Název
+Folder	Složka
+Traffic	Provoz
+left-hand	levostranný
+No start point yet: place one (Game logic > Start points) so the bus has somewhere to appear in openOMSI.	Zatím žádný startovní bod: umístěte ho (Logika hry > Startovní body), aby se měl autobus kde v openOMSI objevit.
+None yet: openOMSI shows it where maps are chosen.	Zatím žádný: openOMSI ho zobrazí při výběru mapy.
+Import your thumbnail	Importovat vlastní náhled
+Choose a picture: it is cut to 370 × 280 and becomes the map's picture (picture.jpg).	Vyberte obrázek: ořízne se na 370 × 280 a stane se obrázkem mapy (picture.jpg).
+Open the map with this view	Otevírat mapu s tímto pohledem
+The camera as it is now is where the map opens (here and in OMSI 2's editor).	Kamera tak, jak je nyní, určuje, jak se mapa otevře (zde i v editoru OMSI 2).
+Saved to	Uloženo do
+Edit map	Úprava mapy
+Change the layer's texture	Změnit texturu vrstvy
+Change the layer's detail texture	Změnit detailní texturu vrstvy
+Controls	Ovládání
+Keyboard	Klávesnice
+Click a key, then press the new one (Esc: leave it). A key already in use is taken from its command.	Klikněte na klávesu a stiskněte novou (Esc: ponechat). Obsazená klávesa se odebere jejímu příkazu.
+press a key…	stiskněte klávesu…
+Also:	Také:
+Back to the default key	Vrátit výchozí klávesu
+Reset all keys	Obnovit všechny klávesy
+Mouse	Myš
+Right button held	Pravé tlačítko drženo
+look round; W A S D fly, Q / E down / up, Shift faster, wheel: speed	rozhlížet se; W A S D: let, Q / E: dolů / nahoru, Shift: rychleji, kolečko: rychlost
+Middle drag	Tažení prostředním
+pan	posun pohledu
+Alt + left / right / middle drag	Alt + tažení levým / pravým / prostředním
+orbit / zoom / pan (as in Unity)	orbita / zoom / posun (jako v Unity)
+Left drag on nothing	Tažení levým po prázdnu
+select with a box	výběr rámečkem
+Alt + left drag	Alt + tažení levým
+orbit round the point under the cursor	orbita kolem bodu pod kurzorem
+Wheel	Kolečko
+move towards the cursor	přiblížení ke kurzoru
+Trackpad	Trackpad
+Two fingers	Dva prsty
+Pinch / twist	Sevření / otočení
+zoom / turn	zoom / otočení
+Option + two fingers or drag	Option + dva prsty nebo tažení
+Fixed keys	Pevné klávesy
+Arrow keys	Šipky
+move over the map (Shift: faster)	pohyb po mapě (Shift: rychleji)
+go to a saved view (Shift: keep the view there)	k uloženému pohledu (Shift: uložit tam pohled)
+Alt + arrows	Alt + šipky
+move the selection a grid step (Shift: 10 cm)	posunout výběr o krok mřížky (Shift: 10 cm)
+Alt + Page Up / Down	Alt + Page Up / Down
+selection up / down 10 cm (Shift: 1 m)	výběr nahoru / dolů o 10 cm (Shift: 1 m)
+add to / take from the selection	přidat k výběru / odebrat z výběru
+Shift / Ctrl + drag on empty ground	Shift / Ctrl + tažení po prázdné zemi
+select with a box (Shift adds)	výběr rámečkem (Shift přidává)
+Double-click a road	Dvojklik na silnici
+select all of it	vybrat ji celou
+turn the object	otočit objekt
+brush size	velikost štětce
+stop / deselect	storno / zrušit výběr
+Unsaved changes	Neuložené změny
+The map has changes that are not saved. Save them first?	Mapa má neuložené změny. Uložit je nejprve?
+Don't save	Neukládat
+Assets	Assety
+All	Všechny
+Picture size	Velikost obrázků
+Shapes…	Tvary…
+Close (B)	Zavřít (B)
+Scenery objects	Objekty scenérie
+Splines (roads, tracks…)	Spliny (silnice, koleje…)
+Favourite on / off	Oblíbené zap / vyp
+content folder (mod, import, own)	složka obsahu (mod, import, vlastní)
+OMSI 2	OMSI 2
+width	šířka
+Build with it	Stavět s ním
+Place it	Umístit
+PBR material…	PBR materiál…
+Delete…	Smazat…
+Not seen in the game (a helper).	Ve hře není vidět (pomůcka).
+Delete the asset?	Smazat asset?
+Its folder goes into openMapper's bin in the content folder (openMapper\\bin), from where it can be put back by hand. Maps that use it show it missing.	Jeho složka se přesune do koše openMapper ve složce obsahu (openMapper\\bin), odkud ji lze ručně vrátit. Mapy, které jej používají, ho ukážou jako chybějící.
+Calendar and place	Kalendář a místo
+Place and time	Místo a čas
+Holidays	Svátky
+Number plates	Poznávací značky
+Latitude	Zeměpisná šířka
+Longitude	Zeměpisná délka
+Time zone	Časové pásmo
+Where the sun stands and when it rises and sets come from here.	Odtud se bere poloha slunce a čas východu a západu.
+Summer time	Letní čas
+years	let
+none: the clocks are never put forward	žádný: hodiny se nikdy nepřesouvají
+EU rules for these years	Pravidla EU pro tyto roky
+Last Sunday of March to last Sunday of October, replacing what is set for these years	Od poslední neděle v březnu do poslední neděle v říjnu, místo toho, co je pro tyto roky nastaveno
+None	Žádné
+Year	Rok
+entries	záznamů
+Public holidays run Sunday's timetable; school holidays the holiday one.	O státních svátcích platí nedělní jízdní řád; o prázdninách prázdninový.
+Public holidays	Státní svátky
+Add a holiday	Přidat svátek
+Holiday	Svátek
+School holidays	Školní prázdniny
+Ends before it starts	Končí dříve, než začíná
+Add school holidays	Přidat prázdniny
+The AI's cars carry these, one a line.	Auta AI nosí tyto značky, jednu na řádek.
+X: a letter, 9: a digit	X: písmeno, 9: číslice
+Make	Vytvořit
+Replaces the list with plates of the pattern	Nahradí seznam značkami podle vzoru
+plates	značek
+The scenario's AI lists are written, groups changed:	Seznamy AI scénáře zapsány, změněno skupin:
+Could not write the scenario	Scénář se nepodařilo zapsat
+The scenario's timetable is written, files:	Jízdní řád scénáře zapsán, souborů:
+Back in the scenario:	Zpět ve scénáři:
+The scenario's things are on the map:	Věci scénáře jsou na mapě:
+what you place now is the scenario's too	to, co nyní umístíte, patří také scénáři
+Editing the scenario	Úprava scénáře
+Done	Hotovo
+Chrono scenarios	Chrono scénáře
+How the map changes over the years: each scenario from its first day lays its own tiles, lines and tickets over the map. The view shows the map as on the day chosen here; what you edit is always the map itself.	Jak se mapa mění v průběhu let: každý scénář od svého prvního dne přidává na mapu vlastní dlaždice, linky a jízdenky. Pohled ukazuje mapu v den zvolený zde; upravuje se vždy samotná mapa.
+Show the map as on	Zobrazit mapu k datu
+Today	Dnes
+Active on that day:	V tento den platí:
+New scenario's name	Název nového scénáře
+New scenario	Nový scénář
+A scenario starting on the day shown, after the others	Scénář začínající v zobrazený den, po ostatních
+From	Od
+To	Do
+for good	navždy
+Own tickets	Vlastní jízdenky
+Own money	Vlastní měna
+the map's	z mapy
+Takes off	Ruší linky
+What changes (shown where the date is chosen)	Co se mění (viditelné při volbě data)
+From its first day, the selection in the view:	Od jeho prvního dne, výběr v pohledu:
+appears	objeví se
+Taken out of the map into the scenario: it is there from the scenario's first day on (place it first, then press this)	Odebráno z mapy do scénáře: objeví se od prvního dne scénáře (nejprve umístěte, pak stiskněte)
+is gone	zmizí
+Stays in the map, gone from the scenario's first day on	Zůstává v mapě, od prvního dne scénáře zmizí
+becomes	změní se na
+its texts become	jeho texty se změní na
+Write	Zapsat
+Its path rules from that day	Jeho pravidla cest od toho dne
+Add a rule	Přidat pravidlo
+Written into the scenario at once (undo does not take it out of the scenario).	Zapsáno do scénáře ihned (zpět to ze scénáře neodebere).
+What it changes	Co mění
+into the map	do mapy
+Out of the scenario into the map itself: there on every day	Ze scénáře do samotné mapy: bude tam každý den
+Take it out of the scenario	Odebrat ze scénáře
+new texts	nové texty
+rules	pravidel
+Nothing yet.	Zatím nic.
+Its own things are on the map: select, move, change and place as usual. The map's own things stay the map's.	Jeho vlastní věci jsou na mapě: vybírejte, posouvejte, měňte a umisťujte jako obvykle. Věci samotné mapy zůstávají mapě.
+Done: back into the scenario	Hotovo: zpět do scénáře
+Edit its own things on the map	Upravit jeho vlastní věci na mapě
+What it brings in is put on the map to work with as with anything else; Done writes it back (undo starts afresh)	To, co přináší, se umístí na mapu a pracuje se s tím jako s čímkoli jiným; Hotovo to zapíše zpět (historie zpět začíná znovu)
+The Lines window shows its timetable (the map's with its own laid over): lines, trips and tours edited there are the scenario's; a line of the map taken away is taken off from its day.	Okno linek zobrazuje jeho jízdní řád (mapy s položeným vlastním): linky, spoje a turnusy upravené tam patří scénáři; odebraná linka mapy se odebere od jeho dne.
+Done with its timetable	Hotovo s jízdním řádem
+Edit its timetable	Upravit jeho jízdní řád
+Its own lines, trips and tours in the Lines window; Done writes only what differs from the map's (undo starts afresh)	Jeho vlastní linky, spoje a turnusy v okně linek; Hotovo zapíše jen rozdíly oproti mapě (historie zpět začíná znovu)
+The Traffic window shows its AI lists (the map's with its own added): vehicles and type groups added there, and a depot's own depot file, are the scenario's from its day.	Okno provozu zobrazuje jeho seznamy AI (mapy s přidanými vlastními): tam přidaná vozidla a skupiny typů i vlastní soubor vozovny patří scénáři od jeho dne.
+Done with its AI lists	Hotovo se seznamy AI
+Edit its AI lists	Upravit jeho seznamy AI
+Vehicles it adds to the groups and depots (OMSI's ailists_#upd.cfg); taking one away is the map's own business	Vozidla, která přidává do skupin a vozoven (ailists_#upd.cfg v OMSI); odebírání je věcí samotné mapy
+Write the scenario	Zapsat scénář
+Close	Zavřít
+The map has no chrono scenarios.	Mapa nemá žádné chrono scénáře.
+from	od
+to	do
+takes off	ruší
+own tickets	vlastní jízdenky
+Its first day	Jeho první den
+Written into the scenario	Zapsáno do scénáře
+Written into the scenario:	Zapsáno do scénáře:
+Scenario written	Scénář zapsán
+The map as on	Mapa k datu
+scenarios:	scénářů:
+Multiplayer	Multiplayer
+Joining… (a big map takes a while to come)	Připojování… (velká mapa se přenáší nějakou dobu)
+Recover a conflicting edit…	Obnovit kolidující úpravu…
+Recovered your edit; undo is available	Vaše úprava obnovena; lze ji vzít zpět
+Edit one map together: one of you hosts it, the others join. Roads, objects, ground and paint are shared as they are made; the timetable, the traffic and the descriptions stay the host's, and the host saves the map. Everybody needs the same objects and splines installed.	Úprava jedné mapy společně: jeden z vás ji hostuje, ostatní se připojí. Silnice, objekty, zem a malba se sdílejí hned při vzniku; jízdní řád, provoz a popisy zůstávají hostiteli a mapu ukládá hostitel. Všichni musí mít nainstalované stejné objekty a spliny.
+Your name	Vaše jméno
+Password	Heslo
+Host this map	Hostovat tuto mapu
+Others on this network can join	Připojit se mohou ostatní v této síti
+Others anywhere can join (a free Cloudflare tunnel, nothing to set up on the router)	Připojit se mohou ostatní odkudkoli (bezplatný tunel Cloudflare, nic se nenastavuje na routeru)
+Port	Port
+Over the internet the password must have at least this many letters:	Přes internet musí mít heslo alespoň tolik znaků:
+No password: anybody who reaches this computer's port can join and change the whole map.	Bez hesla: kdokoli, kdo se dostane k portu tohoto počítače, se může připojit a změnit celou mapu.
+Ask for a password after all	Přesto se zeptat na heslo
+Host without a password? Anybody on this network who finds the port can join and change the whole map.	Hostovat bez hesla? Kdokoli v této síti, kdo najde port, se může připojit a změnit celou mapu.
+Yes, without a password	Ano, bez hesla
+No	Ne
+Type a password the others will need.	Zadejte heslo, které budou ostatní potřebovat.
+Host without a password…	Hostovat bez hesla…
+Host	Hostovat
+Open a map, type a name and a password first	Nejprve otevřete mapu a zadejte jméno a heslo
+Join a map	Připojit se k mapě
+The map open now has unsaved changes: joining closes it. Save it first.	Právě otevřená mapa má neuložené změny: připojení ji zavře. Nejprve ji uložte.
+You host this map. Give the others one of these:	Tuto mapu hostujete vy. Dejte ostatním jednu z těchto adres:
+On this network the connection is not encrypted: somebody listening in can see the map, and from what they catch try passwords on their own computer. Use a long password, or the internet tunnel (encrypted).	V této síti není spojení šifrované: kdo odposlouchává, vidí mapu a z odchycených dat může zkoušet hesla na svém počítači. Použijte dlouhé heslo nebo internetový tunel (šifrovaný).
+Everybody who joins can change the whole map.	Každý, kdo se připojí, může změnit celou mapu.
+Opening the Cloudflare tunnel… (fetched the first time)	Otevírá se tunel Cloudflare… (poprvé se stahuje)
+internet	internet
+Waiting for Cloudflare's address…	Čekám na adresu od Cloudflare…
+The Cloudflare tunnel could not be opened (no cloudflared, or no internet). The LAN addresses still work.	Tunel Cloudflare se nepodařilo otevřít (chybí cloudflared nebo internet). Adresy v místní síti fungují dál.
+You joined this map. The host saves it.	Připojili jste se k této mapě. Ukládá ji hostitel.
+Everything of yours is with the others	Vše vaše je u ostatních
+Sending your edits…	Odesílám vaše úpravy…
+In the session	V relaci
+Say something…	Napsat…
+Leave	Odejít
+Knife (K): a click on a road cuts it there, as often as you like; the pieces' lengths shown at the cursor, on whole grid steps with grid snapping on · right-click or Esc: off	Nůž (K): kliknutí na silnici ji na tom místě rozřízne, kolikrát chcete; délky kusů se ukazují u kurzoru, při zapnuté mřížce na celé kroky mřížky · pravý klik nebo Esc: vypnout
+The angle step: what snapping comes to and what R turns by	Krok úhlu: ke kterému se směr přichytává a o kolik otáčí R
+Angle	Úhel
+Snap headings to the angle step	Přichytávat směry ke kroku úhlu
+Grid	Mřížka
+Snap positions to the grid	Přichytávat polohy k mřížce
+Click two points to measure the distance and gradient between them (U) · right-click: off	Klikněte na dva body a změříte vzdálenost a sklon mezi nimi (U) · pravý klik: vypnout
+Auto-Terrain	Auto-terén
+What you build follows the ground: roads, paths and tracks take its height (off: they run level from where they start). Only what is built from now on; nothing already there changes	To, co stavíte, sleduje zem: silnice, cesty a koleje přebírají její výšku (vypnuto: vedou rovně od počátku). Jen to, co se staví od teď; stávající se nemění
+Auto-Switch	Auto-výhybky
+Branching a track off another makes a switch there	Odbočení koleje od jiné tam vytvoří výhybku
+Auto-Junction	Auto-křižovatky
+Auto-Align	Auto-zarovnání
+Line objects up with the nearest road (Shift: put it freely)	Zarovnávat objekty podle nejbližší silnice (Shift: umístit volně)
+Selection	Výběr
+A click on one of it selects all of it, Ctrl + click one alone	Kliknutí na jednu z nich vybere všechny, Ctrl + klik jen jednu
+Keep these together: a click on one selects all, a drag moves all (Ctrl+G)	Držet pohromadě: klik na jeden vybere všechny, tažení posouvá všechny (Ctrl+G)
+Apply	Použít
+Turn	Otočení
+Level the ground under them	Vyrovnat zem pod nimi
+Each one's outline made level with its foot, blending into the ground 3 m round it	Pod každým zem vyrovnaná s jeho patou, plynule se napojí na okolí v okruhu 3 m
+Make every object	Změnit všechny objekty na
+The object chosen in the Objects tool's catalogue	Objekt vybraný v katalogu nástroje Objekty
+Random headings	Náhodné směry
+Every selected object turned its own random way (trees, bushes, rocks)	Každý vybraný objekt se náhodně otočí (stromy, keře, kameny)
+Along the road	Podél silnice
+Each turned the way the nearest road runs beside it	Každý otočený ve směru nejbližší silnice vedle něj
+Turned:	Otočeno:
+All like this one	Všechny jako tento
+Every selected object takes the heading of the one in the properties	Všechny vybrané objekty převezmou směr toho z vlastností
+Make every road	Změnit všechny silnice na
+The road type chosen in the Roads tool's catalogue	Typ silnice vybraný v katalogu nástroje Silnice
+Lay them on the ground	Položit je na zem
+Reverse their direction	Obrátit jejich směr
+Even slope along them	Rovnoměrný sklon podél nich
+One chain of roads: from the height at one end to that at the other, evenly (a bridge, a ramp)	Jeden řetěz silnic: od výšky na jednom konci k výšce na druhém, rovnoměrně (most, rampa)
+Edit its AI lanes	Upravit pruhy AI
+Its lanes become AI paths of their own (the same lines, the same way) that the Logic tool's Edit existing bends, moves and deletes. The road keeps its look.	Její pruhy se stanou samostatnými cestami AI (stejné čáry, stejným směrem), které Upravit existující v nástroji Logika ohýbá, posouvá a maže. Vzhled silnice se nemění.
+Ends (joined roads follow)	Konce (spojené silnice následují)
+height	výška
+gradient	sklon
+cant	převýšení
+Banking across the road, %: positive lowers its right side (into a right bend)	Příčný sklon silnice, %: kladný snižuje pravou stranu (do pravé zatáčky)
+End	End
+Even slope end to end	Rovnoměrný sklon od konce ke konci
+Both gradients to the straight climb between the ends' heights	Oba sklony na přímé stoupání mezi výškami konců
+Speed limit, km/h	Omezení rychlosti, km/h
+Traffic density ×	Hustota provozu ×
+Priority	Přednost
+Trucks (0: none)	Nákladní auta (0: žádná)
+No cars	Žádná osobní auta
+Buses only	Jen autobusy
+For the AI and the player on one path (lane) of it, counted from 0: the view shows their numbers	Pro AI a hráče na jedné cestě (pruhu) z ní, počítáno od 0: čísla jsou vidět v pohledu
+Path (lane) number	Číslo cesty (pruhu)
+Hanging on it	Visí na něm
+Points to hang objects on:	Bodů pro zavěšení objektů:
+Select it	Vybrat ho
+Hang	Zavěsit
+Choose an object in the Objects catalogue first	Nejprve vyberte objekt v katalogu Objekty
+A fence, a row of houses, an avenue: the selection copied again and again, a step on each time	Plot, řada domů, alej: výběr se kopíruje znovu a znovu, pokaždé o krok dál
+Copies	Kopií
+Step	Krok
+Turn each	Otočení každé
+Rows	Řad
+More than one: a grid (an orchard, a car park), each row a row step on	Víc než jedna: mřížka (sad, parkoviště), každá řada o krok řad dál
+Row step	Krok řad
+Tilted to the ground under it, the way it slopes forward and to the side (a fence, a bench or a shed on a hillside)	Nakloněno podle země pod ním, jak se svažuje dopředu a do strany (plot, lavička nebo kůlna na svahu)
+Heights along the ground again, smoothed so it climbs a hill rather than every bump (after shaping the ground or laying a height map over it); where a road not selected joins, its height is kept	Výšky opět podle země, vyhlazené, aby silnice stoupala na kopec, ne na každou nerovnost (po tvarování země nebo položení výškové mapy); kde navazuje nevybraná silnice, její výška se zachová
+Each starts where it ended: the traffic on it goes the other way (a one-way street, a track's direction), the road itself stays where it is	Každý začíná tam, kde končil: provoz na něm jede opačně (jednosměrná ulice, směr koleje), samotná silnice zůstává na místě
+A second track or the other carriageway: the selected splines copied alongside, bends kept exact, linked as they are	Druhá kolej nebo druhá jízdní dráha: vybrané spliny se zkopírují vedle, zatáčky přesně, vazby jako u originálu
+To the left	Vlevo
+To the right	Vpravo
+Left and right of the way the road runs (its arrows with AI lanes shown)	Vlevo a vpravo ve směru silnice (její šipky při zobrazených pruzích AI)
+For trams and electric trains: a wire spline laid on the selected track, piece for piece and linked (its height is the wire spline's own); the masts go in with Objects along the road	Pro tramvaje a elektrické vlaky: spline vedení položený na vybranou kolej, kus po kusu a s vazbami (jeho výška je vlastní výška splinu vedení); stožáry se dají pomocí Objektů podél silnice
+No wire spline installed (one whose name says Fahrdraht, Oberleitung or wire)	Není nainstalován spline vedení (takový, v jehož názvu je Fahrdraht, Oberleitung nebo wire)
+Lay it	Položit
+Wire pieces laid:	Položeno kusů vedení:
+Paint the ground along it	Vymalovat zem podél
+Add a ground texture in the Paint tool first: the base ground is under everything	Nejprve přidejte texturu země v nástroji Malování: základní zem leží pod vším
+Layer	Vrstva
+Where	Kde
+beside it	vedle ní
+under it too	i pod ní
+Out from its edge	Od okraje
+Soft edge	Měkký okraj
+A gravel verge, dirt by a track, grass along a path: the brush of the Paint tool touches it up afterwards	Štěrková krajnice, hlína u koleje, tráva podél cesty: štětec nástroje Malování to poté doladí
+Beside	Vedle
+Lean with the road	Naklánět s silnicí
+Each object leans with the road's gradient and banking (bays and arrows on the road); off, it stands upright	Každý objekt se naklání podle sklonu a převýšení silnice (zálivy a šipky na silnici); vypnuto, stojí rovně
+A text the row's objects show (@ starts a new line)	Text, který zobrazují objekty řady (@ začíná nový řádek)
+Object:	Objekt:
+Pick an object (a lamp, a tree, a bollard) in the Objects tool's catalogue	Vyberte objekt (lampu, strom, sloupek) v katalogu nástroje Objekty
+Right of the road's direction; negative: left	Vpravo ve směru silnice; záporné: vlevo
+Free at start / end	Volno na začátku / konci
+Both sides	Obě strany
+Place along the road	Rozmístit podél silnice
+Remove all rows	Odebrat všechny řady
+Roundabout: click the centre, then the ring	Kruhový objezd: klikněte na střed, pak na kruh
+A one-way ring of the chosen road type (pick a one-way road); roads inside are cut back to it and joined with junctions	Jednosměrný kruh zvoleného typu silnice (vyberte jednosměrnou); silnice uvnitř se k němu zkrátí a napojí křižovatkami
+Keep the height (bridge, embankment)	Držet výšku (most, násep)
+An even gradient from end to end, the ground left as it is; the rise to the end can be typed while drawing. Pillars: select the road and put them along it as objects.	Rovnoměrný sklon od konce ke konci, zem se nemění; stoupání ke konci lze zadat při kreslení. Pilíře: vyberte silnici a rozmístěte je podél ní jako objekty.
+Rise	Stoupání
+Shift: straight · Enter: build	Shift: rovně · Enter: postavit
+Junction	Křižovatka
+Traffic lights	Semafory
+Lights need three roads or more	Semafory potřebují tři silnice nebo více
+Main road green	Zelená pro hlavní
+Side roads green	Zelená pro vedlejší
+The main road is the pair of roads most in line; red-yellow 2 s, yellow 3 s, 2 s all red between	Hlavní je dvojice silnic nejblíže jedné přímce; červená se žlutou 2 s, žlutá 3 s, mezi fázemi 2 s všem červená
+Zebra crossings	Přechody pro chodce
+Road	Silnice
+Build it again	Postavit znovu
+Makes the plate, its kerbs and lanes again for the roads as they are now	Znovu vytvoří desku, obrubníky a pruhy pro silnice tak, jak jsou nyní
+Linked objects	Provázané objekty
+An object can take its state from another ([varparent]): a signal head shows a light of its crossing's program, a stop's display its stop.	Objekt může přebírat stav od jiného ([varparent]): hlava návěstidla zobrazuje světlo z programu své křižovatky, displej zastávky svou zastávku.
+Takes its state from	Přebírá stav od
+Select it: IDCode	Vybrat ho: IDCode
+Takes its state from an object that is gone: IDCode	Přebírá stav od zmizelého objektu: IDCode
+Takes its state from nothing	Nepřebírá stav od ničeho
+Light	Semafor
+Its light is not one of the crossing's: it stays dark	Jeho světlo není mezi světly křižovatky: zůstává tmavé
+That object runs no traffic lights: link the head to a crossing with a light program	Ten objekt neřídí žádné semafory: provažte hlavu s křižovatkou se světelným programem
+A signal head: link it to its crossing to have it light	Hlava návěstidla: provažte ji s její křižovatkou, aby svítila
+Click the object in the view… (Esc)	Klikněte na objekt v pohledu… (Esc)
+Link to another…	Provázat s jiným…
+Link to an object…	Provázat s objektem…
+Then click the object it is to take its state from (a crossing for a signal head)	Pak klikněte na objekt, od kterého má přebírat stav (křižovatku pro hlavu návěstidla)
+Taking their state from it:	Přebírají od něj stav:
+light	světlo
+Click the object it takes its state from	Klikněte na objekt, od kterého přebírá stav
+stop	zastávka
+Find in map	Hledat v mapě
+Name, file, IDCode, stop or x, y	Název, soubor, IDCode, zastávka nebo x, y
+The point	Bod
+Spline	Spline
+Object	Objekt
+Nothing on the map has this IDCode.	Na mapě není nic s tímto IDCode.
+kinds	druhů
+on the map	na mapě
+Next	Další
+Select the next one and go there	Vybrat další a přejít k němu
+Every one of these becomes the road type chosen in the Roads tool	Všechny tyto se stanou typem silnice vybraným v nástroji Silnice
+Every one of these becomes the object chosen in the catalogue	Všechny tyto se stanou objektem vybraným v katalogu
+More: type to narrow the list	Je jich víc: zúžte seznam zadáním textu
+Replaced:	Nahrazeno:
+Satellite overlay	Satelitní podklad
+Satellite and own pictures	Satelit a vlastní obrázky
+Click a tile to see its overlay here.	Klikněte na dlaždici, abyste zde viděli její podklad.
+Show the overlay	Zobrazit podklad
+opacity	neprůhlednost
+Load satellite imagery	Načíst satelitní snímky
+Place the map on the Earth first (Satellite and terrain…)	Nejprve umístěte mapu na Zemi (Satelit a terén…)
+Load image file…	Načíst soubor s obrázkem…
+Your own picture for this tile (a scan, a screenshot): or drop it on the window	Váš vlastní obrázek pro tuto dlaždici (sken, snímek obrazovky): nebo ho přetáhněte do okna
+Load the OpenStreetMap map	Načíst mapu OpenStreetMap
+OpenStreetMap map for all tiles	Mapa OpenStreetMap pro všechny dlaždice
+The map as openstreetmap.org draws it (streets with their names, houses, water, green, stop signs), drawn sharp from OpenStreetMap data and laid on the tile in place of a satellite picture: to build roads and houses over by eye. Nothing is generated from it.	Mapa tak, jak ji kreslí openstreetmap.org (ulice s názvy, domy, voda, zeleň, značky zastávek), ostře vykreslená z dat OpenStreetMap a položená na dlaždici místo satelitního snímku: abyste mohli stavět silnice a domy podle oka. Nic se z ní negeneruje.
+own picture	vlastní obrázek
+for an earlier placement	pro dřívější umístění
+not kept with the map	neukládá se s mapou
+, partly coarser	, místy hrubší
+nothing	nic
+Place the map on the Earth first.	Nejprve umístěte mapu na Zemi.
+Load terrain heights	Načtení výšek terénu
+Done:	Hotovo:
+with problems	s problémy
+A picture for the tiles	Obrázek pro dlaždice
+Could not read the picture	Obrázek se nepodařilo přečíst
+Could not copy the picture	Obrázek se nepodařilo zkopírovat
+The picture is on the tiles: line it up in Satellite and terrain, Own pictures.	Obrázek je na dlaždicích: doladěte jej v Satelit a terén, Vlastní obrázky.
+Nothing found by that name.	Pod tímto názvem nic nenalezeno.
+Some tiles had Google imagery: enter your Google key to see it again (it is not kept with the map).	Některé dlaždice měly snímky Google: zadejte klíč Google, abyste je znovu viděli (neukládá se s mapou).
+Satellite and terrain	Satelit a terén
+Find a place: a town, a street, an address… (Enter)	Najít místo: město, ulici, adresu… (Enter)
+Searching…	Hledám…
+Search © OpenStreetMap contributors	Hledání © přispěvatelé OpenStreetMap
+This map has world coordinates ([worldcoordinates]): it lies on the Earth by itself, its tiles are Web Mercator tiles.	Tato mapa má světové souřadnice ([worldcoordinates]): leží na Zemi sama, její dlaždice jsou dlaždice Web Mercator.
+Click on the map where the orange tile goes…	Klikněte na mapě, kam patří oranžová dlaždice…
+Place the map here	Umístit mapu sem
+Then click on the map: the middle of the orange tile goes there	Pak klikněte na mapě: tam se umístí střed oranžové dlaždice
+At the view's middle	Do středu pohledu
+North turned	Otočení severu
+Orange tile	Oranžová dlaždice
+click the map to fly there in the view	kliknutí na mapu: přelet tam v pohledu
+1. Find the place.  2. Press "Place the map here" and click on the map: the orange tile (the map's middle) goes there.	1. Najděte místo.  2. Stiskněte „Umístit mapu sem“ a klikněte na mapě: tam se umístí oranžová dlaždice (střed mapy).
+Imagery	Snímky
+The sharpest here	Nejostřejší zde
+cm a pixel here	cm na pixel zde
+checking…	kontroluji…
+is sharper here	je zde ostřejší
+Sharper imagery may be had here with your own free key for Mapbox, MapTiler or Google (Keys below).	Ostřejší snímky zde možná získáte s vlastním bezplatným klíčem Mapbox, MapTiler nebo Google (Klíče níže).
+Terms of use	Podmínky použití
+Zoom	Přiblížení
+the finest here	nejjemnější zde
+Picture of a tile	Obrázek dlaždice
+every pixel of the source (up to 4096)	každý pixel zdroje (až 4096)
+Loaded at	Načteno v
+cm a pixel	cm na pixel
+Also load terrain heights	Načíst i výšky terénu
+New tiles get imagery by themselves	Nové dlaždice získají snímky samy
+Load for all tiles	Načíst pro všechny dlaždice
+For the selected tile	Pro vybranou dlaždici
+Click a tile with the Tiles tool (7)	Klikněte na dlaždici nástrojem Dlaždice (7)
+Terrain heights only	Jen výšky terénu
+of	z
+tiles beside the loaded heights were not loaded: the ground steps at their edge.	dlaždic vedle načtených výšek nebylo načteno: na jejich okraji je stupeň v zemi.
+Fit their edges	Přizpůsobit jejich okraje
+Their edge takes the loaded heights, fading out 60 m into the tile	Jejich okraj převezme načtené výšky, s doznívajícím přechodem 60 m do dlaždice
+Leave them	Ponechat
+Terrain heights	Výšky terénu
+Relative: the orange tile's mean height is 0 m	Relativní: střední výška oranžové dlaždice je 0 m
+Raise everything by	Zvednout vše o
+Taken off:	Odečteno:
+Measure again	Změřit znovu
+Terrain data attribution	Zdroje dat terénu
+Overlay on the ground	Podklad na zemi
+Put the imagery into maps exported for sharing (check its licence first)	Vkládat snímky do map exportovaných ke sdílení (nejprve zkontrolujte licenci)
+Fit tile edges	Přizpůsobení okrajů dlaždic
+Keys for more sources (optional)	Klíče pro další zdroje (volitelné)
+Everything works without a key. With your own free key these may be sharper in some places; the key stays on this computer.	Všechno funguje bez klíče. S vlastním bezplatným klíčem mohou být tyto zdroje místy ostřejší; klíč zůstává na tomto počítači.
+Google satellite (needs your API key)	Google satelit (potřebuje váš API klíč)
+get a key	získat klíč
+In Google Cloud: make a project, enable the Map Tiles API, create an API key, paste it here. Google bills by use above its free amount.	V Google Cloud: vytvořte projekt, zapněte Map Tiles API, vytvořte API klíč a vložte ho sem. Nad rámec bezplatného limitu Google účtuje poplatky.
+key	klíč
+Your own tile server	Vlastní server dlaždic
+URL	URL
+Attribution	Autorství
+Finest zoom	Nejjemnější přiblížení
+Kind	Druh
+XYZ / WMTS tiles	dlaždice XYZ / WMTS
+Terrarium heights	výšky Terrarium
+{z} {x} {y} are filled in; a WMS gets {bbox} (EPSG:3857) and {width} {height}; {key} is your key.	{z} {x} {y} se doplní; WMS dostane {bbox} (EPSG:3857) a {width} {height}; {key} je váš klíč.
+Add	Přidat
+Own pictures	Vlastní obrázky
+A scan, a screenshot, an old plan: laid on tiles and lined up by eye. No place on the Earth needed.	Sken, snímek obrazovky, starý plán: položí se na dlaždice a zarovná od oka. Umístění na Zemi není potřeba.
+Tiles from	Dlaždice od
+Load image file over these tiles…	Načíst obrázek přes tyto dlaždice…
+Turn left 90°	Otočit doleva o 90°
+Turn right 90°	Otočit doprava o 90°
+mirror left-right	zrcadlit zleva doprava
+mirror top-bottom	zrcadlit shora dolů
+Reset	Reset
+Your own pictures	Vaše vlastní obrázky
+of these tiles have your own pictures. Replace them with satellite imagery?	z těchto dlaždic má vlastní obrázky. Nahradit je satelitními snímky?
+Replace them	Nahradit
+Keep my pictures	Ponechat mé obrázky
+Groups for other maps	Skupiny pro jiné mapy
+A selection kept under a name, to put down again in any map (a stop with its shelter and signs, a crossing with its lights)	Výběr uložený pod názvem, který lze znovu položit na libovolné mapě (zastávka s přístřeškem a značkami, přechod se semafory)
+Keep the selection	Uložit výběr
+Group kept	Skupina uložena
+Select what to keep in the view first.	Nejprve v pohledu vyberte, co uložit.
+No groups yet.	Zatím žádné skupiny.
+thing	věc
+things	věcí
+Delete the group (to openMapper's bin)	Smazat skupinu (do koše openMapper)
+Use	Použít
+Into the clipboard: Ctrl+V puts it down at the cursor, as often as wanted	Do schránky: Ctrl+V ji položí u kurzoru, kolikrát chcete
+is in the clipboard: Ctrl+V puts it at the cursor	je ve schránce: Ctrl+V ji položí u kurzoru
+The map's tiles: 300 m squares. Add more beside them with the Tiles tool.	Dlaždice mapy: čtverce 300 m. Další přidáte vedle nich nástrojem Dlaždice.
+A road	Silnice
+Roads tool: click where it starts, then where it ends. Click on a road's end to go on from it.	Nástroj Silnice: klikněte na začátek, pak na konec. Kliknutím na konec silnice z něj pokračujete.
+A bus stop by the road	Zastávka u silnice
+Game logic > Bus stops: put one at the kerb, on the side the doors open. Name it on the right.	Logika hry > Zastávky: umístěte ji k obrubníku na straně, kde se otevírají dveře. Název zadejte vpravo.
+A start point	Startovní bod
+Game logic > Start points: where your bus appears, on a road, facing the way to drive.	Logika hry > Startovní body: kde se objeví váš autobus, na silnici, čelem ve směru jízdy.
+A line with a trip	Linka se spojem
+Lines window: New line, New trip, then click the stops in order. The way is found along the roads.	Okno Linky: Nová linka, Nový spoj, pak klikejte na zastávky popořadě. Trasa se najde po silnicích.
+A tour with departures	Turnus s odjezdy
+Lines window > Tours and times: New tour, then Fill from … to … .	Okno Linky > Turnusy a časy: Nový turnus, pak Vyplnit od … do … .
+Buses for the tours	Autobusy pro turnusy
+A depot the tours take their buses from (Tours: Add a depot, or Traffic and AI).	Vozovna, ze které turnusy berou autobusy (Turnusy: Přidat vozovnu, nebo Provoz a AI).
+Checked	Zkontrolováno
+Map > Check map: what would go wrong in the game, most of it put right with one click.	Mapa > Zkontrolovat mapu: co by ve hře nefungovalo, většinu opravíte jedním kliknutím.
+Saved	Uloženo
+Ctrl+S. Maps are saved into openOMSI's content folder.	Ctrl+S. Mapy se ukládají do složky obsahu openOMSI.
+A test drive	Zkušební jízda
+F5 saves and starts openOMSI on the map: pick line 1 and drive.	F5 uloží a spustí openOMSI s mapou: vyberte linku 1 a jeďte.
+A map you can drive in service:	Mapa, po které lze jezdit v provozu:
+Show me	Ukázat
+Your stops stand away from the roads: a bus serves a stop within 15 m of its lane.	Vaše zastávky stojí daleko od silnic: autobus obslouží zastávku do 15 m od svého pruhu.
+A real place? Put the map on the Earth (Map > Satellite and terrain), then Map > From OpenStreetMap brings its streets, stops, lines and trees.	Skutečné místo? Umístěte mapu na Zemi (Mapa > Satelit a terén), pak Mapa > Z OpenStreetMap přinese jeho ulice, zastávky, linky a stromy.
+Show this for new maps	Zobrazovat u nových map
+The map has no depot file.	Mapa nemá soubor vozovny.
+Make one from the lines	Vytvořit podle linek
+The map has no trips yet (Map > Lines and timetable)	Mapa zatím nemá žádné spoje (Mapa > Linky a jízdní řád)
+Empty one	Prázdný
+New	Nový
+A new depot file from the map's lines	Nový soubor vozovny podle linek mapy
+Delete this depot file	Smazat tento soubor vozovny
+The lines need	Linky potřebují
+Add them	Přidat
+What is there stays as it is	Stávající zůstává beze změny
+No depot group uses it.	Žádná skupina vozovny jej nepoužívá.
+Used by the depot	Používá vozovna
+Use it for every depot	Použít pro všechny vozovny
+The AI's depot groups (Vehicle groups tab) take their buses' destinations from it	Skupiny vozoven AI (karta Skupiny vozidel) z něj berou cílové stanice svých autobusů
+Rename	Přejmenovat
+not a usable name	nepoužitelný název
+The destination a bus shows on its way to and from the depot	Cíl, který autobus ukazuje na cestě do vozovny a z ní
+Destinations	Cílové stanice
+Stops	Zastávky
+Routes	Trasy
+nobody gets on	nikdo nenastupuje
+Code	Kód
+another destination has this code	tento kód má jiná cílová stanice
+As a trip's terminus is named in the timetable: the stop where everybody gets off	Jak je konečná spoje pojmenována v jízdním řádu: zastávka, kde všichni vystupují
+Nobody gets on (service trip, empty sign)	Nikdo nenastupuje (služební jízda, prázdná tabule)
+Delete destination	Smazat cílovou stanici
+Add destination	Přidat cílovou stanici
+New destination	Nová cílová stanice
+As the timetable names the stop	Jak je zastávka pojmenována v jízdním řádu
+Delete stop	Smazat zastávku
+Add stop	Přidat zastávku
+line	linka
+What the driver types: the line's number and two digits (7601: line 76, route 01)	Co zadává řidič: číslo linky a dvě číslice (7601: linka 76, trasa 01)
+Line	Čára
+IBIS text	Text IBIS
+Destination	Cíl
+Stops in order	Zastávky popořadě
+Not in the Stops list: the displays have no texts for it	Není v seznamu zastávek: displeje pro ni nemají texty
+Move up	Nahoru
+Move down	Dolů
+Take out	Odebrat
+Add a stop…	Přidat zastávku…
+Delete route	Smazat trasu
+Add route	Přidat trasu
+No routes: the IBIS knows the destinations' codes only. Add them from the lines above.	Žádné trasy: IBIS zná jen kódy cílových stanic. Přidejte je z linek výše.
+Winter with snow	Zima se sněhem
+Summer (dry)	Léto (suché)
+Jan	Led
+Feb	Úno
+Mar	Bře
+Apr	Dub
+May	Kvě
+Jun	Čvn
+Jul	Čvc
+Aug	Srp
+Sep	Zář
+Oct	Říj
+Nov	Lis
+Dec	Pro
+Map settings	Nastavení mapy
+Money	Měna
+Tickets	Jízdenky
+none: the map has no depot group (Traffic and AI)	žádná: mapa nemá skupinu vozovny (Provoz a AI)
+Years	Roky
+Year offset	Posun roku
+Added to today's year when the game starts at the real date (Berlin-Spandau: -25 for the 1980s)	Přičte se k dnešnímu roku, když hra startuje ve skutečném datu (Berlin-Spandau: -25 pro 80. léta)
+Repair time	Doba opravy
+ min	 min
+Rail	Kolejnice
+real rail (trams and trains follow their tracks' switches)	skutečné koleje (tramvaje a vlaky jedou podle výhybek svých kolejí)
+Helper	Pomocník
+dynamic helper active (the original editor's map option, kept as it is)	dynamický pomocník aktivní (volba mapy z původního editoru, ponechána beze změny)
+Seasons	Roční období
+Summer where none is set. The days count from 1 January.	Léto, kde nic není nastaveno. Dny se počítají od 1. ledna.
+Add a season	Přidat roční období
+A season ends before it starts	Roční období končí dříve, než začíná
+Nothing selected	Nic není vybráno
+Paste here	Vložit sem
+Cut the road here	Rozříznout silnici zde
+Select all like it	Vybrat všechny takové
+Keep for other maps…	Uložit pro jiné mapy…
+Its ground, painting, water, objects and roads, put beside or into this map. Lines, timetable and AI lists stay with the other map.	Její zem, malba, voda, objekty a silnice, položené vedle této mapy nebo do ní. Linky, jízdní řád a seznamy AI zůstávají u té druhé mapy.
+Choose a map…	Vyberte mapu…
+Other…	Jiná…
+A map to take tiles from (its global.cfg)	Mapa, ze které se vezmou dlaždice (její global.cfg)
+Grey: this map · orange: the tiles to add (click to take one or leave it) · red: on a tile of this map, left out	Šedé: tato mapa · oranžové: dlaždice k přidání (klik: vzít nebo ponechat) · červené: na dlaždici této mapy, vynechané
+Move:	Posun:
+west	západ
+east	východ
+north	sever
+south	jih
+Raise it by	Zvednout o
+Its ground, water, roads and objects at a height of their own	Její zem, voda, silnice a objekty ve vlastní výšce
+Ease the ground where the maps meet	Vyhladit zem na styku map
+Added	Přidáno
+tiles from the other map	dlaždic z druhé mapy
+Cube	Krychle
+Plane	Rovina
+Circle	Kruh
+Triangle	Trojúhelník
+Triangular prism	Trojboký hranol
+Wedge	Klín
+Corner wedge	Rohový klín
+Pyramid	Jehlan
+Sphere	Koule
+Icosphere	Ikosféra
+Cylinder	Válec
+Cone	Kužel
+Torus	Torus
+Tube	Trubka
+Capsule	Kapsle
+Stairs	Schody
+Arch	Oblouk
+Make one and put it on the map with a click (each one can then be edited, scaled, cut and joined)	Vytvořte jeden a kliknutím ho umístěte na mapu (každý lze pak upravovat, měnit jeho měřítko, řezat a spojovat)
+Array	Pole
+Mirror	Zrcadlo
+Solidify	Zesílení
+Subdivision surface	Dělení povrchu
+Decimate	Decimace
+Triangulate	Triangulace
+Displace	Posunutí (šum)
+Wireframe	Drátový model
+Screw	Šroub
+Simple deform	Jednoduchá deformace
+Cast	Přetvarování (podle tvaru)
+Weld	Sváření
+Edge split	Rozdělení hran
+Boolean	Booleovská operace
+Follow the ground	Podle terénu
+Count	Počet
+Relative	Relativně
+Offset	Posun
+Merge touching ends	Svařit dotýkající se konce
+Distance	Vzdálenost
+Cut away the other side first	Nejprve odříznout druhou stranu
+Weld at the mirror	Svařit na ose zrcadlení
+Thickness	Tloušťka
+Close the rim	Uzavřít okraj
+Width	Šířka
+Segments	Segmenty
+Levels	Úrovně
+Smooth (Catmull-Clark)	Vyhladit (Catmull-Clark)
+Factor	Síla
+Repeat	Opakování
+Seed	Seed
+Along the normals	Podél normál
+Steps	Kroky
+Axis	Osa
+Twist	Zkroucení
+Bend	Ohyb
+Taper	Zúžení
+Stretch	Natažení
+Amount	Míra
+Box	Kvádr
+Difference	Rozdíl
+With the part	S částí
+Tip: hide the cutting part (its eye in the list) so only the cut shows	Tip: skryjte řezací část (oko v seznamu), aby byl vidět jen výřez
+Above the ground	Nad zemí
+Every vertex follows the terrain under it (in the editor's view and the written files at the place it stands)	Každý vrchol sleduje terén pod sebou
+Mesh (openMapper object)	Mesh (objekt openMapper)
+Shared by	Sdíleno
+objects on the map: changes apply to all	objekty na mapě: změny se projeví u všech
+Make this one single	Udělat tento samostatný
+Leave the edit mode (Tab)	Opustit režim úprav (Tab)
+Edit the mesh (Tab)	Upravit mesh (Tab)
+Write it as OBJ, glTF / GLB, FBX, Collada, USD, STL, PLY, 3MF, OFF, X or O3D	Zapsat jako OBJ, glTF / GLB, FBX, Collada, USD, STL, PLY, 3MF, OFF, X nebo O3D
+Off: its height is kept above the ground under it	Vypnuto: výška se drží nad zemí pod ním
+Solid (collides)	Pevný (kolize)
+The part edited and given modifiers	Část, která se upravuje a má modifikátory
+Shown (and written into the object)	Zobrazena (a zapsána do objektu)
+faces	stěn
+Duplicate the part	Duplikovat část
+Delete the part	Smazat část
+Add a shape as a part	Přidat tvar jako část
+Separate parts into objects	Rozdělit části na objekty
+Each part becomes an object of its own, standing where it stood	Každá část se stane samostatným objektem na svém místě
+Shape	Tvar
+Modifiers	Modifikátory
+Make it part of the mesh	Udělat součástí meshe
+Add a modifier	Přidat modifikátor
+Materials	Materiály
+Colour (multiplies the texture)	Barva (násobí texturu)
+Assign to selected faces	Přiřadit vybraným stěnám
+Choose…	Vybrat…
+No texture	Bez textury
+Save as…	Uložit jako…
+PNG, JPEG, BMP, TGA, TIFF, WebP or DDS	PNG, JPEG, BMP, TGA, TIFF, WebP nebo DDS
+Transparency	Průhlednost
+Opaque	Neprůhledný
+Cut out	Vyřezaný
+Blended	Průsvitný
+Glows	Svítí
+Light of its own: black for none	Vlastní světlo: černá = žádné
+Shine	Lesk
+Normal map	Mapa normál
+ORM map	Mapa ORM
+Night texture	Noční textura
+Light map	Světelná mapa
+Remove the material	Odebrat materiál
+Add a material	Přidat materiál
+Import materials…	Import materiálů…
+From an .mtl, a glTF / GLB / FBX, or the pictures of one PBR material (base colour, normal, roughness, metal, AO...)	Z .mtl, glTF / GLB / FBX nebo z obrázků jednoho PBR materiálu (základní barva, normály, drsnost, kov, AO...)
+Lamps	Lampy
+Glow	Záře
+Light on the ground	Světlo na zemi
+Colour	Barva
+Reach	Dosah
+On	Zapnuto
+Always	Vždy
+At night	V noci
+variable	proměnná
+Seen from one side	Vidět z jedné strany
+Star	Hvězda
+Facing	Směr
+Remove the lamp	Odebrat lampu
+Add a glow	Přidat záři
+A lamp's bulb, a lit sign: a glow seen at night	Žárovka lampy, svítící tabule: záře viditelná v noci
+Add light on the ground	Přidat světlo na zem
+The pool of light a street lamp throws at night	Kužel světla, který pouliční lampa v noci vrhá
+Signal head, lamps	Hlava návěstidla, lampy
+Put it within 40 m of a crossing with a light program: it takes its light from it (or link it in its properties)	Umístěte ji do 40 m od křižovatky se světelným programem: přebere z ní světlo (nebo ji provažte ve vlastnostech)
+Bake	Vypálení
+Its textures and colours painted into one picture on a new UV map (one material: fewer draws in the game), with its own shadows and its lamps' night light if chosen	Jeho textury a barvy vykreslené do jednoho obrázku na nové UV mapě (jeden materiál: méně vykreslení ve hře), na přání s vlastními stíny a nočním světlem jeho lamp
+Ambient occlusion	Ambientní okluze
+How far its shadows reach	Jak daleko sahají jeho stíny
+Lamps' light at night (light map)	Světlo lamp v noci (světelná mapa)
+The object's last change (Ctrl+Z in the edit mode)	Poslední změna objektu (Ctrl+Z v režimu úprav)
+Divisions X	Dělení X
+Divisions Y	Dělení Y
+Rings	Prstence
+Subdivisions	Podrozdělení
+Bottom radius	Spodní poloměr
+Top radius	Horní poloměr
+Tube radius	Poloměr trubky
+Tube segments	Segmenty trubky
+Outer radius	Vnější poloměr
+Inner radius	Vnitřní poloměr
+Opening	Otvor
+Wall	Stěna
+Mesh	Mesh
+A copy of this object's type of its own is made for it, with its meshes, materials and lamps to edit; the original stays as it is	Pro objekt se vytvoří vlastní kopie jeho typu s meshi, materiály a lampami k úpravě; originál zůstane beze změny
+As a mesh	Jako mesh
+Copy as an object	Kopie jako objekt
+An openMapper object of its shape beside it, to edit as a mesh (vertices, edges, faces)	Objekt openMapper stejného tvaru vedle něj, který lze upravovat jako mesh (vrcholy, hrany, stěny)
+The same, the spline taken away (its lanes go with it)	Totéž, spline se odstraní (i s jeho pruhy)
+Splines as a mesh	Spliny jako mesh
+Copy as one object	Kopie jako jeden objekt
+Replace by one object	Nahradit jedním objektem
+Export the selection…	Export výběru…
+As meshes	Jako meshe
+Join into one object (Ctrl+J)	Spojit do jednoho objektu (Ctrl+J)
+All their parts in the one shown in the properties, the others gone	Všechny jejich části v tom, který je ve vlastnostech, ostatní zmizí
+Solid modelling (CSG): the object shown in the properties with the others	Tělesné modelování (CSG): objekt z vlastností s ostatními
+Keep the cutting objects	Ponechat řezací objekty
+Vertices	Vrcholy
+Edges	Hrany
+Faces	Stěny
+vertices	vrcholů
+edges	hran
+Selected	Vybráno
+X-ray: pick through the mesh	Rentgen: vybírat skrz mesh
+All (A)	Vše (A)
+None (Alt+A)	Nic (Alt+A)
+Invert (Ctrl+I)	Invertovat (Ctrl+I)
+Linked (Ctrl+L)	Spojené (Ctrl+L)
+More	Více
+Less	Méně
+Click, Shift + click to add, drag on nothing for a box, a second click or Alt + click for a loop	Klik, Shift + klik přidá, tažení po prázdnu je rámeček, druhý klik nebo Alt + klik je smyčka
+Change	Změnit
+Extrude (E)	Vytáhnout (E)
+Inset (I)	Odsadit (I)
+Bevel (Ctrl+B)	Zkosit (Ctrl+B)
+Loop cut (Ctrl+R)	Řez smyčkou (Ctrl+R)
+Point at an edge and press Ctrl+R	Najeďte na hranu a stiskněte Ctrl+R
+Subdivide	Rozdělit
+Fill (F)	Vyplnit (F)
+Bridge loops	Propojit smyčky
+Connect (J)	Spojit vrcholy (J)
+Poke	Paprsky ze středu
+Duplicate (Shift+D)	Duplikovat (Shift+D)
+Split (Y)	Oddělit (Y)
+Separate into an object (P)	Do samostatného objektu (P)
+Spin 360°	Rotace 360°
+The selection turned round the object's up axis through its middle, in 12 steps	Výběr otočený kolem svislé osy objektu středem, ve 12 krocích
+Smooth vertices	Vyhladit vrcholy
+Merge (M)	Sloučit (M)
+At the middle	Ve středu
+At the first	K prvnímu
+At the last	K poslednímu
+Collapse each piece	Stáhnout každý kus
+By distance (1 mm)	Podle vzdálenosti (1 mm)
+Delete (X)	Smazat (X)
+Only faces	Jen stěny
+Dissolve vertices	Rozpustit vrcholy
+Dissolve edges	Rozpustit hrany
+Dissolve faces	Rozpustit stěny
+Triangulate (Ctrl+T)	Triangulovat (Ctrl+T)
+Triangles to quads (Alt+J)	Trojúhelníky na čtyřúhelníky (Alt+J)
+Shade smooth	Hladké stínování
+Shade flat	Ploché stínování
+Flip normals (Alt+N)	Obrátit normály (Alt+N)
+Normals outward (Shift+N)	Normály ven (Shift+N)
+Mark seam	Označit šev
+Clear seam	Zrušit šev
+Mark sharp	Označit jako ostré
+Clear sharp	Zrušit ostré
+Adjust the last operation	Upravit poslední operaci
+Slide	Posun
+Cuts	Řezy
+UV map	UV mapa
+Unwrap	Rozbalit
+By seams (conformal)	Podle švů (konformně)
+Smart project	Chytrá projekce
+Cube projection (metres)	Krychlová projekce (v metrech)
+Cylinder projection	Válcová projekce
+Sphere projection	Kulová projekce
+Project from the view	Projekce z pohledu
+Lightmap pack	Rozložení pro světelnou mapu
+Close the UV editor	Zavřít UV editor
+UV editor	UV editor
+Faces of the selection (all, with none selected); mark seams on edges first for an unwrap by seams	Stěny výběru (všechny, když není nic vybráno); pro rozbalení podle švů nejprve označte švy na hranách
+Material of the selected faces	Materiál vybraných stěn
+With lamps	Se světly
+Street lamp	Pouliční lampa
+A pole with a lamp that glows and lights the ground at night	Sloup s lampou, která v noci svítí a osvětluje zem
+Signal head	Hlava návěstidla
+A traffic light of the lamps below that a crossing's light program drives	Semafor z lamp níže, který řídí světelný program křižovatky
+Lamps:	Lampy:
+Picture, light, sound	Obrázek, světlo, zvuk
+Picture / pattern…	Obrázek / vzor…
+Choose a picture or a texture: it becomes an object you place, move, turn and scale like any other. Several repeats make a pattern	Vyberte obrázek nebo texturu: stane se objektem, který umístíte, posunete, otočíte a změníte jeho měřítko jako kterýkoli jiný. Několik opakování vytvoří vzor
+Light source	Zdroj světla
+A lamp that glows and lights the ground round it	Lampa, která svítí a osvětluje zem kolem sebe
+Sound source…	Zdroj zvuku…
+Choose a sound file (.wav): it plays where you put the marker, as far as the radius carries; the marker shows in the editor only	Vyberte zvukový soubor (.wav): hraje tam, kde stojí značka, tak daleko, jak sahá poloměr; značka je vidět jen v editoru
+Picture width, m	Šířka obrázku, m
+Repeats	Opakování
+on the ground	na zemi
+standing	stojí
+Light colour	Barva světla
+Light reach, m	Dosah světla, m
+at night	v noci
+always	vždy
+Sound reach, m	Dosah zvuku, m
+Sound volume	Hlasitost zvuku
+Overview: click or drag to move there · double-click: larger / smaller · M: hide	Přehled: kliknutím nebo tažením se tam přesunete · dvojklik: větší / menší · M: skrýt
+Name:	Název:
+My town	Moje město
+Description:	Popis:
+What the map is, for the game's map list	Co mapa je, pro seznam map ve hře
+Size:	Velikost:
+Ground height:	Výška země:
+ m above sea level	 m n. m.
+Traffic:	Provoz:
+keeps right	jízda vpravo
+keeps left	jízda vlevo
+Busy:	Vytížení:
+cars	auta
+passengers	cestující
+Years:	Roky:
+year offset	posun roku
+Added to today's year when the game starts at the real date	Přičte se k dnešnímu roku, když hra začíná ve skutečném datu
+Money:	Měna:
+Tickets:	Jízdenky:
+Seasons:	Roční období:
+four, snowy winter	čtyři, zasněžená zima
+mild winter	mírná zima
+summer only	jen léto
+Rail:	Kolejnice:
+trams and trains follow their tracks' switches	tramvaje a vlaky jedou podle výhybek svých kolejí
+Ground texture (all tiles):	Textura země (všechny dlaždice):
+template	šablona
+More ground layers are painted later (Paint tool); the map's settings can all be changed in Map > Map settings.	Další vrstvy země se malují později (nástroj Malování); všechna nastavení mapy lze změnit v Mapa > Nastavení mapy.
+Create	Vytvořit
+as the template	jako šablona
+ways	cest
+bus routes downloaded	stažených autobusových tras
+not had:	nestaženo:
+The streets of the map's place built as roads with junctions where they meet, its bus stops, lines, trees and woods. Best on tiles with no roads yet: roads lying on ones the map has are left out.	Ulice místa mapy postavené jako silnice s křižovatkami, kde se potkávají, její autobusové zastávky, linky, stromy a lesy. Nejlépe na dlaždicích bez silnic: silnice ležící na již existujících se vynechají.
+The map does not lie on the Earth yet: place it in Satellite and terrain (Map menu, I) first.	Mapa zatím neleží na Zemi: nejprve ji umístěte v Satelit a terén (menu Mapa, I).
+Load the terrain heights first (Satellite and terrain): the roads follow the ground as it is when they are built.	Nejprve načtěte výšky terénu (Satelit a terén): silnice se při stavbě ukládají na zem takovou, jaká je.
+Download for the map's tiles	Stáhnout pro dlaždice mapy
+bus routes	autobusové trasy
+trees	stromy
+buildings	budovy
+water	voda
+Downloading…	Stahuji…
+no type chosen	typ nevybrán
+Use the chosen	Použít vybraný
+One-way roads	Jednosměrné silnice
+Each carriageway of a dual road and one-way streets: with a one-way road type they lie side by side as they should; with none chosen they get their kind's	Každá jízdní dráha dvojité silnice a jednosměrné ulice: s jednosměrným typem silnice leží vedle sebe, jak mají; bez výběru dostanou typ svého druhu
+as their kind	jako jejich druh
+no stop object	žádný objekt zastávky
+The stop chosen in Game logic > Bus stops	Zastávka vybraná v Logika hry > Zastávky
+Bus lines	Autobusové linky
+Each bus route through two or more of the map's stops a trip of its line, the way found along the roads; a tour from 06:00 to 22:00 for each new line	Každá autobusová trasa přes dvě nebo více zastávek mapy: spoj své linky, trasa se najde po silnicích; pro každou novou linku turnus od 06:00 do 22:00
+Trees and woods	Stromy a lesy
+Single trees, rows of them and woods, planted with the plant mix (Objects tool > Plant brush) or the tree chosen; none on a road	Jednotlivé stromy, jejich řady a lesy, zasazené směsí rostlin (nástroj Objekty > Štětec rostlin) nebo vybraným stromem; ne na silnicích
+no plants chosen	nevybrány žádné rostliny
+kinds of plants	druhů rostlin
+apart in woods	rozestup v lesích
+Buildings	Budovy
+Each outline filled with the model of the folder chosen whose ground plan comes nearest, its front to the nearest road; an outline no model fits is left out	Každý obrys se vyplní modelem z vybrané složky s nejpodobnějším půdorysem, průčelím k nejbližší silnici; obrys, kterému nic nevyhovuje, se vynechá
+no folder	žádná složka
++ its folder	+ jeho složka
+Add the folder of the object chosen in the catalogue (Buildings_MC, …)	Přidat složku objektu vybraného v katalogu (Buildings_MC, …)
+Lakes and rivers: the ground inside them lowered below the banks, and the tiles they lie on given water a little under the banks' height (OMSI's water is one level for a tile: low ground elsewhere on it is flooded too)	Jezera a řeky: zem uvnitř se sníží pod břehy a dlaždicím, na kterých leží, se dá voda mírně pod výškou břehů (voda v OMSI je jedna hladina na dlaždici: nízká zem jinde na ní se také zaplaví)
+deep	hloubka
+a road type (Roads tool), then "Use the chosen"	typ silnice (nástroj Silnice), pak „Použít vybraný“
+a stop (Game logic > Bus stops), then "Use the chosen"	zastávku (Logika hry > Zastávky), pak „Použít vybranou“
+a tree in the Objects catalogue (or a plant mix)	strom v katalogu objektů (nebo směs rostlin)
+a building in the catalogue, then "+ its folder"	budovu v katalogu, pak „+ jeho složka“
+To build, choose (or untick):	Ke stavbě vyberte (nebo odškrtněte):
+A one-way street is built the way it runs in OpenStreetMap: give it a one-way road type	Jednosměrná ulice se staví ve směru jako v OpenStreetMap: dejte jí jednosměrný typ silnice
+Build	Postavit
+Name, file or IDCode	Název, soubor nebo IDCode
+things on the map	věcí na mapě
+Groups	Skupiny
+Select the group and go there	Vybrat skupinu a přejít k ní
+Select everything in it	Vybrat vše v ní
+Select it and go there	Vybrat a přejít
+more: narrow the search	víc: zúžte hledání
+Select all of them	Vybrat všechny takové
+Go to the first	Přejít na první
+Pick a tree in the catalogue, then paint	Vyberte strom v katalogu a pak malujte
+Pick a tree in the catalogue, then click round the area	Vyberte strom v katalogu a pak obkliknutím vymezte plochu
+Pick a road type, click the centre, then the ring	Vyberte typ silnice, klikněte na střed, pak na kruh
+Select a road (double-click: all of it): its properties show its height profile	Vyberte silnici (dvojklik: celou): její vlastnosti ukazují profil výšek
+Select one of openMapper's junctions: its properties have Traffic lights and crossings	Vyberte křižovatku openMapper: její vlastnosti mají Semafory a přechody
+Select the signal head (or a display): Linked objects in its properties, then click its crossing	Vyberte hlavu návěstidla (nebo displej): Provázané objekty v jeho vlastnostech, pak klikněte na jeho křižovatku
+Select a road, pick an object in the Objects catalogue: Objects along the road in its properties	Vyberte silnici a objekt v katalogu Objekty: Objekty podél silnice v jejích vlastnostech
+Select a track (double-click: all of it): Overhead wire under Parallel copy in its properties	Vyberte kolej (dvojklik: celou): Trolejové vedení pod Rovnoběžnou kopií v jejích vlastnostech
+Select a road or a chain: Parallel copy in its properties	Vyberte silnici nebo řetěz: Rovnoběžná kopie v jejích vlastnostech
+Select a road (double-click: all of it): Paint the ground along it in its properties	Vyberte silnici (dvojklik: celou): Vymalovat zem podél v jejích vlastnostech
+Click a tile: its water is in the panel; lower the ground under it with the Terrain tool	Klikněte na dlaždici: její voda je v panelu; zem pod ní snižte nástrojem Terén
+Height map: at the end of the Terrain panel	Výšková mapa: na konci panelu Terén
+By slope and height: at the end of the Paint panel	Podle sklonu a výšky: na konci panelu Malování
+View menu: Time of day, Season	Menu Zobrazení: Denní doba, Roční období
+What do you want to do?	Co chcete udělat?
+Groups…	Skupiny…
+Objects on the map by folder	Objekty mapy podle složek
+Knife: cut roads	Nůž: rozřezávat silnice
+Test drive in OMSI 2 (the original)	Zkušební jízda v OMSI 2 (originál)
+Overview map	Přehledová mapa
+Place a bus stop	Umístit zastávku
+Place a start point	Umístit startovní bod
+Plant trees with a brush	Sázet stromy štětcem
+Plant a wood or a park	Zasadit les nebo park
+Roundabout	Kruhový objezd
+Height profile of a road	Profil výšek silnice
+Traffic lights and zebra crossings	Semafory a přechody pro chodce
+Link a signal head to its crossing	Provázat hlavu návěstidla s křižovatkou
+Objects along a road	Objekty podél silnice
+Overhead wire along a track	Trolejové vedení podél koleje
+Parallel copy of a road	Rovnoběžná kopie silnice
+Paint the ground along a road	Vymalovat zem podél silnice
+Water, lake, river	Voda, jezero, řeka
+Ramp in the ground	Rampa v zemi
+Height map import or export	Import nebo export výškové mapy
+Time of day and season	Denní doba a roční období
+PBR material	PBR materiál
+none	žádný
+Own picture…	Vlastní obrázek…
+Choose a texture of the object, or a picture of your own.	Vyberte texturu objektu nebo vlastní obrázek.
+Normals (_nn)	Normály (_nn)
+Roughness	Drsnost
+Shadow in hollows	Stín v prohlubních
+Bumps	Hrbolky
+Only big shapes	Jen velké tvary
+Dark parts stand out (not sink in)	Tmavé části vystupují (neprohlubují se)
+Bright parts smoother	Světlé části hladší
+Metal	Kov
+Back to the defaults	Zpět na výchozí
+This texture has PBR maps of its own already: new ones made here are taken instead of them.	Tato textura už má vlastní PBR mapy: zde vytvořené se použijí místo nich.
+Written as:	Zapíše se jako:
+PBR maps made	PBR mapy vytvořeny
+Delete the PBR material	Smazat PBR materiál
+PBR maps taken away	PBR mapy odebrány
+Height profile	Profil výšek
+over the ground	nad zemí
+Click: go there in the view · drag a dot (a joint) up or down: its height	Klik: přejít tam v pohledu · tažením tečky (spoje) nahoru nebo dolů změníte její výšku
+Climbs, falls	Stoupá, klesá
+Steepest	Nejstrmější
+at	v
+Highest over the ground	Nejvýše nad zemí
+Deepest under it	Nejhlouběji pod ní
+Over 8 % is steep for a bus; over 12 % few streets go	Přes 8 % je pro autobus strmé; přes 12 % vede málo ulic
+roadway	vozovka
+Road types	Typy silnic
+Make a new road type…	Vytvořit nový typ silnice…
+My road	Moje silnice
+ · own	 · vlastní
+Create the road type	Vytvořit typ silnice
+Road type made: the Roads tool builds with it	Typ silnice vytvořen: nástroj Silnice staví s ním
+Change it in the road maker	Změnit v tvůrci silnic
+Its junctions	Jeho křižovatky
+Make a junction where it meets another road (else they only cross)	Vytvořit křižovatku, kde potkává jinou silnici (jinak se jen kříží)
+Corners	Rohy
+× rounder	× zaoblenější
+Traffic lights by themselves	Semafory samy
+Zebra crossings on every arm	Přechody pro chodce na všech ramenech
+Used for the junctions made from now on (where several road types meet, the one asking more wins). A junction already made keeps its own settings: select it to change them.	Použije se pro křižovatky vytvořené od teď (kde se potkává víc typů silnic, vyhrává ten náročnější). Hotová křižovatka si ponechá vlastní nastavení: vyberte ji, abyste ho změnili.
+Pick a road type on the left, or make a new one.	Vyberte typ silnice vlevo nebo vytvořte nový.
+Road maker	Tvůrce silnic
+Lanes	Pruhy
+(▼ 0: one-way)	(▼ 0: jednosměrná)
+Lane width	Šířka pruhu
+Middle strip	Středový pás
+Footways	Chodníky
+Kerb	Obrubník
+Roadway texture	Textura vozovky
+Footway texture	Textura chodníku
+Own…	Vlastní…
+The roadway texture is laid once across all its lanes (as OMSI 2's lane textures are painted: pick one with as many lanes); the footway texture's right end is the kerb.	Textura vozovky se položí jednou napříč všemi pruhy (tak jsou namalovány pruhové textury OMSI 2: vyberte takovou se stejným počtem pruhů); pravý okraj textury chodníku je obrubník.
+not on the map	není na mapě
+Signal routes	Signální cesty
+Each railway signal clears when a train wants the track pieces of its route and none stands on them.	Každé železniční návěstidlo se uvolní, když vlak chce úseky své cesty a nikdo na nich nestojí.
+New route for the selected signal	Nová cesta pro vybrané návěstidlo
+Select a signal (one object) in the view first	Nejprve v pohledu vyberte návěstidlo (jeden objekt)
+The selected object does not look like a signal (its name says nothing of one): check it is.	Vybraný objekt nevypadá jako návěstidlo (jeho název o něm nic neříká): ověřte, že jím je.
+No routes yet.	Zatím žádné cesty.
+pieces	úseků
+Signal	Návěstidlo
+the selected	vybrané
+Aspect	Návěst
+What the signal shows when this route is clear: 1 proceed, 2 proceed slowly (with a speed limit)…	Co návěstidlo ukazuje, když je tato cesta volná: 1 volno, 2 volno pomalu (s omezením rychlosti)…
+Distant signal	Předvěst
+Next signal	Další návěstidlo
+Speed limit	Omezení rychlosti
+OMSI's route kind (the stock maps have 0 and 1)	Druh cesty v OMSI (standardní mapy mají 0 a 1)
+Track pieces	Úseky tratě
+Take the selected track	Vzít vybranou trať
+Every rail path of the selected tracks and switches (double-click a track: all of it); replaces the pieces	Všechny kolejové cesty vybraných kolejí a výhybek (dvojklik na kolej: celou); nahradí úseky
+Select the signal and its pieces in the view	Vybrat návěstidlo a jeho úseky v pohledu
+Delete the route	Smazat cestu
+Lines and timetable	Linky a jízdní řád
+Edit timetable	Úprava jízdního řádu
+No bus stop there: click one of the orange marks	Tam není zastávka: klikněte na jednu z oranžových značek
+The roads can't be read without the OMSI 2 folder.	Bez složky OMSI 2 nelze silnice přečíst.
+A line needs at least two bus stops on the map: place them with Game logic > Bus stops, beside a road.	Linka potřebuje na mapě alespoň dvě zastávky: umístěte je přes Logika hry > Zastávky vedle silnice.
+Lines	Linky
+No lines yet.	Zatím žádné linky.
+New line	Nová linka
+Pick a line on the left, or make a new one.\n\nA line has trips (a way from stop to stop) and tours (one bus's day: which trip it drives when).	Vyberte linku vlevo nebo vytvořte novou.\n\nLinka má spoje (cestu od zastávky k zastávce) a turnusy (den jednoho autobusu: který spoj jede kdy).
+That name is taken or can't be a file name	Název je obsazený nebo nelze použít jako název souboru
+A copy of the line with its trips and tours (a variant to change)	Kopie linky s jejími spoji a turnusy (varianta ke změnám)
+Delete the line and its trips	Smazat linku a její spoje
+Players can drive it	Hráč ji může řídit
+Trips	Spoje
+Tours and times	Turnusy a časy
+A tour is one bus's day: the trips it drives, one after the other, and when each leaves.	Turnus je den jednoho autobusu: spoje, které jede jeden za druhým, a kdy který odjíždí.
+A trip is one way along the line: its stops in order. Most lines have two, there and back.	Spoj je jedna jízda po lince: její zastávky popořadě. Většina linek má dva, tam a zpět.
+New trip	Nový spoj
+Make the way back	Vytvořit zpáteční
+A new trip with the same stops the other way round	Nový spoj se stejnými zastávkami v opačném pořadí
+Trip	Spoj
+Delete the trip	Smazat spoj
+Destination sign	Cedule
+This trip runs on a track of its own (a train): its stops are kept as they are.	Tento spoj jede po vlastní trati (vlak): jeho zastávky zůstanou, jak jsou.
+Show on the map	Ukázat na mapě
+No stops yet.	Zatím žádné zastávky.
+Done picking	Hotovo
+Pick stops on the map	Vybrat na mapě
+Click the stops in the view one after the other, in the order the bus calls at them	Klikejte na zastávky v pohledu jednu po druhé v pořadí, v jakém u nich autobus staví
+Add stop…	Přidat zastávku…
+Click stops on the map (they are marked orange)…	Klikejte na zastávky na mapě (jsou označeny oranžově)…
+Add two stops or more: the way between them is found along the roads.	Přidejte dvě zastávky nebo více: cesta mezi nimi se najde po silnicích.
+Finding the way…	Hledám cestu…
+Route found:	Trasa nalezena:
+km along the roads (blue in the view)	km po silnicích (modře v pohledu)
+the way drives a one-way lane against its direction; is a path drawn the wrong way round?	cesta vede jednosměrným pruhem proti jeho směru; není cesta nakreslena obráceně?
+is not on the map	není na mapě
+no road with car lanes within 15 m	do 15 m není silnice s pruhy pro auta
+No way	Žádná cesta
+the roads are not joined, or run the other way (see View > AI lanes)	silnice nejsou spojeny nebo vedou opačně (viz Zobrazení > Pruhy AI)
+The trip is saved, but its way is not until this is mended	Spoj se uloží, ale jeho cesta ne, dokud se to neopraví
+Trip time	Doba jízdy
+Guess:	Odhad:
+From the route's length at the pace of a town bus	Z délky trasy při tempu městského autobusu
+Times at the stops	Časy na zastávkách
+Minutes after the trip leaves. They follow the distance between the stops; fix one to keep the bus to it (it waits there when early).	Minuty po odjezdu spoje. Řídí se vzdáleností mezi zastávkami; připevněte čas, aby se ho autobus držel (když je dřív, čeká tam).
+fixed	pevný
+Spread all by distance	Rozložit vše podle vzdálenosti
+Holidays and school holidays	Svátky a školní prázdniny
+On a public holiday only the tours with Holidays ticked run; school holidays pick the tours for school holidays or school days.	O státním svátku jedou jen turnusy se zaškrtnutými Svátky; školní prázdniny vybírají turnusy pro prázdniny nebo školní dny.
+Copy to	Kopírovat do
+The same days a year later (feasts that move, like Easter, are to be set by hand)	Stejné dny o rok později (pohyblivé svátky, jako Velikonoce, nastavte ručně)
+The map has no depot (ailists.cfg): only you drive these tours, no AI buses.	Mapa nemá vozovnu (ailists.cfg): tyto turnusy jezdíte jen vy, žádné autobusy AI.
+Add a depot with OMSI 2's MAN buses	Přidat vozovnu s autobusy MAN z OMSI 2
+Its buses run the tours (Map > Traffic and AI shows it)	Jeho autobusy jezdí turnusy (ukáže to Mapa > Provoz a AI)
+Tour	Turnus
+New tour	Nový turnus
+Pick a tour to see its departures.	Vyberte turnus, abyste viděli jeho odjezdy.
+Make a trip first.	Nejprve vytvořte spoj.
+Number	Číslo
+Buses from	Autobusy z
+Delete the tour	Smazat turnus
+Runs on	Jede
+Mo	Po
+Tu	Út
+We	St
+Th	Čt
+Fr	Pá
+Sa	So
+Su	Ne
+Every day	Každý den
+Monday to Friday	Pondělí až pátek
+Weekends and holidays	Víkendy a svátky
+In the school holidays	O školních prázdninách
+On school days	Ve školní dny
+Next departure	Další odjezd
+The next trip of the line, when the bus is back and has had its break	Další spoj linky, až se autobus vrátí a odpočine si
+Fill from	Vyplnit od
+break	pauza
+Fill	Vyplnit
+Replace the tour's departures: the line's trips one after the other, a break after each	Nahradit odjezdy turnusu: spoje linky jeden za druhým, po každém pauza
+No departures yet: add them above.	Zatím žádné odjezdy: přidejte je výše.
+Delete the departure	Smazat odjezd
+GPS tracks to trace	GPS trasy k obkreslení
+A route recorded on a phone or drawn elsewhere (GPX, KML, GeoJSON), shown in the view in magenta to draw roads along, or built into a road at once	Trasa zaznamenaná v telefonu nebo nakreslená jinde (GPX, KML, GeoJSON), zobrazená v pohledu purpurově, aby se podle ní kreslily silnice, nebo hned postavená jako silnice
+Place the map on the Earth first (Map > Satellite and terrain)	Nejprve umístěte mapu na Zemi (Mapa > Satelit a terén)
+Load a file…	Načíst soubor…
+None loaded	Nic nenačteno
+Forget it	Zapomenout
+Build a road along it:	Postavit podél ní silnici:
+Choose a road type in the Roads tool to build it	Vyberte typ silnice v nástroji Silnice, abyste ji postavili
+Built as if drawn: corners rounded into arcs, junctions where it meets roads, cut at the map's edge; one undo step	Staví se jako nakreslená: rohy zaoblené do oblouků, křižovatky tam, kde potkává silnice, ořezáno na okraji mapy; jeden krok zpět
+Traffic and AI	Provoz a AI
+Edit traffic	Úprava provozu
+Over the day	Během dne
+Vehicle groups	Skupiny vozidel
+Parked cars and people	Zaparkovaná auta a lidé
+Depot files	Soubory vozoven
+The AI's vehicles come in groups. A car group drives about on the roads; a depot sends out the buses of the timetable's tours.	Vozidla AI jsou ve skupinách. Skupina aut jezdí po silnicích; vozovna vypouští autobusy turnusů jízdního řádu.
+(This map's ailists.cfg is in OMSI 2's first format: it is written in the second one when changed.)	(ailists.cfg této mapy je v prvním formátu OMSI 2: při změně se zapíše ve druhém.)
+is to drive about, but there is no such group.	má jezdit po silnicích, ale taková skupina neexistuje.
+Make it with OMSI 2's vehicles	Vytvořit s vozidly OMSI 2
+The group of that name from OMSI 2's own maps	Skupina tohoto jména z map OMSI 2
+New car group	Nová skupina aut
+New depot	Nová vozovna
+Pick a group on the left.	Vyberte skupinu vlevo.
+Delete the group (tours still take their buses from it)	Smazat skupinu (turnusy z ní stále berou autobusy)
+Delete the group	Smazat skupinu
+Tours that take their buses from here:	Turnusů, které odsud berou autobusy:
+Drives about on its own	Jezdí sama po silnicích
+as many:	kolik:
+Times the traffic over the day	Násobí provoz během dne
+A vehicle with more weight comes along more often.	Vozidlo s větší vahou se objevuje častěji.
+Add a vehicle…	Přidat vozidlo…
+Depot file (.hof)	Soubor vozovny (.hof)
+None of its buses has this depot file beside it: they run without their destination signs and fleet data.	Žádný z jejích autobusů nemá vedle sebe tento soubor vozovny: pojedou bez cedulí a dat vozového parku.
+The buses it has: a type of bus and the fleet number and plate of each.	Jeho autobusy: typ autobusu a evidenční číslo a SPZ každého.
+Take this type out	Odebrat tento typ
+number	číslo
+plate	SPZ
+Another bus	Další autobus
+Add a type of bus…	Přidat typ autobusu…
+The lists can't be read without the OMSI 2 folder.	Bez složky OMSI 2 nelze seznamy přečíst.
+Parked cars	Zaparkovaná auta
+What stands on the car parks (Game logic > Car parks). A car listed more often stands there more often.	Co stojí na parkovištích (Logika hry > Parkoviště). Auto uvedené častěji tam stojí častěji.
+Who walks about and waits at the stops.	Kdo se prochází a čeká na zastávkách.
+Drivers	Řidiči
+Who drives the AI's buses.	Kdo řídí autobusy AI.
+How often it is listed (0 takes it out)	Kolikrát je uvedeno (0 ho odebere)
+How busy the map is at each hour: the road traffic, and the passengers at the stops. 1 is normal; the game goes along the line between the points.	Jak je mapa v každou hodinu rušná: silniční provoz a cestující na zastávkách. 1 je normál; hra postupuje po čáře mezi body.
+Road traffic	Silniční provoz
+Passengers	Cestující
+Its own traffic over the day	Vlastní provoz během dne
+Without one the group follows the map's road traffic. A curve can be for some days of the week only.	Bez ní skupina sleduje silniční provoz mapy. Křivka může platit jen pro některé dny v týdnu.
+Days:	Dny:
+Mo–Fr	Po–Pá
+Take this curve out	Odebrat tuto křivku
+A curve	Křivka
+Typical day…	Typický den…
+Quiet village	Klidná vesnice
+Town with rush hours	Město s dopravní špičkou
+The same all day	Celý den stejně
+No curve: 1 all day.	Žádná křivka: celý den 1.
+Take the point out	Odebrat bod
+Point	Bod
+Smart unwrap	Chytré rozbalení
+Every flat side apart in the picture, no faces on top of one another (all faces if none is selected)	Každá plochá strana zvlášť na obrázku, žádné stěny na sobě (všechny, když není nic vybráno)
+Box unwrap	Rozbalení kvádrem
+The six sides of a box apart in the picture	Šest stran kvádru zvlášť na obrázku
+Flip ↔	Převrátit ↔
+Flip ↕	Převrátit ↕
+Scale ×2	Měřítko ×2
+Scale ÷2	Měřítko ÷2
+Fit	Přizpůsobit
+Stretched to fill the picture	Roztaženo přes celý obrázek
+Pack islands	Uspořádat ostrovy
+Average island scale	Vyrovnat měřítko ostrovů
+Seams from islands	Švy podle ostrovů
+Click: a face (Shift adds) · drag: move the selected · wheel: zoom · right button: pan	Klik: stěna (Shift přidá) · tažení: posun vybraného · kolečko: zoom · pravé tlačítko: posun pohledu
+Could not keep the views	Pohledy se nepodařilo uložit
+Saved views	Uložené pohledy
+Places of the map to come back to: Ctrl+1…9 goes to the first nine, Ctrl+Shift+1…9 keeps the view there	Místa mapy, ke kterým se vracet: Ctrl+1…9 přejde na prvních devět, Ctrl+Shift+1…9 tam uloží pohled
+Keep this view	Uložit tento pohled
+None yet	Zatím žádné
+Go	Přejít
+Earlier in the list	Výš v seznamu
+Later in the list	Níž v seznamu
+Take the view now instead	Nahradit aktuálním pohledem
+Keep proportions	Zachovat poměr stran
+Back to its own size	Zpět na původní velikost
+Updates	Aktualizace
+This version:	Tato verze:
+New version:	Nová verze:
+Install and restart	Nainstalovat a restartovat
+Not now	Teď ne
+What changed	Co je nového
+Downloading and installing	Stahování a instalace
+Installed version	Nainstalovaná verze
+openMapper restarts when you save the map.	openMapper se restartuje, jakmile mapu uložíte.
+Looking for a new version…	Hledám novou verzi…
+This is the newest version.	Toto je nejnovější verze.
+Download it from GitHub by hand	Stáhnout ručně z GitHubu
+When there is a new version:	Když je nová verze:
+Offer it to me	Nabídnout mi ji
+Install it and restart by itself	Nainstalovat a restartovat samo
+Never look for updates	Nikdy nehledat aktualizace
+Check now	Zkontrolovat nyní
+Never offer updates again	Už nenabízet aktualizace
+The release has no package	Vydání neobsahuje balíček
+No automatic updates for this system.	Pro tento systém nejsou automatické aktualizace.
+No connection to GitHub: are you online?	Žádné spojení s GitHubem: jste online?
+The release has no SHA256SUMS: not installed.	Vydání nemá SHA256SUMS: neinstaluje se.
+The package is not in SHA256SUMS: not installed.	Balíček není v SHA256SUMS: neinstaluje se.
+The download does not match its checksum: not installed.	Stažený soubor neodpovídá kontrolnímu součtu: neinstaluje se.
+Could not replace the program	Program se nepodařilo nahradit
+The package has no program in it.	V balíčku není žádný program.
+openMapper has stopped:	openMapper se zastavil:
+The log with the details:	Záznam s podrobnostmi:
