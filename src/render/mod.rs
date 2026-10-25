@@ -361,6 +361,12 @@ pub struct Renderer {
     spline_opaque: wgpu::RenderPipeline,
     ghost_pipeline: wgpu::RenderPipeline,
     spline_blend: wgpu::RenderPipeline,
+    /// The same with the back faces culled, as the game draws a spline (see
+    /// `omsi_geometry::build_spline_mesh`: every profile face is oriented, and a fence or
+    /// guard rail is two faces a couple of centimetres apart, one per side, which drawn from
+    /// both sides fight in the depth buffer and flicker as the camera moves).
+    spline_opaque_cull: wgpu::RenderPipeline,
+    spline_blend_cull: wgpu::RenderPipeline,
     thumb_opaque: wgpu::RenderPipeline,
     thumb_blend: wgpu::RenderPipeline,
     thumb_sky: wgpu::RenderPipeline,
@@ -575,19 +581,41 @@ pub fn object_matrix(world: DVec3, rot: [f64; 3]) -> Mat4 {
     Mat4::from_translation(world.as_vec3()) * omsi_geometry::object_rotation(omsi_geometry::map_rotation(rot))
 }
 
+/// Which of a set of four pipelines a mesh is drawn with: back faces are culled when the mesh
+/// is one-sided, and blended ones go in the pass that does not write depth.
+///
+/// A spline's faces are oriented for one side (`omsi_geometry::build_spline_mesh` turns its
+/// indices to the content meshes' clockwise front and sets `one_sided`), and a fence or guard
+/// rail is two faces a couple of centimetres apart, one per side: drawn from both sides they
+/// fight in the depth buffer and flicker as the camera moves. Object meshes have been drawn
+/// from one side since they were first read; splines were not.
+fn pipeline_index(one_sided: bool, blend: bool) -> usize {
+    match (one_sided, blend) {
+        (false, false) => 0,
+        (false, true) => 1,
+        (true, false) => 2,
+        (true, true) => 3,
+    }
+}
+
 impl Renderer {
     /// The pipeline an object's mesh is drawn with, set only when it changes.
-    fn set_object_pipeline<'a>(&'a self, pass: &mut wgpu::RenderPass<'a>, one_sided: bool, blend: bool, culled: &mut bool) {
-        if *culled == one_sided {
+    fn set_object_pipeline<'a>(&'a self, pass: &mut wgpu::RenderPass<'a>, one_sided: bool, blend: bool, set: &mut Option<bool>) {
+        if *set == Some(one_sided) {
             return;
         }
-        *culled = one_sided;
-        pass.set_pipeline(match (one_sided, blend) {
-            (false, false) => &self.mesh_opaque,
-            (false, true) => &self.mesh_blend,
-            (true, false) => &self.mesh_opaque_cull,
-            (true, true) => &self.mesh_blend_cull,
-        });
+        *set = Some(one_sided);
+        pass.set_pipeline([&self.mesh_opaque, &self.mesh_blend, &self.mesh_opaque_cull, &self.mesh_blend_cull][pipeline_index(one_sided, blend)]);
+    }
+
+    /// The pipeline a spline or junction plate is drawn with, set only when it changes. The
+    /// same rule as an object's, for the reason in `pipeline_index`.
+    fn set_spline_pipeline<'a>(&'a self, pass: &mut wgpu::RenderPass<'a>, one_sided: bool, blend: bool, set: &mut Option<bool>) {
+        if *set == Some(one_sided) {
+            return;
+        }
+        *set = Some(one_sided);
+        pass.set_pipeline([&self.spline_opaque, &self.spline_blend, &self.spline_opaque_cull, &self.spline_blend_cull][pipeline_index(one_sided, blend)]);
     }
 
     pub fn new(gpu: &Gpu, quality: quality::Quality) -> Renderer {
@@ -746,6 +774,8 @@ impl Renderer {
         });
         let spline_opaque = mesh_pipeline("spline", format, samples, None, true, 0);
         let spline_blend = mesh_pipeline("spline blend", format, samples, blend_alpha, false, 0);
+        let spline_opaque_cull = mesh_pipeline_with("spline culled", format, samples, None, true, 0, true);
+        let spline_blend_cull = mesh_pipeline_with("spline blend culled", format, samples, blend_alpha, false, 0, true);
         let thumb_opaque = mesh_pipeline("thumb", thumb_fmt, 1, None, true, 0);
         let thumb_blend = mesh_pipeline("thumb blend", thumb_fmt, 1, blend_alpha, false, 0);
         let sky = |fmt: wgpu::TextureFormat, samples: u32| {
@@ -873,6 +903,8 @@ impl Renderer {
             spline_opaque,
             ghost_pipeline,
             spline_blend,
+            spline_opaque_cull,
+            spline_blend_cull,
             thumb_opaque,
             thumb_blend,
             thumb_sky,
@@ -2031,16 +2063,16 @@ impl Renderer {
         }
         for blend in [false, true] {
             // splines
-            pass.set_pipeline(if blend { &self.spline_blend } else { &self.spline_opaque });
             pass.set_vertex_buffer(1, dynamic.slice(..));
+            let mut spline_set: Option<bool> = None;
             for &(mesh, mats, i) in &splines {
+                self.set_spline_pipeline(&mut pass, mesh.one_sided, blend, &mut spline_set);
                 let n = draw_mesh(&mut pass, &self.materials, mesh, mats, Some(blend), &[i..i + 1]);
                 calls += n;
                 spline_calls += n;
             }
             // objects
-            pass.set_pipeline(if blend { &self.mesh_blend } else { &self.mesh_opaque });
-            let mut culled = false;
+            let mut culled: Option<bool> = None;
             let mut bound_dynamic = true;
             for (b, ranges, ghost) in &visible {
                 if *ghost != bound_dynamic {
@@ -2334,7 +2366,12 @@ fn draw_mesh(pass: &mut wgpu::RenderPass, materials: &HashMap<MatKey, wgpu::Bind
 
 /// Meshes (in the same frame) as one, its triangles grouped by material.
 fn merge_meshes(parts: &[(&MeshData, &[Material], Aabb)]) -> (MeshData, Vec<Material>, Aabb) {
-    let mut out = MeshData::default();
+    // (one-sided only when every part is: they are drawn with one pipeline, and drawing a
+    // two-sided part from one side would leave it half missing. A tile's chunk merges the
+    // splines drawn near it, and every spline the geometry crate builds is one-sided - which
+    // this lost, begun from `MeshData::default()`, so the merged splines were the ones still
+    // drawn from both sides)
+    let mut out = MeshData { one_sided: !parts.is_empty() && parts.iter().all(|(m, _, _)| m.one_sided), ..Default::default() };
     let mut materials: Vec<Material> = Vec::new();
     let mut keys: Vec<MatKey> = Vec::new();
     let mut by_mat: Vec<Vec<u32>> = Vec::new();
@@ -2582,4 +2619,43 @@ fn light_view(cam: &Camera, sun: Vec3, size: u32, reach: f32) -> (Mat4, f32) {
     let depth = half * 2.0 + 600.0;
     let proj = Mat4::orthographic_rh(x - half, x + half, y - half, y + half, -c.z - depth, -c.z + depth);
     (proj * view, texel)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn a_merged_chunk_keeps_the_one_sidedness_of_its_parts() {
+        // (a tile's chunk merges the splines drawn near it into one draw, and the merged mesh
+        // is what the draw loop sees: it has to carry the flag its parts had. Begun from
+        // `MeshData::default()` it was two-sided, so every merged spline - which is most of
+        // them - was still drawn from both sides.)
+        let one = MeshData { one_sided: true, ..Default::default() };
+        let mut two = one.clone();
+        two.one_sided = false;
+        let aabb = Aabb::EMPTY;
+        let mats: [Material; 0] = [];
+        let (merged, _, _) = merge_meshes(&[(&one, &mats, aabb), (&one, &mats, aabb)]);
+        assert!(merged.one_sided, "merged one-sided parts came out two-sided");
+        // (one two-sided part makes the whole draw two-sided: they share one pipeline)
+        let (merged, _, _) = merge_meshes(&[(&one, &mats, aabb), (&two, &mats, aabb)]);
+        assert!(!merged.one_sided, "a two-sided part was merged into a one-sided draw");
+        // (nothing to merge is nothing to cull)
+        let (merged, _, _) = merge_meshes(&[]);
+        assert!(!merged.one_sided);
+    }
+
+    #[test]
+    fn a_one_sided_mesh_is_drawn_with_the_pipeline_that_culls_the_back() {
+        // (the four pipelines a setter picks from are, in order: two-sided, two-sided blended,
+        // one-sided, one-sided blended, so a one-sided mesh takes the last two)
+        for blend in [false, true] {
+            let two = pipeline_index(false, blend);
+            let one = pipeline_index(true, blend);
+            assert!(one > two, "a one-sided mesh takes a later pipeline than a two-sided one");
+            assert_eq!(one % 2 == 1, blend, "the blended pipeline is the odd one");
+        }
+        assert_eq!([pipeline_index(false, false), pipeline_index(false, true), pipeline_index(true, false), pipeline_index(true, true)], [0, 1, 2, 3]);
+    }
 }
