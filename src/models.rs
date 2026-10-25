@@ -28,9 +28,15 @@ pub struct Mat {
 /// How a picture's alpha is to be used: 0 if it is all opaque, 1 if it is cut out (nearly
 /// every pixel fully there or fully gone: leaves, fences), 2 if it fades (glass).
 pub fn alpha_of(img: &image::RgbaImage) -> u8 {
+    alpha_of_pixels(img.pixels().map(|p| p[3]))
+}
+
+/// `alpha_of` over the alpha bytes alone, so a picture that is already decoded (an
+/// `omsi_texture::Image`) need not be copied into a `RgbaImage` to be classified.
+pub fn alpha_of_pixels(alphas: impl Iterator<Item = u8>) -> u8 {
     let (mut clear, mut mid) = (0usize, 0usize);
-    for p in img.pixels() {
-        match p[3] {
+    for a in alphas {
+        match a {
             250..=255 => {}
             0..=10 => clear += 1,
             _ => mid += 1,
@@ -388,6 +394,41 @@ mod tests {
         assert_eq!(back.materials.len(), 1);
         assert_eq!(back.materials[0].texture, "tri_0.png");
         let _ = std::fs::remove_dir_all(dir);
+    }
+
+    /// A picture whose texels are clear or solid, only the antialiased outline between: the
+    /// parked buses and vans the Hong Kong maps paint onto a hard-edged picture (measured at
+    /// 0.31–0.47 % partial texels over 86–94 % solid ones).
+    fn a_cut_out_picture() -> image::RgbaImage {
+        let mut img = image::RgbaImage::from_pixel(128, 128, image::Rgba([0, 0, 0, 0]));
+        for y in 4..124 {
+            for x in 4..124 {
+                img.put_pixel(x, y, image::Rgba([180, 150, 90, 255]));
+            }
+        }
+        // (the outline: a few texels at half alpha, as an antialiased edge leaves them)
+        for x in 4..64 {
+            img.put_pixel(x, 4, image::Rgba([180, 150, 90, 128]));
+        }
+        img
+    }
+
+    #[test]
+    fn a_picture_is_read_as_opaque_cut_out_or_fading() {
+        // (all there: nothing to cut out)
+        assert_eq!(alpha_of(&image::RgbaImage::from_pixel(8, 8, image::Rgba([1, 2, 3, 255]))), 0);
+        // (a hard edge with an antialiased outline: what a parked bus is painted on)
+        let cut = alpha_of(&a_cut_out_picture());
+        assert_eq!(cut, 1, "a hard-edged picture is not read as a cut-out");
+        // (a soft shadow blob, as the same texture's shadow half is: mostly half-alpha)
+        let mut soft = image::RgbaImage::from_pixel(8, 8, image::Rgba([0, 0, 0, 0]));
+        for (i, p) in soft.pixels_mut().enumerate() {
+            *p = if i % 8 < 4 { image::Rgba([0, 0, 0, 0]) } else { image::Rgba([0, 0, 0, 120]) };
+        }
+        assert_eq!(alpha_of(&soft), 2, "a fading picture is not read as a fade");
+        // (the same picture from its alpha bytes alone, which is how a decoded texture is read)
+        let raw: Vec<u8> = a_cut_out_picture().pixels().flat_map(|p| p.0).collect();
+        assert_eq!(alpha_of_pixels(raw.chunks_exact(4).map(|q| q[3])), cut);
     }
 
 }
