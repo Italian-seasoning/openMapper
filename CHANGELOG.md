@@ -4,7 +4,7 @@ Releases are tagged `v<version>`; the downloads are on the
 [Releases](https://github.com/openOMSI-org/openMapper/releases) page, each with the notes of its
 version from this file.
 
-## Unreleased
+## 0.1.9 - 2026-10-26
 
 ### Fixed
 - **Test drive no longer starts two sessions**: openMapper keeps track of the openOMSI it started; a second click or key press while it runs starts nothing.
