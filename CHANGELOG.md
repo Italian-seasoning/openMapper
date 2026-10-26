@@ -4,6 +4,12 @@ Releases are tagged `v<version>`; the downloads are on the
 [Releases](https://github.com/openOMSI-org/openMapper/releases) page, each with the notes of its
 version from this file.
 
+## 0.1.12 - 2026-10-26
+
+### Fixed
+- **A junction's roadway is as high as the roads' surface** ([#39](https://github.com/openOMSI-org/openMapper/issues/39)): road types drawn above the line they are laid along (the road maker's own sit 10 cm over it) got a junction whose asphalt lay that much under the roads and the kerbs; the plate's roadway now takes the height of the roads' surface.
+- **No crash on exit on Wayland** ([#37](https://github.com/openOMSI-org/openMapper/issues/37)): the program ends right after saving instead of tearing its threads down in order, which crashed in libwayland-client on some Linux systems.
+
 ## 0.1.11 - 2026-10-26
 
 ### Added

@@ -305,6 +305,9 @@ struct ArmGeo {
     /// The roadway's own texture and where its lane (no markings) lies: (texture, u of a
     /// lane's middle, the roadway's u range, metres per repeat along the road).
     road_tex: Option<(PathBuf, f64, f64, f64, f64, f64)>,
+    /// How high the roadway's surface lies over the spline's own height (m): the profile a
+    /// lane runs on, where roads are drawn above the line they are laid along.
+    road_z: f64,
 }
 
 fn arm_geometry(doc: &Document, assets: &mut Assets, a: &Arm) -> Option<ArmGeo> {
@@ -380,7 +383,19 @@ fn arm_geometry(doc: &Document, assets: &mut Assets, a: &Arm) -> Option<ArmGeo> 
         let lane = if lane > 1.5 { lane / 0.9 } else { width * 0.5 };
         Some((tex, u, range, 1.0 / vs, width, lane))
     });
-    Some(ArmGeo { end, out, right_w, left_w, right, left, v0, vdir, road_tex })
+    let road_z = central
+        .map(|(_, pts)| {
+            let x = lane_mid;
+            let mut z = pts[0].1;
+            for w in pts.windows(2) {
+                if (w[0].0 - x) * (w[1].0 - x) <= 0.0 && (w[1].0 - w[0].0).abs() > 1e-6 {
+                    z = w[0].1 + (w[1].1 - w[0].1) * (x - w[0].0) / (w[1].0 - w[0].0);
+                }
+            }
+            z
+        })
+        .unwrap_or(0.0);
+    Some(ArmGeo { end, out, right_w, left_w, right, left, v0, vdir, road_tex, road_z })
 }
 
 /// The junction's mesh: vertices (relative to the centre: position, normal, uv), triangles
@@ -538,12 +553,14 @@ fn junction_mesh(arms: &[ArmGeo], centre: DVec3, core_tex: Option<PathBuf>, peri
         log::debug!("arm {i}: end ({:.1}, {:.1}) out {:.0} right {:.1} left {:.1}", g.end.x - centre.x, g.end.y - centre.y, g.out, g.right_w, g.left_w);
     }
     // the roadway: a fan round the centre, its texture laid flat on the map
-    let mid = DVec3::new(0.0, 0.0, outline.iter().map(|p| p.z - centre.z).sum::<f64>() / outline.len().max(1) as f64);
+    // (at the height the roads' surface lies, not the line they are laid along)
+    let road_z = arms.iter().map(|a| a.road_z).sum::<f64>() / arms.len().max(1) as f64;
+    let mid = DVec3::new(0.0, 0.0, outline.iter().map(|p| p.z - centre.z).sum::<f64>() / outline.len().max(1) as f64 + road_z);
     let (fwd, side) = (roads::dir(along), roads::right(along));
     let uv = |p: DVec3| [(p.x * side.x + p.y * side.y) / period, -(p.x * fwd.x + p.y * fwd.y) / period];
     for i in 0..outline.len() {
-        let p0 = rel(outline[i]);
-        let p1 = rel(outline[(i + 1) % outline.len()]);
+        let p0 = rel(outline[i]) + DVec3::Z * road_z;
+        let p1 = rel(outline[(i + 1) % outline.len()]) + DVec3::Z * road_z;
         mesh.tri([mid, p0, p1], [uv(mid), uv(p0), uv(p1)], DVec3::Z, core);
     }
     mesh
@@ -1023,6 +1040,7 @@ mod tests {
             v0: 0.0,
             vdir: 1.0,
             road_tex: None,
+            road_z: 0.0,
         };
         let arms = vec![arm(DVec3::new(10.0, 0.0, 0.0), 90.0), arm(DVec3::new(-10.0, 0.0, 0.0), 270.0), arm(DVec3::new(0.0, 10.0, 0.0), 0.0)];
         let mesh = junction_mesh(&arms, DVec3::ZERO, None, 8.0, 0.0);

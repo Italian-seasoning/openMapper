@@ -8589,6 +8589,44 @@ mod tests {
         assert!(ed.doc.as_ref().unwrap().tiles[&(0, 0)].tile.splines.is_empty());
     }
 
+    /// The roadway of a junction lies as high as the roads' surface (a road type drawn above
+    /// the line it is laid along), not under it.
+    #[test]
+    fn a_junctions_roadway_is_as_high_as_the_roads_surface() {
+        let (mut assets, dir, plain, _) = pocket_fixture("plate");
+        let content = dir.join("content");
+        let mut doc = flat_map(1);
+        doc.dir = content.join("maps").join("Plate");
+        let mut ed = Editor::default();
+        ed.content_dir = Some(content.clone());
+        ed.open(doc);
+        ed.set_tool(Tool::Roads);
+        ed.road_type = Some(plain.clone());
+        let lib = Library::default();
+        let click = |ed: &mut Editor, a: &mut Assets, x: f64, y: f64| {
+            ed.cursor = Some(DVec3::new(x, y, 0.0));
+            ed.plan_road(a);
+            ed.road_click(a, &lib);
+            ed.tick(a, 0.0, false);
+        };
+        click(&mut ed, &mut assets, 60.0, 150.0);
+        click(&mut ed, &mut assets, 240.0, 150.0);
+        ed.right_click();
+        click(&mut ed, &mut assets, 150.0, 260.0);
+        click(&mut ed, &mut assets, 150.0, 151.0);
+        ed.right_click();
+        for _ in 0..50 { assets.poll(); ed.tick(&mut assets, 0.0, false); std::thread::sleep(std::time::Duration::from_millis(10)); }
+        let t = &ed.doc.as_ref().unwrap().tiles[&(0, 0)].tile;
+        let j = t.objects.iter().find(|o| o.file.contains("junction_")).expect("a junction");
+        let x = std::fs::read_to_string(omsi_cfg::resolve_path(&content, &j.file).with_file_name("model").join(std::path::Path::new(&j.file.replace('\\', "/")).file_name().unwrap()).with_extension("x")).unwrap();
+        // the vertices' heights (the second number of each `x;y;z` line): none under the road surface
+        let heights: Vec<f64> = x.lines().take_while(|l| !l.contains("3;")).filter_map(|l| { let p: Vec<&str> = l.trim().trim_end_matches([',', ';']).split(';').collect(); (p.len() == 3).then(|| p[1].parse().ok()).flatten() }).collect();
+        assert!(!heights.is_empty());
+        let low = heights.iter().cloned().fold(f64::MAX, f64::min);
+        assert!(low > 0.09, "lowest vertex at {low}");
+        let _ = std::fs::remove_dir_all(&dir);
+    }
+
     #[test]
     fn a_road_into_another_makes_a_t_junction() {
         let road_s = std::env::var("TJ_MAIN").unwrap_or("Splines\\Marcel\\str_2spur_8m_borkumer1.sli".into());
