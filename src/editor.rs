@@ -2733,6 +2733,7 @@ impl Editor {
     /// them that tapers from one width to the other.
     fn adapt_joints(&mut self, assets: &mut Assets, ends: Vec<(TileKey, i64, bool)>) {
         let (Some(content), asphalt) = (self.content_dir.clone(), self.asphalt.clone()) else { return };
+        let follow = self.follow_ground;
         let Some(doc) = self.doc.as_mut() else { return };
         for (k, id, at_end) in ends {
             let Some(s) = doc.spline(k, id) else { continue };
@@ -2751,7 +2752,7 @@ impl Editor {
             self.history.touch_global(doc);
             let arms: Vec<crate::junction::Arm> = [(k, id, at_end), (nk, n.id, n_end)].into_iter().filter_map(|(k, id, e)| doc.trim(k, id, e, back)).map(|x| crate::junction::Arm { key: x.0, id: x.1, at_end: x.2 }).collect();
             if arms.len() == 2 {
-                join_two(doc, assets, true, &content, asphalt.as_deref(), &arms[0], &arms[1]);
+                join_two(doc, assets, true, follow, &content, asphalt.as_deref(), &arms[0], &arms[1]);
             }
         }
     }
@@ -3170,7 +3171,7 @@ impl Editor {
                     let back = if tapered { taper_back(step) } else { halves.iter().cloned().fold(3.0, f64::max) + 2.0 };
                     let arms: Vec<crate::junction::Arm> = c.iter().filter_map(|&i| doc.trim(all[i].0, all[i].1, all[i].2, back)).map(|x| crate::junction::Arm { key: x.0, id: x.1, at_end: x.2 }).collect();
                     if arms.len() == 2 {
-                        join_two(doc, assets, adapt, &content, asphalt.as_deref(), &arms[0], &arms[1]);
+                        join_two(doc, assets, adapt, follow, &content, asphalt.as_deref(), &arms[0], &arms[1]);
                     }
                 }
                 continue;
@@ -3185,7 +3186,8 @@ impl Editor {
                     made += 1;
                     if follow {
                         let e = arm_ends_world(doc, &arms);
-                        conform_disc(doc, centre, r * 1.1, &e);
+                        let reach = crate::junction::reach(doc, assets, centre, &arms).max(r * 1.1);
+                        conform_disc(doc, centre, reach, &e);
                     }
                 }
                 Err(e) => log::warn!("junction at a node: {e}"),
@@ -3241,13 +3243,14 @@ impl Editor {
                         count += 1;
                         if follow {
                             let ends = arm_ends_world(doc, &arms);
-                            conform_disc(doc, centre, r * 1.1, &ends);
+                            let reach = crate::junction::reach(doc, assets, centre, &arms).max(r * 1.1);
+                            conform_disc(doc, centre, reach, &ends);
                         }
                     }
                     Err(e) => log::warn!("junction: {e}"),
                 }
             } else if arms.len() == 2 {
-                join_two(doc, assets, adapt, &content, asphalt.as_deref(), &arms[0], &arms[1]);
+                join_two(doc, assets, adapt, follow, &content, asphalt.as_deref(), &arms[0], &arms[1]);
             }
         }
         // where the new road crosses another one (X junctions), one after the other
@@ -3325,14 +3328,15 @@ impl Editor {
                         count += 1;
                         if follow {
                             let ends = arm_ends_world(doc, &arms);
-                            conform_disc(doc, centre, r * 1.1, &ends);
+                            let reach = crate::junction::reach(doc, assets, centre, &arms).max(r * 1.1);
+                            conform_disc(doc, centre, reach, &ends);
                         }
                     }
                     Err(e) => log::warn!("junction: {e}"),
                 }
             } else if arms.len() == 2 {
                 // (the rest were stubs too short to keep: a bend, not a junction)
-                join_two(doc, assets, adapt, &content, asphalt.as_deref(), &arms[0], &arms[1]);
+                join_two(doc, assets, adapt, follow, &content, asphalt.as_deref(), &arms[0], &arms[1]);
             }
         }
         // a junction made before whose arm road this one trimmed away (a short road between
@@ -6023,6 +6027,7 @@ impl Editor {
         let Some(content) = self.content_dir.clone() else { return };
         let asphalt = self.asphalt.clone();
         let adapt = self.auto_adapt;
+        let follow = self.follow_ground;
         let was_selected = self.selection().iter().any(|s| matches!(s, Sel::Object(_, x) if *x == id));
         let Some(doc) = self.doc.as_mut() else { return };
         let Some((jk, o)) = doc.tiles.iter().find_map(|(k, t)| t.tile.objects.iter().find(|o| o.id == id).map(|o| (*k, o.clone()))) else { return };
@@ -6085,7 +6090,7 @@ impl Editor {
                 }
             },
             2 => {
-                join_two(doc, assets, adapt, &content, asphalt.as_deref(), &arms[0], &arms[1]);
+                join_two(doc, assets, adapt, follow, &content, asphalt.as_deref(), &arms[0], &arms[1]);
                 if was_selected {
                     self.select(None);
                 }
@@ -6501,13 +6506,19 @@ fn taper_back(step: f64) -> f64 {
 
 /// Join the two arms left of a junction: roads of different width get a plate that tapers
 /// from the one to the other (as a junction of two roads), else a bend of the first's type.
-fn join_two(doc: &mut Document, assets: &mut Assets, adapt: bool, content: &Path, asphalt: Option<&Path>, a: &crate::junction::Arm, b: &crate::junction::Arm) {
+fn join_two(doc: &mut Document, assets: &mut Assets, adapt: bool, follow: bool, content: &Path, asphalt: Option<&Path>, a: &crate::junction::Arm, b: &crate::junction::Arm) {
     if adapt && width_step(doc, assets, a, b).is_some() {
         let ends = arm_ends_world(doc, &[*a, *b]);
         if ends.len() == 2 {
             let centre = (ends[0] + ends[1]) * 0.5;
             match crate::junction::make_with(doc, assets, content, asphalt, centre, &[*a, *b], &crate::junction::Options::default()) {
-                Ok(_) => return,
+                Ok(_) => {
+                    if follow {
+                        let reach = crate::junction::reach(doc, assets, centre, &[*a, *b]).max(4.0);
+                        conform_disc(doc, centre, reach, &ends);
+                    }
+                    return;
+                }
                 Err(e) => log::warn!("road adapter: {e}"),
             }
         }

@@ -702,6 +702,20 @@ fn num(v: f64) -> String {
     if s.is_empty() || s == "-0" { "0".into() } else { s.to_string() }
 }
 
+/// How far from `centre` the plate reaches: out to the corners of the arms' ends, with the
+/// kerb and footway beyond the roadway (the ground under it is brought to its height out to
+/// there, not only to the roads' own width).
+pub fn reach(doc: &Document, assets: &mut Assets, centre: DVec3, arms: &[Arm]) -> f64 {
+    arms.iter()
+        .filter_map(|a| arm_geometry(doc, assets, a))
+        .map(|g| {
+            let beyond = g.right.iter().chain(g.left.iter()).flat_map(|p| p.points.iter()).map(|q| q.0).fold(0.0, f64::max);
+            let wide = g.right_w.max(g.left_w) + beyond;
+            ((g.end.truncate() - centre.truncate()).length().powi(2) + wide * wide).sqrt()
+        })
+        .fold(0.0, f64::max)
+}
+
 /// The same with lights and crossings as `opts` says.
 pub fn make_with(doc: &mut Document, assets: &mut Assets, content: &Path, asphalt: Option<&Path>, centre: DVec3, arms: &[Arm], opts: &Options) -> anyhow::Result<i64> {
     let (_, lanes) = arm_ends(doc, assets, arms).ok_or_else(|| anyhow::anyhow!("a road of the junction is not loaded"))?;
