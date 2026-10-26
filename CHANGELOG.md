@@ -4,7 +4,23 @@ Releases are tagged `v<version>`; the downloads are on the
 [Releases](https://github.com/openOMSI-org/openMapper/releases) page, each with the notes of its
 version from this file.
 
-## Unreleased
+## 0.1.8 - 2026-10-25
+
+### Fixed
+- **A cable, a fence or a footpath no longer joins a junction** ([#24](https://github.com/openOMSI-org/openMapper/issues/24)): drawn near a junction plate or a road end, splines nothing drives on took them for roads and became arms of the junction or snapped to its places. Only roads join now, and holding Ctrl while drawing joins nothing, not even a road (no arm, no junction made where it crosses another road).
+
+### Changed
+- **How many tiles are loaded at once is a choice** ([#29](https://github.com/openOMSI-org/openMapper/issues/29)): View > Tiles loaded at once: 9, 25, 49, 100 (as before) or 225 tiles round the camera, the others hidden until a click on the empty zone, for big or very detailed maps that were too heavy.
+
+### Added
+- **Roads of different width are joined by a taper** ([#30](https://github.com/openOMSI-org/openMapper/issues/30)): where a road is drawn on from the end of one of another width (a 4-lane into a 6-lane), or two such roads meet at a node, a plate that narrows or widens at 1:10 is laid between them, with its lanes joined, as for a junction of two roads. Roads of one width are joined as before. Auto-Adapt in the bottom bar (on by default) turns it off.
+- **Compulsory stops, request stops and termini**: a bus stop has a kind (Game logic > Bus stops while placing, and in the stop's properties). A compulsory stop always has people waiting and every bus stops; a request stop only serves a bus when somebody gets on or off; a terminus has everybody get off. Each trip says how its buses serve every stop (Lines > a trip > How the stops are served: always, when wanted, drive through, when early: OMSI 2's own `[profile_otherstopping]`), by default from the stop's kind.
+- **How many people wait, get off and where**: a stop's properties hold the most and the fewest people waiting, how many get off (the weight among the stops ahead), the length of the stop and the side of its platform, as OMSI 2 and openOMSI read them from the stop's texts.
+- **Split a pair of stops, and no stop names twice**: the two stops across a road keep one name (renaming one renames the other) until "Split" gives one a name of its own; stops put down by hand get a name no other stop far from them has; a stop whose name another far stop has says so with a button to make it different; the map check lists stops sharing a name with one click to fix.
+- **A junction piece on a road's end**: select a road with a free end and choose a junction piece (the ones made for its road type first): it is turned and put so its place for that road meets the end. Road types can name the junction piece they are joined with by preference (Road types and junctions).
+- **A better road maker**: ready-made roads to start from (quiet street, main road, avenue with a green strip, one-way street, country road, service road), a middle strip with a texture of its own that can stand as high as the footways with a kerb along it, a footway of one width on the left and another on the right (or none on one side).
+- **Scripts** (Map > Scripts): the map's own Lua script for openOMSI (written into the content folder's `plugins`, run on this map only, checked as you type, with ready-made scripts to start from) and the object scripts (`.osc`) of OMSI 2 and openOMSI, checked by openOMSI's own compiler; a light switched by a script (during certain hours, blinking, in certain months) can be made in one click. The map's Lua script goes into the map's shared zip; importing it does not install it (it is code).
+- **Which vehicles drive a line** (Lines > a line > Vehicles): OMSI 2's `car_use/*.ocu` files: for a span of dates the vehicle types its tours are given (only these, or mostly these with a share), and a fleet number for a single tour.
 
 ## 0.1.7 - 2026-10-25
 

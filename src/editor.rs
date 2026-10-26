@@ -1,5 +1,6 @@
 //! The editor: the open map, the tools and what the mouse does with them.
 
+use std::path::Path;
 use std::time::Instant;
 
 use glam::{DVec2, DVec3, Vec3};
@@ -380,6 +381,8 @@ pub struct Editor {
     pub auto_terrain: bool,
     /// Where a new road meets or crosses another one, cut both and put a junction there.
     pub auto_junctions: bool,
+    /// Roads of different width are joined by a taper (Auto-Adapt).
+    pub auto_adapt: bool,
     /// Where a track branches off another, put a switch there (off: the tracks just meet).
     pub auto_switches: bool,
     /// A road drawn near another's end or middle, or a junction piece's helper, joins it
@@ -433,6 +436,11 @@ pub struct Editor {
     stop_twin: Option<(DVec3, f64)>,
     /// A bus stop goes on both sides of the road at once.
     pub stop_both_sides: bool,
+    /// The junction piece picked in a road's properties, and the search in its list.
+    pub junction_piece: Option<String>,
+    pub junction_search: String,
+    /// The kind of bus stop the Game logic tool places.
+    pub stop_kind: crate::stops::StopKind,
     // tiles
     hover_tile: Option<TileKey>,
     /// The tile clicked last with the Tiles tool (its overlay shown in the panel).
@@ -549,6 +557,7 @@ impl Default for Editor {
             road_plan: None,
             follow_ground: true,
             auto_junctions: true,
+            auto_adapt: true,
             auto_terrain: true,
             auto_switches: true,
             snap_roads: true,
@@ -579,6 +588,9 @@ impl Default for Editor {
             ghost_pos: None,
             stop_twin: None,
             stop_both_sides: true,
+            stop_kind: Default::default(),
+            junction_piece: None,
+            junction_search: String::new(),
             hover_tile: None,
             picked_tile: None,
             drag: Drag::None,
@@ -1769,6 +1781,34 @@ impl Editor {
     }
 
 
+    /// Put the junction piece `piece` onto an end of road `id` (`at_end`: its far end, else
+    /// its start): turned and moved so the piece's helper that takes this road type (else its
+    /// first) meets the end, facing along it. `Err` says why not.
+    pub fn junction_at_end(&mut self, assets: &mut Assets, lib: &Library, k: TileKey, id: i64, at_end: bool, piece: &str) -> Result<(), &'static str> {
+        let Some(doc) = self.doc.as_ref() else { return Err("") };
+        let Some(s) = doc.tiles.get(&k).and_then(|t| t.tile.splines.iter().find(|s| s.id == id && !s.deleted)) else { return Err(tr("The road is gone", "Дороги уже нет")) };
+        if (at_end && s.next_id != 0) || (!at_end && s.prev_id != 0) {
+            return Err(tr("This end is already joined to something", "Этот конец уже к чему-то присоединён"));
+        }
+        let c = omsi_geometry::SplineCurve::from_map(s, tile_origin(k));
+        let (end, heading) = if at_end { (c.end_point(), roads::norm_deg(c.heading_at(s.length))) } else { (c.point_at(0.0), roads::norm_deg(s.heading + 180.0)) };
+        let road_file = s.file.replace('/', "\\").to_lowercase();
+        let Some(model) = assets.object_wait(piece, 3000) else { return Err(tr("The junction piece could not be read", "Не удалось прочитать перекрёсток")) };
+        if model.helpers.is_empty() {
+            return Err(tr("This object has no places for roads to join", "У этого объекта нет мест для присоединения дорог"));
+        }
+        let h = model.helpers.iter().find(|h| h.1.replace('/', "\\").to_lowercase() == road_file).unwrap_or(&model.helpers[0]).0;
+        let abs = model.abs_height;
+        let turn = roads::norm_deg(heading + 180.0 - h[3] as f64);
+        let off = object_matrix(DVec3::ZERO, [turn, 0.0, 0.0]).transform_point3(Vec3::new(h[0], h[1], h[2])).as_dvec3();
+        let at = end - off;
+        let z = if abs { at.z } else { at.z.max(doc.ground(at.truncate())) };
+        self.object_type = Some(piece.to_string());
+        self.ghost_pos = Some((DVec3::new(at.x, at.y, z), turn));
+        self.place_object(lib, false);
+        Ok(())
+    }
+
     /// Place the object chosen at the cursor now (dropped from the asset browser).
     pub fn place_now(&mut self, assets: &mut Assets, lib: &Library) {
         self.plan_object(assets, lib);
@@ -1806,7 +1846,10 @@ impl Editor {
         };
         let is_stop = asset.as_ref().map(|a| a.is_bus_stop).unwrap_or(false);
         if is_stop {
-            o.extra = vec![tr("New stop", "Новая остановка").to_string(), "0".into(), "0".into(), "10".into()];
+            // (a name no stop far from here has: stops put down one after another are not
+            // all "New stop")
+            let name = crate::stops::unique_name(&crate::stops::all(doc), None, tr("New stop", "Новая остановка"), pos.truncate());
+            o.extra = crate::stops::StopSettings::new_strings(&name, self.stop_kind);
             o.flag = 7;
         }
         let is_entry = asset.as_ref().map(|a| a.is_entry_point).unwrap_or(false);
@@ -2097,7 +2140,7 @@ impl Editor {
             let id = doc.new_id();
             let org = tile_origin(k);
             let label = if name.trim().is_empty() { tr("Stop", "Остановка").to_string() } else { name.trim().to_string() };
-            let o = MapObject { file: rel.to_string(), id, pos: [at.x - org.x, at.y - org.y, 0.0], rot: [flow, 0.0, 0.0], extra: vec![label, "0".into(), "0".into(), "10".into()], flag: 7, ..Default::default() };
+            let o = MapObject { file: rel.to_string(), id, pos: [at.x - org.x, at.y - org.y, 0.0], rot: [flow, 0.0, 0.0], extra: crate::stops::StopSettings::new_strings(&label, Default::default()), flag: 7, ..Default::default() };
             let t = doc.tiles.get_mut(&k).unwrap();
             t.tile.objects.push(o);
             t.touch_content();
@@ -2292,6 +2335,17 @@ impl Editor {
     }
 
     /// The type being drawn is a track (rails meet in switches, not junctions).
+    /// The road drawn is joined to what is near: its ends take the ends of roads and the places
+    /// of junction pieces, a junction plate takes it as an arm, junctions are made where it meets
+    /// roads. Not for a cable, a fence or a footpath (nothing drives on them: they only lie where
+    /// they are drawn), not with the option off and not while Ctrl is held.
+    fn joins(&self, assets: &mut Assets) -> bool {
+        if !self.snap_roads || self.ctrl_held {
+            return false;
+        }
+        self.drawing_paths() || self.road_type.as_deref().and_then(|r| assets.spline(r)).map(|m| m.joinable()).unwrap_or(true)
+    }
+
     fn drawing_track(&self, assets: &mut Assets) -> bool {
         !self.drawing_paths() && self.road_type.as_deref().and_then(|r| assets.spline(r)).map(|m| m.is_track()).unwrap_or(false)
     }
@@ -2452,7 +2506,8 @@ impl Editor {
         if self.drawing_paths() && self.road_start.is_none() {
             self.follow_lane_kind(assets, c.truncate());
         }
-        let found = if self.drawing_paths() { self.snap_lane(assets, c.truncate(), self.road_start.is_none()) } else if self.snap_roads { self.snap_anchor(assets, c.truncate(), 5.0) } else { None };
+        let joins = self.joins(assets);
+        let found = if self.drawing_paths() { self.snap_lane(assets, c.truncate(), self.road_start.is_none()) } else if joins { self.snap_anchor(assets, c.truncate(), 5.0) } else { None };
         self.road_snap_file = found.as_ref().and_then(|f| f.1.clone());
         let snap = found.map(|f| f.0);
         // (the start end itself is not a target)
@@ -2468,7 +2523,7 @@ impl Editor {
         let mut end_anchor = snap;
         // into a junction plate: to its centre (it is cut back to the edge and becomes an arm)
         self.road_plate_end = None;
-        if snap.is_none() && !self.drawing_paths() {
+        if snap.is_none() && !self.drawing_paths() && joins {
             if let Some(p) = self.plate_at(assets, c.truncate()) {
                 target = p.1.truncate();
                 self.road_plate_end = Some(p);
@@ -2576,7 +2631,7 @@ impl Editor {
                 Some(a) => self.road_start = Some((a, true)),
                 None => {
                     // from inside a junction plate: from its centre, as a new arm of it
-                    self.road_plate_start = self.plate_at(assets, c.truncate());
+                    self.road_plate_start = if self.joins(assets) { self.plate_at(assets, c.truncate()) } else { None };
                     let q = self.snap_point(c.truncate());
                     let z = self.doc.as_ref().map(|d| d.ground(q)).unwrap_or(c.z);
                     let pos = self.road_plate_start.map(|p| p.1).unwrap_or(DVec3::new(q.x, q.y, z));
@@ -2622,12 +2677,15 @@ impl Editor {
                 if switched {
                     self.toast(tr("Switch made", "Стрелка создана"));
                 }
-            } else if self.auto_junctions && !self.drawing_paths() {
+            } else if self.auto_junctions && !self.drawing_paths() && self.joins(assets) {
                 let start_mid = start.mid.map(|m| (m, start.pos));
                 let end_mid = end.and_then(|e| e.mid.map(|m| (m, e.pos)));
                 let n = self.make_junctions(assets, made, half as f64, start_mid, end_mid);
                 if n > 0 {
                     self.toast(format!("{} {n}", tr("Junctions made:", "Перекрёстков создано:")));
+                }
+                if self.auto_adapt {
+                    self.adapt_joints(assets, [start.spline, end.and_then(|e| e.spline)].into_iter().flatten().collect());
                 }
                 // drawing goes on from the road's end, if a junction has not taken it
                 last = last.filter(|l| self.doc.as_ref().map(|d| d.spline(l.0, l.1).is_some()).unwrap_or(false));
@@ -2668,6 +2726,34 @@ impl Editor {
             }
         }
         self.road_plan = None;
+    }
+
+    /// Where a road was drawn on from the end of another of a different width (`ends`: the
+    /// old road's ends, as (tile, id, at its end)), cut both back and lay a plate between
+    /// them that tapers from one width to the other.
+    fn adapt_joints(&mut self, assets: &mut Assets, ends: Vec<(TileKey, i64, bool)>) {
+        let (Some(content), asphalt) = (self.content_dir.clone(), self.asphalt.clone()) else { return };
+        let Some(doc) = self.doc.as_mut() else { return };
+        for (k, id, at_end) in ends {
+            let Some(s) = doc.spline(k, id) else { continue };
+            let next = if at_end { s.next_id } else { s.prev_id };
+            let Some((nk, n)) = doc.find_spline(next).map(|(nk, n)| (nk, n.clone())) else { continue };
+            let n_end = n.next_id == id && n.prev_id != id;
+            let (a, b) = (crate::junction::Arm { key: k, id, at_end }, crate::junction::Arm { key: nk, id: n.id, at_end: n_end });
+            let Some(step) = width_step(doc, assets, &a, &b) else { continue };
+            let back = taper_back(step);
+            // (a road too short for the taper stays joined as it is)
+            if doc.spline(k, id).map(|s| s.length).unwrap_or(0.0) < back + 1.0 || n.length < back + 1.0 {
+                continue;
+            }
+            self.history.touch_tile(doc, k);
+            self.history.touch_tile(doc, nk);
+            self.history.touch_global(doc);
+            let arms: Vec<crate::junction::Arm> = [(k, id, at_end), (nk, n.id, n_end)].into_iter().filter_map(|(k, id, e)| doc.trim(k, id, e, back)).map(|x| crate::junction::Arm { key: x.0, id: x.1, at_end: x.2 }).collect();
+            if arms.len() == 2 {
+                join_two(doc, assets, true, &content, asphalt.as_deref(), &arms[0], &arms[1]);
+            }
+        }
     }
 
     /// Make the splines of a planned road. Returns the last one.
@@ -3025,6 +3111,7 @@ impl Editor {
         let (Some(content), asphalt) = (self.content_dir.clone(), self.asphalt.clone()) else { return 0 };
         let styles = self.road_styles.clone();
         let follow = self.follow_ground;
+        let adapt = self.auto_adapt;
         let mut made = 0;
         // every free end of a road one sees and joins (tracks meet in switches)
         let free = |doc: &Document, assets: &mut Assets| -> Vec<(TileKey, i64, bool, DVec3, f64, f64)> {
@@ -3076,11 +3163,14 @@ impl Editor {
             if c.len() == 2 {
                 // two streets at a corner: both cut back and joined by a bend (in line they go
                 // on as they are; folded back on each other they stay apart)
-                if (30.0..165.0).contains(&sharpest) {
-                    let back = halves.iter().cloned().fold(3.0, f64::max) + 2.0;
+                // (roads of different width are joined by a taper, in line or not)
+                let step = (halves[0] - halves[1]).abs();
+                let tapered = adapt && step >= 0.25 && sharpest >= 30.0;
+                if tapered || (30.0..165.0).contains(&sharpest) {
+                    let back = if tapered { taper_back(step) } else { halves.iter().cloned().fold(3.0, f64::max) + 2.0 };
                     let arms: Vec<crate::junction::Arm> = c.iter().filter_map(|&i| doc.trim(all[i].0, all[i].1, all[i].2, back)).map(|x| crate::junction::Arm { key: x.0, id: x.1, at_end: x.2 }).collect();
                     if arms.len() == 2 {
-                        join_arms(doc, &arms[0], &arms[1]);
+                        join_two(doc, assets, adapt, &content, asphalt.as_deref(), &arms[0], &arms[1]);
                     }
                 }
                 continue;
@@ -3110,6 +3200,7 @@ impl Editor {
     fn make_junctions(&mut self, assets: &mut Assets, made: &[(TileKey, i64)], half: f64, start_mid: Option<(((i32, i32), i64, f64, f64), DVec3)>, end_mid: Option<(((i32, i32), i64, f64, f64), DVec3)>) -> usize {
         let (Some(content), asphalt) = (self.content_dir.clone(), self.asphalt.clone()) else { return 0 };
         let follow = self.follow_ground;
+        let adapt = self.auto_adapt;
         let styles = self.road_styles.clone();
         let mine_style = self.road_type.as_deref().map(|r| styles.get(r)).unwrap_or_default();
         let Some(doc) = self.doc.as_mut() else { return 0 };
@@ -3156,7 +3247,7 @@ impl Editor {
                     Err(e) => log::warn!("junction: {e}"),
                 }
             } else if arms.len() == 2 {
-                join_arms(doc, &arms[0], &arms[1]);
+                join_two(doc, assets, adapt, &content, asphalt.as_deref(), &arms[0], &arms[1]);
             }
         }
         // where the new road crosses another one (X junctions), one after the other
@@ -3241,7 +3332,7 @@ impl Editor {
                 }
             } else if arms.len() == 2 {
                 // (the rest were stubs too short to keep: a bend, not a junction)
-                join_arms(doc, &arms[0], &arms[1]);
+                join_two(doc, assets, adapt, &content, asphalt.as_deref(), &arms[0], &arms[1]);
             }
         }
         // a junction made before whose arm road this one trimmed away (a short road between
@@ -5931,6 +6022,7 @@ impl Editor {
     fn rebuild_junction(&mut self, assets: &mut Assets, id: i64) {
         let Some(content) = self.content_dir.clone() else { return };
         let asphalt = self.asphalt.clone();
+        let adapt = self.auto_adapt;
         let was_selected = self.selection().iter().any(|s| matches!(s, Sel::Object(_, x) if *x == id));
         let Some(doc) = self.doc.as_mut() else { return };
         let Some((jk, o)) = doc.tiles.iter().find_map(|(k, t)| t.tile.objects.iter().find(|o| o.id == id).map(|o| (*k, o.clone()))) else { return };
@@ -5993,7 +6085,7 @@ impl Editor {
                 }
             },
             2 => {
-                join_arms(doc, &arms[0], &arms[1]);
+                join_two(doc, assets, adapt, &content, asphalt.as_deref(), &arms[0], &arms[1]);
                 if was_selected {
                     self.select(None);
                 }
@@ -6388,6 +6480,39 @@ fn style_options(doc: &Document, styles: &crate::road_maker::Styles, arms: &[cra
         o.crossings = arm_ends_world(doc, arms).iter().map(|e| roads::heading_of(e.truncate() - centre.truncate())).collect();
     }
     o
+}
+
+/// How much wider (half width, m) the road of one arm is than the other's, if the roads
+/// differ enough to need a taper between them.
+fn width_step(doc: &Document, assets: &mut Assets, a: &crate::junction::Arm, b: &crate::junction::Arm) -> Option<f64> {
+    let half = |assets: &mut Assets, arm: &crate::junction::Arm| -> Option<f64> {
+        let m = assets.spline(&doc.spline(arm.key, arm.id)?.file)?;
+        (m.joinable() && !m.is_track()).then_some(m.half_width as f64)
+    };
+    let step = (half(assets, a)? - half(assets, b)?).abs();
+    (step >= 0.25).then_some(step)
+}
+
+/// How far each of two roads of different width is cut back for the plate that tapers from
+/// one to the other (a taper of 1:10 on each side).
+fn taper_back(step: f64) -> f64 {
+    (step * 5.0).clamp(6.0, 20.0)
+}
+
+/// Join the two arms left of a junction: roads of different width get a plate that tapers
+/// from the one to the other (as a junction of two roads), else a bend of the first's type.
+fn join_two(doc: &mut Document, assets: &mut Assets, adapt: bool, content: &Path, asphalt: Option<&Path>, a: &crate::junction::Arm, b: &crate::junction::Arm) {
+    if adapt && width_step(doc, assets, a, b).is_some() {
+        let ends = arm_ends_world(doc, &[*a, *b]);
+        if ends.len() == 2 {
+            let centre = (ends[0] + ends[1]) * 0.5;
+            match crate::junction::make_with(doc, assets, content, asphalt, centre, &[*a, *b], &crate::junction::Options::default()) {
+                Ok(_) => return,
+                Err(e) => log::warn!("road adapter: {e}"),
+            }
+        }
+    }
+    join_arms(doc, a, b);
 }
 
 fn join_arms(doc: &mut Document, a: &crate::junction::Arm, b: &crate::junction::Arm) {
@@ -7039,6 +7164,19 @@ mod tests {
         ed.ghost_pos = Some((DVec3::new(250.0, 250.0, 0.0), 0.0));
         ed.place_object(&lib, false);
         assert!(ed.doc.as_ref().unwrap().tiles[&(0, 0)].tile.objects.iter().filter(|o| o.file.contains("Ampel")).any(|o| o.var_parent.is_none()));
+    }
+
+    #[test]
+    fn nothing_is_joined_with_the_option_off_or_ctrl_held() {
+        let mut ed = Editor::default();
+        let mut assets = Assets::new(std::path::PathBuf::new(), std::path::PathBuf::new());
+        // (a road type not read yet counts as a road)
+        assert!(ed.joins(&mut assets));
+        ed.ctrl_held = true;
+        assert!(!ed.joins(&mut assets));
+        ed.ctrl_held = false;
+        ed.snap_roads = false;
+        assert!(!ed.joins(&mut assets));
     }
 
     #[test]
@@ -8118,6 +8256,49 @@ mod tests {
         assert!(ed.best_switch(&mut assets, tracks[1], true).ends_with("EW190_L_Beton.sco"));
         assert!(ed.best_switch(&mut assets, tracks[2], true).ends_with("EW190_L_Klp_0_0.sco"));
         assert!(ed.best_switch(&mut assets, tracks[3], true).ends_with("EW190_L_Beton.sco"));
+    }
+
+    #[test]
+    fn a_road_drawn_on_from_a_road_of_another_width_is_tapered() {
+        let narrow = "Splines\\Marcel\\str_2spur_8m_borkumer1.sli";
+        let wide = "Splines\\Marcel\\str_2spur_13m_Omnibushof.sli";
+        let Some(mut assets) = installed_spline(narrow) else { return };
+        while assets.spline(wide).is_none() && !assets.spline_failed(wide) { assets.poll(); std::thread::sleep(std::time::Duration::from_millis(10)); }
+        if assets.spline(wide).is_none() {
+            return;
+        }
+        let content = std::env::temp_dir().join(format!("om-adapter-{}", std::process::id()));
+        std::fs::create_dir_all(&content).unwrap();
+        let mut doc = flat_map(1);
+        doc.dir = content.join("maps").join("Adapter");
+        let mut ed = Editor::default();
+        ed.content_dir = Some(content.clone());
+        ed.open(doc);
+        ed.set_tool(Tool::Roads);
+        ed.road_type = Some(narrow.into());
+        let lib = Library::default();
+        let click = |ed: &mut Editor, a: &mut Assets, x: f64, y: f64| {
+            ed.cursor = Some(DVec3::new(x, y, 0.0));
+            ed.plan_road(a);
+            ed.road_click(a, &lib);
+            ed.tick(a, 0.0, false);
+        };
+        click(&mut ed, &mut assets, 60.0, 150.0);
+        click(&mut ed, &mut assets, 150.0, 150.0);
+        ed.right_click();
+        ed.road_type = Some(wide.into());
+        ed.inherit_type = false;
+        click(&mut ed, &mut assets, 150.0, 150.0);
+        click(&mut ed, &mut assets, 240.0, 150.0);
+        ed.right_click();
+        for _ in 0..50 { assets.poll(); ed.tick(&mut assets, 0.0, false); std::thread::sleep(std::time::Duration::from_millis(10)); }
+        let doc = ed.doc.as_ref().unwrap();
+        let t = &doc.tiles[&(0, 0)].tile;
+        let j: Vec<_> = t.objects.iter().filter(|o| o.file.contains("junction_")).collect();
+        assert_eq!(j.len(), 1, "one plate between the two widths");
+        let centre = DVec2::new(j[0].pos[0], j[0].pos[1]);
+        assert_eq!(crate::selection::tests::free_ends_near(doc, centre, 25.0), 2, "two arms");
+        let _ = std::fs::remove_dir_all(&content);
     }
 
     #[test]

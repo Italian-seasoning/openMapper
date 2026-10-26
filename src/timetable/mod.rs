@@ -4,6 +4,7 @@
 //! Only what was changed is written: a stock map's files stay as they are until a line,
 //! trip or tour of it is edited.
 
+pub mod caruse;
 pub mod network;
 pub mod route;
 
@@ -42,6 +43,10 @@ pub struct Timetable {
     /// Public holidays and school holidays (`Holidays.txt`): which tours run on a day.
     pub calendar: omsi_map::Calendar,
     calendar_changed: bool,
+    /// Which vehicles drive the lines (`car_use/*.ocu`), and the files to write and take away.
+    pub car_use: Vec<caruse::CarUseFile>,
+    car_changed: BTreeSet<String>,
+    car_removed: BTreeSet<String>,
 }
 
 fn key(name: &str) -> String {
@@ -63,7 +68,7 @@ impl Timetable {
         // (in the order of the days, as the Lines window lists them)
         calendar.holidays.sort_by_key(|h| h.date);
         calendar.ranges.sort_by_key(|r| r.start);
-        Timetable { stops: d.bus_stops, links: d.stn_links, trips: d.trips, tracks: d.tracks, lines: d.lines, order: order.to_vec(), calendar, ..Default::default() }
+        Timetable { stops: d.bus_stops, links: d.stn_links, trips: d.trips, tracks: d.tracks, lines: d.lines, order: order.to_vec(), calendar, car_use: caruse::load_dir(dir), ..Default::default() }
     }
 
     pub fn trip(&self, name: &str) -> Option<&Trip> {
@@ -118,6 +123,9 @@ impl Timetable {
         self.stops_changed = true;
         self.links_changed = true;
         self.calendar_changed = true;
+        let have: BTreeSet<String> = self.car_use.iter().map(|c| c.file.to_lowercase()).collect();
+        self.car_removed = replaced.car_use.iter().map(|c| c.file.to_lowercase()).filter(|f| !have.contains(f)).chain(replaced.car_removed.iter().cloned()).filter(|f| !have.contains(f)).collect();
+        self.car_changed = have;
         self.reroute.clear();
         self.dirty = true;
     }
@@ -130,7 +138,7 @@ impl Timetable {
     /// The same lines, trips, tours and stops (what the Lines window edits; not the routes
     /// found for them or what is still to be saved).
     pub fn same_content(&self, o: &Timetable) -> bool {
-        self.lines == o.lines && self.trips == o.trips && self.stops == o.stops && self.calendar == o.calendar
+        self.lines == o.lines && self.trips == o.trips && self.stops == o.stops && self.calendar == o.calendar && self.car_use == o.car_use
     }
 
     /// A new line (its name made unique).
@@ -154,6 +162,7 @@ impl Timetable {
         self.removed.insert(key(&format!("{old}.ttl")));
         self.changed.remove(&key(&format!("{old}.ttl")));
         self.touch_line(new);
+        self.car_use_follow(old, Some(new));
         // the trips that show it as their line number
         let trips: Vec<String> = self.trips.iter().filter(|t| t.line.trim() == old).map(|t| t.name.clone()).collect();
         for t in trips {
@@ -209,6 +218,7 @@ impl Timetable {
     pub fn delete_line(&mut self, name: &str) {
         let Some(i) = self.lines.iter().position(|l| l.name == name) else { return };
         let l = self.lines.remove(i);
+        self.car_use_follow(name, None);
         self.removed.insert(key(&format!("{name}.ttl")));
         self.changed.remove(&key(&format!("{name}.ttl")));
         let mut trips: BTreeSet<String> = l.tours.iter().flat_map(|t| t.trips.iter().map(|x| x.trip.clone())).collect();
@@ -487,6 +497,7 @@ pub fn plan(tt: &mut Timetable, map_dir: &Path, order: &[TileKey]) -> Vec<Op> {
         let p = find_file(map_dir, "holidays.txt").unwrap_or_else(|| map_dir.join("Holidays.txt"));
         ops.push(Op::Write(p, encode(&holidays_text(&tt.calendar))));
     }
+    ops.extend(caruse::plan(tt, map_dir));
     ops
 }
 
@@ -497,6 +508,7 @@ pub fn saved(tt: &mut Timetable) {
     tt.stops_changed = false;
     tt.links_changed = false;
     tt.calendar_changed = false;
+    caruse::saved(tt);
     tt.dirty = false;
 }
 

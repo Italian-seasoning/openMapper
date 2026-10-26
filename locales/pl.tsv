@@ -2127,3 +2127,124 @@ Could not replace the program	Nie można zastąpić programu
 The package has no program in it.	W pakiecie nie ma programu.
 openMapper has stopped:	openMapper przestał działać:
 The log with the details:	Dziennik ze szczegółami:
+Light made: click where it goes; its script is in Map > Scripts	Światło utworzone: kliknij, gdzie ma stanąć; jego skrypt jest w Mapa > Skrypty
+Stops sharing a name	Przystanki o tej samej nazwie
+Two stops far from each other have one name. The two across a road may share it (they are a pair), but elsewhere the game, the displays and the people who choose where to get off cannot tell them apart. "Fix" gives the later one a number after its name.	Dwa odległe od siebie przystanki mają tę samą nazwę. Dwa po przeciwnych stronach drogi mogą ją dzielić (to para), ale w innych przypadkach gra, wyświetlacze i ludzie wybierający, gdzie wysiąść, nie odróżnią ich. „Napraw" dodaje późniejszemu numer po nazwie.
+same name as the stop	taka sama nazwa jak przystanku
+The road is gone	Drogi już nie ma
+This end is already joined to something	Ten koniec jest już z czymś połączony
+The junction piece could not be read	Nie udało się wczytać elementu skrzyżowania
+This object has no places for roads to join	Ten obiekt nie ma miejsc do łączenia dróg
+Quiet street	Spokojna ulica
+Street with a footway on one side	Ulica z chodnikiem po jednej stronie
+Main road	Droga główna
+Avenue with a green strip	Aleja z pasem zieleni
+One-way street	Ulica jednokierunkowa
+Country road	Droga wiejska
+Service road	Droga dojazdowa
+Empty script	Pusty skrypt
+A greeting when the bus is taken	Powitanie przy wsiadaniu do autobusu
+Announce every stop	Zapowiadaj każdy przystanek
+Traffic by the hour	Ruch według godzin
+Weather at a time	Pogoda o danej porze
+Speed limit warning	Ostrzeżenie o ograniczeniu prędkości
+Next stop on the screen	Następny przystanek na ekranie
+Lit during certain hours	Świeci o określonych godzinach
+Blinks	Miga
+Lit in certain months	Świeci w określonych miesiącach
+Compulsory stop	Przystanek stały
+Request stop	Przystanek na żądanie
+Terminus	Pętla
+Every bus stops here and people are always waiting	Każdy autobus tu staje i zawsze ktoś czeka
+A bus stops only if somebody waits or presses the stop button	Autobus staje tylko, gdy ktoś czeka lub naciśnie przycisk STOP
+Where a line begins or ends: everybody gets off, a bus waits for its departure	Gdzie linia się zaczyna lub kończy: wszyscy wysiadają, autobus czeka na odjazd
+when wanted	na żądanie
+drive through	bez zatrzymania
+when early	jeśli przed czasem
+right of the road	po prawej stronie drogi
+left of the road	po lewej stronie drogi
+both sides	obie strony
+Vehicles	Pojazdy
+Scripts…	Skrypty…
+Junction on an end	Skrzyżowanie na końcu
+The installation has no junction pieces with places for roads.	Instalacja nie ma elementów skrzyżowań z miejscami na drogi.
+None of the pieces is made for this road type: its first place is used.	Żaden z elementów nie jest zrobiony dla tego typu drogi: używane jest jego pierwsze miejsce.
+At the start	Na początku
+At the end	Na końcu
+Junction pieces for it	Elementy skrzyżowań dla niej
+made by openMapper	wykonał openMapper
+Choose it in the catalogue to place on the map	Wybierz go w katalogu, aby postawić na mapie
+Pieces with a place made for this road type. The one picked is offered first when a junction is put on this road's end (select the road: Junction on an end).	Elementy z miejscem zrobionym dla tego typu drogi. Wybrany jest proponowany jako pierwszy, gdy na końcu takiej drogi stawia się skrzyżowanie (zaznacz drogę: Skrzyżowanie na końcu).
+No piece is made for this road type; the list holds every piece with places for roads.	Żaden element nie jest zrobiony dla tego typu drogi; lista zawiera wszystkie elementy z miejscami na drogi.
+Start from	Zacznij od
+a ready-made road…	gotowej drogi…
+raised	podniesiona
+As high as the footways, with a kerb along it	Na wysokości chodników, z krawężnikiem wzdłuż
+ m left	 m po lewej
+a different one on the right	inna po prawej
+ m right	 m po prawej
+Middle strip texture	Tekstura pasa środkowego
+like the roadway	jak jezdnia
+No problems found	Nie znaleziono problemów
+Scripts	Skrypty
+openOMSI: the map's script	openOMSI: skrypt mapy
+Object scripts (OMSI 2 and openOMSI)	Skrypty obiektów (OMSI 2 i openOMSI)
+A Lua script that runs in openOMSI while this map is played: it reacts to what happens (a stop reached, a new hour, a new trip) and can show messages, change the traffic and the weather, move the bus. `on` and `every` work for this map only. OMSI 2 does not run Lua: its scripts belong to objects (the next tab).	Skrypt Lua uruchamiany w openOMSI, gdy gra się na tej mapie: reaguje na to, co się dzieje (dojazd do przystanku, nowa godzina, nowy kurs), potrafi pokazywać komunikaty, zmieniać ruch i pogodę, przestawiać autobus. `on` i `every` działają tylko dla tej mapy. OMSI 2 nie uruchamia Lua: jego skrypty należą do obiektów (następna karta).
+a ready-made script…	gotowy skrypt…
+Save the script	Zapisz skrypt
+Written into the content folder's plugins, where openOMSI loads it again at once	Zapisywany w plugins folderu zawartości, skąd openOMSI od razu wczytuje go ponownie
+Script saved	Skrypt zapisany
+Script saved, but it has problems: the game would not run it	Skrypt zapisany, ale ma problemy: gra by go nie uruchomiła
+Revert	Cofnij zmiany
+Delete the script	Usuń skrypt
+Script deleted	Skrypt usunięty
+What a scenery object runs every frame: lamps that switch, signs that change, doors that open. Select an object to see its scripts; the game's own compiler checks them as you write. Scripts of the installation's objects can be read and learned from; to change one, make an object of your own (Edit the mesh makes a copy) and open it here.	Co obiekt scenerii wykonuje w każdej klatce: lampy, które się włączają, szyldy, które się zmieniają, drzwi, które się otwierają. Zaznacz obiekt, aby zobaczyć jego skrypty; kompilator samej gry sprawdza je w trakcie pisania. Skrypty obiektów z instalacji można czytać i się z nich uczyć; aby zmienić któryś, zrób własny obiekt („Edytuj siatkę" robi kopię) i otwórz go tutaj.
+Select one object on the map.	Zaznacz na mapie jeden obiekt.
+this object has no script	ten obiekt nie ma skryptu
+From the installation: read only.	Z instalacji: tylko do odczytu.
+Not in the object's variable list	Brak na liście zmiennych obiektu
+A light switched by a script	Światło włączane skryptem
+A new object: a lamp that glows and lights the ground while its script says so. The script is yours to change after.	Nowy obiekt: lampa, która świeci i oświetla ziemię, dopóki mówi tak jej skrypt. Skrypt można potem zmienić.
+ h	 godz.
+A round takes	Jedno okrążenie trwa
+ s	 s
+From month	Od miesiąca
+Reaches	Zasięg
+Make the light	Utwórz światło
+Kind of stop	Rodzaj przystanku
+Waiting, at most	Czekających, najwyżej
+Waiting, at least	Czekających, najmniej
+Getting off	Wysiadających
+How many of those riding get off here, compared with the other stops: twice the number, twice the riders	Ilu z jadących wysiada tutaj w porównaniu z innymi przystankami: dwa razy większa liczba, dwa razy więcej osób
+How far along the stop people wait and a bus may stand	Na jakim odcinku przystanku czekają ludzie i może stać autobus
+Platform	Peron
+Paired with the stop across the road: one name for both	W parze z przystankiem po drugiej stronie drogi: jedna nazwa dla obu
+Split	Rozdziel
+The stop gets a name of its own (the number is changed in the name box), and renaming one no longer renames the other	Przystanek dostaje własną nazwę (numer zmienia się w polu nazwy), a zmiana nazwy jednego nie zmienia już drugiego
+Another stop far from here has this name	Inny przystanek daleko stąd ma tę nazwę
+Make it different	Zrób inną
+Which buses drive this line	Jakie autobusy jeżdżą na tej linii
+How the stops are served	Jak obsługiwane są przystanki
+Always: the bus stops whoever waits (a compulsory stop, a terminus). When wanted: only if somebody gets on or off (a request stop). Drive through: it does not stop on this trip. When early: it stops only if it is ahead of its time.	Zawsze: autobus staje, czy ktoś czeka, czy nie (przystanek stały, pętla). Na żądanie: tylko gdy ktoś wsiada lub wysiada (przystanek na żądanie). Bez zatrzymania: na tym kursie nie staje. Jeśli przed czasem: staje tylko wtedy, gdy jest przed rozkładem.
+The AI buses of this line's tours are taken from the depot group; here the vehicles can be limited by date: only some types, mostly some types, or a fleet number for one tour. A line with nothing here takes any vehicle of the group.	Autobusy AI brygad tej linii są brane z grupy zajezdni; tutaj pojazdy można ograniczyć według dat: tylko niektóre typy, głównie niektóre typy albo numer taborowy dla jednej brygady. Linia bez wpisów bierze dowolny pojazd z grupy.
+Delete this assignment	Usuń to przydzielenie
+(day, month, year)	(dzień, miesiąc, rok)
+It ends before it starts: the game ignores it	Kończy się przed początkiem: gra to pomija
+Only these types	Tylko te typy
+Mostly these types	Głównie te typy
+share of the tours	część brygad
+Fleet numbers of single tours	Numery taborowe pojedynczych brygad
+A fleet number for a tour	Numer taborowy dla brygady
+A vehicle assignment	Przydział pojazdu
+tiles are loaded round there, the others are hidden	kafelków jest wczytanych wokół tego miejsca, pozostałe są ukryte
+tiles round the camera are loaded; click on the empty zone to load the next ones	kafelków wokół kamery jest wczytanych; kliknij pustą strefę, aby wczytać kolejne
+Tiles loaded at once	Kafelków wczytywanych naraz
+about 500 m round the camera	około 500 m wokół kamery
+about 850 m	około 850 m
+about 1.2 km	około 1,2 km
+about 1.7 km (the usual)	około 1,7 km (zwykle)
+about 2.5 km	około 2,5 km
+A big or very detailed map is lighter with fewer tiles: the others are hidden until you click on the empty zone	Duża lub bardzo szczegółowa mapa działa lżej z mniejszą liczbą kafelków: pozostałe są ukryte, dopóki nie klikniesz pustej strefy
+Hold Ctrl while drawing to join nothing. Cables, fences and footpaths never join roads or junctions.	Przytrzymaj Ctrl podczas rysowania, aby niczego nie łączyć. Kable, płoty i chodniki nigdy nie łączą się z drogami ani skrzyżowaniami.
+Auto-Adapt	Auto-przejście
+Where roads of different width meet, a plate tapers one into the other	Tam, gdzie spotykają się drogi o różnej szerokości, płyta łagodnie przechodzi od jednej do drugiej

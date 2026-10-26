@@ -2127,3 +2127,124 @@ Could not replace the program	Не ўдалося замяніць прагра�
 The package has no program in it.	У пакеце няма праграмы.
 openMapper has stopped:	openMapper спыніўся:
 The log with the details:	Журнал з падрабязнасцямі:
+Light made: click where it goes; its script is in Map > Scripts	Святло створана: пстрыкніце, куды яго паставіць; яго скрыпт: Карта > Скрыпты
+Stops sharing a name	Прыпынкі з аднолькавай назвай
+Two stops far from each other have one name. The two across a road may share it (they are a pair), but elsewhere the game, the displays and the people who choose where to get off cannot tell them apart. "Fix" gives the later one a number after its name.	Два прыпынкі, далёкія адзін ад аднаго, маюць аднолькавую назву. Насупраць праз дарогу яна можа супадаць (гэта пара), але ў іншых выпадках гульня, табло і пасажыры, якія выбіраюць, дзе выйсці, не адрозняць іх. «Выправіць» дадасць пазнейшаму нумар пасля назвы.
+same name as the stop	такая самая назва, як у прыпынку
+The road is gone	Дарогі ўжо няма
+This end is already joined to something	Гэты канец ужо злучаны з чымсьці
+The junction piece could not be read	Не ўдалося прачытаць элемент скрыжавання
+This object has no places for roads to join	У гэтага аб'екта няма месцаў для далучэння дарог
+Quiet street	Ціхая вуліца
+Street with a footway on one side	Вуліца з тратуарам з аднаго боку
+Main road	Галоўная дарога
+Avenue with a green strip	Праспект з газонам
+One-way street	Вуліца з аднабаковым рухам
+Country road	Загарадная дарога
+Service road	Службовы праезд
+Empty script	Пусты скрыпт
+A greeting when the bus is taken	Прывітанне, калі садзішся ў аўтобус
+Announce every stop	Аб'яўляць кожны прыпынак
+Traffic by the hour	Рух па гадзінах
+Weather at a time	Надвор'е ў зададзены час
+Speed limit warning	Папярэджанне пра хуткасць
+Next stop on the screen	Наступны прыпынак на экране
+Lit during certain hours	Свеціцца ў пэўныя гадзіны
+Blinks	Міргае
+Lit in certain months	Свеціцца ў пэўныя месяцы
+Compulsory stop	Абавязковы прыпынак
+Request stop	Прыпынак па патрабаванні
+Terminus	Канчатковы прыпынак
+Every bus stops here and people are always waiting	Аўтобус спыняецца заўсёды, пасажыры чакаюць заўсёды
+A bus stops only if somebody waits or presses the stop button	Аўтобус спыняецца, толькі калі хтосьці чакае або націснуў кнопку прыпынку
+Where a line begins or ends: everybody gets off, a bus waits for its departure	Дзе лінія пачынаецца або заканчваецца: усе выходзяць, аўтобус чакае адпраўлення
+when wanted	па патрабаванні
+drive through	праязджае
+when early	калі раней
+right of the road	справа ад дарогі
+left of the road	злева ад дарогі
+both sides	з абодвух бакоў
+Vehicles	Транспарт
+Scripts…	Скрыпты…
+Junction on an end	Скрыжаванне на канцы дарогі
+The installation has no junction pieces with places for roads.	Ва ўстаноўцы няма элементаў скрыжавання з месцамі для дарог.
+None of the pieces is made for this road type: its first place is used.	Ніводзін элемент не зроблены пад гэты тып дарогі: бярэцца яго першае месца.
+At the start	На пачатку
+At the end	У канцы
+Junction pieces for it	Элементы скрыжавання для яе
+made by openMapper	робіць openMapper
+Choose it in the catalogue to place on the map	Абярыце яго ў каталогу, каб паставіць на карту
+Pieces with a place made for this road type. The one picked is offered first when a junction is put on this road's end (select the road: Junction on an end).	Элементы з месцам пад гэты тып дарогі. Абраны прапануецца першым, калі скрыжаванне ставяць на канец такой дарогі (вылучыце дарогу: «Скрыжаванне на канцы дарогі»).
+No piece is made for this road type; the list holds every piece with places for roads.	Пад гэты тып дарогі элементаў няма; у спісе ўсе элементы з месцамі для дарог.
+Start from	Узяць за аснову
+a ready-made road…	гатовую дарогу…
+raised	узняты
+As high as the footways, with a kerb along it	Урывень з тратуарамі, з бардзюрам уздоўж
+ m left	 м злева
+a different one on the right	справа іншы
+ m right	 м справа
+Middle strip texture	Тэкстура раздзяляльнай паласы
+like the roadway	як у праезджай часткі
+No problems found	Праблем не знойдзена
+Scripts	Скрыпты
+openOMSI: the map's script	openOMSI: скрыпт карты
+Object scripts (OMSI 2 and openOMSI)	Скрыпты аб'ектаў (OMSI 2 і openOMSI)
+A Lua script that runs in openOMSI while this map is played: it reacts to what happens (a stop reached, a new hour, a new trip) and can show messages, change the traffic and the weather, move the bus. `on` and `every` work for this map only. OMSI 2 does not run Lua: its scripts belong to objects (the next tab).	Скрыпт на Lua, які openOMSI выконвае, пакуль гуляюць на гэтай карце: ён рэагуе на падзеі (дасягнуты прыпынак, новая гадзіна, новы рэйс), паказвае паведамленні, змяняе рух і надвор'е, перастаўляе аўтобус. `on` і `every` працуюць толькі для гэтай карты. OMSI 2 Lua не выконвае: яго скрыпты належаць аб'ектам (наступная ўкладка).
+a ready-made script…	гатовы скрыпт…
+Save the script	Захаваць скрыпт
+Written into the content folder's plugins, where openOMSI loads it again at once	Запісваецца ў plugins тэчкі змесціва, адкуль openOMSI адразу загружае яго зноў
+Script saved	Скрыпт захаваны
+Script saved, but it has problems: the game would not run it	Скрыпт захаваны, але ў ім ёсць памылкі: гульня яго не выканае
+Revert	Вярнуць
+Delete the script	Выдаліць скрыпт
+Script deleted	Скрыпт выдалены
+What a scenery object runs every frame: lamps that switch, signs that change, doors that open. Select an object to see its scripts; the game's own compiler checks them as you write. Scripts of the installation's objects can be read and learned from; to change one, make an object of your own (Edit the mesh makes a copy) and open it here.	Што сцэнарны аб'ект выконвае кожны кадр: лямпы, што ўключаюцца, шыльды, што змяняюцца, дзверы, што адчыняюцца. Вылучыце аб'ект, каб убачыць яго скрыпты; убудаваны кампілятар гульні правярае іх падчас набору. Скрыпты аб'ектаў устаноўкі можна чытаць і вывучаць; каб змяніць, зрабіце ўласны аб'ект («Рэдагаваць меш» робіць копію) і адкрыйце яго тут.
+Select one object on the map.	Вылучыце на карце адзін аб'ект.
+this object has no script	у гэтага аб'екта няма скрыпта
+From the installation: read only.	З устаноўкі: толькі чытанне.
+Not in the object's variable list	Няма ў спісе зменных аб'екта
+A light switched by a script	Святло, якое ўключае скрыпт
+A new object: a lamp that glows and lights the ground while its script says so. The script is yours to change after.	Новы аб'ект: лямпа, што свеціць і асвятляе зямлю, пакуль так кажа яе скрыпт. Потым скрыпт можна змяняць.
+ h	 гадз
+A round takes	Адно кола
+ s	 с
+From month	Ад месяца
+Reaches	Дасягае
+Make the light	Стварыць святло
+Kind of stop	Выгляд прыпынку
+Waiting, at most	Чакаюць, не больш
+Waiting, at least	Чакаюць, не менш
+Getting off	Выходзяць
+How many of those riding get off here, compared with the other stops: twice the number, twice the riders	Колькі з тых, хто едзе, выходзіць тут у параўнанні з іншымі прыпынкамі: удвая большы лік — удвая больш людзей
+How far along the stop people wait and a bus may stand	На якой даўжыні прыпынку чакаюць людзі і можа стаяць аўтобус
+Platform	Платформа
+Paired with the stop across the road: one name for both	У пары з прыпынкам насупраць: адна назва на абодва
+Split	Падзяліць
+The stop gets a name of its own (the number is changed in the name box), and renaming one no longer renames the other	Прыпынак атрымлівае ўласную назву (лік мяняецца ў полі назвы), і перайменаванне аднаго больш не перайменоўвае другі
+Another stop far from here has this name	Іншы прыпынак далёка адсюль мае гэтую назву
+Make it different	Зрабіць іншай
+Which buses drive this line	Якія аўтобусы ходзяць па гэтай лініі
+How the stops are served	Як абслугоўваюцца прыпынкі
+Always: the bus stops whoever waits (a compulsory stop, a terminus). When wanted: only if somebody gets on or off (a request stop). Drive through: it does not stop on this trip. When early: it stops only if it is ahead of its time.	Заўсёды: аўтобус спыняецца, чакае хтосьці ці не (абавязковы, канчатковы). Па патрабаванні: толькі калі хтосьці садзіцца або выходзіць. Праязджае: на гэтым рэйсе не спыняецца. Калі раней: спыняецца, толькі калі ідзе раней за расклад.
+The AI buses of this line's tours are taken from the depot group; here the vehicles can be limited by date: only some types, mostly some types, or a fleet number for one tour. A line with nothing here takes any vehicle of the group.	ШІ-аўтобусы абаротаў гэтай лініі бяруцца з групы дэпо; тут транспарт можна абмежаваць па датах: толькі некаторыя тыпы, пераважна некаторыя тыпы або гаражны нумар для аднаго абароту. Лінія без запісаў бярэ любы транспарт групы.
+Delete this assignment	Выдаліць гэтае прызначэнне
+(day, month, year)	(дзень, месяц, год)
+It ends before it starts: the game ignores it	Заканчваецца раней за пачатак: гульня яго ігнаруе
+Only these types	Толькі гэтыя тыпы
+Mostly these types	Пераважна гэтыя тыпы
+share of the tours	доля абаротаў
+Fleet numbers of single tours	Гаражныя нумары асобных абаротаў
+A fleet number for a tour	Гаражны нумар для абароту
+A vehicle assignment	Прызначэнне транспарту
+tiles are loaded round there, the others are hidden	тайлаў загружана вакол гэтага месца, астатнія схаваны
+tiles round the camera are loaded; click on the empty zone to load the next ones	тайлаў вакол камеры загружана; пстрыкніце па пустой зоне, каб загрузіць наступныя
+Tiles loaded at once	Тайлаў загружаецца адразу
+about 500 m round the camera	каля 500 м вакол камеры
+about 850 m	каля 850 м
+about 1.2 km	каля 1,2 км
+about 1.7 km (the usual)	каля 1,7 км (звычайна)
+about 2.5 km	каля 2,5 км
+A big or very detailed map is lighter with fewer tiles: the others are hidden until you click on the empty zone	Вялікая або вельмі дэталёвая карта працуе лягчэй з меншай колькасцю тайлаў: астатнія схаваны, пакуль вы не пстрыкніце па пустой зоне
+Hold Ctrl while drawing to join nothing. Cables, fences and footpaths never join roads or junctions.	Утрымлівайце Ctrl пры малюнку, каб нічога не далучаць. Кабелі, платы і сцежкі ніколі не далучаюцца да дарог і скрыжаванняў.
+Auto-Adapt	Аўта-пераход
+Where roads of different width meet, a plate tapers one into the other	Дзе сустракаюцца дарогі рознай шырыні, паміж імі робіцца плыўны пераход

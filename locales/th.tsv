@@ -2127,3 +2127,124 @@ Could not replace the program	แทนที่โปรแกรมไม่�
 The package has no program in it.	ในแพ็กเกจไม่มีโปรแกรม
 openMapper has stopped:	openMapper หยุดทำงาน:
 The log with the details:	บันทึกที่มีรายละเอียด:
+Light made: click where it goes; its script is in Map > Scripts	สร้างไฟแล้ว: คลิกตรงที่จะวาง สคริปต์ของไฟอยู่ใน แผนที่ > สคริปต์
+Stops sharing a name	ป้ายหยุดรถที่ใช้ชื่อซ้ำกัน
+Two stops far from each other have one name. The two across a road may share it (they are a pair), but elsewhere the game, the displays and the people who choose where to get off cannot tell them apart. "Fix" gives the later one a number after its name.	ป้ายหยุดรถสองป้ายที่อยู่ห่างกันมากใช้ชื่อเดียวกัน ป้ายสองฝั่งถนนตรงข้ามกันใช้ชื่อเดียวกันได้ (เป็นคู่กัน) แต่ที่อื่นเกม จอแสดงผล และผู้โดยสารที่ต้องเลือกจุดลงจะแยกไม่ออก "แก้ไข" จะเติมเลขต่อท้ายชื่อของป้ายหลัง
+same name as the stop	ชื่อเดียวกับป้ายหยุดรถ
+The road is gone	ไม่มีถนนนี้แล้ว
+This end is already joined to something	ปลายนี้เชื่อมกับบางอย่างอยู่แล้ว
+The junction piece could not be read	อ่านชิ้นส่วนทางแยกไม่ได้
+This object has no places for roads to join	วัตถุนี้ไม่มีตำแหน่งให้ถนนมาเชื่อม
+Quiet street	ถนนเงียบสงบ
+Street with a footway on one side	ถนนที่มีทางเท้าข้างเดียว
+Main road	ถนนสายหลัก
+Avenue with a green strip	ถนนใหญ่ที่มีแถบสีเขียว
+One-way street	ถนนวันเวย์
+Country road	ถนนชนบท
+Service road	ถนนบริการ
+Empty script	สคริปต์ว่าง
+A greeting when the bus is taken	คำทักทายเมื่อขึ้นรถ
+Announce every stop	ประกาศทุกป้าย
+Traffic by the hour	การจราจรตามชั่วโมง
+Weather at a time	สภาพอากาศตามเวลา
+Speed limit warning	เตือนความเร็วจำกัด
+Next stop on the screen	แสดงป้ายถัดไปบนหน้าจอ
+Lit during certain hours	ติดในบางช่วงเวลา
+Blinks	กะพริบ
+Lit in certain months	ติดในบางเดือน
+Compulsory stop	ป้ายบังคับหยุด
+Request stop	ป้ายหยุดตามสัญญาณ
+Terminus	ปลายทาง
+Every bus stops here and people are always waiting	รถทุกคันจอดที่นี่ และมีคนรออยู่เสมอ
+A bus stops only if somebody waits or presses the stop button	รถจะจอดเฉพาะเมื่อมีคนรอหรือมีคนกดปุ่มลงเท่านั้น
+Where a line begins or ends: everybody gets off, a bus waits for its departure	จุดที่สายเริ่มหรือสิ้นสุด: ทุกคนลง รถรอเวลาออก
+when wanted	เมื่อต้องการ
+drive through	ผ่านไป
+when early	เมื่อมาก่อนเวลา
+right of the road	ขวาของถนน
+left of the road	ซ้ายของถนน
+both sides	ทั้งสองข้าง
+Vehicles	ยานพาหนะ
+Scripts…	สคริปต์…
+Junction on an end	ทางแยกที่ปลายถนน
+The installation has no junction pieces with places for roads.	การติดตั้งไม่มีชิ้นส่วนทางแยกที่มีตำแหน่งสำหรับถนน
+None of the pieces is made for this road type: its first place is used.	ไม่มีชิ้นส่วนที่ทำมาสำหรับถนนประเภทนี้: จะใช้ตำแหน่งแรกของมัน
+At the start	ที่จุดเริ่มต้น
+At the end	ที่ปลายทาง
+Junction pieces for it	ชิ้นส่วนที่ใช้ได้
+made by openMapper	สร้างโดย openMapper
+Choose it in the catalogue to place on the map	เลือกในแคตตาล็อกเพื่อวางบนแผนที่
+Pieces with a place made for this road type. The one picked is offered first when a junction is put on this road's end (select the road: Junction on an end).	ชิ้นส่วนที่มีตำแหน่งสำหรับถนนประเภทนี้ อันที่เลือกจะถูกเสนอเป็นอันแรกเมื่อวางทางแยกที่ปลายถนนนี้ (เลือกถนน: ทางแยกที่ปลายถนน)
+No piece is made for this road type; the list holds every piece with places for roads.	ไม่มีชิ้นส่วนที่ทำมาสำหรับถนนประเภทนี้ รายการจึงแสดงชิ้นส่วนทั้งหมดที่มีตำแหน่งสำหรับถนน
+Start from	เริ่มจาก
+a ready-made road…	ถนนสำเร็จรูป…
+raised	ยกสูง
+As high as the footways, with a kerb along it	สูงเท่าทางเท้า มีขอบทางตลอดแนว
+ m left	 ม. ซ้าย
+a different one on the right	ฝั่งขวาใช้อีกแบบ
+ m right	 ม. ขวา
+Middle strip texture	เท็กซ์เจอร์ของเกาะกลางถนน
+like the roadway	เหมือนผิวถนน
+No problems found	ไม่พบปัญหา
+Scripts	สคริปต์
+openOMSI: the map's script	openOMSI: สคริปต์ของแผนที่
+Object scripts (OMSI 2 and openOMSI)	สคริปต์ของวัตถุ (OMSI 2 และ openOMSI)
+A Lua script that runs in openOMSI while this map is played: it reacts to what happens (a stop reached, a new hour, a new trip) and can show messages, change the traffic and the weather, move the bus. `on` and `every` work for this map only. OMSI 2 does not run Lua: its scripts belong to objects (the next tab).	สคริปต์ Lua ที่ทำงานใน openOMSI ขณะเล่นแผนที่นี้ โดยตอบสนองต่อเหตุการณ์ (ถึงป้าย ชั่วโมงใหม่ เที่ยวใหม่) และแสดงข้อความ เปลี่ยนการจราจรและสภาพอากาศ ย้ายรถบัสได้ `on` และ `every` ใช้ได้กับแผนที่นี้เท่านั้น OMSI 2 ไม่รัน Lua: สคริปต์ของมันเป็นของวัตถุ (แท็บถัดไป)
+a ready-made script…	สคริปต์สำเร็จรูป…
+Save the script	บันทึกสคริปต์
+Written into the content folder's plugins, where openOMSI loads it again at once	เขียนลงใน plugins ของโฟลเดอร์เนื้อหา ซึ่ง openOMSI จะโหลดใหม่ทันที
+Script saved	บันทึกสคริปต์แล้ว
+Script saved, but it has problems: the game would not run it	บันทึกสคริปต์แล้ว แต่มีปัญหา: เกมจะไม่รันสคริปต์นี้
+Revert	คืนค่า
+Delete the script	ลบสคริปต์
+Script deleted	ลบสคริปต์แล้ว
+What a scenery object runs every frame: lamps that switch, signs that change, doors that open. Select an object to see its scripts; the game's own compiler checks them as you write. Scripts of the installation's objects can be read and learned from; to change one, make an object of your own (Edit the mesh makes a copy) and open it here.	สิ่งที่วัตถุฉากรันทุกเฟรม: โคมไฟที่เปิดปิด ป้ายที่เปลี่ยน ประตูที่เปิด เลือกวัตถุเพื่อดูสคริปต์ คอมไพเลอร์ของเกมจะตรวจให้ขณะที่คุณเขียน สคริปต์ของวัตถุในการติดตั้งอ่านและศึกษาได้ ถ้าจะแก้ ให้สร้างวัตถุของคุณเอง ("แก้ไขเมช" จะสร้างสำเนา) แล้วเปิดที่นี่
+Select one object on the map.	เลือกวัตถุหนึ่งชิ้นบนแผนที่
+this object has no script	วัตถุนี้ไม่มีสคริปต์
+From the installation: read only.	จากการติดตั้ง: อ่านอย่างเดียว
+Not in the object's variable list	ไม่อยู่ในรายการตัวแปรของวัตถุ
+A light switched by a script	ไฟที่สคริปต์เป็นคนเปิดปิด
+A new object: a lamp that glows and lights the ground while its script says so. The script is yours to change after.	วัตถุใหม่: โคมไฟที่ส่องสว่างและให้แสงบนพื้นขณะที่สคริปต์สั่ง แก้สคริปต์ได้ภายหลัง
+ h	 ชม.
+A round takes	หนึ่งรอบใช้เวลา
+ s	 วิ
+From month	ตั้งแต่เดือน
+Reaches	ส่องถึง
+Make the light	สร้างไฟ
+Kind of stop	ประเภทป้ายหยุดรถ
+Waiting, at most	รอ อย่างมาก
+Waiting, at least	รอ อย่างน้อย
+Getting off	ลง
+How many of those riding get off here, compared with the other stops: twice the number, twice the riders	ในบรรดาผู้โดยสาร มีกี่คนที่ลงที่นี่เมื่อเทียบกับป้ายอื่น: เลขมากเป็นสองเท่า คนลงก็มากเป็นสองเท่า
+How far along the stop people wait and a bus may stand	คนรอและรถจอดได้ยาวตามป้ายเท่าไร
+Platform	ชานชาลา
+Paired with the stop across the road: one name for both	จับคู่กับป้ายฝั่งตรงข้ามถนน: ใช้ชื่อเดียวกัน
+Split	แยก
+The stop gets a name of its own (the number is changed in the name box), and renaming one no longer renames the other	ป้ายได้ชื่อของตัวเอง (แก้เลขในช่องชื่อ) และการเปลี่ยนชื่อป้ายหนึ่งจะไม่เปลี่ยนอีกป้ายอีกต่อไป
+Another stop far from here has this name	มีป้ายหยุดรถอื่นที่อยู่ไกลจากที่นี่ใช้ชื่อนี้
+Make it different	ทำให้ต่างกัน
+Which buses drive this line	รถบัสคันไหนวิ่งสายนี้
+How the stops are served	วิธีให้บริการแต่ละป้าย
+Always: the bus stops whoever waits (a compulsory stop, a terminus). When wanted: only if somebody gets on or off (a request stop). Drive through: it does not stop on this trip. When early: it stops only if it is ahead of its time.	เสมอ: รถจอดไม่ว่าจะมีคนรอหรือไม่ (ป้ายบังคับหยุด ปลายทาง) เมื่อต้องการ: เฉพาะเมื่อมีคนขึ้นหรือลง (ป้ายหยุดตามสัญญาณ) ผ่านไป: ไม่จอดในเที่ยวนี้ เมื่อมาก่อนเวลา: จอดเฉพาะเมื่อมาถึงก่อนเวลา
+The AI buses of this line's tours are taken from the depot group; here the vehicles can be limited by date: only some types, mostly some types, or a fleet number for one tour. A line with nothing here takes any vehicle of the group.	รถบัส AI ของรอบเดินรถของสายนี้ถูกเลือกจากกลุ่มดีโป ที่นี่จำกัดรถตามวันที่ได้: เฉพาะบางรุ่น ส่วนใหญ่บางรุ่น หรือหมายเลขรถสำหรับหนึ่งรอบ สายที่ไม่มีอะไรที่นี่จะใช้รถคันใดก็ได้ในกลุ่ม
+Delete this assignment	ลบการกำหนดนี้
+(day, month, year)	(วัน เดือน ปี)
+It ends before it starts: the game ignores it	สิ้นสุดก่อนเริ่มต้น: เกมจะข้ามไป
+Only these types	เฉพาะรุ่นเหล่านี้
+Mostly these types	ส่วนใหญ่รุ่นเหล่านี้
+share of the tours	สัดส่วนของรอบเดินรถ
+Fleet numbers of single tours	หมายเลขรถของแต่ละรอบ
+A fleet number for a tour	หมายเลขรถสำหรับรอบ
+A vehicle assignment	การกำหนดยานพาหนะ
+tiles are loaded round there, the others are hidden	ไทล์ถูกโหลดรอบจุดนั้น ส่วนที่เหลือถูกซ่อน
+tiles round the camera are loaded; click on the empty zone to load the next ones	ไทล์รอบกล้องถูกโหลดแล้ว; คลิกที่โซนว่างเพื่อโหลดชุดถัดไป
+Tiles loaded at once	จำนวนไทล์ที่โหลดพร้อมกัน
+about 500 m round the camera	ประมาณ 500 m รอบกล้อง
+about 850 m	ประมาณ 850 m
+about 1.2 km	ประมาณ 1.2 km
+about 1.7 km (the usual)	ประมาณ 1.7 km (ค่าปกติ)
+about 2.5 km	ประมาณ 2.5 km
+A big or very detailed map is lighter with fewer tiles: the others are hidden until you click on the empty zone	แผนที่ขนาดใหญ่หรือละเอียดมากจะลื่นขึ้นเมื่อใช้ไทล์น้อยลง: ส่วนที่เหลือจะถูกซ่อนจนกว่าคุณจะคลิกที่โซนว่าง
+Hold Ctrl while drawing to join nothing. Cables, fences and footpaths never join roads or junctions.	กด Ctrl ค้างไว้ขณะวาดเพื่อไม่ให้เชื่อมต่อกับสิ่งใด สายเคเบิล รั้ว และทางเท้าจะไม่เชื่อมต่อกับถนนหรือทางแยก
+Auto-Adapt	เชื่อมต่ออัตโนมัติ
+Where roads of different width meet, a plate tapers one into the other	ตรงที่ถนนที่กว้างไม่เท่ากันมาบรรจบกัน จะมีแผ่นที่ค่อย ๆ เปลี่ยนจากถนนหนึ่งไปอีกถนนหนึ่ง

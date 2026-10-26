@@ -210,6 +210,12 @@ pub fn plan(doc: &Document, roots: &Roots) -> Plan {
     // the map's own folder, all of it
     c.pack_dir(&doc.dir);
     crate::geo::export_filter(&doc.dir, &mut c.plan.files);
+    // its Lua script for openOMSI, if it has one
+    if let Some(folder) = doc.dir.file_name() {
+        if let Some(dir) = crate::scripting::lua_path(&roots.content, &folder.to_string_lossy()).parent().filter(|d| d.is_dir()) {
+            c.pack_dir(dir);
+        }
+    }
     for t in doc.tiles.values() {
         for o in t.tile.objects.iter().chain(t.tile.attach_objects.iter()) {
             c.file(&o.file, true);
@@ -262,6 +268,9 @@ pub fn readme(doc: &Document, plan: &Plan) -> String {
         for f in plan.packed.iter().filter(|f| !f.to_lowercase().starts_with("maps\\")) {
             o.push_str(&format!("  {f}\n"));
         }
+    }
+    if plan.packed.iter().any(|f| f.to_lowercase().starts_with("plugins\\")) {
+        o.push_str("\nThe map has a Lua script for openOMSI (plugins\\map_...). It is code, so openMapper's Import does not install it: read it, and copy that folder into openOMSI's plugins folder if you trust it.\n");
     }
     if !plan.missing.is_empty() {
         o.push_str("\nNamed by the map but not found when it was exported (they will be missing):\n");

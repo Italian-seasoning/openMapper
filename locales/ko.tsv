@@ -2127,3 +2127,124 @@ Could not replace the program	프로그램을 교체할 수 없습니다
 The package has no program in it.	패키지에 프로그램이 없습니다.
 openMapper has stopped:	openMapper가 중지되었습니다:
 The log with the details:	자세한 내용이 담긴 로그:
+Light made: click where it goes; its script is in Map > Scripts	신호등이 만들어졌습니다. 놓을 곳을 클릭하세요. 스크립트는 지도 > 스크립트에 있습니다
+Stops sharing a name	이름이 같은 정류장
+Two stops far from each other have one name. The two across a road may share it (they are a pair), but elsewhere the game, the displays and the people who choose where to get off cannot tell them apart. "Fix" gives the later one a number after its name.	멀리 떨어진 두 정류장의 이름이 같습니다. 도로 건너편끼리라면 이름이 같아도 되지만(한 쌍입니다), 그 외에는 게임도, 안내 표시도, 내릴 곳을 고르는 승객도 구별할 수 없습니다. "수정"을 누르면 나중 정류장의 이름 뒤에 번호가 붙습니다.
+same name as the stop	정류장과 같은 이름
+The road is gone	도로가 없어졌습니다
+This end is already joined to something	이 끝은 이미 무언가와 연결되어 있습니다
+The junction piece could not be read	교차로 부품을 읽을 수 없습니다
+This object has no places for roads to join	이 오브젝트에는 도로를 연결할 자리가 없습니다
+Quiet street	조용한 거리
+Street with a footway on one side	한쪽에 보도가 있는 거리
+Main road	간선도로
+Avenue with a green strip	녹지대가 있는 대로
+One-way street	일방통행 거리
+Country road	시골길
+Service road	작업용 도로
+Empty script	빈 스크립트
+A greeting when the bus is taken	버스에 탈 때의 인사
+Announce every stop	모든 정류장 안내
+Traffic by the hour	시간대별 교통
+Weather at a time	시각에 따른 날씨
+Speed limit warning	제한 속도 경고
+Next stop on the screen	다음 정류장을 화면에 표시
+Lit during certain hours	특정 시간대에 켜짐
+Blinks	깜박임
+Lit in certain months	특정 달에 켜짐
+Compulsory stop	의무 정차
+Request stop	요청 정차
+Terminus	종점
+Every bus stops here and people are always waiting	모든 버스가 서고 늘 사람들이 기다립니다
+A bus stops only if somebody waits or presses the stop button	기다리는 사람이 있거나 하차 버튼이 눌렸을 때만 버스가 섭니다
+Where a line begins or ends: everybody gets off, a bus waits for its departure	노선이 시작하거나 끝나는 곳: 모두 내리고 버스는 출발까지 기다립니다
+when wanted	필요 시
+drive through	통과
+when early	일찍 도착 시
+right of the road	도로 오른쪽
+left of the road	도로 왼쪽
+both sides	양쪽
+Vehicles	차량
+Scripts…	스크립트…
+Junction on an end	도로 끝의 교차로
+The installation has no junction pieces with places for roads.	설치본에는 도로를 연결할 자리가 있는 교차로 부품이 없습니다.
+None of the pieces is made for this road type: its first place is used.	이 도로 유형에 맞는 부품이 없습니다. 첫 번째 자리를 사용합니다.
+At the start	시작 지점
+At the end	끝 지점
+Junction pieces for it	사용할 부품
+made by openMapper	openMapper가 만듦
+Choose it in the catalogue to place on the map	카탈로그에서 선택하면 지도에 배치할 수 있습니다
+Pieces with a place made for this road type. The one picked is offered first when a junction is put on this road's end (select the road: Junction on an end).	이 도로 유형에 맞는 자리가 있는 부품입니다. 선택한 부품은 이 도로의 끝에 교차로를 놓을 때 가장 먼저 제안됩니다(도로 선택: 도로 끝의 교차로).
+No piece is made for this road type; the list holds every piece with places for roads.	이 도로 유형에 맞는 부품이 없습니다. 목록에는 도로를 연결할 자리가 있는 모든 부품이 있습니다.
+Start from	기반으로 사용
+a ready-made road…	기성 도로…
+raised	높임
+As high as the footways, with a kerb along it	보도와 같은 높이, 따라서 연석이 있음
+ m left	 m 왼쪽
+a different one on the right	오른쪽은 다른 것
+ m right	 m 오른쪽
+Middle strip texture	중앙분리대 텍스처
+like the roadway	차도와 동일
+No problems found	문제가 없습니다
+Scripts	스크립트
+openOMSI: the map's script	openOMSI: 지도 스크립트
+Object scripts (OMSI 2 and openOMSI)	오브젝트 스크립트(OMSI 2 및 openOMSI)
+A Lua script that runs in openOMSI while this map is played: it reacts to what happens (a stop reached, a new hour, a new trip) and can show messages, change the traffic and the weather, move the bus. `on` and `every` work for this map only. OMSI 2 does not run Lua: its scripts belong to objects (the next tab).	이 지도를 플레이하는 동안 openOMSI에서 실행되는 Lua 스크립트입니다. 정류장 도착, 새로운 시각, 새로운 운행 같은 일에 반응하여 메시지를 표시하고, 교통과 날씨를 바꾸고, 버스를 옮길 수 있습니다. `on`과 `every`는 이 지도에서만 작동합니다. OMSI 2는 Lua를 실행하지 않으며, 스크립트는 오브젝트에 속합니다(다음 탭).
+a ready-made script…	기성 스크립트…
+Save the script	스크립트 저장
+Written into the content folder's plugins, where openOMSI loads it again at once	콘텐츠 폴더의 plugins에 기록되며, openOMSI가 즉시 다시 불러옵니다
+Script saved	스크립트를 저장했습니다
+Script saved, but it has problems: the game would not run it	스크립트를 저장했지만 문제가 있습니다. 게임에서 실행되지 않습니다
+Revert	되돌리기
+Delete the script	스크립트 삭제
+Script deleted	스크립트를 삭제했습니다
+What a scenery object runs every frame: lamps that switch, signs that change, doors that open. Select an object to see its scripts; the game's own compiler checks them as you write. Scripts of the installation's objects can be read and learned from; to change one, make an object of your own (Edit the mesh makes a copy) and open it here.	씬 오브젝트가 매 프레임 실행하는 것: 켜지는 전등, 바뀌는 표지판, 열리는 문. 오브젝트를 선택하면 스크립트가 보이며, 작성하는 동안 게임 자체 컴파일러가 검사합니다. 설치본 오브젝트의 스크립트는 읽고 배울 수 있습니다. 바꾸려면 자신의 오브젝트를 만들고("메시 편집"이 복사본을 만듭니다) 여기서 여세요.
+Select one object on the map.	지도에서 오브젝트 하나를 선택하세요.
+this object has no script	이 오브젝트에는 스크립트가 없습니다
+From the installation: read only.	설치본 제공: 읽기 전용.
+Not in the object's variable list	오브젝트의 변수 목록에 없음
+A light switched by a script	스크립트로 켜지는 조명
+A new object: a lamp that glows and lights the ground while its script says so. The script is yours to change after.	새 오브젝트: 스크립트가 그렇게 지시하는 동안 빛나며 땅을 비추는 전등입니다. 스크립트는 나중에 직접 바꿀 수 있습니다.
+ h	 시간
+A round takes	한 바퀴 걸리는 시간
+ s	 초
+From month	시작 월
+Reaches	비추는 범위
+Make the light	조명 만들기
+Kind of stop	정류장 유형
+Waiting, at most	대기, 최대
+Waiting, at least	대기, 최소
+Getting off	하차
+How many of those riding get off here, compared with the other stops: twice the number, twice the riders	탑승객 중 다른 정류장에 비해 여기서 내리는 비율: 숫자가 두 배면 승객도 두 배
+How far along the stop people wait and a bus may stand	정류장을 따라 사람들이 기다리고 버스가 설 수 있는 범위
+Platform	승강장
+Paired with the stop across the road: one name for both	도로 건너편 정류장과 한 쌍: 둘 다 같은 이름
+Split	분리
+The stop gets a name of its own (the number is changed in the name box), and renaming one no longer renames the other	정류장이 자기만의 이름을 갖고(번호는 이름 입력란에서 바꿉니다), 한쪽 이름을 바꿔도 다른 쪽은 바뀌지 않습니다
+Another stop far from here has this name	여기서 멀리 있는 다른 정류장이 이 이름을 씁니다
+Make it different	다르게 만들기
+Which buses drive this line	이 노선을 운행하는 버스
+How the stops are served	정류장 운영 방식
+Always: the bus stops whoever waits (a compulsory stop, a terminus). When wanted: only if somebody gets on or off (a request stop). Drive through: it does not stop on this trip. When early: it stops only if it is ahead of its time.	항상: 기다리는 사람과 상관없이 버스가 섭니다(의무 정차, 종점). 필요 시: 누군가 타거나 내릴 때만(요청 정차). 통과: 이번 운행에서는 서지 않습니다. 일찍 도착 시: 시간보다 빠를 때만 섭니다.
+The AI buses of this line's tours are taken from the depot group; here the vehicles can be limited by date: only some types, mostly some types, or a fleet number for one tour. A line with nothing here takes any vehicle of the group.	이 노선 운행 순번의 AI 버스는 차고지 그룹에서 가져옵니다. 여기서 날짜별로 차량을 제한할 수 있습니다: 일부 유형만, 대부분 일부 유형, 또는 한 운행 순번의 차량 번호. 여기에 아무것도 없는 노선은 그룹의 아무 차량이나 씁니다.
+Delete this assignment	이 배정 삭제
+(day, month, year)	(일, 월, 년)
+It ends before it starts: the game ignores it	끝이 시작보다 앞입니다. 게임에서 무시됩니다
+Only these types	이 유형만
+Mostly these types	대부분 이 유형
+share of the tours	운행 순번의 비율
+Fleet numbers of single tours	개별 운행 순번의 차량 번호
+A fleet number for a tour	운행 순번의 차량 번호
+A vehicle assignment	차량 배정
+tiles are loaded round there, the others are hidden	타일이 이 주변에 불러와 있고 나머지는 숨겨집니다
+tiles round the camera are loaded; click on the empty zone to load the next ones	타일이 카메라 주변에 불러와 있습니다. 빈 영역을 클릭하면 다음 타일을 불러옵니다
+Tiles loaded at once	한 번에 불러올 타일 수
+about 500 m round the camera	카메라 주변 약 500 m
+about 850 m	약 850 m
+about 1.2 km	약 1.2 km
+about 1.7 km (the usual)	약 1.7 km(기본값)
+about 2.5 km	약 2.5 km
+A big or very detailed map is lighter with fewer tiles: the others are hidden until you click on the empty zone	크거나 매우 상세한 맵은 타일 수가 적을수록 가볍습니다. 나머지는 빈 영역을 클릭할 때까지 숨겨집니다
+Hold Ctrl while drawing to join nothing. Cables, fences and footpaths never join roads or junctions.	그리는 동안 Ctrl을 누르고 있으면 아무것도 연결되지 않습니다. 케이블, 울타리, 인도는 도로나 교차로에 연결되지 않습니다.
+Auto-Adapt	자동 연결
+Where roads of different width meet, a plate tapers one into the other	폭이 다른 도로가 만나는 곳에 한쪽에서 다른 쪽으로 서서히 이어지는 판을 만들기

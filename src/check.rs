@@ -74,6 +74,8 @@ pub enum Fix {
     /// Make the map its own depot file from its lines, in place of another map's of this
     /// name its depot groups use.
     OwnDepot(String),
+    /// Give a bus stop a name no stop far from it has.
+    UniqueStopName(TileKey, i64),
 }
 
 #[derive(Debug, Clone)]
@@ -96,6 +98,7 @@ pub enum Kind {
     UnlinkedEnds,
     BrokenLink,
     StopOffRoad,
+    StopName,
     EntryOffRoad,
     EntryLost,
     NoEntry,
@@ -127,6 +130,7 @@ impl Kind {
             Kind::UnlinkedEnds => tr("Road ends not joined", "Несоединённые концы дорог"),
             Kind::BrokenLink => tr("Links to splines that are gone", "Ссылки на исчезнувшие сплайны"),
             Kind::StopOffRoad => tr("Bus stops away from a road", "Остановки вдали от дороги"),
+            Kind::StopName => tr("Stops sharing a name", "Остановки с одним именем"),
             Kind::EntryOffRoad => tr("Start points away from a road", "Точки старта вдали от дороги"),
             Kind::EntryLost => tr("Start points without their object", "Точки старта без объекта"),
             Kind::NoEntry => tr("No start point", "Нет точки старта"),
@@ -159,6 +163,7 @@ impl Kind {
             Kind::UnlinkedEnds => tr("Two road ends lie on one another but are not joined. Traffic still finds its way (the game joins lanes by their ends), but rows of lamps and posts and the road's texture do not run on across, and the editor does not treat them as one road. \"Join\" links them.", "Два конца дорог лежат друг на друге, но не соединены. Транспорт проедет (игра соединяет полосы по концам), но ряды фонарей и столбиков и текстура дороги не продолжаются через стык, а редактор не считает их одной дорогой. «Соединить» свяжет их."),
             Kind::BrokenLink => tr("A spline says it goes on into another one that no longer exists. \"Fix\" forgets that link.", "Сплайн ссылается на продолжение, которого больше нет. «Исправить» уберёт эту ссылку."),
             Kind::StopOffRoad => tr("A bus stop belongs to the lane it stands beside (within about 25 m). This one has none near, so buses cannot stop at it. Move it next to the road, or \"Fix\" puts it at the kerb of the nearest lane (within 80 m).", "Остановка относится к полосе, у которой стоит (не дальше примерно 25 м). У этой рядом полосы нет, автобус не сможет у неё остановиться. Передвиньте её к дороге или «Исправить» поставит её у бордюра ближайшей полосы (до 80 м)."),
+            Kind::StopName => tr("Two stops far from each other have one name. The two across a road may share it (they are a pair), but elsewhere the game, the displays and the people who choose where to get off cannot tell them apart. \"Fix\" gives the later one a number after its name.", "У двух далёких друг от друга остановок одно имя. Напротив через дорогу оно может совпадать (это пара), но в остальных случаях игра, табло и пассажиры, выбирающие, где выйти, не отличат их. «Исправить» добавит позднейшей номер после имени."),
             Kind::EntryOffRoad => tr("A start point is where the bus appears. This one is away from any lane: fine in a depot yard, otherwise the bus starts off the road.", "Точка старта: где появляется автобус. Эта далеко от полос: в парке это нормально, иначе автобус окажется вне дороги."),
             Kind::EntryLost => tr("A start point refers to an object that was deleted. \"Fix\" removes the start point.", "Точка старта ссылается на удалённый объект. «Исправить» удалит точку старта."),
             Kind::NoEntry => tr("There is nowhere for the bus to appear. Place a start point (Game logic > Start points) on a road, or \"Fix\" puts one on a lane some 40 m before a bus stop.", "Автобусу негде появиться. Поставьте точку старта (Служебное > Точки старта) на дорогу или «Исправить» поставит её на полосу метрах в 40 перед остановкой."),
@@ -208,6 +213,8 @@ struct Snapshot {
     object_ids: HashSet<i64>,
     /// The map for the timetable's checks (routes are found on it).
     tt_doc: Option<Document>,
+    /// The bus stops, with the tile each is on.
+    stops: Vec<(TileKey, crate::stops::Found)>,
 }
 
 /// What the catalogue says of a file.
@@ -313,6 +320,7 @@ fn snapshot(doc: &Document, lib: &Library) -> Snapshot {
         parents: doc.tiles.values().flat_map(|t| t.tile.attach_objects.iter().filter_map(|a| a.parent_id)).collect(),
         var_links: doc.tiles.iter().flat_map(|(k, t)| t.tile.objects.iter().chain(&t.tile.attach_objects).filter_map(move |o| o.var_parent.map(|p| (*k, o.id, tile_origin(*k) + DVec2::new(o.pos[0], o.pos[1]), p)))).collect(),
         object_ids: doc.tiles.values().flat_map(|t| t.tile.objects.iter().chain(&t.tile.attach_objects).map(|o| o.id).chain(t.tile.spline_attachments.iter().map(|a| a.id)).chain(t.chrono.iter().flat_map(|c| c.objects.iter().chain(&c.attach_objects).map(|o| o.id)))).collect(),
+        stops: doc.tiles.iter().flat_map(|(k, t)| t.tile.objects.iter().filter(|o| o.flag == 7 && o.extra.len() >= 4).map(move |o| (*k, crate::stops::Found { id: o.id, name: o.extra[0].clone(), at: tile_origin(*k) + DVec2::new(o.pos[0], o.pos[1]) }))).collect(),
         tt_doc: (!doc.timetable.lines.is_empty() || !doc.timetable.trips.is_empty() || !doc.traffic.veh_groups.is_empty()).then(|| doc.for_reading()),
     }
 }
@@ -585,6 +593,20 @@ fn run(s: Snapshot, roots: Vec<PathBuf>) -> Vec<Issue> {
                 let fix = (gap < 80.0 && roots.len() >= 2 && !o.attached).then(|| Fix::StopToKerb(o.tile, o.id, roots[0].clone(), roots[roots.len() - 1].clone()));
                 out.push(issue(Severity::Warning, Kind::StopOffRoad, short(&o.file), how, Some(o.world), Some(Sel::Object(o.tile, o.id)), fix));
             }
+        }
+    }
+    // stops of one name that are not a pair: the first keeps it, the later ones are listed
+    let found: Vec<crate::stops::Found> = s.stops.iter().map(|x| x.1.clone()).collect();
+    let mut named = 0;
+    for (tile, f) in &s.stops {
+        let others = crate::stops::clashes(&found, f.id);
+        if others.is_empty() || others.iter().all(|o| o.id > f.id) {
+            continue;
+        }
+        named += 1;
+        if named <= LIST {
+            let first = others.iter().filter(|o| o.id < f.id).map(|o| o.id).min().unwrap_or(0);
+            out.push(issue(Severity::Warning, Kind::StopName, f.name.trim().to_string(), format!("{} {first}", tr("same name as the stop", "то же имя, что у остановки")), Some(f.at), Some(Sel::Object(*tile, f.id)), Some(Fix::UniqueStopName(*tile, f.id))));
         }
     }
     let objects_by_id: HashMap<i64, &ObjRec> = s.objects.iter().map(|o| (o.id, o)).collect();
@@ -965,6 +987,20 @@ pub fn apply(ed: &mut Editor, fix: &Fix) -> bool {
                 _ => false,
             }
         }
+        Fix::UniqueStopName(k, id) => {
+            let stops = crate::stops::all(doc);
+            let Some(me) = stops.iter().find(|f| f.id == *id) else { return false };
+            let name = crate::stops::unique_name(&stops, Some(*id), &me.name, me.at);
+            ed.history.touch_tile(doc, *k);
+            match crate::selection::any_object_mut(doc, *k, *id) {
+                Some(o) if o.extra.first().map(|n| n.trim()) != Some(name.as_str()) => {
+                    o.extra[0] = name;
+                    doc.tiles.get_mut(k).map(|t| t.touch_content());
+                    true
+                }
+                _ => false,
+            }
+        }
         Fix::StockGroups(omsi) => {
             let before = doc.traffic.clone();
             let n = crate::traffic::fill_named_groups(&mut doc.traffic, omsi);
@@ -1313,7 +1349,19 @@ mod tests {
     fn snap(splines: Vec<SplineRec>) -> Snapshot {
         let mut kinds = HashMap::new();
         kinds.insert("splines\\road.sli".to_string(), KindRec { cat: Category::Roads, half_width: 4.0, bus_stop: false, lanes: true, abs_height: false, lamp: false, light_head: false });
-        Snapshot { objects: Vec::new(), splines, chrono_lanes: Vec::new(), kinds, entries: Vec::new(), next_id: 100, listed_missing: Vec::new(), no_terrain: Vec::new(), unlit: HashSet::new(), ground: Vec::new(), map_dir: PathBuf::new(), tiles: HashSet::new(), parents: HashSet::new(), var_links: Vec::new(), object_ids: HashSet::new(), tt_doc: None }
+        Snapshot { objects: Vec::new(), splines, chrono_lanes: Vec::new(), kinds, entries: Vec::new(), next_id: 100, listed_missing: Vec::new(), no_terrain: Vec::new(), unlit: HashSet::new(), ground: Vec::new(), map_dir: PathBuf::new(), tiles: HashSet::new(), parents: HashSet::new(), var_links: Vec::new(), object_ids: HashSet::new(), tt_doc: None, stops: Vec::new() }
+    }
+
+    #[test]
+    fn far_stops_of_one_name_are_listed_but_a_pair_is_not() {
+        let stop = |id: i64, name: &str, x: f64| ((0, 0), crate::stops::Found { id, name: name.into(), at: DVec2::new(x, 0.0) });
+        let mut s = snap(Vec::new());
+        s.stops = vec![stop(1, "Market", 0.0), stop(2, "Market", 15.0), stop(3, "Market", 600.0), stop(4, "Station", 0.0)];
+        let issues = run(s, Vec::new());
+        let named: Vec<_> = issues.iter().filter(|i| i.kind == Kind::StopName).collect();
+        // the third is the one listed: the first keeps the name, the second is its pair
+        assert_eq!(named.len(), 1, "{named:?}");
+        assert_eq!(named[0].fix, Some(Fix::UniqueStopName((0, 0), 3)));
     }
 
     fn doc_with(tiles: &[TileKey]) -> Document {

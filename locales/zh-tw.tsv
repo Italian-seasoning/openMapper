@@ -2127,3 +2127,124 @@ Could not replace the program	無法取代程式
 The package has no program in it.	套件中沒有程式。
 openMapper has stopped:	openMapper 已停止：
 The log with the details:	附有詳細資料的記錄檔：
+Light made: click where it goes; its script is in Map > Scripts	號誌已建立:點擊要放置的位置;其腳本在 地圖 > 腳本
+Stops sharing a name	重名的站牌
+Two stops far from each other have one name. The two across a road may share it (they are a pair), but elsewhere the game, the displays and the people who choose where to get off cannot tell them apart. "Fix" gives the later one a number after its name.	兩個相距很遠的站牌同名。道路對面的兩個站牌可以同名(它們是一對),但在其他情況下,遊戲、顯示螢幕和選擇下車地點的乘客都無法區分它們。「修復」會在後一個站牌的名稱後加上編號。
+same name as the stop	與站牌同名
+The road is gone	道路已不存在
+This end is already joined to something	這一端已與其他東西相連
+The junction piece could not be read	無法讀取路口零件
+This object has no places for roads to join	此物件沒有可連接道路的位置
+Quiet street	安靜街道
+Street with a footway on one side	一側有人行道的街道
+Main road	主幹道
+Avenue with a green strip	附綠化帶的大道
+One-way street	單行街道
+Country road	鄉間道路
+Service road	輔助道路
+Empty script	空腳本
+A greeting when the bus is taken	上車時的問候
+Announce every stop	報每一站
+Traffic by the hour	依小時變化的交通
+Weather at a time	指定時間的天氣
+Speed limit warning	超速警告
+Next stop on the screen	在螢幕上顯示下一站
+Lit during certain hours	在特定時段亮起
+Blinks	閃爍
+Lit in certain months	在特定月份亮起
+Compulsory stop	必停站
+Request stop	招手停靠站
+Terminus	終點站
+Every bus stops here and people are always waiting	每輛公車都停靠,總有人在等候
+A bus stops only if somebody waits or presses the stop button	只有有人等候或按下下車鈴時,公車才停靠
+Where a line begins or ends: everybody gets off, a bus waits for its departure	路線的起點或終點:所有人下車,公車等待發車
+when wanted	有需要時
+drive through	直接通過
+when early	提前到達時
+right of the road	道路右側
+left of the road	道路左側
+both sides	兩側
+Vehicles	車輛
+Scripts…	腳本…
+Junction on an end	路口接在道路末端
+The installation has no junction pieces with places for roads.	安裝目錄中沒有帶道路連接位置的路口零件。
+None of the pieces is made for this road type: its first place is used.	沒有適合此道路類型的零件:將使用其第一個位置。
+At the start	起點處
+At the end	終點處
+Junction pieces for it	適用的零件
+made by openMapper	由 openMapper 製作
+Choose it in the catalogue to place on the map	在目錄中選擇後可放置到地圖上
+Pieces with a place made for this road type. The one picked is offered first when a junction is put on this road's end (select the road: Junction on an end).	具有適合此道路類型位置的零件。在此道路末端放置路口時,所選零件會優先提供(選取道路:路口接在道路末端)。
+No piece is made for this road type; the list holds every piece with places for roads.	沒有適合此道路類型的零件;清單中是所有具有道路連接位置的零件。
+Start from	以此為基礎
+a ready-made road…	現成的道路…
+raised	抬高
+As high as the footways, with a kerb along it	與人行道等高,沿邊有路緣
+ m left	 公尺 左側
+a different one on the right	右側另用一種
+ m right	 公尺 右側
+Middle strip texture	中央分隔島材質
+like the roadway	與車道相同
+No problems found	未發現問題
+Scripts	腳本
+openOMSI: the map's script	openOMSI:地圖腳本
+Object scripts (OMSI 2 and openOMSI)	物件腳本(OMSI 2 和 openOMSI)
+A Lua script that runs in openOMSI while this map is played: it reacts to what happens (a stop reached, a new hour, a new trip) and can show messages, change the traffic and the weather, move the bus. `on` and `every` work for this map only. OMSI 2 does not run Lua: its scripts belong to objects (the next tab).	在玩這張地圖時由 openOMSI 執行的 Lua 腳本:它會對發生的事件作出反應(抵達站牌、新的一小時、新的班次),可以顯示訊息、改變交通和天氣、移動公車。`on` 和 `every` 僅對這張地圖有效。OMSI 2 不執行 Lua:它的腳本屬於物件(下一個分頁)。
+a ready-made script…	現成的腳本…
+Save the script	儲存腳本
+Written into the content folder's plugins, where openOMSI loads it again at once	寫入內容資料夾的 plugins,openOMSI 會立即重新載入
+Script saved	腳本已儲存
+Script saved, but it has problems: the game would not run it	腳本已儲存,但有問題:遊戲不會執行它
+Revert	還原
+Delete the script	刪除腳本
+Script deleted	腳本已刪除
+What a scenery object runs every frame: lamps that switch, signs that change, doors that open. Select an object to see its scripts; the game's own compiler checks them as you write. Scripts of the installation's objects can be read and learned from; to change one, make an object of your own (Edit the mesh makes a copy) and open it here.	場景物件每個影格執行的內容:會開關的燈、會變化的招牌、會開啟的門。選取一個物件即可檢視其腳本;遊戲內建的編譯器會在你撰寫時檢查。安裝目錄中物件的腳本可以閱讀和學習;若要修改,請製作你自己的物件(「編輯網格」會建立副本)並在此處開啟。
+Select one object on the map.	請在地圖上選取一個物件。
+this object has no script	此物件沒有腳本
+From the installation: read only.	來自安裝目錄:唯讀。
+Not in the object's variable list	不在物件的變數清單中
+A light switched by a script	由腳本控制開關的燈
+A new object: a lamp that glows and lights the ground while its script says so. The script is yours to change after.	新物件:當腳本指示時發光並照亮地面的燈。之後可以自由修改腳本。
+ h	 小時
+A round takes	一圈用時
+ s	 秒
+From month	起始月份
+Reaches	照亮範圍
+Make the light	建立燈
+Kind of stop	站牌類型
+Waiting, at most	等候人數上限
+Waiting, at least	等候人數下限
+Getting off	下車
+How many of those riding get off here, compared with the other stops: twice the number, twice the riders	與其他站牌相比,乘客在此下車的比例:數值加倍,下車人數也加倍
+How far along the stop people wait and a bus may stand	沿站牌多長的範圍內人們會等候、公車可以停靠
+Platform	月台
+Paired with the stop across the road: one name for both	與道路對面的站牌配對:兩者同名
+Split	拆分
+The stop gets a name of its own (the number is changed in the name box), and renaming one no longer renames the other	該站牌獲得自己的名稱(在名稱欄中修改編號),重新命名其中一個不再重新命名另一個
+Another stop far from here has this name	遠處另一個站牌使用了此名稱
+Make it different	改成不同的
+Which buses drive this line	哪些公車行駛此路線
+How the stops are served	站牌的停靠方式
+Always: the bus stops whoever waits (a compulsory stop, a terminus). When wanted: only if somebody gets on or off (a request stop). Drive through: it does not stop on this trip. When early: it stops only if it is ahead of its time.	一律:無論有沒有人等候,公車都停靠(必停站、終點站)。有需要時:僅在有人上下車時停靠(招手停靠站)。直接通過:本班次不停靠。提前到達時:僅在比時刻表提前時停靠。
+The AI buses of this line's tours are taken from the depot group; here the vehicles can be limited by date: only some types, mostly some types, or a fleet number for one tour. A line with nothing here takes any vehicle of the group.	此路線更次所用的 AI 公車取自車庫群組;在此可依日期限制車輛:只用某些車型、主要用某些車型,或為某個更次指定車號。此處沒有設定的路線可使用該群組中的任何車輛。
+Delete this assignment	刪除此指派
+(day, month, year)	(日、月、年)
+It ends before it starts: the game ignores it	結束早於開始:遊戲將忽略它
+Only these types	僅限這些車型
+Mostly these types	主要是這些車型
+share of the tours	更次占比
+Fleet numbers of single tours	各個更次的車號
+A fleet number for a tour	某更次的車號
+A vehicle assignment	車輛指派
+tiles are loaded round there, the others are hidden	個圖磚已載入該處周圍，其餘已隱藏
+tiles round the camera are loaded; click on the empty zone to load the next ones	個圖磚已載入相機周圍；點擊空白區域可載入接下來的圖磚
+Tiles loaded at once	一次載入的圖磚數
+about 500 m round the camera	相機周圍約 500 m
+about 850 m	約 850 m
+about 1.2 km	約 1.2 km
+about 1.7 km (the usual)	約 1.7 km（常用）
+about 2.5 km	約 2.5 km
+A big or very detailed map is lighter with fewer tiles: the others are hidden until you click on the empty zone	大型或非常精細的地圖在圖磚較少時更流暢：其餘圖磚會隱藏，直到你點擊空白區域
+Hold Ctrl while drawing to join nothing. Cables, fences and footpaths never join roads or junctions.	繪製時按住 Ctrl 可不連接任何物件。纜線、圍欄和人行道絕不會連接到道路或路口。
+Auto-Adapt	自動銜接
+Where roads of different width meet, a plate tapers one into the other	在寬度不同的道路相接處，鋪設從一條逐漸過渡到另一條的路面

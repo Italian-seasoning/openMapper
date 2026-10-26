@@ -2127,3 +2127,124 @@ Could not replace the program	No s'ha pogut substituir el programa
 The package has no program in it.	El paquet no conté cap programa.
 openMapper has stopped:	openMapper s'ha aturat:
 The log with the details:	El registre amb els detalls:
+Light made: click where it goes; its script is in Map > Scripts	Llum creada: feu clic on ha d'anar; el seu script és a Mapa > Scripts
+Stops sharing a name	Parades amb el mateix nom
+Two stops far from each other have one name. The two across a road may share it (they are a pair), but elsewhere the game, the displays and the people who choose where to get off cannot tell them apart. "Fix" gives the later one a number after its name.	Dues parades allunyades l'una de l'altra tenen el mateix nom. Les dues de cada costat d'una carretera el poden compartir (són una parella), però en els altres casos el joc, els rètols i la gent que tria on baixar no les poden distingir. «Arregla» afegeix un número al nom de la darrera.
+same name as the stop	mateix nom que la parada
+The road is gone	La carretera ja no hi és
+This end is already joined to something	Aquest extrem ja està unit a alguna cosa
+The junction piece could not be read	No s'ha pogut llegir la peça de creuament
+This object has no places for roads to join	Aquest objecte no té llocs per unir carreteres
+Quiet street	Carrer tranquil
+Street with a footway on one side	Carrer amb vorera a un costat
+Main road	Carretera principal
+Avenue with a green strip	Avinguda amb franja verda
+One-way street	Carrer de sentit únic
+Country road	Camí rural
+Service road	Via de servei
+Empty script	Script buit
+A greeting when the bus is taken	Una salutació en pujar a l'autobús
+Announce every stop	Anunciar cada parada
+Traffic by the hour	Trànsit per hores
+Weather at a time	Temps a una hora determinada
+Speed limit warning	Avís de límit de velocitat
+Next stop on the screen	Propera parada a la pantalla
+Lit during certain hours	Encès en certes hores
+Blinks	Parpelleja
+Lit in certain months	Encès en certs mesos
+Compulsory stop	Parada obligatòria
+Request stop	Parada a demanda
+Terminus	Final de línia
+Every bus stops here and people are always waiting	Tots els autobusos s'hi aturen i sempre hi ha gent esperant
+A bus stops only if somebody waits or presses the stop button	Un autobús només s'atura si algú espera o prem el botó de parada
+Where a line begins or ends: everybody gets off, a bus waits for its departure	On una línia comença o acaba: tothom baixa i l'autobús espera la sortida
+when wanted	a demanda
+drive through	passa de llarg
+when early	si va avançat
+right of the road	a la dreta de la carretera
+left of the road	a l'esquerra de la carretera
+both sides	als dos costats
+Vehicles	Vehicles
+Scripts…	Scripts…
+Junction on an end	Creuament en un extrem
+The installation has no junction pieces with places for roads.	La instal·lació no té peces de creuament amb llocs per a carreteres.
+None of the pieces is made for this road type: its first place is used.	Cap de les peces està feta per a aquest tipus de carretera: s'usa el primer lloc.
+At the start	Al principi
+At the end	Al final
+Junction pieces for it	Peces de creuament per a ella
+made by openMapper	fet per openMapper
+Choose it in the catalogue to place on the map	Trieu-la al catàleg per col·locar-la al mapa
+Pieces with a place made for this road type. The one picked is offered first when a junction is put on this road's end (select the road: Junction on an end).	Peces amb un lloc fet per a aquest tipus de carretera. La triada s'ofereix primer quan es posa un creuament a l'extrem d'aquesta carretera (seleccioneu la carretera: Creuament en un extrem).
+No piece is made for this road type; the list holds every piece with places for roads.	Cap peça està feta per a aquest tipus de carretera; la llista conté totes les peces amb llocs per a carreteres.
+Start from	Partir d'
+a ready-made road…	una carretera preparada…
+raised	elevada
+As high as the footways, with a kerb along it	A l'altura de les voreres, amb una vorada al llarg
+ m left	 m a l'esquerra
+a different one on the right	una altra a la dreta
+ m right	 m a la dreta
+Middle strip texture	Textura de la franja central
+like the roadway	com la calçada
+No problems found	No s'ha trobat cap problema
+Scripts	Scripts
+openOMSI: the map's script	openOMSI: l'script del mapa
+Object scripts (OMSI 2 and openOMSI)	Scripts d'objectes (OMSI 2 i openOMSI)
+A Lua script that runs in openOMSI while this map is played: it reacts to what happens (a stop reached, a new hour, a new trip) and can show messages, change the traffic and the weather, move the bus. `on` and `every` work for this map only. OMSI 2 does not run Lua: its scripts belong to objects (the next tab).	Un script Lua que s'executa a openOMSI mentre es juga aquest mapa: reacciona al que passa (una parada assolida, una hora nova, un trajecte nou) i pot mostrar missatges, canviar el trànsit i el temps, moure l'autobús. `on` i `every` només funcionen per a aquest mapa. OMSI 2 no executa Lua: els seus scripts pertanyen als objectes (la pestanya següent).
+a ready-made script…	un script preparat…
+Save the script	Desa l'script
+Written into the content folder's plugins, where openOMSI loads it again at once	S'escriu als plugins de la carpeta de contingut, d'on openOMSI el torna a carregar de seguida
+Script saved	Script desat
+Script saved, but it has problems: the game would not run it	Script desat, però té problemes: el joc no l'executaria
+Revert	Reverteix
+Delete the script	Suprimeix l'script
+Script deleted	Script suprimit
+What a scenery object runs every frame: lamps that switch, signs that change, doors that open. Select an object to see its scripts; the game's own compiler checks them as you write. Scripts of the installation's objects can be read and learned from; to change one, make an object of your own (Edit the mesh makes a copy) and open it here.	El que un objecte d'escenari executa a cada fotograma: llums que s'encenen, rètols que canvien, portes que s'obren. Seleccioneu un objecte per veure'n els scripts; el compilador del mateix joc els comprova mentre escriviu. Els scripts dels objectes de la instal·lació es poden llegir i estudiar; per canviar-ne un, feu un objecte propi (Edita la malla en fa una còpia) i obriu-lo aquí.
+Select one object on the map.	Seleccioneu un objecte al mapa.
+this object has no script	aquest objecte no té cap script
+From the installation: read only.	De la instal·lació: només lectura.
+Not in the object's variable list	No és a la llista de variables de l'objecte
+A light switched by a script	Una llum encesa per un script
+A new object: a lamp that glows and lights the ground while its script says so. The script is yours to change after.	Un objecte nou: un fanal que brilla i il·lumina el terra mentre el seu script ho digui. L'script es pot canviar després.
+ h	 h
+A round takes	Una volta dura
+ s	 s
+From month	Des del mes
+Reaches	Arriba a
+Make the light	Crea la llum
+Kind of stop	Tipus de parada
+Waiting, at most	Esperant, com a màxim
+Waiting, at least	Esperant, com a mínim
+Getting off	Baixen
+How many of those riding get off here, compared with the other stops: twice the number, twice the riders	Quants dels que viatgen baixen aquí, comparat amb les altres parades: el doble de número, el doble de passatgers
+How far along the stop people wait and a bus may stand	Fins on s'estén la gent que espera i on pot aturar-se un autobús
+Platform	Andana
+Paired with the stop across the road: one name for both	Aparellada amb la parada de l'altre costat de la carretera: un sol nom per a les dues
+Split	Separa
+The stop gets a name of its own (the number is changed in the name box), and renaming one no longer renames the other	La parada obté un nom propi (el número es canvia al quadre del nom) i canviar el nom d'una ja no canvia el de l'altra
+Another stop far from here has this name	Una altra parada lluny d'aquí té aquest nom
+Make it different	Fes-la diferent
+Which buses drive this line	Quins autobusos fan aquesta línia
+How the stops are served	Com se serveixen les parades
+Always: the bus stops whoever waits (a compulsory stop, a terminus). When wanted: only if somebody gets on or off (a request stop). Drive through: it does not stop on this trip. When early: it stops only if it is ahead of its time.	Sempre: l'autobús s'atura tant si algú espera com si no (parada obligatòria, final de línia). A demanda: només si algú puja o baixa (parada a demanda). Passa de llarg: en aquest trajecte no s'atura. Si va avançat: només s'atura si va per davant de l'hora.
+The AI buses of this line's tours are taken from the depot group; here the vehicles can be limited by date: only some types, mostly some types, or a fleet number for one tour. A line with nothing here takes any vehicle of the group.	Els autobusos d'IA dels torns d'aquesta línia es prenen del grup de cotxeres; aquí es poden limitar els vehicles per data: només alguns tipus, majoritàriament alguns tipus, o un número de flota per a un torn. Una línia sense res aquí pren qualsevol vehicle del grup.
+Delete this assignment	Suprimeix aquesta assignació
+(day, month, year)	(dia, mes, any)
+It ends before it starts: the game ignores it	Acaba abans de començar: el joc l'ignora
+Only these types	Només aquests tipus
+Mostly these types	Majoritàriament aquests tipus
+share of the tours	part dels torns
+Fleet numbers of single tours	Números de flota de torns concrets
+A fleet number for a tour	Un número de flota per a un torn
+A vehicle assignment	Una assignació de vehicle
+tiles are loaded round there, the others are hidden	tessel·les es carreguen al voltant d'aquest lloc, la resta queden amagades
+tiles round the camera are loaded; click on the empty zone to load the next ones	tessel·les al voltant de la càmera estan carregades; fes clic a la zona buida per carregar les següents
+Tiles loaded at once	Tessel·les carregades alhora
+about 500 m round the camera	uns 500 m al voltant de la càmera
+about 850 m	uns 850 m
+about 1.2 km	uns 1,2 km
+about 1.7 km (the usual)	uns 1,7 km (l'habitual)
+about 2.5 km	uns 2,5 km
+A big or very detailed map is lighter with fewer tiles: the others are hidden until you click on the empty zone	Un mapa gran o molt detallat va més àgil amb menys tessel·les: la resta queden amagades fins que facis clic a la zona buida
+Hold Ctrl while drawing to join nothing. Cables, fences and footpaths never join roads or junctions.	Mantén premut Ctrl mentre dibuixes per no unir res. Els cables, les tanques i les voreres no s'uneixen mai a carreteres ni creuaments.
+Auto-Adapt	Auto-transició
+Where roads of different width meet, a plate tapers one into the other	Allà on es troben carreteres d'amplada diferent, una placa fa la transició de l'una a l'altra

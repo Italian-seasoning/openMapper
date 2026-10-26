@@ -472,17 +472,44 @@ fn junction_mesh(arms: &[ArmGeo], centre: DVec3, core_tex: Option<PathBuf>, peri
         // meets a verge), swept along the curve (it lies to the right of the way round)
         let reach = |v: &[SideProfile]| v.iter().flat_map(|p| p.points.iter()).map(|q| q.0).fold(0.0, f64::max);
         let (sides, v0, vdir, back) = if reach(&b.right) > reach(&a.left) + 0.5 { (&b.right, b.v0, b.vdir, true) } else { (&a.left, a.v0, a.vdir, false) };
-        for prof in sides.iter() {
+        // (the strip as it is at the arm it starts from and at the one it ends at: between two
+        // roads of different width it grows from the one's footway to the other's)
+        let (from_arm, to_arm) = (&a.left, &b.right);
+        let blend = arms.len() == 2 && !from_arm.is_empty() && from_arm.len() == to_arm.len();
+        let strips: Vec<(&SideProfile, &Vec<(f64, f64, f64, f64)>, &Vec<(f64, f64, f64, f64)>)> = if blend {
+            from_arm.iter().zip(to_arm.iter()).map(|(f, t)| (if back { t } else { f }, &f.points, &t.points)).collect()
+        } else {
+            sides.iter().map(|p| (p, &p.points, &p.points)).collect()
+        };
+        for (prof, p_from, p_to) in strips {
             let mat = mesh.material(prof.texture.clone());
-            for w in prof.points.windows(2) {
-                let (d0, z0, u0, vs0) = w[0];
-                let (d1, z1, u1, vs1) = w[1];
-                // the face's normal in the cross-section: up for a flat part, towards the road
-                // for the face of a kerb
-                let (dd, dz) = (d1 - d0, z1 - z0);
-                for q in st.windows(2) {
-                    let (p0, h0, s0) = q[0];
-                    let (p1, h1, s1) = q[1];
+            let n = p_from.len().max(p_to.len());
+            // (the profile at a place along the kerb, the shorter one's last point repeated)
+            let at = |t: f64| -> Vec<(f64, f64, f64, f64)> {
+                (0..n)
+                    .map(|i| {
+                        let (f, g) = (p_from[i.min(p_from.len() - 1)], p_to[i.min(p_to.len() - 1)]);
+                        (f.0 + (g.0 - f.0) * t, f.1 + (g.1 - f.1) * t, f.2 + (g.2 - f.2) * t, f.3 + (g.3 - f.3) * t)
+                    })
+                    .collect()
+            };
+            for q in st.windows(2) {
+                let (p0, h0, s0) = q[0];
+                let (p1, h1, s1) = q[1];
+                // (between two roads the strip's cross-sections are turned from the one's
+                // across to the other's, so they meet the roads' ends square, with no wedge
+                // of ground between)
+                let turn = |h: f64, s: f64| if blend { let from = roads::norm_deg(a.out + 180.0); from + signed_turn(from, b.out) * (s / total) } else { h };
+                let (h0, h1) = (turn(h0, s0), turn(h1, s1));
+                let (w0, w1) = (at(s0 / total), at(s1 / total));
+                for i in 0..n.saturating_sub(1) {
+                    let (d0, z0, u0, vs0) = w0[i];
+                    let (d1, z1, u1, vs1) = w0[i + 1];
+                    let (e0, y0, _, _) = w1[i];
+                    let (e1, y1, _, _) = w1[i + 1];
+                    // the face's normal in the cross-section: up for a flat part, towards the road
+                    // for the face of a kerb
+                    let (dd, dz) = (d1 - d0, z1 - z0);
                     let base = |p: DVec2, h: f64, s: f64, d: f64, z: f64| {
                         let xy = p + roads::right(h) * d;
                         let zz = a.end.z + (b.end.z - a.end.z) * (s / total) + z;
@@ -492,8 +519,8 @@ fn junction_mesh(arms: &[ArmGeo], centre: DVec3, core_tex: Option<PathBuf>, peri
                     let v = |s: f64, vs: f64| if back { v0 - vdir * vs * (total - s) } else { v0 + vdir * vs * s };
                     let pa = base(p0, h0, s0, d0, z0);
                     let pb = base(p0, h0, s0, d1, z1);
-                    let pc = base(p1, h1, s1, d0, z0);
-                    let pd = base(p1, h1, s1, d1, z1);
+                    let pc = base(p1, h1, s1, e0, y0);
+                    let pd = base(p1, h1, s1, e1, y1);
                     let r = roads::right((h0 + h1) * 0.5 + if (h1 - h0).abs() > 180.0 { 180.0 } else { 0.0 });
                     // (in the cross-section, the left of the way outward: up, or towards the road)
                     let nrm = DVec3::new(-r.x * dz, -r.y * dz, dd);

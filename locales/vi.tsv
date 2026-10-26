@@ -2127,3 +2127,124 @@ Could not replace the program	Không thay được chương trình
 The package has no program in it.	Gói không chứa chương trình.
 openMapper has stopped:	openMapper đã dừng:
 The log with the details:	Nhật ký có chi tiết:
+Light made: click where it goes; its script is in Map > Scripts	Đã tạo đèn: nhấp vào nơi đặt đèn; tập lệnh của nó nằm trong Bản đồ > Tập lệnh
+Stops sharing a name	Các điểm dừng trùng tên
+Two stops far from each other have one name. The two across a road may share it (they are a pair), but elsewhere the game, the displays and the people who choose where to get off cannot tell them apart. "Fix" gives the later one a number after its name.	Hai điểm dừng ở xa nhau có cùng một tên. Hai điểm dừng đối diện nhau qua đường có thể dùng chung tên (chúng là một cặp), nhưng ở nơi khác thì trò chơi, bảng hiển thị và hành khách chọn nơi xuống không thể phân biệt chúng. "Sửa" sẽ thêm một số sau tên của điểm dừng đứng sau.
+same name as the stop	trùng tên với điểm dừng
+The road is gone	Con đường không còn nữa
+This end is already joined to something	Đầu này đã nối với thứ khác
+The junction piece could not be read	Không đọc được mảnh nút giao
+This object has no places for roads to join	Đối tượng này không có chỗ để nối đường
+Quiet street	Phố yên tĩnh
+Street with a footway on one side	Phố có vỉa hè một bên
+Main road	Đường chính
+Avenue with a green strip	Đại lộ có dải cây xanh
+One-way street	Phố một chiều
+Country road	Đường nông thôn
+Service road	Đường nội bộ
+Empty script	Tập lệnh trống
+A greeting when the bus is taken	Lời chào khi lên xe buýt
+Announce every stop	Thông báo từng điểm dừng
+Traffic by the hour	Giao thông theo giờ
+Weather at a time	Thời tiết vào một giờ nhất định
+Speed limit warning	Cảnh báo giới hạn tốc độ
+Next stop on the screen	Điểm dừng tiếp theo trên màn hình
+Lit during certain hours	Sáng vào những giờ nhất định
+Blinks	Nhấp nháy
+Lit in certain months	Sáng vào những tháng nhất định
+Compulsory stop	Điểm dừng bắt buộc
+Request stop	Điểm dừng theo yêu cầu
+Terminus	Điểm cuối
+Every bus stops here and people are always waiting	Xe buýt nào cũng dừng ở đây và luôn có người chờ
+A bus stops only if somebody waits or presses the stop button	Xe buýt chỉ dừng nếu có người chờ hoặc bấm nút dừng
+Where a line begins or ends: everybody gets off, a bus waits for its departure	Nơi tuyến bắt đầu hoặc kết thúc: mọi người xuống xe, xe chờ đến giờ khởi hành
+when wanted	khi cần
+drive through	chạy qua
+when early	khi đến sớm
+right of the road	bên phải đường
+left of the road	bên trái đường
+both sides	cả hai bên
+Vehicles	Phương tiện
+Scripts…	Tập lệnh…
+Junction on an end	Nút giao ở đầu đường
+The installation has no junction pieces with places for roads.	Bản cài đặt không có mảnh nút giao nào có chỗ nối đường.
+None of the pieces is made for this road type: its first place is used.	Không mảnh nào được làm cho loại đường này: dùng chỗ nối đầu tiên của nó.
+At the start	Ở điểm đầu
+At the end	Ở điểm cuối
+Junction pieces for it	Các mảnh nút giao cho nó
+made by openMapper	do openMapper tạo
+Choose it in the catalogue to place on the map	Chọn trong danh mục để đặt lên bản đồ
+Pieces with a place made for this road type. The one picked is offered first when a junction is put on this road's end (select the road: Junction on an end).	Các mảnh có chỗ nối làm cho loại đường này. Mảnh được chọn sẽ được đề xuất trước khi đặt nút giao vào đầu đường này (chọn đường: Nút giao ở đầu đường).
+No piece is made for this road type; the list holds every piece with places for roads.	Không có mảnh nào được làm cho loại đường này; danh sách gồm mọi mảnh có chỗ nối đường.
+Start from	Bắt đầu từ
+a ready-made road…	một con đường làm sẵn…
+raised	nâng cao
+As high as the footways, with a kerb along it	Cao bằng vỉa hè, có lề đường dọc theo
+ m left	 m bên trái
+a different one on the right	một loại khác ở bên phải
+ m right	 m bên phải
+Middle strip texture	Texture dải phân cách giữa
+like the roadway	giống mặt đường
+No problems found	Không tìm thấy vấn đề
+Scripts	Tập lệnh
+openOMSI: the map's script	openOMSI: tập lệnh của bản đồ
+Object scripts (OMSI 2 and openOMSI)	Tập lệnh đối tượng (OMSI 2 và openOMSI)
+A Lua script that runs in openOMSI while this map is played: it reacts to what happens (a stop reached, a new hour, a new trip) and can show messages, change the traffic and the weather, move the bus. `on` and `every` work for this map only. OMSI 2 does not run Lua: its scripts belong to objects (the next tab).	Một tập lệnh Lua chạy trong openOMSI khi chơi bản đồ này: nó phản ứng với những gì xảy ra (đến một điểm dừng, giờ mới, chuyến mới) và có thể hiện thông báo, thay đổi giao thông và thời tiết, di chuyển xe buýt. `on` và `every` chỉ có tác dụng với bản đồ này. OMSI 2 không chạy Lua: tập lệnh của nó thuộc về các đối tượng (thẻ tiếp theo).
+a ready-made script…	một tập lệnh làm sẵn…
+Save the script	Lưu tập lệnh
+Written into the content folder's plugins, where openOMSI loads it again at once	Được ghi vào plugins của thư mục nội dung, nơi openOMSI tải lại ngay
+Script saved	Đã lưu tập lệnh
+Script saved, but it has problems: the game would not run it	Đã lưu tập lệnh, nhưng có vấn đề: trò chơi sẽ không chạy nó
+Revert	Hoàn nguyên
+Delete the script	Xóa tập lệnh
+Script deleted	Đã xóa tập lệnh
+What a scenery object runs every frame: lamps that switch, signs that change, doors that open. Select an object to see its scripts; the game's own compiler checks them as you write. Scripts of the installation's objects can be read and learned from; to change one, make an object of your own (Edit the mesh makes a copy) and open it here.	Những gì một đối tượng cảnh quan chạy ở mỗi khung hình: đèn bật tắt, biển hiệu đổi, cửa mở. Chọn một đối tượng để xem tập lệnh của nó; trình biên dịch của chính trò chơi kiểm tra chúng khi bạn viết. Tập lệnh của các đối tượng trong bản cài đặt có thể đọc và học hỏi; để sửa, hãy tạo đối tượng của riêng bạn (Sửa lưới tạo một bản sao) và mở nó ở đây.
+Select one object on the map.	Chọn một đối tượng trên bản đồ.
+this object has no script	đối tượng này không có tập lệnh
+From the installation: read only.	Từ bản cài đặt: chỉ đọc.
+Not in the object's variable list	Không có trong danh sách biến của đối tượng
+A light switched by a script	Đèn do tập lệnh bật
+A new object: a lamp that glows and lights the ground while its script says so. The script is yours to change after.	Một đối tượng mới: chiếc đèn phát sáng và chiếu sáng mặt đất khi tập lệnh của nó bảo vậy. Sau đó tập lệnh là của bạn để sửa.
+ h	 giờ
+A round takes	Một vòng mất
+ s	 giây
+From month	Từ tháng
+Reaches	Chiếu tới
+Make the light	Tạo đèn
+Kind of stop	Loại điểm dừng
+Waiting, at most	Người chờ, nhiều nhất
+Waiting, at least	Người chờ, ít nhất
+Getting off	Xuống xe
+How many of those riding get off here, compared with the other stops: twice the number, twice the riders	Bao nhiêu người trên xe xuống ở đây so với các điểm dừng khác: gấp đôi con số, gấp đôi số người
+How far along the stop people wait and a bus may stand	Người ta chờ và xe buýt có thể đứng dọc theo điểm dừng bao xa
+Platform	Sân ga
+Paired with the stop across the road: one name for both	Ghép đôi với điểm dừng bên kia đường: một tên cho cả hai
+Split	Tách
+The stop gets a name of its own (the number is changed in the name box), and renaming one no longer renames the other	Điểm dừng có tên riêng (số được đổi trong ô tên), và đổi tên một điểm không còn đổi tên điểm kia
+Another stop far from here has this name	Một điểm dừng khác ở xa đây có tên này
+Make it different	Làm cho khác
+Which buses drive this line	Những xe buýt nào chạy tuyến này
+How the stops are served	Cách các điểm dừng được phục vụ
+Always: the bus stops whoever waits (a compulsory stop, a terminus). When wanted: only if somebody gets on or off (a request stop). Drive through: it does not stop on this trip. When early: it stops only if it is ahead of its time.	Luôn luôn: xe buýt dừng dù có ai chờ hay không (điểm dừng bắt buộc, điểm cuối). Khi cần: chỉ nếu có người lên hoặc xuống (điểm dừng theo yêu cầu). Chạy qua: không dừng ở chuyến này. Khi đến sớm: chỉ dừng nếu đang chạy trước giờ.
+The AI buses of this line's tours are taken from the depot group; here the vehicles can be limited by date: only some types, mostly some types, or a fleet number for one tour. A line with nothing here takes any vehicle of the group.	Xe buýt AI của các lượt chạy trên tuyến này được lấy từ nhóm depot; ở đây có thể giới hạn xe theo ngày: chỉ một số loại, phần lớn là một số loại, hoặc số hiệu xe cho một lượt chạy. Tuyến không có gì ở đây thì dùng bất kỳ xe nào của nhóm.
+Delete this assignment	Xóa phân công này
+(day, month, year)	(ngày, tháng, năm)
+It ends before it starts: the game ignores it	Nó kết thúc trước khi bắt đầu: trò chơi bỏ qua nó
+Only these types	Chỉ những loại này
+Mostly these types	Phần lớn những loại này
+share of the tours	tỉ lệ các lượt chạy
+Fleet numbers of single tours	Số hiệu xe của từng lượt chạy
+A fleet number for a tour	Số hiệu xe cho một lượt chạy
+A vehicle assignment	Một phân công phương tiện
+tiles are loaded round there, the others are hidden	ô được tải quanh vị trí đó, các ô còn lại bị ẩn
+tiles round the camera are loaded; click on the empty zone to load the next ones	ô quanh camera đã được tải; nhấp vào vùng trống để tải các ô tiếp theo
+Tiles loaded at once	Số ô tải cùng lúc
+about 500 m round the camera	khoảng 500 m quanh camera
+about 850 m	khoảng 850 m
+about 1.2 km	khoảng 1,2 km
+about 1.7 km (the usual)	khoảng 1,7 km (thông thường)
+about 2.5 km	khoảng 2,5 km
+A big or very detailed map is lighter with fewer tiles: the others are hidden until you click on the empty zone	Bản đồ lớn hoặc rất chi tiết sẽ nhẹ hơn khi có ít ô hơn: các ô còn lại bị ẩn cho đến khi bạn nhấp vào vùng trống
+Hold Ctrl while drawing to join nothing. Cables, fences and footpaths never join roads or junctions.	Giữ Ctrl khi vẽ để không nối với gì cả. Dây cáp, hàng rào và lối đi bộ không bao giờ nối vào đường hay nút giao.
+Auto-Adapt	Tự động chuyển tiếp
+Where roads of different width meet, a plate tapers one into the other	Nơi các đường khác bề rộng gặp nhau, một tấm nối chuyển dần từ đường này sang đường kia

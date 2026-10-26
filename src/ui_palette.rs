@@ -75,6 +75,7 @@ fn commands() -> Vec<Command> {
         cmd!(Icon::Flag, "Ruler", "Линейка", "measure distance gradient измерить расстояние уклон", "U", |_, ed, _| ed.toggle_ruler()),
         // Map
         cmd!(Icon::Settings, "Map settings…", "Настройки карты…", "money tickets depot years seasons деньги билеты депо годы", "", |_, _, a| a.push(Action::MapSettings)),
+        cmd!(Icon::Code, "Scripts…", "Скрипты…", "lua osc script code plugin скрипт код плагин программа", "", |_, _, a| a.push(Action::Scripts)),
         cmd!(Icon::Schedule, "Calendar and place…", "Календарь и место…", "holidays time zone summer number plates праздники часовой пояс номера", "", |_, _, a| a.push(Action::Calendar)),
         cmd!(Icon::Traffic, "Signal routes…", "Маршруты сигналов…", "railway signal железная дорога светофор", "", |_, _, a| a.push(Action::SignalRoutes)),
         cmd!(Icon::History, "Chrono scenarios…", "Хроно-сценарии…", "years history годы", "", |_, _, a| a.push(Action::Chrono)),

@@ -2127,3 +2127,124 @@ Could not replace the program	A program nem cserélhető le
 The package has no program in it.	A csomagban nincs program.
 openMapper has stopped:	Az openMapper leállt:
 The log with the details:	A részleteket tartalmazó napló:
+Light made: click where it goes; its script is in Map > Scripts	Fény létrehozva: kattints oda, ahová kerüljön; a szkriptje itt van: Térkép > Szkriptek
+Stops sharing a name	Azonos nevű megállók
+Two stops far from each other have one name. The two across a road may share it (they are a pair), but elsewhere the game, the displays and the people who choose where to get off cannot tell them apart. "Fix" gives the later one a number after its name.	Két egymástól távoli megállónak ugyanaz a neve. Az út túloldalán lévő megállónak lehet ugyanaz a neve (ők egy pár), máshol viszont a játék, a kijelzők és a leszállóhelyet választó utasok nem tudják megkülönböztetni őket. A „Javítás” a későbbi nevéhez egy számot fűz.
+same name as the stop	a megállóval azonos név
+The road is gone	Az út már nincs meg
+This end is already joined to something	Ez a vég már csatlakozik valamihez
+The junction piece could not be read	A csomópontelemet nem sikerült beolvasni
+This object has no places for roads to join	Ennek az objektumnak nincsenek helyei utak csatlakoztatásához
+Quiet street	Csendes utca
+Street with a footway on one side	Utca egyik oldalon gyalogjárdával
+Main road	Főút
+Avenue with a green strip	Fasoros sugárút zöldsávval
+One-way street	Egyirányú utca
+Country road	Országút
+Service road	Kiszolgálóút
+Empty script	Üres szkript
+A greeting when the bus is taken	Üdvözlés, amikor felszállnak a buszra
+Announce every stop	Minden megálló bemondása
+Traffic by the hour	Forgalom óránként
+Weather at a time	Időjárás adott időpontban
+Speed limit warning	Sebességkorlátozás figyelmeztetés
+Next stop on the screen	Következő megálló a kijelzőn
+Lit during certain hours	Meghatározott órákban világít
+Blinks	Villog
+Lit in certain months	Meghatározott hónapokban világít
+Compulsory stop	Kötelező megálló
+Request stop	Kérésre megálló
+Terminus	Végállomás
+Every bus stops here and people are always waiting	Minden busz megáll itt, és mindig várnak utasok
+A bus stops only if somebody waits or presses the stop button	A busz csak akkor áll meg, ha valaki vár, vagy megnyomta a leszállásjelző gombot
+Where a line begins or ends: everybody gets off, a bus waits for its departure	Ahol a járat kezdődik vagy végződik: mindenki leszáll, a busz az indulásra vár
+when wanted	kérésre
+drive through	áthalad
+when early	ha korán van
+right of the road	az út jobb oldalán
+left of the road	az út bal oldalán
+both sides	mindkét oldalon
+Vehicles	Járművek
+Scripts…	Szkriptek…
+Junction on an end	Csomópont a végén
+The installation has no junction pieces with places for roads.	A telepítésben nincsenek utak számára kialakított helyekkel ellátott csomópontelemek.
+None of the pieces is made for this road type: its first place is used.	Egyik elem sincs ehhez az úttípushoz készítve: az első helyét használja.
+At the start	Az elején
+At the end	A végén
+Junction pieces for it	Hozzá való csomópontelemek
+made by openMapper	az openMapper készíti
+Choose it in the catalogue to place on the map	Válaszd ki a katalógusban, hogy a térképre helyezhesd
+Pieces with a place made for this road type. The one picked is offered first when a junction is put on this road's end (select the road: Junction on an end).	Ehhez az úttípushoz készült helyet tartalmazó elemek. A kiválasztott jelenik meg először, amikor csomópontot teszel ennek az útnak a végére (jelöld ki az utat: Csomópont a végén).
+No piece is made for this road type; the list holds every piece with places for roads.	Ehhez az úttípushoz nincs elem; a lista minden utakhoz való helyet tartalmazó elemet felsorol.
+Start from	Kiindulás
+a ready-made road…	kész útból…
+raised	megemelt
+As high as the footways, with a kerb along it	Egy magasságban a gyalogjárdákkal, mellette szegéllyel
+ m left	 m balra
+a different one on the right	jobbra más
+ m right	 m jobbra
+Middle strip texture	Középső sáv textúrája
+like the roadway	mint az úttesté
+No problems found	Nem található probléma
+Scripts	Szkriptek
+openOMSI: the map's script	openOMSI: a térkép szkriptje
+Object scripts (OMSI 2 and openOMSI)	Objektumszkriptek (OMSI 2 és openOMSI)
+A Lua script that runs in openOMSI while this map is played: it reacts to what happens (a stop reached, a new hour, a new trip) and can show messages, change the traffic and the weather, move the bus. `on` and `every` work for this map only. OMSI 2 does not run Lua: its scripts belong to objects (the next tab).	Lua szkript, amelyet az openOMSI futtat, miközben ezen a térképen játszanak: reagál az eseményekre (elért megálló, új óra, új menet), üzeneteket jeleníthet meg, módosíthatja a forgalmat és az időjárást, áthelyezheti a buszt. Az `on` és az `every` csak ehhez a térképhez működik. Az OMSI 2 nem futtat Lua-t: a szkriptjei az objektumokhoz tartoznak (a következő lap).
+a ready-made script…	kész szkriptből…
+Save the script	Szkript mentése
+Written into the content folder's plugins, where openOMSI loads it again at once	A tartalommappa plugins mappájába íródik, ahonnan az openOMSI azonnal újra betölti
+Script saved	Szkript elmentve
+Script saved, but it has problems: the game would not run it	A szkript elmentve, de hibák vannak benne: a játék nem futtatná
+Revert	Visszaállítás
+Delete the script	Szkript törlése
+Script deleted	Szkript törölve
+What a scenery object runs every frame: lamps that switch, signs that change, doors that open. Select an object to see its scripts; the game's own compiler checks them as you write. Scripts of the installation's objects can be read and learned from; to change one, make an object of your own (Edit the mesh makes a copy) and open it here.	Amit egy díszletobjektum minden képkockában futtat: kapcsolódó lámpák, változó táblák, nyíló ajtók. Jelölj ki egy objektumot a szkriptjei megtekintéséhez; a játék saját fordítója írás közben ellenőrzi őket. A telepítés objektumainak szkriptjei olvashatók és tanulmányozhatók; ha módosítani akarsz egyet, készíts saját objektumot (a Háló szerkesztése másolatot készít), és nyisd meg itt.
+Select one object on the map.	Jelölj ki egy objektumot a térképen.
+this object has no script	ennek az objektumnak nincs szkriptje
+From the installation: read only.	A telepítésből: csak olvasható.
+Not in the object's variable list	Nincs az objektum változólistájában
+A light switched by a script	Szkripttel kapcsolt fény
+A new object: a lamp that glows and lights the ground while its script says so. The script is yours to change after.	Új objektum: egy lámpa, amely világít és megvilágítja a talajt, amíg a szkriptje úgy mondja. A szkriptet utána módosíthatod.
+ h	 óra
+A round takes	Egy kör ideje
+ s	 mp
+From month	Ettől a hónaptól
+Reaches	Hatósugár
+Make the light	Fény létrehozása
+Kind of stop	Megálló fajtája
+Waiting, at most	Várakozók, legfeljebb
+Waiting, at least	Várakozók, legalább
+Getting off	Leszállók
+How many of those riding get off here, compared with the other stops: twice the number, twice the riders	Az utazók közül hányan szállnak le itt a többi megállóhoz képest: kétszeres szám, kétszer annyi utas
+How far along the stop people wait and a bus may stand	Milyen hosszan várnak az emberek a megállóban, és állhat meg busz
+Platform	Peron
+Paired with the stop across the road: one name for both	Az úttal szemközti megállóval párban: közös név mindkettőnek
+Split	Szétválasztás
+The stop gets a name of its own (the number is changed in the name box), and renaming one no longer renames the other	A megálló saját nevet kap (a szám a névmezőben módosítható), és az egyik átnevezése többé nem nevezi át a másikat
+Another stop far from here has this name	Egy másik, innen távoli megállónak ez a neve
+Make it different	Megkülönböztetés
+Which buses drive this line	Mely buszok közlekednek ezen a járaton
+How the stops are served	Hogyan szolgálják ki a megállókat
+Always: the bus stops whoever waits (a compulsory stop, a terminus). When wanted: only if somebody gets on or off (a request stop). Drive through: it does not stop on this trip. When early: it stops only if it is ahead of its time.	Mindig: a busz megáll, akár vár valaki, akár nem (kötelező megálló, végállomás). Kérésre: csak ha valaki fel- vagy leszáll (kérésre megálló). Áthalad: ezen a menetén nem áll meg. Ha korán van: csak akkor áll meg, ha előbbre jár a menetrendnél.
+The AI buses of this line's tours are taken from the depot group; here the vehicles can be limited by date: only some types, mostly some types, or a fleet number for one tour. A line with nothing here takes any vehicle of the group.	A járat fordáinak MI-buszai a telephely csoportjából kerülnek ki; itt a járművek dátum szerint korlátozhatók: csak bizonyos típusok, főleg bizonyos típusok, vagy egy forda pályaszáma. Az itt bejegyzés nélküli járat a csoport bármely járművét kapja.
+Delete this assignment	Hozzárendelés törlése
+(day, month, year)	(nap, hónap, év)
+It ends before it starts: the game ignores it	Hamarabb ér véget, mint kezdődik: a játék figyelmen kívül hagyja
+Only these types	Csak ezek a típusok
+Mostly these types	Főleg ezek a típusok
+share of the tours	a fordák aránya
+Fleet numbers of single tours	Egyes fordák pályaszámai
+A fleet number for a tour	Pályaszám egy fordához
+A vehicle assignment	Jármű-hozzárendelés
+tiles are loaded round there, the others are hidden	csempe van betöltve a hely körül, a többi el van rejtve
+tiles round the camera are loaded; click on the empty zone to load the next ones	csempe van betöltve a kamera körül; kattints az üres zónára a következők betöltéséhez
+Tiles loaded at once	Egyszerre betöltött csempék
+about 500 m round the camera	kb. 500 m a kamera körül
+about 850 m	kb. 850 m
+about 1.2 km	kb. 1,2 km
+about 1.7 km (the usual)	kb. 1,7 km (az általános)
+about 2.5 km	kb. 2,5 km
+A big or very detailed map is lighter with fewer tiles: the others are hidden until you click on the empty zone	Egy nagy vagy nagyon részletes térkép kevesebb csempével gyorsabb: a többi el van rejtve, amíg az üres zónára nem kattintasz
+Hold Ctrl while drawing to join nothing. Cables, fences and footpaths never join roads or junctions.	Rajzoláskor tartsd lenyomva a Ctrl billentyűt, hogy semmihez se csatlakozzon. A kábelek, kerítések és gyalogutak soha nem csatlakoznak utakhoz vagy csomópontokhoz.
+Auto-Adapt	Auto-átmenet
+Where roads of different width meet, a plate tapers one into the other	Ahol különböző szélességű utak találkoznak, egy lap simán átvezet az egyikből a másikba

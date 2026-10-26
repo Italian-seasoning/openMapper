@@ -2127,3 +2127,124 @@ Could not replace the program	プログラムを置き換えられませんで�
 The package has no program in it.	パッケージにプログラムが含まれていません。
 openMapper has stopped:	openMapper が停止しました：
 The log with the details:	詳細を記録したログ：
+Light made: click where it goes; its script is in Map > Scripts	ライトを作成しました。置く場所をクリックしてください。スクリプトはマップ > スクリプトにあります
+Stops sharing a name	同じ名前のバス停
+Two stops far from each other have one name. The two across a road may share it (they are a pair), but elsewhere the game, the displays and the people who choose where to get off cannot tell them apart. "Fix" gives the later one a number after its name.	離れた2つのバス停が同じ名前です。道路の向かい側同士なら同じ名前でもかまいません(ペアです)が、それ以外ではゲームも案内表示も、降りる場所を選ぶ乗客も区別できません。「修正」を押すと、後のほうの名前の後ろに番号が付きます。
+same name as the stop	バス停と同じ名前
+The road is gone	道路がなくなりました
+This end is already joined to something	この端はすでに何かとつながっています
+The junction piece could not be read	交差点パーツを読み込めませんでした
+This object has no places for roads to join	このオブジェクトには道路をつなぐ場所がありません
+Quiet street	静かな通り
+Street with a footway on one side	片側に歩道のある通り
+Main road	幹線道路
+Avenue with a green strip	緑地帯のある大通り
+One-way street	一方通行の通り
+Country road	田舎道
+Service road	作業用道路
+Empty script	空のスクリプト
+A greeting when the bus is taken	バスに乗ったときのあいさつ
+Announce every stop	すべてのバス停をアナウンス
+Traffic by the hour	時間帯ごとの交通
+Weather at a time	時刻に応じた天気
+Speed limit warning	速度制限の警告
+Next stop on the screen	次のバス停を画面に表示
+Lit during certain hours	特定の時間帯に点灯
+Blinks	点滅
+Lit in certain months	特定の月に点灯
+Compulsory stop	必須停車
+Request stop	リクエスト停車
+Terminus	終点
+Every bus stops here and people are always waiting	すべてのバスが停車し、いつも人が待っています
+A bus stops only if somebody waits or presses the stop button	誰かが待っているか降車ボタンが押されたときだけ、バスが停車します
+Where a line begins or ends: everybody gets off, a bus waits for its departure	系統の始点または終点です。全員が降り、バスは出発まで待ちます
+when wanted	必要時
+drive through	通過
+when early	早着時
+right of the road	道路の右側
+left of the road	道路の左側
+both sides	両側
+Vehicles	車両
+Scripts…	スクリプト…
+Junction on an end	道路端の交差点
+The installation has no junction pieces with places for roads.	インストールには、道路をつなぐ場所のある交差点パーツがありません。
+None of the pieces is made for this road type: its first place is used.	この道路タイプに合うパーツはありません。最初の場所を使います。
+At the start	始点
+At the end	終点
+Junction pieces for it	使えるパーツ
+made by openMapper	openMapper が作成
+Choose it in the catalogue to place on the map	カタログで選ぶと、マップに配置できます
+Pieces with a place made for this road type. The one picked is offered first when a junction is put on this road's end (select the road: Junction on an end).	この道路タイプ用の場所があるパーツです。選んだものは、この道路の端に交差点を置くときに最初に提案されます(道路を選択:道路端の交差点)。
+No piece is made for this road type; the list holds every piece with places for roads.	この道路タイプ用のパーツはありません。リストには、道路をつなぐ場所のあるすべてのパーツが入っています。
+Start from	ベースにする
+a ready-made road…	既製の道路…
+raised	高くする
+As high as the footways, with a kerb along it	歩道と同じ高さで、沿って縁石あり
+ m left	 m 左
+a different one on the right	右は別のもの
+ m right	 m 右
+Middle strip texture	中央分離帯のテクスチャ
+like the roadway	車道と同じ
+No problems found	問題は見つかりませんでした
+Scripts	スクリプト
+openOMSI: the map's script	openOMSI:マップのスクリプト
+Object scripts (OMSI 2 and openOMSI)	オブジェクトのスクリプト(OMSI 2 と openOMSI)
+A Lua script that runs in openOMSI while this map is played: it reacts to what happens (a stop reached, a new hour, a new trip) and can show messages, change the traffic and the weather, move the bus. `on` and `every` work for this map only. OMSI 2 does not run Lua: its scripts belong to objects (the next tab).	このマップをプレイしている間に openOMSI で実行される Lua スクリプトです。停留所への到着、新しい時刻、新しい便などの出来事に反応し、メッセージの表示、交通や天気の変更、バスの移動ができます。`on` と `every` はこのマップでのみ動作します。OMSI 2 は Lua を実行しません。スクリプトはオブジェクトに属します(次のタブ)。
+a ready-made script…	既製のスクリプト…
+Save the script	スクリプトを保存
+Written into the content folder's plugins, where openOMSI loads it again at once	コンテンツフォルダの plugins に書き込まれ、openOMSI がすぐに読み込み直します
+Script saved	スクリプトを保存しました
+Script saved, but it has problems: the game would not run it	スクリプトを保存しましたが、問題があります。ゲームでは実行されません
+Revert	元に戻す
+Delete the script	スクリプトを削除
+Script deleted	スクリプトを削除しました
+What a scenery object runs every frame: lamps that switch, signs that change, doors that open. Select an object to see its scripts; the game's own compiler checks them as you write. Scripts of the installation's objects can be read and learned from; to change one, make an object of your own (Edit the mesh makes a copy) and open it here.	シーナリーオブジェクトが毎フレーム実行するもの。切り替わるランプ、変わる看板、開くドアなどです。オブジェクトを選択するとスクリプトが表示され、ゲーム自身のコンパイラが入力中にチェックします。インストール済みオブジェクトのスクリプトは読んで学べます。変更するには自分のオブジェクトを作り(「メッシュを編集」でコピーが作られます)、ここで開いてください。
+Select one object on the map.	マップ上のオブジェクトを1つ選択してください。
+this object has no script	このオブジェクトにはスクリプトがありません
+From the installation: read only.	インストール由来:読み取り専用。
+Not in the object's variable list	オブジェクトの変数リストにありません
+A light switched by a script	スクリプトで切り替わるライト
+A new object: a lamp that glows and lights the ground while its script says so. The script is yours to change after.	新しいオブジェクト。スクリプトの指示がある間、光って地面を照らすランプです。スクリプトはあとで自由に変更できます。
+ h	 時間
+A round takes	1周にかかる時間
+ s	 秒
+From month	開始月
+Reaches	照らす範囲
+Make the light	ライトを作成
+Kind of stop	バス停の種類
+Waiting, at most	待ち人数(最大)
+Waiting, at least	待ち人数(最小)
+Getting off	降車
+How many of those riding get off here, compared with the other stops: twice the number, twice the riders	乗っている人のうち、他のバス停と比べてここで降りる割合。数値が2倍なら降りる人も2倍です
+How far along the stop people wait and a bus may stand	バス停に沿って人が待ち、バスが停まれる範囲
+Platform	ホーム
+Paired with the stop across the road: one name for both	道路の向かいのバス停とペア:両方に同じ名前
+Split	分割
+The stop gets a name of its own (the number is changed in the name box), and renaming one no longer renames the other	バス停に独自の名前が付き(番号は名前欄で変更)、一方の名前を変えてももう一方は変わりません
+Another stop far from here has this name	ここから離れた別のバス停がこの名前です
+Make it different	別の名前にする
+Which buses drive this line	この系統を走るバス
+How the stops are served	バス停の扱い方
+Always: the bus stops whoever waits (a compulsory stop, a terminus). When wanted: only if somebody gets on or off (a request stop). Drive through: it does not stop on this trip. When early: it stops only if it is ahead of its time.	常に:待つ人の有無にかかわらずバスが停車します(必須停車、終点)。必要時:誰かが乗降する場合のみ(リクエスト停車)。通過:この便では停車しません。早着時:時刻より早いときだけ停車します。
+The AI buses of this line's tours are taken from the depot group; here the vehicles can be limited by date: only some types, mostly some types, or a fleet number for one tour. A line with nothing here takes any vehicle of the group.	この系統の行路のAIバスは車庫グループから選ばれます。ここでは日付ごとに車両を絞れます。特定の車種のみ、主に特定の車種、または1つの行路に車両番号を指定します。ここに何もない系統は、グループのどの車両でも使います。
+Delete this assignment	この割り当てを削除
+(day, month, year)	(日、月、年)
+It ends before it starts: the game ignores it	終了が開始より前です。ゲームでは無視されます
+Only these types	これらの車種のみ
+Mostly these types	主にこれらの車種
+share of the tours	行路の割合
+Fleet numbers of single tours	個別の行路の車両番号
+A fleet number for a tour	行路の車両番号
+A vehicle assignment	車両の割り当て
+tiles are loaded round there, the others are hidden	タイルをその周辺に読み込み、残りは非表示
+tiles round the camera are loaded; click on the empty zone to load the next ones	タイルをカメラ周辺に読み込み済み。空の領域をクリックすると次のタイルを読み込みます
+Tiles loaded at once	同時に読み込むタイル数
+about 500 m round the camera	カメラ周辺約500 m
+about 850 m	約850 m
+about 1.2 km	約1.2 km
+about 1.7 km (the usual)	約1.7 km（標準）
+about 2.5 km	約2.5 km
+A big or very detailed map is lighter with fewer tiles: the others are hidden until you click on the empty zone	大きなマップや非常に詳細なマップは、タイル数を減らすと軽くなります。残りは空の領域をクリックするまで非表示です
+Hold Ctrl while drawing to join nothing. Cables, fences and footpaths never join roads or junctions.	描画中に Ctrl を押し続けると、何にも接続しません。ケーブル、フェンス、歩道は道路や交差点には接続されません。
+Auto-Adapt	自動すり付け
+Where roads of different width meet, a plate tapers one into the other	幅の異なる道路が接する場所に、一方から他方へ徐々に幅が変わる板を置く

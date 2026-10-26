@@ -1,6 +1,6 @@
 [package]
 name = "openmapper"
-version = "0.1.7"
+version = "0.1.8"
 edition = "2024"
 rust-version = "1.93"
 license = "AGPL-3.0-only"
@@ -20,6 +20,7 @@ omsi-geometry = { git = "https://github.com/openOMSI-org/openOMSI", rev = "c4738
 omsi-texture = { git = "https://github.com/openOMSI-org/openOMSI", rev = "c4738ed6f43f11b4c06ead299af7ac74280d5c5b" }
 omsi-timetable = { git = "https://github.com/openOMSI-org/openOMSI", rev = "c4738ed6f43f11b4c06ead299af7ac74280d5c5b" }
 omsi-content = { git = "https://github.com/openOMSI-org/openOMSI", rev = "c4738ed6f43f11b4c06ead299af7ac74280d5c5b" }
+omsi-script = { git = "https://github.com/openOMSI-org/openOMSI", rev = "c4738ed6f43f11b4c06ead299af7ac74280d5c5b" }
 
 wgpu = { version = "29", default-features = false, features = ["std", "parking_lot", "metal", "vulkan", "dx12", "gles", "wgsl"] }
 winit = "0.30"
@@ -52,6 +53,8 @@ ufbx = "0.11"
 tiny-skia = { version = "0.12", default-features = false, features = ["std", "simd"] }
 ab_glyph = "0.2"
 ureq = { version = "3.4", default-features = false, features = ["rustls"] }
+# the Lua syntax check of the map scripts (src/scripting.rs), Lua 5.4 as openOMSI runs
+full_moon = { version = "3.0.0", default-features = false, features = ["lua54"] }
 
 [build-dependencies]
 embed-resource = "3"

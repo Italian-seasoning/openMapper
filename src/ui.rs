@@ -53,6 +53,12 @@ pub enum Action {
     Close,
     /// A new object of one of the shapes (`primitives::ALL`), to put on the map.
     CreatePrimitive(usize),
+    /// The Scripts window.
+    Scripts,
+    /// A new light switched by a script: how, its colour and reach.
+    ScriptedLight(crate::scripting::Behaviour, [u8; 3], f32),
+    /// A junction piece (its file) put onto the free end of a road: tile, id, far end or start.
+    JunctionAtEnd(crate::doc::TileKey, i64, bool, String),
     /// Something done to openMapper's own objects (edit mode, join, booleans, export...).
     Mesh(crate::ui_mesh::MeshAction),
     Play,
@@ -103,6 +109,8 @@ pub enum Action {
     /// How the mouse moves the camera ("map" or "fly").
     SetCamera(String),
     SetTileStreaming(bool),
+    /// How many tiles the streaming window holds (it is switched on too).
+    SetStreamTiles(u32),
     /// The interface's zoom (1 = as the system has it).
     SetScale(f32),
     FocusSelection,
@@ -959,6 +967,15 @@ fn menu_bar(root: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, can_undo: bo
                 if check(ui, &mut streaming, tr("Load 100 tiles at a time (like OMSI 2's editor)", "Загружать по 100 тайлов (как в редакторе OMSI 2)")).clicked() {
                     actions.push(Action::SetTileStreaming(streaming));
                 }
+                ui.menu_button(tr("Tiles loaded at once", "Тайлов загружено сразу"), |ui| {
+                    let now = if prefs.stream_tiles == 0 { 100 } else { prefs.stream_tiles };
+                    for (n, hint) in [(9u32, tr("about 500 m round the camera", "около 500 м вокруг камеры")), (25, tr("about 850 m", "около 850 м")), (49, tr("about 1.2 km", "около 1,2 км")), (100, tr("about 1.7 km (the usual)", "около 1,7 км (обычно)")), (225, tr("about 2.5 km", "около 2,5 км"))] {
+                        if radio(ui, streaming && now == n, format!("{n}  ·  {hint}")).clicked() {
+                            actions.push(Action::SetStreamTiles(n));
+                        }
+                    }
+                    ui.label(RichText::new(tr("A big or very detailed map is lighter with fewer tiles: the others are hidden until you click on the empty zone", "Большая или очень детальная карта идёт легче с меньшим числом тайлов: остальные скрыты, пока вы не кликнете по пустой зоне")).small().color(TEXT_DIM));
+                });
                 ui.menu_button(tr("Time of day", "Время суток"), |ui| {
                     if radio(ui, st.daytime.is_none(), tr("Plain day (as the game by day)", "Обычный день (как в игре днём)")).clicked() {
                         st.daytime = None;
@@ -1013,6 +1030,9 @@ fn menu_bar(root: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, can_undo: bo
             ui.menu_button(tr("Map", "Карта"), |ui| {
                 if menu_item(ui, Some(Icon::Settings), tr("Map settings…", "Настройки карты…"), "", true) {
                     actions.push(Action::MapSettings);
+                }
+                if menu_item(ui, Some(Icon::Code), tr("Scripts…", "Скрипты…"), "", true) {
+                    actions.push(Action::Scripts);
                 }
                 if menu_item(ui, Some(Icon::Schedule), tr("Calendar and place…", "Календарь и место…"), "", true) {
                     actions.push(Action::Calendar);
@@ -1333,6 +1353,7 @@ fn logic_panel(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Libra
     ui.add_space(4.0);
     match ed.logic {
         LogicMode::Stops => {
+            crate::ui_stops::kind_picker(ui, &mut ed.stop_kind);
             check(ui, &mut ed.stop_both_sides, tr("On both sides of the road", "С обеих сторон дороги")).on_hover_text(tr("A stop of the same name also goes at the kerb across the road, facing the other way", "Остановка с тем же названием ставится и у обочины напротив, в другую сторону"));
         }
         LogicMode::Parking => {
@@ -1429,6 +1450,7 @@ fn catalogue_of(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Libr
         crate::ui_edit::road_options(ui, ed);
         check(ui, &mut ed.keep_drawing, tr("Go on drawing from the end of the road just built", "Продолжать рисовать с конца построенной дороги"));
         check(ui, &mut ed.snap_roads, tr("Join road ends, roads and junction pieces near the cursor", "Пристыковывать к концам дорог, дорогам и деталям перекрёстков у курсора"));
+        ui.label(RichText::new(tr("Hold Ctrl while drawing to join nothing. Cables, fences and footpaths never join roads or junctions.", "Удерживайте Ctrl при рисовании, чтобы ничего не присоединять. Кабели, заборы и тропы никогда не присоединяются к дорогам и перекрёсткам.")).small().color(TEXT_DIM));
         check(ui, &mut ed.auto_junctions, tr("Make junctions where roads meet", "Делать перекрёстки, где дороги встречаются"));
         check(ui, &mut ed.inherit_type, tr("Go on with the type of the road I start from", "Продолжать типом дороги, от которой начинаю"));
         let current = ed.road_type.as_deref().map(|r| lib.find(r).map(|a| a.name.clone()).unwrap_or_else(|| r.to_string()));
@@ -1915,6 +1937,8 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
     section(ui, tr("Properties", "Свойства"));
     let mut delete = false;
     let mut changed_labels: Option<Vec<String>> = None;
+    // (the rename leaves the stop across the road alone: it was split from it)
+    let mut skip_twins = false;
     let mut new_rot: Option<[f64; 3]> = None;
     let mut new_lift: Option<f64> = None;
     let mut new_scale: Option<(bool, glam::DVec3)> = None;
@@ -2060,6 +2084,25 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
                             ui.end_row();
                         }
                     });
+                    if is_stop {
+                        if crate::ui_stops::settings(ui, &mut labels) {
+                            any = true;
+                        }
+                        let stops = crate::stops::all(doc);
+                        let at = crate::doc::tile_origin(k) + glam::DVec2::new(o.pos[0], o.pos[1]);
+                        match crate::ui_stops::pair(ui, &stops, id) {
+                            Some(crate::ui_stops::PairAction::Split) => {
+                                labels[0] = crate::stops::unique_name(&stops, Some(id), &format!("{} 2", labels[0].trim()), at);
+                                skip_twins = true;
+                                any = true;
+                            }
+                            Some(crate::ui_stops::PairAction::MakeUnique) => {
+                                labels[0] = crate::stops::unique_name(&stops, Some(id), &labels[0], at);
+                                any = true;
+                            }
+                            None => {}
+                        }
+                    }
                     if any {
                         // (trailing empty labels are not written)
                         while labels.len() > 1 && labels.last().map(|l| l.is_empty()).unwrap_or(false) && labels.len() > o.extra.len() {
@@ -2356,7 +2399,7 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
                     }
                 }
                 // its twin across the road (a stop of the same name within 40 m) follows
-                if let Some((was, now, at)) = renamed.filter(|r| r.0 != r.1) {
+                if let Some((was, now, at)) = renamed.filter(|r| r.0 != r.1 && !skip_twins) {
                     let was = &was;
                     let twins: Vec<(crate::doc::TileKey, i64)> = doc
                         .tiles
@@ -2419,6 +2462,7 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
             }
             crate::ui_edit::apply_ends(ed, ui.ctx(), k, id, ends);
             crate::ui_edit::parallel_section(ui, ed, lib);
+            crate::ui_edit::end_junction_section(ui, ed, lib, actions);
             if let Some((a, b, mode)) = spline_extra {
                 ed.set_spline_extra(k, id, a, b, mode);
             }

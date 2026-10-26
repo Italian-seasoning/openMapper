@@ -2127,3 +2127,124 @@ Could not replace the program	无法替换程序
 The package has no program in it.	安装包中没有程序。
 openMapper has stopped:	openMapper 已停止：
 The log with the details:	包含详细信息的日志：
+Light made: click where it goes; its script is in Map > Scripts	信号灯已创建:点击要放置的位置;其脚本在 地图 > 脚本
+Stops sharing a name	重名的站点
+Two stops far from each other have one name. The two across a road may share it (they are a pair), but elsewhere the game, the displays and the people who choose where to get off cannot tell them apart. "Fix" gives the later one a number after its name.	两个相距很远的站点同名。道路对面的两个站点可以同名(它们是一对),但在其他情况下,游戏、显示屏和选择下车地点的乘客都无法区分它们。“修复”会在后一个站点的名称后加上编号。
+same name as the stop	与站点同名
+The road is gone	道路已不存在
+This end is already joined to something	这一端已与其他东西相连
+The junction piece could not be read	无法读取路口部件
+This object has no places for roads to join	此物体没有可连接道路的位置
+Quiet street	安静街道
+Street with a footway on one side	一侧有人行道的街道
+Main road	主干道
+Avenue with a green strip	带绿化带的大道
+One-way street	单行街道
+Country road	乡间道路
+Service road	辅路
+Empty script	空脚本
+A greeting when the bus is taken	上车时的问候
+Announce every stop	报每一站
+Traffic by the hour	按小时变化的交通
+Weather at a time	指定时间的天气
+Speed limit warning	超速警告
+Next stop on the screen	在屏幕上显示下一站
+Lit during certain hours	在特定时段亮起
+Blinks	闪烁
+Lit in certain months	在特定月份亮起
+Compulsory stop	必停站
+Request stop	招手停靠站
+Terminus	终点站
+Every bus stops here and people are always waiting	每辆公交车都停靠,总有人在等候
+A bus stops only if somebody waits or presses the stop button	只有有人等候或按下停车铃时,公交车才停靠
+Where a line begins or ends: everybody gets off, a bus waits for its departure	线路的起点或终点:所有人下车,公交车等待发车
+when wanted	有需要时
+drive through	直接通过
+when early	提前到达时
+right of the road	道路右侧
+left of the road	道路左侧
+both sides	两侧
+Vehicles	车辆
+Scripts…	脚本…
+Junction on an end	路口接在道路末端
+The installation has no junction pieces with places for roads.	安装目录中没有带道路连接位置的路口部件。
+None of the pieces is made for this road type: its first place is used.	没有适合此道路类型的部件:将使用其第一个位置。
+At the start	起点处
+At the end	终点处
+Junction pieces for it	适用的部件
+made by openMapper	由 openMapper 制作
+Choose it in the catalogue to place on the map	在目录中选择后可放置到地图上
+Pieces with a place made for this road type. The one picked is offered first when a junction is put on this road's end (select the road: Junction on an end).	带有适合此道路类型位置的部件。在此道路末端放置路口时,所选部件会优先提供(选中道路:路口接在道路末端)。
+No piece is made for this road type; the list holds every piece with places for roads.	没有适合此道路类型的部件;列表中是所有带道路连接位置的部件。
+Start from	以此为基础
+a ready-made road…	现成的道路…
+raised	抬高
+As high as the footways, with a kerb along it	与人行道等高,沿边有路缘
+ m left	 米 左侧
+a different one on the right	右侧另用一种
+ m right	 米 右侧
+Middle strip texture	中央分隔带纹理
+like the roadway	与行车道相同
+No problems found	未发现问题
+Scripts	脚本
+openOMSI: the map's script	openOMSI:地图脚本
+Object scripts (OMSI 2 and openOMSI)	物体脚本(OMSI 2 和 openOMSI)
+A Lua script that runs in openOMSI while this map is played: it reacts to what happens (a stop reached, a new hour, a new trip) and can show messages, change the traffic and the weather, move the bus. `on` and `every` work for this map only. OMSI 2 does not run Lua: its scripts belong to objects (the next tab).	在玩这张地图时由 openOMSI 运行的 Lua 脚本:它对发生的事件作出反应(到达站点、新的一小时、新的班次),可以显示消息、改变交通和天气、移动公交车。`on` 和 `every` 仅对这张地图有效。OMSI 2 不运行 Lua:它的脚本属于物体(下一个标签页)。
+a ready-made script…	现成的脚本…
+Save the script	保存脚本
+Written into the content folder's plugins, where openOMSI loads it again at once	写入内容文件夹的 plugins,openOMSI 会立即重新加载
+Script saved	脚本已保存
+Script saved, but it has problems: the game would not run it	脚本已保存,但存在问题:游戏不会运行它
+Revert	还原
+Delete the script	删除脚本
+Script deleted	脚本已删除
+What a scenery object runs every frame: lamps that switch, signs that change, doors that open. Select an object to see its scripts; the game's own compiler checks them as you write. Scripts of the installation's objects can be read and learned from; to change one, make an object of your own (Edit the mesh makes a copy) and open it here.	场景物体每帧运行的内容:会开关的灯、会变化的标牌、会打开的门。选择一个物体即可查看其脚本;游戏自带的编译器会在你编写时检查。安装目录中物体的脚本可以阅读和学习;若要修改,请制作你自己的物体(“编辑网格”会创建副本)并在此处打开。
+Select one object on the map.	请在地图上选择一个物体。
+this object has no script	此物体没有脚本
+From the installation: read only.	来自安装目录:只读。
+Not in the object's variable list	不在物体的变量列表中
+A light switched by a script	由脚本控制开关的灯
+A new object: a lamp that glows and lights the ground while its script says so. The script is yours to change after.	新物体:当脚本指示时发光并照亮地面的灯。之后可以自由修改脚本。
+ h	 小时
+A round takes	一圈用时
+ s	 秒
+From month	起始月份
+Reaches	照亮范围
+Make the light	创建灯
+Kind of stop	站点类型
+Waiting, at most	等候人数上限
+Waiting, at least	等候人数下限
+Getting off	下车
+How many of those riding get off here, compared with the other stops: twice the number, twice the riders	与其他站点相比,乘客在此下车的比例:数值翻倍,下车人数也翻倍
+How far along the stop people wait and a bus may stand	沿站点多长的范围内人们会等候、公交车可以停靠
+Platform	站台
+Paired with the stop across the road: one name for both	与道路对面的站点配对:两者同名
+Split	拆分
+The stop gets a name of its own (the number is changed in the name box), and renaming one no longer renames the other	该站点获得自己的名称(在名称框中修改编号),重命名其中一个不再重命名另一个
+Another stop far from here has this name	远处另一个站点使用了此名称
+Make it different	改成不同的
+Which buses drive this line	哪些公交车行驶此线路
+How the stops are served	站点的停靠方式
+Always: the bus stops whoever waits (a compulsory stop, a terminus). When wanted: only if somebody gets on or off (a request stop). Drive through: it does not stop on this trip. When early: it stops only if it is ahead of its time.	始终:无论有没有人等候,公交车都停靠(必停站、终点站)。有需要时:仅在有人上下车时停靠(招手停靠站)。直接通过:本班次不停靠。提前到达时:仅在比时刻表提前时停靠。
+The AI buses of this line's tours are taken from the depot group; here the vehicles can be limited by date: only some types, mostly some types, or a fleet number for one tour. A line with nothing here takes any vehicle of the group.	此线路班次所用的 AI 公交车取自车库组;在此可按日期限制车辆:只用某些车型、主要用某些车型,或为某个班次指定车号。此处没有设置的线路可使用该组中的任何车辆。
+Delete this assignment	删除此分配
+(day, month, year)	(日、月、年)
+It ends before it starts: the game ignores it	结束早于开始:游戏将忽略它
+Only these types	仅限这些车型
+Mostly these types	主要是这些车型
+share of the tours	班次占比
+Fleet numbers of single tours	各个班次的车号
+A fleet number for a tour	某班次的车号
+A vehicle assignment	车辆分配
+tiles are loaded round there, the others are hidden	个图块已加载在该处周围，其余已隐藏
+tiles round the camera are loaded; click on the empty zone to load the next ones	个图块已加载在相机周围；点击空白区域可加载接下来的图块
+Tiles loaded at once	一次加载的图块数
+about 500 m round the camera	相机周围约 500 m
+about 850 m	约 850 m
+about 1.2 km	约 1.2 km
+about 1.7 km (the usual)	约 1.7 km（常用）
+about 2.5 km	约 2.5 km
+A big or very detailed map is lighter with fewer tiles: the others are hidden until you click on the empty zone	大型或非常精细的地图在图块较少时更流畅：其余图块会隐藏，直到你点击空白区域
+Hold Ctrl while drawing to join nothing. Cables, fences and footpaths never join roads or junctions.	绘制时按住 Ctrl 可不连接任何对象。线缆、围栏和人行道绝不会连接到道路或路口。
+Auto-Adapt	自动衔接
+Where roads of different width meet, a plate tapers one into the other	在宽度不同的道路相接处，铺设从一条逐渐过渡到另一条的路面

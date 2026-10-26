@@ -2127,3 +2127,124 @@ Could not replace the program	Hindi mapalitan ang program
 The package has no program in it.	Walang program sa package.
 openMapper has stopped:	Huminto ang openMapper:
 The log with the details:	Ang log na may mga detalye:
+Light made: click where it goes; its script is in Map > Scripts	Nagawa ang ilaw: i-click kung saan ilalagay; nasa Mapa > Mga script ang script nito
+Stops sharing a name	Mga hintuang may parehong pangalan
+Two stops far from each other have one name. The two across a road may share it (they are a pair), but elsewhere the game, the displays and the people who choose where to get off cannot tell them apart. "Fix" gives the later one a number after its name.	Dalawang magkalayong hintuan ang may iisang pangalan. Puwedeng magkapareho ang dalawang nasa magkabilang panig ng kalsada (magkapares sila), pero sa ibang lugar, hindi sila matutukoy ng laro, ng mga display, at ng mga pasaherong pumipili kung saan bababa. Dinadagdagan ng "Ayusin" ng numero ang pangalan ng mas huli.
+same name as the stop	kapareho ng pangalan ng hintuan
+The road is gone	Wala na ang kalsada
+This end is already joined to something	Nakakabit na ang dulong ito sa isang bagay
+The junction piece could not be read	Hindi mabasa ang junction piece
+This object has no places for roads to join	Walang lugar ang object na ito para sa mga kalsadang kakabit
+Quiet street	Tahimik na kalye
+Street with a footway on one side	Kalye na may bangketa sa isang panig
+Main road	Pangunahing kalsada
+Avenue with a green strip	Avenue na may berdeng strip
+One-way street	Isang-daang kalye
+Country road	Kalsadang probinsya
+Service road	Service road
+Empty script	Walang lamang script
+A greeting when the bus is taken	Pagbati kapag sinakyan ang bus
+Announce every stop	I-anunsyo ang bawat hintuan
+Traffic by the hour	Trapiko ayon sa oras
+Weather at a time	Panahon sa takdang oras
+Speed limit warning	Babala sa limitasyon ng bilis
+Next stop on the screen	Susunod na hintuan sa screen
+Lit during certain hours	Nakabukas sa ilang oras
+Blinks	Kumukurap
+Lit in certain months	Nakabukas sa ilang buwan
+Compulsory stop	Sapilitang hintuan
+Request stop	Hintuan kapag hiniling
+Terminus	Terminal
+Every bus stops here and people are always waiting	Humihinto rito ang bawat bus at laging may naghihintay
+A bus stops only if somebody waits or presses the stop button	Humihinto lang ang bus kung may naghihintay o pumindot ng stop button
+Where a line begins or ends: everybody gets off, a bus waits for its departure	Kung saan nagsisimula o nagtatapos ang linya: bumababa ang lahat, naghihintay ang bus sa pag-alis nito
+when wanted	kapag kailangan
+drive through	hindi humihinto
+when early	kapag maaga
+right of the road	sa kanan ng kalsada
+left of the road	sa kaliwa ng kalsada
+both sides	magkabilang panig
+Vehicles	Mga sasakyan
+Scripts…	Mga script…
+Junction on an end	Junction sa dulo
+The installation has no junction pieces with places for roads.	Walang junction piece ang installation na may lugar para sa mga kalsada.
+None of the pieces is made for this road type: its first place is used.	Walang piece na ginawa para sa uri ng kalsadang ito: gagamitin ang una nitong lugar.
+At the start	Sa simula
+At the end	Sa dulo
+Junction pieces for it	Mga junction piece para dito
+made by openMapper	ginawa ng openMapper
+Choose it in the catalogue to place on the map	Piliin sa catalogue para ilagay sa mapa
+Pieces with a place made for this road type. The one picked is offered first when a junction is put on this road's end (select the road: Junction on an end).	Mga piece na may lugar na ginawa para sa uri ng kalsadang ito. Ang napili ang unang iaalok kapag naglagay ng junction sa dulo ng kalsadang ito (piliin ang kalsada: Junction sa dulo).
+No piece is made for this road type; the list holds every piece with places for roads.	Walang piece na ginawa para sa uri ng kalsadang ito; ang listahan ay may bawat piece na may lugar para sa mga kalsada.
+Start from	Magsimula sa
+a ready-made road…	isang handang kalsada…
+raised	nakataas
+As high as the footways, with a kerb along it	Kasingtaas ng mga bangketa, may kerb sa gilid
+ m left	 m sa kaliwa
+a different one on the right	ibang isa sa kanan
+ m right	 m sa kanan
+Middle strip texture	Texture ng gitnang strip
+like the roadway	tulad ng daanan
+No problems found	Walang nakitang problema
+Scripts	Mga script
+openOMSI: the map's script	openOMSI: ang script ng mapa
+Object scripts (OMSI 2 and openOMSI)	Mga script ng object (OMSI 2 at openOMSI)
+A Lua script that runs in openOMSI while this map is played: it reacts to what happens (a stop reached, a new hour, a new trip) and can show messages, change the traffic and the weather, move the bus. `on` and `every` work for this map only. OMSI 2 does not run Lua: its scripts belong to objects (the next tab).	Isang Lua script na tumatakbo sa openOMSI habang nilalaro ang mapang ito: tumutugon ito sa mga nangyayari (narating na hintuan, bagong oras, bagong biyahe) at puwedeng magpakita ng mga mensahe, baguhin ang trapiko at panahon, ilipat ang bus. Para sa mapang ito lang gumagana ang `on` at `every`. Hindi nagpapatakbo ng Lua ang OMSI 2: sa mga object ang mga script nito (susunod na tab).
+a ready-made script…	isang handang script…
+Save the script	I-save ang script
+Written into the content folder's plugins, where openOMSI loads it again at once	Isinusulat sa plugins ng content folder, kung saan agad itong nilo-load muli ng openOMSI
+Script saved	Na-save ang script
+Script saved, but it has problems: the game would not run it	Na-save ang script, pero may problema ito: hindi ito patatakbuhin ng laro
+Revert	Ibalik
+Delete the script	Burahin ang script
+Script deleted	Nabura ang script
+What a scenery object runs every frame: lamps that switch, signs that change, doors that open. Select an object to see its scripts; the game's own compiler checks them as you write. Scripts of the installation's objects can be read and learned from; to change one, make an object of your own (Edit the mesh makes a copy) and open it here.	Ang pinapatakbo ng isang scenery object sa bawat frame: mga ilaw na nag-o-on, mga karatulang nagbabago, mga pintong bumubukas. Pumili ng object para makita ang mga script nito; sinusuri ito ng sariling compiler ng laro habang nagta-type ka. Mababasa at mapag-aaralan ang mga script ng mga object ng installation; para baguhin ang isa, gumawa ng sarili mong object (gumagawa ng kopya ang I-edit ang mesh) at buksan dito.
+Select one object on the map.	Pumili ng isang object sa mapa.
+this object has no script	walang script ang object na ito
+From the installation: read only.	Mula sa installation: read-only.
+Not in the object's variable list	Wala sa listahan ng variable ng object
+A light switched by a script	Ilaw na pinapatakbo ng script
+A new object: a lamp that glows and lights the ground while its script says so. The script is yours to change after.	Bagong object: isang lamp na kumikinang at nagpapailaw sa lupa habang sinasabi ng script nito. Sa iyo ang script na babaguhin pagkatapos.
+ h	 oras
+A round takes	Ang isang ikot ay tumatagal ng
+ s	 s
+From month	Mula sa buwan
+Reaches	Abot
+Make the light	Gawin ang ilaw
+Kind of stop	Uri ng hintuan
+Waiting, at most	Naghihintay, pinakamarami
+Waiting, at least	Naghihintay, pinakakaunti
+Getting off	Bumababa
+How many of those riding get off here, compared with the other stops: twice the number, twice the riders	Ilan sa mga sakay ang bumababa rito, kumpara sa ibang hintuan: dalawang beses ang bilang, dalawang beses ang pasahero
+How far along the stop people wait and a bus may stand	Gaano kahaba ang hintuan na pinaghihintayan ng mga tao at mapaghihintuan ng bus
+Platform	Platform
+Paired with the stop across the road: one name for both	Kapares ng hintuan sa kabila ng kalsada: iisang pangalan para sa dalawa
+Split	Paghiwalayin
+The stop gets a name of its own (the number is changed in the name box), and renaming one no longer renames the other	May sariling pangalan na ang hintuan (binabago ang numero sa name box), at hindi na nire-rename ang isa kapag nire-rename ang isa pa
+Another stop far from here has this name	May ibang hintuan na malayo rito na may ganitong pangalan
+Make it different	Gawing iba
+Which buses drive this line	Aling mga bus ang bumibiyahe sa linyang ito
+How the stops are served	Paano pinagsisilbihan ang mga hintuan
+Always: the bus stops whoever waits (a compulsory stop, a terminus). When wanted: only if somebody gets on or off (a request stop). Drive through: it does not stop on this trip. When early: it stops only if it is ahead of its time.	Palagi: humihinto ang bus kahit sino ang naghihintay (sapilitang hintuan, terminal). Kapag kailangan: kung may sasakay o bababa lang (hintuan kapag hiniling). Hindi humihinto: hindi ito hihinto sa biyaheng ito. Kapag maaga: hihinto lang ito kung nauuna sa oras.
+The AI buses of this line's tours are taken from the depot group; here the vehicles can be limited by date: only some types, mostly some types, or a fleet number for one tour. A line with nothing here takes any vehicle of the group.	Kinukuha sa depot group ang mga AI bus ng mga biyahe ng linyang ito; dito, puwedeng limitahan ang mga sasakyan ayon sa petsa: ilang uri lang, karamihan ay ilang uri, o isang fleet number para sa isang biyahe. Ang linyang walang laman dito ay kukuha ng anumang sasakyan ng group.
+Delete this assignment	Burahin ang assignment na ito
+(day, month, year)	(araw, buwan, taon)
+It ends before it starts: the game ignores it	Natatapos ito bago magsimula: binabalewala ito ng laro
+Only these types	Mga uring ito lang
+Mostly these types	Karamihan ay mga uring ito
+share of the tours	bahagi ng mga biyahe
+Fleet numbers of single tours	Mga fleet number ng isa-isang biyahe
+A fleet number for a tour	Isang fleet number para sa isang biyahe
+A vehicle assignment	Isang assignment ng sasakyan
+tiles are loaded round there, the others are hidden	tile ang nakalo-load sa paligid ng lugar na iyon, nakatago ang iba
+tiles round the camera are loaded; click on the empty zone to load the next ones	tile sa paligid ng camera ang naka-load; i-click ang walang laman na zone para i-load ang susunod
+Tiles loaded at once	Mga tile na nilo-load nang sabay
+about 500 m round the camera	humigit-kumulang 500 m sa paligid ng camera
+about 850 m	humigit-kumulang 850 m
+about 1.2 km	humigit-kumulang 1.2 km
+about 1.7 km (the usual)	humigit-kumulang 1.7 km (karaniwan)
+about 2.5 km	humigit-kumulang 2.5 km
+A big or very detailed map is lighter with fewer tiles: the others are hidden until you click on the empty zone	Mas magaan ang malaki o napakadetalyadong mapa kapag mas kaunti ang tile: nakatago ang iba hanggang mag-click ka sa walang laman na zone
+Hold Ctrl while drawing to join nothing. Cables, fences and footpaths never join roads or junctions.	Pindutin nang matagal ang Ctrl habang gumuguhit para walang ikonekta. Ang mga kable, bakod, at footpath ay hindi kailanman kumokonekta sa mga kalsada o junction.
+Auto-Adapt	Auto-Adapt
+Where roads of different width meet, a plate tapers one into the other	Kung saan nagtatagpo ang mga kalsadang magkaiba ang lapad, may plate na unti-unting nag-uugnay sa dalawa

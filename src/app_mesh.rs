@@ -430,7 +430,7 @@ impl App {
         Ok(())
     }
 
-    fn map_folder(&self) -> String {
+    pub(super) fn map_folder(&self) -> String {
         self.ed.doc.as_ref().and_then(|d| d.dir.file_name()).map(|f| f.to_string_lossy().to_string()).unwrap_or_else(|| "Shared".into())
     }
 
@@ -812,6 +812,17 @@ impl App {
         self.ed.set_tool(crate::editor::Tool::Objects);
         self.ed.object_type = Some(rel);
         self.ed.toast(tr("Signal head made: click where it stands (near a crossing with a light program it links to it)", "Светофор создан: кликните, где он стоит (рядом с перекрёстком со светофорной программой он к ней привяжется)"));
+        Ok(())
+    }
+
+    /// A light a script of its own switches, put on the map with the next click.
+    pub(super) fn new_scripted_light(&mut self, b: crate::scripting::Behaviour, color: [u8; 3], range: f32) -> anyhow::Result<()> {
+        let Some(roots) = self.roots.clone() else { return Ok(()) };
+        let rel = crate::scripting::make_light(&roots, &self.map_folder(), b, color, range)?;
+        self.lib.start_scan(&roots);
+        self.ed.set_tool(crate::editor::Tool::Objects);
+        self.ed.object_type = Some(rel);
+        self.ed.toast(tr("Light made: click where it goes; its script is in Map > Scripts", "Свет создан: кликните, куда его поставить; его скрипт: Карта > Скрипты"));
         Ok(())
     }
 

@@ -187,6 +187,7 @@ pub fn snap_controls(ui: &mut egui::Ui, ed: &mut Editor) {
     check(ui, &mut ed.auto_terrain, RichText::new(tr("Auto-Terrain", "Авто-рельеф")).small()).on_hover_text(tr("What you build follows the ground: roads, paths and tracks take its height (off: they run level from where they start). Only what is built from now on; nothing already there changes", "Новое подстраивается под рельеф: дороги, пути и рельсы берут его высоту (выкл.: идут ровно от точки начала). Только то, что строится дальше; уже построенное не меняется"));
     check(ui, &mut ed.auto_switches, RichText::new(tr("Auto-Switch", "Авто-стрелки")).small()).on_hover_text(tr("Branching a track off another makes a switch there", "Ответвление пути от другого создаёт стрелку"));
     check(ui, &mut ed.auto_junctions, RichText::new(tr("Auto-Junction", "Авто-перекрёсток")).small()).on_hover_text(tr("Make junctions where roads meet", "Делать перекрёстки, где дороги встречаются"));
+    check(ui, &mut ed.auto_adapt, RichText::new(tr("Auto-Adapt", "Авто-переход")).small()).on_hover_text(tr("Where roads of different width meet, a plate tapers one into the other", "Где встречаются дороги разной ширины, между ними плавный переход"));
     check(ui, &mut ed.align_to_road, RichText::new(tr("Auto-Align", "Авто-выравнивание")).small()).on_hover_text(tr("Line objects up with the nearest road (Shift: put it freely)", "Выравнивать объекты по ближайшей дороге (Shift: ставить свободно)"));
 }
 
@@ -1033,4 +1034,50 @@ pub fn link_section(ui: &mut egui::Ui, ed: &mut Editor, lib: &Library, k: TileKe
         ed.link_pick = Some((k, id));
         ed.toast(tr("Click the object it takes its state from", "Щёлкните объект, от которого брать состояние"));
     }
+}
+
+/// A road's free ends: put a junction piece onto one (its helper made for this road type meets
+/// the end), the piece picked from those that fit, the road type's preferred one first.
+pub fn end_junction_section(ui: &mut egui::Ui, ed: &mut Editor, lib: &Library, actions: &mut Vec<crate::ui::Action>) {
+    let Some((k, id)) = ed.single_spline() else { return };
+    let Some(s) = ed.doc.as_ref().and_then(|d| d.tiles.get(&k)).and_then(|t| t.tile.splines.iter().find(|s| s.id == id && !s.deleted)) else { return };
+    let (free_start, free_end, file) = (s.prev_id == 0, s.next_id == 0, s.file.clone());
+    if !free_start && !free_end {
+        return;
+    }
+    section(ui, tr("Junction on an end", "Перекрёсток на конце дороги"));
+    egui::Frame::new().inner_margin(Margin::same(8)).show(ui, |ui| {
+        let (pieces, fits) = lib.junction_pieces(&file);
+        if pieces.is_empty() {
+            ui.label(RichText::new(tr("The installation has no junction pieces with places for roads.", "В установке нет перекрёстков с местами для дорог.")).small().color(TEXT_DIM));
+            return;
+        }
+        let preferred = ed.road_styles.piece(&file).map(str::to_string);
+        let cur = ed.junction_piece.clone().filter(|p| pieces.iter().any(|a| a.rel.eq_ignore_ascii_case(p))).or_else(|| preferred.filter(|p| pieces.iter().any(|a| a.rel.eq_ignore_ascii_case(p)))).or_else(|| pieces.first().map(|a| a.rel.clone()));
+        let mut pick = cur.clone();
+        let name = cur.as_deref().and_then(|c| lib.find(c)).map(|a| a.name.clone()).unwrap_or_default();
+        egui::ComboBox::from_id_salt("junction piece").selected_text(name).width(ui.available_width() - 8.0).height(300.0).show_ui(ui, |ui| {
+            ui.add(egui::TextEdit::singleline(&mut ed.junction_search).hint_text(tr("Search", "Поиск")));
+            let q = ed.junction_search.to_lowercase();
+            for a in pieces.iter().filter(|a| q.is_empty() || a.haystack.contains(&q)).take(200) {
+                let on = cur.as_deref().map(|c| c.eq_ignore_ascii_case(&a.rel)).unwrap_or(false);
+                if ui.selectable_label(on, format!("{}  ·  {}", a.name, a.dir)).clicked() {
+                    pick = Some(a.rel.clone());
+                }
+            }
+        });
+        ed.junction_piece = pick.clone();
+        if !fits {
+            ui.label(RichText::new(tr("None of the pieces is made for this road type: its first place is used.", "Ни один перекрёсток не сделан под этот тип дороги: берётся его первое место.")).small().color(TEXT_DIM));
+        }
+        let Some(piece) = pick else { return };
+        ui.horizontal(|ui| {
+            if free_start && ui.button(tr("At the start", "У начала")).clicked() {
+                actions.push(crate::ui::Action::JunctionAtEnd(k, id, false, piece.clone()));
+            }
+            if free_end && ui.button(tr("At the end", "У конца")).clicked() {
+                actions.push(crate::ui::Action::JunctionAtEnd(k, id, true, piece.clone()));
+            }
+        });
+    });
 }

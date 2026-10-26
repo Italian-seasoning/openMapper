@@ -78,7 +78,7 @@ pub fn build(ed: &mut Editor, assets: &mut Assets, lib: &Library, roots: &Roots,
         let d = (l.point_at(s + 1.0) - l.point_at(s - 1.0)).truncate().normalize_or_zero();
         let right = DVec2::new(d.y, -d.x) * if left { -1.0 } else { 1.0 };
         let at = p.truncate() + right * KERB;
-        place(doc, STOP, at, crate::roads::heading_of(d), vec![name.into(), "0".into(), "0".into(), "10".into()], 7)
+        place(doc, STOP, at, crate::roads::heading_of(d), crate::stops::StopSettings::new_strings(name, Default::default()), 7)
     };
     let s_a = stop(doc, a, names[0]);
     let s_b = stop(doc, b, names[1]);

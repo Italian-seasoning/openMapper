@@ -2127,3 +2127,124 @@ Could not replace the program	Tidak dapat mengganti program
 The package has no program in it.	Paket tidak berisi program.
 openMapper has stopped:	openMapper berhenti:
 The log with the details:	Log dengan rinciannya:
+Light made: click where it goes; its script is in Map > Scripts	Lampu dibuat: klik tempat meletakkannya; skripnya ada di Peta > Skrip
+Stops sharing a name	Halte dengan nama sama
+Two stops far from each other have one name. The two across a road may share it (they are a pair), but elsewhere the game, the displays and the people who choose where to get off cannot tell them apart. "Fix" gives the later one a number after its name.	Dua halte yang berjauhan memakai nama yang sama. Dua halte di seberang jalan boleh berbagi nama (mereka sepasang), tetapi di tempat lain game, layar, dan penumpang yang memilih tempat turun tidak bisa membedakannya. "Perbaiki" memberi yang belakangan nomor setelah namanya.
+same name as the stop	sama dengan nama halte
+The road is gone	Jalannya sudah tidak ada
+This end is already joined to something	Ujung ini sudah tersambung ke sesuatu
+The junction piece could not be read	Bagian persimpangan tidak bisa dibaca
+This object has no places for roads to join	Objek ini tidak punya tempat untuk sambungan jalan
+Quiet street	Jalan sepi
+Street with a footway on one side	Jalan dengan trotoar di satu sisi
+Main road	Jalan utama
+Avenue with a green strip	Boulevard dengan jalur hijau
+One-way street	Jalan satu arah
+Country road	Jalan pedesaan
+Service road	Jalan layanan
+Empty script	Skrip kosong
+A greeting when the bus is taken	Sapaan saat bus dinaiki
+Announce every stop	Umumkan setiap halte
+Traffic by the hour	Lalu lintas menurut jam
+Weather at a time	Cuaca pada waktu tertentu
+Speed limit warning	Peringatan batas kecepatan
+Next stop on the screen	Halte berikutnya di layar
+Lit during certain hours	Menyala pada jam tertentu
+Blinks	Berkedip
+Lit in certain months	Menyala pada bulan tertentu
+Compulsory stop	Halte wajib
+Request stop	Halte berhenti sesuai permintaan
+Terminus	Terminal akhir
+Every bus stops here and people are always waiting	Setiap bus berhenti di sini dan selalu ada yang menunggu
+A bus stops only if somebody waits or presses the stop button	Bus berhenti hanya jika ada yang menunggu atau menekan tombol berhenti
+Where a line begins or ends: everybody gets off, a bus waits for its departure	Tempat sebuah jalur mulai atau berakhir: semua turun, bus menunggu keberangkatannya
+when wanted	jika diperlukan
+drive through	lewat saja
+when early	jika lebih awal
+right of the road	di kanan jalan
+left of the road	di kiri jalan
+both sides	kedua sisi
+Vehicles	Kendaraan
+Scripts…	Skrip…
+Junction on an end	Persimpangan di ujung
+The installation has no junction pieces with places for roads.	Instalasi tidak punya bagian persimpangan dengan tempat untuk jalan.
+None of the pieces is made for this road type: its first place is used.	Tidak ada bagian yang dibuat untuk tipe jalan ini: tempat pertamanya dipakai.
+At the start	Di awal
+At the end	Di akhir
+Junction pieces for it	Bagian persimpangan untuknya
+made by openMapper	dibuat oleh openMapper
+Choose it in the catalogue to place on the map	Pilih di katalog untuk dipasang di peta
+Pieces with a place made for this road type. The one picked is offered first when a junction is put on this road's end (select the road: Junction on an end).	Bagian dengan tempat yang dibuat untuk tipe jalan ini. Yang dipilih ditawarkan lebih dulu saat persimpangan dipasang di ujung jalan ini (pilih jalan: Persimpangan di ujung).
+No piece is made for this road type; the list holds every piece with places for roads.	Tidak ada bagian yang dibuat untuk tipe jalan ini; daftar berisi semua bagian dengan tempat untuk jalan.
+Start from	Mulai dari
+a ready-made road…	jalan siap pakai…
+raised	ditinggikan
+As high as the footways, with a kerb along it	Setinggi trotoar, dengan tepi jalan di sepanjangnya
+ m left	 m di kiri
+a different one on the right	yang lain di kanan
+ m right	 m di kanan
+Middle strip texture	Tekstur jalur tengah
+like the roadway	seperti badan jalan
+No problems found	Tidak ada masalah ditemukan
+Scripts	Skrip
+openOMSI: the map's script	openOMSI: skrip peta
+Object scripts (OMSI 2 and openOMSI)	Skrip objek (OMSI 2 dan openOMSI)
+A Lua script that runs in openOMSI while this map is played: it reacts to what happens (a stop reached, a new hour, a new trip) and can show messages, change the traffic and the weather, move the bus. `on` and `every` work for this map only. OMSI 2 does not run Lua: its scripts belong to objects (the next tab).	Skrip Lua yang berjalan di openOMSI selama peta ini dimainkan: ia bereaksi terhadap yang terjadi (halte tercapai, jam baru, perjalanan baru) dan bisa menampilkan pesan, mengubah lalu lintas dan cuaca, memindahkan bus. `on` dan `every` hanya berlaku untuk peta ini. OMSI 2 tidak menjalankan Lua: skripnya milik objek (tab berikutnya).
+a ready-made script…	skrip siap pakai…
+Save the script	Simpan skrip
+Written into the content folder's plugins, where openOMSI loads it again at once	Ditulis ke plugins folder konten, tempat openOMSI langsung memuatnya lagi
+Script saved	Skrip disimpan
+Script saved, but it has problems: the game would not run it	Skrip disimpan, tetapi ada masalah: game tidak akan menjalankannya
+Revert	Kembalikan
+Delete the script	Hapus skrip
+Script deleted	Skrip dihapus
+What a scenery object runs every frame: lamps that switch, signs that change, doors that open. Select an object to see its scripts; the game's own compiler checks them as you write. Scripts of the installation's objects can be read and learned from; to change one, make an object of your own (Edit the mesh makes a copy) and open it here.	Apa yang dijalankan objek pemandangan di setiap frame: lampu yang menyala, rambu yang berganti, pintu yang terbuka. Pilih objek untuk melihat skripnya; kompiler game sendiri memeriksanya saat Anda menulis. Skrip objek instalasi bisa dibaca dan dipelajari; untuk mengubahnya, buat objek sendiri (Edit mesh membuat salinan) dan buka di sini.
+Select one object on the map.	Pilih satu objek di peta.
+this object has no script	objek ini tidak punya skrip
+From the installation: read only.	Dari instalasi: hanya baca.
+Not in the object's variable list	Tidak ada di daftar variabel objek
+A light switched by a script	Lampu yang dinyalakan skrip
+A new object: a lamp that glows and lights the ground while its script says so. The script is yours to change after.	Objek baru: lampu yang menyala dan menerangi tanah selama skripnya menyuruh begitu. Skripnya bisa Anda ubah setelahnya.
+ h	 j
+A round takes	Satu putaran memakan
+ s	 d
+From month	Dari bulan
+Reaches	Menjangkau
+Make the light	Buat lampu
+Kind of stop	Jenis halte
+Waiting, at most	Menunggu, paling banyak
+Waiting, at least	Menunggu, paling sedikit
+Getting off	Turun
+How many of those riding get off here, compared with the other stops: twice the number, twice the riders	Berapa banyak penumpang yang turun di sini dibanding halte lain: dua kali angkanya, dua kali penumpangnya
+How far along the stop people wait and a bus may stand	Sepanjang apa penumpang menunggu dan bus boleh berhenti di halte
+Platform	Peron
+Paired with the stop across the road: one name for both	Berpasangan dengan halte di seberang jalan: satu nama untuk keduanya
+Split	Pisah
+The stop gets a name of its own (the number is changed in the name box), and renaming one no longer renames the other	Halte mendapat nama sendiri (nomornya diubah di kotak nama), dan mengganti nama yang satu tidak lagi mengganti nama yang lain
+Another stop far from here has this name	Halte lain yang jauh dari sini memakai nama ini
+Make it different	Bedakan
+Which buses drive this line	Bus mana yang melayani jalur ini
+How the stops are served	Cara halte dilayani
+Always: the bus stops whoever waits (a compulsory stop, a terminus). When wanted: only if somebody gets on or off (a request stop). Drive through: it does not stop on this trip. When early: it stops only if it is ahead of its time.	Selalu: bus berhenti siapa pun yang menunggu (halte wajib, terminal akhir). Jika diperlukan: hanya jika ada yang naik atau turun (halte permintaan). Lewat saja: tidak berhenti pada perjalanan ini. Jika lebih awal: berhenti hanya jika lebih cepat dari jadwal.
+The AI buses of this line's tours are taken from the depot group; here the vehicles can be limited by date: only some types, mostly some types, or a fleet number for one tour. A line with nothing here takes any vehicle of the group.	Bus AI untuk perjalanan jalur ini diambil dari grup depo; di sini kendaraan bisa dibatasi menurut tanggal: hanya beberapa tipe, sebagian besar beberapa tipe, atau nomor armada untuk satu perjalanan. Jalur tanpa isian di sini memakai kendaraan apa pun dari grup.
+Delete this assignment	Hapus penugasan ini
+(day, month, year)	(hari, bulan, tahun)
+It ends before it starts: the game ignores it	Berakhir sebelum mulai: game mengabaikannya
+Only these types	Hanya tipe ini
+Mostly these types	Sebagian besar tipe ini
+share of the tours	bagian dari perjalanan
+Fleet numbers of single tours	Nomor armada untuk perjalanan tertentu
+A fleet number for a tour	Nomor armada untuk satu perjalanan
+A vehicle assignment	Penugasan kendaraan
+tiles are loaded round there, the others are hidden	tile dimuat di sekitar tempat itu, sisanya disembunyikan
+tiles round the camera are loaded; click on the empty zone to load the next ones	tile di sekitar kamera dimuat; klik zona kosong untuk memuat berikutnya
+Tiles loaded at once	Tile dimuat sekaligus
+about 500 m round the camera	sekitar 500 m di sekitar kamera
+about 850 m	sekitar 850 m
+about 1.2 km	sekitar 1,2 km
+about 1.7 km (the usual)	sekitar 1,7 km (umum)
+about 2.5 km	sekitar 2,5 km
+A big or very detailed map is lighter with fewer tiles: the others are hidden until you click on the empty zone	Peta besar atau sangat detail lebih ringan dengan lebih sedikit tile: sisanya disembunyikan sampai Anda mengeklik zona kosong
+Hold Ctrl while drawing to join nothing. Cables, fences and footpaths never join roads or junctions.	Tahan Ctrl saat menggambar agar tidak menyambung apa pun. Kabel, pagar, dan trotoar tidak pernah tersambung ke jalan atau persimpangan.
+Auto-Adapt	Auto-Peralihan
+Where roads of different width meet, a plate tapers one into the other	Di tempat jalan berbeda lebar bertemu, sebuah pelat menyambung keduanya secara bertahap
