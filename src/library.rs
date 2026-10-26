@@ -204,6 +204,16 @@ impl Library {
     }
 
     /// Assets of a kind and category matching a search (words in any order).
+    /// The junction pieces road type `road` can be joined to: those with a place made for it
+    /// (`fits`), else, when none is, every piece that has places for roads at all.
+    pub fn junction_pieces(&self, road: &str) -> (Vec<&Asset>, bool) {
+        let norm = |p: &str| p.replace('/', "\\").to_lowercase();
+        let road = norm(road);
+        let pieces: Vec<&Asset> = self.assets.iter().filter(|a| a.kind == Kind::Object && !a.helpers.is_empty()).collect();
+        let fitting: Vec<&Asset> = pieces.iter().copied().filter(|a| a.helpers.iter().any(|h| norm(&h.spline) == road)).collect();
+        if fitting.is_empty() { (pieces, false) } else { (fitting, true) }
+    }
+
     pub fn filter<'a>(&'a self, kind: Kind, cat: Option<Category>, search: &str) -> impl Iterator<Item = &'a Asset> + 'a + use<'a> {
         let words: Vec<String> = search.to_lowercase().split_whitespace().map(str::to_string).collect();
         self.assets

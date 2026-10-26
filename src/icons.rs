@@ -70,6 +70,7 @@ pub enum Icon {
     Move,
     Rotate,
     Scale,
+    Code,
 }
 
 impl Icon {
@@ -136,6 +137,7 @@ impl Icon {
             Icon::Search => 0xef7a,
             Icon::Move => 0xe89f,
             Icon::Rotate => 0xe41a,
+            Icon::Code => 0xe86f,
             Icon::Scale => 0xf1ce,
         };
         char::from_u32(cp).unwrap_or('?')

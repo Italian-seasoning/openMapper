@@ -2127,3 +2127,124 @@ Could not replace the program	Não foi possível substituir o programa
 The package has no program in it.	O pacote não tem programa.
 openMapper has stopped:	O openMapper parou:
 The log with the details:	O registro com os detalhes:
+Light made: click where it goes; its script is in Map > Scripts	Luz criada: clique onde colocá-la; o script dela está em Mapa > Scripts
+Stops sharing a name	Paradas com o mesmo nome
+Two stops far from each other have one name. The two across a road may share it (they are a pair), but elsewhere the game, the displays and the people who choose where to get off cannot tell them apart. "Fix" gives the later one a number after its name.	Duas paradas distantes uma da outra têm o mesmo nome. As duas dos lados opostos de uma estrada podem compartilhá-lo (são um par), mas nos demais casos o jogo, os painéis e os passageiros que escolhem onde descer não conseguem distingui-las. "Corrigir" dá à posterior um número depois do nome.
+same name as the stop	mesmo nome da parada
+The road is gone	A estrada não existe mais
+This end is already joined to something	Esta ponta já está unida a algo
+The junction piece could not be read	Não foi possível ler a peça de cruzamento
+This object has no places for roads to join	Este objeto não tem pontos para unir estradas
+Quiet street	Rua tranquila
+Street with a footway on one side	Rua com calçada de um lado
+Main road	Estrada principal
+Avenue with a green strip	Avenida com faixa verde
+One-way street	Rua de mão única
+Country road	Estrada rural
+Service road	Via de serviço
+Empty script	Script vazio
+A greeting when the bus is taken	Uma saudação ao entrar no ônibus
+Announce every stop	Anunciar cada parada
+Traffic by the hour	Trânsito por hora
+Weather at a time	Clima em um horário
+Speed limit warning	Aviso de limite de velocidade
+Next stop on the screen	Próxima parada na tela
+Lit during certain hours	Acende em certas horas
+Blinks	Pisca
+Lit in certain months	Acende em certos meses
+Compulsory stop	Parada obrigatória
+Request stop	Parada sob demanda
+Terminus	Terminal
+Every bus stops here and people are always waiting	Todo ônibus para aqui e sempre há gente esperando
+A bus stops only if somebody waits or presses the stop button	Um ônibus só para se alguém espera ou aperta o botão de parada
+Where a line begins or ends: everybody gets off, a bus waits for its departure	Onde uma linha começa ou termina: todos descem, o ônibus espera a partida
+when wanted	sob demanda
+drive through	passa direto
+when early	se adiantado
+right of the road	à direita da estrada
+left of the road	à esquerda da estrada
+both sides	dos dois lados
+Vehicles	Veículos
+Scripts…	Scripts…
+Junction on an end	Cruzamento na ponta
+The installation has no junction pieces with places for roads.	A instalação não tem peças de cruzamento com pontos para estradas.
+None of the pieces is made for this road type: its first place is used.	Nenhuma peça é feita para este tipo de estrada: usa-se o primeiro ponto dela.
+At the start	No início
+At the end	No fim
+Junction pieces for it	Peças de cruzamento para ela
+made by openMapper	feito pelo openMapper
+Choose it in the catalogue to place on the map	Escolha no catálogo para colocar no mapa
+Pieces with a place made for this road type. The one picked is offered first when a junction is put on this road's end (select the road: Junction on an end).	Peças com um ponto feito para este tipo de estrada. A escolhida é oferecida primeiro quando um cruzamento é colocado na ponta desta estrada (selecione a estrada: Cruzamento na ponta).
+No piece is made for this road type; the list holds every piece with places for roads.	Nenhuma peça é feita para este tipo de estrada; a lista tem todas as peças com pontos para estradas.
+Start from	Partir de
+a ready-made road…	uma estrada pronta…
+raised	elevado
+As high as the footways, with a kerb along it	Na altura das calçadas, com meio-fio ao longo
+ m left	 m à esquerda
+a different one on the right	outra diferente à direita
+ m right	 m à direita
+Middle strip texture	Textura do canteiro central
+like the roadway	como a pista
+No problems found	Nenhum problema encontrado
+Scripts	Scripts
+openOMSI: the map's script	openOMSI: o script do mapa
+Object scripts (OMSI 2 and openOMSI)	Scripts de objetos (OMSI 2 e openOMSI)
+A Lua script that runs in openOMSI while this map is played: it reacts to what happens (a stop reached, a new hour, a new trip) and can show messages, change the traffic and the weather, move the bus. `on` and `every` work for this map only. OMSI 2 does not run Lua: its scripts belong to objects (the next tab).	Um script Lua que roda no openOMSI enquanto este mapa é jogado: reage ao que acontece (parada alcançada, nova hora, nova viagem) e pode mostrar mensagens, mudar o trânsito e o clima, mover o ônibus. `on` e `every` valem só para este mapa. O OMSI 2 não executa Lua: os scripts dele pertencem a objetos (a próxima aba).
+a ready-made script…	um script pronto…
+Save the script	Salvar o script
+Written into the content folder's plugins, where openOMSI loads it again at once	Gravado nos plugins da pasta de conteúdo, onde o openOMSI o carrega de novo na hora
+Script saved	Script salvo
+Script saved, but it has problems: the game would not run it	Script salvo, mas tem problemas: o jogo não o executaria
+Revert	Reverter
+Delete the script	Excluir o script
+Script deleted	Script excluído
+What a scenery object runs every frame: lamps that switch, signs that change, doors that open. Select an object to see its scripts; the game's own compiler checks them as you write. Scripts of the installation's objects can be read and learned from; to change one, make an object of your own (Edit the mesh makes a copy) and open it here.	O que um objeto de cenário executa a cada quadro: lâmpadas que ligam, placas que mudam, portas que abrem. Selecione um objeto para ver os scripts dele; o compilador do jogo os confere enquanto você escreve. Os scripts dos objetos da instalação podem ser lidos e estudados; para mudar um, crie um objeto seu ("Editar a malha" faz uma cópia) e abra-o aqui.
+Select one object on the map.	Selecione um único objeto no mapa.
+this object has no script	este objeto não tem script
+From the installation: read only.	Da instalação: somente leitura.
+Not in the object's variable list	Não está na lista de variáveis do objeto
+A light switched by a script	Uma luz ligada por um script
+A new object: a lamp that glows and lights the ground while its script says so. The script is yours to change after.	Um objeto novo: uma lâmpada que brilha e ilumina o chão enquanto o script dela mandar. Depois o script é seu para mudar.
+ h	 h
+A round takes	Uma volta leva
+ s	 s
+From month	A partir do mês
+Reaches	Alcance
+Make the light	Criar a luz
+Kind of stop	Tipo de parada
+Waiting, at most	Esperando, no máximo
+Waiting, at least	Esperando, no mínimo
+Getting off	Descem
+How many of those riding get off here, compared with the other stops: twice the number, twice the riders	Quantos dos que viajam descem aqui, em comparação com as outras paradas: o dobro do número, o dobro de passageiros
+How far along the stop people wait and a bus may stand	Em que extensão da parada as pessoas esperam e um ônibus pode ficar
+Platform	Plataforma
+Paired with the stop across the road: one name for both	Em par com a parada em frente: um nome para as duas
+Split	Separar
+The stop gets a name of its own (the number is changed in the name box), and renaming one no longer renames the other	A parada recebe um nome próprio (o número é mudado na caixa de nome), e renomear uma não renomeia mais a outra
+Another stop far from here has this name	Outra parada distante daqui tem este nome
+Make it different	Diferenciar
+Which buses drive this line	Quais ônibus fazem esta linha
+How the stops are served	Como as paradas são atendidas
+Always: the bus stops whoever waits (a compulsory stop, a terminus). When wanted: only if somebody gets on or off (a request stop). Drive through: it does not stop on this trip. When early: it stops only if it is ahead of its time.	Sempre: o ônibus para, haja alguém esperando ou não (parada obrigatória, terminal). Sob demanda: só se alguém embarca ou desce (parada sob demanda). Passa direto: não para nesta viagem. Se adiantado: só para se estiver adiantado em relação ao horário.
+The AI buses of this line's tours are taken from the depot group; here the vehicles can be limited by date: only some types, mostly some types, or a fleet number for one tour. A line with nothing here takes any vehicle of the group.	Os ônibus de IA das escalas desta linha vêm do grupo da garagem; aqui os veículos podem ser limitados por data: só alguns tipos, principalmente alguns tipos, ou um número de frota para uma escala. Uma linha sem nada aqui usa qualquer veículo do grupo.
+Delete this assignment	Excluir esta atribuição
+(day, month, year)	(dia, mês, ano)
+It ends before it starts: the game ignores it	Termina antes de começar: o jogo a ignora
+Only these types	Somente estes tipos
+Mostly these types	Principalmente estes tipos
+share of the tours	parte das escalas
+Fleet numbers of single tours	Números de frota de escalas isoladas
+A fleet number for a tour	Um número de frota para uma escala
+A vehicle assignment	Uma atribuição de veículos
+tiles are loaded round there, the others are hidden	blocos são carregados ao redor desse ponto, os demais ficam ocultos
+tiles round the camera are loaded; click on the empty zone to load the next ones	blocos ao redor da câmera estão carregados; clique na zona vazia para carregar os próximos
+Tiles loaded at once	Blocos carregados de uma vez
+about 500 m round the camera	cerca de 500 m ao redor da câmera
+about 850 m	cerca de 850 m
+about 1.2 km	cerca de 1,2 km
+about 1.7 km (the usual)	cerca de 1,7 km (o usual)
+about 2.5 km	cerca de 2,5 km
+A big or very detailed map is lighter with fewer tiles: the others are hidden until you click on the empty zone	Um mapa grande ou muito detalhado fica mais leve com menos blocos: os demais ficam ocultos até você clicar na zona vazia
+Hold Ctrl while drawing to join nothing. Cables, fences and footpaths never join roads or junctions.	Segure Ctrl ao desenhar para não conectar nada. Cabos, cercas e calçadas nunca se conectam a estradas nem a cruzamentos.
+Auto-Adapt	Auto-transição
+Where roads of different width meet, a plate tapers one into the other	Onde se encontram estradas de largura diferente, uma placa faz a transição gradual de uma para a outra

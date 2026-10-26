@@ -2127,3 +2127,124 @@ Could not replace the program	Program se nepodařilo nahradit
 The package has no program in it.	V balíčku není žádný program.
 openMapper has stopped:	openMapper se zastavil:
 The log with the details:	Záznam s podrobnostmi:
+Light made: click where it goes; its script is in Map > Scripts	Světlo vytvořeno: kliknutím určete, kam se umístí; jeho skript je v Mapa > Skripty
+Stops sharing a name	Zastávky se stejným názvem
+Two stops far from each other have one name. The two across a road may share it (they are a pair), but elsewhere the game, the displays and the people who choose where to get off cannot tell them apart. "Fix" gives the later one a number after its name.	Dvě zastávky daleko od sebe mají stejný název. Ty naproti přes silnici ho mít mohou (tvoří dvojici), jinde ale hra, displeje ani cestující, kteří vybírají, kde vystoupit, nepoznají, která je která. „Opravit“ připojí pozdější zastávce za název číslo.
+same name as the stop	stejný název jako zastávka
+The road is gone	Silnice už neexistuje
+This end is already joined to something	Tento konec je už k něčemu připojen
+The junction piece could not be read	Díl křižovatky se nepodařilo načíst
+This object has no places for roads to join	Tento objekt nemá místa pro napojení silnic
+Quiet street	Klidná ulice
+Street with a footway on one side	Ulice s chodníkem na jedné straně
+Main road	Hlavní silnice
+Avenue with a green strip	Třída se zeleným pásem
+One-way street	Jednosměrná ulice
+Country road	Okresní silnice
+Service road	Obslužná komunikace
+Empty script	Prázdný skript
+A greeting when the bus is taken	Pozdrav při nástupu do autobusu
+Announce every stop	Hlásit každou zastávku
+Traffic by the hour	Provoz podle hodin
+Weather at a time	Počasí v daný čas
+Speed limit warning	Upozornění na rychlost
+Next stop on the screen	Příští zastávka na displeji
+Lit during certain hours	Svítí v určitých hodinách
+Blinks	Bliká
+Lit in certain months	Svítí v určitých měsících
+Compulsory stop	Povinná zastávka
+Request stop	Zastávka na znamení
+Terminus	Konečná
+Every bus stops here and people are always waiting	Autobus zastavuje vždy a lidé vždy čekají
+A bus stops only if somebody waits or presses the stop button	Autobus zastaví, jen pokud někdo čeká nebo stiskne tlačítko zastavení
+Where a line begins or ends: everybody gets off, a bus waits for its departure	Kde linka začíná nebo končí: všichni vystoupí, autobus čeká na odjezd
+when wanted	na znamení
+drive through	projíždí
+when early	při předstihu
+right of the road	vpravo od silnice
+left of the road	vlevo od silnice
+both sides	po obou stranách
+Vehicles	Vozidla
+Scripts…	Skripty…
+Junction on an end	Křižovatka na konci
+The installation has no junction pieces with places for roads.	Instalace nemá žádné díly křižovatek s místy pro silnice.
+None of the pieces is made for this road type: its first place is used.	Žádný z dílů není určen pro tento typ silnice: použije se jeho první místo.
+At the start	Na začátku
+At the end	Na konci
+Junction pieces for it	Díly křižovatek pro ni
+made by openMapper	vytváří openMapper
+Choose it in the catalogue to place on the map	Vyberte jej v katalogu a umístěte na mapu
+Pieces with a place made for this road type. The one picked is offered first when a junction is put on this road's end (select the road: Junction on an end).	Díly s místem určeným pro tento typ silnice. Vybraný se nabídne jako první, když se křižovatka umísťuje na konec této silnice (vyberte silnici: Křižovatka na konci).
+No piece is made for this road type; the list holds every piece with places for roads.	Pro tento typ silnice není žádný díl; seznam obsahuje všechny díly s místy pro silnice.
+Start from	Vycházet z
+a ready-made road…	hotové silnice…
+raised	zvýšený
+As high as the footways, with a kerb along it	Ve výšce chodníků, s obrubníkem podél
+ m left	 m vlevo
+a different one on the right	vpravo jiná
+ m right	 m vpravo
+Middle strip texture	Textura středního pásu
+like the roadway	jako vozovka
+No problems found	Nenalezeny žádné problémy
+Scripts	Skripty
+openOMSI: the map's script	openOMSI: skript mapy
+Object scripts (OMSI 2 and openOMSI)	Skripty objektů (OMSI 2 a openOMSI)
+A Lua script that runs in openOMSI while this map is played: it reacts to what happens (a stop reached, a new hour, a new trip) and can show messages, change the traffic and the weather, move the bus. `on` and `every` work for this map only. OMSI 2 does not run Lua: its scripts belong to objects (the next tab).	Skript v Lua, který běží v openOMSI při hře na této mapě: reaguje na dění (dosažená zastávka, nová hodina, nový spoj) a umí zobrazovat zprávy, měnit provoz a počasí, přemisťovat autobus. `on` a `every` fungují jen pro tuto mapu. OMSI 2 Lua nespouští: jeho skripty patří objektům (další karta).
+a ready-made script…	hotového skriptu…
+Save the script	Uložit skript
+Written into the content folder's plugins, where openOMSI loads it again at once	Zapíše se do složky plugins obsahu, odkud ho openOMSI ihned znovu načte
+Script saved	Skript uložen
+Script saved, but it has problems: the game would not run it	Skript uložen, ale obsahuje chyby: hra by jej nespustila
+Revert	Vrátit zpět
+Delete the script	Smazat skript
+Script deleted	Skript smazán
+What a scenery object runs every frame: lamps that switch, signs that change, doors that open. Select an object to see its scripts; the game's own compiler checks them as you write. Scripts of the installation's objects can be read and learned from; to change one, make an object of your own (Edit the mesh makes a copy) and open it here.	Co scenériový objekt provádí v každém snímku: lampy, které se zapínají, cedule, které se mění, dveře, které se otevírají. Vyberte objekt a uvidíte jeho skripty; kompilátor samotné hry je kontroluje při psaní. Skripty objektů instalace lze číst a učit se z nich; chcete-li některý změnit, vytvořte si vlastní objekt (Upravit mesh vytvoří kopii) a otevřete jej zde.
+Select one object on the map.	Vyberte na mapě jeden objekt.
+this object has no script	tento objekt nemá skript
+From the installation: read only.	Z instalace: jen pro čtení.
+Not in the object's variable list	Není v seznamu proměnných objektu
+A light switched by a script	Světlo spínané skriptem
+A new object: a lamp that glows and lights the ground while its script says so. The script is yours to change after.	Nový objekt: lampa, která svítí a osvětluje zem, dokud to říká její skript. Skript pak můžete upravit.
+ h	 h
+A round takes	Jedno kolo trvá
+ s	 s
+From month	Od měsíce
+Reaches	Dosvit
+Make the light	Vytvořit světlo
+Kind of stop	Druh zastávky
+Waiting, at most	Čeká nejvýše
+Waiting, at least	Čeká nejméně
+Getting off	Vystupuje
+How many of those riding get off here, compared with the other stops: twice the number, twice the riders	Kolik z jedoucích tu vystoupí oproti ostatním zastávkám: dvojnásobné číslo, dvojnásobek cestujících
+How far along the stop people wait and a bus may stand	Na jak dlouhém úseku zastávky lidé čekají a může stát autobus
+Platform	Nástupiště
+Paired with the stop across the road: one name for both	Spárována se zastávkou naproti přes silnici: společný název pro obě
+Split	Rozdělit
+The stop gets a name of its own (the number is changed in the name box), and renaming one no longer renames the other	Zastávka dostane vlastní název (číslo se změní v poli názvu) a přejmenování jedné už nepřejmenuje druhou
+Another stop far from here has this name	Jiná zastávka daleko odsud má tento název
+Make it different	Změnit
+Which buses drive this line	Které autobusy jezdí na této lince
+How the stops are served	Jak se zastávky obsluhují
+Always: the bus stops whoever waits (a compulsory stop, a terminus). When wanted: only if somebody gets on or off (a request stop). Drive through: it does not stop on this trip. When early: it stops only if it is ahead of its time.	Vždy: autobus zastaví, ať někdo čeká, či ne (povinná zastávka, konečná). Na znamení: jen pokud někdo nastupuje nebo vystupuje. Projíždí: na tomto spoji nezastavuje. Při předstihu: zastaví, jen pokud je před jízdním řádem.
+The AI buses of this line's tours are taken from the depot group; here the vehicles can be limited by date: only some types, mostly some types, or a fleet number for one tour. A line with nothing here takes any vehicle of the group.	Autobusy AI z turnusů této linky se berou ze skupiny vozovny; zde lze vozidla omezit podle data: jen některé typy, převážně některé typy nebo evidenční číslo pro jeden turnus. Linka bez záznamů zde bere libovolné vozidlo skupiny.
+Delete this assignment	Smazat toto přiřazení
+(day, month, year)	(den, měsíc, rok)
+It ends before it starts: the game ignores it	Končí dřív, než začíná: hra to ignoruje
+Only these types	Jen tyto typy
+Mostly these types	Převážně tyto typy
+share of the tours	podíl turnusů
+Fleet numbers of single tours	Evidenční čísla jednotlivých turnusů
+A fleet number for a tour	Evidenční číslo pro turnus
+A vehicle assignment	Přiřazení vozidel
+tiles are loaded round there, the others are hidden	dlaždic je načteno kolem tohoto místa, ostatní jsou skryté
+tiles round the camera are loaded; click on the empty zone to load the next ones	dlaždic kolem kamery je načteno; kliknutím na prázdnou zónu načtete další
+Tiles loaded at once	Dlaždic načteno najednou
+about 500 m round the camera	asi 500 m kolem kamery
+about 850 m	asi 850 m
+about 1.2 km	asi 1,2 km
+about 1.7 km (the usual)	asi 1,7 km (obvyklé)
+about 2.5 km	asi 2,5 km
+A big or very detailed map is lighter with fewer tiles: the others are hidden until you click on the empty zone	Velká nebo velmi podrobná mapa běží plynuleji s méně dlaždicemi: ostatní jsou skryté, dokud neklepnete na prázdnou zónu
+Hold Ctrl while drawing to join nothing. Cables, fences and footpaths never join roads or junctions.	Podržte Ctrl při kreslení, aby se nic nepřipojilo. Kabely, ploty a chodníky se nikdy nepřipojují k silnicím ani křižovatkám.
+Auto-Adapt	Auto-přechod
+Where roads of different width meet, a plate tapers one into the other	Kde se potkají silnice různé šířky, vznikne mezi nimi plynulý přechod

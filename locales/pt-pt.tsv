@@ -2127,3 +2127,124 @@ Could not replace the program	Não foi possível substituir o programa
 The package has no program in it.	O pacote não tem nenhum programa.
 openMapper has stopped:	O openMapper parou:
 The log with the details:	O registo com os detalhes:
+Light made: click where it goes; its script is in Map > Scripts	Luz criada: clique onde a colocar; o seu script está em Mapa > Scripts
+Stops sharing a name	Paragens com o mesmo nome
+Two stops far from each other have one name. The two across a road may share it (they are a pair), but elsewhere the game, the displays and the people who choose where to get off cannot tell them apart. "Fix" gives the later one a number after its name.	Duas paragens afastadas uma da outra têm o mesmo nome. As duas dos lados opostos de uma estrada podem partilhá-lo (são um par), mas noutros casos o jogo, os painéis e as pessoas que escolhem onde sair não as conseguem distinguir. "Corrigir" acrescenta um número ao nome da última.
+same name as the stop	mesmo nome que a paragem
+The road is gone	A estrada já não existe
+This end is already joined to something	Esta extremidade já está ligada a outra coisa
+The junction piece could not be read	Não foi possível ler a peça de cruzamento
+This object has no places for roads to join	Este objeto não tem pontos de ligação para estradas
+Quiet street	Rua tranquila
+Street with a footway on one side	Rua com passeio de um lado
+Main road	Estrada principal
+Avenue with a green strip	Avenida com faixa ajardinada
+One-way street	Rua de sentido único
+Country road	Estrada rural
+Service road	Via de serviço
+Empty script	Script vazio
+A greeting when the bus is taken	Uma saudação quando se entra no autocarro
+Announce every stop	Anunciar todas as paragens
+Traffic by the hour	Trânsito por hora
+Weather at a time	Meteorologia a uma hora
+Speed limit warning	Aviso de limite de velocidade
+Next stop on the screen	Próxima paragem no ecrã
+Lit during certain hours	Acesa em certas horas
+Blinks	Pisca
+Lit in certain months	Acesa em certos meses
+Compulsory stop	Paragem obrigatória
+Request stop	Paragem a pedido
+Terminus	Terminal
+Every bus stops here and people are always waiting	Todos os autocarros param aqui e há sempre pessoas à espera
+A bus stops only if somebody waits or presses the stop button	O autocarro só pára se alguém esperar ou carregar no botão de paragem
+Where a line begins or ends: everybody gets off, a bus waits for its departure	Onde uma linha começa ou acaba: todos saem e o autocarro espera pela partida
+when wanted	a pedido
+drive through	passa sem parar
+when early	se adiantado
+right of the road	à direita da estrada
+left of the road	à esquerda da estrada
+both sides	ambos os lados
+Vehicles	Veículos
+Scripts…	Scripts…
+Junction on an end	Cruzamento numa extremidade
+The installation has no junction pieces with places for roads.	A instalação não tem peças de cruzamento com pontos para estradas.
+None of the pieces is made for this road type: its first place is used.	Nenhuma das peças foi feita para este tipo de estrada: é usado o seu primeiro ponto.
+At the start	No início
+At the end	No fim
+Junction pieces for it	Peças de cruzamento para a mesma
+made by openMapper	feito pelo openMapper
+Choose it in the catalogue to place on the map	Escolha-a no catálogo para a colocar no mapa
+Pieces with a place made for this road type. The one picked is offered first when a junction is put on this road's end (select the road: Junction on an end).	Peças com um ponto feito para este tipo de estrada. A escolhida é oferecida primeiro quando se coloca um cruzamento na extremidade desta estrada (selecione a estrada: Cruzamento numa extremidade).
+No piece is made for this road type; the list holds every piece with places for roads.	Nenhuma peça foi feita para este tipo de estrada; a lista contém todas as peças com pontos para estradas.
+Start from	Partir de
+a ready-made road…	uma estrada pronta…
+raised	elevada
+As high as the footways, with a kerb along it	À altura dos passeios, com um lancil ao longo
+ m left	 m à esquerda
+a different one on the right	outra à direita
+ m right	 m à direita
+Middle strip texture	Textura do separador central
+like the roadway	como a faixa de rodagem
+No problems found	Nenhum problema encontrado
+Scripts	Scripts
+openOMSI: the map's script	openOMSI: o script do mapa
+Object scripts (OMSI 2 and openOMSI)	Scripts de objetos (OMSI 2 e openOMSI)
+A Lua script that runs in openOMSI while this map is played: it reacts to what happens (a stop reached, a new hour, a new trip) and can show messages, change the traffic and the weather, move the bus. `on` and `every` work for this map only. OMSI 2 does not run Lua: its scripts belong to objects (the next tab).	Um script Lua que corre no openOMSI enquanto este mapa é jogado: reage ao que acontece (uma paragem alcançada, uma nova hora, uma nova viagem) e pode mostrar mensagens, alterar o trânsito e a meteorologia, mover o autocarro. `on` e `every` funcionam apenas para este mapa. O OMSI 2 não executa Lua: os seus scripts pertencem aos objetos (o separador seguinte).
+a ready-made script…	um script pronto…
+Save the script	Guardar o script
+Written into the content folder's plugins, where openOMSI loads it again at once	Gravado nos plugins da pasta de conteúdo, de onde o openOMSI o volta a carregar logo
+Script saved	Script guardado
+Script saved, but it has problems: the game would not run it	Script guardado, mas tem problemas: o jogo não o executaria
+Revert	Repor
+Delete the script	Eliminar o script
+Script deleted	Script eliminado
+What a scenery object runs every frame: lamps that switch, signs that change, doors that open. Select an object to see its scripts; the game's own compiler checks them as you write. Scripts of the installation's objects can be read and learned from; to change one, make an object of your own (Edit the mesh makes a copy) and open it here.	O que um objeto de cenário executa a cada fotograma: candeeiros que acendem, placas que mudam, portas que abrem. Selecione um objeto para ver os seus scripts; o compilador do próprio jogo verifica-os enquanto escreve. Os scripts dos objetos da instalação podem ser lidos e estudados; para alterar um, crie um objeto seu (Editar a malha faz uma cópia) e abra-o aqui.
+Select one object on the map.	Selecione um objeto no mapa.
+this object has no script	este objeto não tem script
+From the installation: read only.	Da instalação: só de leitura.
+Not in the object's variable list	Não consta da lista de variáveis do objeto
+A light switched by a script	Uma luz acionada por um script
+A new object: a lamp that glows and lights the ground while its script says so. The script is yours to change after.	Um novo objeto: um candeeiro que brilha e ilumina o chão enquanto o seu script o indicar. O script pode ser alterado depois.
+ h	 h
+A round takes	Uma volta demora
+ s	 s
+From month	Desde o mês
+Reaches	Alcance
+Make the light	Criar a luz
+Kind of stop	Tipo de paragem
+Waiting, at most	À espera, no máximo
+Waiting, at least	À espera, no mínimo
+Getting off	Saem
+How many of those riding get off here, compared with the other stops: twice the number, twice the riders	Quantos dos passageiros saem aqui, em comparação com as outras paragens: o dobro do número, o dobro de passageiros
+How far along the stop people wait and a bus may stand	Em que extensão da paragem as pessoas esperam e um autocarro pode parar
+Platform	Plataforma
+Paired with the stop across the road: one name for both	Emparelhada com a paragem do lado oposto: um nome para ambas
+Split	Separar
+The stop gets a name of its own (the number is changed in the name box), and renaming one no longer renames the other	A paragem fica com um nome próprio (o número altera-se na caixa do nome) e mudar o nome de uma já não muda o da outra
+Another stop far from here has this name	Outra paragem longe daqui tem este nome
+Make it different	Tornar diferente
+Which buses drive this line	Que autocarros fazem esta linha
+How the stops are served	Como são servidas as paragens
+Always: the bus stops whoever waits (a compulsory stop, a terminus). When wanted: only if somebody gets on or off (a request stop). Drive through: it does not stop on this trip. When early: it stops only if it is ahead of its time.	Sempre: o autocarro pára haja ou não quem espere (paragem obrigatória, terminal). A pedido: só se alguém entrar ou sair (paragem a pedido). Passa sem parar: não pára nesta viagem. Se adiantado: só pára se estiver adiantado em relação ao horário.
+The AI buses of this line's tours are taken from the depot group; here the vehicles can be limited by date: only some types, mostly some types, or a fleet number for one tour. A line with nothing here takes any vehicle of the group.	Os autocarros IA das escalas desta linha são tirados do grupo da garagem; aqui os veículos podem ser limitados por data: só alguns tipos, sobretudo alguns tipos, ou um número de frota para uma escala. Uma linha sem nada aqui usa qualquer veículo do grupo.
+Delete this assignment	Eliminar esta atribuição
+(day, month, year)	(dia, mês, ano)
+It ends before it starts: the game ignores it	Termina antes de começar: o jogo ignora-a
+Only these types	Só estes tipos
+Mostly these types	Sobretudo estes tipos
+share of the tours	percentagem das escalas
+Fleet numbers of single tours	Números de frota de escalas individuais
+A fleet number for a tour	Um número de frota para uma escala
+A vehicle assignment	Uma atribuição de veículo
+tiles are loaded round there, the others are hidden	mosaicos são carregados à volta desse ponto, os restantes ficam ocultos
+tiles round the camera are loaded; click on the empty zone to load the next ones	mosaicos à volta da câmara estão carregados; clique na zona vazia para carregar os seguintes
+Tiles loaded at once	Mosaicos carregados de uma vez
+about 500 m round the camera	cerca de 500 m à volta da câmara
+about 850 m	cerca de 850 m
+about 1.2 km	cerca de 1,2 km
+about 1.7 km (the usual)	cerca de 1,7 km (habitual)
+about 2.5 km	cerca de 2,5 km
+A big or very detailed map is lighter with fewer tiles: the others are hidden until you click on the empty zone	Um mapa grande ou muito detalhado fica mais leve com menos mosaicos: os restantes ficam ocultos até clicar na zona vazia
+Hold Ctrl while drawing to join nothing. Cables, fences and footpaths never join roads or junctions.	Mantenha Ctrl premido ao desenhar para não ligar nada. Os cabos, as vedações e os passeios nunca se ligam a estradas nem a cruzamentos.
+Auto-Adapt	Auto-transição
+Where roads of different width meet, a plate tapers one into the other	Onde se encontram estradas de largura diferente, uma placa faz a transição gradual de uma para a outra

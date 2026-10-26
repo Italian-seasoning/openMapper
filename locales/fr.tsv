@@ -2127,3 +2127,124 @@ Could not replace the program	Impossible de remplacer le programme
 The package has no program in it.	Le paquet ne contient aucun programme.
 openMapper has stopped:	openMapper s'est arrêté :
 The log with the details:	Le journal avec les détails :
+Light made: click where it goes; its script is in Map > Scripts	Lumière créée : cliquez où la placer ; son script est dans Carte > Scripts
+Stops sharing a name	Arrêts de même nom
+Two stops far from each other have one name. The two across a road may share it (they are a pair), but elsewhere the game, the displays and the people who choose where to get off cannot tell them apart. "Fix" gives the later one a number after its name.	Deux arrêts éloignés l'un de l'autre portent le même nom. Les deux de part et d'autre d'une route peuvent le partager (c'est une paire), mais ailleurs le jeu, les afficheurs et les passagers qui choisissent où descendre ne peuvent pas les distinguer. « Corriger » donne au plus récent un numéro après son nom.
+same name as the stop	même nom que l'arrêt
+The road is gone	La route n'existe plus
+This end is already joined to something	Cette extrémité est déjà reliée à quelque chose
+The junction piece could not be read	La pièce de carrefour n'a pas pu être lue
+This object has no places for roads to join	Cet objet n'a aucun emplacement pour raccorder des routes
+Quiet street	Rue calme
+Street with a footway on one side	Rue avec un trottoir d'un côté
+Main road	Route principale
+Avenue with a green strip	Avenue avec bande verte
+One-way street	Rue à sens unique
+Country road	Route de campagne
+Service road	Voie de service
+Empty script	Script vide
+A greeting when the bus is taken	Un message d'accueil quand on monte dans le bus
+Announce every stop	Annoncer chaque arrêt
+Traffic by the hour	Circulation selon l'heure
+Weather at a time	Météo à une heure donnée
+Speed limit warning	Avertissement de limite de vitesse
+Next stop on the screen	Prochain arrêt à l'écran
+Lit during certain hours	Allumé à certaines heures
+Blinks	Clignote
+Lit in certain months	Allumé certains mois
+Compulsory stop	Arrêt obligatoire
+Request stop	Arrêt facultatif
+Terminus	Terminus
+Every bus stops here and people are always waiting	Tous les bus s'arrêtent ici et des gens attendent toujours
+A bus stops only if somebody waits or presses the stop button	Un bus ne s'arrête que si quelqu'un attend ou appuie sur le bouton d'arrêt
+Where a line begins or ends: everybody gets off, a bus waits for its departure	Où une ligne commence ou finit : tout le monde descend, le bus attend son départ
+when wanted	à la demande
+drive through	passe sans s'arrêter
+when early	si en avance
+right of the road	à droite de la route
+left of the road	à gauche de la route
+both sides	des deux côtés
+Vehicles	Véhicules
+Scripts…	Scripts…
+Junction on an end	Carrefour en bout de route
+The installation has no junction pieces with places for roads.	L'installation n'a aucune pièce de carrefour avec des emplacements pour routes.
+None of the pieces is made for this road type: its first place is used.	Aucune pièce n'est conçue pour ce type de route : son premier emplacement est utilisé.
+At the start	Au début
+At the end	À la fin
+Junction pieces for it	Pièces de carrefour pour elle
+made by openMapper	créé par openMapper
+Choose it in the catalogue to place on the map	Choisir dans le catalogue pour placer sur la carte
+Pieces with a place made for this road type. The one picked is offered first when a junction is put on this road's end (select the road: Junction on an end).	Pièces avec un emplacement conçu pour ce type de route. Celle choisie est proposée en premier quand un carrefour est posé au bout de cette route (sélectionnez la route : Carrefour en bout de route).
+No piece is made for this road type; the list holds every piece with places for roads.	Aucune pièce n'est conçue pour ce type de route ; la liste contient toutes les pièces avec des emplacements pour routes.
+Start from	Partir de
+a ready-made road…	une route toute faite…
+raised	surélevé
+As high as the footways, with a kerb along it	À la hauteur des trottoirs, avec une bordure le long
+ m left	 m à gauche
+a different one on the right	une autre à droite
+ m right	 m à droite
+Middle strip texture	Texture du terre-plein
+like the roadway	comme la chaussée
+No problems found	Aucun problème trouvé
+Scripts	Scripts
+openOMSI: the map's script	openOMSI : le script de la carte
+Object scripts (OMSI 2 and openOMSI)	Scripts d'objets (OMSI 2 et openOMSI)
+A Lua script that runs in openOMSI while this map is played: it reacts to what happens (a stop reached, a new hour, a new trip) and can show messages, change the traffic and the weather, move the bus. `on` and `every` work for this map only. OMSI 2 does not run Lua: its scripts belong to objects (the next tab).	Un script Lua qu'openOMSI exécute pendant qu'on joue cette carte : il réagit à ce qui se passe (arrêt atteint, nouvelle heure, nouveau trajet) et peut afficher des messages, changer la circulation et la météo, déplacer le bus. `on` et `every` ne valent que pour cette carte. OMSI 2 n'exécute pas Lua : ses scripts appartiennent aux objets (onglet suivant).
+a ready-made script…	un script tout fait…
+Save the script	Enregistrer le script
+Written into the content folder's plugins, where openOMSI loads it again at once	Écrit dans les plugins du dossier de contenu, où openOMSI le recharge aussitôt
+Script saved	Script enregistré
+Script saved, but it has problems: the game would not run it	Script enregistré, mais il comporte des problèmes : le jeu ne l'exécuterait pas
+Revert	Rétablir
+Delete the script	Supprimer le script
+Script deleted	Script supprimé
+What a scenery object runs every frame: lamps that switch, signs that change, doors that open. Select an object to see its scripts; the game's own compiler checks them as you write. Scripts of the installation's objects can be read and learned from; to change one, make an object of your own (Edit the mesh makes a copy) and open it here.	Ce qu'un objet de décor exécute à chaque image : lampes qui s'allument, panneaux qui changent, portes qui s'ouvrent. Sélectionnez un objet pour voir ses scripts ; le compilateur du jeu les vérifie pendant que vous écrivez. Les scripts des objets de l'installation peuvent être lus et étudiés ; pour en modifier un, créez votre propre objet (« Modifier le maillage » en fait une copie) et ouvrez-le ici.
+Select one object on the map.	Sélectionnez un seul objet sur la carte.
+this object has no script	cet objet n'a pas de script
+From the installation: read only.	Issu de l'installation : lecture seule.
+Not in the object's variable list	Absent de la liste des variables de l'objet
+A light switched by a script	Une lumière commandée par un script
+A new object: a lamp that glows and lights the ground while its script says so. The script is yours to change after.	Un nouvel objet : une lampe qui brille et éclaire le sol tant que son script le dit. Le script reste à vous de le modifier ensuite.
+ h	 h
+A round takes	Un tour dure
+ s	 s
+From month	À partir du mois
+Reaches	Portée
+Make the light	Créer la lumière
+Kind of stop	Type d'arrêt
+Waiting, at most	Attente, au plus
+Waiting, at least	Attente, au moins
+Getting off	Descente
+How many of those riding get off here, compared with the other stops: twice the number, twice the riders	Combien de passagers descendent ici, comparé aux autres arrêts : le double du nombre, le double de passagers
+How far along the stop people wait and a bus may stand	Sur quelle longueur le long de l'arrêt les gens attendent et un bus peut stationner
+Platform	Quai
+Paired with the stop across the road: one name for both	Associé à l'arrêt d'en face : un seul nom pour les deux
+Split	Séparer
+The stop gets a name of its own (the number is changed in the name box), and renaming one no longer renames the other	L'arrêt reçoit son propre nom (le numéro se change dans le champ du nom), et renommer l'un ne renomme plus l'autre
+Another stop far from here has this name	Un autre arrêt éloigné porte ce nom
+Make it different	Le différencier
+Which buses drive this line	Quels bus roulent sur cette ligne
+How the stops are served	Comment les arrêts sont desservis
+Always: the bus stops whoever waits (a compulsory stop, a terminus). When wanted: only if somebody gets on or off (a request stop). Drive through: it does not stop on this trip. When early: it stops only if it is ahead of its time.	Toujours : le bus s'arrête que quelqu'un attende ou non (arrêt obligatoire, terminus). À la demande : seulement si quelqu'un monte ou descend (arrêt facultatif). Passe sans s'arrêter : il ne s'arrête pas sur ce trajet. Si en avance : il s'arrête seulement s'il devance l'horaire.
+The AI buses of this line's tours are taken from the depot group; here the vehicles can be limited by date: only some types, mostly some types, or a fleet number for one tour. A line with nothing here takes any vehicle of the group.	Les bus IA des services de cette ligne sont pris dans le groupe du dépôt ; ici les véhicules peuvent être limités par date : seulement certains types, surtout certains types, ou un numéro de parc pour un service. Une ligne sans rien ici prend n'importe quel véhicule du groupe.
+Delete this assignment	Supprimer cette affectation
+(day, month, year)	(jour, mois, année)
+It ends before it starts: the game ignores it	Elle finit avant de commencer : le jeu l'ignore
+Only these types	Seulement ces types
+Mostly these types	Surtout ces types
+share of the tours	part des services
+Fleet numbers of single tours	Numéros de parc de services isolés
+A fleet number for a tour	Un numéro de parc pour un service
+A vehicle assignment	Une affectation de véhicule
+tiles are loaded round there, the others are hidden	tuiles sont chargées autour de cet endroit, les autres sont masquées
+tiles round the camera are loaded; click on the empty zone to load the next ones	tuiles autour de la caméra sont chargées ; cliquez sur la zone vide pour charger les suivantes
+Tiles loaded at once	Tuiles chargées à la fois
+about 500 m round the camera	environ 500 m autour de la caméra
+about 850 m	environ 850 m
+about 1.2 km	environ 1,2 km
+about 1.7 km (the usual)	environ 1,7 km (valeur usuelle)
+about 2.5 km	environ 2,5 km
+A big or very detailed map is lighter with fewer tiles: the others are hidden until you click on the empty zone	Une carte grande ou très détaillée est plus fluide avec moins de tuiles : les autres sont masquées jusqu'à ce que vous cliquiez sur la zone vide
+Hold Ctrl while drawing to join nothing. Cables, fences and footpaths never join roads or junctions.	Maintenez Ctrl en dessinant pour ne rien raccorder. Les câbles, clôtures et chemins piétons ne se raccordent jamais aux routes ni aux carrefours.
+Auto-Adapt	Auto-raccord
+Where roads of different width meet, a plate tapers one into the other	Là où des routes de largeurs différentes se rencontrent, une plaque les raccorde en douceur

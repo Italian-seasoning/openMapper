@@ -72,6 +72,9 @@ pub struct Prefs {
     /// editor (None: not asked yet; the default is off).
     #[serde(default)]
     pub tile_streaming: Option<bool>,
+    /// How many tiles one window of streaming holds (0: 100).
+    #[serde(default)]
+    pub stream_tiles: u32,
     /// Graphics quality: "low", "medium", "high" (empty: high).
     #[serde(default)]
     pub graphics: String,

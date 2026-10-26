@@ -2127,3 +2127,124 @@ Could not replace the program	Kunde inte ersätta programmet
 The package has no program in it.	Paketet innehåller inget program.
 openMapper has stopped:	openMapper har stoppat:
 The log with the details:	Loggen med detaljerna:
+Light made: click where it goes; its script is in Map > Scripts	Ljus skapat: klicka där det ska stå; dess skript finns i Karta > Skript
+Stops sharing a name	Hållplatser med samma namn
+Two stops far from each other have one name. The two across a road may share it (they are a pair), but elsewhere the game, the displays and the people who choose where to get off cannot tell them apart. "Fix" gives the later one a number after its name.	Två hållplatser långt från varandra har samma namn. De två på var sida om en väg får dela det (de är ett par), men annars kan spelet, skyltarna och de som väljer var de ska kliva av inte skilja dem åt. "Åtgärda" ger den senare ett nummer efter namnet.
+same name as the stop	samma namn som hållplatsen
+The road is gone	Vägen finns inte längre
+This end is already joined to something	Den här änden är redan ansluten till något
+The junction piece could not be read	Korsningsdelen kunde inte läsas
+This object has no places for roads to join	Det här objektet har inga platser för vägar att ansluta till
+Quiet street	Lugn gata
+Street with a footway on one side	Gata med gångbana på ena sidan
+Main road	Huvudväg
+Avenue with a green strip	Allé med grönremsa
+One-way street	Enkelriktad gata
+Country road	Landsväg
+Service road	Servicväg
+Empty script	Tomt skript
+A greeting when the bus is taken	En hälsning när man går på bussen
+Announce every stop	Utropa varje hållplats
+Traffic by the hour	Trafik per timme
+Weather at a time	Väder vid en viss tid
+Speed limit warning	Varning för hastighetsgräns
+Next stop on the screen	Nästa hållplats på skärmen
+Lit during certain hours	Tänd vissa timmar
+Blinks	Blinkar
+Lit in certain months	Tänd vissa månader
+Compulsory stop	Obligatorisk hållplats
+Request stop	Behovshållplats
+Terminus	Ändhållplats
+Every bus stops here and people are always waiting	Alla bussar stannar här och det väntar alltid folk
+A bus stops only if somebody waits or presses the stop button	En buss stannar bara om någon väntar eller trycker på stoppknappen
+Where a line begins or ends: everybody gets off, a bus waits for its departure	Där en linje börjar eller slutar: alla stiger av, bussen väntar på avgång
+when wanted	vid behov
+drive through	kör förbi
+when early	om tidigt
+right of the road	höger om vägen
+left of the road	vänster om vägen
+both sides	båda sidor
+Vehicles	Fordon
+Scripts…	Skript…
+Junction on an end	Korsning på en ände
+The installation has no junction pieces with places for roads.	Installationen har inga korsningsdelar med platser för vägar.
+None of the pieces is made for this road type: its first place is used.	Ingen av delarna är gjord för den här vägtypen: den första platsen används.
+At the start	Vid början
+At the end	Vid slutet
+Junction pieces for it	Korsningsdelar för den
+made by openMapper	gjord av openMapper
+Choose it in the catalogue to place on the map	Välj den i katalogen för att placera den på kartan
+Pieces with a place made for this road type. The one picked is offered first when a junction is put on this road's end (select the road: Junction on an end).	Delar med en plats gjord för den här vägtypen. Den valda erbjuds först när en korsning sätts på den här vägens ände (markera vägen: Korsning på en ände).
+No piece is made for this road type; the list holds every piece with places for roads.	Ingen del är gjord för den här vägtypen; listan visar alla delar med platser för vägar.
+Start from	Utgå från
+a ready-made road…	en färdig väg…
+raised	upphöjd
+As high as the footways, with a kerb along it	Lika högt som gångbanorna, med en trottoarkant längs
+ m left	 m till vänster
+a different one on the right	en annan till höger
+ m right	 m till höger
+Middle strip texture	Mittremsans textur
+like the roadway	som körbanan
+No problems found	Inga problem hittades
+Scripts	Skript
+openOMSI: the map's script	openOMSI: kartans skript
+Object scripts (OMSI 2 and openOMSI)	Objektskript (OMSI 2 och openOMSI)
+A Lua script that runs in openOMSI while this map is played: it reacts to what happens (a stop reached, a new hour, a new trip) and can show messages, change the traffic and the weather, move the bus. `on` and `every` work for this map only. OMSI 2 does not run Lua: its scripts belong to objects (the next tab).	Ett Lua-skript som körs i openOMSI medan den här kartan spelas: det reagerar på det som händer (en hållplats nåddes, en ny timme, en ny tur) och kan visa meddelanden, ändra trafiken och vädret, flytta bussen. `on` och `every` fungerar bara för den här kartan. OMSI 2 kör inte Lua: dess skript hör till objekt (nästa flik).
+a ready-made script…	ett färdigt skript…
+Save the script	Spara skriptet
+Written into the content folder's plugins, where openOMSI loads it again at once	Skrivs till pluginmappen i innehållsmappen, där openOMSI läser in det igen direkt
+Script saved	Skriptet sparat
+Script saved, but it has problems: the game would not run it	Skriptet sparat, men det har problem: spelet skulle inte köra det
+Revert	Återställ
+Delete the script	Ta bort skriptet
+Script deleted	Skriptet borttaget
+What a scenery object runs every frame: lamps that switch, signs that change, doors that open. Select an object to see its scripts; the game's own compiler checks them as you write. Scripts of the installation's objects can be read and learned from; to change one, make an object of your own (Edit the mesh makes a copy) and open it here.	Vad ett scenobjekt kör varje bildruta: lampor som tänds, skyltar som byts, dörrar som öppnas. Markera ett objekt för att se dess skript; spelets egen kompilator kontrollerar dem medan du skriver. Skript i installationens objekt kan läsas och läras av; för att ändra ett, gör ett eget objekt (Redigera mesh gör en kopia) och öppna det här.
+Select one object on the map.	Markera ett objekt på kartan.
+this object has no script	det här objektet har inget skript
+From the installation: read only.	Från installationen: skrivskyddat.
+Not in the object's variable list	Finns inte i objektets variabellista
+A light switched by a script	Ett ljus som styrs av ett skript
+A new object: a lamp that glows and lights the ground while its script says so. The script is yours to change after.	Ett nytt objekt: en lampa som lyser och belyser marken så länge dess skript säger det. Skriptet kan du ändra efteråt.
+ h	 h
+A round takes	Ett varv tar
+ s	 s
+From month	Från månad
+Reaches	Når
+Make the light	Skapa ljuset
+Kind of stop	Typ av hållplats
+Waiting, at most	Väntande, högst
+Waiting, at least	Väntande, minst
+Getting off	Avstigande
+How many of those riding get off here, compared with the other stops: twice the number, twice the riders	Hur många av de åkande som stiger av här jämfört med andra hållplatser: dubbelt tal, dubbelt så många
+How far along the stop people wait and a bus may stand	Hur långt längs hållplatsen folk väntar och en buss får stå
+Platform	Plattform
+Paired with the stop across the road: one name for both	Parad med hållplatsen mittemot: ett namn för båda
+Split	Dela
+The stop gets a name of its own (the number is changed in the name box), and renaming one no longer renames the other	Hållplatsen får ett eget namn (numret ändras i namnrutan) och att byta namn på den ena byter inte längre namn på den andra
+Another stop far from here has this name	En annan hållplats långt härifrån har det här namnet
+Make it different	Gör annorlunda
+Which buses drive this line	Vilka bussar som kör den här linjen
+How the stops are served	Hur hållplatserna trafikeras
+Always: the bus stops whoever waits (a compulsory stop, a terminus). When wanted: only if somebody gets on or off (a request stop). Drive through: it does not stop on this trip. When early: it stops only if it is ahead of its time.	Alltid: bussen stannar vare sig någon väntar eller inte (obligatorisk hållplats, ändhållplats). Vid behov: bara om någon stiger på eller av (behovshållplats). Kör förbi: stannar inte på den här turen. Om tidigt: stannar bara om den ligger före tidtabellen.
+The AI buses of this line's tours are taken from the depot group; here the vehicles can be limited by date: only some types, mostly some types, or a fleet number for one tour. A line with nothing here takes any vehicle of the group.	AI-bussarna för den här linjens omlopp tas från depågruppen; här kan fordonen begränsas efter datum: bara vissa typer, mest vissa typer, eller ett vagnnummer för ett omlopp. En linje utan något här tar vilket fordon som helst i gruppen.
+Delete this assignment	Ta bort den här tilldelningen
+(day, month, year)	(dag, månad, år)
+It ends before it starts: the game ignores it	Den slutar före den börjar: spelet ignorerar den
+Only these types	Bara dessa typer
+Mostly these types	Mest dessa typer
+share of the tours	andel av omloppen
+Fleet numbers of single tours	Vagnnummer för enskilda omlopp
+A fleet number for a tour	Ett vagnnummer för ett omlopp
+A vehicle assignment	En fordonstilldelning
+tiles are loaded round there, the others are hidden	kartrutor är inlästa runt den platsen, de övriga är dolda
+tiles round the camera are loaded; click on the empty zone to load the next ones	kartrutor runt kameran är inlästa; klicka på den tomma zonen för att läsa in nästa
+Tiles loaded at once	Kartrutor inlästa åt gången
+about 500 m round the camera	cirka 500 m runt kameran
+about 850 m	cirka 850 m
+about 1.2 km	cirka 1,2 km
+about 1.7 km (the usual)	cirka 1,7 km (vanligt)
+about 2.5 km	cirka 2,5 km
+A big or very detailed map is lighter with fewer tiles: the others are hidden until you click on the empty zone	En stor eller mycket detaljerad karta går lättare med färre kartrutor: de övriga är dolda tills du klickar på den tomma zonen
+Hold Ctrl while drawing to join nothing. Cables, fences and footpaths never join roads or junctions.	Håll Ctrl nedtryckt medan du ritar för att inte ansluta något. Kablar, staket och gångvägar ansluts aldrig till vägar eller korsningar.
+Auto-Adapt	Auto-övergång
+Where roads of different width meet, a plate tapers one into the other	Där vägar med olika bredd möts går en platta mjukt över från den ena till den andra

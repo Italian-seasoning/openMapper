@@ -2127,3 +2127,124 @@ Could not replace the program	Program değiştirilemedi
 The package has no program in it.	Pakette program yok.
 openMapper has stopped:	openMapper durdu:
 The log with the details:	Ayrıntıları içeren günlük:
+Light made: click where it goes; its script is in Map > Scripts	Işık oluşturuldu: konulacağı yere tıklayın; betiği Harita > Betikler içinde
+Stops sharing a name	Aynı adı taşıyan duraklar
+Two stops far from each other have one name. The two across a road may share it (they are a pair), but elsewhere the game, the displays and the people who choose where to get off cannot tell them apart. "Fix" gives the later one a number after its name.	Birbirinden uzak iki durak aynı adı taşıyor. Yolun karşısındaki iki durak adı paylaşabilir (bir çifttir), ama başka yerlerde oyun, ekranlar ve nerede ineceğini seçen yolcular bunları ayırt edemez. "Düzelt" sonrakine adından sonra bir numara ekler.
+same name as the stop	durağın adıyla aynı
+The road is gone	Yol artık yok
+This end is already joined to something	Bu uç zaten bir şeye bağlı
+The junction piece could not be read	Kavşak parçası okunamadı
+This object has no places for roads to join	Bu nesnede yolların bağlanacağı yer yok
+Quiet street	Sakin sokak
+Street with a footway on one side	Bir tarafı kaldırımlı sokak
+Main road	Ana yol
+Avenue with a green strip	Yeşil şeritli cadde
+One-way street	Tek yönlü sokak
+Country road	Kırsal yol
+Service road	Servis yolu
+Empty script	Boş betik
+A greeting when the bus is taken	Otobüse binildiğinde karşılama
+Announce every stop	Her durağı anons et
+Traffic by the hour	Saate göre trafik
+Weather at a time	Belirli bir saatte hava durumu
+Speed limit warning	Hız sınırı uyarısı
+Next stop on the screen	Sıradaki durak ekranda
+Lit during certain hours	Belirli saatlerde yanar
+Blinks	Yanıp söner
+Lit in certain months	Belirli aylarda yanar
+Compulsory stop	Zorunlu durak
+Request stop	İsteğe bağlı durak
+Terminus	Son durak
+Every bus stops here and people are always waiting	Her otobüs burada durur ve hep bekleyen yolcu vardır
+A bus stops only if somebody waits or presses the stop button	Otobüs yalnızca biri bekliyorsa ya da durma düğmesine basılmışsa durur
+Where a line begins or ends: everybody gets off, a bus waits for its departure	Bir hattın başladığı ya da bittiği yer: herkes iner, otobüs kalkışını bekler
+when wanted	istenirse
+drive through	durmadan geçer
+when early	erken ise
+right of the road	yolun sağında
+left of the road	yolun solunda
+both sides	iki yanda
+Vehicles	Araçlar
+Scripts…	Betikler…
+Junction on an end	Yol ucunda kavşak
+The installation has no junction pieces with places for roads.	Kurulumda yollar için yeri olan kavşak parçası yok.
+None of the pieces is made for this road type: its first place is used.	Parçalardan hiçbiri bu yol türüne göre yapılmamış: ilk yeri kullanılır.
+At the start	Başlangıçta
+At the end	Sonda
+Junction pieces for it	Bunun için kavşak parçaları
+made by openMapper	openMapper tarafından yapılır
+Choose it in the catalogue to place on the map	Haritaya koymak için katalogdan seçin
+Pieces with a place made for this road type. The one picked is offered first when a junction is put on this road's end (select the road: Junction on an end).	Bu yol türüne göre yapılmış yeri olan parçalar. Seçilen, bu yolun ucuna kavşak konurken ilk önerilir (yolu seçin: Yol ucunda kavşak).
+No piece is made for this road type; the list holds every piece with places for roads.	Bu yol türü için yapılmış parça yok; liste yollar için yeri olan her parçayı içerir.
+Start from	Şuradan başla
+a ready-made road…	hazır bir yol…
+raised	yükseltilmiş
+As high as the footways, with a kerb along it	Kaldırımlarla aynı yükseklikte, boyunca kaldırım kenarı var
+ m left	 m solda
+a different one on the right	sağda farklı bir tane
+ m right	 m sağda
+Middle strip texture	Orta şerit dokusu
+like the roadway	yol yüzeyi gibi
+No problems found	Sorun bulunamadı
+Scripts	Betikler
+openOMSI: the map's script	openOMSI: haritanın betiği
+Object scripts (OMSI 2 and openOMSI)	Nesne betikleri (OMSI 2 ve openOMSI)
+A Lua script that runs in openOMSI while this map is played: it reacts to what happens (a stop reached, a new hour, a new trip) and can show messages, change the traffic and the weather, move the bus. `on` and `every` work for this map only. OMSI 2 does not run Lua: its scripts belong to objects (the next tab).	Bu harita oynanırken openOMSI'de çalışan bir Lua betiği: olanlara tepki verir (varılan durak, yeni saat, yeni sefer), mesaj gösterebilir, trafiği ve havayı değiştirebilir, otobüsü taşıyabilir. `on` ve `every` yalnızca bu harita için çalışır. OMSI 2 Lua çalıştırmaz: betikleri nesnelere aittir (sonraki sekme).
+a ready-made script…	hazır bir betik…
+Save the script	Betiği kaydet
+Written into the content folder's plugins, where openOMSI loads it again at once	İçerik klasörünün plugins klasörüne yazılır, openOMSI orada hemen yeniden yükler
+Script saved	Betik kaydedildi
+Script saved, but it has problems: the game would not run it	Betik kaydedildi ama sorunları var: oyun onu çalıştırmaz
+Revert	Geri al
+Delete the script	Betiği sil
+Script deleted	Betik silindi
+What a scenery object runs every frame: lamps that switch, signs that change, doors that open. Select an object to see its scripts; the game's own compiler checks them as you write. Scripts of the installation's objects can be read and learned from; to change one, make an object of your own (Edit the mesh makes a copy) and open it here.	Bir sahne nesnesinin her karede çalıştırdığı şey: açılıp kapanan lambalar, değişen tabelalar, açılan kapılar. Betiklerini görmek için bir nesne seçin; oyunun kendi derleyicisi siz yazarken kontrol eder. Kurulumdaki nesnelerin betikleri okunabilir ve onlardan öğrenilebilir; birini değiştirmek için kendi nesnenizi yapın (Ağı düzenle bir kopya oluşturur) ve burada açın.
+Select one object on the map.	Haritada bir nesne seçin.
+this object has no script	bu nesnenin betiği yok
+From the installation: read only.	Kurulumdan: salt okunur.
+Not in the object's variable list	Nesnenin değişken listesinde yok
+A light switched by a script	Betikle açılıp kapanan ışık
+A new object: a lamp that glows and lights the ground while its script says so. The script is yours to change after.	Yeni bir nesne: betiği söylediği sürece parlayan ve zemini aydınlatan bir lamba. Betik sonradan sizin değiştirmenize kalmış.
+ h	 sa
+A round takes	Bir tur sürer
+ s	 sn
+From month	Başlangıç ayı
+Reaches	Erişim
+Make the light	Işığı oluştur
+Kind of stop	Durak türü
+Waiting, at most	Bekleyen, en çok
+Waiting, at least	Bekleyen, en az
+Getting off	İnen
+How many of those riding get off here, compared with the other stops: twice the number, twice the riders	Binenlerin kaçının burada indiği, öteki duraklara göre: sayı iki katıysa yolcu da iki kat
+How far along the stop people wait and a bus may stand	Durak boyunca insanların beklediği ve otobüsün durabileceği uzunluk
+Platform	Peron
+Paired with the stop across the road: one name for both	Yolun karşısındaki durakla eşli: ikisi için tek ad
+Split	Ayır
+The stop gets a name of its own (the number is changed in the name box), and renaming one no longer renames the other	Durak kendi adını alır (numara ad kutusunda değiştirilir) ve birinin adını değiştirmek artık ötekinin adını değiştirmez
+Another stop far from here has this name	Buradan uzakta başka bir durak bu adı taşıyor
+Make it different	Farklı yap
+Which buses drive this line	Bu hatta hangi otobüsler çalışır
+How the stops are served	Duraklar nasıl hizmet alır
+Always: the bus stops whoever waits (a compulsory stop, a terminus). When wanted: only if somebody gets on or off (a request stop). Drive through: it does not stop on this trip. When early: it stops only if it is ahead of its time.	Her zaman: kimse beklesin beklemesin otobüs durur (zorunlu durak, son durak). İstenirse: yalnızca biri biniyor ya da iniyorsa (isteğe bağlı durak). Durmadan geçer: bu seferde durmaz. Erken ise: yalnızca saatinden öndeyse durur.
+The AI buses of this line's tours are taken from the depot group; here the vehicles can be limited by date: only some types, mostly some types, or a fleet number for one tour. A line with nothing here takes any vehicle of the group.	Bu hattın sefer turlarındaki YZ otobüsleri garaj grubundan alınır; burada araçlar tarihe göre sınırlanabilir: yalnızca bazı türler, çoğunlukla bazı türler ya da tek bir sefer turu için filo numarası. Burada hiçbir şey olmayan hat grubun herhangi bir aracını alır.
+Delete this assignment	Bu atamayı sil
+(day, month, year)	(gün, ay, yıl)
+It ends before it starts: the game ignores it	Başlamadan önce bitiyor: oyun bunu yok sayar
+Only these types	Yalnızca bu türler
+Mostly these types	Çoğunlukla bu türler
+share of the tours	sefer turlarının payı
+Fleet numbers of single tours	Tek tek sefer turlarının filo numaraları
+A fleet number for a tour	Bir sefer turu için filo numarası
+A vehicle assignment	Araç ataması
+tiles are loaded round there, the others are hidden	karo bu çevrede yüklü, diğerleri gizli
+tiles round the camera are loaded; click on the empty zone to load the next ones	karo kameranın çevresinde yüklü; sonrakileri yüklemek için boş alana tıklayın
+Tiles loaded at once	Aynı anda yüklenen karolar
+about 500 m round the camera	kameranın çevresinde yaklaşık 500 m
+about 850 m	yaklaşık 850 m
+about 1.2 km	yaklaşık 1,2 km
+about 1.7 km (the usual)	yaklaşık 1,7 km (olağan)
+about 2.5 km	yaklaşık 2,5 km
+A big or very detailed map is lighter with fewer tiles: the others are hidden until you click on the empty zone	Büyük veya çok ayrıntılı bir harita daha az karoyla daha akıcı çalışır: diğerleri siz boş alana tıklayana kadar gizli kalır
+Hold Ctrl while drawing to join nothing. Cables, fences and footpaths never join roads or junctions.	Çizerken hiçbir şeye bağlamamak için Ctrl tuşunu basılı tutun. Kablolar, çitler ve yaya yolları asla yollara veya kavşaklara bağlanmaz.
+Auto-Adapt	Oto-Geçiş
+Where roads of different width meet, a plate tapers one into the other	Farklı genişlikteki yollar buluştuğunda, aralarına birinden diğerine yumuşak geçiş yapan bir plaka konur

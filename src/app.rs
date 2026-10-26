@@ -127,6 +127,7 @@ pub struct App {
     traffic: crate::ui_traffic::TrafficUi,
     pbr: crate::ui_pbr::PbrWindow,
     road_types: crate::ui_roads::RoadTypes,
+    scripts: crate::ui_script::ScriptsUi,
     map_settings: crate::ui_mapsettings::MapSettings,
     calendar: crate::ui_calendar::CalendarWindow,
     signals: crate::ui_signals::SignalWindow,
@@ -186,6 +187,7 @@ impl App {
             traffic: Default::default(),
             pbr: Default::default(),
             road_types: Default::default(),
+            scripts: Default::default(),
             map_settings: Default::default(),
             calendar: Default::default(),
             signals: Default::default(),
@@ -329,7 +331,7 @@ impl App {
             return false;
         }
         self.stream_at = Some(at);
-        self.ed.toast(tr("The next 100 tiles are loaded, the others are hidden", "Загружены следующие 100 тайлов, остальные скрыты").to_string());
+        self.ed.toast(format!("{} {}", stream_count(self.prefs.stream_tiles), tr("tiles are loaded round there, the others are hidden", "тайлов загружено вокруг этого места, остальные скрыты")));
         true
     }
 
@@ -403,6 +405,19 @@ impl App {
                 if let (Sel::Spline(k, id), true) = (sel, select.ends_with("chain")) {
                     self.ed.select_chain(k, id);
                 }
+            }
+        }
+        // OPENMAPPER_JUNCTION_END=start|end: the first junction piece that fits the road
+        // OPENMAPPER_SELECT selected put onto its start or its far end
+        if let (Ok(which), Some(Sel::Spline(k, id))) = (std::env::var("OPENMAPPER_JUNCTION_END"), self.ed.selected) {
+            while self.lib.scanning {
+                self.lib.poll();
+                std::thread::sleep(std::time::Duration::from_millis(20));
+            }
+            let file = self.ed.doc.as_ref().and_then(|d| d.spline(k, id)).map(|s| s.file.clone()).unwrap_or_default();
+            let piece = self.lib.junction_pieces(&file).0.first().map(|a| a.rel.clone());
+            if let (Some(piece), Some(assets)) = (piece, self.assets.as_mut()) {
+                log::info!("junction end: {piece}: {:?}", self.ed.junction_at_end(assets, &self.lib, k, id, which == "end", &piece));
             }
         }
         // OPENMAPPER_SHAPE=<n>,x,y: shape n of `primitives::ALL` put there as an object of its
@@ -633,6 +648,10 @@ impl App {
         if std::env::var_os("OPENMAPPER_CHECK").is_some() {
             self.ui.check.open = true;
             self.ui.check.issues = None;
+        }
+        // OPENMAPPER_SCRIPTS=1: the Scripts window open from the start
+        if std::env::var_os("OPENMAPPER_SCRIPTS").is_some() {
+            self.scripts.open = true;
         }
         // OPENMAPPER_TIMETABLE=<line>: the Lines window open on that line (checks without a person at the screen)
         if let Ok(l) = std::env::var("OPENMAPPER_TIMETABLE") {
@@ -1281,12 +1300,25 @@ impl App {
                 }
             }
             Action::RoadTypes => self.road_types.open = !self.road_types.open,
+            Action::Scripts => self.scripts.open = !self.scripts.open,
+            Action::ScriptedLight(b, color, range) => {
+                if let Err(e) = self.new_scripted_light(b, color, range) {
+                    self.ed.error(e.to_string());
+                }
+            }
             Action::PlaceAsset(rel) => {
                 self.ed.set_tool(Tool::Objects);
                 self.ed.object_type = Some(rel);
                 self.ed.place_heading = 0.0;
                 if let Some(a) = self.assets.as_mut() {
                     self.ed.place_now(a, &self.lib);
+                }
+            }
+            Action::JunctionAtEnd(k, id, at_end, piece) => {
+                if let Some(a) = self.assets.as_mut() {
+                    if let Err(e) = self.ed.junction_at_end(a, &self.lib, k, id, at_end, &piece) {
+                        self.ed.error(e);
+                    }
                 }
             }
             Action::RevealMap(cfg) => reveal(&cfg),
@@ -1364,6 +1396,14 @@ impl App {
             Action::ReloadContent(msg) => {
                 self.reload_content();
                 self.ed.toast(msg);
+            }
+            Action::SetStreamTiles(n) => {
+                self.prefs.stream_tiles = n;
+                self.prefs.tile_streaming = Some(true);
+                self.prefs.save();
+                self.stream_at = None;
+                self.stream_set = None;
+                self.ed.toast(format!("{} {}", stream_count(n), tr("tiles round the camera are loaded; click on the empty zone to load the next ones", "тайлов вокруг камеры загружено; клик по пустой зоне загрузит следующие")));
             }
             Action::SetTileStreaming(on) => {
                 self.prefs.tile_streaming = Some(on);
@@ -1933,6 +1973,8 @@ impl App {
                 self.traffic.window(&ctx, &mut self.ed, self.roots.as_ref());
                 self.pbr.window(&ctx, self.roots.as_ref(), &mut actions);
                 self.road_types.window(&ctx, &mut self.ed, &self.lib, self.roots.as_ref(), &mut actions);
+                let folder = self.map_folder();
+                self.scripts.window(&ctx, &mut self.ed, self.roots.as_ref(), &folder, &mut actions);
                 self.map_settings.window(&ctx, &mut self.ed, self.roots.as_ref());
                 self.calendar.window(&ctx, &mut self.ed);
                 self.chrono.window(&ctx, &mut self.ed, &self.lib, self.roots.as_ref(), &mut actions);
@@ -2085,7 +2127,7 @@ impl App {
                 g.renderer.profile.add("extras", crate::render::profile::ms(t_x));
                 self.geo.feed(&mut g.renderer.imagery, &g.gpu, &self.ed);
                 g.renderer.daytime = self.ui.daytime.map(|h| crate::render::daylight::at_map(h, &doc.traffic.timezone));
-                if let Some((set, stamp)) = stream_window(doc, self.prefs.tile_streaming == Some(true), &mut self.stream_at, &self.cam, self.stream_set.as_ref().map(|s| s.1)) {
+                if let Some((set, stamp)) = stream_window(doc, self.prefs.tile_streaming == Some(true), stream_count(self.prefs.stream_tiles), &mut self.stream_at, &self.cam, self.stream_set.as_ref().map(|s| s.1)) {
                     g.renderer.set_live(set.clone());
                     self.stream_set = Some((set, stamp));
                 }
@@ -2997,22 +3039,27 @@ impl ApplicationHandler for App {
 /// The most tiles loaded at a time with tile streaming on.
 const STREAM_TILES: usize = 100;
 
-/// The tiles to load, when that changed: the nearest `STREAM_TILES` to the place the window
+/// How many tiles a window of streaming holds, as the settings say (0: the usual 100).
+fn stream_count(setting: u32) -> usize {
+    if setting == 0 { STREAM_TILES } else { setting.clamp(4, 2000) as usize }
+}
+
+/// The tiles to load, when that changed: the nearest `count` to the place the window
 /// is round (the camera's, until a click on the empty zone moves it), so they lie in a circle.
 /// `Some((None, _))`: everything (streaming off, or a map that small).
-fn stream_window(doc: &Document, on: bool, at: &mut Option<DVec2>, cam: &Camera, seen: Option<(usize, u64, u64)>) -> Option<(Option<std::collections::HashSet<crate::doc::TileKey>>, (usize, u64, u64))> {
+fn stream_window(doc: &Document, on: bool, count: usize, at: &mut Option<DVec2>, cam: &Camera, seen: Option<(usize, u64, u64)>) -> Option<(Option<std::collections::HashSet<crate::doc::TileKey>>, (usize, u64, u64))> {
     let centre = if on { *at.get_or_insert(DVec2::new(cam.target.x, cam.target.y)) } else { *at = None; DVec2::ZERO };
-    let stamp = if on { (doc.tiles.len(), centre.x.to_bits(), centre.y.to_bits()) } else { (0, 0, 0) };
+    let stamp = if on { (doc.tiles.len() + count * 1_000_000_000, centre.x.to_bits(), centre.y.to_bits()) } else { (0, 0, 0) };
     if seen == Some(stamp) {
         return None;
     }
-    if !on || doc.tiles.len() <= STREAM_TILES {
+    if !on || doc.tiles.len() <= count {
         return Some((None, stamp));
     }
     let half = DVec2::splat(tile_size() * 0.5);
     let mut near: Vec<(f64, crate::doc::TileKey)> = doc.tiles.keys().map(|k| ((tile_origin(*k) + half - centre).length_squared(), *k)).collect();
-    near.select_nth_unstable_by(STREAM_TILES, |a, b| a.0.total_cmp(&b.0));
-    Some((Some(near[..STREAM_TILES].iter().map(|n| n.1).collect()), stamp))
+    near.select_nth_unstable_by(count, |a, b| a.0.total_cmp(&b.0));
+    Some((Some(near[..count].iter().map(|n| n.1).collect()), stamp))
 }
 
 /// Write the window's picture to a PNG (the screenshot mode).

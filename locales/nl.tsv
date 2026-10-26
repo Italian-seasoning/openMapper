@@ -2127,3 +2127,124 @@ Could not replace the program	Kon het programma niet vervangen
 The package has no program in it.	Het pakket bevat geen programma.
 openMapper has stopped:	openMapper is gestopt:
 The log with the details:	Het logboek met de details:
+Light made: click where it goes; its script is in Map > Scripts	Licht gemaakt: klik waar het moet komen; het script staat in Kaart > Scripts
+Stops sharing a name	Haltes met dezelfde naam
+Two stops far from each other have one name. The two across a road may share it (they are a pair), but elsewhere the game, the displays and the people who choose where to get off cannot tell them apart. "Fix" gives the later one a number after its name.	Twee haltes ver van elkaar hebben dezelfde naam. De twee aan weerszijden van een weg mogen die delen (ze vormen een paar), maar elders kunnen het spel, de displays en de mensen die kiezen waar ze uitstappen ze niet uit elkaar houden. "Herstellen" geeft de latere een nummer achter de naam.
+same name as the stop	dezelfde naam als de halte
+The road is gone	De weg is verdwenen
+This end is already joined to something	Dit uiteinde is al met iets verbonden
+The junction piece could not be read	Het kruispuntstuk kon niet worden gelezen
+This object has no places for roads to join	Dit object heeft geen plekken om wegen aan te sluiten
+Quiet street	Rustige straat
+Street with a footway on one side	Straat met een trottoir aan één kant
+Main road	Hoofdweg
+Avenue with a green strip	Laan met een groenstrook
+One-way street	Eenrichtingsstraat
+Country road	Landweg
+Service road	Ontsluitingsweg
+Empty script	Leeg script
+A greeting when the bus is taken	Een begroeting bij het instappen in de bus
+Announce every stop	Elke halte omroepen
+Traffic by the hour	Verkeer per uur
+Weather at a time	Weer op een bepaald tijdstip
+Speed limit warning	Waarschuwing voor snelheidslimiet
+Next stop on the screen	Volgende halte op het scherm
+Lit during certain hours	Brandt op bepaalde uren
+Blinks	Knippert
+Lit in certain months	Brandt in bepaalde maanden
+Compulsory stop	Verplichte halte
+Request stop	Halte op verzoek
+Terminus	Eindhalte
+Every bus stops here and people are always waiting	Elke bus stopt hier en er wachten altijd mensen
+A bus stops only if somebody waits or presses the stop button	Een bus stopt alleen als iemand wacht of op de stopknop drukt
+Where a line begins or ends: everybody gets off, a bus waits for its departure	Waar een lijn begint of eindigt: iedereen stapt uit, een bus wacht op zijn vertrektijd
+when wanted	op verzoek
+drive through	doorrijden
+when early	indien vroeg
+right of the road	rechts van de weg
+left of the road	links van de weg
+both sides	beide kanten
+Vehicles	Voertuigen
+Scripts…	Scripts…
+Junction on an end	Kruispunt op een uiteinde
+The installation has no junction pieces with places for roads.	De installatie heeft geen kruispuntstukken met plekken voor wegen.
+None of the pieces is made for this road type: its first place is used.	Geen van de stukken is gemaakt voor dit wegtype: de eerste plek wordt gebruikt.
+At the start	Aan het begin
+At the end	Aan het einde
+Junction pieces for it	Kruispuntstukken ervoor
+made by openMapper	gemaakt door openMapper
+Choose it in the catalogue to place on the map	Kies het in de catalogus om op de kaart te plaatsen
+Pieces with a place made for this road type. The one picked is offered first when a junction is put on this road's end (select the road: Junction on an end).	Stukken met een plek gemaakt voor dit wegtype. Het gekozen stuk wordt als eerste aangeboden wanneer een kruispunt op het uiteinde van deze weg komt (selecteer de weg: Kruispunt op een uiteinde).
+No piece is made for this road type; the list holds every piece with places for roads.	Er is geen stuk gemaakt voor dit wegtype; de lijst bevat alle stukken met plekken voor wegen.
+Start from	Beginnen met
+a ready-made road…	een kant-en-klare weg…
+raised	verhoogd
+As high as the footways, with a kerb along it	Even hoog als de trottoirs, met een stoeprand erlangs
+ m left	 m links
+a different one on the right	rechts een andere
+ m right	 m rechts
+Middle strip texture	Textuur van de middenstrook
+like the roadway	zoals het wegdek
+No problems found	Geen problemen gevonden
+Scripts	Scripts
+openOMSI: the map's script	openOMSI: het script van de kaart
+Object scripts (OMSI 2 and openOMSI)	Objectscripts (OMSI 2 en openOMSI)
+A Lua script that runs in openOMSI while this map is played: it reacts to what happens (a stop reached, a new hour, a new trip) and can show messages, change the traffic and the weather, move the bus. `on` and `every` work for this map only. OMSI 2 does not run Lua: its scripts belong to objects (the next tab).	Een Lua-script dat in openOMSI draait terwijl deze kaart wordt gespeeld: het reageert op wat er gebeurt (een halte bereikt, een nieuw uur, een nieuwe rit) en kan berichten tonen, het verkeer en het weer veranderen en de bus verplaatsen. `on` en `every` werken alleen voor deze kaart. OMSI 2 voert geen Lua uit: de scripts daar horen bij objecten (het volgende tabblad).
+a ready-made script…	een kant-en-klaar script…
+Save the script	Script opslaan
+Written into the content folder's plugins, where openOMSI loads it again at once	Geschreven in de plugins van de contentmap, waar openOMSI het meteen weer laadt
+Script saved	Script opgeslagen
+Script saved, but it has problems: the game would not run it	Script opgeslagen, maar het heeft problemen: het spel zou het niet uitvoeren
+Revert	Terugzetten
+Delete the script	Script verwijderen
+Script deleted	Script verwijderd
+What a scenery object runs every frame: lamps that switch, signs that change, doors that open. Select an object to see its scripts; the game's own compiler checks them as you write. Scripts of the installation's objects can be read and learned from; to change one, make an object of your own (Edit the mesh makes a copy) and open it here.	Wat een scenery-object bij elk beeld uitvoert: lampen die schakelen, borden die wisselen, deuren die opengaan. Selecteer een object om zijn scripts te zien; de compiler van het spel zelf controleert ze terwijl je schrijft. Scripts van objecten uit de installatie kun je lezen en ervan leren; om er een te wijzigen maak je een eigen object (Mesh bewerken maakt een kopie) en open je dat hier.
+Select one object on the map.	Selecteer één object op de kaart.
+this object has no script	dit object heeft geen script
+From the installation: read only.	Uit de installatie: alleen lezen.
+Not in the object's variable list	Niet in de variabelenlijst van het object
+A light switched by a script	Een licht dat door een script wordt geschakeld
+A new object: a lamp that glows and lights the ground while its script says so. The script is yours to change after.	Een nieuw object: een lamp die gloeit en de grond verlicht zolang zijn script dat zegt. Het script kun je daarna zelf wijzigen.
+ h	 u
+A round takes	Een ronde duurt
+ s	 s
+From month	Vanaf maand
+Reaches	Bereikt
+Make the light	Licht maken
+Kind of stop	Soort halte
+Waiting, at most	Wachtenden, maximaal
+Waiting, at least	Wachtenden, minimaal
+Getting off	Uitstappen
+How many of those riding get off here, compared with the other stops: twice the number, twice the riders	Hoeveel van de reizigers hier uitstappen, vergeleken met de andere haltes: tweemaal het getal, tweemaal de reizigers
+How far along the stop people wait and a bus may stand	Over welk deel van de halte mensen wachten en een bus mag staan
+Platform	Perron
+Paired with the stop across the road: one name for both	Gekoppeld aan de halte aan de overkant: één naam voor beide
+Split	Splitsen
+The stop gets a name of its own (the number is changed in the name box), and renaming one no longer renames the other	De halte krijgt een eigen naam (het nummer wijzig je in het naamveld) en een andere naam geven aan de ene verandert de andere niet meer
+Another stop far from here has this name	Een andere halte verderop heeft deze naam
+Make it different	Anders maken
+Which buses drive this line	Welke bussen deze lijn rijden
+How the stops are served	Hoe de haltes worden bediend
+Always: the bus stops whoever waits (a compulsory stop, a terminus). When wanted: only if somebody gets on or off (a request stop). Drive through: it does not stop on this trip. When early: it stops only if it is ahead of its time.	Altijd: de bus stopt of er nu iemand wacht of niet (verplichte halte, eindhalte). Op verzoek: alleen als iemand in- of uitstapt (halte op verzoek). Doorrijden: stopt niet op deze rit. Indien vroeg: stopt alleen als hij voor op schema ligt.
+The AI buses of this line's tours are taken from the depot group; here the vehicles can be limited by date: only some types, mostly some types, or a fleet number for one tour. A line with nothing here takes any vehicle of the group.	De AI-bussen van de omlopen van deze lijn komen uit de depotgroep; hier kunnen de voertuigen per datum worden beperkt: alleen bepaalde typen, meestal bepaalde typen, of een rolnummer voor één omloop. Een lijn zonder iets hier neemt elk voertuig van de groep.
+Delete this assignment	Deze toewijzing verwijderen
+(day, month, year)	(dag, maand, jaar)
+It ends before it starts: the game ignores it	Het eindigt voor het begint: het spel negeert het
+Only these types	Alleen deze typen
+Mostly these types	Meestal deze typen
+share of the tours	aandeel van de omlopen
+Fleet numbers of single tours	Rolnummers van afzonderlijke omlopen
+A fleet number for a tour	Een rolnummer voor een omloop
+A vehicle assignment	Een voertuigtoewijzing
+tiles are loaded round there, the others are hidden	tegels worden rond die plek geladen, de rest is verborgen
+tiles round the camera are loaded; click on the empty zone to load the next ones	tegels rond de camera zijn geladen; klik op de lege zone om de volgende te laden
+Tiles loaded at once	Tegels tegelijk geladen
+about 500 m round the camera	ongeveer 500 m rond de camera
+about 850 m	ongeveer 850 m
+about 1.2 km	ongeveer 1,2 km
+about 1.7 km (the usual)	ongeveer 1,7 km (gebruikelijk)
+about 2.5 km	ongeveer 2,5 km
+A big or very detailed map is lighter with fewer tiles: the others are hidden until you click on the empty zone	Een grote of zeer gedetailleerde kaart loopt soepeler met minder tegels: de rest is verborgen tot je op de lege zone klikt
+Hold Ctrl while drawing to join nothing. Cables, fences and footpaths never join roads or junctions.	Houd Ctrl ingedrukt tijdens het tekenen om niets te verbinden. Kabels, hekken en voetpaden verbinden nooit met wegen of kruispunten.
+Auto-Adapt	Auto-overgang
+Where roads of different width meet, a plate tapers one into the other	Waar wegen van verschillende breedte samenkomen, loopt een plaat geleidelijk van de ene in de andere over

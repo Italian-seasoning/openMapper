@@ -2127,3 +2127,124 @@ Could not replace the program	Бағдарламаны ауыстыру мүмк
 The package has no program in it.	Пакетте бағдарлама жоқ.
 openMapper has stopped:	openMapper тоқтады:
 The log with the details:	Мәліметтері бар журнал:
+Light made: click where it goes; its script is in Map > Scripts	Жарық жасалды: қоятын жерін басыңыз; оның скрипті: Карта > Скрипттер
+Stops sharing a name	Аты бірдей аялдамалар
+Two stops far from each other have one name. The two across a road may share it (they are a pair), but elsewhere the game, the displays and the people who choose where to get off cannot tell them apart. "Fix" gives the later one a number after its name.	Бір-бірінен алыс екі аялдаманың аты бірдей. Жолдың қарсы жағындағыда ол сәйкес келуі мүмкін (бұл жұп), ал басқа жағдайларда ойын, табло және қай жерде түсетінін таңдайтын жолаушылар оларды ажырата алмайды. «Түзету» кейінгісінің атынан кейін нөмір қосады.
+same name as the stop	аялдамамен аты бірдей
+The road is gone	Жол енді жоқ
+This end is already joined to something	Бұл ұш бір нәрсемен әлдеқашан жалғанған
+The junction piece could not be read	Қиылыс бөлігін оқу мүмкін болмады
+This object has no places for roads to join	Бұл нысанда жолдарды жалғайтын орындар жоқ
+Quiet street	Тыныш көше
+Street with a footway on one side	Бір жағында жаяу жүргінші жолы бар көше
+Main road	Негізгі жол
+Avenue with a green strip	Көгалды даңғыл
+One-way street	Бір бағытты көше
+Country road	Ауданаралық жол
+Service road	Қызметтік өту жолы
+Empty script	Бос скрипт
+A greeting when the bus is taken	Автобусқа отырғанда сәлемдесу
+Announce every stop	Әр аялдаманы жариялау
+Traffic by the hour	Сағаттар бойынша трафик
+Weather at a time	Берілген уақыттағы ауа райы
+Speed limit warning	Жылдамдық туралы ескерту
+Next stop on the screen	Келесі аялдама экранда
+Lit during certain hours	Белгілі сағаттарда жанады
+Blinks	Жыпылықтайды
+Lit in certain months	Белгілі айларда жанады
+Compulsory stop	Міндетті аялдама
+Request stop	Талап бойынша аялдама
+Terminus	Соңғы аялдама
+Every bus stops here and people are always waiting	Автобус әрқашан тоқтайды, жолаушылар әрқашан күтеді
+A bus stops only if somebody waits or presses the stop button	Автобус біреу күтсе немесе аялдама батырмасын басса ғана тоқтайды
+Where a line begins or ends: everybody gets off, a bus waits for its departure	Желі басталатын немесе аяқталатын жер: бәрі түседі, автобус жөнелуді күтеді
+when wanted	талап бойынша
+drive through	өтіп кетеді
+when early	ерте келсе
+right of the road	жолдың оң жағында
+left of the road	жолдың сол жағында
+both sides	екі жағында
+Vehicles	Көлік
+Scripts…	Скрипттер…
+Junction on an end	Жол ұшындағы қиылыс
+The installation has no junction pieces with places for roads.	Орнатуда жолдарға арналған орындары бар қиылыс бөліктері жоқ.
+None of the pieces is made for this road type: its first place is used.	Бірде-бір бөлік бұл жол түріне арналмаған: оның бірінші орны алынады.
+At the start	Басында
+At the end	Соңында
+Junction pieces for it	Оған арналған қиылыс бөліктері
+made by openMapper	openMapper жасайды
+Choose it in the catalogue to place on the map	Картаға қою үшін оны каталогтан таңдаңыз
+Pieces with a place made for this road type. The one picked is offered first when a junction is put on this road's end (select the road: Junction on an end).	Осы жол түріне арналған орны бар бөліктер. Таңдалғаны осындай жолдың ұшына қиылыс қойылғанда бірінші ұсынылады (жолды таңдаңыз: «Жол ұшындағы қиылыс»).
+No piece is made for this road type; the list holds every piece with places for roads.	Бұл жол түріне арналған бөлік жоқ; тізімде жолдарға арналған орындары бар барлық бөліктер бар.
+Start from	Негіз ретінде алу
+a ready-made road…	дайын жолды…
+raised	көтерілген
+As high as the footways, with a kerb along it	Жаяу жүргінші жолдарымен бір деңгейде, бойында жиегі бар
+ m left	 м солда
+a different one on the right	оң жағында басқасы
+ m right	 м оңда
+Middle strip texture	Бөлгіш жолақтың текстурасы
+like the roadway	жүру бөлігіндегідей
+No problems found	Мәселелер табылмады
+Scripts	Скрипттер
+openOMSI: the map's script	openOMSI: картаның скрипті
+Object scripts (OMSI 2 and openOMSI)	Нысан скрипттері (OMSI 2 және openOMSI)
+A Lua script that runs in openOMSI while this map is played: it reacts to what happens (a stop reached, a new hour, a new trip) and can show messages, change the traffic and the weather, move the bus. `on` and `every` work for this map only. OMSI 2 does not run Lua: its scripts belong to objects (the next tab).	Осы картада ойнап жатқанда openOMSI орындайтын Lua скрипті: ол болып жатқан оқиғаларға (аялдамаға жету, жаңа сағат, жаңа рейс) жауап береді, хабарламалар көрсетеді, трафик пен ауа райын өзгертеді, автобусты жылжытады. `on` және `every` тек осы карта үшін жұмыс істейді. OMSI 2 Lua орындамайды: оның скрипттері нысандарға тиесілі (келесі қойынды).
+a ready-made script…	дайын скриптті…
+Save the script	Скриптті сақтау
+Written into the content folder's plugins, where openOMSI loads it again at once	Мазмұн қалтасының plugins ішіне жазылады, openOMSI оны сол жерден бірден қайта жүктейді
+Script saved	Скрипт сақталды
+Script saved, but it has problems: the game would not run it	Скрипт сақталды, бірақ онда қателер бар: ойын оны орындамайды
+Revert	Қайтару
+Delete the script	Скриптті жою
+Script deleted	Скрипт жойылды
+What a scenery object runs every frame: lamps that switch, signs that change, doors that open. Select an object to see its scripts; the game's own compiler checks them as you write. Scripts of the installation's objects can be read and learned from; to change one, make an object of your own (Edit the mesh makes a copy) and open it here.	Декорациялық нысан әр кадрда нені орындайды: қосылатын шамдар, ауысатын тақтайшалар, ашылатын есіктер. Скрипттерін көру үшін нысанды таңдаңыз; ойынның өз компиляторы оларды жазған кезде тексереді. Орнатудағы нысандардың скрипттерін оқуға және үйренуге болады; біреуін өзгерту үшін өз нысаныңызды жасаңыз («Мешті өңдеу» көшірме жасайды) және оны осында ашыңыз.
+Select one object on the map.	Картада бір нысанды таңдаңыз.
+this object has no script	бұл нысанның скрипті жоқ
+From the installation: read only.	Орнатудан: тек оқуға арналған.
+Not in the object's variable list	Нысанның айнымалылар тізімінде жоқ
+A light switched by a script	Скрипт қосатын жарық
+A new object: a lamp that glows and lights the ground while its script says so. The script is yours to change after.	Жаңа нысан: скрипті солай дегенше жарқырап, жерді жарықтандыратын шам. Скриптті кейін өзгертуге болады.
+ h	 сағ
+A round takes	Бір айналым
+ s	 с
+From month	Қай айдан
+Reaches	Қашықтығы
+Make the light	Жарық жасау
+Kind of stop	Аялдама түрі
+Waiting, at most	Күтетіндер, көбі
+Waiting, at least	Күтетіндер, кемі
+Getting off	Түсетіндер
+How many of those riding get off here, compared with the other stops: twice the number, twice the riders	Баратындардың қаншасы мұнда түседі, басқа аялдамалармен салыстырғанда: сан екі есе көп болса, адам екі есе көп
+How far along the stop people wait and a bus may stand	Аялдама бойында адамдар қанша жерде күтеді және автобус тұра алады
+Platform	Платформа
+Paired with the stop across the road: one name for both	Қарсы жақтағы аялдамамен жұп: екеуіне бір ат
+Split	Бөлу
+The stop gets a name of its own (the number is changed in the name box), and renaming one no longer renames the other	Аялдама өз атын алады (нөмір ат өрісінде өзгертіледі), бірін қайта атау енді екіншісін қайта атамайды
+Another stop far from here has this name	Осыдан алыс басқа аялдама осы атты алып жүр
+Make it different	Басқаша ету
+Which buses drive this line	Бұл желімен қандай автобустар жүреді
+How the stops are served	Аялдамаларға қалай қызмет көрсетіледі
+Always: the bus stops whoever waits (a compulsory stop, a terminus). When wanted: only if somebody gets on or off (a request stop). Drive through: it does not stop on this trip. When early: it stops only if it is ahead of its time.	Әрқашан: біреу күтсе де, күтпесе де автобус тоқтайды (міндетті, соңғы аялдама). Талап бойынша: біреу мінсе немесе түссе ғана. Өтіп кетеді: бұл рейсте тоқтамайды. Ерте келсе: кестеден озып келе жатса ғана тоқтайды.
+The AI buses of this line's tours are taken from the depot group; here the vehicles can be limited by date: only some types, mostly some types, or a fleet number for one tour. A line with nothing here takes any vehicle of the group.	Осы желінің шығуларындағы ЖИ автобустары депо тобынан алынады; мұнда көлікті күні бойынша шектеуге болады: тек кейбір түрлер, көбіне кейбір түрлер немесе бір шығуға арналған парк нөмірі. Мұнда жазбасы жоқ желі топтың кез келген көлігін алады.
+Delete this assignment	Бұл тағайындауды жою
+(day, month, year)	(күн, ай, жыл)
+It ends before it starts: the game ignores it	Басталудан бұрын аяқталады: ойын оны елемейді
+Only these types	Тек осы түрлер
+Mostly these types	Көбіне осы түрлер
+share of the tours	шығулар үлесі
+Fleet numbers of single tours	Жеке шығулардың парк нөмірлері
+A fleet number for a tour	Шығуға арналған парк нөмірі
+A vehicle assignment	Көлік тағайындау
+tiles are loaded round there, the others are hidden	тайл осы жердің айналасында жүктелген, қалғандары жасырылған
+tiles round the camera are loaded; click on the empty zone to load the next ones	тайл камераның айналасында жүктелген; келесілерін жүктеу үшін бос аймақты басыңыз
+Tiles loaded at once	Бір мезгілде жүктелетін тайлдар
+about 500 m round the camera	камера айналасында шамамен 500 м
+about 850 m	шамамен 850 м
+about 1.2 km	шамамен 1,2 км
+about 1.7 km (the usual)	шамамен 1,7 км (әдеттегі)
+about 2.5 km	шамамен 2,5 км
+A big or very detailed map is lighter with fewer tiles: the others are hidden until you click on the empty zone	Үлкен немесе өте егжей-тегжейлі карта тайлдар аз болғанда жеңілірек жұмыс істейді: қалғандары бос аймақты басқанша жасырылады
+Hold Ctrl while drawing to join nothing. Cables, fences and footpaths never join roads or junctions.	Сызу кезінде ештеңені қоспау үшін Ctrl басып тұрыңыз. Кабельдер, қоршаулар және жаяу жолдар жолдарға не қиылыстарға ешқашан қосылмайды.
+Auto-Adapt	Авто-өтпелі
+Where roads of different width meet, a plate tapers one into the other	Ені әртүрлі жолдар түйіскен жерде олардың арасында біртіндеп өтетін тақта жасалады

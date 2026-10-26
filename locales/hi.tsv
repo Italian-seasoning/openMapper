@@ -2127,3 +2127,124 @@ Could not replace the program	प्रोग्राम बदला नही
 The package has no program in it.	पैकेज में कोई प्रोग्राम नहीं है।
 openMapper has stopped:	openMapper रुक गया:
 The log with the details:	विवरण वाला लॉग:
+Light made: click where it goes; its script is in Map > Scripts	रोशनी बन गई: जहाँ लगानी है वहाँ क्लिक करें; उसकी स्क्रिप्ट नक्शा > स्क्रिप्ट में है
+Stops sharing a name	एक ही नाम वाले बस स्टॉप
+Two stops far from each other have one name. The two across a road may share it (they are a pair), but elsewhere the game, the displays and the people who choose where to get off cannot tell them apart. "Fix" gives the later one a number after its name.	एक-दूसरे से दूर दो बस स्टॉप का नाम एक ही है। सड़क के आमने-सामने के दो स्टॉप का नाम एक हो सकता है (वे जोड़ी हैं), पर और कहीं खेल, डिस्प्ले और उतरने की जगह चुनने वाले यात्री उन्हें अलग नहीं पहचान सकते। "ठीक करें" बाद वाले के नाम के बाद एक संख्या जोड़ देता है।
+same name as the stop	स्टॉप के नाम जैसा ही
+The road is gone	सड़क अब नहीं है
+This end is already joined to something	यह सिरा पहले से किसी चीज़ से जुड़ा है
+The junction piece could not be read	जंक्शन का हिस्सा पढ़ा नहीं जा सका
+This object has no places for roads to join	इस ऑब्जेक्ट में सड़कों को जोड़ने की जगहें नहीं हैं
+Quiet street	शांत गली
+Street with a footway on one side	एक ओर फ़ुटपाथ वाली गली
+Main road	मुख्य सड़क
+Avenue with a green strip	हरी पट्टी वाला एवेन्यू
+One-way street	एकतरफ़ा गली
+Country road	देहाती सड़क
+Service road	सर्विस रोड
+Empty script	खाली स्क्रिप्ट
+A greeting when the bus is taken	बस में चढ़ने पर अभिवादन
+Announce every stop	हर बस स्टॉप की घोषणा
+Traffic by the hour	घंटे के हिसाब से यातायात
+Weather at a time	किसी समय का मौसम
+Speed limit warning	गति सीमा की चेतावनी
+Next stop on the screen	स्क्रीन पर अगला बस स्टॉप
+Lit during certain hours	कुछ घंटों में जलती है
+Blinks	झपकती है
+Lit in certain months	कुछ महीनों में जलती है
+Compulsory stop	अनिवार्य स्टॉप
+Request stop	माँग पर स्टॉप
+Terminus	अंतिम स्टॉप
+Every bus stops here and people are always waiting	हर बस यहाँ रुकती है और लोग हमेशा इंतज़ार करते हैं
+A bus stops only if somebody waits or presses the stop button	बस तभी रुकती है जब कोई इंतज़ार करे या स्टॉप बटन दबाए
+Where a line begins or ends: everybody gets off, a bus waits for its departure	जहाँ लाइन शुरू या खत्म होती है: सब उतरते हैं, बस रवानगी का इंतज़ार करती है
+when wanted	ज़रूरत पर
+drive through	सीधे निकल जाए
+when early	जल्दी हो तो
+right of the road	सड़क के दाएँ
+left of the road	सड़क के बाएँ
+both sides	दोनों ओर
+Vehicles	वाहन
+Scripts…	स्क्रिप्ट…
+Junction on an end	सिरे पर जंक्शन
+The installation has no junction pieces with places for roads.	इंस्टॉलेशन में सड़कों के लिए जगह वाले जंक्शन हिस्से नहीं हैं।
+None of the pieces is made for this road type: its first place is used.	इस सड़क प्रकार के लिए कोई हिस्सा नहीं बना है: उसकी पहली जगह इस्तेमाल होती है।
+At the start	शुरुआत पर
+At the end	अंत पर
+Junction pieces for it	इसके लिए जंक्शन हिस्से
+made by openMapper	openMapper द्वारा बनाया गया
+Choose it in the catalogue to place on the map	नक्शे पर लगाने के लिए कैटलॉग में चुनें
+Pieces with a place made for this road type. The one picked is offered first when a junction is put on this road's end (select the road: Junction on an end).	इस सड़क प्रकार के लिए जगह वाले हिस्से। चुना हुआ हिस्सा सबसे पहले सुझाया जाता है जब इस सड़क के सिरे पर जंक्शन लगाया जाता है (सड़क चुनें: सिरे पर जंक्शन)।
+No piece is made for this road type; the list holds every piece with places for roads.	इस सड़क प्रकार के लिए कोई हिस्सा नहीं बना है; सूची में सड़कों के लिए जगह वाले सभी हिस्से हैं।
+Start from	इससे शुरू करें
+a ready-made road…	तैयार सड़क…
+raised	ऊँची
+As high as the footways, with a kerb along it	फ़ुटपाथ जितनी ऊँचाई पर, साथ में कर्ब
+ m left	 मी. बाएँ
+a different one on the right	दाएँ पर कुछ और
+ m right	 मी. दाएँ
+Middle strip texture	बीच की पट्टी का टेक्सचर
+like the roadway	सड़क के जैसा
+No problems found	कोई समस्या नहीं मिली
+Scripts	स्क्रिप्ट
+openOMSI: the map's script	openOMSI: नक्शे की स्क्रिप्ट
+Object scripts (OMSI 2 and openOMSI)	ऑब्जेक्ट स्क्रिप्ट (OMSI 2 और openOMSI)
+A Lua script that runs in openOMSI while this map is played: it reacts to what happens (a stop reached, a new hour, a new trip) and can show messages, change the traffic and the weather, move the bus. `on` and `every` work for this map only. OMSI 2 does not run Lua: its scripts belong to objects (the next tab).	एक Lua स्क्रिप्ट जो इस नक्शे पर खेलते समय openOMSI में चलती है: वह घटनाओं (स्टॉप पहुँचना, नया घंटा, नई ट्रिप) पर प्रतिक्रिया करती है और संदेश दिखा सकती है, यातायात और मौसम बदल सकती है, बस को हिला सकती है। `on` और `every` सिर्फ़ इसी नक्शे के लिए चलते हैं। OMSI 2 Lua नहीं चलाता: उसकी स्क्रिप्ट ऑब्जेक्ट की होती हैं (अगला टैब)।
+a ready-made script…	तैयार स्क्रिप्ट…
+Save the script	स्क्रिप्ट सेव करें
+Written into the content folder's plugins, where openOMSI loads it again at once	कंटेंट फ़ोल्डर के plugins में लिखी जाती है, जहाँ से openOMSI उसे तुरंत फिर लोड कर लेता है
+Script saved	स्क्रिप्ट सेव हो गई
+Script saved, but it has problems: the game would not run it	स्क्रिप्ट सेव हो गई, पर उसमें समस्याएँ हैं: खेल उसे नहीं चलाएगा
+Revert	वापस लाएँ
+Delete the script	स्क्रिप्ट हटाएँ
+Script deleted	स्क्रिप्ट हटा दी गई
+What a scenery object runs every frame: lamps that switch, signs that change, doors that open. Select an object to see its scripts; the game's own compiler checks them as you write. Scripts of the installation's objects can be read and learned from; to change one, make an object of your own (Edit the mesh makes a copy) and open it here.	सीनरी ऑब्जेक्ट हर फ़्रेम क्या चलाता है: जलने-बुझने वाले लैंप, बदलते साइन, खुलते दरवाज़े। स्क्रिप्ट देखने के लिए ऑब्जेक्ट चुनें; आप लिखते हैं तो खेल का अपना कंपाइलर जाँचता रहता है। इंस्टॉलेशन के ऑब्जेक्ट की स्क्रिप्ट पढ़ी और सीखी जा सकती हैं; बदलने के लिए अपना ऑब्जेक्ट बनाएँ ("मेश संपादित करें" एक कॉपी बनाता है) और उसे यहाँ खोलें।
+Select one object on the map.	नक्शे पर एक ऑब्जेक्ट चुनें।
+this object has no script	इस ऑब्जेक्ट की कोई स्क्रिप्ट नहीं है
+From the installation: read only.	इंस्टॉलेशन से: सिर्फ़ पढ़ने के लिए।
+Not in the object's variable list	ऑब्जेक्ट की वेरिएबल सूची में नहीं है
+A light switched by a script	स्क्रिप्ट से जलने-बुझने वाली रोशनी
+A new object: a lamp that glows and lights the ground while its script says so. The script is yours to change after.	नया ऑब्जेक्ट: एक लैंप जो चमकता है और ज़मीन को रोशन करता है, जब तक उसकी स्क्रिप्ट ऐसा कहे। स्क्रिप्ट बाद में आप बदल सकते हैं।
+ h	 घं.
+A round takes	एक चक्कर में लगता है
+ s	 से.
+From month	महीने से
+Reaches	पहुँच
+Make the light	रोशनी बनाएँ
+Kind of stop	स्टॉप का प्रकार
+Waiting, at most	इंतज़ार, अधिकतम
+Waiting, at least	इंतज़ार, कम से कम
+Getting off	उतरना
+How many of those riding get off here, compared with the other stops: twice the number, twice the riders	सवारी करने वालों में से कितने यहाँ उतरते हैं, दूसरे स्टॉप की तुलना में: संख्या दुगुनी तो यात्री भी दुगुने
+How far along the stop people wait and a bus may stand	स्टॉप के साथ कितनी दूरी तक लोग इंतज़ार करते हैं और बस खड़ी हो सकती है
+Platform	प्लेटफ़ॉर्म
+Paired with the stop across the road: one name for both	सड़क के पार वाले स्टॉप के साथ जोड़ी: दोनों का एक नाम
+Split	अलग करें
+The stop gets a name of its own (the number is changed in the name box), and renaming one no longer renames the other	स्टॉप को अपना नाम मिलता है (संख्या नाम वाले बॉक्स में बदली जाती है), और एक का नाम बदलने से दूसरे का नहीं बदलता
+Another stop far from here has this name	यहाँ से दूर एक और स्टॉप का यही नाम है
+Make it different	अलग बनाएँ
+Which buses drive this line	इस लाइन पर कौन-सी बसें चलती हैं
+How the stops are served	स्टॉप कैसे सर्व होते हैं
+Always: the bus stops whoever waits (a compulsory stop, a terminus). When wanted: only if somebody gets on or off (a request stop). Drive through: it does not stop on this trip. When early: it stops only if it is ahead of its time.	हमेशा: बस रुकती है, चाहे कोई इंतज़ार करे या न करे (अनिवार्य स्टॉप, अंतिम स्टॉप)। ज़रूरत पर: सिर्फ़ तब जब कोई चढ़े या उतरे (माँग पर स्टॉप)। सीधे निकल जाए: इस ट्रिप में नहीं रुकती। जल्दी हो तो: सिर्फ़ तब रुकती है जब समय से आगे हो।
+The AI buses of this line's tours are taken from the depot group; here the vehicles can be limited by date: only some types, mostly some types, or a fleet number for one tour. A line with nothing here takes any vehicle of the group.	इस लाइन के टूर की AI बसें डिपो समूह से ली जाती हैं; यहाँ तारीख़ के अनुसार वाहन सीमित किए जा सकते हैं: सिर्फ़ कुछ प्रकार, ज़्यादातर कुछ प्रकार, या एक टूर के लिए फ़्लीट नंबर। जिस लाइन में यहाँ कुछ नहीं है, वह समूह का कोई भी वाहन लेती है।
+Delete this assignment	यह असाइनमेंट हटाएँ
+(day, month, year)	(दिन, महीना, साल)
+It ends before it starts: the game ignores it	यह शुरू होने से पहले खत्म होता है: खेल इसे अनदेखा करता है
+Only these types	सिर्फ़ ये प्रकार
+Mostly these types	ज़्यादातर ये प्रकार
+share of the tours	टूर का हिस्सा
+Fleet numbers of single tours	अलग-अलग टूर के फ़्लीट नंबर
+A fleet number for a tour	एक टूर के लिए फ़्लीट नंबर
+A vehicle assignment	वाहन असाइनमेंट
+tiles are loaded round there, the others are hidden	टाइलें वहाँ के आसपास लोड हैं, बाकी छिपी हैं
+tiles round the camera are loaded; click on the empty zone to load the next ones	टाइलें कैमरे के आसपास लोड हैं; अगली टाइलें लोड करने के लिए खाली क्षेत्र पर क्लिक करें
+Tiles loaded at once	एक बार में लोड होने वाली टाइलें
+about 500 m round the camera	कैमरे के आसपास लगभग 500 m
+about 850 m	लगभग 850 m
+about 1.2 km	लगभग 1.2 km
+about 1.7 km (the usual)	लगभग 1.7 km (सामान्य)
+about 2.5 km	लगभग 2.5 km
+A big or very detailed map is lighter with fewer tiles: the others are hidden until you click on the empty zone	बड़ा या बहुत विस्तृत मैप कम टाइलों के साथ हल्का चलता है: बाकी टाइलें तब तक छिपी रहती हैं जब तक आप खाली क्षेत्र पर क्लिक नहीं करते
+Hold Ctrl while drawing to join nothing. Cables, fences and footpaths never join roads or junctions.	ड्रॉ करते समय कुछ भी न जोड़ने के लिए Ctrl दबाए रखें। केबल, बाड़ और फ़ुटपाथ कभी सड़कों या जंक्शनों से नहीं जुड़ते।
+Auto-Adapt	ऑटो-अडैप्ट
+Where roads of different width meet, a plate tapers one into the other	जहाँ अलग-अलग चौड़ाई की सड़कें मिलती हैं, वहाँ एक प्लेट एक से दूसरी में धीरे-धीरे बदलती है

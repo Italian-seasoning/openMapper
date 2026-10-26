@@ -212,6 +212,22 @@ impl Assets {
         }
     }
 
+    /// [`Assets::object`], waiting for the model when it has to be read first (for what is done
+    /// once, on a click, not every frame): None if it cannot be read in `ms` milliseconds.
+    pub fn object_wait(&mut self, rel: &str, ms: u64) -> Option<Arc<ObjectModel>> {
+        let start = std::time::Instant::now();
+        loop {
+            if let Some(m) = self.object(rel) {
+                return Some(m);
+            }
+            if matches!(self.objects.get(&rel.to_lowercase()), Some(Slot::Failed)) || start.elapsed().as_millis() as u64 > ms {
+                return None;
+            }
+            self.poll();
+            std::thread::sleep(std::time::Duration::from_millis(5));
+        }
+    }
+
     pub fn spline(&mut self, rel: &str) -> Option<Arc<SplineModel>> {
         let key = rel.to_lowercase();
         match self.splines.get(&key) {
