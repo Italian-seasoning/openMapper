@@ -2248,3 +2248,18 @@ A big or very detailed map is lighter with fewer tiles: the others are hidden un
 Hold Ctrl while drawing to join nothing. Cables, fences and footpaths never join roads or junctions.	Rajzoláskor tartsd lenyomva a Ctrl billentyűt, hogy semmihez se csatlakozzon. A kábelek, kerítések és gyalogutak soha nem csatlakoznak utakhoz vagy csomópontokhoz.
 Auto-Adapt	Auto-átmenet
 Where roads of different width meet, a plate tapers one into the other	Ahol különböző szélességű utak találkoznak, egy lap simán átvezet az egyikből a másikba
+A test drive is running: close it first	Egy próbaút már fut: előbb zárd be
+Write the .x file in its binary form? No: as text, which OMSI 2 and openOMSI read.	A .x fájl bináris formában legyen mentve? Nem: szövegként, ahogy az OMSI 2 és az openOMSI olvassa.
+Where the camera looks	Merre néz a kamera
+Bus stop	Buszmegálló
+Vehicle	Jármű
+No vehicle (on foot)	Nincs jármű (gyalog)
+Weather	Időjárás
+The map's own	A pálya saját beállítása
+Natural weather	Természetes időjárás
+Weather cycle	Időjárás-váltakozás
+Passengers at the stops	Utasok a megállókban
+Close test drive	Próbaút bezárása
+Close the openOMSI session started from here (F5)	A innen indított openOMSI munkamenet bezárása (F5)
+Choose where to start, the vehicle, the time and the weather, then drive the map in openOMSI (F5)	Válaszd ki az indulás helyét, a járművet, az időt és az időjárást, majd járd be a pályát az openOMSI-ban (F5)
+More switches: the window is too narrow for all of them	További kapcsolók: az ablak túl keskeny mindegyikhez

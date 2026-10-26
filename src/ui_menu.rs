@@ -106,6 +106,10 @@ pub fn show(ctx: &egui::Context, menu: &mut Option<ViewMenu>, ed: &mut Editor, l
                 actions.push(Action::FocusSelection);
                 done = true;
             }
+            if item(ui, Icon::Import, tr("Export…", "Экспорт…"), "", any) {
+                actions.push(Action::Mesh(crate::ui_mesh::MeshAction::ExportModel));
+                done = true;
+            }
             if item(ui, Icon::Save, tr("Keep for other maps…", "Сохранить для других карт…"), "", any) {
                 actions.push(Action::SavedGroups);
                 done = true;

@@ -2248,3 +2248,18 @@ A big or very detailed map is lighter with fewer tiles: the others are hidden un
 Hold Ctrl while drawing to join nothing. Cables, fences and footpaths never join roads or junctions.	Çizerken hiçbir şeye bağlamamak için Ctrl tuşunu basılı tutun. Kablolar, çitler ve yaya yolları asla yollara veya kavşaklara bağlanmaz.
 Auto-Adapt	Oto-Geçiş
 Where roads of different width meet, a plate tapers one into the other	Farklı genişlikteki yollar buluştuğunda, aralarına birinden diğerine yumuşak geçiş yapan bir plaka konur
+A test drive is running: close it first	Bir test sürüşü çalışıyor: önce onu kapatın
+Write the .x file in its binary form? No: as text, which OMSI 2 and openOMSI read.	Dosya .x ikili biçimde yazılsın mı? Hayır: OMSI 2 ve openOMSI'nin okuduğu metin olarak.
+Where the camera looks	Kameranın baktığı yer
+Bus stop	Otobüs durağı
+Vehicle	Araç
+No vehicle (on foot)	Araç yok (yaya)
+Weather	Hava durumu
+The map's own	Haritanın kendi ayarı
+Natural weather	Doğal hava
+Weather cycle	Hava değişimi
+Passengers at the stops	Duraklardaki yolcular
+Close test drive	Test sürüşünü kapat
+Close the openOMSI session started from here (F5)	Buradan başlatılan openOMSI oturumunu kapat (F5)
+Choose where to start, the vehicle, the time and the weather, then drive the map in openOMSI (F5)	Başlangıç yerini, aracı, saati ve hava durumunu seçin, sonra haritayı openOMSI'de sürün (F5)
+More switches: the window is too narrow for all of them	Daha fazla anahtar: pencere hepsi için çok dar

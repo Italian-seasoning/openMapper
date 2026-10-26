@@ -35,11 +35,13 @@ pub enum Format {
     ThreeMf,
     Off,
     X,
+    /// DirectX `.x` in its binary form.
+    XBinary,
     O3d,
 }
 
 impl Format {
-    pub const ALL: [Format; 12] = [Format::Obj, Format::Gltf, Format::Glb, Format::Fbx, Format::Dae, Format::Usda, Format::Stl, Format::Ply, Format::ThreeMf, Format::Off, Format::X, Format::O3d];
+    pub const ALL: [Format; 13] = [Format::Obj, Format::Gltf, Format::Glb, Format::Fbx, Format::Dae, Format::Usda, Format::Stl, Format::Ply, Format::ThreeMf, Format::Off, Format::X, Format::XBinary, Format::O3d];
 
     pub fn extension(self) -> &'static str {
         match self {
@@ -53,7 +55,7 @@ impl Format {
             Format::Ply => "ply",
             Format::ThreeMf => "3mf",
             Format::Off => "off",
-            Format::X => "x",
+            Format::X | Format::XBinary => "x",
             Format::O3d => "o3d",
         }
     }
@@ -71,6 +73,7 @@ impl Format {
             Format::ThreeMf => "3D Manufacturing (.3mf)",
             Format::Off => "Object File Format (.off)",
             Format::X => "DirectX (.x, OMSI)",
+            Format::XBinary => "DirectX binary (.x)",
             Format::O3d => "OMSI o3d (.o3d)",
         }
     }
@@ -128,7 +131,7 @@ pub fn export(scene: &Scene, format: Format, path: &Path, texture_path: &dyn Fn(
         Format::Ply => out.file(path, &ply(&objs))?,
         Format::ThreeMf => write_3mf(&objs, &mats, &mut out)?,
         Format::Off => out.file(path, off(&objs).as_bytes())?,
-        Format::X | Format::O3d => {
+        Format::X | Format::XBinary | Format::O3d => {
             let mut merged = Mesh::default();
             for o in &objs {
                 merged.append(&o.mesh, 0);
@@ -136,6 +139,8 @@ pub fn export(scene: &Scene, format: Format, path: &Path, texture_path: &dyn Fn(
             let (bytes, used) = if format == Format::X {
                 let (x, used) = to_x(&merged, &scene.materials);
                 (x.into_bytes(), used)
+            } else if format == Format::XBinary {
+                to_x_binary(&merged, &scene.materials)
             } else {
                 to_o3d(&merged, &scene.materials)
             };
@@ -1659,6 +1664,101 @@ pub fn to_x(mesh: &Mesh, materials: &[Material]) -> (String, Vec<u32>) {
     (x, used)
 }
 
+/// A DirectX `.x` file in its binary form (`xof 0303bin 0032`): the same mesh, normals,
+/// coordinates and materials as [`to_x`], written as the format's tokens (names, braces, lists
+/// of 32-bit integers and floats) instead of text. The numbers of the materials used come back
+/// as for [`to_x`].
+pub fn to_x_binary(mesh: &Mesh, materials: &[Material]) -> (Vec<u8>, Vec<u32>) {
+    // the format's token numbers
+    const NAME: u16 = 1;
+    const STRING: u16 = 2;
+    const INTEGER_LIST: u16 = 6;
+    const FLOAT_LIST: u16 = 7;
+    const OBRACE: u16 = 10;
+    const CBRACE: u16 = 11;
+    const SEMICOLON: u16 = 20;
+    struct Bin(Vec<u8>);
+    impl Bin {
+        fn open(&mut self, name: &str) {
+            self.0.extend_from_slice(&NAME.to_le_bytes());
+            self.0.extend_from_slice(&(name.len() as u32).to_le_bytes());
+            self.0.extend_from_slice(name.as_bytes());
+            self.0.extend_from_slice(&OBRACE.to_le_bytes());
+        }
+        fn close(&mut self) {
+            self.0.extend_from_slice(&CBRACE.to_le_bytes());
+        }
+        fn ints(&mut self, v: &[u32]) {
+            self.0.extend_from_slice(&INTEGER_LIST.to_le_bytes());
+            self.0.extend_from_slice(&(v.len() as u32).to_le_bytes());
+            v.iter().for_each(|i| self.0.extend_from_slice(&i.to_le_bytes()));
+        }
+        fn floats(&mut self, v: &[f32]) {
+            self.0.extend_from_slice(&FLOAT_LIST.to_le_bytes());
+            self.0.extend_from_slice(&(v.len() as u32).to_le_bytes());
+            v.iter().for_each(|f| self.0.extend_from_slice(&f.to_le_bytes()));
+        }
+        fn string(&mut self, s: &str) {
+            self.0.extend_from_slice(&STRING.to_le_bytes());
+            self.0.extend_from_slice(&(s.len() as u32).to_le_bytes());
+            self.0.extend_from_slice(s.as_bytes());
+            self.0.extend_from_slice(&SEMICOLON.to_le_bytes());
+        }
+    }
+    let t = mesh.triangles(SMOOTH_ANGLE);
+    let used = t.materials_used();
+    let n = t.positions.len();
+    let tris = t.triangle_count();
+    let mut b = Bin(b"xof 0303bin 0032".to_vec());
+    // (the corners of each face go the other way round, as in the text file: Direct3D's frame
+    // is the map's mirrored)
+    let faces: Vec<u32> = t.indices.chunks(3).flat_map(|c| [3, c[0], c[2], c[1]]).collect();
+    b.open("Mesh");
+    b.ints(&[n as u32]);
+    let flat: Vec<f32> = t.positions.iter().flat_map(|p| {
+        let p = to_d3d(*p);
+        [p.x, p.y, p.z]
+    }).collect();
+    b.floats(&flat);
+    b.ints(&[tris as u32]);
+    b.ints(&faces);
+    b.open("MeshNormals");
+    b.ints(&[n as u32]);
+    let flat: Vec<f32> = t.normals.iter().flat_map(|p| {
+        let p = to_d3d(*p);
+        [p.x, p.y, p.z]
+    }).collect();
+    b.floats(&flat);
+    b.ints(&[tris as u32]);
+    b.ints(&faces);
+    b.close();
+    b.open("MeshTextureCoords");
+    b.ints(&[n as u32]);
+    let flat: Vec<f32> = t.uvs.iter().flat_map(|uv| [uv.x, uv.y]).collect();
+    b.floats(&flat);
+    b.close();
+    b.open("MeshMaterialList");
+    let slots: Vec<u32> = t.tri_material.iter().map(|m| used.iter().position(|u| u == m).unwrap_or(0) as u32).collect();
+    b.ints(&[used.len().max(1) as u32, tris as u32]);
+    b.ints(&slots);
+    let fallback = Material::default();
+    for &i in if used.is_empty() { &[0u32][..] } else { &used[..] } {
+        let mat = materials.get(i as usize).unwrap_or(&fallback);
+        let c = if mat.texture.is_some() { [1.0, 1.0, 1.0, mat.color[3]] } else { mat.color };
+        b.open("Material");
+        b.floats(&[c[0], c[1], c[2], c[3], mat.power, mat.specular[0], mat.specular[1], mat.specular[2], mat.emissive[0], mat.emissive[1], mat.emissive[2]]);
+        if let Some(tex) = &mat.texture {
+            b.open("TextureFilename");
+            b.string(tex);
+            b.close();
+        }
+        b.close();
+    }
+    b.close();
+    b.close();
+    (b.0, used)
+}
+
 /// `s` in Windows-1252, as OMSI keeps names (what it cannot hold becomes `?`), at most 255
 /// bytes.
 fn cp1252(s: &str) -> Vec<u8> {
@@ -1737,6 +1837,57 @@ mod tests {
         assert!(x.starts_with("xof 0302txt"));
         assert_eq!(used, vec![0]);
         assert!(x.contains(" 12;"));
+    }
+
+
+    /// The numbers of a binary `.x` file, in order (every integer and float of its lists).
+    fn x_binary_numbers(b: &[u8]) -> Vec<f64> {
+        assert_eq!(&b[..16], b"xof 0303bin 0032");
+        let (mut i, mut out) = (16, Vec::new());
+        while i < b.len() {
+            let token = u16::from_le_bytes([b[i], b[i + 1]]);
+            i += 2;
+            let word = |at: usize| u32::from_le_bytes([b[at], b[at + 1], b[at + 2], b[at + 3]]);
+            match token {
+                1 | 2 => {
+                    let len = word(i) as usize;
+                    i += 4 + len;
+                    // (a string is followed by its separator)
+                    if token == 2 {
+                        i += 2;
+                    }
+                }
+                6 | 7 => {
+                    let count = word(i) as usize;
+                    i += 4;
+                    for _ in 0..count {
+                        out.push(if token == 6 { word(i) as f64 } else { f32::from_bits(word(i)) as f64 });
+                        i += 4;
+                    }
+                }
+                10 | 11 => {}
+                other => panic!("unexpected token {other} at {i}"),
+            }
+        }
+        out
+    }
+
+    #[test]
+    fn the_binary_x_file_holds_the_numbers_of_the_text_one() {
+        let m = Primitive::Cube { size: glam::Vec3::ONE }.build();
+        let mats = [Material { texture: Some("wall.bmp".into()), ..Material::default() }];
+        let (text, used) = to_x(&m, &mats);
+        let (bin, used_bin) = to_x_binary(&m, &mats);
+        assert_eq!(used, used_bin);
+        // (the text's numbers, leaving the file name out)
+        let text: String = text.lines().skip(1).filter(|l| !l.contains('"')).collect::<Vec<_>>().join(" ");
+        let wanted: Vec<f64> = text.split(|c: char| !(c.is_ascii_digit() || c == '.' || c == '-')).filter(|w| w.chars().any(|c| c.is_ascii_digit())).map(|w| w.parse().unwrap()).collect();
+        let got = x_binary_numbers(&bin);
+        assert_eq!(wanted.len(), got.len());
+        for (w, g) in wanted.iter().zip(&got) {
+            assert!((w - g).abs() < 1e-4, "{w} against {g}");
+        }
+        assert!(bin.windows(8).any(|w| w == b"wall.bmp"));
     }
 
     /// A fresh folder for a test's files.

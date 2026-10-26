@@ -108,7 +108,13 @@ pub struct App {
     keys: Keys,
     last: Instant,
     swatches: HashMap<String, egui::TextureHandle>,
+    drive: crate::drive::Drive,
     texture_files: Vec<String>,
+    /// The ground textures being looked for (on a thread of its own: a big installation's
+    /// folders took long enough to freeze the window).
+    texture_scan: Option<std::sync::mpsc::Receiver<Vec<String>>>,
+    /// How many assets the switch catalogue was made from (made again when the library changes).
+    switches_for: usize,
     game: Option<PathBuf>,
     /// Open this map once the window is there (the command line).
     open_at_start: Option<PathBuf>,
@@ -177,7 +183,10 @@ impl App {
             keys: Keys::default(),
             last: Instant::now(),
             swatches: HashMap::new(),
+            drive: Default::default(),
             texture_files: Vec::new(),
+            texture_scan: None,
+            switches_for: 0,
             game: install::find_game(),
             open_at_start: open,
             quit: false,
@@ -228,7 +237,7 @@ impl App {
         self.ui.maps = install::list_maps(&roots);
         self.ui.favourites = self.prefs.favourites.clone();
         self.ui.recent_assets = self.prefs.recent_assets.clone();
-        self.texture_files = ground_texture_files(&roots);
+        self.scan_textures(&roots);
         self.ed.content_dir = Some(roots.content.clone());
         self.ed.road_styles = crate::road_maker::Styles::load(&roots.content);
         self.ed.asphalt = crate::junction::asphalt_texture(&roots.omsi);
@@ -242,7 +251,7 @@ impl App {
     }
 
     fn init_gfx(&mut self, el: &ActiveEventLoop) -> anyhow::Result<()> {
-        let mut attrs = Window::default_attributes().with_title("openMapper").with_inner_size(winit::dpi::LogicalSize::new(1440.0, 900.0)).with_min_inner_size(winit::dpi::LogicalSize::new(900.0, 600.0)).with_window_icon(winit::window::Icon::from_rgba(crate::icon::rgba(64), 64, 64).ok());
+        let mut attrs = Window::default_attributes().with_title("openMapper").with_inner_size(winit::dpi::LogicalSize::new(std::env::var("OPENMAPPER_WIDTH").ok().and_then(|w| w.parse().ok()).unwrap_or(1440.0), 900.0)).with_min_inner_size(winit::dpi::LogicalSize::new(900.0, 600.0)).with_window_icon(winit::window::Icon::from_rgba(crate::icon::rgba(64), 64, 64).ok());
         // (a screenshot run stays on top: a window under another gets no frames to take)
         if self.shot.is_some() {
             attrs = attrs.with_window_level(winit::window::WindowLevel::AlwaysOnTop).with_active(false);
@@ -600,6 +609,10 @@ impl App {
         // OPENMAPPER_GAMECHECK=1: Check in openOMSI run at the start
         if std::env::var_os("OPENMAPPER_GAMECHECK").is_some() {
             self.game_check();
+        }
+        // OPENMAPPER_DRIVE=1: the Test drive window open
+        if std::env::var_os("OPENMAPPER_DRIVE").is_some() {
+            self.drive.button();
         }
         // OPENMAPPER_HISTORY=1: the edit history open
         if std::env::var_os("OPENMAPPER_HISTORY").is_some() {
@@ -989,11 +1002,16 @@ impl App {
         Some(vec!["--view".into(), "free".into(), "--cam".into(), format!("{:.2},{:.2},{:.2},{:.1},{:.1}", eye.x, eye.y, eye.z, self.cam.yaw, -self.cam.pitch)])
     }
 
-    fn play(&mut self, extra: Vec<String>) {
-        if !self.save() {
-            return;
+    fn play(&mut self, extra: Vec<String>) -> bool {
+        // (one session at a time: a second click or key press must not start another)
+        if self.drive.is_running() {
+            self.ed.toast(tr("A test drive is running: close it first", "Тест-драйв уже запущен: сначала закройте его"));
+            return false;
         }
-        let (Some(game), Some(roots), Some(doc)) = (&self.game, &self.roots, &self.ed.doc) else { return };
+        if !self.save() {
+            return false;
+        }
+        let (Some(game), Some(roots), Some(doc)) = (&self.game, &self.roots, &self.ed.doc) else { return false };
         let folder = doc.dir.file_name().map(|f| f.to_string_lossy().to_string()).unwrap_or_default();
         let mut cmd = std::process::Command::new(game);
         cmd.arg("--root").arg(&roots.omsi).arg("--map").arg(format!("maps/{folder}/global.cfg")).args(&extra);
@@ -1002,8 +1020,15 @@ impl App {
         }
         cmd.env("OMSI_CONTENT", &roots.content);
         match cmd.spawn() {
-            Ok(_) => self.ed.toast(tr("Starting openOMSI…", "Запускаем openOMSI…")),
-            Err(e) => self.ed.error(format!("openOMSI: {e}")),
+            Ok(child) => {
+                self.drive.started(child);
+                self.ed.toast(tr("Starting openOMSI…", "Запускаем openOMSI…"));
+                true
+            }
+            Err(e) => {
+                self.ed.error(format!("openOMSI: {e}"));
+                false
+            }
         }
     }
 
@@ -1070,6 +1095,38 @@ impl App {
         }
     }
 
+    /// Look for the ground textures on a thread of its own; `poll_textures` takes the result.
+    fn scan_textures(&mut self, roots: &Roots) {
+        let (tx, rx) = std::sync::mpsc::channel();
+        let roots = roots.clone();
+        std::thread::spawn(move || {
+            let _ = tx.send(ground_texture_files(&roots));
+        });
+        self.texture_scan = Some(rx);
+    }
+
+    fn poll_textures(&mut self) {
+        if let Some(rx) = &self.texture_scan {
+            match rx.try_recv() {
+                Ok(files) => {
+                    self.texture_files = files;
+                    self.texture_scan = None;
+                }
+                Err(std::sync::mpsc::TryRecvError::Disconnected) => self.texture_scan = None,
+                Err(std::sync::mpsc::TryRecvError::Empty) => {}
+            }
+        }
+    }
+
+    /// Wait for the ground textures (scripted runs that need them at once).
+    fn wait_textures(&mut self) {
+        if let Some(rx) = self.texture_scan.take() {
+            if let Ok(files) = rx.recv() {
+                self.texture_files = files;
+            }
+        }
+    }
+
     fn reload_content(&mut self) {
         let Some(roots) = &self.roots else { return };
         omsi_cfg::content_changed();
@@ -1081,7 +1138,8 @@ impl App {
             g.renderer.reset_models();
             g.renderer.thumbs.clear();
         }
-        self.texture_files = ground_texture_files(roots);
+        let roots = roots.clone();
+        self.scan_textures(&roots);
         self.ui.pbr_made = None;
     }
 
@@ -1207,16 +1265,27 @@ impl App {
                 self.prefs.keys.clear();
                 self.prefs.save();
             }
-            Action::Play => {
-                self.play(Vec::new());
-                self.guide.driven = true;
+            // (the bottom bar's button and F5: close the session that runs, else ask what to drive)
+            Action::Play => self.drive.button(),
+            Action::DriveStart(req) => {
+                let view = self.view_args().unwrap_or_default();
+                let args = match &self.ed.doc {
+                    Some(doc) => crate::drive::args(&req, doc, self.cam.target.truncate(), self.cam.yaw, view),
+                    None => return,
+                };
+                self.prefs.drive = req.settings.clone();
+                self.prefs.save();
+                if self.play(args) {
+                    self.guide.driven = true;
+                }
             }
             Action::PlayOriginal => self.play_original(),
             Action::PlayHere(look) => {
                 let args = if look { self.view_args() } else { self.nearest_entry_args() };
                 if let Some(a) = args {
-                    self.play(a);
-                    self.guide.driven = true;
+                    if self.play(a) {
+                        self.guide.driven = true;
+                    }
                 }
             }
             Action::Undo => self.ed.undo(),
@@ -1744,15 +1813,20 @@ impl App {
             self.after_open(doc);
             self.collab.joined_open(&mut self.ed);
         }
-        if self.hot.as_ref().map(|h| h.poll()).unwrap_or(false) {
+        // (what a running openOMSI writes into the content folder is not the catalogue's news)
+        let game_runs = self.drive.is_running();
+        if self.hot.as_ref().map(|h| h.poll()).unwrap_or(false) && !game_runs {
             log::info!("content files changed on disk: reading them again");
             self.reload_content();
             self.ed.toast(tr("Files changed on disk: the catalogue and models are updated", "Файлы на диске изменились: каталог и модели обновлены"));
         }
         // (the switches on offer, once the library is read)
-        if !self.lib.scanning && self.ed.switch_catalogue.is_empty() && !self.lib.assets.is_empty() {
+        // (once per library: a library with no switch in it is not looked through every frame)
+        if !self.lib.scanning && self.switches_for != self.lib.assets.len() {
+            self.switches_for = self.lib.assets.len();
             self.ed.switch_catalogue = crate::switches::catalogue(&self.lib);
         }
+        self.poll_textures();
         // camera
         // (looking round: all the mouse moved since the last frame, turned at once)
         if self.mouse.look_raw {
@@ -1969,6 +2043,11 @@ impl App {
             crate::ui_menu::show(&ctx, &mut self.ui.view_menu, &mut self.ed, &self.lib, &mut actions);
             crate::ui_edit::road_entry(&ctx, &mut self.ed, self.view, &mut actions);
             if self.ed.doc.is_some() {
+                if let Some(doc) = self.ed.doc.as_ref() {
+                    if let Some(req) = self.drive.window(&ctx, doc, self.roots.as_ref(), &mut self.prefs.drive) {
+                        actions.push(Action::DriveStart(req));
+                    }
+                }
                 self.tt.window(&ctx, &mut self.ed, self.roots.as_ref(), &mut actions);
                 self.traffic.window(&ctx, &mut self.ed, self.roots.as_ref());
                 self.pbr.window(&ctx, self.roots.as_ref(), &mut actions);
@@ -2316,6 +2395,7 @@ impl App {
             self.lib.poll();
             std::thread::sleep(std::time::Duration::from_millis(20));
         }
+        self.wait_textures();
         self.new_map(name, name, 3, &Default::default());
         let Some(assets) = self.assets.as_mut() else { return };
         let road = self.lib.find("Splines\\Marcel\\str_2spur_8m_borkumer1.sli").map(|a| a.rel.clone()).or_else(|| self.lib.assets.iter().find(|a| a.category == crate::library::Category::Roads).map(|a| a.rel.clone()));

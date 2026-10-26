@@ -1292,6 +1292,11 @@ impl Checker {
     }
 }
 
+/// The map's problems, found without a window (the library must have been read).
+pub fn issues(doc: &Document, lib: &Library) -> Vec<Issue> {
+    run(snapshot(doc, lib), omsi_cfg::content_roots())
+}
+
 /// `openmapper --check path/to/global.cfg`: read the map, check it and print what was
 /// found, without a window. The exit code is 1 when there are errors.
 pub fn cli(cfg: &Path) -> i32 {

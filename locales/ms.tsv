@@ -2248,3 +2248,18 @@ A big or very detailed map is lighter with fewer tiles: the others are hidden un
 Hold Ctrl while drawing to join nothing. Cables, fences and footpaths never join roads or junctions.	Tahan Ctrl semasa melukis supaya tiada apa yang disambung. Kabel, pagar dan laluan pejalan kaki tidak akan disambung ke jalan atau simpang.
 Auto-Adapt	Auto-Peralihan
 Where roads of different width meet, a plate tapers one into the other	Di tempat jalan berlainan lebar bertemu, sekeping plat menyambung satu ke satu lagi secara beransur
+A test drive is running: close it first	Pandu uji sedang berjalan: tutup dahulu
+Write the .x file in its binary form? No: as text, which OMSI 2 and openOMSI read.	Tulis fail .x dalam bentuk binari? Tidak: sebagai teks, yang dibaca oleh OMSI 2 dan openOMSI.
+Where the camera looks	Ke mana kamera memandang
+Bus stop	Perhentian bas
+Vehicle	Kenderaan
+No vehicle (on foot)	Tiada kenderaan (berjalan kaki)
+Weather	Cuaca
+The map's own	Tetapan peta sendiri
+Natural weather	Cuaca semula jadi
+Weather cycle	Pertukaran cuaca
+Passengers at the stops	Penumpang di perhentian
+Close test drive	Tutup pandu uji
+Close the openOMSI session started from here (F5)	Tutup sesi openOMSI yang dimulakan dari sini (F5)
+Choose where to start, the vehicle, the time and the weather, then drive the map in openOMSI (F5)	Pilih tempat bermula, kenderaan, masa dan cuaca, kemudian pandu peta dalam openOMSI (F5)
+More switches: the window is too narrow for all of them	Lebih banyak suis: tetingkap terlalu sempit untuk semuanya

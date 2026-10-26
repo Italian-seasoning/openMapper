@@ -2248,3 +2248,18 @@ A big or very detailed map is lighter with fewer tiles: the others are hidden un
 Hold Ctrl while drawing to join nothing. Cables, fences and footpaths never join roads or junctions.	Mantenha Ctrl premido ao desenhar para não ligar nada. Os cabos, as vedações e os passeios nunca se ligam a estradas nem a cruzamentos.
 Auto-Adapt	Auto-transição
 Where roads of different width meet, a plate tapers one into the other	Onde se encontram estradas de largura diferente, uma placa faz a transição gradual de uma para a outra
+A test drive is running: close it first	Está a decorrer um test drive: feche-o primeiro
+Write the .x file in its binary form? No: as text, which OMSI 2 and openOMSI read.	Gravar o ficheiro .x em formato binário? Não: como texto, que o OMSI 2 e o openOMSI leem.
+Where the camera looks	Para onde olha a câmara
+Bus stop	Paragem de autocarro
+Vehicle	Veículo
+No vehicle (on foot)	Sem veículo (a pé)
+Weather	Meteorologia
+The map's own	A do próprio mapa
+Natural weather	Meteorologia natural
+Weather cycle	Mudança de meteorologia
+Passengers at the stops	Passageiros nas paragens
+Close test drive	Fechar test drive
+Close the openOMSI session started from here (F5)	Fechar a sessão do openOMSI iniciada a partir daqui (F5)
+Choose where to start, the vehicle, the time and the weather, then drive the map in openOMSI (F5)	Escolha o local de partida, o veículo, a hora e a meteorologia e depois conduza o mapa no openOMSI (F5)
+More switches: the window is too narrow for all of them	Mais interruptores: a janela é demasiado estreita para todos

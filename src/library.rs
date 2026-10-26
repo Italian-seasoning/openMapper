@@ -179,7 +179,7 @@ impl Library {
                     }
                     ScanMsg::Done => {
                         self.scanning = false;
-                        self.assets.sort_by(|a, b| a.name.to_lowercase().cmp(&b.name.to_lowercase()));
+                        self.assets.sort_by_cached_key(|a| a.name.to_lowercase());
                         self.index = self.assets.iter().enumerate().map(|(i, a)| (a.rel.to_lowercase(), i)).collect();
                         changed = true;
                     }

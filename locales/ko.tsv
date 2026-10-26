@@ -2248,3 +2248,18 @@ A big or very detailed map is lighter with fewer tiles: the others are hidden un
 Hold Ctrl while drawing to join nothing. Cables, fences and footpaths never join roads or junctions.	그리는 동안 Ctrl을 누르고 있으면 아무것도 연결되지 않습니다. 케이블, 울타리, 인도는 도로나 교차로에 연결되지 않습니다.
 Auto-Adapt	자동 연결
 Where roads of different width meet, a plate tapers one into the other	폭이 다른 도로가 만나는 곳에 한쪽에서 다른 쪽으로 서서히 이어지는 판을 만들기
+A test drive is running: close it first	테스트 주행이 실행 중입니다. 먼저 닫아 주세요
+Write the .x file in its binary form? No: as text, which OMSI 2 and openOMSI read.	확장자 .x 파일을 바이너리 형식으로 저장할까요? 아니요: OMSI 2와 openOMSI가 읽는 텍스트로 저장합니다.
+Where the camera looks	카메라가 향하는 곳
+Bus stop	버스 정류장
+Vehicle	차량
+No vehicle (on foot)	차량 없음 (도보)
+Weather	날씨
+The map's own	맵 자체 설정
+Natural weather	자연 날씨
+Weather cycle	날씨 변화
+Passengers at the stops	정류장의 승객
+Close test drive	테스트 주행 닫기
+Close the openOMSI session started from here (F5)	여기서 시작한 openOMSI 세션 닫기 (F5)
+Choose where to start, the vehicle, the time and the weather, then drive the map in openOMSI (F5)	시작 위치, 차량, 시간, 날씨를 고른 뒤 openOMSI에서 맵을 주행합니다 (F5)
+More switches: the window is too narrow for all of them	추가 스위치: 창이 너무 좁아 모두 표시할 수 없습니다

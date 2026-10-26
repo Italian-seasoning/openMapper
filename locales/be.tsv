@@ -2248,3 +2248,18 @@ A big or very detailed map is lighter with fewer tiles: the others are hidden un
 Hold Ctrl while drawing to join nothing. Cables, fences and footpaths never join roads or junctions.	Утрымлівайце Ctrl пры малюнку, каб нічога не далучаць. Кабелі, платы і сцежкі ніколі не далучаюцца да дарог і скрыжаванняў.
 Auto-Adapt	Аўта-пераход
 Where roads of different width meet, a plate tapers one into the other	Дзе сустракаюцца дарогі рознай шырыні, паміж імі робіцца плыўны пераход
+A test drive is running: close it first	Тэст-драйв ужо запушчаны: спачатку закрыйце яго
+Write the .x file in its binary form? No: as text, which OMSI 2 and openOMSI read.	Запісаць файл .x у двайковым выглядзе? Не: тэкстам, як чытаюць OMSI 2 і openOMSI.
+Where the camera looks	Куды глядзіць камера
+Bus stop	Прыпынак
+Vehicle	Транспарт
+No vehicle (on foot)	Без транспарту (пешшу)
+Weather	Надвор'е
+The map's own	Як у карце
+Natural weather	Натуральнае надвор'е
+Weather cycle	Змена надвор'я
+Passengers at the stops	Пасажыры на прыпынках
+Close test drive	Закрыць тэст-драйв
+Close the openOMSI session started from here (F5)	Закрыць сесію openOMSI, запушчаную адсюль (F5)
+Choose where to start, the vehicle, the time and the weather, then drive the map in openOMSI (F5)	Абраць месца старту, транспарт, час і надвор'е і праехаць карту ў openOMSI (F5)
+More switches: the window is too narrow for all of them	Больш пераключальнікаў: акно занадта вузкае для ўсіх

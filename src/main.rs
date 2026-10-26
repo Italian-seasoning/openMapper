@@ -18,6 +18,7 @@ mod clipboard;
 mod collab;
 mod descriptions;
 mod doc;
+mod drive;
 mod draw;
 mod export;
 mod gamecheck;
@@ -78,6 +79,7 @@ mod traffic;
 mod sysfont;
 mod ui;
 mod markdown;
+mod mcp;
 mod updater;
 mod ui_assets;
 mod ui_edit;
@@ -140,6 +142,14 @@ fn main() {
             std::process::exit(2);
         };
         std::process::exit(check::cli(std::path::Path::new(cfg)));
+    }
+    // `openmapper --mcp path/to/global.cfg [--allow-edit]`: an MCP server on stdin / stdout
+    if args.get(1).map(|a| a == "--mcp").unwrap_or(false) {
+        let Some(cfg) = args.get(2) else {
+            eprintln!("openmapper --mcp path/to/global.cfg [--allow-edit]");
+            std::process::exit(2);
+        };
+        std::process::exit(mcp::cli(std::path::Path::new(cfg), args.iter().skip(3).any(|a| a == "--allow-edit")));
     }
     // `openmapper --export path/to/global.cfg out.zip` / `--import file` (no window)
     match (args.get(1).and_then(|a| a.to_str()), args.get(2), args.get(3)) {

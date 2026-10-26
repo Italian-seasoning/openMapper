@@ -101,6 +101,8 @@ pub enum MeshAction {
     /// The selected faces made an object of their own (P).
     SeparateSelected,
     Export,
+    /// From the view's right-click menu: any object or road to O3D, OBJ, FBX, GLB or X.
+    ExportModel,
     ExportTexture(usize),
     PickTexture(usize, TexSlot),
     ImportMaterial,

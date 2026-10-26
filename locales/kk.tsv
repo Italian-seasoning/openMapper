@@ -2248,3 +2248,18 @@ A big or very detailed map is lighter with fewer tiles: the others are hidden un
 Hold Ctrl while drawing to join nothing. Cables, fences and footpaths never join roads or junctions.	Сызу кезінде ештеңені қоспау үшін Ctrl басып тұрыңыз. Кабельдер, қоршаулар және жаяу жолдар жолдарға не қиылыстарға ешқашан қосылмайды.
 Auto-Adapt	Авто-өтпелі
 Where roads of different width meet, a plate tapers one into the other	Ені әртүрлі жолдар түйіскен жерде олардың арасында біртіндеп өтетін тақта жасалады
+A test drive is running: close it first	Сынақ жүргізу іске қосылған: алдымен оны жабыңыз
+Write the .x file in its binary form? No: as text, which OMSI 2 and openOMSI read.	«.x» файлын екілік түрде жазу керек пе? Жоқ: OMSI 2 және openOMSI оқитын мәтін түрінде.
+Where the camera looks	Камера қайда қарайды
+Bus stop	Автобус аялдамасы
+Vehicle	Көлік
+No vehicle (on foot)	Көліксіз (жаяу)
+Weather	Ауа райы
+The map's own	Картаның өз параметрі
+Natural weather	Табиғи ауа райы
+Weather cycle	Ауа райының ауысуы
+Passengers at the stops	Аялдамалардағы жолаушылар
+Close test drive	Сынақ жүргізуді жабу
+Close the openOMSI session started from here (F5)	Осы жерден іске қосылған openOMSI сеансын жабу (F5)
+Choose where to start, the vehicle, the time and the weather, then drive the map in openOMSI (F5)	Бастау орнын, көлікті, уақытты және ауа райын таңдап, картаны openOMSI-де жүріп өтіңіз (F5)
+More switches: the window is too narrow for all of them	Қосымша қосқыштар: терезе барлығына сыймайды

@@ -2248,3 +2248,18 @@ A big or very detailed map is lighter with fewer tiles: the others are hidden un
 Hold Ctrl while drawing to join nothing. Cables, fences and footpaths never join roads or junctions.	Giữ Ctrl khi vẽ để không nối với gì cả. Dây cáp, hàng rào và lối đi bộ không bao giờ nối vào đường hay nút giao.
 Auto-Adapt	Tự động chuyển tiếp
 Where roads of different width meet, a plate tapers one into the other	Nơi các đường khác bề rộng gặp nhau, một tấm nối chuyển dần từ đường này sang đường kia
+A test drive is running: close it first	Một chuyến lái thử đang chạy: hãy đóng nó trước
+Write the .x file in its binary form? No: as text, which OMSI 2 and openOMSI read.	Ghi tệp .x ở dạng nhị phân? Không: ghi dạng văn bản, loại OMSI 2 và openOMSI đọc được.
+Where the camera looks	Nơi camera hướng tới
+Bus stop	Trạm xe buýt
+Vehicle	Phương tiện
+No vehicle (on foot)	Không có phương tiện (đi bộ)
+Weather	Thời tiết
+The map's own	Theo bản đồ
+Natural weather	Thời tiết tự nhiên
+Weather cycle	Chu kỳ thời tiết
+Passengers at the stops	Hành khách tại các trạm
+Close test drive	Đóng lái thử
+Close the openOMSI session started from here (F5)	Đóng phiên openOMSI được khởi động từ đây (F5)
+Choose where to start, the vehicle, the time and the weather, then drive the map in openOMSI (F5)	Chọn nơi xuất phát, phương tiện, giờ và thời tiết, rồi lái thử bản đồ trong openOMSI (F5)
+More switches: the window is too narrow for all of them	Thêm công tắc: cửa sổ quá hẹp để chứa hết

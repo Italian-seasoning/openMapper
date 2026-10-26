@@ -2248,3 +2248,18 @@ A big or very detailed map is lighter with fewer tiles: the others are hidden un
 Hold Ctrl while drawing to join nothing. Cables, fences and footpaths never join roads or junctions.	繪製時按住 Ctrl 可不連接任何物件。纜線、圍欄和人行道絕不會連接到道路或路口。
 Auto-Adapt	自動銜接
 Where roads of different width meet, a plate tapers one into the other	在寬度不同的道路相接處，鋪設從一條逐漸過渡到另一條的路面
+A test drive is running: close it first	試駕正在執行：請先關閉
+Write the .x file in its binary form? No: as text, which OMSI 2 and openOMSI read.	要以二進位格式寫入 .x 檔案嗎？不：以文字寫入，OMSI 2 和 openOMSI 都能讀取。
+Where the camera looks	攝影機注視的位置
+Bus stop	公車站
+Vehicle	車輛
+No vehicle (on foot)	無車輛（步行）
+Weather	天氣
+The map's own	依地圖設定
+Natural weather	自然天氣
+Weather cycle	天氣變化
+Passengers at the stops	站點的乘客
+Close test drive	關閉試駕
+Close the openOMSI session started from here (F5)	關閉從此處啟動的 openOMSI 工作階段 (F5)
+Choose where to start, the vehicle, the time and the weather, then drive the map in openOMSI (F5)	選擇起點、車輛、時間和天氣，然後在 openOMSI 中試駕地圖 (F5)
+More switches: the window is too narrow for all of them	更多開關：視窗太窄，放不下全部

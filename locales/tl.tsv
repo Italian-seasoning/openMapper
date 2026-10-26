@@ -2248,3 +2248,18 @@ A big or very detailed map is lighter with fewer tiles: the others are hidden un
 Hold Ctrl while drawing to join nothing. Cables, fences and footpaths never join roads or junctions.	Pindutin nang matagal ang Ctrl habang gumuguhit para walang ikonekta. Ang mga kable, bakod, at footpath ay hindi kailanman kumokonekta sa mga kalsada o junction.
 Auto-Adapt	Auto-Adapt
 Where roads of different width meet, a plate tapers one into the other	Kung saan nagtatagpo ang mga kalsadang magkaiba ang lapad, may plate na unti-unting nag-uugnay sa dalawa
+A test drive is running: close it first	Tumatakbo ang test drive: isara muna ito
+Write the .x file in its binary form? No: as text, which OMSI 2 and openOMSI read.	Isulat ang .x file sa binary na anyo? Hindi: bilang text, na binabasa ng OMSI 2 at openOMSI.
+Where the camera looks	Saan nakatingin ang camera
+Bus stop	Hintuan ng bus
+Vehicle	Sasakyan
+No vehicle (on foot)	Walang sasakyan (naglalakad)
+Weather	Panahon
+The map's own	Ayon sa mapa
+Natural weather	Natural na panahon
+Weather cycle	Pagpapalit ng panahon
+Passengers at the stops	Mga pasahero sa mga hintuan
+Close test drive	Isara ang test drive
+Close the openOMSI session started from here (F5)	Isara ang openOMSI session na sinimulan mula rito (F5)
+Choose where to start, the vehicle, the time and the weather, then drive the map in openOMSI (F5)	Piliin ang simulang lugar, sasakyan, oras at panahon, saka imaneho ang mapa sa openOMSI (F5)
+More switches: the window is too narrow for all of them	Higit pang switch: masyadong makitid ang window para sa lahat

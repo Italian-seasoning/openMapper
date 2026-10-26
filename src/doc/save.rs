@@ -101,6 +101,12 @@ pub fn save(doc: &mut Document) -> anyhow::Result<()> {
 /// What saving the map into `dir` writes and removes, and the tiles that it writes. The
 /// changed tiles only (`all`: every tile); an autosave keeps the files it would remove.
 pub fn plan(doc: &Document, dir: &Path, all: bool) -> (Vec<super::safe::Op>, Vec<TileKey>) {
+    plan_known(doc, dir, all, &|k| doc.tiles.contains_key(k))
+}
+
+/// `plan` for a document that holds only the tiles to write (an autosave's snapshot): the
+/// tile list of global.cfg is told which tiles the map has by `has_tile`.
+pub(crate) fn plan_known(doc: &Document, dir: &Path, all: bool, has_tile: &dyn Fn(&TileKey) -> bool) -> (Vec<super::safe::Op>, Vec<TileKey>) {
     use super::safe::Op;
     let mut ops = Vec::new();
     let mut written = Vec::new();
@@ -138,7 +144,7 @@ pub fn plan(doc: &Document, dir: &Path, all: bool) -> (Vec<super::safe::Op>, Vec
         written.push(*k);
     }
     // (last: the tile list that names the tiles)
-    ops.push(Op::Write(dir.join("global.cfg"), utf16(&global_text(doc))));
+    ops.push(Op::Write(dir.join("global.cfg"), utf16(&global_text_known(doc, has_tile))));
     // (only what is there to remove)
     ops.retain(|o| !matches!(o, Op::Remove(p) if !p.exists()));
     (ops, written)
@@ -174,6 +180,10 @@ pub(crate) fn copy_missing(src: &Path, dst: &Path) -> std::io::Result<()> {
 }
 
 pub(crate) fn global_text(doc: &Document) -> String {
+    global_text_known(doc, &|k| doc.tiles.contains_key(k))
+}
+
+pub(crate) fn global_text_known(doc: &Document, has_tile: &dyn Fn(&TileKey) -> bool) -> String {
     let g = &doc.global;
     let mut s = header();
     let kw = |s: &mut String, k: &str, lines: &[String]| {
@@ -268,7 +278,7 @@ pub(crate) fn global_text(doc: &Document) -> String {
     // Berlin-Spandau 40): start points, repeaters and timetables name tiles by their place
     // in it, and a [worldcoordinates] map's grid is measured over all its rows
     for k in &doc.order {
-        if doc.tiles.contains_key(k) {
+        if has_tile(k) {
             kw(&mut s, "map", &[k.0.to_string(), k.1.to_string(), file_of(doc, *k)]);
         } else if let Some(t) = g.tiles.iter().find(|t| (t.x, t.y) == *k) {
             kw(&mut s, "map", &[k.0.to_string(), k.1.to_string(), t.file.clone()]);

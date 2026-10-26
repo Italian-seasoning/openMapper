@@ -2248,3 +2248,18 @@ A big or very detailed map is lighter with fewer tiles: the others are hidden un
 Hold Ctrl while drawing to join nothing. Cables, fences and footpaths never join roads or junctions.	กด Ctrl ค้างไว้ขณะวาดเพื่อไม่ให้เชื่อมต่อกับสิ่งใด สายเคเบิล รั้ว และทางเท้าจะไม่เชื่อมต่อกับถนนหรือทางแยก
 Auto-Adapt	เชื่อมต่ออัตโนมัติ
 Where roads of different width meet, a plate tapers one into the other	ตรงที่ถนนที่กว้างไม่เท่ากันมาบรรจบกัน จะมีแผ่นที่ค่อย ๆ เปลี่ยนจากถนนหนึ่งไปอีกถนนหนึ่ง
+A test drive is running: close it first	กำลังทดลองขับอยู่: ปิดก่อน
+Write the .x file in its binary form? No: as text, which OMSI 2 and openOMSI read.	บันทึกไฟล์ .x เป็นแบบไบนารีหรือไม่? ไม่: บันทึกเป็นข้อความ ซึ่ง OMSI 2 และ openOMSI อ่านได้
+Where the camera looks	กล้องมองไปที่ไหน
+Bus stop	ป้ายรถเมล์
+Vehicle	ยานพาหนะ
+No vehicle (on foot)	ไม่มียานพาหนะ (เดินเท้า)
+Weather	สภาพอากาศ
+The map's own	ตามที่แผนที่กำหนด
+Natural weather	สภาพอากาศตามธรรมชาติ
+Weather cycle	การเปลี่ยนสภาพอากาศ
+Passengers at the stops	ผู้โดยสารที่ป้าย
+Close test drive	ปิดการทดลองขับ
+Close the openOMSI session started from here (F5)	ปิดเซสชัน openOMSI ที่เริ่มจากที่นี่ (F5)
+Choose where to start, the vehicle, the time and the weather, then drive the map in openOMSI (F5)	เลือกจุดเริ่มต้น ยานพาหนะ เวลา และสภาพอากาศ แล้วขับแผนที่ใน openOMSI (F5)
+More switches: the window is too narrow for all of them	สวิตช์เพิ่มเติม: หน้าต่างแคบเกินกว่าจะแสดงทั้งหมด

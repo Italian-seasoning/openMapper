@@ -381,7 +381,8 @@ impl App {
                     self.mesh_known = None;
                 }
                 MeshAction::SeparateSelected => self.separate_selected()?,
-                MeshAction::Export => self.export_selection()?,
+                MeshAction::Export => self.export_selection(false)?,
+                MeshAction::ExportModel => self.export_selection(true)?,
                 MeshAction::ExportTexture(i) => self.export_texture(i)?,
                 MeshAction::PickTexture(i, slot) => self.pick_texture(i, slot)?,
                 MeshAction::ImportMaterial => self.import_material()?,
@@ -461,19 +462,44 @@ impl App {
     // ---------------------------------------------------------------------------- export
 
     /// The selected objects and roads written to a 3D file of the format the name ends in.
-    fn export_selection(&mut self) -> anyhow::Result<()> {
+    /// `simple`: the formats of the right-click menu (O3D, OBJ, FBX, GLB, X as text or binary)
+    /// and a single object written as the model is made, not turned as it stands on the map.
+    fn export_selection(&mut self, simple: bool) -> anyhow::Result<()> {
         use openmapper_mesh::export::{ExportObject, Format, Scene};
         let sels = self.ed.selection();
         if sels.is_empty() {
             anyhow::bail!("{}", tr("select what to export (objects, roads)", "выделите, что экспортировать (объекты, дороги)"));
         }
-        let mut dialog = rfd::FileDialog::new().set_title(tr("Export the selection", "Экспорт выделенного")).set_file_name("export.glb");
-        for f in Format::ALL {
+        let formats: Vec<Format> = if simple { vec![Format::O3d, Format::Obj, Format::Fbx, Format::Glb, Format::X] } else { Format::ALL.into_iter().filter(|f| *f != Format::XBinary).collect() };
+        // (named after the model when there is one)
+        let first_name = self.ed.doc.as_ref().and_then(|d| match sels[0] {
+            Sel::Object(k, id) => d.object(k, id).map(|o| o.file.clone()),
+            Sel::Spline(k, id) => d.spline(k, id).map(|s| s.file.clone()),
+        });
+        let stem = first_name.and_then(|f| f.rsplit('\\').next().map(|n| n.rsplit_once('.').map(|(s, _)| s.to_string()).unwrap_or_else(|| n.to_string()))).filter(|n| !n.is_empty() && sels.len() == 1).unwrap_or_else(|| "export".into());
+        let mut dialog = rfd::FileDialog::new().set_title(tr("Export the selection", "Экспорт выделенного")).set_file_name(format!("{stem}.glb"));
+        for f in &formats {
             dialog = dialog.add_filter(f.label(), &[f.extension()]);
         }
-        let Some(path) = dialog.save_file() else { return Ok(()) };
+        let Some(mut path) = dialog.save_file() else { return Ok(()) };
+        // (a file name with no extension, as some systems' dialogs give)
+        if path.extension().is_none() {
+            path.set_extension("glb");
+        }
         let ext = path.extension().map(|e| e.to_string_lossy().to_lowercase()).unwrap_or_default();
-        let format = Format::ALL.into_iter().find(|f| f.extension() == ext).ok_or_else(|| anyhow::anyhow!("{}: .{ext}", tr("unknown format", "неизвестный формат")))?;
+        let mut format = formats.iter().copied().find(|f| f.extension() == ext).ok_or_else(|| anyhow::anyhow!("{}: .{ext}", tr("unknown format", "неизвестный формат")))?;
+        if simple && format == Format::X {
+            let binary = rfd::MessageDialog::new()
+                .set_level(rfd::MessageLevel::Info)
+                .set_title("openMapper")
+                .set_buttons(rfd::MessageButtons::YesNo)
+                .set_description(tr("Write the .x file in its binary form? No: as text, which OMSI 2 and openOMSI read.", "Записать файл .x в двоичном виде? Нет: текстом, как читают OMSI 2 и openOMSI."))
+                .show();
+            if binary == rfd::MessageDialogResult::Yes {
+                format = Format::XBinary;
+            }
+        }
+        let single_object = simple && sels.len() == 1 && matches!(sels[0], Sel::Object(..));
         let (Some(doc), Some(assets)) = (self.ed.doc.as_ref(), self.assets.as_mut()) else { return Ok(()) };
         // (the selection's middle is the file's origin)
         let centre = crate::selection::centre(doc, &sels).unwrap_or_default();
@@ -490,7 +516,7 @@ impl App {
                         continue;
                     };
                     let world = doc.object_world(k, o, model.abs_height);
-                    let place = editable::placement(world - origin, o.rot).as_mat4();
+                    let place = if single_object { glam::Mat4::IDENTITY } else { editable::placement(world - origin, o.rot).as_mat4() };
                     for part in &model.parts {
                         let mesh = mesh_of(&part.mesh, &part.materials, &mut scene.materials, &mut textures);
                         scene.objects.push(ExportObject { name: o.file.rsplit('\\').next().unwrap_or("object").trim_end_matches(".sco").to_string(), mesh, transform: place });

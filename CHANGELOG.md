@@ -4,6 +4,20 @@ Releases are tagged `v<version>`; the downloads are on the
 [Releases](https://github.com/openOMSI-org/openMapper/releases) page, each with the notes of its
 version from this file.
 
+## Unreleased
+
+### Fixed
+- **Test drive no longer starts two sessions**: openMapper keeps track of the openOMSI it started; a second click or key press while it runs starts nothing.
+- **Fewer freezes with no apparent cause**: the autosave copies only the changed tiles on the main thread and makes their files on another; the ground textures are looked for on a thread of its own (a big installation's folders held the window at the start and after every change of content files); the catalogue of switches is made once per library, not on every frame when a library has none; sorting the catalogue no longer allocates in every comparison; what a running openOMSI writes into the content folder no longer makes the catalogue and models start over.
+
+### Changed
+- **The bottom bar scales with the window**: when it is too narrow for all the switches (Auto-Terrain, Auto-Junction, Auto-Adapt, Auto-Align...) the last ones go into a "···" menu instead of vanishing one after another; the cursor position, the counts and the graphics card's name give way first.
+- **Test drive asks what to drive** (the button, F5): where to start (where the camera looks, a start point, a bus stop, or just this view), the vehicle or none, the time of day, the weather, the traffic and the passengers. While a session runs the button reads "Close test drive" and ends it.
+
+### Added
+- **Export from the right-click menu**: right-click any object or road, then Export... writes it as O3D, OBJ, FBX, GLB or X (as text, or in binary form), through the system's file dialog.
+- Simple bridge over from openMapper to other apps (MCP)
+
 ## 0.1.8 - 2026-10-25
 
 ### Fixed

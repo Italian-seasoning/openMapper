@@ -95,6 +95,9 @@ pub struct Prefs {
     /// The user agreed that test drives in OMSI 2 itself copy the map into its folder.
     #[serde(default)]
     pub omsi2_copy_ok: bool,
+    /// What the Test drive window was last set to.
+    #[serde(default)]
+    pub drive: crate::drive::DriveSettings,
 }
 
 impl Prefs {

@@ -79,11 +79,51 @@ pub struct Job {
     epoch: u64,
 }
 
+/// What an autosave needs of the map, copied on the main thread (only the changed tiles are
+/// copied: cheap) so the text of it can be made on another and the window never waits.
+pub struct Snapshot {
+    doc: Document,
+    tiles: std::collections::HashSet<TileKey>,
+    epoch: u64,
+}
+
+/// Copy what an autosave of the map writes.
+pub fn snapshot(doc: &Document) -> Snapshot {
+    let copy = Document {
+        global: doc.global.clone(),
+        tiles: doc.tiles.iter().filter(|(_, t)| t.dirty).map(|(k, t)| (*k, t.clone())).collect(),
+        order: doc.order.clone(),
+        dir: doc.dir.clone(),
+        source: doc.source.clone(),
+        global_dirty: doc.global_dirty,
+        fresh: doc.fresh,
+        global_rev: doc.global_rev,
+        timetable: if doc.timetable.dirty { doc.timetable.clone() } else { Default::default() },
+        traffic: if doc.traffic.dirty { doc.traffic.clone() } else { Default::default() },
+        descriptions: if doc.descriptions.dirty { doc.descriptions.clone() } else { Default::default() },
+        groups: Vec::new(),
+    };
+    Snapshot { doc: copy, tiles: doc.tiles.keys().copied().collect(), epoch: *EPOCH.lock().unwrap_or_else(|e| e.into_inner()) }
+}
+
 /// What an autosave of the map writes (the tiles' text is made here; nothing is written).
+#[cfg(test)]
 pub fn prepare(doc: &Document, content: &Path) -> Job {
+    let known: std::collections::HashSet<TileKey> = doc.tiles.keys().copied().collect();
+    let epoch = *EPOCH.lock().unwrap_or_else(|e| e.into_inner());
+    prepare_from(doc, &known, epoch, content)
+}
+
+impl Snapshot {
+    pub fn prepare(&self, content: &Path) -> Job {
+        prepare_from(&self.doc, &self.tiles, self.epoch, content)
+    }
+}
+
+fn prepare_from(doc: &Document, known: &std::collections::HashSet<TileKey>, epoch: u64, content: &Path) -> Job {
     let target = dir(content);
     let fresh_dir = target.with_extension("new");
-    let (ops, tiles) = super::save::plan(doc, &fresh_dir, false);
+    let (ops, tiles) = super::save::plan_known(doc, &fresh_dir, false, &|k| known.contains(k));
     let mut ops: Vec<_> = ops.into_iter().filter(|o| matches!(o, super::safe::Op::Write(..))).collect();
     // the timetable and the traffic through their own writers, every file of them (a copy
     // marked as all changed: the map's own stays as it is)
@@ -117,7 +157,7 @@ pub fn prepare(doc: &Document, content: &Path) -> Job {
         target,
         ops,
         meta,
-        epoch: *EPOCH.lock().unwrap_or_else(|e| e.into_inner()),
+        epoch,
     }
 }
 
@@ -232,12 +272,14 @@ impl Timer {
         }
         self.last = Instant::now();
         let t = Instant::now();
-        let job = prepare(doc, content);
-        let made = t.elapsed().as_secs_f32() * 1000.0;
+        // (only the changed tiles are copied here; their text is made and written off the
+        // main thread: a big map's do not hold the window)
+        let snap = snapshot(doc);
+        let copied = t.elapsed().as_secs_f32() * 1000.0;
         let at = dir(content);
-        // (the files are written off the main thread: a big map's do not hold the window)
-        self.running = Some(std::thread::spawn(move || match job.run() {
-            Ok(()) => log::info!("autosave: {} ({made:.0} ms to make ready, {:.0} ms in all)", at.display(), t.elapsed().as_secs_f32() * 1000.0),
+        let content = content.to_path_buf();
+        self.running = Some(std::thread::spawn(move || match snap.prepare(&content).run() {
+            Ok(()) => log::info!("autosave: {} ({copied:.0} ms to copy on the main thread, {:.0} ms in all)", at.display(), t.elapsed().as_secs_f32() * 1000.0),
             Err(e) => log::warn!("autosave: {e}"),
         }));
     }

@@ -67,6 +67,8 @@ pub enum Action {
     PlayHere(bool),
     /// A test drive in OMSI 2 itself (the map and what it needs copied into its folder).
     PlayOriginal,
+    /// Start a test drive as the Test drive window asked.
+    DriveStart(crate::drive::Request),
     /// Paste at this ground point (the view's menu).
     PasteAt(Option<glam::DVec3>),
     /// The groups kept for other maps.
@@ -1176,8 +1178,11 @@ fn toolbar(root: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, can_undo: boo
                 st.assets.open = !st.assets.open;
             }
             ui.with_layout(Layout::right_to_left(Align::Center), |ui| {
-                let r = ui.add_enabled(game_found, egui::Button::new(icons::labelled(Icon::Play, tr("Test drive", "Тест-драйв"))));
-                help(st, &r, if game_found { tr("Save the map and drive it in openOMSI (F5)", "Сохранить карту и проехать её в openOMSI (F5)") } else { tr("openOMSI was not found: install it to test maps", "openOMSI не найден: установите его, чтобы проверять карты") });
+                // (while a session runs the button closes it)
+                let running = crate::drive::running();
+                let label = if running { icons::labelled(Icon::Error, tr("Close test drive", "Закрыть тест-драйв")) } else { icons::labelled(Icon::Play, tr("Test drive", "Тест-драйв")) };
+                let r = ui.add_enabled(game_found, egui::Button::new(label));
+                help(st, &r, if running { tr("Close the openOMSI session started from here (F5)", "Закрыть сессию openOMSI, запущенную отсюда (F5)") } else if game_found { tr("Choose where to start, the vehicle, the time and the weather, then drive the map in openOMSI (F5)", "Выбрать место старта, транспорт, время и погоду и проехать карту в openOMSI (F5)") } else { tr("openOMSI was not found: install it to test maps", "openOMSI не найден: установите его, чтобы проверять карты") });
                 if r.clicked() {
                     actions.push(Action::Play);
                 }
@@ -1212,31 +1217,74 @@ fn status_bar(root: &mut egui::Ui, help_line: Option<String>, ed: &mut Editor, s
                 (None, None) => (String::new(), TEXT_DIM),
             };
             // (the facts on the right first; the help gets what is left, cut short)
+            // The bar scales with the window: what does not fit goes in this order, the tile
+            // numbers' details and counts first, then the cursor, and the switches fold into a
+            // "..." menu (ui_edit::snap_controls) rather than vanishing one by one.
+            let sep = ui.spacing().item_spacing.x * 2.0 + 6.0;
+            let small_w = |ui: &egui::Ui, t: &str, mono: bool| {
+                let mut rt = RichText::new(t).small();
+                if mono {
+                    rt = rt.monospace();
+                }
+                egui::WidgetText::from(rt).into_galley(ui, Some(egui::TextWrapMode::Extend), f32::INFINITY, egui::TextStyle::Button).size().x + sep
+            };
+            let counts = ed.doc.as_ref().map(|doc| {
+                let objects: usize = doc.tiles.values().map(|t| t.tile.objects.len()).sum();
+                let splines: usize = doc.tiles.values().map(|t| t.tile.splines.len()).sum();
+                format!("{} {} · {} {} · {} {}", doc.tiles.len(), tr("tiles", "тайлов"), splines, tr("splines", "сплайнов"), objects, tr("objects", "объектов"))
+            });
+            let cursor = status.cursor.map(|c| {
+                let t = crate::doc::tile_of(c.truncate());
+                format!("X {:>8.1}   Y {:>8.1}   Z {:>6.1}   {} {},{}", c.x, c.y, c.z, tr("tile", "тайл"), t.0, t.1)
+            });
+            let readout = ed.drag_readout();
+            let loading = (status.loading > 0).then(|| format!("{} {}", tr("loading", "загрузка"), status.loading));
+            let w_gpu = small_w(ui, &status.gpu, false);
+            let w_loading = loading.as_deref().map(|t| small_w(ui, t, false) + 24.0).unwrap_or(0.0);
+            let w_counts = counts.as_deref().map(|t| small_w(ui, t, false)).unwrap_or(0.0);
+            let w_cursor = cursor.as_deref().map(|t| small_w(ui, t, true)).unwrap_or(0.0);
+            let w_readout = readout.as_deref().map(|t| small_w(ui, t, false)).unwrap_or(0.0);
+            let w_snap = if ed.doc.is_some() { crate::ui_edit::snap_controls_width(ui) + sep } else { 0.0 };
+            // (the help line keeps room to be read)
+            let budget = (ui.available_width() - 140.0).max(0.0);
+            let mut left = budget - w_loading - w_readout;
+            let take = |w: f32, left: &mut f32| {
+                if w > 0.0 && *left - w >= 0.0 {
+                    *left -= w;
+                    true
+                } else {
+                    false
+                }
+            };
+            // (what matters most for editing is kept longest: the switches, whole if they fit,
+            // else they take all the room and the other facts are left out)
+            let show_snap_full = take(w_snap, &mut left);
+            let (show_cursor, show_counts, show_gpu) = if show_snap_full { (take(w_cursor, &mut left), take(w_counts, &mut left), take(w_gpu, &mut left)) } else { (false, false, false) };
+            let snap_room = if show_snap_full { w_snap } else { left.max(120.0) };
             ui.with_layout(Layout::right_to_left(Align::Center), |ui| {
-                ui.label(RichText::new(&status.gpu).small().color(Color32::from_gray(95)));
-                ui.separator();
-                if status.loading > 0 {
-                    ui.label(RichText::new(format!("{} {}", tr("loading", "загрузка"), status.loading)).small().color(TEXT_DIM));
+                if show_gpu {
+                    ui.label(RichText::new(&status.gpu).small().color(Color32::from_gray(95)));
+                    ui.separator();
+                }
+                if let Some(t) = &loading {
+                    ui.label(RichText::new(t).small().color(TEXT_DIM));
                     ui.spinner();
                     ui.separator();
                 }
-                if let Some(doc) = &ed.doc {
-                    let objects: usize = doc.tiles.values().map(|t| t.tile.objects.len()).sum();
-                    let splines: usize = doc.tiles.values().map(|t| t.tile.splines.len()).sum();
-                    ui.label(RichText::new(format!("{} {} · {} {} · {} {}", doc.tiles.len(), tr("tiles", "тайлов"), splines, tr("splines", "сплайнов"), objects, tr("objects", "объектов"))).small().color(TEXT_DIM));
+                if let (true, Some(t)) = (show_counts, &counts) {
+                    ui.label(RichText::new(t).small().color(TEXT_DIM));
                     ui.separator();
                 }
-                if let Some(r) = ed.drag_readout() {
+                if let Some(r) = readout {
                     ui.label(RichText::new(r).small().strong().color(ACCENT));
                     ui.separator();
                 }
-                if let Some(c) = status.cursor {
-                    let t = crate::doc::tile_of(c.truncate());
-                    ui.label(RichText::new(format!("X {:>8.1}   Y {:>8.1}   Z {:>6.1}   {} {},{}", c.x, c.y, c.z, tr("tile", "тайл"), t.0, t.1)).small().monospace().color(TEXT_DIM));
+                if let (true, Some(t)) = (show_cursor, &cursor) {
+                    ui.label(RichText::new(t).small().monospace().color(TEXT_DIM));
                 }
                 if ed.doc.is_some() {
                     ui.separator();
-                    crate::ui_edit::snap_controls(ui, ed);
+                    crate::ui_edit::snap_controls(ui, ed, snap_room - sep);
                 }
                 ui.separator();
                 ui.with_layout(Layout::left_to_right(Align::Center), |ui| {

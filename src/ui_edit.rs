@@ -152,43 +152,135 @@ pub fn paint_cut(ctx: &egui::Context, ed: &Editor, cam: &crate::camera::Camera, 
     painter.galley(r.min + Vec2::new(5.0, 2.0), galley, Color32::WHITE);
 }
 
-/// Grid and angle snapping, in the status bar.
-pub fn snap_controls(ui: &mut egui::Ui, ed: &mut Editor) {
+/// How many of the status bar's snapping units there are (see `snap_unit`).
+const SNAP_UNITS: usize = 9;
+
+/// The width a snapping unit takes in the status bar (its toggles are as wide as their text).
+fn snap_unit_width(ui: &egui::Ui, i: usize) -> f32 {
+    let gap = ui.spacing().item_spacing.x;
+    let toggle = |t: &str| {
+        let galley = egui::WidgetText::from(RichText::new(t).small()).into_galley(ui, Some(egui::TextWrapMode::Extend), f32::INFINITY, egui::TextStyle::Button);
+        18.0 + 6.0 + galley.size().x + gap
+    };
+    match i {
+        0 => 46.0 + gap + toggle(tr("Angle", "Угол")),
+        1 => 56.0 + gap + toggle(tr("Grid", "Сетка")),
+        2 => toggle(tr("Knife", "Нож")),
+        3 => toggle(tr("Ruler", "Линейка")),
+        4 => toggle(tr("Auto-Terrain", "Авто-рельеф")),
+        5 => toggle(tr("Auto-Switch", "Авто-стрелки")),
+        6 => toggle(tr("Auto-Junction", "Авто-перекрёсток")),
+        7 => toggle(tr("Auto-Adapt", "Авто-переход")),
+        _ => toggle(tr("Auto-Align", "Авто-выравнивание")),
+    }
+}
+
+/// One snapping unit: a toggle, or a step and its toggle.
+fn snap_unit(ui: &mut egui::Ui, ed: &mut Editor, i: usize) {
+    match i {
+        0 => {
+            // (laid out right to left: the toggle, then the step)
+            check(ui, &mut ed.snap_angle, RichText::new(tr("Angle", "Угол")).small()).on_hover_text(tr("Snap headings to the angle step", "Привязка направления к шагу угла"));
+            egui::ComboBox::from_id_salt("angle step").width(46.0).selected_text(RichText::new(format!("{}°", ed.angle_step)).small()).show_ui(ui, |ui| {
+                for s in [1.0, 5.0, 10.0, 15.0, 22.5, 30.0, 45.0, 90.0] {
+                    ui.selectable_value(&mut ed.angle_step, s, format!("{s}°"));
+                }
+            }).response.on_hover_text(tr("The angle step: what snapping comes to and what R turns by", "Шаг угла: к чему привязывается направление и на сколько поворачивает R"));
+        }
+        1 => {
+            check(ui, &mut ed.snap_grid, RichText::new(tr("Grid", "Сетка")).small()).on_hover_text(tr("Snap positions to the grid", "Привязка положения к сетке"));
+            egui::ComboBox::from_id_salt("grid step").width(56.0).selected_text(RichText::new(format!("{} m", ed.grid_step)).small()).show_ui(ui, |ui| {
+                for s in [0.5, 1.0, 2.0, 5.0, 10.0] {
+                    ui.selectable_value(&mut ed.grid_step, s, format!("{s} m"));
+                }
+            });
+        }
+        2 => {
+            let mut knife = ed.cutting;
+            if check(ui, &mut knife, RichText::new(tr("Knife", "Нож")).small()).on_hover_text(knife_help()).changed() {
+                ed.toggle_cutting();
+            }
+        }
+        3 => {
+            let mut on = ed.ruler.is_some();
+            if check(ui, &mut on, RichText::new(tr("Ruler", "Линейка")).small()).on_hover_text(tr("Click two points to measure the distance and gradient between them (U) · right-click: off", "Клик по двум точкам: расстояние и уклон между ними (U) · правый клик: выключить")).changed() {
+                ed.toggle_ruler();
+            }
+        }
+        4 => {
+            check(ui, &mut ed.auto_terrain, RichText::new(tr("Auto-Terrain", "Авто-рельеф")).small()).on_hover_text(tr("What you build follows the ground: roads, paths and tracks take its height (off: they run level from where they start). Only what is built from now on; nothing already there changes", "Новое подстраивается под рельеф: дороги, пути и рельсы берут его высоту (выкл.: идут ровно от точки начала). Только то, что строится дальше; уже построенное не меняется"));
+        }
+        5 => {
+            check(ui, &mut ed.auto_switches, RichText::new(tr("Auto-Switch", "Авто-стрелки")).small()).on_hover_text(tr("Branching a track off another makes a switch there", "Ответвление пути от другого создаёт стрелку"));
+        }
+        6 => {
+            check(ui, &mut ed.auto_junctions, RichText::new(tr("Auto-Junction", "Авто-перекрёсток")).small()).on_hover_text(tr("Make junctions where roads meet", "Делать перекрёстки, где дороги встречаются"));
+        }
+        7 => {
+            check(ui, &mut ed.auto_adapt, RichText::new(tr("Auto-Adapt", "Авто-переход")).small()).on_hover_text(tr("Where roads of different width meet, a plate tapers one into the other", "Где встречаются дороги разной ширины, между ними плавный переход"));
+        }
+        _ => {
+            check(ui, &mut ed.align_to_road, RichText::new(tr("Auto-Align", "Авто-выравнивание")).small()).on_hover_text(tr("Line objects up with the nearest road (Shift: put it freely)", "Выравнивать объекты по ближайшей дороге (Shift: ставить свободно)"));
+        }
+    }
+}
+
+/// What the snapping controls of the status bar take when all of them are shown.
+pub fn snap_controls_width(ui: &egui::Ui) -> f32 {
+    (0..SNAP_UNITS).map(|i| snap_unit_width(ui, i)).sum::<f32>() + ui.spacing().item_spacing.x * 2.0
+}
+
+/// Grid and angle snapping and the Auto-... switches, in the status bar. When `room` is not
+/// enough for all of them the last ones go into a menu behind a "..." button instead of
+/// dropping out of the bar one after another as the window narrows.
+pub fn snap_controls(ui: &mut egui::Ui, ed: &mut Editor, room: f32) {
     ui.spacing_mut().interact_size.y = 16.0;
-    // (laid out right to left: the angle, the step, then the grid switch)
-    egui::ComboBox::from_id_salt("angle step").width(46.0).selected_text(RichText::new(format!("{}°", ed.angle_step)).small()).show_ui(ui, |ui| {
-        for s in [1.0, 5.0, 10.0, 15.0, 22.5, 30.0, 45.0, 90.0] {
-            ui.selectable_value(&mut ed.angle_step, s, format!("{s}°"));
+    let more_w = 28.0 + ui.spacing().item_spacing.x;
+    let full = snap_controls_width(ui);
+    // (how many units fit; when not all, the "more" button takes some room too)
+    let mut shown = SNAP_UNITS;
+    if full > room {
+        let mut left = room - more_w;
+        shown = 0;
+        for i in 0..SNAP_UNITS {
+            let w = snap_unit_width(ui, i);
+            if w > left && shown >= 2 {
+                break;
+            }
+            left -= w;
+            shown += 1;
         }
-    }).response.on_hover_text(tr("The angle step: what snapping comes to and what R turns by", "Шаг угла: к чему привязывается направление и на сколько поворачивает R"));
-    check(ui, &mut ed.snap_angle, RichText::new(tr("Angle", "Угол")).small()).on_hover_text(tr("Snap headings to the angle step", "Привязка направления к шагу угла"));
-    egui::ComboBox::from_id_salt("grid step").width(56.0).selected_text(RichText::new(format!("{} m", ed.grid_step)).small()).show_ui(ui, |ui| {
-        for s in [0.5, 1.0, 2.0, 5.0, 10.0] {
-            ui.selectable_value(&mut ed.grid_step, s, format!("{s} m"));
+    }
+    // (laid out right to left: the first units stay on the right)
+    for i in 0..2.min(shown) {
+        snap_unit(ui, ed, i);
+    }
+    if shown > 2 {
+        ui.separator();
+        // the ruler's measurement, when there is room for it
+        if shown == SNAP_UNITS {
+            if let Some((a, b)) = ed.ruler_line() {
+                let d = b - a;
+                let flat = d.truncate().length();
+                let grade = if flat > 0.01 { format!("{:+.1} %", d.z / flat * 100.0) } else { "-".into() };
+                ui.label(RichText::new(format!("{:.2} m · Δh {:+.2} m · {grade}", flat, d.z)).small().monospace().color(Color32::from_rgb(255, 216, 51)));
+            }
         }
-    });
-    check(ui, &mut ed.snap_grid, RichText::new(tr("Grid", "Сетка")).small()).on_hover_text(tr("Snap positions to the grid", "Привязка положения к сетке"));
-    ui.separator();
-    // the ruler: what it measures, then its switch (right to left)
-    if let Some((a, b)) = ed.ruler_line() {
-        let d = b - a;
-        let flat = d.truncate().length();
-        let grade = if flat > 0.01 { format!("{:+.1} %", d.z / flat * 100.0) } else { "-".into() };
-        ui.label(RichText::new(format!("{:.2} m · Δh {:+.2} m · {grade}", flat, d.z)).small().monospace().color(Color32::from_rgb(255, 216, 51)));
+        for i in 2..shown {
+            snap_unit(ui, ed, i);
+        }
     }
-    let mut knife = ed.cutting;
-    if check(ui, &mut knife, RichText::new(tr("Knife", "Нож")).small()).on_hover_text(knife_help()).changed() {
-        ed.toggle_cutting();
+    if shown < SNAP_UNITS {
+        let r = ui.add(egui::Button::new(RichText::new("···").strong()).min_size(Vec2::new(28.0, 16.0)));
+        let r = r.on_hover_text(tr("More switches: the window is too narrow for all of them", "Ещё переключатели: окно слишком узкое для всех"));
+        egui::Popup::menu(&r).close_behavior(egui::PopupCloseBehavior::CloseOnClickOutside).show(|ui| {
+            ui.set_min_width(170.0);
+            // (a menu lays out top down: the units in the order of the bar)
+            for i in shown..SNAP_UNITS {
+                snap_unit(ui, ed, i);
+            }
+        });
     }
-    let mut on = ed.ruler.is_some();
-    if check(ui, &mut on, RichText::new(tr("Ruler", "Линейка")).small()).on_hover_text(tr("Click two points to measure the distance and gradient between them (U) · right-click: off", "Клик по двум точкам: расстояние и уклон между ними (U) · правый клик: выключить")).changed() {
-        ed.toggle_ruler();
-    }
-    check(ui, &mut ed.auto_terrain, RichText::new(tr("Auto-Terrain", "Авто-рельеф")).small()).on_hover_text(tr("What you build follows the ground: roads, paths and tracks take its height (off: they run level from where they start). Only what is built from now on; nothing already there changes", "Новое подстраивается под рельеф: дороги, пути и рельсы берут его высоту (выкл.: идут ровно от точки начала). Только то, что строится дальше; уже построенное не меняется"));
-    check(ui, &mut ed.auto_switches, RichText::new(tr("Auto-Switch", "Авто-стрелки")).small()).on_hover_text(tr("Branching a track off another makes a switch there", "Ответвление пути от другого создаёт стрелку"));
-    check(ui, &mut ed.auto_junctions, RichText::new(tr("Auto-Junction", "Авто-перекрёсток")).small()).on_hover_text(tr("Make junctions where roads meet", "Делать перекрёстки, где дороги встречаются"));
-    check(ui, &mut ed.auto_adapt, RichText::new(tr("Auto-Adapt", "Авто-переход")).small()).on_hover_text(tr("Where roads of different width meet, a plate tapers one into the other", "Где встречаются дороги разной ширины, между ними плавный переход"));
-    check(ui, &mut ed.align_to_road, RichText::new(tr("Auto-Align", "Авто-выравнивание")).small()).on_hover_text(tr("Line objects up with the nearest road (Shift: put it freely)", "Выравнивать объекты по ближайшей дороге (Shift: ставить свободно)"));
 }
 
 /// The right panel with more than one thing selected.
