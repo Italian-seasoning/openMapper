@@ -177,7 +177,12 @@ fn main() {
         }
     };
     let mut app = app::App::new(open);
-    if let Err(e) = event_loop.run_app(&mut app) {
+    let ran = event_loop.run_app(&mut app);
+    if let Err(e) = &ran {
         eprintln!("openMapper: {e}");
     }
+    // The end of the program: everything that needed saving was saved in `App::exiting`.
+    // Tearing the rest down in order (worker threads joined while one of them lets go of its
+    // share of the window) crashed on Wayland in libwayland-client, so the process ends here.
+    std::process::exit(if ran.is_ok() { 0 } else { 1 });
 }
