@@ -25,7 +25,7 @@ use crate::render::Renderer;
 use crate::ui::{self, Action, UiState};
 
 #[path = "app_mesh.rs"]
-mod mesh;
+pub(crate) mod mesh;
 pub use mesh::bring_picture;
 
 struct Gfx {
@@ -133,6 +133,7 @@ pub struct App {
     traffic: crate::ui_traffic::TrafficUi,
     pbr: crate::ui_pbr::PbrWindow,
     road_types: crate::ui_roads::RoadTypes,
+    cj: crate::ui_cjunction::ComplexJunctions,
     scripts: crate::ui_script::ScriptsUi,
     map_settings: crate::ui_mapsettings::MapSettings,
     calendar: crate::ui_calendar::CalendarWindow,
@@ -196,6 +197,7 @@ impl App {
             traffic: Default::default(),
             pbr: Default::default(),
             road_types: Default::default(),
+            cj: Default::default(),
             scripts: Default::default(),
             map_settings: Default::default(),
             calendar: Default::default(),
@@ -576,6 +578,18 @@ impl App {
                 self.ui.views.go(n - 1, &mut self.cam);
                 self.cam.snap();
             }
+        }
+        // OPENMAPPER_CJ=<layout.json>: the complex junction editor open on that drawing
+        if let Ok(p) = std::env::var("OPENMAPPER_CJ") {
+            if let Some(l) = std::fs::read_to_string(&p).ok().and_then(|t| serde_json::from_str::<crate::cjunction::Layout>(&t).ok()) {
+                self.cj.layout = l;
+            }
+            self.cj.open = true;
+        }
+        // OPENMAPPER_MAKER=1: the Road types window open on a new road type in the road maker
+        // (`pocket`: with a bus pocket)
+        if let Ok(m) = std::env::var("OPENMAPPER_MAKER") {
+            self.road_types.open_maker(m == "pocket");
         }
         // OPENMAPPER_PALETTE=<text>: the command search open with that typed
         if let Ok(q) = std::env::var("OPENMAPPER_PALETTE") {
@@ -1369,6 +1383,41 @@ impl App {
                 }
             }
             Action::RoadTypes => self.road_types.open = !self.road_types.open,
+            Action::ComplexJunctions => self.cj.open = !self.cj.open,
+            Action::PlaceComplex(layout, turn) => {
+                let at = self.cam.target.truncate();
+                self.ed.place_layout(&layout, at, turn);
+            }
+            Action::SaveComplexObject(layout) => {
+                let mut layout = *layout;
+                layout.baked = None;
+                let (Some(roots), Some(assets)) = (self.roots.clone(), self.assets.as_mut()) else { return };
+                match crate::cjunction::bake(&roots, &layout, assets, false) {
+                    Ok(_) => {
+                        self.reload_content();
+                        self.cj.succeeded(tr("Saved as an object", "Сохранён как объект").into());
+                        self.ed.toast(tr("Saved as an object: it is in the catalogue under Objects, to place like any other", "Сохранён как объект: он в каталоге «Объекты», ставится как любой другой"));
+                    }
+                    Err(e) => self.cj.failed(e.to_string()),
+                }
+            }
+            Action::SaveCustomJunction(layout) => {
+                let mut layout = *layout;
+                let (Some(roots), Some(assets)) = (self.roots.clone(), self.assets.as_mut()) else { return };
+                match crate::cjunction::bake(&roots, &layout, assets, true).and_then(|rel| {
+                    layout.baked = Some(rel.clone());
+                    layout.save(&roots.content)?;
+                    Ok(rel)
+                }) {
+                    Ok(rel) => {
+                        self.ed.custom_layouts = None;
+                        self.cj.saved_as(rel);
+                        self.reload_content();
+                        self.ed.toast(tr("Custom junction saved: the Roads tool's automatic junctions use it where roads meet as it was drawn", "Свой перекрёсток сохранён: автоматические перекрёстки «Дорог» ставят его там, где дороги сходятся как нарисовано"));
+                    }
+                    Err(e) => self.cj.failed(e.to_string()),
+                }
+            }
             Action::Scripts => self.scripts.open = !self.scripts.open,
             Action::ScriptedLight(b, color, range) => {
                 if let Err(e) = self.new_scripted_light(b, color, range) {
@@ -2052,6 +2101,7 @@ impl App {
                 self.traffic.window(&ctx, &mut self.ed, self.roots.as_ref());
                 self.pbr.window(&ctx, self.roots.as_ref(), &mut actions);
                 self.road_types.window(&ctx, &mut self.ed, &self.lib, self.roots.as_ref(), &mut actions);
+                self.cj.window(&ctx, &mut self.ed, &self.lib, self.roots.as_ref().map(|r| &r.content), self.assets.as_mut(), &mut actions);
                 let folder = self.map_folder();
                 self.scripts.window(&ctx, &mut self.ed, self.roots.as_ref(), &folder, &mut actions);
                 self.map_settings.window(&ctx, &mut self.ed, self.roots.as_ref());

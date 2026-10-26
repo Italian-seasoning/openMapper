@@ -2263,3 +2263,79 @@ Close test drive	ปิดการทดลองขับ
 Close the openOMSI session started from here (F5)	ปิดเซสชัน openOMSI ที่เริ่มจากที่นี่ (F5)
 Choose where to start, the vehicle, the time and the weather, then drive the map in openOMSI (F5)	เลือกจุดเริ่มต้น ยานพาหนะ เวลา และสภาพอากาศ แล้วขับแผนที่ใน openOMSI (F5)
 More switches: the window is too narrow for all of them	สวิตช์เพิ่มเติม: หน้าต่างแคบเกินกว่าจะแสดงทั้งหมด
+Custom junction saved: the Roads tool's automatic junctions use it where roads meet as it was drawn	บันทึกทางแยกที่กำหนดเองแล้ว: ทางแยกอัตโนมัติของเครื่องมือถนนจะใช้ทางแยกนี้ตรงจุดที่ถนนมาบรรจบกันตามที่วาดไว้
+The junction reaches past the map: add tiles there first	ทางแยกเลยขอบแผนที่: โปรดเพิ่มไทล์ตรงนั้นก่อน
+draw some pieces first	วาดชิ้นส่วนก่อน
+mark the arms (where roads come in): at least two	ระบุแขนทางแยก (จุดที่ถนนเข้ามา): อย่างน้อยสองแขน
+the spline cannot be read	อ่านสไปลน์ไม่ได้
+Draw some pieces first	วาดชิ้นส่วนก่อน
+Complex junction	ทางแยกซับซ้อน
+Complex junction put on the map: its pieces are ordinary splines	วางทางแยกซับซ้อนบนแผนที่แล้ว: ชิ้นส่วนของทางแยกเป็นสไปลน์ธรรมดา
+Pick the road type of the pocket first	เลือกประเภทถนนของช่องจอดก่อน
+The pocket's road type could not be read	อ่านประเภทถนนของช่องจอดไม่ได้
+Press on a road	คลิกที่ถนน
+This stretch is already of the pocket's road type	ช่วงนี้เป็นประเภทถนนเดียวกับช่องจอดอยู่แล้ว
+The road type has no drawn width	ประเภทถนนไม่มีความกว้างที่วาดไว้
+Bus pocket	ช่องจอดรถบัส
+Bus pocket laid	สร้างช่องจอดรถบัสแล้ว
+The road is too short here for a pocket of that length	ถนนตรงนี้สั้นเกินไปสำหรับช่องจอดที่ยาวขนาดนั้น
+The road cannot be cut there	ตัดถนนตรงนั้นไม่ได้
+Street with a bus pocket	ถนนที่มีช่องจอดรถบัส
+Complex junction editor…	ตัวแก้ไขทางแยกซับซ้อน…
+Use my custom junctions where they fit	ใช้ทางแยกของฉันเมื่อเหมาะสม
+Custom junctions saved from the complex junction editor with Use in automatic junctions on	ทางแยกที่กำหนดเองซึ่งบันทึกจากตัวแก้ไขทางแยกซับซ้อนโดยเปิดใช้ "ใช้ในทางแยกอัตโนมัติ"
+My junction	ทางแยกของฉัน
+Complex junction editor	ตัวแก้ไขทางแยกซับซ้อน
+Open a saved one…	เปิดที่บันทึกไว้…
+Draw with	วาดด้วย
+Pick a piece or an arm; drag to move it; Delete removes it	เลือกชิ้นส่วนหรือแขนทางแยก ลากเพื่อย้าย กด Delete เพื่อลบ
+Click the start, then the end	คลิกจุดเริ่มต้น แล้วคลิกจุดสิ้นสุด
+Arc	โค้ง
+Click the start, a point on the arc, then the end	คลิกจุดเริ่มต้น จุดบนโค้ง แล้วจุดสิ้นสุด
+Arm	แขนทางแยก
+Where a road comes in: click the place, then a point out along the road	จุดที่ถนนเข้ามา: คลิกตำแหน่ง แล้วคลิกจุดที่อยู่ห่างออกไปตามแนวถนน
+Snap to the grid and to ends	จับยึดกับกริดและปลายชิ้นส่วน
+Spline type	ประเภทสไปลน์
+Drawing with:	กำลังวาดด้วย:
+Piece	ชิ้นส่วน
+Lift	ยกสูง
+Above the plate: markings lie a little over the asphalt they are painted on	เหนือแผ่นพื้น: เครื่องหมายจราจรจะอยู่สูงกว่าแอสฟัลต์ที่ทาไว้เล็กน้อย
+Type: the one chosen	ประเภท: ที่เลือกไว้
+Move under the one before	ย้ายไปไว้ใต้ชิ้นก่อนหน้า
+any road type	ประเภทถนนใดก็ได้
+Road: the type chosen	ถนน: ประเภทที่เลือกไว้
+Any	ใดก็ได้
+origin	จุดกำเนิด
+Click a piece or an arm to pick it, drag it to move it	คลิกชิ้นส่วนหรือแขนทางแยกเพื่อเลือก ลากเพื่อย้าย
+Click the start of the piece, then its end	คลิกจุดเริ่มต้นของชิ้นส่วน แล้วคลิกจุดสิ้นสุด
+Click the start, a point the arc passes, then the end	คลิกจุดเริ่มต้น จุดที่โค้งผ่าน แล้วจุดสิ้นสุด
+Click where a road comes in, then a point out along the road	คลิกจุดที่ถนนเข้ามา แล้วคลิกจุดที่อยู่ห่างออกไปตามแนวถนน
+Wheel zooms, right or middle drag pans, Esc cancels	ล้อเมาส์ซูม ลากด้วยปุ่มขวาหรือกลางเพื่อเลื่อน Esc ยกเลิก
+Pick a spline type on the left first	เลือกประเภทสไปลน์ทางซ้ายก่อน
+Too short: the points are too close	สั้นเกินไป: จุดอยู่ใกล้กันเกินไป
+arms	แขน
+Put on the map	วางบนแผนที่
+Its pieces become ordinary splines at the middle of the view, to move and change like any other. Nothing about them is automatic	ชิ้นส่วนจะกลายเป็นสไปลน์ธรรมดาตรงกลางมุมมอง ย้ายและแก้ไขได้เหมือนสไปลน์อื่น ๆ ไม่มีส่วนใดทำงานอัตโนมัติ
+Use in automatic junctions	ใช้ในทางแยกอัตโนมัติ
+Where the Roads tool makes a junction by itself and the roads meet as the arms do (same number, facing about the same ways, of the same road types), this one is put there	เมื่อเครื่องมือถนนสร้างทางแยกเองและถนนมาบรรจบกันเหมือนแขนทางแยก (จำนวนเท่ากัน หันไปทางเดียวกันโดยประมาณ และเป็นประเภทถนนเดียวกัน) จะวางทางแยกนี้ลงไป
+Save as a custom junction	บันทึกเป็นทางแยกที่กำหนดเอง
+Written as a junction piece of the content folder (it shows in the catalogue under Junctions) with lanes for the AI; needs three arms or more	เขียนเป็นชิ้นส่วนทางแยกในโฟลเดอร์เนื้อหา (แสดงในแค็ตตาล็อกภายใต้ "ทางแยก") พร้อมเลนสำหรับ AI ต้องมีอย่างน้อยสามแขน
+Save the drawing	บันทึกภาพวาด
+A custom junction is cut back to its arms where roads meet it; draw the roads' own types at the arms so they join cleanly.	ทางแยกที่กำหนดเองจะตัดถนนให้สั้นลงถึงแขนทางแยกตรงจุดที่ถนนมาบรรจบ โปรดวาดประเภทถนนของตัวถนนเองไว้ที่แขนทางแยกเพื่อให้ต่อกันได้เรียบร้อย
+Saved as a custom junction	บันทึกเป็นทางแยกที่กำหนดเองแล้ว
+Bus Pocket Tool	เครื่องมือช่องจอดรถบัส
+Tick it, then press on a road: a bus pocket of the road type chosen below is laid there. It stays on, pocket after pocket, until you untick it	เปิดใช้ แล้วคลิกที่ถนน: จะสร้างช่องจอดรถบัสตามประเภทถนนที่เลือกไว้ด้านล่าง เครื่องมือจะทำงานต่อเนื่องทีละช่องจนกว่าจะปิด
+pick the pocket's road type	เลือกประเภทถนนของช่องจอด
+Full width over	เต็มความกว้างตลอด
+Make a road type with a pocket…	สร้างประเภทถนนที่มีช่องจอด…
+The stretch is cut out of the road and takes the pocket's type, its ends tapering to the road's width. Made in the road maker (Bus pocket).	ช่วงนี้ถูกตัดออกจากถนนและใช้ประเภทของช่องจอด โดยปลายทั้งสองค่อย ๆ แคบลงเท่าความกว้างของถนน สร้างได้ในตัวสร้างถนน (ช่องจอดรถบัส)
+Top view	มุมมองด้านบน
+Side view	มุมมองด้านข้าง
+A lane for buses to stop in, right of the roadway, before the footway. Lay a road type made so where a bay is wanted with the Bus pocket tool of the Roads tool	เลนสำหรับให้รถบัสจอด อยู่ทางขวาของผิวจราจร ก่อนถึงทางเท้า วางถนนประเภทนี้ในจุดที่ต้องการช่องจอดด้วยเครื่องมือช่องจอดรถบัสของเครื่องมือถนน
+Saved as an object	บันทึกเป็นวัตถุแล้ว
+Saved as an object: it is in the catalogue under Objects, to place like any other	บันทึกเป็นวัตถุแล้ว: อยู่ในแคตตาล็อกภายใต้วัตถุ วางได้เหมือนวัตถุอื่น ๆ
+Save as an object	บันทึกเป็นวัตถุ
+The whole drawing as one scenery object of the catalogue (its meshes, and lanes for the AI along its pieces), to place anywhere like any object; arms are not needed	ทั้งภาพวาดเป็นวัตถุฉากหนึ่งชิ้นของแคตตาล็อก (เมชของมัน และเลนสำหรับ AI ตามส่วนต่าง ๆ) วางที่ไหนก็ได้เหมือนวัตถุทั่วไป ไม่จำเป็นต้องมีแขน
+Lanes the way the road is drawn	เลนตามทิศทางที่วาดถนน
+Lanes against it	เลนทวนทิศทาง
+(0 against: one-way)	(ทวน 0: ทางเดินรถทางเดียว)

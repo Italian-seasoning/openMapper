@@ -3,7 +3,7 @@
 
 use std::path::{Path, PathBuf};
 
-use egui::{Color32, Pos2, Rect, RichText, Sense, Stroke, Vec2};
+use egui::{Color32, Pos2, RichText, Sense, Stroke, Vec2};
 
 use crate::editor::Editor;
 use crate::i18n::tr;
@@ -12,6 +12,7 @@ use crate::install::Roots;
 use crate::library::{Category, Kind, Library};
 use crate::road_maker::RoadSpec;
 use crate::ui::Action;
+use crate::ui_tex::{quad, TexCache};
 
 #[derive(Default)]
 pub struct RoadTypes {
@@ -23,6 +24,8 @@ pub struct RoadTypes {
     /// Pictures that can be a roadway or a footway (found once).
     textures: Option<Vec<PathBuf>>,
     tex_search: [String; 3],
+    /// The road's textures as the previews show them.
+    pics: TexCache,
     error: Option<String>,
 }
 
@@ -57,41 +60,166 @@ fn file_name(p: &Path) -> String {
     p.file_name().map(|f| f.to_string_lossy().to_string()).unwrap_or_default()
 }
 
+/// The road seen from above, a stretch of it running up the picture: footways and kerbs, the
+/// roadway with its lane lines (dashed between lanes of one way, solid at the middle), the
+/// middle strip, the pocket, and arrows for the ways the lanes go.
+fn plan(ui: &mut egui::Ui, s: &RoadSpec, tex: &mut TexCache) {
+    let (rect, _) = ui.allocate_exact_size(Vec2::new(ui.available_width(), 170.0), Sense::hover());
+    let p = ui.painter_at(rect);
+    p.rect_filled(rect, 3.0, Color32::from_rgb(28, 30, 33));
+    let total = s.total_width().max(1.0);
+    let k = ((rect.width() - 30.0) / total).min((rect.height() - 20.0) / 14.0);
+    let rw = s.roadway_width();
+    let centre = rect.center().x + (s.footway_left() - s.footway_right() - s.pocket) / 2.0 * k;
+    let x = |m: f32| centre + m * k;
+    let (top, bottom) = (rect.top() + 6.0, rect.bottom() - 18.0);
+    let ctx = ui.ctx().clone();
+    let (road_t, foot_t) = (tex.get(&ctx, &s.roadway_tex), tex.get(&ctx, &s.footway_tex));
+    let med_t = tex.get(&ctx, &s.median_tex);
+    // a band across the road from `a` to `b` m, painted with a picture over the u range
+    // `u` (v running along the road, `per_m` of it to the metre)
+    let strip = |a: f32, b: f32, col: Color32, pic: Option<egui::TextureId>, u: (f32, f32), per_m: f32| {
+        let v = (bottom - top) / k * per_m;
+        quad(&p, pic, [Pos2::new(x(a), top), Pos2::new(x(b), top), Pos2::new(x(b), bottom), Pos2::new(x(a), bottom)], [Pos2::new(u.0, v), Pos2::new(u.1, v), Pos2::new(u.1, 0.0), Pos2::new(u.0, 0.0)], col);
+    };
+    let walk = Color32::from_rgb(150, 150, 145);
+    strip(-rw / 2.0 - s.footway_left(), -rw / 2.0, walk, foot_t, (0.187, 0.953), 0.2);
+    strip(rw / 2.0 + s.pocket, rw / 2.0 + s.pocket + s.footway_right(), walk, foot_t, (0.953, 0.187), 0.2);
+    strip(-rw / 2.0, rw / 2.0, Color32::from_rgb(70, 72, 76), road_t, (0.0, 1.0), 0.1);
+    if s.pocket > 0.0 {
+        let u = 0.5 / (s.lanes_fwd + s.lanes_back).max(1) as f32;
+        strip(rw / 2.0, rw / 2.0 + s.pocket, Color32::from_rgb(86, 90, 104), road_t, (u - 0.01, u + 0.01), 0.1);
+    }
+    // kerbs
+    let kerb = |m: f32| {
+        if s.kerb > 0.0 {
+            p.line_segment([Pos2::new(x(m), top), Pos2::new(x(m), bottom)], Stroke::new(2.0, Color32::from_gray(205)));
+        }
+    };
+    if s.footway_left() > 0.0 {
+        kerb(-rw / 2.0);
+    }
+    if s.footway_right() > 0.0 {
+        kerb(rw / 2.0 + s.pocket);
+    }
+    let mid = s.median_width();
+    let two_way = s.lanes_fwd > 0 && s.lanes_back > 0;
+    if mid > 0.0 {
+        let col = if s.median_tex.as_os_str().is_empty() { Color32::from_rgb(90, 92, 96) } else { Color32::from_rgb(86, 128, 74) };
+        strip(-mid / 2.0, mid / 2.0, col, med_t, (0.0, 1.0), 0.2);
+    }
+    let dash = |m: f32, col: Color32, solid: bool| {
+        let mut y = bottom;
+        while y > top {
+            let y2 = if solid { top } else { (y - 1.5 * k).max(top) };
+            p.line_segment([Pos2::new(x(m), y), Pos2::new(x(m), y2)], Stroke::new(1.5, col));
+            if solid {
+                break;
+            }
+            y -= 3.0 * k;
+        }
+    };
+    let white = Color32::from_gray(225);
+    let yellow = Color32::from_rgb(232, 190, 60);
+    let gap = if two_way { mid / 2.0 } else { 0.0 };
+    let arrow = |m: f32, up: bool, col: Color32| {
+        // (drawn, not written: a lane's arrow must show whatever fonts there are)
+        let dir = if up { -1.0 } else { 1.0 };
+        for y in [bottom - 22.0, top + 40.0] {
+            p.add(egui::Shape::convex_polygon(vec![Pos2::new(x(m), y + dir * 8.0), Pos2::new(x(m) - 5.0, y - dir * 6.0), Pos2::new(x(m) + 5.0, y - dir * 6.0)], col, Stroke::NONE));
+        }
+    };
+    let lanes = |first: f32, n: u8, up: bool| {
+        for i in 0..n {
+            let l = first + i as f32 * s.lane_width;
+            arrow(l + s.lane_width / 2.0, up, Color32::from_rgb(if up { 232 } else { 110 }, if up { 170 } else { 180 }, if up { 60 } else { 240 }));
+            if i > 0 {
+                dash(l, white, false);
+            }
+        }
+    };
+    if two_way {
+        lanes(-gap - s.lanes_back as f32 * s.lane_width, s.lanes_back, false);
+        lanes(gap, s.lanes_fwd, true);
+        if mid <= 0.0 {
+            dash(-0.1, yellow, true);
+            dash(0.1, yellow, true);
+        }
+    } else {
+        lanes(-rw / 2.0, s.lanes_fwd + s.lanes_back, s.lanes_fwd > 0);
+    }
+    if s.pocket > 0.0 {
+        dash(rw / 2.0, white, false);
+        arrow(rw / 2.0 + s.pocket / 2.0, true, Color32::from_rgb(120, 200, 150));
+        p.text(Pos2::new(x(rw / 2.0 + s.pocket / 2.0), (top + bottom) / 2.0), egui::Align2::CENTER_CENTER, "BUS", egui::FontId::proportional(11.0), Color32::from_rgb(120, 200, 150));
+    }
+    // 5 m scale
+    let sy = rect.bottom() - 9.0;
+    p.line_segment([Pos2::new(rect.left() + 10.0, sy), Pos2::new(rect.left() + 10.0 + 5.0 * k, sy)], Stroke::new(2.0, Color32::from_gray(170)));
+    p.text(Pos2::new(rect.left() + 16.0 + 5.0 * k, sy), egui::Align2::LEFT_CENTER, "5 m", egui::FontId::proportional(11.0), Color32::from_gray(170));
+    p.text(Pos2::new(rect.right() - 8.0, sy), egui::Align2::RIGHT_CENTER, format!("{:.1} m", total), egui::FontId::proportional(11.0), Color32::from_gray(170));
+}
+
+/// The spline seen from above or across it (the choice is kept while the maker is open).
+fn preview(ui: &mut egui::Ui, s: &RoadSpec, tex: &mut TexCache) {
+    let key = egui::Id::new("road maker view");
+    let mut top: bool = ui.data_mut(|d| *d.get_temp_mut_or_insert_with(key, || true));
+    ui.horizontal(|ui| {
+        ui.selectable_value(&mut top, true, icons::labelled(Icon::Map, tr("Top view", "Вид сверху")));
+        ui.selectable_value(&mut top, false, icons::labelled(Icon::SideView, tr("Side view", "Вид сбоку")));
+    });
+    ui.data_mut(|d| d.insert_temp(key, top));
+    if top { plan(ui, s, tex) } else { section(ui, s, tex) }
+}
+
 /// The road's cross-section, drawn as one looks along it.
-fn section(ui: &mut egui::Ui, s: &RoadSpec) {
+fn section(ui: &mut egui::Ui, s: &RoadSpec, tex: &mut TexCache) {
     let (rect, _) = ui.allocate_exact_size(Vec2::new(ui.available_width(), 100.0), Sense::hover());
     let p = ui.painter_at(rect);
     p.rect_filled(rect, 3.0, Color32::from_rgb(28, 30, 33));
     let total = s.total_width().max(1.0);
     let k = (rect.width() - 20.0) / total;
     let rw = s.roadway_width();
-    // (the road's middle is the origin; the footways make the picture lean to the wider side)
-    let centre = rect.center().x + (s.footway_left() - s.footway_right()) / 2.0 * k;
+    // (the road's middle is the origin; the footways and the pocket make the picture lean to
+    // the wider side)
+    let centre = rect.center().x + (s.footway_left() - s.footway_right() - s.pocket) / 2.0 * k;
     let x = |m: f32| centre + m * k;
     let base = rect.bottom() - 26.0;
     let lift = (s.kerb * k * 4.0).min(16.0);
+    let ctx = ui.ctx().clone();
+    let (road_t, foot_t, med_t) = (tex.get(&ctx, &s.roadway_tex), tex.get(&ctx, &s.footway_tex), tex.get(&ctx, &s.median_tex));
+    // a surface's top seen end on, painted with its picture over the u range `u`
+    let band = |a: f32, b: f32, y0: f32, col: Color32, pic: Option<egui::TextureId>, u: (f32, f32)| {
+        quad(&p, pic, [Pos2::new(x(a), y0), Pos2::new(x(b), y0), Pos2::new(x(b), base), Pos2::new(x(a), base)], [Pos2::new(u.0, 0.0), Pos2::new(u.1, 0.0), Pos2::new(u.1, 0.4), Pos2::new(u.0, 0.4)], col);
+    };
     // footways
-    for (a, b, w) in [(-rw / 2.0 - s.footway_left(), -rw / 2.0, s.footway_left()), (rw / 2.0, rw / 2.0 + s.footway_right(), s.footway_right())] {
-        if w > 0.0 {
-            p.rect_filled(Rect::from_min_max(Pos2::new(x(a), base - lift - 8.0), Pos2::new(x(b), base)), 0.0, Color32::from_rgb(150, 150, 145));
-        }
+    let walk = Color32::from_rgb(150, 150, 145);
+    if s.footway_left() > 0.0 {
+        band(-rw / 2.0 - s.footway_left(), -rw / 2.0, base - lift - 8.0, walk, foot_t, (0.187, 0.953));
+    }
+    if s.footway_right() > 0.0 {
+        band(rw / 2.0 + s.pocket, rw / 2.0 + s.pocket + s.footway_right(), base - lift - 8.0, walk, foot_t, (0.953, 0.187));
     }
     // the roadway, lanes, the middle
-    p.rect_filled(Rect::from_min_max(Pos2::new(x(-rw / 2.0), base - 8.0), Pos2::new(x(rw / 2.0), base)), 0.0, Color32::from_rgb(70, 72, 76));
+    band(-rw / 2.0, rw / 2.0, base - 8.0, Color32::from_rgb(70, 72, 76), road_t, (0.0, 1.0));
+    if s.pocket > 0.0 {
+        let u = 0.5 / (s.lanes_fwd + s.lanes_back).max(1) as f32;
+        band(rw / 2.0, rw / 2.0 + s.pocket, base - 8.0, Color32::from_rgb(86, 90, 104), road_t, (u - 0.01, u + 0.01));
+    }
     let two_way = s.lanes_fwd > 0 && s.lanes_back > 0;
     let mid = s.median_width();
     if mid > 0.0 {
         let own = !s.median_tex.as_os_str().is_empty();
         let col = if own { Color32::from_rgb(86, 128, 74) } else { Color32::from_rgb(90, 92, 96) };
         let up = if s.median_raised { lift } else { 0.0 };
-        p.rect_filled(Rect::from_min_max(Pos2::new(x(-mid / 2.0), base - 8.0 - up), Pos2::new(x(mid / 2.0), base)), 0.0, col);
+        band(-mid / 2.0, mid / 2.0, base - 8.0 - up, col, if own { med_t } else { road_t }, (0.0, 1.0));
     }
     let gap = if two_way { mid / 2.0 } else { 0.0 };
     let lane = |left: f32, fwd: bool| {
         let c = x(left + s.lane_width / 2.0);
         let y = base - 18.0;
         let col = if fwd { Color32::from_rgb(232, 170, 60) } else { Color32::from_rgb(110, 180, 240) };
-        p.text(Pos2::new(c, y), egui::Align2::CENTER_CENTER, if fwd { "▲" } else { "▼" }, egui::FontId::proportional(12.0), col);
+        p.text(Pos2::new(c, y), egui::Align2::CENTER_CENTER, if fwd { Icon::Up.ch() } else { Icon::Down.ch() }, Icon::font(14.0), col);
         p.line_segment([Pos2::new(x(left), base - 8.0), Pos2::new(x(left), base)], Stroke::new(1.0, Color32::from_gray(200)));
     };
     if two_way {
@@ -110,6 +238,12 @@ fn section(ui: &mut egui::Ui, s: &RoadSpec) {
 }
 
 impl RoadTypes {
+    /// The window open on a new road type in the maker (a check hook).
+    pub fn open_maker(&mut self, pocket: bool) {
+        self.open = true;
+        self.maker = Some(RoadSpec { name: tr("My road", "Моя дорога").into(), pocket: if pocket { 3.0 } else { 0.0 }, ..Default::default() });
+    }
+
     pub fn window(&mut self, ctx: &egui::Context, ed: &mut Editor, lib: &Library, roots: Option<&Roots>, actions: &mut Vec<Action>) {
         if !self.open {
             return;
@@ -145,12 +279,15 @@ impl RoadTypes {
                 ui.vertical(|ui| {
                     let mut cancel = false;
                     if let Some(spec) = &mut self.maker {
-                        Self::maker_ui(ui, spec, &mut self.textures, &mut self.tex_search, roots);
+                        Self::maker_ui(ui, spec, &mut self.textures, &mut self.tex_search, roots, &mut self.pics);
                         ui.add_space(6.0);
                         ui.horizontal(|ui| {
                             if ui.button(icons::labelled(Icon::CheckCircle, tr("Create the road type", "Создать тип дороги"))).clicked() {
                                 match spec.write(&roots.content) {
                                     Ok(rel) => {
+                                        if spec.pocket > 0.0 {
+                                            ed.pocket_type = Some(rel.clone());
+                                        }
                                         ed.road_type = Some(rel.clone());
                                         ed.set_tool(crate::editor::Tool::Roads);
                                         self.picked = Some(rel);
@@ -248,7 +385,7 @@ impl RoadTypes {
         self.open = open;
     }
 
-    fn maker_ui(ui: &mut egui::Ui, s: &mut RoadSpec, textures: &mut Option<Vec<PathBuf>>, search: &mut [String; 3], roots: &Roots) {
+    fn maker_ui(ui: &mut egui::Ui, s: &mut RoadSpec, textures: &mut Option<Vec<PathBuf>>, search: &mut [String; 3], roots: &Roots, tex: &mut TexCache) {
         ui.label(RichText::new(tr("Road maker", "Конструктор дороги")).strong().color(Color32::WHITE));
         ui.horizontal(|ui| {
             ui.label(tr("Start from", "Взять за основу"));
@@ -267,9 +404,11 @@ impl RoadTypes {
             ui.end_row();
             ui.label(tr("Lanes", "Полосы"));
             ui.horizontal(|ui| {
-                ui.add(egui::DragValue::new(&mut s.lanes_fwd).range(0..=5).prefix("▲ "));
-                ui.add(egui::DragValue::new(&mut s.lanes_back).range(0..=5).prefix("▼ "));
-                ui.label(RichText::new(tr("(▼ 0: one-way)", "(▼ 0: одностороннее)")).small().color(Color32::from_gray(140)));
+                ui.label(Icon::Up.text(15.0)).on_hover_text(tr("Lanes the way the road is drawn", "Полосы по ходу дороги"));
+                ui.add(egui::DragValue::new(&mut s.lanes_fwd).range(0..=5));
+                ui.label(Icon::Down.text(15.0)).on_hover_text(tr("Lanes against it", "Полосы против хода"));
+                ui.add(egui::DragValue::new(&mut s.lanes_back).range(0..=5));
+                ui.label(RichText::new(tr("(0 against: one-way)", "(0 против: одностороннее)")).small().color(Color32::from_gray(140)));
             });
             ui.end_row();
             ui.label(tr("Lane width", "Ширина полосы"));
@@ -296,8 +435,11 @@ impl RoadTypes {
             ui.label(tr("Kerb", "Бордюр"));
             ui.add(egui::Slider::new(&mut s.kerb, 0.0..=0.3).suffix(" m"));
             ui.end_row();
+            ui.label(tr("Bus pocket", "Автобусный карман"));
+            ui.add(egui::Slider::new(&mut s.pocket, 0.0..=4.0).suffix(" m")).on_hover_text(tr("A lane for buses to stop in, right of the roadway, before the footway. Lay a road type made so where a bay is wanted with the Bus pocket tool of the Roads tool", "Полоса для остановки автобусов справа от проезжей части, перед тротуаром. Дорогой такого типа делают карман инструментом «Автобусный карман» в «Дорогах»"));
+            ui.end_row();
         });
-        section(ui, s);
+        preview(ui, s, tex);
         let list = textures.get_or_insert_with(|| spline_textures(roots));
         let has_median = s.median_width() > 0.0;
         for (i, (label, hint)) in [(tr("Roadway texture", "Текстура проезжей части"), "asph"), (tr("Footway texture", "Текстура тротуара"), "side"), (tr("Middle strip texture", "Текстура разделителя"), "gras")].into_iter().enumerate() {

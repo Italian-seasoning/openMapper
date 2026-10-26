@@ -2263,3 +2263,79 @@ Close test drive	Zavřít zkušební jízdu
 Close the openOMSI session started from here (F5)	Zavřít relaci openOMSI spuštěnou odsud (F5)
 Choose where to start, the vehicle, the time and the weather, then drive the map in openOMSI (F5)	Vybrat místo startu, vozidlo, čas a počasí a projet mapu v openOMSI (F5)
 More switches: the window is too narrow for all of them	Další přepínače: okno je pro všechny příliš úzké
+Custom junction saved: the Roads tool's automatic junctions use it where roads meet as it was drawn	Vlastní křižovatka uložena: automatické křižovatky nástroje Silnice ji použijí všude, kde se silnice setkají tak, jak byla nakreslena
+The junction reaches past the map: add tiles there first	Křižovatka přesahuje mapu: nejdříve přidejte dlaždice
+draw some pieces first	nejdříve nakreslete nějaké díly
+mark the arms (where roads come in): at least two	označte ramena (kudy vedou silnice dovnitř): alespoň dvě
+the spline cannot be read	splajn nelze přečíst
+Draw some pieces first	Nejdříve nakreslete nějaké díly
+Complex junction	Složitá křižovatka
+Complex junction put on the map: its pieces are ordinary splines	Složitá křižovatka umístěna na mapu: její díly jsou obyčejné splajny
+Pick the road type of the pocket first	Nejdříve vyberte typ silnice zálivu
+The pocket's road type could not be read	Typ silnice zálivu se nepodařilo přečíst
+Press on a road	Klikněte na silnici
+This stretch is already of the pocket's road type	Tento úsek už má typ silnice zálivu
+The road type has no drawn width	Typ silnice nemá nakreslenou šířku
+Bus pocket	Autobusový záliv
+Bus pocket laid	Autobusový záliv vytvořen
+The road is too short here for a pocket of that length	Silnice je zde příliš krátká pro záliv takové délky
+The road cannot be cut there	Silnici zde nelze rozříznout
+Street with a bus pocket	Ulice s autobusovým zálivem
+Complex junction editor…	Editor složitých křižovatek…
+Use my custom junctions where they fit	Použít mé křižovatky, kde se hodí
+Custom junctions saved from the complex junction editor with Use in automatic junctions on	Vlastní křižovatky uložené z editoru složitých křižovatek se zapnutým „Použít v automatických křižovatkách“
+My junction	Moje křižovatka
+Complex junction editor	Editor složitých křižovatek
+Open a saved one…	Otevřít uloženou…
+Draw with	Kreslit pomocí
+Pick a piece or an arm; drag to move it; Delete removes it	Vyberte díl nebo rameno; tažením jej přesunete; Delete jej odstraní
+Click the start, then the end	Klikněte na začátek, pak na konec
+Arc	Oblouk
+Click the start, a point on the arc, then the end	Klikněte na začátek, na bod oblouku a pak na konec
+Arm	Rameno
+Where a road comes in: click the place, then a point out along the road	Kudy vede silnice dovnitř: klikněte na místo, pak na bod dál podél silnice
+Snap to the grid and to ends	Přichytávat k mřížce a ke konců
+Spline type	Typ splajnu
+Drawing with:	Kreslí se:
+Piece	Díl
+Lift	Výška
+Above the plate: markings lie a little over the asphalt they are painted on	Nad deskou: značení leží trochu nad asfaltem, na který je namalováno
+Type: the one chosen	Typ: vybraný
+Move under the one before	Přesunout pod předchozí
+any road type	libovolný typ silnice
+Road: the type chosen	Silnice: vybraný typ
+Any	Libovolná
+origin	počátek
+Click a piece or an arm to pick it, drag it to move it	Kliknutím na díl nebo rameno jej vyberete, tažením jej přesunete
+Click the start of the piece, then its end	Klikněte na začátek dílu, pak na jeho konec
+Click the start, a point the arc passes, then the end	Klikněte na začátek, na bod, kterým oblouk prochází, a pak na konec
+Click where a road comes in, then a point out along the road	Klikněte, kudy vede silnice dovnitř, pak na bod dál podél silnice
+Wheel zooms, right or middle drag pans, Esc cancels	Kolečko přibližuje, tažení pravým či prostředním tlačítkem posouvá, Esc ruší
+Pick a spline type on the left first	Nejdříve vlevo vyberte typ splajnu
+Too short: the points are too close	Příliš krátké: body jsou příliš blízko
+arms	ramen
+Put on the map	Umístit na mapu
+Its pieces become ordinary splines at the middle of the view, to move and change like any other. Nothing about them is automatic	Jeho díly se stanou obyčejnými splajny uprostřed pohledu, které lze přesouvat a upravovat jako jakékoli jiné. Nic z toho není automatické
+Use in automatic junctions	Použít v automatických křižovatkách
+Where the Roads tool makes a junction by itself and the roads meet as the arms do (same number, facing about the same ways, of the same road types), this one is put there	Kde nástroj Silnice vytváří křižovatku sám a silnice se setkají tak jako ramena (stejný počet, přibližně stejné směry, stejné typy silnic), použije se tato
+Save as a custom junction	Uložit jako vlastní křižovatku
+Written as a junction piece of the content folder (it shows in the catalogue under Junctions) with lanes for the AI; needs three arms or more	Zapíše se jako díl křižovatky do složky obsahu (v katalogu je pod Křižovatky) s pruhy pro AI; vyžaduje tři ramena nebo více
+Save the drawing	Uložit kresbu
+A custom junction is cut back to its arms where roads meet it; draw the roads' own types at the arms so they join cleanly.	Vlastní křižovatka ořízne silnice u ramen, kde se na ni napojují; u ramen kreslete typy silnic, které na ně navazují, aby spoje byly čisté.
+Saved as a custom junction	Uloženo jako vlastní křižovatka
+Bus Pocket Tool	Nástroj Autobusový záliv
+Tick it, then press on a road: a bus pocket of the road type chosen below is laid there. It stays on, pocket after pocket, until you untick it	Zapněte a klikejte na silnici: položí se tam autobusový záliv níže vybraného typu silnice. Zůstává zapnutý, záliv za zálivem, dokud jej nevypnete
+pick the pocket's road type	vyberte typ silnice zálivu
+Full width over	Plná šířka na
+Make a road type with a pocket…	Vytvořit typ silnice se zálivem…
+The stretch is cut out of the road and takes the pocket's type, its ends tapering to the road's width. Made in the road maker (Bus pocket).	Úsek se vyřízne ze silnice a převezme typ zálivu, jeho konce se zužují na šířku silnice. Vytváří se v tvůrci silnic (Autobusový záliv).
+Top view	Pohled shora
+Side view	Pohled z boku
+A lane for buses to stop in, right of the roadway, before the footway. Lay a road type made so where a bay is wanted with the Bus pocket tool of the Roads tool	Pruh pro zastavování autobusů vpravo od vozovky, před chodníkem. Silnici takto vytvořeného typu položte tam, kde je záliv potřeba, nástrojem Autobusový záliv v nástroji Silnice
+Saved as an object	Uloženo jako objekt
+Saved as an object: it is in the catalogue under Objects, to place like any other	Uloženo jako objekt: je v katalogu v Objektech a umisťuje se jako každý jiný
+Save as an object	Uložit jako objekt
+The whole drawing as one scenery object of the catalogue (its meshes, and lanes for the AI along its pieces), to place anywhere like any object; arms are not needed	Celý výkres jako jeden objekt scenérie z katalogu (jeho sítě a pruhy pro AI podél jeho částí), který lze umístit kamkoli jako každý objekt; ramena nejsou potřeba
+Lanes the way the road is drawn	Pruhy ve směru kreslení silnice
+Lanes against it	Pruhy proti směru
+(0 against: one-way)	(0 proti: jednosměrná)

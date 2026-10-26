@@ -2263,3 +2263,79 @@ Close test drive	Fechar test drive
 Close the openOMSI session started from here (F5)	Fechar a sessão do openOMSI iniciada a partir daqui (F5)
 Choose where to start, the vehicle, the time and the weather, then drive the map in openOMSI (F5)	Escolha o local de partida, o veículo, a hora e a meteorologia e depois conduza o mapa no openOMSI (F5)
 More switches: the window is too narrow for all of them	Mais interruptores: a janela é demasiado estreita para todos
+Custom junction saved: the Roads tool's automatic junctions use it where roads meet as it was drawn	Cruzamento personalizado guardado: as junções automáticas da ferramenta Estradas usam-no onde as estradas se encontram como foi desenhado
+The junction reaches past the map: add tiles there first	O cruzamento ultrapassa o mapa: adicione primeiro mosaicos aí
+draw some pieces first	desenhe primeiro algumas peças
+mark the arms (where roads come in): at least two	marque os braços (onde as estradas entram): pelo menos dois
+the spline cannot be read	não é possível ler o spline
+Draw some pieces first	Desenhe primeiro algumas peças
+Complex junction	Cruzamento complexo
+Complex junction put on the map: its pieces are ordinary splines	Cruzamento complexo colocado no mapa: as suas peças são splines normais
+Pick the road type of the pocket first	Escolha primeiro o tipo de estrada do bolsa
+The pocket's road type could not be read	Não foi possível ler o tipo de estrada do bolsa
+Press on a road	Prima sobre uma estrada
+This stretch is already of the pocket's road type	Este troço já é do tipo de estrada do bolsa
+The road type has no drawn width	O tipo de estrada não tem largura desenhada
+Bus pocket	Bolsa de autocarros
+Bus pocket laid	Bolsa de autocarros criada
+The road is too short here for a pocket of that length	A estrada é demasiado curta aqui para um bolsa desse comprimento
+The road cannot be cut there	A estrada não pode ser cortada aí
+Street with a bus pocket	Rua com bolsa de autocarros
+Complex junction editor…	Editor de cruzamentos complexos…
+Use my custom junctions where they fit	Usar os meus cruzamentos onde encaixarem
+Custom junctions saved from the complex junction editor with Use in automatic junctions on	Cruzamentos personalizados guardados no editor de cruzamentos complexos com Usar em cruzamentos automáticos ativado
+My junction	O meu cruzamento
+Complex junction editor	Editor de cruzamentos complexos
+Open a saved one…	Abrir um guardado…
+Draw with	Desenhar com
+Pick a piece or an arm; drag to move it; Delete removes it	Escolha uma peça ou um braço; arraste para mover; Delete remove
+Click the start, then the end	Clique no início e depois no fim
+Arc	Arco
+Click the start, a point on the arc, then the end	Clique no início, num ponto do arco e depois no fim
+Arm	Braço
+Where a road comes in: click the place, then a point out along the road	Onde entra uma estrada: clique no local e depois num ponto ao longo da estrada, para fora
+Snap to the grid and to ends	Alinhar à grelha e às extremidades
+Spline type	Tipo de spline
+Drawing with:	A desenhar com:
+Piece	Peça
+Lift	Elevação
+Above the plate: markings lie a little over the asphalt they are painted on	Acima da placa: as marcações ficam um pouco acima do asfalto onde estão pintadas
+Type: the one chosen	Tipo: o escolhido
+Move under the one before	Colocar por baixo da anterior
+any road type	qualquer tipo de estrada
+Road: the type chosen	Estrada: o tipo escolhido
+Any	Qualquer
+origin	origem
+Click a piece or an arm to pick it, drag it to move it	Clique numa peça ou num braço para a escolher e arraste para a mover
+Click the start of the piece, then its end	Clique no início da peça e depois no seu fim
+Click the start, a point the arc passes, then the end	Clique no início, num ponto por onde passa o arco e depois no fim
+Click where a road comes in, then a point out along the road	Clique onde entra uma estrada e depois num ponto ao longo da estrada, para fora
+Wheel zooms, right or middle drag pans, Esc cancels	A roda faz zoom, arrastar com o botão direito ou do meio desloca, Esc cancela
+Pick a spline type on the left first	Escolha primeiro um tipo de spline à esquerda
+Too short: the points are too close	Demasiado curto: os pontos estão demasiado próximos
+arms	braços
+Put on the map	Colocar no mapa
+Its pieces become ordinary splines at the middle of the view, to move and change like any other. Nothing about them is automatic	As suas peças passam a ser splines normais no centro da vista, para mover e alterar como quaisquer outros. Nada nelas é automático
+Use in automatic junctions	Usar em cruzamentos automáticos
+Where the Roads tool makes a junction by itself and the roads meet as the arms do (same number, facing about the same ways, of the same road types), this one is put there	Onde a ferramenta Estradas cria um cruzamento sozinha e as estradas se encontram como os braços (mesmo número, viradas aproximadamente para os mesmos lados, dos mesmos tipos de estrada), este é colocado
+Save as a custom junction	Guardar como cruzamento personalizado
+Written as a junction piece of the content folder (it shows in the catalogue under Junctions) with lanes for the AI; needs three arms or more	Escrito como uma peça de cruzamento da pasta de conteúdo (aparece no catálogo em Cruzamentos) com faixas para a IA; requer três braços ou mais
+Save the drawing	Guardar o desenho
+A custom junction is cut back to its arms where roads meet it; draw the roads' own types at the arms so they join cleanly.	Um cruzamento personalizado é recortado até aos seus braços onde as estradas o encontram; desenhe nos braços os tipos de estrada próprios das estradas para que liguem bem.
+Saved as a custom junction	Guardado como cruzamento personalizado
+Bus Pocket Tool	Ferramenta Bolsa de Autocarros
+Tick it, then press on a road: a bus pocket of the road type chosen below is laid there. It stays on, pocket after pocket, until you untick it	Assinale e prima sobre uma estrada: é aí criada uma bolsa de autocarros do tipo de estrada escolhido abaixo. Fica ativa, bolsa após bolsa, até a desassinalar
+pick the pocket's road type	escolha o tipo de estrada do bolsa
+Full width over	Largura total em
+Make a road type with a pocket…	Criar um tipo de estrada com bolsa…
+The stretch is cut out of the road and takes the pocket's type, its ends tapering to the road's width. Made in the road maker (Bus pocket).	O troço é recortado da estrada e adota o tipo da bolsa, com as extremidades a estreitar até à largura da estrada. Criado no criador de estradas (Bolsa de autocarros).
+Top view	Vista de cima
+Side view	Vista lateral
+A lane for buses to stop in, right of the roadway, before the footway. Lay a road type made so where a bay is wanted with the Bus pocket tool of the Roads tool	Uma faixa para os autocarros pararem, à direita da faixa de rodagem, antes do passeio. Crie com a ferramenta Bolsa de autocarros da ferramenta Estradas uma estrada de um tipo feito assim onde se pretenda uma baía
+Saved as an object	Guardado como objeto
+Saved as an object: it is in the catalogue under Objects, to place like any other	Guardado como objeto: está no catálogo, em Objetos, e coloca-se como qualquer outro
+Save as an object	Guardar como objeto
+The whole drawing as one scenery object of the catalogue (its meshes, and lanes for the AI along its pieces), to place anywhere like any object; arms are not needed	O desenho inteiro como um único objeto de cenário do catálogo (as suas malhas e faixas para a IA ao longo das suas peças), para colocar em qualquer lado como qualquer objeto; os braços não são necessários
+Lanes the way the road is drawn	Faixas no sentido do traçado da estrada
+Lanes against it	Faixas em sentido contrário
+(0 against: one-way)	(0 em contrário: sentido único)

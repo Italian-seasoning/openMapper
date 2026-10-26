@@ -2263,3 +2263,79 @@ Close test drive	關閉試駕
 Close the openOMSI session started from here (F5)	關閉從此處啟動的 openOMSI 工作階段 (F5)
 Choose where to start, the vehicle, the time and the weather, then drive the map in openOMSI (F5)	選擇起點、車輛、時間和天氣，然後在 openOMSI 中試駕地圖 (F5)
 More switches: the window is too narrow for all of them	更多開關：視窗太窄，放不下全部
+Custom junction saved: the Roads tool's automatic junctions use it where roads meet as it was drawn	已儲存自訂路口：「道路」工具的自動路口會在道路依繪製方式交會處使用它
+The junction reaches past the map: add tiles there first	路口超出地圖範圍：請先在該處新增圖磚
+draw some pieces first	請先繪製一些零件
+mark the arms (where roads come in): at least two	標示進出口（道路進入之處）：至少兩個
+the spline cannot be read	無法讀取樣條
+Draw some pieces first	請先繪製一些零件
+Complex junction	複合路口
+Complex junction put on the map: its pieces are ordinary splines	複合路口已放到地圖上：其零件為一般樣條
+Pick the road type of the pocket first	請先選擇停靠彎的道路類型
+The pocket's road type could not be read	無法讀取停靠彎的道路類型
+Press on a road	請按一下道路
+This stretch is already of the pocket's road type	此路段已是停靠彎的道路類型
+The road type has no drawn width	此道路類型沒有繪製寬度
+Bus pocket	公車停靠彎
+Bus pocket laid	已建立公車停靠彎
+The road is too short here for a pocket of that length	此處道路太短，無法容納該長度的停靠彎
+The road cannot be cut there	無法在該處切開道路
+Street with a bus pocket	附公車停靠彎的街道
+Complex junction editor…	複合路口編輯器…
+Use my custom junctions where they fit	在適用處使用我的自訂路口
+Custom junctions saved from the complex junction editor with Use in automatic junctions on	在複合路口編輯器中儲存且已開啟「用於自動路口」的自訂路口
+My junction	我的路口
+Complex junction editor	複合路口編輯器
+Open a saved one…	開啟已儲存的…
+Draw with	繪製方式
+Pick a piece or an arm; drag to move it; Delete removes it	選取零件或進出口；拖曳可移動；按 Delete 可刪除
+Click the start, then the end	點一下起點，再點終點
+Arc	弧線
+Click the start, a point on the arc, then the end	點一下起點、弧線上的一點，再點終點
+Arm	進出口
+Where a road comes in: click the place, then a point out along the road	道路進入之處：點一下該處，再點沿道路向外的一點
+Snap to the grid and to ends	對齊格線與端點
+Spline type	樣條類型
+Drawing with:	目前繪製：
+Piece	零件
+Lift	抬高
+Above the plate: markings lie a little over the asphalt they are painted on	位於路面板上方：標線會略高於所繪的柏油路面
+Type: the one chosen	類型：已選擇的類型
+Move under the one before	移到前一個之下
+any road type	任何道路類型
+Road: the type chosen	道路：已選擇的類型
+Any	任何
+origin	原點
+Click a piece or an arm to pick it, drag it to move it	點一下零件或進出口即可選取，拖曳可移動
+Click the start of the piece, then its end	點一下零件的起點，再點其終點
+Click the start, a point the arc passes, then the end	點一下起點、弧線經過的一點，再點終點
+Click where a road comes in, then a point out along the road	點一下道路進入之處，再點沿道路向外的一點
+Wheel zooms, right or middle drag pans, Esc cancels	滾輪縮放，按住右鍵或中鍵拖曳可平移，Esc 取消
+Pick a spline type on the left first	請先在左側選擇樣條類型
+Too short: the points are too close	太短：兩點距離太近
+arms	進出口
+Put on the map	放到地圖上
+Its pieces become ordinary splines at the middle of the view, to move and change like any other. Nothing about them is automatic	其零件會在檢視中央變成一般樣條，可像其他樣條一樣移動與修改。不含任何自動功能
+Use in automatic junctions	用於自動路口
+Where the Roads tool makes a junction by itself and the roads meet as the arms do (same number, facing about the same ways, of the same road types), this one is put there	當「道路」工具自動建立路口，且道路的交會方式與進出口相符（數量相同、方向大致相同、道路類型相同）時，就會放置此路口
+Save as a custom junction	儲存為自訂路口
+Written as a junction piece of the content folder (it shows in the catalogue under Junctions) with lanes for the AI; needs three arms or more	以路口零件的形式寫入內容資料夾（顯示於目錄的「路口」下），並附 AI 用車道；需要三個以上的進出口
+Save the drawing	儲存繪圖
+A custom junction is cut back to its arms where roads meet it; draw the roads' own types at the arms so they join cleanly.	道路與自訂路口相接處，路口會在進出口處截斷道路；請在進出口處繪製與道路相同的類型，以便順利銜接。
+Saved as a custom junction	已儲存為自訂路口
+Bus Pocket Tool	公車停靠彎工具
+Tick it, then press on a road: a bus pocket of the road type chosen below is laid there. It stays on, pocket after pocket, until you untick it	勾選後在道路上按一下：會在該處建立下方所選道路類型的公車停靠彎。工具會持續啟用，可連續建立，直到取消勾選
+pick the pocket's road type	選擇停靠彎的道路類型
+Full width over	全寬度，長
+Make a road type with a pocket…	建立含停靠彎的道路類型…
+The stretch is cut out of the road and takes the pocket's type, its ends tapering to the road's width. Made in the road maker (Bus pocket).	該路段會從道路中切出並改用停靠彎的類型，兩端逐漸縮窄至道路寬度。類型在道路製作器（公車停靠彎）中建立。
+Top view	俯視圖
+Side view	側視圖
+A lane for buses to stop in, right of the roadway, before the footway. Lay a road type made so where a bay is wanted with the Bus pocket tool of the Roads tool	供公車停靠的車道，位於行車道右側、人行道之前。需要停靠彎的地方，請以「道路」工具的公車停靠彎工具鋪設如此建立的道路類型
+Saved as an object	已儲存為物件
+Saved as an object: it is in the catalogue under Objects, to place like any other	已儲存為物件:位於目錄的「物件」下,可像其他物件一樣放置
+Save as an object	儲存為物件
+The whole drawing as one scenery object of the catalogue (its meshes, and lanes for the AI along its pieces), to place anywhere like any object; arms are not needed	將整幅繪圖作為目錄中的一個場景物件(其網格,以及沿各部分的 AI 車道),可像任何物件一樣放置在任何地方;不需要分支
+Lanes the way the road is drawn	順著道路繪製方向的車道
+Lanes against it	逆向車道
+(0 against: one-way)	(逆向 0:單向道)

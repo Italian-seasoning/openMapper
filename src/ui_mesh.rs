@@ -503,10 +503,10 @@ pub fn object_panel(ui: &mut egui::Ui, ed: &mut Editor, bake: &mut BakeChoice, a
                     if ui.small_button(tr("Apply", "Применить")).on_hover_text(tr("Make it part of the mesh", "Сделать частью меша")).clicked() {
                         action = Some((k, 1));
                     }
-                    if k + 1 < n_mods && ui.small_button("↓").clicked() {
+                    if k + 1 < n_mods && ui.small_button(crate::icons::Icon::Down.text(14.0)).clicked() {
                         action = Some((k, 2));
                     }
-                    if k > 0 && ui.small_button("↑").clicked() {
+                    if k > 0 && ui.small_button(crate::icons::Icon::Up.text(14.0)).clicked() {
                         action = Some((k, 3));
                     }
                 });
@@ -624,7 +624,7 @@ pub fn object_panel(ui: &mut egui::Ui, ed: &mut Editor, bake: &mut BakeChoice, a
             });
             ui.horizontal_wrapped(|ui| {
                 for (slot, label, now) in [(TexSlot::Normal, tr("Normal map", "Нормали"), mat.normal_map.clone()), (TexSlot::Orm, tr("ORM map", "ORM"), mat.orm_map.clone()), (TexSlot::Night, tr("Night texture", "Ночная"), mat.night_map.clone()), (TexSlot::Light, tr("Light map", "Карта света"), mat.light_map.clone())] {
-                    let text = if now.is_some() { format!("✓ {label}") } else { label.to_string() };
+                    let text = if now.is_some() { format!("{} {label}", crate::icons::Icon::CheckCircle.ch()) } else { label.to_string() };
                     if ui.small_button(text).on_hover_text(now.unwrap_or_else(|| tr("Choose a picture", "Выбрать картинку").to_string())).clicked() {
                         actions.push(Action::Mesh(MeshAction::PickTexture(i, slot)));
                     }

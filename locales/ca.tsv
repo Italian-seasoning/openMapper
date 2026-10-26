@@ -2263,3 +2263,79 @@ Close test drive	Tanca la prova de conducció
 Close the openOMSI session started from here (F5)	Tanca la sessió d'openOMSI iniciada des d'aquí (F5)
 Choose where to start, the vehicle, the time and the weather, then drive the map in openOMSI (F5)	Triar el punt d'inici, el vehicle, l'hora i el temps, i recórrer el mapa a openOMSI (F5)
 More switches: the window is too narrow for all of them	Més interruptors: la finestra és massa estreta per a tots
+Custom junction saved: the Roads tool's automatic junctions use it where roads meet as it was drawn	Encreuament propi desat: els encreuaments automàtics de l'eina Carreteres l'usen allà on les carreteres es troben tal com es va dibuixar
+The junction reaches past the map: add tiles there first	L'encreuament sobresurt del mapa: afegiu-hi primer algunes cel·les
+draw some pieces first	dibuixeu primer algunes peces
+mark the arms (where roads come in): at least two	marqueu els braços (per on entren les carreteres): almenys dos
+the spline cannot be read	no es pot llegir l'spline
+Draw some pieces first	Dibuixeu primer algunes peces
+Complex junction	Encreuament complex
+Complex junction put on the map: its pieces are ordinary splines	Encreuament complex col·locat al mapa: les seves peces són splines normals
+Pick the road type of the pocket first	Trieu primer el tipus de carretera del badiu
+The pocket's road type could not be read	No s'ha pogut llegir el tipus de carretera del badiu
+Press on a road	Premeu sobre una carretera
+This stretch is already of the pocket's road type	Aquest tram ja és del tipus de carretera del badiu
+The road type has no drawn width	El tipus de carretera no té amplada dibuixada
+Bus pocket	Badiu d'autobús
+Bus pocket laid	Badiu d'autobús creat
+The road is too short here for a pocket of that length	La carretera és massa curta aquí per a un badiu d'aquesta longitud
+The road cannot be cut there	La carretera no es pot tallar allà
+Street with a bus pocket	Carrer amb badiu d'autobús
+Complex junction editor…	Editor d'encreuaments complexos…
+Use my custom junctions where they fit	Usa els meus encreuaments propis on encaixin
+Custom junctions saved from the complex junction editor with Use in automatic junctions on	Encreuaments propis desats des de l'editor d'encreuaments complexos amb Usa en encreuaments automàtics activat
+My junction	El meu encreuament
+Complex junction editor	Editor d'encreuaments complexos
+Open a saved one…	Obre'n un de desat…
+Draw with	Dibuixa amb
+Pick a piece or an arm; drag to move it; Delete removes it	Trieu una peça o un braç; arrossegueu per moure'l; Supr l'elimina
+Click the start, then the end	Cliqueu l'inici i després el final
+Arc	Arc
+Click the start, a point on the arc, then the end	Cliqueu l'inici, un punt de l'arc i després el final
+Arm	Braç
+Where a road comes in: click the place, then a point out along the road	Per on entra una carretera: cliqueu el lloc i després un punt cap a fora al llarg de la carretera
+Snap to the grid and to ends	Ajusta a la quadrícula i als extrems
+Spline type	Tipus d'spline
+Drawing with:	Es dibuixa amb:
+Piece	Peça
+Lift	Elevació
+Above the plate: markings lie a little over the asphalt they are painted on	Sobre la placa: les marques queden una mica per sobre de l'asfalt on estan pintades
+Type: the one chosen	Tipus: el triat
+Move under the one before	Posa sota l'anterior
+any road type	qualsevol tipus de carretera
+Road: the type chosen	Carretera: el tipus triat
+Any	Qualsevol
+origin	origen
+Click a piece or an arm to pick it, drag it to move it	Cliqueu una peça o un braç per triar-lo, arrossegueu-lo per moure'l
+Click the start of the piece, then its end	Cliqueu l'inici de la peça i després el seu final
+Click the start, a point the arc passes, then the end	Cliqueu l'inici, un punt per on passa l'arc i després el final
+Click where a road comes in, then a point out along the road	Cliqueu per on entra una carretera i després un punt cap a fora al llarg de la carretera
+Wheel zooms, right or middle drag pans, Esc cancels	La roda fa zoom, arrossegar amb el botó dret o central desplaça, Esc cancel·la
+Pick a spline type on the left first	Trieu primer un tipus d'spline a l'esquerra
+Too short: the points are too close	Massa curt: els punts són massa a prop
+arms	braços
+Put on the map	Posa al mapa
+Its pieces become ordinary splines at the middle of the view, to move and change like any other. Nothing about them is automatic	Les seves peces esdevenen splines normals al centre de la vista, per moure-les i canviar-les com qualsevol altra. Res en elles és automàtic
+Use in automatic junctions	Usa en encreuaments automàtics
+Where the Roads tool makes a junction by itself and the roads meet as the arms do (same number, facing about the same ways, of the same road types), this one is put there	On l'eina Carreteres fa un encreuament per si sola i les carreteres es troben com ho fan els braços (el mateix nombre, orientades més o menys igual, dels mateixos tipus de carretera), s'hi col·loca aquest
+Save as a custom junction	Desa com a encreuament propi
+Written as a junction piece of the content folder (it shows in the catalogue under Junctions) with lanes for the AI; needs three arms or more	S'escriu com a peça d'encreuament de la carpeta de contingut (apareix al catàleg a Encreuaments) amb carrils per a la IA; calen tres braços o més
+Save the drawing	Desa el dibuix
+A custom junction is cut back to its arms where roads meet it; draw the roads' own types at the arms so they join cleanly.	Un encreuament propi es retalla fins als seus braços on les carreteres l'hi toquen; dibuixeu als braços els tipus de carretera propis perquè s'uneixin bé.
+Saved as a custom junction	Desat com a encreuament propi
+Bus Pocket Tool	Eina Badiu d'autobús
+Tick it, then press on a road: a bus pocket of the road type chosen below is laid there. It stays on, pocket after pocket, until you untick it	Activeu-la i premeu sobre una carretera: s'hi crea un badiu d'autobús del tipus de carretera triat a sota. Continua activa, badiu rere badiu, fins que la desactiveu
+pick the pocket's road type	trieu el tipus de carretera del badiu
+Full width over	Amplada completa sobre
+Make a road type with a pocket…	Crea un tipus de carretera amb badiu…
+The stretch is cut out of the road and takes the pocket's type, its ends tapering to the road's width. Made in the road maker (Bus pocket).	El tram es talla de la carretera i pren el tipus del badiu, i els extrems s'estrenyen fins a l'amplada de la carretera. Es fa a l'editor de carreteres (Badiu d'autobús).
+Top view	Vista superior
+Side view	Vista lateral
+A lane for buses to stop in, right of the roadway, before the footway. Lay a road type made so where a bay is wanted with the Bus pocket tool of the Roads tool	Un carril perquè s'hi aturin els autobusos, a la dreta de la calçada, abans de la vorera. Una carretera d'aquest tipus es posa on es vol un badiu amb l'eina Badiu d'autobús de l'eina Carreteres
+Saved as an object	Desat com a objecte
+Saved as an object: it is in the catalogue under Objects, to place like any other	Desat com a objecte: és al catàleg, a Objectes, i es col·loca com qualsevol altre
+Save as an object	Desa com a objecte
+The whole drawing as one scenery object of the catalogue (its meshes, and lanes for the AI along its pieces), to place anywhere like any object; arms are not needed	Tot el dibuix com un sol objecte d'escenari del catàleg (les malles i els carrils per a la IA al llarg de les peces), que es col·loca on es vulgui com qualsevol objecte; no calen braços
+Lanes the way the road is drawn	Carrils en el sentit del traçat
+Lanes against it	Carrils en sentit contrari
+(0 against: one-way)	(0 en contra: sentit únic)

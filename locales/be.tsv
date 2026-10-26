@@ -2263,3 +2263,79 @@ Close test drive	Закрыць тэст-драйв
 Close the openOMSI session started from here (F5)	Закрыць сесію openOMSI, запушчаную адсюль (F5)
 Choose where to start, the vehicle, the time and the weather, then drive the map in openOMSI (F5)	Абраць месца старту, транспарт, час і надвор'е і праехаць карту ў openOMSI (F5)
 More switches: the window is too narrow for all of them	Больш пераключальнікаў: акно занадта вузкае для ўсіх
+Custom junction saved: the Roads tool's automatic junctions use it where roads meet as it was drawn	Уласнае скрыжаванне захавана: аўтаматычныя скрыжаванні «Дарог» ставяць яго там, дзе дарогі сыходзяцца так, як намалявана
+The junction reaches past the map: add tiles there first	Скрыжаванне выходзіць за карту: спачатку дадайце тайлы
+draw some pieces first	спачатку намалюйце дэталі
+mark the arms (where roads come in): at least two	пазначце ўезды (дзе ўваходзяць дарогі): не менш за два
+the spline cannot be read	сплайн не чытаецца
+Draw some pieces first	Спачатку намалюйце дэталі
+Complex junction	Складанае скрыжаванне
+Complex junction put on the map: its pieces are ordinary splines	Складанае скрыжаванне пастаўлена на карту: яго дэталі — звычайныя сплайны
+Pick the road type of the pocket first	Спачатку абярыце тып дарогі для кішэні
+The pocket's road type could not be read	Не ўдалося прачытаць тып дарогі кішэні
+Press on a road	Націсніце на дарогу
+This stretch is already of the pocket's road type	Гэты ўчастак ужо таго тыпу, што і кішэня
+The road type has no drawn width	У тыпу дарогі няма намаляванай шырыні
+Bus pocket	Аўтобусная кішэня
+Bus pocket laid	Аўтобусная кішэня створана
+The road is too short here for a pocket of that length	Дарога тут занадта кароткая для кішэні такой даўжыні
+The road cannot be cut there	Тут дарогу нельга разрэзаць
+Street with a bus pocket	Вуліца з аўтобуснай кішэняй
+Complex junction editor…	Рэдактар складаных скрыжаванняў…
+Use my custom junctions where they fit	Ставіць мае скрыжаванні, дзе яны падыходзяць
+Custom junctions saved from the complex junction editor with Use in automatic junctions on	Уласныя скрыжаванні, захаваныя ў рэдактары складаных скрыжаванняў з уключаным «Выкарыстоўваць у аўта-скрыжаваннях»
+My junction	Маё скрыжаванне
+Complex junction editor	Рэдактар складаных скрыжаванняў
+Open a saved one…	Адкрыць захаванае…
+Draw with	Маляваць
+Pick a piece or an arm; drag to move it; Delete removes it	Абраць дэталь або ўезд; перацягнуць; Delete выдаляе
+Click the start, then the end	Клік у пачатак, затым у канец
+Arc	Дуга
+Click the start, a point on the arc, then the end	Клік у пачатак, у кропку дугі, затым у канец
+Arm	Уезд
+Where a road comes in: click the place, then a point out along the road	Дзе ўваходзіць дарога: клік у месца, затым у кропку ўздоўж дарогі вонкі
+Snap to the grid and to ends	Прывязка да сеткі і канцоў
+Spline type	Тып сплайна
+Drawing with:	Малюецца:
+Piece	Дэталь
+Lift	Вышыня
+Above the plate: markings lie a little over the asphalt they are painted on	Над плітой: разметка ляжыць крыху вышэй за асфальт, на якім намалявана
+Type: the one chosen	Тып: абраны
+Move under the one before	Паставіць пад папярэднюю
+any road type	любы тып дарогі
+Road: the type chosen	Дарога: абраны тып
+Any	Любая
+origin	пачатак
+Click a piece or an arm to pick it, drag it to move it	Клік па дэталі або ўездзе абірае яе, перацягванне рухае
+Click the start of the piece, then its end	Клік у пачатак дэталі, затым у яе канец
+Click the start, a point the arc passes, then the end	Клік у пачатак, у кропку дугі, затым у канец
+Click where a road comes in, then a point out along the road	Клік, дзе ўваходзіць дарога, затым кропка ўздоўж дарогі вонкі
+Wheel zooms, right or middle drag pans, Esc cancels	Кола — маштаб, правая/сярэдняя кнопка — зрух, Esc — адмена
+Pick a spline type on the left first	Спачатку абярыце тып сплайна злева
+Too short: the points are too close	Занадта кораткі: кропкі занадта блізка
+arms	уездаў
+Put on the map	Паставіць на карту
+Its pieces become ordinary splines at the middle of the view, to move and change like any other. Nothing about them is automatic	Дэталі становяцца звычайнымі сплайнамі ў цэнтры выгляду, іх рухаюць і змяняюць як любыя іншыя. Нічога аўтаматычнага
+Use in automatic junctions	Выкарыстоўваць у аўта-скрыжаваннях
+Where the Roads tool makes a junction by itself and the roads meet as the arms do (same number, facing about the same ways, of the same road types), this one is put there	Дзе інструмент «Дарогі» робіць скрыжаванне сам і дарогі сыходзяцца як уезды (тая ж колькасць, прыкладна тыя ж напрамкі, тыя ж тыпы дарог), ставіцца гэтае
+Save as a custom junction	Захаваць як уласнае скрыжаванне
+Written as a junction piece of the content folder (it shows in the catalogue under Junctions) with lanes for the AI; needs three arms or more	Запісваецца як скрыжаванне ў тэчцы кантэнту (бачна ў каталогу «Скрыжаванні») з паласамі для ШІ; патрэбна тры ўезды або больш
+Save the drawing	Захаваць малюнак
+A custom junction is cut back to its arms where roads meet it; draw the roads' own types at the arms so they join cleanly.	Уласнае скрыжаванне абразае дарогі па ўездах; малюйце ля ўездаў тыпы дарог, якія падыдуць.
+Saved as a custom junction	Захавана як уласнае скрыжаванне
+Bus Pocket Tool	Інструмент «Аўтобусная кішэня»
+Tick it, then press on a road: a bus pocket of the road type chosen below is laid there. It stays on, pocket after pocket, until you untick it	Уключыце і націскайце на дарогу: там з’явіцца аўтобусная кішэня абранага ніжэй тыпу дарогі. Інструмент працуе, пакуль вы яго не выключыце
+pick the pocket's road type	абярыце тып дарогі кішэні
+Full width over	Поўная шырыня на
+Make a road type with a pocket…	Стварыць тып дарогі з кішэняй…
+The stretch is cut out of the road and takes the pocket's type, its ends tapering to the road's width. Made in the road maker (Bus pocket).	Участак выразаецца з дарогі і атрымлівае тып кішэні, канцы звужаюцца да шырыні дарогі. Тып робіцца ў канструктары дарогі («Аўтобусная кішэня»).
+Top view	Выгляд зверху
+Side view	Выгляд збоку
+A lane for buses to stop in, right of the roadway, before the footway. Lay a road type made so where a bay is wanted with the Bus pocket tool of the Roads tool	Паласа для прыпынку аўтобусаў справа ад праезнай часткі, перад тратуарам. Дарогай такога тыпу робяць кішэню інструментам «Аўтобусная кішэня» ў «Дарогах»
+Saved as an object	Захавана як аб’ект
+Saved as an object: it is in the catalogue under Objects, to place like any other	Захавана як аб’ект: ён у каталогу ў раздзеле «Аб’екты», размяшчаецца як любы іншы
+Save as an object	Захаваць як аб’ект
+The whole drawing as one scenery object of the catalogue (its meshes, and lanes for the AI along its pieces), to place anywhere like any object; arms are not needed	Увесь малюнак як адзін аб’ект сцэнерыі каталога (яго меши і палосы для ШІ ўздоўж частак), размяшчаецца дзе заўгодна як звычайны аб’ект; заезды не патрэбныя
+Lanes the way the road is drawn	Палосы па ходзе дарогі
+Lanes against it	Палосы супраць ходу
+(0 against: one-way)	(0 супраць: аднабаковая)

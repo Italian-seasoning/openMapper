@@ -2263,3 +2263,79 @@ Close test drive	テストドライブを閉じる
 Close the openOMSI session started from here (F5)	ここから開始した openOMSI のセッションを閉じる (F5)
 Choose where to start, the vehicle, the time and the weather, then drive the map in openOMSI (F5)	開始位置、車両、時刻、天候を選んで、openOMSI でマップを走行します (F5)
 More switches: the window is too narrow for all of them	その他のスイッチ：ウィンドウが狭くて全部は表示できません
+Custom junction saved: the Roads tool's automatic junctions use it where roads meet as it was drawn	カスタム交差点を保存しました: 「道路」ツールの自動交差点は、道路が描いたとおりに交わる場所でこれを使います
+The junction reaches past the map: add tiles there first	交差点がマップの外にはみ出しています: 先にタイルを追加してください
+draw some pieces first	先にパーツを描いてください
+mark the arms (where roads come in): at least two	アーム(道路が入ってくる位置)を2つ以上指定してください
+the spline cannot be read	スプラインを読み取れません
+Draw some pieces first	先にパーツを描いてください
+Complex junction	複合交差点
+Complex junction put on the map: its pieces are ordinary splines	複合交差点をマップに配置しました: パーツは通常のスプラインです
+Pick the road type of the pocket first	先にポケットの道路タイプを選んでください
+The pocket's road type could not be read	ポケットの道路タイプを読み取れませんでした
+Press on a road	道路をクリックしてください
+This stretch is already of the pocket's road type	この区間はすでにポケットと同じ道路タイプです
+The road type has no drawn width	この道路タイプには描画幅がありません
+Bus pocket	バスポケット
+Bus pocket laid	バスポケットを作成しました
+The road is too short here for a pocket of that length	この道路は、その長さのポケットには短すぎます
+The road cannot be cut there	そこでは道路を分割できません
+Street with a bus pocket	バスポケット付きの街路
+Complex junction editor…	複合交差点エディタ…
+Use my custom junctions where they fit	合う場所でカスタム交差点を使う
+Custom junctions saved from the complex junction editor with Use in automatic junctions on	「自動交差点で使用」をオンにして複合交差点エディタから保存したカスタム交差点
+My junction	マイ交差点
+Complex junction editor	複合交差点エディタ
+Open a saved one…	保存済みを開く…
+Draw with	描画に使うもの
+Pick a piece or an arm; drag to move it; Delete removes it	パーツまたはアームを選択、ドラッグで移動、Delete で削除
+Click the start, then the end	始点をクリックし、次に終点をクリック
+Arc	円弧
+Click the start, a point on the arc, then the end	始点、円弧上の点、終点の順にクリック
+Arm	アーム
+Where a road comes in: click the place, then a point out along the road	道路が入ってくる位置: その場所をクリックし、次に道路に沿って外側の点をクリック
+Snap to the grid and to ends	グリッドと端点にスナップ
+Spline type	スプラインタイプ
+Drawing with:	描画中:
+Piece	パーツ
+Lift	高さ
+Above the plate: markings lie a little over the asphalt they are painted on	プレートの上: 区画線は、描かれているアスファルトよりわずかに上に置かれます
+Type: the one chosen	タイプ: 選択中のもの
+Move under the one before	前のものの下に移動
+any road type	任意の道路タイプ
+Road: the type chosen	道路: 選択中のタイプ
+Any	すべて
+origin	原点
+Click a piece or an arm to pick it, drag it to move it	パーツまたはアームをクリックで選択、ドラッグで移動
+Click the start of the piece, then its end	パーツの始点をクリックし、次に終点をクリック
+Click the start, a point the arc passes, then the end	始点、円弧が通る点、終点の順にクリック
+Click where a road comes in, then a point out along the road	道路が入ってくる位置をクリックし、次に道路に沿って外側の点をクリック
+Wheel zooms, right or middle drag pans, Esc cancels	ホイールでズーム、右または中ボタンのドラッグでパン、Esc でキャンセル
+Pick a spline type on the left first	先に左側でスプラインタイプを選んでください
+Too short: the points are too close	短すぎます: 点が近すぎます
+arms	アーム
+Put on the map	マップに配置
+Its pieces become ordinary splines at the middle of the view, to move and change like any other. Nothing about them is automatic	パーツはビューの中央に通常のスプラインとして配置され、他のスプラインと同じように移動や変更ができます。自動的に動作するものはありません
+Use in automatic junctions	自動交差点で使用
+Where the Roads tool makes a junction by itself and the roads meet as the arms do (same number, facing about the same ways, of the same road types), this one is put there	「道路」ツールが交差点を自動で作る際、道路がアームと同じように交わる場所(数が同じ、向きがほぼ同じ、道路タイプが同じ)に、これを配置します
+Save as a custom junction	カスタム交差点として保存
+Written as a junction piece of the content folder (it shows in the catalogue under Junctions) with lanes for the AI; needs three arms or more	コンテンツフォルダに交差点パーツとして書き出されます(カタログの「交差点」に表示)。AI 用のレーン付き。アームが3つ以上必要です
+Save the drawing	図を保存
+A custom junction is cut back to its arms where roads meet it; draw the roads' own types at the arms so they join cleanly.	カスタム交差点は、道路が接する位置でアームに合わせて切り詰められます。きれいにつながるよう、アームには道路自身のタイプで描いてください。
+Saved as a custom junction	カスタム交差点として保存しました
+Bus Pocket Tool	バスポケットツール
+Tick it, then press on a road: a bus pocket of the road type chosen below is laid there. It stays on, pocket after pocket, until you untick it	オンにして道路をクリックすると、下で選んだ道路タイプのバスポケットがそこに作られます。オフにするまで、続けて何か所でも作成できます
+pick the pocket's road type	ポケットの道路タイプを選択
+Full width over	全幅の長さ
+Make a road type with a pocket…	ポケット付き道路タイプを作成…
+The stretch is cut out of the road and takes the pocket's type, its ends tapering to the road's width. Made in the road maker (Bus pocket).	この区間は道路から切り出されてポケットのタイプになり、両端は道路の幅に向かってテーパー状に狭まります。道路メーカー(バスポケット)で作成します。
+Top view	上面図
+Side view	側面図
+A lane for buses to stop in, right of the roadway, before the footway. Lay a road type made so where a bay is wanted with the Bus pocket tool of the Roads tool	車道の右側、歩道の手前にある、バスが停車するためのレーン。バスベイが必要な場所に、このタイプの道路を配置し、「道路」ツールのバスポケットツールを使います
+Saved as an object	オブジェクトとして保存しました
+Saved as an object: it is in the catalogue under Objects, to place like any other	オブジェクトとして保存しました: カタログの「オブジェクト」にあり、他のオブジェクトと同様に配置できます
+Save as an object	オブジェクトとして保存
+The whole drawing as one scenery object of the catalogue (its meshes, and lanes for the AI along its pieces), to place anywhere like any object; arms are not needed	図面全体をカタログの1つのシーナリーオブジェクトとして保存します(メッシュと、各パーツに沿ったAI用レーン)。通常のオブジェクトと同様にどこにでも配置でき、アームは不要です
+Lanes the way the road is drawn	道路の描画方向のレーン
+Lanes against it	逆方向のレーン
+(0 against: one-way)	(逆方向 0: 一方通行)

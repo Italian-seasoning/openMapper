@@ -2263,3 +2263,79 @@ Close test drive	关闭试驾
 Close the openOMSI session started from here (F5)	关闭从此处启动的 openOMSI 会话 (F5)
 Choose where to start, the vehicle, the time and the weather, then drive the map in openOMSI (F5)	选择起点、车辆、时间和天气，然后在 openOMSI 中试驾地图 (F5)
 More switches: the window is too narrow for all of them	更多开关：窗口太窄，放不下全部
+Custom junction saved: the Roads tool's automatic junctions use it where roads meet as it was drawn	自定义交叉口已保存:“道路”工具的自动交叉口会在道路按所绘形式相交处使用它
+The junction reaches past the map: add tiles there first	交叉口超出了地图范围:请先在此处添加图块
+draw some pieces first	请先绘制一些部件
+mark the arms (where roads come in): at least two	标记入口(道路进入处):至少两个
+the spline cannot be read	无法读取样条
+Draw some pieces first	请先绘制一些部件
+Complex junction	复杂交叉口
+Complex junction put on the map: its pieces are ordinary splines	复杂交叉口已放置到地图上:其部件为普通样条
+Pick the road type of the pocket first	请先选择停靠港湾的道路类型
+The pocket's road type could not be read	无法读取停靠港湾的道路类型
+Press on a road	请点击一条道路
+This stretch is already of the pocket's road type	此路段已是停靠港湾的道路类型
+The road type has no drawn width	该道路类型没有已绘制的宽度
+Bus pocket	公交停靠港湾
+Bus pocket laid	公交停靠港湾已铺设
+The road is too short here for a pocket of that length	此处道路太短,无法容纳该长度的港湾
+The road cannot be cut there	无法在此处切断道路
+Street with a bus pocket	带公交停靠港湾的街道
+Complex junction editor…	复杂交叉口编辑器…
+Use my custom junctions where they fit	在适用处使用我的自定义交叉口
+Custom junctions saved from the complex junction editor with Use in automatic junctions on	在复杂交叉口编辑器中保存并开启“用于自动交叉口”的自定义交叉口
+My junction	我的交叉口
+Complex junction editor	复杂交叉口编辑器
+Open a saved one…	打开已保存的…
+Draw with	绘制使用
+Pick a piece or an arm; drag to move it; Delete removes it	选择部件或入口;拖动可移动;按 Delete 删除
+Click the start, then the end	点击起点,再点击终点
+Arc	圆弧
+Click the start, a point on the arc, then the end	点击起点、弧上一点,再点击终点
+Arm	入口
+Where a road comes in: click the place, then a point out along the road	道路进入处:点击该位置,再点击沿道路向外的一点
+Snap to the grid and to ends	吸附到网格和端点
+Spline type	样条类型
+Drawing with:	正在绘制:
+Piece	部件
+Lift	抬升
+Above the plate: markings lie a little over the asphalt they are painted on	位于路板之上:标线略高于其所画的沥青面
+Type: the one chosen	类型:所选类型
+Move under the one before	移到前一个之下
+any road type	任意道路类型
+Road: the type chosen	道路:所选类型
+Any	任意
+origin	原点
+Click a piece or an arm to pick it, drag it to move it	点击部件或入口可选中,拖动可移动
+Click the start of the piece, then its end	点击部件的起点,再点击其终点
+Click the start, a point the arc passes, then the end	点击起点、圆弧经过的一点,再点击终点
+Click where a road comes in, then a point out along the road	点击道路进入处,再点击沿道路向外的一点
+Wheel zooms, right or middle drag pans, Esc cancels	滚轮缩放,右键或中键拖动平移,Esc 取消
+Pick a spline type on the left first	请先在左侧选择样条类型
+Too short: the points are too close	太短:点距离过近
+arms	个入口
+Put on the map	放置到地图上
+Its pieces become ordinary splines at the middle of the view, to move and change like any other. Nothing about them is automatic	其部件将成为位于视图中心的普通样条,可像其他样条一样移动和修改。不含任何自动功能
+Use in automatic junctions	用于自动交叉口
+Where the Roads tool makes a junction by itself and the roads meet as the arms do (same number, facing about the same ways, of the same road types), this one is put there	当“道路”工具自动生成交叉口,且道路的相交方式与入口一致(数量相同、朝向大致相同、道路类型相同)时,将放置此交叉口
+Save as a custom junction	保存为自定义交叉口
+Written as a junction piece of the content folder (it shows in the catalogue under Junctions) with lanes for the AI; needs three arms or more	作为交叉口部件写入内容文件夹(在目录的“交叉口”下可见),并带有供 AI 使用的车道;需要三个或更多入口
+Save the drawing	保存绘图
+A custom junction is cut back to its arms where roads meet it; draw the roads' own types at the arms so they join cleanly.	自定义交叉口会在道路相交处按入口裁切;请在入口处绘制道路自身的类型,以便平顺衔接。
+Saved as a custom junction	已保存为自定义交叉口
+Bus Pocket Tool	公交停靠港湾工具
+Tick it, then press on a road: a bus pocket of the road type chosen below is laid there. It stays on, pocket after pocket, until you untick it	勾选后点击道路:将在该处铺设下方所选道路类型的公交停靠港湾。它会一直保持开启,可连续铺设,直到取消勾选
+pick the pocket's road type	选择港湾的道路类型
+Full width over	全宽长度
+Make a road type with a pocket…	创建带停靠港湾的道路类型…
+The stretch is cut out of the road and takes the pocket's type, its ends tapering to the road's width. Made in the road maker (Bus pocket).	该路段会从道路中切出并采用港湾的类型,两端逐渐收窄至道路宽度。在道路制作器(公交停靠港湾)中创建。
+Top view	俯视图
+Side view	侧视图
+A lane for buses to stop in, right of the roadway, before the footway. Lay a road type made so where a bay is wanted with the Bus pocket tool of the Roads tool	公交停靠用的车道,位于行车道右侧、人行道之前。需要设置港湾的位置,请用“道路”工具的公交停靠港湾工具铺设此类道路类型
+Saved as an object	已保存为对象
+Saved as an object: it is in the catalogue under Objects, to place like any other	已保存为对象:位于目录的“对象”下,可像其他对象一样放置
+Save as an object	保存为对象
+The whole drawing as one scenery object of the catalogue (its meshes, and lanes for the AI along its pieces), to place anywhere like any object; arms are not needed	将整幅绘图作为目录中的一个场景对象(其网格,以及沿各部分的 AI 车道),可像任何对象一样放置在任何地方;不需要分支
+Lanes the way the road is drawn	顺着道路绘制方向的车道
+Lanes against it	逆向车道
+(0 against: one-way)	(逆向 0:单向道)

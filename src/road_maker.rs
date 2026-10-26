@@ -35,6 +35,10 @@ pub struct RoadSpec {
     pub footway: f32,
     pub footway_right: Option<f32>,
     pub kerb: f32,
+    /// A bus pocket: a lane (m, 0: none) beside the roadway on the right, between it and the
+    /// footway, for buses to stop in. A road type made with one is what the Roads tool's bus
+    /// pocket tool lays where a bay is wanted.
+    pub pocket: f32,
     /// Texture files (found in the installation or the content folder).
     pub roadway_tex: PathBuf,
     pub footway_tex: PathBuf,
@@ -44,7 +48,7 @@ pub struct RoadSpec {
 
 impl Default for RoadSpec {
     fn default() -> Self {
-        RoadSpec { name: String::new(), lanes_fwd: 1, lanes_back: 1, lane_width: 3.5, median: 0.0, median_raised: false, footway: 3.0, footway_right: None, kerb: 0.15, roadway_tex: PathBuf::new(), footway_tex: PathBuf::new(), median_tex: PathBuf::new() }
+        RoadSpec { name: String::new(), lanes_fwd: 1, lanes_back: 1, lane_width: 3.5, median: 0.0, median_raised: false, footway: 3.0, footway_right: None, kerb: 0.15, pocket: 0.0, roadway_tex: PathBuf::new(), footway_tex: PathBuf::new(), median_tex: PathBuf::new() }
     }
 }
 
@@ -62,6 +66,7 @@ pub fn presets() -> Vec<(&'static str, RoadSpec)> {
         (tr("Main road", "Главная дорога"), RoadSpec { lanes_fwd: 2, lanes_back: 2, lane_width: 3.25, footway: 3.0, ..base.clone() }),
         (tr("Avenue with a green strip", "Проспект с газоном"), RoadSpec { lanes_fwd: 2, lanes_back: 2, lane_width: 3.25, median: 4.0, median_raised: true, footway: 3.5, ..base.clone() }),
         (tr("One-way street", "Улица с односторонним движением"), RoadSpec { lanes_fwd: 2, lanes_back: 0, lane_width: 3.0, footway: 2.5, ..base.clone() }),
+        (tr("Street with a bus pocket", "Улица с автобусным карманом"), RoadSpec { lane_width: 3.0, footway: 2.5, pocket: 3.0, ..base.clone() }),
         (tr("Country road", "Просёлочная дорога"), RoadSpec { lane_width: 3.0, footway: 0.0, kerb: 0.0, ..base.clone() }),
         (tr("Service road", "Служебный проезд"), RoadSpec { lanes_fwd: 1, lanes_back: 0, lane_width: 3.5, footway: 0.0, kerb: 0.0, ..base }),
     ]
@@ -86,7 +91,7 @@ impl RoadSpec {
     }
 
     pub fn total_width(&self) -> f32 {
-        self.roadway_width() + self.footway_left() + self.footway_right()
+        self.roadway_width() + self.pocket + self.footway_left() + self.footway_right()
     }
 
     /// The file name it is saved as.
@@ -100,6 +105,9 @@ impl RoadSpec {
         let rw = self.roadway_width();
         let (xl, xr) = (-rw / 2.0, rw / 2.0);
         let (fl, fr) = (self.footway_left(), self.footway_right());
+        let pw = self.pocket.max(0.0);
+        // (the right footway and its kerb start past the pocket)
+        let xr2 = xr + pw;
         let road_h = 0.10f32;
         let side_h = road_h + self.kerb;
         let mid = self.median_width();
@@ -120,8 +128,11 @@ impl RoadSpec {
         } else {
             height(&mut s, xl, xr, road_h);
         }
+        if pw > 0.0 {
+            height(&mut s, xr, xr2, road_h);
+        }
         if fr > 0.0 {
-            height(&mut s, xr, xr + fr, side_h);
+            height(&mut s, xr2, xr2 + fr, side_h);
         }
         let name = |p: &Path| p.file_name().map(|f| f.to_string_lossy().to_string()).unwrap_or_default();
         let _ = write!(s, "[texture]\n{}\n\n", name(&self.roadway_tex));
@@ -174,9 +185,15 @@ impl RoadSpec {
                 profile(&mut s, t, (xl, side_h, 0.953, 0.2), (xl, road_h, 0.995, 0.2));
             }
             if fr > 0.0 {
-                profile(&mut s, t, (xr, road_h, 0.995, 0.2), (xr, side_h, 0.953, 0.2));
-                profile(&mut s, t, (xr, side_h, 0.953, 0.2), (xr + fr, side_h, 0.187, 0.2));
+                profile(&mut s, t, (xr2, road_h, 0.995, 0.2), (xr2, side_h, 0.953, 0.2));
+                profile(&mut s, t, (xr2, side_h, 0.953, 0.2), (xr2 + fr, side_h, 0.187, 0.2));
             }
+        }
+        if pw > 0.0 {
+            // the pocket: plain asphalt, the middle of the roadway's first lane
+            let lanes = (self.lanes_fwd + self.lanes_back).max(1) as f32;
+            let u = 0.5 / lanes;
+            profile(&mut s, 0, (xr, road_h, u - 0.01, 0.1), (xr2, road_h, u + 0.01, 0.1));
         }
         // lanes: against the road's way left of its middle, with it right of it (as OMSI 2's
         // roads are laid out where traffic keeps right; a left-hand map mirrors the spline)
@@ -193,8 +210,12 @@ impl RoadSpec {
             let x = if one_way { xl + (i as f32 + 0.5) * self.lane_width } else { mid_gap + (i as f32 + 0.5) * self.lane_width };
             let _ = write!(s, "[path]\n0\n{}\n{}\n{}\n0\n\n", num(x), num(road_h), num(self.lane_width * 0.9));
         }
+        if pw > 0.0 {
+            // (traffic with the road's way: right of its middle)
+            let _ = write!(s, "[path]\n0\n{}\n{}\n{}\n0\n\n", num(xr + pw / 2.0), num(road_h), num(pw * 0.9));
+        }
         if fr > 0.0 {
-            let _ = write!(s, "[path]\n1\n{}\n{}\n{}\n2\n\n", num(xr + fr / 2.0), num(side_h), num(fr * 0.4));
+            let _ = write!(s, "[path]\n1\n{}\n{}\n{}\n2\n\n", num(xr2 + fr / 2.0), num(side_h), num(fr * 0.4));
         }
         s
     }
@@ -376,6 +397,36 @@ mod tests {
         // an old spec file (before these fields) still reads
         let old: RoadSpec = serde_json::from_str("{\"name\":\"x\",\"lanes_fwd\":1,\"lanes_back\":1}").unwrap();
         assert_eq!(old.footway_right(), old.footway);
+        let _ = std::fs::remove_dir_all(dir);
+    }
+
+    #[test]
+    fn a_road_with_a_bus_pocket_has_a_lane_for_it_before_the_footway() {
+        let dir = std::env::temp_dir().join(format!("om-roadmaker3-{}", std::process::id()));
+        std::fs::create_dir_all(&dir).unwrap();
+        let mk = |n: &str, c: u8| {
+            let p = dir.join(n);
+            image::RgbaImage::from_pixel(4, 4, image::Rgba([c, c, c, 255])).save(&p).unwrap();
+            p
+        };
+        let spec = RoadSpec { name: "Bay".into(), pocket: 3.0, footway: 2.0, roadway_tex: mk("a.png", 80), footway_tex: mk("f.png", 150), ..Default::default() };
+        assert!((spec.total_width() - (7.0 + 3.0 + 4.0)).abs() < 1e-6);
+        let content = dir.join("content");
+        spec.write(&content).unwrap();
+        let s = omsi_scenery::Spline::load(&content.join("Splines/openMapper/Bay.sli")).unwrap();
+        // the two through lanes and the pocket's, with the road's way, right of the roadway's edge (3.5)
+        let cars: Vec<_> = s.paths.iter().filter(|p| p.kind == 0).collect();
+        assert_eq!(cars.len(), 3);
+        assert!(cars.iter().any(|p| (p.start[0] - 5.0).abs() < 1e-3 && p.direction == 0), "the pocket's lane in the middle of 3.5..6.5");
+        // the right footway starts past the pocket
+        let walk = s.paths.iter().find(|p| p.kind == 1 && p.start[0] > 0.0).unwrap();
+        assert!((walk.start[0] - 7.5).abs() < 1e-3, "{}", walk.start[0]);
+        let right = s.profiles.iter().flat_map(|p| p.points.iter()).map(|q| q.x).fold(f32::MIN, f32::max);
+        assert!((right - 8.5).abs() < 1e-3, "{right}");
+        // the spec reads back, and an old file without a pocket has none
+        assert_eq!(RoadSpec::of(&content.join("Splines/openMapper/Bay.sli")).unwrap(), spec);
+        let old: RoadSpec = serde_json::from_str("{\"name\":\"x\"}").unwrap();
+        assert_eq!(old.pocket, 0.0);
         let _ = std::fs::remove_dir_all(dir);
     }
 

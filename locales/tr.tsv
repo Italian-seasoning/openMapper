@@ -2263,3 +2263,79 @@ Close test drive	Test sürüşünü kapat
 Close the openOMSI session started from here (F5)	Buradan başlatılan openOMSI oturumunu kapat (F5)
 Choose where to start, the vehicle, the time and the weather, then drive the map in openOMSI (F5)	Başlangıç yerini, aracı, saati ve hava durumunu seçin, sonra haritayı openOMSI'de sürün (F5)
 More switches: the window is too narrow for all of them	Daha fazla anahtar: pencere hepsi için çok dar
+Custom junction saved: the Roads tool's automatic junctions use it where roads meet as it was drawn	Özel kavşak kaydedildi: Yollar aracının otomatik kavşakları, yollar çizildiği gibi buluştuğunda bunu kullanır
+The junction reaches past the map: add tiles there first	Kavşak haritanın dışına taşıyor: önce oraya karo ekleyin
+draw some pieces first	önce birkaç parça çizin
+mark the arms (where roads come in): at least two	kolları işaretleyin (yolların girdiği yerler): en az iki
+the spline cannot be read	spline okunamıyor
+Draw some pieces first	Önce birkaç parça çizin
+Complex junction	Karmaşık kavşak
+Complex junction put on the map: its pieces are ordinary splines	Karmaşık kavşak haritaya yerleştirildi: parçaları sıradan spline'lardır
+Pick the road type of the pocket first	Önce cebin yol türünü seçin
+The pocket's road type could not be read	Cebin yol türü okunamadı
+Press on a road	Bir yola basın
+This stretch is already of the pocket's road type	Bu kesim zaten cebin yol türünde
+The road type has no drawn width	Yol türünün çizilmiş bir genişliği yok
+Bus pocket	Otobüs cebi
+Bus pocket laid	Otobüs cebi döşendi
+The road is too short here for a pocket of that length	Yol burada bu uzunlukta bir cep için çok kısa
+The road cannot be cut there	Yol orada kesilemiyor
+Street with a bus pocket	Otobüs cepli sokak
+Complex junction editor…	Karmaşık kavşak düzenleyici…
+Use my custom junctions where they fit	Özel kavşaklarımı uygun yerlerde kullan
+Custom junctions saved from the complex junction editor with Use in automatic junctions on	Karmaşık kavşak düzenleyicide Otomatik kavşaklarda kullan açıkken kaydedilen özel kavşaklar
+My junction	Kavşağım
+Complex junction editor	Karmaşık kavşak düzenleyici
+Open a saved one…	Kayıtlı olanı aç…
+Draw with	Çizim aracı
+Pick a piece or an arm; drag to move it; Delete removes it	Bir parça veya kol seçin; taşımak için sürükleyin; Delete siler
+Click the start, then the end	Başlangıca, sonra bitişe tıklayın
+Arc	Yay
+Click the start, a point on the arc, then the end	Başlangıca, yay üzerinde bir noktaya, sonra bitişe tıklayın
+Arm	Kol
+Where a road comes in: click the place, then a point out along the road	Yolun girdiği yer: yere tıklayın, sonra yol boyunca dışarıda bir noktaya
+Snap to the grid and to ends	Izgaraya ve uçlara yapış
+Spline type	Spline türü
+Drawing with:	Çizilen:
+Piece	Parça
+Lift	Yükseklik
+Above the plate: markings lie a little over the asphalt they are painted on	Plakanın üstünde: işaretlemeler boyandıkları asfaltın biraz üstünde durur
+Type: the one chosen	Tür: seçilen
+Move under the one before	Öncekinin altına al
+any road type	herhangi bir yol türü
+Road: the type chosen	Yol: seçilen tür
+Any	Herhangi
+origin	başlangıç
+Click a piece or an arm to pick it, drag it to move it	Seçmek için bir parçaya veya kola tıklayın, taşımak için sürükleyin
+Click the start of the piece, then its end	Parçanın başlangıcına, sonra bitişine tıklayın
+Click the start, a point the arc passes, then the end	Başlangıca, yayın geçtiği bir noktaya, sonra bitişe tıklayın
+Click where a road comes in, then a point out along the road	Yolun girdiği yere tıklayın, sonra yol boyunca dışarıda bir nokta seçin
+Wheel zooms, right or middle drag pans, Esc cancels	Tekerlek yakınlaştırır, sağ veya orta tuşla sürükleme kaydırır, Esc iptal eder
+Pick a spline type on the left first	Önce soldan bir spline türü seçin
+Too short: the points are too close	Çok kısa: noktalar birbirine çok yakın
+arms	kol
+Put on the map	Haritaya yerleştir
+Its pieces become ordinary splines at the middle of the view, to move and change like any other. Nothing about them is automatic	Parçaları, görünümün ortasında sıradan spline'lara dönüşür; diğerleri gibi taşınıp değiştirilebilir. Hiçbiri otomatik değildir
+Use in automatic junctions	Otomatik kavşaklarda kullan
+Where the Roads tool makes a junction by itself and the roads meet as the arms do (same number, facing about the same ways, of the same road types), this one is put there	Yollar aracı bir kavşağı kendi yaptığında ve yollar kollar gibi buluştuğunda (aynı sayıda, yaklaşık aynı yönlere bakan, aynı yol türlerinde), buraya bu yerleştirilir
+Save as a custom junction	Özel kavşak olarak kaydet
+Written as a junction piece of the content folder (it shows in the catalogue under Junctions) with lanes for the AI; needs three arms or more	İçerik klasörüne bir kavşak parçası olarak yazılır (katalogda Kavşaklar altında görünür) ve YZ için şeritler içerir; üç veya daha fazla kol gerekir
+Save the drawing	Çizimi kaydet
+A custom junction is cut back to its arms where roads meet it; draw the roads' own types at the arms so they join cleanly.	Özel kavşak, yolların buluştuğu yerde kollarına kadar kesilir; temiz birleşmeleri için kollarda yolların kendi türlerini çizin.
+Saved as a custom junction	Özel kavşak olarak kaydedildi
+Bus Pocket Tool	Otobüs Cebi Aracı
+Tick it, then press on a road: a bus pocket of the road type chosen below is laid there. It stays on, pocket after pocket, until you untick it	İşaretleyin, sonra bir yola basın: oraya aşağıda seçilen yol türünde bir otobüs cebi döşenir. Siz işaretini kaldırana kadar cep cep açık kalır
+pick the pocket's road type	cebin yol türünü seçin
+Full width over	Tam genişlik:
+Make a road type with a pocket…	Cepli bir yol türü oluştur…
+The stretch is cut out of the road and takes the pocket's type, its ends tapering to the road's width. Made in the road maker (Bus pocket).	Kesim yoldan çıkarılır ve cebin türünü alır; uçları yolun genişliğine kadar daralır. Yol oluşturucuda (Otobüs cebi) yapılır.
+Top view	Üstten görünüm
+Side view	Yandan görünüm
+A lane for buses to stop in, right of the roadway, before the footway. Lay a road type made so where a bay is wanted with the Bus pocket tool of the Roads tool	Yol şeridinin sağında, kaldırımdan önce, otobüslerin durması için bir şerit. Cep istenen yerde, Yollar aracının Otobüs cebi aracıyla bu şekilde yapılmış bir yol türü döşeyin
+Saved as an object	Nesne olarak kaydedildi
+Saved as an object: it is in the catalogue under Objects, to place like any other	Nesne olarak kaydedildi: katalogda Nesneler altında, diğerleri gibi yerleştirilir
+Save as an object	Nesne olarak kaydet
+The whole drawing as one scenery object of the catalogue (its meshes, and lanes for the AI along its pieces), to place anywhere like any object; arms are not needed	Çizimin tamamı katalogdan tek bir sahne nesnesi olarak (ağları ve parçaları boyunca yapay zekâ için şeritler), her nesne gibi istenen yere yerleştirilir; kollar gerekmez
+Lanes the way the road is drawn	Yolun çizildiği yönde şeritler
+Lanes against it	Ters yönde şeritler
+(0 against: one-way)	(0 ters: tek yönlü)

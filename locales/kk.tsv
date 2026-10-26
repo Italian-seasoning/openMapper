@@ -2263,3 +2263,79 @@ Close test drive	Сынақ жүргізуді жабу
 Close the openOMSI session started from here (F5)	Осы жерден іске қосылған openOMSI сеансын жабу (F5)
 Choose where to start, the vehicle, the time and the weather, then drive the map in openOMSI (F5)	Бастау орнын, көлікті, уақытты және ауа райын таңдап, картаны openOMSI-де жүріп өтіңіз (F5)
 More switches: the window is too narrow for all of them	Қосымша қосқыштар: терезе барлығына сыймайды
+Custom junction saved: the Roads tool's automatic junctions use it where roads meet as it was drawn	Жеке қиылыс сақталды: «Жолдар» құралының автоматты қиылыстары жолдар сызылғандай түйісетін жерде оны қолданады
+The junction reaches past the map: add tiles there first	Қиылыс картадан шығып кетті: алдымен тайлдар қосыңыз
+draw some pieces first	алдымен бөлшектерді сызыңыз
+mark the arms (where roads come in): at least two	кіреберістерді (жолдар кіретін жерді) белгілеңіз: кемінде екеу
+the spline cannot be read	сплайнды оқу мүмкін емес
+Draw some pieces first	Алдымен бөлшектерді сызыңыз
+Complex junction	Күрделі қиылыс
+Complex junction put on the map: its pieces are ordinary splines	Күрделі қиылыс картаға қойылды: оның бөлшектері — қарапайым сплайндар
+Pick the road type of the pocket first	Алдымен қалтаның жол түрін таңдаңыз
+The pocket's road type could not be read	Қалтаның жол түрін оқу мүмкін болмады
+Press on a road	Жолды басыңыз
+This stretch is already of the pocket's road type	Бұл учаске қалтамен бірдей жол түріне жатады
+The road type has no drawn width	Жол түрінің сызылған ені жоқ
+Bus pocket	Автобус қалтасы
+Bus pocket laid	Автобус қалтасы жасалды
+The road is too short here for a pocket of that length	Мұндағы жол осындай ұзындықтағы қалта үшін тым қысқа
+The road cannot be cut there	Жолды бұл жерден кесу мүмкін емес
+Street with a bus pocket	Автобус қалтасы бар көше
+Complex junction editor…	Күрделі қиылыстар редакторы…
+Use my custom junctions where they fit	Менің қиылыстарымды сәйкес келген жерде қолдану
+Custom junctions saved from the complex junction editor with Use in automatic junctions on	Күрделі қиылыстар редакторында «Автоматты қиылыстарда қолдану» қосулы кезде сақталған жеке қиылыстар
+My junction	Менің қиылысым
+Complex junction editor	Күрделі қиылыстар редакторы
+Open a saved one…	Сақталғанды ашу…
+Draw with	Сызу құралы
+Pick a piece or an arm; drag to move it; Delete removes it	Бөлшекті немесе кіреберісті таңдау; жылжыту үшін сүйреңіз; Delete жояды
+Click the start, then the end	Басына, содан соң соңына нұқыңыз
+Arc	Доға
+Click the start, a point on the arc, then the end	Басына, доғаның нүктесіне, содан соң соңына нұқыңыз
+Arm	Кіреберіс
+Where a road comes in: click the place, then a point out along the road	Жол кіретін жер: орынды нұқыңыз, содан соң жол бойымен сыртқа қарай нүктені нұқыңыз
+Snap to the grid and to ends	Тор мен ұштарға тіркеу
+Spline type	Сплайн түрі
+Drawing with:	Сызылуда:
+Piece	Бөлшек
+Lift	Биіктік
+Above the plate: markings lie a little over the asphalt they are painted on	Плитаның үстінде: таңбалау өзі салынған асфальттан сәл жоғары жатады
+Type: the one chosen	Түрі: таңдалған
+Move under the one before	Алдыңғының астына жылжыту
+any road type	кез келген жол түрі
+Road: the type chosen	Жол: таңдалған түр
+Any	Кез келген
+origin	бастапқы нүкте
+Click a piece or an arm to pick it, drag it to move it	Таңдау үшін бөлшекті немесе кіреберісті нұқыңыз, жылжыту үшін сүйреңіз
+Click the start of the piece, then its end	Бөлшектің басын, содан соң соңын нұқыңыз
+Click the start, a point the arc passes, then the end	Басын, доға өтетін нүктені, содан соң соңын нұқыңыз
+Click where a road comes in, then a point out along the road	Жол кіретін жерді, содан соң жол бойымен сыртқа қарай нүктені нұқыңыз
+Wheel zooms, right or middle drag pans, Esc cancels	Дөңгелек — масштаб, оң немесе орта батырмамен сүйреу — жылжыту, Esc — болдырмау
+Pick a spline type on the left first	Алдымен сол жақтан сплайн түрін таңдаңыз
+Too short: the points are too close	Тым қысқа: нүктелер тым жақын
+arms	кіреберіс
+Put on the map	Картаға қою
+Its pieces become ordinary splines at the middle of the view, to move and change like any other. Nothing about them is automatic	Бөлшектері көрініс ортасында қарапайым сплайндарға айналады, оларды басқалар сияқты жылжытып, өзгертуге болады. Автоматты ештеңе жоқ
+Use in automatic junctions	Автоматты қиылыстарда қолдану
+Where the Roads tool makes a junction by itself and the roads meet as the arms do (same number, facing about the same ways, of the same road types), this one is put there	«Жолдар» құралы қиылысты өзі жасайтын және жолдар кіреберістер сияқты түйісетін жерге (саны бірдей, бағыты шамамен бірдей, жол түрлері бірдей) осы қиылыс қойылады
+Save as a custom junction	Жеке қиылыс ретінде сақтау
+Written as a junction piece of the content folder (it shows in the catalogue under Junctions) with lanes for the AI; needs three arms or more	Мазмұн қалтасына қиылыс бөлшегі ретінде жазылады (каталогта «Қиылыстар» астында көрінеді), ЖИ үшін жолақтарымен; үш немесе одан көп кіреберіс қажет
+Save the drawing	Сызбаны сақтау
+A custom junction is cut back to its arms where roads meet it; draw the roads' own types at the arms so they join cleanly.	Жеке қиылыс жолдар түйісетін жерде кіреберістерге дейін қиылады; жолдар таза жалғасуы үшін кіреберістерде жолдардың өз түрлерін сызыңыз.
+Saved as a custom junction	Жеке қиылыс ретінде сақталды
+Bus Pocket Tool	«Автобус қалтасы» құралы
+Tick it, then press on a road: a bus pocket of the road type chosen below is laid there. It stays on, pocket after pocket, until you untick it	Қосып, жолды басыңыз: сол жерге төменде таңдалған жол түріндегі автобус қалтасы салынады. Сіз өшіргенше құрал қосулы тұрады, қалта артынан қалта салуға болады
+pick the pocket's road type	қалтаның жол түрін таңдаңыз
+Full width over	Толық ені
+Make a road type with a pocket…	Қалтасы бар жол түрін жасау…
+The stretch is cut out of the road and takes the pocket's type, its ends tapering to the road's width. Made in the road maker (Bus pocket).	Учаске жолдан кесіліп алынады да, қалтаның түрін алады, ұштары жолдың еніне дейін тарылады. Түрі жол конструкторында жасалады («Автобус қалтасы»).
+Top view	Үстінен көрінісі
+Side view	Бүйірден көрінісі
+A lane for buses to stop in, right of the roadway, before the footway. Lay a road type made so where a bay is wanted with the Bus pocket tool of the Roads tool	Автобустар тоқтайтын жолақ, жүру бөлігінің оң жағында, жаяу жолдың алдында. Қалта қажет жерге «Жолдар» құралындағы «Автобус қалтасы» құралымен осындай жасалған жол түрін салыңыз
+Saved as an object	Нысан ретінде сақталды
+Saved as an object: it is in the catalogue under Objects, to place like any other	Нысан ретінде сақталды: ол каталогта «Нысандар» бөлімінде, кез келген басқа нысан сияқты орналастырылады
+Save as an object	Нысан ретінде сақтау
+The whole drawing as one scenery object of the catalogue (its meshes, and lanes for the AI along its pieces), to place anywhere like any object; arms are not needed	Бүкіл сызбаны каталогтың бір сахна нысаны ретінде (оның мештері және бөлшектері бойындағы ЖИ жолақтары), кез келген нысан сияқты қалаған жерге орналастыруға болады; тармақтар қажет емес
+Lanes the way the road is drawn	Жолдың сызылу бағытымен жолақтар
+Lanes against it	Қарсы бағытта жолақтар
+(0 against: one-way)	(0 қарсы: бір бағытты)

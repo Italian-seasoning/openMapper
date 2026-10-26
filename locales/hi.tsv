@@ -2263,3 +2263,79 @@ Close test drive	टेस्ट ड्राइव बंद करें
 Close the openOMSI session started from here (F5)	यहाँ से शुरू किया गया openOMSI सत्र बंद करें (F5)
 Choose where to start, the vehicle, the time and the weather, then drive the map in openOMSI (F5)	शुरुआती जगह, वाहन, समय और मौसम चुनें, फिर openOMSI में मैप पर चलाएँ (F5)
 More switches: the window is too narrow for all of them	और स्विच: सभी के लिए विंडो बहुत संकरी है
+Custom junction saved: the Roads tool's automatic junctions use it where roads meet as it was drawn	कस्टम जंक्शन सहेजा गया: रोड्स टूल के स्वचालित जंक्शन इसे वहाँ लगाते हैं जहाँ सड़कें उसी तरह मिलती हैं जैसे इसे बनाया गया था
+The junction reaches past the map: add tiles there first	जंक्शन मानचित्र से बाहर तक जाता है: पहले वहाँ टाइल जोड़ें
+draw some pieces first	पहले कुछ भाग बनाएँ
+mark the arms (where roads come in): at least two	आर्म चिह्नित करें (जहाँ सड़कें आती हैं): कम से कम दो
+the spline cannot be read	स्प्लाइन पढ़ी नहीं जा सकती
+Draw some pieces first	पहले कुछ भाग बनाएँ
+Complex junction	जटिल जंक्शन
+Complex junction put on the map: its pieces are ordinary splines	जटिल जंक्शन मानचित्र पर रखा गया: इसके भाग सामान्य स्प्लाइन हैं
+Pick the road type of the pocket first	पहले पॉकेट का सड़क प्रकार चुनें
+The pocket's road type could not be read	पॉकेट का सड़क प्रकार पढ़ा नहीं जा सका
+Press on a road	सड़क पर क्लिक करें
+This stretch is already of the pocket's road type	यह हिस्सा पहले से पॉकेट के सड़क प्रकार का है
+The road type has no drawn width	सड़क प्रकार की कोई बनी हुई चौड़ाई नहीं है
+Bus pocket	बस पॉकेट
+Bus pocket laid	बस पॉकेट बनाया गया
+The road is too short here for a pocket of that length	इतनी लंबाई के पॉकेट के लिए यहाँ सड़क बहुत छोटी है
+The road cannot be cut there	सड़क को वहाँ काटा नहीं जा सकता
+Street with a bus pocket	बस पॉकेट वाली सड़क
+Complex junction editor…	जटिल जंक्शन संपादक…
+Use my custom junctions where they fit	जहाँ उपयुक्त हों वहाँ मेरे कस्टम जंक्शन लगाएँ
+Custom junctions saved from the complex junction editor with Use in automatic junctions on	जटिल जंक्शन संपादक से सहेजे गए कस्टम जंक्शन, जिनमें "स्वचालित जंक्शन में उपयोग करें" चालू है
+My junction	मेरा जंक्शन
+Complex junction editor	जटिल जंक्शन संपादक
+Open a saved one…	सहेजा हुआ खोलें…
+Draw with	इससे बनाएँ
+Pick a piece or an arm; drag to move it; Delete removes it	भाग या आर्म चुनें; खिसकाने के लिए खींचें; Delete उसे हटाता है
+Click the start, then the end	शुरुआत पर क्लिक करें, फिर अंत पर
+Arc	चाप
+Click the start, a point on the arc, then the end	शुरुआत पर, चाप के एक बिंदु पर, फिर अंत पर क्लिक करें
+Arm	आर्म
+Where a road comes in: click the place, then a point out along the road	जहाँ सड़क आती है: जगह पर क्लिक करें, फिर सड़क के साथ बाहर की ओर एक बिंदु पर
+Snap to the grid and to ends	ग्रिड और सिरों से जोड़ें
+Spline type	स्प्लाइन प्रकार
+Drawing with:	इससे बना रहे हैं:
+Piece	भाग
+Lift	ऊँचाई
+Above the plate: markings lie a little over the asphalt they are painted on	प्लेट के ऊपर: मार्किंग उस डामर से थोड़ी ऊपर रहती है जिस पर वह बनी है
+Type: the one chosen	प्रकार: चुना हुआ
+Move under the one before	पिछले के नीचे रखें
+any road type	कोई भी सड़क प्रकार
+Road: the type chosen	सड़क: चुना हुआ प्रकार
+Any	कोई भी
+origin	मूल बिंदु
+Click a piece or an arm to pick it, drag it to move it	किसी भाग या आर्म को चुनने के लिए क्लिक करें, खिसकाने के लिए खींचें
+Click the start of the piece, then its end	भाग की शुरुआत पर क्लिक करें, फिर उसके अंत पर
+Click the start, a point the arc passes, then the end	शुरुआत पर, चाप के एक बिंदु पर, फिर अंत पर क्लिक करें
+Click where a road comes in, then a point out along the road	जहाँ सड़क आती है वहाँ क्लिक करें, फिर सड़क के साथ बाहर की ओर एक बिंदु पर
+Wheel zooms, right or middle drag pans, Esc cancels	व्हील से ज़ूम, दायाँ या बीच का बटन खींचकर पैन, Esc से रद्द
+Pick a spline type on the left first	पहले बाईं ओर से स्प्लाइन प्रकार चुनें
+Too short: the points are too close	बहुत छोटा: बिंदु बहुत पास हैं
+arms	आर्म
+Put on the map	मानचित्र पर रखें
+Its pieces become ordinary splines at the middle of the view, to move and change like any other. Nothing about them is automatic	इसके भाग मानचित्र के दृश्य के बीच में सामान्य स्प्लाइन बन जाते हैं, जिन्हें किसी भी अन्य की तरह खिसकाया और बदला जा सकता है। इनमें कुछ भी स्वचालित नहीं है
+Use in automatic junctions	स्वचालित जंक्शन में उपयोग करें
+Where the Roads tool makes a junction by itself and the roads meet as the arms do (same number, facing about the same ways, of the same road types), this one is put there	जहाँ रोड्स टूल खुद जंक्शन बनाता है और सड़कें आर्म की तरह मिलती हैं (उतनी ही संख्या, लगभग वही दिशाएँ, वही सड़क प्रकार), वहाँ यह लगाया जाता है
+Save as a custom junction	कस्टम जंक्शन के रूप में सहेजें
+Written as a junction piece of the content folder (it shows in the catalogue under Junctions) with lanes for the AI; needs three arms or more	कंटेंट फ़ोल्डर में जंक्शन पीस के रूप में लिखा जाता है (कैटलॉग में "जंक्शन" के अंतर्गत दिखता है) और AI के लिए लेन के साथ; तीन या अधिक आर्म चाहिए
+Save the drawing	चित्र सहेजें
+A custom junction is cut back to its arms where roads meet it; draw the roads' own types at the arms so they join cleanly.	कस्टम जंक्शन, जहाँ सड़कें उससे मिलती हैं वहाँ आर्म तक काट दिया जाता है; आर्म पर सड़कों के अपने प्रकार बनाएँ ताकि वे साफ़ जुड़ें।
+Saved as a custom junction	कस्टम जंक्शन के रूप में सहेजा गया
+Bus Pocket Tool	बस पॉकेट टूल
+Tick it, then press on a road: a bus pocket of the road type chosen below is laid there. It stays on, pocket after pocket, until you untick it	चुनें, फिर सड़क पर क्लिक करें: वहाँ नीचे चुने सड़क प्रकार का बस पॉकेट बनेगा। यह एक के बाद एक पॉकेट बनाते हुए तब तक चालू रहता है जब तक आप इसे बंद नहीं करते
+pick the pocket's road type	पॉकेट का सड़क प्रकार चुनें
+Full width over	पूरी चौड़ाई इतनी दूरी तक
+Make a road type with a pocket…	पॉकेट वाला सड़क प्रकार बनाएँ…
+The stretch is cut out of the road and takes the pocket's type, its ends tapering to the road's width. Made in the road maker (Bus pocket).	यह हिस्सा सड़क से काटा जाता है और पॉकेट का प्रकार ले लेता है, इसके सिरे सड़क की चौड़ाई तक संकरे होते जाते हैं। रोड मेकर में बनाया जाता है (बस पॉकेट)।
+Top view	ऊपर से दृश्य
+Side view	बगल से दृश्य
+A lane for buses to stop in, right of the roadway, before the footway. Lay a road type made so where a bay is wanted with the Bus pocket tool of the Roads tool	बसों के रुकने के लिए एक लेन, सड़क के दाईं ओर, फुटपाथ से पहले। जहाँ बस बे चाहिए वहाँ ऐसे बने सड़क प्रकार को रोड्स टूल के बस पॉकेट टूल से बिछाएँ
+Saved as an object	ऑब्जेक्ट के रूप में सहेजा गया
+Saved as an object: it is in the catalogue under Objects, to place like any other	ऑब्जेक्ट के रूप में सहेजा गया: यह कैटलॉग में ऑब्जेक्ट्स के अंतर्गत है, किसी भी अन्य की तरह रखा जाता है
+Save as an object	ऑब्जेक्ट के रूप में सहेजें
+The whole drawing as one scenery object of the catalogue (its meshes, and lanes for the AI along its pieces), to place anywhere like any object; arms are not needed	पूरा चित्र कैटलॉग के एक सीनरी ऑब्जेक्ट के रूप में (उसकी मेश, और उसके हिस्सों के साथ AI के लिए लेन), किसी भी ऑब्जेक्ट की तरह कहीं भी रखा जा सकता है; भुजाओं की आवश्यकता नहीं है
+Lanes the way the road is drawn	सड़क की खींची दिशा में लेन
+Lanes against it	विपरीत दिशा में लेन
+(0 against: one-way)	(0 विपरीत: एकतरफ़ा)

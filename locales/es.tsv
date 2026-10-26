@@ -2263,3 +2263,79 @@ Close test drive	Cerrar prueba de conducción
 Close the openOMSI session started from here (F5)	Cerrar la sesión de openOMSI iniciada desde aquí (F5)
 Choose where to start, the vehicle, the time and the weather, then drive the map in openOMSI (F5)	Elegir el punto de inicio, el vehículo, la hora y el clima, y recorrer el mapa en openOMSI (F5)
 More switches: the window is too narrow for all of them	Más interruptores: la ventana es demasiado estrecha para todos
+Custom junction saved: the Roads tool's automatic junctions use it where roads meet as it was drawn	Cruce personalizado guardado: los cruces automáticos de la herramienta Carreteras lo usan donde las carreteras se encuentran tal como se dibujó
+The junction reaches past the map: add tiles there first	El cruce sobrepasa el mapa: añada primero teselas allí
+draw some pieces first	dibuje primero algunas piezas
+mark the arms (where roads come in): at least two	marque los accesos (por donde entran las carreteras): al menos dos
+the spline cannot be read	no se puede leer el spline
+Draw some pieces first	Dibuje primero algunas piezas
+Complex junction	Cruce complejo
+Complex junction put on the map: its pieces are ordinary splines	Cruce complejo colocado en el mapa: sus piezas son splines normales
+Pick the road type of the pocket first	Elija primero el tipo de carretera de la bahía
+The pocket's road type could not be read	No se pudo leer el tipo de carretera de la bahía
+Press on a road	Pulse sobre una carretera
+This stretch is already of the pocket's road type	Este tramo ya es del tipo de carretera de la bahía
+The road type has no drawn width	El tipo de carretera no tiene anchura dibujada
+Bus pocket	Bahía de autobús
+Bus pocket laid	Bahía de autobús creada
+The road is too short here for a pocket of that length	La carretera es aquí demasiado corta para una bahía de esa longitud
+The road cannot be cut there	No se puede cortar la carretera ahí
+Street with a bus pocket	Calle con bahía de autobús
+Complex junction editor…	Editor de cruces complejos…
+Use my custom junctions where they fit	Usar mis cruces personalizados donde encajen
+Custom junctions saved from the complex junction editor with Use in automatic junctions on	Cruces personalizados guardados desde el editor de cruces complejos con Usar en cruces automáticos activado
+My junction	Mi cruce
+Complex junction editor	Editor de cruces complejos
+Open a saved one…	Abrir uno guardado…
+Draw with	Dibujar con
+Pick a piece or an arm; drag to move it; Delete removes it	Elegir una pieza o un acceso; arrastrar para moverlo; Supr lo elimina
+Click the start, then the end	Clic en el inicio y luego en el final
+Arc	Arco
+Click the start, a point on the arc, then the end	Clic en el inicio, en un punto del arco y luego en el final
+Arm	Acceso
+Where a road comes in: click the place, then a point out along the road	Por donde entra una carretera: clic en el lugar y luego en un punto hacia fuera a lo largo de la carretera
+Snap to the grid and to ends	Ajustar a la cuadrícula y a los extremos
+Spline type	Tipo de spline
+Drawing with:	Dibujando con:
+Piece	Pieza
+Lift	Elevación
+Above the plate: markings lie a little over the asphalt they are painted on	Sobre la placa: las marcas viales quedan un poco por encima del asfalto en el que están pintadas
+Type: the one chosen	Tipo: el elegido
+Move under the one before	Colocar debajo de la anterior
+any road type	cualquier tipo de carretera
+Road: the type chosen	Carretera: el tipo elegido
+Any	Cualquiera
+origin	origen
+Click a piece or an arm to pick it, drag it to move it	Clic en una pieza o un acceso para elegirlo, arrastre para moverlo
+Click the start of the piece, then its end	Clic en el inicio de la pieza y luego en su final
+Click the start, a point the arc passes, then the end	Clic en el inicio, en un punto por el que pasa el arco y luego en el final
+Click where a road comes in, then a point out along the road	Clic donde entra una carretera y luego en un punto hacia fuera a lo largo de la carretera
+Wheel zooms, right or middle drag pans, Esc cancels	La rueda hace zoom, arrastrar con el botón derecho o central desplaza, Esc cancela
+Pick a spline type on the left first	Elija primero un tipo de spline a la izquierda
+Too short: the points are too close	Demasiado corto: los puntos están demasiado cerca
+arms	accesos
+Put on the map	Colocar en el mapa
+Its pieces become ordinary splines at the middle of the view, to move and change like any other. Nothing about them is automatic	Sus piezas se convierten en splines normales en el centro de la vista, para moverlas y cambiarlas como cualquier otra. Nada en ellas es automático
+Use in automatic junctions	Usar en cruces automáticos
+Where the Roads tool makes a junction by itself and the roads meet as the arms do (same number, facing about the same ways, of the same road types), this one is put there	Donde la herramienta Carreteras crea un cruce por sí sola y las carreteras se encuentran como los accesos (mismo número, orientadas más o menos igual, de los mismos tipos de carretera), se coloca este
+Save as a custom junction	Guardar como cruce personalizado
+Written as a junction piece of the content folder (it shows in the catalogue under Junctions) with lanes for the AI; needs three arms or more	Se escribe como pieza de cruce en la carpeta de contenido (aparece en el catálogo en Cruces) con carriles para la IA; necesita tres accesos o más
+Save the drawing	Guardar el dibujo
+A custom junction is cut back to its arms where roads meet it; draw the roads' own types at the arms so they join cleanly.	Un cruce personalizado recorta las carreteras hasta sus accesos donde se encuentran con él; dibuje en los accesos los tipos propios de las carreteras para que enlacen bien.
+Saved as a custom junction	Guardado como cruce personalizado
+Bus Pocket Tool	Herramienta Bahía de autobús
+Tick it, then press on a road: a bus pocket of the road type chosen below is laid there. It stays on, pocket after pocket, until you untick it	Márquela y pulse sobre una carretera: se creará allí una bahía de autobús del tipo de carretera elegido abajo. Sigue activa, bahía tras bahía, hasta que la desmarque
+pick the pocket's road type	elija el tipo de carretera de la bahía
+Full width over	Anchura completa sobre
+Make a road type with a pocket…	Crear un tipo de carretera con bahía…
+The stretch is cut out of the road and takes the pocket's type, its ends tapering to the road's width. Made in the road maker (Bus pocket).	El tramo se corta de la carretera y toma el tipo de la bahía, con los extremos estrechándose hasta la anchura de la carretera. Se crea en el creador de carreteras (Bahía de autobús).
+Top view	Vista superior
+Side view	Vista lateral
+A lane for buses to stop in, right of the roadway, before the footway. Lay a road type made so where a bay is wanted with the Bus pocket tool of the Roads tool	Un carril para que paren los autobuses, a la derecha de la calzada, antes de la acera. Cree con la herramienta Bahía de autobús de Carreteras una carretera de un tipo así donde se quiera una bahía
+Saved as an object	Guardado como objeto
+Saved as an object: it is in the catalogue under Objects, to place like any other	Guardado como objeto: está en el catálogo, en Objetos, y se coloca como cualquier otro
+Save as an object	Guardar como objeto
+The whole drawing as one scenery object of the catalogue (its meshes, and lanes for the AI along its pieces), to place anywhere like any object; arms are not needed	Todo el dibujo como un único objeto de escenario del catálogo (sus mallas y carriles para la IA a lo largo de sus piezas), que se coloca en cualquier sitio como cualquier objeto; no hacen falta brazos
+Lanes the way the road is drawn	Carriles en el sentido del trazado
+Lanes against it	Carriles en sentido contrario
+(0 against: one-way)	(0 en contra: sentido único)

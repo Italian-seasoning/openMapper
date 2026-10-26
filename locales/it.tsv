@@ -2263,3 +2263,79 @@ Close test drive	Chiudi la prova di guida
 Close the openOMSI session started from here (F5)	Chiudi la sessione openOMSI avviata da qui (F5)
 Choose where to start, the vehicle, the time and the weather, then drive the map in openOMSI (F5)	Scegli il punto di partenza, il veicolo, l'ora e il meteo, poi percorri la mappa in openOMSI (F5)
 More switches: the window is too narrow for all of them	Altri interruttori: la finestra è troppo stretta per tutti
+Custom junction saved: the Roads tool's automatic junctions use it where roads meet as it was drawn	Incrocio personalizzato salvato: gli incroci automatici dello strumento Strade lo usano dove le strade si incontrano come nel disegno
+The junction reaches past the map: add tiles there first	L'incrocio esce dalla mappa: aggiungi prima dei tile
+draw some pieces first	disegna prima alcuni pezzi
+mark the arms (where roads come in): at least two	segna gli accessi (dove entrano le strade): almeno due
+the spline cannot be read	impossibile leggere la spline
+Draw some pieces first	Disegna prima alcuni pezzi
+Complex junction	Incrocio complesso
+Complex junction put on the map: its pieces are ordinary splines	Incrocio complesso inserito nella mappa: i suoi pezzi sono normali spline
+Pick the road type of the pocket first	Scegli prima il tipo di strada della baia
+The pocket's road type could not be read	Impossibile leggere il tipo di strada della baia
+Press on a road	Premi su una strada
+This stretch is already of the pocket's road type	Questo tratto è già del tipo di strada della baia
+The road type has no drawn width	Il tipo di strada non ha una larghezza disegnata
+Bus pocket	Baia bus
+Bus pocket laid	Baia bus creata
+The road is too short here for a pocket of that length	Qui la strada è troppo corta per una baia di questa lunghezza
+The road cannot be cut there	Qui la strada non può essere tagliata
+Street with a bus pocket	Strada con baia bus
+Complex junction editor…	Editor di incroci complessi…
+Use my custom junctions where they fit	Usa i miei incroci dove adatti
+Custom junctions saved from the complex junction editor with Use in automatic junctions on	Incroci personalizzati salvati dall'editor di incroci complessi con Usa negli incroci automatici attivo
+My junction	Il mio incrocio
+Complex junction editor	Editor di incroci complessi
+Open a saved one…	Apri uno salvato…
+Draw with	Disegna con
+Pick a piece or an arm; drag to move it; Delete removes it	Scegli un pezzo o un accesso; trascinalo per spostarlo; Canc lo elimina
+Click the start, then the end	Clic sull'inizio, poi sulla fine
+Arc	Arco
+Click the start, a point on the arc, then the end	Clic sull'inizio, su un punto dell'arco, poi sulla fine
+Arm	Accesso
+Where a road comes in: click the place, then a point out along the road	Dove entra una strada: clic sul punto, poi su un punto lungo la strada verso l'esterno
+Snap to the grid and to ends	Aggancia alla griglia e alle estremità
+Spline type	Tipo di spline
+Drawing with:	Disegno con:
+Piece	Pezzo
+Lift	Quota
+Above the plate: markings lie a little over the asphalt they are painted on	Sopra la piattaforma: la segnaletica sta un po' sopra l'asfalto su cui è dipinta
+Type: the one chosen	Tipo: quello scelto
+Move under the one before	Metti sotto il precedente
+any road type	qualsiasi tipo di strada
+Road: the type chosen	Strada: il tipo scelto
+Any	Qualsiasi
+origin	origine
+Click a piece or an arm to pick it, drag it to move it	Clic su un pezzo o un accesso per sceglierlo, trascinalo per spostarlo
+Click the start of the piece, then its end	Clic sull'inizio del pezzo, poi sulla sua fine
+Click the start, a point the arc passes, then the end	Clic sull'inizio, su un punto per cui passa l'arco, poi sulla fine
+Click where a road comes in, then a point out along the road	Clic dove entra una strada, poi su un punto lungo la strada verso l'esterno
+Wheel zooms, right or middle drag pans, Esc cancels	La rotella zooma, trascinamento con tasto destro o centrale sposta la vista, Esc annulla
+Pick a spline type on the left first	Scegli prima un tipo di spline a sinistra
+Too short: the points are too close	Troppo corto: i punti sono troppo vicini
+arms	accessi
+Put on the map	Inserisci nella mappa
+Its pieces become ordinary splines at the middle of the view, to move and change like any other. Nothing about them is automatic	I suoi pezzi diventano normali spline al centro della vista, da spostare e modificare come tutte le altre. Nulla in essi è automatico
+Use in automatic junctions	Usa negli incroci automatici
+Where the Roads tool makes a junction by itself and the roads meet as the arms do (same number, facing about the same ways, of the same road types), this one is put there	Dove lo strumento Strade crea da solo un incrocio e le strade si incontrano come gli accessi (stesso numero, orientate più o meno nelle stesse direzioni, degli stessi tipi di strada), viene inserito questo
+Save as a custom junction	Salva come incrocio personalizzato
+Written as a junction piece of the content folder (it shows in the catalogue under Junctions) with lanes for the AI; needs three arms or more	Viene scritto come pezzo di incrocio nella cartella dei contenuti (appare nel catalogo sotto Incroci) con le corsie per l'IA; servono almeno tre accessi
+Save the drawing	Salva il disegno
+A custom junction is cut back to its arms where roads meet it; draw the roads' own types at the arms so they join cleanly.	Un incrocio personalizzato taglia le strade in corrispondenza dei suoi accessi; disegna agli accessi i tipi di strada delle strade stesse, così si raccordano bene.
+Saved as a custom junction	Salvato come incrocio personalizzato
+Bus Pocket Tool	Strumento Baia bus
+Tick it, then press on a road: a bus pocket of the road type chosen below is laid there. It stays on, pocket after pocket, until you untick it	Attivalo, poi premi su una strada: lì viene creata una baia bus del tipo di strada scelto sotto. Resta attivo, baia dopo baia, finché non lo disattivi
+pick the pocket's road type	scegli il tipo di strada della baia
+Full width over	Larghezza piena su
+Make a road type with a pocket…	Crea un tipo di strada con baia…
+The stretch is cut out of the road and takes the pocket's type, its ends tapering to the road's width. Made in the road maker (Bus pocket).	Il tratto viene ritagliato dalla strada e assume il tipo della baia, con le estremità che si restringono fino alla larghezza della strada. Si crea nel Costruttore di strade (Baia bus).
+Top view	Vista dall'alto
+Side view	Vista laterale
+A lane for buses to stop in, right of the roadway, before the footway. Lay a road type made so where a bay is wanted with the Bus pocket tool of the Roads tool	Una corsia dove i bus si fermano, a destra della carreggiata, prima del marciapiede. Posa una strada di un tipo creato così dove serve una baia, con lo strumento Baia bus dello strumento Strade
+Saved as an object	Salvato come oggetto
+Saved as an object: it is in the catalogue under Objects, to place like any other	Salvato come oggetto: è nel catalogo, sotto Oggetti, e si posiziona come qualsiasi altro
+Save as an object	Salva come oggetto
+The whole drawing as one scenery object of the catalogue (its meshes, and lanes for the AI along its pieces), to place anywhere like any object; arms are not needed	L'intero disegno come un unico oggetto di scenario del catalogo (le sue mesh e le corsie per l'IA lungo le sue parti), da posizionare ovunque come qualsiasi oggetto; i bracci non servono
+Lanes the way the road is drawn	Corsie nel senso del tracciato della strada
+Lanes against it	Corsie in senso opposto
+(0 against: one-way)	(0 in senso opposto: senso unico)

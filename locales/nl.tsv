@@ -2263,3 +2263,79 @@ Close test drive	Testrit sluiten
 Close the openOMSI session started from here (F5)	De vanaf hier gestarte openOMSI-sessie sluiten (F5)
 Choose where to start, the vehicle, the time and the weather, then drive the map in openOMSI (F5)	Kies de startplek, het voertuig, de tijd en het weer en rij dan de kaart in openOMSI (F5)
 More switches: the window is too narrow for all of them	Meer schakelaars: het venster is te smal voor alle
+Custom junction saved: the Roads tool's automatic junctions use it where roads meet as it was drawn	Eigen kruispunt opgeslagen: de automatische kruispunten van de wegenmodus gebruiken het waar wegen samenkomen zoals getekend
+The junction reaches past the map: add tiles there first	Het kruispunt reikt voorbij de kaart: voeg eerst tegels toe
+draw some pieces first	teken eerst enkele onderdelen
+mark the arms (where roads come in): at least two	markeer de armen (waar wegen binnenkomen): minstens twee
+the spline cannot be read	de spline kan niet worden gelezen
+Draw some pieces first	Teken eerst enkele onderdelen
+Complex junction	Complex kruispunt
+Complex junction put on the map: its pieces are ordinary splines	Complex kruispunt op de kaart geplaatst: de onderdelen zijn gewone splines
+Pick the road type of the pocket first	Kies eerst het wegtype van de bushaven
+The pocket's road type could not be read	Het wegtype van de bushaven kon niet worden gelezen
+Press on a road	Klik op een weg
+This stretch is already of the pocket's road type	Dit stuk heeft al het wegtype van de bushaven
+The road type has no drawn width	Het wegtype heeft geen getekende breedte
+Bus pocket	Bushaven
+Bus pocket laid	Bushaven aangelegd
+The road is too short here for a pocket of that length	De weg is hier te kort voor een bushaven van die lengte
+The road cannot be cut there	De weg kan daar niet worden doorgesneden
+Street with a bus pocket	Straat met bushaven
+Complex junction editor…	Editor voor complexe kruispunten…
+Use my custom junctions where they fit	Mijn eigen kruispunten gebruiken waar ze passen
+Custom junctions saved from the complex junction editor with Use in automatic junctions on	Eigen kruispunten opgeslagen met de editor voor complexe kruispunten met Gebruiken in automatische kruispunten ingeschakeld
+My junction	Mijn kruispunt
+Complex junction editor	Editor voor complexe kruispunten
+Open a saved one…	Opgeslagen kruispunt openen…
+Draw with	Tekenen met
+Pick a piece or an arm; drag to move it; Delete removes it	Kies een onderdeel of arm; sleep om te verplaatsen; Delete verwijdert het
+Click the start, then the end	Klik op het begin en daarna op het einde
+Arc	Boog
+Click the start, a point on the arc, then the end	Klik op het begin, een punt op de boog en daarna op het einde
+Arm	Arm
+Where a road comes in: click the place, then a point out along the road	Waar een weg binnenkomt: klik op de plek en daarna op een punt verderop langs de weg
+Snap to the grid and to ends	Uitlijnen op raster en uiteinden
+Spline type	Splinetype
+Drawing with:	Tekenen met:
+Piece	Onderdeel
+Lift	Hoogte
+Above the plate: markings lie a little over the asphalt they are painted on	Boven de plaat: markeringen liggen iets boven het asfalt waarop ze zijn aangebracht
+Type: the one chosen	Type: het gekozen type
+Move under the one before	Onder het vorige plaatsen
+any road type	elk wegtype
+Road: the type chosen	Weg: het gekozen type
+Any	Elke
+origin	oorsprong
+Click a piece or an arm to pick it, drag it to move it	Klik op een onderdeel of arm om het te kiezen, sleep om te verplaatsen
+Click the start of the piece, then its end	Klik op het begin van het onderdeel en daarna op het einde
+Click the start, a point the arc passes, then the end	Klik op het begin, een punt waar de boog langs gaat en daarna op het einde
+Click where a road comes in, then a point out along the road	Klik waar een weg binnenkomt en daarna op een punt verderop langs de weg
+Wheel zooms, right or middle drag pans, Esc cancels	Wiel zoomt, rechts of midden slepen verschuift, Esc annuleert
+Pick a spline type on the left first	Kies eerst links een splinetype
+Too short: the points are too close	Te kort: de punten liggen te dicht bij elkaar
+arms	armen
+Put on the map	Op de kaart plaatsen
+Its pieces become ordinary splines at the middle of the view, to move and change like any other. Nothing about them is automatic	De onderdelen worden gewone splines in het midden van het beeld, die u net als andere kunt verplaatsen en wijzigen. Er is niets automatisch aan
+Use in automatic junctions	Gebruiken in automatische kruispunten
+Where the Roads tool makes a junction by itself and the roads meet as the arms do (same number, facing about the same ways, of the same road types), this one is put there	Waar de wegenmodus zelf een kruispunt maakt en de wegen samenkomen zoals de armen (zelfde aantal, ongeveer dezelfde richtingen, dezelfde wegtypen), wordt dit kruispunt geplaatst
+Save as a custom junction	Opslaan als eigen kruispunt
+Written as a junction piece of the content folder (it shows in the catalogue under Junctions) with lanes for the AI; needs three arms or more	Wordt weggeschreven als kruispuntonderdeel in de contentmap (te zien in de catalogus onder Kruispunten) met rijstroken voor de AI; vereist drie of meer armen
+Save the drawing	Tekening opslaan
+A custom junction is cut back to its arms where roads meet it; draw the roads' own types at the arms so they join cleanly.	Een eigen kruispunt snijdt wegen af bij de armen waar ze erop aansluiten; teken bij de armen de eigen wegtypen van de wegen zodat ze netjes aansluiten.
+Saved as a custom junction	Opgeslagen als eigen kruispunt
+Bus Pocket Tool	Bushaven-gereedschap
+Tick it, then press on a road: a bus pocket of the road type chosen below is laid there. It stays on, pocket after pocket, until you untick it	Schakel het in en klik op een weg: daar wordt een bushaven van het hieronder gekozen wegtype aangelegd. Het blijft ingeschakeld, haven na haven, totdat u het uitschakelt
+pick the pocket's road type	kies het wegtype van de bushaven
+Full width over	Volle breedte over
+Make a road type with a pocket…	Wegtype met bushaven maken…
+The stretch is cut out of the road and takes the pocket's type, its ends tapering to the road's width. Made in the road maker (Bus pocket).	Het stuk wordt uit de weg gesneden en krijgt het type van de bushaven, waarbij de uiteinden versmallen tot de breedte van de weg. Gemaakt in de wegenmaker (Bushaven).
+Top view	Bovenaanzicht
+Side view	Zijaanzicht
+A lane for buses to stop in, right of the roadway, before the footway. Lay a road type made so where a bay is wanted with the Bus pocket tool of the Roads tool	Een strook waar bussen kunnen stoppen, rechts van de rijbaan, vóór het voetpad. Leg een zo gemaakt wegtype waar een halte gewenst is met het Bushaven-gereedschap van de wegenmodus
+Saved as an object	Opgeslagen als object
+Saved as an object: it is in the catalogue under Objects, to place like any other	Opgeslagen als object: het staat in de catalogus onder Objecten en wordt geplaatst zoals elk ander
+Save as an object	Opslaan als object
+The whole drawing as one scenery object of the catalogue (its meshes, and lanes for the AI along its pieces), to place anywhere like any object; arms are not needed	De hele tekening als één landschapsobject van de catalogus (zijn meshes en rijstroken voor de AI langs zijn delen), overal te plaatsen zoals elk object; armen zijn niet nodig
+Lanes the way the road is drawn	Rijstroken in tekenrichting van de weg
+Lanes against it	Rijstroken tegen de richting in
+(0 against: one-way)	(0 tegen: eenrichtingsverkeer)

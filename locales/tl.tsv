@@ -2263,3 +2263,79 @@ Close test drive	Isara ang test drive
 Close the openOMSI session started from here (F5)	Isara ang openOMSI session na sinimulan mula rito (F5)
 Choose where to start, the vehicle, the time and the weather, then drive the map in openOMSI (F5)	Piliin ang simulang lugar, sasakyan, oras at panahon, saka imaneho ang mapa sa openOMSI (F5)
 More switches: the window is too narrow for all of them	Higit pang switch: masyadong makitid ang window para sa lahat
+Custom junction saved: the Roads tool's automatic junctions use it where roads meet as it was drawn	Nai-save ang custom junction: ginagamit ito ng mga awtomatikong junction ng Roads tool kung saan nagtatagpo ang mga kalsada gaya ng pagkaguhit
+The junction reaches past the map: add tiles there first	Lampas sa mapa ang junction: magdagdag muna ng mga tile doon
+draw some pieces first	gumuhit muna ng ilang piraso
+mark the arms (where roads come in): at least two	markahan ang mga arm (kung saan pumapasok ang mga kalsada): hindi bababa sa dalawa
+the spline cannot be read	hindi mabasa ang spline
+Draw some pieces first	Gumuhit muna ng ilang piraso
+Complex junction	Kumplikadong junction
+Complex junction put on the map: its pieces are ordinary splines	Nailagay sa mapa ang kumplikadong junction: ang mga piraso nito ay karaniwang spline
+Pick the road type of the pocket first	Pumili muna ng uri ng kalsada ng pocket
+The pocket's road type could not be read	Hindi mabasa ang uri ng kalsada ng pocket
+Press on a road	Pindutin ang isang kalsada
+This stretch is already of the pocket's road type	Ang bahaging ito ay nasa uri na ng kalsada ng pocket
+The road type has no drawn width	Walang iginuhit na lapad ang uri ng kalsada
+Bus pocket	Bus pocket
+Bus pocket laid	Nailatag ang bus pocket
+The road is too short here for a pocket of that length	Masyadong maikli ang kalsada rito para sa pocket na ganoon kahaba
+The road cannot be cut there	Hindi maaaring putulin ang kalsada roon
+Street with a bus pocket	Kalye na may bus pocket
+Complex junction editor…	Editor ng kumplikadong junction…
+Use my custom junctions where they fit	Gamitin ang aking mga custom junction kung angkop
+Custom junctions saved from the complex junction editor with Use in automatic junctions on	Mga custom junction na na-save mula sa editor ng kumplikadong junction na naka-on ang Gamitin sa mga awtomatikong junction
+My junction	Aking junction
+Complex junction editor	Editor ng kumplikadong junction
+Open a saved one…	Magbukas ng na-save…
+Draw with	Iguhit gamit ang
+Pick a piece or an arm; drag to move it; Delete removes it	Pumili ng piraso o arm; i-drag para ilipat; buburahin ito ng Delete
+Click the start, then the end	I-click ang simula, pagkatapos ang dulo
+Arc	Arko
+Click the start, a point on the arc, then the end	I-click ang simula, isang punto sa arko, pagkatapos ang dulo
+Arm	Arm
+Where a road comes in: click the place, then a point out along the road	Kung saan pumapasok ang kalsada: i-click ang lugar, pagkatapos ay isang punto palabas sa kalsada
+Snap to the grid and to ends	I-snap sa grid at sa mga dulo
+Spline type	Uri ng spline
+Drawing with:	Iginuguhit gamit ang:
+Piece	Piraso
+Lift	Taas
+Above the plate: markings lie a little over the asphalt they are painted on	Sa ibabaw ng plate: bahagyang nakapatong ang mga marka sa aspalto kung saan sila ipininta
+Type: the one chosen	Uri: ang napili
+Move under the one before	Ilipat sa ilalim ng nauna
+any road type	anumang uri ng kalsada
+Road: the type chosen	Kalsada: ang napiling uri
+Any	Alinman
+origin	pinagmulan
+Click a piece or an arm to pick it, drag it to move it	Mag-click sa piraso o arm para piliin ito, i-drag para ilipat
+Click the start of the piece, then its end	I-click ang simula ng piraso, pagkatapos ang dulo nito
+Click the start, a point the arc passes, then the end	I-click ang simula, isang punto na dinaraanan ng arko, pagkatapos ang dulo
+Click where a road comes in, then a point out along the road	I-click kung saan pumapasok ang kalsada, pagkatapos ay isang punto palabas sa kalsada
+Wheel zooms, right or middle drag pans, Esc cancels	Ang gulong ay nag-zoom, ang right o middle drag ay nag-pan, kinakansela ng Esc
+Pick a spline type on the left first	Pumili muna ng uri ng spline sa kaliwa
+Too short: the points are too close	Masyadong maikli: magkalapit ang mga punto
+arms	mga arm
+Put on the map	Ilagay sa mapa
+Its pieces become ordinary splines at the middle of the view, to move and change like any other. Nothing about them is automatic	Ang mga piraso nito ay magiging karaniwang spline sa gitna ng view, para ilipat at baguhin gaya ng iba. Walang awtomatiko sa mga ito
+Use in automatic junctions	Gamitin sa mga awtomatikong junction
+Where the Roads tool makes a junction by itself and the roads meet as the arms do (same number, facing about the same ways, of the same road types), this one is put there	Kapag ang Roads tool ay gumagawa ng junction nang mag-isa at nagtatagpo ang mga kalsada gaya ng mga arm (parehong bilang, halos parehong direksyon, parehong uri ng kalsada), ito ang inilalagay doon
+Save as a custom junction	I-save bilang custom junction
+Written as a junction piece of the content folder (it shows in the catalogue under Junctions) with lanes for the AI; needs three arms or more	Isinusulat bilang junction piece ng content folder (lalabas ito sa catalogue sa ilalim ng Junctions) na may mga lane para sa AI; kailangan ng tatlong arm o higit pa
+Save the drawing	I-save ang drawing
+A custom junction is cut back to its arms where roads meet it; draw the roads' own types at the arms so they join cleanly.	Ang custom junction ay pinuputol pabalik sa mga arm nito kung saan ito sinasalubong ng mga kalsada; iguhit ang sariling uri ng mga kalsada sa mga arm para maayos na magdugtong.
+Saved as a custom junction	Na-save bilang custom junction
+Bus Pocket Tool	Bus Pocket Tool
+Tick it, then press on a road: a bus pocket of the road type chosen below is laid there. It stays on, pocket after pocket, until you untick it	I-tick ito, pagkatapos ay pindutin ang isang kalsada: ilalatag doon ang bus pocket na may uri ng kalsadang napili sa ibaba. Mananatili itong naka-on, pocket pagkatapos ng pocket, hanggang i-untick mo ito
+pick the pocket's road type	piliin ang uri ng kalsada ng pocket
+Full width over	Buong lapad sa loob ng
+Make a road type with a pocket…	Gumawa ng uri ng kalsada na may pocket…
+The stretch is cut out of the road and takes the pocket's type, its ends tapering to the road's width. Made in the road maker (Bus pocket).	Ang bahagi ay pinuputol mula sa kalsada at kinukuha ang uri ng pocket, na ang mga dulo ay pumapayat hanggang sa lapad ng kalsada. Ginagawa sa road maker (Bus pocket).
+Top view	Tanaw mula sa itaas
+Side view	Tanaw mula sa gilid
+A lane for buses to stop in, right of the roadway, before the footway. Lay a road type made so where a bay is wanted with the Bus pocket tool of the Roads tool	Isang lane para huminto ang mga bus, sa kanan ng daanan, bago ang footway. Maglatag ng uri ng kalsadang ginawa nang ganito kung saan kailangan ng bay gamit ang Bus pocket tool ng Roads tool
+Saved as an object	Na-save bilang object
+Saved as an object: it is in the catalogue under Objects, to place like any other	Na-save bilang object: nasa catalogue ito sa ilalim ng Mga Object, at inilalagay tulad ng iba
+Save as an object	I-save bilang object
+The whole drawing as one scenery object of the catalogue (its meshes, and lanes for the AI along its pieces), to place anywhere like any object; arms are not needed	Ang buong drawing bilang isang scenery object ng catalogue (ang mga mesh nito, at mga lane para sa AI sa tabi ng mga piraso nito), mailalagay kahit saan tulad ng anumang object; hindi kailangan ang mga braso
+Lanes the way the road is drawn	Mga lane ayon sa direksyon ng pagkaguhit ng kalsada
+Lanes against it	Mga lane na pasalungat
+(0 against: one-way)	(0 pasalungat: isang direksyon)

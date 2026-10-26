@@ -2263,3 +2263,79 @@ Close test drive	Закрити тест-драйв
 Close the openOMSI session started from here (F5)	Закрити сесію openOMSI, запущену звідси (F5)
 Choose where to start, the vehicle, the time and the weather, then drive the map in openOMSI (F5)	Обрати місце старту, транспорт, час і погоду та проїхати мапу в openOMSI (F5)
 More switches: the window is too narrow for all of them	Більше перемикачів: вікно закоротке для всіх
+Custom junction saved: the Roads tool's automatic junctions use it where roads meet as it was drawn	Власне перехрестя збережено: автоматичні перехрестя інструмента «Дороги» ставлять його там, де дороги сходяться так, як намальовано
+The junction reaches past the map: add tiles there first	Перехрестя виходить за межі карти: спершу додайте тайли
+draw some pieces first	спершу намалюйте деталі
+mark the arms (where roads come in): at least two	позначте в’їзди (де входять дороги): щонайменше два
+the spline cannot be read	сплайн не вдається прочитати
+Draw some pieces first	Спершу намалюйте деталі
+Complex junction	Складне перехрестя
+Complex junction put on the map: its pieces are ordinary splines	Складне перехрестя розміщено на карті: його деталі — звичайні сплайни
+Pick the road type of the pocket first	Спершу виберіть тип дороги для кишені
+The pocket's road type could not be read	Не вдалося прочитати тип дороги кишені
+Press on a road	Натисніть на дорогу
+This stretch is already of the pocket's road type	Ця ділянка вже має тип дороги кишені
+The road type has no drawn width	Тип дороги не має накресленої ширини
+Bus pocket	Автобусна кишеня
+Bus pocket laid	Автобусну кишеню створено
+The road is too short here for a pocket of that length	Дорога тут закоротка для кишені такої довжини
+The road cannot be cut there	Дорогу тут не можна розрізати
+Street with a bus pocket	Вулиця з автобусною кишенею
+Complex junction editor…	Редактор складних перехресть…
+Use my custom junctions where they fit	Ставити мої перехрестя, де вони підходять
+Custom junctions saved from the complex junction editor with Use in automatic junctions on	Власні перехрестя, збережені в редакторі складних перехресть із увімкненим «Використовувати в автоперехрестях»
+My junction	Моє перехрестя
+Complex junction editor	Редактор складних перехресть
+Open a saved one…	Відкрити збережене…
+Draw with	Малювати
+Pick a piece or an arm; drag to move it; Delete removes it	Виберіть деталь або в’їзд; перетягніть, щоб перемістити; Delete видаляє
+Click the start, then the end	Клацніть початок, потім кінець
+Arc	Дуга
+Click the start, a point on the arc, then the end	Клацніть початок, точку на дузі, потім кінець
+Arm	В’їзд
+Where a road comes in: click the place, then a point out along the road	Де входить дорога: клацніть місце, потім точку назовні вздовж дороги
+Snap to the grid and to ends	Прив’язка до сітки та кінців
+Spline type	Тип сплайна
+Drawing with:	Малюється:
+Piece	Деталь
+Lift	Підйом
+Above the plate: markings lie a little over the asphalt they are painted on	Над плитою: розмітка лежить трохи вище за асфальт, на якому нанесена
+Type: the one chosen	Тип: вибраний
+Move under the one before	Перемістити під попередню
+any road type	будь-який тип дороги
+Road: the type chosen	Дорога: вибраний тип
+Any	Будь-яка
+origin	початок
+Click a piece or an arm to pick it, drag it to move it	Клацніть деталь або в’їзд, щоб вибрати, перетягніть, щоб перемістити
+Click the start of the piece, then its end	Клацніть початок деталі, потім її кінець
+Click the start, a point the arc passes, then the end	Клацніть початок, точку, через яку проходить дуга, потім кінець
+Click where a road comes in, then a point out along the road	Клацніть, де входить дорога, потім точку назовні вздовж дороги
+Wheel zooms, right or middle drag pans, Esc cancels	Колесо — масштаб, права або середня кнопка — зсув, Esc — скасування
+Pick a spline type on the left first	Спершу виберіть тип сплайна ліворуч
+Too short: the points are too close	Закоротко: точки надто близько
+arms	в’їздів
+Put on the map	Розмістити на карті
+Its pieces become ordinary splines at the middle of the view, to move and change like any other. Nothing about them is automatic	Його деталі стають звичайними сплайнами в центрі виду, їх можна переміщати та змінювати, як будь-які інші. Нічого автоматичного
+Use in automatic junctions	Використовувати в автоперехрестях
+Where the Roads tool makes a junction by itself and the roads meet as the arms do (same number, facing about the same ways, of the same road types), this one is put there	Де інструмент «Дороги» створює перехрестя сам і дороги сходяться так, як в’їзди (те саме число, приблизно ті самі напрямки, ті самі типи доріг), ставиться це
+Save as a custom junction	Зберегти як власне перехрестя
+Written as a junction piece of the content folder (it shows in the catalogue under Junctions) with lanes for the AI; needs three arms or more	Записується як деталь-перехрестя в теці вмісту (видно в каталозі «Перехрестя») зі смугами для ШІ; потрібно три в’їзди або більше
+Save the drawing	Зберегти малюнок
+A custom junction is cut back to its arms where roads meet it; draw the roads' own types at the arms so they join cleanly.	Власне перехрестя обрізає дороги по в’їздах; малюйте біля в’їздів ті типи доріг, що підійдуть.
+Saved as a custom junction	Збережено як власне перехрестя
+Bus Pocket Tool	Інструмент «Автобусна кишеня»
+Tick it, then press on a road: a bus pocket of the road type chosen below is laid there. It stays on, pocket after pocket, until you untick it	Увімкніть і натискайте на дорогу: там з’явиться автобусна кишеня вибраного нижче типу дороги. Інструмент працює, доки ви його не вимкнете
+pick the pocket's road type	виберіть тип дороги кишені
+Full width over	Повна ширина на
+Make a road type with a pocket…	Створити тип дороги з кишенею…
+The stretch is cut out of the road and takes the pocket's type, its ends tapering to the road's width. Made in the road maker (Bus pocket).	Ділянку вирізають із дороги, і вона набуває типу кишені, а кінці звужуються до ширини дороги. Тип створюється в конструкторі доріг («Автобусна кишеня»).
+Top view	Вигляд зверху
+Side view	Вигляд збоку
+A lane for buses to stop in, right of the roadway, before the footway. Lay a road type made so where a bay is wanted with the Bus pocket tool of the Roads tool	Смуга для зупинки автобусів праворуч від проїзної частини, перед тротуаром. Дорогою такого типу створюють кишеню інструментом «Автобусна кишеня» в «Дорогах»
+Saved as an object	Збережено як об’єкт
+Saved as an object: it is in the catalogue under Objects, to place like any other	Збережено як об’єкт: він у каталозі в розділі «Об’єкти», розміщується як будь-який інший
+Save as an object	Зберегти як об’єкт
+The whole drawing as one scenery object of the catalogue (its meshes, and lanes for the AI along its pieces), to place anywhere like any object; arms are not needed	Весь малюнок як один об’єкт сценерії каталогу (його меші та смуги для ШІ вздовж його частин), розміщується де завгодно як звичайний об’єкт; в’їзди не потрібні
+Lanes the way the road is drawn	Смуги за ходом дороги
+Lanes against it	Смуги проти ходу
+(0 against: one-way)	(0 проти: одностороння)

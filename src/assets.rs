@@ -228,6 +228,21 @@ impl Assets {
         }
     }
 
+    /// [`Assets::spline`], waiting for the model (see [`Assets::object_wait`]).
+    pub fn spline_wait(&mut self, rel: &str, ms: u64) -> Option<Arc<SplineModel>> {
+        let start = std::time::Instant::now();
+        loop {
+            if let Some(m) = self.spline(rel) {
+                return Some(m);
+            }
+            if matches!(self.splines.get(&rel.to_lowercase()), Some(Slot::Failed)) || start.elapsed().as_millis() as u64 > ms {
+                return None;
+            }
+            self.poll();
+            std::thread::sleep(std::time::Duration::from_millis(5));
+        }
+    }
+
     pub fn spline(&mut self, rel: &str) -> Option<Arc<SplineModel>> {
         let key = rel.to_lowercase();
         match self.splines.get(&key) {

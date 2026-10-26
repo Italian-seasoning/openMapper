@@ -2263,3 +2263,79 @@ Close test drive	Próbaút bezárása
 Close the openOMSI session started from here (F5)	A innen indított openOMSI munkamenet bezárása (F5)
 Choose where to start, the vehicle, the time and the weather, then drive the map in openOMSI (F5)	Válaszd ki az indulás helyét, a járművet, az időt és az időjárást, majd járd be a pályát az openOMSI-ban (F5)
 More switches: the window is too narrow for all of them	További kapcsolók: az ablak túl keskeny mindegyikhez
+Custom junction saved: the Roads tool's automatic junctions use it where roads meet as it was drawn	Egyéni csomópont mentve: az Utak eszköz automatikus csomópontjai ott használják, ahol az utak úgy találkoznak, ahogy rajzolta
+The junction reaches past the map: add tiles there first	A csomópont túlnyúlik a térképen: előbb adjon hozzá csempéket
+draw some pieces first	előbb rajzoljon elemeket
+mark the arms (where roads come in): at least two	jelölje meg az ágakat (ahol az utak belépnek): legalább kettőt
+the spline cannot be read	a spline nem olvasható
+Draw some pieces first	Előbb rajzoljon elemeket
+Complex junction	Összetett csomópont
+Complex junction put on the map: its pieces are ordinary splines	Az összetett csomópont a térképre került: elemei hagyományos splinek
+Pick the road type of the pocket first	Előbb válassza ki az öböl útpályatípusát
+The pocket's road type could not be read	Az öböl útpályatípusa nem olvasható
+Press on a road	Kattintson egy útra
+This stretch is already of the pocket's road type	Ez a szakasz már az öböl útpályatípusú
+The road type has no drawn width	Az útpályatípusnak nincs megrajzolt szélessége
+Bus pocket	Buszöböl
+Bus pocket laid	Buszöböl lerakva
+The road is too short here for a pocket of that length	Az út itt túl rövid egy ilyen hosszú öbölhöz
+The road cannot be cut there	Az utat itt nem lehet elvágni
+Street with a bus pocket	Utca buszöböllel
+Complex junction editor…	Összetett csomópont szerkesztője…
+Use my custom junctions where they fit	Egyéni csomópontjaim használata, ahol illenek
+Custom junctions saved from the complex junction editor with Use in automatic junctions on	Az összetett csomópont szerkesztőjében mentett egyéni csomópontok, ha az Használat automatikus csomópontokban be van kapcsolva
+My junction	Saját csomópont
+Complex junction editor	Összetett csomópont szerkesztője
+Open a saved one…	Mentett megnyitása…
+Draw with	Rajzolás ezzel
+Pick a piece or an arm; drag to move it; Delete removes it	Elem vagy ág kijelölése; húzással mozgatható; a Delete törli
+Click the start, then the end	Kattintson a kezdőpontra, majd a végpontra
+Arc	Ív
+Click the start, a point on the arc, then the end	Kattintson a kezdőpontra, az ív egy pontjára, majd a végpontra
+Arm	Ág
+Where a road comes in: click the place, then a point out along the road	Ahol az út belép: kattintson a helyre, majd egy pontra kifelé az út mentén
+Snap to the grid and to ends	Illesztés a rácshoz és a végpontokhoz
+Spline type	Spline típusa
+Drawing with:	Rajzolás ezzel:
+Piece	Elem
+Lift	Emelés
+Above the plate: markings lie a little over the asphalt they are painted on	A lemez felett: a felfestések kissé az aszfalt fölött fekszenek, amelyre festve vannak
+Type: the one chosen	Típus: a kiválasztott
+Move under the one before	Az előző alá helyezés
+any road type	bármely útpályatípus
+Road: the type chosen	Út: a kiválasztott típus
+Any	Bármely
+origin	origó
+Click a piece or an arm to pick it, drag it to move it	Kattintson egy elemre vagy ágra a kijelöléshez, húzza a mozgatáshoz
+Click the start of the piece, then its end	Kattintson az elem kezdőpontjára, majd a végpontjára
+Click the start, a point the arc passes, then the end	Kattintson a kezdőpontra, az ív egy pontjára, majd a végpontra
+Click where a road comes in, then a point out along the road	Kattintson, ahol az út belép, majd egy pontra kifelé az út mentén
+Wheel zooms, right or middle drag pans, Esc cancels	A kerék nagyít, jobb vagy középső gombbal húzva görget, az Esc megszakít
+Pick a spline type on the left first	Előbb válasszon spline-típust a bal oldalon
+Too short: the points are too close	Túl rövid: a pontok túl közel vannak
+arms	ág
+Put on the map	Térképre helyezés
+Its pieces become ordinary splines at the middle of the view, to move and change like any other. Nothing about them is automatic	Elemei hagyományos splinekké válnak a nézet közepén, úgy mozgathatók és módosíthatók, mint bármely más. Semmi sem automatikus bennük
+Use in automatic junctions	Használat automatikus csomópontokban
+Where the Roads tool makes a junction by itself and the roads meet as the arms do (same number, facing about the same ways, of the same road types), this one is put there	Ahol az Utak eszköz magától csomópontot készít, és az utak úgy találkoznak, mint az ágak (azonos számban, nagyjából azonos irányban, azonos útpályatípusokkal), ez kerül oda
+Save as a custom junction	Mentés egyéni csomópontként
+Written as a junction piece of the content folder (it shows in the catalogue under Junctions) with lanes for the AI; needs three arms or more	Csomópont-elemként íródik a tartalommappába (a katalógusban a Csomópontok alatt jelenik meg) forgalmi sávokkal az MI számára; legalább három ág kell
+Save the drawing	Rajz mentése
+A custom junction is cut back to its arms where roads meet it; draw the roads' own types at the arms so they join cleanly.	Az egyéni csomópont az ágaknál visszavágja az utakat, ahol azok találkoznak vele; az ágaknál az utak saját típusait rajzolja, hogy szépen csatlakozzanak.
+Saved as a custom junction	Mentve egyéni csomópontként
+Bus Pocket Tool	Buszöböl eszköz
+Tick it, then press on a road: a bus pocket of the road type chosen below is laid there. It stays on, pocket after pocket, until you untick it	Kapcsolja be, majd kattintson egy útra: ott az alább kiválasztott útpályatípusú buszöböl jön létre. Addig marad bekapcsolva, öbölről öbölre, amíg ki nem kapcsolja
+pick the pocket's road type	válassza ki az öböl útpályatípusát
+Full width over	Teljes szélesség ezen a hosszon
+Make a road type with a pocket…	Útpályatípus létrehozása öböllel…
+The stretch is cut out of the road and takes the pocket's type, its ends tapering to the road's width. Made in the road maker (Bus pocket).	A szakasz kivágódik az útból, és az öböl típusát kapja, végei az út szélességére keskenyednek. Az útkészítőben készül (Buszöböl).
+Top view	Felülnézet
+Side view	Oldalnézet
+A lane for buses to stop in, right of the roadway, before the footway. Lay a road type made so where a bay is wanted with the Bus pocket tool of the Roads tool	Sáv a buszok megállásához a kocsipálya jobb oldalán, a járda előtt. Ilyen típusú utat ott helyezzen el, ahol öblöt szeretne, az Utak eszköz Buszöböl eszközével
+Saved as an object	Objektumként mentve
+Saved as an object: it is in the catalogue under Objects, to place like any other	Objektumként mentve: a katalógusban van, az Objektumok alatt, és bármelyik másikhoz hasonlóan helyezhető el
+Save as an object	Mentés objektumként
+The whole drawing as one scenery object of the catalogue (its meshes, and lanes for the AI along its pieces), to place anywhere like any object; arms are not needed	A teljes rajz egyetlen katalógus-tereptárgyként (a hálói, és a MI számára sávok a részei mentén), bárhová elhelyezhető mint bármely objektum; karok nem kellenek
+Lanes the way the road is drawn	Sávok az út rajzolt irányában
+Lanes against it	Sávok ellentétes irányban
+(0 against: one-way)	(0 ellentétes: egyirányú)

@@ -10,6 +10,14 @@ pub const FAMILY: &str = "material-symbols";
 pub enum Icon {
     Select,
     Road,
+    /// The complex junction editor's tools: a line, an arc, an arm; a saved object; a side view.
+    Line,
+    Arc,
+    Arm,
+    Cube,
+    SideView,
+    Up,
+    Down,
     Objects,
     Terrain,
     Paint,
@@ -78,6 +86,13 @@ impl Icon {
         let cp = match self {
             Icon::Select => 0xf82f,
             Icon::Road => 0xf472,
+            Icon::Line => 0xebbb,
+            Icon::Arc => 0xf757,
+            Icon::Arm => 0xe0b2,
+            Icon::Cube => 0xf720,
+            Icon::SideView => 0xea16,
+            Icon::Up => 0xe5d8,
+            Icon::Down => 0xe5db,
             Icon::Objects => 0xf030,
             Icon::Terrain => 0xe564,
             Icon::Paint => 0xe243,

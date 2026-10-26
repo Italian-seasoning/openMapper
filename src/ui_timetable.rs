@@ -1012,7 +1012,7 @@ impl TimetableUi {
                 for (k, (num, tour)) in c.use_.number_tour.iter_mut().enumerate() {
                     ui.horizontal(|ui| {
                         ui.add(egui::TextEdit::singleline(num).desired_width(60.0));
-                        ui.label("→");
+                        ui.label(crate::icons::Icon::ChevronRight.text(14.0));
                         egui::ComboBox::from_id_salt(("car use tour", i, k)).selected_text(tour.as_str()).width(110.0).show_ui(ui, |ui| {
                             for t in &tours {
                                 ui.selectable_value(tour, t.clone(), t);

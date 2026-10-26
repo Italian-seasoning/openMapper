@@ -902,6 +902,38 @@ pub fn road_options(ui: &mut egui::Ui, ed: &mut Editor) {
     r.on_hover_text(tr("An even gradient from end to end, the ground left as it is; the rise to the end can be typed while drawing. Pillars: select the road and put them along it as objects.", "Ровный уклон от начала до конца, земля не меняется; подъём к концу можно ввести при рисовании. Опоры: выберите дорогу и расставьте их вдоль неё как объекты."));
 }
 
+/// The Roads tool's bus pocket tool: with the box ticked a click on a road lays a pocket
+/// there, again and again, until it is switched off.
+pub fn pocket_options(ui: &mut egui::Ui, ed: &mut Editor, lib: &Library, actions: &mut Vec<crate::ui::Action>) {
+    let r = check(ui, &mut ed.bus_pocket, icons::labelled(Icon::Road, tr("Bus Pocket Tool", "Инструмент «Автобусный карман»")));
+    r.on_hover_text(tr("Tick it, then press on a road: a bus pocket of the road type chosen below is laid there. It stays on, pocket after pocket, until you untick it", "Включите и нажимайте на дорогу: там появится автобусный карман выбранного ниже типа дороги. Инструмент работает, пока вы его не выключите"));
+    if !ed.bus_pocket {
+        return;
+    }
+    egui::Frame::new().inner_margin(Margin { left: 18, ..Default::default() }).show(ui, |ui| {
+        let key = egui::Id::new("pocket search");
+        let mut search: String = ui.data_mut(|d| d.get_temp::<String>(key)).unwrap_or_default();
+        let shown = ed.pocket_type.as_deref().and_then(|r| lib.find(r)).map(|a| a.name.clone()).unwrap_or_else(|| tr("pick the pocket's road type", "выберите тип дороги кармана").to_string());
+        egui::ComboBox::from_id_salt("pocket type").width(ui.available_width() - 8.0).selected_text(shown).show_ui(ui, |ui| {
+            ui.add(egui::TextEdit::singleline(&mut search).hint_text(tr("Search", "Поиск")));
+            for a in lib.filter(crate::library::Kind::Spline, Some(crate::library::Category::Roads), &search).take(200) {
+                if ui.selectable_label(ed.pocket_type.as_deref().map(|p| p.eq_ignore_ascii_case(&a.rel)).unwrap_or(false), &a.name).on_hover_text(&a.rel).clicked() {
+                    ed.pocket_type = Some(a.rel.clone());
+                }
+            }
+        });
+        ui.data_mut(|d| d.insert_temp(key, search));
+        ui.horizontal(|ui| {
+            ui.label(tr("Full width over", "Полная ширина на"));
+            ui.add(egui::DragValue::new(&mut ed.pocket_len).range(4.0..=80.0).speed(0.5).suffix(" m"));
+        });
+        if ui.small_button(tr("Make a road type with a pocket…", "Создать тип дороги с карманом…")).clicked() {
+            actions.push(crate::ui::Action::RoadTypes);
+        }
+        ui.label(RichText::new(tr("The stretch is cut out of the road and takes the pocket's type, its ends tapering to the road's width. Made in the road maker (Bus pocket).", "Участок вырезается из дороги и получает тип кармана, концы сужаются до ширины дороги. Тип делается в конструкторе дороги («Автобусный карман»).")).small().color(TEXT_DIM));
+    });
+}
+
 /// Numbers for the road being drawn, in the view's corner: what is typed is kept to, what is
 /// left empty follows the cursor (its value shown greyed).
 pub fn road_entry(ctx: &egui::Context, ed: &mut Editor, view: egui::Rect, actions: &mut Vec<crate::ui::Action>) {

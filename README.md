@@ -58,7 +58,7 @@ can drive in service.
 
 ## What it can do
 
-* **Roads and junctions**: two clicks make a road; junctions, traffic lights, crossings, switches and roundabouts come by themselves.
+* **Roads and junctions**: two clicks make a road; junctions, traffic lights, crossings, switches and roundabouts come by themselves. Bus pockets with one tick and a click on the road; complex junctions drawn from above out of small splines, put on the map as they are or saved as custom junctions the automatic ones use.
 * **Objects and plants**: a visual catalogue of the installation's buildings, trees and splines, lining up with roads, a plant brush.
 * **Terrain and paint**: sculpting brushes, ramps, height maps, ground texture painting, tiles and water.
 * **Real places**: satellite imagery, terrain heights and OpenStreetMap (roads, stops, lines, buildings, trees, water).

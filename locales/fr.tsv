@@ -2263,3 +2263,79 @@ Close test drive	Fermer l'essai routier
 Close the openOMSI session started from here (F5)	Fermer la session openOMSI lancée d'ici (F5)
 Choose where to start, the vehicle, the time and the weather, then drive the map in openOMSI (F5)	Choisir le point de départ, le véhicule, l'heure et la météo, puis parcourir la carte dans openOMSI (F5)
 More switches: the window is too narrow for all of them	Plus de commutateurs : la fenêtre est trop étroite pour tous
+Custom junction saved: the Roads tool's automatic junctions use it where roads meet as it was drawn	Carrefour personnalisé enregistré : les carrefours automatiques de l'outil Routes l'utilisent là où les routes se rejoignent comme dessiné
+The junction reaches past the map: add tiles there first	Le carrefour dépasse la carte : ajoutez d'abord des tuiles
+draw some pieces first	dessinez d'abord quelques éléments
+mark the arms (where roads come in): at least two	marquez les branches (où arrivent les routes) : au moins deux
+the spline cannot be read	le spline est illisible
+Draw some pieces first	Dessinez d'abord quelques éléments
+Complex junction	Carrefour complexe
+Complex junction put on the map: its pieces are ordinary splines	Carrefour complexe placé sur la carte : ses éléments sont des splines ordinaires
+Pick the road type of the pocket first	Choisissez d'abord le type de route de la baie
+The pocket's road type could not be read	Impossible de lire le type de route de la baie
+Press on a road	Cliquez sur une route
+This stretch is already of the pocket's road type	Ce tronçon est déjà du type de route de la baie
+The road type has no drawn width	Le type de route n'a pas de largeur dessinée
+Bus pocket	Baie de bus
+Bus pocket laid	Baie de bus créée
+The road is too short here for a pocket of that length	La route est trop courte ici pour une baie de cette longueur
+The road cannot be cut there	La route ne peut pas être coupée à cet endroit
+Street with a bus pocket	Rue avec baie de bus
+Complex junction editor…	Éditeur de carrefours complexes…
+Use my custom junctions where they fit	Utiliser mes carrefours là où ils conviennent
+Custom junctions saved from the complex junction editor with Use in automatic junctions on	Carrefours personnalisés enregistrés depuis l'éditeur de carrefours complexes avec Utiliser dans les carrefours automatiques activé
+My junction	Mon carrefour
+Complex junction editor	Éditeur de carrefours complexes
+Open a saved one…	Ouvrir un carrefour enregistré…
+Draw with	Dessiner avec
+Pick a piece or an arm; drag to move it; Delete removes it	Choisir un élément ou une branche ; faire glisser pour le déplacer ; Suppr le supprime
+Click the start, then the end	Cliquez sur le début, puis sur la fin
+Arc	Arc
+Click the start, a point on the arc, then the end	Cliquez sur le début, sur un point de l'arc, puis sur la fin
+Arm	Branche
+Where a road comes in: click the place, then a point out along the road	Où arrive une route : cliquez sur l'endroit, puis sur un point plus loin le long de la route
+Snap to the grid and to ends	Aimanter à la grille et aux extrémités
+Spline type	Type de spline
+Drawing with:	Dessin avec :
+Piece	Élément
+Lift	Hauteur
+Above the plate: markings lie a little over the asphalt they are painted on	Au-dessus de la dalle : les marquages se posent un peu au-dessus de l'asphalte sur lequel ils sont peints
+Type: the one chosen	Type : celui choisi
+Move under the one before	Placer sous le précédent
+any road type	tout type de route
+Road: the type chosen	Route : le type choisi
+Any	Tous
+origin	origine
+Click a piece or an arm to pick it, drag it to move it	Cliquez sur un élément ou une branche pour le choisir, faites-le glisser pour le déplacer
+Click the start of the piece, then its end	Cliquez sur le début de l'élément, puis sur sa fin
+Click the start, a point the arc passes, then the end	Cliquez sur le début, sur un point par où passe l'arc, puis sur la fin
+Click where a road comes in, then a point out along the road	Cliquez où arrive une route, puis sur un point plus loin le long de la route
+Wheel zooms, right or middle drag pans, Esc cancels	La molette zoome, clic droit ou milieu + glisser déplace la vue, Échap annule
+Pick a spline type on the left first	Choisissez d'abord un type de spline à gauche
+Too short: the points are too close	Trop court : les points sont trop proches
+arms	branches
+Put on the map	Placer sur la carte
+Its pieces become ordinary splines at the middle of the view, to move and change like any other. Nothing about them is automatic	Ses éléments deviennent des splines ordinaires au centre de la vue, à déplacer et modifier comme les autres. Rien n'y est automatique
+Use in automatic junctions	Utiliser dans les carrefours automatiques
+Where the Roads tool makes a junction by itself and the roads meet as the arms do (same number, facing about the same ways, of the same road types), this one is put there	Là où l'outil Routes crée lui-même un carrefour et que les routes se rejoignent comme les branches (même nombre, à peu près les mêmes directions, mêmes types de route), celui-ci est placé
+Save as a custom junction	Enregistrer comme carrefour personnalisé
+Written as a junction piece of the content folder (it shows in the catalogue under Junctions) with lanes for the AI; needs three arms or more	Enregistré comme élément de carrefour du dossier de contenu (visible dans le catalogue sous Carrefours) avec des voies pour l'IA ; nécessite au moins trois branches
+Save the drawing	Enregistrer le dessin
+A custom junction is cut back to its arms where roads meet it; draw the roads' own types at the arms so they join cleanly.	Un carrefour personnalisé coupe les routes au niveau de ses branches ; dessinez aux branches les types de route propres aux routes pour qu'elles se raccordent proprement.
+Saved as a custom junction	Enregistré comme carrefour personnalisé
+Bus Pocket Tool	Outil Baie de bus
+Tick it, then press on a road: a bus pocket of the road type chosen below is laid there. It stays on, pocket after pocket, until you untick it	Cochez-le, puis cliquez sur une route : une baie de bus du type de route choisi ci-dessous y est créée. L'outil reste actif, baie après baie, jusqu'à ce que vous le décochiez
+pick the pocket's road type	choisissez le type de route de la baie
+Full width over	Pleine largeur sur
+Make a road type with a pocket…	Créer un type de route avec baie…
+The stretch is cut out of the road and takes the pocket's type, its ends tapering to the road's width. Made in the road maker (Bus pocket).	Le tronçon est découpé dans la route et prend le type de la baie, ses extrémités se rétrécissant jusqu'à la largeur de la route. À créer dans le créateur de route (Baie de bus).
+Top view	Vue de dessus
+Side view	Vue de côté
+A lane for buses to stop in, right of the roadway, before the footway. Lay a road type made so where a bay is wanted with the Bus pocket tool of the Roads tool	Une voie où les bus s'arrêtent, à droite de la chaussée, avant le trottoir. Posez un type de route ainsi conçu là où une baie est voulue, avec l'outil Baie de bus de l'outil Routes
+Saved as an object	Enregistré comme objet
+Saved as an object: it is in the catalogue under Objects, to place like any other	Enregistré comme objet : il est dans le catalogue, sous Objets, et se place comme n'importe quel autre
+Save as an object	Enregistrer comme objet
+The whole drawing as one scenery object of the catalogue (its meshes, and lanes for the AI along its pieces), to place anywhere like any object; arms are not needed	Tout le dessin comme un seul objet de décor du catalogue (ses maillages, et des voies pour l'IA le long de ses éléments), à placer n'importe où comme tout objet ; les branches ne sont pas nécessaires
+Lanes the way the road is drawn	Voies dans le sens du tracé de la route
+Lanes against it	Voies en sens inverse
+(0 against: one-way)	(0 en sens inverse : sens unique)

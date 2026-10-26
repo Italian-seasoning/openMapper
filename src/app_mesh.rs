@@ -957,7 +957,7 @@ pub fn save_picture(img: &image::RgbaImage, path: &Path) -> anyhow::Result<()> {
 
 /// A drawn mesh (of an object's part or a road) as a mesh to write, its materials added to
 /// `materials` (textures by file name, their files kept in `textures`).
-fn mesh_of(md: &omsi_geometry::MeshData, mats: &[crate::assets::Material], materials: &mut Vec<Material>, textures: &mut std::collections::HashMap<String, PathBuf>) -> Mesh {
+pub(crate) fn mesh_of(md: &omsi_geometry::MeshData, mats: &[crate::assets::Material], materials: &mut Vec<Material>, textures: &mut std::collections::HashMap<String, PathBuf>) -> Mesh {
     let mut slot_mat = Vec::with_capacity(mats.len());
     for m in mats {
         let tex = m.texture.as_ref().and_then(|p| p.file_name()).map(|f| f.to_string_lossy().to_string());

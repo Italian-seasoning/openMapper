@@ -2263,3 +2263,79 @@ Close test drive	Zamknij jazdę próbną
 Close the openOMSI session started from here (F5)	Zamknij sesję openOMSI uruchomioną stąd (F5)
 Choose where to start, the vehicle, the time and the weather, then drive the map in openOMSI (F5)	Wybierz miejsce startu, pojazd, godzinę i pogodę, a potem przejedź mapę w openOMSI (F5)
 More switches: the window is too narrow for all of them	Więcej przełączników: okno jest za wąskie dla wszystkich
+Custom junction saved: the Roads tool's automatic junctions use it where roads meet as it was drawn	Skrzyżowanie własne zapisane: automatyczne skrzyżowania narzędzia Drogi użyją go tam, gdzie drogi spotykają się tak, jak narysowano
+The junction reaches past the map: add tiles there first	Skrzyżowanie wykracza poza mapę: najpierw dodaj kafelki
+draw some pieces first	najpierw narysuj elementy
+mark the arms (where roads come in): at least two	zaznacz wloty (gdzie wchodzą drogi): co najmniej dwa
+the spline cannot be read	nie można odczytać splajnu
+Draw some pieces first	Najpierw narysuj elementy
+Complex junction	Skrzyżowanie złożone
+Complex junction put on the map: its pieces are ordinary splines	Skrzyżowanie złożone umieszczone na mapie: jego elementy to zwykłe splajny
+Pick the road type of the pocket first	Najpierw wybierz typ drogi zatoki
+The pocket's road type could not be read	Nie udało się odczytać typu drogi zatoki
+Press on a road	Kliknij drogę
+This stretch is already of the pocket's road type	Ten odcinek jest już typu drogi zatoki
+The road type has no drawn width	Typ drogi nie ma narysowanej szerokości
+Bus pocket	Zatoka autobusowa
+Bus pocket laid	Zatoka autobusowa utworzona
+The road is too short here for a pocket of that length	Droga jest tu za krótka na zatokę o takiej długości
+The road cannot be cut there	Nie można tu przeciąć drogi
+Street with a bus pocket	Ulica z zatoką autobusową
+Complex junction editor…	Edytor skrzyżowań złożonych…
+Use my custom junctions where they fit	Używaj moich skrzyżowań tam, gdzie pasują
+Custom junctions saved from the complex junction editor with Use in automatic junctions on	Skrzyżowania własne zapisane w edytorze skrzyżowań złożonych z włączoną opcją „Używaj w skrzyżowaniach automatycznych”
+My junction	Moje skrzyżowanie
+Complex junction editor	Edytor skrzyżowań złożonych
+Open a saved one…	Otwórz zapisane…
+Draw with	Rysuj
+Pick a piece or an arm; drag to move it; Delete removes it	Wybierz element lub wlot; przeciągnij, aby przesunąć; Delete usuwa
+Click the start, then the end	Kliknij początek, potem koniec
+Arc	Łuk
+Click the start, a point on the arc, then the end	Kliknij początek, punkt na łuku, potem koniec
+Arm	Wlot
+Where a road comes in: click the place, then a point out along the road	Gdzie wchodzi droga: kliknij miejsce, potem punkt dalej wzdłuż drogi
+Snap to the grid and to ends	Przyciągaj do siatki i końców
+Spline type	Typ splajnu
+Drawing with:	Rysowanie:
+Piece	Element
+Lift	Wzniesienie
+Above the plate: markings lie a little over the asphalt they are painted on	Nad płytą: oznakowanie leży nieco nad asfaltem, na którym jest namalowane
+Type: the one chosen	Typ: wybrany
+Move under the one before	Przesuń pod poprzedni
+any road type	dowolny typ drogi
+Road: the type chosen	Droga: wybrany typ
+Any	Dowolna
+origin	początek
+Click a piece or an arm to pick it, drag it to move it	Kliknij element lub wlot, aby go wybrać; przeciągnij, aby przesunąć
+Click the start of the piece, then its end	Kliknij początek elementu, potem jego koniec
+Click the start, a point the arc passes, then the end	Kliknij początek, punkt, przez który przechodzi łuk, potem koniec
+Click where a road comes in, then a point out along the road	Kliknij, gdzie wchodzi droga, potem punkt dalej wzdłuż drogi
+Wheel zooms, right or middle drag pans, Esc cancels	Kółko przybliża, przeciąganie prawym lub środkowym przyciskiem przesuwa widok, Esc anuluje
+Pick a spline type on the left first	Najpierw wybierz typ splajnu po lewej
+Too short: the points are too close	Za krótko: punkty są zbyt blisko siebie
+arms	wloty
+Put on the map	Umieść na mapie
+Its pieces become ordinary splines at the middle of the view, to move and change like any other. Nothing about them is automatic	Jego elementy stają się zwykłymi splajnami na środku widoku, które można przesuwać i zmieniać jak każde inne. Nic w nich nie jest automatyczne
+Use in automatic junctions	Używaj w skrzyżowaniach automatycznych
+Where the Roads tool makes a junction by itself and the roads meet as the arms do (same number, facing about the same ways, of the same road types), this one is put there	Tam, gdzie narzędzie Drogi samo tworzy skrzyżowanie, a drogi spotykają się tak jak wloty (ta sama liczba, mniej więcej te same kierunki, te same typy dróg), zostanie umieszczone to skrzyżowanie
+Save as a custom junction	Zapisz jako skrzyżowanie własne
+Written as a junction piece of the content folder (it shows in the catalogue under Junctions) with lanes for the AI; needs three arms or more	Zapisywane jako element skrzyżowania w folderze zawartości (widoczny w katalogu w sekcji Skrzyżowania) z pasami dla AI; wymaga co najmniej trzech wlotów
+Save the drawing	Zapisz rysunek
+A custom junction is cut back to its arms where roads meet it; draw the roads' own types at the arms so they join cleanly.	Skrzyżowanie własne przycina drogi do swoich wlotów; rysuj przy wlotach własne typy dróg, aby łączyły się czysto.
+Saved as a custom junction	Zapisano jako skrzyżowanie własne
+Bus Pocket Tool	Narzędzie Zatoka autobusowa
+Tick it, then press on a road: a bus pocket of the road type chosen below is laid there. It stays on, pocket after pocket, until you untick it	Zaznacz, potem kliknij drogę: powstanie tam zatoka autobusowa wybranego niżej typu drogi. Narzędzie pozostaje włączone, zatoka za zatoką, dopóki go nie wyłączysz
+pick the pocket's road type	wybierz typ drogi zatoki
+Full width over	Pełna szerokość na
+Make a road type with a pocket…	Utwórz typ drogi z zatoką…
+The stretch is cut out of the road and takes the pocket's type, its ends tapering to the road's width. Made in the road maker (Bus pocket).	Odcinek jest wycinany z drogi i otrzymuje typ zatoki, a jego końce zwężają się do szerokości drogi. Tworzony w kreatorze dróg (Zatoka autobusowa).
+Top view	Widok z góry
+Side view	Widok z boku
+A lane for buses to stop in, right of the roadway, before the footway. Lay a road type made so where a bay is wanted with the Bus pocket tool of the Roads tool	Pas, na którym zatrzymują się autobusy, po prawej stronie jezdni, przed chodnikiem. Tam, gdzie potrzebna jest zatoka, ułóż tak wykonany typ drogi narzędziem Zatoka autobusowa w narzędziu Drogi
+Saved as an object	Zapisano jako obiekt
+Saved as an object: it is in the catalogue under Objects, to place like any other	Zapisano jako obiekt: jest w katalogu w Obiektach i ustawia się go jak każdy inny
+Save as an object	Zapisz jako obiekt
+The whole drawing as one scenery object of the catalogue (its meshes, and lanes for the AI along its pieces), to place anywhere like any object; arms are not needed	Cały rysunek jako jeden obiekt sceneri z katalogu (jego siatki oraz pasy dla AI wzdłuż jego części), do ustawienia gdziekolwiek jak każdy obiekt; ramiona nie są potrzebne
+Lanes the way the road is drawn	Pasy zgodnie z kierunkiem rysowania drogi
+Lanes against it	Pasy przeciwnie
+(0 against: one-way)	(0 przeciwnie: jednokierunkowa)

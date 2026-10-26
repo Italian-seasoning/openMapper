@@ -2263,3 +2263,79 @@ Close test drive	Probefahrt schließen
 Close the openOMSI session started from here (F5)	Die von hier gestartete openOMSI-Sitzung schließen (F5)
 Choose where to start, the vehicle, the time and the weather, then drive the map in openOMSI (F5)	Startort, Fahrzeug, Uhrzeit und Wetter wählen und die Karte in openOMSI befahren (F5)
 More switches: the window is too narrow for all of them	Weitere Schalter: Das Fenster ist zu schmal für alle
+Custom junction saved: the Roads tool's automatic junctions use it where roads meet as it was drawn	Eigene Kreuzung gespeichert: Die automatischen Kreuzungen des Straßenwerkzeugs verwenden sie, wo Straßen so zusammentreffen, wie sie gezeichnet wurde
+The junction reaches past the map: add tiles there first	Die Kreuzung reicht über die Karte hinaus: Zuerst dort Kacheln hinzufügen
+draw some pieces first	zuerst einige Teile zeichnen
+mark the arms (where roads come in): at least two	Zufahrten markieren (wo Straßen einmünden): mindestens zwei
+the spline cannot be read	Der Spline kann nicht gelesen werden
+Draw some pieces first	Zuerst einige Teile zeichnen
+Complex junction	Komplexe Kreuzung
+Complex junction put on the map: its pieces are ordinary splines	Komplexe Kreuzung auf der Karte platziert: Ihre Teile sind gewöhnliche Splines
+Pick the road type of the pocket first	Zuerst den Straßentyp der Bucht wählen
+The pocket's road type could not be read	Der Straßentyp der Bucht konnte nicht gelesen werden
+Press on a road	Auf eine Straße klicken
+This stretch is already of the pocket's road type	Dieser Abschnitt hat bereits den Straßentyp der Bucht
+The road type has no drawn width	Der Straßentyp hat keine gezeichnete Breite
+Bus pocket	Bushaltebucht
+Bus pocket laid	Bushaltebucht angelegt
+The road is too short here for a pocket of that length	Die Straße ist hier zu kurz für eine Bucht dieser Länge
+The road cannot be cut there	Die Straße kann dort nicht aufgetrennt werden
+Street with a bus pocket	Straße mit Bushaltebucht
+Complex junction editor…	Editor für komplexe Kreuzungen…
+Use my custom junctions where they fit	Meine eigenen Kreuzungen verwenden, wo sie passen
+Custom junctions saved from the complex junction editor with Use in automatic junctions on	Eigene Kreuzungen, die im Editor für komplexe Kreuzungen bei aktivierter Option „In automatischen Kreuzungen verwenden“ gespeichert wurden
+My junction	Meine Kreuzung
+Complex junction editor	Editor für komplexe Kreuzungen
+Open a saved one…	Gespeicherte öffnen…
+Draw with	Zeichnen mit
+Pick a piece or an arm; drag to move it; Delete removes it	Teil oder Zufahrt wählen; zum Verschieben ziehen; Entf löscht
+Click the start, then the end	Auf den Anfang klicken, dann auf das Ende
+Arc	Bogen
+Click the start, a point on the arc, then the end	Auf den Anfang klicken, dann auf einen Punkt des Bogens, dann auf das Ende
+Arm	Zufahrt
+Where a road comes in: click the place, then a point out along the road	Wo eine Straße einmündet: auf die Stelle klicken, dann auf einen Punkt weiter außen an der Straße
+Snap to the grid and to ends	Am Raster und an Enden einrasten
+Spline type	Splinetyp
+Drawing with:	Gezeichnet wird mit:
+Piece	Teil
+Lift	Höhe
+Above the plate: markings lie a little over the asphalt they are painted on	Über der Platte: Markierungen liegen etwas über dem Asphalt, auf den sie gemalt sind
+Type: the one chosen	Typ: der gewählte
+Move under the one before	Unter das vorherige setzen
+any road type	beliebiger Straßentyp
+Road: the type chosen	Straße: der gewählte Typ
+Any	Beliebig
+origin	Ursprung
+Click a piece or an arm to pick it, drag it to move it	Auf ein Teil oder eine Zufahrt klicken, um es zu wählen; ziehen, um es zu verschieben
+Click the start of the piece, then its end	Auf den Anfang des Teils klicken, dann auf sein Ende
+Click the start, a point the arc passes, then the end	Auf den Anfang klicken, dann auf einen Punkt des Bogens, dann auf das Ende
+Click where a road comes in, then a point out along the road	Dorthin klicken, wo eine Straße einmündet, dann auf einen Punkt weiter außen an der Straße
+Wheel zooms, right or middle drag pans, Esc cancels	Mausrad zoomt, Ziehen mit rechter oder mittlerer Taste verschiebt, Esc bricht ab
+Pick a spline type on the left first	Zuerst links einen Splinetyp wählen
+Too short: the points are too close	Zu kurz: Die Punkte liegen zu nah beieinander
+arms	Zufahrten
+Put on the map	Auf der Karte platzieren
+Its pieces become ordinary splines at the middle of the view, to move and change like any other. Nothing about them is automatic	Die Teile werden in der Mitte der Ansicht zu gewöhnlichen Splines, die sich wie alle anderen verschieben und ändern lassen. Nichts daran ist automatisch
+Use in automatic junctions	In automatischen Kreuzungen verwenden
+Where the Roads tool makes a junction by itself and the roads meet as the arms do (same number, facing about the same ways, of the same road types), this one is put there	Wo das Straßenwerkzeug selbst eine Kreuzung erzeugt und die Straßen so zusammentreffen wie die Zufahrten (gleiche Anzahl, ungefähr gleiche Richtungen, gleiche Straßentypen), wird diese eingesetzt
+Save as a custom junction	Als eigene Kreuzung speichern
+Written as a junction piece of the content folder (it shows in the catalogue under Junctions) with lanes for the AI; needs three arms or more	Wird als Kreuzungsteil im Inhaltsordner geschrieben (im Katalog unter Kreuzungen sichtbar) mit Fahrstreifen für die KI; benötigt drei oder mehr Zufahrten
+Save the drawing	Zeichnung speichern
+A custom junction is cut back to its arms where roads meet it; draw the roads' own types at the arms so they join cleanly.	Eine eigene Kreuzung wird dort, wo Straßen auf sie treffen, bis zu ihren Zufahrten zurückgeschnitten; zeichnen Sie an den Zufahrten die passenden Straßentypen, damit sie sauber anschließen.
+Saved as a custom junction	Als eigene Kreuzung gespeichert
+Bus Pocket Tool	Werkzeug „Bushaltebucht“
+Tick it, then press on a road: a bus pocket of the road type chosen below is laid there. It stays on, pocket after pocket, until you untick it	Aktivieren und auf eine Straße klicken: Dort wird eine Bushaltebucht des unten gewählten Straßentyps angelegt. Das Werkzeug bleibt aktiv, Bucht um Bucht, bis Sie es deaktivieren
+pick the pocket's road type	Straßentyp der Bucht wählen
+Full width over	Volle Breite auf
+Make a road type with a pocket…	Straßentyp mit Bucht erstellen…
+The stretch is cut out of the road and takes the pocket's type, its ends tapering to the road's width. Made in the road maker (Bus pocket).	Der Abschnitt wird aus der Straße herausgeschnitten und erhält den Typ der Bucht; seine Enden laufen auf die Breite der Straße zusammen. Wird im Straßen-Editor erstellt (Bushaltebucht).
+Top view	Draufsicht
+Side view	Seitenansicht
+A lane for buses to stop in, right of the roadway, before the footway. Lay a road type made so where a bay is wanted with the Bus pocket tool of the Roads tool	Ein Streifen zum Halten von Bussen, rechts der Fahrbahn, vor dem Gehweg. Eine Straße dieses Typs legt man dort an, wo eine Bucht gewünscht ist, mit dem Werkzeug „Bushaltebucht“ des Straßenwerkzeugs
+Saved as an object	Als Objekt gespeichert
+Saved as an object: it is in the catalogue under Objects, to place like any other	Als Objekt gespeichert: Es steht im Katalog unter Objekte und wird wie jedes andere platziert
+Save as an object	Als Objekt speichern
+The whole drawing as one scenery object of the catalogue (its meshes, and lanes for the AI along its pieces), to place anywhere like any object; arms are not needed	Die ganze Zeichnung als ein Szenerieobjekt des Katalogs (seine Meshes und Spuren für die KI entlang seiner Teile), das wie jedes Objekt überall platziert werden kann; Arme sind nicht nötig
+Lanes the way the road is drawn	Spuren in Zeichenrichtung der Straße
+Lanes against it	Spuren dagegen
+(0 against: one-way)	(0 dagegen: Einbahnstraße)

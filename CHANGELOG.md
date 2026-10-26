@@ -4,6 +4,14 @@ Releases are tagged `v<version>`; the downloads are on the
 [Releases](https://github.com/openOMSI-org/openMapper/releases) page, each with the notes of its
 version from this file.
 
+## 0.1.11 - 2026-10-26
+
+### Added
+- **Top view and side view in the road maker**: the road type being made is drawn from above (footways, kerbs, lanes with their lines and arrows, the middle strip, the pocket, a scale) as well as in section; two tabs under the settings switch between them.
+- **Bus Pocket Tool** (Roads tool, a box with the others): tick it, pick the road type of the pocket, set how long the bay is at full width, and press on a road: that stretch of the road takes the pocket's type, the roads at both ends taper to its width with plates (lanes joined for the AI), one undo step. It stays on, pocket after pocket, until unticked. The road maker has a new Bus pocket lane (right of the roadway, before the footway; ready-made "Street with a bus pocket") for the road type a pocket is laid with.
+- **Complex junction editor** (Tools > Complex junction editor…, also in the Roads tool's panel): a top-view editor where a junction is drawn out of small splines of any type in the catalogue (asphalt, road markings, footways, kerbs) with the line and arc tools, snapping to the grid and to each other's ends, moved, lifted over the asphalt and put in order. "Put on the map" lays them as ordinary, separate splines at the middle of the view (turned by a number of degrees); nothing about them is automatic.
+- **Custom junctions**: the same drawing with its arms marked (where a road comes in, which way it faces, of which type) is saved as a junction piece of the content folder: a scenery object with the drawing's mesh, helpers at the arms and lanes for the AI along every lane of its pieces; it shows in the catalogue under Junctions. With "Use in automatic junctions" on, the Roads tool's automatic junctions put it where roads meet as its arms do (the same number of roads, facing about the same ways, of about the same type): the roads are cut back to its arms and bent onto them, and the plate openMapper would make is left out. "Use my custom junctions where they fit" in the Roads tool turns that off.
+
 ## 0.1.9 - 2026-10-26
 
 ### Fixed

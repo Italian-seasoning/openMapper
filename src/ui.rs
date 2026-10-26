@@ -92,6 +92,14 @@ pub enum Action {
     BinMap(PathBuf),
     /// The Road types window (road maker, junction styles).
     RoadTypes,
+    /// The complex junction editor window.
+    ComplexJunctions,
+    /// A complex junction drawing put on the map as splines, turned by so many degrees.
+    PlaceComplex(Box<crate::cjunction::Layout>, f64),
+    /// A drawing written as a custom junction (an object, and a layout for automatic junctions).
+    SaveCustomJunction(Box<crate::cjunction::Layout>),
+    /// A drawing written as a plain scenery object (an object of the catalogue).
+    SaveComplexObject(Box<crate::cjunction::Layout>),
     /// The PBR window on an object's textures.
     PbrForObject(String),
     /// The PBR window on a road type's textures.
@@ -1025,6 +1033,9 @@ fn menu_bar(root: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, can_undo: bo
                 if menu_item(ui, Some(Icon::Road), tr("Road types and junctions…", "Типы дорог и перекрёстки…"), "", true) {
                     actions.push(Action::RoadTypes);
                 }
+                if menu_item(ui, Some(Icon::Junction), tr("Complex junction editor…", "Редактор сложных перекрёстков…"), "", true) {
+                    actions.push(Action::ComplexJunctions);
+                }
                 if menu_item(ui, Some(Icon::Layers), tr("PBR maps for a picture…", "PBR-карты для картинки…"), "", true) {
                     actions.push(Action::PbrMaker);
                 }
@@ -1496,10 +1507,17 @@ fn catalogue_of(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Libr
         }
         check(ui, &mut ed.follow_ground, tr("Shape the ground under the road", "Подгонять землю под дорогу"));
         crate::ui_edit::road_options(ui, ed);
+        crate::ui_edit::pocket_options(ui, ed, lib, actions);
         check(ui, &mut ed.keep_drawing, tr("Go on drawing from the end of the road just built", "Продолжать рисовать с конца построенной дороги"));
         check(ui, &mut ed.snap_roads, tr("Join road ends, roads and junction pieces near the cursor", "Пристыковывать к концам дорог, дорогам и деталям перекрёстков у курсора"));
         ui.label(RichText::new(tr("Hold Ctrl while drawing to join nothing. Cables, fences and footpaths never join roads or junctions.", "Удерживайте Ctrl при рисовании, чтобы ничего не присоединять. Кабели, заборы и тропы никогда не присоединяются к дорогам и перекрёсткам.")).small().color(TEXT_DIM));
         check(ui, &mut ed.auto_junctions, tr("Make junctions where roads meet", "Делать перекрёстки, где дороги встречаются"));
+        if ed.auto_junctions {
+            check(ui, &mut ed.use_custom, tr("Use my custom junctions where they fit", "Ставить мои перекрёстки, где они подходят")).on_hover_text(tr("Custom junctions saved from the complex junction editor with Use in automatic junctions on", "Свои перекрёстки, сохранённые в редакторе сложных перекрёстков с включённым «Использовать в авто-перекрёстках»"));
+        }
+        if ui.button(icons::labelled(Icon::Junction, tr("Complex junction editor…", "Редактор сложных перекрёстков…"))).clicked() {
+            actions.push(Action::ComplexJunctions);
+        }
         check(ui, &mut ed.inherit_type, tr("Go on with the type of the road I start from", "Продолжать типом дороги, от которой начинаю"));
         let current = ed.road_type.as_deref().map(|r| lib.find(r).map(|a| a.name.clone()).unwrap_or_else(|| r.to_string()));
         ui.horizontal(|ui| {

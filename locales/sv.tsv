@@ -2263,3 +2263,79 @@ Close test drive	Stäng provkörning
 Close the openOMSI session started from here (F5)	Stäng openOMSI-sessionen som startades härifrån (F5)
 Choose where to start, the vehicle, the time and the weather, then drive the map in openOMSI (F5)	Välj startplats, fordon, tid och väder och kör sedan kartan i openOMSI (F5)
 More switches: the window is too narrow for all of them	Fler reglage: fönstret är för smalt för alla
+Custom junction saved: the Roads tool's automatic junctions use it where roads meet as it was drawn	Egen korsning sparad: Vägverktygets automatiska korsningar använder den där vägar möts som den ritades
+The junction reaches past the map: add tiles there first	Korsningen når utanför kartan: lägg först till rutor där
+draw some pieces first	rita först några delar
+mark the arms (where roads come in): at least two	markera armarna (där vägar kommer in): minst två
+the spline cannot be read	splinen kan inte läsas
+Draw some pieces first	Rita först några delar
+Complex junction	Komplex korsning
+Complex junction put on the map: its pieces are ordinary splines	Komplex korsning placerad på kartan: dess delar är vanliga splines
+Pick the road type of the pocket first	Välj först vägtyp för fickan
+The pocket's road type could not be read	Fickans vägtyp kunde inte läsas
+Press on a road	Klicka på en väg
+This stretch is already of the pocket's road type	Den här sträckan är redan av fickans vägtyp
+The road type has no drawn width	Vägtypen har ingen ritad bredd
+Bus pocket	Busslomma
+Bus pocket laid	Busslomma skapad
+The road is too short here for a pocket of that length	Vägen är för kort här för en ficka av den längden
+The road cannot be cut there	Vägen kan inte delas där
+Street with a bus pocket	Gata med busslomma
+Complex junction editor…	Redigerare för komplexa korsningar…
+Use my custom junctions where they fit	Använd mina egna korsningar där de passar
+Custom junctions saved from the complex junction editor with Use in automatic junctions on	Egna korsningar sparade från redigeraren för komplexa korsningar med Använd i automatiska korsningar aktiverat
+My junction	Min korsning
+Complex junction editor	Redigerare för komplexa korsningar
+Open a saved one…	Öppna en sparad…
+Draw with	Rita med
+Pick a piece or an arm; drag to move it; Delete removes it	Välj en del eller en arm; dra för att flytta; Delete tar bort
+Click the start, then the end	Klicka på början, sedan på slutet
+Arc	Båge
+Click the start, a point on the arc, then the end	Klicka på början, en punkt på bågen och sedan på slutet
+Arm	Arm
+Where a road comes in: click the place, then a point out along the road	Där en väg kommer in: klicka på platsen och sedan på en punkt längs vägen utåt
+Snap to the grid and to ends	Fäst mot rutnät och ändpunkter
+Spline type	Splinetyp
+Drawing with:	Ritar med:
+Piece	Del
+Lift	Höjd
+Above the plate: markings lie a little over the asphalt they are painted on	Ovanför plattan: markeringar ligger lite över asfalten de är målade på
+Type: the one chosen	Typ: den valda
+Move under the one before	Flytta under den föregående
+any road type	valfri vägtyp
+Road: the type chosen	Väg: den valda typen
+Any	Valfri
+origin	origo
+Click a piece or an arm to pick it, drag it to move it	Klicka på en del eller en arm för att välja den, dra för att flytta den
+Click the start of the piece, then its end	Klicka på delens början och sedan på dess slut
+Click the start, a point the arc passes, then the end	Klicka på början, en punkt som bågen passerar och sedan på slutet
+Click where a road comes in, then a point out along the road	Klicka där en väg kommer in och sedan på en punkt längs vägen utåt
+Wheel zooms, right or middle drag pans, Esc cancels	Hjulet zoomar, höger- eller mittendrag panorerar, Esc avbryter
+Pick a spline type on the left first	Välj först en splinetyp till vänster
+Too short: the points are too close	För kort: punkterna ligger för nära
+arms	armar
+Put on the map	Placera på kartan
+Its pieces become ordinary splines at the middle of the view, to move and change like any other. Nothing about them is automatic	Dess delar blir vanliga splines i mitten av vyn, som kan flyttas och ändras som alla andra. Inget av dem är automatiskt
+Use in automatic junctions	Använd i automatiska korsningar
+Where the Roads tool makes a junction by itself and the roads meet as the arms do (same number, facing about the same ways, of the same road types), this one is put there	Där Vägverktyget skapar en korsning själv och vägarna möts som armarna gör (samma antal, ungefär samma riktningar, samma vägtyper) placeras den här
+Save as a custom junction	Spara som egen korsning
+Written as a junction piece of the content folder (it shows in the catalogue under Junctions) with lanes for the AI; needs three arms or more	Skrivs som en korsningsdel i innehållsmappen (visas i katalogen under Korsningar) med körfält för AI; kräver tre armar eller fler
+Save the drawing	Spara ritningen
+A custom junction is cut back to its arms where roads meet it; draw the roads' own types at the arms so they join cleanly.	En egen korsning kapas vid sina armar där vägar möter den; rita vägarnas egna typer vid armarna så att de ansluter snyggt.
+Saved as a custom junction	Sparad som egen korsning
+Bus Pocket Tool	Busslommeverktyg
+Tick it, then press on a road: a bus pocket of the road type chosen below is laid there. It stays on, pocket after pocket, until you untick it	Aktivera och klicka på en väg: en busslomma av den vägtyp som valts nedan läggs där. Den förblir aktiv, ficka efter ficka, tills du avaktiverar den
+pick the pocket's road type	välj fickans vägtyp
+Full width over	Full bredd över
+Make a road type with a pocket…	Skapa en vägtyp med ficka…
+The stretch is cut out of the road and takes the pocket's type, its ends tapering to the road's width. Made in the road maker (Bus pocket).	Sträckan skärs ut ur vägen och får fickans typ, med ändarna avsmalnande till vägens bredd. Skapas i vägbyggaren (Busslomma).
+Top view	Ovanifrån
+Side view	Från sidan
+A lane for buses to stop in, right of the roadway, before the footway. Lay a road type made so where a bay is wanted with the Bus pocket tool of the Roads tool	Ett körfält där bussar stannar, till höger om vägbanan, före gångvägen. Lägg en vägtyp som är gjord så där en hållplatsficka önskas med busslommeverktyget i Vägverktyget
+Saved as an object	Sparat som objekt
+Saved as an object: it is in the catalogue under Objects, to place like any other	Sparat som objekt: det finns i katalogen under Objekt och placeras som vilket annat som helst
+Save as an object	Spara som objekt
+The whole drawing as one scenery object of the catalogue (its meshes, and lanes for the AI along its pieces), to place anywhere like any object; arms are not needed	Hela ritningen som ett enda scenobjekt i katalogen (dess meshar och filer för AI längs dess delar), kan placeras var som helst som vilket objekt som helst; armar behövs inte
+Lanes the way the road is drawn	Filer i vägens ritade riktning
+Lanes against it	Filer mot riktningen
+(0 against: one-way)	(0 mot: enkelriktad)

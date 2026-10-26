@@ -2263,3 +2263,79 @@ Close test drive	Tutup uji coba berkendara
 Close the openOMSI session started from here (F5)	Tutup sesi openOMSI yang dimulai dari sini (F5)
 Choose where to start, the vehicle, the time and the weather, then drive the map in openOMSI (F5)	Pilih titik mulai, kendaraan, waktu, dan cuaca, lalu jalankan peta di openOMSI (F5)
 More switches: the window is too narrow for all of them	Pengaturan lainnya: jendela terlalu sempit untuk semuanya
+Custom junction saved: the Roads tool's automatic junctions use it where roads meet as it was drawn	Persimpangan kustom tersimpan: persimpangan otomatis alat Jalan memakainya di tempat jalan bertemu seperti yang digambar
+The junction reaches past the map: add tiles there first	Persimpangan melewati batas peta: tambahkan petak di sana terlebih dahulu
+draw some pieces first	gambar beberapa bagian terlebih dahulu
+mark the arms (where roads come in): at least two	tandai lengan (tempat jalan masuk): minimal dua
+the spline cannot be read	spline tidak dapat dibaca
+Draw some pieces first	Gambar beberapa bagian terlebih dahulu
+Complex junction	Persimpangan kompleks
+Complex junction put on the map: its pieces are ordinary splines	Persimpangan kompleks ditempatkan di peta: bagian-bagiannya adalah spline biasa
+Pick the road type of the pocket first	Pilih dulu tipe jalan untuk kantong
+The pocket's road type could not be read	Tipe jalan kantong tidak dapat dibaca
+Press on a road	Klik pada jalan
+This stretch is already of the pocket's road type	Ruas ini sudah bertipe jalan yang sama dengan kantong
+The road type has no drawn width	Tipe jalan ini tidak memiliki lebar yang digambar
+Bus pocket	Kantong bus
+Bus pocket laid	Kantong bus dibuat
+The road is too short here for a pocket of that length	Jalan di sini terlalu pendek untuk kantong sepanjang itu
+The road cannot be cut there	Jalan tidak dapat dipotong di sana
+Street with a bus pocket	Jalan dengan kantong bus
+Complex junction editor…	Editor persimpangan kompleks…
+Use my custom junctions where they fit	Pakai persimpangan kustom saya jika cocok
+Custom junctions saved from the complex junction editor with Use in automatic junctions on	Persimpangan kustom yang disimpan dari editor persimpangan kompleks dengan Gunakan di persimpangan otomatis aktif
+My junction	Persimpangan saya
+Complex junction editor	Editor persimpangan kompleks
+Open a saved one…	Buka yang tersimpan…
+Draw with	Gambar dengan
+Pick a piece or an arm; drag to move it; Delete removes it	Pilih bagian atau lengan; seret untuk memindahkan; Delete menghapusnya
+Click the start, then the end	Klik titik awal, lalu titik akhir
+Arc	Busur
+Click the start, a point on the arc, then the end	Klik titik awal, satu titik pada busur, lalu titik akhir
+Arm	Lengan
+Where a road comes in: click the place, then a point out along the road	Tempat jalan masuk: klik lokasinya, lalu satu titik ke arah luar sepanjang jalan
+Snap to the grid and to ends	Tempel ke kisi dan ujung
+Spline type	Tipe spline
+Drawing with:	Menggambar dengan:
+Piece	Bagian
+Lift	Ketinggian
+Above the plate: markings lie a little over the asphalt they are painted on	Di atas pelat: marka terletak sedikit di atas aspal tempat marka itu dicat
+Type: the one chosen	Tipe: yang dipilih
+Move under the one before	Pindahkan ke bawah yang sebelumnya
+any road type	tipe jalan apa pun
+Road: the type chosen	Jalan: tipe yang dipilih
+Any	Apa pun
+origin	titik asal
+Click a piece or an arm to pick it, drag it to move it	Klik bagian atau lengan untuk memilihnya, seret untuk memindahkannya
+Click the start of the piece, then its end	Klik titik awal bagian, lalu titik akhirnya
+Click the start, a point the arc passes, then the end	Klik titik awal, satu titik yang dilalui busur, lalu titik akhir
+Click where a road comes in, then a point out along the road	Klik tempat jalan masuk, lalu satu titik ke arah luar sepanjang jalan
+Wheel zooms, right or middle drag pans, Esc cancels	Roda mouse untuk zoom, seret klik kanan atau tengah untuk menggeser, Esc untuk membatalkan
+Pick a spline type on the left first	Pilih dulu tipe spline di sebelah kiri
+Too short: the points are too close	Terlalu pendek: titik-titiknya terlalu berdekatan
+arms	lengan
+Put on the map	Tempatkan di peta
+Its pieces become ordinary splines at the middle of the view, to move and change like any other. Nothing about them is automatic	Bagian-bagiannya menjadi spline biasa di tengah tampilan, dapat dipindahkan dan diubah seperti spline lainnya. Tidak ada yang otomatis
+Use in automatic junctions	Gunakan di persimpangan otomatis
+Where the Roads tool makes a junction by itself and the roads meet as the arms do (same number, facing about the same ways, of the same road types), this one is put there	Di tempat alat Jalan membuat persimpangan sendiri dan jalan-jalan bertemu seperti lengan-lengannya (jumlah sama, arah kurang lebih sama, tipe jalan sama), persimpangan ini yang dipasang
+Save as a custom junction	Simpan sebagai persimpangan kustom
+Written as a junction piece of the content folder (it shows in the catalogue under Junctions) with lanes for the AI; needs three arms or more	Ditulis sebagai bagian persimpangan di folder konten (muncul di katalog bagian Persimpangan) dengan lajur untuk AI; memerlukan tiga lengan atau lebih
+Save the drawing	Simpan gambar
+A custom junction is cut back to its arms where roads meet it; draw the roads' own types at the arms so they join cleanly.	Persimpangan kustom dipotong sampai ke lengannya di tempat jalan bertemu dengannya; gambar tipe jalan itu sendiri pada lengan agar tersambung dengan rapi.
+Saved as a custom junction	Disimpan sebagai persimpangan kustom
+Bus Pocket Tool	Alat Kantong Bus
+Tick it, then press on a road: a bus pocket of the road type chosen below is laid there. It stays on, pocket after pocket, until you untick it	Centang, lalu klik jalan: kantong bus dengan tipe jalan yang dipilih di bawah dibuat di sana. Alat tetap aktif, kantong demi kantong, sampai Anda menghapus centangnya
+pick the pocket's road type	pilih tipe jalan kantong
+Full width over	Lebar penuh sepanjang
+Make a road type with a pocket…	Buat tipe jalan dengan kantong…
+The stretch is cut out of the road and takes the pocket's type, its ends tapering to the road's width. Made in the road maker (Bus pocket).	Ruas dipotong dari jalan dan memakai tipe kantong, ujungnya menyempit hingga selebar jalan. Dibuat di pembuat jalan (Kantong bus).
+Top view	Tampak atas
+Side view	Tampak samping
+A lane for buses to stop in, right of the roadway, before the footway. Lay a road type made so where a bay is wanted with the Bus pocket tool of the Roads tool	Lajur tempat bus berhenti, di sebelah kanan badan jalan, sebelum trotoar. Pasang tipe jalan yang dibuat seperti ini di tempat yang memerlukan teluk dengan alat Kantong Bus pada alat Jalan
+Saved as an object	Disimpan sebagai objek
+Saved as an object: it is in the catalogue under Objects, to place like any other	Disimpan sebagai objek: ada di katalog pada Objek, dan ditempatkan seperti objek lainnya
+Save as an object	Simpan sebagai objek
+The whole drawing as one scenery object of the catalogue (its meshes, and lanes for the AI along its pieces), to place anywhere like any object; arms are not needed	Seluruh gambar sebagai satu objek pemandangan dari katalog (mesh-nya, dan lajur untuk AI di sepanjang bagiannya), dapat ditempatkan di mana saja seperti objek biasa; lengan tidak diperlukan
+Lanes the way the road is drawn	Lajur searah arah jalan digambar
+Lanes against it	Lajur berlawanan arah
+(0 against: one-way)	(0 berlawanan: satu arah)

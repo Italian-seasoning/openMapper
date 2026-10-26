@@ -2263,3 +2263,79 @@ Close test drive	Fechar test drive
 Close the openOMSI session started from here (F5)	Fechar a sessão do openOMSI iniciada daqui (F5)
 Choose where to start, the vehicle, the time and the weather, then drive the map in openOMSI (F5)	Escolha o local de partida, o veículo, o horário e o clima e depois dirija o mapa no openOMSI (F5)
 More switches: the window is too narrow for all of them	Mais chaves: a janela é estreita demais para todas
+Custom junction saved: the Roads tool's automatic junctions use it where roads meet as it was drawn	Cruzamento personalizado salvo: os cruzamentos automáticos da ferramenta Vias o usam onde as vias se encontram como foi desenhado
+The junction reaches past the map: add tiles there first	O cruzamento ultrapassa o mapa: adicione blocos ali primeiro
+draw some pieces first	desenhe algumas peças primeiro
+mark the arms (where roads come in): at least two	marque os braços (onde as vias entram): pelo menos dois
+the spline cannot be read	não foi possível ler o spline
+Draw some pieces first	Desenhe algumas peças primeiro
+Complex junction	Cruzamento complexo
+Complex junction put on the map: its pieces are ordinary splines	Cruzamento complexo colocado no mapa: suas peças são splines comuns
+Pick the road type of the pocket first	Escolha primeiro o tipo de via da baia
+The pocket's road type could not be read	Não foi possível ler o tipo de via da baia
+Press on a road	Clique em uma via
+This stretch is already of the pocket's road type	Este trecho já é do tipo de via da baia
+The road type has no drawn width	O tipo de via não tem largura desenhada
+Bus pocket	Baia de ônibus
+Bus pocket laid	Baia de ônibus criada
+The road is too short here for a pocket of that length	A via é curta demais aqui para uma baia desse comprimento
+The road cannot be cut there	Não é possível cortar a via ali
+Street with a bus pocket	Rua com baia de ônibus
+Complex junction editor…	Editor de cruzamentos complexos…
+Use my custom junctions where they fit	Usar meus cruzamentos onde couberem
+Custom junctions saved from the complex junction editor with Use in automatic junctions on	Cruzamentos personalizados salvos no editor de cruzamentos complexos com Usar em cruzamentos automáticos ativado
+My junction	Meu cruzamento
+Complex junction editor	Editor de cruzamentos complexos
+Open a saved one…	Abrir um salvo…
+Draw with	Desenhar com
+Pick a piece or an arm; drag to move it; Delete removes it	Escolha uma peça ou um braço; arraste para mover; Delete o remove
+Click the start, then the end	Clique no início e depois no fim
+Arc	Arco
+Click the start, a point on the arc, then the end	Clique no início, em um ponto do arco e depois no fim
+Arm	Braço
+Where a road comes in: click the place, then a point out along the road	Onde uma via entra: clique no local e depois em um ponto ao longo da via, para fora
+Snap to the grid and to ends	Alinhar à grade e às extremidades
+Spline type	Tipo de spline
+Drawing with:	Desenhando com:
+Piece	Peça
+Lift	Elevação
+Above the plate: markings lie a little over the asphalt they are painted on	Acima da placa: as marcações ficam um pouco acima do asfalto em que são pintadas
+Type: the one chosen	Tipo: o escolhido
+Move under the one before	Mover para baixo da anterior
+any road type	qualquer tipo de via
+Road: the type chosen	Via: o tipo escolhido
+Any	Qualquer
+origin	origem
+Click a piece or an arm to pick it, drag it to move it	Clique em uma peça ou braço para escolhê-lo, arraste para movê-lo
+Click the start of the piece, then its end	Clique no início da peça e depois no seu fim
+Click the start, a point the arc passes, then the end	Clique no início, em um ponto por onde o arco passa e depois no fim
+Click where a road comes in, then a point out along the road	Clique onde uma via entra e depois em um ponto ao longo da via, para fora
+Wheel zooms, right or middle drag pans, Esc cancels	A roda dá zoom, arrastar com o botão direito ou do meio move a vista, Esc cancela
+Pick a spline type on the left first	Escolha primeiro um tipo de spline à esquerda
+Too short: the points are too close	Curto demais: os pontos estão muito próximos
+arms	braços
+Put on the map	Colocar no mapa
+Its pieces become ordinary splines at the middle of the view, to move and change like any other. Nothing about them is automatic	Suas peças viram splines comuns no centro da vista, para mover e alterar como quaisquer outros. Nada nelas é automático
+Use in automatic junctions	Usar em cruzamentos automáticos
+Where the Roads tool makes a junction by itself and the roads meet as the arms do (same number, facing about the same ways, of the same road types), this one is put there	Onde a ferramenta Vias cria um cruzamento sozinha e as vias se encontram como os braços (mesmo número, voltados mais ou menos para os mesmos lados, dos mesmos tipos de via), este é colocado
+Save as a custom junction	Salvar como cruzamento personalizado
+Written as a junction piece of the content folder (it shows in the catalogue under Junctions) with lanes for the AI; needs three arms or more	Gravado como uma peça de cruzamento da pasta de conteúdo (aparece no catálogo em Cruzamentos) com faixas para a IA; requer três braços ou mais
+Save the drawing	Salvar o desenho
+A custom junction is cut back to its arms where roads meet it; draw the roads' own types at the arms so they join cleanly.	Um cruzamento personalizado é recortado até seus braços onde as vias o encontram; desenhe nos braços os tipos de via das próprias vias para que se unam bem.
+Saved as a custom junction	Salvo como cruzamento personalizado
+Bus Pocket Tool	Ferramenta Baia de ônibus
+Tick it, then press on a road: a bus pocket of the road type chosen below is laid there. It stays on, pocket after pocket, until you untick it	Marque e clique em uma via: uma baia de ônibus do tipo de via escolhido abaixo é criada ali. Continua ativa, baia após baia, até você desmarcar
+pick the pocket's road type	escolha o tipo de via da baia
+Full width over	Largura total sobre
+Make a road type with a pocket…	Criar um tipo de via com baia…
+The stretch is cut out of the road and takes the pocket's type, its ends tapering to the road's width. Made in the road maker (Bus pocket).	O trecho é recortado da via e assume o tipo da baia, com as pontas se estreitando até a largura da via. Criado no construtor de vias (Baia de ônibus).
+Top view	Vista superior
+Side view	Vista lateral
+A lane for buses to stop in, right of the roadway, before the footway. Lay a road type made so where a bay is wanted with the Bus pocket tool of the Roads tool	Uma faixa para os ônibus pararem, à direita da pista, antes da calçada. Use uma via de tipo assim onde se quiser uma baia, com a ferramenta Baia de ônibus da ferramenta Vias
+Saved as an object	Salvo como objeto
+Saved as an object: it is in the catalogue under Objects, to place like any other	Salvo como objeto: está no catálogo, em Objetos, e é colocado como qualquer outro
+Save as an object	Salvar como objeto
+The whole drawing as one scenery object of the catalogue (its meshes, and lanes for the AI along its pieces), to place anywhere like any object; arms are not needed	O desenho inteiro como um único objeto de cenário do catálogo (suas malhas e faixas para a IA ao longo das peças), para colocar em qualquer lugar como qualquer objeto; os braços não são necessários
+Lanes the way the road is drawn	Faixas no sentido do traçado da via
+Lanes against it	Faixas em sentido contrário
+(0 against: one-way)	(0 em contrário: mão única)

@@ -2263,3 +2263,79 @@ Close test drive	Đóng lái thử
 Close the openOMSI session started from here (F5)	Đóng phiên openOMSI được khởi động từ đây (F5)
 Choose where to start, the vehicle, the time and the weather, then drive the map in openOMSI (F5)	Chọn nơi xuất phát, phương tiện, giờ và thời tiết, rồi lái thử bản đồ trong openOMSI (F5)
 More switches: the window is too narrow for all of them	Thêm công tắc: cửa sổ quá hẹp để chứa hết
+Custom junction saved: the Roads tool's automatic junctions use it where roads meet as it was drawn	Đã lưu ngã tư tùy chỉnh: các ngã tư tự động của công cụ Đường sẽ dùng nó ở nơi các đường gặp nhau đúng như đã vẽ
+The junction reaches past the map: add tiles there first	Ngã tư vượt ra ngoài bản đồ: hãy thêm ô bản đồ ở đó trước
+draw some pieces first	hãy vẽ một số chi tiết trước
+mark the arms (where roads come in): at least two	đánh dấu các nhánh (nơi đường đi vào): ít nhất hai
+the spline cannot be read	không đọc được spline
+Draw some pieces first	Hãy vẽ một số chi tiết trước
+Complex junction	Ngã tư phức hợp
+Complex junction put on the map: its pieces are ordinary splines	Đã đặt ngã tư phức hợp lên bản đồ: các chi tiết của nó là spline thông thường
+Pick the road type of the pocket first	Hãy chọn loại đường của ô đỗ trước
+The pocket's road type could not be read	Không đọc được loại đường của ô đỗ
+Press on a road	Nhấp vào một con đường
+This stretch is already of the pocket's road type	Đoạn này đã cùng loại đường với ô đỗ
+The road type has no drawn width	Loại đường không có độ rộng đã vẽ
+Bus pocket	Ô đỗ xe buýt
+Bus pocket laid	Đã tạo ô đỗ xe buýt
+The road is too short here for a pocket of that length	Đường ở đây quá ngắn cho ô đỗ có độ dài đó
+The road cannot be cut there	Không thể cắt đường tại đó
+Street with a bus pocket	Phố có ô đỗ xe buýt
+Complex junction editor…	Trình chỉnh sửa ngã tư phức hợp…
+Use my custom junctions where they fit	Dùng các ngã tư của tôi khi phù hợp
+Custom junctions saved from the complex junction editor with Use in automatic junctions on	Các ngã tư tùy chỉnh đã lưu từ trình chỉnh sửa ngã tư phức hợp với tùy chọn Dùng trong ngã tư tự động được bật
+My junction	Ngã tư của tôi
+Complex junction editor	Trình chỉnh sửa ngã tư phức hợp
+Open a saved one…	Mở mục đã lưu…
+Draw with	Vẽ bằng
+Pick a piece or an arm; drag to move it; Delete removes it	Chọn một chi tiết hoặc một nhánh; kéo để di chuyển; Delete để xóa
+Click the start, then the end	Nhấp vào điểm đầu, rồi điểm cuối
+Arc	Cung
+Click the start, a point on the arc, then the end	Nhấp vào điểm đầu, một điểm trên cung, rồi điểm cuối
+Arm	Nhánh
+Where a road comes in: click the place, then a point out along the road	Nơi đường đi vào: nhấp vào vị trí đó, rồi một điểm ra phía ngoài dọc theo đường
+Snap to the grid and to ends	Bắt dính vào lưới và các đầu mút
+Spline type	Loại spline
+Drawing with:	Đang vẽ bằng:
+Piece	Chi tiết
+Lift	Độ nâng
+Above the plate: markings lie a little over the asphalt they are painted on	Phía trên tấm nền: vạch kẻ nằm cao hơn lớp nhựa đường mà nó được sơn lên một chút
+Type: the one chosen	Loại: loại đã chọn
+Move under the one before	Đưa xuống dưới mục trước
+any road type	loại đường bất kỳ
+Road: the type chosen	Đường: loại đã chọn
+Any	Bất kỳ
+origin	gốc
+Click a piece or an arm to pick it, drag it to move it	Nhấp vào chi tiết hoặc nhánh để chọn, kéo để di chuyển
+Click the start of the piece, then its end	Nhấp vào điểm đầu của chi tiết, rồi điểm cuối của nó
+Click the start, a point the arc passes, then the end	Nhấp vào điểm đầu, một điểm cung đi qua, rồi điểm cuối
+Click where a road comes in, then a point out along the road	Nhấp vào nơi đường đi vào, rồi một điểm ra phía ngoài dọc theo đường
+Wheel zooms, right or middle drag pans, Esc cancels	Con lăn để thu phóng, kéo chuột phải hoặc giữa để di chuyển, Esc để hủy
+Pick a spline type on the left first	Hãy chọn loại spline ở bên trái trước
+Too short: the points are too close	Quá ngắn: các điểm quá gần nhau
+arms	nhánh
+Put on the map	Đặt lên bản đồ
+Its pieces become ordinary splines at the middle of the view, to move and change like any other. Nothing about them is automatic	Các chi tiết của nó trở thành spline thông thường ở giữa khung nhìn, có thể di chuyển và chỉnh sửa như mọi spline khác. Không có gì tự động
+Use in automatic junctions	Dùng trong ngã tư tự động
+Where the Roads tool makes a junction by itself and the roads meet as the arms do (same number, facing about the same ways, of the same road types), this one is put there	Ở nơi công cụ Đường tự tạo ngã tư và các đường gặp nhau giống như các nhánh (cùng số lượng, hướng gần giống nhau, cùng loại đường), ngã tư này sẽ được đặt vào
+Save as a custom junction	Lưu thành ngã tư tùy chỉnh
+Written as a junction piece of the content folder (it shows in the catalogue under Junctions) with lanes for the AI; needs three arms or more	Được ghi thành một chi tiết ngã tư trong thư mục nội dung (hiện trong danh mục ở mục Ngã tư) cùng các làn cho AI; cần từ ba nhánh trở lên
+Save the drawing	Lưu bản vẽ
+A custom junction is cut back to its arms where roads meet it; draw the roads' own types at the arms so they join cleanly.	Ngã tư tùy chỉnh bị cắt lùi đến các nhánh ở nơi các đường gặp nó; hãy vẽ đúng loại đường của chính các đường đó tại các nhánh để nối liền gọn gàng.
+Saved as a custom junction	Đã lưu thành ngã tư tùy chỉnh
+Bus Pocket Tool	Công cụ ô đỗ xe buýt
+Tick it, then press on a road: a bus pocket of the road type chosen below is laid there. It stays on, pocket after pocket, until you untick it	Bật lên, rồi nhấp vào một con đường: một ô đỗ xe buýt thuộc loại đường chọn bên dưới sẽ được tạo ở đó. Công cụ vẫn bật, hết ô đỗ này đến ô đỗ khác, cho đến khi bạn tắt
+pick the pocket's road type	chọn loại đường của ô đỗ
+Full width over	Rộng tối đa trên
+Make a road type with a pocket…	Tạo loại đường có ô đỗ…
+The stretch is cut out of the road and takes the pocket's type, its ends tapering to the road's width. Made in the road maker (Bus pocket).	Đoạn đường được cắt ra khỏi đường và nhận loại của ô đỗ, hai đầu thu hẹp dần về độ rộng của đường. Được tạo trong trình tạo đường (Ô đỗ xe buýt).
+Top view	Nhìn từ trên
+Side view	Nhìn từ bên
+A lane for buses to stop in, right of the roadway, before the footway. Lay a road type made so where a bay is wanted with the Bus pocket tool of the Roads tool	Một làn để xe buýt dừng, nằm bên phải lòng đường, trước vỉa hè. Đặt loại đường được tạo như vậy ở nơi cần có ô đỗ bằng công cụ Ô đỗ xe buýt của công cụ Đường
+Saved as an object	Đã lưu thành đối tượng
+Saved as an object: it is in the catalogue under Objects, to place like any other	Đã lưu thành đối tượng: nằm trong danh mục ở mục Đối tượng, đặt như mọi đối tượng khác
+Save as an object	Lưu thành đối tượng
+The whole drawing as one scenery object of the catalogue (its meshes, and lanes for the AI along its pieces), to place anywhere like any object; arms are not needed	Toàn bộ bản vẽ thành một đối tượng cảnh quan của danh mục (lưới của nó và làn cho AI dọc theo các phần), đặt ở bất cứ đâu như mọi đối tượng; không cần các nhánh
+Lanes the way the road is drawn	Làn theo chiều vẽ đường
+Lanes against it	Làn ngược chiều
+(0 against: one-way)	(0 ngược chiều: một chiều)

@@ -70,6 +70,7 @@ fn commands() -> Vec<Command> {
         cmd!(Icon::Paint, "Paint", "Покраска", "tool ground texture инструмент текстура земли", "6", |_, ed, _| ed.set_tool(Tool::Paint)),
         cmd!(Icon::Tiles, "Tiles", "Тайлы", "tool add remove grow инструмент добавить удалить", "7", |_, ed, _| ed.set_tool(Tool::Tiles)),
         cmd!(Icon::Road, "Road types and junctions…", "Типы дорог и перекрёстки…", "road maker lanes width полосы ширина", "", |_, _, a| a.push(Action::RoadTypes)),
+        cmd!(Icon::Junction, "Complex junction editor…", "Редактор сложных перекрёстков…", "custom junction top view splines markings кастомный перекрёсток вид сверху разметка", "", |_, _, a| a.push(Action::ComplexJunctions)),
         cmd!(Icon::Layers, "PBR maps for a picture…", "PBR-карты для картинки…", "normal roughness нормали", "", |_, _, a| a.push(Action::PbrMaker)),
         cmd!(Icon::Road, "Knife: cut roads", "Нож: разрезать дороги", "cut split knife road spline разрезать разделить дорогу сплайн", "K", |_, ed, _| ed.toggle_cutting()),
         cmd!(Icon::Flag, "Ruler", "Линейка", "measure distance gradient измерить расстояние уклон", "U", |_, ed, _| ed.toggle_ruler()),
