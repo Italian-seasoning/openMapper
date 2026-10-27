@@ -2425,3 +2425,16 @@ The bus pocket could not be made	Автобус қалтасын жасау мү
 Tick it, then press on a road: a bus pocket is laid there, on the kerb the road's own traffic keeps to. It stays on, pocket after pocket, until you untick it	Қосып, жолды басыңыз: жолдың қозғалысы жақындайтын жиек жағында автобус қалтасы жасалады. Өшірмейінше қосулы қалады
 How much wider the road is along the bay, on the kerb its traffic keeps to; the other side stays as it is	Қалта тұсында жол қаншаға кеңейеді, оның жолақтарының жиек жағында; екінші жағы өзгермейді
 The stretch is cut out of the road and given the bay along its kerb, its ends tapering to the road's width. The road's own type is widened: nothing to pick.	Учаске жолдан кесіліп, жиегі бойымен қалта алады, ұштары жол еніне дейін тарылады. Жол түрі өздігінен кеңейеді: ештеңе таңдаудың қажеті жоқ.
+OMSI's aerial photos	OMSI әуе суреттері
+One photo a tile, as OMSI's editor lays them on the ground: they are copied into the map and used as they are.	Әр тайлға бір сурет, OMSI редакторы оларды жерге қалай салса: олар картаға көшіріліп, сол күйінде қолданылады.
+Import them	Көшіру
+This map has none beside it: OMSI keeps them in maps/aerials/<the map's folder>.	Бұл картаның қасында олар жоқ: OMSI оларды maps/aerials/<карта қалтасы> ішінде сақтайды.
+Choose a folder of them…	Суреттері бар қалтаны таңдау…
+A folder of aerial photos	Әуе суреттерінің қалтасы
+No aerial photos in that folder	Бұл қалтада әуе суреттері жоқ
+The photos are of tiles this map does not have	Суреттер бұл картада жоқ тайлдарға тиесілі
+The photos are on the tiles	Суреттер тайлдарға салынды
+Could not copy the photos	Суреттерді көшіру мүмкін болмады
+Copying the photos	Суреттер көшірілуде
+Hold only the photos of the tiles near the camera	Камераға жақын тайлдардың суреттерін ғана ұстау
+The others keep their photo in the map's folder, and are put up again when you go back to them.	Қалғандары суретін карта қалтасында сақтайды да, оларға қайтқанда қайта шығады.

@@ -2425,3 +2425,16 @@ The bus pocket could not be made	Не вдалося зробити автобу
 Tick it, then press on a road: a bus pocket is laid there, on the kerb the road's own traffic keeps to. It stays on, pocket after pocket, until you untick it	Увімкніть і натисніть на дорогу: там з'явиться автобусна кишеня з боку бордюру, до якого тулиться рух дороги. Інструмент працює, доки ви його не вимкнете
 How much wider the road is along the bay, on the kerb its traffic keeps to; the other side stays as it is	Наскільки дорога ширша біля кишені, з боку бордюру її смуг; інший бік не змінюється
 The stretch is cut out of the road and given the bay along its kerb, its ends tapering to the road's width. The road's own type is widened: nothing to pick.	Ділянка вирізається з дороги й отримує кишеню вздовж бордюру, кінці звужуються до ширини дороги. Тип дороги розширюється сам: обирати нічого не треба.
+OMSI's aerial photos	Аерофотознімки OMSI
+One photo a tile, as OMSI's editor lays them on the ground: they are copied into the map and used as they are.	Один знімок на тайл, як їх кладе на землю редактор OMSI: вони копіюються в карту і використовуються як є.
+Import them	Імпортувати
+This map has none beside it: OMSI keeps them in maps/aerials/<the map's folder>.	У цієї карти їх немає поруч: OMSI тримає їх у maps/aerials/<папка карти>.
+Choose a folder of them…	Вибрати папку з ними…
+A folder of aerial photos	Папка аерофотознімків
+No aerial photos in that folder	У цій папці немає аерофотознімків
+The photos are of tiles this map does not have	Знімки стосуються тайлів, яких ця карта не має
+The photos are on the tiles	Знімки на тайлах
+Could not copy the photos	Не вдалося скопіювати знімки
+Copying the photos	Копіювання знімків
+Hold only the photos of the tiles near the camera	Тримати лише знімки тайлів поблизу камери
+The others keep their photo in the map's folder, and are put up again when you go back to them.	Інші зберігають знімок у папці карти й з'являються знову, коли ви до них повернетеся.

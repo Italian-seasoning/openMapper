@@ -2425,3 +2425,16 @@ The bus pocket could not be made	बस पॉकेट नहीं बन स�
 Tick it, then press on a road: a bus pocket is laid there, on the kerb the road's own traffic keeps to. It stays on, pocket after pocket, until you untick it	इसे चालू करें और सड़क पर क्लिक करें: सड़क का अपना यातायात जिस किनारे चलता है वहाँ बस पॉकेट बनेगा। यह तब तक चालू रहता है जब तक आप इसे बंद न करें
 How much wider the road is along the bay, on the kerb its traffic keeps to; the other side stays as it is	पॉकेट के पास सड़क कितनी चौड़ी होती है, उसकी लेनों वाले किनारे पर; दूसरी ओर कुछ नहीं बदलता
 The stretch is cut out of the road and given the bay along its kerb, its ends tapering to the road's width. The road's own type is widened: nothing to pick.	खंड सड़क से काटा जाता है और उसके किनारे के साथ पॉकेट पाता है, सिरे सड़क की चौड़ाई तक संकरे होते हैं। सड़क का प्रकार अपने आप चौड़ा होता है: कुछ चुनना नहीं है।
+OMSI's aerial photos	OMSI की हवाई तस्वीरें
+One photo a tile, as OMSI's editor lays them on the ground: they are copied into the map and used as they are.	प्रति टाइल एक तस्वीर, जैसे OMSI का संपादक उन्हें ज़मीन पर बिछाता है: वे मानचित्र में कॉपी होती हैं और जैसी हैं वैसी ही इस्तेमाल होती हैं।
+Import them	उन्हें आयात करें
+This map has none beside it: OMSI keeps them in maps/aerials/<the map's folder>.	इस मानचित्र के पास कोई नहीं है: OMSI उन्हें maps/aerials/<मानचित्र का फ़ोल्डर> में रखता है।
+Choose a folder of them…	उनका कोई फ़ोल्डर चुनें…
+A folder of aerial photos	हवाई तस्वीरों का फ़ोल्डर
+No aerial photos in that folder	उस फ़ोल्डर में कोई हवाई तस्वीर नहीं है
+The photos are of tiles this map does not have	तस्वीरें ऐसे टाइलों की हैं जो इस मानचित्र में नहीं हैं
+The photos are on the tiles	तस्वीरें टाइलों पर हैं
+Could not copy the photos	तस्वीरें कॉपी नहीं हो सकीं
+Copying the photos	तस्वीरें कॉपी हो रही हैं
+Hold only the photos of the tiles near the camera	कैमरे के पास वाले टाइलों की तस्वीरें ही रखें
+The others keep their photo in the map's folder, and are put up again when you go back to them.	बाकी अपनी तस्वीर मानचित्र के फ़ोल्डर में रखते हैं और जब आप वहाँ लौटते हैं तो फिर आ जाते हैं।

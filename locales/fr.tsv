@@ -2425,3 +2425,16 @@ The bus pocket could not be made	Impossible de créer l'encoche de bus
 Tick it, then press on a road: a bus pocket is laid there, on the kerb the road's own traffic keeps to. It stays on, pocket after pocket, until you untick it	Activez-le puis cliquez sur une route : une encoche de bus y est posée, côté trottoir où roule la circulation de la route. L'outil reste actif jusqu'à ce que vous le désactiviez
 How much wider the road is along the bay, on the kerb its traffic keeps to; the other side stays as it is	De combien la route est plus large le long de l'encoche, côté trottoir de ses voies ; l'autre côté ne change pas
 The stretch is cut out of the road and given the bay along its kerb, its ends tapering to the road's width. The road's own type is widened: nothing to pick.	Le tronçon est découpé dans la route et reçoit l'encoche le long de son trottoir, ses extrémités se rétrécissant à la largeur de la route. Le type de route est élargi tout seul : rien à choisir.
+OMSI's aerial photos	Photos aériennes d'OMSI
+One photo a tile, as OMSI's editor lays them on the ground: they are copied into the map and used as they are.	Une photo par tuile, comme l'éditeur d'OMSI les pose au sol : elles sont copiées dans la carte et utilisées telles quelles.
+Import them	Les importer
+This map has none beside it: OMSI keeps them in maps/aerials/<the map's folder>.	Cette carte n'en a aucune à côté : OMSI les range dans maps/aerials/<le dossier de la carte>.
+Choose a folder of them…	Choisir un dossier qui en contient…
+A folder of aerial photos	Un dossier de photos aériennes
+No aerial photos in that folder	Aucune photo aérienne dans ce dossier
+The photos are of tiles this map does not have	Les photos concernent des tuiles que cette carte n'a pas
+The photos are on the tiles	Les photos sont sur les tuiles
+Could not copy the photos	Impossible de copier les photos
+Copying the photos	Copie des photos
+Hold only the photos of the tiles near the camera	Ne garder que les photos des tuiles près de la caméra
+The others keep their photo in the map's folder, and are put up again when you go back to them.	Les autres gardent leur photo dans le dossier de la carte et reviennent quand vous y retournez.

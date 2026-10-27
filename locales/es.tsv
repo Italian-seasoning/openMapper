@@ -2425,3 +2425,16 @@ The bus pocket could not be made	No se pudo crear la bahía de autobús
 Tick it, then press on a road: a bus pocket is laid there, on the kerb the road's own traffic keeps to. It stays on, pocket after pocket, until you untick it	Actívelo y pulse sobre una carretera: se coloca una bahía de autobús en el bordillo al que se pega el tráfico de la vía. Sigue activo hasta que lo desactive
 How much wider the road is along the bay, on the kerb its traffic keeps to; the other side stays as it is	Cuánto más ancha es la vía junto a la bahía, en el bordillo de sus carriles; el otro lado no cambia
 The stretch is cut out of the road and given the bay along its kerb, its ends tapering to the road's width. The road's own type is widened: nothing to pick.	El tramo se recorta de la vía y recibe la bahía a lo largo de su bordillo, con los extremos estrechándose hasta el ancho de la vía. El tipo de vía se ensancha solo: no hay que elegir nada.
+OMSI's aerial photos	Fotos aéreas de OMSI
+One photo a tile, as OMSI's editor lays them on the ground: they are copied into the map and used as they are.	Una foto por tile, tal como el editor de OMSI las pone en el suelo: se copian al mapa y se usan tal cual.
+Import them	Importarlas
+This map has none beside it: OMSI keeps them in maps/aerials/<the map's folder>.	Este mapa no tiene ninguna al lado: OMSI las guarda en maps/aerials/<la carpeta del mapa>.
+Choose a folder of them…	Elegir una carpeta que las contenga…
+A folder of aerial photos	Una carpeta de fotos aéreas
+No aerial photos in that folder	No hay fotos aéreas en esa carpeta
+The photos are of tiles this map does not have	Las fotos son de tiles que este mapa no tiene
+The photos are on the tiles	Las fotos están en los tiles
+Could not copy the photos	No se pudieron copiar las fotos
+Copying the photos	Copiando las fotos
+Hold only the photos of the tiles near the camera	Retener solo las fotos de los tiles cerca de la cámara
+The others keep their photo in the map's folder, and are put up again when you go back to them.	Los demás guardan su foto en la carpeta del mapa y vuelven a aparecer cuando regresas a ellos.

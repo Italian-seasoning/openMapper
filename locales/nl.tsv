@@ -2465,3 +2465,16 @@ The bus pocket could not be made	De bushalte-inham kon niet worden gemaakt
 Tick it, then press on a road: a bus pocket is laid there, on the kerb the road's own traffic keeps to. It stays on, pocket after pocket, until you untick it	Zet het aan en klik op een weg: daar komt een bushaltehaven aan de stoeprand waar het verkeer van de weg rijdt. Blijft aan tot u het uitzet
 How much wider the road is along the bay, on the kerb its traffic keeps to; the other side stays as it is	Hoeveel breder de weg langs de haven is, aan de stoeprandkant van zijn rijstroken; de andere kant blijft zoals hij was
 The stretch is cut out of the road and given the bay along its kerb, its ends tapering to the road's width. The road's own type is widened: nothing to pick.	Het stuk wordt uit de weg gesneden en krijgt de haven langs zijn stoeprand, de uiteinden lopen toe naar de breedte van de weg. Het wegtype wordt zelf verbreed: niets te kiezen.
+OMSI's aerial photos	Luchtfoto's van OMSI
+One photo a tile, as OMSI's editor lays them on the ground: they are copied into the map and used as they are.	Eén foto per tegel, zoals de OMSI-editor ze op de grond legt: ze worden naar de kaart gekopieerd en ongewijzigd gebruikt.
+Import them	Importeren
+This map has none beside it: OMSI keeps them in maps/aerials/<the map's folder>.	Deze kaart heeft er geen ernaast: OMSI bewaart ze in maps/aerials/<de map van de kaart>.
+Choose a folder of them…	Een map met foto's kiezen…
+A folder of aerial photos	Een map met luchtfoto's
+No aerial photos in that folder	Geen luchtfoto's in die map
+The photos are of tiles this map does not have	De foto's horen bij tegels die deze kaart niet heeft
+The photos are on the tiles	De foto's staan op de tegels
+Could not copy the photos	De foto's konden niet worden gekopieerd
+Copying the photos	Foto's worden gekopieerd
+Hold only the photos of the tiles near the camera	Alleen de foto's van de tegels bij de camera houden
+The others keep their photo in the map's folder, and are put up again when you go back to them.	De andere houden hun foto in de map van de kaart en komen terug als u er weer heen gaat.

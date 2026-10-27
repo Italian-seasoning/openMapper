@@ -2425,3 +2425,16 @@ The bus pocket could not be made	Teluk bas tidak dapat dibuat
 Tick it, then press on a road: a bus pocket is laid there, on the kerb the road's own traffic keeps to. It stays on, pocket after pocket, until you untick it	Hidupkan dan klik jalan: teluk bas dibuat di sisi tebing tempat lalu lintas jalan itu berada. Alat kekal hidup sehingga anda mematikannya
 How much wider the road is along the bay, on the kerb its traffic keeps to; the other side stays as it is	Berapa lebih lebar jalan di sepanjang teluk, di sisi tebing lorongnya; sisi lain tidak berubah
 The stretch is cut out of the road and given the bay along its kerb, its ends tapering to the road's width. The road's own type is widened: nothing to pick.	Bahagian dipotong daripada jalan dan diberi teluk di sepanjang tebingnya, hujungnya menyempit kepada lebar jalan. Jenis jalan dilebarkan sendiri: tiada apa perlu dipilih.
+OMSI's aerial photos	Foto udara OMSI
+One photo a tile, as OMSI's editor lays them on the ground: they are copied into the map and used as they are.	Satu foto setiap jubin, seperti yang dibentangkan editor OMSI di atas tanah: ia disalin ke dalam peta dan digunakan sebagaimana adanya.
+Import them	Import
+This map has none beside it: OMSI keeps them in maps/aerials/<the map's folder>.	Peta ini tiada di sebelahnya: OMSI menyimpannya dalam maps/aerials/<folder peta>.
+Choose a folder of them…	Pilih folder yang mengandunginya…
+A folder of aerial photos	Folder foto udara
+No aerial photos in that folder	Tiada foto udara dalam folder itu
+The photos are of tiles this map does not have	Foto itu untuk jubin yang tiada dalam peta ini
+The photos are on the tiles	Foto sudah ada pada jubin
+Could not copy the photos	Foto tidak dapat disalin
+Copying the photos	Menyalin foto
+Hold only the photos of the tiles near the camera	Simpan hanya foto jubin berhampiran kamera
+The others keep their photo in the map's folder, and are put up again when you go back to them.	Yang lain menyimpan foto dalam folder peta dan muncul semula apabila anda kembali ke sana.

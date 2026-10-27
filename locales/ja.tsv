@@ -2425,3 +2425,16 @@ The bus pocket could not be made	バスベイを作れませんでした
 Tick it, then press on a road: a bus pocket is laid there, on the kerb the road's own traffic keeps to. It stays on, pocket after pocket, until you untick it	オンにして道路をクリックすると、その道路の交通が寄る縁石側にバスベイが作られます。オフにするまでオンのままです
 How much wider the road is along the bay, on the kerb its traffic keeps to; the other side stays as it is	ベイの部分で道路がどれだけ広がるか(車線のある縁石側)。反対側は変わりません
 The stretch is cut out of the road and given the bay along its kerb, its ends tapering to the road's width. The road's own type is widened: nothing to pick.	区間が道路から切り出され、縁石に沿ってベイが付き、両端は道路の幅まで絞られます。道路タイプは自動で広げられるので、選ぶ必要はありません。
+OMSI's aerial photos	OMSI の航空写真
+One photo a tile, as OMSI's editor lays them on the ground: they are copied into the map and used as they are.	OMSI のエディターが地面に敷く 1 タイル 1 枚の写真です。マップにコピーされ、そのまま使われます。
+Import them	読み込む
+This map has none beside it: OMSI keeps them in maps/aerials/<the map's folder>.	このマップのそばにはありません。OMSI は maps/aerials/<マップのフォルダー> に保存します。
+Choose a folder of them…	写真のフォルダーを選ぶ…
+A folder of aerial photos	航空写真のフォルダー
+No aerial photos in that folder	そのフォルダーに航空写真はありません
+The photos are of tiles this map does not have	このマップにないタイルの写真です
+The photos are on the tiles	写真をタイルに置きました
+Could not copy the photos	写真をコピーできませんでした
+Copying the photos	写真をコピー中
+Hold only the photos of the tiles near the camera	カメラの近くのタイルの写真だけを保持
+The others keep their photo in the map's folder, and are put up again when you go back to them.	それ以外は写真をマップのフォルダーに残し、戻ったときに再び表示されます。

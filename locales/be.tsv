@@ -2425,3 +2425,16 @@ The bus pocket could not be made	Не ўдалося зрабіць аўтобу
 Tick it, then press on a road: a bus pocket is laid there, on the kerb the road's own traffic keeps to. It stays on, pocket after pocket, until you untick it	Уключыце і націскайце на дарогу: там з'явіцца аўтобусная кішэня з боку бардзюра, да якога прыціскаецца рух дарогі. Інструмент працуе, пакуль вы яго не выключыце
 How much wider the road is along the bay, on the kerb its traffic keeps to; the other side stays as it is	Наколькі дарога шырэйшая каля кішэні, з боку бардзюра яе палос руху; другі бок не змяняецца
 The stretch is cut out of the road and given the bay along its kerb, its ends tapering to the road's width. The road's own type is widened: nothing to pick.	Участак выразаецца з дарогі і атрымлівае кішэню ўздоўж бардзюра, канцы звужаюцца да шырыні дарогі. Тып дарогі пашыраецца сам: выбіраць нічога не трэба.
+OMSI's aerial photos	Аэрафотаздымкі OMSI
+One photo a tile, as OMSI's editor lays them on the ground: they are copied into the map and used as they are.	Адзін здымак на тайл, як іх кладзе на зямлю рэдактар OMSI: яны капіююцца ў карту і выкарыстоўваюцца як ёсць.
+Import them	Імпартаваць
+This map has none beside it: OMSI keeps them in maps/aerials/<the map's folder>.	У гэтай карты іх няма побач: OMSI трымае іх у maps/aerials/<папка карты>.
+Choose a folder of them…	Выбраць папку з імі…
+A folder of aerial photos	Папка аэрафотаздымкаў
+No aerial photos in that folder	У гэтай папцы няма аэрафотаздымкаў
+The photos are of tiles this map does not have	Здымкі адносяцца да тайлаў, якіх у гэтай карты няма
+The photos are on the tiles	Здымкі на тайлах
+Could not copy the photos	Не ўдалося скапіяваць здымкі
+Copying the photos	Капіраванне здымкаў
+Hold only the photos of the tiles near the camera	Трымаць толькі здымкі тайлаў побач з камерай
+The others keep their photo in the map's folder, and are put up again when you go back to them.	Астатнія пакідаюць здымак у папцы карты і з'яўляюцца зноў, калі вы да іх вернецеся.

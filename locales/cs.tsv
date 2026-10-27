@@ -2425,3 +2425,16 @@ The bus pocket could not be made	Autobusovou zálivku se nepodařilo vytvořit
 Tick it, then press on a road: a bus pocket is laid there, on the kerb the road's own traffic keeps to. It stays on, pocket after pocket, until you untick it	Zapněte a klikněte na silnici: vznikne tam autobusová zálivka u obrubníku, ke kterému se drží provoz silnice. Nástroj zůstává zapnutý, dokud ho nevypnete
 How much wider the road is along the bay, on the kerb its traffic keeps to; the other side stays as it is	O kolik je silnice u zálivky širší, na straně obrubníku jejích jízdních pruhů; druhá strana se nemění
 The stretch is cut out of the road and given the bay along its kerb, its ends tapering to the road's width. The road's own type is widened: nothing to pick.	Úsek se vyřízne ze silnice a dostane zálivku podél obrubníku, konce se zužují na šířku silnice. Typ silnice se rozšíří sám: nic nevybíráte.
+OMSI's aerial photos	Letecké snímky OMSI
+One photo a tile, as OMSI's editor lays them on the ground: they are copied into the map and used as they are.	Jeden snímek na dlaždici, jak je editor OMSI pokládá na zem: zkopírují se do mapy a použijí se tak, jak jsou.
+Import them	Importovat
+This map has none beside it: OMSI keeps them in maps/aerials/<the map's folder>.	Tato mapa žádné nemá vedle sebe: OMSI je uchovává v maps/aerials/<složka mapy>.
+Choose a folder of them…	Vybrat složku s nimi…
+A folder of aerial photos	Složka s leteckými snímky
+No aerial photos in that folder	V této složce nejsou žádné letecké snímky
+The photos are of tiles this map does not have	Snímky patří dlaždicím, které tato mapa nemá
+The photos are on the tiles	Snímky jsou na dlaždicích
+Could not copy the photos	Snímky se nepodařilo zkopírovat
+Copying the photos	Kopírování snímků
+Hold only the photos of the tiles near the camera	Ponechat jen snímky dlaždic blízko kamery
+The others keep their photo in the map's folder, and are put up again when you go back to them.	Ostatní mají snímek dál ve složce mapy a objeví se znovu, až se k nim vrátíte.

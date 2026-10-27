@@ -2425,3 +2425,16 @@ The bus pocket could not be made	สร้างช่องจอดรถบ�
 Tick it, then press on a road: a bus pocket is laid there, on the kerb the road's own traffic keeps to. It stays on, pocket after pocket, until you untick it	เปิดใช้แล้วคลิกที่ถนน: จะมีช่องจอดรถบัสด้านขอบทางที่การจราจรของถนนวิ่งชิดอยู่ เครื่องมือเปิดค้างไว้จนกว่าจะปิด
 How much wider the road is along the bay, on the kerb its traffic keeps to; the other side stays as it is	ถนนกว้างขึ้นเท่าไรตรงช่องจอด ด้านขอบทางของช่องจราจร ส่วนอีกด้านไม่เปลี่ยน
 The stretch is cut out of the road and given the bay along its kerb, its ends tapering to the road's width. The road's own type is widened: nothing to pick.	ช่วงถนนถูกตัดออกและได้ช่องจอดตามขอบทาง ปลายทั้งสองค่อย ๆ แคบลงเท่าความกว้างถนน ชนิดถนนขยายเองโดยไม่ต้องเลือกอะไร
+OMSI's aerial photos	ภาพถ่ายทางอากาศของ OMSI
+One photo a tile, as OMSI's editor lays them on the ground: they are copied into the map and used as they are.	หนึ่งภาพต่อหนึ่งไทล์ ตามที่โปรแกรมแก้ไขของ OMSI วางไว้บนพื้น ภาพจะถูกคัดลอกเข้าแผนที่และใช้ตามที่เป็นอยู่
+Import them	นำเข้า
+This map has none beside it: OMSI keeps them in maps/aerials/<the map's folder>.	แผนที่นี้ไม่มีอยู่ข้าง ๆ OMSI เก็บไว้ใน maps/aerials/<โฟลเดอร์ของแผนที่>
+Choose a folder of them…	เลือกโฟลเดอร์ที่มีภาพเหล่านี้…
+A folder of aerial photos	โฟลเดอร์ภาพถ่ายทางอากาศ
+No aerial photos in that folder	ไม่มีภาพถ่ายทางอากาศในโฟลเดอร์นั้น
+The photos are of tiles this map does not have	ภาพเหล่านี้เป็นของไทล์ที่แผนที่นี้ไม่มี
+The photos are on the tiles	ภาพอยู่บนไทล์แล้ว
+Could not copy the photos	คัดลอกภาพไม่สำเร็จ
+Copying the photos	กำลังคัดลอกภาพ
+Hold only the photos of the tiles near the camera	เก็บเฉพาะภาพของไทล์ใกล้กล้อง
+The others keep their photo in the map's folder, and are put up again when you go back to them.	ไทล์อื่นเก็บภาพไว้ในโฟลเดอร์ของแผนที่ และจะกลับมาเมื่อคุณกลับไปที่นั่น

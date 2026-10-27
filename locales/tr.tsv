@@ -2425,3 +2425,16 @@ The bus pocket could not be made	Otobüs cebi oluşturulamadı
 Tick it, then press on a road: a bus pocket is laid there, on the kerb the road's own traffic keeps to. It stays on, pocket after pocket, until you untick it	Açın ve bir yola tıklayın: yolun trafiğinin yöneldiği kaldırım tarafında otobüs cebi yapılır. Siz kapatana kadar açık kalır
 How much wider the road is along the bay, on the kerb its traffic keeps to; the other side stays as it is	Yolun cepte ne kadar genişlediği, şeritlerinin kaldırım tarafında; diğer taraf değişmez
 The stretch is cut out of the road and given the bay along its kerb, its ends tapering to the road's width. The road's own type is widened: nothing to pick.	Kesim yoldan çıkarılır ve kaldırımı boyunca cep alır, uçları yol genişliğine daralır. Yol türü kendiliğinden genişler: seçilecek bir şey yok.
+OMSI's aerial photos	OMSI'nin hava fotoğrafları
+One photo a tile, as OMSI's editor lays them on the ground: they are copied into the map and used as they are.	OMSI'nin düzenleyicisinin yere serdiği gibi karo başına bir fotoğraf: haritaya kopyalanır ve olduğu gibi kullanılır.
+Import them	İçe aktar
+This map has none beside it: OMSI keeps them in maps/aerials/<the map's folder>.	Bu haritanın yanında hiç yok: OMSI bunları maps/aerials/<haritanın klasörü> içinde tutar.
+Choose a folder of them…	Bunların olduğu bir klasör seç…
+A folder of aerial photos	Hava fotoğrafları klasörü
+No aerial photos in that folder	O klasörde hava fotoğrafı yok
+The photos are of tiles this map does not have	Fotoğraflar bu haritada olmayan karolara ait
+The photos are on the tiles	Fotoğraflar karolara yerleşti
+Could not copy the photos	Fotoğraflar kopyalanamadı
+Copying the photos	Fotoğraflar kopyalanıyor
+Hold only the photos of the tiles near the camera	Yalnızca kameraya yakın karoların fotoğraflarını tut
+The others keep their photo in the map's folder, and are put up again when you go back to them.	Diğerleri fotoğrafını haritanın klasöründe tutar ve oraya döndüğünüzde yeniden gelir.

@@ -2465,3 +2465,16 @@ The bus pocket could not be made	Busshållplatsfickan kunde inte skapas
 Tick it, then press on a road: a bus pocket is laid there, on the kerb the road's own traffic keeps to. It stays on, pocket after pocket, until you untick it	Slå på och klicka på en väg: en busshållplatsficka läggs där, på den kantstenssida vägens trafik går. Verktyget är på tills du slår av det
 How much wider the road is along the bay, on the kerb its traffic keeps to; the other side stays as it is	Hur mycket bredare vägen är vid fickan, på kantstenssidan för dess filer; andra sidan ändras inte
 The stretch is cut out of the road and given the bay along its kerb, its ends tapering to the road's width. The road's own type is widened: nothing to pick.	Sträckan skärs ur vägen och får fickan längs sin kantsten, ändarna smalnar av till vägens bredd. Vägtypen breddas av sig själv: inget att välja.
+OMSI's aerial photos	OMSIs flygbilder
+One photo a tile, as OMSI's editor lays them on the ground: they are copied into the map and used as they are.	En bild per kartruta, som OMSIs redigerare lägger dem på marken: de kopieras in i kartan och används som de är.
+Import them	Importera
+This map has none beside it: OMSI keeps them in maps/aerials/<the map's folder>.	Den här kartan har inga bredvid sig: OMSI förvarar dem i maps/aerials/<kartans mapp>.
+Choose a folder of them…	Välj en mapp som innehåller dem…
+A folder of aerial photos	En mapp med flygbilder
+No aerial photos in that folder	Inga flygbilder i den mappen
+The photos are of tiles this map does not have	Bilderna hör till kartrutor som kartan inte har
+The photos are on the tiles	Bilderna ligger på kartrutorna
+Could not copy the photos	Bilderna kunde inte kopieras
+Copying the photos	Kopierar bilderna
+Hold only the photos of the tiles near the camera	Behåll bara bilderna för rutorna nära kameran
+The others keep their photo in the map's folder, and are put up again when you go back to them.	De övriga har kvar sin bild i kartans mapp och kommer tillbaka när du går dit igen.

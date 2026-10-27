@@ -2425,3 +2425,16 @@ The bus pocket could not be made	Teluk bus tidak dapat dibuat
 Tick it, then press on a road: a bus pocket is laid there, on the kerb the road's own traffic keeps to. It stays on, pocket after pocket, until you untick it	Aktifkan lalu klik jalan: teluk bus dibuat di sisi trotoar tempat lalu lintas jalan itu berjalan. Alat tetap aktif sampai Anda mematikannya
 How much wider the road is along the bay, on the kerb its traffic keeps to; the other side stays as it is	Seberapa lebih lebar jalan di sepanjang teluk, di sisi trotoar lajurnya; sisi lain tidak berubah
 The stretch is cut out of the road and given the bay along its kerb, its ends tapering to the road's width. The road's own type is widened: nothing to pick.	Ruas dipotong dari jalan dan diberi teluk di sepanjang trotoarnya, ujungnya menyempit ke lebar jalan. Tipe jalan melebar sendiri: tidak ada yang perlu dipilih.
+OMSI's aerial photos	Foto udara OMSI
+One photo a tile, as OMSI's editor lays them on the ground: they are copied into the map and used as they are.	Satu foto per tile, seperti yang diletakkan editor OMSI di tanah: foto disalin ke peta dan dipakai apa adanya.
+Import them	Impor
+This map has none beside it: OMSI keeps them in maps/aerials/<the map's folder>.	Peta ini tidak punya di sebelahnya: OMSI menyimpannya di maps/aerials/<folder peta>.
+Choose a folder of them…	Pilih folder berisi foto…
+A folder of aerial photos	Folder foto udara
+No aerial photos in that folder	Tidak ada foto udara di folder itu
+The photos are of tiles this map does not have	Foto-foto itu untuk tile yang tidak ada di peta ini
+The photos are on the tiles	Foto sudah ada di tile
+Could not copy the photos	Foto tidak dapat disalin
+Copying the photos	Menyalin foto
+Hold only the photos of the tiles near the camera	Simpan hanya foto tile di dekat kamera
+The others keep their photo in the map's folder, and are put up again when you go back to them.	Yang lain menyimpan fotonya di folder peta dan muncul lagi saat Anda kembali ke sana.

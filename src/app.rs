@@ -2344,7 +2344,7 @@ impl App {
                 let mut extras = self.ed.extras(&self.cam, assets);
                 self.tt.overlay(&self.ed, &self.cam, &mut extras);
                 g.renderer.profile.add("extras", crate::render::profile::ms(t_x));
-                self.geo.feed(&mut g.renderer.imagery, &g.gpu, &self.ed);
+                self.geo.feed(&mut g.renderer.imagery, &g.gpu, &self.ed, DVec2::new(self.cam.target.x, self.cam.target.y));
                 g.renderer.daytime = self.ui.daytime.map(|h| crate::render::daylight::at_map(h, &doc.traffic.timezone));
                 if let Some((set, stamp)) = stream_window(doc, self.prefs.tile_streaming == Some(true), stream_count(self.prefs.stream_tiles), &mut self.stream_at, &self.cam, self.stream_set.as_ref().map(|s| s.1)) {
                     g.renderer.set_live(set.clone());

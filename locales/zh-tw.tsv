@@ -2425,3 +2425,16 @@ The bus pocket could not be made	無法建立公車彎
 Tick it, then press on a road: a bus pocket is laid there, on the kerb the road's own traffic keeps to. It stays on, pocket after pocket, until you untick it	開啟後點選道路:會在該道路車流靠的路緣那一側建立公車彎。會一直開啟,直到你關閉
 How much wider the road is along the bay, on the kerb its traffic keeps to; the other side stays as it is	公車彎處道路加寬多少(在其車道的路緣一側);另一側不變
 The stretch is cut out of the road and given the bay along its kerb, its ends tapering to the road's width. The road's own type is widened: nothing to pick.	該路段從道路中切出,並沿路緣加上公車彎,兩端收窄至道路寬度。道路類型會自動加寬:無需選擇。
+OMSI's aerial photos	OMSI 航空照片
+One photo a tile, as OMSI's editor lays them on the ground: they are copied into the map and used as they are.	每個圖磚一張照片，就像 OMSI 編輯器鋪在地面上那樣：照片會複製到地圖中，並原樣使用。
+Import them	匯入
+This map has none beside it: OMSI keeps them in maps/aerials/<the map's folder>.	此地圖旁邊沒有這類照片：OMSI 把它們放在 maps/aerials/<地圖資料夾>。
+Choose a folder of them…	選擇包含這些照片的資料夾…
+A folder of aerial photos	航空照片資料夾
+No aerial photos in that folder	該資料夾沒有航空照片
+The photos are of tiles this map does not have	這些照片屬於此地圖沒有的圖磚
+The photos are on the tiles	照片已放上圖磚
+Could not copy the photos	無法複製照片
+Copying the photos	正在複製照片
+Hold only the photos of the tiles near the camera	只保留相機附近圖磚的照片
+The others keep their photo in the map's folder, and are put up again when you go back to them.	其餘圖磚把照片留在這張地圖的資料夾中，回到那裡時會再出現。

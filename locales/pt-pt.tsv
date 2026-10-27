@@ -2465,3 +2465,16 @@ The bus pocket could not be made	Não foi possível criar a baía de autocarro
 Tick it, then press on a road: a bus pocket is laid there, on the kerb the road's own traffic keeps to. It stays on, pocket after pocket, until you untick it	Ative e clique numa estrada: é criada aí uma baía de autocarro no lado do passeio onde circula o trânsito da estrada. Fica ativo até o desativar
 How much wider the road is along the bay, on the kerb its traffic keeps to; the other side stays as it is	Quanto mais larga é a estrada junto da baía, no lado do passeio das suas vias; o outro lado não muda
 The stretch is cut out of the road and given the bay along its kerb, its ends tapering to the road's width. The road's own type is widened: nothing to pick.	O troço é recortado da estrada e recebe a baía ao longo do passeio, com as pontas a estreitar até à largura da estrada. O tipo de estrada alarga-se sozinho: nada a escolher.
+OMSI's aerial photos	Fotografias aéreas do OMSI
+One photo a tile, as OMSI's editor lays them on the ground: they are copied into the map and used as they are.	Uma fotografia por mosaico, como o editor do OMSI as põe no solo: são copiadas para o mapa e usadas tal como estão.
+Import them	Importar
+This map has none beside it: OMSI keeps them in maps/aerials/<the map's folder>.	Este mapa não tem nenhuma ao lado: o OMSI guarda-as em maps/aerials/<a pasta do mapa>.
+Choose a folder of them…	Escolher uma pasta que as contenha…
+A folder of aerial photos	Uma pasta de fotografias aéreas
+No aerial photos in that folder	Não há fotografias aéreas nessa pasta
+The photos are of tiles this map does not have	As fotografias são de mosaicos que este mapa não tem
+The photos are on the tiles	As fotografias estão nos mosaicos
+Could not copy the photos	Não foi possível copiar as fotografias
+Copying the photos	A copiar as fotografias
+Hold only the photos of the tiles near the camera	Guardar só as fotografias dos mosaicos perto da câmara
+The others keep their photo in the map's folder, and are put up again when you go back to them.	As outras guardam a fotografia na pasta do mapa e voltam quando lá regressar.

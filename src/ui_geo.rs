@@ -1,10 +1,11 @@
 //! The "Satellite and terrain" window: where the map lies on the Earth (a map to search
-//! and click on), satellite imagery and terrain heights loaded for its tiles, the user's
-//! own pictures, and the overlay on the ground with its visibility and opacity per tile.
+//! and click on), satellite imagery and terrain heights loaded for its tiles, the aerial
+//! photos OMSI's own editor already has for the map, the user's own pictures, and the
+//! overlay on the ground with its visibility and opacity per tile.
 
-use std::collections::{BTreeMap, BTreeSet, HashMap};
+use std::collections::{BTreeMap, BTreeSet, HashMap, HashSet};
 use std::path::{Path, PathBuf};
-use std::sync::atomic::Ordering;
+use std::sync::atomic::{AtomicUsize, Ordering};
 use std::sync::mpsc::{channel, Receiver, Sender};
 use std::sync::{Arc, Condvar, Mutex};
 use std::time::Instant;
@@ -314,6 +315,17 @@ struct Bake {
     full: bool,
 }
 
+/// A folder of OMSI's photos being copied into the map on a thread of its own.
+struct AerialJob {
+    rx: Receiver<std::io::Result<Vec<TileKey>>>,
+    /// How many are done (the thread sets it after each).
+    at: Arc<AtomicUsize>,
+    total: usize,
+    folder: PathBuf,
+    /// The placement to record with them.
+    stamp: u64,
+}
+
 pub struct GeoUi {
     pub open: bool,
     /// A click on the map of the world: the 3D view goes there.
@@ -369,6 +381,14 @@ pub struct GeoUi {
     mini_pending: Vec<(TileKey, egui::ColorImage)>,
     /// Unloaded tiles beside loaded heights (their shared edge steps).
     edges: Vec<TileKey>,
+    /// OMSI's own aerial photos for this map: the folder found beside it and how many tiles
+    /// it has photos for (None: the map has none).
+    aerial: Option<(PathBuf, usize)>,
+    /// A folder of that map's photos being copied now (a hundred megabytes is not copied on
+    /// the frame's thread).
+    aerial_job: Option<AerialJob>,
+    /// The tiles whose photos are held, with the place and count they were worked out for.
+    near: Option<(HashSet<TileKey>, DVec2, usize)>,
 }
 
 impl Default for GeoUi {
@@ -423,6 +443,9 @@ impl Default for GeoUi {
             mini: HashMap::new(),
             mini_pending: Vec::new(),
             edges: Vec::new(),
+            aerial: None,
+            aerial_job: None,
+            near: None,
         }
     }
 }
@@ -434,7 +457,7 @@ fn ts() -> f64 {
 impl GeoUi {
     /// A load is running.
     pub fn busy(&self) -> bool {
-        self.job.is_some() || !self.queued.is_empty() || self.bake.is_some() || !self.loading.is_empty()
+        self.job.is_some() || !self.queued.is_empty() || self.bake.is_some() || !self.loading.is_empty() || self.aerial_job.is_some()
     }
 
     pub(crate) fn georef(&self) -> Option<Georef> {
@@ -455,6 +478,10 @@ impl GeoUi {
         if let Some(j) = self.job.take() {
             j.cancel.store(true, Ordering::Relaxed);
         }
+        // (a copy of the last map's photos is left to finish into the last map's folder: it is
+        // not recorded on this map's tiles)
+        self.aerial_job = None;
+        self.near = None;
         self.dir = dir.clone();
         self.file = dir.as_deref().map(GeoFile::load).unwrap_or_default();
         self.known = ed.doc.as_ref().map(|d| d.tiles.keys().copied().collect()).unwrap_or_default();
@@ -474,6 +501,13 @@ impl GeoUi {
         self.mini.clear();
         self.mini_pending.clear();
         self.edges.clear();
+        // (OMSI's own photos for this map, if the map has any: looked at once here, not every
+        // frame, as the folder can hold hundreds of files)
+        let known = &self.known;
+        self.aerial = dir.as_deref().and_then(|d| g::aerial::folder_of(d, ed.doc.as_ref().and_then(|d| d.source.as_deref()))).map(|f| {
+            let n = g::aerial::scan(&f).iter().filter(|(k, _)| known.contains(k)).count();
+            (f, n)
+        });
         // (Google's pictures were never kept: made again from the tile cache, fetched again
         // where it has run out)
         self.rebuild = self.file.tiles.iter().filter(|(_, t)| t.imagery.as_ref().map(|m| !m.kept).unwrap_or(false) && t.own.is_none()).filter_map(|(n, _)| {
@@ -584,6 +618,8 @@ impl GeoUi {
             return tr("own picture", "своя картинка").into();
         }
         match (&t.imagery, self.georef()) {
+            // (a photo of OMSI's is of this tile by its name: it holds wherever the map lies)
+            (Some(m), _) if m.source == g::aerial::SOURCE => m.source.clone(),
             (Some(m), Some(geo)) if m.stamp != geo.stamp() => format!("{} z{} ({})", m.source, m.zoom, tr("for an earlier placement", "для прежнего размещения")),
             (Some(m), _) if !m.kept => format!("Google z{} ({})", m.zoom, tr("not kept with the map", "не хранится с картой")),
             (Some(m), _) => format!("{} z{}{}", m.source, m.zoom, if m.coarser { tr(", partly coarser", ", местами грубее") } else { "" }),
@@ -808,6 +844,150 @@ impl GeoUi {
         }
     }
 
+    // -------------------------------------------------------------- OMSI's own photos
+
+    /// The aerial photos OMSI's own editor lays on the ground for this map, which openMapper
+    /// has never read: one picture a tile, so they are taken as they are.
+    fn aerial_ui(&mut self, ui: &mut egui::Ui, ed: &mut Editor) {
+        if self.dir.is_none() {
+            return;
+        }
+        crate::ui::section(ui, tr("OMSI's aerial photos", "Аэроснимки OMSI"));
+        // (copying now: how far it is, and nothing else to press)
+        if let Some(job) = &self.aerial_job {
+            let at = job.at.load(Ordering::Relaxed);
+            ui.label(RichText::new(format!("{} {at} / {}", tr("Copying the photos", "Копирование снимков"), job.total)).small().color(TEXT_DIM));
+            return;
+        }
+        match self.aerial.clone() {
+            Some((folder, n)) => {
+                ui.label(
+                    RichText::new(tr(
+                        "One photo a tile, as OMSI's editor lays them on the ground: they are copied into the map and used as they are.",
+                        "По одному снимку на тайл, как их кладёт на землю редактор OMSI: копируются в карту и используются как есть.",
+                    ))
+                    .small()
+                    .color(TEXT_DIM),
+                );
+                ui.label(RichText::new(folder.display().to_string()).small().color(TEXT_DIM));
+                let label = format!("{} ({n})", tr("Import them", "Импортировать"));
+                if ui.button(icons::labelled(Icon::Import, &label)).clicked() {
+                    self.import_aerial(ed, &folder);
+                }
+            }
+            None => {
+                ui.label(
+                    RichText::new(tr(
+                        "This map has none beside it: OMSI keeps them in maps/aerials/<the map's folder>.",
+                        "У этой карты их нет рядом: OMSI хранит их в maps/aerials/<папка карты>.",
+                    ))
+                    .small()
+                    .color(TEXT_DIM),
+                );
+                if ui.button(icons::labelled(Icon::Import, tr("Choose a folder of them…", "Выбрать папку с ними…"))).clicked() {
+                    if let Some(p) = rfd::FileDialog::new().set_title(tr("A folder of aerial photos", "Папка аэроснимков")).pick_folder() {
+                        self.import_aerial(ed, &p);
+                    }
+                }
+            }
+        }
+        // (a map's own photos are hundreds of megabytes: a window of them is cheap)
+        if self.file.tiles.values().any(|t| t.imagery.is_some() || t.own.is_some()) {
+            self.photos_near_ui(ui);
+        }
+    }
+
+    /// "Only the tiles near the camera" for the photos, and how many.
+    fn photos_near_ui(&mut self, ui: &mut egui::Ui) {
+        let mut on = self.file.photos_near.is_some();
+        if crate::ui::check(ui, &mut on, tr("Hold only the photos of the tiles near the camera", "Держать только снимки тайлов рядом с камерой")).changed() {
+            self.file.photos_near = on.then_some(25);
+            self.near = None;
+            self.touch();
+        }
+        if let Some(n) = &mut self.file.photos_near {
+            let mut c = false;
+            ui.horizontal(|ui| {
+                ui.label(tr("Tiles", "Тайлов"));
+                c = ui.add(egui::DragValue::new(n).speed(1.0).range(1..=2000)).changed();
+                let side = ((*n as f64).sqrt() * ts() * 0.5 / 1000.0) as f32;
+                ui.label(RichText::new(format!("≈ ±{side:.1} km")).small().color(TEXT_DIM));
+            });
+            ui.label(
+                RichText::new(tr(
+                    "The others keep their photo in the map's folder, and are put up again when you go back to them.",
+                    "У остальных снимок остаётся в папке карты и ставится снова, когда вы к ним вернётесь.",
+                ))
+                .small()
+                .color(TEXT_DIM),
+            );
+            if c {
+                self.near = None;
+                self.touch();
+            }
+        }
+    }
+
+    /// Copy a folder's photos over the map's tiles (the ones the map has; a photo of a tile
+    /// that is not there is left out), and show them. The copying runs on a thread: the window
+    /// keeps drawing while a hundred megabytes go by.
+    fn import_aerial(&mut self, ed: &mut Editor, folder: &Path) {
+        let Some(dir) = self.dir.clone() else { return };
+        // (one at a time: a second press while the first copies would take the same files)
+        if self.aerial_job.is_some() {
+            return;
+        }
+        let tiles: HashSet<TileKey> = ed.doc.as_ref().map(|d| d.tiles.keys().copied().collect()).unwrap_or_default();
+        let found = match g::aerial::pick(folder, &tiles) {
+            Ok(f) => f,
+            Err(g::aerial::NotTaken::NoPhotos) => {
+                ed.error(format!("{}: {}", tr("No aerial photos in that folder", "В той папке нет аэроснимков"), folder.display()));
+                return;
+            }
+            Err(_) => {
+                ed.error(tr("The photos are of tiles this map does not have", "Снимки относятся к тайлам, которых у этой карты нет"));
+                return;
+            }
+        };
+        let total = found.len();
+        let (tx, rx) = channel();
+        let at = Arc::new(AtomicUsize::new(0));
+        let (map, progress) = (dir.clone(), at.clone());
+        std::thread::spawn(move || {
+            let r = g::aerial::import(&map, &found, |i, _| progress.store(i, Ordering::Relaxed));
+            let _ = tx.send(r);
+        });
+        self.aerial_job = Some(AerialJob { rx, at, total, folder: folder.to_path_buf(), stamp: self.georef().map(|g| g.stamp()).unwrap_or(0) });
+    }
+
+    /// The copy running now, when it ends: the tiles show their photos (saved with the map).
+    fn poll_aerial(&mut self, ed: &mut Editor) {
+        let Some(job) = self.aerial_job.as_ref() else { return };
+        let got = match job.rx.try_recv() {
+            Ok(r) => Some(r),
+            Err(std::sync::mpsc::TryRecvError::Empty) => None,
+            // (the thread ended without an answer: nothing to record)
+            Err(std::sync::mpsc::TryRecvError::Disconnected) => return,
+        };
+        let Some(got) = got else { return };
+        let job = self.aerial_job.take().expect("asked for above");
+        match got {
+            Ok(done) => {
+                g::aerial::note(&mut self.file, &done, job.stamp);
+                // (the files are there now: read them again on the next frame)
+                self.shown.clear();
+                // (a folder chosen by hand becomes the one the panel offers, as the map's own)
+                match &mut self.aerial {
+                    Some(a) => a.0 = job.folder,
+                    None => self.aerial = Some((job.folder, done.len())),
+                }
+                self.touch();
+                ed.toast(format!("{} ({})", tr("The photos are on the tiles", "Снимки на тайлах"), done.len()));
+            }
+            Err(e) => ed.error(format!("{}: {e}", tr("Could not copy the photos", "Не удалось скопировать снимки"))),
+        }
+    }
+
     // -------------------------------------------------------------- own pictures
 
     fn pick_picture(&mut self, ed: &mut Editor, rect: [i32; 4]) {
@@ -940,8 +1120,36 @@ impl GeoUi {
         }
     }
 
-    /// Keep the renderer's pictures and their opacity as the map's settings say.
-    pub fn feed(&mut self, imagery: &mut Imagery, gpu: &crate::gpu::Gpu, ed: &Editor) {
+    /// The tiles whose photos are kept: the `photos_near` ones nearest `at`, or None for every
+    /// tile. Worked out again only when the camera has moved a tile's width, so a still view
+    /// costs nothing.
+    fn near_set(&mut self, doc: &crate::doc::Document, at: DVec2) -> Option<HashSet<TileKey>> {
+        let Some(n) = self.file.photos_near.filter(|n| *n > 0) else {
+            self.near = None;
+            return None;
+        };
+        let n = n as usize;
+        if doc.tiles.len() <= n {
+            self.near = None;
+            return None;
+        }
+        let half = DVec2::splat(ts() * 0.5);
+        if let Some((set, from, was)) = &self.near {
+            if *was == n && (*from - at).length() < ts() * 0.5 {
+                return Some(set.clone());
+            }
+        }
+        let mut near: Vec<(f64, TileKey)> = doc.tiles.keys().map(|k| ((tile_origin(*k) + half - at).length_squared(), *k)).collect();
+        near.select_nth_unstable_by(n, |a, b| a.0.total_cmp(&b.0));
+        let set: HashSet<TileKey> = near[..n].iter().map(|p| p.1).collect();
+        self.near = Some((set.clone(), at, n));
+        Some(set)
+    }
+
+    /// Keep the renderer's pictures and their opacity as the map's settings say. `at` is where
+    /// the camera looks: with `photos_near` set, only the photos of the tiles round it are
+    /// held (a map's own aerial photos are hundreds of megabytes).
+    pub fn feed(&mut self, imagery: &mut Imagery, gpu: &crate::gpu::Gpu, ed: &Editor, at: DVec2) {
         let Some(dir) = self.dir.clone() else { return };
         let Some(doc) = &ed.doc else { return };
         if self.epoch != imagery.epoch {
@@ -967,8 +1175,21 @@ impl GeoUi {
             self.mini_pending.push((k, mini_of(&m)));
         }
         let max = self.gpu_side();
+        // (the photos of the tiles round the camera, when the map asks for a window of them)
+        let near = self.near_set(doc, at);
         for k in doc.tiles.keys() {
             let t = self.file.tile(*k);
+            if let Some(set) = &near {
+                if !set.contains(k) {
+                    // (out of the window: nothing of it stays on the graphics card)
+                    if self.shown.remove(k).is_some() {
+                        imagery.remove(*k);
+                        self.mini.remove(k);
+                    }
+                    imagery.set_opacity(*k, 0.0);
+                    continue;
+                }
+            }
             let want = self.picture_of(&dir, *k);
             if let (Some(m), true) = (self.memory.get(k), t.own.is_none()) {
                 // (held in memory only: put up once)
@@ -1007,6 +1228,7 @@ impl GeoUi {
 
     pub fn window(&mut self, ctx: &egui::Context, ed: &mut Editor, prefs: &mut Prefs) {
         self.follow(ed);
+        self.poll_aerial(ed);
         self.poll(ed, &prefs.geo);
         self.watch_new(ed, &prefs.geo);
         self.poll_bake();
@@ -1379,6 +1601,10 @@ impl GeoUi {
                 }
             });
         });
+        if self.dir.is_some() {
+            ui.separator();
+            self.aerial_ui(ui, ed);
+        }
         ui.separator();
         self.own_ui(ui, ed, &keys);
     }
@@ -1610,13 +1836,21 @@ impl GeoUi {
         }
     }
 
-    /// `OPENMAPPER_GEO=lat,lon[,load][,hide][,picture=<file>[,turn=<deg>]]` (checks without a
-    /// person at the screen): the map placed with its orange tile there, the window open
-    /// (unless `hide`), with `load` imagery and heights loaded for every tile, with
-    /// `picture` that file laid over all tiles.
+    /// `OPENMAPPER_GEO=lat,lon[,load][,hide][,picture=<file>[,turn=<deg>]][,aerial[=<folder>]]`
+    /// (checks without a person at the screen): the map placed with its orange tile there, the
+    /// window open (unless `hide`), with `load` imagery and heights loaded for every tile, with
+    /// `picture` that file laid over all tiles, with `aerial` OMSI's own photos of the map taken
+    /// (from the folder beside it, or from `=folder`).
     pub fn scripted(&mut self, ed: &mut Editor, prefs: &Prefs, arg: &str) {
         self.follow(ed);
         let parts: Vec<&str> = arg.split(',').map(str::trim).collect();
+        if let Some(p) = parts.iter().find_map(|p| p.strip_prefix("aerial=")) {
+            self.import_aerial(ed, Path::new(p));
+        } else if parts.contains(&"aerial") {
+            if let Some(f) = ed.doc.as_ref().and_then(|d| g::aerial::folder_of(&d.dir, d.source.as_deref())) {
+                self.import_aerial(ed, &f);
+            }
+        }
         if let Some(p) = parts.iter().find_map(|p| p.strip_prefix("picture=")) {
             let keys: Vec<TileKey> = ed.doc.as_ref().map(|d| d.tiles.keys().copied().collect()).unwrap_or_default();
             let r = keys.iter().fold([i32::MAX, i32::MAX, i32::MIN, i32::MIN], |r, k| [r[0].min(k.0), r[1].min(k.1), r[2].max(k.0), r[3].max(k.1)]);

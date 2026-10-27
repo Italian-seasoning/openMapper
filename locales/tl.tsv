@@ -2425,3 +2425,16 @@ The bus pocket could not be made	Hindi nagawa ang bus bay
 Tick it, then press on a road: a bus pocket is laid there, on the kerb the road's own traffic keeps to. It stays on, pocket after pocket, until you untick it	I-on at i-click ang kalsada: may bus bay na ilalagay sa gilid ng kalsadang dinadaanan ng trapiko nito. Nananatiling naka-on hanggang i-off mo
 How much wider the road is along the bay, on the kerb its traffic keeps to; the other side stays as it is	Gaano kalapad ang kalsada sa bay, sa gilid ng mga lane nito; hindi nagbabago ang kabilang gilid
 The stretch is cut out of the road and given the bay along its kerb, its ends tapering to the road's width. The road's own type is widened: nothing to pick.	Hinihiwa ang bahagi mula sa kalsada at nilalagyan ng bay sa tabi ng gilid nito, at sumisikip ang mga dulo hanggang sa lapad ng kalsada. Awtomatikong lumalapad ang uri ng kalsada: walang pipiliin.
+OMSI's aerial photos	Mga aerial photo ng OMSI
+One photo a tile, as OMSI's editor lays them on the ground: they are copied into the map and used as they are.	Isang photo kada tile, gaya ng inilalagay ng editor ng OMSI sa lupa: kinokopya ang mga ito sa mapa at ginagamit kung ano ang mga ito.
+Import them	I-import
+This map has none beside it: OMSI keeps them in maps/aerials/<the map's folder>.	Walang ganito sa tabi ng mapang ito: inilalagay sila ng OMSI sa maps/aerials/<folder ng mapa>.
+Choose a folder of them…	Pumili ng folder na may mga ito…
+A folder of aerial photos	Folder ng mga aerial photo
+No aerial photos in that folder	Walang aerial photo sa folder na iyon
+The photos are of tiles this map does not have	Ang mga photo ay para sa mga tile na wala sa mapang ito
+The photos are on the tiles	Nasa mga tile na ang mga photo
+Could not copy the photos	Hindi makopya ang mga photo
+Copying the photos	Kinokopya ang mga photo
+Hold only the photos of the tiles near the camera	Itago lamang ang mga photo ng tile malapit sa camera
+The others keep their photo in the map's folder, and are put up again when you go back to them.	Ang iba ay itinatago ang photo sa folder ng mapa at bumabalik kapag bumalik ka roon.

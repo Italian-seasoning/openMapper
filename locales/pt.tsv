@@ -2465,3 +2465,16 @@ The bus pocket could not be made	Não foi possível criar a baia de ônibus
 Tick it, then press on a road: a bus pocket is laid there, on the kerb the road's own traffic keeps to. It stays on, pocket after pocket, until you untick it	Ative e clique numa estrada: uma baia de ônibus é criada no lado da calçada onde corre o tráfego da via. Fica ativo até você desativar
 How much wider the road is along the bay, on the kerb its traffic keeps to; the other side stays as it is	Quanto mais larga é a via junto à baia, no lado da calçada das suas faixas; o outro lado não muda
 The stretch is cut out of the road and given the bay along its kerb, its ends tapering to the road's width. The road's own type is widened: nothing to pick.	O trecho é recortado da via e recebe a baia ao longo da calçada, com as pontas se estreitando até a largura da via. O tipo de via se alarga sozinho: nada a escolher.
+OMSI's aerial photos	Fotos aéreas do OMSI
+One photo a tile, as OMSI's editor lays them on the ground: they are copied into the map and used as they are.	Uma foto por bloco, como o editor do OMSI as coloca no chão: são copiadas para o mapa e usadas como estão.
+Import them	Importar
+This map has none beside it: OMSI keeps them in maps/aerials/<the map's folder>.	Este mapa não tem nenhuma ao lado: o OMSI guarda em maps/aerials/<a pasta do mapa>.
+Choose a folder of them…	Escolher uma pasta que as contenha…
+A folder of aerial photos	Uma pasta de fotos aéreas
+No aerial photos in that folder	Não há fotos aéreas nessa pasta
+The photos are of tiles this map does not have	As fotos são de blocos que este mapa não tem
+The photos are on the tiles	As fotos estão nos blocos
+Could not copy the photos	Não foi possível copiar as fotos
+Copying the photos	Copiando as fotos
+Hold only the photos of the tiles near the camera	Guardar só as fotos dos blocos perto da câmera
+The others keep their photo in the map's folder, and are put up again when you go back to them.	As outras guardam a foto na pasta do mapa e voltam quando você retorna a elas.

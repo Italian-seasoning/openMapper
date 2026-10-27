@@ -2465,3 +2465,16 @@ The bus pocket could not be made	Nie udało się utworzyć zatoki autobusowej
 Tick it, then press on a road: a bus pocket is laid there, on the kerb the road's own traffic keeps to. It stays on, pocket after pocket, until you untick it	Włącz i kliknij drogę: powstanie tam zatoka autobusowa przy krawężniku, przy którym jedzie ruch drogi. Narzędzie działa, dopóki go nie wyłączysz
 How much wider the road is along the bay, on the kerb its traffic keeps to; the other side stays as it is	O ile droga jest szersza przy zatoce, po stronie krawężnika jej pasów; druga strona się nie zmienia
 The stretch is cut out of the road and given the bay along its kerb, its ends tapering to the road's width. The road's own type is widened: nothing to pick.	Odcinek jest wycinany z drogi i dostaje zatokę wzdłuż krawężnika, jego końce zwężają się do szerokości drogi. Typ drogi poszerza się sam: nic nie trzeba wybierać.
+OMSI's aerial photos	Zdjęcia lotnicze OMSI
+One photo a tile, as OMSI's editor lays them on the ground: they are copied into the map and used as they are.	Jedno zdjęcie na kafelek, tak jak kładzie je na ziemi edytor OMSI: są kopiowane do mapy i używane bez zmian.
+Import them	Importuj
+This map has none beside it: OMSI keeps them in maps/aerials/<the map's folder>.	Ta mapa nie ma żadnych obok: OMSI trzyma je w maps/aerials/<folder mapy>.
+Choose a folder of them…	Wybierz folder z nimi…
+A folder of aerial photos	Folder ze zdjęciami lotniczymi
+No aerial photos in that folder	W tym folderze nie ma zdjęć lotniczych
+The photos are of tiles this map does not have	Zdjęcia dotyczą kafelków, których ta mapa nie ma
+The photos are on the tiles	Zdjęcia są na kafelkach
+Could not copy the photos	Nie udało się skopiować zdjęć
+Copying the photos	Kopiowanie zdjęć
+Hold only the photos of the tiles near the camera	Trzymaj tylko zdjęcia kafelków blisko kamery
+The others keep their photo in the map's folder, and are put up again when you go back to them.	Pozostałe zachowują zdjęcie w folderze mapy i wracają, gdy do nich wrócisz.

@@ -2425,3 +2425,16 @@ The bus pocket could not be made	A buszöblöt nem sikerült létrehozni
 Tick it, then press on a road: a bus pocket is laid there, on the kerb the road's own traffic keeps to. It stays on, pocket after pocket, until you untick it	Kapcsolja be, és kattintson egy útra: ott buszöböl készül azon a szegélyoldalon, ahol az út forgalma halad. Addig marad bekapcsolva, amíg ki nem kapcsolja
 How much wider the road is along the bay, on the kerb its traffic keeps to; the other side stays as it is	Mennyivel szélesebb az út az öbölnél, a sávjai szegélyoldalán; a másik oldal nem változik
 The stretch is cut out of the road and given the bay along its kerb, its ends tapering to the road's width. The road's own type is widened: nothing to pick.	A szakasz kivágódik az útból, és szegélye mentén öblöt kap, a végei az út szélességére szűkülnek. Az úttípus magától kiszélesedik: nincs mit választani.
+OMSI's aerial photos	Az OMSI légi fényképei
+One photo a tile, as OMSI's editor lays them on the ground: they are copied into the map and used as they are.	Egy fénykép csempénként, ahogy az OMSI szerkesztője a földre teszi őket: a térképbe másolódnak, és úgy használódnak, ahogy vannak.
+Import them	Importálás
+This map has none beside it: OMSI keeps them in maps/aerials/<the map's folder>.	Ennek a térképnek nincs ilyen mellette: az OMSI a maps/aerials/<a térkép mappája> alatt tartja őket.
+Choose a folder of them…	Mappa kiválasztása…
+A folder of aerial photos	Légi fényképek mappája
+No aerial photos in that folder	Ebben a mappában nincsenek légi fényképek
+The photos are of tiles this map does not have	A fényképek olyan csempékhez tartoznak, amelyek nincsenek ebben a térképben
+The photos are on the tiles	A fényképek a csempéken vannak
+Could not copy the photos	A fényképeket nem sikerült másolni
+Copying the photos	Fényképek másolása
+Hold only the photos of the tiles near the camera	Csak a kamera közelében lévő csempék fényképeit tartsd
+The others keep their photo in the map's folder, and are put up again when you go back to them.	A többi a fényképét a térkép mappájában tartja, és visszatér, amikor visszamész hozzájuk.

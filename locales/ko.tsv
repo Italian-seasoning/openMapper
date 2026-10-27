@@ -2425,3 +2425,16 @@ The bus pocket could not be made	버스 베이를 만들 수 없습니다
 Tick it, then press on a road: a bus pocket is laid there, on the kerb the road's own traffic keeps to. It stays on, pocket after pocket, until you untick it	켜고 도로를 누르면 그 도로의 교통이 붙는 연석 쪽에 버스 베이가 만들어집니다. 끌 때까지 계속 켜져 있습니다
 How much wider the road is along the bay, on the kerb its traffic keeps to; the other side stays as it is	베이 구간에서 도로가 얼마나 넓어지는지(차선이 있는 연석 쪽). 반대쪽은 그대로입니다
 The stretch is cut out of the road and given the bay along its kerb, its ends tapering to the road's width. The road's own type is widened: nothing to pick.	구간이 도로에서 잘려 연석을 따라 베이가 생기고, 양끝은 도로 폭으로 좁아집니다. 도로 종류는 저절로 넓어지므로 고를 것이 없습니다.
+OMSI's aerial photos	OMSI 항공 사진
+One photo a tile, as OMSI's editor lays them on the ground: they are copied into the map and used as they are.	OMSI 편집기가 지면에 까는 타일당 한 장의 사진입니다. 지도로 복사되어 그대로 사용됩니다.
+Import them	가져오기
+This map has none beside it: OMSI keeps them in maps/aerials/<the map's folder>.	이 지도 옆에는 없습니다. OMSI는 maps/aerials/<지도 폴더>에 보관합니다.
+Choose a folder of them…	사진이 든 폴더 선택…
+A folder of aerial photos	항공 사진 폴더
+No aerial photos in that folder	그 폴더에 항공 사진이 없습니다
+The photos are of tiles this map does not have	이 지도에 없는 타일의 사진입니다
+The photos are on the tiles	사진을 타일에 놓았습니다
+Could not copy the photos	사진을 복사할 수 없습니다
+Copying the photos	사진 복사 중
+Hold only the photos of the tiles near the camera	카메라 근처 타일의 사진만 유지
+The others keep their photo in the map's folder, and are put up again when you go back to them.	나머지는 사진을 지도 폴더에 두고, 다시 가면 나타납니다.

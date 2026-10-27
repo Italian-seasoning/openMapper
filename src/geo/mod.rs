@@ -3,6 +3,7 @@
 //! `<map>/openMapper/geo.json`, each tile's imagery in `<map>/openMapper/imagery`, and the
 //! game reads none of it (only the terrain heights written into the tiles are the map's).
 
+pub mod aerial;
 pub mod elevation;
 pub mod fetch;
 pub mod imagery;
@@ -249,6 +250,11 @@ pub struct GeoFile {
     /// Put the imagery into zips exported for sharing (its licence may not allow that).
     #[serde(default)]
     pub export_imagery: bool,
+    /// Keep the photos of only this many tiles nearest the camera (None: every tile that has
+    /// one). A map's own aerial photos are hundreds of megabytes: a window of them is enough
+    /// to see where one is, and the rest are not held in the graphics card's memory.
+    #[serde(default)]
+    pub photos_near: Option<u32>,
     /// Per tile ("x_y").
     #[serde(default)]
     pub tiles: BTreeMap<String, TileGeo>,
@@ -259,7 +265,7 @@ pub struct GeoFile {
 
 impl Default for GeoFile {
     fn default() -> Self {
-        GeoFile { anchor: None, source: String::new(), zoom: 0, size: 0, auto_new: true, with_terrain: false, terrain: Default::default(), overlay: true, opacity: 1.0, export_imagery: false, tiles: BTreeMap::new(), pictures: BTreeMap::new() }
+        GeoFile { anchor: None, source: String::new(), zoom: 0, size: 0, auto_new: true, with_terrain: false, terrain: Default::default(), overlay: true, opacity: 1.0, export_imagery: false, photos_near: None, tiles: BTreeMap::new(), pictures: BTreeMap::new() }
     }
 }
 

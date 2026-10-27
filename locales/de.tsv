@@ -2425,3 +2425,16 @@ The bus pocket could not be made	Die Bushaltebucht konnte nicht erstellt werden
 Tick it, then press on a road: a bus pocket is laid there, on the kerb the road's own traffic keeps to. It stays on, pocket after pocket, until you untick it	Einschalten und auf eine Straße klicken: dort entsteht eine Bushaltebucht an der Bordsteinseite, an der der Verkehr der Straße fährt. Das Werkzeug bleibt an, bis Sie es ausschalten
 How much wider the road is along the bay, on the kerb its traffic keeps to; the other side stays as it is	Wie viel breiter die Straße an der Bucht ist, auf der Bordsteinseite ihrer Fahrspuren; die andere Seite bleibt unverändert
 The stretch is cut out of the road and given the bay along its kerb, its ends tapering to the road's width. The road's own type is widened: nothing to pick.	Der Abschnitt wird aus der Straße geschnitten und erhält die Bucht entlang seines Bordsteins, die Enden laufen auf die Straßenbreite zu. Der Straßentyp wird selbst verbreitert: nichts auszuwählen.
+OMSI's aerial photos	OMSI-Luftbilder
+One photo a tile, as OMSI's editor lays them on the ground: they are copied into the map and used as they are.	Ein Bild pro Kachel, wie der OMSI-Editor sie auf den Boden legt: Sie werden in die Karte kopiert und unverändert verwendet.
+Import them	Importieren
+This map has none beside it: OMSI keeps them in maps/aerials/<the map's folder>.	Diese Karte hat keine daneben: OMSI legt sie unter maps/aerials/<der Ordner der Karte> ab.
+Choose a folder of them…	Einen Ordner damit wählen…
+A folder of aerial photos	Ein Ordner mit Luftbildern
+No aerial photos in that folder	In diesem Ordner sind keine Luftbilder
+The photos are of tiles this map does not have	Die Bilder gehören zu Kacheln, die diese Karte nicht hat
+The photos are on the tiles	Die Bilder liegen auf den Kacheln
+Could not copy the photos	Die Bilder konnten nicht kopiert werden
+Copying the photos	Die Bilder werden kopiert
+Hold only the photos of the tiles near the camera	Nur die Bilder der Kacheln bei der Kamera behalten
+The others keep their photo in the map's folder, and are put up again when you go back to them.	Die übrigen behalten ihr Bild im Ordner der Karte und kommen wieder, wenn Sie dorthin zurückkehren.

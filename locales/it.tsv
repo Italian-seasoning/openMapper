@@ -2425,3 +2425,16 @@ The bus pocket could not be made	Impossibile creare la baia per autobus
 Tick it, then press on a road: a bus pocket is laid there, on the kerb the road's own traffic keeps to. It stays on, pocket after pocket, until you untick it	Attivalo e clicca su una strada: lì viene creata una baia per autobus sul lato del marciapiede dove corre il traffico della strada. Resta attivo finché non lo disattivi
 How much wider the road is along the bay, on the kerb its traffic keeps to; the other side stays as it is	Di quanto la strada è più larga lungo la baia, sul lato del marciapiede delle sue corsie; l'altro lato non cambia
 The stretch is cut out of the road and given the bay along its kerb, its ends tapering to the road's width. The road's own type is widened: nothing to pick.	Il tratto viene ritagliato dalla strada e riceve la baia lungo il suo marciapiede, con le estremità che si restringono alla larghezza della strada. Il tipo di strada si allarga da solo: non c'è nulla da scegliere.
+OMSI's aerial photos	Foto aeree di OMSI
+One photo a tile, as OMSI's editor lays them on the ground: they are copied into the map and used as they are.	Una foto per tile, come le posa a terra l'editor di OMSI: vengono copiate nella mappa e usate così come sono.
+Import them	Importale
+This map has none beside it: OMSI keeps them in maps/aerials/<the map's folder>.	Questa mappa non ne ha nessuna accanto: OMSI le tiene in maps/aerials/<la cartella della mappa>.
+Choose a folder of them…	Scegli una cartella che le contenga…
+A folder of aerial photos	Una cartella di foto aeree
+No aerial photos in that folder	Nessuna foto aerea in quella cartella
+The photos are of tiles this map does not have	Le foto riguardano tile che questa mappa non ha
+The photos are on the tiles	Le foto sono sui tile
+Could not copy the photos	Impossibile copiare le foto
+Copying the photos	Copia delle foto
+Hold only the photos of the tiles near the camera	Tieni solo le foto dei tile vicino alla camera
+The others keep their photo in the map's folder, and are put up again when you go back to them.	Gli altri tengono la foto nella cartella della mappa e tornano quando ci si ritorna.

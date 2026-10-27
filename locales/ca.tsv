@@ -2425,3 +2425,16 @@ The bus pocket could not be made	No s'ha pogut fer la baia d'autobús
 Tick it, then press on a road: a bus pocket is laid there, on the kerb the road's own traffic keeps to. It stays on, pocket after pocket, until you untick it	Activeu-ho i premeu sobre una carretera: s'hi posa una baia d'autobús a la vorera on circula el trànsit de la via. Continua activa fins que la desactiveu
 How much wider the road is along the bay, on the kerb its traffic keeps to; the other side stays as it is	Quant més ampla és la via al llarg de la baia, a la vorera on circula el seu trànsit; l'altre costat no canvia
 The stretch is cut out of the road and given the bay along its kerb, its ends tapering to the road's width. The road's own type is widened: nothing to pick.	El tram es retalla de la via i rep la baia al llarg de la vorera, amb els extrems que s'estrenyen fins a l'amplada de la via. El tipus de la via s'eixampla sol: no cal triar res.
+OMSI's aerial photos	Fotografies aèries de l'OMSI
+One photo a tile, as OMSI's editor lays them on the ground: they are copied into the map and used as they are.	Una foto per tessel·la, tal com l'editor de l'OMSI les posa a terra: es copien al mapa i s'usen tal com són.
+Import them	Importa-les
+This map has none beside it: OMSI keeps them in maps/aerials/<the map's folder>.	Aquest mapa no en té cap al costat: l'OMSI les guarda a maps/aerials/<la carpeta del mapa>.
+Choose a folder of them…	Tria una carpeta que les contingui…
+A folder of aerial photos	Una carpeta de fotografies aèries
+No aerial photos in that folder	No hi ha fotografies aèries en aquesta carpeta
+The photos are of tiles this map does not have	Les fotos són de tessel·les que aquest mapa no té
+The photos are on the tiles	Les fotos són a les tessel·les
+Could not copy the photos	No s'han pogut copiar les fotos
+Copying the photos	S'estan copiant les fotos
+Hold only the photos of the tiles near the camera	Retén només les fotos de les tessel·les a prop de la càmera
+The others keep their photo in the map's folder, and are put up again when you go back to them.	Les altres guarden la foto a la carpeta del mapa i tornen a aparèixer quan hi tornes.
