@@ -2407,3 +2407,10 @@ Straight on	Recto
 A piece straight on between arms that face each other	Un tramo recto entre accesos enfrentados
 auto	auto
 Built by Auto-Junction from the arms	Creado por el Auto-cruce a partir de los accesos
+the plate could not be made from these arms	no se pudo crear la placa con estos accesos
+Plate with kerbs and footways	Placa con bordillos y aceras
+Junctions as the Roads tool makes them: where roads cross, one ends on another or several end at one place, they are cut back and a plate is laid with rounded kerbs, footways and lanes through it	Cruces como los hace la herramienta Carreteras: donde las carreteras se cruzan, una acaba en otra o varias acaban en un punto, se recortan y se pone una placa con bordillos redondeados, aceras y carriles a través
+The bus pocket could not be made	No se pudo crear la bahía de autobús
+Tick it, then press on a road: a bus pocket is laid there, on the kerb the road's own traffic keeps to. It stays on, pocket after pocket, until you untick it	Actívelo y pulse sobre una carretera: se coloca una bahía de autobús en el bordillo al que se pega el tráfico de la vía. Sigue activo hasta que lo desactive
+How much wider the road is along the bay, on the kerb its traffic keeps to; the other side stays as it is	Cuánto más ancha es la vía junto a la bahía, en el bordillo de sus carriles; el otro lado no cambia
+The stretch is cut out of the road and given the bay along its kerb, its ends tapering to the road's width. The road's own type is widened: nothing to pick.	El tramo se recorta de la vía y recibe la bahía a lo largo de su bordillo, con los extremos estrechándose hasta el ancho de la vía. El tipo de vía se ensancha solo: no hay que elegir nada.

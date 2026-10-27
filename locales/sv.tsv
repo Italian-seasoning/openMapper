@@ -2447,3 +2447,10 @@ Straight on	Rakt fram
 A piece straight on between arms that face each other	Ett rakt stycke mellan armar som ligger mitt emot varandra
 auto	auto
 Built by Auto-Junction from the arms	Skapad av Auto-korsning utifrån armarna
+the plate could not be made from these arms	plattan kunde inte skapas av dessa armar
+Plate with kerbs and footways	Platta med kantstenar och trottoarer
+Junctions as the Roads tool makes them: where roads cross, one ends on another or several end at one place, they are cut back and a plate is laid with rounded kerbs, footways and lanes through it	Korsningar som verktyget Vägar gör dem: där vägar korsas, en slutar på en annan eller flera slutar på samma ställe kortas de av och en platta läggs med rundade kantstenar, trottoarer och körfält igenom
+The bus pocket could not be made	Busshållplatsfickan kunde inte skapas
+Tick it, then press on a road: a bus pocket is laid there, on the kerb the road's own traffic keeps to. It stays on, pocket after pocket, until you untick it	Slå på och klicka på en väg: en busshållplatsficka läggs där, på den kantstenssida vägens trafik går. Verktyget är på tills du slår av det
+How much wider the road is along the bay, on the kerb its traffic keeps to; the other side stays as it is	Hur mycket bredare vägen är vid fickan, på kantstenssidan för dess filer; andra sidan ändras inte
+The stretch is cut out of the road and given the bay along its kerb, its ends tapering to the road's width. The road's own type is widened: nothing to pick.	Sträckan skärs ur vägen och får fickan längs sin kantsten, ändarna smalnar av till vägens bredd. Vägtypen breddas av sig själv: inget att välja.

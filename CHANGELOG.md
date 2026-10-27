@@ -4,6 +4,13 @@ Releases are tagged `v<version>`; the downloads are on the
 [Releases](https://github.com/openOMSI-org/openMapper/releases) page, each with the notes of its
 version from this file.
 
+## 0.1.14 - 2026-10-27
+
+### Changed
+- **Auto-Junction in the complex junction editor works as in the Roads tool**: draw the roads as they are, and where they cross, one ends on another's middle, or three or more end at one place, they are cut back by the room the junction needs and a plate is laid with rounded kerbs, footways and lanes through it ("Plate with kerbs and footways", on by default; turns, rounded corners and straight-on pieces are off by default). It is drawn in the editor, saved into custom junctions and objects, and put on the map with the drawing.
+- **Bus pocket**: the bay is the road's own type widened along the kerb its traffic keeps to (left on a left-hand road), the other side stays exactly where it was, so a bay no longer pushes the kerb inward on one side; nothing has to be picked. It works on a closed ring road, which before reported a bay as laid while none was; a bay that could not be finished is now rolled back whole.
+- **Complex junction editor**: the plate's lanes and kerbs follow the road type's own sides whichever way a road was drawn (before, a road drawn away from the junction had its left/right and lane directions mirrored), and the Lanes view shows the lanes as they will be, the roads cut back and the turns through the plate.
+
 ## 0.1.13 - 2026-10-26
 
 ### Added

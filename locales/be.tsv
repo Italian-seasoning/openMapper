@@ -2407,3 +2407,10 @@ Straight on	Наўпрост
 A piece straight on between arms that face each other	Адрэзак наўпрост паміж уездамі, што стаяць насупраць адзін аднаго
 auto	аўта
 Built by Auto-Junction from the arms	Пабудавана Аўта-скрыжаваннем па ўездах
+the plate could not be made from these arms	плиту не ўдалося пабудаваць з гэтых заездаў
+Plate with kerbs and footways	Пліта з бардзюрамі і тратуарамі
+Junctions as the Roads tool makes them: where roads cross, one ends on another or several end at one place, they are cut back and a plate is laid with rounded kerbs, footways and lanes through it	Скрыжаванні, як іх робіць інструмент «Дарогі»: дзе дарогі перасякаюцца, адна ўпіраецца ў другую або некалькі сыходзяцца ў адным месцы, яны абрэзаюцца і кладзецца пліта з закругленымі бардзюрамі, тратуарамі і паласамі праз яе
+The bus pocket could not be made	Не ўдалося зрабіць аўтобусную кішэню
+Tick it, then press on a road: a bus pocket is laid there, on the kerb the road's own traffic keeps to. It stays on, pocket after pocket, until you untick it	Уключыце і націскайце на дарогу: там з'явіцца аўтобусная кішэня з боку бардзюра, да якога прыціскаецца рух дарогі. Інструмент працуе, пакуль вы яго не выключыце
+How much wider the road is along the bay, on the kerb its traffic keeps to; the other side stays as it is	Наколькі дарога шырэйшая каля кішэні, з боку бардзюра яе палос руху; другі бок не змяняецца
+The stretch is cut out of the road and given the bay along its kerb, its ends tapering to the road's width. The road's own type is widened: nothing to pick.	Участак выразаецца з дарогі і атрымлівае кішэню ўздоўж бардзюра, канцы звужаюцца да шырыні дарогі. Тып дарогі пашыраецца сам: выбіраць нічога не трэба.

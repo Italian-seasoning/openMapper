@@ -2407,3 +2407,10 @@ Straight on	Egyenesen
 A piece straight on between arms that face each other	Egyenes darab az egymással szemben lévő ágak között
 auto	auto
 Built by Auto-Junction from the arms	Az Auto-csomópont készítette az ágakból
+the plate could not be made from these arms	a lapot nem sikerült ezekből a bekötőkből elkészíteni
+Plate with kerbs and footways	Lap szegélyekkel és járdákkal
+Junctions as the Roads tool makes them: where roads cross, one ends on another or several end at one place, they are cut back and a plate is laid with rounded kerbs, footways and lanes through it	Csomópontok, ahogy az Utak eszköz készíti: ahol az utak keresztezik egymást, az egyik a másikon ér véget, vagy többen ugyanott végződnek, megrövidülnek, és lekerekített szegélyekkel, járdákkal és áthaladó sávokkal ellátott lap kerül oda
+The bus pocket could not be made	A buszöblöt nem sikerült létrehozni
+Tick it, then press on a road: a bus pocket is laid there, on the kerb the road's own traffic keeps to. It stays on, pocket after pocket, until you untick it	Kapcsolja be, és kattintson egy útra: ott buszöböl készül azon a szegélyoldalon, ahol az út forgalma halad. Addig marad bekapcsolva, amíg ki nem kapcsolja
+How much wider the road is along the bay, on the kerb its traffic keeps to; the other side stays as it is	Mennyivel szélesebb az út az öbölnél, a sávjai szegélyoldalán; a másik oldal nem változik
+The stretch is cut out of the road and given the bay along its kerb, its ends tapering to the road's width. The road's own type is widened: nothing to pick.	A szakasz kivágódik az útból, és szegélye mentén öblöt kap, a végei az út szélességére szűkülnek. Az úttípus magától kiszélesedik: nincs mit választani.

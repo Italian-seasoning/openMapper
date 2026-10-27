@@ -2407,3 +2407,10 @@ Straight on	Tout droit
 A piece straight on between arms that face each other	Un tronçon droit entre des branches qui se font face
 auto	auto
 Built by Auto-Junction from the arms	Créé par l'Auto-carrefour à partir des branches
+the plate could not be made from these arms	la plaque n'a pas pu être créée à partir de ces branches
+Plate with kerbs and footways	Plaque avec bordures et trottoirs
+Junctions as the Roads tool makes them: where roads cross, one ends on another or several end at one place, they are cut back and a plate is laid with rounded kerbs, footways and lanes through it	Des carrefours comme ceux de l'outil Routes : là où des routes se croisent, l'une s'arrête sur une autre ou plusieurs s'arrêtent au même endroit, elles sont raccourcies et une plaque est posée, avec bordures arrondies, trottoirs et voies au travers
+The bus pocket could not be made	Impossible de créer l'encoche de bus
+Tick it, then press on a road: a bus pocket is laid there, on the kerb the road's own traffic keeps to. It stays on, pocket after pocket, until you untick it	Activez-le puis cliquez sur une route : une encoche de bus y est posée, côté trottoir où roule la circulation de la route. L'outil reste actif jusqu'à ce que vous le désactiviez
+How much wider the road is along the bay, on the kerb its traffic keeps to; the other side stays as it is	De combien la route est plus large le long de l'encoche, côté trottoir de ses voies ; l'autre côté ne change pas
+The stretch is cut out of the road and given the bay along its kerb, its ends tapering to the road's width. The road's own type is widened: nothing to pick.	Le tronçon est découpé dans la route et reçoit l'encoche le long de son trottoir, ses extrémités se rétrécissant à la largeur de la route. Le type de route est élargi tout seul : rien à choisir.

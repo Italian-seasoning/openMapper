@@ -2407,3 +2407,10 @@ Straight on	ตรงไป
 A piece straight on between arms that face each other	ช่วงตรงระหว่างแขนที่หันหน้าเข้าหากัน
 auto	อัตโนมัติ
 Built by Auto-Junction from the arms	สร้างโดยทางแยกอัตโนมัติจากแขน
+the plate could not be made from these arms	ไม่สามารถสร้างแผ่นจากทางเข้าเหล่านี้ได้
+Plate with kerbs and footways	แผ่นพร้อมขอบทางและทางเท้า
+Junctions as the Roads tool makes them: where roads cross, one ends on another or several end at one place, they are cut back and a plate is laid with rounded kerbs, footways and lanes through it	ทางแยกตามที่เครื่องมือถนนสร้าง: ตรงที่ถนนตัดกัน ถนนหนึ่งสิ้นสุดที่อีกถนน หรือหลายถนนสิ้นสุดที่จุดเดียว ถนนจะถูกตัดสั้นลงและวางแผ่นที่มีขอบทางมน ทางเท้า และช่องจราจรผ่าน
+The bus pocket could not be made	สร้างช่องจอดรถบัสไม่ได้
+Tick it, then press on a road: a bus pocket is laid there, on the kerb the road's own traffic keeps to. It stays on, pocket after pocket, until you untick it	เปิดใช้แล้วคลิกที่ถนน: จะมีช่องจอดรถบัสด้านขอบทางที่การจราจรของถนนวิ่งชิดอยู่ เครื่องมือเปิดค้างไว้จนกว่าจะปิด
+How much wider the road is along the bay, on the kerb its traffic keeps to; the other side stays as it is	ถนนกว้างขึ้นเท่าไรตรงช่องจอด ด้านขอบทางของช่องจราจร ส่วนอีกด้านไม่เปลี่ยน
+The stretch is cut out of the road and given the bay along its kerb, its ends tapering to the road's width. The road's own type is widened: nothing to pick.	ช่วงถนนถูกตัดออกและได้ช่องจอดตามขอบทาง ปลายทั้งสองค่อย ๆ แคบลงเท่าความกว้างถนน ชนิดถนนขยายเองโดยไม่ต้องเลือกอะไร

@@ -29,8 +29,9 @@ impl Editor {
 
     /// A complex junction put on the map at `origin`, turned `rot` degrees: ordinary splines,
     /// selected, the ground brought level under them; one undo step.
-    pub fn place_layout(&mut self, layout: &Layout, origin: DVec2, rot: f64) {
+    pub fn place_layout(&mut self, assets: &mut Assets, layout: &Layout, origin: DVec2, rot: f64) {
         let follow = self.follow_ground;
+        let (content, asphalt) = (self.content_dir.clone(), self.asphalt.clone());
         let Some(doc) = self.doc.as_mut() else { return };
         if layout.pieces.iter().all(|p| p.hidden) {
             self.toast(tr("Draw some pieces first", "Сначала нарисуйте детали"));
@@ -43,9 +44,30 @@ impl Editor {
         }
         self.history.touch_global(doc);
         let z = doc.ground(origin);
-        match cjunction::place(doc, layout, origin, z, rot) {
+        let kinds = cjunction::road_kinds(layout, assets);
+        let resolved = layout.resolve(&|f| kinds.get(&f.to_lowercase()).map(|k| k.0).unwrap_or(false), &|f| kinds.get(&f.to_lowercase()).map(|k| k.1).unwrap_or(1.5));
+        let mut cut = layout.clone();
+        cut.pieces = resolved.pieces;
+        match cjunction::place(doc, &cut, origin, z, rot) {
             Ok(made) => {
-                let things = cjunction::place_objects(doc, layout, origin, z, rot);
+                let mut things = cjunction::place_objects(doc, layout, origin, z, rot);
+                // (the plate between the arms: an object of its own, turned with the drawing)
+                if let Some(content) = content {
+                    let folder = crate::junction::folder_name(doc);
+                    for arms in &resolved.plates {
+                        let plate = crate::junction::object_dir(&content, &folder).ok().and_then(|d| crate::junction::layout_plate(assets, arms, Some(&d.join("texture")), asphalt.as_deref()));
+                        let Some(rel) = plate.and_then(|p| p.write_object(&content, &folder).ok()) else { continue };
+                        let k = tile_of(origin);
+                        if doc.tiles.contains_key(&k) {
+                            let id = doc.new_id();
+                            let org = tile_origin(k);
+                            let Some(t) = doc.tiles.get_mut(&k) else { return };
+                            t.tile.objects.push(MapObject { file: rel, id, pos: [origin.x - org.x, origin.y - org.y, z], rot: [rot, 0.0, 0.0], ..Default::default() });
+                            t.touch_content();
+                            things.push((k, id));
+                        }
+                    }
+                }
                 if follow {
                     conform_disc(doc, DVec3::new(origin.x, origin.y, z), layout.radius() + 1.0, &[]);
                 }
@@ -54,7 +76,9 @@ impl Editor {
                 self.toast(tr("Complex junction put on the map: its pieces are ordinary splines", "Сложный перекрёсток на карте: его детали — обычные сплайны"));
             }
             Err(e) => {
-                self.history.cancel();
+                if let Some(d) = self.doc.as_mut() {
+                    self.history.rollback(d);
+                }
                 self.error(e);
             }
         }

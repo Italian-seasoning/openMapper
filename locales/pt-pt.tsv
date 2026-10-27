@@ -2447,3 +2447,10 @@ Straight on	Em frente
 A piece straight on between arms that face each other	Um troço reto entre braços que se defrontam
 auto	auto
 Built by Auto-Junction from the arms	Criado pelo Auto-cruzamento a partir dos braços
+the plate could not be made from these arms	não foi possível criar a placa a partir destes acessos
+Plate with kerbs and footways	Placa com lancis e passeios
+Junctions as the Roads tool makes them: where roads cross, one ends on another or several end at one place, they are cut back and a plate is laid with rounded kerbs, footways and lanes through it	Cruzamentos como os faz a ferramenta Estradas: onde as estradas se cruzam, uma termina noutra ou várias terminam no mesmo sítio, são encurtadas e é colocada uma placa com lancis arredondados, passeios e vias a atravessá-la
+The bus pocket could not be made	Não foi possível criar a baía de autocarro
+Tick it, then press on a road: a bus pocket is laid there, on the kerb the road's own traffic keeps to. It stays on, pocket after pocket, until you untick it	Ative e clique numa estrada: é criada aí uma baía de autocarro no lado do passeio onde circula o trânsito da estrada. Fica ativo até o desativar
+How much wider the road is along the bay, on the kerb its traffic keeps to; the other side stays as it is	Quanto mais larga é a estrada junto da baía, no lado do passeio das suas vias; o outro lado não muda
+The stretch is cut out of the road and given the bay along its kerb, its ends tapering to the road's width. The road's own type is widened: nothing to pick.	O troço é recortado da estrada e recebe a baía ao longo do passeio, com as pontas a estreitar até à largura da estrada. O tipo de estrada alarga-se sozinho: nada a escolher.

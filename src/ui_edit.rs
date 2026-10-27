@@ -904,42 +904,24 @@ pub fn road_options(ui: &mut egui::Ui, ed: &mut Editor) {
 
 /// The Roads tool's bus pocket tool: with the box ticked a click on a road lays a pocket
 /// there, again and again, until it is switched off.
-pub fn pocket_options(ui: &mut egui::Ui, ed: &mut Editor, lib: &Library, actions: &mut Vec<crate::ui::Action>) {
+pub fn pocket_options(ui: &mut egui::Ui, ed: &mut Editor) {
     let r = check(ui, &mut ed.bus_pocket, icons::labelled(Icon::Road, tr("Bus Pocket Tool", "Инструмент «Автобусный карман»")));
-    r.on_hover_text(tr("Tick it, then press on a road: a bus pocket of the road type chosen below is laid there. It stays on, pocket after pocket, until you untick it", "Включите и нажимайте на дорогу: там появится автобусный карман выбранного ниже типа дороги. Инструмент работает, пока вы его не выключите"));
+    r.on_hover_text(tr("Tick it, then press on a road: a bus pocket is laid there, on the kerb the road's own traffic keeps to. It stays on, pocket after pocket, until you untick it", "Включите и нажимайте на дорогу: там появится автобусный карман, со стороны бордюра, к которому прижимается движение дороги. Инструмент работает, пока вы его не выключите"));
     if !ed.bus_pocket {
         return;
     }
     egui::Frame::new().inner_margin(Margin { left: 18, ..Default::default() }).show(ui, |ui| {
-        let key = egui::Id::new("pocket search");
-        let mut search: String = ui.data_mut(|d| d.get_temp::<String>(key)).unwrap_or_default();
-        let shown = ed.pocket_type.as_deref().and_then(|r| lib.find(r)).map(|a| a.name.clone()).unwrap_or_else(|| tr("pick the pocket's road type", "выберите тип дороги кармана").to_string());
-        egui::ComboBox::from_id_salt("pocket type").width(ui.available_width() - 8.0).selected_text(shown).show_ui(ui, |ui| {
-            ui.add(egui::TextEdit::singleline(&mut search).hint_text(tr("Search", "Поиск")));
-            for a in lib.filter(crate::library::Kind::Spline, Some(crate::library::Category::Roads), &search).take(200) {
-                if ui.selectable_label(ed.pocket_type.as_deref().map(|p| p.eq_ignore_ascii_case(&a.rel)).unwrap_or(false), &a.name).on_hover_text(&a.rel).clicked() {
-                    ed.pocket_type = Some(a.rel.clone());
-                }
-            }
-        });
-        ui.data_mut(|d| d.insert_temp(key, search));
         ui.horizontal(|ui| {
             ui.label(tr("Full width over", "Полная ширина на"));
             ui.add(egui::DragValue::new(&mut ed.pocket_len).range(4.0..=80.0).speed(0.5).suffix(" m"));
         });
-        // the bay's own width, for a road type made in the road maker
-        let spec = ed.pocket_type.as_deref().and_then(|r| ed.content_dir.as_ref().map(|c| c.join(r.replace('\\', "/")))).and_then(|p| crate::road_maker::RoadSpec::of(&p));
-        if let Some(spec) = &spec {
-            ui.horizontal(|ui| {
-                ui.label(tr("Bay width", "Ширина кармана"));
-                if ed.pocket_width <= 0.0 {
-                    ed.pocket_width = spec.pocket;
-                }
-                ui.add(egui::DragValue::new(&mut ed.pocket_width).range(1.5..=6.0).speed(0.05).suffix(" m")).on_hover_text(tr("A road type with this pocket lane is made from the chosen one (the road maker's), if it is not the width it has", "Из выбранного типа (из конструктора дорог) делается тип с такой полосой кармана, если ширина другая"));
-            });
-        } else {
-            ed.pocket_width = 0.0;
-        }
+        ui.horizontal(|ui| {
+            ui.label(tr("Bay width", "Ширина кармана"));
+            if ed.pocket_width <= 0.0 {
+                ed.pocket_width = 3.0;
+            }
+            ui.add(egui::DragValue::new(&mut ed.pocket_width).range(1.5..=6.0).speed(0.05).suffix(" m")).on_hover_text(tr("How much wider the road is along the bay, on the kerb its traffic keeps to; the other side stays as it is", "На сколько дорога шире у кармана, со стороны бордюра её полосы движения; другая сторона не меняется"));
+        });
         check(ui, &mut ed.pocket_metres, tr("Tapers in metres", "Переходы в метрах")).on_hover_text(tr("Give the length of each taper in metres instead of a ratio", "Задавать длину каждого перехода в метрах, а не отношением"));
         ui.horizontal(|ui| {
             ui.label(tr("Taper in", "Вход"));
@@ -964,10 +946,7 @@ pub fn pocket_options(ui: &mut egui::Ui, ed: &mut Editor, lib: &Library, actions
         check(ui, &mut ed.pocket_alike, tr("Both ends alike", "Оба конца одинаковые"));
         check(ui, &mut ed.pocket_fit, tr("Slide the bay to where it fits", "Сдвигать карман туда, где он помещается")).on_hover_text(tr("Near the end of a road or a junction there is no room for the taper at both ends: the bay is moved along the road to where there is", "У конца дороги или перекрёстка нет места для перехода с обеих сторон: карман сдвигается вдоль дороги туда, где место есть"));
         ui.label(RichText::new(tr("A bay always gets a taper at both ends; where one cannot be laid nothing is changed.", "Карман всегда получает переход с обеих сторон; если один уложить нельзя, ничего не меняется.")).small().color(TEXT_DIM));
-        if ui.small_button(tr("Make a road type with a pocket…", "Создать тип дороги с карманом…")).clicked() {
-            actions.push(crate::ui::Action::RoadTypes);
-        }
-        ui.label(RichText::new(tr("The stretch is cut out of the road and takes the pocket's type, its ends tapering to the road's width. Made in the road maker (Bus pocket).", "Участок вырезается из дороги и получает тип кармана, концы сужаются до ширины дороги. Тип делается в конструкторе дороги («Автобусный карман»).")).small().color(TEXT_DIM));
+        ui.label(RichText::new(tr("The stretch is cut out of the road and given the bay along its kerb, its ends tapering to the road's width. The road's own type is widened: nothing to pick.", "Участок вырезается из дороги и получает карман вдоль бордюра, концы сужаются до ширины дороги. Тип дороги расширяется сам: выбирать ничего не нужно.")).small().color(TEXT_DIM));
     });
 }
 

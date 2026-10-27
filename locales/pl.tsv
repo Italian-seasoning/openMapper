@@ -2447,3 +2447,10 @@ Straight on	Na wprost
 A piece straight on between arms that face each other	Prosty odcinek między wlotami leżącymi naprzeciw siebie
 auto	auto
 Built by Auto-Junction from the arms	Utworzone przez Auto-skrzyżowanie z wlotów
+the plate could not be made from these arms	nie udało się utworzyć płyty z tych wlotów
+Plate with kerbs and footways	Płyta z krawężnikami i chodnikami
+Junctions as the Roads tool makes them: where roads cross, one ends on another or several end at one place, they are cut back and a plate is laid with rounded kerbs, footways and lanes through it	Skrzyżowania, jak robi je narzędzie Drogi: tam, gdzie drogi się krzyżują, jedna kończy się na innej lub kilka kończy się w jednym miejscu, są skracane i układana jest płyta z zaokrąglonymi krawężnikami, chodnikami i pasami przez nią
+The bus pocket could not be made	Nie udało się utworzyć zatoki autobusowej
+Tick it, then press on a road: a bus pocket is laid there, on the kerb the road's own traffic keeps to. It stays on, pocket after pocket, until you untick it	Włącz i kliknij drogę: powstanie tam zatoka autobusowa przy krawężniku, przy którym jedzie ruch drogi. Narzędzie działa, dopóki go nie wyłączysz
+How much wider the road is along the bay, on the kerb its traffic keeps to; the other side stays as it is	O ile droga jest szersza przy zatoce, po stronie krawężnika jej pasów; druga strona się nie zmienia
+The stretch is cut out of the road and given the bay along its kerb, its ends tapering to the road's width. The road's own type is widened: nothing to pick.	Odcinek jest wycinany z drogi i dostaje zatokę wzdłuż krawężnika, jego końce zwężają się do szerokości drogi. Typ drogi poszerza się sam: nic nie trzeba wybierać.

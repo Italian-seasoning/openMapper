@@ -116,6 +116,9 @@ pub struct Layout {
 #[derive(Debug, Clone, Copy, PartialEq, Serialize, Deserialize)]
 #[serde(default)]
 pub struct AutoBuild {
+    /// The junction's plate, as the Roads tool makes it: the roadway between the arms, kerbs
+    /// rounded at each corner and the footways round them, with lanes through it.
+    pub plate: bool,
     /// A turn of the arm's road type between each two neighbouring arms (a biarc).
     pub turns: bool,
     /// A rounded corner of `radius` where the two roads' middle lines meet instead of a turn.
@@ -128,7 +131,7 @@ pub struct AutoBuild {
 
 impl Default for AutoBuild {
     fn default() -> Self {
-        AutoBuild { turns: true, corners: false, through: true, radius: 8.0 }
+        AutoBuild { plate: true, turns: false, corners: false, through: false, radius: 8.0 }
     }
 }
 
@@ -317,16 +320,41 @@ pub fn extra_lines(layout: &Layout, models: &dyn Fn(&str) -> Option<std::sync::A
     s
 }
 
+/// Which of the layout's spline types are roads (a junction piece for traffic) and how wide
+/// (half, m), read from their models.
+pub fn road_kinds(layout: &Layout, assets: &mut Assets) -> std::collections::HashMap<String, (bool, f64)> {
+    let mut out = std::collections::HashMap::new();
+    for p in &layout.pieces {
+        out.entry(p.file.to_lowercase()).or_insert_with(|| assets.spline_wait(&p.file, 5000).map(|m| (m.joinable() && !m.is_track(), m.half_width as f64)).unwrap_or((false, 1.5)));
+    }
+    out
+}
+
 /// Write the layout as a scenery object (`custom`: a junction piece that automatic junctions
 /// may use, with at least two arms; else any drawing as a plain object, arms or none) (its mesh swept from the pieces' splines, its helpers
 /// and lanes) and keep the layout beside it. Gives back the object's relative path.
 pub fn bake(roots: &crate::install::Roots, layout: &Layout, assets: &mut Assets, custom: bool) -> anyhow::Result<String> {
+    let kinds = road_kinds(layout, assets);
+    let resolved = layout.resolve(&|f| kinds.get(&f.to_lowercase()).map(|k| k.0).unwrap_or(false), &|f| kinds.get(&f.to_lowercase()).map(|k| k.1).unwrap_or(1.5));
     anyhow::ensure!(!layout.pieces.is_empty(), "{}", tr("draw some pieces first", "сначала нарисуйте детали"));
     anyhow::ensure!(!custom || layout.arms.len() >= 2, "{}", tr("mark the arms (where roads come in): at least two", "отметьте въезды (где входят дороги): не меньше двух"));
     let mut src = crate::editable::Source { name: layout.name.trim().to_string(), abs_height: true, ..Default::default() };
     let mut textures = std::collections::HashMap::new();
     let mut joined = openmapper_mesh::Mesh::default();
-    for piece in layout.pieces.iter().filter(|p| !p.hidden) {
+    let rel = layout.baked.clone().filter(|r| crate::editable::sco_path(roots, r).map(|p| p.exists()).unwrap_or(false)).unwrap_or_else(|| crate::editable::new_rel(roots, "Junctions", &if custom { format!("cj_{}", file_stem(&layout.name)) } else { file_stem(&layout.name) }));
+    let (dir, _) = crate::editable::folder_of(roots, &rel);
+    std::fs::create_dir_all(dir.join("texture"))?;
+    // the plate between the arms: the roadway, kerbs and footways, with its lanes
+    let mut plate_paths = String::new();
+    for arms in &resolved.plates {
+        for a in arms {
+            anyhow::ensure!(assets.spline_wait(&a.file, 5000).is_some(), "{}: {}", tr("the spline cannot be read", "сплайн не читается"), a.file);
+        }
+        let plate = crate::junction::layout_plate(assets, arms, Some(&dir.join("texture")), None).ok_or_else(|| anyhow::anyhow!("{}", tr("the plate could not be made from these arms", "плиту не удалось построить из этих въездов")))?;
+        joined.append(&plate.model_mesh(&mut src.model.materials, &mut textures), 0);
+        plate_paths.push_str(&plate.paths);
+    }
+    for piece in resolved.pieces.iter().filter(|p| !p.hidden) {
         let Some(model) = assets.spline_wait(&piece.file, 5000) else {
             anyhow::bail!("{}: {}", tr("the spline cannot be read", "сплайн не читается"), piece.file);
         };
@@ -340,15 +368,15 @@ pub fn bake(roots: &crate::install::Roots, layout: &Layout, assets: &mut Assets,
     anyhow::ensure!(!joined.is_empty(), "{}", tr("these splines have no shape to see", "у этих сплайнов нет видимой формы"));
     src.model.parts.push(openmapper_mesh::Part::new("plate", joined));
     let mut models = std::collections::HashMap::new();
-    for p in layout.pieces.iter().filter(|p| !p.hidden) {
+    for p in resolved.pieces.iter().filter(|p| !p.hidden) {
         if let Some(m) = assets.spline_wait(&p.file, 5000) {
             models.insert(p.file.to_lowercase(), m);
         }
     }
-    src.extra = extra_lines(layout, &|f| models.get(&f.to_lowercase()).cloned());
-    let rel = layout.baked.clone().filter(|r| crate::editable::sco_path(roots, r).map(|p| p.exists()).unwrap_or(false)).unwrap_or_else(|| crate::editable::new_rel(roots, "Junctions", &if custom { format!("cj_{}", file_stem(&layout.name)) } else { file_stem(&layout.name) }));
-    let (dir, _) = crate::editable::folder_of(roots, &rel);
-    std::fs::create_dir_all(dir.join("texture"))?;
+    let mut cut = layout.clone();
+    cut.pieces = resolved.pieces.clone();
+    src.extra = extra_lines(&cut, &|f| models.get(&f.to_lowercase()).cloned());
+    src.extra.push_str(&plate_paths);
     for (name, path) in &textures {
         let _ = name;
         crate::junction::copy_texture(path, &dir.join("texture"));
@@ -619,6 +647,205 @@ impl Layout {
     }
 }
 
+/// What a drawing comes to with its junctions made as the Roads tool makes them: the roads
+/// cut back where they cross or meet, and for each junction the roads that end at it.
+pub struct Resolved {
+    /// Every piece to put on the map or in the object: the roads cut back, the rest as drawn.
+    pub pieces: Vec<Piece>,
+    /// The roads that end at each junction, for its plate.
+    pub plates: Vec<Vec<crate::junction::PlateArm>>,
+}
+
+/// Something of a piece to cut away: the stretch `from..to` along it.
+type Cut = (usize, f64, f64);
+
+impl Piece {
+    pub fn length(&self) -> f64 {
+        self.segs.iter().map(|s| s.length).sum()
+    }
+
+    /// The point and heading `d` along the piece.
+    fn at(&self, d: f64) -> (DVec2, f64) {
+        let mut off = 0.0;
+        for (i, s) in self.segs.iter().enumerate() {
+            let seg = s.seg();
+            if d <= off + s.length + 1e-9 || i + 1 == self.segs.len() {
+                let l = (d - off).clamp(0.0, s.length);
+                return (seg.point(l), seg.heading_at(l));
+            }
+            off += s.length;
+        }
+        (DVec2::ZERO, 0.0)
+    }
+
+    /// The part of the piece from `from` to `to` along it.
+    pub fn part(&self, from: f64, to: f64) -> Option<Piece> {
+        let mut segs = Vec::new();
+        let mut off = 0.0;
+        for s in &self.segs {
+            let (a, b) = (from.max(off), to.min(off + s.length));
+            if b - a > 0.01 {
+                let seg = s.seg();
+                let (d0, d1) = (a - off, b - off);
+                segs.push(LSeg { x: seg.point(d0).x, y: seg.point(d0).y, heading: seg.heading_at(d0), radius: s.radius, length: d1 - d0 });
+            }
+            off += s.length;
+        }
+        (!segs.is_empty()).then(|| Piece { segs, ..self.clone() })
+    }
+
+    /// Its middle line every 0.5 m: (point, distance along).
+    fn polyline(&self) -> Vec<(DVec2, f64)> {
+        let l = self.length();
+        let n = (l / 0.5).ceil().max(2.0) as usize;
+        (0..=n).map(|i| (self.at(l * i as f64 / n as f64).0, l * i as f64 / n as f64)).collect()
+    }
+}
+
+impl Layout {
+    /// The drawing with junctions made as the Roads tool makes them (when `build.plate`): where
+    /// one road crosses another, ends on another's middle, or three or more roads end at one
+    /// place, the roads are cut back by the room the junction needs, and the roads that end at
+    /// it are given for its plate. A junction whose roads leave too little is not made.
+    pub fn resolve(&self, is_road: &dyn Fn(&str) -> bool, half: &dyn Fn(&str) -> f64) -> Resolved {
+        let plain = Resolved { pieces: self.pieces.clone(), plates: Vec::new() };
+        if !self.build.plate {
+            return plain;
+        }
+        let roads_ix: Vec<usize> = (0..self.pieces.len()).filter(|&i| { let p = &self.pieces[i]; is_road(&p.file) && !p.hidden && !p.auto && p.length() > 1.0 }).collect();
+        let polys: Vec<Vec<(DVec2, f64)>> = roads_ix.iter().map(|&i| self.pieces[i].polyline()).collect();
+        let hw = |i: usize| half(&self.pieces[i].file).max(1.0);
+        let head_diff = |a: f64, b: f64| (a - b + 180.0).rem_euclid(360.0) - 180.0;
+        // each junction: where the roads cut and by how much, as (piece, from, to) with its centre
+        let mut events: Vec<Vec<Cut>> = Vec::new();
+        let mut used_ends: Vec<(usize, bool)> = Vec::new();
+        // roads running into another's middle (T junctions)
+        for (xi, &i) in roads_ix.iter().enumerate() {
+            let pi = &self.pieces[i];
+            let li = pi.length();
+            for at_end in [false, true] {
+                let (pt, h) = pi.at(if at_end { li } else { 0.0 });
+                for (xj, &j) in roads_ix.iter().enumerate() {
+                    if xj == xi {
+                        continue;
+                    }
+                    let lj = self.pieces[j].length();
+                    let Some((q, aj)) = polys[xj].iter().map(|(q, d)| ((*q - pt).length(), (*q, *d))).filter(|(d, _)| *d < 0.6).min_by(|a, b| a.0.total_cmp(&b.0)).map(|x| x.1) else { continue };
+                    let _ = q;
+                    let hj = self.pieces[j].at(aj).1;
+                    let r = crate::junction::radius_at(&[hw(i), hw(j)], head_diff(h, hj));
+                    // (at the other road's own end the two are only joined)
+                    if aj < r * 0.5 || aj > lj - r * 0.5 || li < r + 0.5 {
+                        continue;
+                    }
+                    let own = if at_end { (i, li - r, li) } else { (i, 0.0, r) };
+                    events.push(vec![own, (j, aj - r, aj + r)]);
+                    used_ends.push((i, at_end));
+                }
+            }
+        }
+        // roads crossing (X junctions)
+        for (xi, &i) in roads_ix.iter().enumerate() {
+            for (xj, &j) in roads_ix.iter().enumerate().skip(xi + 1) {
+                let (li, lj) = (self.pieces[i].length(), self.pieces[j].length());
+                for (pt, ai, aj) in crate::junction::crossings(&polys[xi], &polys[xj]) {
+                    // (not at a road's end: that is a T junction or a joint)
+                    if ai < 1.5 || ai > li - 1.5 || aj < 1.5 || aj > lj - 1.5 {
+                        continue;
+                    }
+                    let _ = pt;
+                    let r = crate::junction::radius_at(&[hw(i), hw(j)], head_diff(self.pieces[i].at(ai).1, self.pieces[j].at(aj).1));
+                    if ai < r * 0.5 || ai > li - r * 0.5 || aj < r * 0.5 || aj > lj - r * 0.5 {
+                        continue;
+                    }
+                    events.push(vec![(i, ai - r, ai + r), (j, aj - r, aj + r)]);
+                }
+            }
+        }
+        // three or more roads ending at one place
+        let mut ends: Vec<(usize, bool, DVec2, f64)> = Vec::new();
+        for &i in &roads_ix {
+            let p = &self.pieces[i];
+            let l = p.length();
+            let (a, ha) = p.at(0.0);
+            let (b, hb) = p.at(l);
+            ends.push((i, false, a, ha));
+            ends.push((i, true, b, roads::norm_deg(hb + 180.0)));
+        }
+        let mut taken = vec![false; ends.len()];
+        for x in 0..ends.len() {
+            if taken[x] || used_ends.contains(&(ends[x].0, ends[x].1)) {
+                continue;
+            }
+            let group: Vec<usize> = (0..ends.len()).filter(|&y| !taken[y] && !used_ends.contains(&(ends[y].0, ends[y].1)) && (ends[y].2 - ends[x].2).length() < 1.0).collect();
+            if group.len() < 3 || group.iter().map(|&y| ends[y].0).collect::<std::collections::HashSet<_>>().len() < group.len() {
+                continue;
+            }
+            // (the sharpest angle between roads side by side)
+            let mut hs: Vec<f64> = group.iter().map(|&y| ends[y].3.rem_euclid(360.0)).collect();
+            hs.sort_by(|a, b| a.total_cmp(b));
+            let sharp = (0..hs.len()).map(|k| (hs[(k + 1) % hs.len()] - hs[k]).rem_euclid(360.0)).fold(360.0, f64::min);
+            let r = crate::junction::radius_at(&group.iter().map(|&y| hw(ends[y].0)).collect::<Vec<_>>(), sharp);
+            let mut cuts = Vec::new();
+            for &y in &group {
+                taken[y] = true;
+                let (i, at_end, _, _) = ends[y];
+                let l = self.pieces[i].length();
+                if l < r + 0.5 {
+                    cuts.clear();
+                    break;
+                }
+                cuts.push(if at_end { (i, l - r, l) } else { (i, 0.0, r) });
+            }
+            if !cuts.is_empty() {
+                events.push(cuts);
+            }
+        }
+        // the arms of each junction, from what is left of its roads beside the cuts
+        let mut plates = Vec::new();
+        let mut cuts_of: Vec<Vec<(f64, f64)>> = vec![Vec::new(); self.pieces.len()];
+        for ev in &events {
+            let mut arms = Vec::new();
+            for &(i, lo, hi) in ev {
+                let p = &self.pieces[i];
+                let l = p.length();
+                if lo > 0.5 {
+                    let (pt, h) = p.at(lo);
+                    arms.push(crate::junction::PlateArm { file: p.file.clone(), pos: pt, out: roads::norm_deg(h + 180.0), at_end: true });
+                }
+                if hi < l - 0.5 {
+                    let (pt, h) = p.at(hi);
+                    arms.push(crate::junction::PlateArm { file: p.file.clone(), pos: pt, out: h, at_end: false });
+                }
+            }
+            if arms.len() < 3 {
+                continue;
+            }
+            for &(i, lo, hi) in ev {
+                cuts_of[i].push((lo.max(0.0), hi));
+            }
+            plates.push(arms);
+        }
+        let mut pieces = Vec::new();
+        for (i, p) in self.pieces.iter().enumerate() {
+            if cuts_of[i].is_empty() {
+                pieces.push(p.clone());
+                continue;
+            }
+            let mut cuts = cuts_of[i].clone();
+            cuts.sort_by(|a, b| a.0.total_cmp(&b.0));
+            let (mut at, l) = (0.0, p.length());
+            for (lo, hi) in cuts.into_iter().chain(std::iter::once((l, l))) {
+                if lo - at > 0.3 {
+                    pieces.extend(p.part(at, lo));
+                }
+                at = at.max(hi);
+            }
+        }
+        Resolved { pieces, plates }
+    }
+}
+
 /// The arc from `p` that leaves heading `h` and reaches `q` (a tangent arc); a straight when
 /// `q` lies ahead on the line. None when `q` is behind or the arc would be more than a half
 /// circle round.
@@ -815,7 +1042,7 @@ mod tests {
         l.sync_arms(&is_road, &half);
         assert_eq!(l.arms.len(), 4);
         // the arms' ends are free only while the built pieces do not count as covering them
-        l.build = AutoBuild { turns: true, corners: false, through: true, radius: 8.0 };
+        l.build = AutoBuild { plate: false, turns: true, corners: false, through: true, radius: 8.0 };
         let map = l.sync_built();
         assert_eq!(map, vec![Some(0), Some(1), Some(2), Some(3)]);
         let built: Vec<Piece> = l.pieces.iter().filter(|p| p.auto).cloned().collect();
@@ -837,7 +1064,7 @@ mod tests {
         assert_eq!(&map[..4], &[Some(0), Some(1), Some(2), Some(3)]);
         assert!(map[4..].iter().all(|m| m.is_none()));
         // rounded corners: an arc of the radius takes each 90° turn, tangent to both roads
-        l.build = AutoBuild { turns: false, corners: true, through: false, radius: 8.0 };
+        l.build = AutoBuild { plate: false, turns: false, corners: true, through: false, radius: 8.0 };
         l.sync_built();
         let corners: Vec<Piece> = l.pieces.iter().filter(|p| p.auto).cloned().collect();
         assert_eq!(corners.len(), 4);
@@ -847,12 +1074,12 @@ mod tests {
             assert!((arc.length - 8.0 * std::f64::consts::FRAC_PI_2).abs() < 0.1, "{arc:?}");
         }
         // everything switched off: only the hand-drawn pieces are left
-        l.build = AutoBuild { turns: false, corners: false, through: false, radius: 8.0 };
+        l.build = AutoBuild { plate: false, turns: false, corners: false, through: false, radius: 8.0 };
         l.sync_built();
         assert_eq!(l.pieces.len(), 4);
         // a layout from before has no auto marks and reads back
         let old: Layout = serde_json::from_str(r#"{"pieces":[{"file":"r","segs":[]}]}"#).unwrap();
-        assert!(!old.pieces[0].auto && old.build.turns);
+        assert!(!old.pieces[0].auto && old.build.plate && !old.build.turns);
     }
 
     #[test]

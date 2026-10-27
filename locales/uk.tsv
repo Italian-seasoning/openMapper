@@ -2407,3 +2407,10 @@ Straight on	Прямо
 A piece straight on between arms that face each other	Прямий відрізок між в’їздами, що стоять один проти одного
 auto	авто
 Built by Auto-Junction from the arms	Побудовано Авто-перехрестям із в’їздів
+the plate could not be made from these arms	плиту не вдалося побудувати з цих в'їздів
+Plate with kerbs and footways	Плита з бордюрами та тротуарами
+Junctions as the Roads tool makes them: where roads cross, one ends on another or several end at one place, they are cut back and a plate is laid with rounded kerbs, footways and lanes through it	Перехрестя, як їх робить інструмент «Дороги»: де дороги перетинаються, одна впирається в іншу або кілька сходяться в одному місці, вони обрізаються і кладеться плита із закругленими бордюрами, тротуарами та смугами крізь неї
+The bus pocket could not be made	Не вдалося зробити автобусну кишеню
+Tick it, then press on a road: a bus pocket is laid there, on the kerb the road's own traffic keeps to. It stays on, pocket after pocket, until you untick it	Увімкніть і натисніть на дорогу: там з'явиться автобусна кишеня з боку бордюру, до якого тулиться рух дороги. Інструмент працює, доки ви його не вимкнете
+How much wider the road is along the bay, on the kerb its traffic keeps to; the other side stays as it is	Наскільки дорога ширша біля кишені, з боку бордюру її смуг; інший бік не змінюється
+The stretch is cut out of the road and given the bay along its kerb, its ends tapering to the road's width. The road's own type is widened: nothing to pick.	Ділянка вирізається з дороги й отримує кишеню вздовж бордюру, кінці звужуються до ширини дороги. Тип дороги розширюється сам: обирати нічого не треба.

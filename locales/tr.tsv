@@ -2407,3 +2407,10 @@ Straight on	Düz devam
 A piece straight on between arms that face each other	Karşılıklı duran kollar arasında düz bir parça
 auto	oto
 Built by Auto-Junction from the arms	Kollardan Oto-Kavşak ile oluşturuldu
+the plate could not be made from these arms	plaka bu kollardan oluşturulamadı
+Plate with kerbs and footways	Kaldırım taşlı ve yaya yollu plaka
+Junctions as the Roads tool makes them: where roads cross, one ends on another or several end at one place, they are cut back and a plate is laid with rounded kerbs, footways and lanes through it	Yollar aracının yaptığı gibi kavşaklar: yolların kesiştiği, birinin diğerinde bittiği veya birkaçının aynı yerde bittiği yerde yollar kısaltılır ve yuvarlak bordürlü, yaya yollu, içinden şeritler geçen bir plaka döşenir
+The bus pocket could not be made	Otobüs cebi oluşturulamadı
+Tick it, then press on a road: a bus pocket is laid there, on the kerb the road's own traffic keeps to. It stays on, pocket after pocket, until you untick it	Açın ve bir yola tıklayın: yolun trafiğinin yöneldiği kaldırım tarafında otobüs cebi yapılır. Siz kapatana kadar açık kalır
+How much wider the road is along the bay, on the kerb its traffic keeps to; the other side stays as it is	Yolun cepte ne kadar genişlediği, şeritlerinin kaldırım tarafında; diğer taraf değişmez
+The stretch is cut out of the road and given the bay along its kerb, its ends tapering to the road's width. The road's own type is widened: nothing to pick.	Kesim yoldan çıkarılır ve kaldırımı boyunca cep alır, uçları yol genişliğine daralır. Yol türü kendiliğinden genişler: seçilecek bir şey yok.

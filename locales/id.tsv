@@ -2407,3 +2407,10 @@ Straight on	Lurus
 A piece straight on between arms that face each other	Potongan lurus di antara lengan yang saling berhadapan
 auto	otomatis
 Built by Auto-Junction from the arms	Dibuat oleh Auto-Persimpangan dari lengan-lengannya
+the plate could not be made from these arms	pelat tidak dapat dibuat dari lengan ini
+Plate with kerbs and footways	Pelat dengan trotoar dan kerb
+Junctions as the Roads tool makes them: where roads cross, one ends on another or several end at one place, they are cut back and a plate is laid with rounded kerbs, footways and lanes through it	Persimpangan seperti yang dibuat alat Jalan: tempat jalan bersilangan, satu berakhir di jalan lain atau beberapa berakhir di satu tempat, jalan dipotong dan dipasang pelat dengan kerb membulat, trotoar, dan lajur melaluinya
+The bus pocket could not be made	Teluk bus tidak dapat dibuat
+Tick it, then press on a road: a bus pocket is laid there, on the kerb the road's own traffic keeps to. It stays on, pocket after pocket, until you untick it	Aktifkan lalu klik jalan: teluk bus dibuat di sisi trotoar tempat lalu lintas jalan itu berjalan. Alat tetap aktif sampai Anda mematikannya
+How much wider the road is along the bay, on the kerb its traffic keeps to; the other side stays as it is	Seberapa lebih lebar jalan di sepanjang teluk, di sisi trotoar lajurnya; sisi lain tidak berubah
+The stretch is cut out of the road and given the bay along its kerb, its ends tapering to the road's width. The road's own type is widened: nothing to pick.	Ruas dipotong dari jalan dan diberi teluk di sepanjang trotoarnya, ujungnya menyempit ke lebar jalan. Tipe jalan melebar sendiri: tidak ada yang perlu dipilih.

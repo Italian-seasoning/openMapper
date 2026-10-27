@@ -2407,3 +2407,10 @@ Straight on	直行
 A piece straight on between arms that face each other	相對的進出口之間的一段直路
 auto	自動
 Built by Auto-Junction from the arms	由自動路口依進出口建立
+the plate could not be made from these arms	無法由這些入口建立路板
+Plate with kerbs and footways	帶路緣與人行道的路板
+Junctions as the Roads tool makes them: where roads cross, one ends on another or several end at one place, they are cut back and a plate is laid with rounded kerbs, footways and lanes through it	與道路工具所建相同的路口：道路交叉、一條道路止於另一條，或多條道路止於同一處時，道路會被縮短，並鋪上帶圓弧路緣、人行道與穿過車道的路板
+The bus pocket could not be made	無法建立公車彎
+Tick it, then press on a road: a bus pocket is laid there, on the kerb the road's own traffic keeps to. It stays on, pocket after pocket, until you untick it	開啟後點選道路:會在該道路車流靠的路緣那一側建立公車彎。會一直開啟,直到你關閉
+How much wider the road is along the bay, on the kerb its traffic keeps to; the other side stays as it is	公車彎處道路加寬多少(在其車道的路緣一側);另一側不變
+The stretch is cut out of the road and given the bay along its kerb, its ends tapering to the road's width. The road's own type is widened: nothing to pick.	該路段從道路中切出,並沿路緣加上公車彎,兩端收窄至道路寬度。道路類型會自動加寬:無需選擇。

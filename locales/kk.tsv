@@ -2407,3 +2407,10 @@ Straight on	Тура
 A piece straight on between arms that face each other	Бір-біріне қарама-қарсы кіреберістер арасындағы түзу бөлік
 auto	авто
 Built by Auto-Junction from the arms	Авто-қиылыс кіреберістерден жасады
+the plate could not be made from these arms	пластинаны осы кірулерден жасау мүмкін болмады
+Plate with kerbs and footways	Бордюрлері мен жаяу жолдары бар пластина
+Junctions as the Roads tool makes them: where roads cross, one ends on another or several end at one place, they are cut back and a plate is laid with rounded kerbs, footways and lanes through it	«Жолдар» құралы жасайтындай қиылыстар: жолдар қиылысатын, бірі екіншісіне тірелетін немесе бірнешеуі бір жерде аяқталатын жерде олар қысқартылып, дөңгелектелген бордюрлері, жаяу жолдары және ол арқылы өтетін жолақтары бар пластина төселеді
+The bus pocket could not be made	Автобус қалтасын жасау мүмкін болмады
+Tick it, then press on a road: a bus pocket is laid there, on the kerb the road's own traffic keeps to. It stays on, pocket after pocket, until you untick it	Қосып, жолды басыңыз: жолдың қозғалысы жақындайтын жиек жағында автобус қалтасы жасалады. Өшірмейінше қосулы қалады
+How much wider the road is along the bay, on the kerb its traffic keeps to; the other side stays as it is	Қалта тұсында жол қаншаға кеңейеді, оның жолақтарының жиек жағында; екінші жағы өзгермейді
+The stretch is cut out of the road and given the bay along its kerb, its ends tapering to the road's width. The road's own type is widened: nothing to pick.	Учаске жолдан кесіліп, жиегі бойымен қалта алады, ұштары жол еніне дейін тарылады. Жол түрі өздігінен кеңейеді: ештеңе таңдаудың қажеті жоқ.

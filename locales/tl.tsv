@@ -2407,3 +2407,10 @@ Straight on	Diretso
 A piece straight on between arms that face each other	Isang tuwid na piraso sa pagitan ng mga arm na magkaharap
 auto	auto
 Built by Auto-Junction from the arms	Ginawa ng Auto-Junction mula sa mga arm
+the plate could not be made from these arms	hindi nagawa ang plato mula sa mga sangang ito
+Plate with kerbs and footways	Plato na may kerb at bangketa
+Junctions as the Roads tool makes them: where roads cross, one ends on another or several end at one place, they are cut back and a plate is laid with rounded kerbs, footways and lanes through it	Mga interseksyon tulad ng ginagawa ng tool na Mga Daan: kung saan nagtatagpo ang mga daan, nagtatapos ang isa sa isa pa o ilan ang nagtatapos sa iisang lugar, pinaiikli ang mga ito at nilalagyan ng plato na may bilugang kerb, bangketa, at mga linya sa pagitan
+The bus pocket could not be made	Hindi nagawa ang bus bay
+Tick it, then press on a road: a bus pocket is laid there, on the kerb the road's own traffic keeps to. It stays on, pocket after pocket, until you untick it	I-on at i-click ang kalsada: may bus bay na ilalagay sa gilid ng kalsadang dinadaanan ng trapiko nito. Nananatiling naka-on hanggang i-off mo
+How much wider the road is along the bay, on the kerb its traffic keeps to; the other side stays as it is	Gaano kalapad ang kalsada sa bay, sa gilid ng mga lane nito; hindi nagbabago ang kabilang gilid
+The stretch is cut out of the road and given the bay along its kerb, its ends tapering to the road's width. The road's own type is widened: nothing to pick.	Hinihiwa ang bahagi mula sa kalsada at nilalagyan ng bay sa tabi ng gilid nito, at sumisikip ang mga dulo hanggang sa lapad ng kalsada. Awtomatikong lumalapad ang uri ng kalsada: walang pipiliin.

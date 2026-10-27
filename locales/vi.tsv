@@ -2407,3 +2407,10 @@ Straight on	Đi thẳng
 A piece straight on between arms that face each other	Một đoạn thẳng giữa các nhánh đối diện nhau
 auto	tự động
 Built by Auto-Junction from the arms	Do Tự động nút giao tạo từ các nhánh
+the plate could not be made from these arms	không thể tạo tấm từ các nhánh này
+Plate with kerbs and footways	Tấm có lề đường và vỉa hè
+Junctions as the Roads tool makes them: where roads cross, one ends on another or several end at one place, they are cut back and a plate is laid with rounded kerbs, footways and lanes through it	Nút giao như công cụ Đường tạo ra: nơi các đường cắt nhau, một đường kết thúc vào đường khác hoặc nhiều đường kết thúc tại một chỗ, chúng được cắt ngắn và đặt một tấm có lề đường bo tròn, vỉa hè và các làn xe đi xuyên qua
+The bus pocket could not be made	Không tạo được vịnh đỗ xe buýt
+Tick it, then press on a road: a bus pocket is laid there, on the kerb the road's own traffic keeps to. It stays on, pocket after pocket, until you untick it	Bật lên rồi bấm vào đường: vịnh đỗ xe buýt được đặt ở phía vỉa hè mà xe của đường chạy sát. Công cụ giữ bật cho đến khi bạn tắt
+How much wider the road is along the bay, on the kerb its traffic keeps to; the other side stays as it is	Đường rộng thêm bao nhiêu ở chỗ vịnh, ở phía vỉa hè của các làn; phía bên kia không đổi
+The stretch is cut out of the road and given the bay along its kerb, its ends tapering to the road's width. The road's own type is widened: nothing to pick.	Đoạn được cắt khỏi đường và có vịnh dọc theo vỉa hè, hai đầu thu hẹp về bề rộng đường. Loại đường tự được mở rộng: không cần chọn gì.

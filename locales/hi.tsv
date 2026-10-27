@@ -2407,3 +2407,10 @@ Straight on	सीधा
 A piece straight on between arms that face each other	आमने-सामने के आर्म के बीच एक सीधा टुकड़ा
 auto	ऑटो
 Built by Auto-Junction from the arms	आर्म से ऑटो-जंक्शन द्वारा बनाया गया
+the plate could not be made from these arms	इन भुजाओं से प्लेट नहीं बन सकी
+Plate with kerbs and footways	किनारे और फुटपाथ वाली प्लेट
+Junctions as the Roads tool makes them: where roads cross, one ends on another or several end at one place, they are cut back and a plate is laid with rounded kerbs, footways and lanes through it	चौराहे जैसे सड़क टूल बनाता है: जहाँ सड़कें एक-दूसरे को काटती हैं, एक दूसरी पर समाप्त होती है या कई एक जगह समाप्त होती हैं, वे छोटी की जाती हैं और गोल किनारों, फुटपाथ और आर-पार लेन वाली प्लेट बिछाई जाती है
+The bus pocket could not be made	बस पॉकेट नहीं बन सका
+Tick it, then press on a road: a bus pocket is laid there, on the kerb the road's own traffic keeps to. It stays on, pocket after pocket, until you untick it	इसे चालू करें और सड़क पर क्लिक करें: सड़क का अपना यातायात जिस किनारे चलता है वहाँ बस पॉकेट बनेगा। यह तब तक चालू रहता है जब तक आप इसे बंद न करें
+How much wider the road is along the bay, on the kerb its traffic keeps to; the other side stays as it is	पॉकेट के पास सड़क कितनी चौड़ी होती है, उसकी लेनों वाले किनारे पर; दूसरी ओर कुछ नहीं बदलता
+The stretch is cut out of the road and given the bay along its kerb, its ends tapering to the road's width. The road's own type is widened: nothing to pick.	खंड सड़क से काटा जाता है और उसके किनारे के साथ पॉकेट पाता है, सिरे सड़क की चौड़ाई तक संकरे होते हैं। सड़क का प्रकार अपने आप चौड़ा होता है: कुछ चुनना नहीं है।

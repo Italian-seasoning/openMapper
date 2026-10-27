@@ -188,7 +188,7 @@ impl Assets {
         Assets { tx, rx, objects: HashMap::new(), splines: HashMap::new(), textures: HashMap::new(), new_textures: Vec::new(), pending: 0, omsi, content }
     }
 
-    fn resolve(&self, rel: &str) -> PathBuf {
+    pub(crate) fn resolve(&self, rel: &str) -> PathBuf {
         let c = omsi_cfg::resolve_path(&self.content, rel);
         if omsi_cfg::vfs::exists(&c) {
             c

@@ -1514,7 +1514,7 @@ fn catalogue_of(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Libr
         }
         check(ui, &mut ed.follow_ground, tr("Shape the ground under the road", "Подгонять землю под дорогу"));
         crate::ui_edit::road_options(ui, ed);
-        crate::ui_edit::pocket_options(ui, ed, lib, actions);
+        crate::ui_edit::pocket_options(ui, ed);
         check(ui, &mut ed.keep_drawing, tr("Go on drawing from the end of the road just built", "Продолжать рисовать с конца построенной дороги"));
         check(ui, &mut ed.snap_roads, tr("Join road ends, roads and junction pieces near the cursor", "Пристыковывать к концам дорог, дорогам и деталям перекрёстков у курсора"));
         ui.label(RichText::new(tr("Hold Ctrl while drawing to join nothing. Cables, fences and footpaths never join roads or junctions.", "Удерживайте Ctrl при рисовании, чтобы ничего не присоединять. Кабели, заборы и тропы никогда не присоединяются к дорогам и перекрёсткам.")).small().color(TEXT_DIM));

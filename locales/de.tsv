@@ -2407,3 +2407,10 @@ Straight on	Geradeaus
 A piece straight on between arms that face each other	Ein gerades Stück zwischen einander gegenüberliegenden Zufahrten
 auto	auto
 Built by Auto-Junction from the arms	Von der Auto-Kreuzung aus den Zufahrten erzeugt
+the plate could not be made from these arms	die Platte konnte aus diesen Zufahrten nicht erstellt werden
+Plate with kerbs and footways	Platte mit Bordsteinen und Gehwegen
+Junctions as the Roads tool makes them: where roads cross, one ends on another or several end at one place, they are cut back and a plate is laid with rounded kerbs, footways and lanes through it	Kreuzungen, wie das Straßenwerkzeug sie macht: wo Straßen sich kreuzen, eine auf einer anderen endet oder mehrere an einer Stelle enden, werden sie gekürzt und eine Platte mit abgerundeten Bordsteinen, Gehwegen und Fahrspuren hindurch gelegt
+The bus pocket could not be made	Die Bushaltebucht konnte nicht erstellt werden
+Tick it, then press on a road: a bus pocket is laid there, on the kerb the road's own traffic keeps to. It stays on, pocket after pocket, until you untick it	Einschalten und auf eine Straße klicken: dort entsteht eine Bushaltebucht an der Bordsteinseite, an der der Verkehr der Straße fährt. Das Werkzeug bleibt an, bis Sie es ausschalten
+How much wider the road is along the bay, on the kerb its traffic keeps to; the other side stays as it is	Wie viel breiter die Straße an der Bucht ist, auf der Bordsteinseite ihrer Fahrspuren; die andere Seite bleibt unverändert
+The stretch is cut out of the road and given the bay along its kerb, its ends tapering to the road's width. The road's own type is widened: nothing to pick.	Der Abschnitt wird aus der Straße geschnitten und erhält die Bucht entlang seines Bordsteins, die Enden laufen auf die Straßenbreite zu. Der Straßentyp wird selbst verbreitert: nichts auszuwählen.

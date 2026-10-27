@@ -29,6 +29,24 @@ fn chain_of(doc: &Document, k: TileKey, id: i64) -> Chain {
             break;
         }
     }
+    let out = walk(doc, first);
+    // a closed road (a ring): its chain has no end, so it starts on the far side from the
+    // click, and a bay near where the walk began is no bay at the end of a road
+    let closed = out.last().and_then(|(ck, cid, _)| doc.spline(*ck, *cid)).map(|l| l.next_id == out[0].1).unwrap_or(false) && out.len() > 1;
+    if closed {
+        let total = out.last().and_then(|(ck, cid, at)| doc.spline(*ck, *cid).map(|s| at + s.length)).unwrap_or(0.0);
+        let clicked = out.iter().find(|c| c.1 == id).map(|c| c.2).unwrap_or(0.0);
+        // (the piece that begins nearest half the ring away from the clicked one)
+        let far = (clicked + total / 2.0).rem_euclid(total);
+        if let Some(start) = out.iter().min_by(|a, b| (a.2 - far).abs().total_cmp(&(b.2 - far).abs())) {
+            return walk(doc, (start.0, start.1));
+        }
+    }
+    out
+}
+
+/// The pieces from `first` on along the links, each with where it begins.
+fn walk(doc: &Document, first: (TileKey, i64)) -> Chain {
     let mut out: Chain = Vec::new();
     let (mut cur, mut at) = (Some(first), 0.0);
     while let Some((ck, cid)) = cur {
@@ -174,6 +192,233 @@ pub fn extent(model: &crate::assets::SplineModel) -> Option<(f32, f32)> {
     Some((xs.iter().cloned().fold(f32::MAX, f32::min), xs.iter().cloned().fold(f32::MIN, f32::max)))
 }
 
+/// The side of a road a bay is made on.
+#[derive(Debug, Clone, Copy, PartialEq)]
+pub enum Side {
+    Left,
+    Right,
+}
+
+impl Side {
+    pub fn name(self) -> &'static str {
+        match self {
+            Side::Left => "left",
+            Side::Right => "right",
+        }
+    }
+}
+
+/// The kerb the road's own traffic keeps to, in the road type's frame: the side its lanes along
+/// the road's way lie on (a mirrored spline runs them the other way, so its against lanes).
+/// Where there are none to tell, `left_hand` says.
+pub fn bay_side(model: &crate::assets::SplineModel, mirrored: bool, left_hand: bool) -> Side {
+    let along = if mirrored { 1 } else { 0 };
+    let xs: Vec<f32> = model.def.paths.iter().filter(|p| p.kind == 0 && p.direction == along).map(|p| p.start[0]).collect();
+    if xs.is_empty() {
+        return if left_hand != mirrored { Side::Left } else { Side::Right };
+    }
+    if xs.iter().sum::<f32>() >= 0.0 { Side::Right } else { Side::Left }
+}
+
+/// One `[tag]` of a road type's text and the lines that follow it.
+struct Item {
+    tag: String,
+    lines: Vec<String>,
+}
+
+impl Item {
+    /// The numbers of the lines that are one (index of the line, value).
+    fn values(&self) -> Vec<(usize, f32)> {
+        self.lines.iter().enumerate().filter_map(|(i, l)| Some((i, l.trim().parse::<f32>().ok()?))).collect()
+    }
+
+    fn set(&mut self, nth: usize, v: f32) {
+        if let Some((i, _)) = self.values().get(nth).copied() {
+            self.lines[i] = format!("{v:.3}");
+        }
+    }
+
+    fn new(tag: &str, values: &[String]) -> Item {
+        Item { tag: tag.to_string(), lines: values.to_vec() }
+    }
+}
+
+fn items_of(text: &str) -> Vec<Item> {
+    let mut items = vec![Item { tag: String::new(), lines: Vec::new() }];
+    for l in text.lines() {
+        let t = l.trim();
+        if t.starts_with('[') && t.ends_with(']') {
+            items.push(Item { tag: t.to_lowercase(), lines: Vec::new() });
+        } else {
+            items.last_mut().unwrap().lines.push(l.to_string());
+        }
+    }
+    items
+}
+
+/// A road type's text made again with a bay of `width` m along its kerb on `side`: everything
+/// beyond the roadway's edge on that side (footway, kerb, its lane) moved out by the width, and
+/// a strip of the roadway's own asphalt, a height profile and a street lane (the nearest
+/// lane's way) laid in the gap. The other side is left as it is. None where the text has no
+/// roadway to widen.
+pub fn bay_sli(text: &str, side: Side, width: f32) -> Option<String> {
+    let mut items = items_of(text);
+    let sign = if side == Side::Right { 1.0f32 } else { -1.0 };
+    let eps = 0.01;
+    // the roadway: the lowest height profiles; its edge on the bay's side
+    let heights: Vec<(usize, f32, f32, f32)> = items.iter().enumerate().filter(|(_, i)| i.tag == "[heightprofile]").filter_map(|(ix, i)| {
+        let v = i.values();
+        (v.len() >= 3).then(|| (ix, v[0].1, v[1].1, v[2].1))
+    }).collect();
+    let road_h = heights.iter().map(|h| h.3).fold(f32::MAX, f32::min);
+    let low = heights.iter().filter(|h| (h.3 - road_h).abs() < 1e-4);
+    let edge = if side == Side::Right { low.map(|h| h.1.max(h.2)).fold(f32::MIN, f32::max) } else { low.map(|h| h.1.min(h.2)).fold(f32::MAX, f32::min) };
+    if heights.is_empty() || edge.abs() > 60.0 {
+        return None;
+    }
+    let beyond = |x: f32| if side == Side::Right { x >= edge - eps } else { x <= edge + eps };
+    // the profiles with their points
+    let mut groups: Vec<(usize, Vec<usize>)> = Vec::new();
+    for (ix, i) in items.iter().enumerate() {
+        match i.tag.as_str() {
+            "[profile]" => groups.push((ix, Vec::new())),
+            "[profilepnt]" => {
+                if let Some(g) = groups.last_mut() {
+                    if g.1.last().map(|l| *l + 1 == ix).unwrap_or(ix == g.0 + 1) {
+                        g.1.push(ix);
+                    }
+                }
+            }
+            _ => {}
+        }
+    }
+    let point = |items: &Vec<Item>, ix: usize| -> Option<(f32, f32, f32, f32)> {
+        let v = items[ix].values();
+        (v.len() >= 4).then(|| (v[0].1, v[1].1, v[2].1, v[3].1))
+    };
+    // the profile that ends at the roadway's edge: its asphalt carries on into the bay
+    let mut strip: Option<(usize, String, (f32, f32, f32, f32), f32)> = None;
+    let mut moved: Vec<usize> = Vec::new();
+    for (pix, pts) in &groups {
+        let p: Vec<(f32, f32, f32, f32)> = pts.iter().filter_map(|i| point(&items, *i)).collect();
+        if p.len() < 2 {
+            continue;
+        }
+        if p.iter().all(|q| beyond(q.0)) {
+            moved.extend(pts.iter().copied());
+        } else if strip.is_none() {
+            if let Some(at) = p.iter().find(|q| (q.0 - edge).abs() < eps) {
+                let inner = p.iter().filter(|q| (q.0 - edge).abs() >= eps).map(|q| q.2).next().unwrap_or(at.2);
+                let tex = items[*pix].values().first().map(|v| items[*pix].lines[v.0].clone()).unwrap_or_else(|| "0".into());
+                // (the last point of the profile's last point: after it the strip goes in)
+                strip = Some((*pts.last().unwrap(), tex, *at, (at.2 + inner) / 2.0));
+            }
+        }
+    }
+    let (after_profile, tex, at, u_mid) = strip?;
+    for ix in moved {
+        let v = items[ix].values();
+        let x = v[0].1;
+        items[ix].set(0, x + sign * width);
+    }
+    // the footway's (and anything else's) height profiles and lanes beyond the edge
+    let mut lanes: Vec<(usize, f32, f32, i32)> = Vec::new();
+    for (ix, i) in items.iter_mut().enumerate() {
+        match i.tag.as_str() {
+            "[heightprofile]" => {
+                let v = i.values();
+                if v.len() >= 2 && beyond(v[0].1) && beyond(v[1].1) {
+                    i.set(0, v[0].1 + sign * width);
+                    i.set(1, v[1].1 + sign * width);
+                }
+            }
+            "[path]" => {
+                let v = i.values();
+                if v.len() >= 5 {
+                    if beyond(v[1].1) {
+                        i.set(1, v[1].1 + sign * width);
+                    } else if v[0].1 as i32 == 0 {
+                        lanes.push((ix, v[1].1, v[2].1, v[4].1 as i32));
+                    }
+                }
+            }
+            _ => {}
+        }
+    }
+    // the bay's lane goes the way of the street lane beside it
+    let near = lanes.iter().max_by(|a, b| (a.1 * sign).total_cmp(&(b.1 * sign)))?;
+    let n = |v: f32| format!("{v:.3}");
+    let (a, b) = if side == Side::Right { (edge, edge + width) } else { (edge - width, edge) };
+    let mut add: Vec<(usize, Vec<Item>)> = Vec::new();
+    add.push((
+        items.iter().rposition(|i| i.tag == "[heightprofile]")?,
+        vec![Item::new("[heightprofile]", &[n(a), n(b), n(road_h), n(road_h), String::new()])],
+    ));
+    add.push((
+        after_profile,
+        vec![
+            Item::new("[profile]", &[tex, String::new()]),
+            Item::new("[profilepnt]", &[n(a), n(at.1), n(u_mid - 0.01), n(at.3), String::new()]),
+            Item::new("[profilepnt]", &[n(b), n(at.1), n(u_mid + 0.01), n(at.3), String::new()]),
+        ],
+    ));
+    add.push((
+        items.iter().rposition(|i| i.tag == "[path]")?,
+        vec![Item::new("[path]", &["0".into(), n((a + b) / 2.0), n(near.2), n(width * 0.9), near.3.to_string(), String::new()])],
+    ));
+    // (from the back, so the places stay where they were)
+    add.sort_by(|x, y| y.0.cmp(&x.0));
+    for (ix, new) in add {
+        for (k, it) in new.into_iter().enumerate() {
+            items.insert(ix + 1 + k, it);
+        }
+    }
+    for i in items.iter_mut().filter(|i| i.tag == "[friendlyname]") {
+        if let Some(l) = i.lines.iter_mut().find(|l| !l.trim().is_empty()) {
+            *l = format!("{} bay {:.1} m", l.trim(), width);
+        }
+    }
+    let mut out = String::new();
+    for i in &items {
+        if !i.tag.is_empty() {
+            out.push_str(&i.tag);
+            out.push('\n');
+        }
+        for l in &i.lines {
+            out.push_str(l);
+            out.push('\n');
+        }
+    }
+    Some(out)
+}
+
+/// The road type of a bay on `main_rel`'s road (made in the content folder as
+/// `Splines\openMapper\<name>_bay_<side>_<width>.sli`, with its textures beside it): the road
+/// type's own text with the bay along the kerb its traffic keeps to. Gives back its path and
+/// the side. Made once: the same bay is found again.
+pub fn bay_type(assets: &mut crate::assets::Assets, content: &std::path::Path, main_rel: &str, mirrored: bool, left_hand: bool, width: f32) -> Result<(String, Side), String> {
+    let main = assets.spline_wait(main_rel, 3000).ok_or_else(|| "the road type could not be read".to_string())?;
+    let side = bay_side(&main, mirrored, left_hand);
+    let text = omsi_cfg::vfs::read_text(&assets.resolve(main_rel)).map_err(|e| e.to_string())?;
+    let sli = bay_sli(&text, side, width).ok_or_else(|| "the road type has no roadway to widen".to_string())?;
+    let stem: String = std::path::Path::new(&main_rel.replace('\\', "/")).file_stem().map(|s| s.to_string_lossy().to_string()).unwrap_or_default().chars().map(|c| if c.is_alphanumeric() || c == '-' || c == '_' { c } else { '_' }).collect();
+    let name = format!("{stem}_bay_{}_{:.1}m", side.name(), width);
+    let dir = content.join("Splines").join("openMapper");
+    let tex_dir = dir.join("texture");
+    std::fs::create_dir_all(&tex_dir).map_err(|e| e.to_string())?;
+    for m in &main.materials {
+        if let Some(t) = &m.texture {
+            crate::junction::copy_texture(t, &tex_dir);
+        }
+    }
+    crate::doc::safe::write_atomic(&dir.join(format!("{name}.sli")), &omsi_cfg::encode_text(&text_crlf(&sli))).map_err(|e| e.to_string())?;
+    Ok((format!("Splines\\openMapper\\{name}.sli"), side))
+}
+
+fn text_crlf(s: &str) -> String {
+    s.replace("\r\n", "\n").replace('\n', "\r\n")
+}
+
 /// The road nearest `p` (within `within` m of its middle) that `wanted` accepts by file name:
 /// tile, id and the distance along it.
 pub fn road_near(doc: &Document, p: DVec2, within: f64, wanted: &mut dyn FnMut(&str) -> bool) -> Option<(TileKey, i64, f64)> {
@@ -247,6 +492,53 @@ mod tests {
         let after = cut.after.unwrap();
         assert_eq!(s.next_id, after.1);
         assert_eq!(doc.spline(after.0, after.1).unwrap().prev_id, inner[0].1);
+    }
+
+    /// A ring has no end: a bay near where its walk would have begun is cut all the same, with
+    /// road on both sides.
+    #[test]
+    fn a_bay_on_a_ring_has_road_either_side_wherever_it_is() {
+        for click in 1..=4 {
+            let mut doc = flat_map(1);
+            for id in 1..=4 {
+                add_spline(&mut doc, (0, 0), id, 100.0 + 100.0 * id as f64, 50.0, 0.0, 100.0, if id == 1 { 4 } else { id - 1 }, if id == 4 { 1 } else { id + 1 });
+            }
+            let (start, total) = chain_position(&doc, (0, 0), click).unwrap();
+            assert!((total - 400.0).abs() < 1e-6);
+            // (the clicked piece lies in the middle of the walk, not at its start)
+            assert!(start > 100.0 && start < 300.0, "{click}: {start}");
+            let cut = cut_out(&mut doc, (0, 0), click, start + 5.0, start + 35.0).unwrap();
+            assert!(cut.before.is_some() && cut.after.is_some(), "{click}");
+        }
+    }
+
+    fn extremes(text: &str) -> ((f32, f32), usize, usize) {
+        let items = items_of(text);
+        let xs: Vec<f32> = items.iter().filter(|i| i.tag == "[profilepnt]").filter_map(|i| i.values().first().map(|v| v.1)).collect();
+        let n = |t: &str| items.iter().filter(|i| i.tag == t).count();
+        ((xs.iter().cloned().fold(f32::MAX, f32::min), xs.iter().cloned().fold(f32::MIN, f32::max)), n("[heightprofile]"), n("[path]"))
+    }
+
+    /// A road type's text with a bay moves what lies past its roadway's edge on one side only,
+    /// and lays the bay's strip, height and lane in the gap.
+    #[test]
+    fn a_bay_widens_one_side_of_the_text_and_leaves_the_other() {
+        let tex = std::env::temp_dir().join("om-bay-text.png");
+        let spec = crate::road_maker::RoadSpec { name: "T".into(), roadway_tex: tex.clone(), footway_tex: tex, footway: 2.0, ..Default::default() };
+        let text = spec.sli();
+        let ((lo, hi), heights, paths) = extremes(&text);
+        for (side, sign) in [(Side::Right, 1.0f32), (Side::Left, -1.0)] {
+            let out = bay_sli(&text, side, 3.0).unwrap();
+            let ((l2, h2), heights2, paths2) = extremes(&out);
+            if sign > 0.0 {
+                assert!((l2 - lo).abs() < 1e-3 && (h2 - hi - 3.0).abs() < 1e-3, "{l2} {h2} from {lo} {hi}");
+            } else {
+                assert!((h2 - hi).abs() < 1e-3 && (l2 - lo + 3.0).abs() < 1e-3, "{l2} {h2} from {lo} {hi}");
+            }
+            assert_eq!((heights2, paths2), (heights + 1, paths + 1));
+            // (a lane for the bay, 3 m wide, with the road's own traffic: out beyond the lanes)
+            assert!(out.contains("2.700"));
+        }
     }
 
     #[test]

@@ -2407,3 +2407,10 @@ Straight on	Dritto
 A piece straight on between arms that face each other	Un tratto dritto tra accessi che si fronteggiano
 auto	auto
 Built by Auto-Junction from the arms	Creato da Auto-incrocio dagli accessi
+the plate could not be made from these arms	non è stato possibile creare la piastra da questi bracci
+Plate with kerbs and footways	Piastra con cordoli e marciapiedi
+Junctions as the Roads tool makes them: where roads cross, one ends on another or several end at one place, they are cut back and a plate is laid with rounded kerbs, footways and lanes through it	Incroci come li fa lo strumento Strade: dove le strade si incrociano, una finisce su un'altra o più finiscono nello stesso punto, vengono accorciate e si posa una piastra con cordoli arrotondati, marciapiedi e corsie attraverso
+The bus pocket could not be made	Impossibile creare la baia per autobus
+Tick it, then press on a road: a bus pocket is laid there, on the kerb the road's own traffic keeps to. It stays on, pocket after pocket, until you untick it	Attivalo e clicca su una strada: lì viene creata una baia per autobus sul lato del marciapiede dove corre il traffico della strada. Resta attivo finché non lo disattivi
+How much wider the road is along the bay, on the kerb its traffic keeps to; the other side stays as it is	Di quanto la strada è più larga lungo la baia, sul lato del marciapiede delle sue corsie; l'altro lato non cambia
+The stretch is cut out of the road and given the bay along its kerb, its ends tapering to the road's width. The road's own type is widened: nothing to pick.	Il tratto viene ritagliato dalla strada e riceve la baia lungo il suo marciapiede, con le estremità che si restringono alla larghezza della strada. Il tipo di strada si allarga da solo: non c'è nulla da scegliere.

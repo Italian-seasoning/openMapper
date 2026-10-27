@@ -598,6 +598,8 @@ impl App {
                 self.cj.layout = l;
             }
             self.cj.open = true;
+            // OPENMAPPER_CJ_LANES=1: with the lanes drawn
+            self.cj.show_lanes(std::env::var_os("OPENMAPPER_CJ_LANES").is_some());
         }
         // OPENMAPPER_MAKER=1: the Road types window open on a new road type in the road maker
         // (`pocket`: with a bus pocket)
@@ -915,6 +917,40 @@ impl App {
             }
             Err(e) => self.ed.error(format!("{}: {e}", tr("The sample could not be made", "Пример не получился"))),
         }
+    }
+
+    /// `OPENMAPPER_POCKET`: a bus pocket laid on the sample's ring (a check of the bay tool).
+    fn demo_pocket(&mut self, at: &str) {
+        let v: Vec<f64> = at.split(',').filter_map(|x| x.trim().parse().ok()).collect();
+        let Some(doc) = self.ed.doc.as_ref() else { return };
+        let n = doc.tiles.len().max(1) as f64;
+        let centre = doc.tiles.keys().fold(DVec2::ZERO, |a, k| a + tile_origin(*k) + DVec2::splat(tile_size() * 0.5)) / n;
+        self.ed.pocket_width = v.get(2).copied().unwrap_or(3.0) as f32;
+        self.ed.bus_pocket = true;
+        self.ed.set_tool(Tool::Roads);
+        let Some(assets) = self.assets.as_mut() else { return };
+        let p = centre + DVec2::new(v.first().copied().unwrap_or(0.0), v.get(1).copied().unwrap_or(-70.0));
+        let z = self.ed.doc.as_ref().map(|d| d.ground(p)).unwrap_or(0.0);
+        self.ed.hover_point(assets, &self.lib, DVec3::new(p.x, p.y, z));
+        self.ed.pocket_click(assets);
+        for t in &self.ed.toasts {
+            log::info!("pocket check: toast ({}) {}", t.error, t.text);
+        }
+        if let Some(doc) = self.ed.doc.as_ref() {
+            for (k, t) in &doc.tiles {
+                let org = tile_origin(*k);
+                for s in t.tile.splines.iter().filter(|s| !s.deleted && (DVec2::new(org.x + s.pos[0], org.y + s.pos[1]) - p).length() < 80.0) {
+                    log::info!("pocket check: spline {} {} at ({:.1}, {:.1}) h {:.1} len {:.1} r {:.1} mirror {} prev {} next {}", s.id, s.file, org.x + s.pos[0], org.y + s.pos[1], s.heading, s.length, s.radius, s.mirror, s.prev_id, s.next_id);
+                }
+                for o in t.tile.objects.iter().filter(|o| (DVec2::new(org.x + o.pos[0], org.y + o.pos[1]) - p).length() < 80.0) {
+                    log::info!("pocket check: object {} at ({:.1}, {:.1})", o.file, org.x + o.pos[0], org.y + o.pos[1]);
+                }
+            }
+        }
+        self.cam.jump_to(DVec3::new(p.x + 14.0, p.y - 6.0, 0.0), 95.0);
+        self.cam.yaw = 0.0;
+        self.cam.pitch = 80.0;
+        self.save();
     }
 
     fn save(&mut self) -> bool {
@@ -1409,7 +1445,9 @@ impl App {
             Action::ComplexJunctions => self.cj.open = !self.cj.open,
             Action::PlaceComplex(layout, turn) => {
                 let at = self.cam.target.truncate();
-                self.ed.place_layout(&layout, at, turn);
+                if let Some(assets) = self.assets.as_mut() {
+                    self.ed.place_layout(assets, &layout, at, turn);
+                }
             }
             Action::SaveComplexObject(layout) => {
                 let mut layout = *layout;
@@ -2365,6 +2403,11 @@ impl App {
                         }
                         self.new_map(&name, &name, 3, &crate::ui_newmap::NewMapOptions { left_hand: std::env::var_os("OPENMAPPER_LHT").is_some(), seasons: crate::ui_newmap::Seasons::Summer, ..Default::default() });
                         self.sample();
+                        // OPENMAPPER_POCKET=<dx>,<dy>[,<pocket width>]: a bus pocket pressed that far from
+                        // the map's middle (a bay of 3 m or the width)
+                        if let Ok(p) = std::env::var("OPENMAPPER_POCKET") {
+                            self.demo_pocket(&p);
+                        }
                         self.save();
                     } else if d == "RING" {
                         self.demo_ring();
@@ -2379,6 +2422,9 @@ impl App {
                         }
                     }
                 }
+            }
+            if self.frames == 4 && std::env::var_os("OPENMAPPER_NOGUIDE").is_some() {
+                self.guide.open = false;
             }
             if self.snapshot {
                 self.snapshot = false;

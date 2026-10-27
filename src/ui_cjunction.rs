@@ -15,7 +15,7 @@ use crate::editor::Editor;
 use crate::i18n::tr;
 use crate::icons::{self, Icon};
 use crate::library::{Category, Kind, Library};
-use crate::roads;
+use crate::roads::{self, Seg};
 use crate::ui::{check, Action, TEXT_DIM};
 use crate::ui_tex::{quad, TexCache};
 
@@ -91,6 +91,8 @@ pub struct ComplexJunctions {
     message: Option<(String, bool)>,
     /// The pieces' textures as the canvas shows them.
     pics: TexCache,
+    /// The drawing's junctions as drawn: the pieces and build they were made for, the pieces cut back, the plates' triangles.
+    plate: Option<(Vec<Piece>, crate::cjunction::AutoBuild, Vec<Piece>, Vec<([DVec2; 3], bool)>, Vec<(Seg, i32, i32)>)>,
     /// Steps back and forward; the drawing as it was last frame, and whether it is being
     /// changed (a drag changes it every frame: one step).
     undo: Vec<Layout>,
@@ -106,7 +108,7 @@ pub struct ComplexJunctions {
 impl Default for ComplexJunctions {
     fn default() -> Self {
         let layout = fresh();
-        ComplexJunctions { open: false, seen: layout.clone(), layout, tool: Tool::Line, file: None, cat: Some(Category::Roads), search: String::new(), pending: Vec::new(), pick: None, centre: DVec2::ZERO, scale: 12.0, snap: true, auto_align: true, auto_adapt: true, auto_arms: true, obj_file: None, obj_search: String::new(), obj_turn: 0.0, obj_step: 20.0, obj_offset: 4.0, preview: false, lanes: false, turn: 0.0, saved: None, moving: None, handle: None, message: None, pics: TexCache::default(), undo: Vec::new(), redo: Vec::new(), changing: false, fit: true, canvas: Vec2::new(800.0, 500.0) }
+        ComplexJunctions { open: false, seen: layout.clone(), layout, tool: Tool::Line, file: None, cat: Some(Category::Roads), search: String::new(), pending: Vec::new(), pick: None, centre: DVec2::ZERO, scale: 12.0, snap: true, auto_align: true, auto_adapt: true, auto_arms: true, obj_file: None, obj_search: String::new(), obj_turn: 0.0, obj_step: 20.0, obj_offset: 4.0, preview: false, lanes: false, turn: 0.0, saved: None, moving: None, handle: None, message: None, pics: TexCache::default(), plate: None, undo: Vec::new(), redo: Vec::new(), changing: false, fit: true, canvas: Vec2::new(800.0, 500.0) }
     }
 }
 
@@ -165,6 +167,11 @@ fn align_end(a: DVec2, b: DVec2, tangent: Option<f64>) -> DVec2 {
 }
 
 impl ComplexJunctions {
+    /// The lanes drawn over the drawing, or not.
+    pub fn show_lanes(&mut self, on: bool) {
+        self.lanes = on;
+    }
+
     pub fn window(&mut self, ctx: &egui::Context, ed: &mut Editor, lib: &Library, content: Option<&PathBuf>, assets: Option<&mut Assets>, actions: &mut Vec<Action>) {
         if !self.open {
             return;
@@ -409,6 +416,7 @@ impl ComplexJunctions {
         if self.auto_arms {
             ui.indent("cj built", |ui| {
                 let b = &mut self.layout.build;
+                check(ui, &mut b.plate, tr("Plate with kerbs and footways", "Плита с бордюрами и тротуарами")).on_hover_text(tr("Junctions as the Roads tool makes them: where roads cross, one ends on another or several end at one place, they are cut back and a plate is laid with rounded kerbs, footways and lanes through it", "Перекрёстки, как их делает инструмент «Дороги»: где дороги пересекаются, одна упирается в другую или несколько сходятся в одном месте, они обрезаются и кладётся плита со скруглёнными бордюрами, тротуарами и полосами через неё"));
                 check(ui, &mut b.turns, tr("Turns", "Повороты")).on_hover_text(tr("A turn of the arm's road type between each two neighbouring arms, so traffic has lanes through the junction", "Поворот типа дороги въезда между каждыми двумя соседними въездами: у транспорта есть полосы через перекрёсток"));
                 check(ui, &mut b.corners, tr("Rounded corners", "Скруглённые углы")).on_hover_text(tr("Where the roads' middle lines meet, the turn is an arc of this radius (a turn is still made where it does not fit)", "Где осевые дорог пересекаются, поворот делается дугой этого радиуса (где она не помещается, остаётся обычный поворот)"));
                 ui.add_enabled_ui(b.corners, |ui| {
@@ -849,16 +857,44 @@ impl ComplexJunctions {
                 draw_one(&mut self.pics, &painter, &to_screen, &stub, lib, assets, &ctx, scale, false, 150, false);
             }
         }
+        // the junctions as the Roads tool makes them (made again only when the drawing changes)
+        let stale = self.plate.as_ref().map(|p| p.0 != self.layout.pieces || p.1 != self.layout.build).unwrap_or(true);
+        if stale {
+            let resolved = self.layout.resolve(&|f| is_road(lib, f), &|f| half_of(lib, f));
+            let plates: Option<Vec<_>> = resolved.plates.iter().map(|arms| assets.as_deref_mut().and_then(|a| crate::junction::layout_plate(a, arms, None, None)).map(|p| (p.flat(), p.lanes))).collect();
+            // (a road type not loaded yet: made again next frame)
+            self.plate = plates.map(|pl| {
+                let lanes = pl.iter().flat_map(|p| p.1.iter().copied()).collect();
+                (self.layout.pieces.clone(), self.layout.build, resolved.pieces, pl.into_iter().flat_map(|p| p.0).collect(), lanes)
+            });
+        }
+        let shown: Vec<Piece> = self.plate.as_ref().map(|p| p.2.clone()).unwrap_or_else(|| self.layout.pieces.clone());
+        if let Some((_, _, _, tris, _)) = &self.plate {
+            for (t, core) in tris {
+                let col = if *core { Color32::from_rgb(74, 76, 82) } else { Color32::from_rgb(150, 150, 146) };
+                painter.add(egui::Shape::convex_polygon(t.iter().map(|p| to_screen(*p)).collect(), col, Stroke::new(0.6, col)));
+            }
+        }
         // the pieces, first drawn lowest
-        for (i, p) in self.layout.pieces.iter().enumerate().filter(|(_, p)| !p.hidden) {
-            let picked = !preview && self.pick == Some(Pick::Piece(i));
-            draw_one(&mut self.pics, &painter, &to_screen, p, lib, assets, &ctx, scale, picked, 235, !preview);
+        // (the roads as cut back for the junctions; the picked piece shows whole, faint, over them)
+        for p in shown.iter().filter(|p| !p.hidden) {
+            draw_one(&mut self.pics, &painter, &to_screen, p, lib, assets, &ctx, scale, false, 235, false);
+        }
+        if !preview {
+            for (i, p) in self.layout.pieces.iter().enumerate().filter(|(_, p)| !p.hidden) {
+                let picked = self.pick == Some(Pick::Piece(i));
+                draw_one(&mut self.pics, &painter, &to_screen, p, lib, assets, &ctx, scale, picked, if picked { 90 } else { 0 }, true);
+            }
         }
         if self.lanes {
-            for p in self.layout.pieces.iter().filter(|p| !p.hidden) {
+            // (the lanes as they will be: along the roads as cut back, and through the plates)
+            for p in shown.iter().filter(|p| !p.hidden) {
                 if let Some(m) = assets.as_deref_mut().and_then(|a| a.spline(&p.file)) {
                     draw_lanes(&painter, &to_screen, p, &m, scale);
                 }
+            }
+            for (seg, kind, dir) in self.plate.iter().flat_map(|p| p.4.iter()) {
+                draw_lane_line(&painter, &to_screen, seg, *kind, *dir, scale);
             }
         }
         for (i, o) in self.layout.objects.iter().enumerate() {
@@ -1262,7 +1298,9 @@ fn draw_piece(painter: &egui::Painter, to_screen: &dyn Fn(DVec2) -> Pos2, p: &Pi
             prev = Some((a, b));
         }
     }
-    if let Some((model, ids)) = textured {
+    if col.a() == 0 {
+        // (only its guides)
+    } else if let Some((model, ids)) = textured {
         // each surface of the spline's profile seen from above, painted with its texture
         let mut chain = 0.0;
         for s in &p.segs {
@@ -1333,6 +1371,23 @@ fn draw_lanes(painter: &egui::Painter, to_screen: &dyn Fn(DVec2) -> Pos2, piece:
                 painter.add(egui::Shape::convex_polygon(vec![to_screen(c + f * m), to_screen(c - f * m * 0.6 + r * m * 0.6), to_screen(c - f * m * 0.6 - r * m * 0.6)], col, Stroke::NONE));
             }
         }
+    }
+}
+
+/// One lane of a plate: a line along `seg` with an arrow in the way it goes (green: vehicles,
+/// orange: people).
+fn draw_lane_line(painter: &egui::Painter, to_screen: &dyn Fn(DVec2) -> Pos2, seg: &Seg, kind: i32, direction: i32, scale: f32) {
+    let col = if kind == 0 { Color32::from_rgb(110, 230, 150) } else { Color32::from_rgb(255, 180, 80) };
+    let n = ((seg.length * scale as f64 / 8.0).ceil() as usize).clamp(2, 300);
+    let pts: Vec<Pos2> = (0..=n).map(|k| to_screen(seg.point(seg.length * k as f64 / n as f64))).collect();
+    painter.add(egui::Shape::line(pts, Stroke::new(1.5, col)));
+    if direction != 2 {
+        let d = seg.length / 2.0;
+        let h = seg.heading_at(d) + if direction == 1 { 180.0 } else { 0.0 };
+        let c = seg.point(d);
+        let (f, r) = (roads::dir(h), roads::right(h));
+        let m = 4.0 / scale as f64;
+        painter.add(egui::Shape::convex_polygon(vec![to_screen(c + f * m), to_screen(c - f * m * 0.6 + r * m * 0.6), to_screen(c - f * m * 0.6 - r * m * 0.6)], col, Stroke::NONE));
     }
 }
 

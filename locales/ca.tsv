@@ -2407,3 +2407,10 @@ Straight on	Recte
 A piece straight on between arms that face each other	Un tram recte entre braços que s'enfronten
 auto	auto
 Built by Auto-Junction from the arms	Creat per l'Auto-creuament a partir dels braços
+the plate could not be made from these arms	no s'ha pogut fer la placa amb aquests accessos
+Plate with kerbs and footways	Placa amb vorades i voreres
+Junctions as the Roads tool makes them: where roads cross, one ends on another or several end at one place, they are cut back and a plate is laid with rounded kerbs, footways and lanes through it	Encreuaments com els fa l'eina Carreteres: on les carreteres es creuen, una acaba en una altra o diverses acaben en un lloc, es retallen i es posa una placa amb vorades arrodonides, voreres i carrils a través
+The bus pocket could not be made	No s'ha pogut fer la baia d'autobús
+Tick it, then press on a road: a bus pocket is laid there, on the kerb the road's own traffic keeps to. It stays on, pocket after pocket, until you untick it	Activeu-ho i premeu sobre una carretera: s'hi posa una baia d'autobús a la vorera on circula el trànsit de la via. Continua activa fins que la desactiveu
+How much wider the road is along the bay, on the kerb its traffic keeps to; the other side stays as it is	Quant més ampla és la via al llarg de la baia, a la vorera on circula el seu trànsit; l'altre costat no canvia
+The stretch is cut out of the road and given the bay along its kerb, its ends tapering to the road's width. The road's own type is widened: nothing to pick.	El tram es retalla de la via i rep la baia al llarg de la vorera, amb els extrems que s'estrenyen fins a l'amplada de la via. El tipus de la via s'eixampla sol: no cal triar res.

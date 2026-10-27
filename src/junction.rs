@@ -14,7 +14,7 @@ use glam::{DVec2, DVec3};
 use omsi_geometry::SplineCurve;
 use omsi_map::MapObject;
 
-use crate::assets::Assets;
+use crate::assets::{Assets, SplineModel};
 use crate::doc::{tile_of, tile_origin, Document, TileKey};
 use crate::roads::{self, Seg};
 
@@ -72,25 +72,32 @@ fn arm_ends(doc: &Document, assets: &mut Assets, arms: &[Arm]) -> Option<(Vec<(D
         let p = c.point_at(at);
         ends.push((p, roads::norm_deg(into), model.half_width as f64, s.file.clone()));
         let mirror = if s.mirror { -1.0 } else { 1.0 };
-        for path in &model.def.paths {
-            let x = path.start[0] as f64 * mirror;
-            let z = path.start[2] as f64;
-            let pos = c.offset_point(at, x, z);
-            // along the spline: 0 forwards, 1 backwards, 2 both ways; (incoming, flow)
-            let along = c.heading_at(at);
-            let ways: Vec<(bool, f64)> = match path.direction {
-                0 => vec![(a.at_end, along)],
-                1 => vec![(!a.at_end, along + 180.0)],
-                _ => vec![(true, if a.at_end { along } else { along + 180.0 }), (false, if a.at_end { along + 180.0 } else { along })],
-            };
-            // lateral place seen from the arm's way into the junction
-            let side = if a.at_end { x } else { -x };
-            for (incoming, flow) in ways {
-                lanes.push(LaneEnd { arm: ai, pos, flow: roads::norm_deg(flow), kind: path.kind, width: path.width as f64, side, incoming });
-            }
-        }
+        lanes.extend(lanes_at(&model, mirror, ai, a.at_end, |x, z| c.offset_point(at, x, z), c.heading_at(at)));
     }
     Some((ends, lanes))
+}
+
+/// The lanes of a road type where it meets a junction: `place(x, z)` is where a lane at
+/// lateral place `x` (and height `z`) ends, `along` the heading of the road's own way there.
+fn lanes_at(model: &SplineModel, mirror: f64, ai: usize, at_end: bool, place: impl Fn(f64, f64) -> DVec3, along: f64) -> Vec<LaneEnd> {
+    let mut lanes = Vec::new();
+    for path in &model.def.paths {
+        let x = path.start[0] as f64 * mirror;
+        let z = path.start[2] as f64;
+        let pos = place(x, z);
+        // along the spline: 0 forwards, 1 backwards, 2 both ways; (incoming, flow)
+        let ways: Vec<(bool, f64)> = match path.direction {
+            0 => vec![(at_end, along)],
+            1 => vec![(!at_end, along + 180.0)],
+            _ => vec![(true, if at_end { along } else { along + 180.0 }), (false, if at_end { along + 180.0 } else { along })],
+        };
+        // lateral place seen from the arm's way into the junction
+        let side = if at_end { x } else { -x };
+        for (incoming, flow) in ways {
+            lanes.push(LaneEnd { arm: ai, pos, flow: roads::norm_deg(flow), kind: path.kind, width: path.width as f64, side, incoming });
+        }
+    }
+    lanes
 }
 
 /// One `[path]` record (object frame = world less the junction's centre).
@@ -317,7 +324,14 @@ fn arm_geometry(doc: &Document, assets: &mut Assets, a: &Arm) -> Option<ArmGeo> 
     let at = if a.at_end { s.length } else { 0.0 };
     let end = c.point_at(at);
     let out = roads::norm_deg(if a.at_end { c.heading_at(at) + 180.0 } else { c.heading_at(at) });
-    let m = if s.mirror { -1.0 } else { 1.0 };
+    Some(arm_geo_of(&model, s.mirror, a.at_end, end, out, at + s.tex_offset))
+}
+
+/// An arm's geometry from its road type: the spline's end at the junction (`at_end`: it is
+/// the spline's end, else its start), `out` the heading out along the road, `v_at` how far
+/// along its texture runs there.
+fn arm_geo_of(model: &SplineModel, mirrored: bool, at_end: bool, end: DVec3, out: f64, v_at: f64) -> ArmGeo {
+    let m = if mirrored { -1.0 } else { 1.0 };
     let profs: Vec<(usize, Vec<(f64, f64, f64, f64)>)> = model.def.profiles.iter().filter(|p| p.points.len() >= 2).map(|p| (p.texture, p.points.iter().map(|q| (q.x as f64 * m, q.z as f64, q.u as f64, q.v_scale as f64)).collect())).collect();
     // the roadway: where the spline's street lanes run (its `[path]`s say it: a half of a
     // divided road has its centre line on the median's edge, with grass on one side); else
@@ -362,10 +376,10 @@ fn arm_geometry(doc: &Document, assets: &mut Assets, a: &Arm) -> Option<ArmGeo> 
     };
     let (spline_right, spline_left) = (side(true), side(false));
     // (looking out along an arm whose end is at the junction, the spline's right is our left)
-    let (right, left, right_w, left_w) = if a.at_end { (spline_left, spline_right, -xl, xr) } else { (spline_right, spline_left, xr, -xl) };
+    let (right, left, right_w, left_w) = if at_end { (spline_left, spline_right, -xl, xr) } else { (spline_right, spline_left, xr, -xl) };
     let vs = central.map(|c| c.1[0].3).unwrap_or(0.2).abs().max(1e-3);
-    let v0 = vs * (at + s.tex_offset) * m;
-    let vdir = if a.at_end { m } else { -m };
+    let v0 = vs * v_at * m;
+    let vdir = if at_end { m } else { -m };
     let road_tex = central.and_then(|(t, pts)| {
         let tex = model.materials.get(*t)?.texture.clone()?;
         // the u in the middle of a lane
@@ -395,7 +409,7 @@ fn arm_geometry(doc: &Document, assets: &mut Assets, a: &Arm) -> Option<ArmGeo> 
             z
         })
         .unwrap_or(0.0);
-    Some(ArmGeo { end, out, right_w, left_w, right, left, v0, vdir, road_tex, road_z })
+    ArmGeo { end, out, right_w, left_w, right, left, v0, vdir, road_tex, road_z }
 }
 
 /// The junction's mesh: vertices (relative to the centre: position, normal, uv), triangles
@@ -969,6 +983,164 @@ pub fn make_with(doc: &mut Document, assets: &mut Assets, content: &Path, asphal
         }
     }
     Ok(id)
+}
+
+/// The folder a map's junction objects are written in (`Sceneryobjects\openMapper\<folder>`
+/// in the content folder), made with its `model` and `texture` folders.
+pub fn object_dir(content: &Path, folder: &str) -> std::io::Result<PathBuf> {
+    let sco_root = std::fs::read_dir(content)?.flatten().map(|e| e.path()).find(|p| p.is_dir() && p.file_name().map(|f| f.to_string_lossy().eq_ignore_ascii_case("sceneryobjects")).unwrap_or(false)).unwrap_or_else(|| content.join("Sceneryobjects"));
+    let dir = sco_root.join("openMapper").join(folder);
+    std::fs::create_dir_all(dir.join("model"))?;
+    std::fs::create_dir_all(dir.join("texture"))?;
+    Ok(dir)
+}
+
+/// The name of a map's folder as its junction objects' folder is named.
+pub fn folder_name(doc: &Document) -> String {
+    doc.dir.file_name().map(|f| f.to_string_lossy().to_string()).unwrap_or_else(|| "map".into()).chars().map(|c| if c.is_alphanumeric() || c == '-' || c == '_' { c } else { '_' }).collect()
+}
+
+/// A road coming into a drawn junction: its road type, where it ends (in the drawing's frame)
+/// and the heading out along it.
+#[derive(Debug, Clone, PartialEq)]
+pub struct PlateArm {
+    pub file: String,
+    pub pos: DVec2,
+    pub out: f64,
+    /// The road's spline runs into the junction here (its end is at it); else it runs away
+    /// from it (its start is). The road type's left and right and the lanes' ways are the
+    /// spline's own.
+    pub at_end: bool,
+}
+
+/// The plate of a junction drawn in the complex junction editor: the roadway, the kerbs round
+/// each corner and the footways, as the Roads tool makes them, and the lanes through it.
+pub struct Plate {
+    mesh: Mesh,
+    /// Its `[path]` records (drawing's frame).
+    pub paths: String,
+    /// The same lanes as lines (drawing's frame): the way along it, the path's kind and its
+    /// direction (0 along the line, 1 against, 2 both).
+    pub lanes: Vec<(Seg, i32, i32)>,
+}
+
+/// The plate between `arms` (the roads end at their points, which the plate meets). `tex_dir`
+/// is where the roadway's own asphalt is written (None: nothing is written, the roadway has no
+/// texture: for a drawing on screen). None when fewer than two arms, or a road type is not loaded.
+pub fn layout_plate(assets: &mut Assets, arms: &[PlateArm], tex_dir: Option<&Path>, asphalt: Option<&Path>) -> Option<Plate> {
+    if arms.len() < 2 {
+        return None;
+    }
+    let (mut geo, mut lanes) = (Vec::new(), Vec::new());
+    for (i, a) in arms.iter().enumerate() {
+        let model = assets.spline(&a.file)?;
+        let end = DVec3::new(a.pos.x, a.pos.y, 0.0);
+        // (the spline's own way there: into the junction, or away from it)
+        let along = if a.at_end { roads::norm_deg(a.out + 180.0) } else { a.out };
+        let r = roads::right(along);
+        geo.push(arm_geo_of(&model, false, a.at_end, end, a.out, 0.0));
+        lanes.extend(lanes_at(&model, 1.0, i, a.at_end, |x, z| end + DVec3::new(r.x * x, r.y * x, z), along));
+    }
+    // (made round the junction's own middle, then moved to the drawing's frame)
+    let mid = arms.iter().map(|a| a.pos).sum::<DVec2>() / arms.len() as f64;
+    let centre = DVec3::new(mid.x, mid.y, 0.0);
+    let recs = paths(&lanes, centre, &vec![None; arms.len()]);
+    let widest = geo.iter().filter(|g| g.road_tex.is_some()).max_by(|a, b| (a.left_w + a.right_w).total_cmp(&(b.left_w + b.right_w)));
+    let (core_tex, period) = match (widest.and_then(|g| g.road_tex.clone()), tex_dir) {
+        (Some((tex, u, range, period, width, lane)), Some(dir)) => {
+            let out = plain_like(&tex, u, range / width, period.clamp(2.0, 40.0), lane, dir);
+            (out.or_else(|| asphalt.map(Path::to_path_buf)), period.clamp(2.0, 40.0))
+        }
+        (_, Some(_)) => (asphalt.map(Path::to_path_buf), 8.0),
+        _ => (None, 8.0),
+    };
+    let along = widest.map(|g| g.out).unwrap_or(0.0);
+    let mut mesh = junction_mesh(&geo, centre, core_tex, period.max(1.0), along);
+    for v in &mut mesh.verts {
+        v.0[0] += mid.x;
+        v.0[1] += mid.y;
+    }
+    let mut paths = String::new();
+    for p in &recs {
+        let s = &p.seg;
+        let start = s.start + mid;
+        let grad = if s.length > 0.01 { (p.z1 - p.z0) / s.length } else { 0.0 };
+        let _ = write!(paths, "[path]\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n\n", num(start.x), num(start.y), num(p.z0), num(s.heading), num(s.radius), num(s.length), num(grad), num(grad), p.kind, num(p.width), p.direction, p.blinker);
+    }
+    let lanes = recs.iter().map(|p| (Seg { start: p.seg.start + mid, ..p.seg }, p.kind, p.direction)).collect();
+    Some(Plate { mesh, paths, lanes })
+}
+
+impl Plate {
+    /// The plate's triangles seen from above, each with whether it is the roadway (else a kerb
+    /// or footway): for drawing it.
+    pub fn flat(&self) -> Vec<([DVec2; 3], bool)> {
+        self.mesh.tris.iter().map(|(t, mat)| ([0, 1, 2].map(|i| DVec2::new(self.mesh.verts[t[i]].0[0], self.mesh.verts[t[i]].0[1])), *mat == 0)).collect()
+    }
+
+    /// The plate as a mesh of an editable object: its materials added to `materials`, its
+    /// textures (name to file) to `textures`.
+    pub fn model_mesh(&self, materials: &mut Vec<openmapper_mesh::Material>, textures: &mut std::collections::HashMap<String, PathBuf>) -> openmapper_mesh::Mesh {
+        let slot: Vec<u32> = self
+            .mesh
+            .textures
+            .iter()
+            .map(|t| {
+                let name = t.as_ref().and_then(|p| p.file_name()).map(|f| f.to_string_lossy().to_string());
+                if let (Some(n), Some(p)) = (&name, t) {
+                    textures.entry(n.clone()).or_insert_with(|| p.clone());
+                }
+                let mat = openmapper_mesh::Material { name: name.clone().unwrap_or_else(|| "Plate".into()), color: [1.0, 1.0, 1.0, 1.0], texture: name, ..Default::default() };
+                let i = materials.iter().position(|x| x.texture == mat.texture && x.color == mat.color && x.alpha == mat.alpha).unwrap_or_else(|| {
+                    materials.push(mat);
+                    materials.len() - 1
+                });
+                i as u32
+            })
+            .collect();
+        let mut out = openmapper_mesh::Mesh::default();
+        for (t, mat) in &self.mesh.tris {
+            let ids: Vec<u32> = t.iter().map(|&i| out.add_vertex(glam::Vec3::new(self.mesh.verts[i].0[0] as f32, self.mesh.verts[i].0[1] as f32, self.mesh.verts[i].0[2] as f32))).collect();
+            let uvs: Vec<glam::Vec2> = t.iter().map(|&i| glam::Vec2::new(self.mesh.verts[i].2[0] as f32, self.mesh.verts[i].2[1] as f32)).collect();
+            out.add_face(ids, uvs, slot.get(*mat).copied().unwrap_or(0));
+        }
+        out.weld(1e-5);
+        out
+    }
+
+    /// Written as a scenery object of its own (`Sceneryobjects\openMapper\<folder>\junction_<hash>.sco`)
+    /// for a drawing put on the map: its relative path.
+    pub fn write_object(&self, content: &Path, folder: &str) -> anyhow::Result<String> {
+        let dir = object_dir(content, folder)?;
+        let tex_dir = dir.join("texture");
+        let mut names = Vec::new();
+        for t in &self.mesh.textures {
+            let Some(p) = t else {
+                names.push(String::new());
+                continue;
+            };
+            if p.parent() != Some(tex_dir.as_path()) {
+                copy_texture(p, &tex_dir);
+            }
+            names.push(p.file_name().map(|f| f.to_string_lossy().to_string()).unwrap_or_default());
+        }
+        let x_text = mesh_x(&self.mesh, &names);
+        let hash = {
+            use std::hash::{Hash, Hasher};
+            let mut h = std::collections::hash_map::DefaultHasher::new();
+            (&x_text, &self.paths).hash(&mut h);
+            h.finish()
+        };
+        let name = format!("junction_{hash:016x}");
+        let (model_path, sco_path) = (dir.join("model").join(format!("{name}.x")), dir.join(format!("{name}.sco")));
+        if !(model_path.is_file() && sco_path.is_file()) {
+            std::fs::write(&model_path, &x_text)?;
+            let sco = format!("{}\n\n[friendlyname]\nJunction {}\n\n[groups]\n1\nopenMapper\n\n[surface]\n\n[absheight]\n\n[mesh]\n{name}.x\n\n{}", Options::default().line(), &format!("{hash:016x}")[..6], self.paths);
+            std::fs::write(&sco_path, omsi_cfg::encode_text(&sco.replace('\n', "\r\n")))?;
+        }
+        crate::hot::own_change();
+        Ok(format!("Sceneryobjects\\openMapper\\{folder}\\{name}.sco"))
+    }
 }
 
 /// Delete the junction files (`junction_<id>.sco` and its `.x`) in `dir` whose object file

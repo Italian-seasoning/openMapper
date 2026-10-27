@@ -2797,8 +2797,8 @@ impl Editor {
             self.history.touch_tile(doc, nk);
             self.history.touch_global(doc);
             let arms: Vec<crate::junction::Arm> = [(k, id, at_end), (nk, n.id, n_end)].into_iter().filter_map(|(k, id, e)| doc.trim(k, id, e, back)).map(|x| crate::junction::Arm { key: x.0, id: x.1, at_end: x.2 }).collect();
-            if arms.len() == 2 {
-                join_two(doc, assets, true, follow, &content, asphalt.as_deref(), &arms[0], &arms[1]);
+            // (counted only where the plate was laid: a bare bend is no taper)
+            if arms.len() == 2 && join_two(doc, assets, true, follow, &content, asphalt.as_deref(), &arms[0], &arms[1]) {
                 made += 1;
             }
         }
@@ -6434,37 +6434,7 @@ impl Editor {
     /// full width and a taper each end, takes the pocket's road type; the width adapter lays
     /// the plates that taper between the types.
     pub fn pocket_click(&mut self, assets: &mut Assets) {
-        let Some(cfg) = self.pocket_type.clone() else {
-            self.toast(tr("Pick the road type of the pocket first", "Сначала выберите тип дороги для кармана"));
-            return;
-        };
         let Some(c) = self.cursor else { return };
-        // (a width of its own: the road type made again with that pocket lane)
-        let mut cfg = cfg;
-        if self.pocket_width > 0.0 {
-            if let Some(content) = self.content_dir.clone() {
-                let file = content.join(cfg.replace('\\', "/"));
-                if let Some(spec) = crate::road_maker::RoadSpec::of(&file).filter(|s| (s.pocket - self.pocket_width).abs() > 0.01) {
-                    let mut v = spec.clone();
-                    v.pocket = self.pocket_width;
-                    v.name = format!("{} bay {:.1} m", spec.name, self.pocket_width);
-                    match v.write(&content) {
-                        Ok(rel) => {
-                            crate::hot::own_change();
-                            cfg = rel;
-                        }
-                        Err(e) => {
-                            self.error(e.to_string());
-                            return;
-                        }
-                    }
-                }
-            }
-        }
-        let Some(cfg_model) = assets.spline_wait(&cfg, 3000) else {
-            self.error(tr("The pocket's road type could not be read", "Не удалось прочитать тип дороги кармана"));
-            return;
-        };
         let Some(doc) = self.doc.as_ref() else { return };
         let mut seen: std::collections::HashMap<String, bool> = std::collections::HashMap::new();
         let mut wanted = |f: &str| *seen.entry(f.to_lowercase()).or_insert_with(|| assets.spline_wait(f, 1000).map(|m| m.joinable() && !m.is_track()).unwrap_or(false));
@@ -6472,17 +6442,30 @@ impl Editor {
             self.toast(tr("Press on a road", "Нажмите на дорогу"));
             return;
         };
-        let Some(main_file) = doc.spline(k, id).map(|s| s.file.clone()) else { return };
-        if main_file.eq_ignore_ascii_case(&cfg) {
+        let Some((main_file, mirrored)) = doc.spline(k, id).map(|s| (s.file.clone(), s.mirror)) else { return };
+        let left_hand = doc.global.left_hand_traffic;
+        let Some(content) = self.content_dir.clone() else { return };
+        if main_file.to_lowercase().contains("_bay_") {
             self.toast(tr("This stretch is already of the pocket's road type", "Этот участок уже того типа, что карман"));
             return;
         }
-        let Some(main) = assets.spline_wait(&main_file, 3000) else { return };
-        let (Some(me), Some(ce)) = (crate::pocket::extent(&main), crate::pocket::extent(&cfg_model)) else {
-            self.error(tr("The road type has no drawn width", "У типа дороги нет нарисованной ширины"));
-            return;
+        // (the bay's road type: the road's own, widened along the kerb its traffic keeps to; the
+        // other side is left as it is)
+        let width = if self.pocket_width > 0.0 { self.pocket_width } else { 3.0 };
+        let (cfg, _) = match crate::pocket::bay_type(assets, &content, &main_file, mirrored, left_hand, width) {
+            Ok(v) => v,
+            Err(e) => {
+                self.error(format!("{}: {e}", tr("The bus pocket could not be made", "Не удалось сделать автобусный карман")));
+                return;
+            }
         };
-        let step = (main.half_width - cfg_model.half_width).abs() as f64;
+        crate::hot::own_change();
+        if assets.spline_wait(&cfg, 3000).is_none() {
+            self.error(tr("The pocket's road type could not be read", "Не удалось прочитать тип дороги кармана"));
+            return;
+        }
+        let Some(doc) = self.doc.as_ref() else { return };
+        let step = width as f64;
         let ratio_in = self.pocket_taper_in.clamp(1.0, 12.0);
         let ratio_out = if self.pocket_alike { ratio_in } else { self.pocket_taper_out.clamp(1.0, 12.0) };
         // (a taper in metres is a plate that long: half of it is cut from each road)
@@ -6507,8 +6490,6 @@ impl Editor {
             }
             from = from.clamp(lo, hi);
         }
-        // (the pocket's left edge lies where the road's did, so its through lanes stay put)
-        let shift = (me.0 - ce.0) as f64;
         let Some(doc) = self.doc.as_mut() else { return };
         self.history.begin(tr("Bus pocket", "Автобусный карман"));
         let keys: Vec<TileKey> = doc.tiles.keys().copied().collect();
@@ -6517,7 +6498,7 @@ impl Editor {
         }
         self.history.touch_global(doc);
         let result = crate::pocket::cut_out(doc, k, id, from, from + stretch).and_then(|cut| {
-            let mut inner = crate::pocket::retype(doc, &cut, &cfg, shift)?;
+            let mut inner = crate::pocket::retype(doc, &cut, &cfg, 0.0)?;
             // (one piece where the stretch's pieces make one curve: the taper needs length)
             let mut i = 0;
             while i + 1 < inner.len() {
@@ -6541,7 +6522,9 @@ impl Editor {
                     laid += self.adapt_joints_by(assets, vec![(ak, aid, false)], ratio_out);
                 }
                 if wanted_plates < 2 || laid < wanted_plates {
-                    self.history.cancel();
+                    if let Some(d) = self.doc.as_mut() {
+                        self.history.rollback(d);
+                    }
                     self.error(tr("The bay needs a taper at both ends and one could not be laid there", "Карману нужен переход с обеих сторон, а один здесь уложить не удалось"));
                     return;
                 }
@@ -6550,7 +6533,9 @@ impl Editor {
                 self.toast(tr("Bus pocket laid", "Автобусный карман создан"));
             }
             Err(e) => {
-                self.history.cancel();
+                if let Some(d) = self.doc.as_mut() {
+                    self.history.rollback(d);
+                }
                 self.error(e);
             }
         }
@@ -6686,11 +6671,20 @@ const POCKET_TAPER: f64 = 3.0;
 /// How much wider (half width, m) the road of one arm is than the other's, if the roads
 /// differ enough to need a taper between them.
 fn width_step(doc: &Document, assets: &mut Assets, a: &crate::junction::Arm, b: &crate::junction::Arm) -> Option<f64> {
-    let half = |assets: &mut Assets, arm: &crate::junction::Arm| -> Option<f64> {
-        let m = assets.spline(&doc.spline(arm.key, arm.id)?.file)?;
-        (m.joinable() && !m.is_track()).then_some(m.half_width as f64)
+    // (the drawn extent either side of the road's middle, as the map sees it: a mirrored
+    // spline is turned round)
+    let extent = |assets: &mut Assets, arm: &crate::junction::Arm| -> Option<(f64, f64)> {
+        let s = doc.spline(arm.key, arm.id)?;
+        let m = assets.spline(&s.file)?;
+        if !(m.joinable() && !m.is_track()) {
+            return None;
+        }
+        let (lo, hi) = crate::pocket::extent(&m).unwrap_or((-m.half_width, m.half_width));
+        let (lo, hi) = (lo as f64, hi as f64);
+        Some(if s.mirror { (-hi, -lo) } else { (lo, hi) })
     };
-    let step = (half(assets, a)? - half(assets, b)?).abs();
+    let (ea, eb) = (extent(assets, a)?, extent(assets, b)?);
+    let step = (ea.0 - eb.0).abs().max((ea.1 - eb.1).abs());
     (step >= 0.25).then_some(step)
 }
 
@@ -6726,7 +6720,8 @@ pub(crate) fn reach_along(doc: &Document, k: TileKey, id: i64, at_end: bool) -> 
 
 /// Join the two arms left of a junction: roads of different width get a plate that tapers
 /// from the one to the other (as a junction of two roads), else a bend of the first's type.
-fn join_two(doc: &mut Document, assets: &mut Assets, adapt: bool, follow: bool, content: &Path, asphalt: Option<&Path>, a: &crate::junction::Arm, b: &crate::junction::Arm) {
+/// Gives back whether the plate was laid (false: the ends are only joined by a bend).
+fn join_two(doc: &mut Document, assets: &mut Assets, adapt: bool, follow: bool, content: &Path, asphalt: Option<&Path>, a: &crate::junction::Arm, b: &crate::junction::Arm) -> bool {
     if adapt && width_step(doc, assets, a, b).is_some() {
         let ends = arm_ends_world(doc, &[*a, *b]);
         if ends.len() == 2 {
@@ -6737,13 +6732,14 @@ fn join_two(doc: &mut Document, assets: &mut Assets, adapt: bool, follow: bool, 
                         let reach = crate::junction::reach(doc, assets, centre, &[*a, *b]).max(4.0);
                         conform_disc(doc, centre, reach, &ends);
                     }
-                    return;
+                    return true;
                 }
                 Err(e) => log::warn!("road adapter: {e}"),
             }
         }
     }
     join_arms(doc, a, b);
+    false
 }
 
 fn join_arms(doc: &mut Document, a: &crate::junction::Arm, b: &crate::junction::Arm) {
@@ -8554,7 +8550,7 @@ mod tests {
 
     #[test]
     fn a_bus_pocket_retypes_a_stretch_and_tapers_its_ends() {
-        let (mut assets, dir, plain, bay) = pocket_fixture("lay");
+        let (mut assets, dir, plain, _) = pocket_fixture("lay");
         let mut doc = flat_map(1);
         doc.dir = dir.join("content").join("maps").join("Pocket");
         doc.tiles.get_mut(&(0, 0)).unwrap().tile.splines.push(MapSpline { file: plain.clone(), id: 1, pos: [150.0, 80.0, 0.0], heading: 0.0, length: 100.0, ..Default::default() });
@@ -8563,15 +8559,16 @@ mod tests {
         ed.open(doc);
         ed.set_tool(Tool::Roads);
         ed.bus_pocket = true;
-        ed.pocket_type = Some(bay.clone());
         ed.pocket_len = 12.0;
         ed.cursor = Some(DVec3::new(150.0, 125.0, 0.0));
         ed.pocket_click(&mut assets);
         for _ in 0..30 { assets.poll(); ed.tick(&mut assets, 0.0, false); std::thread::sleep(std::time::Duration::from_millis(10)); }
         let doc = ed.doc.as_ref().unwrap();
         let t = &doc.tiles[&(0, 0)].tile;
-        let pocket: Vec<_> = t.splines.iter().filter(|s| !s.deleted && s.file.eq_ignore_ascii_case(&bay)).collect();
+        // (the road was made in the road maker: the bay is that road with a pocket lane, not the type picked)
+        let pocket: Vec<_> = t.splines.iter().filter(|s| !s.deleted && !s.file.eq_ignore_ascii_case(&plain)).collect();
         assert!(!pocket.is_empty(), "a stretch of the pocket's type");
+        assert!(pocket.iter().all(|s| s.file.to_lowercase().contains("bay")), "{:?}", pocket.iter().map(|s| &s.file).collect::<Vec<_>>());
         // the full-width bay (the tapers' plates take the rest of the stretch)
         let len: f64 = pocket.iter().map(|s| s.length).sum();
         assert!((len - 12.0).abs() < 0.5, "{len}");
@@ -8583,6 +8580,44 @@ mod tests {
         let t = &ed.doc.as_ref().unwrap().tiles[&(0, 0)].tile;
         assert_eq!(t.splines.iter().filter(|s| !s.deleted).count(), 1);
         assert_eq!(t.objects.iter().filter(|o| o.file.contains("junction_")).count(), 0);
+        let _ = std::fs::remove_dir_all(&dir);
+    }
+
+    /// A bay is the road type's own text widened along the kerb its traffic keeps to (a road
+    /// of the installation, with no spec beside it, as well): the lanes stay on the road's
+    /// line, and the other side of the road stays where it was.
+    #[test]
+    fn a_bus_pocket_widens_the_roads_own_type_on_its_kerb_side() {
+        let (mut assets, dir, plain, _) = pocket_fixture("lanes");
+        let content = dir.join("content");
+        // (the road is as a road of the installation: no spec beside it)
+        let _ = std::fs::remove_file(content.join("Splines").join("openMapper").join("Plain.road.json"));
+        let mut doc = flat_map(1);
+        doc.dir = content.join("maps").join("Pocket");
+        doc.tiles.get_mut(&(0, 0)).unwrap().tile.splines.push(MapSpline { file: plain.clone(), id: 1, pos: [150.0, 80.0, 0.0], heading: 0.0, length: 100.0, ..Default::default() });
+        let mut ed = Editor::default();
+        ed.content_dir = Some(content.clone());
+        ed.open(doc);
+        ed.set_tool(Tool::Roads);
+        ed.bus_pocket = true;
+        ed.pocket_len = 12.0;
+        ed.cursor = Some(DVec3::new(150.0, 125.0, 0.0));
+        ed.pocket_click(&mut assets);
+        for _ in 0..30 { assets.poll(); ed.tick(&mut assets, 0.0, false); std::thread::sleep(std::time::Duration::from_millis(10)); }
+        let t = &ed.doc.as_ref().unwrap().tiles[&(0, 0)].tile;
+        let bay: Vec<_> = t.splines.iter().filter(|s| !s.deleted && s.file.to_lowercase().contains("_bay_right")).collect();
+        assert_eq!(bay.len(), 1, "{:?}", t.splines.iter().map(|s| &s.file).collect::<Vec<_>>());
+        assert!((bay[0].pos[0] - 150.0).abs() < 0.01, "lanes stay on the road's line: {:?}", bay[0].pos);
+        assert_eq!(t.objects.iter().filter(|o| o.file.contains("junction_")).count(), 2);
+        // the road's own text, widened on its right only
+        let own = omsi_cfg::vfs::read_text(&omsi_cfg::resolve_path(&content, &plain)).unwrap();
+        let made = omsi_cfg::vfs::read_text(&omsi_cfg::resolve_path(&content, &bay[0].file)).unwrap();
+        let m = assets.spline_wait(&bay[0].file, 5000).unwrap();
+        let o = assets.spline_wait(&plain, 5000).unwrap();
+        let (me, oe) = (crate::pocket::extent(&m).unwrap(), crate::pocket::extent(&o).unwrap());
+        assert!((me.0 - oe.0).abs() < 1e-3, "the left side stays: {me:?} {oe:?}");
+        assert!((me.1 - oe.1 - 3.0).abs() < 1e-3, "the right side is 3 m wider: {me:?} {oe:?}");
+        assert!(made.len() > own.len());
         let _ = std::fs::remove_dir_all(&dir);
     }
 
@@ -8603,6 +8638,7 @@ mod tests {
             baked: None,
             ..Default::default()
         };
+        layout.build.plate = false;
         let rel = crate::cjunction::bake(&roots, &layout, &mut assets, true).unwrap();
         layout.baked = Some(rel.clone());
         layout.save(&content).unwrap();
@@ -8645,6 +8681,53 @@ mod tests {
         let _ = std::fs::remove_dir_all(&dir);
     }
 
+    /// Roads drawn across one another, one ending on another, or several ending at one place
+    /// are cut back and given a plate, as the Roads tool does; the arms stay at the roads' outer ends.
+    #[test]
+    fn auto_junction_cuts_roads_back_and_makes_a_plate_as_the_roads_tool_does() {
+        use crate::cjunction::{LSeg, Layout, Piece};
+        let (mut assets, dir, plain, _) = pocket_fixture("plate-layout");
+        let content = dir.join("content");
+        let roots = crate::install::Roots { omsi: dir.join("omsi"), content: content.clone() };
+        let line = |x: f64, y: f64, h: f64, len: f64| Piece { file: plain.clone(), segs: vec![LSeg { x, y, heading: h, radius: 0.0, length: len }], lift: 0.0, hidden: false, auto: false };
+        // a crossing: two roads of 80 m through the middle
+        let mut layout = Layout { name: "Plate".into(), pieces: vec![line(0.0, -40.0, 0.0, 80.0), line(-40.0, 0.0, 90.0, 80.0)], auto: true, ..Default::default() };
+        let kinds = crate::cjunction::road_kinds(&layout, &mut assets);
+        let (is_road, half) = (|f: &str| kinds.get(&f.to_lowercase()).map(|k| k.0).unwrap_or(false), |f: &str| kinds.get(&f.to_lowercase()).map(|k| k.1).unwrap_or(1.5));
+        let r = crate::cjunction::Layout::resolve(&layout, &is_road, &half);
+        assert_eq!(r.plates.len(), 1);
+        assert_eq!(r.plates[0].len(), 4, "a road each way");
+        assert_eq!(r.pieces.len(), 4, "each road cut in two");
+        let room = crate::junction::radius_at(&[half(&plain)], 90.0);
+        for a in &r.plates[0] {
+            assert!((a.pos.length() - room).abs() < 0.5, "cut back by the room the Roads tool leaves: {} vs {room}", a.pos.length());
+        }
+        // a T: one road ends on the other's middle
+        layout.pieces = vec![line(-40.0, 0.0, 90.0, 80.0), line(0.0, 0.0, 0.0, 40.0)];
+        let r = layout.resolve(&is_road, &half);
+        assert_eq!((r.plates.len(), r.plates[0].len(), r.pieces.len()), (1, 3, 3));
+        // a star: three roads end at the origin
+        layout.pieces = vec![line(0.0, 0.0, 0.0, 40.0), line(0.0, 0.0, 120.0, 40.0), line(0.0, 0.0, 240.0, 40.0)];
+        let r = layout.resolve(&is_road, &half);
+        assert_eq!((r.plates.len(), r.plates[0].len()), (1, 3));
+        // the arms are where the drawn roads end outside, none inside
+        layout.sync_arms(&is_road, &half);
+        assert_eq!(layout.arms.len(), 3);
+        // saved: the object has the plate's lanes besides the roads'
+        layout.pieces = vec![line(0.0, -40.0, 0.0, 80.0), line(-40.0, 0.0, 90.0, 80.0)];
+        layout.sync_arms(&is_road, &half);
+        let with = crate::cjunction::bake(&roots, &layout, &mut assets, true).unwrap();
+        let sco = omsi_scenery::SceneryObject::load(&omsi_cfg::resolve_path(&content, &with)).unwrap();
+        layout.build.plate = false;
+        layout.baked = None;
+        layout.name = "No plate".into();
+        let without = crate::cjunction::bake(&roots, &layout, &mut assets, true).unwrap();
+        let bare = omsi_scenery::SceneryObject::load(&omsi_cfg::resolve_path(&content, &without)).unwrap();
+        assert_eq!(sco.spline_helpers.len(), 4);
+        assert!(sco.paths.len() > bare.paths.len(), "the plate's lanes join the roads' ({} against {})", sco.paths.len(), bare.paths.len());
+        let _ = std::fs::remove_dir_all(&dir);
+    }
+
     /// A custom junction drawn as a T of the road type, baked to an object, is used where
     /// roads of that type meet like it, the roads bent onto its helpers.
     #[test]
@@ -8655,7 +8738,8 @@ mod tests {
         let mut ed = Editor::default();
         ed.open(doc);
         let layout = Layout { name: "C".into(), pieces: vec![Piece { file: "Splines\\a.sli".into(), segs: vec![LSeg { x: -8.0, y: 0.0, heading: 90.0, radius: 0.0, length: 16.0 }], lift: 0.0, hidden: false, auto: false }, Piece { file: "Splines\\b.sli".into(), segs: vec![LSeg { x: 0.0, y: -8.0, heading: 0.0, radius: 0.0, length: 16.0 }], lift: 0.02, hidden: false, auto: false }], ..Default::default() };
-        ed.place_layout(&layout, DVec2::new(150.0, 150.0), 0.0);
+        let mut assets = Assets::new(std::env::temp_dir().join("om-complex-omsi"), std::env::temp_dir().join("om-complex-content"));
+        ed.place_layout(&mut assets, &layout, DVec2::new(150.0, 150.0), 0.0);
         let t = &ed.doc.as_ref().unwrap().tiles[&(0, 0)].tile;
         assert_eq!(t.splines.len(), 2);
         assert!(t.splines.iter().all(|s| s.prev_id == 0 && s.next_id == 0), "separate pieces: nothing joined");

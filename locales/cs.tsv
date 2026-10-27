@@ -2407,3 +2407,10 @@ Straight on	Přímo
 A piece straight on between arms that face each other	Přímý úsek mezi rameny, která jsou proti sobě
 auto	auto
 Built by Auto-Junction from the arms	Vytvořeno Auto-křižovatkou z ramen
+the plate could not be made from these arms	desku se z těchto ramen nepodařilo vytvořit
+Plate with kerbs and footways	Deska s obrubníky a chodníky
+Junctions as the Roads tool makes them: where roads cross, one ends on another or several end at one place, they are cut back and a plate is laid with rounded kerbs, footways and lanes through it	Křižovatky, jak je dělá nástroj Silnice: kde se silnice kříží, jedna končí na druhé nebo několik končí na jednom místě, zkrátí se a položí se deska se zaoblenými obrubníky, chodníky a jízdními pruhy skrz
+The bus pocket could not be made	Autobusovou zálivku se nepodařilo vytvořit
+Tick it, then press on a road: a bus pocket is laid there, on the kerb the road's own traffic keeps to. It stays on, pocket after pocket, until you untick it	Zapněte a klikněte na silnici: vznikne tam autobusová zálivka u obrubníku, ke kterému se drží provoz silnice. Nástroj zůstává zapnutý, dokud ho nevypnete
+How much wider the road is along the bay, on the kerb its traffic keeps to; the other side stays as it is	O kolik je silnice u zálivky širší, na straně obrubníku jejích jízdních pruhů; druhá strana se nemění
+The stretch is cut out of the road and given the bay along its kerb, its ends tapering to the road's width. The road's own type is widened: nothing to pick.	Úsek se vyřízne ze silnice a dostane zálivku podél obrubníku, konce se zužují na šířku silnice. Typ silnice se rozšíří sám: nic nevybíráte.

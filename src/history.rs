@@ -111,6 +111,15 @@ impl History {
         self.open = None;
     }
 
+    /// Drop the open edit and put back what it touched, as it was when the edit began (for a
+    /// tool that found out half-way that it cannot finish).
+    pub fn rollback(&mut self, doc: &mut Document) {
+        if let Some(s) = self.open.take() {
+            self.changed.add(&s);
+            let _ = apply(doc, s);
+        }
+    }
+
     /// Close the open edit (nothing kept: it is dropped).
     pub fn commit(&mut self) {
         if let Some(s) = self.open.take() {
