@@ -1,5 +1,5 @@
 Could not open the map	無法開啟地圖
-The next 100 tiles are loaded, the others are hidden	已載入接下來的 100 個圖磚，其餘已隱藏
+The next 100 tiles are loaded, the others are hidden	已載入接下來的 100 個圖塊，其餘已隱藏
 Find the place in the window and build from it	在視窗中尋找地點並由此建立地圖
 Your map is ready. Start with a road!	地圖已就緒。先從一條道路開始吧！
 Export the map for sharing	匯出地圖以供分享
@@ -19,7 +19,7 @@ openOMSI was not found	找不到 openOMSI
 From the start point	從起點
 The map has no start point: place one with Game logic > Start points	地圖沒有起點：請以 遊戲邏輯 > 起點 放置一個
 Starting openOMSI…	正在啟動 openOMSI…
-To drive the map in OMSI 2 itself it has to be copied into the OMSI 2 folder (Maps, and the objects, roads and textures made for it). Nothing that is there is replaced except earlier copies of this map. Copy it there?	若要在 OMSI 2 中直接駕駛此地圖，必須將其複製到 OMSI 2 資料夾（Maps，以及為其製作的物件、道路和紋理）。除了此地圖先前的副本外，不會取代任何現有內容。要複製過去嗎？
+To drive the map in OMSI 2 itself it has to be copied into the OMSI 2 folder (Maps, and the objects, roads and textures made for it). Nothing that is there is replaced except earlier copies of this map. Copy it there?	若要在 OMSI 2 中直接駕駛此地圖，必須將其複製到 OMSI 2 資料夾（Maps，以及為其製作的物件、道路和貼圖）。除了此地圖先前的副本外，不會取代任何現有內容。要複製過去嗎？
 Starting OMSI 2: choose the map	正在啟動 OMSI 2：請選擇地圖
 The map is copied into the OMSI 2 folder; OMSI 2 itself runs on Windows only:	地圖已複製到 OMSI 2 資料夾；OMSI 2 本身僅能在 Windows 上執行：
 Could not copy the map into OMSI 2	無法將地圖複製到 OMSI 2
@@ -36,24 +36,24 @@ Click on the map to put it there	點擊地圖以放置於此
 Could not make the shape	無法建立形狀
 Choose the OMSI 2 folder	選擇 OMSI 2 資料夾
 That is not an OMSI 2 folder (Omsi.exe, maps and Vehicles must be in it)	這不是 OMSI 2 資料夾（其中必須有 Omsi.exe、maps 和 Vehicles）
-This object has no textures to make PBR maps of	此物件沒有可製作 PBR 貼圖的紋理
+This object has no textures to make PBR maps of	此物件沒有可製作 PBR 貼圖的貼圖
 Could not copy the map	無法複製地圖
 Could not move the map	無法移動地圖
 Terrain flattened; splines laid on it:	地形已整平；已鋪設的樣條：
-This road type has no textures to make PBR maps of	此道路類型沒有可製作 PBR 貼圖的紋理
+This road type has no textures to make PBR maps of	此道路類型沒有可製作 PBR 貼圖的貼圖
 Pictures	圖片
-Only 100 tiles round the camera are loaded; click on the empty zone to load the next 100	只載入相機周圍的 100 個圖磚；點擊空白區域可載入接下來的 100 個
-All tiles are loaded	已載入所有圖磚
+Only 100 tiles round the camera are loaded; click on the empty zone to load the next 100	只載入相機周圍的 100 個圖塊；點擊空白區域可載入接下來的 100 個
+All tiles are loaded	已載入所有圖塊
 Import the map's thumbnail	匯入地圖縮圖
 The map's thumbnail is set: openOMSI shows it where maps are chosen.	地圖縮圖已設定：openOMSI 會在選擇地圖處顯示它。
 Could not use the picture	無法使用該圖片
 Map camera	地圖相機
 The map opens with this view from now on.	地圖之後將以此視角開啟。
-Add ground texture	新增地面紋理
+Add ground texture	新增地面貼圖
 View kept as	視角已記為
 No view kept as	沒有記錄視角
 Files changed on disk: the catalogue and models are updated	磁碟上的檔案已變更：目錄與模型已更新
-The track does not run over the map's tiles	軌跡未經過地圖的圖磚
+The track does not run over the map's tiles	軌跡未經過地圖的圖塊
 Road along a GPS track	沿 GPS 軌跡建立道路
 Roads built:	已建立道路：
 junctions:	路口：
@@ -87,12 +87,12 @@ select what to export (objects, roads)	選取要匯出的內容（物件、道�
 Export the selection	匯出選取內容
 unknown format	未知格式
 the models are still loading: try again in a moment	模型仍在載入：請稍後再試
-this material has no texture	此材質沒有紋理
+this material has no texture	此材質沒有貼圖
 cannot read	無法讀取
-Export the texture	匯出紋理
-Texture saved:	紋理已儲存：
+Export the texture	匯出貼圖
+Texture saved:	貼圖已儲存：
 Choose a picture	選擇圖片
-give the material a texture first: its maps go beside it	請先為材質設定紋理：其貼圖會放在紋理旁
+give the material a texture first: its maps go beside it	請先為材質設定貼圖：其貼圖會放在貼圖旁
 Import materials (an .mtl, a model, or the pictures of one PBR material)	匯入材質（.mtl、模型，或單一 PBR 材質的圖片）
 Materials and pictures	材質與圖片
 no materials found there	該處找不到材質
@@ -106,7 +106,7 @@ these splines have no shape to see	這些樣條沒有可見的形狀
 Replace by an object	以物件取代
 Made into an object: Tab edits its mesh	已轉為物件：按 Tab 編輯其網格
 Signal head made: click where it stands (near a crossing with a light program it links to it)	已建立號誌燈頭：點擊其所在位置（靠近有燈號程式的路口時會連結到它）
-Choose a picture or a texture	選擇圖片或紋理
+Choose a picture or a texture	選擇圖片或貼圖
 cannot read the picture	無法讀取圖片
 Picture made: click where it goes (it can be moved, turned and scaled after)	已建立圖片：點擊要放置的位置（之後可移動、旋轉和縮放）
 Light made: click where it shines	已建立燈光：點擊其照射位置
@@ -127,7 +127,7 @@ No ground on the map is like that	地圖上沒有這樣的地面
 Painted	已上色
 Missing objects	缺少物件
 Missing roads and splines	缺少道路與樣條
-Missing textures	缺少紋理
+Missing textures	缺少貼圖
 Road ends not joined	未連接的道路端點
 Links to splines that are gone	指向已不存在樣條的連結
 Bus stops away from a road	遠離道路的站牌
@@ -136,51 +136,51 @@ Start points without their object	缺少物件的起點
 No start point	沒有起點
 IDCodes used twice	重複使用的 IDCode
 Next IDCode too low	NextIDCode 過低
-Objects off their tile	超出所屬圖磚的物件
-Tiles without a file	沒有檔案的圖磚
-Tiles without ground	沒有地面的圖磚
+Objects off their tile	超出所屬圖塊的物件
+Tiles without a file	沒有檔案的圖塊
+Tiles without ground	沒有地面的圖塊
 Trips without a way	沒有路徑的班次
 Tours without departures	沒有發車的車班
-Tours without a depot	沒有車庫的車班
+Tours without a depot	沒有車廠的車班
 Traffic groups not in the AI lists	不在 AI 清單中的交通群組
 Stops no trip calls at	沒有班次停靠的站牌
 Signal routes naming what is gone	指向已不存在內容的號誌路徑
-Chrono changes of what is gone	指向已不存在內容的時序變更
+Chrono changes of what is gone	指向已不存在內容的時空變更
 Lamps lighting no ground at night	夜間未照亮地面的路燈
-Tiles with very many objects	物件非常多的圖磚
+Tiles with very many objects	物件非常多的圖塊
 Objects linked to one that is gone	連結到已不存在物件的物件
 Signal heads linked to no crossing	未連結任何路口的號誌燈頭
-Depot files (destinations)	車庫檔案（終點站）
-The map uses an object (.sco) that is not installed. The game leaves it out. Install the mod it comes from, or delete the object. A junction of openMapper's whose file is gone (the map was moved without it) is made again for its roads with "Fix".	地圖使用了未安裝的物件 (.sco)。遊戲會略過它。請安裝其來源模組，或刪除該物件。openMapper 的路口若檔案遺失（地圖在沒有它的情況下被移動），可用「修復」依其道路重新建立。
+Depot files (destinations)	車廠檔案（終點站）
+The map uses an object (.sco) that is not installed. The game leaves it out. Install the mod it comes from, or delete the object. A junction of openMapper's whose file is gone (the map was moved without it) is made again for its roads with "Fix".	地圖使用了未安裝的物件 (.sco)。遊戲會略過它。請安裝其來源模組，或刪除該物件。openMapper 的路口若檔案遺失（地圖在沒有它的情況下被移動），可用「修正」依其道路重新建立。
 The map uses a road or spline type (.sli) that is not installed: that road is missing in the game, and buses cannot drive there.	地圖使用了未安裝的道路或樣條類型 (.sli)：遊戲中沒有該道路，巴士無法在那裡行駛。
 An object or road names a picture that cannot be found. It will look white or black in the game.	物件或道路指定的圖片找不到。在遊戲中會顯示為白色或黑色。
-Two road ends lie on one another but are not joined. Traffic still finds its way (the game joins lanes by their ends), but rows of lamps and posts and the road's texture do not run on across, and the editor does not treat them as one road. "Join" links them.	兩個道路端點相互重疊但未連接。交通仍可通行（遊戲依端點連接車道），但成排的燈與柱以及道路紋理不會延續過去，編輯器也不會將它們視為同一條道路。「連接」可將它們連起。
-A spline says it goes on into another one that no longer exists. "Fix" forgets that link.	某個樣條指向一個已不存在的後續樣條。「修復」會移除該連結。
-A bus stop belongs to the lane it stands beside (within about 25 m). This one has none near, so buses cannot stop at it. Move it next to the road, or "Fix" puts it at the kerb of the nearest lane (within 80 m).	站牌屬於其旁邊的車道（約 25 公尺內）。此站牌附近沒有車道，巴士無法在此停靠。請將它移到道路旁，或用「修復」將它放到最近車道的路緣（80 公尺內）。
-A start point is where the bus appears. This one is away from any lane: fine in a depot yard, otherwise the bus starts off the road.	起點是巴士出現的位置。此起點遠離所有車道：在車庫場地內沒問題，否則巴士會從道路外出發。
-A start point refers to an object that was deleted. "Fix" removes the start point.	某個起點指向已被刪除的物件。「修復」會移除該起點。
-There is nowhere for the bus to appear. Place a start point (Game logic > Start points) on a road, or "Fix" puts one on a lane some 40 m before a bus stop.	巴士沒有出現的地方。請在道路上放置起點（遊戲邏輯 > 起點），或用「修復」在站牌前約 40 公尺的車道上放置一個。
+Two road ends lie on one another but are not joined. Traffic still finds its way (the game joins lanes by their ends), but rows of lamps and posts and the road's texture do not run on across, and the editor does not treat them as one road. "Join" links them.	兩個道路端點相互重疊但未連接。交通仍可通行（遊戲依端點連接車道），但成排的燈與柱以及道路貼圖不會延續過去，編輯器也不會將它們視為同一條道路。「連接」可將它們連起。
+A spline says it goes on into another one that no longer exists. "Fix" forgets that link.	某個樣條指向一個已不存在的後續樣條。「修正」會移除該連結。
+A bus stop belongs to the lane it stands beside (within about 25 m). This one has none near, so buses cannot stop at it. Move it next to the road, or "Fix" puts it at the kerb of the nearest lane (within 80 m).	站牌屬於其旁邊的車道（約 25 公尺內）。此站牌附近沒有車道，巴士無法在此停靠。請將它移到道路旁，或用「修正」將它放到最近車道的路緣（80 公尺內）。
+A start point is where the bus appears. This one is away from any lane: fine in a depot yard, otherwise the bus starts off the road.	起點是巴士出現的位置。此起點遠離所有車道：在車廠場地內沒問題，否則巴士會從道路外出發。
+A start point refers to an object that was deleted. "Fix" removes the start point.	某個起點指向已被刪除的物件。「修正」會移除該起點。
+There is nowhere for the bus to appear. Place a start point (Game logic > Start points) on a road, or "Fix" puts one on a lane some 40 m before a bus stop.	巴士沒有出現的地方。請在道路上放置起點（遊戲邏輯 > 起點），或用「修正」在站牌前約 40 公尺的車道上放置一個。
 Two things on the map share one IDCode: links, timetables and start points may pick the wrong one.	地圖上有兩個項目共用同一個 IDCode：連結、時刻表和起點可能會選錯。
-The counter for new IDCodes is below codes already used, so new objects would get codes twice. "Fix" raises it.	新 IDCode 的計數器低於已使用的代碼，新物件會得到重複的代碼。「修復」會將其調高。
-An object standing on the ground lies outside its own tile. The game does not show it. Move it a little or put it again.	放在地面上的物件位於所屬圖磚之外。遊戲不會顯示它。請稍微移動它或重新放置。
-global.cfg lists tiles whose file is not there. The game leaves them out; they stay listed, as start points and timetables count tiles by their place in the list.	global.cfg 列出了沒有檔案的圖磚。遊戲會略過它們；它們仍保留在清單中，因為起點和時刻表是依圖磚在清單中的位置計算的。
-A tile has no height file: its ground is flat. Saving writes one.	圖磚沒有高度檔案：其地面是平的。儲存時會寫入一個。
+The counter for new IDCodes is below codes already used, so new objects would get codes twice. "Fix" raises it.	新 IDCode 的計數器低於已使用的代碼，新物件會得到重複的代碼。「修正」會將其調高。
+An object standing on the ground lies outside its own tile. The game does not show it. Move it a little or put it again.	放在地面上的物件位於所屬圖塊之外。遊戲不會顯示它。請稍微移動它或重新放置。
+global.cfg lists tiles whose file is not there. The game leaves them out; they stay listed, as start points and timetables count tiles by their place in the list.	global.cfg 列出了沒有檔案的圖塊。遊戲會略過它們；它們仍保留在清單中，因為起點和時刻表是依圖塊在清單中的位置計算的。
+A tile has no height file: its ground is flat. Saving writes one.	圖塊沒有高度檔案：其地面是平的。儲存時會寫入一個。
 No way along the roads was found through this trip's stops, so buses cannot drive it. Open it in Map > Lines and timetable to see where it breaks.	沿道路找不到經過此班次各站的路徑，因此巴士無法行駛。請在 地圖 > 路線與時刻表 中開啟它，查看在哪裡中斷。
 A tour (a bus's day on the line) has no trips, so no bus runs it.	車班（巴士一天在路線上的行程）沒有班次，因此沒有巴士會跑它。
-A tour names no depot or group of the AI lists (or one that is not there): the game has no vehicle to send on it. Choose a depot for it in the Lines window, or "Fix" gives it the map's depot (one of OMSI 2's MAN buses added where the map has none).	車班未指定車庫或 AI 清單中的群組（或指定的不存在）：遊戲沒有可派出的車輛。請在路線視窗中為其選擇車庫，或用「修復」給它地圖的車庫（若地圖沒有，會加入一個 OMSI 2 的 MAN 巴士）。
-The unscheduled traffic names a group that the AI lists do not have: those cars never appear. Add the group in Map > Traffic and AI, or "Fix" copies it from OMSI 2's own maps where they have it.	不定時交通指定了 AI 清單中沒有的群組：這些車輛永遠不會出現。請在 地圖 > 交通與 AI 中新增該群組，或用「修復」從 OMSI 2 自己的地圖複製（若那裡有的話）。
+A tour names no depot or group of the AI lists (or one that is not there): the game has no vehicle to send on it. Choose a depot for it in the Lines window, or "Fix" gives it the map's depot (one of OMSI 2's MAN buses added where the map has none).	車班未指定車廠或 AI 清單中的群組（或指定的不存在）：遊戲沒有可派出的車輛。請在路線視窗中為其選擇車廠，或用「修正」給它地圖的車廠（若地圖沒有，會加入一個 OMSI 2 的 MAN 巴士）。
+The unscheduled traffic names a group that the AI lists do not have: those cars never appear. Add the group in Map > Traffic and AI, or "Fix" copies it from OMSI 2's own maps where they have it.	不定時交通指定了 AI 清單中沒有的群組：這些車輛永遠不會出現。請在 地圖 > 交通與 AI 中新增該群組，或用「修正」從 OMSI 2 自己的地圖複製（若那裡有的話）。
 A stop of the timetable that no trip calls at. Nothing is wrong, it is only not used yet.	時刻表中沒有任何班次停靠的站牌。沒有問題，只是尚未使用。
-A chrono scenario takes away, retypes or relabels something that is no longer on the map (it was deleted or its IDCode changed): that change does nothing. Open Map > Chrono scenarios, the scenario's properties, and take the change out.	時序情境移除、變更類型或更改標籤的內容已不在地圖上（已被刪除或其 IDCode 已變更）：該變更不起作用。請開啟 地圖 > 時序情境，進入情境屬性，移除該變更。
-A tile holds far more objects than the stock maps' tiles (up to some 600): the game may stutter when it loads it or looks across it. Thin out a wood planted too densely (Plant brush, Clear) or plant it with more space between the trees.	圖磚上的物件遠多於原版地圖的圖磚（最多約 600 個）：遊戲在載入或遠眺它時可能會卡頓。請疏減種得太密的樹林（植物筆刷，清除），或讓樹木間距更大。
-Street lamps stand on a tile the game does not light from its lamps ([variable_terrainlightmap] is off): at night the ground under them stays dark (unless the tile's light map file was made by OMSI 2's editor). "Fix" turns it on, as on nearly every tile of the stock maps.	路燈位於遊戲不會用燈來照明的圖磚上（[variable_terrainlightmap] 已關閉）：夜間燈下的地面仍然很暗（除非該圖磚的光照圖檔是由 OMSI 2 編輯器製作）。「修復」會將其開啟，如同原版地圖的幾乎所有圖磚。
-An object takes its state ([varparent]) from an object no longer on the map: a signal head stays dark, a display blank. Link it to another in its properties (Linked objects), or "Fix" forgets the link.	某物件從已不在地圖上的物件取得狀態 ([varparent])：號誌燈頭不亮、顯示器空白。請在其屬性（連結的物件）中連結到其他物件，或用「修復」移除該連結。
+A chrono scenario takes away, retypes or relabels something that is no longer on the map (it was deleted or its IDCode changed): that change does nothing. Open Map > Chrono scenarios, the scenario's properties, and take the change out.	時空情境移除、變更類型或更改標籤的內容已不在地圖上（已被刪除或其 IDCode 已變更）：該變更不起作用。請開啟 地圖 > 時空情境，進入情境屬性，移除該變更。
+A tile holds far more objects than the stock maps' tiles (up to some 600): the game may stutter when it loads it or looks across it. Thin out a wood planted too densely (Plant brush, Clear) or plant it with more space between the trees.	圖塊上的物件遠多於原版地圖的圖塊（最多約 600 個）：遊戲在載入或遠眺它時可能會卡頓。請疏減種得太密的樹林（植物筆刷，清除），或讓樹木間距更大。
+Street lamps stand on a tile the game does not light from its lamps ([variable_terrainlightmap] is off): at night the ground under them stays dark (unless the tile's light map file was made by OMSI 2's editor). "Fix" turns it on, as on nearly every tile of the stock maps.	路燈位於遊戲不會用燈來照明的圖塊上（[variable_terrainlightmap] 已關閉）：夜間燈下的地面仍然很暗（除非該圖塊的光照圖檔是由 OMSI 2 編輯器製作）。「修正」會將其開啟，如同原版地圖的幾乎所有圖塊。
+An object takes its state ([varparent]) from an object no longer on the map: a signal head stays dark, a display blank. Link it to another in its properties (Linked objects), or "Fix" forgets the link.	某物件從已不在地圖上的物件取得狀態 ([varparent])：號誌燈頭不亮、顯示器空白。請在其屬性（連結的物件）中連結到其他物件，或用「修正」移除該連結。
 A traffic light's signal head takes its light from a crossing's program ([varparent]); this one is linked to none while others like it are, so it stays dark in the game. Select it and link it in its properties (Linked objects).	紅綠燈的號誌燈頭從路口的程式取得燈號 ([varparent])；此燈未連結任何路口，而同類的燈都有連結，因此在遊戲中不會亮。請選取它並在其屬性（連結的物件）中連結。
-A depot file (.hof) gives the buses their destinations, the stop names on their displays and the routes their IBIS knows. Without one the signs stay empty and the IBIS knows no line. "Fix" makes it from the map's lines, or adds what the lines need to the map's own (Map > Depot files to see and change it).	車庫檔案 (.hof) 提供巴士的終點站、顯示器上的站名，以及其 IBIS 所知的路線。沒有它，標示牌會空白，IBIS 也不認得任何路線。「修復」會依地圖的路線建立一個，或將路線所需的內容加入地圖自己的檔案（地圖 > 車庫檔案 可查看與變更）。
+A depot file (.hof) gives the buses their destinations, the stop names on their displays and the routes their IBIS knows. Without one the signs stay empty and the IBIS knows no line. "Fix" makes it from the map's lines, or adds what the lines need to the map's own (Map > Depot files to see and change it).	車廠檔案 (.hof) 提供巴士的終點站、顯示器上的站名，以及其 IBIS 所知的路線。沒有它，標示牌會空白，IBIS 也不認得任何路線。「修正」會依地圖的路線建立一個，或將路線所需的內容加入地圖自己的檔案（地圖 > 車廠檔案 可查看與變更）。
 A signal route names a signal or track pieces no longer on the map: the signal may never clear. Open Map > Signal routes and take the track again, or delete the route.	號誌路徑指定的號誌或軌道段已不在地圖上：號誌可能永遠不會放行。請開啟 地圖 > 號誌路徑 重新選取軌道，或刪除該路徑。
 font	字型
 used	已使用
 in	於
-a ground texture of the map	地圖的地面紋理
+a ground texture of the map	地圖的地面貼圖
 splines	樣條
 apart	相距
 spline	樣條
@@ -192,13 +192,13 @@ object	物件
 The map has no start point	地圖沒有起點
 things have it	個項目使用它
 highest in use:	已使用的最大值：
-tile	圖磚
+tile	圖塊
 no .terrain file: flat	沒有 .terrain 檔案：平坦
 objects	個物件
 lamps	盞燈
-The map has no depot file	地圖沒有車庫檔案
+The map has no depot file	地圖沒有車廠檔案
 the buses show no destination	巴士不會顯示終點站
-named by the map's depot, but found nowhere	地圖車庫所指定，但到處都找不到
+named by the map's depot, but found nowhere	地圖車廠所指定，但到處都找不到
 knows none of the	一個都不認得
 lacks	缺少
 destinations of the lines	路線的終點站
@@ -207,7 +207,7 @@ destinations	個終點站
 stops	站點
 routes	條路線
 tour	車班
-no depot named	未指定車庫
+no depot named	未指定車廠
 not in the AI lists:	不在 AI 清單中：
 the stop has no object:	站牌沒有物件：
 no road beside	旁邊沒有道路：
@@ -218,11 +218,11 @@ gone	已不存在
 changes of nothing	個無效變更
 time	次
 times	次
-Fix from the map check	從地圖檢查修復
+Fix from the map check	從地圖檢查修正
 Car groups from OMSI 2's maps	來自 OMSI 2 地圖的車輛群組
-A depot for the tour	車班的車庫
-A depot file from the lines	依路線建立車庫檔案
-Depot file: what the lines need	車庫檔案：路線所需內容
+A depot for the tour	車班的車廠
+A depot file from the lines	依路線建立車廠檔案
+Depot file: what the lines need	車廠檔案：路線所需內容
 Map check	地圖檢查
 Check again	重新檢查
 Checking the map…	正在檢查地圖…
@@ -230,11 +230,11 @@ errors	個錯誤
 warnings	個警告
 notes	則備註
 Nothing found: the map looks fine.	沒有發現問題：地圖看起來沒問題。
-Fix all	全部修復
+Fix all	全部修正
 Join	連接
-Fix	修復
+Fix	修正
 Click to fly there	點擊以飛到該處
-Fixed:	已修復：
+Fixed:	已修正：
 it has parts openMapper does not write	其中有 openMapper 不會寫入的部分
 A host on the internet needs a password of at least	網際網路上的主機需要至少
 Type a password, or choose explicitly to host without one	請輸入密碼，或明確選擇不設密碼來主持
@@ -245,7 +245,7 @@ Multiplayer ended: another map was opened	多人編輯已結束：已開啟另�
 Somebody changed this first: your edit was put back	有人先變更了這個：您的編輯已被還原
 The host takes no more: the edit is too big, or the session holds as much as it may. Your edit was put back	主機不再接受：編輯太大，或工作階段已達上限。您的編輯已被還原
 That lies too far from the map for this session: your edit was put back	這離此工作階段的地圖太遠：您的編輯已被還原
-tiles	個圖磚
+tiles	個圖塊
 changed what you were editing: it is as they left it	變更了您正在編輯的內容：已保留其結果
 The timetable, the traffic and the descriptions are the host's in multiplayer: your change was put back	多人編輯時，時刻表、交通和說明由主機負責：您的變更已被還原
 Your conflicting edit was kept	您衝突的編輯已保留
@@ -283,7 +283,7 @@ Tool: Objects	工具：物件
 Tool: Game logic	工具：遊戲邏輯
 Tool: Terrain	工具：地形
 Tool: Paint	工具：上色
-Tool: Tiles	工具：圖磚
+Tool: Tiles	工具：圖塊
 Turn the object (Shift: the other way)	旋轉物件（Shift：反方向）
 Ruler	尺規
 Knife	刀具
@@ -293,7 +293,7 @@ Scale handles	縮放控點
 Edit the mesh (vertices, edges, faces)	編輯網格（頂點、邊、面）
 Join the selected objects into one	將選取的物件合併為一個
 Build the planned road	建造規劃的道路
-Tile grid on / off	圖磚格線 開／關
+Tile grid on / off	圖塊格線 開／關
 Group the selection	將選取內容群組
 Ungroup	取消群組
 Look straight down, north up	向下直視，北方朝上
@@ -326,10 +326,10 @@ Restore the changes	還原變更
 Drop them	捨棄
 Nothing comes after it to join	後面沒有可接合的部分
 The next piece runs the other way: reverse it first	下一段方向相反：請先將它反轉
-The next piece lies on another tile	下一段位於另一個圖磚上
+The next piece lies on another tile	下一段位於另一個圖塊上
 The two pieces are of different road types	兩段的道路類型不同
 The two pieces have different settings (path rules, ground, skew)	兩段的設定不同（路徑規則、地面、傾斜）
-A row of objects comes onto the next piece from another tile	有一排物件從另一個圖磚進入下一段
+A row of objects comes onto the next piece from another tile	有一排物件從另一個圖塊進入下一段
 The two pieces do not bend, climb or bank alike: joined they would change shape	兩段的彎曲、爬升或傾斜方式不同：接合後形狀會改變
 Earlier versions	先前的版本
 Before every save, the files it replaces are kept (the last 10 saves). Going back puts the map as it was before that save; later changes go.	每次儲存前，會保留被取代的檔案（最近 10 次儲存）。返回會將地圖還原為該次儲存之前的狀態；之後的變更會消失。
@@ -350,7 +350,7 @@ Paint	繪製地表
 Roads	道路
 Objects	物件
 Game logic	遊戲邏輯
-Tiles	圖磚
+Tiles	圖塊
 Raise	抬高
 Lower	降低
 Smooth	平滑
@@ -363,7 +363,7 @@ Bus stops	站牌
 Car parks	停車場
 AI paths	AI 路徑
 Other	其他
-Where the bus appears when a drive starts. Put it on a road or in the depot, facing the way to drive.	開始駕駛時巴士出現的位置。請放在道路或車庫上，朝向行駛方向。
+Where the bus appears when a drive starts. Put it on a road or in the depot, facing the way to drive.	開始駕駛時巴士出現的位置。請放在道路或車廠上，朝向行駛方向。
 Where passengers wait. Put it beside the road at the kerb; name it on the right.	乘客等候的位置。請放在道路旁的路緣；名稱在右側設定。
 Where parked cars stand. Click for one; with a row on, click the start and end of a row along the kerb.	停放車輛的位置。點擊放一個；開啟成排後，沿路緣點擊一排的起點與終點。
 Lanes the AI's cars or people follow. Draw like a road: it snaps to lane ends (green: joined, red: dead end) and along lanes. A car path runs the way you draw it.	AI 車輛或行人行走的車道。像畫道路一樣繪製：會吸附到車道端點（綠色：已連接，紅色：死路）及沿車道吸附。車輛路徑依您繪製的方向行進。
@@ -396,7 +396,7 @@ Delete object	刪除物件
 Delete road	刪除道路
 Delete selection	刪除選取內容
 Pick an object in the catalogue first	請先在目錄中選取物件
-There is no tile here: add one with the Tiles tool	此處沒有圖磚：請用「圖磚」工具新增
+There is no tile here: add one with the Tiles tool	此處沒有圖塊：請用「圖塊」工具新增
 Place object	放置物件
 New stop	新站牌
 Linked to	連結至
@@ -413,22 +413,22 @@ Pick a road type in the catalogue first	請先在目錄中選取道路類型
 That bend is too sharp	彎道太急
 Switch made	已建立轉轍器
 Junctions made:	已建立路口：
-The road leaves the map: add tiles there first	道路超出地圖範圍：請先在該處新增圖磚
+The road leaves the map: add tiles there first	道路超出地圖範圍：請先在該處新增圖塊
 Build road	建造道路
 Roads from OpenStreetMap	來自 OpenStreetMap 的道路
 Pick a tree in the catalogue (or add some to the mix) first	請先在目錄中選取樹木（或加入混合）
-Right-click a tile to remove it	右鍵點擊圖磚可移除
-New tiles go next to the map	新圖磚會加在地圖旁邊
-Add tile	新增圖磚
+Right-click a tile to remove it	右鍵點擊圖塊可移除
+New tiles go next to the map	新圖塊會加在地圖旁邊
+Add tile	新增圖塊
 Water	水
 Paint detail	上色細緻度
 Ground layer order	地面圖層順序
-Detail texture	細節紋理
-Ground texture	地面紋理
+Detail texture	細節貼圖
+Ground texture	地面貼圖
 Lamp light on the ground	地面上的路燈光
-Add tiles	新增圖磚
-A map needs at least one tile	地圖至少要保留一個圖磚
-Remove tile	移除圖磚
+Add tiles	新增圖塊
+A map needs at least one tile	地圖至少要保留一個圖塊
+Remove tile	移除圖塊
 Pick a point (a dot at an end or where pieces meet) to take it out	選取一個點（端點或各段相接處的圓點）以移除它
 Remove a point of the path	移除路徑上的點
 Point taken out	已移除該點
@@ -500,13 +500,13 @@ Bus stop: name it in the panel on the right	站牌：請在右側面板中命名
 openOMSI stopped with an error	openOMSI 因錯誤而停止
 Check in openOMSI	在 openOMSI 中檢查
 The saved map run by the game itself, unseen, with its own checks; the picture is the game's, from your view	由遊戲本身在無畫面下執行已儲存的地圖，並進行其自身的檢查；圖片是遊戲從您的視角產生的
-Every tile (slower on a big map)	所有圖磚（大型地圖較慢）
+Every tile (slower on a big map)	所有圖塊（大型地圖較慢）
 Run again	再次執行
 openOMSI is loading the map…	openOMSI 正在載入地圖…
 Nothing wrong found	沒有發現問題
 Problems found:	發現的問題：
 Go there	前往該處
-of the places named lie at the map's edge or a road's dead end (greyed): the game measures a lane's last point on the road's very edge, and a bus at the end stands over it; nothing to mend	所列地點位於地圖邊緣或道路死路端（灰色）：遊戲會在道路最邊緣量測車道的最後一點，而末端的巴士就停在其上；無需修復
+of the places named lie at the map's edge or a road's dead end (greyed): the game measures a lane's last point on the road's very edge, and a bus at the end stands over it; nothing to mend	所列地點位於地圖邊緣或道路死路端（灰色）：遊戲會在道路最邊緣量測車道的最後一點，而末端的巴士就停在其上；無需修正
 The game said nothing about the map	遊戲沒有回報關於地圖的任何內容
 The game's whole output	遊戲的完整輸出
 no key entered	未輸入金鑰
@@ -552,7 +552,7 @@ IBIS and roller blind	IBIS 與捲簾
 Front sign, line 1	前方標示，第 1 行
 Front sign, line 2	前方標示，第 2 行
 Side sign	側面標示
-Roller blind texture	捲簾紋理
+Roller blind texture	捲簾貼圖
 IBIS 2 (20 letters)	IBIS 2（20 字元）
 Extra sign	額外標示
 Krüger picture	Krüger 圖片
@@ -584,9 +584,9 @@ Tracks	軌道
 Footpaths	人行道
 Fences, walls, kerbs	圍欄、牆、路緣
 Technical (AI, helpers)	技術類（AI、輔助物件）
-This map lies on the world's grid ([worldcoordinates]): its tiles cannot be taken yet	此地圖位於世界格網 ([worldcoordinates])：目前還無法取用其圖磚
-This map lies on the world's grid ([worldcoordinates]): tiles cannot be added from another yet	此地圖位於世界格網 ([worldcoordinates])：目前還無法從其他地圖加入圖磚
-Tiles from another map	來自其他地圖的圖磚
+This map lies on the world's grid ([worldcoordinates]): its tiles cannot be taken yet	此地圖位於世界格網 ([worldcoordinates])：目前還無法取用其圖塊
+This map lies on the world's grid ([worldcoordinates]): tiles cannot be added from another yet	此地圖位於世界格網 ([worldcoordinates])：目前還無法從其他地圖加入圖塊
+Tiles from another map	來自其他地圖的圖塊
 Union	聯集
 Difference (cut out)	差集（挖空）
 Intersection	交集
@@ -613,13 +613,13 @@ Tram tracks	電車軌道
 Railway tracks	鐵路軌道
 motorway, trunk, primary, secondary	快速道路、幹道、主要及次要道路
 tertiary, residential, unclassified	三級道路、住宅區道路、未分類道路
-yards, car parks, depots	院落、停車場、車庫
+yards, car parks, depots	院落、停車場、車廠
 each track on its own; branches are joined with switches by hand	每條軌道各自獨立；分岔處以手動用轉轍器連接
 main lines without sidings; branches are joined with switches by hand	無側線的主線；分岔處以手動用轉轍器連接
 Water from OpenStreetMap	來自 OpenStreetMap 的水域
 Give a distance	請指定距離
 The bend is too tight for that distance on its inner side	以此距離而言，內側的彎道太緊
-The copy leaves the map: add tiles there first	複製品超出地圖範圍：請先在該處新增圖磚
+The copy leaves the map: add tiles there first	複製品超出地圖範圍：請先在該處新增圖塊
 Made with openMapper	以 openMapper 製作
 Low (no shadows, rough edges, 3 km view)	低（無陰影、邊緣粗糙、3 公里視距）
 Medium (softer shadows, 8 km view)	中（陰影較柔和、8 公里視距）
@@ -628,7 +628,7 @@ This end belongs to a junction: select the junction and move it, the road follow
 Paint along the roads	沿道路上色
 Market	市場
 Station	車站
-Depot	車庫
+Depot	車廠
 this object takes its model from a model file: it cannot be scaled	此物件的模型來自模型檔：無法縮放
 Not a GPX, KML or GeoJSON file	不是 GPX、KML 或 GeoJSON 檔案
 No lines in the file	檔案中沒有路線
@@ -679,7 +679,7 @@ Find in map…	在地圖中尋找…
 Search for a command…	搜尋指令…
 Delete	刪除
 Deselect	取消選取
-Tile grid	圖磚格線
+Tile grid	圖塊格線
 What the game does not show	遊戲中不顯示的內容
 AI lanes	AI 車道
 Names of stops and start points	站牌與起點的名稱
@@ -693,7 +693,7 @@ Go to selection	前往選取內容
 Camera	攝影機
 Unity: right button looks round and W A S D fly, middle pans, Alt orbits	Unity：右鍵環顧並以 W A S D 飛行，中鍵平移，Alt 環繞
 Map editor: right button looks round and W A S D fly (Q down, E up), middle pans, the wheel zooms to the cursor, drag moves the map	地圖編輯器：右鍵環顧並以 W A S D 飛行（Q 下降，E 上升），中鍵平移，滾輪朝游標縮放，拖曳可移動地圖
-Load 100 tiles at a time (like OMSI 2's editor)	一次載入 100 個圖磚（如 OMSI 2 的編輯器）
+Load 100 tiles at a time (like OMSI 2's editor)	一次載入 100 個圖塊（如 OMSI 2 的編輯器）
 Time of day	時刻
 Plain day (as the game by day)	一般白天（如遊戲中的白天）
 At an hour	指定時刻
@@ -724,17 +724,17 @@ Map	地圖
 Map settings…	地圖設定…
 Calendar and place…	日曆與地點…
 Signal routes…	號誌路徑…
-Chrono scenarios…	時序情境…
-Ground textures…	地面紋理…
+Chrono scenarios…	時空情境…
+Ground textures…	地面貼圖…
 Check map…	檢查地圖…
 Junctions made again:	已重新建立的路口：
 Lines and timetable…	路線與時刻表…
 Traffic and AI…	交通與 AI…
-Depot files (destinations)…	車庫檔案（終點站）…
+Depot files (destinations)…	車廠檔案（終點站）…
 Satellite and terrain…	衛星與地形…
 From OpenStreetMap…	從 OpenStreetMap…
 GPS tracks to trace…	供描繪的 GPS 軌跡…
-Tiles from another map…	來自其他地圖的圖磚…
+Tiles from another map…	來自其他地圖的圖塊…
 Test drive in openOMSI	在 openOMSI 中試駕
 Test drive in OMSI 2 (the original)…	在 OMSI 2（原版）中試駕…
 Check in openOMSI…	在 openOMSI 中檢查…
@@ -745,7 +745,7 @@ Save (Ctrl+S): there are unsaved changes	儲存 (Ctrl+S)：有未儲存的變更
 Save (Ctrl+S)	儲存 (Ctrl+S)
 Import assets: a mod folder or .zip, a .obj / .x / .o3d model (or drop files on the window)	匯入資源：模組資料夾或 .zip、.obj / .x / .o3d 模型（或將檔案拖曳到視窗）
 Redo (Ctrl+Shift+Z)	重做 (Ctrl+Shift+Z)
-Tile grid (G)	圖磚格線 (G)
+Tile grid (G)	圖塊格線 (G)
 Assets: every object and road type, with pictures (B)	資源：所有物件與道路類型，含圖片 (B)
 Test drive	試駕
 Save the map and drive it in openOMSI (F5)	儲存地圖並在 openOMSI 中駕駛 (F5)
@@ -755,11 +755,11 @@ See this view in openOMSI	在 openOMSI 中查看此視角
 loading	載入中
 Edit mesh	編輯網格
 Shapes and lamps	形狀與燈
-Click beside the map to add a 300 × 300 m tile. Right-click a tile to remove it.	點擊地圖旁邊可新增 300 × 300 m 的圖磚。右鍵點擊圖磚可移除。
+Click beside the map to add a 300 × 300 m tile. Right-click a tile to remove it.	點擊地圖旁邊可新增 300 × 300 m 的圖塊。右鍵點擊圖塊可移除。
 Area	區域
-A ring of tiles round the map	地圖周圍的一圈圖磚
-Every free place beside the map, corners too, gets a tile at the height of its neighbours	地圖旁每個空位（包括角落）都會得到與鄰近圖磚等高的圖磚
-Tiles added:	已新增圖磚：
+A ring of tiles round the map	地圖周圍的一圈圖塊
+Every free place beside the map, corners too, gets a tile at the height of its neighbours	地圖旁每個空位（包括角落）都會得到與鄰近圖塊等高的圖塊
+Tiles added:	已新增圖塊：
 Everything on the map, grouped by the folders its files lie in	地圖上的所有內容，依檔案所在資料夾分組
 Click an object or a road in the view to see and change it on the right.	在視圖中點擊物件或道路，即可在右側查看並變更。
 Line up with the nearest road (Shift: put it freely)	對齊最近的道路（Shift：自由放置）
@@ -815,7 +815,7 @@ Softens bumps and edges	使凸起與邊緣變柔和
 Raises the ground under the brush	抬高筆刷下的地面
 Lowers the ground under the brush	降低筆刷下的地面
 Gives flat ground the rolls and dips of a natural field; hold longer for more	讓平坦的地面出現自然田野般的起伏；按住越久越明顯
-Paint a lake or a river: the ground is dug to a bed under the water's level (where you start the stroke, or the tile's water) and the tile gets water at that level. Water in OMSI is one level for a whole tile: another low place on the same tile shows it too	繪製湖或河：地面會挖成水位以下的河床（水位取自筆劃起點處或圖磚的水面），圖磚也會得到該水位的水。OMSI 中整個圖磚只有一個水位：同一圖磚上其他低窪處也會顯示水
+Paint a lake or a river: the ground is dug to a bed under the water's level (where you start the stroke, or the tile's water) and the tile gets water at that level. Water in OMSI is one level for a whole tile: another low place on the same tile shows it too	繪製湖或河：地面會挖成水位以下的河床（水位取自筆劃起點處或圖塊的水面），圖塊也會得到該水位的水。OMSI 中整個圖塊只有一個水位：同一圖塊上其他低窪處也會顯示水
 Click where it starts, then where it ends: the ground between becomes one even slope as wide as the brush (an embankment, a ramp, a level bed)	先點擊起點，再點擊終點：兩者之間的地面會變成與筆刷同寬的均勻斜坡（路堤、坡道、平整路基）
 To a height	到指定高度
 Flatten to the height typed instead of the one where the drag starts (a level square, a platform)	整平到輸入的高度，而非拖曳起點處的高度（平整的廣場、平台）
@@ -823,7 +823,7 @@ Depth	深度
 The water's level is set where a stroke starts: start at the bank.	水位取自筆劃起點：請從岸邊開始。
 Brush	筆刷
 Flatten the whole terrain	整平整個地形
-Every tile's ground levelled to the map's mean height; the roads, the AI paths and the junctions follow it. One undo step brings the relief back. (The satellite picture: View > Satellite overlay.)	所有圖磚的地面都會整平到地圖的平均高度；道路、AI 路徑和路口會跟隨。一次復原即可還原地形起伏。（衛星圖片：檢視 > 衛星疊圖。）
+Every tile's ground levelled to the map's mean height; the roads, the AI paths and the junctions follow it. One undo step brings the relief back. (The satellite picture: View > Satellite overlay.)	所有圖塊的地面都會整平到地圖的平均高度；道路、AI 路徑和路口會跟隨。一次復原即可還原地形起伏。（衛星圖片：檢視 > 衛星疊圖。）
 Ground layers	地面圖層
 base ground	基礎地面
 layer	圖層
@@ -831,28 +831,28 @@ Add…	新增…
 Remove	移除
 Up the list: drawn under the layers after it	往上移：繪製在後面的圖層之下
 Down the list: drawn over the layers before it	往下移：繪製在前面的圖層之上
-Texture	紋理
+Texture	貼圖
 The layer's picture; its painting stays	圖層的圖片；其上色會保留
-A fine grain laid over the texture, seen close up (OMSI's detail texture)	疊在紋理上的細緻顆粒，近看可見（OMSI 的細節紋理）
+A fine grain laid over the texture, seen close up (OMSI's detail texture)	疊在貼圖上的細緻顆粒，近看可見（OMSI 的細節貼圖）
 Click to choose another	點擊以選擇其他
-Repeats per tile	每圖磚重複數
+Repeats per tile	每圖塊重複數
 Detail repeats	細節重複數
-How finely this layer can be painted: texels across a tile (its masks are made again at the new size)	此圖層可上色的細緻程度：每個圖磚橫向的紋素數（遮罩會依新尺寸重新產生）
-Edit ground texture	編輯地面紋理
+How finely this layer can be painted: texels across a tile (its masks are made again at the new size)	此圖層可上色的細緻程度：每個圖塊橫向的紋素數（遮罩會依新尺寸重新產生）
+Edit ground texture	編輯地面貼圖
 Erase	擦除
-Remove ground texture	移除地面紋理
-Tile	圖磚
-A water surface over the whole tile: it shows where the ground lies below it (lower the ground with the Terrain tool for a lake or a river)	覆蓋整個圖磚的水面：在其下方地面較低處可見（用「地形」工具降低地面即可做出湖或河）
+Remove ground texture	移除地面貼圖
+Tile	圖塊
+A water surface over the whole tile: it shows where the ground lies below it (lower the ground with the Terrain tool for a lake or a river)	覆蓋整個圖塊的水面：在其下方地面較低處可見（用「地形」工具降低地面即可做出湖或河）
 at 	於
 Lamps light the ground at night	路燈夜間照亮地面
-The game works out the light pools of the street lamps on and round this tile when it loads it ([variable_terrainlightmap]); off, it shows the tile's light map file as it is	遊戲在載入此圖磚時，會計算它及周圍路燈的光斑 ([variable_terrainlightmap])；關閉時，則照原樣顯示圖磚的光照圖檔
+The game works out the light pools of the street lamps on and round this tile when it loads it ([variable_terrainlightmap]); off, it shows the tile's light map file as it is	遊戲在載入此圖塊時，會計算它及周圍路燈的光斑 ([variable_terrainlightmap])；關閉時，則照原樣顯示圖塊的光照圖檔
 Edit history	編輯記錄
 Click a step to go back to just after it	點擊某一步，回到該步驟剛完成之後的狀態
 Opened	已開啟
 Properties	屬性
 Configure PBR	設定 PBR
 Create PBR	建立 PBR
-Normal, roughness, metal and shadow maps made from the object's textures, tuned and written as openOMSI reads them	由物件的紋理產生法線、粗糙度、金屬與陰影貼圖，調整後以 openOMSI 讀取的方式寫入
+Normal, roughness, metal and shadow maps made from the object's textures, tuned and written as openOMSI reads them	由物件的貼圖產生法線、粗糙度、金屬與陰影貼圖，調整後以 openOMSI 讀取的方式寫入
 Type	類型
 Hangs on	掛在
 point	點
@@ -883,9 +883,9 @@ colour only	僅顏色
 opaque	不透明
 cut out	鏤空
 blended	半透明
-How the texture's transparency is used: cut out for leaves and fences, blended for glass	紋理透明度的用法：鏤空用於樹葉和圍欄，半透明用於玻璃
-Textures	紋理
-Normal, roughness, metal and shadow maps made from the road type's textures	由道路類型的紋理產生法線、粗糙度、金屬與陰影貼圖
+How the texture's transparency is used: cut out for leaves and fences, blended for glass	貼圖透明度的用法：鏤空用於樹葉和圍欄，半透明用於玻璃
+Textures	貼圖
+Normal, roughness, metal and shadow maps made from the road type's textures	由道路類型的貼圖產生法線、粗糙度、金屬與陰影貼圖
 Length	長度
 Radius	半徑
 right	右
@@ -928,8 +928,8 @@ Open the map with this view	以此視角開啟地圖
 The camera as it is now is where the map opens (here and in OMSI 2's editor).	目前的相機位置就是地圖開啟時的視角（此處及 OMSI 2 編輯器皆然）。
 Saved to	儲存至
 Edit map	編輯地圖
-Change the layer's texture	變更圖層的紋理
-Change the layer's detail texture	變更圖層的細節紋理
+Change the layer's texture	變更圖層的貼圖
+Change the layer's detail texture	變更圖層的細節貼圖
 Controls	操作方式
 Keyboard	鍵盤
 Click a key, then press the new one (Esc: leave it). A key already in use is taken from its command.	點擊一個按鍵，再按新的按鍵（Esc：保持不變）。已被使用的按鍵會從原指令移走。
@@ -1028,8 +1028,8 @@ The scenario's things are on the map:	情境的項目已在地圖上：
 what you place now is the scenario's too	您現在放置的內容也屬於此情境
 Editing the scenario	正在編輯情境
 Done	完畢
-Chrono scenarios	時序情境
-How the map changes over the years: each scenario from its first day lays its own tiles, lines and tickets over the map. The view shows the map as on the day chosen here; what you edit is always the map itself.	地圖隨年份的變化：每個情境從其第一天起，在地圖上疊加自己的圖磚、路線與車票。視圖顯示此處所選日期的地圖；您編輯的永遠是地圖本身。
+Chrono scenarios	時空情境
+How the map changes over the years: each scenario from its first day lays its own tiles, lines and tickets over the map. The view shows the map as on the day chosen here; what you edit is always the map itself.	地圖隨年份的變化：每個情境從其第一天起，在地圖上疊加自己的圖塊、路線與車票。視圖顯示此處所選日期的地圖；您編輯的永遠是地圖本身。
 Show the map as on	顯示地圖於
 Today	今天
 Active on that day:	該日生效：
@@ -1070,13 +1070,13 @@ The Lines window shows its timetable (the map's with its own laid over): lines, 
 Done with its timetable	完成時刻表
 Edit its timetable	編輯其時刻表
 Its own lines, trips and tours in the Lines window; Done writes only what differs from the map's (undo starts afresh)	在路線視窗中查看其自身的路線、班次與車班；「完成」只寫入與地圖不同之處（復原記錄重新開始）
-The Traffic window shows its AI lists (the map's with its own added): vehicles and type groups added there, and a depot's own depot file, are the scenario's from its day.	交通視窗顯示其 AI 清單（地圖的清單加上其自身新增的）：在那裡新增的車輛與類型群組，以及車庫自己的車庫檔案，自其日期起屬於情境。
+The Traffic window shows its AI lists (the map's with its own added): vehicles and type groups added there, and a depot's own depot file, are the scenario's from its day.	交通視窗顯示其 AI 清單（地圖的清單加上其自身新增的）：在那裡新增的車輛與類型群組，以及車廠自己的車廠檔案，自其日期起屬於情境。
 Done with its AI lists	完成 AI 清單
 Edit its AI lists	編輯其 AI 清單
-Vehicles it adds to the groups and depots (OMSI's ailists_#upd.cfg); taking one away is the map's own business	它加入群組與車庫的車輛（OMSI 的 ailists_#upd.cfg）；移除車輛屬於地圖本身的事務
+Vehicles it adds to the groups and depots (OMSI's ailists_#upd.cfg); taking one away is the map's own business	它加入群組與車廠的車輛（OMSI 的 ailists_#upd.cfg）；移除車輛屬於地圖本身的事務
 Write the scenario	寫入情境
 Close	關閉
-The map has no chrono scenarios.	地圖沒有時序情境。
+The map has no chrono scenarios.	地圖沒有時空情境。
 from	從
 to	至
 takes off	撤除
@@ -1201,7 +1201,7 @@ No wire spline installed (one whose name says Fahrdraht, Oberleitung or wire)	�
 Lay it	鋪設
 Wire pieces laid:	已鋪設電線段數：
 Paint the ground along it	沿其為地面上色
-Add a ground texture in the Paint tool first: the base ground is under everything	請先在「上色」工具中新增地面紋理：基礎地面在最底層
+Add a ground texture in the Paint tool first: the base ground is under everything	請先在「上色」工具中新增地面貼圖：基礎地面在最底層
 Layer	圖層
 Where	位置
 beside it	旁邊
@@ -1270,16 +1270,16 @@ More: type to narrow the list	還有更多：輸入文字縮小清單
 Replaced:	已取代：
 Satellite overlay	衛星疊圖
 Satellite and own pictures	衛星與自有圖片
-Click a tile to see its overlay here.	點擊圖磚即可在此查看其疊圖。
+Click a tile to see its overlay here.	點擊圖塊即可在此查看其疊圖。
 Show the overlay	顯示疊圖
 opacity	不透明度
 Load satellite imagery	載入衛星影像
 Place the map on the Earth first (Satellite and terrain…)	請先將地圖放在地球上（衛星與地形…）
 Load image file…	載入圖片檔…
-Your own picture for this tile (a scan, a screenshot): or drop it on the window	此圖磚專用的自有圖片（掃描檔、螢幕截圖）：或將它拖曳到視窗
+Your own picture for this tile (a scan, a screenshot): or drop it on the window	此圖塊專用的自有圖片（掃描檔、螢幕截圖）：或將它拖曳到視窗
 Load the OpenStreetMap map	載入 OpenStreetMap 地圖
-OpenStreetMap map for all tiles	所有圖磚的 OpenStreetMap 地圖
-The map as openstreetmap.org draws it (streets with their names, houses, water, green, stop signs), drawn sharp from OpenStreetMap data and laid on the tile in place of a satellite picture: to build roads and houses over by eye. Nothing is generated from it.	如 openstreetmap.org 所繪製的地圖（含名稱的街道、房屋、水域、綠地、站牌標誌），由 OpenStreetMap 資料清晰繪出並鋪在圖磚上取代衛星圖片：方便目測在上面建造道路和房屋。不會由此產生任何內容。
+OpenStreetMap map for all tiles	所有圖塊的 OpenStreetMap 地圖
+The map as openstreetmap.org draws it (streets with their names, houses, water, green, stop signs), drawn sharp from OpenStreetMap data and laid on the tile in place of a satellite picture: to build roads and houses over by eye. Nothing is generated from it.	如 openstreetmap.org 所繪製的地圖（含名稱的街道、房屋、水域、綠地、站牌標誌），由 OpenStreetMap 資料清晰繪出並鋪在圖塊上取代衛星圖片：方便目測在上面建造道路和房屋。不會由此產生任何內容。
 own picture	自有圖片
 for an earlier placement	適用於先前的放置
 not kept with the map	不隨地圖保存
@@ -1289,25 +1289,25 @@ Place the map on the Earth first.	請先將地圖放在地球上。
 Load terrain heights	載入地形高度
 Done:	完成：
 with problems	有問題
-A picture for the tiles	圖磚用的圖片
+A picture for the tiles	圖塊用的圖片
 Could not read the picture	無法讀取圖片
 Could not copy the picture	無法複製圖片
-The picture is on the tiles: line it up in Satellite and terrain, Own pictures.	圖片已套用在圖磚上：請在「衛星與地形」的「自有圖片」中對齊。
+The picture is on the tiles: line it up in Satellite and terrain, Own pictures.	圖片已套用在圖塊上：請在「衛星與地形」的「自有圖片」中對齊。
 Nothing found by that name.	找不到該名稱的內容。
-Some tiles had Google imagery: enter your Google key to see it again (it is not kept with the map).	部分圖磚曾有 Google 影像：請輸入您的 Google 金鑰以再次查看（不隨地圖保存）。
+Some tiles had Google imagery: enter your Google key to see it again (it is not kept with the map).	部分圖塊曾有 Google 影像：請輸入您的 Google 金鑰以再次查看（不隨地圖保存）。
 Satellite and terrain	衛星與地形
 Find a place: a town, a street, an address… (Enter)	尋找地點：城鎮、街道、地址… (Enter)
 Searching…	搜尋中…
 Search © OpenStreetMap contributors	搜尋 © OpenStreetMap 貢獻者
-This map has world coordinates ([worldcoordinates]): it lies on the Earth by itself, its tiles are Web Mercator tiles.	此地圖有世界座標 ([worldcoordinates])：它自己就位於地球上，其圖磚為 Web Mercator 圖磚。
-Click on the map where the orange tile goes…	點擊地圖上橘色圖磚要放的位置…
+This map has world coordinates ([worldcoordinates]): it lies on the Earth by itself, its tiles are Web Mercator tiles.	此地圖有世界座標 ([worldcoordinates])：它自己就位於地球上，其圖塊為 Web Mercator 圖塊。
+Click on the map where the orange tile goes…	點擊地圖上橘色圖塊要放的位置…
 Place the map here	將地圖放在這裡
-Then click on the map: the middle of the orange tile goes there	然後點擊地圖：橘色圖磚的中心會放在那裡
+Then click on the map: the middle of the orange tile goes there	然後點擊地圖：橘色圖塊的中心會放在那裡
 At the view's middle	放在視圖中心
 North turned	北方旋轉
-Orange tile	橘色圖磚
+Orange tile	橘色圖塊
 click the map to fly there in the view	點擊地圖：視圖飛到該處
-1. Find the place.  2. Press "Place the map here" and click on the map: the orange tile (the map's middle) goes there.	1. 尋找地點。 2. 按「將地圖放在這裡」並點擊地圖：橘色圖磚（地圖中心）會放在那裡。
+1. Find the place.  2. Press "Place the map here" and click on the map: the orange tile (the map's middle) goes there.	1. 尋找地點。 2. 按「將地圖放在這裡」並點擊地圖：橘色圖塊（地圖中心）會放在那裡。
 Imagery	影像
 The sharpest here	此處最清晰的
 cm a pixel here	公分／像素（此處）
@@ -1317,56 +1317,56 @@ Sharper imagery may be had here with your own free key for Mapbox, MapTiler or G
 Terms of use	使用條款
 Zoom	縮放
 the finest here	此處最精細的
-Picture of a tile	圖磚的圖片
+Picture of a tile	圖塊的圖片
 every pixel of the source (up to 4096)	來源的每個像素（最高 4096）
 Loaded at	載入解析度
 cm a pixel	公分／像素
 Also load terrain heights	同時載入地形高度
-New tiles get imagery by themselves	新圖磚會自動取得影像
-Load for all tiles	載入至所有圖磚
-For the selected tile	對所選圖磚
-Click a tile with the Tiles tool (7)	用「圖磚」工具點擊圖磚 (7)
+New tiles get imagery by themselves	新圖塊會自動取得影像
+Load for all tiles	載入至所有圖塊
+For the selected tile	對所選圖塊
+Click a tile with the Tiles tool (7)	用「圖塊」工具點擊圖塊 (7)
 Terrain heights only	僅地形高度
 of	共
-tiles beside the loaded heights were not loaded: the ground steps at their edge.	個緊鄰已載入高度的圖磚未載入：其邊緣的地面會出現落差。
+tiles beside the loaded heights were not loaded: the ground steps at their edge.	個緊鄰已載入高度的圖塊未載入：其邊緣的地面會出現落差。
 Fit their edges	貼合其邊緣
-Their edge takes the loaded heights, fading out 60 m into the tile	其邊緣採用已載入的高度，並在圖磚內 60 m 範圍內漸隱
+Their edge takes the loaded heights, fading out 60 m into the tile	其邊緣採用已載入的高度，並在圖塊內 60 m 範圍內漸隱
 Leave them	保持原樣
 Terrain heights	地形高度
-Relative: the orange tile's mean height is 0 m	相對：橘色圖磚的平均高度為 0 m
+Relative: the orange tile's mean height is 0 m	相對：橘色圖塊的平均高度為 0 m
 Raise everything by	全部抬高
 Taken off:	已扣除：
 Measure again	重新量測
 Terrain data attribution	地形資料出處
 Overlay on the ground	地面疊圖
 Put the imagery into maps exported for sharing (check its licence first)	在匯出分享的地圖中包含影像（請先確認其授權）
-Fit tile edges	貼合圖磚邊緣
+Fit tile edges	貼合圖塊邊緣
 Keys for more sources (optional)	其他來源的金鑰（選用）
 Everything works without a key. With your own free key these may be sharper in some places; the key stays on this computer.	不用金鑰也能運作。使用您自己的免費金鑰，這些來源在某些地方可能更清晰；金鑰只留在這台電腦上。
 Google satellite (needs your API key)	Google 衛星（需要您的 API 金鑰）
 get a key	取得金鑰
 In Google Cloud: make a project, enable the Map Tiles API, create an API key, paste it here. Google bills by use above its free amount.	在 Google Cloud：建立專案，啟用 Map Tiles API，建立 API 金鑰並貼到這裡。超出免費額度的部分由 Google 依用量計費。
 key	金鑰
-Your own tile server	您自己的圖磚伺服器
+Your own tile server	您自己的圖塊伺服器
 URL	URL
 Attribution	出處
 Finest zoom	最精細縮放
 Kind	種類
-XYZ / WMTS tiles	XYZ / WMTS 圖磚
+XYZ / WMTS tiles	XYZ / WMTS 圖塊
 Terrarium heights	Terrarium 高度
 {z} {x} {y} are filled in; a WMS gets {bbox} (EPSG:3857) and {width} {height}; {key} is your key.	會填入 {z} {x} {y}；WMS 會得到 {bbox} (EPSG:3857) 與 {width} {height}；{key} 為您的金鑰。
 Add	新增
 Own pictures	自有圖片
-A scan, a screenshot, an old plan: laid on tiles and lined up by eye. No place on the Earth needed.	掃描檔、螢幕截圖、舊平面圖：鋪在圖磚上並以目測對齊。不需要放在地球上的位置。
-Tiles from	圖磚來自
-Load image file over these tiles…	將圖片檔載入這些圖磚上…
+A scan, a screenshot, an old plan: laid on tiles and lined up by eye. No place on the Earth needed.	掃描檔、螢幕截圖、舊平面圖：鋪在圖塊上並以目測對齊。不需要放在地球上的位置。
+Tiles from	圖塊來自
+Load image file over these tiles…	將圖片檔載入這些圖塊上…
 Turn left 90°	左轉 90°
 Turn right 90°	右轉 90°
 mirror left-right	左右鏡像
 mirror top-bottom	上下鏡像
 Reset	重設
 Your own pictures	您的自有圖片
-of these tiles have your own pictures. Replace them with satellite imagery?	個圖磚有您的自有圖片。要用衛星影像取代它們嗎？
+of these tiles have your own pictures. Replace them with satellite imagery?	個圖塊有您的自有圖片。要用衛星影像取代它們嗎？
 Replace them	取代它們
 Keep my pictures	保留我的圖片
 Groups for other maps	供其他地圖使用的群組
@@ -1381,7 +1381,7 @@ Delete the group (to openMapper's bin)	刪除群組（移至 openMapper 資源�
 Use	使用
 Into the clipboard: Ctrl+V puts it down at the cursor, as often as wanted	放入剪貼簿：Ctrl+V 可在游標處放下，次數不限
 is in the clipboard: Ctrl+V puts it at the cursor	已在剪貼簿中：Ctrl+V 可在游標處放下
-The map's tiles: 300 m squares. Add more beside them with the Tiles tool.	地圖的圖磚：300 m 見方。可用「圖磚」工具在旁邊新增。
+The map's tiles: 300 m squares. Add more beside them with the Tiles tool.	地圖的圖塊：300 m 見方。可用「圖塊」工具在旁邊新增。
 A road	一條道路
 Roads tool: click where it starts, then where it ends. Click on a road's end to go on from it.	「道路」工具：先點擊起點，再點擊終點。點擊道路端點可由此繼續。
 A bus stop by the road	道路旁的站牌
@@ -1393,9 +1393,9 @@ Lines window: New line, New trip, then click the stops in order. The way is foun
 A tour with departures	含發車的車班
 Lines window > Tours and times: New tour, then Fill from … to … .	路線視窗 > 車班與時間：新增車班，然後「從 … 到 … 填入」。
 Buses for the tours	車班用的巴士
-A depot the tours take their buses from (Tours: Add a depot, or Traffic and AI).	車班領取巴士的車庫（車班：新增車庫，或交通與 AI）。
+A depot the tours take their buses from (Tours: Add a depot, or Traffic and AI).	車班領取巴士的車廠（車班：新增車廠，或交通與 AI）。
 Checked	已檢查
-Map > Check map: what would go wrong in the game, most of it put right with one click.	地圖 > 檢查地圖：找出遊戲中會出問題之處，大部分一鍵即可修復。
+Map > Check map: what would go wrong in the game, most of it put right with one click.	地圖 > 檢查地圖：找出遊戲中會出問題之處，大部分一鍵即可修正。
 Saved	已儲存
 Ctrl+S. Maps are saved into openOMSI's content folder.	Ctrl+S。地圖會儲存到 openOMSI 的內容資料夾。
 A test drive	試駕
@@ -1405,23 +1405,23 @@ Show me	帶我看
 Your stops stand away from the roads: a bus serves a stop within 15 m of its lane.	您的站牌離道路太遠：巴士只服務離其車道 15 m 以內的站牌。
 A real place? Put the map on the Earth (Map > Satellite and terrain), then Map > From OpenStreetMap brings its streets, stops, lines and trees.	真實地點？請將地圖放在地球上（地圖 > 衛星與地形），再用 地圖 > 從 OpenStreetMap 帶入其街道、站牌、路線與樹木。
 Show this for new maps	新地圖時顯示此內容
-The map has no depot file.	地圖沒有車庫檔案。
+The map has no depot file.	地圖沒有車廠檔案。
 Make one from the lines	依路線建立
 The map has no trips yet (Map > Lines and timetable)	地圖尚無班次（地圖 > 路線與時刻表）
 Empty one	空白
 New	新增
-A new depot file from the map's lines	依地圖路線建立新的車庫檔案
-Delete this depot file	刪除此車庫檔案
+A new depot file from the map's lines	依地圖路線建立新的車廠檔案
+Delete this depot file	刪除此車廠檔案
 The lines need	路線所需
 Add them	加入
 What is there stays as it is	現有內容保持不變
-No depot group uses it.	沒有任何車庫群組使用它。
-Used by the depot	使用它的車庫
-Use it for every depot	用於所有車庫
-The AI's depot groups (Vehicle groups tab) take their buses' destinations from it	AI 的車庫群組（車輛群組分頁）從中取得其巴士的終點站
+No depot group uses it.	沒有任何車廠群組使用它。
+Used by the depot	使用它的車廠
+Use it for every depot	用於所有車廠
+The AI's depot groups (Vehicle groups tab) take their buses' destinations from it	AI 的車廠群組（車輛群組分頁）從中取得其巴士的終點站
 Rename	重新命名
 not a usable name	不是可用的名稱
-The destination a bus shows on its way to and from the depot	巴士往返車庫途中顯示的終點站
+The destination a bus shows on its way to and from the depot	巴士往返車廠途中顯示的終點站
 Destinations	終點站
 Stops	站牌
 Routes	路線
@@ -1467,7 +1467,7 @@ Dec	12月
 Map settings	地圖設定
 Money	貨幣
 Tickets	車票
-none: the map has no depot group (Traffic and AI)	無：地圖沒有車庫群組（交通與 AI）
+none: the map has no depot group (Traffic and AI)	無：地圖沒有車廠群組（交通與 AI）
 Years	年份
 Year offset	年份偏移
 Added to today's year when the game starts at the real date (Berlin-Spandau: -25 for the 1980s)	遊戲以真實日期啟動時加到今年的數值（Berlin-Spandau：-25 即為 1980 年代）
@@ -1489,8 +1489,8 @@ Keep for other maps…	保存供其他地圖使用…
 Its ground, painting, water, objects and roads, put beside or into this map. Lines, timetable and AI lists stay with the other map.	其地面、上色、水域、物件與道路，放在此地圖旁邊或併入其中。路線、時刻表與 AI 清單仍屬於另一張地圖。
 Choose a map…	選擇地圖…
 Other…	其他…
-A map to take tiles from (its global.cfg)	要取用圖磚的地圖（其 global.cfg）
-Grey: this map · orange: the tiles to add (click to take one or leave it) · red: on a tile of this map, left out	灰色：此地圖 · 橘色：要加入的圖磚（點擊以取用或略過）· 紅色：位於此地圖的圖磚上，不取用
+A map to take tiles from (its global.cfg)	要取用圖塊的地圖（其 global.cfg）
+Grey: this map · orange: the tiles to add (click to take one or leave it) · red: on a tile of this map, left out	灰色：此地圖 · 橘色：要加入的圖塊（點擊以取用或略過）· 紅色：位於此地圖的圖塊上，不取用
 Move:	移動：
 west	西
 east	東
@@ -1500,7 +1500,7 @@ Raise it by	抬高
 Its ground, water, roads and objects at a height of their own	其地面、水域、道路與物件使用自己的高度
 Ease the ground where the maps meet	緩和兩張地圖交界處的地面
 Added	已加入
-tiles from the other map	個來自另一張地圖的圖磚
+tiles from the other map	個來自另一張地圖的圖塊
 Cube	立方體
 Plane	平面
 Circle	圓形
@@ -1586,10 +1586,10 @@ Modifiers	修改器
 Make it part of the mesh	設為網格的一部分
 Add a modifier	新增修改器
 Materials	材質
-Colour (multiplies the texture)	顏色（與紋理相乘）
+Colour (multiplies the texture)	顏色（與貼圖相乘）
 Assign to selected faces	指定給選取的面
 Choose…	選擇…
-No texture	無紋理
+No texture	無貼圖
 Save as…	另存為…
 PNG, JPEG, BMP, TGA, TIFF, WebP or DDS	PNG、JPEG、BMP、TGA、TIFF、WebP 或 DDS
 Transparency	透明度
@@ -1601,7 +1601,7 @@ Light of its own: black for none	自身的光：黑色為無
 Shine	光澤
 Normal map	法線貼圖
 ORM map	ORM 貼圖
-Night texture	夜間紋理
+Night texture	夜間貼圖
 Light map	光照圖
 Remove the material	刪除材質
 Add a material	新增材質
@@ -1627,7 +1627,7 @@ The pool of light a street lamp throws at night	路燈夜間投下的光斑
 Signal head, lamps	號誌燈頭、燈
 Put it within 40 m of a crossing with a light program: it takes its light from it (or link it in its properties)	請放在有燈號程式的路口 40 m 以內：它會從路口取得燈號（或在屬性中連結）
 Bake	烘焙
-Its textures and colours painted into one picture on a new UV map (one material: fewer draws in the game), with its own shadows and its lamps' night light if chosen	其紋理和顏色烘焙成一張圖片，放在新的 UV 貼圖上（一個材質：遊戲中繪製次數更少），可選擇包含其自身陰影及燈的夜間光照
+Its textures and colours painted into one picture on a new UV map (one material: fewer draws in the game), with its own shadows and its lamps' night light if chosen	其貼圖和顏色烘焙成一張圖片，放在新的 UV 貼圖上（一個材質：遊戲中繪製次數更少），可選擇包含其自身陰影及燈的夜間光照
 Ambient occlusion	環境光遮蔽
 How far its shadows reach	其陰影延伸的距離
 Lamps' light at night (light map)	夜間燈光（光照圖）
@@ -1735,7 +1735,7 @@ A traffic light of the lamps below that a crossing's light program drives	由下
 Lamps:	燈：
 Picture, light, sound	圖片、光、聲音
 Picture / pattern…	圖片／圖案…
-Choose a picture or a texture: it becomes an object you place, move, turn and scale like any other. Several repeats make a pattern	選擇圖片或紋理：它會成為可像其他物件一樣放置、移動、旋轉和縮放的物件。多次重複可形成圖案
+Choose a picture or a texture: it becomes an object you place, move, turn and scale like any other. Several repeats make a pattern	選擇圖片或貼圖：它會成為可像其他物件一樣放置、移動、旋轉和縮放的物件。多次重複可形成圖案
 Light source	光源
 A lamp that glows and lights the ground round it	會發光並照亮周圍地面的燈
 Sound source…	音源…
@@ -1775,7 +1775,7 @@ mild winter	溫和冬季
 summer only	僅夏季
 Rail:	軌道：
 trams and trains follow their tracks' switches	電車與火車依軌道的轉轍器行駛
-Ground texture (all tiles):	地面紋理（所有圖磚）：
+Ground texture (all tiles):	地面貼圖（所有圖塊）：
 template	範本
 More ground layers are painted later (Paint tool); the map's settings can all be changed in Map > Map settings.	其他地面圖層稍後再上色（「上色」工具）；地圖的所有設定都可在 地圖 > 地圖設定 中變更。
 Create	建立
@@ -1783,10 +1783,10 @@ as the template	同範本
 ways	條路
 bus routes downloaded	條巴士路線已下載
 not had:	未取得：
-The streets of the map's place built as roads with junctions where they meet, its bus stops, lines, trees and woods. Best on tiles with no roads yet: roads lying on ones the map has are left out.	依地圖所在地的街道建立道路，相交處設路口，並帶入其站牌、路線、樹木與樹林。最適合尚無道路的圖磚：與地圖已有道路重疊的道路會被略過。
+The streets of the map's place built as roads with junctions where they meet, its bus stops, lines, trees and woods. Best on tiles with no roads yet: roads lying on ones the map has are left out.	依地圖所在地的街道建立道路，相交處設路口，並帶入其站牌、路線、樹木與樹林。最適合尚無道路的圖塊：與地圖已有道路重疊的道路會被略過。
 The map does not lie on the Earth yet: place it in Satellite and terrain (Map menu, I) first.	地圖尚未放在地球上：請先在「衛星與地形」中放置（地圖選單，I）。
 Load the terrain heights first (Satellite and terrain): the roads follow the ground as it is when they are built.	請先載入地形高度（衛星與地形）：道路會依建造時的地面起伏鋪設。
-Download for the map's tiles	下載地圖圖磚範圍的資料
+Download for the map's tiles	下載地圖圖塊範圍的資料
 bus routes	巴士路線
 trees	樹木
 buildings	建築
@@ -1811,7 +1811,7 @@ Each outline filled with the model of the folder chosen whose ground plan comes 
 no folder	沒有資料夾
 + its folder	+ 其資料夾
 Add the folder of the object chosen in the catalogue (Buildings_MC, …)	加入目錄中所選物件的資料夾 (Buildings_MC, …)
-Lakes and rivers: the ground inside them lowered below the banks, and the tiles they lie on given water a little under the banks' height (OMSI's water is one level for a tile: low ground elsewhere on it is flooded too)	湖泊與河流：其內的地面降到岸邊以下，所在圖磚加上略低於岸邊高度的水（OMSI 的水每個圖磚只有一個水位：圖磚上其他低處也會被淹沒）
+Lakes and rivers: the ground inside them lowered below the banks, and the tiles they lie on given water a little under the banks' height (OMSI's water is one level for a tile: low ground elsewhere on it is flooded too)	湖泊與河流：其內的地面降到岸邊以下，所在圖塊加上略低於岸邊高度的水（OMSI 的水每個圖塊只有一個水位：圖塊上其他低處也會被淹沒）
 deep	深
 a road type (Roads tool), then "Use the chosen"	道路類型（道路工具），然後按「使用所選的」
 a stop (Game logic > Bus stops), then "Use the chosen"	站牌（遊戲邏輯 > 站牌），然後按「使用所選的」
@@ -1839,7 +1839,7 @@ Select a road, pick an object in the Objects catalogue: Objects along the road i
 Select a track (double-click: all of it): Overhead wire under Parallel copy in its properties	選取軌道（按兩下：整條）：其屬性中「平行複製」下的「架空電線」
 Select a road or a chain: Parallel copy in its properties	選取道路或一串道路：其屬性中的「平行複製」
 Select a road (double-click: all of it): Paint the ground along it in its properties	選取道路（按兩下：整條）：其屬性中的「沿其為地面上色」
-Click a tile: its water is in the panel; lower the ground under it with the Terrain tool	點擊圖磚：水在面板中；用「地形」工具降低其下的地面
+Click a tile: its water is in the panel; lower the ground under it with the Terrain tool	點擊圖塊：水在面板中；用「地形」工具降低其下的地面
 Height map: at the end of the Terrain panel	高度圖：在「地形」面板底部
 By slope and height: at the end of the Paint panel	依坡度與高度：在「上色」面板底部
 View menu: Time of day, Season	檢視選單：時段、季節
@@ -1868,7 +1868,7 @@ Time of day and season	時段與季節
 PBR material	PBR 材質
 none	無
 Own picture…	自有圖片…
-Choose a texture of the object, or a picture of your own.	選擇物件的紋理，或您自己的圖片。
+Choose a texture of the object, or a picture of your own.	選擇物件的貼圖，或您自己的圖片。
 Normals (_nn)	法線 (_nn)
 Roughness	粗糙度
 Shadow in hollows	凹處陰影
@@ -1878,7 +1878,7 @@ Dark parts stand out (not sink in)	暗部凸起（而非凹陷）
 Bright parts smoother	亮部較平滑
 Metal	金屬
 Back to the defaults	還原為預設值
-This texture has PBR maps of its own already: new ones made here are taken instead of them.	此紋理已有自己的 PBR 貼圖：在此製作的新貼圖會取代它們。
+This texture has PBR maps of its own already: new ones made here are taken instead of them.	此貼圖已有自己的 PBR 貼圖：在此製作的新貼圖會取代它們。
 Written as:	寫入為：
 PBR maps made	PBR 貼圖已製作
 Delete the PBR material	刪除 PBR 材質
@@ -1915,10 +1915,10 @@ Lane width	車道寬度
 Middle strip	中央分隔帶
 Footways	人行道
 Kerb	路緣
-Roadway texture	車行道紋理
-Footway texture	人行道紋理
+Roadway texture	車行道貼圖
+Footway texture	人行道貼圖
 Own…	自有…
-The roadway texture is laid once across all its lanes (as OMSI 2's lane textures are painted: pick one with as many lanes); the footway texture's right end is the kerb.	車行道紋理橫跨所有車道鋪一次（如 OMSI 2 車道紋理的繪製方式：請選車道數相同的）；人行道紋理的右端是路緣。
+The roadway texture is laid once across all its lanes (as OMSI 2's lane textures are painted: pick one with as many lanes); the footway texture's right end is the kerb.	車行道貼圖橫跨所有車道鋪一次（如 OMSI 2 車道貼圖的繪製方式：請選車道數相同的）；人行道貼圖的右端是路緣。
 not on the map	不在地圖上
 Signal routes	號誌路徑
 Each railway signal clears when a train wants the track pieces of its route and none stands on them.	當列車需要其路徑的軌道段，且其上沒有車輛時，鐵路號誌即放行。
@@ -1980,7 +1980,7 @@ is not on the map	不在地圖上
 no road with car lanes within 15 m	15 m 內沒有帶汽車車道的道路
 No way	沒有路徑
 the roads are not joined, or run the other way (see View > AI lanes)	道路未相連，或方向相反（見 檢視 > AI 車道）
-The trip is saved, but its way is not until this is mended	班次會儲存，但在此問題修復前路徑不會儲存
+The trip is saved, but its way is not until this is mended	班次會儲存，但在此問題修正前路徑不會儲存
 Trip time	行車時間
 Guess:	估算：
 From the route's length at the pace of a town bus	依路徑長度和市區巴士的速度
@@ -1992,8 +1992,8 @@ Holidays and school holidays	假日與學校假期
 On a public holiday only the tours with Holidays ticked run; school holidays pick the tours for school holidays or school days.	國定假日只行駛勾選「假日」的車班；學校假期則選擇學校假期用或上課日用的車班。
 Copy to	複製到
 The same days a year later (feasts that move, like Easter, are to be set by hand)	一年後的相同日期（會移動的節日，如復活節，需手動設定）
-The map has no depot (ailists.cfg): only you drive these tours, no AI buses.	地圖沒有車庫 (ailists.cfg)：只有您駕駛這些車班，沒有 AI 巴士。
-Add a depot with OMSI 2's MAN buses	加入含 OMSI 2 MAN 巴士的車庫
+The map has no depot (ailists.cfg): only you drive these tours, no AI buses.	地圖沒有車廠 (ailists.cfg)：只有您駕駛這些車班，沒有 AI 巴士。
+Add a depot with OMSI 2's MAN buses	加入含 OMSI 2 MAN 巴士的車廠
 Its buses run the tours (Map > Traffic and AI shows it)	其巴士行駛車班（地圖 > 交通與 AI 可查看）
 Tour	更次
 New tour	新增車班
@@ -2037,14 +2037,14 @@ Edit traffic	編輯交通
 Over the day	依時段
 Vehicle groups	車輛群組
 Parked cars and people	停放車輛與行人
-Depot files	車庫檔案
-The AI's vehicles come in groups. A car group drives about on the roads; a depot sends out the buses of the timetable's tours.	AI 的車輛分成群組。車輛群組自行在道路上行駛；車庫則派出時刻表車班的巴士。
+Depot files	車廠檔案
+The AI's vehicles come in groups. A car group drives about on the roads; a depot sends out the buses of the timetable's tours.	AI 的車輛分成群組。車輛群組自行在道路上行駛；車廠則派出時刻表車班的巴士。
 (This map's ailists.cfg is in OMSI 2's first format: it is written in the second one when changed.)	（此地圖的 ailists.cfg 是 OMSI 2 的第一種格式：變更時會以第二種格式寫入。）
 is to drive about, but there is no such group.	應該在道路上行駛，但沒有這樣的群組。
 Make it with OMSI 2's vehicles	以 OMSI 2 的車輛建立
 The group of that name from OMSI 2's own maps	來自 OMSI 2 自己地圖的同名群組
 New car group	新增車輛群組
-New depot	新增車庫
+New depot	新增車廠
 Pick a group on the left.	請在左側選取群組。
 Delete the group (tours still take their buses from it)	刪除群組（車班仍從中取得巴士）
 Delete the group	刪除群組
@@ -2054,8 +2054,8 @@ as many:	數量：
 Times the traffic over the day	依時段調整交通量
 A vehicle with more weight comes along more often.	權重較大的車輛出現較頻繁。
 Add a vehicle…	新增車輛…
-Depot file (.hof)	車庫檔案 (.hof)
-None of its buses has this depot file beside it: they run without their destination signs and fleet data.	它的巴士旁邊都沒有此車庫檔案：它們會在沒有目的地標示和車隊資料的情況下行駛。
+Depot file (.hof)	車廠檔案 (.hof)
+None of its buses has this depot file beside it: they run without their destination signs and fleet data.	它的巴士旁邊都沒有此車廠檔案：它們會在沒有目的地標示和車隊資料的情況下行駛。
 The buses it has: a type of bus and the fleet number and plate of each.	它擁有的巴士：巴士類型，以及每輛的車隊編號和車牌。
 Take this type out	移除此類型
 number	編號
