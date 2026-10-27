@@ -4,7 +4,7 @@ Releases are tagged `v<version>`; the downloads are on the
 [Releases](https://github.com/openOMSI-org/openMapper/releases) page, each with the notes of its
 version from this file.
 
-## Unreleased
+## 0.1.13 - 2026-10-26
 
 ### Added
 - **Auto-Junction builds the junction** in the complex junction editor: from the arms it lays turns (of each arm's road type) between neighbouring arms, rounded corners of a set radius where the roads' middle lines meet, and a piece straight on between arms that face each other. Each is a switch under Auto-Junction; the built pieces are listed in Layers as "auto", are kept in step with the drawing, never touch pieces drawn by hand, and are put on the map and saved like the others.
