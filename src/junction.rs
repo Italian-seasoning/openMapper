@@ -671,6 +671,90 @@ fn mesh_x(m: &Mesh, names: &[String]) -> String {
 /// length along. The junction's roadway, laid flat at the same scale, then has the roads'
 /// grain and colour, not a stretched smear.
 fn clean_asphalt(tex: &Path, u: f64, u_per_m: f64, period: f64, lane_m: f64, out: &Path) -> Option<()> {
+    let buf = clean_asphalt_image(tex, u, u_per_m, period, lane_m)?;
+    save_like(&buf, out)
+}
+
+/// Save a picture in the format its file name says (the road's own texture is a .bmp, .dds,
+/// .tga or .jpg, and what is made from it is written as one too); a name of another kind
+/// gets a PNG.
+fn save_like(buf: &image::RgbaImage, out: &Path) -> Option<()> {
+    let ext = out.extension().map(|e| e.to_string_lossy().to_lowercase()).unwrap_or_default();
+    match ext.as_str() {
+        "dds" => std::fs::write(out, crate::doc::dds::rgba(buf.width(), buf.height(), buf.as_raw())).ok(),
+        "bmp" | "jpg" | "jpeg" => image::DynamicImage::ImageRgba8(buf.clone()).to_rgb8().save(out).ok(),
+        "tga" | "png" => buf.save(out).ok(),
+        _ => buf.save_with_format(out, image::ImageFormat::Png).ok(),
+    }
+}
+
+/// The files that go with a texture (`name_wintersnow.dds`, `name.bmp.cfg`, `name.surf`…):
+/// everything beside it that starts with its name and then an underscore or a dot.
+pub fn companions(tex: &Path) -> Vec<PathBuf> {
+    let (Some(dir), Some(stem), Some(own)) = (tex.parent(), tex.file_stem().map(|s| s.to_string_lossy().to_lowercase()), tex.file_name().map(|s| s.to_string_lossy().to_lowercase())) else { return Vec::new() };
+    let mut out: Vec<PathBuf> = std::fs::read_dir(dir)
+        .into_iter()
+        .flatten()
+        .flatten()
+        .map(|e| e.path())
+        .filter(|p| {
+            let f = p.file_name().map(|f| f.to_string_lossy().to_lowercase()).unwrap_or_default();
+            p.is_file() && f != own && (f.starts_with(&format!("{stem}_")) || f.starts_with(&format!("{stem}.")))
+        })
+        .collect();
+    out.sort();
+    out
+}
+
+/// A texture copied into `to_dir` with everything that goes with it (its seasonal pictures,
+/// its .cfg and .surf), under its own name.
+pub fn copy_texture(tex: &Path, to_dir: &Path) {
+    let Some(name) = tex.file_name() else { return };
+    let to = to_dir.join(name);
+    if !to.exists() {
+        let _ = std::fs::copy(tex, &to);
+    }
+    for c in companions(tex) {
+        let Some(n) = c.file_name() else { continue };
+        let t = to_dir.join(n);
+        if !t.exists() {
+            let _ = std::fs::copy(&c, &t);
+        }
+    }
+}
+
+/// The plain asphalt made from `tex` as `<stem>_junction.<same extension>` in `to_dir`, with
+/// the same made from each of its companions (its winter pictures, in their formats) and the
+/// others (.cfg, .surf) copied under the new name. Gives the main picture's path.
+fn plain_like(tex: &Path, u: f64, u_per_m: f64, period: f64, lane_m: f64, to_dir: &Path) -> Option<PathBuf> {
+    let stem = tex.file_stem()?.to_string_lossy().to_string();
+    let ext = tex.extension().map(|e| e.to_string_lossy().to_string()).unwrap_or_else(|| "png".into());
+    let new_stem = format!("{stem}_junction");
+    let out = to_dir.join(format!("{new_stem}.{ext}"));
+    // (one cut short, a full disk say, is made again)
+    if out.exists() && omsi_texture::decode_file(&out).is_err() {
+        let _ = std::fs::remove_file(&out);
+    }
+    if !out.exists() {
+        clean_asphalt(tex, u, u_per_m, period, lane_m, &out)?;
+    }
+    for c in companions(tex) {
+        let Some(name) = c.file_name().map(|f| f.to_string_lossy().to_string()) else { continue };
+        let to = to_dir.join(format!("{new_stem}{}", &name[stem.len().min(name.len())..]));
+        if to.exists() {
+            continue;
+        }
+        let image_ext = c.extension().map(|e| matches!(e.to_string_lossy().to_lowercase().as_str(), "bmp" | "dds" | "tga" | "jpg" | "jpeg" | "png")).unwrap_or(false);
+        // (a picture made the same way, else the file as it is)
+        let done = image_ext && c.file_name().map(|f| !f.to_string_lossy().to_lowercase().ends_with(".cfg")).unwrap_or(false) && clean_asphalt(&c, u, u_per_m, period, lane_m, &to).is_some();
+        if !done {
+            let _ = std::fs::copy(&c, &to);
+        }
+    }
+    Some(out)
+}
+
+fn clean_asphalt_image(tex: &Path, u: f64, u_per_m: f64, period: f64, lane_m: f64) -> Option<image::RgbaImage> {
     let img = omsi_texture::decode_file(tex).ok()?;
     let (w, h) = (img.width as usize, img.height as usize);
     let col = |uu: f64| -> f64 {
@@ -710,7 +794,7 @@ fn clean_asphalt(tex: &Path, u: f64, u_per_m: f64, period: f64, lane_m: f64, out
             buf.put_pixel(x as u32, y as u32, image::Rgba([p[0], p[1], p[2], 255]));
         }
     }
-    buf.save(out).ok()
+    Some(buf)
 }
 
 fn num(v: f64) -> String {
@@ -771,18 +855,10 @@ pub fn make_with(doc: &mut Document, assets: &mut Assets, content: &Path, asphal
     let road_tex = widest.and_then(|g| g.road_tex.clone());
     let (core_tex, period) = match road_tex {
         Some((tex, u, range, period, width, lane)) => {
-            let stem = tex.file_stem().map(|s| s.to_string_lossy().to_string()).unwrap_or_else(|| "road".into());
-            let out = tex_dir.join(format!("om_{stem}_plain5.png"));
-            // (one cut short, a full disk say, is made again)
-            if out.exists() && image::open(&out).is_err() {
-                let _ = std::fs::remove_file(&out);
-            }
-            if !out.exists() {
-                // (most of a lane: slabs and patches keep their size; the markings at its
-                // edges stay out)
-                clean_asphalt(&tex, u, range / width, period.clamp(2.0, 40.0), lane, &out);
-            }
-            (out.exists().then_some(out).or_else(|| asphalt.map(Path::to_path_buf)), period.clamp(2.0, 40.0))
+            // (most of a lane: slabs and patches keep their size; the markings at its edges
+            // stay out. Named, formatted and accompanied as the road's own texture is)
+            let out = plain_like(&tex, u, range / width, period.clamp(2.0, 40.0), lane, &tex_dir);
+            (out.or_else(|| asphalt.map(Path::to_path_buf)), period.clamp(2.0, 40.0))
         }
         None => (asphalt.map(Path::to_path_buf), 8.0),
     };
@@ -817,35 +893,50 @@ pub fn make_with(doc: &mut Document, assets: &mut Assets, content: &Path, asphal
             continue;
         };
         let name = p.file_name().map(|f| f.to_string_lossy().to_string()).unwrap_or_default();
-        let to = tex_dir.join(&name);
-        if !to.exists() {
-            let _ = std::fs::copy(p, &to);
+        if p.parent() != Some(tex_dir.as_path()) {
+            copy_texture(p, &tex_dir);
         }
         names.push(name);
     }
-    let name = format!("junction_{id}");
-    std::fs::write(dir.join("model").join(format!("{name}.x")), mesh_x(&mesh, &names))?;
-    let mut sco = String::new();
-    let _ = write!(sco, "{}\n\n[friendlyname]\nJunction {id}\n\n[groups]\n1\nopenMapper\n\n[surface]\n\n[absheight]\n\n[mesh]\n{name}.x\n\n", opts.line());
+    // (the plate is written from what it is made of, its centre as the origin: junctions
+    // that come out the same share one object file, one model and one set of textures, so
+    // the game loads and draws it once. Named by what is in it)
+    let x_text = mesh_x(&mesh, &names);
+    let mut body = String::new();
     if light_of.iter().any(|l| l.is_some()) {
-        sco.push_str(&light_program(opts));
+        body.push_str(&light_program(opts));
     }
     // where roads join it (the editors snap to these)
     for (g, a) in geo.iter().zip(arms) {
         let file = doc.spline(a.key, a.id).map(|s| s.file.clone()).unwrap_or_default();
         let p = g.end - centre;
         // (OMSI's order: x, height, forward)
-        let _ = write!(sco, "[splinehelper]\n{file}\n{}\n{}\n{}\n{}\n0.1\n0\n\n", num(p.x), num(p.z), num(p.y), num(roads::norm_deg(g.out + 180.0)));
+        let _ = write!(body, "[splinehelper]\n{file}\n{}\n{}\n{}\n{}\n0.1\n0\n\n", num(p.x), num(p.z), num(p.y), num(roads::norm_deg(g.out + 180.0)));
     }
     for p in &recs {
         let s = &p.seg;
         let grad = if s.length > 0.01 { (p.z1 - p.z0) / s.length } else { 0.0 };
-        let _ = write!(sco, "[path]\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n\n", num(s.start.x), num(s.start.y), num(p.z0), num(s.heading), num(s.radius), num(s.length), num(grad), num(grad), p.kind, num(p.width), p.direction, p.blinker);
+        let _ = write!(body, "[path]\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n\n", num(s.start.x), num(s.start.y), num(p.z0), num(s.heading), num(s.radius), num(s.length), num(grad), num(grad), p.kind, num(p.width), p.direction, p.blinker);
         if let Some(l) = p.light {
-            let _ = write!(sco, "[use_traffic_light]\n{l}\n\n");
+            let _ = write!(body, "[use_traffic_light]\n{l}\n\n");
         }
     }
-    std::fs::write(dir.join(format!("{name}.sco")), omsi_cfg::encode_text(&sco.replace('\n', "\r\n")))?;
+    let hash = {
+        use std::hash::{Hash, Hasher};
+        let mut h = std::collections::hash_map::DefaultHasher::new();
+        (&x_text, &body, opts.line()).hash(&mut h);
+        h.finish()
+    };
+    let name = format!("junction_{hash:016x}");
+    let model_path = dir.join("model").join(format!("{name}.x"));
+    let sco_path = dir.join(format!("{name}.sco"));
+    if !(model_path.is_file() && sco_path.is_file()) {
+        std::fs::write(&model_path, &x_text)?;
+        let mut sco = String::new();
+        let _ = write!(sco, "{}\n\n[friendlyname]\nJunction {}\n\n[groups]\n1\nopenMapper\n\n[surface]\n\n[absheight]\n\n[mesh]\n{name}.x\n\n", opts.line(), &format!("{hash:016x}")[..6]);
+        sco.push_str(&body);
+        std::fs::write(&sco_path, omsi_cfg::encode_text(&sco.replace('\n', "\r\n")))?;
+    }
     crate::hot::own_change();
     let k = tile_of(centre.truncate());
     let k = if doc.tiles.contains_key(&k) { k } else { arms[0].key };
@@ -894,7 +985,9 @@ pub fn remove_unused(dir: &Path, folder: &str, used: &std::collections::HashSet<
         }
         let rel = format!("sceneryobjects\\openmapper\\{}\\{lower}", folder.to_lowercase());
         let num: Option<i64> = lower["junction_".len()..lower.len() - 4].parse().ok();
-        if used.contains(&rel) || num.map(|n| n >= keep_from).unwrap_or(true) {
+        // (one named by its contents is shared; a recent one may be wanted by undo)
+        let recent = e.metadata().and_then(|m| m.modified()).ok().and_then(|t| t.elapsed().ok()).map(|d| d.as_secs() < 86_400).unwrap_or(true);
+        if used.contains(&rel) || num.map(|n| n >= keep_from).unwrap_or(recent) {
             continue;
         }
         let stem = &name[..name.len() - 4];

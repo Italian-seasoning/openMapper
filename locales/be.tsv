@@ -2339,3 +2339,71 @@ The whole drawing as one scenery object of the catalogue (its meshes, and lanes 
 Lanes the way the road is drawn	Палосы па ходзе дарогі
 Lanes against it	Палосы супраць ходу
 (0 against: one-way)	(0 супраць: аднабаковая)
+The road is too short here for a bay with a taper at both ends	Дарога тут занадта кароткая для кішэні са звужэннем на абодвух канцах
+Too near the end of the road for the taper at both ends of the bay	Занадта блізка да канца дарогі для звужэнняў на абодвух канцах кішэні
+The bay needs a taper at both ends and one could not be laid there	Кішэні патрэбна звужэнне на абодвух канцах, а пакласці яго тут не ўдалося
+Pick a piece or an arm; drag it to move it, drag the dots at the ends of the picked piece to change it; Delete removes it	Выберыце элемент або рукаў; перацягніце яго, каб перасунуць, перацягніце кропкі на канцах выбранага элемента, каб змяніць яго; Delete выдаляе яго
+Click the start, a point on the arc, then the end. Started at the end of a piece with Auto-Align on, two clicks make an arc tangent to it	Націсніце пачатак, кропку на дузе, потым канец. Калі пачата з канца элемента з уключаным Auto-Align, два націскі даюць дугу, датычную да яго
+Curve	Крывая
+A smooth path through every point clicked, for complex turns: Enter, a double click or the button below ends it	Плаўны шлях праз кожную пастаўленую кропку, для складаных паваротаў: Enter, двайны націск або кнопка ніжэй завяршае яго
+Finish the curve	Завяршыць крывую
+A piece started at the end of another goes on in line with it: a line along its way or across it, an arc or a curve tangent to it. Elsewhere lines keep to steps of 15°	Элемент, пачаты ў канцы іншага, працягваецца па лініі з ім: прамая ўздоўж або поперак яго, дуга ці крывая, датычная да яго. У іншых месцах прамыя трымаюцца крокаў 15°
+A road of another width started at the end of a road keeps its edge on the side it bends to, and a taper is laid to get there	Дарога іншай шырыні, пачатая ў канцы дарогі, захоўвае свой край з таго боку, куды паварочвае, і для гэтага кладзецца звужэнне
+The arms are found by themselves: every free end of a road is where a road comes in. Arms put by hand stay as they are	Рукавы знаходзяцца самі: кожны вольны канец дарогі — гэта месца, дзе ўваходзіць дарога. Рукавы, пастаўленыя ўручную, застаюцца як ёсць
+found from a road's free end	знойдзена па вольным канцы дарогі
+The whole drawing	Увесь чарцёж
+Left and right swapped	Левае і правае памянялі месцамі
+Turn 90°	Паварот 90°
+Find the arms	Знайсці рукавы
+The free ends of roads become arms	Вольныя канцы дарог становяцца рукавамі
+segments	сегменты
+0: a straight; positive: turns right; negative: turns left	0: прамая; дадатнае: паварот направа; адмоўнае: паварот налева
+Reverse	Развярнуць
+Runs the other way: the piece's start and end swap	Ідзе ў адваротны бок: пачатак і канец элемента мяняюцца месцамі
+Under the one before it	Пад папярэднім
+Higher	Вышэй
+Over the one after it	Над наступным
+Preview	Прагляд
+The junction as it will be: the roads running out of the arms, no grid or handles	Скрыжаванне такім, якім яно будзе: дарогі, што выходзяць з рукавоў, без сеткі і маркераў
+The lanes of the AI over the drawing, with the way they go	Паласы ШІ над чарцяжом з напрамкам руху
+Zoom out (-)	Аддаліць (-)
+Zoom in (+)	Наблізіць (+)
+The whole drawing in view (F)	Увесь чарцёж у полі зроку (F)
+Preview: the junction as it will look. Wheel zooms, right or middle drag pans	Прагляд: скрыжаванне такім, якім яно будзе выглядаць. Кола маштабуе, правая або сярэдняя кнопка перасоўвае
+Click the points the curve passes; Enter or a double click ends it	Націскайце кропкі, праз якія праходзіць крывая; Enter або двайны націск завяршае яе
+Wheel zooms, right or middle drag pans, F fits, Ctrl+Z undoes, Esc cancels	Кола маштабуе, правая або сярэдняя кнопка перасоўвае, F упісвае, Ctrl+Z адмяняе, Esc скасоўвае
+Taper in	Звужэнне на ўваходзе
+Metres of road the bay takes to open per metre it widens (more: gentler)	Метраў дарогі, якія кішэня займае на раскрыццё на кожны метр пашырэння (больш: плаўней)
+out	на выхадзе
+Both ends alike	Абодва канцы аднолькавыя
+Slide the bay to where it fits	Пасунуць кішэню туды, дзе яна ўмяшчаецца
+Near the end of a road or a junction there is no room for the taper at both ends: the bay is moved along the road to where there is	Каля канца дарогі або скрыжавання няма месца для звужэння на абодвух канцах: кішэню зрушваюць уздоўж дарогі туды, дзе месца ёсць
+A bay always gets a taper at both ends; where one cannot be laid nothing is changed.	Кішэня заўсёды атрымлівае звужэнне на абодвух канцах; дзе яго нельга пакласці, нічога не змяняецца.
+Controls as in OMSI 2's editor: middle button turns, right button held and moved zooms, a right click goes there (Shift: menu)	Кіраванне як у рэдактары OMSI 2: сярэдняя кнопка круціць, правая кнопка з рухам маштабуе, правы клік вядзе туды (Shift: меню)
+Controls as chosen under Camera	Кіраванне, абранае ў раздзеле «Камера»
+Advanced users	Дасведчаныя карыстальнікі
+Controls as in OMSI 2's editor	Кіраванне як у рэдактары OMSI 2
+Off by default. The middle button turns the view, the right button held and moved up and down zooms, a right click on the ground goes there (Shift + right click: the menu), the arrows move the camera, the wheel zooms	Выключана па змаўчанні. Сярэдняя кнопка круціць выгляд, правая кнопка з рухам уверх і ўніз маштабуе, правы клік па зямлі вядзе туды (Shift + правы клік: меню), стрэлкі рухаюць камеру, кола маштабуе
+Bay width	Шырыня кішэні
+A road type with this pocket lane is made from the chosen one (the road maker's), if it is not the width it has	Тып дарогі з такой паласой кішэні ствараецца з абранага (з канструктара дарогі), калі ён не мае гэтай шырыні
+Tapers in metres	Звужэнні ў метрах
+Give the length of each taper in metres instead of a ratio	Задайце даўжыню кожнага звужэння ў метрах замест прапорцыі
+Stand a scenery object (a lamp, a shelter, a bin): on a piece it is turned along it, with Auto-Align on	Паставіць аб'ект дэкору (ліхтар, павільён, смеццевую ўрну): на дэталі ён паварочваецца ўздоўж яе, калі ўключана Аўта-выраўноўванне
+Standing:	Стаіць:
+Added to the way the piece goes where it stands on one (180° faces it the other way)	Дадаецца да напрамку дэталі там, дзе аб'ект стаіць на ёй (180° — тварам у іншы бок)
+Across the piece to the right, for 'Along the piece'	Упоперак дэталі направа, для «Уздоўж дэталі»
+Layers	Пласты
+Shown: a hidden layer is not put on the map or written	Паказваецца: схаваны пласт не ставіцца на карту і не запісваецца
+Objects along it	Аб'екты ўздоўж яе
+The object chosen with the Object tool stood along this piece at the spacing and offset set there	Аб'ект, абраны інструментам «Аб'ект», стаіць уздоўж гэтай дэталі з адлегласцю і зрухам, зададзенымі там
+Click where the object stands; on a piece it faces along it	Націсніце туды, дзе стаіць аб'ект; на дэталі ён глядзіць уздоўж яе
+Pick an object on the left first	Спачатку абярыце аб'ект злева
+Turns	Павароты
+A turn of the arm's road type between each two neighbouring arms, so traffic has lanes through the junction	Паварот тыпу дарогі ўезду паміж кожнымі двума суседнімі ўездамі, каб на скрыжаванні былі палосы для руху
+Rounded corners	Закругленыя куты
+Where the roads' middle lines meet, the turn is an arc of this radius (a turn is still made where it does not fit)	Там, дзе сярэднія лініі дарог сыходзяцца, паварот — дуга гэтага радыуса (паварот робіцца і там, дзе дуга не ўмяшчаецца)
+Corner radius	Радыус кута
+Straight on	Наўпрост
+A piece straight on between arms that face each other	Адрэзак наўпрост паміж уездамі, што стаяць насупраць адзін аднаго
+auto	аўта
+Built by Auto-Junction from the arms	Пабудавана Аўта-скрыжаваннем па ўездах

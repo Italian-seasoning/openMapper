@@ -73,3 +73,48 @@ pub fn init(filter: &str) {
         }
     }));
 }
+
+static STAGE: Mutex<String> = Mutex::new(String::new());
+static BEAT: std::sync::atomic::AtomicU64 = std::sync::atomic::AtomicU64::new(0);
+
+fn now_ms() -> u64 {
+    static START: OnceLock<std::time::Instant> = OnceLock::new();
+    START.get_or_init(std::time::Instant::now).elapsed().as_millis() as u64
+}
+
+/// Note what the program is about to do (the watchdog names it when the window stops
+/// answering) and log it.
+pub fn stage(what: &str) {
+    log::info!("start: {what}");
+    *STAGE.lock().unwrap_or_else(|e| e.into_inner()) = what.to_string();
+    beat();
+}
+
+/// The window's thread is alive (called once a frame).
+pub fn beat() {
+    BEAT.store(now_ms(), std::sync::atomic::Ordering::Relaxed);
+}
+
+/// A thread that writes to the log when the window's thread has not drawn a frame for ten
+/// seconds, with the stage it was last at: a program that hangs at its start then leaves a
+/// log saying where.
+pub fn watchdog() {
+    beat();
+    let _ = std::thread::Builder::new().name("watchdog".into()).spawn(|| {
+        let mut told = 0;
+        loop {
+            std::thread::sleep(std::time::Duration::from_secs(5));
+            let quiet = now_ms().saturating_sub(BEAT.load(std::sync::atomic::Ordering::Relaxed)) / 1000;
+            if quiet >= 10 && quiet / 30 >= told {
+                told = quiet / 30 + 1;
+                let stage = STAGE.lock().unwrap_or_else(|e| e.into_inner()).clone();
+                log::warn!("the window has not answered for {quiet} s; last stage: {}", if stage.is_empty() { "(before the window)" } else { &stage });
+                if let Some(f) = FILE.get() {
+                    let _ = f.lock().unwrap_or_else(|e| e.into_inner()).sync_all();
+                }
+            } else if quiet < 10 {
+                told = 0;
+            }
+        }
+    });
+}

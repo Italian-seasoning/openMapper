@@ -2339,3 +2339,71 @@ The whole drawing as one scenery object of the catalogue (its meshes, and lanes 
 Lanes the way the road is drawn	सड़क की खींची दिशा में लेन
 Lanes against it	विपरीत दिशा में लेन
 (0 against: one-way)	(0 विपरीत: एकतरफ़ा)
+The road is too short here for a bay with a taper at both ends	यहाँ सड़क दोनों सिरों पर टेपर वाली बे के लिए बहुत छोटी है
+Too near the end of the road for the taper at both ends of the bay	दोनों सिरों के टेपर के लिए सड़क के अंत के बहुत पास
+The bay needs a taper at both ends and one could not be laid there	बे को दोनों सिरों पर टेपर चाहिए और यहाँ कोई नहीं बिछ सका
+Pick a piece or an arm; drag it to move it, drag the dots at the ends of the picked piece to change it; Delete removes it	कोई टुकड़ा या भुजा चुनें; उसे खींचकर हिलाएँ, चुने टुकड़े के सिरों के बिंदु खींचकर उसे बदलें; Delete उसे हटाता है
+Click the start, a point on the arc, then the end. Started at the end of a piece with Auto-Align on, two clicks make an arc tangent to it	शुरुआत पर क्लिक करें, फिर चाप के एक बिंदु पर, फिर अंत पर। Auto-Align चालू हो और शुरुआत किसी टुकड़े के सिरे पर हो, तो दो क्लिक उसकी स्पर्शरेखा वाला चाप बनाते हैं
+Curve	वक्र
+A smooth path through every point clicked, for complex turns: Enter, a double click or the button below ends it	क्लिक किए हर बिंदु से गुज़रता एक चिकना रास्ता, जटिल मोड़ों के लिए: Enter, डबल क्लिक या नीचे का बटन इसे पूरा करता है
+Finish the curve	वक्र पूरा करें
+A piece started at the end of another goes on in line with it: a line along its way or across it, an arc or a curve tangent to it. Elsewhere lines keep to steps of 15°	किसी दूसरे के सिरे पर शुरू किया टुकड़ा उसी की सीध में आगे बढ़ता है: उसके साथ या आर-पार सीधी रेखा, उसकी स्पर्शरेखा वाला चाप या वक्र। अन्यत्र रेखाएँ 15° के चरणों में रहती हैं
+A road of another width started at the end of a road keeps its edge on the side it bends to, and a taper is laid to get there	सड़क के सिरे पर शुरू की गई दूसरी चौड़ाई की सड़क अपना किनारा उसी ओर रखती है जिधर वह मुड़ती है, और वहाँ पहुँचने के लिए टेपर बिछाया जाता है
+The arms are found by themselves: every free end of a road is where a road comes in. Arms put by hand stay as they are	भुजाएँ अपने आप मिल जाती हैं: सड़क का हर खुला सिरा वह जगह है जहाँ सड़क आती है। हाथ से रखी भुजाएँ जैसी हैं वैसी रहती हैं
+found from a road's free end	सड़क के खुले सिरे से मिली
+The whole drawing	पूरा चित्र
+Left and right swapped	बायाँ और दायाँ बदले गए
+Turn 90°	90° घुमाएँ
+Find the arms	भुजाएँ खोजें
+The free ends of roads become arms	सड़कों के खुले सिरे भुजाएँ बन जाते हैं
+segments	खंड
+0: a straight; positive: turns right; negative: turns left	0: सीधा; धनात्मक: दाएँ मुड़ता है; ऋणात्मक: बाएँ मुड़ता है
+Reverse	उलटें
+Runs the other way: the piece's start and end swap	दूसरी ओर चलता है: टुकड़े की शुरुआत और अंत आपस में बदल जाते हैं
+Under the one before it	पिछले के नीचे
+Higher	ऊपर
+Over the one after it	अगले के ऊपर
+Preview	पूर्वावलोकन
+The junction as it will be: the roads running out of the arms, no grid or handles	जंक्शन जैसा वह होगा: भुजाओं से निकलती सड़कें, बिना ग्रिड या हैंडल के
+The lanes of the AI over the drawing, with the way they go	चित्र पर AI की लेनें, उनकी दिशा सहित
+Zoom out (-)	ज़ूम आउट (-)
+Zoom in (+)	ज़ूम इन (+)
+The whole drawing in view (F)	पूरा चित्र दृश्य में (F)
+Preview: the junction as it will look. Wheel zooms, right or middle drag pans	पूर्वावलोकन: जंक्शन जैसा दिखेगा। पहिया ज़ूम करता है, दायाँ या बीच का बटन खींचने से खिसकता है
+Click the points the curve passes; Enter or a double click ends it	उन बिंदुओं पर क्लिक करें जिनसे वक्र गुज़रता है; Enter या डबल क्लिक इसे पूरा करता है
+Wheel zooms, right or middle drag pans, F fits, Ctrl+Z undoes, Esc cancels	पहिया ज़ूम करता है, दायाँ या बीच का बटन खींचने से खिसकता है, F फ़िट करता है, Ctrl+Z पूर्ववत करता है, Esc रद्द करता है
+Taper in	अंदर टेपर
+Metres of road the bay takes to open per metre it widens (more: gentler)	बे को हर मीटर चौड़ा होने पर खुलने में लगने वाले सड़क के मीटर (अधिक: नरम)
+out	बाहर
+Both ends alike	दोनों सिरे एक जैसे
+Slide the bay to where it fits	बे को वहाँ खिसकाएँ जहाँ वह समाए
+Near the end of a road or a junction there is no room for the taper at both ends: the bay is moved along the road to where there is	सड़क या जंक्शन के अंत के पास दोनों सिरों पर टेपर की जगह नहीं है: बे को सड़क के साथ वहाँ खिसकाया जाता है जहाँ जगह है
+A bay always gets a taper at both ends; where one cannot be laid nothing is changed.	बे को हमेशा दोनों सिरों पर टेपर मिलता है; जहाँ नहीं बिछ सकता, वहाँ कुछ नहीं बदलता।
+Controls as in OMSI 2's editor: middle button turns, right button held and moved zooms, a right click goes there (Shift: menu)	OMSI 2 के एडिटर जैसे नियंत्रण: बीच का बटन घुमाता है, दायाँ बटन दबाकर हिलाने से ज़ूम होता है, दायाँ क्लिक वहाँ जाता है (Shift: मेनू)
+Controls as chosen under Camera	नियंत्रण जैसे कैमरा के अंतर्गत चुने गए हैं
+Advanced users	एडवांस्ड उपयोगकर्ता
+Controls as in OMSI 2's editor	OMSI 2 के एडिटर जैसे नियंत्रण
+Off by default. The middle button turns the view, the right button held and moved up and down zooms, a right click on the ground goes there (Shift + right click: the menu), the arrows move the camera, the wheel zooms	डिफ़ॉल्ट रूप से बंद। बीच का बटन दृश्य घुमाता है, दायाँ बटन दबाकर ऊपर-नीचे हिलाने से ज़ूम होता है, ज़मीन पर दायाँ क्लिक वहाँ जाता है (Shift + दायाँ क्लिक: मेनू), तीर कुंजियाँ कैमरा हिलाती हैं, व्हील ज़ूम करता है
+Bay width	पॉकेट की चौड़ाई
+A road type with this pocket lane is made from the chosen one (the road maker's), if it is not the width it has	इस पॉकेट लेन वाला सड़क प्रकार चुने गए प्रकार (रोड मेकर वाले) से बनाया जाता है, यदि उसकी चौड़ाई यह नहीं है
+Tapers in metres	मीटर में टेपर
+Give the length of each taper in metres instead of a ratio	अनुपात के बजाय हर टेपर की लंबाई मीटर में दें
+Stand a scenery object (a lamp, a shelter, a bin): on a piece it is turned along it, with Auto-Align on	सजावटी ऑब्जेक्ट (लैंप, शेल्टर, कूड़ेदान) लगाएँ: भाग पर ऑटो-अलाइन चालू होने पर वह उसी के साथ-साथ घूम जाता है
+Standing:	खड़ा:
+Added to the way the piece goes where it stands on one (180° faces it the other way)	जहाँ ऑब्जेक्ट भाग पर खड़ा है वहाँ भाग की दिशा में जुड़ता है (180° से वह दूसरी ओर मुँह करता है)
+Across the piece to the right, for 'Along the piece'	भाग के आर-पार दाईं ओर, 'भाग के साथ-साथ' के लिए
+Layers	लेयर
+Shown: a hidden layer is not put on the map or written	दिखाई गई: छिपी हुई लेयर नक्शे पर नहीं रखी जाती और न लिखी जाती है
+Objects along it	इसके साथ-साथ ऑब्जेक्ट
+The object chosen with the Object tool stood along this piece at the spacing and offset set there	ऑब्जेक्ट टूल से चुना गया ऑब्जेक्ट इस भाग के साथ-साथ वहाँ तय की गई दूरी और ऑफ़सेट पर खड़ा होता है
+Click where the object stands; on a piece it faces along it	जहाँ ऑब्जेक्ट खड़ा है वहाँ क्लिक करें; भाग पर उसका मुँह उसी के साथ-साथ होता है
+Pick an object on the left first	पहले बाईं ओर से कोई ऑब्जेक्ट चुनें
+Turns	टर्न
+A turn of the arm's road type between each two neighbouring arms, so traffic has lanes through the junction	हर दो पास के आर्म के बीच आर्म के सड़क प्रकार का एक टर्न, ताकि जंक्शन से गुज़रने वाले ट्रैफ़िक के लिए लेन हों
+Rounded corners	गोल कोने
+Where the roads' middle lines meet, the turn is an arc of this radius (a turn is still made where it does not fit)	जहाँ सड़कों की मध्य रेखाएँ मिलती हैं, वहाँ टर्न इस त्रिज्या का चाप होता है (जहाँ चाप नहीं बैठता, वहाँ भी टर्न बनाया जाता है)
+Corner radius	कोने की त्रिज्या
+Straight on	सीधा
+A piece straight on between arms that face each other	आमने-सामने के आर्म के बीच एक सीधा टुकड़ा
+auto	ऑटो
+Built by Auto-Junction from the arms	आर्म से ऑटो-जंक्शन द्वारा बनाया गया

@@ -2339,3 +2339,71 @@ The whole drawing as one scenery object of the catalogue (its meshes, and lanes 
 Lanes the way the road is drawn	Yolun çizildiği yönde şeritler
 Lanes against it	Ters yönde şeritler
 (0 against: one-way)	(0 ters: tek yönlü)
+The road is too short here for a bay with a taper at both ends	Burada yol, iki ucunda da daralma olan bir cep için çok kısa
+Too near the end of the road for the taper at both ends of the bay	Yolun ucuna, cebin iki ucundaki daralma için fazla yakın
+The bay needs a taper at both ends and one could not be laid there	Cebin iki ucunda da daralma gerekir ve oraya bir tanesi konamadı
+Pick a piece or an arm; drag it to move it, drag the dots at the ends of the picked piece to change it; Delete removes it	Bir parça ya da kol seçin; taşımak için sürükleyin, değiştirmek için seçili parçanın uçlarındaki noktaları sürükleyin; Delete onu siler
+Click the start, a point on the arc, then the end. Started at the end of a piece with Auto-Align on, two clicks make an arc tangent to it	Başlangıca, yay üzerinde bir noktaya, sonra bitişe tıklayın. Auto-Align açıkken bir parçanın ucunda başlarsanız, iki tıklama ona teğet bir yay yapar
+Curve	Eğri
+A smooth path through every point clicked, for complex turns: Enter, a double click or the button below ends it	Tıklanan her noktadan geçen yumuşak bir yol, karmaşık dönüşler için: Enter, çift tıklama ya da aşağıdaki düğme bitirir
+Finish the curve	Eğriyi bitir
+A piece started at the end of another goes on in line with it: a line along its way or across it, an arc or a curve tangent to it. Elsewhere lines keep to steps of 15°	Başka bir parçanın ucunda başlayan parça onunla aynı doğrultuda sürer: yolu boyunca ya da karşısına bir çizgi, ona teğet bir yay ya da eğri. Başka yerlerde çizgiler 15° adımlarla gider
+A road of another width started at the end of a road keeps its edge on the side it bends to, and a taper is laid to get there	Bir yolun ucunda başlayan farklı genişlikteki yol, kıvrıldığı taraftaki kenarını korur ve oraya varmak için bir daralma döşenir
+The arms are found by themselves: every free end of a road is where a road comes in. Arms put by hand stay as they are	Kollar kendiliğinden bulunur: yolun her serbest ucu bir yolun girdiği yerdir. Elle konan kollar olduğu gibi kalır
+found from a road's free end	yolun serbest ucundan bulundu
+The whole drawing	Tüm çizim
+Left and right swapped	Sol ve sağ yer değiştirdi
+Turn 90°	90° döndür
+Find the arms	Kolları bul
+The free ends of roads become arms	Yolların serbest uçları kol olur
+segments	bölüm
+0: a straight; positive: turns right; negative: turns left	0: düz; pozitif: sağa döner; negatif: sola döner
+Reverse	Ters çevir
+Runs the other way: the piece's start and end swap	Öbür yöne gider: parçanın başı ve sonu yer değiştirir
+Under the one before it	Öncekinin altında
+Higher	Daha yüksek
+Over the one after it	Sonrakinin üstünde
+Preview	Önizleme
+The junction as it will be: the roads running out of the arms, no grid or handles	Kavşak olacağı gibi: kollardan çıkan yollar, ızgara ve tutamaç yok
+The lanes of the AI over the drawing, with the way they go	Çizimin üzerinde yapay zekânın şeritleri, gittikleri yönle
+Zoom out (-)	Uzaklaştır (-)
+Zoom in (+)	Yakınlaştır (+)
+The whole drawing in view (F)	Tüm çizim görünümde (F)
+Preview: the junction as it will look. Wheel zooms, right or middle drag pans	Önizleme: kavşağın görüneceği hali. Tekerlek yakınlaştırır, sağ ya da orta tuşla sürükleme kaydırır
+Click the points the curve passes; Enter or a double click ends it	Eğrinin geçtiği noktalara tıklayın; Enter ya da çift tıklama bitirir
+Wheel zooms, right or middle drag pans, F fits, Ctrl+Z undoes, Esc cancels	Tekerlek yakınlaştırır, sağ ya da orta tuşla sürükleme kaydırır, F sığdırır, Ctrl+Z geri alır, Esc iptal eder
+Taper in	Giriş daralması
+Metres of road the bay takes to open per metre it widens (more: gentler)	Cebin, genişlediği her metre için açılması gereken yol metresi (daha fazla: daha yumuşak)
+out	çıkış
+Both ends alike	İki uç aynı
+Slide the bay to where it fits	Cebi sığdığı yere kaydır
+Near the end of a road or a junction there is no room for the taper at both ends: the bay is moved along the road to where there is	Yolun ya da kavşağın ucuna yakın yerde iki uçtaki daralma için yer yok: cep, yer olan yere kadar yol boyunca kaydırılır
+A bay always gets a taper at both ends; where one cannot be laid nothing is changed.	Cebin iki ucunda da her zaman daralma olur; konamıyorsa hiçbir şey değişmez.
+Controls as in OMSI 2's editor: middle button turns, right button held and moved zooms, a right click goes there (Shift: menu)	OMSI 2'nin düzenleyicisindeki gibi kontroller: orta tuş döndürür, basılı tutulup hareket ettirilen sağ tuş yakınlaştırır, sağ tık oraya gider (Shift: menü)
+Controls as chosen under Camera	Kamera altında seçilen kontroller
+Advanced users	Gelişmiş kullanıcılar
+Controls as in OMSI 2's editor	OMSI 2'nin düzenleyicisindeki gibi kontroller
+Off by default. The middle button turns the view, the right button held and moved up and down zooms, a right click on the ground goes there (Shift + right click: the menu), the arrows move the camera, the wheel zooms	Varsayılan olarak kapalı. Orta tuş görünümü döndürür, basılı tutulup yukarı aşağı hareket ettirilen sağ tuş yakınlaştırır, zemine sağ tık oraya gider (Shift + sağ tık: menü), ok tuşları kamerayı hareket ettirir, tekerlek yakınlaştırır
+Bay width	Cep genişliği
+A road type with this pocket lane is made from the chosen one (the road maker's), if it is not the width it has	Bu cep şeridine sahip bir yol türü, seçilen türden (yol yapıcıdaki) oluşturulur; genişliği bu değilse
+Tapers in metres	Daralmalar metre olarak
+Give the length of each taper in metres instead of a ratio	Oran yerine her daralmanın uzunluğunu metre olarak girin
+Stand a scenery object (a lamp, a shelter, a bin): on a piece it is turned along it, with Auto-Align on	Bir çevre nesnesi (lamba, durak sundurması, çöp kutusu) yerleştir: bir parçanın üzerinde, Oto-Hizalama açıkken parça boyunca döndürülür
+Standing:	Duruyor:
+Added to the way the piece goes where it stands on one (180° faces it the other way)	Nesnenin üzerinde durduğu yerde parçanın yönüne eklenir (180° onu ters yöne çevirir)
+Across the piece to the right, for 'Along the piece'	Parçaya dik olarak sağa, 'Parça boyunca' için
+Layers	Katmanlar
+Shown: a hidden layer is not put on the map or written	Gösterilir: gizli bir katman haritaya konmaz ve yazılmaz
+Objects along it	Boyunca nesneler
+The object chosen with the Object tool stood along this piece at the spacing and offset set there	Nesne aracıyla seçilen nesne, bu parça boyunca orada ayarlanan aralık ve kaymayla durur
+Click where the object stands; on a piece it faces along it	Nesnenin duracağı yere tıklayın; bir parçanın üzerinde parça boyunca bakar
+Pick an object on the left first	Önce soldan bir nesne seçin
+Turns	Dönüşler
+A turn of the arm's road type between each two neighbouring arms, so traffic has lanes through the junction	Her iki komşu kol arasında kolun yol türünde bir dönüş, trafiğin kavşaktan geçen şeritleri olsun diye
+Rounded corners	Yuvarlatılmış köşeler
+Where the roads' middle lines meet, the turn is an arc of this radius (a turn is still made where it does not fit)	Yolların orta çizgilerinin buluştuğu yerde dönüş bu yarıçaplı bir yaydır (yayın sığmadığı yerde de dönüş yapılır)
+Corner radius	Köşe yarıçapı
+Straight on	Düz devam
+A piece straight on between arms that face each other	Karşılıklı duran kollar arasında düz bir parça
+auto	oto
+Built by Auto-Junction from the arms	Kollardan Oto-Kavşak ile oluşturuldu

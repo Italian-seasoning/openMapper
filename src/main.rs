@@ -167,7 +167,10 @@ fn main() {
         _ => {}
     }
     // `openmapper path/to/global.cfg` opens that map
+    logging::watchdog();
+    logging::stage("cleaning up after an update");
     updater::clean_up();
+    logging::stage("creating the event loop");
     let open = std::env::args_os().nth(1).map(std::path::PathBuf::from).filter(|p| p.is_file());
     let event_loop = match winit::event_loop::EventLoop::new() {
         Ok(e) => e,
@@ -176,7 +179,9 @@ fn main() {
             std::process::exit(1);
         }
     };
+    logging::stage("reading the settings and the installation");
     let mut app = app::App::new(open);
+    logging::stage("opening the window");
     let ran = event_loop.run_app(&mut app);
     if let Err(e) = &ran {
         eprintln!("openMapper: {e}");

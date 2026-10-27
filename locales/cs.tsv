@@ -2339,3 +2339,71 @@ The whole drawing as one scenery object of the catalogue (its meshes, and lanes 
 Lanes the way the road is drawn	Pruhy ve směru kreslení silnice
 Lanes against it	Pruhy proti směru
 (0 against: one-way)	(0 proti: jednosměrná)
+The road is too short here for a bay with a taper at both ends	Silnice je tu příliš krátká na záliv s náběhem na obou koncích
+Too near the end of the road for the taper at both ends of the bay	Příliš blízko konce silnice pro náběh na obou koncích zálivu
+The bay needs a taper at both ends and one could not be laid there	Záliv potřebuje náběh na obou koncích a tady se jej nepodařilo položit
+Pick a piece or an arm; drag it to move it, drag the dots at the ends of the picked piece to change it; Delete removes it	Vyberte díl nebo rameno; tažením jej přesunete, tažením bodů na koncích vybraného dílu jej změníte; Delete jej odstraní
+Click the start, a point on the arc, then the end. Started at the end of a piece with Auto-Align on, two clicks make an arc tangent to it	Klikněte na začátek, bod na oblouku a pak na konec. Při zahájení na konci dílu se zapnutým Auto-Align vzniknou dvěma kliknutími oblouk tečný k němu
+Curve	Křivka
+A smooth path through every point clicked, for complex turns: Enter, a double click or the button below ends it	Hladká dráha každým kliknutým bodem, pro složité zatáčky: ukončí ji Enter, dvojité kliknutí nebo tlačítko níže
+Finish the curve	Dokončit křivku
+A piece started at the end of another goes on in line with it: a line along its way or across it, an arc or a curve tangent to it. Elsewhere lines keep to steps of 15°	Díl zahájený na konci jiného pokračuje v jeho směru: přímka podél něj nebo napříč, oblouk či křivka tečná k němu. Jinde se přímky drží kroků po 15°
+A road of another width started at the end of a road keeps its edge on the side it bends to, and a taper is laid to get there	Silnice jiné šířky zahájená na konci silnice si ponechá okraj na straně, kam se stáčí, a k tomu se položí náběh
+The arms are found by themselves: every free end of a road is where a road comes in. Arms put by hand stay as they are	Ramena se najdou sama: každý volný konec silnice je místo, kde silnice přichází. Ramena zadaná ručně zůstanou, jak jsou
+found from a road's free end	nalezeno z volného konce silnice
+The whole drawing	Celý výkres
+Left and right swapped	Levá a pravá strana prohozeny
+Turn 90°	Otočit o 90°
+Find the arms	Najít ramena
+The free ends of roads become arms	Volné konce silnic se stanou rameny
+segments	segmenty
+0: a straight; positive: turns right; negative: turns left	0: rovný úsek; kladné: zatáčí doprava; záporné: zatáčí doleva
+Reverse	Obrátit
+Runs the other way: the piece's start and end swap	Vede opačným směrem: začátek a konec dílu se prohodí
+Under the one before it	Pod předchozím
+Higher	Výše
+Over the one after it	Nad následujícím
+Preview	Náhled
+The junction as it will be: the roads running out of the arms, no grid or handles	Křižovatka, jaká bude: silnice vycházející z ramen, bez mřížky a úchytů
+The lanes of the AI over the drawing, with the way they go	Jízdní pruhy AI nad výkresem se směrem jízdy
+Zoom out (-)	Oddálit (-)
+Zoom in (+)	Přiblížit (+)
+The whole drawing in view (F)	Celý výkres v zobrazení (F)
+Preview: the junction as it will look. Wheel zooms, right or middle drag pans	Náhled: křižovatka, jak bude vypadat. Kolečko zoomuje, tažení pravým či prostředním tlačítkem posouvá
+Click the points the curve passes; Enter or a double click ends it	Klikejte na body, kterými křivka prochází; Enter nebo dvojité kliknutí ji ukončí
+Wheel zooms, right or middle drag pans, F fits, Ctrl+Z undoes, Esc cancels	Kolečko zoomuje, tažení pravým či prostředním tlačítkem posouvá, F přizpůsobí, Ctrl+Z vrací, Esc ruší
+Taper in	Náběh
+Metres of road the bay takes to open per metre it widens (more: gentler)	Metrů silnice, které záliv potřebuje k otevření na metr rozšíření (více: pozvolněji)
+out	výběh
+Both ends alike	Oba konce stejné
+Slide the bay to where it fits	Posunout záliv, kam se vejde
+Near the end of a road or a junction there is no room for the taper at both ends: the bay is moved along the road to where there is	Poblíž konce silnice nebo křižovatky není místo pro náběh na obou koncích: záliv se posune podél silnice tam, kde místo je
+A bay always gets a taper at both ends; where one cannot be laid nothing is changed.	Záliv vždy dostane náběh na obou koncích; kde jej nelze položit, nic se nemění.
+Controls as in OMSI 2's editor: middle button turns, right button held and moved zooms, a right click goes there (Shift: menu)	Ovládání jako v editoru OMSI 2: prostřední tlačítko otáčí, podržené a posouvané pravé tlačítko přibližuje, pravé kliknutí tam přejde (Shift: nabídka)
+Controls as chosen under Camera	Ovládání podle volby v části Kamera
+Advanced users	Pokročilí uživatelé
+Controls as in OMSI 2's editor	Ovládání jako v editoru OMSI 2
+Off by default. The middle button turns the view, the right button held and moved up and down zooms, a right click on the ground goes there (Shift + right click: the menu), the arrows move the camera, the wheel zooms	Ve výchozím stavu vypnuto. Prostřední tlačítko otáčí pohled, podržené pravé tlačítko posouvané nahoru a dolů přibližuje, pravé kliknutí na terén tam přejde (Shift + pravé kliknutí: nabídka), šipky posouvají kameru, kolečko přibližuje
+Bay width	Šířka zálivu
+A road type with this pocket lane is made from the chosen one (the road maker's), if it is not the width it has	Typ silnice s tímto pruhem zálivu se vytvoří z vybraného (z tvůrce silnic), pokud nemá tuto šířku
+Tapers in metres	Zúžení v metrech
+Give the length of each taper in metres instead of a ratio	Zadejte délku každého zúžení v metrech místo poměru
+Stand a scenery object (a lamp, a shelter, a bin): on a piece it is turned along it, with Auto-Align on	Postavit okrasný objekt (lampu, přístřešek, koš): na dílu se natočí podél něj, je-li zapnuto Auto-zarovnání
+Standing:	Stojí:
+Added to the way the piece goes where it stands on one (180° faces it the other way)	Přičte se ke směru dílu tam, kde na něm objekt stojí (180° ho otočí na druhou stranu)
+Across the piece to the right, for 'Along the piece'	Napříč dílem doprava, pro „Podél dílu“
+Layers	Vrstvy
+Shown: a hidden layer is not put on the map or written	Zobrazeno: skrytá vrstva se do mapy nedává ani se nezapisuje
+Objects along it	Objekty podél něj
+The object chosen with the Object tool stood along this piece at the spacing and offset set there	Objekt vybraný nástrojem Objekt stojí podél tohoto dílu s roztečí a posunem nastavenými tam
+Click where the object stands; on a piece it faces along it	Klikněte, kde objekt stojí; na dílu směřuje podél něj
+Pick an object on the left first	Nejprve vlevo vyberte objekt
+Turns	Odbočky
+A turn of the arm's road type between each two neighbouring arms, so traffic has lanes through the junction	Odbočka typu silnice ramene mezi každými dvěma sousedními rameny, aby měl provoz křižovatkou jízdní pruhy
+Rounded corners	Zaoblené rohy
+Where the roads' middle lines meet, the turn is an arc of this radius (a turn is still made where it does not fit)	Kde se osy silnic setkávají, je odbočka obloukem tohoto poloměru (odbočka se vytvoří i tam, kde se oblouk nevejde)
+Corner radius	Poloměr rohu
+Straight on	Přímo
+A piece straight on between arms that face each other	Přímý úsek mezi rameny, která jsou proti sobě
+auto	auto
+Built by Auto-Junction from the arms	Vytvořeno Auto-křižovatkou z ramen

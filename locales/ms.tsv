@@ -2339,3 +2339,71 @@ The whole drawing as one scenery object of the catalogue (its meshes, and lanes 
 Lanes the way the road is drawn	Lorong mengikut arah jalan dilukis
 Lanes against it	Lorong berlawanan arah
 (0 against: one-way)	(0 berlawanan: sehala)
+The road is too short here for a bay with a taper at both ends	Jalan di sini terlalu pendek untuk teluk dengan taper di kedua-dua hujung
+Too near the end of the road for the taper at both ends of the bay	Terlalu dekat dengan hujung jalan untuk taper di kedua-dua hujung teluk
+The bay needs a taper at both ends and one could not be laid there	Teluk memerlukan taper di kedua-dua hujung dan satu tidak dapat dipasang di situ
+Pick a piece or an arm; drag it to move it, drag the dots at the ends of the picked piece to change it; Delete removes it	Pilih satu bahagian atau lengan; seret untuk mengalihkannya, seret titik di hujung bahagian terpilih untuk mengubahnya; Delete memadamkannya
+Click the start, a point on the arc, then the end. Started at the end of a piece with Auto-Align on, two clicks make an arc tangent to it	Klik permulaan, satu titik pada lengkok, kemudian hujung. Dimulakan di hujung sesuatu bahagian dengan Auto-Align hidup, dua klik menghasilkan lengkok tangen kepadanya
+Curve	Lengkung
+A smooth path through every point clicked, for complex turns: Enter, a double click or the button below ends it	Laluan licin melalui setiap titik yang diklik, untuk selekoh rumit: Enter, klik dua kali atau butang di bawah menamatkannya
+Finish the curve	Habiskan lengkung
+A piece started at the end of another goes on in line with it: a line along its way or across it, an arc or a curve tangent to it. Elsewhere lines keep to steps of 15°	Bahagian yang dimulakan di hujung bahagian lain diteruskan segaris dengannya: garis di sepanjang atau merentasinya, lengkok atau lengkung tangen kepadanya. Di tempat lain garis mengikut langkah 15°
+A road of another width started at the end of a road keeps its edge on the side it bends to, and a taper is laid to get there	Jalan berlainan lebar yang dimulakan di hujung jalan mengekalkan tepinya di sebelah ia membelok, dan taper dipasang untuk sampai ke situ
+The arms are found by themselves: every free end of a road is where a road comes in. Arms put by hand stay as they are	Lengan dijumpai sendiri: setiap hujung bebas jalan ialah tempat sebuah jalan masuk. Lengan yang dipasang secara manual kekal seperti sedia ada
+found from a road's free end	dijumpai dari hujung bebas jalan
+The whole drawing	Seluruh lukisan
+Left and right swapped	Kiri dan kanan ditukar
+Turn 90°	Putar 90°
+Find the arms	Cari lengan
+The free ends of roads become arms	Hujung bebas jalan menjadi lengan
+segments	segmen
+0: a straight; positive: turns right; negative: turns left	0: lurus; positif: membelok ke kanan; negatif: membelok ke kiri
+Reverse	Songsang
+Runs the other way: the piece's start and end swap	Berjalan ke arah lain: permulaan dan hujung bahagian bertukar
+Under the one before it	Di bawah yang sebelumnya
+Higher	Lebih tinggi
+Over the one after it	Di atas yang selepasnya
+Preview	Pratonton
+The junction as it will be: the roads running out of the arms, no grid or handles	Persimpangan seperti nanti: jalan yang keluar dari lengan, tanpa grid atau pemegang
+The lanes of the AI over the drawing, with the way they go	Lorong AI di atas lukisan, beserta arah perjalanannya
+Zoom out (-)	Zum keluar (-)
+Zoom in (+)	Zum masuk (+)
+The whole drawing in view (F)	Seluruh lukisan dalam paparan (F)
+Preview: the junction as it will look. Wheel zooms, right or middle drag pans	Pratonton: persimpangan seperti nanti. Roda zum, seret klik kanan atau tengah menganjak
+Click the points the curve passes; Enter or a double click ends it	Klik titik yang dilalui lengkung; Enter atau klik dua kali menamatkannya
+Wheel zooms, right or middle drag pans, F fits, Ctrl+Z undoes, Esc cancels	Roda zum, seret klik kanan atau tengah menganjak, F muatkan, Ctrl+Z buat asal, Esc batal
+Taper in	Taper masuk
+Metres of road the bay takes to open per metre it widens (more: gentler)	Meter jalan yang diperlukan teluk untuk terbuka bagi setiap meter ia melebar (lebih: lebih landai)
+out	keluar
+Both ends alike	Kedua-dua hujung sama
+Slide the bay to where it fits	Alihkan teluk ke tempat yang muat
+Near the end of a road or a junction there is no room for the taper at both ends: the bay is moved along the road to where there is	Berhampiran hujung jalan atau persimpangan tiada ruang untuk taper di kedua-dua hujung: teluk dialihkan di sepanjang jalan ke tempat yang ada ruang
+A bay always gets a taper at both ends; where one cannot be laid nothing is changed.	Teluk sentiasa mendapat taper di kedua-dua hujung; jika tidak boleh dipasang, tiada apa yang diubah.
+Controls as in OMSI 2's editor: middle button turns, right button held and moved zooms, a right click goes there (Shift: menu)	Kawalan seperti dalam editor OMSI 2: butang tengah memutar, butang kanan ditekan dan digerakkan untuk zum, klik kanan pergi ke sana (Shift: menu)
+Controls as chosen under Camera	Kawalan seperti yang dipilih di bawah Kamera
+Advanced users	Pengguna mahir
+Controls as in OMSI 2's editor	Kawalan seperti dalam editor OMSI 2
+Off by default. The middle button turns the view, the right button held and moved up and down zooms, a right click on the ground goes there (Shift + right click: the menu), the arrows move the camera, the wheel zooms	Dimatikan secara lalai. Butang tengah memutar paparan, butang kanan ditekan dan digerakkan ke atas dan bawah untuk zum, klik kanan pada tanah pergi ke sana (Shift + klik kanan: menu), kekunci anak panah menggerakkan kamera, roda tetikus untuk zum
+Bay width	Lebar poket
+A road type with this pocket lane is made from the chosen one (the road maker's), if it is not the width it has	Jenis jalan dengan lorong poket ini dibuat daripada yang dipilih (milik pembuat jalan), jika lebarnya tidak sama
+Tapers in metres	Tirus dalam meter
+Give the length of each taper in metres instead of a ratio	Berikan panjang setiap tirus dalam meter, bukannya nisbah
+Stand a scenery object (a lamp, a shelter, a bin): on a piece it is turned along it, with Auto-Align on	Letakkan objek hiasan (lampu, pondok perhentian, tong sampah): pada bahagian, ia diputar mengikut bahagian itu apabila Auto-Jajar dihidupkan
+Standing:	Berdiri:
+Added to the way the piece goes where it stands on one (180° faces it the other way)	Ditambah pada arah bahagian di tempat objek berdiri padanya (180° menghadapkannya ke arah lain)
+Across the piece to the right, for 'Along the piece'	Melintang bahagian ke kanan, untuk 'Sepanjang bahagian'
+Layers	Lapisan
+Shown: a hidden layer is not put on the map or written	Dipaparkan: lapisan tersembunyi tidak diletakkan pada peta dan tidak ditulis
+Objects along it	Objek di sepanjangnya
+The object chosen with the Object tool stood along this piece at the spacing and offset set there	Objek yang dipilih dengan alat Objek berdiri di sepanjang bahagian ini pada jarak dan ofset yang ditetapkan di sana
+Click where the object stands; on a piece it faces along it	Klik di tempat objek berdiri; pada bahagian, ia menghadap mengikut bahagian itu
+Pick an object on the left first	Pilih objek di sebelah kiri dahulu
+Turns	Belokan
+A turn of the arm's road type between each two neighbouring arms, so traffic has lanes through the junction	Satu belokan berjenis jalan lengan antara setiap dua lengan yang berjiran, supaya trafik mempunyai lorong melalui persimpangan
+Rounded corners	Sudut bulat
+Where the roads' middle lines meet, the turn is an arc of this radius (a turn is still made where it does not fit)	Di tempat garis tengah jalan bertemu, belokan ialah lengkok berjejari ini (belokan tetap dibuat di tempat lengkok tidak muat)
+Corner radius	Jejari sudut
+Straight on	Terus
+A piece straight on between arms that face each other	Satu bahagian lurus antara lengan yang saling berhadapan
+auto	auto
+Built by Auto-Junction from the arms	Dibina oleh Auto-Simpang daripada lengan

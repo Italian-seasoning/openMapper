@@ -2339,3 +2339,71 @@ The whole drawing as one scenery object of the catalogue (its meshes, and lanes 
 Lanes the way the road is drawn	도로가 그려진 방향의 차선
 Lanes against it	반대 방향 차선
 (0 against: one-way)	(반대 0: 일방통행)
+The road is too short here for a bay with a taper at both ends	이 도로는 양쪽 끝에 테이퍼가 있는 정차 구간을 두기에는 너무 짧습니다
+Too near the end of the road for the taper at both ends of the bay	도로 끝에 너무 가까워 정차 구간 양쪽 끝의 테이퍼를 둘 수 없습니다
+The bay needs a taper at both ends and one could not be laid there	정차 구간에는 양쪽 끝에 테이퍼가 필요한데 한쪽을 놓을 수 없었습니다
+Pick a piece or an arm; drag it to move it, drag the dots at the ends of the picked piece to change it; Delete removes it	조각이나 암을 선택합니다. 드래그해서 이동하고, 선택한 조각 끝의 점을 드래그해서 모양을 바꿉니다. Delete로 삭제합니다
+Click the start, a point on the arc, then the end. Started at the end of a piece with Auto-Align on, two clicks make an arc tangent to it	시작점, 호 위의 한 점, 끝점 순으로 클릭합니다. Auto-Align을 켜고 조각의 끝에서 시작하면 두 번의 클릭으로 그에 접하는 호가 됩니다
+Curve	곡선
+A smooth path through every point clicked, for complex turns: Enter, a double click or the button below ends it	클릭한 모든 점을 지나는 부드러운 경로로, 복잡한 커브에 씁니다. Enter, 더블 클릭 또는 아래 버튼으로 끝냅니다
+Finish the curve	곡선 완료
+A piece started at the end of another goes on in line with it: a line along its way or across it, an arc or a curve tangent to it. Elsewhere lines keep to steps of 15°	다른 조각의 끝에서 시작한 조각은 그와 일직선으로 이어집니다. 진행 방향을 따르거나 가로지르는 직선, 접하는 호 또는 곡선입니다. 그 밖에는 직선이 15° 단위로 맞춰집니다
+A road of another width started at the end of a road keeps its edge on the side it bends to, and a taper is laid to get there	도로 끝에서 시작한 다른 폭의 도로는 꺾이는 쪽의 가장자리를 유지하며, 거기에 이르도록 테이퍼가 놓입니다
+The arms are found by themselves: every free end of a road is where a road comes in. Arms put by hand stay as they are	암은 자동으로 찾아집니다. 도로의 열린 끝마다 도로가 들어오는 곳입니다. 직접 놓은 암은 그대로 둡니다
+found from a road's free end	도로의 열린 끝에서 찾음
+The whole drawing	전체 도면
+Left and right swapped	좌우 바꿈
+Turn 90°	90° 회전
+Find the arms	암 찾기
+The free ends of roads become arms	도로의 열린 끝이 암이 됩니다
+segments	구간
+0: a straight; positive: turns right; negative: turns left	0: 직선, 양수: 우회전, 음수: 좌회전
+Reverse	반전
+Runs the other way: the piece's start and end swap	반대 방향으로 달립니다. 조각의 시작과 끝이 바뀝니다
+Under the one before it	앞의 것 아래
+Higher	위로
+Over the one after it	뒤의 것 위
+Preview	미리보기
+The junction as it will be: the roads running out of the arms, no grid or handles	완성된 교차로의 모습: 암에서 나가는 도로만 보이고 격자와 핸들은 없습니다
+The lanes of the AI over the drawing, with the way they go	도면 위의 AI 차선과 진행 방향
+Zoom out (-)	축소 (-)
+Zoom in (+)	확대 (+)
+The whole drawing in view (F)	전체 도면 보기 (F)
+Preview: the junction as it will look. Wheel zooms, right or middle drag pans	미리보기: 완성된 교차로의 모습. 휠로 확대/축소, 오른쪽 또는 가운데 버튼 드래그로 이동
+Click the points the curve passes; Enter or a double click ends it	곡선이 지나는 점을 클릭합니다. Enter 또는 더블 클릭으로 끝냅니다
+Wheel zooms, right or middle drag pans, F fits, Ctrl+Z undoes, Esc cancels	휠로 확대/축소, 오른쪽 또는 가운데 버튼 드래그로 이동, F로 맞춤, Ctrl+Z로 실행 취소, Esc로 취소
+Taper in	진입 테이퍼
+Metres of road the bay takes to open per metre it widens (more: gentler)	정차 구간이 1m 넓어지는 동안 열리는 데 필요한 도로 길이(미터). 클수록 완만
+out	진출
+Both ends alike	양쪽 끝 같게
+Slide the bay to where it fits	정차 구간을 들어갈 곳으로 이동
+Near the end of a road or a junction there is no room for the taper at both ends: the bay is moved along the road to where there is	도로나 교차로 끝 가까이에는 양쪽 끝의 테이퍼를 둘 공간이 없습니다. 정차 구간을 공간이 있는 곳까지 도로를 따라 옮깁니다
+A bay always gets a taper at both ends; where one cannot be laid nothing is changed.	정차 구간에는 항상 양쪽 끝에 테이퍼가 생기며, 놓을 수 없는 곳에서는 아무것도 바뀌지 않습니다.
+Controls as in OMSI 2's editor: middle button turns, right button held and moved zooms, a right click goes there (Shift: menu)	OMSI 2 편집기와 같은 조작: 가운데 버튼은 회전, 오른쪽 버튼을 누른 채 움직이면 확대/축소, 오른쪽 클릭하면 그곳으로 이동 (Shift: 메뉴)
+Controls as chosen under Camera	카메라에서 선택한 조작
+Advanced users	고급 사용자
+Controls as in OMSI 2's editor	OMSI 2 편집기와 같은 조작
+Off by default. The middle button turns the view, the right button held and moved up and down zooms, a right click on the ground goes there (Shift + right click: the menu), the arrows move the camera, the wheel zooms	기본값은 꺼짐. 가운데 버튼은 시점을 회전하고, 오른쪽 버튼을 누른 채 위아래로 움직이면 확대/축소하며, 지면을 오른쪽 클릭하면 그곳으로 이동합니다 (Shift + 오른쪽 클릭: 메뉴). 화살표 키는 카메라를 이동하고 휠은 확대/축소합니다
+Bay width	포켓 폭
+A road type with this pocket lane is made from the chosen one (the road maker's), if it is not the width it has	이 포켓 차선이 있는 도로 유형은 선택한 도로 유형(도로 메이커의 것)에서 만들어집니다. 폭이 다를 경우에만 해당합니다
+Tapers in metres	테이퍼 길이(미터)
+Give the length of each taper in metres instead of a ratio	비율 대신 각 테이퍼의 길이를 미터로 지정합니다
+Stand a scenery object (a lamp, a shelter, a bin): on a piece it is turned along it, with Auto-Align on	장식 오브젝트(가로등, 쉼터, 쓰레기통)를 세웁니다. 부품 위에서는 자동 정렬이 켜져 있으면 부품을 따라 회전합니다
+Standing:	서 있음:
+Added to the way the piece goes where it stands on one (180° faces it the other way)	오브젝트가 부품 위에 서 있는 곳에서 부품의 방향에 더해집니다(180°는 반대쪽을 향함)
+Across the piece to the right, for 'Along the piece'	부품에 가로지르는 오른쪽 방향, '부품을 따라'용
+Layers	레이어
+Shown: a hidden layer is not put on the map or written	표시: 숨겨진 레이어는 지도에 놓이지 않고 기록되지 않습니다
+Objects along it	따라 놓인 오브젝트
+The object chosen with the Object tool stood along this piece at the spacing and offset set there	오브젝트 도구로 고른 오브젝트가 그곳에서 설정한 간격과 오프셋으로 이 부품을 따라 놓입니다
+Click where the object stands; on a piece it faces along it	오브젝트가 서 있을 곳을 클릭하세요. 부품 위에서는 부품을 따라 향합니다
+Pick an object on the left first	먼저 왼쪽에서 오브젝트를 고르세요
+Turns	회전로
+A turn of the arm's road type between each two neighbouring arms, so traffic has lanes through the junction	서로 이웃한 두 접속부 사이마다 접속부의 도로 유형으로 된 회전로를 두어, 교차로를 지나는 교통에 차로가 생기게 합니다
+Rounded corners	둥근 모서리
+Where the roads' middle lines meet, the turn is an arc of this radius (a turn is still made where it does not fit)	도로 중심선이 만나는 곳에서 회전로는 이 반지름의 호가 됩니다 (호가 들어가지 않는 곳에도 회전로는 만들어집니다)
+Corner radius	모서리 반지름
+Straight on	직진
+A piece straight on between arms that face each other	서로 마주 보는 접속부 사이의 직선 구간
+auto	자동
+Built by Auto-Junction from the arms	자동 교차로가 접속부로부터 생성

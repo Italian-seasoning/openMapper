@@ -2339,3 +2339,71 @@ The whole drawing as one scenery object of the catalogue (its meshes, and lanes 
 Lanes the way the road is drawn	Mga lane ayon sa direksyon ng pagkaguhit ng kalsada
 Lanes against it	Mga lane na pasalungat
 (0 against: one-way)	(0 pasalungat: isang direksyon)
+The road is too short here for a bay with a taper at both ends	Masyadong maikli ang kalsada rito para sa bay na may taper sa magkabilang dulo
+Too near the end of the road for the taper at both ends of the bay	Masyadong malapit sa dulo ng kalsada para sa taper sa magkabilang dulo ng bay
+The bay needs a taper at both ends and one could not be laid there	Kailangan ng bay ng taper sa magkabilang dulo at walang mailagay doon
+Pick a piece or an arm; drag it to move it, drag the dots at the ends of the picked piece to change it; Delete removes it	Pumili ng piraso o arm; i-drag para ilipat, i-drag ang mga tuldok sa dulo ng napiling piraso para baguhin ito; Delete ang nagtatanggal
+Click the start, a point on the arc, then the end. Started at the end of a piece with Auto-Align on, two clicks make an arc tangent to it	I-click ang simula, isang punto sa arko, saka ang dulo. Kung nagsimula sa dulo ng piraso na naka-on ang Auto-Align, dalawang click ang gagawa ng arkong tangent doon
+Curve	Kurba
+A smooth path through every point clicked, for complex turns: Enter, a double click or the button below ends it	Makinis na landas sa bawat na-click na punto, para sa masalimuot na liko: tinatapos ito ng Enter, double click o ng button sa ibaba
+Finish the curve	Tapusin ang kurba
+A piece started at the end of another goes on in line with it: a line along its way or across it, an arc or a curve tangent to it. Elsewhere lines keep to steps of 15°	Ang pirasong sinimulan sa dulo ng iba ay tuloy-tuloy sa linya nito: guhit sa daan o patawid nito, arko o kurbang tangent dito. Sa iba pang lugar, nasa hakbang na 15° ang mga guhit
+A road of another width started at the end of a road keeps its edge on the side it bends to, and a taper is laid to get there	Ang kalsadang iba ang lapad na sinimulan sa dulo ng kalsada ay nananatili ang gilid sa panig na liliko, at may taper na inilalatag para makarating doon
+The arms are found by themselves: every free end of a road is where a road comes in. Arms put by hand stay as they are	Kusang nahahanap ang mga arm: bawat bukas na dulo ng kalsada ay pasukan ng kalsada. Mananatili ang mga arm na inilagay nang mano-mano
+found from a road's free end	nahanap mula sa bukas na dulo ng kalsada
+The whole drawing	Ang buong drowing
+Left and right swapped	Pinagpalit ang kaliwa at kanan
+Turn 90°	Liko 90°
+Find the arms	Hanapin ang mga arm
+The free ends of roads become arms	Nagiging arm ang mga bukas na dulo ng kalsada
+segments	mga segment
+0: a straight; positive: turns right; negative: turns left	0: tuwid; positibo: kanan ang liko; negatibo: kaliwa ang liko
+Reverse	Baligtarin
+Runs the other way: the piece's start and end swap	Tumatakbo sa kabilang direksyon: nagpapalit ang simula at dulo ng piraso
+Under the one before it	Sa ilalim ng nauna
+Higher	Mas mataas
+Over the one after it	Sa ibabaw ng kasunod
+Preview	Preview
+The junction as it will be: the roads running out of the arms, no grid or handles	Ang junction kung paano ito magiging: ang mga kalsadang lumalabas sa mga arm, walang grid o handle
+The lanes of the AI over the drawing, with the way they go	Ang mga lane ng AI sa ibabaw ng drowing, kasama ang direksyon nila
+Zoom out (-)	Mag-zoom out (-)
+Zoom in (+)	Mag-zoom in (+)
+The whole drawing in view (F)	Ang buong drowing sa tanaw (F)
+Preview: the junction as it will look. Wheel zooms, right or middle drag pans	Preview: ang junction kung paano ito magmumukha. Nagzo-zoom ang wheel, right o middle drag ang nagpa-pan
+Click the points the curve passes; Enter or a double click ends it	I-click ang mga punto na dinaraanan ng kurba; tinatapos ito ng Enter o double click
+Wheel zooms, right or middle drag pans, F fits, Ctrl+Z undoes, Esc cancels	Nagzo-zoom ang wheel, right o middle drag ang nagpa-pan, F ang magkasya, Ctrl+Z ang magbabalik, Esc ang magkansela
+Taper in	Taper sa pasok
+Metres of road the bay takes to open per metre it widens (more: gentler)	Metro ng kalsadang kailangan ng bay para bumukas sa bawat metrong paglapad nito (mas marami: mas banayad)
+out	labas
+Both ends alike	Parehong dulo
+Slide the bay to where it fits	I-slide ang bay sa lugar na kasya
+Near the end of a road or a junction there is no room for the taper at both ends: the bay is moved along the road to where there is	Malapit sa dulo ng kalsada o junction ay walang espasyo para sa taper sa magkabilang dulo: inililipat ang bay sa kalsada hanggang sa lugar na may espasyo
+A bay always gets a taper at both ends; where one cannot be laid nothing is changed.	Laging may taper sa magkabilang dulo ang bay; kapag walang mailagay, walang binabago.
+Controls as in OMSI 2's editor: middle button turns, right button held and moved zooms, a right click goes there (Shift: menu)	Mga kontrol tulad ng sa editor ng OMSI 2: ang gitnang button ay umiikot, ang kanang button na hawak at ginagalaw ay nagzo-zoom, ang right click ay pupunta roon (Shift: menu)
+Controls as chosen under Camera	Mga kontrol ayon sa napili sa Camera
+Advanced users	Mga advanced na user
+Controls as in OMSI 2's editor	Mga kontrol tulad ng sa editor ng OMSI 2
+Off by default. The middle button turns the view, the right button held and moved up and down zooms, a right click on the ground goes there (Shift + right click: the menu), the arrows move the camera, the wheel zooms	Naka-off bilang default. Ang gitnang button ay iniikot ang view, ang kanang button na hawak at ginagalaw pataas at pababa ay nagzo-zoom, ang right click sa lupa ay pupunta roon (Shift + right click: ang menu), ang mga arrow ay gumagalaw sa camera, ang wheel ay nagzo-zoom
+Bay width	Lapad ng pocket
+A road type with this pocket lane is made from the chosen one (the road maker's), if it is not the width it has	Ang uri ng kalsada na may ganitong pocket lane ay ginagawa mula sa napili (sa road maker), kung hindi ito ang lapad nito
+Tapers in metres	Mga taper sa metro
+Give the length of each taper in metres instead of a ratio	Ibigay ang haba ng bawat taper sa metro sa halip na ratio
+Stand a scenery object (a lamp, a shelter, a bin): on a piece it is turned along it, with Auto-Align on	Maglagay ng scenery object (isang lampara, isang silungan, isang basurahan): sa isang piraso, iniikot ito kasunod ng piraso, kapag naka-on ang Auto-Align
+Standing:	Nakatayo:
+Added to the way the piece goes where it stands on one (180° faces it the other way)	Idinaragdag sa direksyon ng piraso kung saan nakatayo ang object dito (ang 180° ay nakaharap sa kabilang direksyon)
+Across the piece to the right, for 'Along the piece'	Pahalang sa piraso papunta sa kanan, para sa 'Sa kahabaan ng piraso'
+Layers	Mga layer
+Shown: a hidden layer is not put on the map or written	Ipinapakita: ang nakatagong layer ay hindi inilalagay sa mapa at hindi isinusulat
+Objects along it	Mga object sa kahabaan nito
+The object chosen with the Object tool stood along this piece at the spacing and offset set there	Ang object na pinili gamit ang Object tool ay nakatayo sa kahabaan ng pirasong ito sa agwat at offset na itinakda doon
+Click where the object stands; on a piece it faces along it	I-click kung saan nakatayo ang object; sa isang piraso, nakaharap ito sa kahabaan nito
+Pick an object on the left first	Pumili muna ng object sa kaliwa
+Turns	Mga liko
+A turn of the arm's road type between each two neighbouring arms, so traffic has lanes through the junction	Isang liko na may uri ng kalsada ng arm sa pagitan ng bawat dalawang magkatabing arm, para may mga lane ang trapiko sa junction
+Rounded corners	Bilugang mga sulok
+Where the roads' middle lines meet, the turn is an arc of this radius (a turn is still made where it does not fit)	Kung saan nagtatagpo ang mga gitnang linya ng mga kalsada, ang liko ay isang arko na may ganitong radius (gagawa pa rin ng liko kahit hindi magkasya ang arko)
+Corner radius	Radius ng sulok
+Straight on	Diretso
+A piece straight on between arms that face each other	Isang tuwid na piraso sa pagitan ng mga arm na magkaharap
+auto	auto
+Built by Auto-Junction from the arms	Ginawa ng Auto-Junction mula sa mga arm

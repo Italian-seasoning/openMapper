@@ -2339,3 +2339,111 @@ The whole drawing as one scenery object of the catalogue (its meshes, and lanes 
 Lanes the way the road is drawn	Faixas no sentido do traçado da via
 Lanes against it	Faixas em sentido contrário
 (0 against: one-way)	(0 em contrário: mão única)
+The road is too short here for a bay with a taper at both ends	A estrada é curta demais aqui para uma baia com transição nas duas pontas
+Too near the end of the road for the taper at both ends of the bay	Perto demais do fim da estrada para a transição nas duas pontas da baia
+The bay needs a taper at both ends and one could not be laid there	A baia precisa de transição nas duas pontas e não foi possível colocar uma aqui
+Pick a piece or an arm; drag it to move it, drag the dots at the ends of the picked piece to change it; Delete removes it	Escolha um trecho ou um braço; arraste para movê-lo, arraste os pontos nas pontas do trecho escolhido para alterá-lo; Delete o remove
+Click the start, a point on the arc, then the end. Started at the end of a piece with Auto-Align on, two clicks make an arc tangent to it	Clique no início, num ponto do arco e depois no fim. Começado no fim de um trecho com Auto-Align ativado, dois cliques fazem um arco tangente a ele
+Curve	Curva
+A smooth path through every point clicked, for complex turns: Enter, a double click or the button below ends it	Um caminho suave por todos os pontos clicados, para curvas complexas: Enter, um clique duplo ou o botão abaixo o termina
+Finish the curve	Concluir a curva
+A piece started at the end of another goes on in line with it: a line along its way or across it, an arc or a curve tangent to it. Elsewhere lines keep to steps of 15°	Um trecho começado no fim de outro continua alinhado com ele: uma reta ao longo do seu sentido ou transversal, um arco ou uma curva tangente a ele. Em outros lugares as retas seguem passos de 15°
+A road of another width started at the end of a road keeps its edge on the side it bends to, and a taper is laid to get there	Uma estrada de outra largura começada no fim de uma estrada mantém a borda do lado para onde curva, e uma transição é colocada para chegar lá
+The arms are found by themselves: every free end of a road is where a road comes in. Arms put by hand stay as they are	Os braços são encontrados automaticamente: cada ponta livre de uma estrada é onde entra uma estrada. Os braços postos à mão ficam como estão
+found from a road's free end	encontrado a partir da ponta livre de uma estrada
+The whole drawing	O desenho todo
+Left and right swapped	Esquerda e direita trocadas
+Turn 90°	Girar 90°
+Find the arms	Encontrar braços
+The free ends of roads become arms	As pontas livres das estradas viram braços
+segments	segmentos
+0: a straight; positive: turns right; negative: turns left	0: reta; positivo: vira à direita; negativo: vira à esquerda
+Reverse	Inverter
+Runs the other way: the piece's start and end swap	Segue no outro sentido: o início e o fim do trecho trocam
+Under the one before it	Por baixo do anterior
+Higher	Mais alto
+Over the one after it	Por cima do seguinte
+Preview	Pré-visualização
+The junction as it will be: the roads running out of the arms, no grid or handles	O cruzamento como ficará: as estradas que saem dos braços, sem grade nem alças
+The lanes of the AI over the drawing, with the way they go	As faixas da IA sobre o desenho, com o sentido em que seguem
+Zoom out (-)	Reduzir (-)
+Zoom in (+)	Ampliar (+)
+The whole drawing in view (F)	O desenho todo à vista (F)
+Preview: the junction as it will look. Wheel zooms, right or middle drag pans	Pré-visualização: o cruzamento como vai ficar. A roda dá zoom, arrastar com o botão direito ou do meio move
+Click the points the curve passes; Enter or a double click ends it	Clique nos pontos por onde passa a curva; Enter ou um clique duplo termina
+Wheel zooms, right or middle drag pans, F fits, Ctrl+Z undoes, Esc cancels	A roda dá zoom, arrastar com o botão direito ou do meio move, F ajusta, Ctrl+Z desfaz, Esc cancela
+Taper in	Transição de entrada
+Metres of road the bay takes to open per metre it widens (more: gentler)	Metros de estrada que a baia leva para abrir por metro que alarga (mais: mais suave)
+out	saída
+Both ends alike	Ambas as pontas iguais
+Slide the bay to where it fits	Deslizar a baia para onde cabe
+Near the end of a road or a junction there is no room for the taper at both ends: the bay is moved along the road to where there is	Perto do fim de uma estrada ou de um cruzamento não há espaço para a transição nas duas pontas: a baia é deslocada ao longo da estrada para onde há
+A bay always gets a taper at both ends; where one cannot be laid nothing is changed.	Uma baia sempre recebe transição nas duas pontas; onde não for possível colocar uma, nada é alterado.
+The road is too short here for a bay with a taper at both ends	A estrada é curta demais aqui para uma baia com transição nas duas pontas
+Too near the end of the road for the taper at both ends of the bay	Perto demais do fim da estrada para a transição nas duas pontas da baia
+The bay needs a taper at both ends and one could not be laid there	A baia precisa de transição nas duas pontas e não foi possível colocar uma aqui
+Pick a piece or an arm; drag it to move it, drag the dots at the ends of the picked piece to change it; Delete removes it	Escolha um trecho ou um braço; arraste para movê-lo, arraste os pontos nas pontas do trecho escolhido para alterá-lo; Delete o remove
+Click the start, a point on the arc, then the end. Started at the end of a piece with Auto-Align on, two clicks make an arc tangent to it	Clique no início, num ponto do arco e depois no fim. Começado no fim de um trecho com Auto-Align ativado, dois cliques fazem um arco tangente a ele
+Curve	Curva
+A smooth path through every point clicked, for complex turns: Enter, a double click or the button below ends it	Um caminho suave por todos os pontos clicados, para curvas complexas: Enter, um clique duplo ou o botão abaixo o termina
+Finish the curve	Concluir a curva
+A piece started at the end of another goes on in line with it: a line along its way or across it, an arc or a curve tangent to it. Elsewhere lines keep to steps of 15°	Um trecho começado no fim de outro continua alinhado com ele: uma reta ao longo do seu sentido ou transversal, um arco ou uma curva tangente a ele. Em outros lugares as retas seguem passos de 15°
+A road of another width started at the end of a road keeps its edge on the side it bends to, and a taper is laid to get there	Uma estrada de outra largura começada no fim de uma estrada mantém a borda do lado para onde curva, e uma transição é colocada para chegar lá
+The arms are found by themselves: every free end of a road is where a road comes in. Arms put by hand stay as they are	Os braços são encontrados automaticamente: cada ponta livre de uma estrada é onde entra uma estrada. Os braços postos à mão ficam como estão
+found from a road's free end	encontrado a partir da ponta livre de uma estrada
+The whole drawing	O desenho todo
+Left and right swapped	Esquerda e direita trocadas
+Turn 90°	Girar 90°
+Find the arms	Encontrar braços
+The free ends of roads become arms	As pontas livres das estradas viram braços
+segments	segmentos
+0: a straight; positive: turns right; negative: turns left	0: reta; positivo: vira à direita; negativo: vira à esquerda
+Reverse	Inverter
+Runs the other way: the piece's start and end swap	Segue no outro sentido: o início e o fim do trecho trocam
+Under the one before it	Por baixo do anterior
+Higher	Mais alto
+Over the one after it	Por cima do seguinte
+Preview	Pré-visualização
+The junction as it will be: the roads running out of the arms, no grid or handles	O cruzamento como ficará: as estradas que saem dos braços, sem grade nem alças
+The lanes of the AI over the drawing, with the way they go	As faixas da IA sobre o desenho, com o sentido em que seguem
+Zoom out (-)	Reduzir (-)
+Zoom in (+)	Ampliar (+)
+The whole drawing in view (F)	O desenho todo à vista (F)
+Preview: the junction as it will look. Wheel zooms, right or middle drag pans	Pré-visualização: o cruzamento como vai ficar. A roda dá zoom, arrastar com o botão direito ou do meio move
+Click the points the curve passes; Enter or a double click ends it	Clique nos pontos por onde passa a curva; Enter ou um clique duplo termina
+Wheel zooms, right or middle drag pans, F fits, Ctrl+Z undoes, Esc cancels	A roda dá zoom, arrastar com o botão direito ou do meio move, F ajusta, Ctrl+Z desfaz, Esc cancela
+Taper in	Transição de entrada
+Metres of road the bay takes to open per metre it widens (more: gentler)	Metros de estrada que a baia leva para abrir por metro que alarga (mais: mais suave)
+out	saída
+Both ends alike	Ambas as pontas iguais
+Slide the bay to where it fits	Deslizar a baia para onde cabe
+Near the end of a road or a junction there is no room for the taper at both ends: the bay is moved along the road to where there is	Perto do fim de uma estrada ou de um cruzamento não há espaço para a transição nas duas pontas: a baia é deslocada ao longo da estrada para onde há
+A bay always gets a taper at both ends; where one cannot be laid nothing is changed.	Uma baia sempre recebe transição nas duas pontas; onde não for possível colocar uma, nada é alterado.
+Controls as in OMSI 2's editor: middle button turns, right button held and moved zooms, a right click goes there (Shift: menu)	Controles como no editor do OMSI 2: o botão do meio gira, o botão direito mantido e movido dá zoom, um clique direito vai até lá (Shift: menu)
+Controls as chosen under Camera	Controles conforme escolhido em Câmera
+Advanced users	Usuários avançados
+Controls as in OMSI 2's editor	Controles como no editor do OMSI 2
+Off by default. The middle button turns the view, the right button held and moved up and down zooms, a right click on the ground goes there (Shift + right click: the menu), the arrows move the camera, the wheel zooms	Desativado por padrão. O botão do meio gira a vista, o botão direito mantido e movido para cima e para baixo dá zoom, um clique direito no terreno vai até lá (Shift + clique direito: o menu), as setas movem a câmera, a roda dá zoom
+Bay width	Largura da baia
+A road type with this pocket lane is made from the chosen one (the road maker's), if it is not the width it has	Um tipo de via com esta faixa da baia é criado a partir do escolhido (o do construtor de estradas), se não tiver essa largura
+Tapers in metres	Afunilamentos em metros
+Give the length of each taper in metres instead of a ratio	Informe o comprimento de cada afunilamento em metros em vez de uma proporção
+Stand a scenery object (a lamp, a shelter, a bin): on a piece it is turned along it, with Auto-Align on	Colocar um objeto de cenário (um poste, um abrigo, uma lixeira): sobre uma peça ele é girado ao longo dela, com Auto-Alinhar ativado
+Standing:	Colocado:
+Added to the way the piece goes where it stands on one (180° faces it the other way)	Somado à direção da peça onde o objeto está sobre ela (180° o vira para o lado oposto)
+Across the piece to the right, for 'Along the piece'	Transversal à peça para a direita, para "Ao longo da peça"
+Layers	Camadas
+Shown: a hidden layer is not put on the map or written	Visível: uma camada oculta não é colocada no mapa nem gravada
+Objects along it	Objetos ao longo
+The object chosen with the Object tool stood along this piece at the spacing and offset set there	O objeto escolhido com a ferramenta Objeto fica ao longo desta peça com o espaçamento e o deslocamento definidos lá
+Click where the object stands; on a piece it faces along it	Clique onde o objeto fica; sobre uma peça ele fica voltado ao longo dela
+Pick an object on the left first	Escolha primeiro um objeto à esquerda
+Turns	Conversões
+A turn of the arm's road type between each two neighbouring arms, so traffic has lanes through the junction	Uma conversão do tipo de via do braço entre cada dois braços vizinhos, para que o tráfego tenha faixas através do cruzamento
+Rounded corners	Cantos arredondados
+Where the roads' middle lines meet, the turn is an arc of this radius (a turn is still made where it does not fit)	Onde as linhas centrais das vias se encontram, a conversão é um arco deste raio (a conversão é feita mesmo onde ele não cabe)
+Corner radius	Raio do canto
+Straight on	Em frente
+A piece straight on between arms that face each other	Um trecho reto entre braços que ficam frente a frente
+auto	auto
+Built by Auto-Junction from the arms	Criado pelo Auto-Cruzamento a partir dos braços

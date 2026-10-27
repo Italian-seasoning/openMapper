@@ -338,6 +338,21 @@ pub struct Editor {
     pub use_custom: bool,
     pub pocket_type: Option<String>,
     pub pocket_len: f64,
+    /// The taper into and out of a bay: metres of road per metre the width changes, and
+    /// whether the two ends are kept alike. Both ends are always tapered (never a step).
+    pub pocket_taper_in: f64,
+    pub pocket_taper_out: f64,
+    pub pocket_alike: bool,
+    /// The tapers given as their length in metres (else as a ratio), and those lengths.
+    pub pocket_metres: bool,
+    pub pocket_in_m: f64,
+    pub pocket_out_m: f64,
+    /// The width of the bay (m, 0: as the road type has it): a road type made in the road
+    /// maker is written again with this pocket lane.
+    pub pocket_width: f32,
+    /// Shift the bay along the road to where it fits, if the click is too near a road's end
+    /// for the tapers.
+    pub pocket_fit: bool,
     ring_centre: Option<DVec3>,
     /// Roads keep their height (bridges, embankments): an even gradient from end to end,
     /// the ground left as it is.
@@ -545,6 +560,14 @@ impl Default for Editor {
             use_custom: true,
             pocket_type: None,
             pocket_len: 20.0,
+            pocket_taper_in: POCKET_TAPER,
+            pocket_taper_out: POCKET_TAPER,
+            pocket_alike: true,
+            pocket_metres: false,
+            pocket_in_m: 18.0,
+            pocket_out_m: 18.0,
+            pocket_width: 0.0,
+            pocket_fit: true,
             ring_centre: None,
             keep_height: false,
             snap_grid: false,
@@ -2753,10 +2776,11 @@ impl Editor {
 
     /// [`Editor::adapt_joints`] with the taper `ratio` as metres cut back per metre of
     /// difference in half width (5: 1:10 over both sides; a bus pocket's is steeper).
-    fn adapt_joints_by(&mut self, assets: &mut Assets, ends: Vec<(TileKey, i64, bool)>, ratio: f64) {
-        let (Some(content), asphalt) = (self.content_dir.clone(), self.asphalt.clone()) else { return };
+    fn adapt_joints_by(&mut self, assets: &mut Assets, ends: Vec<(TileKey, i64, bool)>, ratio: f64) -> usize {
+        let (Some(content), asphalt) = (self.content_dir.clone(), self.asphalt.clone()) else { return 0 };
         let follow = self.follow_ground;
-        let Some(doc) = self.doc.as_mut() else { return };
+        let Some(doc) = self.doc.as_mut() else { return 0 };
+        let mut made = 0;
         for (k, id, at_end) in ends {
             let Some(s) = doc.spline(k, id) else { continue };
             let next = if at_end { s.next_id } else { s.prev_id };
@@ -2775,8 +2799,10 @@ impl Editor {
             let arms: Vec<crate::junction::Arm> = [(k, id, at_end), (nk, n.id, n_end)].into_iter().filter_map(|(k, id, e)| doc.trim(k, id, e, back)).map(|x| crate::junction::Arm { key: x.0, id: x.1, at_end: x.2 }).collect();
             if arms.len() == 2 {
                 join_two(doc, assets, true, follow, &content, asphalt.as_deref(), &arms[0], &arms[1]);
+                made += 1;
             }
         }
+        made
     }
 
     /// Make the splines of a planned road. Returns the last one.
@@ -6413,6 +6439,28 @@ impl Editor {
             return;
         };
         let Some(c) = self.cursor else { return };
+        // (a width of its own: the road type made again with that pocket lane)
+        let mut cfg = cfg;
+        if self.pocket_width > 0.0 {
+            if let Some(content) = self.content_dir.clone() {
+                let file = content.join(cfg.replace('\\', "/"));
+                if let Some(spec) = crate::road_maker::RoadSpec::of(&file).filter(|s| (s.pocket - self.pocket_width).abs() > 0.01) {
+                    let mut v = spec.clone();
+                    v.pocket = self.pocket_width;
+                    v.name = format!("{} bay {:.1} m", spec.name, self.pocket_width);
+                    match v.write(&content) {
+                        Ok(rel) => {
+                            crate::hot::own_change();
+                            cfg = rel;
+                        }
+                        Err(e) => {
+                            self.error(e.to_string());
+                            return;
+                        }
+                    }
+                }
+            }
+        }
         let Some(cfg_model) = assets.spline_wait(&cfg, 3000) else {
             self.error(tr("The pocket's road type could not be read", "Не удалось прочитать тип дороги кармана"));
             return;
@@ -6435,10 +6483,30 @@ impl Editor {
             return;
         };
         let step = (main.half_width - cfg_model.half_width).abs() as f64;
-        let back = taper_back_by(step.max(0.25), POCKET_TAPER);
-        let stretch = self.pocket_len.clamp(4.0, 80.0) + 2.0 * back;
-        let Some((start, _)) = crate::pocket::chain_position(doc, k, id) else { return };
-        let mid = start + at;
+        let ratio_in = self.pocket_taper_in.clamp(1.0, 12.0);
+        let ratio_out = if self.pocket_alike { ratio_in } else { self.pocket_taper_out.clamp(1.0, 12.0) };
+        // (a taper in metres is a plate that long: half of it is cut from each road)
+        let (m_in, m_out) = (self.pocket_in_m.clamp(12.0, 60.0), if self.pocket_alike { self.pocket_in_m.clamp(12.0, 60.0) } else { self.pocket_out_m.clamp(12.0, 60.0) });
+        let (back_in, back_out) = if self.pocket_metres { (m_in / 2.0, m_out / 2.0) } else { (taper_back_by(step.max(0.25), ratio_in), taper_back_by(step.max(0.25), ratio_out)) };
+        // (the ratio the plates are laid with: the length asked for over the width changed)
+        let (ratio_in, ratio_out) = if self.pocket_metres { (back_in / step.max(0.25), back_out / step.max(0.25)) } else { (ratio_in, ratio_out) };
+        let len = self.pocket_len.clamp(4.0, 80.0);
+        let stretch = len + back_in + back_out;
+        let Some((start, total)) = crate::pocket::chain_position(doc, k, id) else { return };
+        // (the road must go on for the taper on each side: a bay is never ended by a step)
+        let (lo, hi) = (back_in + 1.0, total - back_out - 1.0 - stretch);
+        let mut from = start + at - len / 2.0 - back_in;
+        if hi < lo - 1e-6 {
+            self.error(tr("The road is too short here for a bay with a taper at both ends", "Дорога здесь слишком короткая для кармана с переходом с обеих сторон"));
+            return;
+        }
+        if from < lo || from > hi {
+            if !self.pocket_fit {
+                self.error(tr("Too near the end of the road for the taper at both ends of the bay", "Слишком близко к концу дороги для перехода с обеих сторон кармана"));
+                return;
+            }
+            from = from.clamp(lo, hi);
+        }
         // (the pocket's left edge lies where the road's did, so its through lanes stay put)
         let shift = (me.0 - ce.0) as f64;
         let Some(doc) = self.doc.as_mut() else { return };
@@ -6448,7 +6516,7 @@ impl Editor {
             self.history.touch_tile(doc, key);
         }
         self.history.touch_global(doc);
-        let result = crate::pocket::cut_out(doc, k, id, mid - stretch / 2.0, mid + stretch / 2.0).and_then(|cut| {
+        let result = crate::pocket::cut_out(doc, k, id, from, from + stretch).and_then(|cut| {
             let mut inner = crate::pocket::retype(doc, &cut, &cfg, shift)?;
             // (one piece where the stretch's pieces make one curve: the taper needs length)
             let mut i = 0;
@@ -6463,14 +6531,20 @@ impl Editor {
         });
         match result {
             Ok((before, after, inner)) => {
-                let mut ends = Vec::new();
+                let (mut laid, mut wanted_plates) = (0, 0);
                 if let (Some((bk, bid)), true) = (before, !inner.is_empty()) {
-                    ends.push((bk, bid, true));
+                    wanted_plates += 1;
+                    laid += self.adapt_joints_by(assets, vec![(bk, bid, true)], ratio_in);
                 }
                 if let (Some((ak, aid)), true) = (after, !inner.is_empty()) {
-                    ends.push((ak, aid, false));
+                    wanted_plates += 1;
+                    laid += self.adapt_joints_by(assets, vec![(ak, aid, false)], ratio_out);
                 }
-                self.adapt_joints_by(assets, ends, POCKET_TAPER);
+                if wanted_plates < 2 || laid < wanted_plates {
+                    self.history.cancel();
+                    self.error(tr("The bay needs a taper at both ends and one could not be laid there", "Карману нужен переход с обеих сторон, а один здесь уложить не удалось"));
+                    return;
+                }
                 self.history.commit();
                 self.set_selection(inner.into_iter().filter(|(k, id)| self.doc.as_ref().map(|d| d.spline(*k, *id).is_some()).unwrap_or(false)).map(|(k, id)| Sel::Spline(k, id)).collect());
                 self.toast(tr("Bus pocket laid", "Автобусный карман создан"));
@@ -6627,7 +6701,7 @@ fn taper_back(step: f64) -> f64 {
 }
 
 fn taper_back_by(step: f64, ratio: f64) -> f64 {
-    (step * ratio).clamp(6.0, 20.0)
+    (step * ratio).clamp(6.0, 30.0)
 }
 
 /// How far the road runs from its end `at_end` of spline `id` along its chain, up to a limit
@@ -8523,10 +8597,11 @@ mod tests {
         let line = |x: f64, y: f64, h: f64, len: f64| LSeg { x, y, heading: h, radius: 0.0, length: len };
         let mut layout = Layout {
             name: "My T".into(),
-            pieces: vec![Piece { file: plain.clone(), segs: vec![line(-14.0, 0.0, 90.0, 28.0)], lift: 0.0 }, Piece { file: plain.clone(), segs: vec![line(0.0, 0.0, 0.0, 14.0)], lift: 0.0 }],
-            arms: vec![Arm { x: -14.0, y: 0.0, out: 270.0, road: plain.clone() }, Arm { x: 14.0, y: 0.0, out: 90.0, road: plain.clone() }, Arm { x: 0.0, y: 14.0, out: 0.0, road: plain.clone() }],
+            pieces: vec![Piece { file: plain.clone(), segs: vec![line(-14.0, 0.0, 90.0, 28.0)], lift: 0.0, hidden: false, auto: false }, Piece { file: plain.clone(), segs: vec![line(0.0, 0.0, 0.0, 14.0)], lift: 0.0, hidden: false, auto: false }],
+            arms: vec![Arm { x: -14.0, y: 0.0, out: 270.0, road: plain.clone(), ..Default::default() }, Arm { x: 14.0, y: 0.0, out: 90.0, road: plain.clone(), ..Default::default() }, Arm { x: 0.0, y: 14.0, out: 0.0, road: plain.clone(), ..Default::default() }],
             auto: true,
             baked: None,
+            ..Default::default()
         };
         let rel = crate::cjunction::bake(&roots, &layout, &mut assets, true).unwrap();
         layout.baked = Some(rel.clone());
@@ -8579,7 +8654,7 @@ mod tests {
         doc.dir = std::env::temp_dir().join("om-complex");
         let mut ed = Editor::default();
         ed.open(doc);
-        let layout = Layout { name: "C".into(), pieces: vec![Piece { file: "Splines\\a.sli".into(), segs: vec![LSeg { x: -8.0, y: 0.0, heading: 90.0, radius: 0.0, length: 16.0 }], lift: 0.0 }, Piece { file: "Splines\\b.sli".into(), segs: vec![LSeg { x: 0.0, y: -8.0, heading: 0.0, radius: 0.0, length: 16.0 }], lift: 0.02 }], ..Default::default() };
+        let layout = Layout { name: "C".into(), pieces: vec![Piece { file: "Splines\\a.sli".into(), segs: vec![LSeg { x: -8.0, y: 0.0, heading: 90.0, radius: 0.0, length: 16.0 }], lift: 0.0, hidden: false, auto: false }, Piece { file: "Splines\\b.sli".into(), segs: vec![LSeg { x: 0.0, y: -8.0, heading: 0.0, radius: 0.0, length: 16.0 }], lift: 0.02, hidden: false, auto: false }], ..Default::default() };
         ed.place_layout(&layout, DVec2::new(150.0, 150.0), 0.0);
         let t = &ed.doc.as_ref().unwrap().tiles[&(0, 0)].tile;
         assert_eq!(t.splines.len(), 2);

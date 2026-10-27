@@ -2339,3 +2339,71 @@ The whole drawing as one scenery object of the catalogue (its meshes, and lanes 
 Lanes the way the road is drawn	Làn theo chiều vẽ đường
 Lanes against it	Làn ngược chiều
 (0 against: one-way)	(0 ngược chiều: một chiều)
+The road is too short here for a bay with a taper at both ends	Đoạn đường này quá ngắn cho một ô đỗ có đoạn thu hẹp ở cả hai đầu
+Too near the end of the road for the taper at both ends of the bay	Quá gần cuối đường cho đoạn thu hẹp ở cả hai đầu ô đỗ
+The bay needs a taper at both ends and one could not be laid there	Ô đỗ cần đoạn thu hẹp ở cả hai đầu và không đặt được ở đó
+Pick a piece or an arm; drag it to move it, drag the dots at the ends of the picked piece to change it; Delete removes it	Chọn một đoạn hoặc một nhánh; kéo để di chuyển, kéo các chấm ở hai đầu đoạn đã chọn để thay đổi; Delete để xóa
+Click the start, a point on the arc, then the end. Started at the end of a piece with Auto-Align on, two clicks make an arc tangent to it	Bấm điểm đầu, một điểm trên cung, rồi điểm cuối. Bắt đầu ở cuối một đoạn khi bật Auto-Align, hai lần bấm tạo cung tiếp tuyến với nó
+Curve	Đường cong
+A smooth path through every point clicked, for complex turns: Enter, a double click or the button below ends it	Đường trơn đi qua mọi điểm đã bấm, cho khúc quanh phức tạp: Enter, nhấp đúp hoặc nút bên dưới để kết thúc
+Finish the curve	Hoàn tất đường cong
+A piece started at the end of another goes on in line with it: a line along its way or across it, an arc or a curve tangent to it. Elsewhere lines keep to steps of 15°	Đoạn bắt đầu ở cuối một đoạn khác sẽ tiếp tục thẳng hàng với nó: đường dọc theo hoặc cắt ngang, cung hoặc đường cong tiếp tuyến với nó. Ở nơi khác, đường đi theo bước 15°
+A road of another width started at the end of a road keeps its edge on the side it bends to, and a taper is laid to get there	Đường có bề rộng khác bắt đầu ở cuối một đường giữ mép ở phía nó rẽ tới, và một đoạn thu hẹp được đặt để tới đó
+The arms are found by themselves: every free end of a road is where a road comes in. Arms put by hand stay as they are	Các nhánh tự được tìm thấy: mỗi đầu hở của đường là nơi một đường đi vào. Nhánh đặt bằng tay vẫn giữ nguyên
+found from a road's free end	tìm thấy từ đầu hở của đường
+The whole drawing	Toàn bộ bản vẽ
+Left and right swapped	Đã đổi trái và phải
+Turn 90°	Rẽ 90°
+Find the arms	Tìm các nhánh
+The free ends of roads become arms	Các đầu hở của đường trở thành nhánh
+segments	đoạn
+0: a straight; positive: turns right; negative: turns left	0: thẳng; dương: rẽ phải; âm: rẽ trái
+Reverse	Đảo chiều
+Runs the other way: the piece's start and end swap	Chạy theo hướng ngược lại: đầu và cuối của đoạn đổi chỗ
+Under the one before it	Dưới đoạn trước
+Higher	Cao hơn
+Over the one after it	Trên đoạn sau
+Preview	Xem trước
+The junction as it will be: the roads running out of the arms, no grid or handles	Nút giao như sẽ có: các đường chạy ra từ các nhánh, không lưới và tay nắm
+The lanes of the AI over the drawing, with the way they go	Các làn của AI trên bản vẽ, kèm hướng đi
+Zoom out (-)	Thu nhỏ (-)
+Zoom in (+)	Phóng to (+)
+The whole drawing in view (F)	Toàn bộ bản vẽ trong khung nhìn (F)
+Preview: the junction as it will look. Wheel zooms, right or middle drag pans	Xem trước: nút giao như sẽ trông. Con lăn phóng to thu nhỏ, kéo chuột phải hoặc giữa để di chuyển
+Click the points the curve passes; Enter or a double click ends it	Bấm các điểm mà đường cong đi qua; Enter hoặc nhấp đúp để kết thúc
+Wheel zooms, right or middle drag pans, F fits, Ctrl+Z undoes, Esc cancels	Con lăn phóng to thu nhỏ, kéo chuột phải hoặc giữa để di chuyển, F vừa khung, Ctrl+Z hoàn tác, Esc hủy
+Taper in	Thu hẹp vào
+Metres of road the bay takes to open per metre it widens (more: gentler)	Số mét đường ô đỗ cần để mở ra cho mỗi mét nó rộng thêm (nhiều hơn: thoải hơn)
+out	ra
+Both ends alike	Hai đầu giống nhau
+Slide the bay to where it fits	Trượt ô đỗ tới chỗ vừa
+Near the end of a road or a junction there is no room for the taper at both ends: the bay is moved along the road to where there is	Gần cuối đường hoặc nút giao không đủ chỗ cho đoạn thu hẹp ở cả hai đầu: ô đỗ được dời dọc theo đường tới chỗ đủ chỗ
+A bay always gets a taper at both ends; where one cannot be laid nothing is changed.	Ô đỗ luôn có đoạn thu hẹp ở cả hai đầu; nơi không đặt được thì không có gì thay đổi.
+Controls as in OMSI 2's editor: middle button turns, right button held and moved zooms, a right click goes there (Shift: menu)	Điều khiển như trong trình chỉnh sửa của OMSI 2: nút giữa xoay, giữ nút phải và di chuyển để thu phóng, nhấp chuột phải để đến đó (Shift: menu)
+Controls as chosen under Camera	Điều khiển theo lựa chọn trong Camera
+Advanced users	Người dùng nâng cao
+Controls as in OMSI 2's editor	Điều khiển như trong trình chỉnh sửa của OMSI 2
+Off by default. The middle button turns the view, the right button held and moved up and down zooms, a right click on the ground goes there (Shift + right click: the menu), the arrows move the camera, the wheel zooms	Mặc định tắt. Nút giữa xoay góc nhìn, giữ nút phải và di chuyển lên xuống để thu phóng, nhấp chuột phải vào mặt đất để đến đó (Shift + nhấp chuột phải: menu), phím mũi tên di chuyển camera, con lăn để thu phóng
+Bay width	Chiều rộng ô đỗ
+A road type with this pocket lane is made from the chosen one (the road maker's), if it is not the width it has	Loại đường có làn ô đỗ này được tạo từ loại đã chọn (của trình tạo đường), nếu nó không có chiều rộng này
+Tapers in metres	Thu hẹp tính bằng mét
+Give the length of each taper in metres instead of a ratio	Nhập chiều dài mỗi đoạn thu hẹp bằng mét thay vì tỉ lệ
+Stand a scenery object (a lamp, a shelter, a bin): on a piece it is turned along it, with Auto-Align on	Đặt một đối tượng cảnh quan (đèn, nhà chờ, thùng rác): trên một chi tiết, nó xoay dọc theo chi tiết khi bật Tự động căn
+Standing:	Đứng:
+Added to the way the piece goes where it stands on one (180° faces it the other way)	Cộng vào hướng của chi tiết tại chỗ đối tượng đứng trên đó (180° quay nó sang phía kia)
+Across the piece to the right, for 'Along the piece'	Vuông góc với chi tiết sang phải, cho 'Dọc theo chi tiết'
+Layers	Lớp
+Shown: a hidden layer is not put on the map or written	Hiển thị: lớp bị ẩn sẽ không được đặt lên bản đồ và không được ghi
+Objects along it	Đối tượng dọc theo
+The object chosen with the Object tool stood along this piece at the spacing and offset set there	Đối tượng chọn bằng công cụ Đối tượng đứng dọc theo chi tiết này với khoảng cách và độ lệch đặt ở đó
+Click where the object stands; on a piece it faces along it	Nhấp vào chỗ đối tượng đứng; trên một chi tiết nó quay dọc theo chi tiết
+Pick an object on the left first	Hãy chọn một đối tượng ở bên trái trước
+Turns	Đường rẽ
+A turn of the arm's road type between each two neighbouring arms, so traffic has lanes through the junction	Một đường rẽ theo loại đường của nhánh giữa mỗi hai nhánh kề nhau, để xe cộ có làn đi qua ngã tư
+Rounded corners	Góc bo tròn
+Where the roads' middle lines meet, the turn is an arc of this radius (a turn is still made where it does not fit)	Nơi các đường tim của đường gặp nhau, đường rẽ là một cung có bán kính này (đường rẽ vẫn được tạo ở nơi cung không vừa)
+Corner radius	Bán kính góc
+Straight on	Đi thẳng
+A piece straight on between arms that face each other	Một đoạn thẳng giữa các nhánh đối diện nhau
+auto	tự động
+Built by Auto-Junction from the arms	Do Tự động nút giao tạo từ các nhánh

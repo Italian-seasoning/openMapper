@@ -2339,3 +2339,71 @@ The whole drawing as one scenery object of the catalogue (its meshes, and lanes 
 Lanes the way the road is drawn	顺着道路绘制方向的车道
 Lanes against it	逆向车道
 (0 against: one-way)	(逆向 0:单向道)
+The road is too short here for a bay with a taper at both ends	这里的道路太短,放不下两端都有渐缩段的停靠湾
+Too near the end of the road for the taper at both ends of the bay	太靠近道路尽头,放不下停靠湾两端的渐缩段
+The bay needs a taper at both ends and one could not be laid there	停靠湾两端都需要渐缩段,而这里放不下
+Pick a piece or an arm; drag it to move it, drag the dots at the ends of the picked piece to change it; Delete removes it	选取一段或一条支路;拖动可移动,拖动所选段两端的圆点可修改;Delete 可删除
+Click the start, a point on the arc, then the end. Started at the end of a piece with Auto-Align on, two clicks make an arc tangent to it	点击起点、弧上一点,再点击终点。在启用 Auto-Align 时从某段的末端开始,点击两次即可得到与它相切的弧
+Curve	曲线
+A smooth path through every point clicked, for complex turns: Enter, a double click or the button below ends it	经过每个点击位置的平滑路径,用于复杂的转弯:Enter、双击或下方按钮可结束
+Finish the curve	完成曲线
+A piece started at the end of another goes on in line with it: a line along its way or across it, an arc or a curve tangent to it. Elsewhere lines keep to steps of 15°	从另一段末端开始的一段会与它顺接:沿着它或横过它的直线、与它相切的弧或曲线。其他地方的直线以 15° 为间隔
+A road of another width started at the end of a road keeps its edge on the side it bends to, and a taper is laid to get there	从道路末端开始的不同宽度道路,会保留转向那一侧的边缘,并铺设一段渐缩段来衔接
+The arms are found by themselves: every free end of a road is where a road comes in. Arms put by hand stay as they are	支路会自动找出:道路的每个自由端都是道路进入之处。手动放置的支路保持不变
+found from a road's free end	由道路的自由端找出
+The whole drawing	整张图
+Left and right swapped	左右已对调
+Turn 90°	转 90°
+Find the arms	找出支路
+The free ends of roads become arms	道路的自由端变成支路
+segments	段数
+0: a straight; positive: turns right; negative: turns left	0:直线;正值:右转;负值:左转
+Reverse	反向
+Runs the other way: the piece's start and end swap	朝相反方向延伸:该段的起点与终点对调
+Under the one before it	在前一段之下
+Higher	较高
+Over the one after it	在后一段之上
+Preview	预览
+The junction as it will be: the roads running out of the arms, no grid or handles	路口建成后的样子:从支路延伸出的道路,没有网格和控制点
+The lanes of the AI over the drawing, with the way they go	AI 的车道叠在图上,并显示行进方向
+Zoom out (-)	缩小 (-)
+Zoom in (+)	放大 (+)
+The whole drawing in view (F)	整张图置于视野内 (F)
+Preview: the junction as it will look. Wheel zooms, right or middle drag pans	预览:路口建成后的样子。滚轮缩放,按右键或中键拖动可平移
+Click the points the curve passes; Enter or a double click ends it	点击曲线经过的点;Enter 或双击可结束
+Wheel zooms, right or middle drag pans, F fits, Ctrl+Z undoes, Esc cancels	滚轮缩放,按右键或中键拖动可平移,F 适应窗口,Ctrl+Z 撤销,Esc 取消
+Taper in	入口渐缩
+Metres of road the bay takes to open per metre it widens (more: gentler)	停靠湾每加宽一米所需展开的道路米数(越大:越平缓)
+out	出口
+Both ends alike	两端相同
+Slide the bay to where it fits	将停靠湾滑到放得下的位置
+Near the end of a road or a junction there is no room for the taper at both ends: the bay is moved along the road to where there is	在道路或路口末端附近,两端的渐缩段没有空间:停靠湾会沿道路移到有空间的位置
+A bay always gets a taper at both ends; where one cannot be laid nothing is changed.	停靠湾两端一定有渐缩段;放不下时不会有任何改变。
+Controls as in OMSI 2's editor: middle button turns, right button held and moved zooms, a right click goes there (Shift: menu)	操作方式与 OMSI 2 的编辑器相同：按住中键旋转，按住右键并移动可缩放，单击右键前往该处（Shift：菜单）
+Controls as chosen under Camera	操作方式按“摄像机”中的选择
+Advanced users	高级用户
+Controls as in OMSI 2's editor	操作方式与 OMSI 2 的编辑器相同
+Off by default. The middle button turns the view, the right button held and moved up and down zooms, a right click on the ground goes there (Shift + right click: the menu), the arrows move the camera, the wheel zooms	默认关闭。中键旋转视角，按住右键上下移动可缩放，在地面单击右键前往该处（Shift + 右键：菜单），方向键移动摄像机，滚轮缩放
+Bay width	停靠港湾宽度
+A road type with this pocket lane is made from the chosen one (the road maker's), if it is not the width it has	若所选道路类型（道路制作器中的）宽度不同，则由它创建具有此停靠港湾车道的道路类型
+Tapers in metres	锥化长度（米）
+Give the length of each taper in metres instead of a ratio	以米指定每段锥化的长度，而非比例
+Stand a scenery object (a lamp, a shelter, a bin): on a piece it is turned along it, with Auto-Align on	放置场景物体(路灯、候车亭、垃圾桶):在部件上时,若开启自动对齐,会沿部件方向转向
+Standing:	站立:
+Added to the way the piece goes where it stands on one (180° faces it the other way)	加到物体所站部件处的部件方向上(180° 则朝向另一侧)
+Across the piece to the right, for 'Along the piece'	垂直于部件向右,供“沿部件”使用
+Layers	图层
+Shown: a hidden layer is not put on the map or written	显示:隐藏的图层不会放到地图上,也不会写出
+Objects along it	沿线物体
+The object chosen with the Object tool stood along this piece at the spacing and offset set there	以物体工具选取的物体,按该处设置的间距和偏移沿此部件放置
+Click where the object stands; on a piece it faces along it	点击物体站立的位置;在部件上时朝向沿部件方向
+Pick an object on the left first	请先在左侧选取一个物体
+Turns	转弯
+A turn of the arm's road type between each two neighbouring arms, so traffic has lanes through the junction	在每两个相邻入口之间,建立一段该入口道路类型的转弯,让车流在交叉口内有车道可行
+Rounded corners	圆角
+Where the roads' middle lines meet, the turn is an arc of this radius (a turn is still made where it does not fit)	道路中心线相交处,转弯为此半径的圆弧(圆弧放不下的地方仍会生成转弯)
+Corner radius	拐角半径
+Straight on	直行
+A piece straight on between arms that face each other	相对入口之间的一段直路
+auto	自动
+Built by Auto-Junction from the arms	由自动路口根据入口生成

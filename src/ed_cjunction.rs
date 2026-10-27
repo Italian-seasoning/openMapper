@@ -32,7 +32,7 @@ impl Editor {
     pub fn place_layout(&mut self, layout: &Layout, origin: DVec2, rot: f64) {
         let follow = self.follow_ground;
         let Some(doc) = self.doc.as_mut() else { return };
-        if layout.pieces.is_empty() {
+        if layout.pieces.iter().all(|p| p.hidden) {
             self.toast(tr("Draw some pieces first", "Сначала нарисуйте детали"));
             return;
         }
@@ -45,11 +45,12 @@ impl Editor {
         let z = doc.ground(origin);
         match cjunction::place(doc, layout, origin, z, rot) {
             Ok(made) => {
+                let things = cjunction::place_objects(doc, layout, origin, z, rot);
                 if follow {
                     conform_disc(doc, DVec3::new(origin.x, origin.y, z), layout.radius() + 1.0, &[]);
                 }
                 self.history.commit();
-                self.set_selection(made.into_iter().map(|(k, id)| Sel::Spline(k, id)).collect());
+                self.set_selection(made.into_iter().map(|(k, id)| Sel::Spline(k, id)).chain(things.into_iter().map(|(k, id)| Sel::Object(k, id))).collect());
                 self.toast(tr("Complex junction put on the map: its pieces are ordinary splines", "Сложный перекрёсток на карте: его детали — обычные сплайны"));
             }
             Err(e) => {
@@ -133,6 +134,7 @@ pub(crate) fn apply_custom(doc: &mut Document, assets: &mut Assets, layouts: &[L
     let t = doc.tiles.get_mut(&k)?;
     t.tile.objects.push(MapObject { file: baked, id, pos: [centre.x - org.x, centre.y - org.y, z], rot: [rot, 0.0, 0.0], ..Default::default() });
     t.touch_content();
+    cjunction::place_objects(doc, layout, centre.truncate(), z, rot);
     if follow {
         conform_disc(doc, centre, layout.radius() + 1.0, &ends_world);
     }

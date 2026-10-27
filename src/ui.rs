@@ -118,6 +118,7 @@ pub enum Action {
     SetAlpha(String, usize, String, i32, u8),
     /// How the mouse moves the camera ("map" or "fly").
     SetCamera(String),
+    SetOmsiControls(bool),
     SetTileStreaming(bool),
     /// How many tiles the streaming window holds (it is switched on too).
     SetStreamTiles(u32),
@@ -808,7 +809,7 @@ pub fn editor(root: &mut egui::Ui, st: &mut UiState, u: EditorUi, actions: &mut 
     // the round 2D / 3D switch at the top right of the view
     if view.0.is_positive() {
         let at = egui::Pos2::new(view.0.right() - 46.0, view.0.top() + 12.0);
-        egui::Area::new(Id::new("view 2d 3d")).fixed_pos(at).order(egui::Order::Foreground).show(&ctx, |ui| {
+        egui::Area::new(Id::new("view 2d 3d")).fixed_pos(at).order(egui::Order::Middle).show(&ctx, |ui| {
             let (rect, resp) = ui.allocate_exact_size(Vec2::splat(34.0), Sense::click());
             let p = ui.painter();
             p.circle_filled(rect.center(), 17.0, if resp.hovered() { Color32::from_rgb(70, 74, 82) } else { Color32::from_rgb(46, 49, 55) });
@@ -971,6 +972,12 @@ fn menu_bar(root: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, can_undo: bo
                     }
                     if radio(ui, !unity, tr("Map editor: right button looks round and W A S D fly (Q down, E up), middle pans, the wheel zooms to the cursor, drag moves the map", "Редактор карт: правая кнопка оглядывает и W A S D летят (Q вниз, E вверх), средняя двигает, колесо приближает к курсору, перетаскивание двигает карту")).clicked() {
                         actions.push(Action::SetCamera("map".into()));
+                    }
+                });
+                ui.menu_button(tr("Advanced users", "Для опытных"), |ui| {
+                    let mut on = prefs.omsi_controls;
+                    if check(ui, &mut on, tr("Controls as in OMSI 2's editor", "Управление как в редакторе OMSI 2")).on_hover_text(tr("Off by default. The middle button turns the view, the right button held and moved up and down zooms, a right click on the ground goes there (Shift + right click: the menu), the arrows move the camera, the wheel zooms", "Выключено по умолчанию. Средняя кнопка вращает вид, правая кнопка с движением вверх-вниз приближает, правый клик по земле переходит туда (Shift + правый клик: меню), стрелки двигают камеру, колесо приближает")).clicked() {
+                        actions.push(Action::SetOmsiControls(on));
                     }
                 });
                 let mut streaming = prefs.tile_streaming == Some(true);

@@ -113,6 +113,8 @@ pub struct App {
     /// The ground textures being looked for (on a thread of its own: a big installation's
     /// folders took long enough to freeze the window).
     texture_scan: Option<std::sync::mpsc::Receiver<Vec<String>>>,
+    /// The maps of the installation, listed on a thread of their own at the start.
+    maps_scan: Option<std::sync::mpsc::Receiver<Vec<install::MapEntry>>>,
     /// How many assets the switch catalogue was made from (made again when the library changes).
     switches_for: usize,
     game: Option<PathBuf>,
@@ -187,6 +189,7 @@ impl App {
             drive: Default::default(),
             texture_files: Vec::new(),
             texture_scan: None,
+            maps_scan: None,
             switches_for: 0,
             game: install::find_game(),
             open_at_start: open,
@@ -217,6 +220,7 @@ impl App {
             autosave: Default::default(),
             recover: None,
         };
+        crate::logging::stage("looking for OMSI 2 and the content");
         app.setup_roots();
         // OPENMAPPER_NEWMAP: the New map dialog open at the start (checks without a person at the screen)
         if std::env::var_os("OPENMAPPER_NEWMAP").is_some() {
@@ -236,7 +240,13 @@ impl App {
         let roots = Roots::new(omsi);
         self.assets = Some(Assets::new(roots.omsi.clone(), roots.content.clone()));
         self.lib.start_scan(&roots);
-        self.ui.maps = install::list_maps(&roots);
+        // (every map's global.cfg is read to name it: a long list on a slow disk is not waited for)
+        let (tx, rx) = std::sync::mpsc::channel();
+        let listed = roots.clone();
+        std::thread::spawn(move || {
+            let _ = tx.send(install::list_maps(&listed));
+        });
+        self.maps_scan = Some(rx);
         self.ui.favourites = self.prefs.favourites.clone();
         self.ui.recent_assets = self.prefs.recent_assets.clone();
         self.scan_textures(&roots);
@@ -258,8 +268,11 @@ impl App {
         if self.shot.is_some() {
             attrs = attrs.with_window_level(winit::window::WindowLevel::AlwaysOnTop).with_active(false);
         }
+        crate::logging::stage("creating the window");
         let window = Arc::new(el.create_window(attrs)?);
+        crate::logging::stage("starting the graphics card");
         let mut gpu = Gpu::new(window.clone())?;
+        crate::logging::stage("first frames");
         let quality = crate::render::quality::Quality::from_code(&self.prefs.graphics);
         gpu.set_samples(quality.samples());
         let mut renderer = Renderer::new(&gpu, quality);
@@ -1120,6 +1133,16 @@ impl App {
     }
 
     fn poll_textures(&mut self) {
+        if let Some(rx) = &self.maps_scan {
+            match rx.try_recv() {
+                Ok(list) => {
+                    self.ui.maps = list;
+                    self.maps_scan = None;
+                }
+                Err(std::sync::mpsc::TryRecvError::Disconnected) => self.maps_scan = None,
+                Err(std::sync::mpsc::TryRecvError::Empty) => {}
+            }
+        }
         if let Some(rx) = &self.texture_scan {
             match rx.try_recv() {
                 Ok(files) => {
@@ -1530,6 +1553,11 @@ impl App {
                 self.stream_set = None;
                 self.ed.toast(if on { tr("Only 100 tiles round the camera are loaded; click on the empty zone to load the next 100", "Загружены только 100 тайлов вокруг камеры; клик по пустой зоне загрузит следующие 100") } else { tr("All tiles are loaded", "Загружены все тайлы") }.to_string());
             }
+            Action::SetOmsiControls(on) => {
+                self.prefs.omsi_controls = on;
+                self.prefs.save();
+                self.ed.toast(if on { tr("Controls as in OMSI 2's editor: middle button turns, right button held and moved zooms, a right click goes there (Shift: menu)", "Управление как в редакторе OMSI 2: средняя кнопка вращает, правая зажатая с движением приближает, правый клик переходит туда (Shift: меню)") } else { tr("Controls as chosen under Camera", "Управление как выбрано в «Камера»") }.to_string());
+            }
             Action::SetCamera(c) => {
                 self.prefs.camera = c;
                 self.prefs.save();
@@ -1826,7 +1854,7 @@ impl App {
     /// The camera moves like a fly-through (Unity / Unreal) rather than over a map.
     /// The camera works as Unity's scene view (the default), else as a map editor's.
     fn fly_style(&self) -> bool {
-        self.prefs.camera != "map"
+        !self.prefs.omsi_controls && self.prefs.camera != "map"
     }
 
     /// What a drag of the map holds: the point under the cursor, else where the cursor's ray
@@ -2317,6 +2345,7 @@ impl App {
             g.renderer.profile.add("frame interval", dt as f32 * 1000.0);
             g.renderer.profile.end_frame();
             self.frames += 1;
+            crate::logging::beat();
             // OPENMAPPER_SAVE=1: what the checks above did saved at the third frame (a larger
             // number: at that frame, after what is built a few frames in)
             let save_at = std::env::var("OPENMAPPER_SAVE").ok().map(|v| v.parse::<u64>().ok().filter(|n| *n > 1).unwrap_or(3));
@@ -2904,6 +2933,9 @@ impl ApplicationHandler for App {
                     // turns round the point the button went down on, the map following the hand)
                     if self.ui.view_2d {
                         self.cam.pan_screen(dx, dy, h);
+                    } else if self.prefs.omsi_controls {
+                        // (OMSI 2's editor: held and moved down zooms in, up zooms out)
+                        self.cam.zoom(dy * 0.04, self.ed.cursor);
                     } else if unity && self.keys.alt {
                         self.cam.dolly((dx - dy) * 0.02);
                     } else if !self.mouse.look_raw {
@@ -2914,7 +2946,12 @@ impl ApplicationHandler for App {
                     self.cam.orbit_pixels(if unity { dx } else { -dx }, dy);
                 }
                 if self.mouse.middle {
-                    self.cam.pan_screen(dx, dy, h);
+                    if self.prefs.omsi_controls && !self.ui.view_2d {
+                        // (OMSI 2's editor: the middle button turns the view)
+                        self.cam.orbit_pixels(-dx, dy);
+                    } else {
+                        self.cam.pan_screen(dx, dy, h);
+                    }
                 } else if self.mouse.grab {
                     match (self.mouse.grab_anchor, self.view_ray()) {
                         (Some(a), Some((o, d))) => self.cam.grab(a, o, d),
@@ -2999,7 +3036,7 @@ impl ApplicationHandler for App {
                             self.mouse.right = true;
                             self.mouse.right_moved = 0.0;
                             self.mouse.look_acc = (0.0, 0.0);
-                            if !self.ui.view_2d && !self.keys.alt {
+                            if !self.ui.view_2d && !self.keys.alt && !self.prefs.omsi_controls {
                                 let ok = g.window.set_cursor_grab(winit::window::CursorGrabMode::Locked).or_else(|_| g.window.set_cursor_grab(winit::window::CursorGrabMode::Confined)).is_ok();
                                 if ok {
                                     g.window.set_cursor_visible(false);
@@ -3014,7 +3051,14 @@ impl ApplicationHandler for App {
                                 g.window.set_cursor_visible(true);
                                 let _ = g.window.set_cursor_position(winit::dpi::LogicalPosition::new(self.mouse.pos.0 as f64, self.mouse.pos.1 as f64));
                             }
-                            if self.mouse.right_moved < 5.0 && self.ed.right_click() {
+                            let menu = self.mouse.right_moved < 5.0 && self.ed.right_click();
+                            if menu && self.prefs.omsi_controls && !self.keys.shift {
+                                // (OMSI 2's editor: a right click on the ground goes there; Shift opens the menu)
+                                if let Some(c) = self.ed.cursor {
+                                    let d = self.cam.distance;
+                                    self.cam.jump_to(c, d);
+                                }
+                            } else if menu {
                                 self.ui.view_menu = Some(crate::ui_menu::ViewMenu { at: egui::pos2(self.mouse.pos.0, self.mouse.pos.1), ground: self.ed.cursor });
                             }
                         }

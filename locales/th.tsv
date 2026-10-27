@@ -2339,3 +2339,71 @@ The whole drawing as one scenery object of the catalogue (its meshes, and lanes 
 Lanes the way the road is drawn	เลนตามทิศทางที่วาดถนน
 Lanes against it	เลนทวนทิศทาง
 (0 against: one-way)	(ทวน 0: ทางเดินรถทางเดียว)
+The road is too short here for a bay with a taper at both ends	ถนนช่วงนี้สั้นเกินไปสำหรับช่องจอดที่มีส่วนเรียวทั้งสองปลาย
+Too near the end of the road for the taper at both ends of the bay	ใกล้ปลายถนนเกินไปสำหรับส่วนเรียวทั้งสองปลายของช่องจอด
+The bay needs a taper at both ends and one could not be laid there	ช่องจอดต้องมีส่วนเรียวทั้งสองปลาย แต่วางตรงนั้นไม่ได้
+Pick a piece or an arm; drag it to move it, drag the dots at the ends of the picked piece to change it; Delete removes it	เลือกชิ้นส่วนหรือแขน ลากเพื่อย้าย ลากจุดที่ปลายชิ้นส่วนที่เลือกเพื่อเปลี่ยนรูป Delete ใช้ลบ
+Click the start, a point on the arc, then the end. Started at the end of a piece with Auto-Align on, two clicks make an arc tangent to it	คลิกจุดเริ่ม จุดบนส่วนโค้ง แล้วจุดสิ้นสุด ถ้าเริ่มที่ปลายชิ้นส่วนขณะเปิด Auto-Align คลิกสองครั้งจะได้ส่วนโค้งที่สัมผัสกับชิ้นส่วนนั้น
+Curve	เส้นโค้ง
+A smooth path through every point clicked, for complex turns: Enter, a double click or the button below ends it	เส้นทางเรียบที่ผ่านทุกจุดที่คลิก สำหรับทางเลี้ยวซับซ้อน: Enter, ดับเบิลคลิก หรือปุ่มด้านล่างจะจบเส้นทาง
+Finish the curve	จบเส้นโค้ง
+A piece started at the end of another goes on in line with it: a line along its way or across it, an arc or a curve tangent to it. Elsewhere lines keep to steps of 15°	ชิ้นส่วนที่เริ่มที่ปลายของอีกชิ้นจะต่อเนื่องไปในแนวเดียวกัน: เส้นตรงตามแนวหรือตัดขวาง ส่วนโค้งหรือเส้นโค้งที่สัมผัสกับมัน ที่อื่นเส้นตรงจะเดินทีละ 15°
+A road of another width started at the end of a road keeps its edge on the side it bends to, and a taper is laid to get there	ถนนที่มีความกว้างต่างกันซึ่งเริ่มที่ปลายถนนจะคงขอบด้านที่โค้งไปไว้ และวางส่วนเรียวเพื่อเชื่อมต่อ
+The arms are found by themselves: every free end of a road is where a road comes in. Arms put by hand stay as they are	ระบบหาแขนให้เอง: ปลายถนนที่ว่างทุกแห่งคือจุดที่ถนนเข้ามา แขนที่วางด้วยมือจะคงเดิม
+found from a road's free end	พบจากปลายว่างของถนน
+The whole drawing	ทั้งแบบร่าง
+Left and right swapped	สลับซ้ายและขวา
+Turn 90°	เลี้ยว 90°
+Find the arms	หาแขน
+The free ends of roads become arms	ปลายว่างของถนนกลายเป็นแขน
+segments	ส่วน
+0: a straight; positive: turns right; negative: turns left	0: ทางตรง ค่าบวก: เลี้ยวขวา ค่าลบ: เลี้ยวซ้าย
+Reverse	กลับด้าน
+Runs the other way: the piece's start and end swap	วิ่งไปทางตรงข้าม: จุดเริ่มและจุดสิ้นสุดของชิ้นส่วนสลับกัน
+Under the one before it	ใต้ชิ้นก่อนหน้า
+Higher	สูงขึ้น
+Over the one after it	เหนือชิ้นถัดไป
+Preview	ตัวอย่าง
+The junction as it will be: the roads running out of the arms, no grid or handles	ทางแยกตามที่จะเป็น: ถนนที่ออกจากแขน ไม่มีตารางหรือจุดจับ
+The lanes of the AI over the drawing, with the way they go	เลนของ AI บนแบบร่าง พร้อมทิศทางที่วิ่ง
+Zoom out (-)	ซูมออก (-)
+Zoom in (+)	ซูมเข้า (+)
+The whole drawing in view (F)	เห็นแบบร่างทั้งหมด (F)
+Preview: the junction as it will look. Wheel zooms, right or middle drag pans	ตัวอย่าง: ทางแยกตามที่จะดูเป็น ล้อเมาส์ซูม ลากด้วยปุ่มขวาหรือกลางเพื่อเลื่อน
+Click the points the curve passes; Enter or a double click ends it	คลิกจุดที่เส้นโค้งผ่าน Enter หรือดับเบิลคลิกเพื่อจบ
+Wheel zooms, right or middle drag pans, F fits, Ctrl+Z undoes, Esc cancels	ล้อเมาส์ซูม ลากด้วยปุ่มขวาหรือกลางเพื่อเลื่อน F พอดีหน้าจอ Ctrl+Z เลิกทำ Esc ยกเลิก
+Taper in	ส่วนเรียวขาเข้า
+Metres of road the bay takes to open per metre it widens (more: gentler)	จำนวนเมตรของถนนที่ช่องจอดใช้เปิดออกต่อทุกเมตรที่กว้างขึ้น (มากขึ้น: ลาดน้อยลง)
+out	ออก
+Both ends alike	ทั้งสองปลายเหมือนกัน
+Slide the bay to where it fits	เลื่อนช่องจอดไปตำแหน่งที่พอดี
+Near the end of a road or a junction there is no room for the taper at both ends: the bay is moved along the road to where there is	ใกล้ปลายถนนหรือทางแยกไม่มีที่พอสำหรับส่วนเรียวทั้งสองปลาย: ช่องจอดจะถูกเลื่อนไปตามถนนจนถึงตำแหน่งที่มีที่
+A bay always gets a taper at both ends; where one cannot be laid nothing is changed.	ช่องจอดมีส่วนเรียวทั้งสองปลายเสมอ ถ้าวางไม่ได้จะไม่มีอะไรเปลี่ยน
+Controls as in OMSI 2's editor: middle button turns, right button held and moved zooms, a right click goes there (Shift: menu)	ควบคุมแบบเดียวกับตัวแก้ไขของ OMSI 2: ปุ่มกลางหมุน กดปุ่มขวาค้างแล้วเลื่อนเพื่อซูม คลิกขวาเพื่อไปยังจุดนั้น (Shift: เมนู)
+Controls as chosen under Camera	ควบคุมตามที่เลือกไว้ใน กล้อง
+Advanced users	ผู้ใช้ขั้นสูง
+Controls as in OMSI 2's editor	ควบคุมแบบเดียวกับตัวแก้ไขของ OMSI 2
+Off by default. The middle button turns the view, the right button held and moved up and down zooms, a right click on the ground goes there (Shift + right click: the menu), the arrows move the camera, the wheel zooms	ปิดไว้ตามค่าเริ่มต้น ปุ่มกลางหมุนมุมมอง กดปุ่มขวาค้างแล้วเลื่อนขึ้นลงเพื่อซูม คลิกขวาบนพื้นเพื่อไปยังจุดนั้น (Shift + คลิกขวา: เมนู) ปุ่มลูกศรเลื่อนกล้อง ล้อเมาส์ซูม
+Bay width	ความกว้างช่องจอด
+A road type with this pocket lane is made from the chosen one (the road maker's), if it is not the width it has	ประเภทถนนที่มีเลนช่องจอดนี้จะถูกสร้างจากประเภทที่เลือก (ของตัวสร้างถนน) หากไม่ได้มีความกว้างนี้
+Tapers in metres	ความเรียวเป็นเมตร
+Give the length of each taper in metres instead of a ratio	ระบุความยาวของส่วนเรียวแต่ละส่วนเป็นเมตรแทนสัดส่วน
+Stand a scenery object (a lamp, a shelter, a bin): on a piece it is turned along it, with Auto-Align on	วางวัตถุประกอบฉาก (เช่น เสาไฟ ศาลาพัก ถังขยะ): บนชิ้นส่วนจะหันตามแนวชิ้นส่วนเมื่อเปิดจัดแนวอัตโนมัติ
+Standing:	ตั้งอยู่:
+Added to the way the piece goes where it stands on one (180° faces it the other way)	บวกเข้ากับทิศทางของชิ้นส่วนตรงที่วัตถุตั้งอยู่บนนั้น (180° คือหันไปอีกด้าน)
+Across the piece to the right, for 'Along the piece'	ขวางชิ้นส่วนไปทางขวา สำหรับ 'ตามแนวชิ้นส่วน'
+Layers	ชั้น
+Shown: a hidden layer is not put on the map or written	แสดง: ชั้นที่ซ่อนอยู่จะไม่ถูกวางบนแผนที่และไม่ถูกเขียน
+Objects along it	วัตถุตามแนว
+The object chosen with the Object tool stood along this piece at the spacing and offset set there	วัตถุที่เลือกด้วยเครื่องมือวัตถุจะตั้งตามแนวชิ้นส่วนนี้ด้วยระยะห่างและออฟเซ็ตที่ตั้งไว้ตรงนั้น
+Click where the object stands; on a piece it faces along it	คลิกตรงที่วัตถุตั้งอยู่ บนชิ้นส่วนจะหันตามแนวชิ้นส่วน
+Pick an object on the left first	เลือกวัตถุทางซ้ายก่อน
+Turns	ทางเลี้ยว
+A turn of the arm's road type between each two neighbouring arms, so traffic has lanes through the junction	ทางเลี้ยวประเภทถนนของแขนระหว่างแขนที่อยู่ติดกันทุกคู่ เพื่อให้การจราจรมีช่องทางผ่านทางแยก
+Rounded corners	มุมโค้งมน
+Where the roads' middle lines meet, the turn is an arc of this radius (a turn is still made where it does not fit)	ตรงที่เส้นกึ่งกลางของถนนมาบรรจบกัน ทางเลี้ยวเป็นส่วนโค้งรัศมีนี้ (ถ้าส่วนโค้งไม่พอดี ก็ยังสร้างทางเลี้ยวอยู่ดี)
+Corner radius	รัศมีมุม
+Straight on	ตรงไป
+A piece straight on between arms that face each other	ช่วงตรงระหว่างแขนที่หันหน้าเข้าหากัน
+auto	อัตโนมัติ
+Built by Auto-Junction from the arms	สร้างโดยทางแยกอัตโนมัติจากแขน

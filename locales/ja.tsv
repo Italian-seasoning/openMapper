@@ -2339,3 +2339,71 @@ The whole drawing as one scenery object of the catalogue (its meshes, and lanes 
 Lanes the way the road is drawn	道路の描画方向のレーン
 Lanes against it	逆方向のレーン
 (0 against: one-way)	(逆方向 0: 一方通行)
+The road is too short here for a bay with a taper at both ends	この道路はテーパーを両端に付けたバスベイには短すぎます
+Too near the end of the road for the taper at both ends of the bay	道路の端に近すぎて、バスベイ両端のテーパーを置けません
+The bay needs a taper at both ends and one could not be laid there	バスベイには両端のテーパーが必要ですが、片方を置けませんでした
+Pick a piece or an arm; drag it to move it, drag the dots at the ends of the picked piece to change it; Delete removes it	ピースまたはアームを選択します。ドラッグで移動、選択したピースの端の点をドラッグで変形、Delete で削除します
+Click the start, a point on the arc, then the end. Started at the end of a piece with Auto-Align on, two clicks make an arc tangent to it	始点、円弧上の点、終点の順にクリックします。Auto-Align オンでピースの端から始めると、2回のクリックでそれに接する円弧になります
+Curve	曲線
+A smooth path through every point clicked, for complex turns: Enter, a double click or the button below ends it	クリックしたすべての点を通る滑らかな経路で、複雑なカーブ向けです。Enter、ダブルクリック、または下のボタンで終了します
+Finish the curve	曲線を完了
+A piece started at the end of another goes on in line with it: a line along its way or across it, an arc or a curve tangent to it. Elsewhere lines keep to steps of 15°	別のピースの端から始めたピースは、それと一直線に続きます。進行方向に沿う直線または交差する直線、接する円弧または曲線です。それ以外では直線は15°刻みになります
+A road of another width started at the end of a road keeps its edge on the side it bends to, and a taper is laid to get there	道路の端から始めた幅の異なる道路は、曲がる側の縁を保ち、そこへ至るテーパーが置かれます
+The arms are found by themselves: every free end of a road is where a road comes in. Arms put by hand stay as they are	アームは自動で見つかります。道路の空いた端はすべて道路の入口です。手で置いたアームはそのまま残ります
+found from a road's free end	道路の空いた端から検出
+The whole drawing	描画全体
+Left and right swapped	左右を入れ替え
+Turn 90°	90°回転
+Find the arms	アームを検出
+The free ends of roads become arms	道路の空いた端がアームになります
+segments	セグメント
+0: a straight; positive: turns right; negative: turns left	0: 直進、正: 右に曲がる、負: 左に曲がる
+Reverse	反転
+Runs the other way: the piece's start and end swap	逆向きに走ります。ピースの始点と終点が入れ替わります
+Under the one before it	前のものの下
+Higher	上へ
+Over the one after it	後のものの上
+Preview	プレビュー
+The junction as it will be: the roads running out of the arms, no grid or handles	完成時の交差点: アームから伸びる道路のみで、グリッドやハンドルは表示しません
+The lanes of the AI over the drawing, with the way they go	描画上の AI のレーンと進行方向
+Zoom out (-)	縮小 (-)
+Zoom in (+)	拡大 (+)
+The whole drawing in view (F)	描画全体を表示 (F)
+Preview: the junction as it will look. Wheel zooms, right or middle drag pans	プレビュー: 完成時の交差点。ホイールでズーム、右または中ボタンのドラッグで移動
+Click the points the curve passes; Enter or a double click ends it	曲線が通る点をクリックします。Enter またはダブルクリックで終了します
+Wheel zooms, right or middle drag pans, F fits, Ctrl+Z undoes, Esc cancels	ホイールでズーム、右または中ボタンのドラッグで移動、F で全体表示、Ctrl+Z で元に戻す、Esc で取り消し
+Taper in	入口テーパー
+Metres of road the bay takes to open per metre it widens (more: gentler)	バスベイが1m広がるのに必要な道路の長さ（メートル）。大きいほど緩やか
+out	出口
+Both ends alike	両端とも同じ
+Slide the bay to where it fits	バスベイを収まる位置へ移動
+Near the end of a road or a junction there is no room for the taper at both ends: the bay is moved along the road to where there is	道路や交差点の端の近くでは両端のテーパーを置く余地がありません。バスベイは余地のある所まで道路沿いに移動されます
+A bay always gets a taper at both ends; where one cannot be laid nothing is changed.	バスベイには必ず両端にテーパーが付きます。置けない場合は何も変更されません。
+Controls as in OMSI 2's editor: middle button turns, right button held and moved zooms, a right click goes there (Shift: menu)	OMSI 2 のエディタと同じ操作: 中ボタンで回転、右ボタンを押したまま動かすとズーム、右クリックでその場所へ移動 (Shift: メニュー)
+Controls as chosen under Camera	「カメラ」で選んだ操作
+Advanced users	上級者向け
+Controls as in OMSI 2's editor	OMSI 2 のエディタと同じ操作
+Off by default. The middle button turns the view, the right button held and moved up and down zooms, a right click on the ground goes there (Shift + right click: the menu), the arrows move the camera, the wheel zooms	初期設定ではオフ。中ボタンで視点を回転、右ボタンを押したまま上下に動かすとズーム、地面を右クリックでその場所へ移動 (Shift + 右クリック: メニュー)、矢印キーでカメラを移動、ホイールでズーム
+Bay width	ポケットの幅
+A road type with this pocket lane is made from the chosen one (the road maker's), if it is not the width it has	このポケット車線を持つ道路タイプは、選んだ道路タイプ（道路メーカーのもの）から作られます。幅が異なる場合に限ります
+Tapers in metres	先細りをメートルで指定
+Give the length of each taper in metres instead of a ratio	比率ではなく、各先細りの長さをメートルで指定します
+Stand a scenery object (a lamp, a shelter, a bin): on a piece it is turned along it, with Auto-Align on	景観オブジェクト(街灯、待合所、ゴミ箱など)を置きます。パーツの上では、自動整列がオンならパーツに沿った向きになります
+Standing:	配置:
+Added to the way the piece goes where it stands on one (180° faces it the other way)	オブジェクトがパーツ上にある位置で、パーツの向きに加算されます(180°で反対向き)
+Across the piece to the right, for 'Along the piece'	パーツに対して右向きの横方向。「パーツに沿って」用
+Layers	レイヤー
+Shown: a hidden layer is not put on the map or written	表示:非表示のレイヤーはマップに置かれず、書き出されません
+Objects along it	沿ったオブジェクト
+The object chosen with the Object tool stood along this piece at the spacing and offset set there	オブジェクトツールで選んだオブジェクトを、そこで設定した間隔とオフセットでこのパーツに沿って並べます
+Click where the object stands; on a piece it faces along it	オブジェクトを置く位置をクリックします。パーツ上ではパーツに沿った向きになります
+Pick an object on the left first	先に左側でオブジェクトを選んでください
+Turns	ターン
+A turn of the arm's road type between each two neighbouring arms, so traffic has lanes through the junction	隣り合う各2本のアームの間に、そのアームの道路タイプのターンを作り、交通が交差点を通る車線を持てるようにします
+Rounded corners	丸めた角
+Where the roads' middle lines meet, the turn is an arc of this radius (a turn is still made where it does not fit)	道路の中心線が交わる場所では、ターンはこの半径の円弧になります（円弧が収まらない場所でもターンは作られます）
+Corner radius	角の半径
+Straight on	直進
+A piece straight on between arms that face each other	向かい合うアーム同士の間の直進部分
+auto	自動
+Built by Auto-Junction from the arms	アームから自動交差点が作成

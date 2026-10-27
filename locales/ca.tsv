@@ -2339,3 +2339,71 @@ The whole drawing as one scenery object of the catalogue (its meshes, and lanes 
 Lanes the way the road is drawn	Carrils en el sentit del traçat
 Lanes against it	Carrils en sentit contrari
 (0 against: one-way)	(0 en contra: sentit únic)
+The road is too short here for a bay with a taper at both ends	Aquí la carretera és massa curta per a una baia amb una transició a cada extrem
+Too near the end of the road for the taper at both ends of the bay	Massa a prop del final de la carretera per a la transició a cada extrem de la baia
+The bay needs a taper at both ends and one could not be laid there	La baia necessita una transició a cada extrem i aquí no se n'ha pogut posar una
+Pick a piece or an arm; drag it to move it, drag the dots at the ends of the picked piece to change it; Delete removes it	Trieu una peça o un braç; arrossegueu-lo per moure'l, arrossegueu els punts dels extrems de la peça triada per canviar-la; Delete l'elimina
+Click the start, a point on the arc, then the end. Started at the end of a piece with Auto-Align on, two clicks make an arc tangent to it	Feu clic a l'inici, a un punt de l'arc i després al final. Si s'inicia al final d'una peça amb Auto-Align activat, dos clics fan un arc tangent a ella
+Curve	Corba
+A smooth path through every point clicked, for complex turns: Enter, a double click or the button below ends it	Un camí suau per cada punt clicat, per a girs complexos: Enter, un doble clic o el botó de sota l'acaba
+Finish the curve	Acaba la corba
+A piece started at the end of another goes on in line with it: a line along its way or across it, an arc or a curve tangent to it. Elsewhere lines keep to steps of 15°	Una peça iniciada al final d'una altra continua alineada amb ella: una recta al llarg o a través seu, un arc o una corba tangent. En altres llocs les rectes van a salts de 15°
+A road of another width started at the end of a road keeps its edge on the side it bends to, and a taper is laid to get there	Una carretera d'una altra amplada iniciada al final d'una carretera conserva la vora del costat cap on gira, i es posa una transició per arribar-hi
+The arms are found by themselves: every free end of a road is where a road comes in. Arms put by hand stay as they are	Els braços es troben sols: cada extrem lliure d'una carretera és on entra una carretera. Els braços posats a mà es queden com són
+found from a road's free end	trobat des de l'extrem lliure d'una carretera
+The whole drawing	Tot el dibuix
+Left and right swapped	Esquerra i dreta intercanviades
+Turn 90°	Gira 90°
+Find the arms	Troba els braços
+The free ends of roads become arms	Els extrems lliures de les carreteres esdevenen braços
+segments	segments
+0: a straight; positive: turns right; negative: turns left	0: un tram recte; positiu: gira a la dreta; negatiu: gira a l'esquerra
+Reverse	Inverteix
+Runs the other way: the piece's start and end swap	Va en l'altre sentit: l'inici i el final de la peça s'intercanvien
+Under the one before it	Sota l'anterior
+Higher	Més amunt
+Over the one after it	Sobre el següent
+Preview	Previsualització
+The junction as it will be: the roads running out of the arms, no grid or handles	L'encreuament tal com serà: les carreteres que surten dels braços, sense quadrícula ni nanses
+The lanes of the AI over the drawing, with the way they go	Els carrils de la IA sobre el dibuix, amb el sentit en què van
+Zoom out (-)	Allunya (-)
+Zoom in (+)	Acosta (+)
+The whole drawing in view (F)	Tot el dibuix a la vista (F)
+Preview: the junction as it will look. Wheel zooms, right or middle drag pans	Previsualització: l'encreuament tal com es veurà. La roda fa zoom, arrossegar amb el botó dret o central desplaça
+Click the points the curve passes; Enter or a double click ends it	Cliqueu els punts per on passa la corba; Enter o un doble clic l'acaba
+Wheel zooms, right or middle drag pans, F fits, Ctrl+Z undoes, Esc cancels	La roda fa zoom, arrossegar amb el botó dret o central desplaça, F ajusta, Ctrl+Z desfà, Esc cancel·la
+Taper in	Transició d'entrada
+Metres of road the bay takes to open per metre it widens (more: gentler)	Metres de carretera que triga la baia a obrir-se per metre que s'eixampla (més: més suau)
+out	sortida
+Both ends alike	Tots dos extrems iguals
+Slide the bay to where it fits	Desplaça la baia on càpiga
+Near the end of a road or a junction there is no room for the taper at both ends: the bay is moved along the road to where there is	Prop del final d'una carretera o d'un encreuament no hi ha lloc per a la transició a cada extrem: la baia es mou al llarg de la carretera fins on n'hi ha
+A bay always gets a taper at both ends; where one cannot be laid nothing is changed.	Una baia sempre té una transició a cada extrem; on no se'n pot posar, no es canvia res.
+Controls as in OMSI 2's editor: middle button turns, right button held and moved zooms, a right click goes there (Shift: menu)	Controls com a l'editor d'OMSI 2: el botó del mig gira, el botó dret mantingut i mogut fa zoom, un clic dret hi va (Shift: menú)
+Controls as chosen under Camera	Controls tal com s'ha triat a Càmera
+Advanced users	Usuaris avançats
+Controls as in OMSI 2's editor	Controls com a l'editor d'OMSI 2
+Off by default. The middle button turns the view, the right button held and moved up and down zooms, a right click on the ground goes there (Shift + right click: the menu), the arrows move the camera, the wheel zooms	Desactivat per defecte. El botó del mig gira la vista, el botó dret mantingut i mogut amunt i avall fa zoom, un clic dret al terreny hi va (Shift + clic dret: el menú), les fletxes mouen la càmera, la roda fa zoom
+Bay width	Amplada del badiu
+A road type with this pocket lane is made from the chosen one (the road maker's), if it is not the width it has	Un tipus de carretera amb aquest carril de badiu es crea a partir de l'escollit (el del creador de carreteres), si no té aquesta amplada
+Tapers in metres	Estretiments en metres
+Give the length of each taper in metres instead of a ratio	Indiqueu la longitud de cada estretiment en metres en lloc d'una proporció
+Stand a scenery object (a lamp, a shelter, a bin): on a piece it is turned along it, with Auto-Align on	Col·loca un objecte d'escenari (un fanal, una marquesina, una paperera): sobre una peça es gira al llarg d'ella, amb Auto-alineació activada
+Standing:	Dret:
+Added to the way the piece goes where it stands on one (180° faces it the other way)	S'afegeix a la direcció de la peça allà on l'objecte hi és (180° el fa mirar cap a l'altre costat)
+Across the piece to the right, for 'Along the piece'	Perpendicular a la peça cap a la dreta, per a «Al llarg de la peça»
+Layers	Capes
+Shown: a hidden layer is not put on the map or written	Visible: una capa amagada no es posa al mapa ni s'escriu
+Objects along it	Objectes al llarg
+The object chosen with the Object tool stood along this piece at the spacing and offset set there	L'objecte triat amb l'eina Objecte es col·loca al llarg d'aquesta peça amb la separació i el desplaçament definits allà
+Click where the object stands; on a piece it faces along it	Fes clic on és l'objecte; sobre una peça mira al llarg d'ella
+Pick an object on the left first	Primer tria un objecte a l'esquerra
+Turns	Girs
+A turn of the arm's road type between each two neighbouring arms, so traffic has lanes through the junction	Un gir del tipus de carretera del braç entre cada dos braços veïns, perquè el trànsit tingui carrils a través de l'encreuament
+Rounded corners	Cantonades arrodonides
+Where the roads' middle lines meet, the turn is an arc of this radius (a turn is still made where it does not fit)	On les línies centrals de les carreteres es troben, el gir és un arc d'aquest radi (el gir es fa igualment on no hi cap)
+Corner radius	Radi de la cantonada
+Straight on	Recte
+A piece straight on between arms that face each other	Un tram recte entre braços que s'enfronten
+auto	auto
+Built by Auto-Junction from the arms	Creat per l'Auto-creuament a partir dels braços

@@ -4,6 +4,22 @@ Releases are tagged `v<version>`; the downloads are on the
 [Releases](https://github.com/openOMSI-org/openMapper/releases) page, each with the notes of its
 version from this file.
 
+## Unreleased
+
+### Added
+- **Auto-Junction builds the junction** in the complex junction editor: from the arms it lays turns (of each arm's road type) between neighbouring arms, rounded corners of a set radius where the roads' middle lines meet, and a piece straight on between arms that face each other. Each is a switch under Auto-Junction; the built pieces are listed in Layers as "auto", are kept in step with the drawing, never touch pieces drawn by hand, and are put on the map and saved like the others.
+- **Bus pocket settings**: the bay's own width (a road type made in the road maker is written again with that pocket lane), the taper into and out of the bay set separately (or kept alike), as a ratio or as a length in metres, and a bay always gets a taper at both ends: near a road's end or a junction it slides along the road to where there is room, and where there is none nothing is changed (no step in the road).
+- **Complex junction editor, rebuilt**: Auto-Align (a piece goes on in line with the piece it starts from, tangent arcs in two clicks, lines in steps of 15°), Auto-Adapt (a road of another width keeps the edge on the side it bends to, with a taper), Auto-Junction (arms are found from the roads' free ends), a Curve tool for complex turns (a smooth path through any number of points), a Preview of the junction with the roads running out of its arms and the AI's lanes, zoom (wheel, pinch, buttons, F to fit), undo and redo, drag handles at a piece's ends, numbers for the picked piece, mirror, turn, reverse and copy.
+
+- **Controls as in OMSI 2's editor** ([#44](https://github.com/openOMSI-org/openMapper/issues/44)): a new "Advanced users" submenu in the View menu next to Camera, off by default. With it on, the middle button turns the view, the right button held and moved up and down zooms, a right click on the ground goes there (Shift + right click opens the menu), the arrows move the camera and the wheel zooms. The scheme is put together from what players report of the original editor, so tell us what differs.
+
+### Changed
+- **Junction plates keep the road's texture format** ([#41](https://github.com/openOMSI-org/openMapper/issues/41)): the asphalt made for a plate is written in the format of the road's own texture (bmp, dds, tga, jpg) as `<name>_junction.<ext>`, with its seasonal pictures made the same way and its .cfg and .surf files copied alongside.
+- **Equal junctions share one object** ([#43](https://github.com/openOMSI-org/openMapper/issues/43)): plates that come out the same (shape, lanes, textures) are one object file and one model, named by their contents, instead of a copy for every junction.
+
+### Fixed
+- **Start-up hangs leave a trace** ([#40](https://github.com/openOMSI-org/openMapper/issues/40)): the program logs the stage it is at, writes to the log when the window does not answer for ten seconds (`logs/openmapper.log` in openOMSI's data folder), and lists the installation's maps on a thread of its own.
+
 ## 0.1.12 - 2026-10-26
 
 ### Fixed

@@ -2339,3 +2339,71 @@ The whole drawing as one scenery object of the catalogue (its meshes, and lanes 
 Lanes the way the road is drawn	Spuren in Zeichenrichtung der Straße
 Lanes against it	Spuren dagegen
 (0 against: one-way)	(0 dagegen: Einbahnstraße)
+The road is too short here for a bay with a taper at both ends	Die Straße ist hier zu kurz für eine Bucht mit Verziehung an beiden Enden
+Too near the end of the road for the taper at both ends of the bay	Zu nah am Straßenende für die Verziehung an beiden Enden der Bucht
+The bay needs a taper at both ends and one could not be laid there	Die Bucht braucht an beiden Enden eine Verziehung, und hier ließ sich keine legen
+Pick a piece or an arm; drag it to move it, drag the dots at the ends of the picked piece to change it; Delete removes it	Element oder Arm wählen; Ziehen verschiebt es, Ziehen der Punkte an den Enden des gewählten Elements ändert es; Delete löscht es
+Click the start, a point on the arc, then the end. Started at the end of a piece with Auto-Align on, two clicks make an arc tangent to it	Start, einen Punkt auf dem Bogen, dann das Ende anklicken. Beginnt man am Ende eines Elements mit aktivem Auto-Align, ergeben zwei Klicks einen tangentialen Bogen
+Curve	Kurve
+A smooth path through every point clicked, for complex turns: Enter, a double click or the button below ends it	Ein glatter Weg durch jeden angeklickten Punkt, für komplexe Kurven: Enter, ein Doppelklick oder die Schaltfläche unten beendet ihn
+Finish the curve	Kurve beenden
+A piece started at the end of another goes on in line with it: a line along its way or across it, an arc or a curve tangent to it. Elsewhere lines keep to steps of 15°	Ein am Ende eines anderen begonnenes Element setzt sich in dessen Richtung fort: eine Gerade längs oder quer dazu, ein Bogen oder eine Kurve tangential dazu. Sonst bleiben Geraden in 15°-Schritten
+A road of another width started at the end of a road keeps its edge on the side it bends to, and a taper is laid to get there	Eine Straße anderer Breite, am Ende einer Straße begonnen, behält ihren Rand auf der Seite, zu der sie abbiegt, und eine Verziehung führt dorthin
+The arms are found by themselves: every free end of a road is where a road comes in. Arms put by hand stay as they are	Die Arme werden selbst gefunden: Jedes freie Straßenende ist eine Einmündung. Von Hand gesetzte Arme bleiben unverändert
+found from a road's free end	am freien Ende einer Straße gefunden
+The whole drawing	Die ganze Zeichnung
+Left and right swapped	Links und rechts vertauscht
+Turn 90°	90° drehen
+Find the arms	Arme finden
+The free ends of roads become arms	Die freien Straßenenden werden zu Armen
+segments	Segmente
+0: a straight; positive: turns right; negative: turns left	0: Gerade; positiv: biegt rechts ab; negativ: biegt links ab
+Reverse	Umkehren
+Runs the other way: the piece's start and end swap	Läuft in die andere Richtung: Anfang und Ende des Elements werden getauscht
+Under the one before it	Unter dem vorigen
+Higher	Höher
+Over the one after it	Über dem nächsten
+Preview	Vorschau
+The junction as it will be: the roads running out of the arms, no grid or handles	Die Kreuzung, wie sie wird: die von den Armen abgehenden Straßen, ohne Raster und Griffe
+The lanes of the AI over the drawing, with the way they go	Die KI-Spuren über der Zeichnung, mit ihrer Fahrtrichtung
+Zoom out (-)	Verkleinern (-)
+Zoom in (+)	Vergrößern (+)
+The whole drawing in view (F)	Die ganze Zeichnung im Blick (F)
+Preview: the junction as it will look. Wheel zooms, right or middle drag pans	Vorschau: die Kreuzung, wie sie aussehen wird. Rad zoomt, Ziehen mit rechter oder mittlerer Taste verschiebt
+Click the points the curve passes; Enter or a double click ends it	Die Punkte anklicken, durch die die Kurve läuft; Enter oder Doppelklick beendet sie
+Wheel zooms, right or middle drag pans, F fits, Ctrl+Z undoes, Esc cancels	Rad zoomt, Ziehen mit rechter oder mittlerer Taste verschiebt, F passt ein, Ctrl+Z macht rückgängig, Esc bricht ab
+Taper in	Verziehung ein
+Metres of road the bay takes to open per metre it widens (more: gentler)	Meter Straße, die die Bucht zum Öffnen braucht, je Meter Verbreiterung (mehr: sanfter)
+out	aus
+Both ends alike	Beide Enden gleich
+Slide the bay to where it fits	Bucht dorthin schieben, wo sie passt
+Near the end of a road or a junction there is no room for the taper at both ends: the bay is moved along the road to where there is	Nahe dem Ende einer Straße oder Kreuzung ist kein Platz für die Verziehung an beiden Enden: Die Bucht wird entlang der Straße dorthin verschoben, wo Platz ist
+A bay always gets a taper at both ends; where one cannot be laid nothing is changed.	Eine Bucht bekommt immer an beiden Enden eine Verziehung; wo keine gelegt werden kann, wird nichts geändert.
+Controls as in OMSI 2's editor: middle button turns, right button held and moved zooms, a right click goes there (Shift: menu)	Steuerung wie im Editor von OMSI 2: Mittlere Taste dreht, gedrückte und bewegte rechte Taste zoomt, ein Rechtsklick springt dorthin (Umschalt: Menü)
+Controls as chosen under Camera	Steuerung wie unter Kamera gewählt
+Advanced users	Fortgeschrittene Nutzer
+Controls as in OMSI 2's editor	Steuerung wie im Editor von OMSI 2
+Off by default. The middle button turns the view, the right button held and moved up and down zooms, a right click on the ground goes there (Shift + right click: the menu), the arrows move the camera, the wheel zooms	Standardmäßig aus. Die mittlere Taste dreht die Ansicht, die gedrückte rechte Taste nach oben und unten bewegt zoomt, ein Rechtsklick auf den Boden springt dorthin (Umschalt + Rechtsklick: das Menü), die Pfeiltasten bewegen die Kamera, das Mausrad zoomt
+Bay width	Buchtbreite
+A road type with this pocket lane is made from the chosen one (the road maker's), if it is not the width it has	Ein Straßentyp mit diesem Buchtstreifen wird aus dem gewählten (dem des Straßen-Editors) erstellt, wenn er nicht diese Breite hat
+Tapers in metres	Verjüngungen in Metern
+Give the length of each taper in metres instead of a ratio	Länge jeder Verjüngung in Metern statt als Verhältnis angeben
+Stand a scenery object (a lamp, a shelter, a bin): on a piece it is turned along it, with Auto-Align on	Ein Dekorationsobjekt (Laterne, Wartehäuschen, Mülleimer) aufstellen: auf einem Teil wird es bei aktiver Auto-Ausrichtung entlang des Teils gedreht
+Standing:	Steht:
+Added to the way the piece goes where it stands on one (180° faces it the other way)	Wird zur Richtung des Teils addiert, wo das Objekt darauf steht (180° dreht es zur anderen Seite)
+Across the piece to the right, for 'Along the piece'	Quer zum Teil nach rechts, für „Entlang des Teils“
+Layers	Ebenen
+Shown: a hidden layer is not put on the map or written	Sichtbar: eine ausgeblendete Ebene wird weder auf die Karte gesetzt noch geschrieben
+Objects along it	Objekte entlang
+The object chosen with the Object tool stood along this piece at the spacing and offset set there	Das mit dem Objekt-Werkzeug gewählte Objekt steht entlang dieses Teils mit dem dort eingestellten Abstand und Versatz
+Click where the object stands; on a piece it faces along it	Klicken, wo das Objekt steht; auf einem Teil blickt es entlang des Teils
+Pick an object on the left first	Zuerst links ein Objekt wählen
+Turns	Abbiegungen
+A turn of the arm's road type between each two neighbouring arms, so traffic has lanes through the junction	Eine Abbiegung vom Straßentyp der Zufahrt zwischen je zwei benachbarten Zufahrten, damit der Verkehr durch die Kreuzung Fahrstreifen hat
+Rounded corners	Abgerundete Ecken
+Where the roads' middle lines meet, the turn is an arc of this radius (a turn is still made where it does not fit)	Wo sich die Mittellinien der Straßen treffen, ist die Abbiegung ein Bogen mit diesem Radius (eine Abbiegung entsteht auch dort, wo der Bogen nicht passt)
+Corner radius	Eckenradius
+Straight on	Geradeaus
+A piece straight on between arms that face each other	Ein gerades Stück zwischen einander gegenüberliegenden Zufahrten
+auto	auto
+Built by Auto-Junction from the arms	Von der Auto-Kreuzung aus den Zufahrten erzeugt

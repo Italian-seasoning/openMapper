@@ -2339,3 +2339,71 @@ The whole drawing as one scenery object of the catalogue (its meshes, and lanes 
 Lanes the way the road is drawn	Voies dans le sens du tracé de la route
 Lanes against it	Voies en sens inverse
 (0 against: one-way)	(0 en sens inverse : sens unique)
+The road is too short here for a bay with a taper at both ends	La route est ici trop courte pour une encoche avec un raccord à chaque extrémité
+Too near the end of the road for the taper at both ends of the bay	Trop près du bout de la route pour le raccord aux deux extrémités de l'encoche
+The bay needs a taper at both ends and one could not be laid there	L'encoche demande un raccord à chaque extrémité et il n'a pas pu en être posé un ici
+Pick a piece or an arm; drag it to move it, drag the dots at the ends of the picked piece to change it; Delete removes it	Choisissez un élément ou une branche ; faites-le glisser pour le déplacer, faites glisser les points aux extrémités de l'élément choisi pour le modifier ; Delete le supprime
+Click the start, a point on the arc, then the end. Started at the end of a piece with Auto-Align on, two clicks make an arc tangent to it	Cliquez le début, un point de l'arc, puis la fin. Commencé au bout d'un élément avec Auto-Align activé, deux clics font un arc tangent à celui-ci
+Curve	Courbe
+A smooth path through every point clicked, for complex turns: Enter, a double click or the button below ends it	Un tracé lisse par chaque point cliqué, pour les virages complexes : Enter, un double clic ou le bouton ci-dessous la termine
+Finish the curve	Terminer la courbe
+A piece started at the end of another goes on in line with it: a line along its way or across it, an arc or a curve tangent to it. Elsewhere lines keep to steps of 15°	Un élément commencé au bout d'un autre se poursuit dans son alignement : une droite dans son prolongement ou en travers, un arc ou une courbe tangent. Ailleurs, les droites suivent des pas de 15°
+A road of another width started at the end of a road keeps its edge on the side it bends to, and a taper is laid to get there	Une route d'une autre largeur commencée au bout d'une route garde son bord du côté où elle tourne, et un raccord est posé pour y arriver
+The arms are found by themselves: every free end of a road is where a road comes in. Arms put by hand stay as they are	Les branches se trouvent d'elles-mêmes : chaque extrémité libre d'une route est un point d'arrivée d'une route. Les branches posées à la main restent telles quelles
+found from a road's free end	trouvé depuis l'extrémité libre d'une route
+The whole drawing	Tout le dessin
+Left and right swapped	Gauche et droite échangées
+Turn 90°	Tourner de 90°
+Find the arms	Trouver les branches
+The free ends of roads become arms	Les extrémités libres des routes deviennent des branches
+segments	segments
+0: a straight; positive: turns right; negative: turns left	0 : une droite ; positif : tourne à droite ; négatif : tourne à gauche
+Reverse	Inverser
+Runs the other way: the piece's start and end swap	Va dans l'autre sens : le début et la fin de l'élément sont échangés
+Under the one before it	Sous le précédent
+Higher	Plus haut
+Over the one after it	Sur le suivant
+Preview	Aperçu
+The junction as it will be: the roads running out of the arms, no grid or handles	Le carrefour tel qu'il sera : les routes qui partent des branches, sans grille ni poignées
+The lanes of the AI over the drawing, with the way they go	Les voies de l'IA sur le dessin, avec leur sens
+Zoom out (-)	Dézoomer (-)
+Zoom in (+)	Zoomer (+)
+The whole drawing in view (F)	Tout le dessin en vue (F)
+Preview: the junction as it will look. Wheel zooms, right or middle drag pans	Aperçu : le carrefour tel qu'il sera. La molette zoome, glisser avec le bouton droit ou central déplace
+Click the points the curve passes; Enter or a double click ends it	Cliquez les points par où passe la courbe ; Enter ou un double clic la termine
+Wheel zooms, right or middle drag pans, F fits, Ctrl+Z undoes, Esc cancels	La molette zoome, glisser avec le bouton droit ou central déplace, F cadre, Ctrl+Z annule, Esc abandonne
+Taper in	Raccord d'entrée
+Metres of road the bay takes to open per metre it widens (more: gentler)	Mètres de route que prend l'encoche pour s'ouvrir par mètre d'élargissement (plus : plus doux)
+out	sortie
+Both ends alike	Les deux extrémités identiques
+Slide the bay to where it fits	Glisser l'encoche là où elle tient
+Near the end of a road or a junction there is no room for the taper at both ends: the bay is moved along the road to where there is	Près du bout d'une route ou d'un carrefour, il n'y a pas de place pour le raccord aux deux extrémités : l'encoche est déplacée le long de la route là où il y en a
+A bay always gets a taper at both ends; where one cannot be laid nothing is changed.	Une encoche reçoit toujours un raccord à chaque extrémité ; là où l'on ne peut en poser, rien n'est changé.
+Controls as in OMSI 2's editor: middle button turns, right button held and moved zooms, a right click goes there (Shift: menu)	Commandes comme dans l'éditeur d'OMSI 2 : le bouton central fait tourner, le bouton droit maintenu et déplacé zoome, un clic droit y va (Shift : menu)
+Controls as chosen under Camera	Commandes selon le choix fait sous Caméra
+Advanced users	Utilisateurs avancés
+Controls as in OMSI 2's editor	Commandes comme dans l'éditeur d'OMSI 2
+Off by default. The middle button turns the view, the right button held and moved up and down zooms, a right click on the ground goes there (Shift + right click: the menu), the arrows move the camera, the wheel zooms	Désactivé par défaut. Le bouton central fait tourner la vue, le bouton droit maintenu et déplacé de haut en bas zoome, un clic droit sur le sol y va (Shift + clic droit : le menu), les flèches déplacent la caméra, la molette zoome
+Bay width	Largeur de la baie
+A road type with this pocket lane is made from the chosen one (the road maker's), if it is not the width it has	Un type de route avec cette voie de baie est créé à partir de celui choisi (celui du créateur de route), s'il n'a pas cette largeur
+Tapers in metres	Effilements en mètres
+Give the length of each taper in metres instead of a ratio	Indiquez la longueur de chaque effilement en mètres au lieu d'une proportion
+Stand a scenery object (a lamp, a shelter, a bin): on a piece it is turned along it, with Auto-Align on	Poser un objet de décor (un lampadaire, un abribus, une poubelle) : sur un élément, il est tourné le long de celui-ci, avec Auto-alignement activé
+Standing:	Posé :
+Added to the way the piece goes where it stands on one (180° faces it the other way)	S'ajoute à la direction de l'élément là où l'objet s'y trouve (180° le tourne de l'autre côté)
+Across the piece to the right, for 'Along the piece'	Perpendiculairement à l'élément vers la droite, pour « Le long de l'élément »
+Layers	Couches
+Shown: a hidden layer is not put on the map or written	Affichée : une couche masquée n'est ni placée sur la carte ni écrite
+Objects along it	Objets le long
+The object chosen with the Object tool stood along this piece at the spacing and offset set there	L'objet choisi avec l'outil Objet est posé le long de cet élément avec l'espacement et le décalage réglés là
+Click where the object stands; on a piece it faces along it	Cliquez où se trouve l'objet ; sur un élément, il est orienté le long de celui-ci
+Pick an object on the left first	Choisissez d'abord un objet à gauche
+Turns	Virages
+A turn of the arm's road type between each two neighbouring arms, so traffic has lanes through the junction	Un virage du type de route de la branche entre deux branches voisines, pour que la circulation ait des voies à travers le carrefour
+Rounded corners	Angles arrondis
+Where the roads' middle lines meet, the turn is an arc of this radius (a turn is still made where it does not fit)	Là où les lignes médianes des routes se rejoignent, le virage est un arc de ce rayon (un virage est quand même fait là où il ne tient pas)
+Corner radius	Rayon d'angle
+Straight on	Tout droit
+A piece straight on between arms that face each other	Un tronçon droit entre des branches qui se font face
+auto	auto
+Built by Auto-Junction from the arms	Créé par l'Auto-carrefour à partir des branches

@@ -58,10 +58,31 @@ pub struct Piece {
     /// Lifted above the plate (m): markings lie a little over the asphalt they are painted on.
     #[serde(default)]
     pub lift: f64,
+    /// Switched off in the editor's layers: it is not put on the map or written.
+    #[serde(default)]
+    pub hidden: bool,
+    /// Made by Auto-Junction from the arms: kept in step with them, never edited by hand.
+    #[serde(default)]
+    pub auto: bool,
+}
+
+/// A scenery object stood in the drawing (a lamp, a bin, a bus shelter), in the layout's frame.
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+pub struct LObject {
+    /// The scenery object (`Sceneryobjects\...sco`).
+    pub file: String,
+    pub x: f64,
+    pub y: f64,
+    /// Height above the plate (m).
+    #[serde(default)]
+    pub z: f64,
+    /// Degrees clockwise from north.
+    #[serde(default)]
+    pub heading: f64,
 }
 
 /// A place a road joins: its position, the way it faces out of the junction and its type.
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 pub struct Arm {
     pub x: f64,
     pub y: f64,
@@ -70,6 +91,9 @@ pub struct Arm {
     /// The road type that joins here (empty: any).
     #[serde(default)]
     pub road: String,
+    /// Found by the editor from a road's free end (Auto-Junction), not placed by hand.
+    #[serde(default)]
+    pub auto: bool,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -78,10 +102,34 @@ pub struct Layout {
     pub name: String,
     pub pieces: Vec<Piece>,
     pub arms: Vec<Arm>,
+    /// What Auto-Junction builds from the arms.
+    pub build: AutoBuild,
+    /// Objects stood on the drawing: put on the map with it, as ordinary objects.
+    pub objects: Vec<LObject>,
     /// Used where the Roads tool makes junctions by itself, when the roads meet as the arms do.
     pub auto: bool,
     /// The scenery object it was written as (`Sceneryobjects\...sco`), once saved as custom.
     pub baked: Option<String>,
+}
+
+/// What Auto-Junction builds between the arms of a drawing (each switchable).
+#[derive(Debug, Clone, Copy, PartialEq, Serialize, Deserialize)]
+#[serde(default)]
+pub struct AutoBuild {
+    /// A turn of the arm's road type between each two neighbouring arms (a biarc).
+    pub turns: bool,
+    /// A rounded corner of `radius` where the two roads' middle lines meet instead of a turn.
+    pub corners: bool,
+    /// A piece straight on between arms facing each other.
+    pub through: bool,
+    /// The corner's radius (m).
+    pub radius: f64,
+}
+
+impl Default for AutoBuild {
+    fn default() -> Self {
+        AutoBuild { turns: true, corners: false, through: true, radius: 8.0 }
+    }
 }
 
 /// The most the roads' headings may differ from the arms' for a layout to fit them (degrees).
@@ -166,7 +214,7 @@ fn world_segs(piece: &Piece, origin: DVec2, rot: f64) -> Vec<Seg> {
 /// `origin` (the height `z` there), turned `rot` degrees. Gives back the splines made.
 pub fn place(doc: &mut Document, layout: &Layout, origin: DVec2, z: f64, rot: f64) -> Result<Vec<(TileKey, i64)>, &'static str> {
     // (every tile it touches must be there: nothing is laid if one is not)
-    for piece in &layout.pieces {
+    for piece in layout.pieces.iter().filter(|p| !p.hidden) {
         for s in world_segs(piece, origin, rot) {
             for p in [s.start, s.end()] {
                 if !doc.tiles.contains_key(&tile_of(p)) {
@@ -176,7 +224,7 @@ pub fn place(doc: &mut Document, layout: &Layout, origin: DVec2, z: f64, rot: f6
         }
     }
     let mut made = Vec::new();
-    for piece in &layout.pieces {
+    for piece in layout.pieces.iter().filter(|p| !p.hidden) {
         let segs = world_segs(piece, origin, rot);
         let ids: Vec<i64> = segs.iter().map(|_| doc.new_id()).collect();
         let mut chain = 0.0;
@@ -204,6 +252,24 @@ pub fn place(doc: &mut Document, layout: &Layout, origin: DVec2, z: f64, rot: f6
         }
     }
     Ok(made)
+}
+
+/// The layout's objects as map objects at `origin` (height `z` there), turned `rot` degrees:
+/// the tile each is in must be there (those that are not are left out). Gives back how many
+/// were put and their places.
+pub fn place_objects(doc: &mut Document, layout: &Layout, origin: DVec2, z: f64, rot: f64) -> Vec<(TileKey, i64)> {
+    let mut made = Vec::new();
+    for o in &layout.objects {
+        let p = to_world(DVec2::new(o.x, o.y), origin, rot);
+        let k = tile_of(p);
+        let id = doc.new_id();
+        let org = tile_origin(k);
+        let Some(t) = doc.tiles.get_mut(&k) else { continue };
+        t.tile.objects.push(omsi_map::MapObject { file: o.file.clone(), id, pos: [p.x - org.x, p.y - org.y, z + o.z], rot: [roads::norm_deg(o.heading + rot), 0.0, 0.0], ..Default::default() });
+        t.touch_content();
+        made.push((k, id));
+    }
+    made
 }
 
 /// The lanes of a piece as `[path]` records of the junction object (object frame).
@@ -243,7 +309,7 @@ pub fn extra_lines(layout: &Layout, models: &dyn Fn(&str) -> Option<std::sync::A
         // turned round, as in the plates openMapper makes)
         let _ = write!(s, "[splinehelper]\n{}\n{}\n{}\n{}\n{}\n0.1\n0\n\n", if a.road.is_empty() { layout.pieces.first().map(|p| p.file.as_str()).unwrap_or("") } else { &a.road }, num(a.x), num(0.0), num(a.y), num(roads::norm_deg(a.out + 180.0)));
     }
-    for p in &layout.pieces {
+    for p in layout.pieces.iter().filter(|p| !p.hidden) {
         if let Some(m) = models(&p.file) {
             path_records(p, &m, &mut s);
         }
@@ -260,7 +326,7 @@ pub fn bake(roots: &crate::install::Roots, layout: &Layout, assets: &mut Assets,
     let mut src = crate::editable::Source { name: layout.name.trim().to_string(), abs_height: true, ..Default::default() };
     let mut textures = std::collections::HashMap::new();
     let mut joined = openmapper_mesh::Mesh::default();
-    for piece in &layout.pieces {
+    for piece in layout.pieces.iter().filter(|p| !p.hidden) {
         let Some(model) = assets.spline_wait(&piece.file, 5000) else {
             anyhow::bail!("{}: {}", tr("the spline cannot be read", "сплайн не читается"), piece.file);
         };
@@ -274,7 +340,7 @@ pub fn bake(roots: &crate::install::Roots, layout: &Layout, assets: &mut Assets,
     anyhow::ensure!(!joined.is_empty(), "{}", tr("these splines have no shape to see", "у этих сплайнов нет видимой формы"));
     src.model.parts.push(openmapper_mesh::Part::new("plate", joined));
     let mut models = std::collections::HashMap::new();
-    for p in &layout.pieces {
+    for p in layout.pieces.iter().filter(|p| !p.hidden) {
         if let Some(m) = assets.spline_wait(&p.file, 5000) {
             models.insert(p.file.to_lowercase(), m);
         }
@@ -284,7 +350,8 @@ pub fn bake(roots: &crate::install::Roots, layout: &Layout, assets: &mut Assets,
     let (dir, _) = crate::editable::folder_of(roots, &rel);
     std::fs::create_dir_all(dir.join("texture"))?;
     for (name, path) in &textures {
-        let _ = std::fs::copy(path, dir.join("texture").join(name));
+        let _ = name;
+        crate::junction::copy_texture(path, &dir.join("texture"));
     }
     crate::editable::save(roots, &rel, &src)?;
     Ok(rel)
@@ -333,6 +400,294 @@ pub fn fit(layout: &Layout, roads_out: &[(f64, String)], same_type: &dyn Fn(&str
     best.filter(|b| b.2 <= FIT_TOLERANCE)
 }
 
+// ------------------------------------------------------------ drawing helpers
+
+impl LSeg {
+    /// The segment mirrored across the y axis (`mirror`), then turned `rot` degrees clockwise
+    /// about the origin; `about` is subtracted first and added back (a piece turned in place).
+    pub fn transformed(&self, mirror: bool, rot: f64, about: DVec2) -> LSeg {
+        let p = DVec2::new(self.x, self.y) - about;
+        let (p, h, r) = if mirror { (DVec2::new(-p.x, p.y), roads::norm_deg(-self.heading), -self.radius) } else { (p, self.heading, self.radius) };
+        let p = to_world(p, about, rot);
+        LSeg { x: p.x, y: p.y, heading: roads::norm_deg(h + rot), radius: r, length: self.length }
+    }
+}
+
+impl Piece {
+    /// The piece the other way round: its segments reversed in order and each run backwards.
+    pub fn reversed(&self) -> Piece {
+        Piece { file: self.file.clone(), segs: self.segs.iter().rev().map(|s| LSeg::of(&roads::reverse(&s.seg()))).collect(), lift: self.lift, hidden: self.hidden, auto: self.auto }
+    }
+
+    /// Where it starts and the heading it starts with, where it ends and the heading it ends with.
+    pub fn ends(&self) -> Option<(DVec2, f64, DVec2, f64)> {
+        let (f, l) = (self.segs.first()?.seg(), self.segs.last()?.seg());
+        Some((f.start, f.heading, l.end(), l.end_heading()))
+    }
+
+    /// How far `p` is from the piece's middle line (m).
+    pub fn distance_to(&self, p: DVec2) -> f64 {
+        let mut best = f64::MAX;
+        for s in &self.segs {
+            let seg = s.seg();
+            let n = (s.length / 0.4).ceil().max(2.0) as usize;
+            for k in 0..=n {
+                best = best.min((seg.point(s.length * k as f64 / n as f64) - p).length());
+            }
+        }
+        best
+    }
+}
+
+impl Layout {
+    /// The whole drawing mirrored across the y axis and/or turned `rot` degrees.
+    pub fn transform(&mut self, mirror: bool, rot: f64) {
+        for p in &mut self.pieces {
+            for s in &mut p.segs {
+                *s = s.transformed(mirror, rot, DVec2::ZERO);
+            }
+        }
+        for a in &mut self.arms {
+            let q = if mirror { DVec2::new(-a.x, a.y) } else { DVec2::new(a.x, a.y) };
+            let q = to_world(q, DVec2::ZERO, rot);
+            a.x = q.x;
+            a.y = q.y;
+            a.out = roads::norm_deg(if mirror { -a.out } else { a.out } + rot);
+        }
+    }
+
+    /// The box the drawing fills: (low corner, high corner).
+    pub fn bounds(&self) -> Option<(DVec2, DVec2)> {
+        let pts: Vec<DVec2> = self
+            .pieces
+            .iter()
+            .flat_map(|p| p.segs.iter())
+            .flat_map(|s| {
+                let seg = s.seg();
+                let n = (s.length / 1.0).ceil().max(2.0) as usize;
+                (0..=n).map(move |k| seg.point(s.length * k as f64 / n as f64))
+            })
+            .chain(self.arms.iter().map(|a| DVec2::new(a.x, a.y)))
+            .collect();
+        let first = *pts.first()?;
+        Some(pts.iter().fold((first, first), |(lo, hi), p| (lo.min(*p), hi.max(*p))))
+    }
+
+    /// The ends of road pieces that no other road piece covers: where roads come in. `half`
+    /// gives a spline type's half width.
+    pub fn free_ends(&self, is_road: &dyn Fn(&str) -> bool, half: &dyn Fn(&str) -> f64) -> Vec<Arm> {
+        let mut out = Vec::new();
+        for (i, p) in self.pieces.iter().enumerate() {
+            let Some((a, ha, b, hb)) = p.ends().filter(|_| is_road(&p.file) && !p.hidden && !p.auto) else { continue };
+            for (pt, h) in [(a, roads::norm_deg(ha + 180.0)), (b, hb)] {
+                let covered = self.pieces.iter().enumerate().any(|(j, q)| j != i && !q.hidden && !q.auto && is_road(&q.file) && q.distance_to(pt) < (half(&q.file) * 0.9).max(0.4));
+                if !covered {
+                    out.push(Arm { x: pt.x, y: pt.y, out: h, road: p.file.clone(), auto: true });
+                }
+            }
+        }
+        out
+    }
+
+    /// The arms the editor finds (Auto-Junction) replaced by those of the drawing as it is
+    /// now; arms put by hand stay, and a found one near a hand-put one is not added.
+    pub fn sync_arms(&mut self, is_road: &dyn Fn(&str) -> bool, half: &dyn Fn(&str) -> f64) {
+        let found = self.free_ends(is_road, half);
+        self.arms.retain(|a| !a.auto);
+        for f in found {
+            if !self.arms.iter().any(|a| (DVec2::new(a.x, a.y) - DVec2::new(f.x, f.y)).length() < 1.5) {
+                self.arms.push(f);
+            }
+        }
+    }
+}
+
+/// How far apart two neighbouring arms may face for a turn or corner between them, and how far
+/// from facing each other for a piece straight on (degrees).
+const TURN_MAX: f64 = 165.0;
+const THROUGH_SLACK: f64 = 15.0;
+
+/// The way round from heading `a` to `b` clockwise (0..360).
+fn gap(a: f64, b: f64) -> f64 {
+    (b - a).rem_euclid(360.0)
+}
+
+/// A rounded corner between two arms: the arms' middle lines run in to where they meet and a
+/// tangent arc of `radius` takes the turn. None where the lines do not meet ahead of both arms
+/// or the arc does not fit.
+fn corner(a: &Arm, b: &Arm, radius: f64) -> Option<Vec<LSeg>> {
+    let (pa, pb) = (DVec2::new(a.x, a.y), DVec2::new(b.x, b.y));
+    let (da, db) = (roads::dir(roads::norm_deg(a.out + 180.0)), roads::dir(b.out));
+    // the lines meet at pa + s*da == pb + w*db (w = -t)
+    let det = da.x * db.y - da.y * db.x;
+    if det.abs() < 1e-6 {
+        return None;
+    }
+    let v = pb - pa;
+    let s = (v.x * db.y - v.y * db.x) / det;
+    let t = (v.x * da.y - v.y * da.x) / det;
+    // (ahead of the way in, and behind the way out)
+    if s < 0.5 || t > -0.5 {
+        return None;
+    }
+    let x = pa + da * s;
+    let turn = da.angle_to(db).abs();
+    let reach = radius * (turn / 2.0).tan();
+    if !reach.is_finite() || reach > s - 0.3 || reach > -t - 0.3 {
+        return None;
+    }
+    let (ta, tb) = (x - da * reach, x + db * reach);
+    let ha = roads::norm_deg(a.out + 180.0);
+    let mut out = Vec::new();
+    if (ta - pa).length() > 0.05 {
+        out.push(LSeg::of(&roads::straight(pa, ta)?));
+    }
+    out.push(LSeg::of(&tangent_arc(ta, ha, tb)?));
+    if (pb - tb).length() > 0.05 {
+        out.push(LSeg::of(&roads::straight(tb, pb)?));
+    }
+    Some(out)
+}
+
+impl Layout {
+    /// The pieces Auto-Junction builds from the arms, replacing those it built before; pieces
+    /// drawn by hand are not touched and come first. Gives back where each old piece went: the
+    /// index it has now, or None for a removed one.
+    pub fn sync_built(&mut self) -> Vec<Option<usize>> {
+        let mut map = Vec::new();
+        let mut kept = Vec::new();
+        for p in std::mem::take(&mut self.pieces) {
+            if p.auto {
+                map.push(None);
+            } else {
+                map.push(Some(kept.len()));
+                kept.push(p);
+            }
+        }
+        self.pieces = kept;
+        let arms: Vec<&Arm> = self.arms.iter().filter(|a| !a.road.is_empty()).collect();
+        let b = self.build;
+        let mut made = Vec::new();
+        let mut order: Vec<usize> = (0..arms.len()).collect();
+        order.sort_by(|&i, &j| arms[i].out.rem_euclid(360.0).total_cmp(&arms[j].out.rem_euclid(360.0)));
+        if b.turns || b.corners {
+            let n = order.len();
+            for k in 0..n {
+                if n == 2 && k == 1 {
+                    break;
+                }
+                let (a, c) = (arms[order[k]], arms[order[(k + 1) % n]]);
+                if n < 2 || gap(a.out, c.out) > TURN_MAX {
+                    continue;
+                }
+                let segs = if b.corners { corner(a, c, b.radius.max(1.0)) } else { None }.or_else(|| {
+                    if !b.turns {
+                        return None;
+                    }
+                    let segs = roads::biarc(DVec2::new(a.x, a.y), roads::norm_deg(a.out + 180.0), DVec2::new(c.x, c.y), c.out)?;
+                    Some(segs.iter().map(LSeg::of).collect())
+                });
+                if let Some(segs) = segs {
+                    made.push(Piece { file: a.road.clone(), segs, lift: 0.0, hidden: false, auto: true });
+                }
+            }
+        }
+        if b.through {
+            for (x, &i) in order.iter().enumerate() {
+                for &j in &order[x + 1..] {
+                    let (a, c) = (arms[i], arms[j]);
+                    if (gap(a.out, c.out) - 180.0).abs() > THROUGH_SLACK {
+                        continue;
+                    }
+                    let (pa, pc) = (DVec2::new(a.x, a.y), DVec2::new(c.x, c.y));
+                    let ha = roads::norm_deg(a.out + 180.0);
+                    // (straight on when the middle lines coincide, else one smooth bend)
+                    let side = (pc - pa).dot(roads::right(ha));
+                    let segs: Option<Vec<LSeg>> = if side.abs() < 0.05 {
+                        roads::straight(pa, pc).map(|s| vec![LSeg::of(&s)])
+                    } else {
+                        roads::biarc(pa, ha, pc, c.out).map(|v| v.iter().map(LSeg::of).collect())
+                    };
+                    if let Some(segs) = segs {
+                        made.push(Piece { file: a.road.clone(), segs, lift: 0.0, hidden: false, auto: true });
+                    }
+                }
+            }
+        }
+        self.pieces.extend(made);
+        map
+    }
+}
+
+/// The arc from `p` that leaves heading `h` and reaches `q` (a tangent arc); a straight when
+/// `q` lies ahead on the line. None when `q` is behind or the arc would be more than a half
+/// circle round.
+pub fn tangent_arc(p: DVec2, h: f64, q: DVec2) -> Option<Seg> {
+    let v = q - p;
+    let d = v.length();
+    if d < 0.5 {
+        return None;
+    }
+    let t = roads::dir(h);
+    let sin_t = t.perp_dot(v) / d; // (positive: q to the left)
+    let cos_t = t.dot(v) / d;
+    if cos_t < -0.2 {
+        return None;
+    }
+    let theta = sin_t.atan2(cos_t); // deflection of the chord from the tangent
+    if theta.abs() < 0.2_f64.to_radians() {
+        return Some(Seg { start: p, heading: h, length: d, radius: 0.0 });
+    }
+    let r = d / (2.0 * theta.abs().sin());
+    let length = r * 2.0 * theta.abs();
+    // (a right turn: a positive radius)
+    Some(Seg { start: p, heading: h, length, radius: if theta < 0.0 { r } else { -r } })
+}
+
+/// A smooth chain of arcs through `pts`, leaving the first with heading `start` and
+/// arriving at the last with heading `end` when those are given; else the ends bend the
+/// way the chain does.
+pub fn curve_through(pts: &[DVec2], start: Option<f64>, end: Option<f64>) -> Vec<Seg> {
+    let n = pts.len();
+    if n < 2 {
+        return Vec::new();
+    }
+    let chord = |i: usize| roads::heading_of(pts[i + 1] - pts[i]);
+    let diff = |a: f64, b: f64| (a - b + 180.0).rem_euclid(360.0) - 180.0;
+    let mut hs: Vec<f64> = (0..n)
+        .map(|i| {
+            if i == 0 {
+                chord(0)
+            } else if i == n - 1 {
+                chord(n - 2)
+            } else {
+                // the middle of the way in and the way out
+                let (a, b) = (chord(i - 1), chord(i));
+                roads::norm_deg(a + diff(b, a) / 2.0)
+            }
+        })
+        .collect();
+    if n > 2 {
+        hs[0] = roads::norm_deg(chord(0) - diff(hs[1], chord(0)));
+        hs[n - 1] = roads::norm_deg(chord(n - 2) + diff(chord(n - 2), hs[n - 2]));
+    }
+    if let Some(h) = start {
+        hs[0] = h;
+    }
+    if let Some(h) = end {
+        hs[n - 1] = h;
+    }
+    let mut out = Vec::new();
+    for i in 0..n - 1 {
+        let segs = if (diff(hs[i], chord(i)).abs() < 0.3 && diff(hs[i + 1], chord(i)).abs() < 0.3) || (pts[i + 1] - pts[i]).length() < 1.0 { None } else { roads::biarc(pts[i], hs[i], pts[i + 1], hs[i + 1]) };
+        match segs.or_else(|| roads::straight(pts[i], pts[i + 1]).map(|s| vec![s])) {
+            Some(v) => out.extend(v.into_iter().filter(|s| s.length > 0.05)),
+            None => {}
+        }
+    }
+    out
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -361,7 +716,7 @@ mod tests {
         let mut doc = flat_map(1);
         let layout = Layout {
             name: "T".into(),
-            pieces: vec![Piece { file: "Splines\\a.sli".into(), segs: vec![LSeg { x: 0.0, y: 0.0, heading: 0.0, radius: 0.0, length: 10.0 }, LSeg { x: 0.0, y: 10.0, heading: 0.0, radius: 0.0, length: 5.0 }], lift: 0.02 }],
+            pieces: vec![Piece { file: "Splines\\a.sli".into(), segs: vec![LSeg { x: 0.0, y: 0.0, heading: 0.0, radius: 0.0, length: 10.0 }, LSeg { x: 0.0, y: 10.0, heading: 0.0, radius: 0.0, length: 5.0 }], lift: 0.02, hidden: false, auto: false }],
             ..Default::default()
         };
         let made = place(&mut doc, &layout, DVec2::new(100.0, 100.0), 3.0, 90.0).unwrap();
@@ -379,7 +734,7 @@ mod tests {
     }
 
     fn crossing(road: &str) -> Layout {
-        Layout { name: "X".into(), arms: [0.0, 90.0, 180.0, 270.0].iter().map(|h| Arm { x: 0.0, y: 0.0, out: *h, road: road.into() }).collect(), ..Default::default() }
+        Layout { name: "X".into(), arms: [0.0, 90.0, 180.0, 270.0].iter().map(|h| Arm { x: 0.0, y: 0.0, out: *h, road: road.into(), ..Default::default() }).collect(), ..Default::default() }
     }
 
     #[test]
@@ -414,5 +769,107 @@ mod tests {
         let back = Layout::load_all(&dir);
         assert_eq!(back, vec![l]);
         let _ = std::fs::remove_dir_all(dir);
+    }
+
+    #[test]
+    fn a_tangent_arc_leaves_the_way_it_was_going_and_reaches_the_point() {
+        let s = tangent_arc(DVec2::ZERO, 0.0, DVec2::new(10.0, 10.0)).unwrap();
+        // north, then a right turn through a quarter circle to a point 10 east, 10 north
+        assert!((s.radius - 10.0).abs() < 1e-6 && (s.end() - DVec2::new(10.0, 10.0)).length() < 1e-6, "{s:?}");
+        let l = tangent_arc(DVec2::ZERO, 0.0, DVec2::new(-10.0, 10.0)).unwrap();
+        assert!(l.radius < 0.0 && (l.end() - DVec2::new(-10.0, 10.0)).length() < 1e-6);
+        assert_eq!(tangent_arc(DVec2::ZERO, 0.0, DVec2::new(0.0, 10.0)).unwrap().radius, 0.0);
+        assert!(tangent_arc(DVec2::ZERO, 0.0, DVec2::new(0.0, -10.0)).is_none());
+    }
+
+    #[test]
+    fn a_curve_goes_through_every_point_and_a_turned_layout_turns_back() {
+        let pts = [DVec2::new(0.0, 0.0), DVec2::new(10.0, 10.0), DVec2::new(0.0, 20.0), DVec2::new(-10.0, 30.0)];
+        let segs = curve_through(&pts, Some(0.0), None);
+        assert!(segs.len() >= 3);
+        for w in segs.windows(2) {
+            assert!((w[0].end() - w[1].start).length() < 1e-3, "joined: {w:?}");
+        }
+        assert!((segs.last().unwrap().end() - pts[3]).length() < 1e-3);
+        for p in &pts[1..3] {
+            assert!(segs.iter().any(|s| (s.end() - *p).length() < 1e-3), "passes {p:?}");
+        }
+        let mut l = Layout { pieces: vec![Piece { file: "a".into(), segs: segs.iter().map(LSeg::of).collect(), lift: 0.0, hidden: false, auto: false }], arms: vec![Arm { x: 3.0, y: 4.0, out: 20.0, ..Default::default() }], ..Default::default() };
+        let before = l.clone();
+        l.transform(true, 90.0);
+        assert!(l != before);
+        l.transform(false, -90.0);
+        l.transform(true, 0.0);
+        for (a, b) in l.pieces[0].segs.iter().zip(&before.pieces[0].segs) {
+            assert!((a.x - b.x).abs() < 1e-6 && (a.y - b.y).abs() < 1e-6 && (a.heading - b.heading).abs() < 1e-6 && (a.radius - b.radius).abs() < 1e-6);
+        }
+        assert!((l.arms[0].out - 20.0).abs() < 1e-6 && (l.arms[0].x - 3.0).abs() < 1e-6);
+    }
+
+    #[test]
+    fn auto_junction_builds_turns_corners_and_straight_on_between_arms() {
+        let road = |x: f64, y: f64, h: f64| Piece { file: "r".into(), segs: vec![LSeg { x, y, heading: h, radius: 0.0, length: 20.0 }], lift: 0.0, hidden: false, auto: false };
+        // a cross: four stubs ending 20 m from the middle
+        let mut l = Layout { pieces: vec![road(0.0, 0.0, 0.0), road(0.0, 0.0, 90.0), road(0.0, 0.0, 180.0), road(0.0, 0.0, 270.0)], ..Default::default() };
+        let (is_road, half) = (|f: &str| f == "r", |_: &str| 3.0);
+        l.sync_arms(&is_road, &half);
+        assert_eq!(l.arms.len(), 4);
+        // the arms' ends are free only while the built pieces do not count as covering them
+        l.build = AutoBuild { turns: true, corners: false, through: true, radius: 8.0 };
+        let map = l.sync_built();
+        assert_eq!(map, vec![Some(0), Some(1), Some(2), Some(3)]);
+        let built: Vec<Piece> = l.pieces.iter().filter(|p| p.auto).cloned().collect();
+        // four turns and two straight-on pieces
+        assert_eq!(built.len(), 6);
+        assert_eq!(l.pieces.iter().filter(|p| !p.auto).count(), 4);
+        l.sync_arms(&is_road, &half);
+        assert_eq!(l.arms.len(), 4, "built pieces must not hide or add arms");
+        // a built piece joins two arms
+        for p in &built {
+            let (a, _, b, _) = p.ends().unwrap();
+            assert!(l.arms.iter().any(|m| (DVec2::new(m.x, m.y) - a).length() < 0.1));
+            assert!(l.arms.iter().any(|m| (DVec2::new(m.x, m.y) - b).length() < 0.1));
+        }
+        // building again changes nothing, and the hand-drawn pieces keep their places
+        let before = l.pieces.clone();
+        let map = l.sync_built();
+        assert_eq!(l.pieces, before);
+        assert_eq!(&map[..4], &[Some(0), Some(1), Some(2), Some(3)]);
+        assert!(map[4..].iter().all(|m| m.is_none()));
+        // rounded corners: an arc of the radius takes each 90° turn, tangent to both roads
+        l.build = AutoBuild { turns: false, corners: true, through: false, radius: 8.0 };
+        l.sync_built();
+        let corners: Vec<Piece> = l.pieces.iter().filter(|p| p.auto).cloned().collect();
+        assert_eq!(corners.len(), 4);
+        for p in &corners {
+            let arc = p.segs.iter().find(|s| s.radius != 0.0).expect("an arc");
+            assert!((arc.radius.abs() - 8.0).abs() < 0.05, "{arc:?}");
+            assert!((arc.length - 8.0 * std::f64::consts::FRAC_PI_2).abs() < 0.1, "{arc:?}");
+        }
+        // everything switched off: only the hand-drawn pieces are left
+        l.build = AutoBuild { turns: false, corners: false, through: false, radius: 8.0 };
+        l.sync_built();
+        assert_eq!(l.pieces.len(), 4);
+        // a layout from before has no auto marks and reads back
+        let old: Layout = serde_json::from_str(r#"{"pieces":[{"file":"r","segs":[]}]}"#).unwrap();
+        assert!(!old.pieces[0].auto && old.build.turns);
+    }
+
+    #[test]
+    fn roads_come_in_where_a_road_end_is_free() {
+        let road = |y0: f64, y1: f64, x: f64| Piece { file: "r".into(), segs: vec![LSeg { x, y: y0, heading: 0.0, radius: 0.0, length: y1 - y0 }], lift: 0.0, hidden: false, auto: false };
+        // a road north-south in two pieces, one crossing road: free ends are the four outer ones... a T: west-east stub meets it
+        let mut l = Layout { pieces: vec![road(-20.0, 0.0, 0.0), road(0.0, 20.0, 0.0), Piece { file: "r".into(), segs: vec![LSeg { x: 0.0, y: 0.0, heading: 90.0, radius: 0.0, length: 20.0 }], lift: 0.0, hidden: false, auto: false }], ..Default::default() };
+        let is_road = |f: &str| f == "r";
+        let half = |_: &str| 3.0;
+        let ends = l.free_ends(&is_road, &half);
+        assert_eq!(ends.len(), 3, "{ends:?}");
+        assert!(ends.iter().any(|a| (a.out - 180.0).abs() < 1e-6 && (a.y + 20.0).abs() < 1e-6));
+        assert!(ends.iter().any(|a| (a.out - 90.0).abs() < 1e-6 && (a.x - 20.0).abs() < 1e-6));
+        // the arms found are replaced on the next look; one put by hand stays
+        l.arms.push(Arm { x: 50.0, y: 50.0, out: 0.0, ..Default::default() });
+        l.sync_arms(&is_road, &half);
+        l.sync_arms(&is_road, &half);
+        assert_eq!(l.arms.len(), 4);
     }
 }

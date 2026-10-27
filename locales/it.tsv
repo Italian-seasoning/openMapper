@@ -2339,3 +2339,71 @@ The whole drawing as one scenery object of the catalogue (its meshes, and lanes 
 Lanes the way the road is drawn	Corsie nel senso del tracciato della strada
 Lanes against it	Corsie in senso opposto
 (0 against: one-way)	(0 in senso opposto: senso unico)
+The road is too short here for a bay with a taper at both ends	La strada qui è troppo corta per una baia con un raccordo a entrambe le estremità
+Too near the end of the road for the taper at both ends of the bay	Troppo vicino alla fine della strada per il raccordo a entrambe le estremità della baia
+The bay needs a taper at both ends and one could not be laid there	La baia ha bisogno di un raccordo a entrambe le estremità e uno non ha potuto essere posato lì
+Pick a piece or an arm; drag it to move it, drag the dots at the ends of the picked piece to change it; Delete removes it	Scegli un pezzo o un braccio; trascinalo per spostarlo, trascina i punti alle estremità del pezzo scelto per modificarlo; Canc lo rimuove
+Click the start, a point on the arc, then the end. Started at the end of a piece with Auto-Align on, two clicks make an arc tangent to it	Clicca l'inizio, un punto sull'arco, poi la fine. Iniziando dalla fine di un pezzo con Auto-Align attivo, due clic fanno un arco tangente ad esso
+Curve	Curva
+A smooth path through every point clicked, for complex turns: Enter, a double click or the button below ends it	Un percorso morbido attraverso ogni punto cliccato, per curve complesse: Invio, un doppio clic o il pulsante qui sotto lo termina
+Finish the curve	Termina la curva
+A piece started at the end of another goes on in line with it: a line along its way or across it, an arc or a curve tangent to it. Elsewhere lines keep to steps of 15°	Un pezzo iniziato alla fine di un altro prosegue in linea con esso: una retta lungo il suo andamento o attraverso di esso, un arco o una curva tangente. Altrove le linee seguono passi di 15°
+A road of another width started at the end of a road keeps its edge on the side it bends to, and a taper is laid to get there	Una strada di altra larghezza iniziata alla fine di una strada mantiene il suo bordo dal lato verso cui piega, e un raccordo è posato per arrivarci
+The arms are found by themselves: every free end of a road is where a road comes in. Arms put by hand stay as they are	I bracci si trovano da soli: ogni estremità libera di una strada è un punto d'ingresso di una strada. I bracci messi a mano restano come sono
+found from a road's free end	trovato da un'estremità libera di una strada
+The whole drawing	Tutto il disegno
+Left and right swapped	Sinistra e destra invertite
+Turn 90°	Ruota di 90°
+Find the arms	Trova i bracci
+The free ends of roads become arms	Le estremità libere delle strade diventano bracci
+segments	segmenti
+0: a straight; positive: turns right; negative: turns left	0: rettilineo; positivo: gira a destra; negativo: gira a sinistra
+Reverse	Inverti
+Runs the other way: the piece's start and end swap	Corre nell'altro senso: inizio e fine del pezzo si scambiano
+Under the one before it	Sotto il precedente
+Higher	Più in alto
+Over the one after it	Sopra il successivo
+Preview	Anteprima
+The junction as it will be: the roads running out of the arms, no grid or handles	L'incrocio come sarà: le strade che escono dai bracci, senza griglia né maniglie
+The lanes of the AI over the drawing, with the way they go	Le corsie dell'IA sul disegno, con il loro senso di marcia
+Zoom out (-)	Riduci (-)
+Zoom in (+)	Ingrandisci (+)
+The whole drawing in view (F)	Tutto il disegno in vista (F)
+Preview: the junction as it will look. Wheel zooms, right or middle drag pans	Anteprima: l'incrocio come sarà. La rotella zooma, trascina con il tasto destro o centrale per spostare
+Click the points the curve passes; Enter or a double click ends it	Clicca i punti per cui passa la curva; Invio o un doppio clic la termina
+Wheel zooms, right or middle drag pans, F fits, Ctrl+Z undoes, Esc cancels	La rotella zooma, trascina con il tasto destro o centrale per spostare, F adatta, Ctrl+Z annulla, Esc interrompe
+Taper in	Raccordo in entrata
+Metres of road the bay takes to open per metre it widens (more: gentler)	Metri di strada che la baia impiega ad aprirsi per ogni metro di cui si allarga (più: più dolce)
+out	uscita
+Both ends alike	Entrambe le estremità uguali
+Slide the bay to where it fits	Sposta la baia dove ci sta
+Near the end of a road or a junction there is no room for the taper at both ends: the bay is moved along the road to where there is	Vicino alla fine di una strada o di un incrocio non c'è spazio per il raccordo a entrambe le estremità: la baia viene spostata lungo la strada dove ce n'è
+A bay always gets a taper at both ends; where one cannot be laid nothing is changed.	Una baia ha sempre un raccordo a entrambe le estremità; dove non si può posare, non cambia nulla.
+Controls as in OMSI 2's editor: middle button turns, right button held and moved zooms, a right click goes there (Shift: menu)	Comandi come nell'editor di OMSI 2: il pulsante centrale ruota, il pulsante destro tenuto premuto e mosso zooma, un clic destro porta lì (Shift: menu)
+Controls as chosen under Camera	Comandi come scelti in Telecamera
+Advanced users	Utenti esperti
+Controls as in OMSI 2's editor	Comandi come nell'editor di OMSI 2
+Off by default. The middle button turns the view, the right button held and moved up and down zooms, a right click on the ground goes there (Shift + right click: the menu), the arrows move the camera, the wheel zooms	Disattivato di default. Il pulsante centrale ruota la vista, il pulsante destro tenuto premuto e mosso su e giù zooma, un clic destro sul terreno porta lì (Shift + clic destro: il menu), le frecce muovono la telecamera, la rotellina zooma
+Bay width	Larghezza della baia
+A road type with this pocket lane is made from the chosen one (the road maker's), if it is not the width it has	Un tipo di strada con questa corsia della baia viene creato da quello scelto (quello del costruttore di strade), se non ha questa larghezza
+Tapers in metres	Rastremazioni in metri
+Give the length of each taper in metres instead of a ratio	Indica la lunghezza di ogni rastremazione in metri invece di un rapporto
+Stand a scenery object (a lamp, a shelter, a bin): on a piece it is turned along it, with Auto-Align on	Posiziona un oggetto di arredo (un lampione, una pensilina, un cestino): su un pezzo viene ruotato lungo di esso, con Auto-allineamento attivo
+Standing:	In piedi:
+Added to the way the piece goes where it stands on one (180° faces it the other way)	Si aggiunge alla direzione del pezzo dove l'oggetto vi si trova (180° lo rivolge dall'altra parte)
+Across the piece to the right, for 'Along the piece'	Trasversale al pezzo verso destra, per «Lungo il pezzo»
+Layers	Strati
+Shown: a hidden layer is not put on the map or written	Visibile: uno strato nascosto non viene messo sulla mappa né scritto
+Objects along it	Oggetti lungo di esso
+The object chosen with the Object tool stood along this piece at the spacing and offset set there	L'oggetto scelto con lo strumento Oggetto viene posto lungo questo pezzo con la spaziatura e lo scostamento impostati lì
+Click where the object stands; on a piece it faces along it	Clicca dove si trova l'oggetto; su un pezzo guarda lungo di esso
+Pick an object on the left first	Prima scegli un oggetto a sinistra
+Turns	Svolte
+A turn of the arm's road type between each two neighbouring arms, so traffic has lanes through the junction	Una svolta del tipo di strada dell'accesso tra ogni coppia di accessi vicini, così il traffico ha corsie attraverso l'incrocio
+Rounded corners	Angoli arrotondati
+Where the roads' middle lines meet, the turn is an arc of this radius (a turn is still made where it does not fit)	Dove le linee mediane delle strade si incontrano, la svolta è un arco di questo raggio (la svolta viene comunque creata dove non ci sta)
+Corner radius	Raggio dell'angolo
+Straight on	Dritto
+A piece straight on between arms that face each other	Un tratto dritto tra accessi che si fronteggiano
+auto	auto
+Built by Auto-Junction from the arms	Creato da Auto-incrocio dagli accessi

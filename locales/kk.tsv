@@ -2339,3 +2339,71 @@ The whole drawing as one scenery object of the catalogue (its meshes, and lanes 
 Lanes the way the road is drawn	Жолдың сызылу бағытымен жолақтар
 Lanes against it	Қарсы бағытта жолақтар
 (0 against: one-way)	(0 қарсы: бір бағытты)
+The road is too short here for a bay with a taper at both ends	Мұнда жол екі шетінде өтпелі аймағы бар аялдама қалтасы үшін тым қысқа
+Too near the end of the road for the taper at both ends of the bay	Жолдың соңына тым жақын: қалтаның екі шетіндегі өтпелі аймақ сыймайды
+The bay needs a taper at both ends and one could not be laid there	Қалтаға екі шетінде өтпелі аймақ керек, біреуін салу мүмкін болмады
+Pick a piece or an arm; drag it to move it, drag the dots at the ends of the picked piece to change it; Delete removes it	Бөлікті немесе тармақты таңдаңыз; жылжыту үшін сүйреңіз, өзгерту үшін таңдалған бөліктің шетіндегі нүктелерді сүйреңіз; Delete жояды
+Click the start, a point on the arc, then the end. Started at the end of a piece with Auto-Align on, two clicks make an arc tangent to it	Басын, доғадағы нүктені, содан соң соңын басыңыз. Auto-Align қосулы кезде бөліктің соңынан бастасаңыз, екі басу оған жанама доға жасайды
+Curve	Қисық
+A smooth path through every point clicked, for complex turns: Enter, a double click or the button below ends it	Басылған әр нүкте арқылы өтетін тегіс жол, күрделі бұрылыстар үшін: Enter, екі рет басу немесе төмендегі түйме аяқтайды
+Finish the curve	Қисықты аяқтау
+A piece started at the end of another goes on in line with it: a line along its way or across it, an arc or a curve tangent to it. Elsewhere lines keep to steps of 15°	Басқа бөліктің соңынан басталған бөлік онымен бір сызықта жалғасады: оның бойымен немесе оны кесіп өтетін түзу, оған жанама доға немесе қисық. Басқа жерде сызықтар 15° қадаммен жүреді
+A road of another width started at the end of a road keeps its edge on the side it bends to, and a taper is laid to get there	Жолдың соңынан басталған басқа енді жол бұрылатын жағындағы шетін сақтайды, оған жету үшін өтпелі аймақ салынады
+The arms are found by themselves: every free end of a road is where a road comes in. Arms put by hand stay as they are	Тармақтар өздігінен табылады: жолдың әр бос шеті - жол кіретін жер. Қолмен қойылған тармақтар сол күйінде қалады
+found from a road's free end	жолдың бос шетінен табылған
+The whole drawing	Бүкіл сызба
+Left and right swapped	Сол мен оң ауыстырылған
+Turn 90°	90° бұру
+Find the arms	Тармақтарды табу
+The free ends of roads become arms	Жолдардың бос шеттері тармаққа айналады
+segments	сегменттер
+0: a straight; positive: turns right; negative: turns left	0: түзу; оң: оңға бұрылады; теріс: солға бұрылады
+Reverse	Бұрып қою
+Runs the other way: the piece's start and end swap	Қарсы бағытқа жүреді: бөліктің басы мен соңы ауысады
+Under the one before it	Алдыңғының астында
+Higher	Жоғарырақ
+Over the one after it	Келесінің үстінде
+Preview	Алдын ала қарау
+The junction as it will be: the roads running out of the arms, no grid or handles	Түйісу болашақта қандай болады: тармақтардан шығатын жолдар, торсыз және тұтқасыз
+The lanes of the AI over the drawing, with the way they go	Сызба үстіндегі AI жолақтары және олардың жүру бағыты
+Zoom out (-)	Кішірейту (-)
+Zoom in (+)	Үлкейту (+)
+The whole drawing in view (F)	Бүкіл сызба көрінеді (F)
+Preview: the junction as it will look. Wheel zooms, right or middle drag pans	Алдын ала қарау: түйісу болашақта қандай болады. Дөңгелек үлкейтеді, оң немесе орта түймемен сүйреу жылжытады
+Click the points the curve passes; Enter or a double click ends it	Қисық өтетін нүктелерді басыңыз; Enter немесе екі рет басу аяқтайды
+Wheel zooms, right or middle drag pans, F fits, Ctrl+Z undoes, Esc cancels	Дөңгелек үлкейтеді, оң немесе орта түймемен сүйреу жылжытады, F сыйдырады, Ctrl+Z болдырмайды, Esc бас тартады
+Taper in	Кірудегі өтпелі аймақ
+Metres of road the bay takes to open per metre it widens (more: gentler)	Қалта әр метр кеңейген сайын ашылуға қажет жол метрі (көбірек: жұмсағырақ)
+out	шығу
+Both ends alike	Екі шеті бірдей
+Slide the bay to where it fits	Қалтаны сыятын жерге жылжыту
+Near the end of a road or a junction there is no room for the taper at both ends: the bay is moved along the road to where there is	Жолдың немесе түйісудің соңына жақын жерде екі шеттегі өтпелі аймаққа орын жоқ: қалта жол бойымен орын бар жерге жылжытылады
+A bay always gets a taper at both ends; where one cannot be laid nothing is changed.	Қалтаның екі шетінде әрқашан өтпелі аймақ болады; салу мүмкін болмаған жерде ештеңе өзгермейді.
+Controls as in OMSI 2's editor: middle button turns, right button held and moved zooms, a right click goes there (Shift: menu)	OMSI 2 редакторындағыдай басқару: ортаңғы батырма айналдырады, оң батырманы басып жылжыту масштабтайды, оң шерту сол жерге апарады (Shift: мәзір)
+Controls as chosen under Camera	«Камера» бөлімінде таңдалған басқару
+Advanced users	Тәжірибелі пайдаланушылар
+Controls as in OMSI 2's editor	OMSI 2 редакторындағыдай басқару
+Off by default. The middle button turns the view, the right button held and moved up and down zooms, a right click on the ground goes there (Shift + right click: the menu), the arrows move the camera, the wheel zooms	Әдепкіде өшірулі. Ортаңғы батырма көріністі айналдырады, оң батырманы басып жоғары-төмен жылжыту масштабтайды, жерге оң шерту сол жерге апарады (Shift + оң шерту: мәзір), көрсеткілер камераны жылжытады, дөңгелек масштабтайды
+Bay width	Қалта ені
+A road type with this pocket lane is made from the chosen one (the road maker's), if it is not the width it has	Осы қалта жолағы бар жол түрі таңдалған түрден (жол конструкторындағыдан) жасалады, егер оның ені басқа болса
+Tapers in metres	Тарылтулар метрмен
+Give the length of each taper in metres instead of a ratio	Қатынастың орнына әр тарылтудың ұзындығын метрмен беріңіз
+Stand a scenery object (a lamp, a shelter, a bin): on a piece it is turned along it, with Auto-Align on	Көріністік нысанды (шамды, аялдама төбесін, қоқыс жәшігін) қою: бөлшекте Авто-тураландыру қосулы болса, ол бөлшек бойымен бұрылады
+Standing:	Тұр:
+Added to the way the piece goes where it stands on one (180° faces it the other way)	Нысан бөлшекте тұрған жерде бөлшектің бағытына қосылады (180° оны екінші жаққа қаратады)
+Across the piece to the right, for 'Along the piece'	Бөлшекті көлденең кесіп оңға қарай, «Бөлшек бойымен» үшін
+Layers	Қабаттар
+Shown: a hidden layer is not put on the map or written	Көрсетілген: жасырын қабат картаға қойылмайды және жазылмайды
+Objects along it	Бойындағы нысандар
+The object chosen with the Object tool stood along this piece at the spacing and offset set there	«Нысан» құралымен таңдалған нысан осы бөлшектің бойында сонда берілген аралықпен және ығысумен тұрады
+Click where the object stands; on a piece it faces along it	Нысан тұратын жерді басыңыз; бөлшекте ол бөлшек бойымен қарайды
+Pick an object on the left first	Алдымен сол жақтан нысанды таңдаңыз
+Turns	Бұрылыстар
+A turn of the arm's road type between each two neighbouring arms, so traffic has lanes through the junction	Көрші екі кіреберістің арасында кіреберістің жол түріндегі бұрылыс, қиылыс арқылы қозғалыстың жолақтары болу үшін
+Rounded corners	Дөңгелектелген бұрыштар
+Where the roads' middle lines meet, the turn is an arc of this radius (a turn is still made where it does not fit)	Жолдардың орта сызықтары түйісетін жерде бұрылыс осы радиусты доға болады (доға сыймайтын жерде де бұрылыс жасалады)
+Corner radius	Бұрыш радиусы
+Straight on	Тура
+A piece straight on between arms that face each other	Бір-біріне қарама-қарсы кіреберістер арасындағы түзу бөлік
+auto	авто
+Built by Auto-Junction from the arms	Авто-қиылыс кіреберістерден жасады

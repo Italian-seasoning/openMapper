@@ -927,6 +927,43 @@ pub fn pocket_options(ui: &mut egui::Ui, ed: &mut Editor, lib: &Library, actions
             ui.label(tr("Full width over", "Полная ширина на"));
             ui.add(egui::DragValue::new(&mut ed.pocket_len).range(4.0..=80.0).speed(0.5).suffix(" m"));
         });
+        // the bay's own width, for a road type made in the road maker
+        let spec = ed.pocket_type.as_deref().and_then(|r| ed.content_dir.as_ref().map(|c| c.join(r.replace('\\', "/")))).and_then(|p| crate::road_maker::RoadSpec::of(&p));
+        if let Some(spec) = &spec {
+            ui.horizontal(|ui| {
+                ui.label(tr("Bay width", "Ширина кармана"));
+                if ed.pocket_width <= 0.0 {
+                    ed.pocket_width = spec.pocket;
+                }
+                ui.add(egui::DragValue::new(&mut ed.pocket_width).range(1.5..=6.0).speed(0.05).suffix(" m")).on_hover_text(tr("A road type with this pocket lane is made from the chosen one (the road maker's), if it is not the width it has", "Из выбранного типа (из конструктора дорог) делается тип с такой полосой кармана, если ширина другая"));
+            });
+        } else {
+            ed.pocket_width = 0.0;
+        }
+        check(ui, &mut ed.pocket_metres, tr("Tapers in metres", "Переходы в метрах")).on_hover_text(tr("Give the length of each taper in metres instead of a ratio", "Задавать длину каждого перехода в метрах, а не отношением"));
+        ui.horizontal(|ui| {
+            ui.label(tr("Taper in", "Вход"));
+            if ed.pocket_metres {
+                ui.add(egui::DragValue::new(&mut ed.pocket_in_m).range(12.0..=60.0).speed(0.5).suffix(" m"));
+            } else {
+                ui.add(egui::DragValue::new(&mut ed.pocket_taper_in).range(1.0..=12.0).speed(0.1).suffix(" :1")).on_hover_text(tr("Metres of road the bay takes to open per metre it widens (more: gentler)", "Сколько метров дороги уходит на раскрытие кармана на метр ширины (больше — положе)"));
+            }
+            if ed.pocket_alike {
+                ed.pocket_taper_out = ed.pocket_taper_in;
+                ed.pocket_out_m = ed.pocket_in_m;
+            }
+            ui.add_enabled_ui(!ed.pocket_alike, |ui| {
+                ui.label(tr("out", "выход"));
+                if ed.pocket_metres {
+                    ui.add(egui::DragValue::new(&mut ed.pocket_out_m).range(12.0..=60.0).speed(0.5).suffix(" m"));
+                } else {
+                    ui.add(egui::DragValue::new(&mut ed.pocket_taper_out).range(1.0..=12.0).speed(0.1).suffix(" :1"));
+                }
+            });
+        });
+        check(ui, &mut ed.pocket_alike, tr("Both ends alike", "Оба конца одинаковые"));
+        check(ui, &mut ed.pocket_fit, tr("Slide the bay to where it fits", "Сдвигать карман туда, где он помещается")).on_hover_text(tr("Near the end of a road or a junction there is no room for the taper at both ends: the bay is moved along the road to where there is", "У конца дороги или перекрёстка нет места для перехода с обеих сторон: карман сдвигается вдоль дороги туда, где место есть"));
+        ui.label(RichText::new(tr("A bay always gets a taper at both ends; where one cannot be laid nothing is changed.", "Карман всегда получает переход с обеих сторон; если один уложить нельзя, ничего не меняется.")).small().color(TEXT_DIM));
         if ui.small_button(tr("Make a road type with a pocket…", "Создать тип дороги с карманом…")).clicked() {
             actions.push(crate::ui::Action::RoadTypes);
         }

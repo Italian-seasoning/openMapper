@@ -68,6 +68,11 @@ pub struct Prefs {
     /// builders) or "fly" (like Unity / Unreal: right button looks round, W A S D fly).
     #[serde(default)]
     pub camera: String,
+    /// The camera is moved as in OMSI 2's own editor (Advanced users): the middle button
+    /// turns the view, the right button held and moved up and down zooms, a right click on
+    /// the ground goes there, the arrows move.
+    #[serde(default)]
+    pub omsi_controls: bool,
     /// Only the tiles round the place looked at are loaded, 100 at a time, as in OMSI 2's own
     /// editor (None: not asked yet; the default is off).
     #[serde(default)]

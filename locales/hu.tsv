@@ -2339,3 +2339,71 @@ The whole drawing as one scenery object of the catalogue (its meshes, and lanes 
 Lanes the way the road is drawn	Sávok az út rajzolt irányában
 Lanes against it	Sávok ellentétes irányban
 (0 against: one-way)	(0 ellentétes: egyirányú)
+The road is too short here for a bay with a taper at both ends	Az út itt túl rövid egy olyan öbölhöz, amelynek mindkét végén átmeneti szakasz van
+Too near the end of the road for the taper at both ends of the bay	Túl közel van az út végéhez az öböl két végén lévő átmeneti szakaszhoz
+The bay needs a taper at both ends and one could not be laid there	Az öbölnek mindkét végén átmeneti szakasz kell, és az egyiket nem lehetett lerakni
+Pick a piece or an arm; drag it to move it, drag the dots at the ends of the picked piece to change it; Delete removes it	Jelölj ki egy elemet vagy bekötést; húzással mozgatod, a kijelölt elem végén lévő pontok húzásával módosítod; a Delete törli
+Click the start, a point on the arc, then the end. Started at the end of a piece with Auto-Align on, two clicks make an arc tangent to it	Kattints a kezdőpontra, egy ívpontra, majd a végpontra. Ha elem végéről indul, bekapcsolt Auto-Align mellett két kattintás hozzá érintő ívet ad
+Curve	Görbe
+A smooth path through every point clicked, for complex turns: Enter, a double click or the button below ends it	Sima pálya minden kattintott ponton át, összetett kanyarokhoz: az Enter, a dupla kattintás vagy az alábbi gomb zárja le
+Finish the curve	Görbe befejezése
+A piece started at the end of another goes on in line with it: a line along its way or across it, an arc or a curve tangent to it. Elsewhere lines keep to steps of 15°	Egy másik elem végéről indított elem vele egy vonalban folytatódik: egyenes a haladási irányban vagy keresztben, ív vagy görbe érintőlegesen. Máskor a vonalak 15°-os lépésekhez igazodnak
+A road of another width started at the end of a road keeps its edge on the side it bends to, and a taper is laid to get there	Egy út végéről indított, más szélességű út a kanyarodás oldalán megtartja a szélét, és átmeneti szakasz vezet oda
+The arms are found by themselves: every free end of a road is where a road comes in. Arms put by hand stay as they are	A bekötéseket a program magától megtalálja: az utak minden szabad vége egy bekötés. A kézzel tettek maradnak, ahogy vannak
+found from a road's free end	egy út szabad végénél talált
+The whole drawing	Az egész rajz
+Left and right swapped	Bal és jobb felcserélve
+Turn 90°	Fordítás 90°
+Find the arms	Bekötések keresése
+The free ends of roads become arms	Az utak szabad végei bekötések lesznek
+segments	szakasz
+0: a straight; positive: turns right; negative: turns left	0: egyenes; pozitív: jobbra fordul; negatív: balra fordul
+Reverse	Megfordítás
+Runs the other way: the piece's start and end swap	Másik irányba fut: az elem kezdete és vége felcserélődik
+Under the one before it	Az előző alatt
+Higher	Följebb
+Over the one after it	A következő felett
+Preview	Előnézet
+The junction as it will be: the roads running out of the arms, no grid or handles	A csomópont a végleges kinézetben: a bekötésekből kifutó utak, rács és fogantyúk nélkül
+The lanes of the AI over the drawing, with the way they go	Az AI sávjai a rajz felett, haladási irányukkal
+Zoom out (-)	Kicsinyítés (-)
+Zoom in (+)	Nagyítás (+)
+The whole drawing in view (F)	Az egész rajz látszik (F)
+Preview: the junction as it will look. Wheel zooms, right or middle drag pans	Előnézet: a csomópont a végleges kinézetben. A kerék nagyít, jobb vagy középső gombbal húzva mozog a nézet
+Click the points the curve passes; Enter or a double click ends it	Kattints azokra a pontokra, amelyeken a görbe áthalad; az Enter vagy a dupla kattintás zárja le
+Wheel zooms, right or middle drag pans, F fits, Ctrl+Z undoes, Esc cancels	A kerék nagyít, jobb vagy középső gombbal húzva mozog a nézet, F illeszt, Ctrl+Z visszavon, Esc megszakít
+Taper in	Bevezető szakasz
+Metres of road the bay takes to open per metre it widens (more: gentler)	Hány méter út kell az öböl kinyílásához minden szélesedő méterre (több: lágyabb)
+out	ki
+Both ends alike	Mindkét vég egyforma
+Slide the bay to where it fits	Öböl eltolása a megfelelő helyre
+Near the end of a road or a junction there is no room for the taper at both ends: the bay is moved along the road to where there is	Út vagy csomópont vége közelében nincs hely az átmeneti szakaszhoz mindkét végén: az öblöt az út mentén arrébb tolja, ahol van
+A bay always gets a taper at both ends; where one cannot be laid nothing is changed.	Az öbölnek mindkét végén van átmeneti szakasza; ahol nem rakható le, ott semmi nem változik.
+Controls as in OMSI 2's editor: middle button turns, right button held and moved zooms, a right click goes there (Shift: menu)	Vezérlés az OMSI 2 szerkesztőjéhez hasonlóan: a középső gomb forgat, a lenyomva tartott és mozgatott jobb gomb nagyít, a jobb kattintás odavisz (Shift: menü)
+Controls as chosen under Camera	A Kamera alatt választott vezérlés
+Advanced users	Haladó felhasználók
+Controls as in OMSI 2's editor	Vezérlés az OMSI 2 szerkesztőjéhez hasonlóan
+Off by default. The middle button turns the view, the right button held and moved up and down zooms, a right click on the ground goes there (Shift + right click: the menu), the arrows move the camera, the wheel zooms	Alapból ki van kapcsolva. A középső gomb forgatja a nézetet, a lenyomva tartott jobb gomb fel-le mozgatása nagyít, a talajra jobb kattintva odaugrik (Shift + jobb kattintás: a menü), a nyilak mozgatják a kamerát, a görgő nagyít
+Bay width	Öböl szélessége
+A road type with this pocket lane is made from the chosen one (the road maker's), if it is not the width it has	Az ilyen öbölsávos útpályatípus a kiválasztottból (az útkészítőből) készül, ha annak nem ez a szélessége
+Tapers in metres	Szűkítések méterben
+Give the length of each taper in metres instead of a ratio	Az arány helyett az egyes szűkítések hosszát adja meg méterben
+Stand a scenery object (a lamp, a shelter, a bin): on a piece it is turned along it, with Auto-Align on	Díszítő objektum (lámpa, váróhely, szemetes) felállítása: elemen az elem mentén fordul, ha az Auto-igazítás be van kapcsolva
+Standing:	Áll:
+Added to the way the piece goes where it stands on one (180° faces it the other way)	Hozzáadódik az elem irányához ott, ahol az objektum rajta áll (180° a másik irányba fordítja)
+Across the piece to the right, for 'Along the piece'	Az elemre merőlegesen jobbra, az „Az elem mentén” beállításhoz
+Layers	Rétegek
+Shown: a hidden layer is not put on the map or written	Látható: az elrejtett réteg nem kerül a térképre és nem íródik ki
+Objects along it	Objektumok mentén
+The object chosen with the Object tool stood along this piece at the spacing and offset set there	Az Objektum eszközzel kiválasztott objektum e elem mentén áll az ott megadott távolsággal és eltolással
+Click where the object stands; on a piece it faces along it	Kattintson oda, ahol az objektum áll; elemen az elem mentén néz
+Pick an object on the left first	Előbb válasszon objektumot balra
+Turns	Kanyarodók
+A turn of the arm's road type between each two neighbouring arms, so traffic has lanes through the junction	Az ág útpályatípusú kanyarodó minden két szomszédos ág között, hogy a forgalomnak legyenek sávjai a csomóponton át
+Rounded corners	Lekerekített sarkok
+Where the roads' middle lines meet, the turn is an arc of this radius (a turn is still made where it does not fit)	Ahol az utak középvonalai találkoznak, a kanyarodó ennek a sugárnak az íve (ott is készül kanyarodó, ahol az ív nem fér el)
+Corner radius	Sarok sugara
+Straight on	Egyenesen
+A piece straight on between arms that face each other	Egyenes darab az egymással szemben lévő ágak között
+auto	auto
+Built by Auto-Junction from the arms	Az Auto-csomópont készítette az ágakból

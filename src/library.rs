@@ -275,6 +275,36 @@ fn pretty(stem: &str) -> String {
     }
 }
 
+/// A catalogue of road splines of the given half widths, for tests.
+#[cfg(test)]
+pub fn roads_for_tests(list: &[(&str, f32)]) -> Library {
+    let mut lib = Library::default();
+    for (rel, half) in list {
+        let a = Asset {
+            kind: Kind::Spline,
+            rel: rel.to_string(),
+            name: rel.to_string(),
+            dir: String::new(),
+            category: Category::Roads,
+            haystack: String::new(),
+            from_content: false,
+            is_bus_stop: false,
+            is_entry_point: false,
+            is_car_park: false,
+            abs_height: false,
+            lamp: false,
+            light_head: false,
+            light_program: false,
+            helpers: Vec::new(),
+            half_width: *half,
+            lanes: (0, 0, 0),
+        };
+        lib.assets.push(a);
+    }
+    lib.index = lib.assets.iter().enumerate().map(|(i, a)| (a.rel.to_lowercase(), i)).collect();
+    lib
+}
+
 fn describe(root: &Path, path: &Path, kind: Kind, from_content: bool) -> Option<Asset> {
     let rel = path.strip_prefix(root).ok()?.to_string_lossy().replace('/', "\\");
     let stem = path.file_stem()?.to_string_lossy().to_string();
