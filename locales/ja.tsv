@@ -698,6 +698,17 @@ Time of day	時刻
 Plain day (as the game by day)	通常の昼（ゲームの昼と同じ）
 At an hour	指定の時刻
 Where the sun stands then, today, at the map's place (Map > Calendar and place); by night the moon	その時刻の今日の太陽の位置（マップの場所）。マップ > カレンダーと場所 を参照。夜は月
+Let time run	時間を進める
+Let time run (starts the clock at 12:00)	時間を進める（12:00 から時計を開始）
+The hour moves on while the editor is running, and the lamps of the shops and streets come on at dusk; ticking this in Plain day starts the clock at noon	エディタの実行中は時刻が進み、夕暮れには店や街路の明かりがともります。通常の昼でこれをオンにすると、時計は正午から始まります
+Speed, for testing (the sun and the lamps' cycle)	速度（テスト用：太陽と明かりの周期）
+Normal: a minute of the map a second	標準：地図の1分を1秒で
+Five times as fast: an 82 s cycle of the lamps in 16 s	5倍速：明かりの82秒周期を16秒で
+An hour of the map a second, the lamps' cycle in a second or two	地図の1時間を1秒で、明かりの周期を1〜2秒で
+day	昼
+Plain day: the sun stands where the game has it by day. Click to start the clock at 12:00	通常の昼：太陽はゲームの昼と同じ位置に固定されます。クリックで12:00から時計を開始
+The view's clock, stopped. Click to let it run	ビューの時計は停止中。クリックで進めます
+The view's clock, running. Click to stop it (the hour stays where it is)	ビューの時計は進行中。クリックで停止します（時刻はそのまま）
 Season	季節
 Summer	夏
 Dry summer	乾燥した夏

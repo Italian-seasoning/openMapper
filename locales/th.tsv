@@ -698,6 +698,17 @@ Time of day	ช่วงเวลา
 Plain day (as the game by day)	วันปกติ (เหมือนในเกมตอนกลางวัน)
 At an hour	ในชั่วโมงที่กำหนด
 Where the sun stands then, today, at the map's place (Map > Calendar and place); by night the moon	ตำแหน่งดวงอาทิตย์ในเวลานั้น วันนี้ ที่ตำแหน่งของแผนที่ (แผนที่ > ปฏิทินและสถานที่); กลางคืนเป็นดวงจันทร์
+Let time run	ปล่อยให้เวลาเดิน
+Let time run (starts the clock at 12:00)	ปล่อยให้เวลาเดิน (เริ่มนาฬิกาที่ 12:00)
+The hour moves on while the editor is running, and the lamps of the shops and streets come on at dusk; ticking this in Plain day starts the clock at noon	เวลาจะเดินต่อไปขณะที่ตัวแก้ไขทำงาน และเมื่อถึงพลบค่ำ ไฟของร้านค้าและถนนจะสว่างขึ้น การติ๊กในวันปกติจะเริ่มนาฬิกาที่เที่ยงวัน
+Speed, for testing (the sun and the lamps' cycle)	ความเร็ว สำหรับทดสอบ (ดวงอาทิตย์และรอบของไฟ)
+Normal: a minute of the map a second	ปกติ: หนึ่งนาทีของแผนที่ต่อวินาที
+Five times as fast: an 82 s cycle of the lamps in 16 s	เร็วขึ้นห้าเท่า: รอบไฟ 82 วินาทีใน 16 วินาที
+An hour of the map a second, the lamps' cycle in a second or two	หนึ่งชั่วโมงของแผนที่ต่อวินาที รอบของไฟในหนึ่งหรือสองวินาที
+day	กลางวัน
+Plain day: the sun stands where the game has it by day. Click to start the clock at 12:00	วันปกติ: ดวงอาทิตย์อยู่ที่ที่เกมวางไว้ตอนกลางวัน คลิกเพื่อเริ่มนาฬิกาที่ 12:00
+The view's clock, stopped. Click to let it run	นาฬิกาของมุมมองหยุดอยู่ คลิกเพื่อให้เดิน
+The view's clock, running. Click to stop it (the hour stays where it is)	นาฬิกาของมุมมองกำลังเดิน คลิกเพื่อหยุด (เวลาจะอยู่ที่เดิม)
 Season	ฤดูกาล
 Summer	ฤดูร้อน
 Dry summer	หน้าร้อนแห้งแล้ง

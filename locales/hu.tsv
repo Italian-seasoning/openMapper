@@ -698,6 +698,17 @@ Time of day	Napszak
 Plain day (as the game by day)	Sima nap (mint a játék nappal)
 At an hour	Adott órában
 Where the sun stands then, today, at the map's place (Map > Calendar and place); by night the moon	Hol áll akkor a nap ma, a térkép helyén (Térkép > Naptár és hely); éjjel a hold
+Let time run	Hagyd futni az időt
+Let time run (starts the clock at 12:00)	Hagyd futni az időt (az óra 12:00-kor indul)
+The hour moves on while the editor is running, and the lamps of the shops and streets come on at dusk; ticking this in Plain day starts the clock at noon	Az óra továbbhalad, amíg a szerkesztő fut, és szürkületkor felgyulladnak a boltok és utcák lámpái; ha ezt sima napban bekapcsolod, az óra délben indul
+Speed, for testing (the sun and the lamps' cycle)	Sebesség, kipróbáláshoz (a nap és a lámpák ciklusa)
+Normal: a minute of the map a second	Normál: a térkép egy perce másodpercenként
+Five times as fast: an 82 s cycle of the lamps in 16 s	Ötször ilyen gyors: a lámpák 82 s-os ciklusa 16 s alatt
+An hour of the map a second, the lamps' cycle in a second or two	A térkép egy órája másodpercenként, a lámpák ciklusa egy-két másodperc alatt
+day	nap
+Plain day: the sun stands where the game has it by day. Click to start the clock at 12:00	Sima nap: a nap ott áll, ahol a játék nappal tartja. Kattints az óra 12:00-kor való indításához
+The view's clock, stopped. Click to let it run	A nézet órája áll. Kattints, hogy fusson
+The view's clock, running. Click to stop it (the hour stays where it is)	A nézet órája jár. Kattints a megállításához (az óra ott marad, ahol van)
 Season	Évszak
 Summer	Nyár
 Dry summer	Száraz nyár

@@ -698,6 +698,17 @@ Time of day	दिन का समय
 Plain day (as the game by day)	सादा दिन (गेम में दिन जैसा)
 At an hour	किसी घंटे पर
 Where the sun stands then, today, at the map's place (Map > Calendar and place); by night the moon	तब सूरज कहाँ होता है, आज, मैप की जगह पर (मैप > कैलेंडर और जगह); रात में चाँद
+Let time run	समय बहने दें
+Let time run (starts the clock at 12:00)	समय बहने दें (घड़ी 12:00 से शुरू होती है)
+The hour moves on while the editor is running, and the lamps of the shops and streets come on at dusk; ticking this in Plain day starts the clock at noon	समय आगे बढ़ता रहता है जब तक एडिटर चल रहा है, और शाम होते ही दुकानों और सड़कों की बत्तियाँ जल जाती हैं; सादे दिन में इसे चुनने पर घड़ी दोपहर से शुरू होती है
+Speed, for testing (the sun and the lamps' cycle)	गति, जाँच के लिए (सूरज और बत्तियों का चक्र)
+Normal: a minute of the map a second	सामान्य: मैप का एक मिनट प्रति सेकंड
+Five times as fast: an 82 s cycle of the lamps in 16 s	पाँच गुना तेज़: बत्तियों का 82 सेकंड का चक्र 16 सेकंड में
+An hour of the map a second, the lamps' cycle in a second or two	मैप का एक घंटा प्रति सेकंड, बत्तियों का चक्र एक-दो सेकंड में
+day	दिन
+Plain day: the sun stands where the game has it by day. Click to start the clock at 12:00	सादा दिन: सूरज वहीं रहता है जहाँ खेल में दिन के समय होता है। घड़ी 12:00 से शुरू करने के लिए क्लिक करें
+The view's clock, stopped. Click to let it run	दृश्य की घड़ी रुकी है। चलाने के लिए क्लिक करें
+The view's clock, running. Click to stop it (the hour stays where it is)	दृश्य की घड़ी चल रही है। रोकने के लिए क्लिक करें (घंटा वहीं रहेगा)
 Season	मौसम
 Summer	गर्मी
 Dry summer	सूखी गर्मी

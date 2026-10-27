@@ -698,6 +698,17 @@ Time of day	时间
 Plain day (as the game by day)	普通白天（如游戏中的白天）
 At an hour	指定时刻
 Where the sun stands then, today, at the map's place (Map > Calendar and place); by night the moon	届时太阳的位置：按今天、地图所在地点（地图 > 日历与地点）；夜间为月亮
+Let time run	让时间流动
+Let time run (starts the clock at 12:00)	让时间流动（时钟从 12:00 开始）
+The hour moves on while the editor is running, and the lamps of the shops and streets come on at dusk; ticking this in Plain day starts the clock at noon	编辑器运行时时间会继续前进，黄昏时商店与街道的灯会亮起；在普通白天勾选此项会让时钟从中午开始
+Speed, for testing (the sun and the lamps' cycle)	速度，供测试（太阳与灯光的周期）
+Normal: a minute of the map a second	正常：地图的一分钟为一秒
+Five times as fast: an 82 s cycle of the lamps in 16 s	五倍速：灯光的 82 秒周期缩短为 16 秒
+An hour of the map a second, the lamps' cycle in a second or two	地图的一小时为一秒，灯光周期为一到两秒
+day	白天
+Plain day: the sun stands where the game has it by day. Click to start the clock at 12:00	普通白天：太阳固定在游戏白天的位置。点击以让时钟从 12:00 开始
+The view's clock, stopped. Click to let it run	视图的时钟已停止。点击让它继续走
+The view's clock, running. Click to stop it (the hour stays where it is)	视图的时钟正在走。点击将它停下（时间会留在原处）
 Season	季节
 Summer	夏季
 Dry summer	干燥的夏季

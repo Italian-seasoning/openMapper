@@ -273,6 +273,11 @@ pub struct UiState {
     pub autopaint: crate::autopaint::Rule,
     /// The hour the view is lit at (View menu; None: plain day as openOMSI's).
     pub daytime: Option<f32>,
+    /// Whether that hour runs on while the editor is open (View menu).
+    pub time_flows: bool,
+    /// How many times faster than the normal run both clocks go (View menu; for testing:
+    /// 1 is the minute-a-second day and the lamps' own seconds).
+    pub time_speed: f32,
     /// The season the view shows (View menu; None: summer).
     pub season: Option<&'static str>,
     /// The maps' pictures on the welcome screen, small (None: the map has none).
@@ -326,6 +331,8 @@ impl Default for UiState {
             heightmap: Default::default(),
             autopaint: Default::default(),
             daytime: None,
+            time_flows: false,
+            time_speed: 1.0,
             season: None,
             welcome_pictures: HashMap::new(),
         }
@@ -781,7 +788,7 @@ pub fn editor(root: &mut egui::Ui, st: &mut UiState, u: EditorUi, actions: &mut 
     toolbar(root, st, ed, can_undo, can_redo, game_found, actions);
     // (the panels below fill in the help; the status bar shows last frame's)
     let help_line = st.status_help.take();
-    status_bar(root, help_line, ed, &status);
+    status_bar(root, help_line, st, ed, &status);
     egui::Panel::left("tool panel").resizable(true).default_size(290.0).size_range(240.0..=480.0).frame(panel_frame()).show(root, |ui| {
         tool_panel(ui, st, ed, lib, thumbs, wanted, swatches, wanted_swatches, actions);
     });
@@ -833,6 +840,16 @@ pub fn editor(root: &mut egui::Ui, st: &mut UiState, u: EditorUi, actions: &mut 
         crate::doc::safe::versions_window(&ctx, &mut st.versions_open, &doc.dir, actions);
     }
     view
+}
+
+/// What "let time run" means (View > Time of day): in Plain day the view is lit by a fixed
+/// daylight, so ticking the clock starts an hour to run from - noon - rather than leaving a
+/// checkbox that does nothing. "At an hour" keeps the hour already chosen.
+pub(crate) fn let_time_run(st: &mut UiState, on: bool) {
+    st.time_flows = on;
+    if on && st.daytime.is_none() {
+        st.daytime = Some(12.0);
+    }
 }
 
 #[allow(clippy::too_many_arguments)]
@@ -996,13 +1013,46 @@ fn menu_bar(root: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, can_undo: bo
                 ui.menu_button(tr("Time of day", "Время суток"), |ui| {
                     if radio(ui, st.daytime.is_none(), tr("Plain day (as the game by day)", "Обычный день (как в игре днём)")).clicked() {
                         st.daytime = None;
+                        st.time_flows = false;
                     }
                     if radio(ui, st.daytime.is_some(), tr("At an hour", "В заданный час")).clicked() && st.daytime.is_none() {
                         st.daytime = Some(18.0);
                     }
-                    if let Some(h) = &mut st.daytime {
-                        let r = ui.add(egui::Slider::new(h, 0.0..=24.0).step_by(0.25).custom_formatter(|v, _| format!("{:02}:{:02}", v as u32 % 24, ((v.fract() * 60.0).round() as u32) % 60)));
+                    // (the clock is offered in both modes: in Plain day there is no hour to run
+                    // from, so ticking it starts one at noon - a checkbox that did nothing
+                    // would be a trap)
+                    let label = if st.daytime.is_none() {
+                        tr("Let time run (starts the clock at 12:00)", "Пусть время идёт (часы с 12:00)")
+                    } else {
+                        tr("Let time run", "Пусть время идёт")
+                    };
+                    let changed = check(ui, &mut st.time_flows, label)
+                        .on_hover_text(tr("The hour moves on while the editor is running, and the lamps of the shops and streets come on at dusk; ticking this in Plain day starts the clock at noon", "Час идёт, пока работает редактор, и на закате загораются лампы витрин и улиц; если включить это в обычном дне, часы начнут идти с полудня"))
+                        .changed();
+                    if changed {
+                        let_time_run(st, st.time_flows);
+                    }
+                    // (the speeds are for testing: the multiplier runs both clocks - the sun's
+                    // day while the clock flows, and the lamps' programs - at 1x as before, so
+                    // the normal case is untouched)
+                    ui.separator();
+                    ui.label(RichText::new(tr("Speed, for testing (the sun and the lamps' cycle)", "Скорость, для проверки (солнце и цикл светофоров)")).small().color(TEXT_DIM));
+                    ui.horizontal(|ui| {
+                        for speed in crate::render::daylight::SPEEDS {
+                            let hint = match speed as u32 {
+                                1 => tr("Normal: a minute of the map a second", "Обычная: минута карты в секунду"),
+                                5 => tr("Five times as fast: an 82 s cycle of the lamps in 16 s", "В пять раз быстрее: цикл светофоров 82 с за 16 с"),
+                                _ => tr("An hour of the map a second, the lamps' cycle in a second or two", "Час карты в секунду, цикл светофоров за секунду-две"),
+                            };
+                            if radio(ui, (st.time_speed - speed).abs() < f32::EPSILON, format!("{}x", speed as u32)).on_hover_text(hint).clicked() {
+                                st.time_speed = speed;
+                            }
+                        }
+                    });
+                    if let Some(mut h) = st.daytime {
+                        let r = ui.add(egui::Slider::new(&mut h, 0.0..=24.0).step_by(0.25).custom_formatter(|v, _| crate::render::daylight::clock_text(v as f32)));
                         r.on_hover_text(tr("Where the sun stands then, today, at the map's place (Map > Calendar and place); by night the moon", "Где тогда стоит солнце, сегодня, в месте карты (Карта > Календарь и место); ночью луна"));
+                        st.daytime = Some(h);
                     }
                 });
                 ui.menu_button(tr("Season", "Время года"), |ui| {
@@ -1224,7 +1274,7 @@ fn play_here_items(ui: &mut egui::Ui, game_found: bool, actions: &mut Vec<Action
     }
 }
 
-fn status_bar(root: &mut egui::Ui, help_line: Option<String>, ed: &mut Editor, status: &Status) {
+fn status_bar(root: &mut egui::Ui, help_line: Option<String>, st: &mut UiState, ed: &mut Editor, status: &Status) {
     ed.toasts.retain(|t| t.at.elapsed().as_secs_f32() < 8.0);
     egui::Panel::bottom("status").exact_size(22.0).frame(Frame::new().fill(BG_DARK).inner_margin(Margin::symmetric(8, 3))).show(root, |ui| {
         ui.horizontal(|ui| {
@@ -1256,7 +1306,23 @@ fn status_bar(root: &mut egui::Ui, help_line: Option<String>, ed: &mut Editor, s
                 format!("X {:>8.1}   Y {:>8.1}   Z {:>6.1}   {} {},{}", c.x, c.y, c.z, tr("tile", "тайл"), t.0, t.1)
             });
             let readout = ed.drag_readout();
+            // (the view's clock, from the hour the sun is lit at: in Plain day there is no
+            // hour to show, so the readout says "day" rather than a number that never moves)
+            let clock = match st.daytime {
+                Some(h) => crate::render::daylight::clock_text(h),
+                None => tr("day", "день").to_string(),
+            };
+            // (the speed is shown with either: in Plain day it still runs the lamps' cycle)
+            let clock = if st.time_speed > 1.0 { format!("{clock}  {}x", st.time_speed as u32) } else { clock };
+            let clock_tip = if st.daytime.is_none() {
+                tr("Plain day: the sun stands where the game has it by day. Click to start the clock at 12:00", "Обычный день: солнце стоит там, где оно днём в игре. Клик: часы начнут идти с 12:00")
+            } else if st.time_flows {
+                tr("The view's clock, running. Click to stop it (the hour stays where it is)", "Часы вида идут. Клик: остановить (час остаётся на месте)")
+            } else {
+                tr("The view's clock, stopped. Click to let it run", "Часы вида стоят. Клик: пусть идут")
+            };
             let loading = (status.loading > 0).then(|| format!("{} {}", tr("loading", "загрузка"), status.loading));
+            let w_clock = small_w(ui, &clock, true) + 24.0;
             let w_gpu = small_w(ui, &status.gpu, false);
             let w_loading = loading.as_deref().map(|t| small_w(ui, t, false) + 24.0).unwrap_or(0.0);
             let w_counts = counts.as_deref().map(|t| small_w(ui, t, false)).unwrap_or(0.0);
@@ -1265,7 +1331,7 @@ fn status_bar(root: &mut egui::Ui, help_line: Option<String>, ed: &mut Editor, s
             let w_snap = if ed.doc.is_some() { crate::ui_edit::snap_controls_width(ui) + sep } else { 0.0 };
             // (the help line keeps room to be read)
             let budget = (ui.available_width() - 140.0).max(0.0);
-            let mut left = budget - w_loading - w_readout;
+            let mut left = budget - w_loading - w_readout - w_clock;
             let take = |w: f32, left: &mut f32| {
                 if w > 0.0 && *left - w >= 0.0 {
                     *left -= w;
@@ -1280,6 +1346,14 @@ fn status_bar(root: &mut egui::Ui, help_line: Option<String>, ed: &mut Editor, s
             let (show_cursor, show_counts, show_gpu) = if show_snap_full { (take(w_cursor, &mut left), take(w_counts, &mut left), take(w_gpu, &mut left)) } else { (false, false, false) };
             let snap_room = if show_snap_full { w_snap } else { left.max(120.0) };
             ui.with_layout(Layout::right_to_left(Align::Center), |ui| {
+                // (the clock is both the readout and the button: a click starts or stops the
+                // hour the sun is lit at, as View > Time of day's "let time run")
+                let c = if st.time_flows { ACCENT } else { TEXT_DIM };
+                let r = ui.add(egui::Button::new(RichText::new(&clock).small().monospace().color(c)).frame(false)).on_hover_text(clock_tip);
+                if r.clicked() {
+                    let_time_run(st, !st.time_flows);
+                }
+                ui.separator();
                 if show_gpu {
                     ui.label(RichText::new(&status.gpu).small().color(Color32::from_gray(95)));
                     ui.separator();
@@ -2892,5 +2966,39 @@ mod tests {
         assert_eq!(short("abc", 5), "abc");
         assert_eq!(short("abcdefgh", 5), "abcd…");
         assert_eq!(short("абвгдежз", 4).chars().count(), 4);
+    }
+
+    /// The clock is offered in Plain day too: ticking it there starts noon rather than
+    /// leaving a checkbox that lights nothing (it was offered under "At an hour" only).
+    #[test]
+    fn letting_time_run_in_plain_day_starts_an_hour() {
+        let mut st = UiState::default();
+        assert_eq!(st.daytime, None);
+        let_time_run(&mut st, true);
+        assert!(st.time_flows);
+        assert_eq!(st.daytime, Some(12.0), "the sun has an hour to run from");
+        // (stopping it keeps the hour where it stopped)
+        let_time_run(&mut st, false);
+        assert!(!st.time_flows);
+        assert_eq!(st.daytime, Some(12.0));
+        // (an hour already chosen is not moved)
+        st.daytime = Some(18.5);
+        let_time_run(&mut st, true);
+        assert_eq!(st.daytime, Some(18.5));
+        // (un-ticking never invents an hour)
+        let mut plain = UiState::default();
+        let_time_run(&mut plain, false);
+        assert_eq!(plain.daytime, None);
+        assert!(!plain.time_flows);
+    }
+
+    /// The clock starts as it always behaved: Plain day, stopped, and 1x - a speed that
+    /// changed nothing unless one chose it.
+    #[test]
+    fn the_clock_starts_stopped_at_the_normal_speed() {
+        let st = UiState::default();
+        assert_eq!(st.daytime, None);
+        assert!(!st.time_flows);
+        assert_eq!(st.time_speed, 1.0);
     }
 }

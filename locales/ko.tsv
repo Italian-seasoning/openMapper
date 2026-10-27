@@ -698,6 +698,17 @@ Time of day	시간대
 Plain day (as the game by day)	평범한 낮(게임의 낮처럼)
 At an hour	지정한 시각
 Where the sun stands then, today, at the map's place (Map > Calendar and place); by night the moon	그 시각 오늘 맵 위치에서의 태양 위치(맵 > 달력 및 장소). 밤에는 달
+Let time run	시간 흐르기
+Let time run (starts the clock at 12:00)	시간 흐르기(12:00에 시계 시작)
+The hour moves on while the editor is running, and the lamps of the shops and streets come on at dusk; ticking this in Plain day starts the clock at noon	편집기가 실행되는 동안 시각이 흐르고, 해질녘에는 상점과 거리의 조명이 켜집니다. 평범한 낮에서 이것을 켜면 시계가 정오에 시작됩니다
+Speed, for testing (the sun and the lamps' cycle)	속도, 테스트용 (태양과 조명 주기)
+Normal: a minute of the map a second	보통: 맵의 1분이 1초
+Five times as fast: an 82 s cycle of the lamps in 16 s	5배 빠름: 조명의 82초 주기가 16초에
+An hour of the map a second, the lamps' cycle in a second or two	맵의 1시간이 1초, 조명 주기가 1~2초에
+day	낮
+Plain day: the sun stands where the game has it by day. Click to start the clock at 12:00	평범한 낮: 태양은 게임의 낮 위치에 고정됩니다. 클릭하면 시계가 12:00에 시작됩니다
+The view's clock, stopped. Click to let it run	시점의 시계가 멈춰 있습니다. 클릭하면 흐릅니다
+The view's clock, running. Click to stop it (the hour stays where it is)	시점의 시계가 흐르고 있습니다. 클릭하면 멈춥니다 (시각은 그대로)
 Season	계절
 Summer	여름
 Dry summer	건조한 여름

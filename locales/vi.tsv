@@ -698,6 +698,17 @@ Time of day	Thời điểm trong ngày
 Plain day (as the game by day)	Ban ngày thường (như trò chơi ban ngày)
 At an hour	Vào một giờ
 Where the sun stands then, today, at the map's place (Map > Calendar and place); by night the moon	Nơi mặt trời đứng lúc đó, hôm nay, tại vị trí của bản đồ (Bản đồ > Lịch và vị trí); ban đêm là mặt trăng
+Let time run	Cho thời gian chạy
+Let time run (starts the clock at 12:00)	Cho thời gian chạy (bắt đầu đồng hồ lúc 12:00)
+The hour moves on while the editor is running, and the lamps of the shops and streets come on at dusk; ticking this in Plain day starts the clock at noon	Giờ tiếp tục trôi khi trình sửa đang chạy, và đèn của các cửa hàng và đường phố bật lên lúc chạng vạng; đánh dấu mục này ở ban ngày thường sẽ bắt đầu đồng hồ vào buổi trưa
+Speed, for testing (the sun and the lamps' cycle)	Tốc độ, để thử (mặt trời và chu kỳ đèn)
+Normal: a minute of the map a second	Bình thường: một phút của bản đồ mỗi giây
+Five times as fast: an 82 s cycle of the lamps in 16 s	Nhanh gấp năm lần: chu kỳ 82 giây của đèn trong 16 giây
+An hour of the map a second, the lamps' cycle in a second or two	Một giờ của bản đồ mỗi giây, chu kỳ đèn trong một hoặc hai giây
+day	ban ngày
+Plain day: the sun stands where the game has it by day. Click to start the clock at 12:00	Ban ngày thường: mặt trời đứng yên ở vị trí trò chơi đặt vào ban ngày. Nhấp để bắt đầu đồng hồ lúc 12:00
+The view's clock, stopped. Click to let it run	Đồng hồ của góc nhìn đã dừng. Nhấp để cho nó chạy
+The view's clock, running. Click to stop it (the hour stays where it is)	Đồng hồ của góc nhìn đang chạy. Nhấp để dừng (giờ vẫn giữ nguyên)
 Season	Mùa
 Summer	Mùa hè
 Dry summer	Mùa hè khô

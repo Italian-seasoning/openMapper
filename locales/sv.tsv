@@ -698,6 +698,17 @@ Time of day	Tid på dygnet
 Plain day (as the game by day)	Vanlig dag (som spelet på dagen)
 At an hour	Vid en timme
 Where the sun stands then, today, at the map's place (Map > Calendar and place); by night the moon	Där solen står då, i dag, på kartans plats (Karta > Kalender och plats); på natten månen
+Let time run	Låt tiden gå
+Let time run (starts the clock at 12:00)	Låt tiden gå (startar klockan vid 12:00)
+The hour moves on while the editor is running, and the lamps of the shops and streets come on at dusk; ticking this in Plain day starts the clock at noon	Timmen går vidare medan redigeraren körs, och i skymningen tänds lamporna i butikerna och på gatorna; om du kryssar i detta i vanlig dag startar klockan vid middagstid
+Speed, for testing (the sun and the lamps' cycle)	Hastighet, för att testa (solen och lampornas cykel)
+Normal: a minute of the map a second	Normal: en minut av kartan per sekund
+Five times as fast: an 82 s cycle of the lamps in 16 s	Fem gånger så snabbt: en 82 s lång cykel för lamporna på 16 s
+An hour of the map a second, the lamps' cycle in a second or two	En timme av kartan per sekund, lampornas cykel på en eller två sekunder
+day	dag
+Plain day: the sun stands where the game has it by day. Click to start the clock at 12:00	Vanlig dag: solen står där spelet har den på dagen. Klicka för att starta klockan vid 12:00
+The view's clock, stopped. Click to let it run	Vyns klocka är stoppad. Klicka för att låta den gå
+The view's clock, running. Click to stop it (the hour stays where it is)	Vyns klocka går. Klicka för att stoppa den (timmen stannar där den är)
 Season	Årstid
 Summer	Sommar
 Dry summer	Torr sommar

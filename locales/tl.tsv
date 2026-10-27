@@ -698,6 +698,17 @@ Time of day	Oras ng araw
 Plain day (as the game by day)	Karaniwang araw (tulad ng laro sa araw)
 At an hour	Sa isang oras
 Where the sun stands then, today, at the map's place (Map > Calendar and place); by night the moon	Kung nasaan ang araw noon, ngayon, sa lugar ng mapa (Mapa > Kalendaryo at lugar); sa gabi, ang buwan
+Let time run	Hayaang tumakbo ang oras
+Let time run (starts the clock at 12:00)	Hayaang tumakbo ang oras (sinisimulan ang orasan sa 12:00)
+The hour moves on while the editor is running, and the lamps of the shops and streets come on at dusk; ticking this in Plain day starts the clock at noon	Tuloy ang oras habang tumatakbo ang editor, at sa dapit-hapon ay nagsisindi ang mga ilaw ng tindahan at kalye; kapag ito ay tinitikan sa karaniwang araw, nagsisimula ang orasan sa tanghali
+Speed, for testing (the sun and the lamps' cycle)	Bilis, para sa pagsubok (ang araw at ang ikot ng mga ilaw)
+Normal: a minute of the map a second	Karaniwan: isang minuto ng mapa kada segundo
+Five times as fast: an 82 s cycle of the lamps in 16 s	Limang beses ang bilis: ang 82 s na ikot ng mga ilaw sa 16 s
+An hour of the map a second, the lamps' cycle in a second or two	Isang oras ng mapa kada segundo, ang ikot ng mga ilaw sa isa o dalawang segundo
+day	araw
+Plain day: the sun stands where the game has it by day. Click to start the clock at 12:00	Karaniwang araw: nananatili ang araw kung saan ito inilalagay ng laro sa araw. I-click para simulan ang orasan sa 12:00
+The view's clock, stopped. Click to let it run	Nakatigil ang orasan ng view. I-click para hayaang tumakbo
+The view's clock, running. Click to stop it (the hour stays where it is)	Tumatakbo ang orasan ng view. I-click para itigil (mananatili ang oras kung saan ito naroon)
 Season	Panahon
 Summer	Tag-init
 Dry summer	Tuyong tag-init

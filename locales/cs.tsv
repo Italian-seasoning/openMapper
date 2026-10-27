@@ -698,6 +698,17 @@ Time of day	Denní doba
 Plain day (as the game by day)	Obyčejný den (jako ve hře ve dne)
 At an hour	V určitou hodinu
 Where the sun stands then, today, at the map's place (Map > Calendar and place); by night the moon	Kde pak stojí slunce, dnes, na místě mapy (Mapa > Kalendář a místo); v noci měsíc
+Let time run	Nechat čas běžet
+Let time run (starts the clock at 12:00)	Nechat čas běžet (spustí hodiny ve 12:00)
+The hour moves on while the editor is running, and the lamps of the shops and streets come on at dusk; ticking this in Plain day starts the clock at noon	Hodina běží, dokud je editor spuštěný, a za soumraku se rozsvítí lampy obchodů a ulic; zaškrtnutím v obyčejném dni se hodiny spustí v poledne
+Speed, for testing (the sun and the lamps' cycle)	Rychlost, pro vyzkoušení (slunce a cyklus lamp)
+Normal: a minute of the map a second	Normálně: minuta mapy za sekundu
+Five times as fast: an 82 s cycle of the lamps in 16 s	Pětkrát rychleji: cyklus lamp 82 s za 16 s
+An hour of the map a second, the lamps' cycle in a second or two	Hodina mapy za sekundu, cyklus lamp za sekundu nebo dvě
+day	den
+Plain day: the sun stands where the game has it by day. Click to start the clock at 12:00	Obyčejný den: slunce stojí tam, kde ho hra ve dne má. Kliknutím spustíte hodiny ve 12:00
+The view's clock, stopped. Click to let it run	Hodiny zobrazení stojí. Kliknutím je necháte běžet
+The view's clock, running. Click to stop it (the hour stays where it is)	Hodiny zobrazení běží. Kliknutím je zastavíte (hodina zůstane, kde je)
 Season	Roční období
 Summer	Léto
 Dry summer	Suché léto

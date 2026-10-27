@@ -698,6 +698,17 @@ Time of day	Günün saati
 Plain day (as the game by day)	Düz gün (oyundaki gündüz gibi)
 At an hour	Belirli bir saatte
 Where the sun stands then, today, at the map's place (Map > Calendar and place); by night the moon	Güneşin o zaman, bugün, haritanın bulunduğu yerde durduğu yer (Harita > Takvim ve yer); geceleri ay
+Let time run	Zaman aksın
+Let time run (starts the clock at 12:00)	Zaman aksın (saati 12:00'de başlatır)
+The hour moves on while the editor is running, and the lamps of the shops and streets come on at dusk; ticking this in Plain day starts the clock at noon	Düzenleyici çalışırken saat ilerler ve akşam karanlığında dükkânların ve sokakların lambaları yanar; düz günde bunu işaretlemek saati öğlen başlatır
+Speed, for testing (the sun and the lamps' cycle)	Hız, denemek için (güneş ve lambaların döngüsü)
+Normal: a minute of the map a second	Normal: haritanın bir dakikası bir saniyede
+Five times as fast: an 82 s cycle of the lamps in 16 s	Beş kat hızlı: lambaların 82 s'lik döngüsü 16 s'de
+An hour of the map a second, the lamps' cycle in a second or two	Haritanın bir saati bir saniyede, lambaların döngüsü bir-iki saniyede
+day	gündüz
+Plain day: the sun stands where the game has it by day. Click to start the clock at 12:00	Düz gün: güneş, oyunun gündüz koyduğu yerde durur. Saati 12:00'de başlatmak için tıklayın
+The view's clock, stopped. Click to let it run	Görünümün saati durdu. Akması için tıklayın
+The view's clock, running. Click to stop it (the hour stays where it is)	Görünümün saati işliyor. Durdurmak için tıklayın (saat olduğu yerde kalır)
 Season	Mevsim
 Summer	Yaz
 Dry summer	Kuru yaz

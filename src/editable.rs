@@ -91,6 +91,17 @@ impl Lamp {
         }
     }
 
+    /// The lamp a script variable names (the `[visible]` of a lens): the content spells it
+    /// `Red` as often as `red`.
+    pub fn of_var(var: &str) -> Option<Lamp> {
+        match var.trim().to_ascii_lowercase().as_str() {
+            "red" => Some(Lamp::Red),
+            "yellow" => Some(Lamp::Yellow),
+            "green" => Some(Lamp::Green),
+            _ => None,
+        }
+    }
+
     pub fn rgb(self) -> [u8; 3] {
         match self {
             Lamp::Red => [255, 30, 20],

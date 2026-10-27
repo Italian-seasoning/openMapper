@@ -38,6 +38,22 @@ pub struct Part {
     /// label). The label's value is a picture's name, looked for where the object's own
     /// textures are; an empty one leaves the slot's own picture, as in Omsi.exe.
     pub freetex: Vec<(usize, usize)>,
+    /// The script variable that shows it (`[visible]`) and the value it shows at: a signal
+    /// head's lens, lit by its crossing's program (None: always shown).
+    pub visible: Option<(String, f32)>,
+    /// The script variable that fades it (`[alphascale] red` and its like): the other way a
+    /// signal head's lens is lit - its "on" picture shows while the variable is 1 (None: not
+    /// faded; the lens meshes of the Hong Kong signal heads, which have no `[visible]`).
+    pub faded: Option<String>,
+}
+
+impl Part {
+    /// The lamp whose lens this is, if it is one: shown by `[visible]`, or faded in by
+    /// `[alphascale]`. Both name the lamp variable `red`, `yellow` or `green`.
+    pub fn lamp(&self) -> Option<crate::editable::Lamp> {
+        let shown = self.visible.as_ref().and_then(|(var, _)| crate::editable::Lamp::of_var(var));
+        shown.or_else(|| self.faded.as_deref().and_then(crate::editable::Lamp::of_var))
+    }
 }
 
 pub struct ObjectModel {
@@ -70,9 +86,12 @@ pub struct ObjectModel {
     /// What its labels mean (`[stringvarnamelist]`; empty names where only a text texture
     /// says a label is read). Empty: it reads no labels.
     pub labels: Vec<String>,
-    /// The lights of its traffic light program (`[traffic_light]` names): a crossing whose
-    /// signal heads take their state from it (`[varparent]`).
-    pub lights: Vec<String>,
+    /// The lights of its traffic light program (`[traffic_light]`, each with its phases): a
+    /// crossing whose signal heads take their state from it (`[varparent]`).
+    pub lights: Vec<omsi_scenery::TrafficLight>,
+    /// Its `[traffic_lights_group]`: the seconds of the program's cycle (None: the phases'
+    /// own sum).
+    pub cycle: Option<f32>,
     /// A signal head (`[trafficlight]` with no program of its own): its first label names a
     /// light of its parent's program.
     pub light_head: bool,
@@ -84,6 +103,10 @@ impl ObjectModel {
     }
     pub fn centre(&self) -> Vec3 {
         (self.hi + self.lo) * 0.5
+    }
+    /// The names of its program's lights, in the order the crossing counts them.
+    pub fn light_names(&self) -> Vec<String> {
+        self.lights.iter().map(|l| l.name.clone()).collect()
     }
 }
 
@@ -401,13 +424,19 @@ pub(crate) fn load_object(path: &Path, omsi: &Path, content: &Path) -> Option<Ob
     let mut parts = Vec::new();
     let mut lo = Vec3::splat(f32::MAX);
     let mut hi = Vec3::splat(f32::MIN);
+    // (a signal head's lenses: the German ones say `[visible] red 1`, the Hong Kong ones
+    // fade an "on" picture in by `[alphascale] red`; both name the lamp)
+    let signal = sco.is_traffic_light;
     for md in mesh_defs {
-        // (the meshes switched on by a script - lights, signals, seasons - are left out
-        // unless they show by default)
-        // (but those of the season, as the cows and hay bales of summer: shown)
-        if md.visible.as_ref().map(|(var, v)| *v != 0.0 && !is_season(var)).unwrap_or(false) {
-            continue;
-        }
+        // (the meshes a script switches on are left out unless they show by default; but a
+        // signal head's lenses, which its crossing's program lights, are kept - dark until
+        // it lights one; the seasons' props stay shown, as the cows and hay bales of summer)
+        let visible = match gate_of(md.visible.as_ref()) {
+            Gate::Shown => None,
+            Gate::Skipped => continue,
+            Gate::Lamp(var, value) => Some((var, value)),
+        };
+        let faded = signal.then(|| md.materials.iter().find_map(|d| d.alphascale.as_deref()).filter(|v| crate::editable::Lamp::of_var(v).is_some()).map(str::to_string)).flatten();
         let in_model = omsi_cfg::resolve_path(&omsi_cfg::resolve_path(&model_dir, "model"), &md.file);
         let mesh_path = if omsi_cfg::vfs::is_file(&in_model) { in_model } else { omsi_cfg::resolve_path(&model_dir, &md.file) };
         let Ok(m) = omsi_o3d::load_mesh(&mesh_path) else { continue };
@@ -453,7 +482,7 @@ pub(crate) fn load_object(path: &Path, omsi: &Path, content: &Path) -> Option<Ob
                 Material { texture: find_tex(&mat.texture, &dirs), color: mat.diffuse, alpha, glow }
             })
             .collect();
-        parts.push(Part { mesh, materials, texts, freetex });
+        parts.push(Part { mesh, materials, texts, freetex, visible, faded });
     }
     // a junction plate draped onto its `[crossing_heightdeformation]` field, as openOMSI
     // (and Omsi.exe, as it loads the type) does: its arms meet roads that do not lie at the
@@ -534,7 +563,7 @@ pub(crate) fn load_object(path: &Path, omsi: &Path, content: &Path) -> Option<Ob
     }
     // (a tree with an editor-only helper box is seen in the game: only the box is not)
     let technical = (sco.only_editor && tree.is_none()) || sco.is_entry_point || sco.is_car_park || sco.is_help_arrow || (parts.is_empty() && tree.is_none());
-    Some(ObjectModel { parts, lo, hi, abs_height: sco.absolute_height(), tree, helpers, attachments, surface, holes, technical, editor_parts: sco.only_editor, paths: sco.paths.clone(), texts: model.text_textures.clone(), labels: label_names, lights: sco.traffic_lights.iter().map(|l| l.name.clone()).collect(), light_head: sco.is_traffic_light && sco.traffic_lights.is_empty() })
+    Some(ObjectModel { parts, lo, hi, abs_height: sco.absolute_height(), tree, helpers, attachments, surface, holes, technical, editor_parts: sco.only_editor, paths: sco.paths.clone(), texts: model.text_textures.clone(), labels: label_names, lights: sco.traffic_lights.clone(), cycle: sco.traffic_lights_group, light_head: sco.is_traffic_light && sco.traffic_lights.is_empty() })
 }
 
 fn load_spline(path: &Path, omsi: &Path, content: &Path) -> Option<SplineModel> {
@@ -663,9 +692,63 @@ fn is_season(var: &str) -> bool {
     ["sommer", "summer", "winter", "season", "jahreszeit"].iter().any(|w| v.contains(w))
 }
 
+/// How a mesh gated by `[visible]` is kept: as it comes (a season's prop, a mesh shown while
+/// its variable is off), left out (a script's own switch, as a shop's sign), or a signal
+/// head's lens, kept dark until its crossing's program lights it.
+enum Gate {
+    Shown,
+    Skipped,
+    Lamp(String, f32),
+}
+
+fn gate_of(visible: Option<&(String, f32)>) -> Gate {
+    let Some((var, value)) = visible else { return Gate::Shown };
+    if *value == 0.0 || is_season(var) {
+        return Gate::Shown;
+    }
+    match crate::editable::Lamp::of_var(var) {
+        Some(_) => Gate::Lamp(var.clone(), *value),
+        None => Gate::Skipped,
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    /// A mesh gated by a script variable: a season's prop stays, a shop's sign is left out,
+    /// and a signal's lens is kept (dark) for the crossing's program.
+    #[test]
+    fn a_mesh_switched_by_a_script_is_kept_only_for_a_lamp_or_a_season() {
+        assert!(matches!(gate_of(None), Gate::Shown));
+        // (shown while its variable is off, as openMapper shows them today)
+        assert!(matches!(gate_of(Some(&("ShopSign".into(), 0.0))), Gate::Shown));
+        assert!(matches!(gate_of(Some(&("ShopSign".into(), 1.0))), Gate::Skipped));
+        assert!(matches!(gate_of(Some(&("sommerhalbjahr".into(), 1.0))), Gate::Shown));
+        for (var, lamp) in [("Red", crate::editable::Lamp::Red), ("red", crate::editable::Lamp::Red), ("YELLOW", crate::editable::Lamp::Yellow), ("green", crate::editable::Lamp::Green)] {
+            assert!(matches!(gate_of(Some(&(var.into(), 1.0))), Gate::Lamp(..)), "{var}");
+            assert_eq!(crate::editable::Lamp::of_var(var), Some(lamp));
+        }
+        // (the other names a lamp's variable goes by: no lamp, no crash)
+        assert!(matches!(gate_of(Some(&("Left".into(), 1.0))), Gate::Skipped));
+        assert_eq!(crate::editable::Lamp::of_var("#12"), None);
+    }
+
+    /// A lens faded in by `[alphascale]` (the Hong Kong signal heads: no `[visible]`) is a
+    /// lamp too, so the crossing's program lights it as it lights the German heads' lenses.
+    #[test]
+    fn a_lens_faded_by_a_variable_is_a_lamp() {
+        let part = |faded: Option<&str>| Part { mesh: MeshData::default(), materials: Vec::new(), texts: Vec::new(), freetex: Vec::new(), visible: None, faded: faded.map(str::to_string) };
+        assert_eq!(part(Some("red")).lamp(), Some(crate::editable::Lamp::Red));
+        assert_eq!(part(Some("Yellow")).lamp(), Some(crate::editable::Lamp::Yellow));
+        assert_eq!(part(Some("green")).lamp(), Some(crate::editable::Lamp::Green));
+        // (another `[alphascale]`, as a sign's brightness: not a lamp)
+        assert_eq!(part(Some("Licht")).lamp(), None);
+        assert_eq!(part(None).lamp(), None);
+        // (a `[visible]` lens, as the German heads have them, is still seen)
+        let shown = Part { visible: Some(("red".into(), 1.0)), ..part(None) };
+        assert_eq!(shown.lamp(), Some(crate::editable::Lamp::Red));
+    }
 
     #[test]
     fn a_freetex_variable_names_one_of_the_objects_labels() {
@@ -712,5 +795,47 @@ mod tests {
         assert!(found.unwrap().to_string_lossy().to_lowercase().ends_with("ltr12.png"));
         // (an empty label picks nothing: the slot keeps its own, as Omsi.exe leaves it)
         assert!(assets.freetex_texture("Sceneryobjects/76K_GM/FreetexGantry.sco", "  ").is_none());
+    }
+
+    /// The stock content's signal head: its body and its three lenses, which OMSI switches by
+    /// the lamps' variables - all four kept, the lenses dark until a crossing lights them.
+    #[test]
+    fn a_signal_head_keeps_its_lenses_and_shows_no_lamp_by_itself() {
+        let Some(omsi) = crate::install::find_omsi_root(&crate::install::Prefs::default()) else {
+            eprintln!("no OMSI 2 installation: skipped");
+            return;
+        };
+        let content = std::env::temp_dir().join("openmapper-ampel-none");
+        let sco = omsi_cfg::resolve_path(&omsi, "Sceneryobjects/Verkehrszeichen_MC/Ampel_Kfz_1.sco");
+        if !sco.is_file() {
+            eprintln!("no Ampel_Kfz_1: skipped");
+            return;
+        }
+        let m = load_object(&sco, &omsi, &content).expect("the signal head reads");
+        assert_eq!(m.parts.len(), 4, "the body and a lens for each lamp");
+        let lamps: Vec<crate::editable::Lamp> = m.parts.iter().filter_map(Part::lamp).collect();
+        assert_eq!(lamps, [crate::editable::Lamp::Red, crate::editable::Lamp::Yellow, crate::editable::Lamp::Green]);
+        assert_eq!(m.parts.iter().filter(|p| p.visible.is_none()).count(), 1, "the body is not switched");
+        assert!(m.light_head, "it takes its state from a crossing");
+    }
+
+    /// A crossing's program: not only the lights' names but their phases and the cycle, which
+    /// is what the signal heads standing at it are lit by.
+    #[test]
+    fn a_crossing_keeps_its_light_program() {
+        let dir = std::env::temp_dir().join(format!("om-crossing-{}", std::process::id()));
+        let _ = std::fs::create_dir_all(&dir);
+        let path = dir.join("crossing.sco");
+        // (a main road's light and a side road's, as openMapper's junctions write them)
+        let text = "[friendlyname]\nCrossing\n\n[traffic_lights_group]\n30\n\n[traffic_light]\nMain road\n\n[phase]\n3\n2\n\n[phase]\n6\n20\n\n[phase]\n9\n3\n\n[phase]\n0\n0\n\n[traffic_light]\nSide roads\n\n[phase]\n0\n22\n\n[phase]\n3\n2\n\n[phase]\n6\n5\n\n[phase]\n9\n3\n";
+        std::fs::write(&path, text).expect("the crossing writes");
+        let m = load_object(&path, &dir, &dir).expect("the crossing reads");
+        assert_eq!(m.cycle, Some(30.0), "the group's cycle");
+        assert_eq!(m.light_names(), ["Main road", "Side roads"]);
+        let phases: Vec<(i32, f32)> = m.lights[0].phases.iter().map(|p| (p.state, p.duration)).collect();
+        assert_eq!(phases, [(3, 2.0), (6, 20.0), (9, 3.0), (0, 0.0)]);
+        assert_eq!(m.lights[1].phases.len(), 4, "the side road's light keeps its own");
+        assert!(!m.light_head, "it runs a program of its own");
+        let _ = std::fs::remove_dir_all(&dir);
     }
 }

@@ -698,6 +698,17 @@ Time of day	Waktu
 Plain day (as the game by day)	Hari biasa (seperti permainan pada siang hari)
 At an hour	Pada jam tertentu
 Where the sun stands then, today, at the map's place (Map > Calendar and place); by night the moon	Di mana matahari berada ketika itu, hari ini, di tempat peta (Peta > Kalendar dan tempat); pada waktu malam bulan
+Let time run	Biarkan masa berjalan
+Let time run (starts the clock at 12:00)	Biarkan masa berjalan (memulakan jam pada 12:00)
+The hour moves on while the editor is running, and the lamps of the shops and streets come on at dusk; ticking this in Plain day starts the clock at noon	Jam terus berjalan semasa editor berjalan, dan lampu kedai serta jalan menyala pada waktu senja; menandakan ini dalam hari biasa memulakan jam pada tengah hari
+Speed, for testing (the sun and the lamps' cycle)	Kelajuan, untuk ujian (matahari dan kitaran lampu)
+Normal: a minute of the map a second	Biasa: satu minit peta sesaat
+Five times as fast: an 82 s cycle of the lamps in 16 s	Lima kali lebih laju: kitaran lampu 82 s dalam 16 s
+An hour of the map a second, the lamps' cycle in a second or two	Satu jam peta sesaat, kitaran lampu dalam satu atau dua saat
+day	siang
+Plain day: the sun stands where the game has it by day. Click to start the clock at 12:00	Hari biasa: matahari kekal di tempat permainan meletakkannya pada siang hari. Klik untuk memulakan jam pada 12:00
+The view's clock, stopped. Click to let it run	Jam paparan berhenti. Klik untuk membiarkannya berjalan
+The view's clock, running. Click to stop it (the hour stays where it is)	Jam paparan sedang berjalan. Klik untuk menghentikannya (jam kekal di tempatnya)
 Season	Musim
 Summer	Musim panas
 Dry summer	Musim panas kering

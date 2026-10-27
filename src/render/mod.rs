@@ -24,6 +24,7 @@ pub mod daylight;
 pub mod imagery;
 pub mod profile;
 pub mod quality;
+pub mod traffic_lights;
 
 use cull::{Aabb, Frustum};
 
@@ -264,6 +265,23 @@ struct Pending {
     sel: Option<Sel>,
 }
 
+/// A signal head of the map, kept between the frames that make the scene over: the program it
+/// takes its state from (`[varparent]`) and the model its lenses are cut from, so that what is
+/// lit is worked out each frame without walking the tiles.
+struct Head {
+    /// The base model's key (its labels resolved), for its lenses' own models.
+    key: String,
+    model: Arc<ObjectModel>,
+    program: Option<Arc<ObjectModel>>,
+    /// The light of the program it shows: its first label (`[stringvarnamelist]`), which
+    /// openMapper writes as the light's place; none names the first.
+    light: usize,
+    /// Where it stands, relative to the render anchor.
+    mat: Mat4,
+    radius: f32,
+    sel: Sel,
+}
+
 type Groups = HashMap<String, (bool, Vec<Pending>)>;
 
 impl Batch {
@@ -440,6 +458,10 @@ pub struct Renderer {
     pub roots: Vec<PathBuf>,
     batches: Vec<Batch>,
     ghost_batches: Vec<Batch>,
+    /// The lenses lit at the signal heads, drawn from the buffer that changes every frame.
+    signal_batches: Vec<Batch>,
+    /// The map's signal heads, gathered when the scene is made over.
+    signal_heads: Vec<Head>,
     scene_key: u64,
     splines: HashMap<(TileKey, i64), SplineEntry>,
     chunks: HashMap<TileKey, Chunk>,
@@ -964,6 +986,8 @@ impl Renderer {
             roots: Vec::new(),
             batches: Vec::new(),
             ghost_batches: Vec::new(),
+            signal_batches: Vec::new(),
+            signal_heads: Vec::new(),
             scene_key: 0,
             daytime: None,
             splines: HashMap::new(),
@@ -1011,6 +1035,8 @@ impl Renderer {
         self.ground_bind = None;
         self.scene_key = 0;
         self.tile_groups.clear();
+        self.signal_heads.clear();
+        self.signal_batches.clear();
     }
 
     /// Forget loaded models (files changed on disk).
@@ -1019,7 +1045,8 @@ impl Renderer {
     pub fn forget_model(&mut self, rel: &str, dir: &std::path::Path) {
         let k = rel.to_lowercase();
         let labelled = format!("{k}\u{1}");
-        self.models.retain(|key, _| *key != k && !key.starts_with(&labelled));
+        let lens = format!("{k}\u{3}");
+        self.models.retain(|key, _| *key != k && !key.starts_with(&labelled) && !key.starts_with(&lens));
         self.textures.retain(|p, _| !p.starts_with(dir));
         self.materials.retain(|m, _| !m.texture.as_ref().map(|t| t.starts_with(dir)).unwrap_or(false) && !m.glow.as_ref().map(|g| g.0.starts_with(dir)).unwrap_or(false));
         self.thumbs.remove(&k);
@@ -1164,7 +1191,8 @@ impl Renderer {
         if self.models.contains_key(key) {
             return;
         }
-        let parts = m.parts.iter().map(|p| (upload_mesh(device, &p.mesh), p.materials.clone())).collect::<Vec<_>>();
+        // (a signal head's lenses wait for the crossing's program: dark until then)
+        let parts = m.parts.iter().filter(|p| p.lamp().is_none()).map(|p| (upload_mesh(device, &p.mesh), p.materials.clone())).collect::<Vec<_>>();
         self.models.insert(key.to_string(), Some(GpuModel { parts, technical: m.technical || m.editor_parts }));
     }
 
@@ -1193,9 +1221,11 @@ impl Renderer {
             format!("{key}\u{1}{}\u{2}{}", shown.join("\u{1}"), picked.iter().map(|(n, _)| *n).collect::<Vec<_>>().join("\u{1}"))
         };
         if !self.models.contains_key(&key) {
+            // (a signal head's lenses wait for the crossing's program: dark until then)
             let parts = m
                 .parts
                 .iter()
+                .filter(|p| p.lamp().is_none())
                 .map(|p| {
                     let mut mats = p.materials.clone();
                     for &(slot, t) in &p.texts {
@@ -1227,6 +1257,65 @@ impl Renderer {
             self.models.insert(key.clone(), Some(GpuModel { parts, technical: m.technical || m.editor_parts }));
         }
         key
+    }
+
+    /// One lens of a signal head as a model of its own, keyed by its place among the head's
+    /// parts: the frame that lights it draws the instance, the head's body being drawn with the
+    /// map's objects (its lens meshes have no text of their own, so the head's labels need not
+    /// be laid over them).
+    fn lens_model(&mut self, device: &wgpu::Device, key: &str, m: &ObjectModel, part: usize) -> String {
+        let key = format!("{key}\u{3}{part}");
+        if !self.models.contains_key(&key) {
+            let parts = m.parts.get(part).map(|p| vec![(upload_mesh(device, &p.mesh), p.materials.clone())]).unwrap_or_default();
+            self.models.insert(key.clone(), Some(GpuModel { parts, technical: m.technical || m.editor_parts }));
+            // (a lamp's own picture and glow are warmed before it is drawn)
+            self.warm_pending = true;
+        }
+        key
+    }
+
+    /// The map's signal heads, their programs and the models their lenses are cut from,
+    /// gathered when the scene is made over (the lenses themselves are lit every frame, as the
+    /// clock runs the programs).
+    fn gather_heads(&mut self, device: &wgpu::Device, doc: &Document, assets: &mut Assets, disp: &[(TileKey, Arc<omsi_map::Tile>)], extras: &FrameExtras, anchor: DVec3) -> Vec<Head> {
+        let mut heads = Vec::new();
+        for (k, t) in disp {
+            let mut parents: HashMap<i64, (Pose, Arc<ObjectModel>)> = HashMap::new();
+            for o in &t.objects {
+                let Some(model) = assets.object(&o.file) else { continue };
+                let pose = Pose::of_object(doc.object_world(*k, o, model.abs_height), o.rot);
+                if let Some(h) = self.head_of(device, doc, assets, *k, o, pose.matrix_from(anchor), model.clone(), extras) {
+                    heads.push(h);
+                }
+                parents.insert(o.id, (pose, model));
+            }
+            // (a head hanging on a pole of its tile, as its body is drawn)
+            for o in &t.attach_objects {
+                let Some(model) = assets.object(&o.file) else { continue };
+                let Some((parent, pmodel)) = o.parent_id.and_then(|p| parents.get(&p)).cloned() else { continue };
+                let attach = pmodel.attachments.get(o.attach_index).copied().unwrap_or(Mat4::IDENTITY);
+                let pose = parent.attached(&attach, omsi_geometry::map_rotation(o.rot));
+                if let Some(h) = self.head_of(device, doc, assets, *k, o, pose.matrix_from(anchor), model, extras) {
+                    heads.push(h);
+                }
+            }
+        }
+        heads
+    }
+
+    /// A signal head, where it stands and the model its lenses are cut from: None for an
+    /// object that is no head, or one the view leaves out.
+    #[allow(clippy::too_many_arguments)]
+    fn head_of(&mut self, device: &wgpu::Device, doc: &Document, assets: &mut Assets, k: TileKey, o: &omsi_map::MapObject, mat: Mat4, model: Arc<ObjectModel>, extras: &FrameExtras) -> Option<Head> {
+        if !model.light_head || model.technical && !extras.show_technical || hidden_layer(&model, extras) {
+            return None;
+        }
+        let key = self.model_with_labels(device, &o.file.to_lowercase(), &model, &o.extra, assets);
+        let scale = mat.x_axis.truncate().length().max(mat.y_axis.truncate().length()).max(mat.z_axis.truncate().length());
+        let program = o.var_parent.and_then(|p| crate::selection::object_by_id(doc, p)).and_then(|(_, p)| assets.object(&p.file));
+        let light = o.extra.first().and_then(|l| l.trim().parse().ok()).unwrap_or(0);
+        let radius = (model.centre().length() + model.radius()) * scale;
+        Some(Head { key, model, program, light, mat, radius, sel: Sel::Object(k, o.id) })
     }
 
     /// Draw only these tiles (None: all). The others lose their graphics at once; they are
@@ -1454,6 +1543,10 @@ impl Renderer {
             self.batches = batches;
             self.scene_by_sel = by_sel;
             self.cached_scene = instances;
+            // (the signal heads, for the frames that light their lenses: they are found again
+            // here, with everything else that is made over, not every frame)
+            let heads = self.gather_heads(device, doc, assets, &disp, extras, anchor);
+            self.signal_heads = heads;
             self.tinted.clear();
             self.resized.clear();
             self.resized_orig.clear();
@@ -1657,6 +1750,54 @@ impl Renderer {
         let (ghosts, ghost_batches, _) = flatten(ghost_groups, all.len() as u32);
         self.ghost_batches = ghost_batches.into_iter().map(|b| Batch::whole(b.model, b.tree, b.first, b.count)).collect();
         all.extend(ghosts);
+        // the signal heads' lenses: one instance for each lamp the crossing's program has lit
+        // (a program's phases are seconds of the game's own time, so they run on the editor's
+        // clock whatever hour the view is lit at; the lenses are models of their own, the
+        // heads' bodies drawn with the map's objects, and they are put here rather than among
+        // the tiles because what is lit changes with the clock, not with the map)
+        let mut lenses: Vec<(String, Arc<ObjectModel>, Mat4, Option<Sel>, f32, [f32; 4], usize)> = Vec::new();
+        for h in &self.signal_heads {
+            // (a head Omsi.exe cannot link to a crossing - no `[varparent]`, one that leads
+            // nowhere, a light with no phases - shows phase 0: red, as the game leaves it)
+            let state = match &h.program {
+                Some(p) => match p.lights.get(h.light) {
+                    Some(light) if !light.phases.is_empty() => traffic_lights::state_at(&light.phases, p.cycle, self.time),
+                    _ => traffic_lights::UNLINKED_STATE,
+                },
+                None => traffic_lights::UNLINKED_STATE,
+            };
+            let lit = traffic_lights::Lit::of_state(state);
+            if lit.is_dark() {
+                continue;
+            }
+            let tint = if extras.selected == Some(h.sel) || extras.selected_more.contains(&h.sel) {
+                SELECTED
+            } else if extras.hover == Some(h.sel) {
+                HOVERED
+            } else {
+                [0.0; 4]
+            };
+            // (a head being resized in the view takes its lenses with it)
+            let mut mat = h.mat;
+            if let Some((_, f)) = extras.resized.iter().find(|(s, _)| *s == h.sel) {
+                for (c, k) in [f.x, f.y, f.z].into_iter().enumerate() {
+                    *mat.col_mut(c) *= k as f32;
+                }
+            }
+            for (i, p) in h.model.parts.iter().enumerate() {
+                if p.lamp().map(|lamp| lit.shows(lamp)).unwrap_or(false) {
+                    lenses.push((h.key.clone(), h.model.clone(), mat, Some(h.sel), h.radius, tint, i));
+                }
+            }
+        }
+        let mut lens_groups: Groups = HashMap::new();
+        for (key, model, mat, sel, radius, tint, part) in lenses {
+            let key = self.lens_model(device, &key, &model, part);
+            lens_groups.entry(key).or_default().1.push(Pending { inst: Instance::new(mat, tint), radius, sel });
+        }
+        let (lens_instances, lens_batches, _) = flatten(lens_groups, all.len() as u32);
+        self.signal_batches = lens_batches;
+        all.extend(lens_instances);
         if all.is_empty() {
             all.push(self.blank);
         }
@@ -1865,7 +2006,7 @@ impl Renderer {
     fn warm_materials(&mut self, device: &wgpu::Device, queue: &wgpu::Queue, assets: &mut Assets) -> bool {
         let mut mats: Vec<Material> = Vec::new();
         mats.push(marker_material());
-        for b in self.batches.iter().chain(self.ghost_batches.iter()) {
+        for b in self.batches.iter().chain(self.ghost_batches.iter()).chain(self.signal_batches.iter()) {
             if let Some(p) = b.model.strip_prefix("tree:") {
                 mats.push(Material { texture: Some(PathBuf::from(p)), color: [1.0; 4], alpha: Alpha::Test, glow: None });
             }
@@ -2110,6 +2251,14 @@ impl Renderer {
         }
         for b in &self.ghost_batches {
             visible.push((b, vec![b.first..b.first + b.count], true));
+        }
+        // (the signal heads' lenses: drawn from the buffer that changes every frame)
+        for b in &self.signal_batches {
+            let mut ranges = Vec::new();
+            b.visible(&f, eye, far, self.quality.detail(), &mut ranges);
+            if !ranges.is_empty() {
+                visible.push((b, ranges, true));
+            }
         }
         let mut instances_drawn = 0;
         let mut spline_calls = 0;

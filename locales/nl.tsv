@@ -698,6 +698,17 @@ Time of day	Tijdstip
 Plain day (as the game by day)	Gewone dag (zoals het spel overdag)
 At an hour	Op een uur
 Where the sun stands then, today, at the map's place (Map > Calendar and place); by night the moon	Waar de zon dan staat, vandaag, op de plek van de kaart (Kaart > Kalender en plaats); 's nachts de maan
+Let time run	Tijd laten lopen
+Let time run (starts the clock at 12:00)	Tijd laten lopen (start de klok om 12:00)
+The hour moves on while the editor is running, and the lamps of the shops and streets come on at dusk; ticking this in Plain day starts the clock at noon	Het uur loopt door terwijl de editor draait, en bij schemering gaan de lampen van de winkels en straten aan; dit aanvinken in gewone dag start de klok om twaalf uur 's middags
+Speed, for testing (the sun and the lamps' cycle)	Snelheid, om te testen (de zon en de cyclus van de lampen)
+Normal: a minute of the map a second	Normaal: een minuut van de kaart per seconde
+Five times as fast: an 82 s cycle of the lamps in 16 s	Vijf keer zo snel: een cyclus van 82 s van de lampen in 16 s
+An hour of the map a second, the lamps' cycle in a second or two	Een uur van de kaart per seconde, de cyclus van de lampen in een seconde of twee
+day	dag
+Plain day: the sun stands where the game has it by day. Click to start the clock at 12:00	Gewone dag: de zon staat waar het spel hem overdag heeft. Klik om de klok om 12:00 te starten
+The view's clock, stopped. Click to let it run	De klok van het beeld staat stil. Klik om hem te laten lopen
+The view's clock, running. Click to stop it (the hour stays where it is)	De klok van het beeld loopt. Klik om hem te stoppen (het uur blijft staan)
 Season	Seizoen
 Summer	Zomer
 Dry summer	Droge zomer

@@ -698,6 +698,17 @@ Time of day	Час сутак
 Plain day (as the game by day)	Звычайны дзень (як у гульні днём)
 At an hour	У зададзены час
 Where the sun stands then, today, at the map's place (Map > Calendar and place); by night the moon	Дзе тады стаіць сонца, сёння, у месцы карты (Карта > Каляндар і месца); уначы месяц
+Let time run	Хай час ідзе
+Let time run (starts the clock at 12:00)	Хай час ідзе (гадзіннік пачнецца з 12:00)
+The hour moves on while the editor is running, and the lamps of the shops and streets come on at dusk; ticking this in Plain day starts the clock at noon	Гадзіна ідзе, пакуль працуе рэдактар, а з надыходам змяркання запальваюцца ліхтары крам і вуліц; калі ўключыць гэта ў звычайным дні, гадзіннік пачнецца з поўдня
+Speed, for testing (the sun and the lamps' cycle)	Хуткасць для праверкі (сонца і цыкл ліхтароў)
+Normal: a minute of the map a second	Звычайна: хвіліна карты за секунду
+Five times as fast: an 82 s cycle of the lamps in 16 s	У пяць разоў хутчэй: цыкл ліхтароў 82 с за 16 с
+An hour of the map a second, the lamps' cycle in a second or two	Гадзіна карты за секунду, цыкл ліхтароў за секунду-дзве
+day	дзень
+Plain day: the sun stands where the game has it by day. Click to start the clock at 12:00	Звычайны дзень: сонца стаіць там, дзе яго мае гульня ўдзень. Пстрыкніце, каб гадзіннік пачаўся з 12:00
+The view's clock, stopped. Click to let it run	Гадзіннік выгляду спынены. Пстрыкніце, каб ён пайшоў
+The view's clock, running. Click to stop it (the hour stays where it is)	Гадзіннік выгляду ідзе. Пстрыкніце, каб спыніць (гадзіна застанецца на месцы)
 Season	Пара года
 Summer	Лета
 Dry summer	Сухое лета

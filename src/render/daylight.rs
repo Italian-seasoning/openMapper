@@ -106,6 +106,40 @@ pub fn light(t: Option<Daytime>) -> Light {
     }
 }
 
+/// Seconds of the map's day that pass in a second of the editor while its clock runs (a
+/// minute a second: an evening comes on while one watches it).
+pub const DAY_PER_SECOND: f32 = 60.0;
+
+/// The speeds the View menu offers for testing (View > Time of day): multipliers of the
+/// editor's second, so 1 is the normal run - a minute of the map's day a second, and the
+/// lamps' programs on the game's own seconds - 5 an evening every twelve seconds, 60 an
+/// hour a second.
+pub const SPEEDS: [f32; 3] = [1.0, 5.0, 60.0];
+
+/// The hour `dt` seconds later, the day coming round at 24, at `speed` times the normal run.
+pub fn hour_after_at(hour: f32, dt: f32, speed: f32) -> f32 {
+    hour_after(hour, dt * speed)
+}
+
+/// The hour `dt` seconds later at the normal speed.
+pub fn hour_after(hour: f32, dt: f32) -> f32 {
+    (hour + dt * DAY_PER_SECOND / 3600.0).rem_euclid(24.0)
+}
+
+/// The lamps' cycle clock `dt` seconds later: the programs' own seconds, so a speed chosen
+/// for testing shortens the cycle along with the sun's day rather than running a second clock.
+pub fn seconds_after(t: f32, dt: f32, speed: f32) -> f32 {
+    t + dt * speed
+}
+
+/// The hour as the timetable writes its times ("4:07", "12:00"): the status bar's clock and
+/// nothing else - the day comes round rather than reading "24:00".
+pub fn clock_text(hour: f32) -> String {
+    // (the timetable's own "h:mm" is the repository's way of writing a time of day)
+    let minutes = (hour.rem_euclid(24.0) * 60.0).round().rem_euclid(1440.0);
+    crate::timetable::clock(minutes)
+}
+
 /// The view lit at `clock` o'clock (local time) on today's date, where the map's
 /// `timezone.txt` places it (Berlin when it says nothing).
 pub fn at_map(clock: f32, z: &omsi_map::TimeZone) -> Daytime {
@@ -145,5 +179,47 @@ mod tests {
         assert!(!light(Some(june(1.0))).shadows);
         assert!(light(Some(june(15.0))).shadows);
         assert_eq!((light(Some(june(15.0))).night, light(Some(june(1.0))).night), (0.0, 1.0));
+    }
+
+    #[test]
+    fn an_hour_runs_on_and_the_day_comes_round() {
+        // (a minute of the map's day a second of the editor)
+        assert!((hour_after(12.0, 60.0) - 13.0).abs() < 1e-4);
+        assert!((hour_after(23.5, 30.0) - 0.0).abs() < 1e-4);
+        // (a long standstill comes round the day rather than running off it)
+        assert!((hour_after(18.0, 24.0 * 60.0) - 18.0).abs() < 1e-3);
+        assert!((hour_after(0.0, 25.0 * 60.0) - 1.0).abs() < 1e-3);
+    }
+
+    #[test]
+    fn a_speed_runs_the_hour_faster() {
+        // (1x is the normal minute a second, as before the speeds were offered)
+        assert_eq!(SPEEDS[0], 1.0, "the normal run is the first choice");
+        assert!(SPEEDS.contains(&5.0));
+        assert_eq!(hour_after_at(12.0, 30.0, 1.0), hour_after(12.0, 30.0));
+        // (5x: five minutes of the map a second)
+        assert!((hour_after_at(12.0, 60.0, 5.0) - 17.0).abs() < 1e-3);
+        // (60x: an hour a second)
+        assert!((hour_after_at(12.0, 1.0, 60.0) - 13.0).abs() < 1e-3);
+        // (and the day still comes round at 24 however fast it runs)
+        assert!((hour_after_at(23.5, 30.0, 5.0) - 2.0).abs() < 1e-3);
+    }
+
+    #[test]
+    fn the_cycle_clock_runs_as_fast_as_the_sun_and_still_starts_at_zero() {
+        assert!((seconds_after(0.0, 2.0, 1.0) - 2.0).abs() < 1e-5);
+        assert!((seconds_after(0.0, 2.0, 5.0) - 10.0).abs() < 1e-5);
+        // (an 82 s program comes round at 5x after 16.4 s of the editor)
+        assert!((seconds_after(0.0, 16.4, 5.0) - 82.0).abs() < 1e-4);
+    }
+
+    #[test]
+    fn the_clock_reads_as_the_timetable_writes_a_time() {
+        assert_eq!(clock_text(12.0), "12:00");
+        // (midnight is the timetable's own "0:00", not "24:00")
+        assert_eq!(clock_text(0.0), "0:00");
+        assert_eq!(clock_text(23.9999), "0:00");
+        assert_eq!(clock_text(4.1167), "4:07");
+        assert_eq!(clock_text(18.5), "18:30");
     }
 }

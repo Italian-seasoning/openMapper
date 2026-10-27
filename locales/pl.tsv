@@ -698,6 +698,17 @@ Time of day	Pora dnia
 Plain day (as the game by day)	Zwykły dzień (jak w grze za dnia)
 At an hour	O wybranej godzinie
 Where the sun stands then, today, at the map's place (Map > Calendar and place); by night the moon	Gdzie wtedy stoi słońce, dziś, w miejscu mapy (Mapa > Kalendarz i miejsce); nocą księżyc
+Let time run	Pozwól czasowi płynąć
+Let time run (starts the clock at 12:00)	Pozwól czasowi płynąć (uruchamia zegar o 12:00)
+The hour moves on while the editor is running, and the lamps of the shops and streets come on at dusk; ticking this in Plain day starts the clock at noon	Godzina płynie, dopóki działa edytor, a o zmierzchu zapalają się światła sklepów i ulic; zaznaczenie tego w zwykłym dniu uruchamia zegar w południe
+Speed, for testing (the sun and the lamps' cycle)	Prędkość, do sprawdzenia (słońce i cykl świateł)
+Normal: a minute of the map a second	Normalnie: minuta mapy na sekundę
+Five times as fast: an 82 s cycle of the lamps in 16 s	Pięć razy szybciej: cykl świateł 82 s w 16 s
+An hour of the map a second, the lamps' cycle in a second or two	Godzina mapy na sekundę, cykl świateł w sekundę lub dwie
+day	dzień
+Plain day: the sun stands where the game has it by day. Click to start the clock at 12:00	Zwykły dzień: słońce stoi tam, gdzie ma je gra za dnia. Kliknij, aby uruchomić zegar o 12:00
+The view's clock, stopped. Click to let it run	Zegar widoku zatrzymany. Kliknij, aby go uruchomić
+The view's clock, running. Click to stop it (the hour stays where it is)	Zegar widoku działa. Kliknij, aby go zatrzymać (godzina zostaje tam, gdzie jest)
 Season	Pora roku
 Summer	Lato
 Dry summer	Suche lato

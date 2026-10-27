@@ -698,6 +698,17 @@ Time of day	Tageszeit
 Plain day (as the game by day)	Normaler Tag (wie im Spiel tagsüber)
 At an hour	Zu einer Stunde
 Where the sun stands then, today, at the map's place (Map > Calendar and place); by night the moon	Wo die Sonne dann steht, heute, am Ort der Karte (Karte > Kalender und Ort); nachts der Mond
+Let time run	Zeit laufen lassen
+Let time run (starts the clock at 12:00)	Zeit laufen lassen (startet die Uhr um 12:00)
+The hour moves on while the editor is running, and the lamps of the shops and streets come on at dusk; ticking this in Plain day starts the clock at noon	Die Stunde läuft weiter, solange der Editor läuft, und in der Dämmerung gehen die Lichter der Läden und Straßen an; wenn dies in „Normaler Tag“ angehakt wird, startet die Uhr am Mittag
+Speed, for testing (the sun and the lamps' cycle)	Geschwindigkeit, zum Testen (die Sonne und der Zyklus der Lampen)
+Normal: a minute of the map a second	Normal: eine Minute der Karte pro Sekunde
+Five times as fast: an 82 s cycle of the lamps in 16 s	Fünfmal so schnell: ein 82-s-Zyklus der Lampen in 16 s
+An hour of the map a second, the lamps' cycle in a second or two	Eine Stunde der Karte pro Sekunde, der Zyklus der Lampen in ein bis zwei Sekunden
+day	Tag
+Plain day: the sun stands where the game has it by day. Click to start the clock at 12:00	Normaler Tag: Die Sonne steht, wo das Spiel sie tagsüber hat. Klicken, um die Uhr um 12:00 zu starten
+The view's clock, stopped. Click to let it run	Die Uhr der Ansicht steht. Klicken, um sie laufen zu lassen
+The view's clock, running. Click to stop it (the hour stays where it is)	Die Uhr der Ansicht läuft. Klicken, um sie anzuhalten (die Stunde bleibt, wo sie ist)
 Season	Jahreszeit
 Summer	Sommer
 Dry summer	Trockener Sommer

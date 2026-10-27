@@ -698,6 +698,17 @@ Time of day	Тәулік уақыты
 Plain day (as the game by day)	Қарапайым күн (ойындағы күндізгідей)
 At an hour	Белгілі сағатта
 Where the sun stands then, today, at the map's place (Map > Calendar and place); by night the moon	Күн сол кезде картаның орнында бүгін қай жерде тұрады (Карта > Күнтізбе және орын); түнде ай
+Let time run	Уақыт жүрсін
+Let time run (starts the clock at 12:00)	Уақыт жүрсін (сағат 12:00-ден басталады)
+The hour moves on while the editor is running, and the lamps of the shops and streets come on at dusk; ticking this in Plain day starts the clock at noon	Редактор жұмыс істеп тұрғанда сағат жүреді, ымыртта дүкендер мен көшелердің шамдары жанады; қарапайым күнде мұны белгілесеңіз, сағат түсте басталады
+Speed, for testing (the sun and the lamps' cycle)	Жылдамдық, тексеру үшін (күн және шамдар циклі)
+Normal: a minute of the map a second	Қалыпты: картаның бір минуты бір секундта
+Five times as fast: an 82 s cycle of the lamps in 16 s	Бес есе жылдам: шамдардың 82 с циклі 16 с ішінде
+An hour of the map a second, the lamps' cycle in a second or two	Картаның бір сағаты бір секундта, шамдар циклі бір-екі секундта
+day	күн
+Plain day: the sun stands where the game has it by day. Click to start the clock at 12:00	Қарапайым күн: күн ойында күндізгі орнында тұрады. Сағатты 12:00-ден бастау үшін басыңыз
+The view's clock, stopped. Click to let it run	Көрініс сағаты тоқтаулы. Жүргізу үшін басыңыз
+The view's clock, running. Click to stop it (the hour stays where it is)	Көрініс сағаты жүріп тұр. Тоқтату үшін басыңыз (сағат орнында қалады)
 Season	Жыл мезгілі
 Summer	Жаз
 Dry summer	Құрғақ жаз

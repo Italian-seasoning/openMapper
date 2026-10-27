@@ -226,6 +226,21 @@ impl App {
         if std::env::var_os("OPENMAPPER_NEWMAP").is_some() {
             app.ui.new_map = Some(Default::default());
         }
+        // OPENMAPPER_TIME="5,12.5": the view's clock running at 5x from 12:30 (checks of the
+        // speeds without a person at the screen, as OPENMAPPER_SHOT is)
+        if let Some(v) = std::env::var_os("OPENMAPPER_TIME") {
+            let s = v.to_string_lossy();
+            let mut parts = s.split(',');
+            let speed = parts.next().and_then(|p| p.trim().parse::<f32>().ok());
+            let hour = parts.next().and_then(|p| p.trim().parse::<f32>().ok());
+            if let Some(speed) = speed.filter(|s| s.is_finite() && *s > 0.0) {
+                app.ui.time_speed = speed;
+            }
+            if let Some(hour) = hour.filter(|h| h.is_finite()) {
+                app.ui.daytime = Some(hour.rem_euclid(24.0));
+                app.ui.time_flows = true;
+            }
+        }
         // OPENMAPPER_MULTIPLAYER: File > Multiplayer open at the start
         app.collab.open = std::env::var_os("OPENMAPPER_MULTIPLAYER").is_some();
         app
@@ -1919,6 +1934,13 @@ impl App {
         let now = Instant::now();
         let dt = (now - self.last).as_secs_f64().min(0.1);
         self.last = now;
+        // (the view's hour when the View menu lets it run: a minute of the map's day a
+        // second at 1x, as many times that as the testing speed chosen)
+        if self.ui.time_flows {
+            if let Some(h) = &mut self.ui.daytime {
+                *h = crate::render::daylight::hour_after_at(*h, dt as f32, self.ui.time_speed);
+            }
+        }
         if let Some(a) = &mut self.assets {
             a.poll();
         }
@@ -2095,7 +2117,7 @@ impl App {
                     labels: m.labels.clone(),
                     paths: m.paths.len(),
                     attach_points: m.attachments.len(),
-                    lights: m.lights.clone(),
+                    lights: m.light_names(),
                     light_head: m.light_head,
                 });
             }
@@ -2105,7 +2127,7 @@ impl App {
             (Some(Sel::Object(k, id)), Some(doc), Some(a)) => crate::selection::any_object(doc, k, id)
                 .and_then(|o| o.var_parent)
                 .and_then(|p| crate::selection::object_by_id(doc, p))
-                .and_then(|(_, p)| a.object(&p.file).map(|m| (p.file.clone(), m.lights.clone()))),
+                .and_then(|(_, p)| a.object(&p.file).map(|m| (p.file.clone(), m.light_names()))),
             _ => None,
         };
         // (the overview map stays out of the map's picture)
@@ -2314,7 +2336,9 @@ impl App {
             let view = frame.texture.create_view(&Default::default());
             let scene_view = frame.texture.create_view(&wgpu::TextureViewDescriptor { format: Some(g.gpu.scene_format), ..Default::default() });
             let mut enc = g.gpu.device.create_command_encoder(&wgpu::CommandEncoderDescriptor { label: Some("frame") });
-            g.renderer.time += dt as f32;
+            // (the lamps' programs run on the editor's own seconds, so the testing speed
+            // shortens their cycle too: the phase still follows the program's own time)
+            g.renderer.time = crate::render::daylight::seconds_after(g.renderer.time, dt as f32, self.ui.time_speed);
             if let (Some(doc), Some(assets)) = (&self.ed.doc, self.assets.as_mut()) {
                 let t_x = Instant::now();
                 let mut extras = self.ed.extras(&self.cam, assets);
