@@ -4,6 +4,20 @@ Releases are tagged `v<version>`; the downloads are on the
 [Releases](https://github.com/openOMSI-org/openMapper/releases) page, each with the notes of its
 version from this file.
 
+## 0.1.15 - 2026-10-27
+
+### Added
+- **A crossing's signal heads show their light**: the lenses of a signal head are kept (dark) as an object loads, and a crossing's program lights them red, red and yellow, green, yellow as OMSI does; a head that cannot be linked to a crossing shows red.
+- **A clock in the view**: View > Time of day offers "let time run" at 1x, 5x and 60x, which speeds up the sun and the signal programs together; the bottom bar shows the hour, and a click on it starts or stops the clock.
+- **A map's own aerial photos**: Satellite and terrain has an "OMSI's aerial photos" section that finds the photos OMSI's editor keeps beside the map (`maps/aerials/<map>/tile_X_Y.map.aerial.jpg`), copies them into the map's imagery and records them in `geo.json`; the copying runs in the background, and only the photos of the tiles near the camera can be held on the graphics card.
+
+### Changed
+- **Traditional Chinese** uses the terminology of OMSI's own maps and one word for a thing (圖塊, 貼圖, 車廠, 修正).
+- Dependencies: Tokio 1.53.3 (patched), zip 9.0.5, sha2 0.11, pollster 1.0.
+
+### Fixed
+- **Start-up on old graphics drivers**: when an adapter is found but its device cannot be opened, the next graphics backend (then GL, then the software one) is tried instead of ending start-up.
+
 ## 0.1.14 - 2026-10-27
 
 ### Changed
