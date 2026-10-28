@@ -106,7 +106,17 @@ impl Gpu {
             .or_else(|| caps.formats.iter().copied().find(usable))
             .unwrap_or(caps.formats[0])
             .remove_srgb_suffix();
-        let scene_format = format.add_srgb_suffix();
+        // (a second, sRGB view of the frame needs SURFACE_VIEW_FORMATS, which old GL drivers
+        // lack: there the surface itself is sRGB and the interface draws into it as well, or,
+        // with no sRGB format offered, the 3D view draws into the plain one)
+        let views = adapter.get_downlevel_capabilities().flags.contains(wgpu::DownlevelFlags::SURFACE_VIEW_FORMATS);
+        let (format, scene_format) = if views {
+            (format, format.add_srgb_suffix())
+        } else {
+            let f = Some(format.add_srgb_suffix()).filter(|f| caps.formats.contains(f)).unwrap_or(format);
+            log::info!("surface views of another format unsupported: drawing into {f:?}");
+            (f, f)
+        };
         // (COPY_SRC: the screenshot mode reads the picture back)
         let copy = if caps.usages.contains(wgpu::TextureUsages::COPY_SRC) { wgpu::TextureUsages::COPY_SRC } else { wgpu::TextureUsages::empty() };
         let config = wgpu::SurfaceConfiguration {
@@ -125,7 +135,7 @@ impl Gpu {
         let (colour, depth_counts) = (supported(scene_format), supported(DEPTH));
         let max_samples = [8u32, 4, 2].into_iter().find(|n| colour.contains(n) && depth_counts.contains(n)).unwrap_or(1);
         let samples = max_samples.min(4);
-        let (depth, msaa) = targets(&device, &config, samples);
+        let (depth, msaa) = targets(&device, &config, scene_format, samples);
         Ok(Gpu { surface, device, queue, config, scene_format, adapter_name: format!("{} ({:?})", info.name, info.backend), depth, msaa, samples, max_samples })
     }
 
@@ -136,7 +146,7 @@ impl Gpu {
         self.config.width = w;
         self.config.height = h;
         self.surface.configure(&self.device, &self.config);
-        let (d, m) = targets(&self.device, &self.config, self.samples);
+        let (d, m) = targets(&self.device, &self.config, self.scene_format, self.samples);
         self.depth = d;
         self.msaa = m;
     }
@@ -145,13 +155,13 @@ impl Gpu {
     pub fn set_samples(&mut self, n: u32) {
         let n = if n > self.max_samples { self.max_samples } else { n };
         self.samples = n;
-        let (d, m) = targets(&self.device, &self.config, n);
+        let (d, m) = targets(&self.device, &self.config, self.scene_format, n);
         self.depth = d;
         self.msaa = m;
     }
 }
 
-fn targets(device: &wgpu::Device, c: &wgpu::SurfaceConfiguration, samples: u32) -> (wgpu::TextureView, wgpu::TextureView) {
+fn targets(device: &wgpu::Device, c: &wgpu::SurfaceConfiguration, scene_format: wgpu::TextureFormat, samples: u32) -> (wgpu::TextureView, wgpu::TextureView) {
     let size = wgpu::Extent3d { width: c.width, height: c.height, depth_or_array_layers: 1 };
     let depth = device.create_texture(&wgpu::TextureDescriptor {
         label: Some("depth"),
@@ -169,7 +179,7 @@ fn targets(device: &wgpu::Device, c: &wgpu::SurfaceConfiguration, samples: u32) 
         mip_level_count: 1,
         sample_count: samples,
         dimension: wgpu::TextureDimension::D2,
-        format: c.format.add_srgb_suffix(),
+        format: scene_format,
         usage: wgpu::TextureUsages::RENDER_ATTACHMENT,
         view_formats: &[],
     });
