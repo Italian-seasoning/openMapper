@@ -2344,7 +2344,9 @@ impl App {
                 let mut extras = self.ed.extras(&self.cam, assets);
                 self.tt.overlay(&self.ed, &self.cam, &mut extras);
                 g.renderer.profile.add("extras", crate::render::profile::ms(t_x));
+                let t_geo = Instant::now();
                 self.geo.feed(&mut g.renderer.imagery, &g.gpu, &self.ed, DVec2::new(self.cam.target.x, self.cam.target.y));
+                g.renderer.profile.add("geo.feed", crate::render::profile::ms(t_geo));
                 g.renderer.daytime = self.ui.daytime.map(|h| crate::render::daylight::at_map(h, &doc.traffic.timezone));
                 if let Some((set, stamp)) = stream_window(doc, self.prefs.tile_streaming == Some(true), stream_count(self.prefs.stream_tiles), &mut self.stream_at, &self.cam, self.stream_set.as_ref().map(|s| s.1)) {
                     g.renderer.set_live(set.clone());
@@ -2378,9 +2380,13 @@ impl App {
             }
             // the interface over it
             let ppp = full.pixels_per_point;
+            let t_tess = Instant::now();
             let prims = g.egui_ctx.tessellate(full.shapes, ppp);
+            g.renderer.profile.add("egui tessellate", crate::render::profile::ms(t_tess));
             let sd = egui_wgpu::ScreenDescriptor { size_in_pixels: [g.gpu.config.width, g.gpu.config.height], pixels_per_point: ppp };
+            let t_up = Instant::now();
             let extra = g.egui_renderer.update_buffers(&g.gpu.device, &g.gpu.queue, &mut enc, &prims, &sd);
+            g.renderer.profile.add("egui buffers", crate::render::profile::ms(t_up));
             {
                 let pass = enc.begin_render_pass(&wgpu::RenderPassDescriptor {
                     label: Some("egui"),

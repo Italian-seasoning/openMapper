@@ -464,6 +464,19 @@ pub struct Renderer {
     signal_heads: Vec<Head>,
     scene_key: u64,
     splines: HashMap<(TileKey, i64), SplineEntry>,
+    /// Each tile's splines' hashes, and the tile revision they were worked out for (hashing a
+    /// spline lowercases its file's name, so a map of thousands was an allocation each, each
+    /// frame).
+    spline_hashes: HashMap<TileKey, (u64, std::sync::Arc<Vec<u64>>)>,
+    /// The scene's materials, once each, and the scene they were collected for.
+    warm_mats: Vec<Material>,
+    warm_for: u64,
+    /// How far the walk over them has gone.
+    warm_done: usize,
+    /// Whether the last walk met one that could not be put up yet (its picture still loading).
+    warm_missing: bool,
+    /// When the list was last collected.
+    warm_collect_at: Option<std::time::Instant>,
     chunks: HashMap<TileKey, Chunk>,
     /// Builds the splines' meshes off the main thread.
     builder: build::Builder,
@@ -991,6 +1004,12 @@ impl Renderer {
             scene_key: 0,
             daytime: None,
             splines: HashMap::new(),
+            spline_hashes: HashMap::new(),
+            warm_mats: Vec::new(),
+            warm_for: 0,
+            warm_done: 0,
+            warm_missing: false,
+            warm_collect_at: None,
             chunks: HashMap::new(),
             builder: build::Builder::new(),
             ghost_spline_meshes: Vec::new(),
@@ -1628,12 +1647,23 @@ impl Renderer {
         }
         let start = std::time::Instant::now();
         let mut spline_instances: Vec<Instance> = Vec::new();
+        // (each tile's splines' hashes, made again only when the tile changed)
+        for (k, t) in &disp {
+            let rev = self.display.get(k).map(|d| d.0).unwrap_or(0);
+            if self.spline_hashes.get(k).map(|(r, _)| *r != rev).unwrap_or(true) {
+                let org = tile_origin(*k);
+                let v: Vec<u64> = t.splines.iter().map(|s| spline_hash(s, org)).collect();
+                self.spline_hashes.insert(*k, (rev, std::sync::Arc::new(v)));
+            }
+        }
+        self.spline_hashes.retain(|k, _| self.display.contains_key(k));
         for (k, t) in &disp {
             let org = tile_origin(*k);
             let corner = Vec3::new((org.x - anchor.x) as f32, (org.y - anchor.y) as f32, 0.0);
-            for s in t.splines.iter().filter(|s| !s.deleted && !s.file.trim().is_empty()) {
+            let hashes = self.spline_hashes.get(k).map(|(_, v)| v.clone()).unwrap_or_default();
+            for (i, s) in t.splines.iter().enumerate().filter(|(_, s)| !s.deleted && !s.file.trim().is_empty()) {
                 alive.push((*k, s.id));
-                let h = spline_hash(s, org);
+                let h = hashes.get(i).copied().unwrap_or_else(|| spline_hash(s, org));
                 let sel = Some(Sel::Spline(*k, s.id));
                 let tint = if extras.selected == sel || extras.selected_more.contains(&Sel::Spline(*k, s.id)) {
                     SELECTED
@@ -2003,7 +2033,52 @@ impl Renderer {
     }
 
     /// Whether some are still missing.
+    ///
+    /// What the scene draws is collected once and kept, and the walk over it carries on where
+    /// the last frame's twenty milliseconds ran out: collected anew and started again from the
+    /// first material in every frame, a scene whose materials take longer than that to look at
+    /// never got through them at all - it spent the twenty milliseconds and began again, every
+    /// frame, for ever.
     fn warm_materials(&mut self, device: &wgpu::Device, queue: &wgpu::Queue, assets: &mut Assets) -> bool {
+        // (a map still streaming in gives a new scene key nearly every frame: collected again
+        // that often, the list itself cost more than uploading what was in it)
+        let stale = self.warm_for != self.scene_key;
+        let waited = self.warm_collect_at.map(|t| t.elapsed().as_millis() > 500).unwrap_or(true);
+        // (collected again only once the walk through the list has finished: starting it over
+        // half way threw away the work, and a map that is still streaming gives a new scene key
+        // nearly every frame, so it was started over in every frame and never got through)
+        let finished = self.warm_done >= self.warm_mats.len();
+        if self.warm_mats.is_empty() || (stale && finished && waited) {
+            self.warm_mats = self.scene_materials();
+            self.warm_for = self.scene_key;
+            self.warm_collect_at = Some(std::time::Instant::now());
+            self.warm_done = 0;
+            self.warm_missing = false;
+        } else if finished && self.warm_missing && !stale {
+            // (called again when pictures arrived: a walk that missed some goes again for them)
+            self.warm_done = 0;
+            self.warm_missing = false;
+        }
+        let mats = std::mem::take(&mut self.warm_mats);
+        let start = std::time::Instant::now();
+        let mut i = self.warm_done;
+        while i < mats.len() {
+            // (uploading textures is spread over frames)
+            if start.elapsed().as_millis() > 20 {
+                break;
+            }
+            self.warm_missing |= self.material(device, queue, assets, &mats[i]).is_none();
+            i += 1;
+        }
+        let more = i < mats.len();
+        self.warm_mats = mats;
+        self.warm_done = i;
+        // (a scene changed since the list was made is asked about again until it is collected)
+        more || self.warm_for != self.scene_key
+    }
+
+    /// Every material the scene draws, once each.
+    fn scene_materials(&self) -> Vec<Material> {
         let mut mats: Vec<Material> = Vec::new();
         mats.push(marker_material());
         for b in self.batches.iter().chain(self.ghost_batches.iter()).chain(self.signal_batches.iter()) {
@@ -2025,19 +2100,17 @@ impl Renderer {
         for g in &self.ghost_spline_meshes {
             mats.extend(g.2.iter().cloned());
         }
-        let start = std::time::Instant::now();
-        let mut seen = std::collections::HashSet::new();
-        let mut missing = false;
-        for m in mats {
-            // (uploading textures is spread over frames)
-            if start.elapsed().as_millis() > 20 {
-                return true;
-            }
-            if seen.insert(mat_key(&m)) {
-                missing |= self.material(device, queue, assets, &m).is_none();
+        // (told apart by what they name rather than by a key made for each: a map of thousands
+        // of splines went through a pair of strings apiece, every time this ran)
+        let mut out: Vec<Material> = Vec::with_capacity(mats.len());
+        let mut seen = std::collections::HashSet::with_capacity(mats.len());
+        for m in &mats {
+            let key = (m.texture.as_deref(), m.glow.as_ref().map(|g| g.0.as_path()), m.alpha as u8, m.color.map(|c| (c.clamp(0.0, 1.0) * 255.0) as u8));
+            if seen.insert(key) {
+                out.push(m.clone());
             }
         }
-        missing && assets.pending > 0
+        out
     }
 
     fn sync_ground(&mut self, gpu: &Gpu, doc: &Document, assets: &mut Assets) {

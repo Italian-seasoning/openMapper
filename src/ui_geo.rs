@@ -389,6 +389,11 @@ pub struct GeoUi {
     aerial_job: Option<AerialJob>,
     /// The tiles whose photos are held, with the place and count they were worked out for.
     near: Option<(HashSet<TileKey>, DVec2, usize)>,
+    /// What each tile's picture is, and when it was written: looked at on the disk now and then
+    /// rather than in every frame (a map of hundreds of tiles meant a thousand calls a second).
+    pictures: HashMap<TileKey, (Option<PathBuf>, Option<std::time::SystemTime>)>,
+    /// When the disk was last looked at for them.
+    pictures_at: Option<Instant>,
 }
 
 impl Default for GeoUi {
@@ -446,6 +451,8 @@ impl Default for GeoUi {
             aerial: None,
             aerial_job: None,
             near: None,
+            pictures: HashMap::new(),
+            pictures_at: None,
         }
     }
 }
@@ -482,6 +489,8 @@ impl GeoUi {
         // not recorded on this map's tiles)
         self.aerial_job = None;
         self.near = None;
+        self.pictures.clear();
+        self.pictures_at = None;
         self.dir = dir.clone();
         self.file = dir.as_deref().map(GeoFile::load).unwrap_or_default();
         self.known = ed.doc.as_ref().map(|d| d.tiles.keys().copied().collect()).unwrap_or_default();
@@ -528,6 +537,9 @@ impl GeoUi {
                     log::error!("geo.json: {e}");
                 }
             }
+            // (which tiles have a picture may have changed)
+            self.pictures.clear();
+            self.pictures_at = None;
         }
     }
 
@@ -634,6 +646,21 @@ impl GeoUi {
             return Some(g::own_path(dir, k)).filter(|p| p.is_file());
         }
         t.imagery.as_ref().filter(|m| m.kept).map(|_| g::imagery_path(dir, k)).filter(|p| p.is_file())
+    }
+
+    /// [`picture_of`](Self::picture_of) and when the file was written, remembered (the disk is
+    /// asked once, not in every frame).
+    fn picture_cached(&mut self, dir: &Path, k: TileKey) -> Option<(PathBuf, Option<std::time::SystemTime>)> {
+        if let Some((p, t)) = self.pictures.get(&k) {
+            return p.clone().map(|p| (p, *t));
+        }
+        let found = self.picture_of(dir, k).map(|p| {
+            let t = std::fs::metadata(&p).and_then(|m| m.modified()).ok();
+            (p, t)
+        });
+        let entry = (found.as_ref().map(|f| f.0.clone()), found.as_ref().and_then(|f| f.1));
+        self.pictures.insert(k, entry);
+        found
     }
 
     // -------------------------------------------------------------- the main interface
@@ -976,6 +1003,8 @@ impl GeoUi {
                 g::aerial::note(&mut self.file, &done, job.stamp);
                 // (the files are there now: read them again on the next frame)
                 self.shown.clear();
+                self.pictures.clear();
+                self.pictures_at = None;
                 // (a folder chosen by hand becomes the one the panel offers, as the map's own)
                 match &mut self.aerial {
                     Some(a) => a.0 = job.folder,
@@ -1082,6 +1111,7 @@ impl GeoUi {
                         if b.full {
                             // (the file is new: the next look at it reads it again)
                             self.shown.remove(&k);
+                            self.pictures.remove(&k);
                         }
                         self.uploads.push((k, m));
                     }
@@ -1175,6 +1205,12 @@ impl GeoUi {
             self.mini_pending.push((k, mini_of(&m)));
         }
         let max = self.gpu_side();
+        // (the disk is looked at now and then, not in every frame; a change of the map's own
+        // settings clears it at once, through `flush`)
+        if self.pictures_at.map(|t| t.elapsed().as_secs_f32() > 1.0).unwrap_or(true) {
+            self.pictures_at = Some(Instant::now());
+            self.pictures.clear();
+        }
         // (the photos of the tiles round the camera, when the map asks for a window of them)
         let near = self.near_set(doc, at);
         for k in doc.tiles.keys() {
@@ -1190,7 +1226,7 @@ impl GeoUi {
                     continue;
                 }
             }
-            let want = self.picture_of(&dir, *k);
+            let want = self.picture_cached(&dir, *k);
             if let (Some(m), true) = (self.memory.get(k), t.own.is_none()) {
                 // (held in memory only: put up once)
                 let now = (PathBuf::new(), None);
@@ -1202,10 +1238,10 @@ impl GeoUi {
                 }
             } else {
                 match want {
-                    Some(p) => {
-                        let time = std::fs::metadata(&p).and_then(|m| m.modified()).ok();
-                        let now = (p.clone(), time);
+                    Some((p, time)) => {
+                        let now = (p, time);
                         if self.shown.get(k) != Some(&now) && !self.loading.contains(k) {
+                            let p = now.0.clone();
                             self.shown.insert(*k, now);
                             self.loading.insert(*k);
                             let _ = self.load_tx.send((dir.clone(), *k, p, max));
