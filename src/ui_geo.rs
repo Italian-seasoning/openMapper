@@ -381,6 +381,8 @@ pub struct GeoUi {
     mini_pending: Vec<(TileKey, egui::ColorImage)>,
     /// Unloaded tiles beside loaded heights (their shared edge steps).
     edges: Vec<TileKey>,
+    /// The edge the pictures on the GPU were put up at (0: none up yet).
+    shown_side: u32,
     /// OMSI's own aerial photos for this map: the folder found beside it and how many tiles
     /// it has photos for (None: the map has none).
     aerial: Option<(PathBuf, usize)>,
@@ -448,6 +450,7 @@ impl Default for GeoUi {
             mini: HashMap::new(),
             mini_pending: Vec::new(),
             edges: Vec::new(),
+            shown_side: 0,
             aerial: None,
             aerial_job: None,
             near: None,
@@ -1085,7 +1088,7 @@ impl GeoUi {
         let keys: Vec<TileKey> = pic.tiles().filter(|k| self.file.tile(*k).own.as_deref() == Some(id)).collect();
         let (tx, rx) = channel();
         let t = ts();
-        let max = self.gpu_side();
+        let max = self.gpu_side(keys.len());
         std::thread::spawn(move || {
             let n = if full { pic.piece_size(t, img.width()) } else { 384 };
             for k in keys {
@@ -1139,10 +1142,12 @@ impl GeoUi {
 
     // -------------------------------------------------------------- the overlay
 
-    /// Edge of the textures on the GPU: the more tiles have pictures, the smaller.
-    fn gpu_side(&self) -> u32 {
-        let n = self.file.tiles.values().filter(|t| t.imagery.is_some() || t.own.is_some()).count();
-        match n {
+    /// Edge of the textures on the GPU: the more of them are held at once, the smaller. What
+    /// counts is what is up on the card now, not how many tiles the map has: a map's own aerial
+    /// photos are 1024 or 2048 a side, and 485 of those kept at their own size would be 43 GB,
+    /// while a window of sixteen round the camera is a quarter of a gigabyte.
+    fn gpu_side(&self, held: usize) -> u32 {
+        match held {
             0..=4 => 4096,
             5..=16 => 2048,
             17..=64 => 1024,
@@ -1204,7 +1209,6 @@ impl GeoUi {
             imagery.upload(gpu, k, &m, 0.0);
             self.mini_pending.push((k, mini_of(&m)));
         }
-        let max = self.gpu_side();
         // (the disk is looked at now and then, not in every frame; a change of the map's own
         // settings clears it at once, through `flush`)
         if self.pictures_at.map(|t| t.elapsed().as_secs_f32() > 1.0).unwrap_or(true) {
@@ -1213,6 +1217,15 @@ impl GeoUi {
         }
         // (the photos of the tiles round the camera, when the map asks for a window of them)
         let near = self.near_set(doc, at);
+        // (the edge of the textures: what is held at once, not what the map has - a window of a
+        // few tiles can keep its photos near their own size, the whole map cannot)
+        let held = near.as_ref().map(|s| s.len()).unwrap_or_else(|| self.file.tiles.values().filter(|t| t.imagery.is_some() || t.own.is_some()).count());
+        let max = self.gpu_side(held);
+        // (a different edge from the one the pictures went up at: they go up again)
+        if self.shown_side != max {
+            self.shown_side = max;
+            self.shown.clear();
+        }
         for k in doc.tiles.keys() {
             let t = self.file.tile(*k);
             if let Some(set) = &near {
