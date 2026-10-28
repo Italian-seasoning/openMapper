@@ -4,6 +4,15 @@ Releases are tagged `v<version>`; the downloads are on the
 [Releases](https://github.com/openOMSI-org/openMapper/releases) page, each with the notes of its
 version from this file.
 
+## 0.1.16 - 2026-10-28
+
+### Changed
+- **A map's own aerial photos at their own size**: the size a photo is put up at on the graphics card comes from how many are held at once (the window round the camera), not from how many the map has, so a map with hundreds of photos shows the ones near the camera at 1024 or 2048 instead of 512 a side.
+- **Faster on big maps**: the overview map's roads are drawn once into a picture instead of being laid out again in every frame, the scene's materials are no longer collected anew in every frame, and which picture a tile shows is looked up on the disk once a second rather than every frame (a map of 66,000 splines went from about 10 to 45 frames a second).
+
+### Fixed
+- **Start-up on old GL drivers** ([#48](https://github.com/openOMSI-org/openMapper/issues/48)): a driver without surface view formats (such as a GeForce GTX 550 Ti on driver 391.35) no longer ends start-up with "Downlevel flags SURFACE_VIEW_FORMATS are required"; the frame is made sRGB itself and the interface draws into it.
+
 ## 0.1.15 - 2026-10-27
 
 ### Added
