@@ -80,9 +80,6 @@ impl Sync {
         if ch.groups {
             self.dirty.insert(Part::Groups);
         }
-        if ch.transit {
-            self.dirty.insert(Part::Transit);
-        }
     }
 
     /// The next edit to send, when none is on its way.
@@ -166,10 +163,6 @@ impl Sync {
                     forget.groups = true;
                     s.data.as_deref().map(|b| codec::apply_groups(doc, b)).unwrap_or(false)
                 }
-                Part::Transit => {
-                    forget.transit = true;
-                    s.data.as_deref().map(|b| codec::apply_transit(doc, b)).unwrap_or(false)
-                }
                 // (not passed on in this version)
                 Part::Timetable | Part::Traffic | Part::Descriptions => true,
             };
@@ -213,7 +206,6 @@ pub fn bytes_of(doc: &Document, part: Part) -> Option<Vec<u8>> {
         Part::Tile(x, y) => doc.tiles.get(&(x, y)).map(codec::tile_bytes),
         Part::Global => Some(codec::global_bytes(doc)),
         Part::Groups => Some(codec::groups_bytes(doc)),
-        Part::Transit => Some(codec::transit_bytes(doc)),
         Part::Timetable | Part::Traffic | Part::Descriptions => None,
     }
 }
@@ -223,6 +215,5 @@ pub fn all_states(doc: &Document) -> Vec<State> {
     let mut parts: Vec<Part> = doc.tiles.keys().map(|k| Part::Tile(k.0, k.1)).collect();
     parts.push(Part::Global);
     parts.push(Part::Groups);
-    parts.push(Part::Transit);
     parts.into_iter().map(|part| State { part, version: 1, data: bytes_of(doc, part) }).collect()
 }

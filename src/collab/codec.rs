@@ -124,21 +124,6 @@ fn fit_masks(doc: &mut Document, k: TileKey) {
     }
 }
 
-pub fn transit_bytes(doc: &Document) -> Vec<u8> {
-    doc.transit.to_bytes()
-}
-
-/// Put another editor's transit network (modes and transport folder) into the document.
-pub fn apply_transit(doc: &mut Document, bytes: &[u8]) -> bool {
-    let modes = doc.transit.modes;
-    let ok = doc.transit.take_bytes(bytes);
-    // (the modes are written with global.cfg)
-    if ok && doc.transit.modes != modes {
-        doc.global_dirty = true;
-    }
-    ok
-}
-
 pub fn groups_bytes(doc: &Document) -> Vec<u8> {
     serde_json::to_vec(&doc.groups).unwrap_or_default()
 }

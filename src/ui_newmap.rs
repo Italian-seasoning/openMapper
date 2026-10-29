@@ -1,9 +1,7 @@
 //! The New map dialog: what a map is before anything is built on it: its name and
 //! description, size, the height and texture of its ground, which side traffic keeps to,
 //! its years, money and tickets, how busy its streets are, its seasons, and whether to start
-//! from a real place. And its kind: Classic (OMSI 2's maps, run by OMSI 2 and openOMSI) or
-//! Modern (openOMSI's transport modes: stations, routes, wires and third rail, for openOMSI
-//! only).
+//! from a real place.
 
 use std::collections::HashMap;
 
@@ -45,17 +43,11 @@ pub struct NewMapOptions {
     pub seasons: Seasons,
     /// The window for real places (satellite imagery, terrain, OpenStreetMap) opened at once.
     pub real_place: bool,
-    /// A Modern map for these modes (empty: a Classic map).
-    pub modes: crate::transit::Modes,
-    /// A Modern tram map starts with the tram sample (a loop line under its wire).
-    pub tram_sample: bool,
-    /// A Modern trolleybus map starts with the trolleybus sample (a junction under its wires).
-    pub trolley_sample: bool,
 }
 
 impl Default for NewMapOptions {
     fn default() -> Self {
-        NewMapOptions { description: String::new(), ground: None, height: 0.0, left_hand: false, real_rail: true, years: (2000, 2030), year_offset: 0, money: String::new(), tickets: String::new(), traffic: 1.0, passengers: 1.0, seasons: Seasons::Four, real_place: false, modes: crate::transit::Modes::of(&[crate::transit::Mode::Bus]), tram_sample: false, trolley_sample: false }
+        NewMapOptions { description: String::new(), ground: None, height: 0.0, left_hand: false, real_rail: true, years: (2000, 2030), year_offset: 0, money: String::new(), tickets: String::new(), traffic: 1.0, passengers: 1.0, seasons: Seasons::Four, real_place: false }
     }
 }
 
@@ -64,15 +56,13 @@ pub struct NewMapForm {
     pub name: String,
     pub size: i32,
     pub options: NewMapOptions,
-    /// Modern is chosen (its modes are `options.modes`, kept while Classic is tried).
-    pub modern: bool,
     /// Money systems and ticket packs to choose from (read when the dialog opens).
     lists: Option<(Vec<String>, Vec<String>)>,
 }
 
 impl Default for NewMapForm {
     fn default() -> Self {
-        NewMapForm { name: String::new(), size: 3, options: NewMapOptions::default(), modern: true, lists: None }
+        NewMapForm { name: String::new(), size: 3, options: NewMapOptions::default(), lists: None }
     }
 }
 
@@ -95,14 +85,6 @@ pub fn dialog(ctx: &egui::Context, form: &mut Option<NewMapForm>, roots: Option<
         ui.set_width(480.0);
         let o = &mut f.options;
         egui::ScrollArea::vertical().max_height(ctx.content_rect().height() * 0.75).show(ui, |ui| {
-            kind(ui, &mut f.modern, &mut o.modes);
-            if f.modern && o.modes.contains(crate::transit::Mode::Tram) {
-                ui.checkbox(&mut o.tram_sample, tr("Start with a tram line: a loop of track under its wire, two stations and a route", "Начать с трамвайной линии: кольцо путей под проводом, две станции и маршрут"));
-            }
-            if f.modern && o.modes.contains(crate::transit::Mode::Trolleybus) {
-                ui.checkbox(&mut o.trolley_sample, tr("Start with a trolleybus line: a junction under its wires with frogs, three stations and two routes", "Начать с троллейбусной линии: перекрёсток под проводами со стрелками, три станции и два маршрута"));
-            }
-            ui.add_space(4.0);
             egui::Grid::new("new map").num_columns(2).spacing(Vec2::new(10.0, 8.0)).show(ui, |ui| {
                 ui.label(tr("Name:", "Название:"));
                 let r = ui.add(egui::TextEdit::singleline(&mut f.name).hint_text(tr("My town", "Мой город")).desired_width(300.0));
@@ -212,17 +194,11 @@ pub fn dialog(ctx: &egui::Context, form: &mut Option<NewMapForm>, roots: Option<
             if ui.button(tr("Cancel", "Отмена")).clicked() {
                 close = true;
             }
-            let ok = !f.name.trim().is_empty() && (!f.modern || !f.options.modes.is_empty());
+            let ok = !f.name.trim().is_empty();
             if ui.add_enabled(ok, egui::Button::new(tr("Create", "Создать"))).clicked() || (ok && ui.input(|i| i.key_pressed(egui::Key::Enter) && !i.modifiers.shift)) {
                 let friendly = f.name.trim().to_string();
                 let folder: String = friendly.chars().map(|c| if c.is_alphanumeric() || c == ' ' || c == '-' || c == '_' { c } else { '_' }).collect::<String>().trim().to_string();
-                let mut options = f.options.clone();
-                if !f.modern {
-                    options.modes = Default::default();
-                }
-                options.tram_sample &= options.modes.contains(crate::transit::Mode::Tram);
-                options.trolley_sample &= options.modes.contains(crate::transit::Mode::Trolleybus);
-                actions.push(Action::NewMap { folder, friendly, size: f.size, options });
+                actions.push(Action::NewMap { folder, friendly, size: f.size, options: f.options.clone() });
                 close = true;
             }
         });
@@ -241,50 +217,4 @@ fn choose(ui: &mut egui::Ui, id: &str, value: &mut String, list: &[String]) {
             ui.selectable_value(value, v.clone(), name);
         }
     });
-}
-
-/// Classic or Modern, and a Modern map's modes.
-pub(crate) fn kind(ui: &mut egui::Ui, modern: &mut bool, modes: &mut crate::transit::Modes) {
-    ui.horizontal(|ui| {
-        let card = |ui: &mut egui::Ui, on: bool, title: &str, text: &str| -> bool {
-            let fill = if on { ACCENT.gamma_multiply(0.22) } else { Color32::from_gray(38) };
-            let stroke = Stroke::new(if on { 2.0 } else { 1.0 }, if on { ACCENT } else { Color32::from_gray(70) });
-            let r = egui::Frame::new().fill(fill).stroke(stroke).corner_radius(6.0).inner_margin(8.0).show(ui, |ui| {
-                ui.vertical(|ui| {
-                    ui.set_width(214.0);
-                    ui.set_min_height(64.0);
-                    ui.label(RichText::new(title).strong());
-                    ui.add(egui::Label::new(RichText::new(text).small().color(TEXT_DIM)).wrap());
-                });
-            });
-            r.response.interact(Sense::click()).clicked()
-        };
-        if card(ui, !*modern, tr("Classic", "Классическая"), tr("Runs in OMSI 2 and in openOMSI. Buses, and trams and trains as OMSI 2 has them.", "Работает в OMSI 2 и в openOMSI. Автобусы, а трамваи и поезда — как в OMSI 2.")) {
-            *modern = false;
-        }
-        if card(ui, *modern, tr("Modern", "Современная"), tr("openOMSI only. Real transit: stations, routes, overhead wire, third rail, depots and signal blocks.", "Только openOMSI. Настоящий транспорт: станции, маршруты, контактная сеть, контактный рельс, депо и блок-участки.")) {
-            *modern = true;
-        }
-    });
-    if !*modern {
-        return;
-    }
-    ui.add_space(4.0);
-    ui.label(tr("Made for (one or more):", "Для чего (одно или несколько):"));
-    for m in crate::transit::Mode::ALL {
-        ui.horizontal(|ui| {
-            let mut on = modes.contains(m);
-            ui.allocate_ui_with_layout(Vec2::new(110.0, 18.0), egui::Layout::left_to_right(egui::Align::Center), |ui| {
-                ui.set_min_width(110.0);
-                if ui.checkbox(&mut on, RichText::new(m.label()).strong()).changed() {
-                    modes.set(m, on);
-                }
-            });
-            ui.label(RichText::new(m.hint()).small().color(TEXT_DIM));
-        });
-    }
-    if modes.is_empty() {
-        ui.label(RichText::new(tr("Choose at least one", "Выберите хотя бы одно")).color(Color32::from_rgb(230, 160, 60)));
-    }
-    ui.add(egui::Label::new(RichText::new(tr("OMSI 2 cannot run a Modern map's routes, wires or blocks, and openOMSI runs only vehicles of its modes on it. openMapper's transit kit (tracks, wires, platforms, masts) is made in the content folder.", "OMSI 2 не может запустить маршруты, провода и блок-участки современной карты, а openOMSI пускает на неё только транспорт её видов. Транспортный набор openMapper (пути, провода, платформы, опоры) создаётся в папке контента.")).small().color(TEXT_DIM)).wrap());
 }

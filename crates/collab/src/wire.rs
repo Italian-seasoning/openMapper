@@ -5,8 +5,8 @@ use std::io::{self, Read, Write};
 
 use serde::{Deserialize, Serialize};
 
-/// The protocol's version: host and peer must have the same (2: the transit network is a part).
-pub const PROTOCOL: u32 = 2;
+/// The protocol's version: host and peer must have the same.
+pub const PROTOCOL: u32 = 1;
 
 const MAGIC: &[u8; 4] = b"OMMP";
 /// The largest header read (the parts' bytes come after it).
@@ -21,8 +21,6 @@ pub enum Part {
     Traffic,
     Descriptions,
     Groups,
-    /// A Modern map's modes and transport folder.
-    Transit,
 }
 
 /// A part as it is: its version and its bytes (None: not there, a tile taken away).

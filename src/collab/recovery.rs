@@ -52,13 +52,11 @@ pub fn restore(path: &std::path::Path, doc: &mut Document, history: &mut crate::
     candidate.order = doc.order.clone();
     candidate.tiles = doc.tiles.clone();
     candidate.groups = doc.groups.clone();
-    candidate.transit = doc.transit.clone();
     for s in &saved {
         let ok = match s.part {
             Part::Tile(x, y) => super::codec::apply_tile(&mut candidate, (x, y), s.data.as_deref()),
             Part::Global => s.data.as_deref().map(|b| super::codec::apply_global(&mut candidate, b)).unwrap_or(false),
             Part::Groups => s.data.as_deref().map(|b| super::codec::apply_groups(&mut candidate, b)).unwrap_or(false),
-            Part::Transit => s.data.as_deref().map(|b| super::codec::apply_transit(&mut candidate, b)).unwrap_or(false),
             _ => false,
         };
         anyhow::ensure!(ok, "unreadable recovery part: {:?}", s.part);
@@ -66,9 +64,6 @@ pub fn restore(path: &std::path::Path, doc: &mut Document, history: &mut crate::
     let mark = history.mark();
     if saved.iter().any(|s| s.part == Part::Groups) {
         history.push_snapshot("recover conflicting edit", crate::history::Snapshot { groups: Some(doc.groups.clone()), ..Default::default() });
-    }
-    if saved.iter().any(|s| s.part == Part::Transit) {
-        history.push_snapshot("recover conflicting edit", crate::history::Snapshot { transit: Some(doc.transit.clone()), ..Default::default() });
     }
     history.begin("recover conflicting edit");
     for s in &saved {
@@ -88,7 +83,6 @@ pub fn restore(path: &std::path::Path, doc: &mut Document, history: &mut crate::
     doc.order = candidate.order;
     doc.tiles = candidate.tiles;
     doc.groups = candidate.groups;
-    doc.transit = candidate.transit;
     doc.global_dirty = true;
     doc.global_rev = crate::doc::next_rev();
     history.commit();

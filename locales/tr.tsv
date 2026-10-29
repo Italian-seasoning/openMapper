@@ -2438,301 +2438,48 @@ Could not copy the photos	Fotoğraflar kopyalanamadı
 Copying the photos	Fotoğraflar kopyalanıyor
 Hold only the photos of the tiles near the camera	Yalnızca kameraya yakın karoların fotoğraflarını tut
 The others keep their photo in the map's folder, and are put up again when you go back to them.	Diğerleri fotoğrafını haritanın klasöründe tutar ve oraya döndüğünüzde yeniden gelir.
-A tram loop with two stations and its wire: save, then drive it in openOMSI with a tram of your own.	İki istasyonlu ve teliyle bir tramvay ring hattı: kaydedin, sonra openOMSI'de kendi tramvayınızla sürün.
-Transit kit made, files:	Ulaşım seti oluşturuldu, dosyalar:
-The transit kit could not be made	Ulaşım seti oluşturulamadı
-Transit network problems	Ulaşım ağı sorunları
-Stations without their mode's lanes	Kendi türünün şeritleri olmayan istasyonlar
-Stations without their stop	Durağı olmayan istasyonlar
-openOMSI's own reader finds this in the map's transport folder (stations, routes, wires, switches, depots, signals): a service it names is skipped, a section or a block left out. Open Map > Transit network to change it.	openOMSI'nin kendi okuyucusu bunu haritanın transport klasöründe bulur (istasyonlar, güzergâhlar, teller, makaslar, garajlar, sinyaller): adı geçen hizmet atlanır, bölüm veya blok dışarıda kalır. Değiştirmek için Harita > Ulaşım ağı'nı açın.
-openOMSI routes a service over the lanes of its mode within 25 m of each station (rails for trams, metro and trains, streets for buses and trolleybuses). This station has none of its modes' near, so its services cannot run. Move the stop next to the track or road, or lay one there.	openOMSI bir hizmeti her istasyonun 25 m yakınındaki kendi türünün şeritleri üzerinden yönlendirir (tramvay, metro ve trenler için raylar, otobüs ve troleybüsler için sokaklar). Bu istasyonun yakınında kendi türlerinden hiçbiri yok, bu yüzden hizmetleri çalışamaz. Durağı rayın veya yolun yanına taşıyın ya da oraya bir tane döşeyin.
-A station is found by the game among the map's stops: by its stop object, else by its name. This one's object is no stop on the map and no stop has its name, so the services through it are skipped. Pick its stop again in Map > Transit network, Stations.	Oyun bir istasyonu haritanın durakları arasında bulur: durak nesnesiyle, yoksa adıyla. Bunun nesnesi haritada bir durak değil ve hiçbir durak onun adını taşımıyor, bu yüzden içinden geçen hizmetler atlanır. Durağını Harita > Ulaşım ağı, İstasyonlar'da yeniden seçin.
-station	istasyon
-Transit network…	Ulaşım ağı…
-The transport folder stays: openOMSI still reads its stations, routes and wires.	transport klasörü kalır: openOMSI onun istasyonlarını, güzergâhlarını ve tellerini okumaya devam eder.
-Remove it too	Onu da kaldır
-Start with a tram line: a loop of track under its wire, two stations and a route	Bir tramvay hattıyla başla: telinin altında bir ring rayı, iki istasyon ve bir güzergâh
-Classic	Klasik
-Runs in OMSI 2 and in openOMSI. Buses, and trams and trains as OMSI 2 has them.	OMSI 2'de ve openOMSI'de çalışır. Otobüsler; tramvaylar ve trenler OMSI 2'deki gibi.
-Modern	Modern
-openOMSI only. Real transit: stations, routes, overhead wire, third rail, depots and signal blocks.	Yalnızca openOMSI. Gerçek toplu ulaşım: istasyonlar, güzergâhlar, havai hat, üçüncü ray, garajlar ve sinyal blokları.
-Made for (one or more):	Kimin için (bir veya daha fazla):
-Choose at least one	En az birini seçin
-OMSI 2 cannot run a Modern map's routes, wires or blocks, and openOMSI runs only vehicles of its modes on it. openMapper's transit kit (tracks, wires, platforms, masts) is made in the content folder.	OMSI 2 modern bir haritanın güzergâhlarını, tellerini veya bloklarını çalıştıramaz; openOMSI de üzerinde yalnızca kendi türlerinin araçlarını çalıştırır. openMapper'ın ulaşım seti (raylar, teller, peronlar, direkler) içerik klasöründe oluşturulur.
-Overview	Genel bakış
-Stations	İstasyonlar
-Depots	Garajlar
-Power	Enerji
-Switches and signals	Makaslar ve sinyaller
-Set it (else the game's default)	Ayarla (yoksa oyunun varsayılanı)
-(not set)	(ayarlanmadı)
-Take it out	Kaldır
-Transit network	Ulaşım ağı
-This is a Classic map.	Bu klasik bir harita.
-Stations, routes without tours, the overhead wire, the third rail, depots and signal blocks are openOMSI's (0.3.42 and later): make the map Modern in Map settings to give it a transit network. OMSI 2 cannot run them.	İstasyonlar, sefer turu olmayan güzergâhlar, havai hat, üçüncü ray, garajlar ve sinyal blokları openOMSI'ye aittir (0.3.42 ve sonrası): haritaya bir ulaşım ağı vermek için Harita ayarları'nda onu modern yapın. OMSI 2 bunları çalıştıramaz.
-No stop there: click a stop object (a bus stop, or the kit's station stop)	Orada durak yok: bir durak nesnesine tıklayın (bir otobüs durağı veya setin istasyon durağı)
-Now click where the block ends	Şimdi bloğun bittiği yere tıklayın
-Click the signal object itself	Sinyal nesnesinin kendisine tıklayın
-Then click in the view	Sonra görünümde tıklayın
-Modern map for	Modern harita:
-openOMSI runs only vehicles of these modes here; OMSI 2 cannot run the network. The modes are changed in Map settings.	openOMSI burada yalnızca bu türlerin araçlarını çalıştırır; OMSI 2 ağı çalıştıramaz. Türler Harita ayarları'nda değiştirilir.
-Services	Hizmetler
-Track rules	Ray kuralları
-Overhead wire spans	Havai hat kesimleri
-Third rail spans	Üçüncü ray kesimleri
-Trolleybus wire spans	Troleybüs hattı kesimleri
-Switches	Makaslar
-Signals and blocks	Sinyaller ve bloklar
-Problems	Sorunlar
-None: openOMSI reads the network as it is.	Yok: openOMSI ağı olduğu gibi okuyor.
-error	hata
-warning	uyarı
-Found by openOMSI's own reader of the transport folder, the texts as it writes them in its log.	openOMSI'nin transport klasörünü okuyan kendi okuyucusu bulur; metinler günlüğüne yazdığı gibidir.
-openMapper's transit kit	openMapper'ın ulaşım seti
-Tracks, platforms, wires and objects made by openMapper for Modern maps (OMSI 2 ships no metro, third rail or trolleybus wire). They are in the catalogue under openMapper; click one to place it.	openMapper'ın modern haritalar için yaptığı raylar, peronlar, teller ve nesneler (OMSI 2'de metro, üçüncü ray veya troleybüs teli yoktur). Katalogda openMapper altında bulunurlar; yerleştirmek için birine tıklayın.
-Make the kit	Seti oluştur
-A station is a stop object of the map (a bus stop, or the kit's station stop beside a track) with its platforms. openOMSI routes a service over the lanes of its mode within 25 m of each station.	İstasyon, haritanın bir durak nesnesi (bir otobüs durağı veya setin bir rayın yanındaki istasyon durağı) ve peronlarıdır. openOMSI bir hizmeti her istasyonun 25 m yakınındaki kendi türünün şeritleri üzerinden yönlendirir.
-A station for every stop of the map	Haritanın her durağı için bir istasyon
-Stops not yet a station become one, named as the stop, its modes from the tracks and roads beside it	Henüz istasyon olmayan duraklar istasyon olur: adı durağın adı, türleri yanındaki raylar ve yollardan
-New station	Yeni istasyon
-Stations added:	Eklenen istasyonlar:
-Choose a station	Bir istasyon seçin
-Id	Kimlik
-Modes	Türler
-Stop object	Durak nesnesi
-Pick	Seç
-Place	Yer
-Change to	Aktarma
-Platforms	Peronlar
-Side	Taraf
-island	ada
-both	iki taraf
-platform screen doors	peron kapıları
-Delete the station	İstasyonu sil
-A route is segments from station to station (the stops between them in order) and services over them: a branch, a short working or an express is another segment or service. openOMSI makes the timetable's tours from them and finds the way over the tracks itself.	Bir güzergâh, istasyondan istasyona kısımlar (aradaki duraklar sırayla) ve bunlar üzerindeki hizmetlerdir: bir kol, kısa sefer veya ekspres başka bir kısım ya da hizmettir. openOMSI bunlardan tarifenin sefer turlarını yapar ve raylar üzerindeki yolu kendisi bulur.
-Add two stations or more first (Stations)	Önce iki veya daha fazla istasyon ekleyin (İstasyonlar)
-New route	Yeni güzergâh
-Segment	Kısım
-Stops between	Aradaki duraklar
-Passed without stopping	Durmadan geçilen
-Standing at a stop	Durakta bekleme
-Speed	Hız
-Way back	Dönüş yolu
-over the same segment	aynı kısım üzerinden
-another segment	başka bir kısım
-Service	Hizmet
-Segments in order	Sırayla kısımlar
-From – to	Nereden – nereye
-Days	Günler
-every day	her gün
-weekends	hafta sonları
-Saturdays	cumartesileri
-Sundays	pazarları
-turns back	geri döner
-goes round a loop	ring yapar
-goes to depot	garaja gider
-Cars in a train	Dizideki vagon sayısı
-Every 10 minutes from 05:30 to 23:30 over all the route's segments	Güzergâhın tüm kısımlarında 05:30'dan 23:30'a kadar her 10 dakikada bir
-Departures of their own	Kendi kalkışları
-For a service without a headway: its departures, as 06:00 06:12 06:30.	Sefer aralığı olmayan bir hizmet için: kalkışları, örneğin 06:00 06:12 06:30.
-Departures	Kalkışlar
-A service's depot sends out its vehicles: its AI group (Traffic and AI) supplies them, and the first departure of the day leaves by its gate along the rails to the first station.	Bir hizmetin garajı araçlarını çıkarır: YZ grubu (Trafik ve YZ) onları sağlar ve günün ilk kalkışı garaj kapısından raylar boyunca ilk istasyona gider.
-AI group	YZ grubu
-Capacity	Kapasite
-Its stop	Durağı
-Gates	Kapılar
-Add a gate	Kapı ekle
-has a turning loop	dönüş ringi var
-Delete the depot	Garajı sil
-A gate needs a rail within 25 m and a way to the first station, or the trip starts at its station (the game's log says so).	Bir kapının 25 m içinde bir raya ve ilk istasyona giden bir yola ihtiyacı vardır; yoksa sefer kendi istasyonunda başlar (oyunun günlüğü bunu yazar).
-Which tracks serve which mode and how they are powered: a rule matches a track type (a file pattern, * for any letters), a tile or one piece; later rules win. Without a rule openOMSI guesses from the type's name.	Hangi rayların hangi türe hizmet ettiği ve nasıl beslendiği: bir kural bir ray türüne (bir dosya kalıbı, * herhangi harfler için), bir karoya veya tek bir parçaya uyar; sonraki kurallar geçerlidir. Kural yoksa openOMSI türün adından tahmin eder.
-A rule for the selected track's type	Seçili rayın türü için bir kural
-Empty rule	Boş kural
-(select a track in the view to make a rule for its type)	(türü için kural yapmak üzere görünümde bir ray seçin)
-Track type	Ray türü
-Only on tile / piece	Yalnızca karo / parça
-id	kimlik
-in the street	sokakta
-railway	ayrı yol
-overhead wire	havai hat
-third rail	üçüncü ray
-diesel	dizel
-Tunnel	Tünel
-yes	evet
-no	hayır
-Gauge	Ray açıklığı
-A map for buses alone has no line to power.	Yalnızca otobüs için olan bir haritanın besleyecek hattı yoktur.
-Third rail	Üçüncü ray
-Trolleybus wire	Troleybüs hattı
-Where the wire is, the player's tram or electric train needs a live section of it over its pantograph (dead sections and breaks stop the drive). Without spans openOMSI takes the current for granted. Spans are laid along the selected tracks.	Telin olduğu yerde oyuncunun tramvayı veya elektrikli treni pantografının üstünde enerjili bir bölüme ihtiyaç duyar (enerjisiz bölümler ve kesintiler aracı durdurur). Kesim yoksa openOMSI akımın her yerde olduğunu varsayar. Kesimler seçili raylar boyunca döşenir.
-The player's metro train needs a live section of third rail beside its shoe. The kit's metro tracks carry the rail itself; spans say where it is fed. Spans are laid along the selected tracks.	Oyuncunun metro treni pabucunun yanında enerjili bir üçüncü ray bölümüne ihtiyaç duyar. Setin metro rayları rayın kendisini taşır; kesimler nereden beslendiğini söyler. Kesimler seçili raylar boyunca döşenir.
-openOMSI's trolleybuses run on this wire (trolley.txt beside global.cfg): a pole is powered only on a pair fed by a substation. Spans are laid over each way's lane of the selected roads, with the wire splines that show them.	openOMSI'nin troleybüsleri bu hatta çalışır (global.cfg yanındaki trolley.txt): bir sırık yalnızca bir alt istasyondan beslenen bir çift üzerinde enerji alır. Kesimler seçili yolların her yön şeridinin üzerine, onları gösteren tel spline'larıyla birlikte döşenir.
-The line	Hat
-Voltage	Gerilim
-Current	Akım
-direct	doğru
-alternating	alternatif
-Wire height	Tel yüksekliği
-Wire spacing	Teller arası mesafe
-Sections (each fed by a substation)	Bölümler (her biri bir alt istasyondan beslenir)
-name	ad
-live	enerjili
-feeder Ω	besleyici Ω
-Section	Bölüm
-Spans	Kesimler
-one pair over the middle	ortada bir çift
-a pair over each 3.0 m lane	her 3,0 m şeridin üstünde bir çift
-a pair over each 3.5 m lane	her 3,5 m şeridin üstünde bir çift
-lay the wire splines too	tel spline'larını da döşe
-Wire the selected roads	Seçili yollara tel çek
-Electrify the selected tracks	Seçili rayları elektrikle
-Take their spans off	Kesimlerini kaldır
-(select roads in the view)	(görünümde yolları seçin)
-(select tracks in the view)	(görünümde rayları seçin)
-Their spans are taken off	Kesimleri kaldırıldı
-Spans laid:	Döşenen kesimler:
-Gaps	Boşluklar
-Insulators	İzolatörler
-Gap	Boşluk
-Insulator	İzolatör
-Frogs (wire switches)	Hava makasları (tel makasları)
-Where three spans meet: the contact plate before it sets it by the current the bus draws (power) or by its indicator.	Üç kesimin birleştiği yer: önündeki kontak plakası onu otobüsün çektiği akıma (güç) veya sinyal lambasına göre çevirir.
-by current	akıma göre
-by indicator	sinyal lambasına göre
-Frog	Hava makası
-A switch listed here holds while a train stands on it, goes back to its rest position, and can be thrown by hand only or locked by a signal. Switches not listed work as before.	Bu listedeki bir makas üzerinde tren dururken yerinde kalır, normal konumuna döner ve yalnızca elle çevrilebilir ya da bir sinyalle kilitlenebilir. Listede olmayan makaslar eskisi gibi çalışır.
-The selected switch objects	Seçili makas nesneleri
-simple	basit
-crossover	makas bağlantısı
-double slip	çift İngiliz makası
-diamond	çapraz geçit
-scissors	makaslı çapraz bağlantı
-rests straight	normalde düz
-rests diverging	normalde sapan
-thrown by the route	güzergâhla çevrilir
-by hand only	yalnızca elle
-interlocked	kilitlemeli
-diverging	sapan
-locked by	kilitleyen
-Blocks	Bloklar
-A stretch of track that holds one AI train at a time, given by where it begins and ends on the rails; its signals show whether it is free. Blocks need the timetable's trains (the AI) to hold.	Aynı anda yalnızca bir YZ treninin bulunabildiği, raylar üzerinde başladığı ve bittiği yerle tanımlanan ray kesimi; sinyalleri boş olup olmadığını gösterir. Blokların çalışması için tarifenin trenleri (YZ) gerekir.
-Ends	Uçlar
-Block	Blok
-Click where the block begins	Bloğun başladığı yere tıklayın
-Signals	Sinyaller
-A signal of the map tied to a block shows stop while the block is in use and go while it is free.	Haritada bir bloğa bağlı sinyal, blok kullanılırken dur, boşken geç gösterir.
-main	ana
-distant	ön
-block	blok
-shunting	manevra
-speed	hız
-tram	tramvay
-Tram street track	Sokak tramvay rayı
-Tram track on grass	Çim üzerinde tramvay rayı
-Railway track	Demiryolu rayı
-Metro track	Metro rayı
-Metro tunnel	Metro tüneli
-Tram platform	Tramvay peronu
-Metro side platform	Metro yan peronu
-Metro island platform	Metro ada peronu
-Railway side platform	Demiryolu yan peronu
-Railway island platform	Demiryolu ada peronu
-Trolleybus wires (one pair)	Troleybüs telleri (bir çift)
-Trolleybus wires, 3.0 m lanes	Troleybüs telleri, 3,0 m şeritler
-Trolleybus wires, 3.5 m lanes	Troleybüs telleri, 3,5 m şeritler
-Catenary mast (arm right)	Katener direği (kol sağda)
-Catenary mast (arm left)	Katener direği (kol solda)
-Trolleybus pole (arm right)	Troleybüs direği (kol sağda)
-Trolleybus pole (arm left)	Troleybüs direği (kol solda)
-Metro sign	Metro tabelası
-Platform shelter	Peron sundurması
-Buffer stop	Tampon
-Station stop	İstasyon durağı
-Bus	Otobüs
-Tram	Tramvay
-Railway	Demiryolu
-Metro	Metro
-Trolleybus	Troleybüs
-buses on the streets, stops at the kerb	sokaklarda otobüsler, kaldırım kenarında duraklar
-street track under a contact wire, low platforms	bir kontak telinin altında sokak rayı, alçak peronlar
-mainline track, stations with platforms, signals and blocks	ana hat rayı, peronlu istasyonlar, sinyaller ve bloklar
-track with a third rail, tunnels, high platforms	üçüncü raylı hat, tüneller, yüksek peronlar
-buses under a pair of wires, frogs at junctions	bir çift telin altında otobüsler, kavşaklarda hava makasları
-Depot Square	Garaj Meydanı
-Park Gate	Park Kapısı
-Tram start	Tramvay başlangıcı
-Loop line	Ring hattı
-A trolleybus junction under its wires with three stations: save, then drive it in openOMSI with a trolleybus of your own.	Telleri altında üç istasyonlu bir troleybüs kavşağı: kaydedin, sonra openOMSI'de kendi troleybüsünüzle sürün.
-station stops:	istasyon durağı:
-stations:	istasyon:
-routes:	güzergâh:
-Vehicles of other modes	Başka türlerin araçları
-Services without a vehicle of their mode	Kendi türünden aracı olmayan hizmetler
-openOMSI runs only vehicles of a Modern map's modes on it. This vehicle of the AI lists is made for another mode (its file says so, or it is a depot's vehicle and its shape says so), so the game leaves it out. Change it in Map > Traffic and AI, or add its mode to the map in Map settings.	openOMSI modern bir haritada yalnızca haritanın türlerinin araçlarını çalıştırır. YZ listelerindeki bu araç başka bir tür için yapılmış (dosyası öyle diyor ya da bir garaj aracı ve biçimi öyle gösteriyor), bu yüzden oyun onu atlar. Harita > Trafik ve YZ içinde değiştirin ya da türünü Harita ayarları'nda haritaya ekleyin.
-A service of the transit network takes its vehicles from its depot's AI group (or names one vehicle file). That group has no vehicle of the route's mode, so nothing runs it. Give the depot an AI group with such vehicles (Map > Traffic and AI), or choose another depot.	Ulaşım ağının bir hizmeti araçlarını garajının YZ grubundan alır (ya da tek bir araç dosyası adlandırır). Bu grupta güzergâhın türünden hiç araç yok, bu yüzden hizmeti kimse çalıştırmaz. Garaja böyle araçları olan bir YZ grubu verin (Harita > Trafik ve YZ) ya da başka bir garaj seçin.
-group	grup
-route	güzergâh
-its depot names no AI group	garajı bir YZ grubu adlandırmıyor
-no vehicle of the mode in	bu türden araç yok, grup
-Stations from OpenStreetMap	OpenStreetMap istasyonları
-Metro tracks	Metro rayları
-in tunnels too: build them with the kit's metro tunnel and cut the ground away (a Modern map)	tünellerde de: setin metro tüneliyle kurun ve zemini kesip çıkarın (modern bir harita)
-Start with a trolleybus line: a junction under its wires with frogs, three stations and two routes	Bir troleybüs hattıyla başla: telleri altında hava makaslı bir kavşak, üç istasyon ve iki güzergâh
-Stations (tram, metro, railway)	İstasyonlar (tramvay, metro, demiryolu)
-Each tram stop and station of the map's rail modes put with the kit's station stop beside the nearest track (within 25 m); every stop of the map then becomes a station of its transport folder	Haritanın raylı türlerinin her tramvay durağı ve istasyonu, setin istasyon durağıyla en yakın rayın yanına konur (25 m içinde); ardından haritanın her durağı transport klasörünün bir istasyonu olur
-Routes (tram, trolleybus, metro, railway)	Güzergâhlar (tramvay, troleybüs, metro, demiryolu)
-Each route of the map's modes through two or more of its stations a segment of its line, the line's service as often as OpenStreetMap says (else every 10 minutes), from 05:30 to 23:30; openOMSI finds the way over the tracks	Haritanın türlerinden, istasyonlarından iki ya da daha fazlasından geçen her güzergâh hattının bir kısmı olur; hattın hizmeti OpenStreetMap'in dediği sıklıkta (yoksa her 10 dakikada bir), 05:30'dan 23:30'a kadar çalışır; raylar üzerindeki yolu openOMSI kendisi bulur
-no vehicle of it is installed	hiçbir aracı kurulu değil
-Its vehicles:	Araçları:
-(select roads in the view, and the junctions between them)	(görünümde yolları ve aralarındaki kavşakları seçin)
-(select tracks in the view, and their switches)	(görünümde rayları ve makaslarını seçin)
-A pair of wires over each way's kerb lane; through a selected junction only the lanes that join wired roads. Frogs are put where three wires meet.	Her yönün kaldırım kenarındaki şeridinin üzerinde bir çift tel; seçili bir kavşakta yalnızca telli yolları birleştiren şeritler. Üç telin birleştiği yerlere hava makası konur.
-The map's files are still being read	Haritanın dosyaları hâlâ okunuyor
-West Gate	Batı Kapısı
-East Market	Doğu Pazarı
-North Park	Kuzey Parkı
-Market line	Pazar hattı
-Park line	Park hattı
-Trolleybus start	Troleybüs başlangıcı
-frogs:	hava makası:
-places where more than three wires meet get no frog: wire fewer turns there	üçten fazla telin birleştiği yer hava makası almadı: oralarda daha az dönüşe tel çekin
-Track ends that do not meet	Buluşmayan ray uçları
-Two tracks run on into one another but their ends lie apart: the game joins rails only where their ends lie within 1.5 m, so no train or tram gets across (a route through there finds no way). "Fix" moves one end onto the other, arriving in line with it, and joins them.	İki ray birbirinin devamı ama uçları ayrı duruyor: oyun rayları yalnızca uçları 1,5 m içinde olduğunda birleştirir, bu yüzden buradan ne tren ne tramvay geçebilir (buradan geçen bir güzergâh yol bulamaz). "Düzelt" bir ucu diğerinin üzerine, onunla aynı hizada taşır ve birleştirir.
-tracks	raylar
-Select the roads or tracks to build into the ground	Zemine gömülecek yolları veya rayları seçin
-Cutting	Yarma
-Cut and cover tunnel	Aç-kapa tünel
-Nothing to build into the ground	Zemine gömülecek bir şey yok
-Build into the ground	Zemine göm
-The chain of the selected pieces lowered, with ramps at its ends. Cut: an open cutting with sloped banks. Cover: open ramps down to the portals and a tunnel under the ground between them (a shell of walls and roof, a portal at each mouth).	Seçili parçaların zinciri, uçlarında rampalarla alçaltılır. Yarma: eğimli şevleri olan açık bir yarma. Tünel: portallara inen açık rampalar ve aralarında zeminin altında bir tünel (duvar ve tavandan bir kabuk, her ağızda bir portal).
-Cover (tunnel)	Kapalı (tünel)
-Ramp gradient	Rampa eğimi
-Banks	Şevler
- m out per metre up	 m yana / metre yukarı
-Ramps	Rampalar
-at the start	başta
-at the end	sonda
-A tunnel needs a depth of 6 m or more: shallower it stays an open cutting	Bir tünel için 6 m veya daha fazla derinlik gerekir: daha sığ olursa açık yarma olarak kalır
-Each ramp is about	Her rampa yaklaşık
-Pieces lowered:	Alçaltılan parça:
-tunnel pieces:	tünel parçası:
-portals:	portal:
-their overhead taken off: wire them again (Transit network, Power)	havai hatları kaldırıldı: yeniden döşeyin (Ulaşım ağı, Enerji)
-Platforms at the stations	İstasyonlarda peronlar
-The kit's platform of each rail station's mode beside its track, on the side its stop stands, as long as its platform says	Setin, her raylı istasyonun moduna ait peronu, rayının yanında, durağının bulunduğu tarafta, peronunun belirttiği uzunlukta
-Platforms laid:	Döşenen peron:
-lay the wires, masts, poles and frogs too	teller, direkler ve hava makasları da döşensin
-Catenary mast	Katener direği
-Trolleybus pole	Troleybüs direği
-Trolleybus frog	Troleybüs hava makası
-Section insulator	Seksiyon izolatörü
 Lake	Göl
 River	Nehir
 Water level:	Su seviyesi:
+Banks	Şevler
 Click the shore round and close it on the first point (Enter closes too, right-click takes a point back). The ground inside is dug to a bed and the banks slope to the shore.	Kıyının çevresine tıklayın ve ilk noktada kapatın (Enter de kapatır, sağ tık bir noktayı geri alır). İçerideki zemin bir yatak olarak kazılır ve kıyılar kıyıya doğru eğimlenir.
 Click the river's middle line from its source on and finish on the last point (or Enter). Water in OMSI lies at one level for a tile: a river runs level.	Nehrin orta çizgisine kaynağından başlayarak tıklayın ve son noktada bitirin (veya Enter). OMSI'de su, bir karo için tek seviyededir: nehir düz akar.
 Add as a ground texture	Zemin dokusu olarak ekle
+Painted line	Boyalı çizgi
+Stop line	Dur çizgisi
+A wide solid line across a lane: draw it across the road	Şeridi enine geçen geniş düz çizgi: yolu enine kesecek şekilde çizin
+Crossing	Yaya geçidi
+Zebra bars: draw it across the road, the bars lie along it	Zebra: yolu enine kesecek şekilde çizin, çizgiler yol boyunca uzanır
+Centre line	Orta çizgi
+A double yellow line	Çift sarı çizgi
+Lane line	Şerit çizgisi
+A white dashed line	Beyaz kesik çizgi
+Solid	Düz
+Dashed	Kesikli
+Double	Çift
+Solid and dashed	Düz ve kesikli
+Crossing (bars)	Yaya geçidi (çizgiler)
+A line's width (each line of a double one); a crossing's reach along the road	Bir çizginin genişliği (çiftte her biri); geçidin yol boyunca derinliği
+Bar	Çizgi
+Dash	Kesik
+Gap	Boşluk
+Draw with this line	Bu çizgiyle çiz
+It is made as a spline type of the content folder (Splines\\openMapper\\marks) and chosen: draw it with Line, Arc or Curve, over the asphalt	İçerik klasöründe (Splines\\openMapper\\marks) bir spline türü olarak oluşturulur ve seçilir: Çizgi, Yay veya Eğri ile asfaltın üzerine çizin
+Painted line made: draw with it in the junction editor	Boyalı çizgi oluşturuldu: kavşak düzenleyicide onunla çizin
 A junction was not made: its roads are too short or too close together. Lengthen them or move the junctions apart.	Kavşak oluşturulamadı: yolları çok kısa ya da birbirine çok yakın. Yolları uzatın veya kavşakları birbirinden uzaklaştırın.
+Draw road markings	Yol çizgilerini çiz
+Pen	Fırça
+Straight line	Düz çizgi
+Dashed line	Kesik çizgi
+Rectangle	Dikdörtgen
+Arrow	Ok
+Eraser	Silgi
+Dash length	Kesik uzunluğu
+Gap between dashes	Kesikler arası boşluk
+Pointing back	Geriye bakan
+Snap to 5 cm	5 cm'ye hizala
+Drag to draw. The picture is the roadway as the texture lies on it, up is the way of the road; it repeats along, so what leaves at the top comes in at the bottom.	Çizmek için sürükleyin. Resim, dokunun üzerinde durduğu haliyle yol gövdesidir, yukarısı yolun gidiş yönüdür; boyuna tekrarlanır, yani üstten çıkan alttan girer.
+Pick a roadway texture first	Önce bir yol gövdesi dokusu seçin
 Display	Görünüm
 X-ray (Alt+Z): see and pick through the mesh	X-ışını (Alt+Z): mesh'in içinden görün ve seçin
 Show the textures	Dokuları göster
@@ -2746,42 +2493,9 @@ Paint my own markings	Kendi çizgilerimi çiz
 The maker paints the lines onto the roadway texture: pick a plain asphalt texture, or its own lines show too	Oluşturucu çizgileri yol yüzeyi dokusuna çizer: sade bir asfalt dokusu seçin, yoksa kendi çizgileri de görünür
 Standard for these lanes	Bu şeritler için standart
 Add a line	Çizgi ekle
-Across the roadway from its middle (right of the road's way is plus)	Yol yüzeyi boyunca ortasından itibaren (yolun yönünün sağı artıdır)
-Solid	Düz
-Dashed	Kesikli
-Double solid	Çift düz
-Solid and dashed	Düz ve kesikli
-The line's width	Çizginin genişliği
-Dash length	Kesik uzunluğu
-Gap between dashes	Kesikler arası boşluk
-Draw road markings	Yol çizgilerini çiz
-Pen	Fırça
-Straight line	Düz çizgi
-Dashed line	Kesik çizgi
-Rectangle	Dikdörtgen
-Arrow	Ok
-Eraser	Silgi
-Pointing back	Geriye bakan
-Snap to 5 cm	5 cm'ye hizala
-Drag to draw. The picture is the roadway as the texture lies on it, up is the way of the road; it repeats along, so what leaves at the top comes in at the bottom.	Çizmek için sürükleyin. Resim, dokunun üzerinde durduğu haliyle yol gövdesidir, yukarısı yolun gidiş yönüdür; boyuna tekrarlanır, yani üstten çıkan alttan girer.
-Pick a roadway texture first	Önce bir yol gövdesi dokusu seçin
 Draw by hand…	Elle çiz…
 A drawing board with a pen, lines, arrows and an eraser: what you draw goes onto the roadway	Fırça, çizgiler, oklar ve silgiyle bir çizim tahtası: çizdiğiniz yol gövdesine işlenir
 a drawing is on the road	yolda bir çizim var
-Painted line	Boyalı çizgi
-Stop line	Dur çizgisi
-A wide solid line across a lane: draw it across the road	Şeridi enine geçen geniş düz çizgi: yolu enine kesecek şekilde çizin
-Crossing	Yaya geçidi
-Zebra bars: draw it across the road, the bars lie along it	Zebra: yolu enine kesecek şekilde çizin, çizgiler yol boyunca uzanır
-Centre line	Orta çizgi
-A double yellow line	Çift sarı çizgi
-Lane line	Şerit çizgisi
-A white dashed line	Beyaz kesik çizgi
-Double	Çift
-Crossing (bars)	Yaya geçidi (çizgiler)
-A line's width (each line of a double one); a crossing's reach along the road	Bir çizginin genişliği (çiftte her biri); geçidin yol boyunca derinliği
-Bar	Çizgi
-Dash	Kesik
-Draw with this line	Bu çizgiyle çiz
-It is made as a spline type of the content folder (Splines\\openMapper\\marks) and chosen: draw it with Line, Arc or Curve, over the asphalt	İçerik klasöründe (Splines\\openMapper\\marks) bir spline türü olarak oluşturulur ve seçilir: Çizgi, Yay veya Eğri ile asfaltın üzerine çizin
-Painted line made: draw with it in the junction editor	Boyalı çizgi oluşturuldu: kavşak düzenleyicide onunla çizin
+Across the roadway from its middle (right of the road's way is plus)	Yol yüzeyi boyunca ortasından itibaren (yolun yönünün sağı artıdır)
+Double solid	Çift düz
+The line's width	Çizginin genişliği

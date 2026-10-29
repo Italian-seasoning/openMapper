@@ -19,7 +19,6 @@ mod collab;
 mod descriptions;
 mod doc;
 mod drive;
-mod dig;
 mod draw;
 mod export;
 mod gamecheck;
@@ -80,7 +79,6 @@ mod switches;
 mod texts;
 mod timetable;
 mod traffic;
-mod transit;
 mod sysfont;
 mod ui;
 mod markdown;
@@ -124,7 +122,6 @@ mod trace;
 mod ui_timetable;
 mod ui_trace;
 mod ui_traffic;
-mod ui_transit;
 
 /// A program without a console of its own (Windows' GUI subsystem) writes its log and the
 /// command line modes' output into the console it was started from, if any.

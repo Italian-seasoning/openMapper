@@ -2438,301 +2438,48 @@ Could not copy the photos	No s'han pogut copiar les fotos
 Copying the photos	S'estan copiant les fotos
 Hold only the photos of the tiles near the camera	Retén només les fotos de les tessel·les a prop de la càmera
 The others keep their photo in the map's folder, and are put up again when you go back to them.	Les altres guarden la foto a la carpeta del mapa i tornen a aparèixer quan hi tornes.
-A tram loop with two stations and its wire: save, then drive it in openOMSI with a tram of your own.	Un bucle de tramvia amb dues estacions i el seu cable: desa'l i recorre'l a openOMSI amb un tramvia propi.
-Transit kit made, files:	Kit de transport creat, fitxers:
-The transit kit could not be made	No s'ha pogut crear el kit de transport
-Transit network problems	Problemes de la xarxa de transport
-Stations without their mode's lanes	Estacions sense els carrils del seu mode
-Stations without their stop	Estacions sense la seva parada
-openOMSI's own reader finds this in the map's transport folder (stations, routes, wires, switches, depots, signals): a service it names is skipped, a section or a block left out. Open Map > Transit network to change it.	El lector propi d'openOMSI troba això a la carpeta transport del mapa (estacions, rutes, cables, agulles, cotxeres, senyals): el servei que esmenta s'omet, i la secció o el cantó no es tenen en compte. Obre Mapa > Xarxa de transport per canviar-ho.
-openOMSI routes a service over the lanes of its mode within 25 m of each station (rails for trams, metro and trains, streets for buses and trolleybuses). This station has none of its modes' near, so its services cannot run. Move the stop next to the track or road, or lay one there.	openOMSI traça un servei pels carrils del seu mode a menys de 25 m de cada estació (vies per a tramvies, metro i trens, carrers per a autobusos i troleibusos). Aquesta estació no en té cap dels seus modes a prop, així que els seus serveis no poden circular. Mou la parada vora la via o la carretera, o traça'n una allà.
-A station is found by the game among the map's stops: by its stop object, else by its name. This one's object is no stop on the map and no stop has its name, so the services through it are skipped. Pick its stop again in Map > Transit network, Stations.	El joc busca una estació entre les parades del mapa: pel seu objecte de parada o, si no, pel nom. L'objecte d'aquesta no és cap parada del mapa i cap parada no té el seu nom, així que els serveis que hi passen s'ometen. Torna a triar-ne la parada a Mapa > Xarxa de transport, Estacions.
-station	estació
-Transit network…	Xarxa de transport…
-The transport folder stays: openOMSI still reads its stations, routes and wires.	La carpeta transport es queda: openOMSI continua llegint-ne les estacions, rutes i cables.
-Remove it too	Elimina-la també
-Start with a tram line: a loop of track under its wire, two stations and a route	Comença amb una línia de tramvia: un bucle de via sota el cable, dues estacions i una ruta
-Classic	Clàssic
-Runs in OMSI 2 and in openOMSI. Buses, and trams and trains as OMSI 2 has them.	Funciona a OMSI 2 i a openOMSI. Autobusos, i tramvies i trens tal com els té OMSI 2.
-Modern	Modern
-openOMSI only. Real transit: stations, routes, overhead wire, third rail, depots and signal blocks.	Només openOMSI. Transport real: estacions, rutes, cable aeri, tercer rail, cotxeres i cantons de senyals.
-Made for (one or more):	Fet per a (un o més):
-Choose at least one	Tria'n almenys un
-OMSI 2 cannot run a Modern map's routes, wires or blocks, and openOMSI runs only vehicles of its modes on it. openMapper's transit kit (tracks, wires, platforms, masts) is made in the content folder.	OMSI 2 no pot fer servir les rutes, cables ni cantons d'un mapa modern, i openOMSI només hi posa vehicles dels seus modes. El kit de transport d'openMapper (vies, cables, andanes, pals) es crea a la carpeta de contingut.
-Overview	Resum
-Stations	Estacions
-Depots	Cotxeres
-Power	Alimentació
-Switches and signals	Agulles i senyals
-Set it (else the game's default)	Defineix-ho (si no, el valor per defecte del joc)
-(not set)	(sense definir)
-Take it out	Treu-ho
-Transit network	Xarxa de transport
-This is a Classic map.	Aquest és un mapa clàssic.
-Stations, routes without tours, the overhead wire, the third rail, depots and signal blocks are openOMSI's (0.3.42 and later): make the map Modern in Map settings to give it a transit network. OMSI 2 cannot run them.	Les estacions, les rutes sense torns, el cable aeri, el tercer rail, les cotxeres i els cantons són d'openOMSI (0.3.42 o posterior): fes el mapa modern a Configuració del mapa per donar-li una xarxa de transport. OMSI 2 no els pot fer servir.
-No stop there: click a stop object (a bus stop, or the kit's station stop)	Aquí no hi ha cap parada: fes clic en un objecte de parada (una parada d'autobús o la parada d'estació del kit)
-Now click where the block ends	Ara fes clic on acaba el cantó
-Click the signal object itself	Fes clic a l'objecte del senyal mateix
-Then click in the view	Després fes clic a la vista
-Modern map for	Mapa modern per a
-openOMSI runs only vehicles of these modes here; OMSI 2 cannot run the network. The modes are changed in Map settings.	openOMSI només hi posa vehicles d'aquests modes; OMSI 2 no pot fer servir la xarxa. Els modes es canvien a Configuració del mapa.
-Services	Serveis
-Track rules	Regles de vies
-Overhead wire spans	Trams de cable aeri
-Third rail spans	Trams de tercer rail
-Trolleybus wire spans	Trams de cable de troleibús
-Switches	Agulles
-Signals and blocks	Senyals i cantons
-Problems	Problemes
-None: openOMSI reads the network as it is.	Cap: openOMSI llegeix la xarxa tal com és.
-error	error
-warning	avís
-Found by openOMSI's own reader of the transport folder, the texts as it writes them in its log.	Els troba el lector propi d'openOMSI de la carpeta transport; els textos són els que escriu al seu registre.
-openMapper's transit kit	Kit de transport d'openMapper
-Tracks, platforms, wires and objects made by openMapper for Modern maps (OMSI 2 ships no metro, third rail or trolleybus wire). They are in the catalogue under openMapper; click one to place it.	Vies, andanes, cables i objectes fets per openMapper per a mapes moderns (OMSI 2 no porta metro, tercer rail ni cable de troleibús). Són al catàleg, sota openMapper; fes clic en un per col·locar-lo.
-Make the kit	Crea el kit
-A station is a stop object of the map (a bus stop, or the kit's station stop beside a track) with its platforms. openOMSI routes a service over the lanes of its mode within 25 m of each station.	Una estació és un objecte de parada del mapa (una parada d'autobús, o la parada d'estació del kit vora una via) amb les seves andanes. openOMSI traça un servei pels carrils del seu mode a menys de 25 m de cada estació.
-A station for every stop of the map	Una estació per a cada parada del mapa
-Stops not yet a station become one, named as the stop, its modes from the tracks and roads beside it	Les parades que encara no són estació ho passen a ser, amb el nom de la parada i els modes de les vies i carreteres del costat
-New station	Estació nova
-Stations added:	Estacions afegides:
-Choose a station	Tria una estació
-Id	Id
-Modes	Modes
-Stop object	Objecte de parada
-Pick	Tria
-Place	Lloc
-Change to	Correspondència amb
-Platforms	Andanes
-Side	Costat
-island	central
-both	tots dos
-platform screen doors	portes d'andana
-Delete the station	Elimina l'estació
-A route is segments from station to station (the stops between them in order) and services over them: a branch, a short working or an express is another segment or service. openOMSI makes the timetable's tours from them and finds the way over the tracks itself.	Una ruta són segments d'estació a estació (amb les parades entremig per ordre) i serveis sobre ells: un ramal, un servei parcial o un exprés és un altre segment o servei. openOMSI en crea els torns de l'horari i troba ell mateix el camí per les vies.
-Add two stations or more first (Stations)	Primer afegeix dues estacions o més (Estacions)
-New route	Ruta nova
-Segment	Segment
-Stops between	Parades entremig
-Passed without stopping	Hi passa sense aturar-se
-Standing at a stop	Aturat a una parada
-Speed	Velocitat
-Way back	Tornada
-over the same segment	pel mateix segment
-another segment	un altre segment
-Service	Servei
-Segments in order	Segments per ordre
-From – to	Des de – fins a
-Days	Dies
-every day	cada dia
-weekends	caps de setmana
-Saturdays	dissabtes
-Sundays	diumenges
-turns back	fa mitja volta
-goes round a loop	fa un bucle
-goes to depot	va a cotxeres
-Cars in a train	Cotxes per tren
-Every 10 minutes from 05:30 to 23:30 over all the route's segments	Cada 10 minuts de 05:30 a 23:30 per tots els segments de la ruta
-Departures of their own	Sortides pròpies
-For a service without a headway: its departures, as 06:00 06:12 06:30.	Per a un servei sense interval: les seves sortides, com 06:00 06:12 06:30.
-Departures	Sortides
-A service's depot sends out its vehicles: its AI group (Traffic and AI) supplies them, and the first departure of the day leaves by its gate along the rails to the first station.	La cotxera d'un servei en treu els vehicles: el seu grup d'IA (Trànsit i IA) els aporta, i la primera sortida del dia surt per la seva porta per les vies fins a la primera estació.
-AI group	Grup d'IA
-Capacity	Capacitat
-Its stop	La seva parada
-Gates	Portes
-Add a gate	Afegeix una porta
-has a turning loop	té bucle de retorn
-Delete the depot	Elimina la cotxera
-A gate needs a rail within 25 m and a way to the first station, or the trip starts at its station (the game's log says so).	Una porta necessita una via a menys de 25 m i un camí fins a la primera estació; si no, el viatge comença a la seva estació (ho diu el registre del joc).
-Which tracks serve which mode and how they are powered: a rule matches a track type (a file pattern, * for any letters), a tile or one piece; later rules win. Without a rule openOMSI guesses from the type's name.	Quines vies serveixen quin mode i com s'alimenten: una regla correspon a un tipus de via (un patró de fitxer, * per a qualsevol lletra), una tessel·la o una peça; les regles posteriors manen. Sense regla, openOMSI ho dedueix del nom del tipus.
-A rule for the selected track's type	Una regla per al tipus de la via seleccionada
-Empty rule	Regla buida
-(select a track in the view to make a rule for its type)	(selecciona una via a la vista per fer una regla per al seu tipus)
-Track type	Tipus de via
-Only on tile / piece	Només a la tessel·la / peça
-id	id
-in the street	al carrer
-railway	plataforma reservada
-overhead wire	cable aeri
-third rail	tercer rail
-diesel	dièsel
-Tunnel	Túnel
-yes	sí
-no	no
-Gauge	Ample de via
-A map for buses alone has no line to power.	Un mapa només per a autobusos no té línia per alimentar.
-Third rail	Tercer rail
-Trolleybus wire	Cable de troleibús
-Where the wire is, the player's tram or electric train needs a live section of it over its pantograph (dead sections and breaks stop the drive). Without spans openOMSI takes the current for granted. Spans are laid along the selected tracks.	On hi ha cable, el tramvia o tren elèctric del jugador necessita una secció amb tensió sobre el pantògraf (les seccions sense tensió i els talls l'aturen). Sense trams, openOMSI dona el corrent per suposat. Els trams es tracen al llarg de les vies seleccionades.
-The player's metro train needs a live section of third rail beside its shoe. The kit's metro tracks carry the rail itself; spans say where it is fed. Spans are laid along the selected tracks.	El tren de metro del jugador necessita una secció de tercer rail amb tensió al costat del patí. Les vies de metro del kit porten el rail mateix; els trams diuen on s'alimenta. Els trams es tracen al llarg de les vies seleccionades.
-openOMSI's trolleybuses run on this wire (trolley.txt beside global.cfg): a pole is powered only on a pair fed by a substation. Spans are laid over each way's lane of the selected roads, with the wire splines that show them.	Els troleibusos d'openOMSI circulen per aquest cable (trolley.txt al costat de global.cfg): una perxa només té corrent en un parell alimentat per una subestació. Els trams es tracen sobre el carril de cada sentit de les carreteres seleccionades, amb els splines de cable que els mostren.
-The line	La línia
-Voltage	Tensió
-Current	Corrent
-direct	continu
-alternating	altern
-Wire height	Alçada del cable
-Wire spacing	Separació dels cables
-Sections (each fed by a substation)	Seccions (cadascuna alimentada per una subestació)
-name	nom
-live	amb tensió
-feeder Ω	alimentador Ω
-Section	Secció
-Spans	Trams
-one pair over the middle	un parell pel mig
-a pair over each 3.0 m lane	un parell sobre cada carril de 3,0 m
-a pair over each 3.5 m lane	un parell sobre cada carril de 3,5 m
-lay the wire splines too	traça també els splines de cable
-Wire the selected roads	Electrifica les carreteres seleccionades
-Electrify the selected tracks	Electrifica les vies seleccionades
-Take their spans off	Treu-ne els trams
-(select roads in the view)	(selecciona carreteres a la vista)
-(select tracks in the view)	(selecciona vies a la vista)
-Their spans are taken off	Se n'han tret els trams
-Spans laid:	Trams traçats:
-Gaps	Talls
-Insulators	Aïlladors
-Gap	Tall
-Insulator	Aïllador
-Frogs (wire switches)	Agulles aèries (de cable)
-Where three spans meet: the contact plate before it sets it by the current the bus draws (power) or by its indicator.	On es troben tres trams: la placa de contacte d'abans la canvia segons el corrent que pren l'autobús (tracció) o segons l'intermitent.
-by current	per corrent
-by indicator	per intermitent
-Frog	Agulla aèria
-A switch listed here holds while a train stands on it, goes back to its rest position, and can be thrown by hand only or locked by a signal. Switches not listed work as before.	Una agulla d'aquesta llista es manté mentre hi ha un tren a sobre, torna a la posició de repòs i pot ser només manual o estar enclavada per un senyal. Les agulles que no hi són funcionen com abans.
-The selected switch objects	Els objectes d'agulla seleccionats
-simple	simple
-crossover	escapament
-double slip	travessia doble
-diamond	encreuament
-scissors	tisora
-rests straight	en repòs recta
-rests diverging	en repòs desviada
-thrown by the route	moguda per la ruta
-by hand only	només manual
-interlocked	enclavada
-diverging	desviada
-locked by	enclavada per
-Blocks	Cantons
-A stretch of track that holds one AI train at a time, given by where it begins and ends on the rails; its signals show whether it is free. Blocks need the timetable's trains (the AI) to hold.	Un tram de via que admet un sol tren d'IA alhora, definit per on comença i acaba a les vies; els seus senyals mostren si és lliure. Els cantons necessiten els trens de l'horari (la IA) per actuar.
-Ends	Extrems
-Block	Cantó
-Click where the block begins	Fes clic on comença el cantó
-Signals	Senyals
-A signal of the map tied to a block shows stop while the block is in use and go while it is free.	Un senyal del mapa lligat a un cantó mostra aturada mentre el cantó és ocupat i via lliure quan és lliure.
-main	principal
-distant	avançat
-block	de bloqueig
-shunting	de maniobres
-speed	de velocitat
-tram	de tramvia
-Tram street track	Via de tramvia al carrer
-Tram track on grass	Via de tramvia sobre gespa
-Railway track	Via de ferrocarril
-Metro track	Via de metro
-Metro tunnel	Túnel de metro
-Tram platform	Andana de tramvia
-Metro side platform	Andana lateral de metro
-Metro island platform	Andana central de metro
-Railway side platform	Andana lateral de ferrocarril
-Railway island platform	Andana central de ferrocarril
-Trolleybus wires (one pair)	Cables de troleibús (un parell)
-Trolleybus wires, 3.0 m lanes	Cables de troleibús, carrils de 3,0 m
-Trolleybus wires, 3.5 m lanes	Cables de troleibús, carrils de 3,5 m
-Catenary mast (arm right)	Pal de catenària (mènsula a la dreta)
-Catenary mast (arm left)	Pal de catenària (mènsula a l'esquerra)
-Trolleybus pole (arm right)	Pal de troleibús (braç a la dreta)
-Trolleybus pole (arm left)	Pal de troleibús (braç a l'esquerra)
-Metro sign	Senyal de metro
-Platform shelter	Marquesina d'andana
-Buffer stop	Topall
-Station stop	Parada d'estació
-Bus	Autobús
-Tram	Tramvia
-Railway	Ferrocarril
-Metro	Metro
-Trolleybus	Troleibús
-buses on the streets, stops at the kerb	autobusos pels carrers, parades a la vorada
-street track under a contact wire, low platforms	via al carrer sota un cable de contacte, andanes baixes
-mainline track, stations with platforms, signals and blocks	via principal, estacions amb andanes, senyals i cantons
-track with a third rail, tunnels, high platforms	via amb tercer rail, túnels, andanes altes
-buses under a pair of wires, frogs at junctions	autobusos sota un parell de cables, agulles aèries a les cruïlles
-Depot Square	Plaça de les Cotxeres
-Park Gate	Porta del Parc
-Tram start	Inici del tramvia
-Loop line	Línia circular
-A trolleybus junction under its wires with three stations: save, then drive it in openOMSI with a trolleybus of your own.	Un creuament de troleibús sota els seus cables amb tres estacions: desa'l i recorre'l a openOMSI amb un troleibús propi.
-station stops:	parades d'estació:
-stations:	estacions:
-routes:	rutes:
-Vehicles of other modes	Vehicles d'altres modes
-Services without a vehicle of their mode	Serveis sense cap vehicle del seu mode
-openOMSI runs only vehicles of a Modern map's modes on it. This vehicle of the AI lists is made for another mode (its file says so, or it is a depot's vehicle and its shape says so), so the game leaves it out. Change it in Map > Traffic and AI, or add its mode to the map in Map settings.	openOMSI només posa en un mapa modern vehicles dels seus modes. Aquest vehicle de les llistes d'IA està fet per a un altre mode (ho diu el seu fitxer, o és un vehicle d'una cotxera i ho diu la seva forma), així que el joc l'omet. Canvia'l a Mapa > Trànsit i IA o afegeix el seu mode al mapa a Configuració del mapa.
-A service of the transit network takes its vehicles from its depot's AI group (or names one vehicle file). That group has no vehicle of the route's mode, so nothing runs it. Give the depot an AI group with such vehicles (Map > Traffic and AI), or choose another depot.	Un servei de la xarxa de transport pren els vehicles del grup d'IA de la seva cotxera (o esmenta un fitxer de vehicle). Aquest grup no té cap vehicle del mode de la ruta, així que ningú no la fa. Dona a la cotxera un grup d'IA amb aquests vehicles (Mapa > Trànsit i IA) o tria una altra cotxera.
-group	grup
-route	ruta
-its depot names no AI group	la seva cotxera no esmenta cap grup d'IA
-no vehicle of the mode in	cap vehicle del mode a
-Stations from OpenStreetMap	Estacions d'OpenStreetMap
-Metro tracks	Vies de metro
-in tunnels too: build them with the kit's metro tunnel and cut the ground away (a Modern map)	també en túnels: construeix-les amb el túnel de metro del kit i retalla el terreny (un mapa modern)
-Start with a trolleybus line: a junction under its wires with frogs, three stations and two routes	Comença amb una línia de troleibús: un creuament sota els seus cables amb agulles aèries, tres estacions i dues rutes
-Stations (tram, metro, railway)	Estacions (tramvia, metro, ferrocarril)
-Each tram stop and station of the map's rail modes put with the kit's station stop beside the nearest track (within 25 m); every stop of the map then becomes a station of its transport folder	Cada parada de tramvia i estació dels modes ferroviaris del mapa es posa amb la parada d'estació del kit al costat de la via més propera (a menys de 25 m); després cada parada del mapa passa a ser una estació de la seva carpeta transport
-Routes (tram, trolleybus, metro, railway)	Rutes (tramvia, troleibús, metro, ferrocarril)
-Each route of the map's modes through two or more of its stations a segment of its line, the line's service as often as OpenStreetMap says (else every 10 minutes), from 05:30 to 23:30; openOMSI finds the way over the tracks	Cada ruta dels modes del mapa que passa per dues o més de les seves estacions passa a ser un segment de la seva línia, amb el servei de la línia tan freqüent com digui OpenStreetMap (si no, cada 10 minuts), de 05:30 a 23:30; openOMSI troba ell mateix el camí per les vies
-no vehicle of it is installed	no hi ha cap vehicle seu instal·lat
-Its vehicles:	Els seus vehicles:
-(select roads in the view, and the junctions between them)	(selecciona carreteres a la vista, i els creuaments entre elles)
-(select tracks in the view, and their switches)	(selecciona vies a la vista, i les seves agulles)
-A pair of wires over each way's kerb lane; through a selected junction only the lanes that join wired roads. Frogs are put where three wires meet.	Un parell de cables sobre el carril del costat de la vorera de cada sentit; a través d'un creuament seleccionat, només els carrils que uneixen carreteres electrificades. On es troben tres cables es posen agulles aèries.
-The map's files are still being read	Encara s'estan llegint els fitxers del mapa
-West Gate	Porta Oest
-East Market	Mercat Est
-North Park	Parc Nord
-Market line	Línia del Mercat
-Park line	Línia del Parc
-Trolleybus start	Inici del troleibús
-frogs:	agulles aèries:
-places where more than three wires meet get no frog: wire fewer turns there	els punts on es troben més de tres cables queden sense agulla aèria: electrifica-hi menys girs
-Track ends that do not meet	Extrems de via que no es troben
-Two tracks run on into one another but their ends lie apart: the game joins rails only where their ends lie within 1.5 m, so no train or tram gets across (a route through there finds no way). "Fix" moves one end onto the other, arriving in line with it, and joins them.	Dues vies continuen l'una en l'altra, però els seus extrems estan separats: el joc uneix els carrils només on els extrems són a menys d'1,5 m, de manera que cap tren ni tramvia no hi passa (una ruta per aquí no troba camí). «Arregla» mou un extrem sobre l'altre, alineat amb ell, i els uneix.
-tracks	vies
-Select the roads or tracks to build into the ground	Selecciona les carreteres o vies que vols soterrar
-Cutting	Trinxera
-Cut and cover tunnel	Túnel entre pantalles
-Nothing to build into the ground	No hi ha res per soterrar
-Build into the ground	Soterra
-The chain of the selected pieces lowered, with ramps at its ends. Cut: an open cutting with sloped banks. Cover: open ramps down to the portals and a tunnel under the ground between them (a shell of walls and roof, a portal at each mouth).	La cadena de trams seleccionats es rebaixa, amb rampes als extrems. Trinxera: oberta, amb talussos inclinats. Túnel: rampes obertes que baixen fins als portals i entre ells un túnel sota terra (una closca de murs i sostre, un portal a cada boca).
-Cover (tunnel)	Cobert (túnel)
-Ramp gradient	Pendent de les rampes
-Banks	Talussos
- m out per metre up	 m cap enfora per metre d'alçada
-Ramps	Rampes
-at the start	al principi
-at the end	al final
-A tunnel needs a depth of 6 m or more: shallower it stays an open cutting	Un túnel necessita una profunditat de 6 m o més: amb menys queda com a trinxera oberta
-Each ramp is about	Cada rampa fa uns
-Pieces lowered:	Trams rebaixats:
-tunnel pieces:	trams de túnel:
-portals:	portals:
-their overhead taken off: wire them again (Transit network, Power)	se'ls ha tret el cable aeri: torna'l a estendre (Xarxa de transport, Alimentació)
-Platforms at the stations	Andanes a les estacions
-The kit's platform of each rail station's mode beside its track, on the side its stop stands, as long as its platform says	L'andana del kit per al mode de cada estació ferroviària al costat de la seva via, al costat de la seva parada, tan llarga com indica la seva andana
-Platforms laid:	Andanes col·locades:
-lay the wires, masts, poles and frogs too	estén també cables, pals i agulles aèries
-Catenary mast	Pal de catenària
-Trolleybus pole	Pal de troleibús
-Trolleybus frog	Agulla aèria de troleibús
-Section insulator	Aïllador de secció
 Lake	Llac
 River	Riu
 Water level:	Nivell de l'aigua:
+Banks	Talussos
 Click the shore round and close it on the first point (Enter closes too, right-click takes a point back). The ground inside is dug to a bed and the banks slope to the shore.	Feu clic al voltant de la riba i tanqueu al primer punt (Enter també tanca, el clic dret desfà un punt). El terreny de dins s'excava fins a un llit i els talussos baixen cap a la riba.
 Click the river's middle line from its source on and finish on the last point (or Enter). Water in OMSI lies at one level for a tile: a river runs level.	Feu clic a la línia central del riu des de la font i acabeu a l'últim punt (o Enter). L'aigua a OMSI es troba a un sol nivell per tessel·la: un riu va anivellat.
 Add as a ground texture	Afegeix com a textura de terreny
+Painted line	Línia pintada
+Stop line	Línia de detenció
+A wide solid line across a lane: draw it across the road	Una línia contínua ampla a través d'un carril: dibuixeu-la a través del carrer
+Crossing	Pas de vianants
+Zebra bars: draw it across the road, the bars lie along it	Zebra: dibuixeu-lo a través del carrer, les franges van al llarg d'ell
+Centre line	Línia central
+A double yellow line	Una doble línia groga
+Lane line	Línia de carril
+A white dashed line	Una línia blanca discontínua
+Solid	Contínua
+Dashed	Discontínua
+Double	Doble
+Solid and dashed	Contínua i discontínua
+Crossing (bars)	Pas de vianants (franges)
+A line's width (each line of a double one); a crossing's reach along the road	Amplada d'una línia (de cada una en una doble); fondària d'un pas al llarg del carrer
+Bar	Franja
+Dash	Traç
+Gap	Tall
+Draw with this line	Dibuixa amb aquesta línia
+It is made as a spline type of the content folder (Splines\\openMapper\\marks) and chosen: draw it with Line, Arc or Curve, over the asphalt	Es crea com a tipus d'spline de la carpeta de contingut (Splines\\openMapper\\marks) i es tria: dibuixeu-la amb Línia, Arc o Corba sobre l'asfalt
+Painted line made: draw with it in the junction editor	Línia pintada creada: dibuixeu amb ella a l'editor de cruïlles
 A junction was not made: its roads are too short or too close together. Lengthen them or move the junctions apart.	No s'ha creat cap encreuament: les seves carreteres són massa curtes o massa properes. Allargueu-les o separeu els encreuaments.
+Draw road markings	Dibuixa marques viàries
+Pen	Ploma
+Straight line	Línia recta
+Dashed line	Línia discontínua
+Rectangle	Rectangle
+Arrow	Fletxa
+Eraser	Goma d'esborrar
+Dash length	Longitud del traç
+Gap between dashes	Espai entre traços
+Pointing back	Cap enrere
+Snap to 5 cm	Ajusta a 5 cm
+Drag to draw. The picture is the roadway as the texture lies on it, up is the way of the road; it repeats along, so what leaves at the top comes in at the bottom.	Arrossegueu per dibuixar. La imatge és la calçada tal com hi està estesa la textura, amunt és el sentit de la carretera; es repeteix al llarg, així que el que surt per dalt entra per baix.
+Pick a roadway texture first	Trieu primer una textura de calçada
 Display	Visualització
 X-ray (Alt+Z): see and pick through the mesh	Raigs X (Alt+Z): veure i seleccionar a través de la malla
 Show the textures	Mostra les textures
@@ -2746,42 +2493,9 @@ Paint my own markings	Pintar les meves pròpies marques
 The maker paints the lines onto the roadway texture: pick a plain asphalt texture, or its own lines show too	El creador pinta les línies sobre la textura de la calçada: trieu una textura d'asfalt llisa, o també es veuran les seves línies
 Standard for these lanes	Estàndard per a aquests carrils
 Add a line	Afegeix una línia
-Across the roadway from its middle (right of the road's way is plus)	Per la calçada des del seu mig (la dreta del sentit de la via és positiu)
-Solid	Contínua
-Dashed	Discontínua
-Double solid	Doble contínua
-Solid and dashed	Contínua i discontínua
-The line's width	L'amplada de la línia
-Dash length	Longitud del traç
-Gap between dashes	Espai entre traços
-Draw road markings	Dibuixa marques viàries
-Pen	Ploma
-Straight line	Línia recta
-Dashed line	Línia discontínua
-Rectangle	Rectangle
-Arrow	Fletxa
-Eraser	Goma d'esborrar
-Pointing back	Cap enrere
-Snap to 5 cm	Ajusta a 5 cm
-Drag to draw. The picture is the roadway as the texture lies on it, up is the way of the road; it repeats along, so what leaves at the top comes in at the bottom.	Arrossegueu per dibuixar. La imatge és la calçada tal com hi està estesa la textura, amunt és el sentit de la carretera; es repeteix al llarg, així que el que surt per dalt entra per baix.
-Pick a roadway texture first	Trieu primer una textura de calçada
 Draw by hand…	Dibuixa a mà…
 A drawing board with a pen, lines, arrows and an eraser: what you draw goes onto the roadway	Una taula de dibuix amb una ploma, línies, fletxes i una goma d'esborrar: el que dibuixeu va a la calçada
 a drawing is on the road	un dibuix és a la carretera
-Painted line	Línia pintada
-Stop line	Línia de detenció
-A wide solid line across a lane: draw it across the road	Una línia contínua ampla a través d'un carril: dibuixeu-la a través del carrer
-Crossing	Pas de vianants
-Zebra bars: draw it across the road, the bars lie along it	Zebra: dibuixeu-lo a través del carrer, les franges van al llarg d'ell
-Centre line	Línia central
-A double yellow line	Una doble línia groga
-Lane line	Línia de carril
-A white dashed line	Una línia blanca discontínua
-Double	Doble
-Crossing (bars)	Pas de vianants (franges)
-A line's width (each line of a double one); a crossing's reach along the road	Amplada d'una línia (de cada una en una doble); fondària d'un pas al llarg del carrer
-Bar	Franja
-Dash	Traç
-Draw with this line	Dibuixa amb aquesta línia
-It is made as a spline type of the content folder (Splines\\openMapper\\marks) and chosen: draw it with Line, Arc or Curve, over the asphalt	Es crea com a tipus d'spline de la carpeta de contingut (Splines\\openMapper\\marks) i es tria: dibuixeu-la amb Línia, Arc o Corba sobre l'asfalt
-Painted line made: draw with it in the junction editor	Línia pintada creada: dibuixeu amb ella a l'editor de cruïlles
+Across the roadway from its middle (right of the road's way is plus)	Per la calçada des del seu mig (la dreta del sentit de la via és positiu)
+Double solid	Doble contínua
+The line's width	L'amplada de la línia

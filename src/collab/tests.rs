@@ -208,28 +208,6 @@ fn groups_are_shared() {
 }
 
 #[test]
-fn the_transit_network_is_shared_both_ways() {
-    let (_h, mut ana, mut bruno) = session();
-    // the host makes the map Modern with a station; the guest gets it
-    let before = ana.doc.transit.clone();
-    ana.doc.transit.modes = crate::transit::Modes::of(&[crate::transit::Mode::Tram]);
-    ana.doc.transit.file_mut(crate::transit::File::Stations).blocks.push(crate::transit::Block::with("station", &[("id", "A"), ("modes", "tram")]));
-    ana.history.push_snapshot("transit", crate::history::Snapshot { transit: Some(before), ..Default::default() });
-    settle(&mut ana, &mut bruno);
-    assert_eq!(bruno.doc.transit.modes, ana.doc.transit.modes);
-    assert_eq!(bruno.doc.transit.file(crate::transit::File::Stations), ana.doc.transit.file(crate::transit::File::Stations));
-    // a guest may change it too (it is no host-only part)
-    let before = bruno.doc.transit.clone();
-    bruno.doc.transit.file_mut(crate::transit::File::Routes).blocks.push(crate::transit::Block::with("route", &[("id", "T1"), ("mode", "tram")]));
-    bruno.history.push_snapshot("transit", crate::history::Snapshot { transit: Some(before), ..Default::default() });
-    settle(&mut ana, &mut bruno);
-    assert!(!bruno.notes.contains(&Note::HostOnly));
-    assert_eq!(ana.doc.transit.file(crate::transit::File::Routes).find("route", "T1"), Some(0));
-    // (and the host's copy is written on its save)
-    assert!(ana.doc.transit.dirty);
-}
-
-#[test]
 fn a_guest_map_lands_in_a_folder_of_its_own() {
     let content = std::env::temp_dir().join(format!("openmapper-collab-{}", std::process::id()));
     std::fs::create_dir_all(content.join("maps").join("Grundorf_multiplayer")).unwrap();

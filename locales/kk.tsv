@@ -2438,301 +2438,48 @@ Could not copy the photos	Суреттерді көшіру мүмкін бол�
 Copying the photos	Суреттер көшірілуде
 Hold only the photos of the tiles near the camera	Камераға жақын тайлдардың суреттерін ғана ұстау
 The others keep their photo in the map's folder, and are put up again when you go back to them.	Қалғандары суретін карта қалтасында сақтайды да, оларға қайтқанда қайта шығады.
-A tram loop with two stations and its wire: save, then drive it in openOMSI with a tram of your own.	Екі станциясы және байланыс сымы бар трамвай айналмасы: сақтаңыз да, openOMSI-де өз трамвайыңызбен жүріп өтіңіз.
-Transit kit made, files:	Көлік жинағы жасалды, файлдар:
-The transit kit could not be made	Көлік жинағын жасау мүмкін болмады
-Transit network problems	Көлік желісінің мәселелері
-Stations without their mode's lanes	Өз көлік түрінің жолақтары жоқ станциялар
-Stations without their stop	Өз аялдамасы жоқ станциялар
-openOMSI's own reader finds this in the map's transport folder (stations, routes, wires, switches, depots, signals): a service it names is skipped, a section or a block left out. Open Map > Transit network to change it.	Мұны openOMSI-дің өз оқу модулі картаның transport қалтасынан табады (станциялар, маршруттар, сымдар, бұрмалағыштар, депо, сигналдар): аталған қозғалыс режимі өткізіліп жіберіледі, секция немесе блок-учаске есепке алынбайды. Өзгерту үшін Карта > Көлік желісі тармағын ашыңыз.
-openOMSI routes a service over the lanes of its mode within 25 m of each station (rails for trams, metro and trains, streets for buses and trolleybuses). This station has none of its modes' near, so its services cannot run. Move the stop next to the track or road, or lay one there.	openOMSI қозғалыс режимін әр станциядан 25 м ішіндегі өз түрінің жолақтарымен салады (трамвай, метро және пойыздар үшін рельстер, автобустар мен троллейбустар үшін көшелер). Бұл станцияның қасында оның түрлерінің ешбір жолағы жоқ, сондықтан оның режимдері жүре алмайды. Аялдаманы рельс жолына немесе көлік жолына жақындатыңыз немесе оны сол жерге салыңыз.
-A station is found by the game among the map's stops: by its stop object, else by its name. This one's object is no stop on the map and no stop has its name, so the services through it are skipped. Pick its stop again in Map > Transit network, Stations.	Ойын станцияны картаның аялдамаларынан іздейді: аялдама нысаны бойынша, болмаса атауы бойынша. Бұл станцияның нысаны картада аялдама емес және ешбір аялдама оның атауымен аталмаған, сондықтан ол арқылы өтетін режимдер өткізіліп жіберіледі. Оның аялдамасын Карта > Көлік желісі, Станциялар бөлімінде қайта таңдаңыз.
-station	станция
-Transit network…	Көлік желісі…
-The transport folder stays: openOMSI still reads its stations, routes and wires.	transport қалтасы қалады: openOMSI оның станцияларын, маршруттарын және сымдарын оқи береді.
-Remove it too	Оны да жою
-Start with a tram line: a loop of track under its wire, two stations and a route	Трамвай желісінен бастау: байланыс сымы астындағы айналма жол, екі станция және маршрут
-Classic	Классикалық
-Runs in OMSI 2 and in openOMSI. Buses, and trams and trains as OMSI 2 has them.	OMSI 2-де де, openOMSI-де де жұмыс істейді. Автобустар, ал трамвайлар мен пойыздар — OMSI 2-дегідей.
-Modern	Заманауи
-openOMSI only. Real transit: stations, routes, overhead wire, third rail, depots and signal blocks.	Тек openOMSI. Нағыз көлік: станциялар, маршруттар, байланыс желісі, байланыс рельсі, депо және блок-учаскелер.
-Made for (one or more):	Не үшін (бір немесе бірнеше):
-Choose at least one	Кемінде біреуін таңдаңыз
-OMSI 2 cannot run a Modern map's routes, wires or blocks, and openOMSI runs only vehicles of its modes on it. openMapper's transit kit (tracks, wires, platforms, masts) is made in the content folder.	OMSI 2 заманауи картаның маршруттарын, сымдарын немесе блок-учаскелерін іске қоса алмайды, ал openOMSI онда тек оның түрлеріндегі көлікті жүргізеді. openMapper көлік жинағы (рельс жолдары, сымдар, платформалар, діңгектер) контент қалтасында жасалады.
-Overview	Шолу
-Stations	Станциялар
-Depots	Депо
-Power	Қуат
-Switches and signals	Бұрмалағыштар мен сигналдар
-Set it (else the game's default)	Орнату (әйтпесе — ойынның әдепкі мәні)
-(not set)	(орнатылмаған)
-Take it out	Алып тастау
-Transit network	Көлік желісі
-This is a Classic map.	Бұл — классикалық карта.
-Stations, routes without tours, the overhead wire, the third rail, depots and signal blocks are openOMSI's (0.3.42 and later): make the map Modern in Map settings to give it a transit network. OMSI 2 cannot run them.	Станциялар, шығуларсыз маршруттар, байланыс желісі, байланыс рельсі, депо және блок-учаскелер — openOMSI мүмкіндіктері (0.3.42 және жаңалары): картаға көлік желісін беру үшін оны Карта баптауларында заманауи етіңіз. OMSI 2 оларды іске қоса алмайды.
-No stop there: click a stop object (a bus stop, or the kit's station stop)	Мұнда аялдама жоқ: аялдама нысанын басыңыз (автобус аялдамасын немесе жинақтағы станция аялдамасын)
-Now click where the block ends	Енді блок-учаске аяқталатын жерді басыңыз
-Click the signal object itself	Сигнал нысанының өзін басыңыз
-Then click in the view	Содан кейін көріністе басыңыз
-Modern map for	Заманауи карта, түрлері:
-openOMSI runs only vehicles of these modes here; OMSI 2 cannot run the network. The modes are changed in Map settings.	openOMSI мұнда тек осы түрлердің көлігін жүргізеді; OMSI 2 желіні іске қоса алмайды. Түрлер Карта баптауларында өзгертіледі.
-Services	Қозғалыс режимдері
-Track rules	Рельс жолдарының ережелері
-Overhead wire spans	Байланыс желісінің аралықтары
-Third rail spans	Байланыс рельсінің аралықтары
-Trolleybus wire spans	Троллейбус желісінің аралықтары
-Switches	Бұрмалағыштар
-Signals and blocks	Сигналдар мен блок-учаскелер
-Problems	Мәселелер
-None: openOMSI reads the network as it is.	Жоқ: openOMSI желіні сол күйінде оқиды.
-error	қате
-warning	ескерту
-Found by openOMSI's own reader of the transport folder, the texts as it writes them in its log.	openOMSI-дің transport қалтасын оқитын өз модулі тапқан; мәтіндер — ол журналға қалай жазса, солай.
-openMapper's transit kit	openMapper көлік жинағы
-Tracks, platforms, wires and objects made by openMapper for Modern maps (OMSI 2 ships no metro, third rail or trolleybus wire). They are in the catalogue under openMapper; click one to place it.	openMapper заманауи карталар үшін жасаған рельс жолдары, платформалар, сымдар және нысандар (OMSI 2-де метро, байланыс рельсі және троллейбус желісі жоқ). Олар каталогта openMapper бөлімінде; қою үшін біреуін басыңыз.
-Make the kit	Жинақты жасау
-A station is a stop object of the map (a bus stop, or the kit's station stop beside a track) with its platforms. openOMSI routes a service over the lanes of its mode within 25 m of each station.	Станция — картадағы аялдама нысаны (автобус аялдамасы немесе рельс жолы жанындағы жинақтың станция аялдамасы) және оның платформалары. openOMSI қозғалыс режимін әр станциядан 25 м ішіндегі өз түрінің жолақтарымен салады.
-A station for every stop of the map	Картаның әр аялдамасына станция
-Stops not yet a station become one, named as the stop, its modes from the tracks and roads beside it	Әлі станция емес аялдамалар станцияға айналады: атауы — аялдаманікі, түрлері — жанындағы рельс жолдары мен көлік жолдары бойынша
-New station	Жаңа станция
-Stations added:	Қосылған станциялар:
-Choose a station	Станцияны таңдаңыз
-Id	Код
-Modes	Түрлері
-Stop object	Аялдама нысаны
-Pick	Таңдау
-Place	Орны
-Change to	Ауысу
-Platforms	Платформалар
-Side	Жағы
-island	аралдық
-both	екі жағынан
-platform screen doors	платформаның қорғаныс есіктері
-Delete the station	Станцияны жою
-A route is segments from station to station (the stops between them in order) and services over them: a branch, a short working or an express is another segment or service. openOMSI makes the timetable's tours from them and finds the way over the tracks itself.	Маршрут — станциядан станцияға дейінгі кесінділер (арасындағы аялдамалар ретімен) және олар бойынша қозғалыс режимдері: тармақ, қысқартылған рейс немесе экспресс — бұл тағы бір кесінді немесе режим. openOMSI олардан кестенің шығуларын өзі жасайды және рельстер бойынша жолды өзі табады.
-Add two stations or more first (Stations)	Алдымен кемінде екі станция қосыңыз («Станциялар» қойындысы)
-New route	Жаңа маршрут
-Segment	Кесінді
-Stops between	Аралық аялдамалар
-Passed without stopping	Тоқтамай өтеді
-Standing at a stop	Аялдамада тұру
-Speed	Жылдамдық
-Way back	Кері жол
-over the same segment	сол кесінді бойынша
-another segment	басқа кесінді бойынша
-Service	Қозғалыс режимі
-Segments in order	Кесінділер ретімен
-From – to	Қайдан – қайда
-Days	Күндер
-every day	күн сайын
-weekends	демалыс күндері
-Saturdays	сенбі күндері
-Sundays	жексенбі күндері
-turns back	кері бұрылады
-goes round a loop	айналма бойымен жүреді
-goes to depot	депоға кетеді
-Cars in a train	Құрамдағы вагондар
-Every 10 minutes from 05:30 to 23:30 over all the route's segments	05:30-дан 23:30-ға дейін әр 10 минут сайын маршруттың барлық кесінділері бойынша
-Departures of their own	Жеке жөнелу уақыттары
-For a service without a headway: its departures, as 06:00 06:12 06:30.	Интервалы жоқ режим үшін: оның жөнелу уақыттары, мысалы 06:00 06:12 06:30.
-Departures	Жөнелу уақыттары
-A service's depot sends out its vehicles: its AI group (Traffic and AI) supplies them, and the first departure of the day leaves by its gate along the rails to the first station.	Режимнің депосы оның көліктерін шығарады: оларды депоның ЖИ тобы («Трафик және ЖИ») береді, ал күннің бірінші рейсі депо қақпасынан рельстер бойымен бірінші станцияға шығады.
-AI group	ЖИ тобы
-Capacity	Сыйымдылығы
-Its stop	Оның аялдамасы
-Gates	Қақпалар
-Add a gate	Қақпа қосу
-has a turning loop	бұрылыс айналмасы бар
-Delete the depot	Депоны жою
-A gate needs a rail within 25 m and a way to the first station, or the trip starts at its station (the game's log says so).	Қақпаға 25 м ішінде рельс және бірінші станцияға дейін жол керек, әйтпесе рейс өз станциясынан басталады (бұл туралы ойын журналы жазады).
-Which tracks serve which mode and how they are powered: a rule matches a track type (a file pattern, * for any letters), a tile or one piece; later rules win. Without a rule openOMSI guesses from the type's name.	Қай рельс жолы қай көлік түріне арналған және қалай қуат алады: ереже рельс жолының түріне (файл үлгісі, * — кез келген әріптер), тайлға немесе бір бөлікке сәйкес келеді; кейінгі ережелердің басымдығы бар. Ереже болмаса, openOMSI түрдің атауына қарап болжайды.
-A rule for the selected track's type	Таңдалған рельс жолының түріне ереже
-Empty rule	Бос ереже
-(select a track in the view to make a rule for its type)	(түріне ереже жасау үшін көріністе рельс жолын таңдаңыз)
-Track type	Рельс жолының түрі
-Only on tile / piece	Тек тайлда / бөлікте
-id	код
-in the street	көшеде
-railway	оқшауланған
-overhead wire	байланыс сымы
-third rail	байланыс рельсі
-diesel	дизель
-Tunnel	Тоннель
-yes	иә
-no	жоқ
-Gauge	Рельс аралығы
-A map for buses alone has no line to power.	Тек автобустарға арналған картада қуат беретін желі жоқ.
-Third rail	Байланыс рельсі
-Trolleybus wire	Троллейбус желісі
-Where the wire is, the player's tram or electric train needs a live section of it over its pantograph (dead sections and breaks stop the drive). Without spans openOMSI takes the current for granted. Spans are laid along the selected tracks.	Сым бар жерде ойыншының трамвайына немесе электр пойызына ток қабылдағыштың үстінде кернеудегі секция керек (тоқсыз секциялар мен үзілістер тартуды тоқтатады). Аралықтар болмаса, openOMSI ток барлық жерде бар деп санайды. Аралықтар таңдалған рельс жолдары бойымен салынады.
-The player's metro train needs a live section of third rail beside its shoe. The kit's metro tracks carry the rail itself; spans say where it is fed. Spans are laid along the selected tracks.	Ойыншының метро пойызына ток қабылдағышының жанында кернеудегі байланыс рельсінің секциясы керек. Жинақтағы метро жолдарында рельстің өзі бар; аралықтар оған қай жерде қуат берілетінін көрсетеді. Аралықтар таңдалған рельс жолдары бойымен салынады.
-openOMSI's trolleybuses run on this wire (trolley.txt beside global.cfg): a pole is powered only on a pair fed by a substation. Spans are laid over each way's lane of the selected roads, with the wire splines that show them.	openOMSI троллейбустары осы желімен жүреді (global.cfg жанындағы trolley.txt): штангаға тек қосалқы станциядан қуат алатын сым жұбында ғана ток келеді. Аралықтар таңдалған жолдардың әр бағыттағы жолағының үстіне, оларды көрсететін сым сплайндарымен бірге салынады.
-The line	Желі
-Voltage	Кернеу
-Current	Ток
-direct	тұрақты
-alternating	айнымалы
-Wire height	Сым биіктігі
-Wire spacing	Сымдар арасындағы қашықтық
-Sections (each fed by a substation)	Секциялар (әрқайсысы өз қосалқы станциясынан)
-name	атауы
-live	кернеуде
-feeder Ω	фидер Ω
-Section	Секция
-Spans	Аралықтар
-one pair over the middle	ортасында бір жұп
-a pair over each 3.0 m lane	әр 3,0 м жолақтың үстінде бір жұп
-a pair over each 3.5 m lane	әр 3,5 м жолақтың үстінде бір жұп
-lay the wire splines too	сым сплайндарын да салу
-Wire the selected roads	Таңдалған жолдарды электрлендіру
-Electrify the selected tracks	Таңдалған рельс жолдарын электрлендіру
-Take their spans off	Олардың аралықтарын алып тастау
-(select roads in the view)	(көріністе жолдарды таңдаңыз)
-(select tracks in the view)	(көріністе рельс жолдарын таңдаңыз)
-Their spans are taken off	Олардың аралықтары алынды
-Spans laid:	Салынған аралықтар:
-Gaps	Үзілістер
-Insulators	Изоляторлар
-Gap	Үзіліс
-Insulator	Изолятор
-Frogs (wire switches)	Сым бұрмалағыштары
-Where three spans meet: the contact plate before it sets it by the current the bus draws (power) or by its indicator.	Үш аралық түйіскен жерде: оның алдындағы түйіспе пластина оны троллейбус алатын ток бойынша (тарту) немесе бұрылыс көрсеткіші бойынша ауыстырады.
-by current	ток бойынша
-by indicator	бұрылыс көрсеткіші бойынша
-Frog	Бұрмалағыш
-A switch listed here holds while a train stands on it, goes back to its rest position, and can be thrown by hand only or locked by a signal. Switches not listed work as before.	Осы тізімдегі бұрмалағыш үстінде пойыз тұрғанда ауыспайды, қалыпты күйіне қайтады және тек қолмен ауыстырылатын немесе сигналмен бекітілген бола алады. Тізімде жоқ бұрмалағыштар бұрынғыдай жұмыс істейді.
-The selected switch objects	Таңдалған бұрмалағыш нысандары
-simple	қарапайым
-crossover	қиғаш өткел
-double slip	ағылшын бұрмалағышы
-diamond	тұйық қиылыс
-scissors	айқас өткел
-rests straight	қалыпты күйі — тура
-rests diverging	қалыпты күйі — бұрылысқа
-thrown by the route	маршрут бойынша
-by hand only	тек қолмен
-interlocked	орталықтандырылған
-diverging	бұрылысқа
-locked by	бекітетін сигнал
-Blocks	Блок-учаскелер
-A stretch of track that holds one AI train at a time, given by where it begins and ends on the rails; its signals show whether it is free. Blocks need the timetable's trains (the AI) to hold.	Бір уақытта тек бір ЖИ пойызы бола алатын рельс жолының бөлігі; рельстердегі басы мен соңы арқылы беріледі, оның сигналдары оның бос не бос емес екенін көрсетеді. Блок-учаскелер тек кесте пойыздарына (ЖИ) әсер етеді.
-Ends	Шеттері
-Block	Блок-учаске
-Click where the block begins	Блок-учаске басталатын жерді басыңыз
-Signals	Сигналдар
-A signal of the map tied to a block shows stop while the block is in use and go while it is free.	Блок-учаскеге байланған картадағы сигнал учаске бос емес кезде «тоқта», бос кезде «жүр» көрсетеді.
-main	негізгі
-distant	ескерту
-block	блоктық
-shunting	маневрлік
-speed	жылдамдық
-tram	трамвайлық
-Tram street track	Көшедегі трамвай жолы
-Tram track on grass	Көгалдағы трамвай жолы
-Railway track	Теміржол рельс жолы
-Metro track	Метро жолы
-Metro tunnel	Метро тоннелі
-Tram platform	Трамвай платформасы
-Metro side platform	Метроның бүйір платформасы
-Metro island platform	Метроның аралдық платформасы
-Railway side platform	Теміржолдың бүйір платформасы
-Railway island platform	Теміржолдың аралдық платформасы
-Trolleybus wires (one pair)	Троллейбус сымдары (бір жұп)
-Trolleybus wires, 3.0 m lanes	Троллейбус сымдары, 3,0 м жолақтар
-Trolleybus wires, 3.5 m lanes	Троллейбус сымдары, 3,5 м жолақтар
-Catenary mast (arm right)	Байланыс желісінің діңгегі (консолі оңға)
-Catenary mast (arm left)	Байланыс желісінің діңгегі (консолі солға)
-Trolleybus pole (arm right)	Троллейбус желісінің діңгегі (кронштейні оңға)
-Trolleybus pole (arm left)	Троллейбус желісінің діңгегі (кронштейні солға)
-Metro sign	Метро белгісі
-Platform shelter	Платформадағы шатыр
-Buffer stop	Тұйық тірегі
-Station stop	Станция аялдамасы
-Bus	Автобус
-Tram	Трамвай
-Railway	Теміржол
-Metro	Метро
-Trolleybus	Троллейбус
-buses on the streets, stops at the kerb	көшелердегі автобустар, жол жиегіндегі аялдамалар
-street track under a contact wire, low platforms	байланыс сымы астындағы көше рельс жолдары, аласа платформалар
-mainline track, stations with platforms, signals and blocks	магистральдық жолдар, платформалы станциялар, сигналдар мен блок-учаскелер
-track with a third rail, tunnels, high platforms	байланыс рельсі бар жолдар, тоннельдер, биік платформалар
-buses under a pair of wires, frogs at junctions	сым жұбы астындағы автобустар, тармақталуларда бұрмалағыштар
-Depot Square	Депо алаңы
-Park Gate	Саябақ қақпасы
-Tram start	Трамвай старты
-Loop line	Айналма желі
-A trolleybus junction under its wires with three stations: save, then drive it in openOMSI with a trolleybus of your own.	Үш станциясы бар, сымдар астындағы троллейбус қиылысы: сақтаңыз да, openOMSI-де өз троллейбусыңызбен жүріп өтіңіз.
-station stops:	станция аялдамалары:
-stations:	станциялар:
-routes:	маршруттар:
-Vehicles of other modes	Басқа түрлердің көлігі
-Services without a vehicle of their mode	Өз түрінің көлігі жоқ қозғалыс режимдері
-openOMSI runs only vehicles of a Modern map's modes on it. This vehicle of the AI lists is made for another mode (its file says so, or it is a depot's vehicle and its shape says so), so the game leaves it out. Change it in Map > Traffic and AI, or add its mode to the map in Map settings.	openOMSI заманауи картада тек оның түрлеріндегі көлікті жүргізеді. ЖИ тізімдеріндегі бұл көлік басқа түрге арналған (бұл оның файлында айтылған немесе бұл депо көлігі және бұл оның құрылымынан көрінеді), сондықтан ойын оны шығармайды. Оны Карта > Трафик және ЖИ арқылы ауыстырыңыз немесе оның түрін Карта баптауларында картаға қосыңыз.
-A service of the transit network takes its vehicles from its depot's AI group (or names one vehicle file). That group has no vehicle of the route's mode, so nothing runs it. Give the depot an AI group with such vehicles (Map > Traffic and AI), or choose another depot.	Көлік желісінің қозғалыс режимі көлікті өз депосының ЖИ тобынан алады (немесе бір көлік файлын көрсетеді). Бұл топта маршрут түрінің көлігі жоқ, сондықтан онымен ешкім жүрмейді. Депоға осындай көлігі бар ЖИ тобын беріңіз («Трафик және ЖИ») немесе басқа депо таңдаңыз.
-group	топ
-route	маршрут
-its depot names no AI group	оның депосы ЖИ тобын көрсетпейді
-no vehicle of the mode in	бұл түрдің көлігі жоқ, топ:
-Stations from OpenStreetMap	OpenStreetMap станциялары
-Metro tracks	Метро жолдары
-in tunnels too: build them with the kit's metro tunnel and cut the ground away (a Modern map)	тоннельдерде де: оларды жинақтың метро тоннелімен салып, жерді ойып тастаңыз (заманауи карта)
-Start with a trolleybus line: a junction under its wires with frogs, three stations and two routes	Троллейбус желісінен бастау: бұрмалағыштары бар сымдар астындағы қиылыс, үш станция және екі маршрут
-Stations (tram, metro, railway)	Станциялар (трамвай, метро, теміржол)
-Each tram stop and station of the map's rail modes put with the kit's station stop beside the nearest track (within 25 m); every stop of the map then becomes a station of its transport folder	Картаның рельсті түрлеріндегі әр трамвай аялдамасы мен станциясы жинақтың станция аялдамасымен ең жақын рельс жолының жанына қойылады (25 м ішінде); содан кейін картаның әр аялдамасы оның transport қалтасының станциясына айналады
-Routes (tram, trolleybus, metro, railway)	Маршруттар (трамвай, троллейбус, метро, теміржол)
-Each route of the map's modes through two or more of its stations a segment of its line, the line's service as often as OpenStreetMap says (else every 10 minutes), from 05:30 to 23:30; openOMSI finds the way over the tracks	Картаның екі немесе одан көп станциясы арқылы өтетін, оның түрлеріндегі әр маршрут — өз желісінің кесіндісі, желінің қозғалыс режимі — OpenStreetMap көрсеткен аралықпен (әйтпесе әр 10 минут сайын), 05:30-дан 23:30-ға дейін; рельстер бойынша жолды openOMSI өзі табады
-no vehicle of it is installed	оның бірде-бір көлігі орнатылмаған
-Its vehicles:	Оның көлігі:
-(select roads in the view, and the junctions between them)	(көріністе жолдарды және олардың арасындағы қиылыстарды таңдаңыз)
-(select tracks in the view, and their switches)	(көріністе рельс жолдарын және олардың бұрмалағыштарын таңдаңыз)
-A pair of wires over each way's kerb lane; through a selected junction only the lanes that join wired roads. Frogs are put where three wires meet.	Әр бағыттың шеткі жолағының үстінде бір жұп сым; таңдалған қиылыста тек электрлендірілген жолдарды жалғайтын жолақтар. Үш сым түйіскен жерге бұрмалағыш қойылады.
-The map's files are still being read	Карта файлдары әлі оқылуда
-West Gate	Батыс қақпа
-East Market	Шығыс базар
-North Park	Солтүстік саябақ
-Market line	Базар желісі
-Park line	Саябақ желісі
-Trolleybus start	Троллейбус старты
-frogs:	бұрмалағыштар:
-places where more than three wires meet get no frog: wire fewer turns there	жерде үштен көп сым түйіседі, бұрмалағыш қойылмады: ол жерлерде азырақ бұрылысты электрлендіріңіз
-Track ends that do not meet	Түйіспейтін рельс жолдарының ұштары
-Two tracks run on into one another but their ends lie apart: the game joins rails only where their ends lie within 1.5 m, so no train or tram gets across (a route through there finds no way). "Fix" moves one end onto the other, arriving in line with it, and joins them.	Екі рельс жолы бірін-бірі жалғастырады, бірақ ұштары алшақ: ойын рельстерді ұштары 1,5 м-ден жақын болғанда ғана қосады, сондықтан мұнда пойыз да, трамвай да өте алмайды (осы жер арқылы өтетін маршрут жол таппайды). «Түзету» бір ұшты екіншісіне, онымен бір сызықта жылжытып, оларды қосады.
-tracks	рельс жолдары
-Select the roads or tracks to build into the ground	Жерге түсіру үшін жолдарды немесе рельс жолдарын таңдаңыз
-Cutting	Ойық
-Cut and cover tunnel	Ашық тәсілмен салынған туннель
-Nothing to build into the ground	Жерге түсіретін ештеңе жоқ
-Build into the ground	Жерге түсіру
-The chain of the selected pieces lowered, with ramps at its ends. Cut: an open cutting with sloped banks. Cover: open ramps down to the portals and a tunnel under the ground between them (a shell of walls and roof, a portal at each mouth).	Таңдалған бөліктер тізбегі төмен түсіріледі, ұштарында — пандустар. Ойық: ашық, беткейлерімен. Туннель: порталдарға дейін ашық пандустар, ал олардың арасында жер астындағы туннель (қабырғалар мен күмбез, әр кіреберісте портал).
-Cover (tunnel)	Туннель (жабық)
-Ramp gradient	Пандус еңісі
-Banks	Беткейлер
- m out per metre up	 м жанға әр метр биіктікке
-Ramps	Пандустар
-at the start	басында
-at the end	соңында
-A tunnel needs a depth of 6 m or more: shallower it stays an open cutting	Туннельге кемінде 6 м тереңдік керек: таязырағы ашық ойық болып қалады
-Each ramp is about	Әр пандус шамамен
-Pieces lowered:	Түсірілген бөліктер:
-tunnel pieces:	туннель бөліктері:
-portals:	порталдар:
-their overhead taken off: wire them again (Transit network, Power)	олардың байланыс желісі алынды: оны қайта тартыңыз (Көлік желісі, Қуат)
-Platforms at the stations	Станциялардағы платформалар
-The kit's platform of each rail station's mode beside its track, on the side its stop stands, as long as its platform says	Әр рельс станциясының түрі үшін жинақтағы платформа оның рельс жолының жанында, аялдамасы тұрған жақта, платформасында көрсетілген ұзындықта
-Platforms laid:	Салынған платформалар:
-lay the wires, masts, poles and frogs too	сымдарды, діңгектерді, тіректерді және бұрмалағыштарды да салу
-Catenary mast	Байланыс желісінің діңгегі
-Trolleybus pole	Троллейбус желісінің тірегі
-Trolleybus frog	Троллейбус бұрмалағышы
-Section insulator	Секциялық изолятор
 Lake	Көл
 River	Өзен
 Water level:	Су деңгейі:
+Banks	Беткейлер
 Click the shore round and close it on the first point (Enter closes too, right-click takes a point back). The ground inside is dug to a bed and the banks slope to the shore.	Жағаны айнала басып, бірінші нүктеде жабыңыз (Enter де жабады, тінтуірдің оң жағы нүктені қайтарады). Ішіндегі жер түбіне дейін қазылып, жағалар жағаға қарай еңкейеді.
 Click the river's middle line from its source on and finish on the last point (or Enter). Water in OMSI lies at one level for a tile: a river runs level.	Өзеннің орта сызығын бастауынан бастап басыңыз да, соңғы нүктеде аяқтаңыз (немесе Enter). OMSI-де су бір тайлда бір деңгейде тұрады: өзен тегіс ағады.
 Add as a ground texture	Жер текстурасы ретінде қосу
+Painted line	Боялған сызық
+Stop line	Тоқтау сызығы
+A wide solid line across a lane: draw it across the road	Жолақты көлденең кесетін кең тұтас сызық: жолды көлденең кесіп сызыңыз
+Crossing	Өткел
+Zebra bars: draw it across the road, the bars lie along it	Зебра: жолды көлденең кесіп сызыңыз, жолақтар жол бойымен жатады
+Centre line	Орталық сызық
+A double yellow line	Қос сары сызық
+Lane line	Жолақ сызығы
+A white dashed line	Ақ үзік сызық
+Solid	Тұтас
+Dashed	Үзік
+Double	Қос
+Solid and dashed	Тұтас және үзік
+Crossing (bars)	Өткел (зебра)
+A line's width (each line of a double one); a crossing's reach along the road	Сызық ені (қоста — әрқайсысы); өткелдің жол бойындағы тереңдігі
+Bar	Жолақ
+Dash	Штрих
+Gap	Үзіліс
+Draw with this line	Осы сызықпен сызу
+It is made as a spline type of the content folder (Splines\\openMapper\\marks) and chosen: draw it with Line, Arc or Curve, over the asphalt	Мазмұн қалтасында (Splines\\openMapper\\marks) сплайн түрі ретінде жасалып, таңдалады: асфальт үстіне Сызық, Доға немесе Қисық құралымен сызыңыз
+Painted line made: draw with it in the junction editor	Боялған сызық жасалды: онымен қиылыс редакторында сызыңыз
 A junction was not made: its roads are too short or too close together. Lengthen them or move the junctions apart.	Айқасу жасалмады: жолдары тым қысқа немесе бір-біріне тым жақын. Оларды ұзартыңыз немесе айқасуларды алшақтатыңыз.
+Draw road markings	Жол таңбаларын салу
+Pen	Қалам
+Straight line	Түзу сызық
+Dashed line	Үзік сызық
+Rectangle	Тікбұрыш
+Arrow	Көрсеткі
+Eraser	Өшіргіш
+Dash length	Үзік ұзындығы
+Gap between dashes	Үзіктер арасындағы бос орын
+Pointing back	Артқа қараған
+Snap to 5 cm	5 см-ге тіркеу
+Drag to draw. The picture is the roadway as the texture lies on it, up is the way of the road; it repeats along, so what leaves at the top comes in at the bottom.	Сызу үшін сүйреңіз. Сурет — текстура төселген жолдың өзі, жоғары жағы — жол бағыты; ол бойына қайталанады, сондықтан жоғарыдан шыққан нәрсе төменнен кіреді.
+Pick a roadway texture first	Алдымен жүру бөлігінің текстурасын таңдаңыз
 Display	Көрсетілім
 X-ray (Alt+Z): see and pick through the mesh	Рентген (Alt+Z): меш арқылы көру және таңдау
 Show the textures	Текстураларды көрсету
@@ -2746,42 +2493,9 @@ Paint my own markings	Өз таңбалауымды салу
 The maker paints the lines onto the roadway texture: pick a plain asphalt texture, or its own lines show too	Жасаушы сызықтарды жол төсемінің текстурасына салады: тегіс асфальт текстурасын таңдаңыз, әйтпесе оның өз сызықтары да көрінеді
 Standard for these lanes	Осы жолақтар үшін стандарт
 Add a line	Сызық қосу
-Across the roadway from its middle (right of the road's way is plus)	Жолды көлденеңінен ортасынан бастап (жол бағытының оң жағы — плюс)
-Solid	Тұтас
-Dashed	Үзік
-Double solid	Қос тұтас
-Solid and dashed	Тұтас және үзік
-The line's width	Сызық ені
-Dash length	Үзік ұзындығы
-Gap between dashes	Үзіктер арасындағы бос орын
-Draw road markings	Жол таңбаларын салу
-Pen	Қалам
-Straight line	Түзу сызық
-Dashed line	Үзік сызық
-Rectangle	Тікбұрыш
-Arrow	Көрсеткі
-Eraser	Өшіргіш
-Pointing back	Артқа қараған
-Snap to 5 cm	5 см-ге тіркеу
-Drag to draw. The picture is the roadway as the texture lies on it, up is the way of the road; it repeats along, so what leaves at the top comes in at the bottom.	Сызу үшін сүйреңіз. Сурет — текстура төселген жолдың өзі, жоғары жағы — жол бағыты; ол бойына қайталанады, сондықтан жоғарыдан шыққан нәрсе төменнен кіреді.
-Pick a roadway texture first	Алдымен жүру бөлігінің текстурасын таңдаңыз
 Draw by hand…	Қолмен салу…
 A drawing board with a pen, lines, arrows and an eraser: what you draw goes onto the roadway	Қаламы, сызықтары, көрсеткілері және өшіргіші бар сызу тақтасы: салғаныңыз жүру бөлігіне түседі
 a drawing is on the road	сурет жолда тұр
-Painted line	Боялған сызық
-Stop line	Тоқтау сызығы
-A wide solid line across a lane: draw it across the road	Жолақты көлденең кесетін кең тұтас сызық: жолды көлденең кесіп сызыңыз
-Crossing	Өткел
-Zebra bars: draw it across the road, the bars lie along it	Зебра: жолды көлденең кесіп сызыңыз, жолақтар жол бойымен жатады
-Centre line	Орталық сызық
-A double yellow line	Қос сары сызық
-Lane line	Жолақ сызығы
-A white dashed line	Ақ үзік сызық
-Double	Қос
-Crossing (bars)	Өткел (зебра)
-A line's width (each line of a double one); a crossing's reach along the road	Сызық ені (қоста — әрқайсысы); өткелдің жол бойындағы тереңдігі
-Bar	Жолақ
-Dash	Штрих
-Draw with this line	Осы сызықпен сызу
-It is made as a spline type of the content folder (Splines\\openMapper\\marks) and chosen: draw it with Line, Arc or Curve, over the asphalt	Мазмұн қалтасында (Splines\\openMapper\\marks) сплайн түрі ретінде жасалып, таңдалады: асфальт үстіне Сызық, Доға немесе Қисық құралымен сызыңыз
-Painted line made: draw with it in the junction editor	Боялған сызық жасалды: онымен қиылыс редакторында сызыңыз
+Across the roadway from its middle (right of the road's way is plus)	Жолды көлденеңінен ортасынан бастап (жол бағытының оң жағы — плюс)
+Double solid	Қос тұтас
+The line's width	Сызық ені

@@ -113,24 +113,6 @@ A **roundabout** is a Roads tool option: click its centre, then its ring.
 * In the map's properties (click empty ground with Select), **Import your thumbnail** takes a
   picture of your choice (cut to 370 × 280) as the one shown where maps are chosen.
 
-## 10. Trams, trolleybuses, metro and trains
-
-openOMSI (0.3.42 and later) runs more than buses. For that a map has to be **Modern**:
-
-1. **New map…**, choose **Modern** and tick what it is for (Tram, Trolleybus, Metro, Railway,
-   Bus: one or several). With Tram ticked, **Start with a tram line** gives you a working loop
-   to look at. A Modern map runs in openOMSI only.
-2. Lay the track from the catalogue (openMapper's transit kit: street track, metro track,
-   tunnel, platforms). Put a **station stop** beside the track where trains stop.
-3. **Map > Transit network…**: on **Stations**, "A station for every stop of the map"; on
-   **Routes**, a route with a segment from one station to the next and a service over it.
-4. On **Power**, select the tracks in the view and "Electrify the selected tracks" (overhead
-   wire for trams and trains), or the roads for trolleybuses; metro tracks get their third
-   rail's spans the same way.
-5. **Map > Check map** shows what openOMSI would complain about. Then save and drive.
-
-Everything in detail: [TRANSIT.md](TRANSIT.md).
-
 ## Handy to know
 
 | Keys | What |

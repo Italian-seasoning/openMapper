@@ -2438,301 +2438,48 @@ Could not copy the photos	Không chép được ảnh
 Copying the photos	Đang chép ảnh
 Hold only the photos of the tiles near the camera	Chỉ giữ ảnh của các ô gần camera
 The others keep their photo in the map's folder, and are put up again when you go back to them.	Các ô khác giữ ảnh trong thư mục bản đồ và hiện lại khi bạn quay lại đó.
-A tram loop with two stations and its wire: save, then drive it in openOMSI with a tram of your own.	Một vòng tàu điện với hai ga và dây điện: hãy lưu, rồi lái nó trong openOMSI bằng tàu điện của riêng bạn.
-Transit kit made, files:	Đã tạo bộ vận tải, tệp:
-The transit kit could not be made	Không tạo được bộ vận tải
-Transit network problems	Vấn đề của mạng vận tải
-Stations without their mode's lanes	Ga không có làn thuộc loại hình của mình
-Stations without their stop	Ga không có điểm dừng
-openOMSI's own reader finds this in the map's transport folder (stations, routes, wires, switches, depots, signals): a service it names is skipped, a section or a block left out. Open Map > Transit network to change it.	Bộ đọc riêng của openOMSI tìm thấy điều này trong thư mục transport của bản đồ (ga, tuyến đường, dây, ghi, depot, tín hiệu): dịch vụ được nêu bị bỏ qua, phân đoạn hoặc khu gian bị bỏ ra. Mở Bản đồ > Mạng vận tải để sửa.
-openOMSI routes a service over the lanes of its mode within 25 m of each station (rails for trams, metro and trains, streets for buses and trolleybuses). This station has none of its modes' near, so its services cannot run. Move the stop next to the track or road, or lay one there.	openOMSI cho dịch vụ chạy trên các làn thuộc loại hình của nó trong phạm vi 25 m quanh mỗi ga (ray cho tàu điện, tàu điện ngầm và tàu hỏa, đường phố cho xe buýt và xe điện bánh hơi). Gần ga này không có làn nào thuộc các loại hình của nó, nên các dịch vụ của nó không chạy được. Hãy dời điểm dừng đến cạnh ray hoặc đường, hoặc làm một đoạn ở đó.
-A station is found by the game among the map's stops: by its stop object, else by its name. This one's object is no stop on the map and no stop has its name, so the services through it are skipped. Pick its stop again in Map > Transit network, Stations.	Trò chơi tìm ga trong các điểm dừng của bản đồ: theo đối tượng điểm dừng, nếu không thì theo tên. Đối tượng của ga này không phải điểm dừng trên bản đồ và không có điểm dừng nào mang tên nó, nên các dịch vụ qua nó bị bỏ qua. Hãy chọn lại điểm dừng của nó trong Bản đồ > Mạng vận tải, Ga.
-station	ga
-Transit network…	Mạng vận tải…
-The transport folder stays: openOMSI still reads its stations, routes and wires.	Thư mục transport vẫn được giữ: openOMSI vẫn đọc các ga, tuyến đường và dây điện trong đó.
-Remove it too	Xóa cả nó
-Start with a tram line: a loop of track under its wire, two stations and a route	Bắt đầu với một tuyến tàu điện: vòng ray dưới dây điện, hai ga và một tuyến đường
-Classic	Cổ điển
-Runs in OMSI 2 and in openOMSI. Buses, and trams and trains as OMSI 2 has them.	Chạy trong OMSI 2 và openOMSI. Xe buýt, cùng tàu điện và tàu hỏa như trong OMSI 2.
-Modern	Hiện đại
-openOMSI only. Real transit: stations, routes, overhead wire, third rail, depots and signal blocks.	Chỉ openOMSI. Vận tải thật sự: ga, tuyến đường, dây điện trên cao, ray thứ ba, depot và khu gian tín hiệu.
-Made for (one or more):	Dành cho (một hoặc nhiều):
-Choose at least one	Chọn ít nhất một
-OMSI 2 cannot run a Modern map's routes, wires or blocks, and openOMSI runs only vehicles of its modes on it. openMapper's transit kit (tracks, wires, platforms, masts) is made in the content folder.	OMSI 2 không chạy được tuyến đường, dây điện hay khu gian của bản đồ Hiện đại, còn openOMSI chỉ chạy phương tiện thuộc các loại hình của bản đồ trên đó. Bộ vận tải của openMapper (ray, dây, sân ga, cột) được tạo trong thư mục nội dung.
-Overview	Tổng quan
-Stations	Ga
-Depots	Depot
-Power	Điện
-Switches and signals	Ghi và tín hiệu
-Set it (else the game's default)	Đặt (nếu không, dùng mặc định của trò chơi)
-(not set)	(chưa đặt)
-Take it out	Bỏ đi
-Transit network	Mạng vận tải
-This is a Classic map.	Đây là bản đồ Cổ điển.
-Stations, routes without tours, the overhead wire, the third rail, depots and signal blocks are openOMSI's (0.3.42 and later): make the map Modern in Map settings to give it a transit network. OMSI 2 cannot run them.	Ga, tuyến đường không có lượt, dây điện trên cao, ray thứ ba, depot và khu gian tín hiệu là của openOMSI (0.3.42 trở lên): hãy chuyển bản đồ thành Hiện đại trong Cài đặt bản đồ để thêm mạng vận tải. OMSI 2 không chạy được chúng.
-No stop there: click a stop object (a bus stop, or the kit's station stop)	Không có điểm dừng ở đó: hãy nhấp vào một đối tượng điểm dừng (điểm dừng xe buýt, hoặc điểm dừng ga của bộ)
-Now click where the block ends	Giờ hãy nhấp vào nơi khu gian kết thúc
-Click the signal object itself	Nhấp vào chính đối tượng tín hiệu
-Then click in the view	Rồi nhấp vào khung nhìn
-Modern map for	Bản đồ Hiện đại cho
-openOMSI runs only vehicles of these modes here; OMSI 2 cannot run the network. The modes are changed in Map settings.	Ở đây openOMSI chỉ chạy phương tiện thuộc các loại hình này; OMSI 2 không chạy được mạng. Các loại hình được đổi trong Cài đặt bản đồ.
-Services	Dịch vụ
-Track rules	Quy tắc ray
-Overhead wire spans	Nhịp dây điện trên cao
-Third rail spans	Nhịp ray thứ ba
-Trolleybus wire spans	Nhịp dây xe điện bánh hơi
-Switches	Ghi
-Signals and blocks	Tín hiệu và khu gian
-Problems	Vấn đề
-None: openOMSI reads the network as it is.	Không có: openOMSI đọc mạng đúng như hiện có.
-error	lỗi
-warning	cảnh báo
-Found by openOMSI's own reader of the transport folder, the texts as it writes them in its log.	Do bộ đọc thư mục transport riêng của openOMSI tìm thấy, văn bản đúng như nó ghi trong nhật ký.
-openMapper's transit kit	Bộ vận tải của openMapper
-Tracks, platforms, wires and objects made by openMapper for Modern maps (OMSI 2 ships no metro, third rail or trolleybus wire). They are in the catalogue under openMapper; click one to place it.	Ray, sân ga, dây điện và đối tượng do openMapper tạo cho bản đồ Hiện đại (OMSI 2 không có tàu điện ngầm, ray thứ ba hay dây xe điện bánh hơi). Chúng nằm trong danh mục, mục openMapper; nhấp vào một cái để đặt.
-Make the kit	Tạo bộ
-A station is a stop object of the map (a bus stop, or the kit's station stop beside a track) with its platforms. openOMSI routes a service over the lanes of its mode within 25 m of each station.	Ga là một đối tượng điểm dừng của bản đồ (điểm dừng xe buýt, hoặc điểm dừng ga của bộ cạnh ray) cùng các sân ga của nó. openOMSI cho dịch vụ chạy trên các làn thuộc loại hình của nó trong phạm vi 25 m quanh mỗi ga.
-A station for every stop of the map	Một ga cho mỗi điểm dừng của bản đồ
-Stops not yet a station become one, named as the stop, its modes from the tracks and roads beside it	Điểm dừng chưa là ga sẽ thành ga, đặt tên theo điểm dừng, loại hình lấy từ ray và đường bên cạnh
-New station	Ga mới
-Stations added:	Đã thêm ga:
-Choose a station	Chọn một ga
-Id	Mã
-Modes	Loại hình
-Stop object	Đối tượng điểm dừng
-Pick	Chọn
-Place	Vị trí
-Change to	Chuyển sang
-Platforms	Sân ga
-Side	Phía
-island	đảo
-both	cả hai
-platform screen doors	cửa chắn sân ga
-Delete the station	Xóa ga
-A route is segments from station to station (the stops between them in order) and services over them: a branch, a short working or an express is another segment or service. openOMSI makes the timetable's tours from them and finds the way over the tracks itself.	Tuyến đường gồm các đoạn từ ga đến ga (các điểm dừng ở giữa theo thứ tự) và các dịch vụ chạy trên đó: một nhánh, chuyến ngắn hay chuyến tốc hành là một đoạn hoặc dịch vụ khác. openOMSI tự tạo các lượt của bảng giờ từ chúng và tự tìm đường trên ray.
-Add two stations or more first (Stations)	Hãy thêm ít nhất hai ga trước (Ga)
-New route	Tuyến đường mới
-Segment	Đoạn
-Stops between	Điểm dừng ở giữa
-Passed without stopping	Đi qua không dừng
-Standing at a stop	Thời gian dừng tại điểm dừng
-Speed	Tốc độ
-Way back	Chiều về
-over the same segment	trên cùng đoạn
-another segment	đoạn khác
-Service	Dịch vụ
-Segments in order	Các đoạn theo thứ tự
-From – to	Từ – đến
-Days	Ngày
-every day	mỗi ngày
-weekends	cuối tuần
-Saturdays	thứ Bảy
-Sundays	Chủ nhật
-turns back	quay đầu
-goes round a loop	chạy vòng
-goes to depot	về depot
-Cars in a train	Số toa mỗi đoàn
-Every 10 minutes from 05:30 to 23:30 over all the route's segments	Cứ 10 phút từ 05:30 đến 23:30 trên mọi đoạn của tuyến đường
-Departures of their own	Giờ xuất bến riêng
-For a service without a headway: its departures, as 06:00 06:12 06:30.	Cho dịch vụ không có giãn cách: giờ xuất bến của nó, như 06:00 06:12 06:30.
-Departures	Giờ xuất bến
-A service's depot sends out its vehicles: its AI group (Traffic and AI) supplies them, and the first departure of the day leaves by its gate along the rails to the first station.	Depot của dịch vụ đưa phương tiện ra: nhóm AI của nó (Giao thông và AI) cung cấp chúng, và chuyến đầu tiên trong ngày ra qua cổng theo ray tới ga đầu tiên.
-AI group	Nhóm AI
-Capacity	Sức chứa
-Its stop	Điểm dừng của nó
-Gates	Cổng
-Add a gate	Thêm cổng
-has a turning loop	có vòng quay đầu
-Delete the depot	Xóa depot
-A gate needs a rail within 25 m and a way to the first station, or the trip starts at its station (the game's log says so).	Cổng cần ray trong phạm vi 25 m và đường tới ga đầu tiên, nếu không chuyến sẽ bắt đầu tại ga của nó (nhật ký trò chơi sẽ ghi vậy).
-Which tracks serve which mode and how they are powered: a rule matches a track type (a file pattern, * for any letters), a tile or one piece; later rules win. Without a rule openOMSI guesses from the type's name.	Ray nào phục vụ loại hình nào và được cấp điện ra sao: quy tắc khớp với một loại ray (mẫu tên tệp, * cho chữ bất kỳ), một ô hoặc một đoạn; quy tắc sau được ưu tiên. Không có quy tắc, openOMSI đoán từ tên loại.
-A rule for the selected track's type	Quy tắc cho loại của ray đã chọn
-Empty rule	Quy tắc trống
-(select a track in the view to make a rule for its type)	(chọn một ray trong khung nhìn để tạo quy tắc cho loại của nó)
-Track type	Loại ray
-Only on tile / piece	Chỉ trên ô / đoạn
-id	mã
-in the street	trên phố
-railway	đường riêng
-overhead wire	dây điện trên cao
-third rail	ray thứ ba
-diesel	diesel
-Tunnel	Đường hầm
-yes	có
-no	không
-Gauge	Khổ ray
-A map for buses alone has no line to power.	Bản đồ chỉ có xe buýt thì không có đường dây nào để cấp điện.
-Third rail	Ray thứ ba
-Trolleybus wire	Dây xe điện bánh hơi
-Where the wire is, the player's tram or electric train needs a live section of it over its pantograph (dead sections and breaks stop the drive). Without spans openOMSI takes the current for granted. Spans are laid along the selected tracks.	Ở nơi có dây, tàu điện hoặc tàu hỏa điện của người chơi cần một phân đoạn có điện phía trên cần lấy điện (phân đoạn mất điện và khe hở làm mất sức kéo). Không có nhịp, openOMSI coi như luôn có điện. Các nhịp được đặt dọc theo ray đã chọn.
-The player's metro train needs a live section of third rail beside its shoe. The kit's metro tracks carry the rail itself; spans say where it is fed. Spans are laid along the selected tracks.	Tàu điện ngầm của người chơi cần một phân đoạn ray thứ ba có điện bên cạnh guốc lấy điện. Ray tàu điện ngầm của bộ đã mang sẵn ray điện; các nhịp cho biết nơi nó được cấp điện. Các nhịp được đặt dọc theo ray đã chọn.
-openOMSI's trolleybuses run on this wire (trolley.txt beside global.cfg): a pole is powered only on a pair fed by a substation. Spans are laid over each way's lane of the selected roads, with the wire splines that show them.	Xe điện bánh hơi của openOMSI chạy trên dây này (trolley.txt cạnh global.cfg): cần lấy điện chỉ có điện trên cặp dây được trạm biến áp cấp. Các nhịp được đặt phía trên làn mỗi chiều của các đường đã chọn, cùng các spline dây điện hiển thị chúng.
-The line	Đường dây
-Voltage	Điện áp
-Current	Dòng điện
-direct	một chiều
-alternating	xoay chiều
-Wire height	Chiều cao dây
-Wire spacing	Khoảng cách dây
-Sections (each fed by a substation)	Phân đoạn (mỗi phân đoạn do một trạm biến áp cấp)
-name	tên
-live	có điện
-feeder Ω	cáp cấp Ω
-Section	Phân đoạn
-Spans	Nhịp
-one pair over the middle	một cặp ở giữa
-a pair over each 3.0 m lane	một cặp trên mỗi làn 3,0 m
-a pair over each 3.5 m lane	một cặp trên mỗi làn 3,5 m
-lay the wire splines too	đặt cả spline dây điện
-Wire the selected roads	Mắc dây cho các đường đã chọn
-Electrify the selected tracks	Điện khí hóa các ray đã chọn
-Take their spans off	Gỡ nhịp của chúng
-(select roads in the view)	(chọn đường trong khung nhìn)
-(select tracks in the view)	(chọn ray trong khung nhìn)
-Their spans are taken off	Đã gỡ nhịp của chúng
-Spans laid:	Đã đặt nhịp:
-Gaps	Khe hở
-Insulators	Sứ cách điện
-Gap	Khe hở
-Insulator	Sứ cách điện
-Frogs (wire switches)	Ghi dây (frog)
-Where three spans meet: the contact plate before it sets it by the current the bus draws (power) or by its indicator.	Nơi ba nhịp gặp nhau: tấm tiếp xúc phía trước đặt nó theo dòng điện xe kéo (công suất) hoặc theo đèn xi nhan.
-by current	theo dòng điện
-by indicator	theo xi nhan
-Frog	Ghi dây
-A switch listed here holds while a train stands on it, goes back to its rest position, and can be thrown by hand only or locked by a signal. Switches not listed work as before.	Ghi có trong danh sách này giữ nguyên khi tàu đang đứng trên nó, trở về vị trí nghỉ, và có thể chỉ bẻ bằng tay hoặc bị tín hiệu khóa. Ghi không có trong danh sách hoạt động như trước.
-The selected switch objects	Các đối tượng ghi đã chọn
-simple	đơn
-crossover	ghi nối
-double slip	ghi kiểu Anh
-diamond	giao cắt thoi
-scissors	ghi chéo kéo
-rests straight	nghỉ ở thẳng
-rests diverging	nghỉ ở rẽ
-thrown by the route	bẻ theo tuyến
-by hand only	chỉ bằng tay
-interlocked	liên khóa
-diverging	rẽ
-locked by	khóa bởi
-Blocks	Khu gian
-A stretch of track that holds one AI train at a time, given by where it begins and ends on the rails; its signals show whether it is free. Blocks need the timetable's trains (the AI) to hold.	Một đoạn ray mỗi lúc chỉ chứa một tàu AI, xác định bằng nơi bắt đầu và kết thúc trên ray; tín hiệu của nó cho biết nó có trống không. Khu gian chỉ giữ được tàu theo bảng giờ (AI).
-Ends	Đầu mút
-Block	Khu gian
-Click where the block begins	Nhấp vào nơi khu gian bắt đầu
-Signals	Tín hiệu
-A signal of the map tied to a block shows stop while the block is in use and go while it is free.	Tín hiệu của bản đồ gắn với một khu gian sẽ báo dừng khi khu gian đang có tàu và báo đi khi nó trống.
-main	chính
-distant	báo trước
-block	khu gian
-shunting	dồn tàu
-speed	tốc độ
-tram	tàu điện
-Tram street track	Ray tàu điện trên phố
-Tram track on grass	Ray tàu điện trên cỏ
-Railway track	Ray đường sắt
-Metro track	Ray tàu điện ngầm
-Metro tunnel	Hầm tàu điện ngầm
-Tram platform	Sân ga tàu điện
-Metro side platform	Sân ga bên tàu điện ngầm
-Metro island platform	Sân ga đảo tàu điện ngầm
-Railway side platform	Sân ga bên đường sắt
-Railway island platform	Sân ga đảo đường sắt
-Trolleybus wires (one pair)	Dây xe điện bánh hơi (một cặp)
-Trolleybus wires, 3.0 m lanes	Dây xe điện bánh hơi, làn 3,0 m
-Trolleybus wires, 3.5 m lanes	Dây xe điện bánh hơi, làn 3,5 m
-Catenary mast (arm right)	Cột lưới điện (tay đỡ bên phải)
-Catenary mast (arm left)	Cột lưới điện (tay đỡ bên trái)
-Trolleybus pole (arm right)	Cột dây xe điện bánh hơi (tay đỡ bên phải)
-Trolleybus pole (arm left)	Cột dây xe điện bánh hơi (tay đỡ bên trái)
-Metro sign	Biển tàu điện ngầm
-Platform shelter	Mái che sân ga
-Buffer stop	Ụ chắn cuối ray
-Station stop	Điểm dừng ga
-Bus	Xe buýt
-Tram	Tàu điện
-Railway	Đường sắt
-Metro	Tàu điện ngầm
-Trolleybus	Xe điện bánh hơi
-buses on the streets, stops at the kerb	xe buýt trên phố, điểm dừng ở lề đường
-street track under a contact wire, low platforms	ray trên phố dưới dây tiếp xúc, sân ga thấp
-mainline track, stations with platforms, signals and blocks	ray đường chính, ga có sân ga, tín hiệu và khu gian
-track with a third rail, tunnels, high platforms	ray có ray thứ ba, đường hầm, sân ga cao
-buses under a pair of wires, frogs at junctions	xe buýt dưới một cặp dây, ghi dây ở các ngã ba
-Depot Square	Quảng trường Depot
-Park Gate	Cổng Công viên
-Tram start	Xuất phát tàu điện
-Loop line	Tuyến vòng
-A trolleybus junction under its wires with three stations: save, then drive it in openOMSI with a trolleybus of your own.	Một nút giao xe điện bánh hơi dưới dây điện với ba ga: hãy lưu, rồi lái nó trong openOMSI bằng xe điện bánh hơi của riêng bạn.
-station stops:	điểm dừng ga:
-stations:	ga:
-routes:	tuyến đường:
-Vehicles of other modes	Phương tiện thuộc loại hình khác
-Services without a vehicle of their mode	Dịch vụ không có phương tiện thuộc loại hình của mình
-openOMSI runs only vehicles of a Modern map's modes on it. This vehicle of the AI lists is made for another mode (its file says so, or it is a depot's vehicle and its shape says so), so the game leaves it out. Change it in Map > Traffic and AI, or add its mode to the map in Map settings.	openOMSI chỉ chạy phương tiện thuộc các loại hình của bản đồ Hiện đại trên đó. Phương tiện này trong danh sách AI được làm cho loại hình khác (tệp của nó nói vậy, hoặc nó là phương tiện của depot và hình dạng của nó cho thấy vậy), nên trò chơi bỏ nó ra. Hãy đổi nó trong Bản đồ > Giao thông và AI, hoặc thêm loại hình của nó cho bản đồ trong Cài đặt bản đồ.
-A service of the transit network takes its vehicles from its depot's AI group (or names one vehicle file). That group has no vehicle of the route's mode, so nothing runs it. Give the depot an AI group with such vehicles (Map > Traffic and AI), or choose another depot.	Một dịch vụ của mạng vận tải lấy phương tiện từ nhóm AI của depot của nó (hoặc nêu một tệp phương tiện). Nhóm đó không có phương tiện thuộc loại hình của tuyến đường, nên không có gì chạy dịch vụ này. Hãy cho depot một nhóm AI có những phương tiện như vậy (Giao thông và AI), hoặc chọn depot khác.
-group	nhóm
-route	tuyến đường
-its depot names no AI group	depot của nó không nêu nhóm AI
-no vehicle of the mode in	không có phương tiện thuộc loại hình này trong
-Stations from OpenStreetMap	Ga từ OpenStreetMap
-Metro tracks	Đường tàu điện ngầm
-in tunnels too: build them with the kit's metro tunnel and cut the ground away (a Modern map)	cả trong hầm: dựng chúng bằng hầm tàu điện ngầm của bộ và khoét bỏ mặt đất (bản đồ Hiện đại)
-Start with a trolleybus line: a junction under its wires with frogs, three stations and two routes	Bắt đầu với một tuyến xe điện bánh hơi: nút giao dưới dây điện có ghi dây, ba ga và hai tuyến đường
-Stations (tram, metro, railway)	Ga (tàu điện, tàu điện ngầm, đường sắt)
-Each tram stop and station of the map's rail modes put with the kit's station stop beside the nearest track (within 25 m); every stop of the map then becomes a station of its transport folder	Mỗi điểm dừng tàu điện và ga thuộc các loại hình đường ray của bản đồ được đặt bằng điểm dừng ga của bộ cạnh ray gần nhất (trong phạm vi 25 m); sau đó mọi điểm dừng của bản đồ trở thành một ga trong thư mục transport của nó
-Routes (tram, trolleybus, metro, railway)	Tuyến đường (tàu điện, xe điện bánh hơi, tàu điện ngầm, đường sắt)
-Each route of the map's modes through two or more of its stations a segment of its line, the line's service as often as OpenStreetMap says (else every 10 minutes), from 05:30 to 23:30; openOMSI finds the way over the tracks	Mỗi tuyến đường thuộc các loại hình của bản đồ qua hai ga trở lên của nó thành một đoạn của tuyến, dịch vụ của tuyến chạy dày như OpenStreetMap ghi (nếu không thì cứ 10 phút), từ 05:30 đến 23:30; openOMSI tự tìm đường trên ray
-no vehicle of it is installed	chưa cài phương tiện nào của nó
-Its vehicles:	Phương tiện của nó:
-(select roads in the view, and the junctions between them)	(chọn đường trong khung nhìn, và các nút giao giữa chúng)
-(select tracks in the view, and their switches)	(chọn ray trong khung nhìn, và các ghi của chúng)
-A pair of wires over each way's kerb lane; through a selected junction only the lanes that join wired roads. Frogs are put where three wires meet.	Một cặp dây phía trên làn sát lề của mỗi chiều; qua nút giao đã chọn chỉ có các làn nối những đường đã mắc dây. Ghi dây được đặt ở nơi ba dây gặp nhau.
-The map's files are still being read	Các tệp của bản đồ vẫn đang được đọc
-West Gate	Cổng Tây
-East Market	Chợ Đông
-North Park	Công viên Bắc
-Market line	Tuyến Chợ
-Park line	Tuyến Công viên
-Trolleybus start	Xuất phát xe điện bánh hơi
-frogs:	ghi dây:
-places where more than three wires meet get no frog: wire fewer turns there	chỗ có hơn ba dây gặp nhau không được đặt ghi dây: hãy mắc dây cho ít lối rẽ hơn ở đó
-Track ends that do not meet	Đầu ray không khớp nhau
-Two tracks run on into one another but their ends lie apart: the game joins rails only where their ends lie within 1.5 m, so no train or tram gets across (a route through there finds no way). "Fix" moves one end onto the other, arriving in line with it, and joins them.	Hai đường ray nối tiếp nhau nhưng đầu của chúng cách xa: trò chơi chỉ nối ray khi hai đầu cách nhau dưới 1,5 m, nên không tàu hỏa hay tàu điện nào qua được (tuyến đi qua đó không tìm được đường). "Sửa" dời một đầu tới đầu kia, thẳng hàng với nó, rồi nối chúng lại.
-tracks	đường ray
-Select the roads or tracks to build into the ground	Chọn đường hoặc đường ray để hạ xuống đất
-Cutting	Đường xẻ
-Cut and cover tunnel	Hầm đào lấp
-Nothing to build into the ground	Không có gì để hạ xuống đất
-Build into the ground	Hạ xuống đất
-The chain of the selected pieces lowered, with ramps at its ends. Cut: an open cutting with sloped banks. Cover: open ramps down to the portals and a tunnel under the ground between them (a shell of walls and roof, a portal at each mouth).	Chuỗi các đoạn đã chọn được hạ thấp, có dốc nghiêng ở hai đầu. Đường xẻ: hào hở với mái taluy. Hầm: dốc nghiêng hở xuống tới cửa hầm và đường hầm dưới đất giữa chúng (vỏ gồm tường và mái, cửa hầm ở mỗi đầu).
-Cover (tunnel)	Hầm (có nắp)
-Ramp gradient	Độ dốc của dốc nghiêng
-Banks	Mái taluy
- m out per metre up	 m ra ngoài mỗi mét lên cao
-Ramps	Dốc nghiêng
-at the start	ở đầu
-at the end	ở cuối
-A tunnel needs a depth of 6 m or more: shallower it stays an open cutting	Hầm cần độ sâu từ 6 m trở lên: nông hơn thì vẫn là đường xẻ hở
-Each ramp is about	Mỗi dốc nghiêng khoảng
-Pieces lowered:	Số đoạn đã hạ:
-tunnel pieces:	đoạn hầm:
-portals:	cửa hầm:
-their overhead taken off: wire them again (Transit network, Power)	dây điện trên cao của chúng đã bị gỡ: hãy kéo dây lại (Mạng vận tải, Điện)
-Platforms at the stations	Sân ga tại các nhà ga
-The kit's platform of each rail station's mode beside its track, on the side its stop stands, as long as its platform says	Sân ga của bộ cho loại hình của mỗi ga đường sắt, đặt cạnh đường ray của ga, ở phía có điểm dừng, dài bằng sân ga của ga quy định
-Platforms laid:	Số sân ga đã đặt:
-lay the wires, masts, poles and frogs too	đặt cả dây, cột, trụ và ghi dây
-Catenary mast	Cột dây điện trên cao
-Trolleybus pole	Trụ dây xe điện bánh hơi
-Trolleybus frog	Ghi dây xe điện bánh hơi
-Section insulator	Sứ cách điện phân đoạn
 Lake	Hồ
 River	Sông
 Water level:	Mực nước:
+Banks	Mái taluy
 Click the shore round and close it on the first point (Enter closes too, right-click takes a point back). The ground inside is dug to a bed and the banks slope to the shore.	Nhấp vòng quanh bờ và đóng lại ở điểm đầu tiên (Enter cũng đóng, nhấp chuột phải để lùi một điểm). Phần đất bên trong được đào thành lòng hồ và các bờ dốc xuống mép nước.
 Click the river's middle line from its source on and finish on the last point (or Enter). Water in OMSI lies at one level for a tile: a river runs level.	Nhấp dọc đường giữa của sông từ nguồn và kết thúc ở điểm cuối (hoặc Enter). Nước trong OMSI chỉ có một mực nước trên mỗi ô: sông chảy ngang mực.
 Add as a ground texture	Thêm làm kết cấu mặt đất
+Painted line	Vạch sơn
+Stop line	Vạch dừng
+A wide solid line across a lane: draw it across the road	Một vạch liền rộng ngang làn: vẽ ngang đường
+Crossing	Vạch qua đường
+Zebra bars: draw it across the road, the bars lie along it	Vạch ngựa vằn: vẽ ngang đường, các vạch nằm dọc theo đường
+Centre line	Vạch giữa
+A double yellow line	Vạch vàng đôi
+Lane line	Vạch làn
+A white dashed line	Vạch trắng đứt nét
+Solid	Vạch liền
+Dashed	Vạch đứt
+Double	Đôi
+Solid and dashed	Vạch liền và vạch đứt
+Crossing (bars)	Vạch qua đường (các vạch)
+A line's width (each line of a double one); a crossing's reach along the road	Độ rộng của vạch (từng vạch với vạch đôi); chiều sâu của vạch qua đường dọc theo đường
+Bar	Vạch
+Dash	Nét
+Gap	Khe hở
+Draw with this line	Vẽ bằng vạch này
+It is made as a spline type of the content folder (Splines\\openMapper\\marks) and chosen: draw it with Line, Arc or Curve, over the asphalt	Được tạo thành một loại spline trong thư mục nội dung (Splines\\openMapper\\marks) và được chọn: vẽ bằng Đường, Cung hoặc Đường cong lên mặt nhựa
+Painted line made: draw with it in the junction editor	Đã tạo vạch sơn: vẽ bằng nó trong trình sửa ngã tư
 A junction was not made: its roads are too short or too close together. Lengthen them or move the junctions apart.	Không tạo được ngã giao: các đường quá ngắn hoặc quá gần nhau. Hãy kéo dài chúng hoặc dời các ngã giao ra xa nhau.
+Draw road markings	Vẽ vạch kẻ đường
+Pen	Cọ vẽ
+Straight line	Đường thẳng
+Dashed line	Đường đứt nét
+Rectangle	Hình chữ nhật
+Arrow	Mũi tên
+Eraser	Tẩy
+Dash length	Độ dài đoạn vạch
+Gap between dashes	Khoảng cách giữa các đoạn
+Pointing back	Hướng ngược lại
+Snap to 5 cm	Bắt dính 5 cm
+Drag to draw. The picture is the roadway as the texture lies on it, up is the way of the road; it repeats along, so what leaves at the top comes in at the bottom.	Kéo để vẽ. Hình ảnh là lòng đường như texture nằm trên đó, phía trên là hướng của đường; nó lặp lại theo chiều dọc, nên thứ đi ra ở trên sẽ vào lại ở dưới.
+Pick a roadway texture first	Hãy chọn texture lòng đường trước
 Display	Hiển thị
 X-ray (Alt+Z): see and pick through the mesh	Tia X (Alt+Z): nhìn và chọn xuyên qua mesh
 Show the textures	Hiện kết cấu
@@ -2746,42 +2493,9 @@ Paint my own markings	Tự vẽ vạch kẻ
 The maker paints the lines onto the roadway texture: pick a plain asphalt texture, or its own lines show too	Trình tạo vẽ các vạch lên texture mặt đường: chọn texture nhựa đường trơn, nếu không vạch có sẵn của nó cũng hiện ra
 Standard for these lanes	Mặc định cho các làn này
 Add a line	Thêm vạch
-Across the roadway from its middle (right of the road's way is plus)	Ngang qua mặt đường từ giữa (bên phải hướng của đường là dương)
-Solid	Vạch liền
-Dashed	Vạch đứt
-Double solid	Vạch liền đôi
-Solid and dashed	Vạch liền và vạch đứt
-The line's width	Độ rộng của vạch
-Dash length	Độ dài đoạn vạch
-Gap between dashes	Khoảng cách giữa các đoạn
-Draw road markings	Vẽ vạch kẻ đường
-Pen	Cọ vẽ
-Straight line	Đường thẳng
-Dashed line	Đường đứt nét
-Rectangle	Hình chữ nhật
-Arrow	Mũi tên
-Eraser	Tẩy
-Pointing back	Hướng ngược lại
-Snap to 5 cm	Bắt dính 5 cm
-Drag to draw. The picture is the roadway as the texture lies on it, up is the way of the road; it repeats along, so what leaves at the top comes in at the bottom.	Kéo để vẽ. Hình ảnh là lòng đường như texture nằm trên đó, phía trên là hướng của đường; nó lặp lại theo chiều dọc, nên thứ đi ra ở trên sẽ vào lại ở dưới.
-Pick a roadway texture first	Hãy chọn texture lòng đường trước
 Draw by hand…	Vẽ tay…
 A drawing board with a pen, lines, arrows and an eraser: what you draw goes onto the roadway	Bảng vẽ với cọ, đường thẳng, mũi tên và tẩy: những gì bạn vẽ sẽ nằm trên lòng đường
 a drawing is on the road	có hình vẽ trên đường
-Painted line	Vạch sơn
-Stop line	Vạch dừng
-A wide solid line across a lane: draw it across the road	Một vạch liền rộng ngang làn: vẽ ngang đường
-Crossing	Vạch qua đường
-Zebra bars: draw it across the road, the bars lie along it	Vạch ngựa vằn: vẽ ngang đường, các vạch nằm dọc theo đường
-Centre line	Vạch giữa
-A double yellow line	Vạch vàng đôi
-Lane line	Vạch làn
-A white dashed line	Vạch trắng đứt nét
-Double	Đôi
-Crossing (bars)	Vạch qua đường (các vạch)
-A line's width (each line of a double one); a crossing's reach along the road	Độ rộng của vạch (từng vạch với vạch đôi); chiều sâu của vạch qua đường dọc theo đường
-Bar	Vạch
-Dash	Nét
-Draw with this line	Vẽ bằng vạch này
-It is made as a spline type of the content folder (Splines\\openMapper\\marks) and chosen: draw it with Line, Arc or Curve, over the asphalt	Được tạo thành một loại spline trong thư mục nội dung (Splines\\openMapper\\marks) và được chọn: vẽ bằng Đường, Cung hoặc Đường cong lên mặt nhựa
-Painted line made: draw with it in the junction editor	Đã tạo vạch sơn: vẽ bằng nó trong trình sửa ngã tư
+Across the roadway from its middle (right of the road's way is plus)	Ngang qua mặt đường từ giữa (bên phải hướng của đường là dương)
+Double solid	Vạch liền đôi
+The line's width	Độ rộng của vạch

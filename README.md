@@ -63,7 +63,6 @@ can drive in service.
 * **Terrain and paint**: sculpting brushes, ramps, height maps, ground texture painting, tiles and water.
 * **Real places**: satellite imagery, terrain heights and OpenStreetMap (roads, stops, lines, buildings, trees, water).
 * **Lines and traffic**: timetable, tours, depot files, AI traffic and paths.
-* **Trams, trolleybuses, metro and trains** (Modern maps, openOMSI only): stations, routes without tours, overhead wire, third rail, trolleybus wire, depots and signal blocks, with openMapper's own kit of tracks, platforms, wires and masts ([docs/TRANSIT.md](docs/TRANSIT.md)).
 * **Your own models**: import glTF, FBX, OBJ and more, edit meshes, make materials and PBR maps, export.
 * **Check and drive**: a map check, the game's own checks, safe saving with earlier versions, and a test drive in openOMSI on one key (`F5`).
 

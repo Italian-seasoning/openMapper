@@ -2438,301 +2438,48 @@ Could not copy the photos	사진을 복사할 수 없습니다
 Copying the photos	사진 복사 중
 Hold only the photos of the tiles near the camera	카메라 근처 타일의 사진만 유지
 The others keep their photo in the map's folder, and are put up again when you go back to them.	나머지는 사진을 지도 폴더에 두고, 다시 가면 나타납니다.
-A tram loop with two stations and its wire: save, then drive it in openOMSI with a tram of your own.	역 두 개와 가공선이 있는 트램 순환선: 저장한 뒤 openOMSI에서 직접 트램을 몰아 보세요.
-Transit kit made, files:	대중교통 키트를 만들었습니다. 파일:
-The transit kit could not be made	대중교통 키트를 만들 수 없습니다
-Transit network problems	대중교통망 문제
-Stations without their mode's lanes	자기 교통수단의 차선이 없는 역
-Stations without their stop	정류장이 없는 역
-openOMSI's own reader finds this in the map's transport folder (stations, routes, wires, switches, depots, signals): a service it names is skipped, a section or a block left out. Open Map > Transit network to change it.	openOMSI 자체 리더가 맵의 transport 폴더(역, 노선, 가공선, 분기기, 차고지, 신호)에서 이것을 찾았습니다. 해당 운행 계통은 건너뛰고, 섹션이나 폐색 구간은 제외됩니다. 바꾸려면 맵 > 대중교통망을 여세요.
-openOMSI routes a service over the lanes of its mode within 25 m of each station (rails for trams, metro and trains, streets for buses and trolleybuses). This station has none of its modes' near, so its services cannot run. Move the stop next to the track or road, or lay one there.	openOMSI는 각 역에서 25 m 이내에 있는 해당 교통수단의 차선(트램, 지하철, 열차는 선로, 버스와 트롤리버스는 도로)으로 운행 계통의 경로를 만듭니다. 이 역 근처에는 해당 교통수단의 차선이 없어서 운행할 수 없습니다. 정류장을 선로나 도로 옆으로 옮기거나 그곳에 선로나 도로를 까세요.
-A station is found by the game among the map's stops: by its stop object, else by its name. This one's object is no stop on the map and no stop has its name, so the services through it are skipped. Pick its stop again in Map > Transit network, Stations.	게임은 맵의 정류장 중에서 역을 찾습니다. 정류장 오브젝트로 찾고, 없으면 이름으로 찾습니다. 이 역의 오브젝트는 맵 위의 정류장이 아니고 같은 이름의 정류장도 없어서, 이 역을 지나는 운행 계통은 건너뜁니다. 맵 > 대중교통망의 역 탭에서 정류장을 다시 고르세요.
-station	역
-Transit network…	대중교통망…
-The transport folder stays: openOMSI still reads its stations, routes and wires.	transport 폴더는 남습니다. openOMSI는 계속 그 역, 노선, 가공선을 읽습니다.
-Remove it too	이것도 제거
-Start with a tram line: a loop of track under its wire, two stations and a route	트램 노선으로 시작: 가공선 아래 순환 선로, 역 두 개, 노선 하나
-Classic	클래식
-Runs in OMSI 2 and in openOMSI. Buses, and trams and trains as OMSI 2 has them.	OMSI 2와 openOMSI에서 실행됩니다. 버스, 그리고 OMSI 2 방식의 트램과 열차.
-Modern	모던
-openOMSI only. Real transit: stations, routes, overhead wire, third rail, depots and signal blocks.	openOMSI 전용. 진짜 대중교통: 역, 노선, 가공선, 제3궤조, 차고지, 폐색 구간.
-Made for (one or more):	대상(하나 이상):
-Choose at least one	하나 이상 고르세요
-OMSI 2 cannot run a Modern map's routes, wires or blocks, and openOMSI runs only vehicles of its modes on it. openMapper's transit kit (tracks, wires, platforms, masts) is made in the content folder.	OMSI 2는 모던 맵의 노선, 가공선, 폐색 구간을 실행할 수 없고, openOMSI는 그 맵에서 해당 교통수단의 차량만 운행합니다. openMapper의 대중교통 키트(선로, 가공선, 승강장, 전주)는 콘텐츠 폴더에 만들어집니다.
-Overview	개요
-Stations	역
-Depots	차고지
-Power	전력
-Switches and signals	분기기와 신호
-Set it (else the game's default)	설정(안 하면 게임 기본값)
-(not set)	(설정 안 됨)
-Take it out	빼기
-Transit network	대중교통망
-This is a Classic map.	클래식 맵입니다.
-Stations, routes without tours, the overhead wire, the third rail, depots and signal blocks are openOMSI's (0.3.42 and later): make the map Modern in Map settings to give it a transit network. OMSI 2 cannot run them.	역, 운행 순번 없는 노선, 가공선, 제3궤조, 차고지, 폐색 구간은 openOMSI(0.3.42 이상)의 기능입니다. 대중교통망을 설정하려면 맵 설정에서 맵을 모던으로 바꾸세요. OMSI 2에서는 실행되지 않습니다.
-No stop there: click a stop object (a bus stop, or the kit's station stop)	거기에는 정류장이 없습니다. 정류장 오브젝트(버스 정류장 또는 키트의 역 정류장)를 클릭하세요
-Now click where the block ends	이제 폐색 구간이 끝나는 곳을 클릭하세요
-Click the signal object itself	신호 오브젝트 자체를 클릭하세요
-Then click in the view	그런 다음 뷰에서 클릭하세요
-Modern map for	모던 맵 대상
-openOMSI runs only vehicles of these modes here; OMSI 2 cannot run the network. The modes are changed in Map settings.	여기서 openOMSI는 이 교통수단의 차량만 운행하며, OMSI 2는 이 망을 실행할 수 없습니다. 교통수단은 맵 설정에서 바꿉니다.
-Services	운행 계통
-Track rules	선로 규칙
-Overhead wire spans	가공선 경간
-Third rail spans	제3궤조 경간
-Trolleybus wire spans	트롤리버스 가선 경간
-Switches	분기기
-Signals and blocks	신호와 폐색 구간
-Problems	문제
-None: openOMSI reads the network as it is.	없음: openOMSI가 망을 있는 그대로 읽습니다.
-error	오류
-warning	경고
-Found by openOMSI's own reader of the transport folder, the texts as it writes them in its log.	openOMSI 자체의 transport 폴더 리더가 찾은 것으로, 문구는 그 로그에 적힌 그대로입니다.
-openMapper's transit kit	openMapper 대중교통 키트
-Tracks, platforms, wires and objects made by openMapper for Modern maps (OMSI 2 ships no metro, third rail or trolleybus wire). They are in the catalogue under openMapper; click one to place it.	openMapper가 모던 맵용으로 만든 선로, 승강장, 가선, 오브젝트(OMSI 2에는 지하철, 제3궤조, 트롤리버스 가선이 없습니다). 카탈로그의 openMapper 아래에 있으며, 클릭하면 배치합니다.
-Make the kit	키트 만들기
-A station is a stop object of the map (a bus stop, or the kit's station stop beside a track) with its platforms. openOMSI routes a service over the lanes of its mode within 25 m of each station.	역은 맵의 정류장 오브젝트(버스 정류장 또는 선로 옆 키트의 역 정류장)와 그 승강장입니다. openOMSI는 각 역에서 25 m 이내에 있는 해당 교통수단의 차선으로 운행 계통의 경로를 만듭니다.
-A station for every stop of the map	맵의 모든 정류장에 역 만들기
-Stops not yet a station become one, named as the stop, its modes from the tracks and roads beside it	아직 역이 아닌 정류장이 역이 됩니다. 이름은 정류장과 같고, 교통수단은 옆의 선로와 도로로 정해집니다
-New station	새 역
-Stations added:	추가한 역:
-Choose a station	역을 고르세요
-Id	ID
-Modes	교통수단
-Stop object	정류장 오브젝트
-Pick	고르기
-Place	위치
-Change to	환승
-Platforms	승강장
-Side	쪽
-island	섬식
-both	양쪽
-platform screen doors	스크린도어
-Delete the station	역 삭제
-A route is segments from station to station (the stops between them in order) and services over them: a branch, a short working or an express is another segment or service. openOMSI makes the timetable's tours from them and finds the way over the tracks itself.	노선은 역에서 역까지의 구간(그 사이 정류장을 순서대로)과 그 위를 달리는 운행 계통으로 이루어집니다. 지선, 단축 운행, 급행은 또 다른 구간이나 운행 계통입니다. openOMSI는 이것으로 시간표의 운행 순번을 만들고 선로 위 경로도 스스로 찾습니다.
-Add two stations or more first (Stations)	먼저 역을 두 개 이상 추가하세요(역 탭)
-New route	새 노선
-Segment	구간
-Stops between	사이 정류장
-Passed without stopping	무정차 통과
-Standing at a stop	정차 시간
-Speed	속도
-Way back	복귀 경로
-over the same segment	같은 구간으로
-another segment	다른 구간으로
-Service	운행 계통
-Segments in order	구간 순서
-From – to	출발 – 도착
-Days	운행일
-every day	매일
-weekends	주말
-Saturdays	토요일
-Sundays	일요일
-turns back	회차
-goes round a loop	순환
-goes to depot	차고지로 입고
-Cars in a train	편성 차량 수
-Every 10 minutes from 05:30 to 23:30 over all the route's segments	05:30부터 23:30까지 10분마다, 노선의 모든 구간
-Departures of their own	개별 출발
-For a service without a headway: its departures, as 06:00 06:12 06:30.	배차 간격이 없는 운행 계통용: 출발 시간을 06:00 06:12 06:30처럼 입력합니다.
-Departures	출발
-A service's depot sends out its vehicles: its AI group (Traffic and AI) supplies them, and the first departure of the day leaves by its gate along the rails to the first station.	운행 계통의 차고지가 차량을 내보냅니다. 그 AI 그룹(트래픽 및 AI)이 차량을 공급하고, 그날 첫 출발은 출입구에서 선로를 따라 첫 역으로 갑니다.
-AI group	AI 그룹
-Capacity	수용량
-Its stop	정류장
-Gates	출입구
-Add a gate	출입구 추가
-has a turning loop	회차 루프 있음
-Delete the depot	차고지 삭제
-A gate needs a rail within 25 m and a way to the first station, or the trip starts at its station (the game's log says so).	출입구에는 25 m 이내의 레일과 첫 역까지의 경로가 필요합니다. 없으면 운행이 그 역에서 시작됩니다(게임 로그에 기록됨).
-Which tracks serve which mode and how they are powered: a rule matches a track type (a file pattern, * for any letters), a tile or one piece; later rules win. Without a rule openOMSI guesses from the type's name.	어느 선로가 어떤 교통수단에 쓰이고 어떻게 급전되는지 정합니다. 규칙은 선로 유형(파일 패턴, *는 아무 글자), 타일 또는 한 조각에 적용되며, 나중 규칙이 우선합니다. 규칙이 없으면 openOMSI가 유형 이름으로 추측합니다.
-A rule for the selected track's type	선택한 선로 유형의 규칙
-Empty rule	빈 규칙
-(select a track in the view to make a rule for its type)	(뷰에서 선로를 선택하면 그 유형의 규칙을 만듭니다)
-Track type	선로 유형
-Only on tile / piece	타일 / 조각만
-id	ID
-in the street	도로 병용
-railway	전용 궤도
-overhead wire	가공선
-third rail	제3궤조
-diesel	디젤
-Tunnel	터널
-yes	예
-no	아니요
-Gauge	궤간
-A map for buses alone has no line to power.	버스 전용 맵에는 급전할 선이 없습니다.
-Third rail	제3궤조
-Trolleybus wire	트롤리버스 가선
-Where the wire is, the player's tram or electric train needs a live section of it over its pantograph (dead sections and breaks stop the drive). Without spans openOMSI takes the current for granted. Spans are laid along the selected tracks.	가선이 있는 곳에서는 플레이어의 트램이나 전동차의 팬터그래프 위에 전기가 흐르는 섹션이 있어야 합니다(무전 섹션과 끊긴 곳에서는 동력이 끊깁니다). 경간이 없으면 openOMSI는 전기가 있다고 간주합니다. 경간은 선택한 선로를 따라 깔립니다.
-The player's metro train needs a live section of third rail beside its shoe. The kit's metro tracks carry the rail itself; spans say where it is fed. Spans are laid along the selected tracks.	플레이어의 지하철 열차는 집전화 옆에 전기가 흐르는 제3궤조 섹션이 있어야 합니다. 키트의 지하철 선로에는 궤조가 이미 있고, 경간은 어디에 급전되는지를 나타냅니다. 경간은 선택한 선로를 따라 깔립니다.
-openOMSI's trolleybuses run on this wire (trolley.txt beside global.cfg): a pole is powered only on a pair fed by a substation. Spans are laid over each way's lane of the selected roads, with the wire splines that show them.	openOMSI의 트롤리버스는 이 가선으로 달립니다(global.cfg 옆의 trolley.txt). 집전봉은 변전소에서 급전되는 가선 한 쌍에서만 전기가 통합니다. 경간은 선택한 도로의 방향별 차선 위에, 이를 보여 주는 가선 스플라인과 함께 깔립니다.
-The line	급전 계통
-Voltage	전압
-Current	전류
-direct	직류
-alternating	교류
-Wire height	가선 높이
-Wire spacing	가선 간격
-Sections (each fed by a substation)	섹션(각각 변전소에서 급전)
-name	이름
-live	통전
-feeder Ω	급전선 Ω
-Section	섹션
-Spans	경간
-one pair over the middle	중앙에 한 쌍
-a pair over each 3.0 m lane	3.0 m 차선마다 한 쌍
-a pair over each 3.5 m lane	3.5 m 차선마다 한 쌍
-lay the wire splines too	가선 스플라인도 깔기
-Wire the selected roads	선택한 도로에 가선 설치
-Electrify the selected tracks	선택한 선로 전철화
-Take their spans off	경간 제거
-(select roads in the view)	(뷰에서 도로를 선택하세요)
-(select tracks in the view)	(뷰에서 선로를 선택하세요)
-Their spans are taken off	경간을 제거했습니다
-Spans laid:	깐 경간:
-Gaps	단절
-Insulators	절연체
-Gap	단절
-Insulator	절연체
-Frogs (wire switches)	가선 분기기(프로그)
-Where three spans meet: the contact plate before it sets it by the current the bus draws (power) or by its indicator.	세 경간이 만나는 곳: 그 앞의 접촉판이 버스가 쓰는 전류(가속) 또는 방향지시등에 따라 전환합니다.
-by current	전류로
-by indicator	방향지시등으로
-Frog	가선 분기기
-A switch listed here holds while a train stands on it, goes back to its rest position, and can be thrown by hand only or locked by a signal. Switches not listed work as before.	여기 나열한 분기기는 열차가 위에 있는 동안 전환되지 않고, 정위로 돌아가며, 수동 전용으로 하거나 신호로 쇄정할 수 있습니다. 나열하지 않은 분기기는 예전처럼 작동합니다.
-The selected switch objects	선택한 분기기 오브젝트
-simple	단순
-crossover	건넘선
-double slip	복식 슬립
-diamond	다이아몬드 크로싱
-scissors	시저스 크로싱
-rests straight	정위 직진
-rests diverging	정위 분기
-thrown by the route	진로에 따라 전환
-by hand only	수동 전용
-interlocked	연동
-diverging	분기
-locked by	쇄정 신호
-Blocks	폐색 구간
-A stretch of track that holds one AI train at a time, given by where it begins and ends on the rails; its signals show whether it is free. Blocks need the timetable's trains (the AI) to hold.	한 번에 AI 열차 한 대만 들어갈 수 있는 선로 구간으로, 레일 위의 시작과 끝으로 정합니다. 그 신호가 비어 있는지를 보여 줍니다. 폐색 구간은 시간표 열차(AI)에만 작용합니다.
-Ends	양끝
-Block	폐색 구간
-Click where the block begins	폐색 구간이 시작되는 곳을 클릭하세요
-Signals	신호
-A signal of the map tied to a block shows stop while the block is in use and go while it is free.	폐색 구간에 연결된 맵의 신호는 구간이 사용 중이면 정지를, 비어 있으면 진행을 표시합니다.
-main	주신호
-distant	예고 신호
-block	폐색 신호
-shunting	입환 신호
-speed	속도 신호
-tram	트램 신호
-Tram street track	도로 병용 트램 선로
-Tram track on grass	잔디 트램 선로
-Railway track	철도 선로
-Metro track	지하철 선로
-Metro tunnel	지하철 터널
-Tram platform	트램 승강장
-Metro side platform	지하철 상대식 승강장
-Metro island platform	지하철 섬식 승강장
-Railway side platform	철도 상대식 승강장
-Railway island platform	철도 섬식 승강장
-Trolleybus wires (one pair)	트롤리버스 가선(한 쌍)
-Trolleybus wires, 3.0 m lanes	트롤리버스 가선, 3.0 m 차선
-Trolleybus wires, 3.5 m lanes	트롤리버스 가선, 3.5 m 차선
-Catenary mast (arm right)	전차선주(완철 오른쪽)
-Catenary mast (arm left)	전차선주(완철 왼쪽)
-Trolleybus pole (arm right)	트롤리버스 전주(완철 오른쪽)
-Trolleybus pole (arm left)	트롤리버스 전주(완철 왼쪽)
-Metro sign	지하철 표지
-Platform shelter	승강장 지붕
-Buffer stop	차막이
-Station stop	역 정류장
-Bus	버스
-Tram	트램
-Railway	철도
-Metro	지하철
-Trolleybus	트롤리버스
-buses on the streets, stops at the kerb	거리를 달리는 버스, 연석 옆 정류장
-street track under a contact wire, low platforms	가공선 아래 도로 위 선로, 낮은 승강장
-mainline track, stations with platforms, signals and blocks	본선 선로, 승강장이 있는 역, 신호와 폐색 구간
-track with a third rail, tunnels, high platforms	제3궤조 선로, 터널, 높은 승강장
-buses under a pair of wires, frogs at junctions	가선 한 쌍 아래를 달리는 버스, 교차로의 가선 분기기
-Depot Square	차고지 광장
-Park Gate	공원 입구
-Tram start	트램 출발
-Loop line	순환선
-A trolleybus junction under its wires with three stations: save, then drive it in openOMSI with a trolleybus of your own.	가선 아래 역 세 개가 있는 트롤리버스 교차로: 저장한 뒤 openOMSI에서 직접 트롤리버스를 몰아 보세요.
-station stops:	역 정류장:
-stations:	역:
-routes:	노선:
-Vehicles of other modes	다른 교통수단의 차량
-Services without a vehicle of their mode	자기 교통수단의 차량이 없는 운행 계통
-openOMSI runs only vehicles of a Modern map's modes on it. This vehicle of the AI lists is made for another mode (its file says so, or it is a depot's vehicle and its shape says so), so the game leaves it out. Change it in Map > Traffic and AI, or add its mode to the map in Map settings.	openOMSI는 모던 맵에서 그 맵의 교통수단 차량만 운행합니다. AI 목록의 이 차량은 다른 교통수단용입니다(파일에 그렇게 적혀 있거나, 차고지 차량이며 형태로 보아 그렇습니다). 그래서 게임에서 나오지 않습니다. 맵 > 트래픽 및 AI에서 바꾸거나, 맵 설정에서 그 교통수단을 맵에 추가하세요.
-A service of the transit network takes its vehicles from its depot's AI group (or names one vehicle file). That group has no vehicle of the route's mode, so nothing runs it. Give the depot an AI group with such vehicles (Map > Traffic and AI), or choose another depot.	대중교통망의 운행 계통은 차고지의 AI 그룹에서 차량을 가져옵니다(또는 차량 파일 하나를 지정합니다). 그 그룹에는 노선 교통수단의 차량이 없어서 아무것도 운행하지 않습니다. 차고지에 그런 차량이 있는 AI 그룹을 지정하거나(트래픽 및 AI) 다른 차고지를 고르세요.
-group	그룹
-route	노선
-its depot names no AI group	차고지에 AI 그룹이 지정되지 않음
-no vehicle of the mode in	이 교통수단의 차량이 없는 그룹:
-Stations from OpenStreetMap	OpenStreetMap의 역
-Metro tracks	지하철 선로
-in tunnels too: build them with the kit's metro tunnel and cut the ground away (a Modern map)	터널 안도: 키트의 지하철 터널로 만들고 지면을 파내세요(모던 맵)
-Start with a trolleybus line: a junction under its wires with frogs, three stations and two routes	트롤리버스 노선으로 시작: 가선 분기기가 있는 가선 아래 교차로, 역 세 개, 노선 두 개
-Stations (tram, metro, railway)	역(트램, 지하철, 철도)
-Each tram stop and station of the map's rail modes put with the kit's station stop beside the nearest track (within 25 m); every stop of the map then becomes a station of its transport folder	맵의 궤도 교통수단의 각 트램 정류장과 역을 가장 가까운 선로 옆(25 m 이내)에 키트의 역 정류장으로 놓습니다. 그다음 맵의 모든 정류장이 transport 폴더의 역이 됩니다
-Routes (tram, trolleybus, metro, railway)	노선(트램, 트롤리버스, 지하철, 철도)
-Each route of the map's modes through two or more of its stations a segment of its line, the line's service as often as OpenStreetMap says (else every 10 minutes), from 05:30 to 23:30; openOMSI finds the way over the tracks	맵의 교통수단에 속하고 그 역을 둘 이상 지나는 각 경로는 해당 노선의 구간이 되고, 노선의 운행 계통은 OpenStreetMap의 배차 간격(없으면 10분마다)으로 05:30부터 23:30까지 운행합니다. 선로 위 경로는 openOMSI가 찾습니다
-no vehicle of it is installed	설치된 차량이 없음
-Its vehicles:	차량:
-(select roads in the view, and the junctions between them)	(뷰에서 도로와 그 사이의 교차로를 선택하세요)
-(select tracks in the view, and their switches)	(뷰에서 선로와 그 분기기를 선택하세요)
-A pair of wires over each way's kerb lane; through a selected junction only the lanes that join wired roads. Frogs are put where three wires meet.	각 방향 가장자리 차선 위에 가선 한 쌍. 선택한 교차로에서는 가선이 있는 도로를 잇는 차선에만. 가선 세 개가 만나는 곳에 가선 분기기를 둡니다.
-The map's files are still being read	맵 파일을 아직 읽는 중입니다
-West Gate	서문
-East Market	동부 시장
-North Park	북부 공원
-Market line	시장선
-Park line	공원선
-Trolleybus start	트롤리버스 출발
-frogs:	가선 분기기:
-places where more than three wires meet get no frog: wire fewer turns there	곳은 세 개가 넘는 가선이 만나 가선 분기기를 두지 못했습니다: 그곳에서는 가선을 놓을 회전을 줄이세요
-Track ends that do not meet	서로 맞지 않는 선로 끝
-Two tracks run on into one another but their ends lie apart: the game joins rails only where their ends lie within 1.5 m, so no train or tram gets across (a route through there finds no way). "Fix" moves one end onto the other, arriving in line with it, and joins them.	두 선로가 서로 이어지지만 끝이 떨어져 있습니다. 게임은 끝이 1.5 m 이내일 때만 레일을 연결하므로 열차도 트램도 이곳을 지나갈 수 없습니다(이곳을 지나는 노선은 경로를 찾지 못합니다). "수정"은 한쪽 끝을 다른 쪽 끝으로 방향을 맞춰 옮기고 둘을 연결합니다.
-tracks	선로
-Select the roads or tracks to build into the ground	지하로 낮출 도로나 선로를 선택하세요
-Cutting	절토 구간
-Cut and cover tunnel	개착식 터널
-Nothing to build into the ground	지하로 낮출 것이 없습니다
-Build into the ground	지하로 낮추기
-The chain of the selected pieces lowered, with ramps at its ends. Cut: an open cutting with sloped banks. Cover: open ramps down to the portals and a tunnel under the ground between them (a shell of walls and roof, a portal at each mouth).	선택한 조각들의 연결을 낮추고 양 끝에 경사로를 둡니다. 절토: 비탈면이 있는 개방형 절토 구간. 터널: 갱문까지 내려가는 개방형 경사로와 그 사이의 지하 터널(벽과 천장 구조체, 각 입구에 갱문).
-Cover (tunnel)	덮개(터널)
-Ramp gradient	경사로 경사
-Banks	비탈면
- m out per metre up	 m(높이 1 m당 수평 거리)
-Ramps	경사로
-at the start	시작 지점
-at the end	끝 지점
-A tunnel needs a depth of 6 m or more: shallower it stays an open cutting	터널은 깊이가 6 m 이상이어야 합니다. 더 얕으면 개방형 절토 구간으로 남습니다
-Each ramp is about	각 경사로 약
-Pieces lowered:	낮춘 조각:
-tunnel pieces:	터널 조각:
-portals:	갱문:
-their overhead taken off: wire them again (Transit network, Power)	가공선이 제거되었습니다. 다시 가설하세요(대중교통망, 전력)
-Platforms at the stations	역의 승강장
-The kit's platform of each rail station's mode beside its track, on the side its stop stands, as long as its platform says	각 철도역의 교통수단에 맞는 키트 승강장을 선로 옆, 정류장이 있는 쪽에 승강장에 지정된 길이로 놓습니다
-Platforms laid:	놓은 승강장:
-lay the wires, masts, poles and frogs too	가선, 전주, 가선 분기기도 함께 놓기
-Catenary mast	가공선 전주
-Trolleybus pole	트롤리버스 전주
-Trolleybus frog	트롤리버스 가선 분기기
-Section insulator	섹션 절연체
 Lake	호수
 River	강
 Water level:	수위:
+Banks	비탈면
 Click the shore round and close it on the first point (Enter closes too, right-click takes a point back). The ground inside is dug to a bed and the banks slope to the shore.	호안을 따라 클릭하고 첫 번째 점에서 닫으세요(Enter로도 닫히며, 오른쪽 클릭은 점을 하나 되돌립니다). 안쪽 지면은 바닥까지 파이고 둑이 호안을 향해 경사집니다.
 Click the river's middle line from its source on and finish on the last point (or Enter). Water in OMSI lies at one level for a tile: a river runs level.	강의 중심선을 발원지부터 클릭하고 마지막 점에서 마치세요(또는 Enter). OMSI에서 물은 타일당 하나의 수위로 놓입니다. 강은 수평으로 흐릅니다.
 Add as a ground texture	지면 텍스처로 추가
+Painted line	도색선
+Stop line	정지선
+A wide solid line across a lane: draw it across the road	차선을 가로지르는 굵은 실선: 도로를 가로지르게 그리세요
+Crossing	횡단보도
+Zebra bars: draw it across the road, the bars lie along it	얼룩말 무늬: 도로를 가로지르게 그리면 줄무늬는 도로를 따라 놓입니다
+Centre line	중앙선
+A double yellow line	노란색 이중선
+Lane line	차선 구분선
+A white dashed line	흰색 점선
+Solid	실선
+Dashed	점선
+Double	이중
+Solid and dashed	실선과 점선
+Crossing (bars)	횡단보도(줄무늬)
+A line's width (each line of a double one); a crossing's reach along the road	선의 너비(이중선은 각 선); 횡단보도가 도로를 따라 뻗는 깊이
+Bar	줄무늬
+Dash	점선 길이
+Gap	단절
+Draw with this line	이 선으로 그리기
+It is made as a spline type of the content folder (Splines\\openMapper\\marks) and chosen: draw it with Line, Arc or Curve, over the asphalt	콘텐츠 폴더(Splines\\openMapper\\marks)에 스플라인 유형으로 만들어져 선택됩니다. 선, 호 또는 곡선으로 아스팔트 위에 그리세요
+Painted line made: draw with it in the junction editor	도색선을 만들었습니다: 교차로 편집기에서 사용해 그리세요
 A junction was not made: its roads are too short or too close together. Lengthen them or move the junctions apart.	교차로가 만들어지지 않았습니다. 도로가 너무 짧거나 서로 너무 가깝습니다. 도로를 늘리거나 교차로를 떨어뜨리세요.
+Draw road markings	도로 표시 그리기
+Pen	펜
+Straight line	직선
+Dashed line	점선
+Rectangle	직사각형
+Arrow	화살표
+Eraser	지우개
+Dash length	점선 길이
+Gap between dashes	점선 간격
+Pointing back	뒤를 향함
+Snap to 5 cm	5 cm에 맞춤
+Drag to draw. The picture is the roadway as the texture lies on it, up is the way of the road; it repeats along, so what leaves at the top comes in at the bottom.	드래그하여 그립니다. 그림은 텍스처가 입혀진 차도 그대로이며, 위쪽이 도로 방향입니다. 길이 방향으로 반복되므로 위로 나간 것은 아래로 들어옵니다.
+Pick a roadway texture first	먼저 차도 텍스처를 선택하세요
 Display	표시
 X-ray (Alt+Z): see and pick through the mesh	X-레이(Alt+Z): 메시를 투과하여 보고 선택
 Show the textures	텍스처 표시
@@ -2746,42 +2493,9 @@ Paint my own markings	노면표시 직접 그리기
 The maker paints the lines onto the roadway texture: pick a plain asphalt texture, or its own lines show too	메이커가 차도 텍스처에 선을 그립니다. 무늬 없는 아스팔트 텍스처를 고르세요. 아니면 텍스처 자체의 선도 함께 보입니다
 Standard for these lanes	이 차선의 기본값
 Add a line	선 추가
-Across the roadway from its middle (right of the road's way is plus)	도로 중앙에서 차도를 가로지르는 거리(도로 진행 방향의 오른쪽이 +)
-Solid	실선
-Dashed	점선
-Double solid	이중 실선
-Solid and dashed	실선과 점선
-The line's width	선 폭
-Dash length	점선 길이
-Gap between dashes	점선 간격
-Draw road markings	도로 표시 그리기
-Pen	펜
-Straight line	직선
-Dashed line	점선
-Rectangle	직사각형
-Arrow	화살표
-Eraser	지우개
-Pointing back	뒤를 향함
-Snap to 5 cm	5 cm에 맞춤
-Drag to draw. The picture is the roadway as the texture lies on it, up is the way of the road; it repeats along, so what leaves at the top comes in at the bottom.	드래그하여 그립니다. 그림은 텍스처가 입혀진 차도 그대로이며, 위쪽이 도로 방향입니다. 길이 방향으로 반복되므로 위로 나간 것은 아래로 들어옵니다.
-Pick a roadway texture first	먼저 차도 텍스처를 선택하세요
 Draw by hand…	손으로 그리기…
 A drawing board with a pen, lines, arrows and an eraser: what you draw goes onto the roadway	펜, 선, 화살표, 지우개가 있는 그림판: 그린 것이 차도에 표시됩니다
 a drawing is on the road	그림이 도로 위에 있습니다
-Painted line	도색선
-Stop line	정지선
-A wide solid line across a lane: draw it across the road	차선을 가로지르는 굵은 실선: 도로를 가로지르게 그리세요
-Crossing	횡단보도
-Zebra bars: draw it across the road, the bars lie along it	얼룩말 무늬: 도로를 가로지르게 그리면 줄무늬는 도로를 따라 놓입니다
-Centre line	중앙선
-A double yellow line	노란색 이중선
-Lane line	차선 구분선
-A white dashed line	흰색 점선
-Double	이중
-Crossing (bars)	횡단보도(줄무늬)
-A line's width (each line of a double one); a crossing's reach along the road	선의 너비(이중선은 각 선); 횡단보도가 도로를 따라 뻗는 깊이
-Bar	줄무늬
-Dash	점선 길이
-Draw with this line	이 선으로 그리기
-It is made as a spline type of the content folder (Splines\\openMapper\\marks) and chosen: draw it with Line, Arc or Curve, over the asphalt	콘텐츠 폴더(Splines\\openMapper\\marks)에 스플라인 유형으로 만들어져 선택됩니다. 선, 호 또는 곡선으로 아스팔트 위에 그리세요
-Painted line made: draw with it in the junction editor	도색선을 만들었습니다: 교차로 편집기에서 사용해 그리세요
+Across the roadway from its middle (right of the road's way is plus)	도로 중앙에서 차도를 가로지르는 거리(도로 진행 방향의 오른쪽이 +)
+Double solid	이중 실선
+The line's width	선 폭

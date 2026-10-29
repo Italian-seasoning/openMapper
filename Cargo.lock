@@ -2261,20 +2261,6 @@ dependencies = [
 [[package]]
 name = "omsi-cfg"
 version = "0.1.0"
-source = "git+https://github.com/openOMSI-org/openOMSI?rev=906e6e638f786ed5efd8a6d2a5ad38ed0ba7a7f0#906e6e638f786ed5efd8a6d2a5ad38ed0ba7a7f0"
-dependencies = [
- "encoding_rs",
- "flate2",
- "log",
- "rayon",
- "ring",
- "thiserror 2.0.21",
- "unicode-normalization",
-]
-
-[[package]]
-name = "omsi-cfg"
-version = "0.1.0"
 source = "git+https://github.com/openOMSI-org/openOMSI?rev=c4738ed6f43f11b4c06ead299af7ac74280d5c5b#c4738ed6f43f11b4c06ead299af7ac74280d5c5b"
 dependencies = [
  "encoding_rs",
@@ -2291,7 +2277,7 @@ version = "0.1.0"
 source = "git+https://github.com/openOMSI-org/openOMSI?rev=c4738ed6f43f11b4c06ead299af7ac74280d5c5b#c4738ed6f43f11b4c06ead299af7ac74280d5c5b"
 dependencies = [
  "log",
- "omsi-cfg 0.1.0 (git+https://github.com/openOMSI-org/openOMSI?rev=c4738ed6f43f11b4c06ead299af7ac74280d5c5b)",
+ "omsi-cfg",
 ]
 
 [[package]]
@@ -2301,7 +2287,7 @@ source = "git+https://github.com/openOMSI-org/openOMSI?rev=c4738ed6f43f11b4c06ea
 dependencies = [
  "glam",
  "log",
- "omsi-cfg 0.1.0 (git+https://github.com/openOMSI-org/openOMSI?rev=c4738ed6f43f11b4c06ead299af7ac74280d5c5b)",
+ "omsi-cfg",
  "omsi-map",
  "omsi-o3d",
  "omsi-scenery",
@@ -2313,7 +2299,7 @@ version = "0.1.0"
 source = "git+https://github.com/openOMSI-org/openOMSI?rev=c4738ed6f43f11b4c06ead299af7ac74280d5c5b#c4738ed6f43f11b4c06ead299af7ac74280d5c5b"
 dependencies = [
  "log",
- "omsi-cfg 0.1.0 (git+https://github.com/openOMSI-org/openOMSI?rev=c4738ed6f43f11b4c06ead299af7ac74280d5c5b)",
+ "omsi-cfg",
  "thiserror 2.0.21",
 ]
 
@@ -2323,7 +2309,7 @@ version = "0.1.0"
 source = "git+https://github.com/openOMSI-org/openOMSI?rev=c4738ed6f43f11b4c06ead299af7ac74280d5c5b#c4738ed6f43f11b4c06ead299af7ac74280d5c5b"
 dependencies = [
  "log",
- "omsi-cfg 0.1.0 (git+https://github.com/openOMSI-org/openOMSI?rev=c4738ed6f43f11b4c06ead299af7ac74280d5c5b)",
+ "omsi-cfg",
 ]
 
 [[package]]
@@ -2334,7 +2320,7 @@ dependencies = [
  "flate2",
  "libc",
  "log",
- "omsi-cfg 0.1.0 (git+https://github.com/openOMSI-org/openOMSI?rev=c4738ed6f43f11b4c06ead299af7ac74280d5c5b)",
+ "omsi-cfg",
  "ring",
  "sha2 0.10.9",
  "tungstenite",
@@ -2349,7 +2335,7 @@ dependencies = [
  "encoding_rs",
  "glam",
  "log",
- "omsi-cfg 0.1.0 (git+https://github.com/openOMSI-org/openOMSI?rev=c4738ed6f43f11b4c06ead299af7ac74280d5c5b)",
+ "omsi-cfg",
  "thiserror 2.0.21",
 ]
 
@@ -2359,7 +2345,7 @@ version = "0.1.0"
 source = "git+https://github.com/openOMSI-org/openOMSI?rev=c4738ed6f43f11b4c06ead299af7ac74280d5c5b#c4738ed6f43f11b4c06ead299af7ac74280d5c5b"
 dependencies = [
  "log",
- "omsi-cfg 0.1.0 (git+https://github.com/openOMSI-org/openOMSI?rev=c4738ed6f43f11b4c06ead299af7ac74280d5c5b)",
+ "omsi-cfg",
  "omsi-model",
 ]
 
@@ -2370,7 +2356,7 @@ source = "git+https://github.com/openOMSI-org/openOMSI?rev=c4738ed6f43f11b4c06ea
 dependencies = [
  "hashbrown 0.17.1",
  "log",
- "omsi-cfg 0.1.0 (git+https://github.com/openOMSI-org/openOMSI?rev=c4738ed6f43f11b4c06ead299af7ac74280d5c5b)",
+ "omsi-cfg",
  "thiserror 2.0.21",
 ]
 
@@ -2382,7 +2368,7 @@ dependencies = [
  "hashbrown 0.17.1",
  "image",
  "log",
- "omsi-cfg 0.1.0 (git+https://github.com/openOMSI-org/openOMSI?rev=c4738ed6f43f11b4c06ead299af7ac74280d5c5b)",
+ "omsi-cfg",
  "parking_lot",
  "rayon",
  "thiserror 2.0.21",
@@ -2394,27 +2380,7 @@ version = "0.1.0"
 source = "git+https://github.com/openOMSI-org/openOMSI?rev=c4738ed6f43f11b4c06ead299af7ac74280d5c5b#c4738ed6f43f11b4c06ead299af7ac74280d5c5b"
 dependencies = [
  "log",
- "omsi-cfg 0.1.0 (git+https://github.com/openOMSI-org/openOMSI?rev=c4738ed6f43f11b4c06ead299af7ac74280d5c5b)",
-]
-
-[[package]]
-name = "omsi-transit"
-version = "0.1.0"
-source = "git+https://github.com/openOMSI-org/openOMSI?rev=906e6e638f786ed5efd8a6d2a5ad38ed0ba7a7f0#906e6e638f786ed5efd8a6d2a5ad38ed0ba7a7f0"
-dependencies = [
- "log",
- "omsi-cfg 0.1.0 (git+https://github.com/openOMSI-org/openOMSI?rev=906e6e638f786ed5efd8a6d2a5ad38ed0ba7a7f0)",
-]
-
-[[package]]
-name = "omsi-trolley"
-version = "0.1.0"
-source = "git+https://github.com/openOMSI-org/openOMSI?rev=906e6e638f786ed5efd8a6d2a5ad38ed0ba7a7f0#906e6e638f786ed5efd8a6d2a5ad38ed0ba7a7f0"
-dependencies = [
- "glam",
- "hashbrown 0.17.1",
- "log",
- "omsi-cfg 0.1.0 (git+https://github.com/openOMSI-org/openOMSI?rev=906e6e638f786ed5efd8a6d2a5ad38ed0ba7a7f0)",
+ "omsi-cfg",
 ]
 
 [[package]]
@@ -2447,8 +2413,7 @@ dependencies = [
  "gltf",
  "image",
  "log",
- "omsi-cfg 0.1.0 (git+https://github.com/openOMSI-org/openOMSI?rev=906e6e638f786ed5efd8a6d2a5ad38ed0ba7a7f0)",
- "omsi-cfg 0.1.0 (git+https://github.com/openOMSI-org/openOMSI?rev=c4738ed6f43f11b4c06ead299af7ac74280d5c5b)",
+ "omsi-cfg",
  "omsi-content",
  "omsi-geometry",
  "omsi-map",
@@ -2459,8 +2424,6 @@ dependencies = [
  "omsi-script",
  "omsi-texture",
  "omsi-timetable",
- "omsi-transit",
- "omsi-trolley",
  "openmapper-collab",
  "openmapper-mesh",
  "pollster 1.0.1",

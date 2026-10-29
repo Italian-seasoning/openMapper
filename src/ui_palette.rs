@@ -84,7 +84,6 @@ fn commands() -> Vec<Command> {
             st.check.open = true;
             st.check.issues = None;
         }),
-        cmd!(Icon::Tram, "Transit network…", "Транспортная сеть…", "transit tram metro train railway trolleybus station route depot catenary third rail wire modern трамвай метро поезд троллейбус станция маршрут депо контактная сеть", "", |_, _, a| a.push(Action::Transit)),
         cmd!(Icon::Bus, "Lines and timetable…", "Линии и расписание…", "route trips tours schedule bus line маршрут рейсы туры автобус", "L", |_, _, a| a.push(Action::Timetable)),
         cmd!(Icon::Traffic, "Traffic and AI…", "Трафик и ИИ…", "cars density ailists depot машины плотность", "T", |_, _, a| a.push(Action::Traffic)),
         cmd!(Icon::Flag, "Depot files (destinations)…", "Файлы депо (конечные)…", "hof destinations ibis routes terminus signs конечные указатели маршруты", "", |_, _, a| a.push(Action::Depots)),

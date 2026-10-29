@@ -2438,301 +2438,48 @@ Could not copy the photos	A fényképeket nem sikerült másolni
 Copying the photos	Fényképek másolása
 Hold only the photos of the tiles near the camera	Csak a kamera közelében lévő csempék fényképeit tartsd
 The others keep their photo in the map's folder, and are put up again when you go back to them.	A többi a fényképét a térkép mappájában tartja, és visszatér, amikor visszamész hozzájuk.
-A tram loop with two stations and its wire: save, then drive it in openOMSI with a tram of your own.	Villamoshurok két állomással és felsővezetékkel: mentsd el, majd vezesd végig az openOMSI-ban egy saját villamossal.
-Transit kit made, files:	A közlekedési készlet elkészült, fájlok:
-The transit kit could not be made	A közlekedési készlet nem készíthető el
-Transit network problems	A közlekedési hálózat problémái
-Stations without their mode's lanes	Állomások a közlekedési módjuk sávjai nélkül
-Stations without their stop	Állomások megálló nélkül
-openOMSI's own reader finds this in the map's transport folder (stations, routes, wires, switches, depots, signals): a service it names is skipped, a section or a block left out. Open Map > Transit network to change it.	Az openOMSI saját beolvasója ezt találja a térkép transport mappájában (állomások, útvonalak, vezetékek, váltók, telephelyek, jelzők): a megnevezett járatminta kimarad, egy tápszakasz vagy térköz kimarad. Nyisd meg a Térkép > Közlekedési hálózat alatt a módosításhoz.
-openOMSI routes a service over the lanes of its mode within 25 m of each station (rails for trams, metro and trains, streets for buses and trolleybuses). This station has none of its modes' near, so its services cannot run. Move the stop next to the track or road, or lay one there.	Az openOMSI a járatmintát a közlekedési módja sávjain vezeti, minden állomástól 25 m-en belül (sínek villamosnak, metrónak és vonatnak, utcák busznak és trolibusznak). Ennek az állomásnak a közelében nincs egyik módjához tartozó sáv sem, így a járatai nem indulnak. Tedd a megállót a pálya vagy az út mellé, vagy fektess le ott egyet.
-A station is found by the game among the map's stops: by its stop object, else by its name. This one's object is no stop on the map and no stop has its name, so the services through it are skipped. Pick its stop again in Map > Transit network, Stations.	Az állomást a játék a térkép megállói között keresi: a megállóobjektuma, különben a neve alapján. Ennek az objektuma nem megálló a térképen, és nincs ilyen nevű megálló sem, így a rajta átmenő járatminták kimaradnak. Válaszd ki újra a megállóját a Térkép > Közlekedési hálózat, Állomások alatt.
-station	állomás
-Transit network…	Közlekedési hálózat…
-The transport folder stays: openOMSI still reads its stations, routes and wires.	A transport mappa megmarad: az openOMSI továbbra is beolvassa az állomásait, útvonalait és vezetékeit.
-Remove it too	Azt is töröld
-Start with a tram line: a loop of track under its wire, two stations and a route	Kezdés egy villamosvonallal: pályahurok felsővezeték alatt, két állomás és egy útvonal
-Classic	Klasszikus
-Runs in OMSI 2 and in openOMSI. Buses, and trams and trains as OMSI 2 has them.	OMSI 2-ben és openOMSI-ban is fut. Buszok, valamint villamosok és vonatok úgy, ahogy az OMSI 2-ben vannak.
-Modern	Modern
-openOMSI only. Real transit: stations, routes, overhead wire, third rail, depots and signal blocks.	Csak openOMSI. Valódi tömegközlekedés: állomások, útvonalak, felsővezeték, harmadik sín, telephelyek és jelzőtérközök.
-Made for (one or more):	Ehhez készül (egy vagy több):
-Choose at least one	Válassz legalább egyet
-OMSI 2 cannot run a Modern map's routes, wires or blocks, and openOMSI runs only vehicles of its modes on it. openMapper's transit kit (tracks, wires, platforms, masts) is made in the content folder.	Az OMSI 2 nem tudja futtatni egy modern térkép útvonalait, vezetékeit vagy térközeit, az openOMSI pedig csak a módjainak megfelelő járműveket futtatja rajta. Az openMapper közlekedési készlete (pályák, vezetékek, peronok, oszlopok) a tartalommappában készül el.
-Overview	Áttekintés
-Stations	Állomások
-Depots	Telephelyek
-Power	Energiaellátás
-Switches and signals	Váltók és jelzők
-Set it (else the game's default)	Beállítás (különben a játék alapértéke)
-(not set)	(nincs beállítva)
-Take it out	Eltávolítás
-Transit network	Közlekedési hálózat
-This is a Classic map.	Ez egy klasszikus térkép.
-Stations, routes without tours, the overhead wire, the third rail, depots and signal blocks are openOMSI's (0.3.42 and later): make the map Modern in Map settings to give it a transit network. OMSI 2 cannot run them.	Az állomások, a forda nélküli útvonalak, a felsővezeték, a harmadik sín, a telephelyek és a jelzőtérközök az openOMSI (0.3.42-es és újabb) részei: tedd a térképet modernné a Térképbeállításokban, hogy közlekedési hálózatot adhass neki. Az OMSI 2 nem tudja futtatni őket.
-No stop there: click a stop object (a bus stop, or the kit's station stop)	Itt nincs megálló: kattints egy megállóobjektumra (buszmegállóra vagy a készlet állomásmegállójára)
-Now click where the block ends	Most kattints oda, ahol a térköz véget ér
-Click the signal object itself	Kattints magára a jelzőobjektumra
-Then click in the view	Aztán kattints a nézetbe
-Modern map for	Modern térkép a következőkhöz:
-openOMSI runs only vehicles of these modes here; OMSI 2 cannot run the network. The modes are changed in Map settings.	Az openOMSI itt csak ezeknek a módoknak a járműveit futtatja; az OMSI 2 nem tudja futtatni a hálózatot. A módok a Térképbeállításokban módosíthatók.
-Services	Járatminták
-Track rules	Pályaszabályok
-Overhead wire spans	Felsővezeték-mezők
-Third rail spans	Harmadiksín-mezők
-Trolleybus wire spans	Trolibuszvezeték-mezők
-Switches	Váltók
-Signals and blocks	Jelzők és térközök
-Problems	Problémák
-None: openOMSI reads the network as it is.	Nincs: az openOMSI úgy olvassa be a hálózatot, ahogy van.
-error	hiba
-warning	figyelmeztetés
-Found by openOMSI's own reader of the transport folder, the texts as it writes them in its log.	Az openOMSI saját, a transport mappát olvasó beolvasója találta; a szövegek úgy, ahogy a naplójába írja.
-openMapper's transit kit	Az openMapper közlekedési készlete
-Tracks, platforms, wires and objects made by openMapper for Modern maps (OMSI 2 ships no metro, third rail or trolleybus wire). They are in the catalogue under openMapper; click one to place it.	Pályák, peronok, vezetékek és objektumok, amelyeket az openMapper készít modern térképekhez (az OMSI 2-ben nincs metró, harmadik sín vagy trolibuszvezeték). A katalógusban az openMapper alatt találhatók; kattints egyre a lehelyezéshez.
-Make the kit	Készlet elkészítése
-A station is a stop object of the map (a bus stop, or the kit's station stop beside a track) with its platforms. openOMSI routes a service over the lanes of its mode within 25 m of each station.	Az állomás a térkép egy megállóobjektuma (buszmegálló, vagy a készlet állomásmegállója egy pálya mellett) a peronjaival. Az openOMSI a járatmintát a módja sávjain vezeti, minden állomástól 25 m-en belül.
-A station for every stop of the map	Állomás a térkép minden megállójához
-Stops not yet a station become one, named as the stop, its modes from the tracks and roads beside it	A még nem állomás megállók állomássá válnak, a megálló nevével, a módjaik a mellettük lévő pályák és utak alapján
-New station	Új állomás
-Stations added:	Hozzáadott állomások:
-Choose a station	Válassz egy állomást
-Id	Azonosító
-Modes	Módok
-Stop object	Megállóobjektum
-Pick	Kiválasztás
-Place	Hely
-Change to	Átszállás
-Platforms	Peronok
-Side	Oldal
-island	szigetperon
-both	mindkét oldal
-platform screen doors	peronajtók
-Delete the station	Állomás törlése
-A route is segments from station to station (the stops between them in order) and services over them: a branch, a short working or an express is another segment or service. openOMSI makes the timetable's tours from them and finds the way over the tracks itself.	Az útvonal állomástól állomásig tartó szakaszokból (a köztük lévő megállókkal sorrendben) és a rajtuk közlekedő járatmintákból áll: egy elágazás, egy rövidített járat vagy egy gyorsjárat újabb szakasz vagy járatminta. Az openOMSI ezekből készíti el a menetrend fordáit, és maga találja meg az utat a pályákon.
-Add two stations or more first (Stations)	Előbb adj hozzá legalább két állomást (Állomások)
-New route	Új útvonal
-Segment	Szakasz
-Stops between	Köztes megállók
-Passed without stopping	Megállás nélkül áthalad
-Standing at a stop	Állásidő a megállóban
-Speed	Sebesség
-Way back	Visszaút
-over the same segment	ugyanazon a szakaszon
-another segment	másik szakaszon
-Service	Járatminta
-Segments in order	Szakaszok sorrendben
-From – to	Honnan – hová
-Days	Napok
-every day	minden nap
-weekends	hétvégén
-Saturdays	szombatonként
-Sundays	vasárnaponként
-turns back	visszafordul
-goes round a loop	hurokban fordul
-goes to depot	a telephelyre megy
-Cars in a train	Kocsik a szerelvényben
-Every 10 minutes from 05:30 to 23:30 over all the route's segments	10 percenként 05:30 és 23:30 között az útvonal összes szakaszán
-Departures of their own	Saját indulások
-For a service without a headway: its departures, as 06:00 06:12 06:30.	Követési idő nélküli járatmintához: az indulásai, pl. 06:00 06:12 06:30.
-Departures	Indulások
-A service's depot sends out its vehicles: its AI group (Traffic and AI) supplies them, and the first departure of the day leaves by its gate along the rails to the first station.	A járatminta telephelye küldi ki a járműveit: az MI-csoportja (Forgalom és MI) adja őket, és a nap első indulása a kapuján át a síneken indul az első állomásra.
-AI group	MI-csoport
-Capacity	Befogadóképesség
-Its stop	A megállója
-Gates	Kapuk
-Add a gate	Kapu hozzáadása
-has a turning loop	van fordítóhurka
-Delete the depot	Telephely törlése
-A gate needs a rail within 25 m and a way to the first station, or the trip starts at its station (the game's log says so).	A kapunak 25 m-en belül sínre és az első állomásig vezető útra van szüksége, különben a menet az állomásán kezdődik (a játék naplója ezt jelzi).
-Which tracks serve which mode and how they are powered: a rule matches a track type (a file pattern, * for any letters), a tile or one piece; later rules win. Without a rule openOMSI guesses from the type's name.	Mely pályák mely módot szolgálják ki és hogyan kapnak áramot: egy szabály egy pályatípusra (fájlminta, * bármilyen betűkre), egy csempére vagy egy darabra illik; a későbbi szabályok erősebbek. Szabály nélkül az openOMSI a típus nevéből találgat.
-A rule for the selected track's type	Szabály a kijelölt pálya típusához
-Empty rule	Üres szabály
-(select a track in the view to make a rule for its type)	(jelölj ki egy pályát a nézetben, hogy szabályt készíts a típusához)
-Track type	Pályatípus
-Only on tile / piece	Csak csempe / darab
-id	azonosító
-in the street	utcában
-railway	különálló pálya
-overhead wire	felsővezeték
-third rail	harmadik sín
-diesel	dízel
-Tunnel	Alagút
-yes	igen
-no	nem
-Gauge	Nyomtáv
-A map for buses alone has no line to power.	Egy csak buszos térképen nincs táplálandó vezeték.
-Third rail	Harmadik sín
-Trolleybus wire	Trolibuszvezeték
-Where the wire is, the player's tram or electric train needs a live section of it over its pantograph (dead sections and breaks stop the drive). Without spans openOMSI takes the current for granted. Spans are laid along the selected tracks.	Ahol van vezeték, a játékos villamosának vagy villamos vonatának feszültség alatti szakaszra van szüksége az áramszedője fölött (a feszültségmentes szakaszok és a megszakítások leállítják a vontatást). Mezők nélkül az openOMSI mindenhol feltételez áramot. A mezők a kijelölt pályák mentén kerülnek lefektetésre.
-The player's metro train needs a live section of third rail beside its shoe. The kit's metro tracks carry the rail itself; spans say where it is fed. Spans are laid along the selected tracks.	A játékos metrószerelvényének feszültség alatti harmadiksín-szakaszra van szüksége az áramszedő saruja mellett. A készlet metrópályái maguk hordozzák a sínt; a mezők mondják meg, hol kap táplálást. A mezők a kijelölt pályák mentén kerülnek lefektetésre.
-openOMSI's trolleybuses run on this wire (trolley.txt beside global.cfg): a pole is powered only on a pair fed by a substation. Spans are laid over each way's lane of the selected roads, with the wire splines that show them.	Az openOMSI trolibuszai ezen a vezetéken járnak (trolley.txt a global.cfg mellett): az áramszedő rúd csak alállomásról táplált vezetékpáron kap áramot. A mezők a kijelölt utak mindkét irányú sávja fölé kerülnek, az őket megjelenítő vezetéksplinekkel együtt.
-The line	A vezetékhálózat
-Voltage	Feszültség
-Current	Áramnem
-direct	egyenáram
-alternating	váltóáram
-Wire height	Vezetékmagasság
-Wire spacing	Vezetéktávolság
-Sections (each fed by a substation)	Tápszakaszok (mindegyiket egy alállomás táplálja)
-name	név
-live	feszültség alatt
-feeder Ω	tápvezeték Ω
-Section	Tápszakasz
-Spans	Mezők
-one pair over the middle	egy pár középen
-a pair over each 3.0 m lane	egy pár minden 3,0 m-es sáv fölött
-a pair over each 3.5 m lane	egy pár minden 3,5 m-es sáv fölött
-lay the wire splines too	a vezetéksplinek lefektetése is
-Wire the selected roads	Vezeték a kijelölt utak fölé
-Electrify the selected tracks	Kijelölt pályák villamosítása
-Take their spans off	Mezőik eltávolítása
-(select roads in the view)	(jelölj ki utakat a nézetben)
-(select tracks in the view)	(jelölj ki pályákat a nézetben)
-Their spans are taken off	A mezőik eltávolítva
-Spans laid:	Lefektetett mezők:
-Gaps	Megszakítások
-Insulators	Szigetelők
-Gap	Megszakítás
-Insulator	Szigetelő
-Frogs (wire switches)	Légváltók (vezetékváltók)
-Where three spans meet: the contact plate before it sets it by the current the bus draws (power) or by its indicator.	Ahol három mező találkozik: az előtte lévő érintkezőlap a busz által felvett áram (teljesítmény) vagy az irányjelzője alapján állítja.
-by current	áram szerint
-by indicator	irányjelző szerint
-Frog	Légváltó
-A switch listed here holds while a train stands on it, goes back to its rest position, and can be thrown by hand only or locked by a signal. Switches not listed work as before.	Az itt felsorolt váltó nem állítható, amíg vonat áll rajta, visszatér az alaphelyzetébe, és lehet csak kézzel állítható vagy jelző által lezárt. A fel nem sorolt váltók a korábbiak szerint működnek.
-The selected switch objects	A kijelölt váltóobjektumok
-simple	egyszerű
-crossover	vágánykapcsolat
-double slip	angolváltó
-diamond	átszelés
-scissors	ollós vágánykapcsolat
-rests straight	alaphelyzet: egyenes
-rests diverging	alaphelyzet: kitérő
-thrown by the route	útvonal szerint állítva
-by hand only	csak kézzel
-interlocked	biztosított
-diverging	kitérő
-locked by	lezáró jelző
-Blocks	Térközök
-A stretch of track that holds one AI train at a time, given by where it begins and ends on the rails; its signals show whether it is free. Blocks need the timetable's trains (the AI) to hold.	Egy pályaszakasz, amelyen egyszerre egy MI-vonat lehet, a síneken lévő kezdete és vége határozza meg; a jelzői mutatják, szabad-e. A térközök a menetrend vonataira (az MI-re) hatnak.
-Ends	Végek
-Block	Térköz
-Click where the block begins	Kattints oda, ahol a térköz kezdődik
-Signals	Jelzők
-A signal of the map tied to a block shows stop while the block is in use and go while it is free.	A térkép egy térközhöz kötött jelzője „megállj”-t mutat, amíg a térköz foglalt, és „szabad”-ot, amíg szabad.
-main	főjelző
-distant	előjelző
-block	térközjelző
-shunting	tolatásjelző
-speed	sebességjelző
-tram	villamosjelző
-Tram street track	Utcai villamospálya
-Tram track on grass	Füves villamospálya
-Railway track	Vasúti pálya
-Metro track	Metrópálya
-Metro tunnel	Metróalagút
-Tram platform	Villamosperon
-Metro side platform	Metró oldalperon
-Metro island platform	Metró szigetperon
-Railway side platform	Vasúti oldalperon
-Railway island platform	Vasúti szigetperon
-Trolleybus wires (one pair)	Trolibuszvezeték (egy pár)
-Trolleybus wires, 3.0 m lanes	Trolibuszvezeték, 3,0 m-es sávok
-Trolleybus wires, 3.5 m lanes	Trolibuszvezeték, 3,5 m-es sávok
-Catenary mast (arm right)	Felsővezeték-oszlop (kar jobbra)
-Catenary mast (arm left)	Felsővezeték-oszlop (kar balra)
-Trolleybus pole (arm right)	Trolibuszoszlop (kar jobbra)
-Trolleybus pole (arm left)	Trolibuszoszlop (kar balra)
-Metro sign	Metrótábla
-Platform shelter	Peronfedél
-Buffer stop	Ütközőbak
-Station stop	Állomásmegálló
-Bus	Busz
-Tram	Villamos
-Railway	Vasút
-Metro	Metró
-Trolleybus	Trolibusz
-buses on the streets, stops at the kerb	buszok az utcákon, megállók a szegélynél
-street track under a contact wire, low platforms	utcai pálya felsővezeték alatt, alacsony peronok
-mainline track, stations with platforms, signals and blocks	fővonali pálya, peronos állomások, jelzők és térközök
-track with a third rail, tunnels, high platforms	pálya harmadik sínnel, alagutak, magas peronok
-buses under a pair of wires, frogs at junctions	buszok vezetékpár alatt, légváltók a csomópontokban
-Depot Square	Kocsiszín tér
-Park Gate	Parkkapu
-Tram start	Villamos kezdőpont
-Loop line	Körjárat
-A trolleybus junction under its wires with three stations: save, then drive it in openOMSI with a trolleybus of your own.	Trolibusz-csomópont a vezetékei alatt három állomással: mentsd el, majd vezesd végig az openOMSI-ban egy saját trolibusszal.
-station stops:	állomásmegállók:
-stations:	állomások:
-routes:	útvonalak:
-Vehicles of other modes	Más módok járművei
-Services without a vehicle of their mode	Járatminták a módjuk járműve nélkül
-openOMSI runs only vehicles of a Modern map's modes on it. This vehicle of the AI lists is made for another mode (its file says so, or it is a depot's vehicle and its shape says so), so the game leaves it out. Change it in Map > Traffic and AI, or add its mode to the map in Map settings.	Az openOMSI egy modern térképen csak a térkép módjainak járműveit futtatja. Az MI-listák e járműve más módhoz készült (ezt mondja a fájlja, vagy telephelyi jármű, és ezt mutatja a felépítése), ezért a játék kihagyja. Cseréld le a Térkép > Forgalom és MI alatt, vagy add hozzá a módját a térképhez a Térképbeállításokban.
-A service of the transit network takes its vehicles from its depot's AI group (or names one vehicle file). That group has no vehicle of the route's mode, so nothing runs it. Give the depot an AI group with such vehicles (Map > Traffic and AI), or choose another depot.	A közlekedési hálózat egy járatmintája a telephelye MI-csoportjából veszi a járműveit (vagy egy járműfájlt nevez meg). Abban a csoportban nincs az útvonal módjának megfelelő jármű, így senki sem közlekedik rajta. Adj a telephelynek ilyen járművekkel rendelkező MI-csoportot (Térkép > Forgalom és MI), vagy válassz másik telephelyet.
-group	csoport
-route	útvonal
-its depot names no AI group	a telephelye nem nevez meg MI-csoportot
-no vehicle of the mode in	nincs a mód szerinti jármű, csoport
-Stations from OpenStreetMap	Állomások az OpenStreetMapből
-Metro tracks	Metrópályák
-in tunnels too: build them with the kit's metro tunnel and cut the ground away (a Modern map)	alagutakban is: építsd őket a készlet metróalagútjával, és vágd ki a talajt (modern térkép)
-Start with a trolleybus line: a junction under its wires with frogs, three stations and two routes	Kezdés egy trolibuszvonallal: csomópont a vezetékei alatt légváltókkal, három állomás és két útvonal
-Stations (tram, metro, railway)	Állomások (villamos, metró, vasút)
-Each tram stop and station of the map's rail modes put with the kit's station stop beside the nearest track (within 25 m); every stop of the map then becomes a station of its transport folder	A térkép kötöttpályás módjainak minden villamosmegállója és állomása a készlet állomásmegállójával kerül a legközelebbi pálya mellé (25 m-en belül); ezután a térkép minden megállója a transport mappájának állomásává válik
-Routes (tram, trolleybus, metro, railway)	Útvonalak (villamos, trolibusz, metró, vasút)
-Each route of the map's modes through two or more of its stations a segment of its line, the line's service as often as OpenStreetMap says (else every 10 minutes), from 05:30 to 23:30; openOMSI finds the way over the tracks	A térkép módjainak minden útvonala, amely két vagy több állomásán áthalad, a vonala egy szakasza lesz, a vonal járatmintája olyan sűrűn, ahogy az OpenStreetMap mondja (különben 10 percenként), 05:30 és 23:30 között; az utat a pályákon az openOMSI maga találja meg
-no vehicle of it is installed	egyetlen járműve sincs telepítve
-Its vehicles:	Járművei:
-(select roads in the view, and the junctions between them)	(jelölj ki utakat a nézetben, és a köztük lévő csomópontokat)
-(select tracks in the view, and their switches)	(jelölj ki pályákat a nézetben, és a váltóikat)
-A pair of wires over each way's kerb lane; through a selected junction only the lanes that join wired roads. Frogs are put where three wires meet.	Egy vezetékpár minden irány szegély melletti sávja fölött; egy kijelölt csomóponton át csak a vezetékes utakat összekötő sávok. Ahol három vezeték találkozik, légváltó kerül.
-The map's files are still being read	A térkép fájljai még beolvasás alatt vannak
-West Gate	Nyugati kapu
-East Market	Keleti piac
-North Park	Északi park
-Market line	Piac vonal
-Park line	Park vonal
-Trolleybus start	Trolibusz kezdőpont
-frogs:	légváltók:
-places where more than three wires meet get no frog: wire fewer turns there	hely, ahol háromnál több vezeték találkozik, légváltó nélkül maradt: ott kevesebb kanyart láss el vezetékkel
-Track ends that do not meet	Nem találkozó sínvégek
-Two tracks run on into one another but their ends lie apart: the game joins rails only where their ends lie within 1.5 m, so no train or tram gets across (a route through there finds no way). "Fix" moves one end onto the other, arriving in line with it, and joins them.	Két sín egymás folytatása, de a végeik távol vannak egymástól: a játék csak ott köti össze a síneket, ahol a végeik 1,5 m-en belül vannak, így itt sem vonat, sem villamos nem jut át (az erre vezető útvonal nem talál utat). A „Javítás” az egyik véget a másikra helyezi, vele egy vonalban, és összeköti őket.
-tracks	sínek
-Select the roads or tracks to build into the ground	Jelöld ki a talajba süllyesztendő utakat vagy síneket
-Cutting	Bevágás
-Cut and cover tunnel	Nyitott építésű alagút
-Nothing to build into the ground	Nincs mit a talajba süllyeszteni
-Build into the ground	Süllyesztés a talajba
-The chain of the selected pieces lowered, with ramps at its ends. Cut: an open cutting with sloped banks. Cover: open ramps down to the portals and a tunnel under the ground between them (a shell of walls and roof, a portal at each mouth).	A kijelölt darabok lánca lesüllyed, a végein rámpákkal. Bevágás: nyitott, lejtős rézsűkkel. Alagút: nyitott rámpák le a portálokig, köztük alagút a föld alatt (falakból és födémből álló héj, minden bejáratnál egy portál).
-Cover (tunnel)	Fedett (alagút)
-Ramp gradient	Rámpa lejtése
-Banks	Rézsűk
- m out per metre up	 m oldalra 1 m emelkedésenként
-Ramps	Rámpák
-at the start	az elején
-at the end	a végén
-A tunnel needs a depth of 6 m or more: shallower it stays an open cutting	Az alagúthoz legalább 6 m mélység kell: sekélyebben nyitott bevágás marad
-Each ramp is about	Minden rámpa nagyjából
-Pieces lowered:	Lesüllyesztett darabok:
-tunnel pieces:	alagútdarabok:
-portals:	portálok:
-their overhead taken off: wire them again (Transit network, Power)	felsővezetékük eltávolítva: fektesd le újra (Közlekedési hálózat, Energiaellátás)
-Platforms at the stations	Peronok az állomásokon
-The kit's platform of each rail station's mode beside its track, on the side its stop stands, as long as its platform says	A készlet perona minden kötöttpályás állomás módjához, a sínje mellett, a megálló felőli oldalon, olyan hosszan, ahogy a peronja megadja
-Platforms laid:	Lefektetett peronok:
-lay the wires, masts, poles and frogs too	a vezetékek, oszlopok és légváltók lefektetése is
-Catenary mast	Felsővezeték-oszlop
-Trolleybus pole	Trolibuszoszlop
-Trolleybus frog	Trolibusz-légváltó
-Section insulator	Szakaszszigetelő
 Lake	Tó
 River	Folyó
 Water level:	Vízszint:
+Banks	Rézsűk
 Click the shore round and close it on the first point (Enter closes too, right-click takes a point back). The ground inside is dug to a bed and the banks slope to the shore.	Kattintson körbe a part mentén, és zárja a kört az első pontnál (az Enter is zár, a jobb kattintás visszavesz egy pontot). A belső talaj mederig kiásásra kerül, a partok pedig a vízpart felé lejtenek.
 Click the river's middle line from its source on and finish on the last point (or Enter). Water in OMSI lies at one level for a tile: a river runs level.	Kattintson a folyó középvonalára a forrástól kezdve, és az utolsó ponton fejezze be (vagy Enterrel). Az OMSI-ban a víz csempénként egy szinten áll: a folyó vízszintesen folyik.
 Add as a ground texture	Hozzáadás talajtextúraként
+Painted line	Festett vonal
+Stop line	Megállóvonal
+A wide solid line across a lane: draw it across the road	Széles folytonos vonal a sáv keresztében: az útra merőlegesen rajzolja
+Crossing	Gyalogátkelő
+Zebra bars: draw it across the road, the bars lie along it	Zebra: az útra merőlegesen rajzolja, a csíkok az út mentén fekszenek
+Centre line	Középvonal
+A double yellow line	Kettős sárga vonal
+Lane line	Sávelválasztó vonal
+A white dashed line	Fehér szaggatott vonal
+Solid	Folytonos
+Dashed	Szaggatott
+Double	Kettős
+Solid and dashed	Folytonos és szaggatott
+Crossing (bars)	Gyalogátkelő (csíkok)
+A line's width (each line of a double one); a crossing's reach along the road	A vonal szélessége (kettősnél mindegyiké); az átkelő mélysége az út mentén
+Bar	Csík
+Dash	Szakasz
+Gap	Megszakítás
+Draw with this line	Rajzolás ezzel a vonallal
+It is made as a spline type of the content folder (Splines\\openMapper\\marks) and chosen: draw it with Line, Arc or Curve, over the asphalt	Spline-típusként jön létre a tartalommappában (Splines\\openMapper\\marks) és ki is van választva: Vonal, Ív vagy Görbe eszközzel rajzolja az aszfalt fölé
+Painted line made: draw with it in the junction editor	Festett vonal elkészült: rajzoljon vele a kereszteződés-szerkesztőben
 A junction was not made: its roads are too short or too close together. Lengthen them or move the junctions apart.	A kereszteződés nem jött létre: az utak túl rövidek vagy túl közel vannak egymáshoz. Hosszabbítsa meg őket, vagy tegye távolabb a kereszteződéseket.
+Draw road markings	Útburkolati jelek rajzolása
+Pen	Toll
+Straight line	Egyenes vonal
+Dashed line	Szaggatott vonal
+Rectangle	Téglalap
+Arrow	Nyíl
+Eraser	Radír
+Dash length	Szakasz hossza
+Gap between dashes	Köz a szakaszok között
+Pointing back	Hátrafelé mutat
+Snap to 5 cm	Illesztés 5 cm-re
+Drag to draw. The picture is the roadway as the texture lies on it, up is the way of the road; it repeats along, so what leaves at the top comes in at the bottom.	Húzással rajzolj. A kép az úttest úgy, ahogy a textúra rajta fekszik, felül az út iránya van; hosszában ismétlődik, így ami felül kilép, alul belép.
+Pick a roadway texture first	Először válassz úttest-textúrát
 Display	Megjelenítés
 X-ray (Alt+Z): see and pick through the mesh	Röntgen (Alt+Z): átlátás és kijelölés a hálón keresztül
 Show the textures	Textúrák megjelenítése
@@ -2746,42 +2493,9 @@ Paint my own markings	Saját jelek festése
 The maker paints the lines onto the roadway texture: pick a plain asphalt texture, or its own lines show too	A készítő a vonalakat az úttest textúrájára festi: válassz sima aszfalttextúrát, különben annak saját vonalai is látszanak
 Standard for these lanes	Szabvány ezekhez a sávokhoz
 Add a line	Vonal hozzáadása
-Across the roadway from its middle (right of the road's way is plus)	Az úttesten át a közepétől (az út irányától jobbra plusz)
-Solid	Folytonos
-Dashed	Szaggatott
-Double solid	Dupla folytonos
-Solid and dashed	Folytonos és szaggatott
-The line's width	A vonal szélessége
-Dash length	Szakasz hossza
-Gap between dashes	Köz a szakaszok között
-Draw road markings	Útburkolati jelek rajzolása
-Pen	Toll
-Straight line	Egyenes vonal
-Dashed line	Szaggatott vonal
-Rectangle	Téglalap
-Arrow	Nyíl
-Eraser	Radír
-Pointing back	Hátrafelé mutat
-Snap to 5 cm	Illesztés 5 cm-re
-Drag to draw. The picture is the roadway as the texture lies on it, up is the way of the road; it repeats along, so what leaves at the top comes in at the bottom.	Húzással rajzolj. A kép az úttest úgy, ahogy a textúra rajta fekszik, felül az út iránya van; hosszában ismétlődik, így ami felül kilép, alul belép.
-Pick a roadway texture first	Először válassz úttest-textúrát
 Draw by hand…	Rajzolás kézzel…
 A drawing board with a pen, lines, arrows and an eraser: what you draw goes onto the roadway	Rajztábla tollal, vonalakkal, nyilakkal és radírral: amit rajzolsz, az az úttestre kerül
 a drawing is on the road	rajz van az úton
-Painted line	Festett vonal
-Stop line	Megállóvonal
-A wide solid line across a lane: draw it across the road	Széles folytonos vonal a sáv keresztében: az útra merőlegesen rajzolja
-Crossing	Gyalogátkelő
-Zebra bars: draw it across the road, the bars lie along it	Zebra: az útra merőlegesen rajzolja, a csíkok az út mentén fekszenek
-Centre line	Középvonal
-A double yellow line	Kettős sárga vonal
-Lane line	Sávelválasztó vonal
-A white dashed line	Fehér szaggatott vonal
-Double	Kettős
-Crossing (bars)	Gyalogátkelő (csíkok)
-A line's width (each line of a double one); a crossing's reach along the road	A vonal szélessége (kettősnél mindegyiké); az átkelő mélysége az út mentén
-Bar	Csík
-Dash	Szakasz
-Draw with this line	Rajzolás ezzel a vonallal
-It is made as a spline type of the content folder (Splines\\openMapper\\marks) and chosen: draw it with Line, Arc or Curve, over the asphalt	Spline-típusként jön létre a tartalommappában (Splines\\openMapper\\marks) és ki is van választva: Vonal, Ív vagy Görbe eszközzel rajzolja az aszfalt fölé
-Painted line made: draw with it in the junction editor	Festett vonal elkészült: rajzoljon vele a kereszteződés-szerkesztőben
+Across the roadway from its middle (right of the road's way is plus)	Az úttesten át a közepétől (az út irányától jobbra plusz)
+Double solid	Dupla folytonos
+The line's width	A vonal szélessége

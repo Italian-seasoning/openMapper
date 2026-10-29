@@ -2438,301 +2438,48 @@ Could not copy the photos	Не вдалося скопіювати знімки
 Copying the photos	Копіювання знімків
 Hold only the photos of the tiles near the camera	Тримати лише знімки тайлів поблизу камери
 The others keep their photo in the map's folder, and are put up again when you go back to them.	Інші зберігають знімок у папці карти й з'являються знову, коли ви до них повернетеся.
-A tram loop with two stations and its wire: save, then drive it in openOMSI with a tram of your own.	Трамвайне кільце з двома станціями та контактним проводом: збережіть і проїдьте його в openOMSI на власному трамваї.
-Transit kit made, files:	Транспортний набір створено, файлів:
-The transit kit could not be made	Не вдалося створити транспортний набір
-Transit network problems	Проблеми транспортної мережі
-Stations without their mode's lanes	Станції без смуг свого виду транспорту
-Stations without their stop	Станції без своєї зупинки
-openOMSI's own reader finds this in the map's transport folder (stations, routes, wires, switches, depots, signals): a service it names is skipped, a section or a block left out. Open Map > Transit network to change it.	Це знаходить власний модуль читання openOMSI у теці transport карти (станції, маршрути, проводи, стрілки, депо, сигнали): названий режим руху пропускається, секція чи блок-ділянка не враховуються. Відкрийте Карта > Транспортна мережа, щоб змінити це.
-openOMSI routes a service over the lanes of its mode within 25 m of each station (rails for trams, metro and trains, streets for buses and trolleybuses). This station has none of its modes' near, so its services cannot run. Move the stop next to the track or road, or lay one there.	openOMSI прокладає режим руху смугами свого виду транспорту в межах 25 м від кожної станції (рейки для трамваїв, метро й поїздів, вулиці для автобусів і тролейбусів). Біля цієї станції немає смуг жодного з її видів, тож її режими руху не можуть працювати. Пересуньте зупинку до колії чи дороги або прокладіть їх там.
-A station is found by the game among the map's stops: by its stop object, else by its name. This one's object is no stop on the map and no stop has its name, so the services through it are skipped. Pick its stop again in Map > Transit network, Stations.	Гра шукає станцію серед зупинок карти: за об'єктом зупинки, інакше за назвою. Об'єкт цієї станції не є зупинкою на карті, і жодна зупинка не має її назви, тож режими руху через неї пропускаються. Виберіть її зупинку знову в Карта > Транспортна мережа, Станції.
-station	станція
-Transit network…	Транспортна мережа…
-The transport folder stays: openOMSI still reads its stations, routes and wires.	Тека transport лишається: openOMSI і далі читає її станції, маршрути й проводи.
-Remove it too	Видалити і її
-Start with a tram line: a loop of track under its wire, two stations and a route	Почати з трамвайної лінії: кільце колії під контактним проводом, дві станції та маршрут
-Classic	Класична
-Runs in OMSI 2 and in openOMSI. Buses, and trams and trains as OMSI 2 has them.	Працює в OMSI 2 і в openOMSI. Автобуси, а також трамваї й поїзди — як в OMSI 2.
-Modern	Сучасна
-openOMSI only. Real transit: stations, routes, overhead wire, third rail, depots and signal blocks.	Лише openOMSI. Справжній транспорт: станції, маршрути, контактна мережа, контактна рейка, депо та блок-ділянки.
-Made for (one or more):	Для чого (одне чи кілька):
-Choose at least one	Виберіть хоча б одне
-OMSI 2 cannot run a Modern map's routes, wires or blocks, and openOMSI runs only vehicles of its modes on it. openMapper's transit kit (tracks, wires, platforms, masts) is made in the content folder.	OMSI 2 не вміє запускати маршрути, проводи й блок-ділянки сучасної карти, а openOMSI пускає на неї лише транспорт її видів. Транспортний набір openMapper (колії, проводи, платформи, щогли) створюється в теці контенту.
-Overview	Огляд
-Stations	Станції
-Depots	Депо
-Power	Живлення
-Switches and signals	Стрілки й сигнали
-Set it (else the game's default)	Задати (інакше — типове значення гри)
-(not set)	(не задано)
-Take it out	Прибрати
-Transit network	Транспортна мережа
-This is a Classic map.	Це класична карта.
-Stations, routes without tours, the overhead wire, the third rail, depots and signal blocks are openOMSI's (0.3.42 and later): make the map Modern in Map settings to give it a transit network. OMSI 2 cannot run them.	Станції, маршрути без оборотів, контактна мережа, контактна рейка, депо та блок-ділянки — це можливості openOMSI (0.3.42 і новіших): зробіть карту сучасною в «Налаштуваннях карти», щоб дати їй транспортну мережу. OMSI 2 їх не підтримує.
-No stop there: click a stop object (a bus stop, or the kit's station stop)	Тут немає зупинки: клацніть об'єкт зупинки (автобусну зупинку або станційну зупинку з набору)
-Now click where the block ends	Тепер клацніть, де блок-ділянка закінчується
-Click the signal object itself	Клацніть сам об'єкт сигналу
-Then click in the view	Потім клацніть у вікні виду
-Modern map for	Сучасна карта для
-openOMSI runs only vehicles of these modes here; OMSI 2 cannot run the network. The modes are changed in Map settings.	openOMSI пускає сюди лише транспорт цих видів; OMSI 2 не вміє запускати мережу. Види змінюються в «Налаштуваннях карти».
-Services	Режими руху
-Track rules	Правила колій
-Overhead wire spans	Прольоти контактної мережі
-Third rail spans	Ділянки контактної рейки
-Trolleybus wire spans	Прольоти тролейбусної мережі
-Switches	Стрілки
-Signals and blocks	Сигнали й блок-ділянки
-Problems	Проблеми
-None: openOMSI reads the network as it is.	Немає: openOMSI читає мережу як є.
-error	помилка
-warning	попередження
-Found by openOMSI's own reader of the transport folder, the texts as it writes them in its log.	Знайдено власним модулем openOMSI, що читає теку transport; тексти — як він пише їх у журнал.
-openMapper's transit kit	Транспортний набір openMapper
-Tracks, platforms, wires and objects made by openMapper for Modern maps (OMSI 2 ships no metro, third rail or trolleybus wire). They are in the catalogue under openMapper; click one to place it.	Колії, платформи, проводи та об'єкти, створені openMapper для сучасних карт (в OMSI 2 немає метро, контактної рейки й тролейбусної мережі). Вони в каталозі в розділі openMapper; клацніть, щоб поставити.
-Make the kit	Створити набір
-A station is a stop object of the map (a bus stop, or the kit's station stop beside a track) with its platforms. openOMSI routes a service over the lanes of its mode within 25 m of each station.	Станція — це об'єкт зупинки на карті (автобусна зупинка або станційна зупинка з набору біля колії) з її платформами. openOMSI прокладає режим руху смугами свого виду в межах 25 м від кожної станції.
-A station for every stop of the map	Станція для кожної зупинки карти
-Stops not yet a station become one, named as the stop, its modes from the tracks and roads beside it	Зупинки, що ще не є станціями, стають ними: назва — як у зупинки, види — за коліями й дорогами поруч
-New station	Нова станція
-Stations added:	Додано станцій:
-Choose a station	Виберіть станцію
-Id	Код
-Modes	Види
-Stop object	Об'єкт зупинки
-Pick	Вибрати
-Place	Місце
-Change to	Пересадка на
-Platforms	Платформи
-Side	Сторона
-island	острівна
-both	з обох боків
-platform screen doors	захисні двері платформи
-Delete the station	Видалити станцію
-A route is segments from station to station (the stops between them in order) and services over them: a branch, a short working or an express is another segment or service. openOMSI makes the timetable's tours from them and finds the way over the tracks itself.	Маршрут — це відрізки від станції до станції (з проміжними зупинками по порядку) і режими руху ними: відгалуження, укорочений рейс чи експрес — це ще один відрізок або режим. openOMSI сам будує з них обороти розкладу й сам знаходить шлях коліями.
-Add two stations or more first (Stations)	Спершу додайте хоча б дві станції (вкладка «Станції»)
-New route	Новий маршрут
-Segment	Відрізок
-Stops between	Проміжні зупинки
-Passed without stopping	Проїжджає без зупинки
-Standing at a stop	Стоянка на зупинці
-Speed	Швидкість
-Way back	Зворотний шлях
-over the same segment	тим самим відрізком
-another segment	іншим відрізком
-Service	Режим руху
-Segments in order	Відрізки по порядку
-From – to	Від – до
-Days	Дні
-every day	щодня
-weekends	у вихідні
-Saturdays	у суботи
-Sundays	у неділі
-turns back	розвертається
-goes round a loop	їде по кільцю
-goes to depot	іде в депо
-Cars in a train	Вагонів у складі
-Every 10 minutes from 05:30 to 23:30 over all the route's segments	Кожні 10 хвилин з 05:30 до 23:30 усіма відрізками маршруту
-Departures of their own	Власні відправлення
-For a service without a headway: its departures, as 06:00 06:12 06:30.	Для режиму руху без інтервалу: його відправлення, наприклад 06:00 06:12 06:30.
-Departures	Відправлення
-A service's depot sends out its vehicles: its AI group (Traffic and AI) supplies them, and the first departure of the day leaves by its gate along the rails to the first station.	Депо режиму руху випускає його транспорт: його дає група ШІ депо («Трафік і ШІ»), а перше відправлення дня виїжджає через ворота депо рейками до першої станції.
-AI group	Група ШІ
-Capacity	Місткість
-Its stop	Його зупинка
-Gates	Ворота
-Add a gate	Додати ворота
-has a turning loop	є розворотне кільце
-Delete the depot	Видалити депо
-A gate needs a rail within 25 m and a way to the first station, or the trip starts at its station (the game's log says so).	Воротам потрібна рейка в межах 25 м і шлях до першої станції, інакше рейс починається з її станції (про це пише журнал гри).
-Which tracks serve which mode and how they are powered: a rule matches a track type (a file pattern, * for any letters), a tile or one piece; later rules win. Without a rule openOMSI guesses from the type's name.	Які колії для якого виду транспорту і як вони живляться: правило відповідає типу колії (шаблон файлу, * — будь-які літери), тайлу або одному шматку; пізніші правила мають перевагу. Без правила openOMSI вгадує за назвою типу.
-A rule for the selected track's type	Правило для типу вибраної колії
-Empty rule	Порожнє правило
-(select a track in the view to make a rule for its type)	(виберіть колію у вікні виду, щоб створити правило для її типу)
-Track type	Тип колії
-Only on tile / piece	Лише на тайлі / шматку
-id	код
-in the street	у вулиці
-railway	відокремлена
-overhead wire	контактний провід
-third rail	контактна рейка
-diesel	дизель
-Tunnel	Тунель
-yes	так
-no	ні
-Gauge	Ширина колії
-A map for buses alone has no line to power.	Карта лише для автобусів не має мережі живлення.
-Third rail	Контактна рейка
-Trolleybus wire	Тролейбусна мережа
-Where the wire is, the player's tram or electric train needs a live section of it over its pantograph (dead sections and breaks stop the drive). Without spans openOMSI takes the current for granted. Spans are laid along the selected tracks.	Там, де є провід, трамваю чи електропоїзду гравця потрібна секція під напругою над струмоприймачем (знеструмлені секції й розриви зупиняють тягу). Без прольотів openOMSI вважає, що струм є всюди. Прольоти прокладаються вздовж вибраних колій.
-The player's metro train needs a live section of third rail beside its shoe. The kit's metro tracks carry the rail itself; spans say where it is fed. Spans are laid along the selected tracks.	Поїзду метро гравця потрібна секція контактної рейки під напругою біля його струмоприймача. Колії метро з набору вже мають саму рейку; ділянки вказують, де на неї подається живлення. Ділянки прокладаються вздовж вибраних колій.
-openOMSI's trolleybuses run on this wire (trolley.txt beside global.cfg): a pole is powered only on a pair fed by a substation. Spans are laid over each way's lane of the selected roads, with the wire splines that show them.	Тролейбуси openOMSI їздять цією мережею (trolley.txt поруч із global.cfg): штанга під напругою лише на парі проводів, що живиться від підстанції. Прольоти прокладаються над смугою кожного напрямку вибраних доріг разом зі сплайнами дроту, що їх показують.
-The line	Лінія
-Voltage	Напруга
-Current	Струм
-direct	постійний
-alternating	змінний
-Wire height	Висота проводу
-Wire spacing	Відстань між проводами
-Sections (each fed by a substation)	Секції (кожна від своєї підстанції)
-name	назва
-live	під напругою
-feeder Ω	фідер Ω
-Section	Секція
-Spans	Прольоти
-one pair over the middle	одна пара посередині
-a pair over each 3.0 m lane	пара над кожною смугою 3,0 м
-a pair over each 3.5 m lane	пара над кожною смугою 3,5 м
-lay the wire splines too	прокласти й сплайни дроту
-Wire the selected roads	Електрифікувати вибрані дороги
-Electrify the selected tracks	Електрифікувати вибрані колії
-Take their spans off	Прибрати їхні прольоти
-(select roads in the view)	(виберіть дороги у вікні виду)
-(select tracks in the view)	(виберіть колії у вікні виду)
-Their spans are taken off	Їхні прольоти прибрано
-Spans laid:	Прокладено прольотів:
-Gaps	Розриви
-Insulators	Ізолятори
-Gap	Розрив
-Insulator	Ізолятор
-Frogs (wire switches)	Стрілки контактної мережі
-Where three spans meet: the contact plate before it sets it by the current the bus draws (power) or by its indicator.	Там, де сходяться три прольоти: контактна пластина перед стрілкою перемикає її за струмом, який бере тролейбус (тяга), або за покажчиком повороту.
-by current	за струмом
-by indicator	за покажчиком повороту
-Frog	Стрілка
-A switch listed here holds while a train stands on it, goes back to its rest position, and can be thrown by hand only or locked by a signal. Switches not listed work as before.	Стрілка з цього списку не перемикається, поки на ній стоїть поїзд, повертається в нормальне положення і може бути лише ручною або замкненою сигналом. Стрілки поза списком працюють як раніше.
-The selected switch objects	Вибрані об'єкти стрілок
-simple	звичайна
-crossover	з'їзд
-double slip	англійська
-diamond	глухий перетин
-scissors	перехресний з'їзд
-rests straight	нормально — прямо
-rests diverging	нормально — на відгалуження
-thrown by the route	за маршрутом
-by hand only	лише вручну
-interlocked	централізована
-diverging	на відгалуження
-locked by	замкнена сигналом
-Blocks	Блок-ділянки
-A stretch of track that holds one AI train at a time, given by where it begins and ends on the rails; its signals show whether it is free. Blocks need the timetable's trains (the AI) to hold.	Відрізок колії, на якому одночасно може бути лише один поїзд ШІ; задається початком і кінцем на рейках, його сигнали показують, чи він вільний. Блок-ділянки діють лише для поїздів розкладу (ШІ).
-Ends	Кінці
-Block	Блок-ділянка
-Click where the block begins	Клацніть, де блок-ділянка починається
-Signals	Сигнали
-A signal of the map tied to a block shows stop while the block is in use and go while it is free.	Сигнал на карті, прив'язаний до блок-ділянки, показує «стоп», поки ділянка зайнята, і «вільно», коли вона вільна.
-main	основний
-distant	попереджувальний
-block	прохідний
-shunting	маневровий
-speed	швидкісний
-tram	трамвайний
-Tram street track	Трамвайна колія в бруківці
-Tram track on grass	Трамвайна колія на газоні
-Railway track	Залізнична колія
-Metro track	Колія метро
-Metro tunnel	Тунель метро
-Tram platform	Трамвайна платформа
-Metro side platform	Бічна платформа метро
-Metro island platform	Острівна платформа метро
-Railway side platform	Бічна залізнична платформа
-Railway island platform	Острівна залізнична платформа
-Trolleybus wires (one pair)	Тролейбусні проводи (одна пара)
-Trolleybus wires, 3.0 m lanes	Тролейбусні проводи, смуги 3,0 м
-Trolleybus wires, 3.5 m lanes	Тролейбусні проводи, смуги 3,5 м
-Catenary mast (arm right)	Опора контактної мережі (консоль праворуч)
-Catenary mast (arm left)	Опора контактної мережі (консоль ліворуч)
-Trolleybus pole (arm right)	Опора тролейбусної мережі (кронштейн праворуч)
-Trolleybus pole (arm left)	Опора тролейбусної мережі (кронштейн ліворуч)
-Metro sign	Знак метро
-Platform shelter	Навіс на платформі
-Buffer stop	Тупиковий упор
-Station stop	Станційна зупинка
-Bus	Автобус
-Tram	Трамвай
-Railway	Залізниця
-Metro	Метро
-Trolleybus	Тролейбус
-buses on the streets, stops at the kerb	автобуси на вулицях, зупинки біля бордюру
-street track under a contact wire, low platforms	колії на вулиці під контактним проводом, низькі платформи
-mainline track, stations with platforms, signals and blocks	магістральні колії, станції з платформами, сигнали та блок-ділянки
-track with a third rail, tunnels, high platforms	колії з контактною рейкою, тунелі, високі платформи
-buses under a pair of wires, frogs at junctions	автобуси під парою проводів, стрілки на розгалуженнях
-Depot Square	Площа Депо
-Park Gate	Ворота парку
-Tram start	Старт трамвая
-Loop line	Кільцева лінія
-A trolleybus junction under its wires with three stations: save, then drive it in openOMSI with a trolleybus of your own.	Тролейбусне перехрестя під проводами з трьома станціями: збережіть і проїдьте його в openOMSI на власному тролейбусі.
-station stops:	станційних зупинок:
-stations:	станцій:
-routes:	маршрутів:
-Vehicles of other modes	Транспорт інших видів
-Services without a vehicle of their mode	Режими руху без транспорту свого виду
-openOMSI runs only vehicles of a Modern map's modes on it. This vehicle of the AI lists is made for another mode (its file says so, or it is a depot's vehicle and its shape says so), so the game leaves it out. Change it in Map > Traffic and AI, or add its mode to the map in Map settings.	openOMSI пускає на сучасну карту лише транспорт її видів. Цей транспорт зі списку ШІ зроблено для іншого виду (так сказано в його файлі, або це транспорт депо і так видно з його будови), тож гра його не випустить. Замініть його в Карта > Трафік і ШІ або додайте його вид карті в «Налаштуваннях карти».
-A service of the transit network takes its vehicles from its depot's AI group (or names one vehicle file). That group has no vehicle of the route's mode, so nothing runs it. Give the depot an AI group with such vehicles (Map > Traffic and AI), or choose another depot.	Режим руху транспортної мережі бере транспорт із групи ШІ свого депо (або вказує один файл транспорту). У цій групі немає транспорту виду маршруту, тож ним ніхто не поїде. Дайте депо групу ШІ з таким транспортом («Трафік і ШІ») або виберіть інше депо.
-group	група
-route	маршрут
-its depot names no AI group	його депо не вказує групу ШІ
-no vehicle of the mode in	немає транспорту цього виду в
-Stations from OpenStreetMap	Станції з OpenStreetMap
-Metro tracks	Колії метро
-in tunnels too: build them with the kit's metro tunnel and cut the ground away (a Modern map)	і в тунелях: будуйте їх тунелем метро з набору й виріжте землю (сучасна карта)
-Start with a trolleybus line: a junction under its wires with frogs, three stations and two routes	Почати з тролейбусної лінії: перехрестя під проводами зі стрілками, три станції та два маршрути
-Stations (tram, metro, railway)	Станції (трамвай, метро, залізниця)
-Each tram stop and station of the map's rail modes put with the kit's station stop beside the nearest track (within 25 m); every stop of the map then becomes a station of its transport folder	Кожна трамвайна зупинка й станція рейкових видів транспорту карти ставиться станційною зупинкою з набору біля найближчої колії (у межах 25 м); потім кожна зупинка карти стає станцією її теки transport
-Routes (tram, trolleybus, metro, railway)	Маршрути (трамвай, тролейбус, метро, залізниця)
-Each route of the map's modes through two or more of its stations a segment of its line, the line's service as often as OpenStreetMap says (else every 10 minutes), from 05:30 to 23:30; openOMSI finds the way over the tracks	Кожен маршрут видів карти через дві чи більше її станцій — відрізок своєї лінії, режим руху лінії — з інтервалом з OpenStreetMap (інакше кожні 10 хвилин), з 05:30 до 23:30; шлях коліями openOMSI знаходить сам
-no vehicle of it is installed	жодного її транспорту не встановлено
-Its vehicles:	Її транспорт:
-(select roads in the view, and the junctions between them)	(виберіть дороги у вікні виду та перехрестя між ними)
-(select tracks in the view, and their switches)	(виберіть колії у вікні виду та їхні стрілки)
-A pair of wires over each way's kerb lane; through a selected junction only the lanes that join wired roads. Frogs are put where three wires meet.	Пара проводів над крайньою смугою кожного напрямку; на вибраному перехресті — лише смуги між електрифікованими дорогами. Де сходяться три проводи, ставиться стрілка.
-The map's files are still being read	Файли карти ще читаються
-West Gate	Західні ворота
-East Market	Східний ринок
-North Park	Північний парк
-Market line	Ринкова лінія
-Park line	Паркова лінія
-Trolleybus start	Старт тролейбуса
-frogs:	стрілок:
-places where more than three wires meet get no frog: wire fewer turns there	місць, де сходиться понад три проводи, лишилися без стрілки: електрифікуйте там менше поворотів
-Track ends that do not meet	Кінці колій, що не сходяться
-Two tracks run on into one another but their ends lie apart: the game joins rails only where their ends lie within 1.5 m, so no train or tram gets across (a route through there finds no way). "Fix" moves one end onto the other, arriving in line with it, and joins them.	Дві колії продовжують одна одну, але їхні кінці розійшлися: гра з'єднує рейки, лише якщо кінці ближче 1,5 м, тож ні поїзд, ні трамвай тут не проїде (маршрут через це місце не знайде шляху). «Виправити» пересуне один кінець на інший, в лінію з ним, і з'єднає їх.
-tracks	колії
-Select the roads or tracks to build into the ground	Виберіть дороги або колії, щоб опустити їх у землю
-Cutting	Виїмка
-Cut and cover tunnel	Тунель відкритого способу
-Nothing to build into the ground	Нема чого опускати в землю
-Build into the ground	Опустити в землю
-The chain of the selected pieces lowered, with ramps at its ends. Cut: an open cutting with sloped banks. Cover: open ramps down to the portals and a tunnel under the ground between them (a shell of walls and roof, a portal at each mouth).	Ланцюжок вибраних шматків опускається, на кінцях — пандуси. Виїмка: відкрита, зі схилами. Тунель: відкриті пандуси до порталів, а між ними тунель під землею (стіни й склепіння, портал біля кожного в'їзду).
-Cover (tunnel)	Тунель (закритий)
-Ramp gradient	Ухил пандуса
-Banks	Схили
- m out per metre up	 м убік на метр угору
-Ramps	Пандуси
-at the start	на початку
-at the end	у кінці
-A tunnel needs a depth of 6 m or more: shallower it stays an open cutting	Тунелю потрібна глибина від 6 м: мілкіший лишається відкритою виїмкою
-Each ramp is about	Кожен пандус приблизно
-Pieces lowered:	Шматків опущено:
-tunnel pieces:	шматків тунелю:
-portals:	порталів:
-their overhead taken off: wire them again (Transit network, Power)	їхню контактну мережу знято: прокладіть її заново (Транспортна мережа, Живлення)
-Platforms at the stations	Платформи біля станцій
-The kit's platform of each rail station's mode beside its track, on the side its stop stands, as long as its platform says	Платформа з набору для виду кожної рейкової станції біля її колії, з боку зупинки, завдовжки як її платформа
-Platforms laid:	Платформ прокладено:
-lay the wires, masts, poles and frogs too	прокласти й проводи, щогли, опори та стрілки
-Catenary mast	Щогла контактної мережі
-Trolleybus pole	Опора тролейбусної мережі
-Trolleybus frog	Тролейбусна стрілка
-Section insulator	Секційний ізолятор
 Lake	Озеро
 River	Річка
 Water level:	Рівень води:
+Banks	Схили
 Click the shore round and close it on the first point (Enter closes too, right-click takes a point back). The ground inside is dug to a bed and the banks slope to the shore.	Клацайте навколо берега й замкніть на першій точці (Enter теж замикає, правий клік повертає точку назад). Ґрунт усередині виривається до дна, а береги схиляються до урізу води.
 Click the river's middle line from its source on and finish on the last point (or Enter). Water in OMSI lies at one level for a tile: a river runs level.	Клацайте по осьовій лінії річки від витоку й завершіть на останній точці (або Enter). Вода в OMSI має один рівень на тайл: річка тече на одному рівні.
 Add as a ground texture	Додати як текстуру ґрунту
+Painted line	Намальована лінія
+Stop line	Стоп-лінія
+A wide solid line across a lane: draw it across the road	Широка суцільна лінія впоперек смуги: малюйте її впоперек дороги
+Crossing	Перехід
+Zebra bars: draw it across the road, the bars lie along it	Зебра: малюйте впоперек дороги, смуги лежать уздовж неї
+Centre line	Осьова
+A double yellow line	Подвійна жовта лінія
+Lane line	Лінія між смугами
+A white dashed line	Біла переривчаста лінія
+Solid	Суцільна
+Dashed	Переривчаста
+Double	Подвійна
+Solid and dashed	Суцільна й переривчаста
+Crossing (bars)	Перехід (зебра)
+A line's width (each line of a double one); a crossing's reach along the road	Ширина лінії (кожної в подвійної); глибина переходу вздовж дороги
+Bar	Смуга
+Dash	Штрих
+Gap	Розрив
+Draw with this line	Малювати цією лінією
+It is made as a spline type of the content folder (Splines\\openMapper\\marks) and chosen: draw it with Line, Arc or Curve, over the asphalt	Створюється як тип сплайна в теці вмісту (Splines\\openMapper\\marks) і вибирається: малюйте нею Лінією, Дугою або Кривою поверх асфальту
+Painted line made: draw with it in the junction editor	Лінію створено: малюйте нею в редакторі перехресть
 A junction was not made: its roads are too short or too close together. Lengthen them or move the junctions apart.	Перехрестя не створено: його дороги надто короткі або надто близькі одна до одної. Подовжте їх або розсуньте перехрестя.
+Draw road markings	Намалювати дорожню розмітку
+Pen	Пензель
+Straight line	Пряма лінія
+Dashed line	Пунктирна лінія
+Rectangle	Прямокутник
+Arrow	Стрілка
+Eraser	Гумка
+Dash length	Довжина штриха
+Gap between dashes	Проміжок між штрихами
+Pointing back	Спрямована назад
+Snap to 5 cm	Прив’язка до 5 cm
+Drag to draw. The picture is the roadway as the texture lies on it, up is the way of the road; it repeats along, so what leaves at the top comes in at the bottom.	Перетягніть, щоб малювати. Зображення — це проїзна частина так, як на ній лежить текстура, угору — напрямок дороги; воно повторюється вздовж, тож те, що виходить угорі, входить унизу.
+Pick a roadway texture first	Спершу виберіть текстуру проїзної частини
 Display	Показ
 X-ray (Alt+Z): see and pick through the mesh	Рентген (Alt+Z): бачити й вибирати крізь меш
 Show the textures	Показувати текстури
@@ -2746,42 +2493,9 @@ Paint my own markings	Малювати власну розмітку
 The maker paints the lines onto the roadway texture: pick a plain asphalt texture, or its own lines show too	Генератор малює лінії на текстурі проїжджої частини: оберіть просту асфальтову текстуру, інакше її власні лінії теж буде видно
 Standard for these lanes	Стандарт для цих смуг
 Add a line	Додати лінію
-Across the roadway from its middle (right of the road's way is plus)	Упоперек проїжджої частини від її середини (праворуч за напрямком дороги — плюс)
-Solid	Суцільна
-Dashed	Переривчаста
-Double solid	Подвійна суцільна
-Solid and dashed	Суцільна й переривчаста
-The line's width	Ширина лінії
-Dash length	Довжина штриха
-Gap between dashes	Проміжок між штрихами
-Draw road markings	Намалювати дорожню розмітку
-Pen	Пензель
-Straight line	Пряма лінія
-Dashed line	Пунктирна лінія
-Rectangle	Прямокутник
-Arrow	Стрілка
-Eraser	Гумка
-Pointing back	Спрямована назад
-Snap to 5 cm	Прив’язка до 5 cm
-Drag to draw. The picture is the roadway as the texture lies on it, up is the way of the road; it repeats along, so what leaves at the top comes in at the bottom.	Перетягніть, щоб малювати. Зображення — це проїзна частина так, як на ній лежить текстура, угору — напрямок дороги; воно повторюється вздовж, тож те, що виходить угорі, входить унизу.
-Pick a roadway texture first	Спершу виберіть текстуру проїзної частини
 Draw by hand…	Малювати вручну…
 A drawing board with a pen, lines, arrows and an eraser: what you draw goes onto the roadway	Дошка для малювання з пензлем, лініями, стрілками та гумкою: те, що ви малюєте, потрапляє на проїзну частину
 a drawing is on the road	на дорозі є малюнок
-Painted line	Намальована лінія
-Stop line	Стоп-лінія
-A wide solid line across a lane: draw it across the road	Широка суцільна лінія впоперек смуги: малюйте її впоперек дороги
-Crossing	Перехід
-Zebra bars: draw it across the road, the bars lie along it	Зебра: малюйте впоперек дороги, смуги лежать уздовж неї
-Centre line	Осьова
-A double yellow line	Подвійна жовта лінія
-Lane line	Лінія між смугами
-A white dashed line	Біла переривчаста лінія
-Double	Подвійна
-Crossing (bars)	Перехід (зебра)
-A line's width (each line of a double one); a crossing's reach along the road	Ширина лінії (кожної в подвійної); глибина переходу вздовж дороги
-Bar	Смуга
-Dash	Штрих
-Draw with this line	Малювати цією лінією
-It is made as a spline type of the content folder (Splines\\openMapper\\marks) and chosen: draw it with Line, Arc or Curve, over the asphalt	Створюється як тип сплайна в теці вмісту (Splines\\openMapper\\marks) і вибирається: малюйте нею Лінією, Дугою або Кривою поверх асфальту
-Painted line made: draw with it in the junction editor	Лінію створено: малюйте нею в редакторі перехресть
+Across the roadway from its middle (right of the road's way is plus)	Упоперек проїжджої частини від її середини (праворуч за напрямком дороги — плюс)
+Double solid	Подвійна суцільна
+The line's width	Ширина лінії

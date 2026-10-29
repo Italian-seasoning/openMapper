@@ -163,10 +163,6 @@ pub enum Action {
     SetGroundTexture(usize, bool, String),
     /// Open or close the Lines window.
     Timetable,
-    /// Open or close the Transit network window (Modern maps).
-    Transit,
-    /// Make openMapper's transit kit in the content folder (again).
-    TransitKit,
     /// Put the map's folder back as it was before the save kept in this backup (and the
     /// later ones), then open it again.
     RestoreBackup(PathBuf),
@@ -1133,9 +1129,6 @@ fn menu_bar(root: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, can_undo: bo
                 }
                 if menu_item(ui, Some(Icon::Bus), tr("Lines and timetable…", "Линии и расписание…"), "L", true) {
                     actions.push(Action::Timetable);
-                }
-                if menu_item(ui, Some(Icon::Tram), tr("Transit network…", "Транспортная сеть…"), "", true) {
-                    actions.push(Action::Transit);
                 }
                 if menu_item(ui, Some(Icon::Traffic), tr("Traffic and AI…", "Трафик и ИИ…"), "T", true) {
                     actions.push(Action::Traffic);
@@ -2657,7 +2650,6 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
             crate::ui_edit::rules_section(ui, ed, sel);
             crate::ui_edit::rows_section(ui, ed, lib);
             crate::ui_edit::paint_along_section(ui, ed, lib);
-            crate::ui_edit::dig_section(ui, ed, lib);
             crate::ui_profile::profile_section(ui, ed, actions);
             let Some(doc) = ed.doc.as_mut() else { return };
             if let Some((file, mirror)) = spline_change {

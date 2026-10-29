@@ -209,7 +209,7 @@ pub fn add_start(doc: &mut Document, at: DVec2, heading: f64, name: &str) -> i64
     id
 }
 
-pub(crate) fn place(doc: &mut Document, file: &str, at: DVec2, heading: f64, extra: Vec<String>, flag: i32) -> i64 {
+fn place(doc: &mut Document, file: &str, at: DVec2, heading: f64, extra: Vec<String>, flag: i32) -> i64 {
     let id = doc.new_id();
     let k = tile_of(at);
     let org = tile_origin(k);

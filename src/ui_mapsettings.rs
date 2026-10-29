@@ -1,6 +1,6 @@
 //! Map settings (Map menu), as OMSI 2's editor has them: the money and tickets the map
 //! uses, its years, the depot buses start from, the repair time, real rail and the seasons
-//! of the year. And whether it is a Classic or a Modern map, and a Modern map's modes.
+//! of the year.
 
 
 use egui::{Color32, RichText, Vec2};
@@ -17,8 +17,6 @@ pub struct MapSettings {
     pub open: bool,
     /// What can be chosen (read when the window opens): money systems, ticket packs, depots.
     lists: Option<(Vec<String>, Vec<String>, Vec<String>)>,
-    /// Modern chosen (kept while its modes are being picked: a Modern map needs one).
-    modern: Option<bool>,
 }
 
 /// The files `<root>/<top>/<folder>/*.<ext>` of both roots, as a map names them
@@ -82,7 +80,6 @@ impl MapSettings {
     pub fn window(&mut self, ctx: &egui::Context, ed: &mut Editor, roots: Option<&Roots>) {
         if !self.open {
             self.lists = None;
-            self.modern = None;
             return;
         }
         let (Some(doc), Some(roots)) = (ed.doc.as_mut(), roots) else { return };
@@ -93,24 +90,10 @@ impl MapSettings {
             (content_files(roots, "Money", "cfg"), content_files(roots, "TicketPacks", "otp"), deps)
         });
         let before = doc.global.clone();
-        let transit_before = doc.transit.clone();
-        let modern = self.modern.get_or_insert(doc.transit.is_modern());
-        let mut modes = doc.transit.modes;
-        let mut drop_network = false;
         let g = &mut doc.global;
         let mut open = self.open;
-        egui::Window::new(icons::labelled(Icon::Settings, tr("Map settings", "Настройки карты"))).id(egui::Id::new("map settings")).open(&mut open).default_pos([340.0, 100.0]).default_size([480.0, 560.0]).resizable(true).show(ctx, |ui| {
+        egui::Window::new(icons::labelled(Icon::Settings, tr("Map settings", "Настройки карты"))).id(egui::Id::new("map settings")).open(&mut open).default_pos([340.0, 100.0]).default_size([440.0, 520.0]).resizable(true).show(ctx, |ui| {
             egui::ScrollArea::vertical().auto_shrink([false, true]).show(ui, |ui| {
-                crate::ui_newmap::kind(ui, modern, &mut modes);
-                if !*modern && transit_before.has_any_file() {
-                    ui.horizontal_wrapped(|ui| {
-                        ui.label(RichText::new(tr("The transport folder stays: openOMSI still reads its stations, routes and wires.", "Папка transport остаётся: openOMSI по-прежнему читает её станции, маршруты и провода.")).small().color(TEXT_DIM));
-                        if ui.small_button(tr("Remove it too", "Удалить и её")).clicked() {
-                            drop_network = true;
-                        }
-                    });
-                }
-                ui.separator();
                 egui::Grid::new("map settings grid").num_columns(2).spacing(Vec2::new(8.0, 6.0)).show(ui, |ui| {
                     prop_row(ui, tr("Money", "Валюта"), |ui| choose(ui, "money", &mut g.money_system, &lists.0));
                     prop_row(ui, tr("Tickets", "Билеты"), |ui| choose(ui, "tickets", &mut g.ticket_pack, &lists.1));
@@ -173,29 +156,9 @@ impl MapSettings {
             });
         });
         self.open = open;
-        // Modern with its modes (a map made Modern gets the kit, its rules and networks), or
-        // Classic: no modes
-        let want = if *modern { modes } else { Default::default() };
-        if want != doc.transit.modes && (!*modern || !want.is_empty()) {
-            if want.is_empty() {
-                doc.transit.modes = want;
-            } else {
-                crate::transit::kit::start_modern(doc, roots, want);
-            }
-            doc.global_dirty = true;
-        }
-        if drop_network {
-            for f in crate::transit::File::ALL {
-                doc.transit.file_mut(f).blocks.clear();
-            }
-        }
-        if doc.transit != transit_before {
-            ed.history.push_snapshot(tr("Map settings", "Настройки карты"), crate::history::Snapshot { global: Some((before.clone(), doc.order.clone())), transit: Some(transit_before), ..Default::default() });
-            return;
-        }
         if doc.global != before {
             let order = doc.order.clone();
-            ed.history.push_snapshot(tr("Map settings", "Настройки карты"), crate::history::Snapshot { global: Some((before, order)), ..Default::default() });
+            ed.history.push_snapshot(tr("Map settings", "Настройки карты"), crate::history::Snapshot { global: Some((before, order)), timetable: None, traffic: None, descriptions: None, groups: None });
             if let Some(doc) = ed.doc.as_mut() {
                 doc.global_dirty = true;
             }

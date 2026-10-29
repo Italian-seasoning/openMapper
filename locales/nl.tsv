@@ -2478,301 +2478,48 @@ Could not copy the photos	De foto's konden niet worden gekopieerd
 Copying the photos	Foto's worden gekopieerd
 Hold only the photos of the tiles near the camera	Alleen de foto's van de tegels bij de camera houden
 The others keep their photo in the map's folder, and are put up again when you go back to them.	De andere houden hun foto in de map van de kaart en komen terug als u er weer heen gaat.
-A tram loop with two stations and its wire: save, then drive it in openOMSI with a tram of your own.	Een tramlus met twee stations en bovenleiding: sla op en rijd hem dan in openOMSI met een eigen tram.
-Transit kit made, files:	Vervoerskit gemaakt, bestanden:
-The transit kit could not be made	De vervoerskit kon niet worden gemaakt
-Transit network problems	Problemen in het vervoersnet
-Stations without their mode's lanes	Stations zonder rijbanen van hun vervoerswijze
-Stations without their stop	Stations zonder hun halte
-openOMSI's own reader finds this in the map's transport folder (stations, routes, wires, switches, depots, signals): a service it names is skipped, a section or a block left out. Open Map > Transit network to change it.	openOMSI's eigen lezer vindt dit in de map transport van de kaart (stations, routes, leidingen, wissels, depots, seinen): een genoemde dienst wordt overgeslagen, een sectie of blok weggelaten. Open Kaart > Vervoersnet om het te wijzigen.
-openOMSI routes a service over the lanes of its mode within 25 m of each station (rails for trams, metro and trains, streets for buses and trolleybuses). This station has none of its modes' near, so its services cannot run. Move the stop next to the track or road, or lay one there.	openOMSI leidt een dienst over de rijbanen van zijn vervoerswijze binnen 25 m van elk station (rails voor tram, metro en trein, straten voor bus en trolleybus). Dit station heeft niets van zijn vervoerswijzen in de buurt, dus zijn diensten kunnen niet rijden. Verplaats de halte naast het spoor of de weg, of leg er een aan.
-A station is found by the game among the map's stops: by its stop object, else by its name. This one's object is no stop on the map and no stop has its name, so the services through it are skipped. Pick its stop again in Map > Transit network, Stations.	Het spel vindt een station tussen de haltes van de kaart: via zijn halteobject, anders via zijn naam. Het object van dit station is geen halte op de kaart en geen halte heeft zijn naam, dus de diensten erlangs worden overgeslagen. Kies zijn halte opnieuw in Kaart > Vervoersnet, Stations.
-station	station
-Transit network…	Vervoersnet…
-The transport folder stays: openOMSI still reads its stations, routes and wires.	De map transport blijft: openOMSI leest nog steeds zijn stations, routes en leidingen.
-Remove it too	Ook die verwijderen
-Start with a tram line: a loop of track under its wire, two stations and a route	Beginnen met een tramlijn: een sporenlus onder bovenleiding, twee stations en een route
-Classic	Klassiek
-Runs in OMSI 2 and in openOMSI. Buses, and trams and trains as OMSI 2 has them.	Werkt in OMSI 2 en in openOMSI. Bussen, en trams en treinen zoals OMSI 2 ze heeft.
-Modern	Modern
-openOMSI only. Real transit: stations, routes, overhead wire, third rail, depots and signal blocks.	Alleen openOMSI. Echt openbaar vervoer: stations, routes, bovenleiding, derde rail, depots en seinblokken.
-Made for (one or more):	Gemaakt voor (een of meer):
-Choose at least one	Kies er minstens één
-OMSI 2 cannot run a Modern map's routes, wires or blocks, and openOMSI runs only vehicles of its modes on it. openMapper's transit kit (tracks, wires, platforms, masts) is made in the content folder.	OMSI 2 kan de routes, leidingen of blokken van een moderne kaart niet uitvoeren, en openOMSI laat er alleen voertuigen van haar vervoerswijzen op rijden. De vervoerskit van openMapper (sporen, leidingen, perrons, masten) wordt in de contentmap gemaakt.
-Overview	Overzicht
-Stations	Stations
-Depots	Depots
-Power	Voeding
-Switches and signals	Wissels en seinen
-Set it (else the game's default)	Instellen (anders de standaard van het spel)
-(not set)	(niet ingesteld)
-Take it out	Weghalen
-Transit network	Vervoersnet
-This is a Classic map.	Dit is een klassieke kaart.
-Stations, routes without tours, the overhead wire, the third rail, depots and signal blocks are openOMSI's (0.3.42 and later): make the map Modern in Map settings to give it a transit network. OMSI 2 cannot run them.	Stations, routes zonder omlopen, de bovenleiding, de derde rail, depots en seinblokken zijn van openOMSI (0.3.42 en later): maak de kaart modern in Kaartinstellingen om haar een vervoersnet te geven. OMSI 2 kan ze niet uitvoeren.
-No stop there: click a stop object (a bus stop, or the kit's station stop)	Daar is geen halte: klik op een halteobject (een bushalte, of de stationshalte van de kit)
-Now click where the block ends	Klik nu waar het blok eindigt
-Click the signal object itself	Klik op het seinobject zelf
-Then click in the view	Klik dan in het beeld
-Modern map for	Moderne kaart voor
-openOMSI runs only vehicles of these modes here; OMSI 2 cannot run the network. The modes are changed in Map settings.	openOMSI laat hier alleen voertuigen van deze vervoerswijzen rijden; OMSI 2 kan het net niet uitvoeren. De vervoerswijzen wijzig je in Kaartinstellingen.
-Services	Diensten
-Track rules	Spoorregels
-Overhead wire spans	Bovenleidingvelden
-Third rail spans	Derde-railvelden
-Trolleybus wire spans	Trolleybusleidingvelden
-Switches	Wissels
-Signals and blocks	Seinen en blokken
-Problems	Problemen
-None: openOMSI reads the network as it is.	Geen: openOMSI leest het net zoals het is.
-error	fout
-warning	waarschuwing
-Found by openOMSI's own reader of the transport folder, the texts as it writes them in its log.	Gevonden door openOMSI's eigen lezer van de map transport, de teksten zoals hij ze in zijn logboek schrijft.
-openMapper's transit kit	Vervoerskit van openMapper
-Tracks, platforms, wires and objects made by openMapper for Modern maps (OMSI 2 ships no metro, third rail or trolleybus wire). They are in the catalogue under openMapper; click one to place it.	Sporen, perrons, leidingen en objecten die openMapper maakt voor moderne kaarten (OMSI 2 heeft geen metro, derde rail of trolleybusleiding). Ze staan in de catalogus onder openMapper; klik erop om er een te plaatsen.
-Make the kit	Kit maken
-A station is a stop object of the map (a bus stop, or the kit's station stop beside a track) with its platforms. openOMSI routes a service over the lanes of its mode within 25 m of each station.	Een station is een halteobject van de kaart (een bushalte, of de stationshalte van de kit naast een spoor) met zijn perrons. openOMSI leidt een dienst over de rijbanen van zijn vervoerswijze binnen 25 m van elk station.
-A station for every stop of the map	Een station voor elke halte van de kaart
-Stops not yet a station become one, named as the stop, its modes from the tracks and roads beside it	Haltes die nog geen station zijn, worden er een, genoemd naar de halte, met vervoerswijzen volgens de sporen en wegen ernaast
-New station	Nieuw station
-Stations added:	Stations toegevoegd:
-Choose a station	Kies een station
-Id	Id
-Modes	Vervoerswijzen
-Stop object	Halteobject
-Pick	Kiezen
-Place	Plaats
-Change to	Overstap naar
-Platforms	Perrons
-Side	Zijde
-island	eilandperron
-both	beide zijden
-platform screen doors	perrondeuren
-Delete the station	Het station verwijderen
-A route is segments from station to station (the stops between them in order) and services over them: a branch, a short working or an express is another segment or service. openOMSI makes the timetable's tours from them and finds the way over the tracks itself.	Een route bestaat uit segmenten van station tot station (met de haltes ertussen op volgorde) en diensten daarover: een aftakking, een ingekorte rit of een sneldienst is een ander segment of een andere dienst. openOMSI maakt er de omlopen van de dienstregeling van en vindt zelf de weg over de sporen.
-Add two stations or more first (Stations)	Voeg eerst twee of meer stations toe (Stations)
-New route	Nieuwe route
-Segment	Segment
-Stops between	Haltes ertussen
-Passed without stopping	Zonder stoppen gepasseerd
-Standing at a stop	Halteertijd
-Speed	Snelheid
-Way back	Terugweg
-over the same segment	over hetzelfde segment
-another segment	een ander segment
-Service	Dienst
-Segments in order	Segmenten op volgorde
-From – to	Van – tot
-Days	Dagen
-every day	dagelijks
-weekends	in het weekend
-Saturdays	zaterdags
-Sundays	zondags
-turns back	keert
-goes round a loop	rijdt over een lus
-goes to depot	gaat naar het depot
-Cars in a train	Rijtuigen per trein
-Every 10 minutes from 05:30 to 23:30 over all the route's segments	Elke 10 minuten van 05:30 tot 23:30 over alle segmenten van de route
-Departures of their own	Eigen vertrektijden
-For a service without a headway: its departures, as 06:00 06:12 06:30.	Voor een dienst zonder interval: zijn vertrektijden, zoals 06:00 06:12 06:30.
-Departures	Vertrektijden
-A service's depot sends out its vehicles: its AI group (Traffic and AI) supplies them, and the first departure of the day leaves by its gate along the rails to the first station.	Het depot van een dienst stuurt zijn voertuigen uit: zijn AI-groep (Verkeer en AI) levert ze, en het eerste vertrek van de dag rijdt door de poort over de rails naar het eerste station.
-AI group	AI-groep
-Capacity	Capaciteit
-Its stop	Zijn halte
-Gates	Poorten
-Add a gate	Poort toevoegen
-has a turning loop	heeft een keerlus
-Delete the depot	Het depot verwijderen
-A gate needs a rail within 25 m and a way to the first station, or the trip starts at its station (the game's log says so).	Een poort heeft een rail binnen 25 m nodig en een weg naar het eerste station, anders begint de rit bij zijn station (het logboek van het spel meldt het).
-Which tracks serve which mode and how they are powered: a rule matches a track type (a file pattern, * for any letters), a tile or one piece; later rules win. Without a rule openOMSI guesses from the type's name.	Welke sporen welke vervoerswijze bedienen en hoe ze gevoed worden: een regel past op een spoortype (een bestandspatroon, * voor willekeurige letters), een tegel of één stuk; latere regels winnen. Zonder regel raadt openOMSI aan de hand van de naam van het type.
-A rule for the selected track's type	Een regel voor het type van het geselecteerde spoor
-Empty rule	Lege regel
-(select a track in the view to make a rule for its type)	(selecteer een spoor in het beeld om een regel voor zijn type te maken)
-Track type	Spoortype
-Only on tile / piece	Alleen op tegel / stuk
-id	id
-in the street	in de straat
-railway	spoorweg
-overhead wire	bovenleiding
-third rail	derde rail
-diesel	diesel
-Tunnel	Tunnel
-yes	ja
-no	nee
-Gauge	Spoorwijdte
-A map for buses alone has no line to power.	Een kaart alleen voor bussen heeft geen leiding om te voeden.
-Third rail	Derde rail
-Trolleybus wire	Trolleybusleiding
-Where the wire is, the player's tram or electric train needs a live section of it over its pantograph (dead sections and breaks stop the drive). Without spans openOMSI takes the current for granted. Spans are laid along the selected tracks.	Waar de leiding is, heeft de tram of elektrische trein van de speler een spanningvoerende sectie boven zijn pantograaf nodig (spanningsloze secties en onderbrekingen stoppen de aandrijving). Zonder velden neemt openOMSI aan dat er stroom is. Velden worden langs de geselecteerde sporen gelegd.
-The player's metro train needs a live section of third rail beside its shoe. The kit's metro tracks carry the rail itself; spans say where it is fed. Spans are laid along the selected tracks.	De metro van de speler heeft een spanningvoerende sectie derde rail naast zijn sleepschoen nodig. De metrosporen van de kit hebben de rail zelf; velden geven aan waar hij gevoed wordt. Velden worden langs de geselecteerde sporen gelegd.
-openOMSI's trolleybuses run on this wire (trolley.txt beside global.cfg): a pole is powered only on a pair fed by a substation. Spans are laid over each way's lane of the selected roads, with the wire splines that show them.	De trolleybussen van openOMSI rijden op deze leiding (trolley.txt naast global.cfg): een stroomafnemer krijgt alleen stroom op een paar dat door een onderstation gevoed wordt. Velden worden boven de rijstrook van elke richting van de geselecteerde wegen gelegd, met de leiding-splines die ze tonen.
-The line	De leiding
-Voltage	Spanning
-Current	Stroom
-direct	gelijkstroom
-alternating	wisselstroom
-Wire height	Draadhoogte
-Wire spacing	Draadafstand
-Sections (each fed by a substation)	Secties (elk gevoed door een onderstation)
-name	naam
-live	onder spanning
-feeder Ω	voeding Ω
-Section	Sectie
-Spans	Velden
-one pair over the middle	één paar boven het midden
-a pair over each 3.0 m lane	een paar boven elke rijstrook van 3,0 m
-a pair over each 3.5 m lane	een paar boven elke rijstrook van 3,5 m
-lay the wire splines too	ook de leiding-splines leggen
-Wire the selected roads	Geselecteerde wegen van leiding voorzien
-Electrify the selected tracks	Geselecteerde sporen elektrificeren
-Take their spans off	Hun velden weghalen
-(select roads in the view)	(selecteer wegen in het beeld)
-(select tracks in the view)	(selecteer sporen in het beeld)
-Their spans are taken off	Hun velden zijn weggehaald
-Spans laid:	Velden gelegd:
-Gaps	Onderbrekingen
-Insulators	Isolatoren
-Gap	Onderbreking
-Insulator	Isolator
-Frogs (wire switches)	Bovenleidingwissels
-Where three spans meet: the contact plate before it sets it by the current the bus draws (power) or by its indicator.	Waar drie velden samenkomen: de contactplaat ervoor zet hem om naar de stroom die de bus trekt (tractie) of naar zijn knipperlicht.
-by current	via stroom
-by indicator	via knipperlicht
-Frog	Bovenleidingwissel
-A switch listed here holds while a train stands on it, goes back to its rest position, and can be thrown by hand only or locked by a signal. Switches not listed work as before.	Een wissel in deze lijst blijft liggen zolang er een trein op staat, gaat terug naar zijn ruststand en kan alleen met de hand worden omgezet of door een sein worden vergrendeld. Niet vermelde wissels werken zoals voorheen.
-The selected switch objects	De geselecteerde wisselobjecten
-simple	enkel
-crossover	overloopwissel
-double slip	Engels wissel
-diamond	kruising
-scissors	dubbele overloopwissel
-rests straight	ruststand rechtdoor
-rests diverging	ruststand afbuigend
-thrown by the route	omgezet door de route
-by hand only	alleen met de hand
-interlocked	beveiligd
-diverging	afbuigend
-locked by	vergrendeld door
-Blocks	Blokken
-A stretch of track that holds one AI train at a time, given by where it begins and ends on the rails; its signals show whether it is free. Blocks need the timetable's trains (the AI) to hold.	Een stuk spoor waarop maar één AI-trein tegelijk mag zijn, aangegeven door waar het begint en eindigt op de rails; zijn seinen tonen of het vrij is. Blokken houden alleen de treinen van de dienstregeling (de AI) tegen.
-Ends	Uiteinden
-Block	Blok
-Click where the block begins	Klik waar het blok begint
-Signals	Seinen
-A signal of the map tied to a block shows stop while the block is in use and go while it is free.	Een sein van de kaart dat aan een blok gekoppeld is, toont stop zolang het blok bezet is en veilig als het vrij is.
-main	hoofdsein
-distant	voorsein
-block	bloksein
-shunting	rangeersein
-speed	snelheidssein
-tram	tramsein
-Tram street track	Tramspoor in de straat
-Tram track on grass	Tramspoor in gras
-Railway track	Spoorwegspoor
-Metro track	Metrospoor
-Metro tunnel	Metrotunnel
-Tram platform	Tramperron
-Metro side platform	Metrozijperron
-Metro island platform	Metro-eilandperron
-Railway side platform	Zijperron spoorweg
-Railway island platform	Eilandperron spoorweg
-Trolleybus wires (one pair)	Trolleybusleiding (één paar)
-Trolleybus wires, 3.0 m lanes	Trolleybusleiding, rijstroken van 3,0 m
-Trolleybus wires, 3.5 m lanes	Trolleybusleiding, rijstroken van 3,5 m
-Catenary mast (arm right)	Bovenleidingmast (arm rechts)
-Catenary mast (arm left)	Bovenleidingmast (arm links)
-Trolleybus pole (arm right)	Trolleybusmast (arm rechts)
-Trolleybus pole (arm left)	Trolleybusmast (arm links)
-Metro sign	Metrobord
-Platform shelter	Perronoverkapping
-Buffer stop	Stootjuk
-Station stop	Stationshalte
-Bus	Bus
-Tram	Tram
-Railway	Trein
-Metro	Metro
-Trolleybus	Trolleybus
-buses on the streets, stops at the kerb	bussen op straat, haltes aan de stoeprand
-street track under a contact wire, low platforms	sporen in de straat onder een rijdraad, lage perrons
-mainline track, stations with platforms, signals and blocks	hoofdspoorlijnen, stations met perrons, seinen en blokken
-track with a third rail, tunnels, high platforms	sporen met derde rail, tunnels, hoge perrons
-buses under a pair of wires, frogs at junctions	bussen onder een paar draden, bovenleidingwissels bij splitsingen
-Depot Square	Depotplein
-Park Gate	Parkpoort
-Tram start	Tramstart
-Loop line	Ringlijn
-A trolleybus junction under its wires with three stations: save, then drive it in openOMSI with a trolleybus of your own.	Een trolleybuskruispunt onder bovenleiding met drie stations: sla op en rijd het dan in openOMSI met een eigen trolleybus.
-station stops:	stationshaltes:
-stations:	stations:
-routes:	routes:
-Vehicles of other modes	Voertuigen van andere vervoerswijzen
-Services without a vehicle of their mode	Diensten zonder voertuig van hun vervoerswijze
-openOMSI runs only vehicles of a Modern map's modes on it. This vehicle of the AI lists is made for another mode (its file says so, or it is a depot's vehicle and its shape says so), so the game leaves it out. Change it in Map > Traffic and AI, or add its mode to the map in Map settings.	openOMSI laat op een moderne kaart alleen voertuigen van haar vervoerswijzen rijden. Dit voertuig uit de AI-lijsten is gemaakt voor een andere vervoerswijze (zijn bestand zegt het, of het is een voertuig van een depot en zijn vorm zegt het), dus het spel laat het weg. Wijzig het in Kaart > Verkeer en AI, of voeg zijn vervoerswijze aan de kaart toe in Kaartinstellingen.
-A service of the transit network takes its vehicles from its depot's AI group (or names one vehicle file). That group has no vehicle of the route's mode, so nothing runs it. Give the depot an AI group with such vehicles (Map > Traffic and AI), or choose another depot.	Een dienst van het vervoersnet haalt zijn voertuigen uit de AI-groep van zijn depot (of noemt één voertuigbestand). Die groep heeft geen voertuig van de vervoerswijze van de route, dus niemand rijdt hem. Geef het depot een AI-groep met zulke voertuigen (Kaart > Verkeer en AI), of kies een ander depot.
-group	groep
-route	route
-its depot names no AI group	zijn depot noemt geen AI-groep
-no vehicle of the mode in	geen voertuig van de vervoerswijze in
-Stations from OpenStreetMap	Stations uit OpenStreetMap
-Metro tracks	Metrosporen
-in tunnels too: build them with the kit's metro tunnel and cut the ground away (a Modern map)	ook in tunnels: bouw ze met de metrotunnel van de kit en snijd de grond weg (een moderne kaart)
-Start with a trolleybus line: a junction under its wires with frogs, three stations and two routes	Beginnen met een trolleybuslijn: een kruispunt onder bovenleiding met bovenleidingwissels, drie stations en twee routes
-Stations (tram, metro, railway)	Stations (tram, metro, trein)
-Each tram stop and station of the map's rail modes put with the kit's station stop beside the nearest track (within 25 m); every stop of the map then becomes a station of its transport folder	Elke tramhalte en elk station van de railvervoerswijzen van de kaart wordt met de stationshalte van de kit naast het dichtstbijzijnde spoor gezet (binnen 25 m); daarna wordt elke halte van de kaart een station van haar map transport
-Routes (tram, trolleybus, metro, railway)	Routes (tram, trolleybus, metro, trein)
-Each route of the map's modes through two or more of its stations a segment of its line, the line's service as often as OpenStreetMap says (else every 10 minutes), from 05:30 to 23:30; openOMSI finds the way over the tracks	Elke route van de vervoerswijzen van de kaart door twee of meer van haar stations wordt een segment van haar lijn, met de dienst van de lijn zo vaak als OpenStreetMap zegt (anders elke 10 minuten), van 05:30 tot 23:30; openOMSI vindt zelf de weg over de sporen
-no vehicle of it is installed	er is geen enkel voertuig ervan geïnstalleerd
-Its vehicles:	Voertuigen ervan:
-(select roads in the view, and the junctions between them)	(selecteer wegen in het beeld, en de kruispunten ertussen)
-(select tracks in the view, and their switches)	(selecteer sporen in het beeld, en hun wissels)
-A pair of wires over each way's kerb lane; through a selected junction only the lanes that join wired roads. Frogs are put where three wires meet.	Een paar draden boven de rijstrook langs de stoeprand in elke richting; door een geselecteerd kruispunt alleen de rijstroken die wegen met leiding verbinden. Waar drie leidingen samenkomen, worden bovenleidingwissels geplaatst.
-The map's files are still being read	De bestanden van de kaart worden nog gelezen
-West Gate	Westpoort
-East Market	Oostmarkt
-North Park	Noordpark
-Market line	Marktlijn
-Park line	Parklijn
-Trolleybus start	Trolleybusstart
-frogs:	bovenleidingwissels:
-places where more than three wires meet get no frog: wire fewer turns there	plekken waar meer dan drie leidingen samenkomen krijgen geen bovenleidingwissel: leg daar minder afslagen onder leiding
-Track ends that do not meet	Spooreinden die niet aansluiten
-Two tracks run on into one another but their ends lie apart: the game joins rails only where their ends lie within 1.5 m, so no train or tram gets across (a route through there finds no way). "Fix" moves one end onto the other, arriving in line with it, and joins them.	Twee sporen lopen in elkaar door, maar hun einden liggen uit elkaar: het spel verbindt rails alleen waar hun einden binnen 1,5 m van elkaar liggen, dus hier komt geen trein of tram overheen (een route hierdoor vindt geen weg). "Herstellen" verplaatst het ene einde naar het andere, in lijn ermee, en verbindt ze.
-tracks	sporen
-Select the roads or tracks to build into the ground	Selecteer de wegen of sporen om in de grond te bouwen
-Cutting	Ingraving
-Cut and cover tunnel	Tunnel in open bouwput
-Nothing to build into the ground	Niets om in de grond te bouwen
-Build into the ground	In de grond bouwen
-The chain of the selected pieces lowered, with ramps at its ends. Cut: an open cutting with sloped banks. Cover: open ramps down to the portals and a tunnel under the ground between them (a shell of walls and roof, a portal at each mouth).	De keten van de geselecteerde delen verlaagd, met hellingen aan de uiteinden. Ingraving: open, met schuine taluds. Tunnel: open hellingen omlaag naar de portalen en daartussen een tunnel onder de grond (een omhulsel van wanden en dak, een portaal bij elke ingang).
-Cover (tunnel)	Overkapping (tunnel)
-Ramp gradient	Hellingspercentage
-Banks	Taluds
- m out per metre up	 m opzij per meter omhoog
-Ramps	Hellingen
-at the start	aan het begin
-at the end	aan het einde
-A tunnel needs a depth of 6 m or more: shallower it stays an open cutting	Een tunnel heeft een diepte van 6 m of meer nodig: ondieper blijft het een open ingraving
-Each ramp is about	Elke helling is ongeveer
-Pieces lowered:	Delen verlaagd:
-tunnel pieces:	tunneldelen:
-portals:	portalen:
-their overhead taken off: wire them again (Transit network, Power)	hun bovenleiding is verwijderd: leg die opnieuw (Vervoersnet, Voeding)
-Platforms at the stations	Perrons bij de stations
-The kit's platform of each rail station's mode beside its track, on the side its stop stands, as long as its platform says	Het perron uit de kit voor de modus van elk spoorstation naast zijn spoor, aan de kant van zijn halte, zo lang als zijn perron aangeeft
-Platforms laid:	Perrons gelegd:
-lay the wires, masts, poles and frogs too	ook de draden, masten en bovenleidingwissels leggen
-Catenary mast	Bovenleidingmast
-Trolleybus pole	Trolleybusmast
-Trolleybus frog	Trolleybus-bovenleidingwissel
-Section insulator	Sectie-isolator
 Lake	Meer
 River	Rivier
 Water level:	Waterpeil:
+Banks	Taluds
 Click the shore round and close it on the first point (Enter closes too, right-click takes a point back). The ground inside is dug to a bed and the banks slope to the shore.	Klik rond de oever en sluit af op het eerste punt (Enter sluit ook af, rechtsklikken neemt een punt terug). De grond binnenin wordt tot een bodem uitgegraven en de oevers lopen af naar de waterlijn.
 Click the river's middle line from its source on and finish on the last point (or Enter). Water in OMSI lies at one level for a tile: a river runs level.	Klik de middellijn van de rivier vanaf de bron en eindig op het laatste punt (of Enter). Water in OMSI ligt op één peil per tegel: een rivier loopt vlak.
 Add as a ground texture	Toevoegen als grondtextuur
+Painted line	Geverfde lijn
+Stop line	Stopstreep
+A wide solid line across a lane: draw it across the road	Een brede doorgetrokken lijn dwars over een rijstrook: teken hem dwars op de weg
+Crossing	Oversteekplaats
+Zebra bars: draw it across the road, the bars lie along it	Zebrapad: teken het dwars op de weg, de strepen liggen langs de weg
+Centre line	Middenlijn
+A double yellow line	Een dubbele gele lijn
+Lane line	Rijstrooklijn
+A white dashed line	Een witte onderbroken lijn
+Solid	Doorgetrokken
+Dashed	Onderbroken
+Double	Dubbel
+Solid and dashed	Doorgetrokken en onderbroken
+Crossing (bars)	Oversteekplaats (strepen)
+A line's width (each line of a double one); a crossing's reach along the road	Breedte van een lijn (van elke lijn bij een dubbele); diepte van een oversteekplaats langs de weg
+Bar	Streep
+Dash	Streepje
+Gap	Onderbreking
+Draw with this line	Met deze lijn tekenen
+It is made as a spline type of the content folder (Splines\\openMapper\\marks) and chosen: draw it with Line, Arc or Curve, over the asphalt	Wordt gemaakt als splinetype in de inhoudsmap (Splines\\openMapper\\marks) en gekozen: teken met Lijn, Boog of Kromme over het asfalt
+Painted line made: draw with it in the junction editor	Geverfde lijn gemaakt: teken ermee in de kruispuntbewerker
 A junction was not made: its roads are too short or too close together. Lengthen them or move the junctions apart.	Er is geen kruising gemaakt: de wegen zijn te kort of liggen te dicht bij elkaar. Verleng ze of verplaats de kruisingen verder uit elkaar.
+Draw road markings	Wegmarkeringen tekenen
+Pen	Pen
+Straight line	Rechte lijn
+Dashed line	Streeplijn
+Rectangle	Rechthoek
+Arrow	Pijl
+Eraser	Gum
+Dash length	Streeplengte
+Gap between dashes	Tussenruimte tussen streepjes
+Pointing back	Wijst terug
+Snap to 5 cm	Uitlijnen op 5 cm
+Drag to draw. The picture is the roadway as the texture lies on it, up is the way of the road; it repeats along, so what leaves at the top comes in at the bottom.	Sleep om te tekenen. De afbeelding is het wegdek zoals de textuur erop ligt, boven is de rijrichting van de weg; hij herhaalt zich in de lengte, dus wat bovenaan verdwijnt, komt onderaan weer binnen.
+Pick a roadway texture first	Kies eerst een wegdektextuur
 Display	Weergave
 X-ray (Alt+Z): see and pick through the mesh	Röntgen (Alt+Z): door de mesh heen kijken en kiezen
 Show the textures	Textures tonen
@@ -2786,42 +2533,9 @@ Paint my own markings	Eigen markeringen schilderen
 The maker paints the lines onto the roadway texture: pick a plain asphalt texture, or its own lines show too	De maker schildert de lijnen op de wegtextuur: kies een effen asfalttextuur, anders zijn de eigen lijnen ervan ook zichtbaar
 Standard for these lanes	Standaard voor deze rijstroken
 Add a line	Lijn toevoegen
-Across the roadway from its middle (right of the road's way is plus)	Dwars over de weg vanaf het midden (rechts van de rijrichting is plus)
-Solid	Doorgetrokken
-Dashed	Onderbroken
-Double solid	Dubbel doorgetrokken
-Solid and dashed	Doorgetrokken en onderbroken
-The line's width	Lijnbreedte
-Dash length	Streeplengte
-Gap between dashes	Tussenruimte tussen streepjes
-Draw road markings	Wegmarkeringen tekenen
-Pen	Pen
-Straight line	Rechte lijn
-Dashed line	Streeplijn
-Rectangle	Rechthoek
-Arrow	Pijl
-Eraser	Gum
-Pointing back	Wijst terug
-Snap to 5 cm	Uitlijnen op 5 cm
-Drag to draw. The picture is the roadway as the texture lies on it, up is the way of the road; it repeats along, so what leaves at the top comes in at the bottom.	Sleep om te tekenen. De afbeelding is het wegdek zoals de textuur erop ligt, boven is de rijrichting van de weg; hij herhaalt zich in de lengte, dus wat bovenaan verdwijnt, komt onderaan weer binnen.
-Pick a roadway texture first	Kies eerst een wegdektextuur
 Draw by hand…	Uit de hand tekenen…
 A drawing board with a pen, lines, arrows and an eraser: what you draw goes onto the roadway	Een tekenbord met pen, lijnen, pijlen en gum: wat je tekent komt op het wegdek
 a drawing is on the road	er staat een tekening op de weg
-Painted line	Geverfde lijn
-Stop line	Stopstreep
-A wide solid line across a lane: draw it across the road	Een brede doorgetrokken lijn dwars over een rijstrook: teken hem dwars op de weg
-Crossing	Oversteekplaats
-Zebra bars: draw it across the road, the bars lie along it	Zebrapad: teken het dwars op de weg, de strepen liggen langs de weg
-Centre line	Middenlijn
-A double yellow line	Een dubbele gele lijn
-Lane line	Rijstrooklijn
-A white dashed line	Een witte onderbroken lijn
-Double	Dubbel
-Crossing (bars)	Oversteekplaats (strepen)
-A line's width (each line of a double one); a crossing's reach along the road	Breedte van een lijn (van elke lijn bij een dubbele); diepte van een oversteekplaats langs de weg
-Bar	Streep
-Dash	Streepje
-Draw with this line	Met deze lijn tekenen
-It is made as a spline type of the content folder (Splines\\openMapper\\marks) and chosen: draw it with Line, Arc or Curve, over the asphalt	Wordt gemaakt als splinetype in de inhoudsmap (Splines\\openMapper\\marks) en gekozen: teken met Lijn, Boog of Kromme over het asfalt
-Painted line made: draw with it in the junction editor	Geverfde lijn gemaakt: teken ermee in de kruispuntbewerker
+Across the roadway from its middle (right of the road's way is plus)	Dwars over de weg vanaf het midden (rechts van de rijrichting is plus)
+Double solid	Dubbel doorgetrokken
+The line's width	Lijnbreedte

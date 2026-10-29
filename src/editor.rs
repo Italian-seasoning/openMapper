@@ -2233,51 +2233,6 @@ impl Editor {
         n
     }
 
-    /// Stations from OpenStreetMap: each with the stop object `rel` beside the nearest rail lane
-    /// (within 25 m), on its right as it runs, unless a stop stands within 10 m. How many.
-    pub fn place_osm_stations(&mut self, assets: &mut Assets, stations: &[(DVec2, String)], rel: &str) -> usize {
-        let Some(doc) = self.doc.as_ref() else { return 0 };
-        let mut stood: Vec<DVec2> = doc.tiles.iter().flat_map(|(k, t)| t.tile.objects.iter().filter(|o| o.flag == 7).map(move |o| tile_origin(*k) + DVec2::new(o.pos[0], o.pos[1]))).collect();
-        self.history.begin(tr("Stations from OpenStreetMap", "Станции из OpenStreetMap"));
-        let mut n = 0;
-        for (p, name) in stations {
-            let Some(doc) = self.doc.as_ref() else { break };
-            let (lanes, _) = crate::lanes::near(doc, assets, *p, 25.0);
-            let best = lanes.iter().filter(|l| l.kind == 2).filter_map(|l| l.nearest(*p).map(|q| (q, l.direction))).filter(|(q, _)| q.2 < 25.0).min_by(|a, b| a.0 .2.total_cmp(&b.0 .2));
-            let Some(((q, h, _, _), dir)) = best else { continue };
-            let flow = if dir == 1 { roads::norm_deg(h + 180.0) } else { h };
-            // (on the side of the track the OSM station lies, a platform's width off it)
-            let right = roads::right(flow);
-            let side = if (*p - q.truncate()).dot(right) >= 0.0 { 1.0 } else { -1.0 };
-            let at = q.truncate() + right * side * 3.2;
-            if stood.iter().any(|s| (*s - at).length() < 10.0) {
-                continue;
-            }
-            let k = tile_of(at);
-            let Some(doc) = self.doc.as_mut() else { break };
-            if !doc.tiles.contains_key(&k) {
-                continue;
-            }
-            self.history.touch_tile(doc, k);
-            let id = doc.new_id();
-            let org = tile_origin(k);
-            let label = if name.trim().is_empty() { tr("Station", "Станция").to_string() } else { name.trim().to_string() };
-            let o = MapObject { file: rel.to_string(), id, pos: [at.x - org.x, at.y - org.y, 0.0], rot: [flow, 0.0, 0.0], extra: crate::stops::StopSettings::new_strings(&label, Default::default()), flag: 7, ..Default::default() };
-            let t = doc.tiles.get_mut(&k).unwrap();
-            t.tile.objects.push(o);
-            t.touch_content();
-            stood.push(at);
-            n += 1;
-        }
-        if n == 0 {
-            self.history.cancel();
-        } else {
-            self.history.touch_global(self.doc.as_ref().unwrap());
-            self.history.commit();
-        }
-        n
-    }
-
     /// A car park click with rows on: the first click starts a row, the second fills it to
     /// there with car parks every `parking_step` metres, standing along it.
     fn parking_click(&mut self, assets: &mut Assets, lib: &Library) {
@@ -2480,12 +2435,6 @@ impl Editor {
             return None;
         }
         let track = self.road_type.as_deref()?;
-        // (a Modern map's tram tracks branch without OMSI 2's railway turnouts, 27 m long and
-        // of 190 m radius, far too wide for a tram's junction: the track is cut there, and
-        // openOMSI takes the branch a route names or the driver's indicator points to)
-        if self.doc.as_ref().is_some_and(|d| d.transit.is_modern()) && track.to_lowercase().contains("tram") {
-            return None;
-        }
         let rel = self.best_switch(assets, track, left);
         let model = assets.object(&rel)?;
         let shape = crate::switches::Shape::of(&model)?;
