@@ -2438,3 +2438,350 @@ Could not copy the photos	Foto tidak dapat disalin
 Copying the photos	Menyalin foto
 Hold only the photos of the tiles near the camera	Simpan hanya foto jubin berhampiran kamera
 The others keep their photo in the map's folder, and are put up again when you go back to them.	Yang lain menyimpan foto dalam folder peta dan muncul semula apabila anda kembali ke sana.
+A tram loop with two stations and its wire: save, then drive it in openOMSI with a tram of your own.	Gelung trem dengan dua stesen dan wayarnya: simpan, kemudian pandu di openOMSI dengan trem anda sendiri.
+Transit kit made, files:	Kit transit dibuat, fail:
+The transit kit could not be made	Kit transit tidak dapat dibuat
+Transit network problems	Masalah rangkaian transit
+Stations without their mode's lanes	Stesen tanpa lorong modnya
+Stations without their stop	Stesen tanpa perhentiannya
+openOMSI's own reader finds this in the map's transport folder (stations, routes, wires, switches, depots, signals): a service it names is skipped, a section or a block left out. Open Map > Transit network to change it.	Pembaca openOMSI sendiri menemui ini dalam folder transport peta (stesen, laluan, wayar, suis, depoh, isyarat): perkhidmatan yang dinamakannya dilangkau, seksyen atau blok ditinggalkan. Buka Peta > Rangkaian transit untuk mengubahnya.
+openOMSI routes a service over the lanes of its mode within 25 m of each station (rails for trams, metro and trains, streets for buses and trolleybuses). This station has none of its modes' near, so its services cannot run. Move the stop next to the track or road, or lay one there.	openOMSI menjalankan perkhidmatan pada lorong modnya dalam lingkungan 25 m dari setiap stesen (rel untuk trem, metro dan kereta api, jalan untuk bas dan bas troli). Stesen ini tiada lorong modnya berhampiran, jadi perkhidmatannya tidak dapat berjalan. Alihkan perhentian ke sebelah trek atau jalan, atau bina satu di situ.
+A station is found by the game among the map's stops: by its stop object, else by its name. This one's object is no stop on the map and no stop has its name, so the services through it are skipped. Pick its stop again in Map > Transit network, Stations.	Stesen dicari oleh permainan antara perhentian peta: melalui objek perhentiannya, jika tidak melalui namanya. Objek stesen ini bukan perhentian pada peta dan tiada perhentian dengan namanya, jadi perkhidmatan yang melaluinya dilangkau. Pilih semula perhentiannya dalam Peta > Rangkaian transit, Stesen.
+station	stesen
+Transit network…	Rangkaian transit…
+The transport folder stays: openOMSI still reads its stations, routes and wires.	Folder transport kekal: openOMSI masih membaca stesen, laluan dan wayarnya.
+Remove it too	Buang juga
+Start with a tram line: a loop of track under its wire, two stations and a route	Mula dengan laluan trem: gelung trek di bawah wayarnya, dua stesen dan satu laluan
+Classic	Klasik
+Runs in OMSI 2 and in openOMSI. Buses, and trams and trains as OMSI 2 has them.	Berjalan dalam OMSI 2 dan openOMSI. Bas, serta trem dan kereta api seperti dalam OMSI 2.
+Modern	Moden
+openOMSI only. Real transit: stations, routes, overhead wire, third rail, depots and signal blocks.	openOMSI sahaja. Transit sebenar: stesen, laluan, wayar atas, rel ketiga, depoh dan blok isyarat.
+Made for (one or more):	Dibuat untuk (satu atau lebih):
+Choose at least one	Pilih sekurang-kurangnya satu
+OMSI 2 cannot run a Modern map's routes, wires or blocks, and openOMSI runs only vehicles of its modes on it. openMapper's transit kit (tracks, wires, platforms, masts) is made in the content folder.	OMSI 2 tidak dapat menjalankan laluan, wayar atau blok peta Moden, dan openOMSI hanya menjalankan kenderaan modnya padanya. Kit transit openMapper (trek, wayar, platform, tiang) dibuat dalam folder kandungan.
+Overview	Gambaran keseluruhan
+Stations	Stesen
+Depots	Depoh
+Power	Kuasa
+Switches and signals	Suis dan isyarat
+Set it (else the game's default)	Tetapkan (jika tidak, lalai permainan)
+(not set)	(tidak ditetapkan)
+Take it out	Keluarkan
+Transit network	Rangkaian transit
+This is a Classic map.	Ini peta Klasik.
+Stations, routes without tours, the overhead wire, the third rail, depots and signal blocks are openOMSI's (0.3.42 and later): make the map Modern in Map settings to give it a transit network. OMSI 2 cannot run them.	Stesen, laluan tanpa giliran, wayar atas, rel ketiga, depoh dan blok isyarat ialah ciri openOMSI (0.3.42 dan ke atas): jadikan peta Moden dalam Tetapan peta untuk memberinya rangkaian transit. OMSI 2 tidak dapat menjalankannya.
+No stop there: click a stop object (a bus stop, or the kit's station stop)	Tiada perhentian di situ: klik objek perhentian (perhentian bas, atau perhentian stesen kit)
+Now click where the block ends	Sekarang klik di mana blok berakhir
+Click the signal object itself	Klik objek isyarat itu sendiri
+Then click in the view	Kemudian klik dalam pandangan
+Modern map for	Peta Moden untuk
+openOMSI runs only vehicles of these modes here; OMSI 2 cannot run the network. The modes are changed in Map settings.	openOMSI hanya menjalankan kenderaan mod ini di sini; OMSI 2 tidak dapat menjalankan rangkaian ini. Mod diubah dalam Tetapan peta.
+Services	Perkhidmatan
+Track rules	Peraturan trek
+Overhead wire spans	Rentang wayar atas
+Third rail spans	Rentang rel ketiga
+Trolleybus wire spans	Rentang wayar bas troli
+Switches	Suis
+Signals and blocks	Isyarat dan blok
+Problems	Masalah
+None: openOMSI reads the network as it is.	Tiada: openOMSI membaca rangkaian seadanya.
+error	ralat
+warning	amaran
+Found by openOMSI's own reader of the transport folder, the texts as it writes them in its log.	Ditemui oleh pembaca folder transport openOMSI sendiri, teksnya seperti yang ditulis dalam lognya.
+openMapper's transit kit	Kit transit openMapper
+Tracks, platforms, wires and objects made by openMapper for Modern maps (OMSI 2 ships no metro, third rail or trolleybus wire). They are in the catalogue under openMapper; click one to place it.	Trek, platform, wayar dan objek yang dibuat oleh openMapper untuk peta Moden (OMSI 2 tidak menyertakan metro, rel ketiga atau wayar bas troli). Ia ada dalam katalog di bawah openMapper; klik satu untuk meletakkannya.
+Make the kit	Buat kit
+A station is a stop object of the map (a bus stop, or the kit's station stop beside a track) with its platforms. openOMSI routes a service over the lanes of its mode within 25 m of each station.	Stesen ialah objek perhentian pada peta (perhentian bas, atau perhentian stesen kit di sebelah trek) bersama platformnya. openOMSI menjalankan perkhidmatan pada lorong modnya dalam lingkungan 25 m dari setiap stesen.
+A station for every stop of the map	Stesen untuk setiap perhentian peta
+Stops not yet a station become one, named as the stop, its modes from the tracks and roads beside it	Perhentian yang belum menjadi stesen dijadikan stesen, dinamakan seperti perhentian itu, modnya daripada trek dan jalan di sebelahnya
+New station	Stesen baharu
+Stations added:	Stesen ditambah:
+Choose a station	Pilih stesen
+Id	ID
+Modes	Mod
+Stop object	Objek perhentian
+Pick	Pilih
+Place	Lokasi
+Change to	Pertukaran ke
+Platforms	Platform
+Side	Sisi
+island	pulau
+both	kedua-dua
+platform screen doors	pintu skrin platform
+Delete the station	Padam stesen
+A route is segments from station to station (the stops between them in order) and services over them: a branch, a short working or an express is another segment or service. openOMSI makes the timetable's tours from them and finds the way over the tracks itself.	Laluan ialah segmen dari stesen ke stesen (perhentian di antaranya mengikut urutan) dan perkhidmatan di atasnya: cabang, perjalanan pendek atau ekspres ialah segmen atau perkhidmatan lain. openOMSI membina giliran jadual waktu daripadanya dan mencari jalan di atas trek sendiri.
+Add two stations or more first (Stations)	Tambah dua stesen atau lebih dahulu (Stesen)
+New route	Laluan baharu
+Segment	Segmen
+Stops between	Perhentian di antara
+Passed without stopping	Dilalui tanpa berhenti
+Standing at a stop	Masa berhenti di perhentian
+Speed	Kelajuan
+Way back	Jalan balik
+over the same segment	melalui segmen yang sama
+another segment	segmen lain
+Service	Perkhidmatan
+Segments in order	Segmen mengikut urutan
+From – to	Dari – hingga
+Days	Hari
+every day	setiap hari
+weekends	hujung minggu
+Saturdays	hari Sabtu
+Sundays	hari Ahad
+turns back	berpatah balik
+goes round a loop	mengelilingi gelung
+goes to depot	masuk depoh
+Cars in a train	Gerabak dalam satu set
+Every 10 minutes from 05:30 to 23:30 over all the route's segments	Setiap 10 minit dari 05:30 hingga 23:30 melalui semua segmen laluan
+Departures of their own	Perlepasan tersendiri
+For a service without a headway: its departures, as 06:00 06:12 06:30.	Untuk perkhidmatan tanpa sela masa: perlepasannya, contohnya 06:00 06:12 06:30.
+Departures	Perlepasan
+A service's depot sends out its vehicles: its AI group (Traffic and AI) supplies them, and the first departure of the day leaves by its gate along the rails to the first station.	Depoh perkhidmatan menghantar kenderaannya: kumpulan AI-nya (Trafik dan AI) membekalkannya, dan perlepasan pertama hari itu keluar melalui pintu pagarnya di sepanjang rel ke stesen pertama.
+AI group	Kumpulan AI
+Capacity	Kapasiti
+Its stop	Perhentiannya
+Gates	Pintu pagar
+Add a gate	Tambah pintu pagar
+has a turning loop	ada gelung pusing balik
+Delete the depot	Padam depoh
+A gate needs a rail within 25 m and a way to the first station, or the trip starts at its station (the game's log says so).	Pintu pagar memerlukan rel dalam lingkungan 25 m dan jalan ke stesen pertama, jika tidak perjalanan bermula di stesennya (log permainan menyatakannya).
+Which tracks serve which mode and how they are powered: a rule matches a track type (a file pattern, * for any letters), a tile or one piece; later rules win. Without a rule openOMSI guesses from the type's name.	Trek mana untuk mod mana dan bagaimana ia dikuasakan: peraturan sepadan dengan jenis trek (corak fail, * untuk sebarang huruf), jubin atau satu keping; peraturan yang kemudian menang. Tanpa peraturan, openOMSI meneka daripada nama jenis.
+A rule for the selected track's type	Peraturan untuk jenis trek terpilih
+Empty rule	Peraturan kosong
+(select a track in the view to make a rule for its type)	(pilih trek dalam pandangan untuk membuat peraturan bagi jenisnya)
+Track type	Jenis trek
+Only on tile / piece	Hanya pada jubin / keping
+id	id
+in the street	di jalan
+railway	laluan berasingan
+overhead wire	wayar atas
+third rail	rel ketiga
+diesel	diesel
+Tunnel	Terowong
+yes	ya
+no	tidak
+Gauge	Tolok
+A map for buses alone has no line to power.	Peta untuk bas sahaja tiada talian untuk dikuasakan.
+Third rail	Rel ketiga
+Trolleybus wire	Wayar bas troli
+Where the wire is, the player's tram or electric train needs a live section of it over its pantograph (dead sections and breaks stop the drive). Without spans openOMSI takes the current for granted. Spans are laid along the selected tracks.	Di mana ada wayar, trem atau kereta api elektrik pemain memerlukan seksyen wayar yang hidup di atas pantografnya (seksyen mati dan sela menghentikan pemanduan). Tanpa rentang, openOMSI menganggap arus sentiasa ada. Rentang dipasang di sepanjang trek terpilih.
+The player's metro train needs a live section of third rail beside its shoe. The kit's metro tracks carry the rail itself; spans say where it is fed. Spans are laid along the selected tracks.	Kereta api metro pemain memerlukan seksyen rel ketiga yang hidup di sebelah kasut pengumpulnya. Trek metro kit membawa rel itu sendiri; rentang menunjukkan di mana ia disuap kuasa. Rentang dipasang di sepanjang trek terpilih.
+openOMSI's trolleybuses run on this wire (trolley.txt beside global.cfg): a pole is powered only on a pair fed by a substation. Spans are laid over each way's lane of the selected roads, with the wire splines that show them.	Bas troli openOMSI berjalan pada wayar ini (trolley.txt di sebelah global.cfg): tiang troli hanya berkuasa pada pasangan wayar yang disuap oleh pencawang. Rentang dipasang di atas lorong setiap arah jalan terpilih, bersama splin wayar yang menunjukkannya.
+The line	Talian
+Voltage	Voltan
+Current	Arus
+direct	terus
+alternating	ulang-alik
+Wire height	Ketinggian wayar
+Wire spacing	Jarak antara wayar
+Sections (each fed by a substation)	Seksyen (setiap satu disuap oleh pencawang)
+name	nama
+live	hidup
+feeder Ω	penyuap Ω
+Section	Seksyen
+Spans	Rentang
+one pair over the middle	satu pasang di tengah
+a pair over each 3.0 m lane	satu pasang di atas setiap lorong 3.0 m
+a pair over each 3.5 m lane	satu pasang di atas setiap lorong 3.5 m
+lay the wire splines too	pasang juga splin wayar
+Wire the selected roads	Pasang wayar pada jalan terpilih
+Electrify the selected tracks	Elektrikkan trek terpilih
+Take their spans off	Tanggalkan rentangnya
+(select roads in the view)	(pilih jalan dalam pandangan)
+(select tracks in the view)	(pilih trek dalam pandangan)
+Their spans are taken off	Rentangnya ditanggalkan
+Spans laid:	Rentang dipasang:
+Gaps	Sela
+Insulators	Penebat
+Gap	Sela
+Insulator	Penebat
+Frogs (wire switches)	Frog (suis wayar)
+Where three spans meet: the contact plate before it sets it by the current the bus draws (power) or by its indicator.	Di mana tiga rentang bertemu: plat sentuh sebelumnya menetapkannya mengikut arus yang ditarik bas (kuasa) atau mengikut lampu isyarat beloknya.
+by current	mengikut arus
+by indicator	mengikut lampu isyarat belok
+Frog	Frog
+A switch listed here holds while a train stands on it, goes back to its rest position, and can be thrown by hand only or locked by a signal. Switches not listed work as before.	Suis yang disenaraikan di sini kekal semasa kereta api berada di atasnya, kembali ke kedudukan rehatnya, dan boleh diubah secara manual sahaja atau dikunci oleh isyarat. Suis yang tidak disenaraikan berfungsi seperti sebelum ini.
+The selected switch objects	Objek suis terpilih
+simple	biasa
+crossover	silang lintas
+double slip	gelincir berganda
+diamond	silang berlian
+scissors	silang gunting
+rests straight	rehat lurus
+rests diverging	rehat bercabang
+thrown by the route	diubah oleh laluan
+by hand only	manual sahaja
+interlocked	bersaling kunci
+diverging	bercabang
+locked by	dikunci oleh
+Blocks	Blok
+A stretch of track that holds one AI train at a time, given by where it begins and ends on the rails; its signals show whether it is free. Blocks need the timetable's trains (the AI) to hold.	Bahagian trek yang memuatkan satu kereta api AI pada satu masa, ditentukan oleh titik mula dan tamatnya pada rel; isyaratnya menunjukkan sama ada ia kosong. Blok hanya berkuat kuasa untuk kereta api jadual waktu (AI).
+Ends	Hujung
+Block	Blok
+Click where the block begins	Klik di mana blok bermula
+Signals	Isyarat
+A signal of the map tied to a block shows stop while the block is in use and go while it is free.	Isyarat peta yang terikat pada blok menunjukkan berhenti semasa blok digunakan dan jalan semasa ia kosong.
+main	utama
+distant	jauh
+block	blok
+shunting	langsir
+speed	laju
+tram	trem
+Tram street track	Trek trem jalan
+Tram track on grass	Trek trem atas rumput
+Railway track	Trek kereta api
+Metro track	Trek metro
+Metro tunnel	Terowong metro
+Tram platform	Platform trem
+Metro side platform	Platform sisi metro
+Metro island platform	Platform pulau metro
+Railway side platform	Platform sisi kereta api
+Railway island platform	Platform pulau kereta api
+Trolleybus wires (one pair)	Wayar bas troli (satu pasang)
+Trolleybus wires, 3.0 m lanes	Wayar bas troli, lorong 3.0 m
+Trolleybus wires, 3.5 m lanes	Wayar bas troli, lorong 3.5 m
+Catenary mast (arm right)	Tiang wayar atas (lengan kanan)
+Catenary mast (arm left)	Tiang wayar atas (lengan kiri)
+Trolleybus pole (arm right)	Tiang bas troli (lengan kanan)
+Trolleybus pole (arm left)	Tiang bas troli (lengan kiri)
+Metro sign	Papan tanda metro
+Platform shelter	Teduhan platform
+Buffer stop	Penampan hujung
+Station stop	Perhentian stesen
+Bus	Bas
+Tram	Trem
+Railway	Kereta api
+Metro	Metro
+Trolleybus	Bas troli
+buses on the streets, stops at the kerb	bas di jalan, perhentian di tepi kerb
+street track under a contact wire, low platforms	trek jalan di bawah wayar sentuh, platform rendah
+mainline track, stations with platforms, signals and blocks	trek laluan utama, stesen dengan platform, isyarat dan blok
+track with a third rail, tunnels, high platforms	trek dengan rel ketiga, terowong, platform tinggi
+buses under a pair of wires, frogs at junctions	bas di bawah sepasang wayar, frog di simpang
+Depot Square	Dataran Depoh
+Park Gate	Pintu Taman
+Tram start	Mula trem
+Loop line	Laluan gelung
+A trolleybus junction under its wires with three stations: save, then drive it in openOMSI with a trolleybus of your own.	Simpang bas troli di bawah wayarnya dengan tiga stesen: simpan, kemudian pandu di openOMSI dengan bas troli anda sendiri.
+station stops:	perhentian stesen:
+stations:	stesen:
+routes:	laluan:
+Vehicles of other modes	Kenderaan mod lain
+Services without a vehicle of their mode	Perkhidmatan tanpa kenderaan modnya
+openOMSI runs only vehicles of a Modern map's modes on it. This vehicle of the AI lists is made for another mode (its file says so, or it is a depot's vehicle and its shape says so), so the game leaves it out. Change it in Map > Traffic and AI, or add its mode to the map in Map settings.	openOMSI hanya menjalankan kenderaan mod peta Moden padanya. Kenderaan senarai AI ini dibuat untuk mod lain (failnya menyatakannya, atau ia kenderaan depoh dan bentuknya menunjukkannya), jadi permainan tidak menjalankannya. Tukarnya dalam Peta > Trafik dan AI, atau tambah modnya pada peta dalam Tetapan peta.
+A service of the transit network takes its vehicles from its depot's AI group (or names one vehicle file). That group has no vehicle of the route's mode, so nothing runs it. Give the depot an AI group with such vehicles (Map > Traffic and AI), or choose another depot.	Perkhidmatan rangkaian transit mengambil kenderaannya daripada kumpulan AI depohnya (atau menamakan satu fail kenderaan). Kumpulan itu tiada kenderaan mod laluan, jadi tiada apa yang menjalankannya. Beri depoh kumpulan AI dengan kenderaan sedemikian (Trafik dan AI), atau pilih depoh lain.
+group	kumpulan
+route	laluan
+its depot names no AI group	depohnya tidak menamakan kumpulan AI
+no vehicle of the mode in	tiada kenderaan mod ini dalam
+Stations from OpenStreetMap	Stesen daripada OpenStreetMap
+Metro tracks	Trek metro
+in tunnels too: build them with the kit's metro tunnel and cut the ground away (a Modern map)	dalam terowong juga: bina dengan terowong metro kit dan potong tanahnya (peta Moden)
+Start with a trolleybus line: a junction under its wires with frogs, three stations and two routes	Mula dengan laluan bas troli: simpang di bawah wayarnya dengan frog, tiga stesen dan dua laluan
+Stations (tram, metro, railway)	Stesen (trem, metro, kereta api)
+Each tram stop and station of the map's rail modes put with the kit's station stop beside the nearest track (within 25 m); every stop of the map then becomes a station of its transport folder	Setiap perhentian trem dan stesen mod rel peta diletakkan dengan perhentian stesen kit di sebelah trek terdekat (dalam lingkungan 25 m); kemudian setiap perhentian peta menjadi stesen dalam folder transport-nya
+Routes (tram, trolleybus, metro, railway)	Laluan (trem, bas troli, metro, kereta api)
+Each route of the map's modes through two or more of its stations a segment of its line, the line's service as often as OpenStreetMap says (else every 10 minutes), from 05:30 to 23:30; openOMSI finds the way over the tracks	Setiap laluan mod peta melalui dua atau lebih stesennya menjadi segmen laluannya, dengan perkhidmatan laluan sekerap yang dinyatakan OpenStreetMap (jika tidak, setiap 10 minit), dari 05:30 hingga 23:30; openOMSI mencari jalan di atas trek
+no vehicle of it is installed	tiada kenderaannya dipasang
+Its vehicles:	Kenderaannya:
+(select roads in the view, and the junctions between them)	(pilih jalan dalam pandangan, dan simpang di antaranya)
+(select tracks in the view, and their switches)	(pilih trek dalam pandangan, dan suisnya)
+A pair of wires over each way's kerb lane; through a selected junction only the lanes that join wired roads. Frogs are put where three wires meet.	Sepasang wayar di atas lorong tepi setiap arah; di simpang terpilih hanya lorong yang menyambung jalan berwayar. Frog diletakkan di mana tiga wayar bertemu.
+The map's files are still being read	Fail peta masih dibaca
+West Gate	Pintu Barat
+East Market	Pasar Timur
+North Park	Taman Utara
+Market line	Laluan Pasar
+Park line	Laluan Taman
+Trolleybus start	Mula bas troli
+frogs:	frog:
+places where more than three wires meet get no frog: wire fewer turns there	tempat di mana lebih daripada tiga wayar bertemu tidak diberi frog: pasang wayar pada lebih sedikit belokan di situ
+Track ends that do not meet	Hujung trek yang tidak bertemu
+Two tracks run on into one another but their ends lie apart: the game joins rails only where their ends lie within 1.5 m, so no train or tram gets across (a route through there finds no way). "Fix" moves one end onto the other, arriving in line with it, and joins them.	Dua trek bersambung antara satu sama lain tetapi hujungnya berjauhan: permainan hanya menyambung rel jika hujungnya dalam lingkungan 1.5 m, jadi tiada kereta api atau trem dapat melintas (laluan yang melaluinya tidak menemui jalan). "Baiki" mengalihkan satu hujung ke hujung yang lain, selari dengannya, lalu menyambungkannya.
+tracks	trek
+Select the roads or tracks to build into the ground	Pilih jalan atau trek untuk dibina ke dalam tanah
+Cutting	Potongan tanah
+Cut and cover tunnel	Terowong potong dan tutup
+Nothing to build into the ground	Tiada apa untuk dibina ke dalam tanah
+Build into the ground	Bina ke dalam tanah
+The chain of the selected pieces lowered, with ramps at its ends. Cut: an open cutting with sloped banks. Cover: open ramps down to the portals and a tunnel under the ground between them (a shell of walls and roof, a portal at each mouth).	Rantaian kepingan terpilih diturunkan, dengan tanjakan di hujungnya. Potongan: potongan tanah terbuka dengan tebing bercerun. Tertutup: tanjakan terbuka turun ke portal dan terowong di bawah tanah di antaranya (kelompang dinding dan bumbung, portal di setiap mulut).
+Cover (tunnel)	Tertutup (terowong)
+Ramp gradient	Kecerunan tanjakan
+Banks	Tebing
+ m out per metre up	 m ke sisi bagi setiap meter naik
+Ramps	Tanjakan
+at the start	di permulaan
+at the end	di penghujung
+A tunnel needs a depth of 6 m or more: shallower it stays an open cutting	Terowong memerlukan kedalaman 6 m atau lebih: jika lebih cetek, ia kekal sebagai potongan tanah terbuka
+Each ramp is about	Setiap tanjakan kira-kira
+Pieces lowered:	Kepingan diturunkan:
+tunnel pieces:	kepingan terowong:
+portals:	portal:
+their overhead taken off: wire them again (Transit network, Power)	wayar atasnya ditanggalkan: pasang wayar semula (Rangkaian transit, Kuasa)
+Platforms at the stations	Platform di stesen
+The kit's platform of each rail station's mode beside its track, on the side its stop stands, as long as its platform says	Platform kit bagi mod setiap stesen rel di sebelah treknya, di sisi perhentiannya berdiri, sepanjang yang dinyatakan platformnya
+Platforms laid:	Platform dipasang:
+lay the wires, masts, poles and frogs too	pasang juga wayar, tiang dan frog
+Catenary mast	Tiang wayar atas
+Trolleybus pole	Tiang wayar bas troli
+Trolleybus frog	Frog bas troli
+Section insulator	Penebat seksyen
+Lake	Tasik
+River	Sungai
+Water level:	Paras air:
+Click the shore round and close it on the first point (Enter closes too, right-click takes a point back). The ground inside is dug to a bed and the banks slope to the shore.	Klik mengelilingi pantai dan tutup pada titik pertama (Enter juga menutup, klik kanan membuang satu titik). Tanah di dalamnya digali menjadi dasar dan tebing condong ke arah pantai.
+Click the river's middle line from its source on and finish on the last point (or Enter). Water in OMSI lies at one level for a tile: a river runs level.	Klik garis tengah sungai bermula dari hulunya dan tamatkan pada titik terakhir (atau Enter). Air dalam OMSI berada pada satu paras bagi setiap jubin: sungai mengalir mendatar.
+Add as a ground texture	Tambah sebagai tekstur tanah
+A junction was not made: its roads are too short or too close together. Lengthen them or move the junctions apart.	Persimpangan tidak dibuat: jalannya terlalu pendek atau terlalu dekat antara satu sama lain. Panjangkan jalan atau jarakkan persimpangan.
+Display	Paparan
+X-ray (Alt+Z): see and pick through the mesh	Sinar-X (Alt+Z): lihat dan pilih menembusi mesh
+Show the textures	Tunjukkan tekstur
+The object's own pictures under the editing shading	Gambar asal objek di bawah pewarnaan suntingan
+Shading opacity	Kelegapan pewarnaan
+0 %: the textures as they are; 100 %: the plain shading. The picture is renewed a moment after each change.	0 %: tekstur seperti asal; 100 %: pewarnaan biasa. Gambar dikemas kini sesaat selepas setiap perubahan.
+Give this material to the selected faces	Berikan bahan ini kepada muka yang dipilih
+Select faces to give them a material.	Pilih muka untuk memberikan bahan kepadanya.
+Road markings	Tanda jalan
+Paint my own markings	Cat tanda sendiri
+The maker paints the lines onto the roadway texture: pick a plain asphalt texture, or its own lines show too	Pembuat melukis garisan pada tekstur jalan raya: pilih tekstur asfalt biasa, atau garisannya sendiri juga akan kelihatan
+Standard for these lanes	Piawai untuk lorong ini
+Add a line	Tambah garisan
+Across the roadway from its middle (right of the road's way is plus)	Melintang jalan dari tengahnya (kanan arah jalan ialah positif)
+Solid	Padu
+Dashed	Putus-putus
+Double solid	Padu berganda
+Solid and dashed	Padu dan putus-putus
+The line's width	Lebar garisan
+Dash length	Panjang putus
+Gap between dashes	Jarak antara putus
+Draw road markings	Lukis tanda jalan
+Pen	Pen
+Straight line	Garisan lurus
+Dashed line	Garisan putus-putus
+Rectangle	Segi empat tepat
+Arrow	Anak panah
+Eraser	Pemadam
+Pointing back	Menghala ke belakang
+Snap to 5 cm	Lekat pada 5 cm
+Drag to draw. The picture is the roadway as the texture lies on it, up is the way of the road; it repeats along, so what leaves at the top comes in at the bottom.	Seret untuk melukis. Gambar ialah permukaan jalan seperti tekstur terletak padanya, atas ialah arah jalan; ia berulang sepanjang jalan, jadi apa yang keluar di atas masuk semula di bawah.
+Pick a roadway texture first	Pilih tekstur permukaan jalan dahulu
+Draw by hand…	Lukis dengan tangan…
+A drawing board with a pen, lines, arrows and an eraser: what you draw goes onto the roadway	Papan lukisan dengan pen, garisan, anak panah dan pemadam: apa yang anda lukis terletak pada permukaan jalan
+a drawing is on the road	lukisan berada di atas jalan
+Painted line	Garisan cat
+Stop line	Garisan henti
+A wide solid line across a lane: draw it across the road	Garisan padu lebar melintang lorong: lukis melintang jalan
+Crossing	Lintasan pejalan kaki
+Zebra bars: draw it across the road, the bars lie along it	Zebra: lukis melintang jalan, jalurnya sepanjang jalan
+Centre line	Garisan tengah
+A double yellow line	Garisan kuning berganda
+Lane line	Garisan lorong
+A white dashed line	Garisan putus-putus putih
+Double	Berganda
+Crossing (bars)	Lintasan pejalan kaki (jalur)
+A line's width (each line of a double one); a crossing's reach along the road	Lebar garisan (setiap satu pada yang berganda); kedalaman lintasan sepanjang jalan
+Bar	Jalur
+Dash	Sengkang
+Draw with this line	Lukis dengan garisan ini
+It is made as a spline type of the content folder (Splines\\openMapper\\marks) and chosen: draw it with Line, Arc or Curve, over the asphalt	Dibuat sebagai jenis spline dalam folder kandungan (Splines\\openMapper\\marks) dan dipilih: lukis dengan Garisan, Lengkok atau Lengkung di atas asfalt
+Painted line made: draw with it in the junction editor	Garisan cat dibuat: lukis dengannya dalam penyunting persimpangan

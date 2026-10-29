@@ -199,6 +199,8 @@ pub struct Document {
     pub descriptions: crate::descriptions::Descriptions,
     /// Things kept together (openMapper's own: `openMapper/groups.json` beside the map).
     pub groups: Vec<crate::mapgroups::MapGroup>,
+    /// Its transport modes and network (a Modern map's; empty on a Classic one).
+    pub transit: crate::transit::Transit,
 }
 
 impl Document {
@@ -239,6 +241,7 @@ impl Document {
             fresh: true,
             global_rev: next_rev(),
             timetable: Default::default(),
+            transit: Default::default(),
         };
         // (the cars the template's traffic names, so its streets are not empty)
         crate::traffic::fill_named_groups(&mut doc.traffic, &roots.omsi);
@@ -318,6 +321,11 @@ impl Document {
         let timetable = crate::timetable::Timetable::load(&src_dir, &order);
         let traffic = crate::traffic::Traffic::load(&src_dir);
         let descriptions = crate::descriptions::Descriptions::load(&src_dir);
+        let mut transit = crate::transit::Transit::load(&src_dir);
+        if !in_content {
+            // (the copy in the content folder gets them on its first save)
+            transit.mark_all();
+        }
         progress(1.0);
         crate::render::profile::log_time(&format!("read {} tiles", tiles.len()), started);
         Ok(Document {
@@ -333,6 +341,7 @@ impl Document {
             traffic,
             descriptions,
             groups: Vec::new(),
+            transit,
         })
     }
 
@@ -384,6 +393,7 @@ impl Document {
             traffic: self.traffic.clone(),
             descriptions: Default::default(),
             groups: Vec::new(),
+            transit: self.transit.clone(),
         }
     }
 
@@ -396,7 +406,7 @@ impl Document {
     }
 
     pub fn is_dirty(&self) -> bool {
-        self.global_dirty || self.timetable.dirty || self.traffic.dirty || self.descriptions.dirty || self.tiles.values().any(|t| t.dirty)
+        self.global_dirty || self.timetable.dirty || self.traffic.dirty || self.descriptions.dirty || self.transit.dirty || self.tiles.values().any(|t| t.dirty)
     }
 
     /// A fresh IDCode for a new object or spline.

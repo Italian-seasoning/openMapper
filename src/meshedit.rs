@@ -83,6 +83,12 @@ pub struct Session {
     pub hover: Option<Hit>,
     /// Pick and box-select through the mesh, not only what is seen.
     pub xray: bool,
+    /// The object's own textures are shown in the edit view, under the shading tinted over
+    /// them with `shade` (0..1: 0 the textures as they are, 1 the plain shading).
+    pub tex_preview: bool,
+    pub shade: f32,
+    /// The object's `texture` folder (for the pictures of its materials).
+    pub tex_dir: std::path::PathBuf,
     /// Where the object stands, set each frame.
     pub place: DMat4,
     /// The mesh as a handle drag began.
@@ -113,6 +119,9 @@ impl Session {
             last: None,
             hover: None,
             xray: false,
+            tex_preview: false,
+            shade: 0.5,
+            tex_dir: editable::folder_of(roots, rel).0.join("texture"),
             place: DMat4::IDENTITY,
             drag_base: None,
             rev: 0,
@@ -269,6 +278,15 @@ impl Session {
                     }
                 }
                 best.map(|b| Hit::Edge(b.1))
+            }
+            SelectMode::Face if self.xray => {
+                // (x-ray: the face whose middle is nearest the cursor, near or far side; with
+                // none near, the first face under the cursor as ever)
+                let near = (0..mesh.faces.len())
+                    .filter_map(|fi| px(mesh.face_center(fi)).map(|s| ((s - view.pointer).length(), fi)))
+                    .filter(|(dd, _)| *dd < 14.0)
+                    .min_by(|a, b| a.0.total_cmp(&b.0));
+                near.map(|(_, f)| Hit::Face(f)).or(first_hit.map(|(_, f)| Hit::Face(f)))
             }
             SelectMode::Face => first_hit.map(|(_, f)| Hit::Face(f)),
         }
@@ -567,10 +585,27 @@ impl Session {
                     let m = self.src.model.materials.get(mesh.faces[fi].material as usize).map(|m| m.color).unwrap_or([0.8; 4]);
                     [0.35 + m[0] * 0.4, 0.35 + m[1] * 0.4, 0.35 + m[2] * 0.4]
                 };
-                let col = [base[0] * lit, base[1] * lit, base[2] * lit, 1.0];
+                // (x-ray: every face see-through, the picked ones a little less, so the far side
+                // of the mesh shows through the near)
+                let picked_face = active && sel_faces.contains(&fi);
+                let alpha = if self.xray {
+                    if picked_face { 0.6 } else if active { 0.22 } else { 0.12 }
+                } else if self.tex_preview {
+                    // (the textures show through the shading; the picked faces always show)
+                    if picked_face { self.shade.max(0.45) } else { self.shade }
+                } else {
+                    1.0
+                };
+                if alpha <= 0.004 {
+                    continue;
+                }
+                // (over the object's own textures the shading lies a hair toward the eye)
+                let hair = |p: DVec3| if self.tex_preview && !self.xray { p + (eye - p).normalize_or_zero() * view.metres_per_point(p) * 1.5 } else { p };
+                let col = [base[0] * lit, base[1] * lit, base[2] * lit, alpha];
+                let dst = if self.xray { &mut x.overlay } else { &mut x.solid };
                 for t in mesh.triangulate_face(fi) {
                     for k in t {
-                        x.solid.push(OverlayPoint { pos: self.world(mesh.positions[mesh.faces[fi].verts[k] as usize]), color: col });
+                        dst.push(OverlayPoint { pos: hair(self.world(mesh.positions[mesh.faces[fi].verts[k] as usize])), color: col });
                     }
                 }
             }
@@ -579,6 +614,8 @@ impl Session {
         // edges, lifted a little toward the eye so they are not hidden in their faces
         let lift = |p: DVec3, by: f64| p + (eye - p).normalize_or_zero() * by;
         let sel_edges = &self.sel.edges;
+        // (x-ray: edges and points are drawn over everything, not hidden behind the faces)
+        let marks = if self.xray { &mut x.overlay } else { &mut x.overlay_depth };
         let hover_edge = match self.hover {
             Some(Hit::Edge(e)) => Some(e),
             _ => None,
@@ -599,7 +636,7 @@ impl Session {
                 [0.05, 0.05, 0.06, 0.9]
             };
             let w = if sel_edges.contains(&k) || hover_edge == Some(k) { 2.4 } else { 1.4 };
-            gizmo::ribbon(&mut x.overlay_depth, eye, lift(pa, mpp * 2.0), lift(pb, mpp * 2.0), mpp * w, color);
+            gizmo::ribbon(marks, eye, lift(pa, mpp * 2.0), lift(pb, mpp * 2.0), mpp * w, color);
         }
         match self.mode {
             SelectMode::Vertex => {
@@ -609,7 +646,7 @@ impl Session {
                     let on = self.sel.verts.contains(&(i as u32));
                     let hot = self.hover == Some(Hit::Vert(i as u32));
                     let color = if hot { [1.0, 1.0, 1.0, 1.0] } else if on { [1.0, 0.62, 0.15, 1.0] } else { [0.02, 0.02, 0.02, 1.0] };
-                    square(&mut x.overlay_depth, &view.cam, lift(w, mpp * 3.0), mpp * if on || hot { 6.0 } else { 4.5 }, color);
+                    square(marks, &view.cam, lift(w, mpp * 3.0), mpp * if on || hot { 6.0 } else { 4.5 }, color);
                 }
             }
             SelectMode::Face => {
@@ -619,7 +656,7 @@ impl Session {
                     let on = self.sel.faces.contains(&fi);
                     let hot = self.hover == Some(Hit::Face(fi));
                     let color = if hot { [1.0, 1.0, 1.0, 1.0] } else if on { [1.0, 0.62, 0.15, 1.0] } else { [0.1, 0.1, 0.1, 0.9] };
-                    square(&mut x.overlay_depth, &view.cam, lift(w, mpp * 3.0), mpp * 4.0, color);
+                    square(marks, &view.cam, lift(w, mpp * 3.0), mpp * 4.0, color);
                 }
             }
             SelectMode::Edge => {}

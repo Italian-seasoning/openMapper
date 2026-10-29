@@ -2438,3 +2438,350 @@ Could not copy the photos	Impossibile copiare le foto
 Copying the photos	Copia delle foto
 Hold only the photos of the tiles near the camera	Tieni solo le foto dei tile vicino alla camera
 The others keep their photo in the map's folder, and are put up again when you go back to them.	Gli altri tengono la foto nella cartella della mappa e tornano quando ci si ritorna.
+A tram loop with two stations and its wire: save, then drive it in openOMSI with a tram of your own.	Un anello tranviario con due stazioni e il suo filo aereo: salva, poi percorrilo in openOMSI con un tram tuo.
+Transit kit made, files:	Kit di trasporto creato, file:
+The transit kit could not be made	Impossibile creare il kit di trasporto
+Transit network problems	Problemi della rete di trasporto
+Stations without their mode's lanes	Stazioni senza corsie della loro modalità
+Stations without their stop	Stazioni senza la loro fermata
+openOMSI's own reader finds this in the map's transport folder (stations, routes, wires, switches, depots, signals): a service it names is skipped, a section or a block left out. Open Map > Transit network to change it.	Il lettore di openOMSI trova questo nella cartella transport della mappa (stazioni, percorsi, linee aeree, scambi, depositi, segnali): un servizio citato viene saltato, una sezione o un blocco tralasciati. Apri Mappa > Rete di trasporto per modificarlo.
+openOMSI routes a service over the lanes of its mode within 25 m of each station (rails for trams, metro and trains, streets for buses and trolleybuses). This station has none of its modes' near, so its services cannot run. Move the stop next to the track or road, or lay one there.	openOMSI fa passare un servizio sulle corsie della sua modalità entro 25 m da ogni stazione (binari per tram, metropolitana e treni, strade per bus e filobus). Questa stazione non ha nessuna delle sue modalità vicino, quindi i suoi servizi non possono circolare. Sposta la fermata accanto al binario o alla strada, o posane uno lì.
+A station is found by the game among the map's stops: by its stop object, else by its name. This one's object is no stop on the map and no stop has its name, so the services through it are skipped. Pick its stop again in Map > Transit network, Stations.	Il gioco trova una stazione tra le fermate della mappa: dal suo oggetto fermata, altrimenti dal nome. L'oggetto di questa non è una fermata della mappa e nessuna fermata ha il suo nome, quindi i servizi che vi passano vengono saltati. Scegli di nuovo la sua fermata in Mappa > Rete di trasporto, Stazioni.
+station	stazione
+Transit network…	Rete di trasporto…
+The transport folder stays: openOMSI still reads its stations, routes and wires.	La cartella transport resta: openOMSI legge ancora le sue stazioni, i percorsi e le linee aeree.
+Remove it too	Rimuovi anche quella
+Start with a tram line: a loop of track under its wire, two stations and a route	Inizia con una linea tranviaria: un anello di binari sotto il filo aereo, due stazioni e un percorso
+Classic	Classica
+Runs in OMSI 2 and in openOMSI. Buses, and trams and trains as OMSI 2 has them.	Funziona in OMSI 2 e in openOMSI. Autobus, e tram e treni come li ha OMSI 2.
+Modern	Moderna
+openOMSI only. Real transit: stations, routes, overhead wire, third rail, depots and signal blocks.	Solo openOMSI. Trasporto pubblico vero: stazioni, percorsi, filo aereo, terza rotaia, depositi e sezioni di blocco.
+Made for (one or more):	Pensata per (uno o più):
+Choose at least one	Scegline almeno uno
+OMSI 2 cannot run a Modern map's routes, wires or blocks, and openOMSI runs only vehicles of its modes on it. openMapper's transit kit (tracks, wires, platforms, masts) is made in the content folder.	OMSI 2 non può far funzionare i percorsi, le linee aeree o i blocchi di una mappa moderna, e openOMSI vi fa circolare solo veicoli delle sue modalità. Il kit di trasporto di openMapper (binari, linee aeree, banchine, pali) viene creato nella cartella dei contenuti.
+Overview	Panoramica
+Stations	Stazioni
+Depots	Depositi
+Power	Alimentazione
+Switches and signals	Scambi e segnali
+Set it (else the game's default)	Imposta (altrimenti il valore predefinito del gioco)
+(not set)	(non impostato)
+Take it out	Togli
+Transit network	Rete di trasporto
+This is a Classic map.	Questa è una mappa classica.
+Stations, routes without tours, the overhead wire, the third rail, depots and signal blocks are openOMSI's (0.3.42 and later): make the map Modern in Map settings to give it a transit network. OMSI 2 cannot run them.	Stazioni, percorsi senza turni, il filo aereo, la terza rotaia, i depositi e le sezioni di blocco sono di openOMSI (0.3.42 e successivi): rendi la mappa moderna in Impostazioni mappa per darle una rete di trasporto. OMSI 2 non può gestirli.
+No stop there: click a stop object (a bus stop, or the kit's station stop)	Nessuna fermata lì: clicca un oggetto fermata (una fermata dell'autobus o la fermata di stazione del kit)
+Now click where the block ends	Ora clicca dove finisce il blocco
+Click the signal object itself	Clicca l'oggetto del segnale stesso
+Then click in the view	Poi clicca nella vista
+Modern map for	Mappa moderna per
+openOMSI runs only vehicles of these modes here; OMSI 2 cannot run the network. The modes are changed in Map settings.	openOMSI qui fa circolare solo veicoli di queste modalità; OMSI 2 non può gestire la rete. Le modalità si cambiano in Impostazioni mappa.
+Services	Servizi
+Track rules	Regole dei binari
+Overhead wire spans	Campate del filo aereo
+Third rail spans	Campate della terza rotaia
+Trolleybus wire spans	Campate della linea filoviaria
+Switches	Scambi
+Signals and blocks	Segnali e blocchi
+Problems	Problemi
+None: openOMSI reads the network as it is.	Nessuno: openOMSI legge la rete così com'è.
+error	errore
+warning	avviso
+Found by openOMSI's own reader of the transport folder, the texts as it writes them in its log.	Trovato dal lettore di openOMSI della cartella transport, i testi come li scrive nel suo log.
+openMapper's transit kit	Kit di trasporto di openMapper
+Tracks, platforms, wires and objects made by openMapper for Modern maps (OMSI 2 ships no metro, third rail or trolleybus wire). They are in the catalogue under openMapper; click one to place it.	Binari, banchine, linee aeree e oggetti creati da openMapper per le mappe moderne (OMSI 2 non ha metropolitana, terza rotaia né linea filoviaria). Sono nel catalogo sotto openMapper; cliccane uno per posizionarlo.
+Make the kit	Crea il kit
+A station is a stop object of the map (a bus stop, or the kit's station stop beside a track) with its platforms. openOMSI routes a service over the lanes of its mode within 25 m of each station.	Una stazione è un oggetto fermata della mappa (una fermata dell'autobus o la fermata di stazione del kit accanto a un binario) con le sue banchine. openOMSI fa passare un servizio sulle corsie della sua modalità entro 25 m da ogni stazione.
+A station for every stop of the map	Una stazione per ogni fermata della mappa
+Stops not yet a station become one, named as the stop, its modes from the tracks and roads beside it	Le fermate che non sono ancora una stazione lo diventano, col nome della fermata e le modalità dei binari e delle strade accanto
+New station	Nuova stazione
+Stations added:	Stazioni aggiunte:
+Choose a station	Scegli una stazione
+Id	Id
+Modes	Modalità
+Stop object	Oggetto fermata
+Pick	Scegli
+Place	Luogo
+Change to	Interscambio con
+Platforms	Banchine
+Side	Lato
+island	a isola
+both	entrambi i lati
+platform screen doors	porte di banchina
+Delete the station	Elimina la stazione
+A route is segments from station to station (the stops between them in order) and services over them: a branch, a short working or an express is another segment or service. openOMSI makes the timetable's tours from them and finds the way over the tracks itself.	Un percorso è fatto di segmenti da stazione a stazione (con le fermate intermedie in ordine) e di servizi su di essi: una diramazione, una corsa limitata o un espresso sono un altro segmento o servizio. openOMSI ne ricava i turni dell'orario e trova da solo la strada sui binari.
+Add two stations or more first (Stations)	Aggiungi prima due o più stazioni (Stazioni)
+New route	Nuovo percorso
+Segment	Segmento
+Stops between	Fermate intermedie
+Passed without stopping	Passate senza fermata
+Standing at a stop	Sosta in fermata
+Speed	Velocità
+Way back	Ritorno
+over the same segment	sullo stesso segmento
+another segment	un altro segmento
+Service	Servizio
+Segments in order	Segmenti in ordine
+From – to	Da – a
+Days	Giorni
+every day	ogni giorno
+weekends	nel fine settimana
+Saturdays	il sabato
+Sundays	la domenica
+turns back	inverte la marcia
+goes round a loop	percorre un anello
+goes to depot	rientra in deposito
+Cars in a train	Vetture per convoglio
+Every 10 minutes from 05:30 to 23:30 over all the route's segments	Ogni 10 minuti dalle 05:30 alle 23:30 su tutti i segmenti del percorso
+Departures of their own	Partenze proprie
+For a service without a headway: its departures, as 06:00 06:12 06:30.	Per un servizio senza cadenza: le sue partenze, come 06:00 06:12 06:30.
+Departures	Partenze
+A service's depot sends out its vehicles: its AI group (Traffic and AI) supplies them, and the first departure of the day leaves by its gate along the rails to the first station.	Il deposito di un servizio manda fuori i suoi veicoli: il suo gruppo IA (Traffico e IA) li fornisce, e la prima partenza del giorno esce dalla sua porta lungo i binari fino alla prima stazione.
+AI group	Gruppo IA
+Capacity	Capacità
+Its stop	La sua fermata
+Gates	Porte
+Add a gate	Aggiungi una porta
+has a turning loop	ha un anello di inversione
+Delete the depot	Elimina il deposito
+A gate needs a rail within 25 m and a way to the first station, or the trip starts at its station (the game's log says so).	Una porta ha bisogno di un binario entro 25 m e di una strada fino alla prima stazione, altrimenti la corsa parte dalla sua stazione (lo dice il log del gioco).
+Which tracks serve which mode and how they are powered: a rule matches a track type (a file pattern, * for any letters), a tile or one piece; later rules win. Without a rule openOMSI guesses from the type's name.	Quali binari servono quale modalità e come sono alimentati: una regola vale per un tipo di binario (un modello di file, * per qualsiasi lettera), un tile o un solo pezzo; le regole successive prevalgono. Senza regola openOMSI deduce dal nome del tipo.
+A rule for the selected track's type	Una regola per il tipo del binario selezionato
+Empty rule	Regola vuota
+(select a track in the view to make a rule for its type)	(seleziona un binario nella vista per creare una regola per il suo tipo)
+Track type	Tipo di binario
+Only on tile / piece	Solo su tile / pezzo
+id	id
+in the street	in sede stradale
+railway	ferrovia
+overhead wire	filo aereo
+third rail	terza rotaia
+diesel	diesel
+Tunnel	Galleria
+yes	sì
+no	no
+Gauge	Scartamento
+A map for buses alone has no line to power.	Una mappa solo per autobus non ha linee da alimentare.
+Third rail	Terza rotaia
+Trolleybus wire	Linea filoviaria
+Where the wire is, the player's tram or electric train needs a live section of it over its pantograph (dead sections and breaks stop the drive). Without spans openOMSI takes the current for granted. Spans are laid along the selected tracks.	Dove c'è il filo, il tram o il treno elettrico del giocatore ha bisogno di una sezione in tensione sopra il pantografo (sezioni senza tensione e interruzioni fermano la trazione). Senza campate openOMSI dà la corrente per scontata. Le campate si posano lungo i binari selezionati.
+The player's metro train needs a live section of third rail beside its shoe. The kit's metro tracks carry the rail itself; spans say where it is fed. Spans are laid along the selected tracks.	Il treno della metropolitana del giocatore ha bisogno di una sezione di terza rotaia in tensione accanto al suo pattino. I binari della metropolitana del kit portano già la rotaia; le campate dicono dove è alimentata. Le campate si posano lungo i binari selezionati.
+openOMSI's trolleybuses run on this wire (trolley.txt beside global.cfg): a pole is powered only on a pair fed by a substation. Spans are laid over each way's lane of the selected roads, with the wire splines that show them.	I filobus di openOMSI viaggiano su questa linea (trolley.txt accanto a global.cfg): un'asta è alimentata solo su una coppia servita da una sottostazione. Le campate si posano sopra la corsia di ogni senso delle strade selezionate, con le spline dei fili che le mostrano.
+The line	La linea
+Voltage	Tensione
+Current	Corrente
+direct	continua
+alternating	alternata
+Wire height	Altezza del filo
+Wire spacing	Distanza tra i fili
+Sections (each fed by a substation)	Sezioni (ognuna alimentata da una sottostazione)
+name	nome
+live	in tensione
+feeder Ω	alimentatore Ω
+Section	Sezione
+Spans	Campate
+one pair over the middle	una coppia al centro
+a pair over each 3.0 m lane	una coppia sopra ogni corsia da 3,0 m
+a pair over each 3.5 m lane	una coppia sopra ogni corsia da 3,5 m
+lay the wire splines too	posa anche le spline dei fili
+Wire the selected roads	Elettrifica le strade selezionate
+Electrify the selected tracks	Elettrifica i binari selezionati
+Take their spans off	Togli le loro campate
+(select roads in the view)	(seleziona strade nella vista)
+(select tracks in the view)	(seleziona binari nella vista)
+Their spans are taken off	Le loro campate sono state tolte
+Spans laid:	Campate posate:
+Gaps	Interruzioni
+Insulators	Isolatori
+Gap	Interruzione
+Insulator	Isolatore
+Frogs (wire switches)	Scambi aerei
+Where three spans meet: the contact plate before it sets it by the current the bus draws (power) or by its indicator.	Dove si incontrano tre campate: la piastra di contatto prima lo comanda secondo la corrente che assorbe il bus (trazione) o secondo la sua freccia.
+by current	a corrente
+by indicator	a freccia
+Frog	Scambio aereo
+A switch listed here holds while a train stands on it, goes back to its rest position, and can be thrown by hand only or locked by a signal. Switches not listed work as before.	Uno scambio elencato qui resta fermo finché un treno vi si trova sopra, torna alla posizione di riposo e può essere manovrato solo a mano o bloccato da un segnale. Gli scambi non elencati funzionano come prima.
+The selected switch objects	Gli oggetti scambio selezionati
+simple	semplice
+crossover	comunicazione
+double slip	inglese doppia
+diamond	intersezione
+scissors	comunicazione doppia
+rests straight	riposo in corretto tracciato
+rests diverging	riposo in deviata
+thrown by the route	comandato dal percorso
+by hand only	solo a mano
+interlocked	interbloccato
+diverging	deviata
+locked by	bloccato da
+Blocks	Blocchi
+A stretch of track that holds one AI train at a time, given by where it begins and ends on the rails; its signals show whether it is free. Blocks need the timetable's trains (the AI) to hold.	Un tratto di binario che accoglie un solo treno IA alla volta, dato da dove inizia e finisce sui binari; i suoi segnali mostrano se è libero. I blocchi trattengono solo i treni dell'orario (l'IA).
+Ends	Estremità
+Block	Blocco
+Click where the block begins	Clicca dove inizia il blocco
+Signals	Segnali
+A signal of the map tied to a block shows stop while the block is in use and go while it is free.	Un segnale della mappa legato a un blocco mostra via impedita finché il blocco è occupato e via libera quando è libero.
+main	principale
+distant	avviso
+block	di blocco
+shunting	di manovra
+speed	di velocità
+tram	tranviario
+Tram street track	Binario del tram in sede stradale
+Tram track on grass	Binario del tram su prato
+Railway track	Binario ferroviario
+Metro track	Binario della metropolitana
+Metro tunnel	Galleria della metropolitana
+Tram platform	Banchina del tram
+Metro side platform	Banchina laterale della metropolitana
+Metro island platform	Banchina a isola della metropolitana
+Railway side platform	Banchina laterale ferroviaria
+Railway island platform	Banchina a isola ferroviaria
+Trolleybus wires (one pair)	Linea filoviaria (una coppia)
+Trolleybus wires, 3.0 m lanes	Linea filoviaria, corsie da 3,0 m
+Trolleybus wires, 3.5 m lanes	Linea filoviaria, corsie da 3,5 m
+Catenary mast (arm right)	Palo del filo aereo (mensola a destra)
+Catenary mast (arm left)	Palo del filo aereo (mensola a sinistra)
+Trolleybus pole (arm right)	Palo filoviario (braccio a destra)
+Trolleybus pole (arm left)	Palo filoviario (braccio a sinistra)
+Metro sign	Insegna della metropolitana
+Platform shelter	Pensilina di banchina
+Buffer stop	Respingente
+Station stop	Fermata di stazione
+Bus	Autobus
+Tram	Tram
+Railway	Ferrovia
+Metro	Metropolitana
+Trolleybus	Filobus
+buses on the streets, stops at the kerb	autobus per le strade, fermate al cordolo
+street track under a contact wire, low platforms	binari in strada sotto un filo di contatto, banchine basse
+mainline track, stations with platforms, signals and blocks	binari di linea, stazioni con banchine, segnali e blocchi
+track with a third rail, tunnels, high platforms	binari con terza rotaia, gallerie, banchine alte
+buses under a pair of wires, frogs at junctions	autobus sotto una coppia di fili, scambi aerei agli incroci
+Depot Square	Piazza Deposito
+Park Gate	Porta del Parco
+Tram start	Partenza tram
+Loop line	Linea circolare
+A trolleybus junction under its wires with three stations: save, then drive it in openOMSI with a trolleybus of your own.	Un incrocio filoviario sotto i suoi fili con tre stazioni: salva, poi percorrilo in openOMSI con un filobus tuo.
+station stops:	fermate di stazione:
+stations:	stazioni:
+routes:	percorsi:
+Vehicles of other modes	Veicoli di altre modalità
+Services without a vehicle of their mode	Servizi senza un veicolo della loro modalità
+openOMSI runs only vehicles of a Modern map's modes on it. This vehicle of the AI lists is made for another mode (its file says so, or it is a depot's vehicle and its shape says so), so the game leaves it out. Change it in Map > Traffic and AI, or add its mode to the map in Map settings.	openOMSI fa circolare su una mappa moderna solo veicoli delle sue modalità. Questo veicolo degli elenchi IA è fatto per un'altra modalità (lo dice il suo file, oppure è un veicolo di un deposito e lo dice la sua forma), quindi il gioco lo omette. Cambialo in Mappa > Traffico e IA, oppure aggiungi la sua modalità alla mappa in Impostazioni mappa.
+A service of the transit network takes its vehicles from its depot's AI group (or names one vehicle file). That group has no vehicle of the route's mode, so nothing runs it. Give the depot an AI group with such vehicles (Map > Traffic and AI), or choose another depot.	Un servizio della rete di trasporto prende i veicoli dal gruppo IA del suo deposito (oppure indica un file di veicolo). Quel gruppo non ha alcun veicolo della modalità del percorso, quindi nessuno lo effettua. Dai al deposito un gruppo IA con veicoli simili (Mappa > Traffico e IA), oppure scegli un altro deposito.
+group	gruppo
+route	percorso
+its depot names no AI group	il suo deposito non indica alcun gruppo IA
+no vehicle of the mode in	nessun veicolo della modalità in
+Stations from OpenStreetMap	Stazioni da OpenStreetMap
+Metro tracks	Binari della metropolitana
+in tunnels too: build them with the kit's metro tunnel and cut the ground away (a Modern map)	anche in galleria: costruiscili con la galleria della metropolitana del kit e ritaglia il terreno (una mappa moderna)
+Start with a trolleybus line: a junction under its wires with frogs, three stations and two routes	Inizia con una linea filoviaria: un incrocio sotto i suoi fili con scambi aerei, tre stazioni e due percorsi
+Stations (tram, metro, railway)	Stazioni (tram, metropolitana, ferrovia)
+Each tram stop and station of the map's rail modes put with the kit's station stop beside the nearest track (within 25 m); every stop of the map then becomes a station of its transport folder	Ogni fermata del tram e stazione delle modalità su rotaia della mappa viene posata con la fermata di stazione del kit accanto al binario più vicino (entro 25 m); poi ogni fermata della mappa diventa una stazione della sua cartella transport
+Routes (tram, trolleybus, metro, railway)	Percorsi (tram, filobus, metropolitana, ferrovia)
+Each route of the map's modes through two or more of its stations a segment of its line, the line's service as often as OpenStreetMap says (else every 10 minutes), from 05:30 to 23:30; openOMSI finds the way over the tracks	Ogni percorso delle modalità della mappa che passa per due o più delle sue stazioni diventa un segmento della sua linea, con il servizio della linea frequente quanto dice OpenStreetMap (altrimenti ogni 10 minuti), dalle 05:30 alle 23:30; openOMSI trova da solo la strada sui binari
+no vehicle of it is installed	nessun suo veicolo è installato
+Its vehicles:	I suoi veicoli:
+(select roads in the view, and the junctions between them)	(seleziona strade nella vista, e gli incroci tra di esse)
+(select tracks in the view, and their switches)	(seleziona binari nella vista, e i loro scambi)
+A pair of wires over each way's kerb lane; through a selected junction only the lanes that join wired roads. Frogs are put where three wires meet.	Una coppia di fili sopra la corsia lungo il cordolo di ogni senso; attraverso un incrocio selezionato solo le corsie che collegano strade elettrificate. Dove si incontrano tre linee aeree si posano scambi aerei.
+The map's files are still being read	I file della mappa sono ancora in lettura
+West Gate	Porta Ovest
+East Market	Mercato Est
+North Park	Parco Nord
+Market line	Linea del Mercato
+Park line	Linea del Parco
+Trolleybus start	Partenza filobus
+frogs:	scambi aerei:
+places where more than three wires meet get no frog: wire fewer turns there	i punti dove si incontrano più di tre linee aeree restano senza scambio aereo: elettrifica meno svolte lì
+Track ends that do not meet	Estremità di binario che non si incontrano
+Two tracks run on into one another but their ends lie apart: the game joins rails only where their ends lie within 1.5 m, so no train or tram gets across (a route through there finds no way). "Fix" moves one end onto the other, arriving in line with it, and joins them.	Due binari proseguono l'uno nell'altro, ma le loro estremità sono distanti: il gioco unisce le rotaie solo dove le estremità sono entro 1,5 m, quindi nessun treno o tram passa (un percorso attraverso questo punto non trova strada). "Correggi" sposta un'estremità sull'altra, allineandola, e le unisce.
+tracks	binari
+Select the roads or tracks to build into the ground	Seleziona le strade o i binari da interrare
+Cutting	Trincea
+Cut and cover tunnel	Galleria artificiale
+Nothing to build into the ground	Niente da interrare
+Build into the ground	Interra
+The chain of the selected pieces lowered, with ramps at its ends. Cut: an open cutting with sloped banks. Cover: open ramps down to the portals and a tunnel under the ground between them (a shell of walls and roof, a portal at each mouth).	La catena dei tratti selezionati viene abbassata, con rampe alle estremità. Trincea: aperta, con scarpate inclinate. Galleria: rampe aperte che scendono fino ai portali e tra questi una galleria sotto il terreno (un guscio di pareti e volta, un portale a ogni imbocco).
+Cover (tunnel)	Copertura (galleria)
+Ramp gradient	Pendenza delle rampe
+Banks	Scarpate
+ m out per metre up	 m in fuori per metro in su
+Ramps	Rampe
+at the start	all'inizio
+at the end	alla fine
+A tunnel needs a depth of 6 m or more: shallower it stays an open cutting	Una galleria richiede una profondità di 6 m o più: meno profonda resta una trincea aperta
+Each ramp is about	Ogni rampa è lunga circa
+Pieces lowered:	Tratti abbassati:
+tunnel pieces:	tratti di galleria:
+portals:	portali:
+their overhead taken off: wire them again (Transit network, Power)	il loro filo aereo è stato rimosso: posalo di nuovo (Rete di trasporto, Alimentazione)
+Platforms at the stations	Banchine alle stazioni
+The kit's platform of each rail station's mode beside its track, on the side its stop stands, as long as its platform says	La banchina del kit per la modalità di ogni stazione ferroviaria accanto al suo binario, dal lato della sua fermata, lunga quanto indica la sua banchina
+Platforms laid:	Banchine posate:
+lay the wires, masts, poles and frogs too	posa anche fili, pali e scambi aerei
+Catenary mast	Palo del filo aereo
+Trolleybus pole	Palo filoviario
+Trolleybus frog	Scambio aereo filoviario
+Section insulator	Isolatore di sezione
+Lake	Lago
+River	Fiume
+Water level:	Livello dell'acqua:
+Click the shore round and close it on the first point (Enter closes too, right-click takes a point back). The ground inside is dug to a bed and the banks slope to the shore.	Fai clic intorno alla riva e chiudi sul primo punto (anche Invio chiude, il clic destro annulla un punto). Il terreno all'interno viene scavato fino a un fondale e le sponde scendono verso la riva.
+Click the river's middle line from its source on and finish on the last point (or Enter). Water in OMSI lies at one level for a tile: a river runs level.	Fai clic sulla linea centrale del fiume a partire dalla sorgente e termina sull'ultimo punto (o con Invio). In OMSI l'acqua si trova a un solo livello per tile: un fiume scorre in piano.
+Add as a ground texture	Aggiungi come texture del terreno
+A junction was not made: its roads are too short or too close together. Lengthen them or move the junctions apart.	Un incrocio non è stato creato: le sue strade sono troppo corte o troppo vicine tra loro. Allungale o allontana gli incroci.
+Display	Visualizzazione
+X-ray (Alt+Z): see and pick through the mesh	Raggi X (Alt+Z): vedi e seleziona attraverso la mesh
+Show the textures	Mostra le texture
+The object's own pictures under the editing shading	Le immagini proprie dell'oggetto sotto la colorazione di modifica
+Shading opacity	Opacità della colorazione
+0 %: the textures as they are; 100 %: the plain shading. The picture is renewed a moment after each change.	0 %: le texture così come sono; 100 %: la sola colorazione. L'immagine si aggiorna un istante dopo ogni modifica.
+Give this material to the selected faces	Assegna questo materiale alle facce selezionate
+Select faces to give them a material.	Seleziona delle facce per assegnare loro un materiale.
+Road markings	Segnaletica orizzontale
+Paint my own markings	Dipingi segnaletica personalizzata
+The maker paints the lines onto the roadway texture: pick a plain asphalt texture, or its own lines show too	Il generatore dipinge le linee sulla texture della carreggiata: scegli una texture di asfalto semplice, altrimenti compaiono anche le sue linee
+Standard for these lanes	Standard per queste corsie
+Add a line	Aggiungi una linea
+Across the roadway from its middle (right of the road's way is plus)	Attraverso la carreggiata dal centro (a destra del senso della strada è positivo)
+Solid	Continua
+Dashed	Tratteggiata
+Double solid	Doppia continua
+Solid and dashed	Continua e tratteggiata
+The line's width	Larghezza della linea
+Dash length	Lunghezza del tratto
+Gap between dashes	Distanza tra i tratti
+Draw road markings	Disegna la segnaletica stradale
+Pen	Penna
+Straight line	Linea retta
+Dashed line	Linea tratteggiata
+Rectangle	Rettangolo
+Arrow	Freccia
+Eraser	Gomma
+Pointing back	Rivolta all'indietro
+Snap to 5 cm	Aggancia a 5 cm
+Drag to draw. The picture is the roadway as the texture lies on it, up is the way of the road; it repeats along, so what leaves at the top comes in at the bottom.	Trascina per disegnare. L'immagine è la carreggiata così come la texture vi è applicata, l'alto è la direzione della strada; si ripete in lunghezza, quindi ciò che esce in alto rientra in basso.
+Pick a roadway texture first	Scegli prima una texture della carreggiata
+Draw by hand…	Disegna a mano…
+A drawing board with a pen, lines, arrows and an eraser: what you draw goes onto the roadway	Una tavola da disegno con penna, linee, frecce e gomma: ciò che disegni finisce sulla carreggiata
+a drawing is on the road	un disegno è sulla strada
+Painted line	Linea dipinta
+Stop line	Linea di arresto
+A wide solid line across a lane: draw it across the road	Una linea continua larga attraverso una corsia: disegnala di traverso alla strada
+Crossing	Attraversamento
+Zebra bars: draw it across the road, the bars lie along it	Strisce pedonali: disegnale di traverso alla strada, le strisce stanno lungo la strada
+Centre line	Linea di mezzeria
+A double yellow line	Una doppia linea gialla
+Lane line	Linea di corsia
+A white dashed line	Una linea bianca tratteggiata
+Double	Doppia
+Crossing (bars)	Attraversamento (strisce)
+A line's width (each line of a double one); a crossing's reach along the road	Larghezza di una linea (di ciascuna in una doppia); profondità di un attraversamento lungo la strada
+Bar	Striscia
+Dash	Tratto
+Draw with this line	Disegna con questa linea
+It is made as a spline type of the content folder (Splines\\openMapper\\marks) and chosen: draw it with Line, Arc or Curve, over the asphalt	Viene creata come tipo di spline della cartella dei contenuti (Splines\\openMapper\\marks) e scelta: disegnala con Linea, Arco o Curva sull'asfalto
+Painted line made: draw with it in the junction editor	Linea dipinta creata: disegna con essa nell'editor degli incroci

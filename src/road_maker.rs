@@ -17,6 +17,172 @@ use std::path::{Path, PathBuf};
 
 use serde::{Deserialize, Serialize};
 
+/// How a painted line along the road looks.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
+pub enum MarkStyle {
+    Solid,
+    Dashed,
+    /// Two solid lines side by side (no overtaking).
+    Double,
+    /// A solid line with a dashed one beside it (overtaking from the dashed side).
+    SolidDashed,
+}
+
+/// One painted line along the roadway: where, how it looks.
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(default)]
+pub struct Marking {
+    /// Across the roadway from its middle (m, right of the road's way positive).
+    pub x: f32,
+    pub style: MarkStyle,
+    pub color: [u8; 3],
+    /// The line's width (m); a double line's lines are this wide each.
+    pub width: f32,
+    /// A dashed line's dash and the gap after it (m).
+    pub dash: f32,
+    pub gap: f32,
+}
+
+pub const WHITE: [u8; 3] = [235, 235, 230];
+pub const YELLOW: [u8; 3] = [232, 190, 60];
+
+impl Default for Marking {
+    fn default() -> Self {
+        Marking { x: 0.0, style: MarkStyle::Solid, color: WHITE, width: 0.12, dash: 3.0, gap: 6.0 }
+    }
+}
+
+impl Marking {
+    /// The lines it is made of: across position, and whether dashed.
+    pub fn lines_at(&self) -> Vec<(f32, bool)> {
+        let off = (0.1 + self.width) / 2.0;
+        match self.style {
+            MarkStyle::Solid => vec![(self.x, false)],
+            MarkStyle::Dashed => vec![(self.x, true)],
+            MarkStyle::Double => vec![(self.x - off, false), (self.x + off, false)],
+            MarkStyle::SolidDashed => vec![(self.x - off, false), (self.x + off, true)],
+        }
+    }
+}
+
+/// What is drawn on the roadway by hand: a transparent picture laid over the roadway texture
+/// (`HAND_W` across, `HAND_H` along `mark_period` metres), drawn in metres and wrapping where
+/// the texture repeats so a stroke leaving at one end comes in at the other.
+#[derive(Debug, Clone, PartialEq)]
+pub struct Hand {
+    pub img: image::RgbaImage,
+}
+
+pub const HAND_W: u32 = 1024;
+pub const HAND_H: u32 = 512;
+
+impl Default for Hand {
+    fn default() -> Self {
+        Hand { img: image::RgbaImage::new(HAND_W, HAND_H) }
+    }
+}
+
+impl Hand {
+    pub fn is_empty(&self) -> bool {
+        self.img.pixels().all(|p| p.0[3] == 0)
+    }
+
+    /// Lay `color` over the pixels `cover(x_m, y_m)` says (0..1) within a box, wrapped along.
+    fn paint(&mut self, cw: f32, len: f32, lo: (f32, f32), hi: (f32, f32), color: [u8; 3], erase: bool, cover: &dyn Fn(f32, f32) -> f32) {
+        let (kx, ky) = (HAND_W as f32 / cw, HAND_H as f32 / len);
+        let x0 = ((lo.0 * kx).floor() as i64).max(0);
+        let x1 = ((hi.0 * kx).ceil() as i64).min(HAND_W as i64 - 1);
+        let y0 = (lo.1 * ky).floor() as i64;
+        let y1 = (hi.1 * ky).ceil() as i64;
+        for py in y0..=y1 {
+            let row = py.rem_euclid(HAND_H as i64) as u32;
+            for px in x0..=x1 {
+                let (mx, my) = ((px as f32 + 0.5) / kx, (py as f32 + 0.5) / ky);
+                let c = cover(mx, my).clamp(0.0, 1.0);
+                if c <= 0.0 {
+                    continue;
+                }
+                let p = self.img.get_pixel_mut(px as u32, row);
+                let a = p.0[3] as f32 / 255.0;
+                if erase {
+                    p.0[3] = (a * (1.0 - c) * 255.0).round() as u8;
+                } else {
+                    let out = c + a * (1.0 - c);
+                    for k in 0..3 {
+                        p.0[k] = ((color[k] as f32 * c + p.0[k] as f32 * a * (1.0 - c)) / out.max(1e-6)).round() as u8;
+                    }
+                    p.0[3] = (out * 255.0).round() as u8;
+                }
+            }
+        }
+    }
+
+    /// A line from `a` to `b` (m across from the left edge, m along), `r` m each side of it,
+    /// with round ends and soft edges.
+    pub fn stroke(&mut self, cw: f32, len: f32, a: (f32, f32), b: (f32, f32), r: f32, color: [u8; 3], erase: bool) {
+        let soft = (cw / HAND_W as f32).max(len / HAND_H as f32);
+        let (ab, l2) = ((b.0 - a.0, b.1 - a.1), ((b.0 - a.0).powi(2) + (b.1 - a.1).powi(2)).max(1e-9));
+        let dist = move |x: f32, y: f32| {
+            let t = (((x - a.0) * ab.0 + (y - a.1) * ab.1) / l2).clamp(0.0, 1.0);
+            ((x - (a.0 + ab.0 * t)).powi(2) + (y - (a.1 + ab.1 * t)).powi(2)).sqrt()
+        };
+        let cover = move |x: f32, y: f32| (r - dist(x, y)) / soft + 0.5;
+        let (lo, hi) = ((a.0.min(b.0) - r - soft, a.1.min(b.1) - r - soft), (a.0.max(b.0) + r + soft, a.1.max(b.1) + r + soft));
+        // (the stroke and its copies a texture length either way: what runs off one end comes in at the other)
+        self.paint(cw, len, lo, hi, color, erase, &|x, y| cover(x, y).max(cover(x, y + len)).max(cover(x, y - len)));
+    }
+
+    /// The polygon `pts` filled.
+    pub fn fill(&mut self, cw: f32, len: f32, pts: &[(f32, f32)], color: [u8; 3], erase: bool) {
+        if pts.len() < 3 {
+            return;
+        }
+        let inside = |x: f32, y: f32| {
+            let mut on = false;
+            for i in 0..pts.len() {
+                let (a, b) = (pts[i], pts[(i + 1) % pts.len()]);
+                if (a.1 > y) != (b.1 > y) && x < (b.0 - a.0) * (y - a.1) / (b.1 - a.1) + a.0 {
+                    on = !on;
+                }
+            }
+            on
+        };
+        let (kx, ky) = (HAND_W as f32 / cw, HAND_H as f32 / len);
+        let (hx, hy) = (0.25 / kx, 0.25 / ky);
+        let cover = |x: f32, y: f32| {
+            let mut n = 0;
+            for (dx, dy) in [(-hx, -hy), (hx, -hy), (-hx, hy), (hx, hy)] {
+                if inside(x + dx, y + dy) || inside(x + dx, y + dy + len) || inside(x + dx, y + dy - len) {
+                    n += 1;
+                }
+            }
+            n as f32 / 4.0
+        };
+        let lo = pts.iter().fold((f32::MAX, f32::MAX), |m, p| (m.0.min(p.0), m.1.min(p.1)));
+        let hi = pts.iter().fold((f32::MIN, f32::MIN), |m, p| (m.0.max(p.0), m.1.max(p.1)));
+        self.paint(cw, len, (lo.0 - 0.05, lo.1 - 0.05), (hi.0 + 0.05, hi.1 + 0.05), color, erase, &cover);
+    }
+
+    /// The drawing laid over `base` (same size).
+    pub fn over(&self, base: &mut image::RgbaImage) {
+        for (b, h) in base.pixels_mut().zip(self.img.pixels()) {
+            let a = h.0[3] as f32 / 255.0 * 0.97;
+            if a > 0.0 {
+                for k in 0..3 {
+                    b.0[k] = (b.0[k] as f32 + (h.0[k] as f32 - b.0[k] as f32) * a) as u8;
+                }
+            }
+        }
+    }
+}
+
+/// An arrow of the road marking's kind, pointing along (+y) from `at`: a shaft and a head, 3 m
+/// long; `back` turns it round.
+pub fn arrow_polygon(at: (f32, f32), back: bool) -> Vec<(f32, f32)> {
+    let s = if back { -1.0 } else { 1.0 };
+    [(-0.15, -1.5), (0.15, -1.5), (0.15, 0.3), (0.55, 0.3), (0.0, 1.5), (-0.55, 0.3), (-0.15, 0.3)].iter().map(|&(x, y)| (at.0 + x, at.1 + s * y)).collect()
+}
+
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(default)]
 pub struct RoadSpec {
@@ -44,11 +210,18 @@ pub struct RoadSpec {
     pub footway_tex: PathBuf,
     /// The middle strip's own texture (grass, paving); the roadway's runs on under it if none.
     pub median_tex: PathBuf,
+    /// The lines are painted by the maker (`markings`) onto the roadway texture, which should
+    /// be plain asphalt, instead of being the ones the texture has.
+    pub marked: bool,
+    pub markings: Vec<Marking>,
+    /// What is drawn over them by hand (kept beside the road as `<name>.marks.png`).
+    #[serde(skip)]
+    pub hand: Option<std::sync::Arc<Hand>>,
 }
 
 impl Default for RoadSpec {
     fn default() -> Self {
-        RoadSpec { name: String::new(), lanes_fwd: 1, lanes_back: 1, lane_width: 3.5, median: 0.0, median_raised: false, footway: 3.0, footway_right: None, kerb: 0.15, pocket: 0.0, roadway_tex: PathBuf::new(), footway_tex: PathBuf::new(), median_tex: PathBuf::new() }
+        RoadSpec { name: String::new(), lanes_fwd: 1, lanes_back: 1, lane_width: 3.5, median: 0.0, median_raised: false, footway: 3.0, footway_right: None, kerb: 0.15, pocket: 0.0, roadway_tex: PathBuf::new(), footway_tex: PathBuf::new(), median_tex: PathBuf::new(), marked: false, markings: Vec::new(), hand: None }
     }
 }
 
@@ -94,6 +267,128 @@ impl RoadSpec {
         self.roadway_width() + self.pocket + self.footway_left() + self.footway_right()
     }
 
+    /// Where a place across the roadway (m from its middle) lies in the roadway texture (0..1).
+    pub fn roadway_u(&self, x: f32) -> f32 {
+        let rw = self.roadway_width();
+        let (xl, mid) = (-rw / 2.0, self.median_width());
+        if mid > 0.0 && !self.median_tex.as_os_str().is_empty() {
+            let lanes_w = (rw - mid).max(0.1);
+            let u_mid = (-mid / 2.0 - xl) / lanes_w;
+            if x <= -mid / 2.0 {
+                (x - xl) / lanes_w
+            } else if x >= mid / 2.0 {
+                u_mid + (x - mid / 2.0) / lanes_w
+            } else {
+                u_mid
+            }
+        } else {
+            (x - xl) / rw.max(0.1)
+        }
+    }
+
+    /// How wide the roadway texture lies across the road (m): the roadway, less a middle strip
+    /// of its own, which has its own texture.
+    pub fn canvas_width(&self) -> f32 {
+        let own = self.median_width() > 0.0 && !self.median_tex.as_os_str().is_empty();
+        (self.roadway_width() - if own { self.median_width() } else { 0.0 }).max(0.5)
+    }
+
+    /// How far along the road the painted roadway texture runs before it repeats (m): about
+    /// ten, a whole number of the first dashed line's periods so its dashes go on unbroken.
+    pub fn mark_period(&self) -> f32 {
+        let first = self.markings.iter().filter(|m| matches!(m.style, MarkStyle::Dashed | MarkStyle::SolidDashed)).map(|m| (m.dash + m.gap).max(0.5)).next().unwrap_or(10.0);
+        (first * (10.0 / first).round().max(1.0)).clamp(2.0, 40.0)
+    }
+
+    /// A dashed line's period as painted: the texture's length holds a whole number of them.
+    pub fn dash_period(&self, m: &Marking) -> f32 {
+        let l = self.mark_period();
+        l / (l / (m.dash + m.gap).max(0.5)).round().max(1.0)
+    }
+
+    /// The v scale of the roadway's profiles: 0.1 (ten metres to the texture), or the painted
+    /// texture's own length.
+    fn roadway_v(&self) -> f32 {
+        if self.marked { 1.0 / self.mark_period() } else { 0.1 }
+    }
+
+    fn roadway_tex_name(&self) -> String {
+        if self.marked {
+            format!("{}_lines.bmp", self.file_stem())
+        } else {
+            self.roadway_tex.file_name().map(|f| f.to_string_lossy().to_string()).unwrap_or_default()
+        }
+    }
+
+    /// The markings a road like this usually has: edge lines, the middle (double yellow, or
+    /// white edge lines of the strip), dashed lines between lanes of one way.
+    pub fn standard_markings(&self) -> Vec<Marking> {
+        let (rw, mid, lw) = (self.roadway_width(), self.median_width(), self.lane_width);
+        let two_way = self.lanes_fwd > 0 && self.lanes_back > 0;
+        let line = |x: f32, style: MarkStyle, color: [u8; 3]| Marking { x, style, color, ..Default::default() };
+        let mut v = Vec::new();
+        let edge = if self.pocket > 0.0 { MarkStyle::Dashed } else { MarkStyle::Solid };
+        v.push(line(-rw / 2.0 + 0.2, MarkStyle::Solid, WHITE));
+        v.push(line(rw / 2.0 - 0.2, edge, WHITE));
+        if two_way {
+            let gap = mid / 2.0;
+            if mid <= 0.0 {
+                v.push(line(0.0, MarkStyle::Double, YELLOW));
+            } else {
+                v.push(line(-gap - 0.2, MarkStyle::Solid, WHITE));
+                v.push(line(gap + 0.2, MarkStyle::Solid, WHITE));
+            }
+            for i in 1..self.lanes_back {
+                v.push(line(-gap - i as f32 * lw, MarkStyle::Dashed, WHITE));
+            }
+            for i in 1..self.lanes_fwd {
+                v.push(line(gap + i as f32 * lw, MarkStyle::Dashed, WHITE));
+            }
+        } else {
+            for i in 1..(self.lanes_fwd + self.lanes_back) {
+                v.push(line(-rw / 2.0 + i as f32 * lw, MarkStyle::Dashed, WHITE));
+            }
+        }
+        v
+    }
+
+    /// The roadway texture with the markings painted on: the texture's picture stretched
+    /// across the roadway as it is laid (u across, v along `mark_period` metres), lines drawn
+    /// with soft edges.
+    pub fn painted_roadway(&self) -> Option<image::RgbaImage> {
+        let img = omsi_texture::decode_file(&self.roadway_tex).ok()?;
+        let src = image::RgbaImage::from_raw(img.width as u32, img.height as u32, img.rgba.clone())?;
+        let (w, h) = (1024usize, 512usize);
+        let mut buf = image::imageops::resize(&src, w as u32, h as u32, image::imageops::FilterType::Triangle);
+        let len = self.mark_period();
+        for m in &self.markings {
+            let period = self.dash_period(m);
+            for (x, dashed) in m.lines_at() {
+                let (a, b) = (self.roadway_u(x - m.width / 2.0) * w as f32, self.roadway_u(x + m.width / 2.0) * w as f32);
+                let (lo, hi) = (a.min(b), a.max(b));
+                for px in (lo.floor().max(0.0) as usize)..(hi.ceil().max(0.0) as usize).min(w) {
+                    let cover = (hi.min(px as f32 + 1.0) - lo.max(px as f32)).clamp(0.0, 1.0);
+                    if cover <= 0.0 {
+                        continue;
+                    }
+                    for py in 0..h {
+                        if dashed && ((py as f32 + 0.5) / h as f32 * len) % period >= m.dash.min(period) {
+                            continue;
+                        }
+                        let p = buf.get_pixel_mut(px as u32, py as u32);
+                        for c in 0..3 {
+                            p.0[c] = (p.0[c] as f32 + (m.color[c] as f32 - p.0[c] as f32) * cover * 0.96) as u8;
+                        }
+                    }
+                }
+            }
+        }
+        if let Some(h) = &self.hand {
+            h.over(&mut buf);
+        }
+        Some(buf)
+    }
+
     /// The file name it is saved as.
     pub fn file_stem(&self) -> String {
         let s: String = self.name.trim().chars().map(|c| if c.is_alphanumeric() || c == '-' || c == '_' { c } else { '_' }).collect();
@@ -113,6 +408,7 @@ impl RoadSpec {
         let mid = self.median_width();
         let own_median = mid > 0.0 && !self.median_tex.as_os_str().as_encoded_bytes().is_empty();
         let raised = mid > 0.0 && self.median_raised;
+        let rv = self.roadway_v();
         let mut s = format!("File created with openMapper\n\n[friendlyname]\n{}\n\n", self.name.trim());
         // the ground and the wheels: footways high, the roadway low
         let height = |s: &mut String, a: f32, b: f32, h: f32| {
@@ -135,7 +431,7 @@ impl RoadSpec {
             height(&mut s, xr2, xr2 + fr, side_h);
         }
         let name = |p: &Path| p.file_name().map(|f| f.to_string_lossy().to_string()).unwrap_or_default();
-        let _ = write!(s, "[texture]\n{}\n\n", name(&self.roadway_tex));
+        let _ = write!(s, "[texture]\n{}\n\n", self.roadway_tex_name());
         let side_tex = (fl > 0.0 || fr > 0.0 || raised) && !self.footway_tex.as_os_str().is_empty();
         let mut next = 1u32;
         let mut side_ix = 0;
@@ -162,15 +458,15 @@ impl RoadSpec {
             let lanes_w = rw - mid;
             let u_mid = ((-mid / 2.0 - xl) / lanes_w).clamp(0.0, 1.0);
             let y = |on: bool| if on { side_h } else { road_h };
-            profile(&mut s, 0, (xl, road_h, 0.0, 0.1), (-mid / 2.0, road_h, u_mid, 0.1));
-            profile(&mut s, 0, (mid / 2.0, road_h, u_mid, 0.1), (xr, road_h, 1.0, 0.1));
+            profile(&mut s, 0, (xl, road_h, 0.0, rv), (-mid / 2.0, road_h, u_mid, rv));
+            profile(&mut s, 0, (mid / 2.0, road_h, u_mid, rv), (xr, road_h, 1.0, rv));
             if raised && side_tex {
                 profile(&mut s, side_ix, (-mid / 2.0, road_h, 0.995, 0.2), (-mid / 2.0, y(true), 0.953, 0.2));
                 profile(&mut s, side_ix, (mid / 2.0, y(true), 0.953, 0.2), (mid / 2.0, road_h, 0.995, 0.2));
             }
             profile(&mut s, median_ix, (-mid / 2.0, y(raised), 0.0, mid), (mid / 2.0, y(raised), 1.0, mid));
         } else {
-            profile(&mut s, 0, (xl, road_h, 0.0, 0.1), (xr, road_h, 1.0, 0.1));
+            profile(&mut s, 0, (xl, road_h, 0.0, rv), (xr, road_h, 1.0, rv));
             if raised && side_tex {
                 profile(&mut s, side_ix, (-mid / 2.0, road_h, 0.995, 0.2), (-mid / 2.0, side_h, 0.953, 0.2));
                 profile(&mut s, side_ix, (-mid / 2.0, side_h, 0.953, 0.2), (mid / 2.0, side_h, 0.187, 0.2));
@@ -190,10 +486,13 @@ impl RoadSpec {
             }
         }
         if pw > 0.0 {
-            // the pocket: plain asphalt, the middle of the roadway's first lane
+            // the pocket: the roadway's own asphalt at the roadway's scale (u 1 is the roadway's
+            // width), centred on the middle of its first lane; squeezed into a sliver of the
+            // texture it would be a smear of one column across the whole bay
             let lanes = (self.lanes_fwd + self.lanes_back).max(1) as f32;
-            let u = 0.5 / lanes;
-            profile(&mut s, 0, (xr, road_h, u - 0.01, 0.1), (xr2, road_h, u + 0.01, 0.1));
+            let span = pw / rw.max(0.1);
+            let u0 = (0.5 / lanes - span / 2.0).clamp(0.0, (1.0 - span).max(0.0));
+            profile(&mut s, 0, (xr, road_h, u0, rv), (xr2, road_h, u0 + span, rv));
         }
         // lanes: against the road's way left of its middle, with it right of it (as OMSI 2's
         // roads are laid out where traffic keeps right; a left-hand map mirrors the spline)
@@ -242,17 +541,35 @@ impl RoadSpec {
             }
         }
         let stem = self.file_stem();
+        if self.marked {
+            let img = self.painted_roadway().ok_or_else(|| anyhow::anyhow!("the roadway texture could not be read"))?;
+            image::DynamicImage::ImageRgba8(img).to_rgb8().save(tex_dir.join(self.roadway_tex_name()))?;
+        }
         let path = dir.join(format!("{stem}.sli"));
         crate::doc::safe::write_atomic(&path, &omsi_cfg::encode_text(&self.sli().replace('\n', "\r\n")))?;
         // (the spec beside it, so the road can be opened in the maker again)
         crate::doc::safe::write_atomic(&dir.join(format!("{stem}.road.json")), serde_json::to_string_pretty(self)?.as_bytes())?;
+        let marks = dir.join(format!("{stem}.marks.png"));
+        match self.hand.as_ref().filter(|h| self.marked && !h.is_empty()) {
+            Some(h) => h.img.save(&marks)?,
+            None => {
+                let _ = std::fs::remove_file(&marks);
+            }
+        }
         Ok(format!("Splines\\openMapper\\{stem}.sli"))
     }
 
     /// The spec a road type was made with here, if it was.
     pub fn of(sli: &Path) -> Option<RoadSpec> {
         let json = sli.with_extension("road.json");
-        serde_json::from_str(&std::fs::read_to_string(json).ok()?).ok()
+        let mut spec: RoadSpec = serde_json::from_str(&std::fs::read_to_string(json).ok()?).ok()?;
+        if let Ok(img) = image::open(sli.with_extension("marks.png")) {
+            let img = img.to_rgba8();
+            if (img.width(), img.height()) == (HAND_W, HAND_H) {
+                spec.hand = Some(std::sync::Arc::new(Hand { img }));
+            }
+        }
+        Some(spec)
     }
 }
 
@@ -427,6 +744,70 @@ mod tests {
         assert_eq!(RoadSpec::of(&content.join("Splines/openMapper/Bay.sli")).unwrap(), spec);
         let old: RoadSpec = serde_json::from_str("{\"name\":\"x\"}").unwrap();
         assert_eq!(old.pocket, 0.0);
+        let _ = std::fs::remove_dir_all(dir);
+    }
+
+    #[test]
+    fn painted_markings_are_in_the_roadway_texture_and_the_road_reads_back() {
+        let dir = std::env::temp_dir().join(format!("om-roadmaker4-{}", std::process::id()));
+        std::fs::create_dir_all(&dir).unwrap();
+        let tex = dir.join("a.png");
+        image::RgbaImage::from_pixel(16, 16, image::Rgba([80, 80, 80, 255])).save(&tex).unwrap();
+        let mut spec = RoadSpec { name: "Lined".into(), roadway_tex: tex, marked: true, ..Default::default() };
+        spec.markings = spec.standard_markings();
+        // two-way, no strip: a double yellow in the middle and an edge line each side
+        assert!(spec.markings.iter().any(|m| m.style == MarkStyle::Double && m.x == 0.0));
+        let img = spec.painted_roadway().unwrap();
+        let at = (spec.roadway_u(0.11) * img.width() as f32) as u32;
+        let yellow_at_middle = (0..img.height()).any(|y| img.get_pixel(at, y).0[0] > 150);
+        // (the gap between the two lines is asphalt)
+        assert_eq!(img.get_pixel(img.width() / 2, 3).0[0], 80);
+        assert!(yellow_at_middle);
+        // (and plain asphalt where no line is)
+        assert_eq!(img.get_pixel(img.width() / 4, 3).0[0], 80);
+        let content = dir.join("content");
+        spec.write(&content).unwrap();
+        assert!(content.join("Splines/openMapper/texture/Lined_lines.bmp").is_file());
+        let s = omsi_scenery::Spline::load(&content.join("Splines/openMapper/Lined.sli")).unwrap();
+        assert!(s.textures[0].file.eq_ignore_ascii_case("Lined_lines.bmp"), "{}", s.textures[0].file);
+        assert_eq!(RoadSpec::of(&content.join("Splines/openMapper/Lined.sli")).unwrap(), spec);
+        // a dashed line's dashes come a whole number to the texture
+        let d = Marking { style: MarkStyle::Dashed, dash: 3.0, gap: 6.0, ..Default::default() };
+        let spec2 = RoadSpec { markings: vec![d.clone()], ..spec.clone() };
+        assert!((spec2.mark_period() / spec2.dash_period(&d) - (spec2.mark_period() / spec2.dash_period(&d)).round()).abs() < 1e-4);
+        let _ = std::fs::remove_dir_all(dir);
+    }
+
+    #[test]
+    fn a_drawing_by_hand_wraps_along_the_road_and_is_kept_with_the_road() {
+        let dir = std::env::temp_dir().join(format!("om-roadmaker5-{}", std::process::id()));
+        std::fs::create_dir_all(&dir).unwrap();
+        let tex = dir.join("a.png");
+        image::RgbaImage::from_pixel(16, 16, image::Rgba([80, 80, 80, 255])).save(&tex).unwrap();
+        let mut spec = RoadSpec { name: "Drawn".into(), roadway_tex: tex, marked: true, ..Default::default() };
+        let (cw, len) = (spec.canvas_width(), spec.mark_period());
+        let mut h = Hand::default();
+        assert!(h.is_empty());
+        // a stroke across the end of the texture comes in again at its start
+        h.stroke(cw, len, (3.0, len - 0.1), (3.0, len + 1.0), 0.1, YELLOW, false);
+        let px = (3.0 / cw * HAND_W as f32) as u32;
+        assert!(h.img.get_pixel(px, HAND_H - 3).0[3] > 200);
+        assert!(h.img.get_pixel(px, 20).0[3] > 200, "wrapped");
+        assert_eq!(h.img.get_pixel(px, HAND_H / 2).0[3], 0);
+        // an eraser takes it away
+        h.stroke(cw, len, (3.0, 0.0), (3.0, 0.3), 0.3, WHITE, true);
+        assert_eq!(h.img.get_pixel(px, 20).0[3], 0);
+        // a filled arrow is there
+        h.fill(cw, len, &arrow_polygon((5.0, 5.0), false), WHITE, false);
+        assert!(h.img.get_pixel((5.0 / cw * HAND_W as f32) as u32, (5.0 / len * HAND_H as f32) as u32).0[3] > 200);
+        spec.hand = Some(std::sync::Arc::new(h));
+        // it lies over the texture, and is read back with the road
+        let img = spec.painted_roadway().unwrap();
+        assert!(img.get_pixel(px, 41).0[0] > 150);
+        let content = dir.join("content");
+        spec.write(&content).unwrap();
+        let back = RoadSpec::of(&content.join("Splines/openMapper/Drawn.sli")).unwrap();
+        assert_eq!(back.hand, spec.hand);
         let _ = std::fs::remove_dir_all(dir);
     }
 

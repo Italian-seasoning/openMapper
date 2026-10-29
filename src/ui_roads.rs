@@ -10,7 +10,7 @@ use crate::i18n::tr;
 use crate::icons::{self, Icon};
 use crate::install::Roots;
 use crate::library::{Category, Kind, Library};
-use crate::road_maker::RoadSpec;
+use crate::road_maker::{MarkStyle, Marking, RoadSpec};
 use crate::ui::Action;
 use crate::ui_tex::{quad, TexCache};
 
@@ -27,6 +27,8 @@ pub struct RoadTypes {
     /// The road's textures as the previews show them.
     pics: TexCache,
     error: Option<String>,
+    /// The drawing board for the markings.
+    canvas: crate::ui_markpaint::MarkCanvas,
 }
 
 /// The pictures of the spline texture folders: what roads are painted with.
@@ -133,7 +135,7 @@ fn plan(ui: &mut egui::Ui, s: &RoadSpec, tex: &mut TexCache) {
         for i in 0..n {
             let l = first + i as f32 * s.lane_width;
             arrow(l + s.lane_width / 2.0, up, Color32::from_rgb(if up { 232 } else { 110 }, if up { 170 } else { 180 }, if up { 60 } else { 240 }));
-            if i > 0 {
+            if i > 0 && !s.marked {
                 dash(l, white, false);
             }
         }
@@ -141,15 +143,34 @@ fn plan(ui: &mut egui::Ui, s: &RoadSpec, tex: &mut TexCache) {
     if two_way {
         lanes(-gap - s.lanes_back as f32 * s.lane_width, s.lanes_back, false);
         lanes(gap, s.lanes_fwd, true);
-        if mid <= 0.0 {
+        if mid <= 0.0 && !s.marked {
             dash(-0.1, yellow, true);
             dash(0.1, yellow, true);
         }
     } else {
         lanes(-rw / 2.0, s.lanes_fwd + s.lanes_back, s.lanes_fwd > 0);
     }
-    if s.pocket > 0.0 {
+    if s.marked {
+        // the painted lines, as the texture will have them (dashes at their real length)
+        for m in &s.markings {
+            let col = Color32::from_rgb(m.color[0], m.color[1], m.color[2]);
+            let period = s.dash_period(m);
+            for (lx, dashed) in m.lines_at() {
+                let mut y = bottom;
+                while y > top {
+                    let y2 = if dashed { (y - m.dash.min(period) * k).max(top) } else { top };
+                    p.line_segment([Pos2::new(x(lx), y), Pos2::new(x(lx), y2)], Stroke::new((m.width * k).max(1.0), col));
+                    if !dashed {
+                        break;
+                    }
+                    y -= period * k;
+                }
+            }
+        }
+    } else if s.pocket > 0.0 {
         dash(rw / 2.0, white, false);
+    }
+    if s.pocket > 0.0 {
         arrow(rw / 2.0 + s.pocket / 2.0, true, Color32::from_rgb(120, 200, 150));
         p.text(Pos2::new(x(rw / 2.0 + s.pocket / 2.0), (top + bottom) / 2.0), egui::Align2::CENTER_CENTER, "BUS", egui::FontId::proportional(11.0), Color32::from_rgb(120, 200, 150));
     }
@@ -239,6 +260,27 @@ fn section(ui: &mut egui::Ui, s: &RoadSpec, tex: &mut TexCache) {
 
 impl RoadTypes {
     /// The window open on a new road type in the maker (a check hook).
+    /// The maker's road with the standard markings painted (for checks).
+    pub fn mark_maker(&mut self) {
+        if let Some(s) = &mut self.maker {
+            s.marked = true;
+            s.markings = s.standard_markings();
+        }
+    }
+
+    /// The drawing board open on the maker's road with a few strokes drawn (for checks).
+    pub fn mark_canvas_sample(&mut self) {
+        if let Some(s) = &mut self.maker {
+            let (cw, len) = (s.canvas_width(), s.mark_period());
+            let mut h = crate::road_maker::Hand::default();
+            h.stroke(cw, len, (1.0, 1.0), (3.0, 8.0), 0.1, crate::road_maker::YELLOW, false);
+            h.fill(cw, len, &crate::road_maker::arrow_polygon((cw * 0.75, 5.0), false), crate::road_maker::WHITE, false);
+            h.stroke(cw, len, (cw - 0.5, 9.0), (cw - 0.5, 11.5), 0.15, crate::road_maker::WHITE, false);
+            s.hand = Some(std::sync::Arc::new(h));
+            self.canvas.open = true;
+        }
+    }
+
     pub fn open_maker(&mut self, pocket: bool) {
         self.open = true;
         self.maker = Some(RoadSpec { name: tr("My road", "Моя дорога").into(), pocket: if pocket { 3.0 } else { 0.0 }, ..Default::default() });
@@ -279,7 +321,7 @@ impl RoadTypes {
                 ui.vertical(|ui| {
                     let mut cancel = false;
                     if let Some(spec) = &mut self.maker {
-                        Self::maker_ui(ui, spec, &mut self.textures, &mut self.tex_search, roots, &mut self.pics);
+                        Self::maker_ui(ui, spec, &mut self.textures, &mut self.tex_search, roots, &mut self.pics, &mut self.canvas.open);
                         ui.add_space(6.0);
                         ui.horizontal(|ui| {
                             if ui.button(icons::labelled(Icon::CheckCircle, tr("Create the road type", "Создать тип дороги"))).clicked() {
@@ -382,10 +424,14 @@ impl RoadTypes {
                 });
             });
         });
+        match &mut self.maker {
+            Some(spec) => self.canvas.window(ctx, spec),
+            None => self.canvas.open = false,
+        }
         self.open = open;
     }
 
-    fn maker_ui(ui: &mut egui::Ui, s: &mut RoadSpec, textures: &mut Option<Vec<PathBuf>>, search: &mut [String; 3], roots: &Roots, tex: &mut TexCache) {
+    fn maker_ui(ui: &mut egui::Ui, s: &mut RoadSpec, textures: &mut Option<Vec<PathBuf>>, search: &mut [String; 3], roots: &Roots, tex: &mut TexCache, canvas: &mut bool) {
         ui.label(RichText::new(tr("Road maker", "Конструктор дороги")).strong().color(Color32::WHITE));
         ui.horizontal(|ui| {
             ui.label(tr("Start from", "Взять за основу"));
@@ -476,6 +522,61 @@ impl RoadTypes {
                 }
             });
         }
+        egui::CollapsingHeader::new(RichText::new(tr("Road markings", "Дорожная разметка")).strong().color(Color32::WHITE)).id_salt("road markings").default_open(s.marked).show(ui, |ui| {
+            ui.checkbox(&mut s.marked, tr("Paint my own markings", "Нарисовать свою разметку")).on_hover_text(tr("The maker paints the lines onto the roadway texture: pick a plain asphalt texture, or its own lines show too", "Конструктор рисует линии на текстуре проезжей части: берите гладкий асфальт, иначе проступят и его собственные линии"));
+            if !s.marked {
+                return;
+            }
+            ui.horizontal(|ui| {
+                if ui.button(tr("Standard for these lanes", "Типовая для этих полос")).clicked() {
+                    s.markings = s.standard_markings();
+                }
+                if ui.button(tr("Add a line", "Добавить линию")).clicked() {
+                    s.markings.push(Marking::default());
+                }
+                if ui.button(tr("Clear", "Очистить")).clicked() {
+                    s.markings.clear();
+                }
+            });
+            ui.horizontal(|ui| {
+                if ui.button(icons::labelled(Icon::Paint, tr("Draw by hand…", "Рисовать вручную…"))).on_hover_text(tr("A drawing board with a pen, lines, arrows and an eraser: what you draw goes onto the roadway", "Холст с кистью, линиями, стрелками и ластиком: нарисованное ложится на проезжую часть")).clicked() {
+                    *canvas = true;
+                    s.marked = true;
+                }
+                if s.hand.as_ref().map(|h| !h.is_empty()).unwrap_or(false) {
+                    ui.label(RichText::new(tr("a drawing is on the road", "на дороге есть рисунок")).small().color(Color32::from_gray(150)));
+                }
+            });
+            let half = s.roadway_width() / 2.0;
+            let mut remove = None;
+            for (i, m) in s.markings.iter_mut().enumerate() {
+                ui.horizontal_wrapped(|ui| {
+                    ui.add(egui::DragValue::new(&mut m.x).speed(0.05).range(-half..=half).fixed_decimals(2).suffix(" m")).on_hover_text(tr("Across the roadway from its middle (right of the road's way is plus)", "Поперёк проезжей части от середины (справа по ходу дороги: плюс)"));
+                    egui::ComboBox::from_id_salt(("mark style", i)).width(110.0).selected_text(match m.style {
+                        MarkStyle::Solid => tr("Solid", "Сплошная"),
+                        MarkStyle::Dashed => tr("Dashed", "Прерывистая"),
+                        MarkStyle::Double => tr("Double solid", "Двойная сплошная"),
+                        MarkStyle::SolidDashed => tr("Solid and dashed", "Сплошная и прерывистая"),
+                    }).show_ui(ui, |ui| {
+                        for (st, label) in [(MarkStyle::Solid, tr("Solid", "Сплошная")), (MarkStyle::Dashed, tr("Dashed", "Прерывистая")), (MarkStyle::Double, tr("Double solid", "Двойная сплошная")), (MarkStyle::SolidDashed, tr("Solid and dashed", "Сплошная и прерывистая"))] {
+                            ui.selectable_value(&mut m.style, st, label);
+                        }
+                    });
+                    ui.color_edit_button_srgb(&mut m.color);
+                    ui.add(egui::DragValue::new(&mut m.width).speed(0.01).range(0.05..=0.6).fixed_decimals(2).suffix(" m")).on_hover_text(tr("The line's width", "Ширина линии"));
+                    if matches!(m.style, MarkStyle::Dashed | MarkStyle::SolidDashed) {
+                        ui.add(egui::DragValue::new(&mut m.dash).speed(0.1).range(0.5..=12.0).fixed_decimals(1).suffix(" m")).on_hover_text(tr("Dash length", "Длина штриха"));
+                        ui.add(egui::DragValue::new(&mut m.gap).speed(0.1).range(0.5..=20.0).fixed_decimals(1).suffix(" m")).on_hover_text(tr("Gap between dashes", "Промежуток между штрихами"));
+                    }
+                    if ui.small_button("×").clicked() {
+                        remove = Some(i);
+                    }
+                });
+            }
+            if let Some(i) = remove {
+                s.markings.remove(i);
+            }
+        });
         ui.label(RichText::new(tr("The roadway texture is laid once across all its lanes (as OMSI 2's lane textures are painted: pick one with as many lanes); the footway texture's right end is the kerb.", "Текстура проезжей части ложится один раз поперёк всех полос (как нарисованы полосные текстуры OMSI 2: берите с тем же числом полос); правый край текстуры тротуара: бордюр.")).small().color(Color32::from_gray(140)));
     }
 }

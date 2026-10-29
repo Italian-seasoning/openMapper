@@ -1,7 +1,9 @@
-//! Bus lines from OpenStreetMap: each `route=bus` relation of the map's place (one way of a
+//! Lines from OpenStreetMap: each `route=bus` relation of the map's place (one way of a
 //! line, its stops in order) becomes a trip of its line through the map's stops nearest to
 //! the relation's, the way found along the roads; a line with a trip each way gets a tour
-//! there and back all day, and the map a depot when it has none.
+//! there and back all day, and the map a depot when it has none. The trolleybus, tram,
+//! light rail, metro and train routes come too: a Modern map makes routes of its transport
+//! folder of them (`crate::transit::osm`).
 
 use std::collections::HashMap;
 
@@ -12,17 +14,47 @@ use crate::doc::{tile_origin, Document, TileKey};
 use crate::timetable::network::{Files, Network};
 use crate::timetable::{route, ALL_DAYS};
 
-/// One way of a line: its number, its name and its stops in order (latitude, longitude).
+/// One way of a line: its number, its name and its stops in order (latitude, longitude),
+/// what it is (bus, trolleybus, tram, metro, railway) and how often it runs (minutes, OSM's
+/// `interval`).
 #[derive(Clone, Debug)]
 pub struct Route {
     pub number: String,
     pub name: String,
     pub stops: Vec<(f64, f64)>,
+    pub mode: crate::transit::Mode,
+    pub interval: Option<f32>,
 }
 
-/// The query for the bus routes within a box, with the nodes they stop at.
+/// The query for the routes within a box, with the nodes they stop at.
 pub fn query(bbox: [f64; 4]) -> String {
-    format!("[out:json][timeout:90];rel[\"route\"=\"bus\"]({:.6},{:.6},{:.6},{:.6})->.r;.r out body;node(r.r);out;", bbox[0], bbox[1], bbox[2], bbox[3])
+    format!("[out:json][timeout:90];rel[\"route\"~\"^(bus|trolleybus|tram|light_rail|subway|train)$\"]({:.6},{:.6},{:.6},{:.6})->.r;.r out body;node(r.r);out;", bbox[0], bbox[1], bbox[2], bbox[3])
+}
+
+/// The mode of a `route=` value.
+fn mode_of(route: &str) -> Option<crate::transit::Mode> {
+    use crate::transit::Mode;
+    match route {
+        "bus" => Some(Mode::Bus),
+        "trolleybus" => Some(Mode::Trolleybus),
+        "tram" | "light_rail" => Some(Mode::Tram),
+        "subway" => Some(Mode::Metro),
+        "train" => Some(Mode::Railway),
+        _ => None,
+    }
+}
+
+/// Minutes of an `interval` tag: `10`, `00:10`, `0:07:30`, `5-10` (the first).
+pub fn interval_minutes(v: &str) -> Option<f32> {
+    let v = v.split([';', '-', ',']).next()?.trim();
+    let parts: Vec<f32> = v.split(':').map(|p| p.trim().parse::<f32>()).collect::<Result<_, _>>().ok()?;
+    let m = match parts.as_slice() {
+        [m] => *m,
+        [h, m] => h * 60.0 + m,
+        [h, m, s] => h * 60.0 + m + s / 60.0,
+        _ => return None,
+    };
+    (m > 0.0 && m < 24.0 * 60.0).then_some(m)
 }
 
 /// The routes of an answer: the platforms in order (or the stop positions, for a route
@@ -50,8 +82,9 @@ pub fn parse(body: &str) -> Result<Vec<Route>, String> {
         let platforms = pick("platform");
         let stops = if platforms.len() >= 2 { platforms } else { pick("stop") };
         let number = if tag("ref").is_empty() { tag("name") } else { tag("ref") };
+        let Some(mode) = mode_of(&tag("route")) else { continue };
         if stops.len() >= 2 && !number.is_empty() {
-            out.push(Route { number, name: tag("name"), stops });
+            out.push(Route { number, name: tag("name"), stops, mode, interval: interval_minutes(&tag("interval")) });
         }
     }
     Ok(out)
@@ -187,5 +220,7 @@ mod tests {
         assert_eq!(r[0].number, "130");
         assert_eq!(r[0].stops, vec![(2.0, 2.0), (3.0, 3.0)]);
         assert_eq!(file_name("Bus 130: A => B"), "Bus 130- A => B".replace(['>'], "-"));
+        assert_eq!(r[0].mode, crate::transit::Mode::Bus);
+        assert_eq!((interval_minutes("10"), interval_minutes("00:07:30"), interval_minutes("5-10"), interval_minutes("never")), (Some(10.0), Some(7.5), Some(5.0), None));
     }
 }

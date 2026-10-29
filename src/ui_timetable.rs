@@ -400,7 +400,7 @@ impl TimetableUi {
     fn pick_from_view(&mut self, ed: &mut Editor) {
         ed.pick_mode = self.picking;
         if !self.picking {
-            ed.picked = None;
+            // (what was picked may be the Transit network window's)
             return;
         }
         if ed.tool != Tool::Select {

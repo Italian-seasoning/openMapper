@@ -654,6 +654,8 @@ pub struct Resolved {
     pub pieces: Vec<Piece>,
     /// The roads that end at each junction, for its plate.
     pub plates: Vec<Vec<crate::junction::PlateArm>>,
+    /// Junctions found but not made: the roads are too short or too close for the room one needs.
+    pub skipped: usize,
 }
 
 /// Something of a piece to cut away: the stretch `from..to` along it.
@@ -708,7 +710,7 @@ impl Layout {
     /// place, the roads are cut back by the room the junction needs, and the roads that end at
     /// it are given for its plate. A junction whose roads leave too little is not made.
     pub fn resolve(&self, is_road: &dyn Fn(&str) -> bool, half: &dyn Fn(&str) -> f64) -> Resolved {
-        let plain = Resolved { pieces: self.pieces.clone(), plates: Vec::new() };
+        let plain = Resolved { pieces: self.pieces.clone(), plates: Vec::new(), skipped: 0 };
         if !self.build.plate {
             return plain;
         }
@@ -718,6 +720,13 @@ impl Layout {
         let head_diff = |a: f64, b: f64| (a - b + 180.0).rem_euclid(360.0) - 180.0;
         // each junction: where the roads cut and by how much, as (piece, from, to) with its centre
         let mut events: Vec<Vec<Cut>> = Vec::new();
+        let mut skipped = 0usize;
+        // the room a junction takes, kept to what the roads have: a short road gives a smaller
+        // junction (down to the least that holds the kerbs), not none
+        let fit = |r: f64, room: f64, wide: f64| -> Option<f64> {
+            let r = r.min(room);
+            (r >= wide + 2.5).then_some(r)
+        };
         let mut used_ends: Vec<(usize, bool)> = Vec::new();
         // roads running into another's middle (T junctions)
         for (xi, &i) in roads_ix.iter().enumerate() {
@@ -735,9 +744,13 @@ impl Layout {
                     let hj = self.pieces[j].at(aj).1;
                     let r = crate::junction::radius_at(&[hw(i), hw(j)], head_diff(h, hj));
                     // (at the other road's own end the two are only joined)
-                    if aj < r * 0.5 || aj > lj - r * 0.5 || li < r + 0.5 {
+                    if aj < 1.5 || aj > lj - 1.5 {
                         continue;
                     }
+                    let Some(r) = fit(r, (aj.min(lj - aj) - 0.6).min(li - 0.6), hw(i).max(hw(j))) else {
+                        skipped += 1;
+                        continue;
+                    };
                     let own = if at_end { (i, li - r, li) } else { (i, 0.0, r) };
                     events.push(vec![own, (j, aj - r, aj + r)]);
                     used_ends.push((i, at_end));
@@ -755,9 +768,11 @@ impl Layout {
                     }
                     let _ = pt;
                     let r = crate::junction::radius_at(&[hw(i), hw(j)], head_diff(self.pieces[i].at(ai).1, self.pieces[j].at(aj).1));
-                    if ai < r * 0.5 || ai > li - r * 0.5 || aj < r * 0.5 || aj > lj - r * 0.5 {
+                    let room = (ai.min(li - ai)).min(aj.min(lj - aj)) - 0.6;
+                    let Some(r) = fit(r, room, hw(i).max(hw(j))) else {
+                        skipped += 1;
                         continue;
-                    }
+                    };
                     events.push(vec![(i, ai - r, ai + r), (j, aj - r, aj + r)]);
                 }
             }
@@ -787,14 +802,16 @@ impl Layout {
             let sharp = (0..hs.len()).map(|k| (hs[(k + 1) % hs.len()] - hs[k]).rem_euclid(360.0)).fold(360.0, f64::min);
             let r = crate::junction::radius_at(&group.iter().map(|&y| hw(ends[y].0)).collect::<Vec<_>>(), sharp);
             let mut cuts = Vec::new();
+            let shortest = group.iter().map(|&y| self.pieces[ends[y].0].length()).fold(f64::MAX, f64::min);
+            let widest = group.iter().map(|&y| hw(ends[y].0)).fold(0.0, f64::max);
+            let Some(r) = fit(r, shortest - 0.6, widest) else {
+                skipped += 1;
+                continue;
+            };
             for &y in &group {
                 taken[y] = true;
                 let (i, at_end, _, _) = ends[y];
                 let l = self.pieces[i].length();
-                if l < r + 0.5 {
-                    cuts.clear();
-                    break;
-                }
                 cuts.push(if at_end { (i, l - r, l) } else { (i, 0.0, r) });
             }
             if !cuts.is_empty() {
@@ -842,7 +859,7 @@ impl Layout {
                 at = at.max(hi);
             }
         }
-        Resolved { pieces, plates }
+        Resolved { pieces, plates, skipped }
     }
 }
 

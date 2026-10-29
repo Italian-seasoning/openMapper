@@ -15,6 +15,7 @@ use crate::i18n::tr;
 use crate::icons::{self, Icon};
 use crate::library::Library;
 use crate::osm::{self, Class};
+use crate::transit::Mode;
 use crate::ui::TEXT_DIM;
 
 pub struct OsmUi {
@@ -39,6 +40,10 @@ pub struct OsmUi {
     with_lines: bool,
     /// Stops put down too, with this stop object.
     with_stops: bool,
+    /// A Modern map's stations (tram, metro, railway) put beside the rails, and its routes of
+    /// other modes than the bus made routes of its transport folder.
+    with_stations: bool,
+    with_transit: bool,
     stop_type: Option<String>,
     /// The roads made of them for the map as it is (its tiles' count when made).
     roads: Option<(usize, Vec<osm::Road>)>,
@@ -58,8 +63,12 @@ pub struct OsmUi {
 /// The downloaded things within the map, in world coordinates.
 #[derive(Default)]
 struct Derived {
+    /// Bus (and trolleybus) stops, and the stations of the rails (with what they serve).
     stops: Vec<(DVec2, String)>,
+    stations: Vec<(DVec2, String, crate::transit::Modes)>,
     lines: Vec<(String, String, Vec<DVec2>)>,
+    /// The routes of other modes than the bus.
+    transit: Vec<crate::transit::osm::OsmRoute>,
     trees: Vec<DVec2>,
     rows: Vec<Vec<DVec2>>,
     woods: Vec<Vec<DVec2>>,
@@ -82,6 +91,10 @@ pub struct Build {
     pub stop_type: Option<String>,
     /// Bus routes: number, name, their stops in order.
     pub lines: Vec<(String, String, Vec<DVec2>)>,
+    /// A Modern map's stations of the rails, put with the kit's station stop, and its
+    /// routes of other modes for its transport folder.
+    pub stations: Vec<(DVec2, String)>,
+    pub transit: Vec<crate::transit::osm::OsmRoute>,
     /// Where trees go, and the plants they are.
     pub trees: Vec<DVec2>,
     pub mix: Vec<String>,
@@ -112,6 +125,8 @@ impl Default for OsmUi {
             tree_spacing: 8.0,
             with_lines: true,
             with_stops: true,
+            with_stations: true,
+            with_transit: true,
             stop_type: None,
             roads: None,
             status: None,
@@ -198,6 +213,12 @@ impl OsmUi {
             }
         }
         let derived = self.derived.as_ref().map(|d| d.1.clone()).unwrap_or_default();
+        // (a Modern map's tracks are the kit's until others are chosen)
+        if ed.doc.as_ref().is_some_and(|d| d.transit.is_modern()) && lib.find(&crate::transit::kit::spline_rel("om_metro_track")).is_some() {
+            for (c, stem) in [(Class::Tram, "om_tram_street_track"), (Class::Rail, "om_railway_track"), (Class::Metro, "om_metro_track")] {
+                self.types.entry(c).or_insert_with(|| crate::transit::kit::spline_rel(stem));
+            }
+        }
         let mut open = self.open;
         egui::Window::new(icons::labelled(Icon::Road, tr("From OpenStreetMap", "Из OpenStreetMap"))).id(egui::Id::new("osm roads")).open(&mut open).default_pos([360.0, 110.0]).default_size([390.0, 700.0]).resizable(true).vscroll(true).show(ctx, |ui| {
             ui.label(RichText::new(tr("The streets of the map's place built as roads with junctions where they meet, its bus stops, lines, trees and woods. Best on tiles with no roads yet: roads lying on ones the map has are left out.", "Улицы места карты, построенные дорогами с перекрёстками, её остановки, линии, деревья и леса. Лучше на тайлах без дорог: дороги поверх уже имеющихся пропускаются.")).small().color(TEXT_DIM));
@@ -313,6 +334,22 @@ impl OsmUi {
                 let shown: Vec<&str> = numbers.iter().take(8).copied().collect();
                 ui.label(RichText::new(format!("{} {}{}", lines_in.len(), shown.join(", "), if numbers.len() > 8 { "…" } else { "" })).small().color(TEXT_DIM));
             });
+            // a Modern map's stations and routes of its other modes
+            let modern = ed.doc.as_ref().map(|d| d.transit.is_modern()).unwrap_or(false);
+            if modern {
+                ui.horizontal(|ui| {
+                    crate::ui::check(ui, &mut self.with_stations, tr("Stations (tram, metro, railway)", "Станции (трамвай, метро, железная дорога)")).on_hover_text(tr("Each tram stop and station of the map's rail modes put with the kit's station stop beside the nearest track (within 25 m); every stop of the map then becomes a station of its transport folder", "Каждая трамвайная остановка и станция видов рельсового транспорта карты ставится станционной остановкой из набора у ближайшего пути (в пределах 25 м); затем каждая остановка карты становится станцией её папки transport"));
+                    ui.label(RichText::new(format!("{}", derived.stations.len())).small().color(TEXT_DIM));
+                });
+                ui.horizontal(|ui| {
+                    crate::ui::check(ui, &mut self.with_transit, tr("Routes (tram, trolleybus, metro, railway)", "Маршруты (трамвай, троллейбус, метро, железная дорога)")).on_hover_text(tr("Each route of the map's modes through two or more of its stations a segment of its line, the line's service as often as OpenStreetMap says (else every 10 minutes), from 05:30 to 23:30; openOMSI finds the way over the tracks", "Каждый маршрут видов карты через две или больше её станций — участок своей линии, режим движения линии — с интервалом из OpenStreetMap (иначе каждые 10 минут), с 05:30 до 23:30; путь по рельсам openOMSI находит сам"));
+                    let mut numbers: Vec<String> = derived.transit.iter().map(|r| format!("{} {}", r.mode.label(), r.number)).collect();
+                    numbers.sort();
+                    numbers.dedup();
+                    let shown: Vec<&str> = numbers.iter().take(6).map(|s| s.as_str()).collect();
+                    ui.label(RichText::new(format!("{} {}{}", numbers.len(), shown.join(", "), if numbers.len() > 6 { "…" } else { "" })).small().color(TEXT_DIM));
+                });
+            }
             // trees and woods, with the plant mix (or the tree chosen)
             let (trees, rows, woods, ha) = (&derived.trees, &derived.rows, &derived.woods, derived.ha);
             let mix: Vec<String> = if !ed.plant_mix.is_empty() { ed.plant_mix.clone() } else { ed.object_type.iter().filter(|t| lib.find(t).map(|a| a.category == crate::library::Category::Trees).unwrap_or(false)).cloned().collect() };
@@ -379,13 +416,13 @@ impl OsmUi {
                 }
             }
             ui.label(RichText::new(tr("A one-way street is built the way it runs in OpenStreetMap: give it a one-way road type", "Улица с односторонним движением строится в направлении OpenStreetMap: дайте ей односторонний тип дороги")).small().color(TEXT_DIM));
-            let stops_n = if self.with_stops { stops_in.len() } else { 0 };
+            let stops_n = if self.with_stops { stops_in.len() } else { 0 } + if modern && self.with_stations { derived.stations.len() } else { 0 };
             let r = ui.add_enabled(!missing && (count + stops_n > 0 || self.with_trees || self.with_buildings || self.with_water), egui::Button::new(icons::labelled(Icon::Road, &format!("{} ({count} · {stops_n})", tr("Build", "Построить")))));
             if r.clicked() {
                 let list: Vec<osm::Road> = roads.iter().filter(|r| wanted.iter().any(|w| w.0 == r.class)).cloned().collect();
                 let mut rng = crate::osm_green::shaker();
                 let spots = if self.with_trees { crate::osm_green::spots(trees, rows, woods, &derived.holes, map_box(ed), self.tree_spacing, &mut rng) } else { Vec::new() };
-                self.build = Some(Build { roads: list, types: wanted, stops: if self.with_stops { stops_in.clone() } else { Vec::new() }, stop_type: self.stop_type.clone(), oneway_type: self.oneway_type.clone(), lines: if self.with_lines { lines_in.clone() } else { Vec::new() }, trees: spots, mix, buildings: if self.with_buildings { outlines.clone() } else { Vec::new() }, pool, water: self.with_water.then(|| (derived.water.clone(), derived.islands.clone(), self.water_depth)) });
+                self.build = Some(Build { roads: list, types: wanted, stops: if self.with_stops { stops_in.clone() } else { Vec::new() }, stop_type: self.stop_type.clone(), oneway_type: self.oneway_type.clone(), lines: if self.with_lines { lines_in.clone() } else { Vec::new() }, stations: if modern && self.with_stations { derived.stations.iter().map(|s| (s.0, s.1.clone())).collect() } else { Vec::new() }, transit: if modern && self.with_transit { derived.transit.clone() } else { Vec::new() }, trees: spots, mix, buildings: if self.with_buildings { outlines.clone() } else { Vec::new() }, pool, water: self.with_water.then(|| (derived.water.clone(), derived.islands.clone(), self.water_depth)) });
             }
             ui.add_space(4.0);
             ui.hyperlink_to(RichText::new("© OpenStreetMap contributors (ODbL)").small(), "https://www.openstreetmap.org/copyright");
@@ -404,8 +441,11 @@ impl OsmUi {
         let ha = crate::osm_green::spots(&[], &[], &woods, &holes, map_box(ed), 10.0, &mut none).iter().filter(|p| inside(p)).count() as f64 * 100.0 / 10_000.0;
         let water: Vec<Vec<DVec2>> = self.water.areas.iter().map(w).collect();
         Derived {
-            stops: self.stops.iter().map(|st| (g.world(st.at.0, st.at.1), st.name.clone())).filter(|(p, _)| inside(p)).collect(),
-            lines: self.lines.iter().map(|r| (r.number.clone(), r.name.clone(), w(&r.stops))).filter(|r| r.2.iter().filter(|p| inside(p)).count() >= 2).collect(),
+            stops: self.stops.iter().filter(|st| st.modes.contains(Mode::Bus) || st.modes.contains(Mode::Trolleybus)).map(|st| (g.world(st.at.0, st.at.1), st.name.clone())).filter(|(p, _)| inside(p)).collect(),
+            // (a Modern map's of its rail modes: a Classic map has no stations of its own)
+            stations: self.stops.iter().filter(|st| st.modes.iter().any(|m| m.is_rail() && doc.transit.modes.contains(m))).map(|st| (g.world(st.at.0, st.at.1), st.name.clone(), st.modes)).filter(|(p, _, _)| inside(p)).collect(),
+            lines: self.lines.iter().filter(|r| r.mode == Mode::Bus).map(|r| (r.number.clone(), r.name.clone(), w(&r.stops))).filter(|r| r.2.iter().filter(|p| inside(p)).count() >= 2).collect(),
+            transit: self.lines.iter().filter(|r| r.mode != Mode::Bus && doc.transit.modes.contains(r.mode)).map(|r| crate::transit::osm::OsmRoute { mode: r.mode, number: r.number.clone(), name: r.name.clone(), stops: w(&r.stops), interval: r.interval }).filter(|r| r.stops.iter().filter(|p| inside(p)).count() >= 2).collect(),
             trees: self.green.trees.iter().map(|p| g.world(p.0, p.1)).filter(inside).collect(),
             rows: self.green.rows.iter().map(w).collect(),
             woods,
@@ -449,6 +489,17 @@ impl OsmUi {
             self.types.insert(Class::Tram, r.clone());
             self.types.insert(Class::Rail, r.clone());
         }
+        // (a Modern map's tracks: the kit's where none is given; the metro, mostly underground,
+        // only when asked for, as in the window)
+        if ed.doc.as_ref().is_some_and(|d| d.transit.is_modern()) {
+            for (c, stem) in [(Class::Tram, "om_tram_street_track"), (Class::Rail, "om_railway_track")] {
+                self.types.entry(c).or_insert_with(|| crate::transit::kit::spline_rel(stem));
+            }
+            // OPENMAPPER_OSM_METRO=1: the metro too (its tunnels built under the ground)
+            if std::env::var_os("OPENMAPPER_OSM_METRO").is_some() {
+                self.types.entry(Class::Metro).or_insert_with(|| crate::transit::kit::spline_rel("om_metro_track"));
+            }
+        }
         self.types.insert(Class::Main, main.clone());
         self.types.insert(Class::Street, street);
         let body = match crate::geo::fetch::overpass(&osm::query(b)) {
@@ -460,8 +511,11 @@ impl OsmUi {
                 let Some(doc) = ed.doc.as_ref() else { return };
                 let roads = osm::roads(&w, |la, lo| g.world(la, lo), |p| doc.tiles.contains_key(&tile_of(p)));
                 log::info!("osm: {} ways, {} roads", w.len(), roads.len());
-                let wanted: Vec<(Class, String)> = [Class::Main, Class::Street, Class::Tram, Class::Rail].iter().filter_map(|c| self.types.get(c).map(|t| (*c, t.clone()))).collect();
-                let stops: Vec<(DVec2, String)> = osm::parse_stops(&body).unwrap_or_default().into_iter().map(|st| (g.world(st.at.0, st.at.1), st.name)).collect();
+                let wanted: Vec<(Class, String)> = [Class::Main, Class::Street, Class::Tram, Class::Rail, Class::Metro].iter().filter_map(|c| self.types.get(c).map(|t| (*c, t.clone()))).collect();
+                let map_modes = doc.transit.modes;
+                let all_stops = osm::parse_stops(&body).unwrap_or_default();
+                let stops: Vec<(DVec2, String)> = all_stops.iter().filter(|st| st.modes.contains(Mode::Bus) || st.modes.contains(Mode::Trolleybus)).map(|st| (g.world(st.at.0, st.at.1), st.name.clone())).collect();
+                let stations: Vec<(DVec2, String)> = all_stops.iter().filter(|st| st.modes.iter().any(|m| m.is_rail() && map_modes.contains(m))).map(|st| (g.world(st.at.0, st.at.1), st.name.clone())).collect();
                 let trees = match &tree {
                     Some(_) => {
                         let gr = crate::geo::fetch::overpass(&crate::osm_green::query(b)).and_then(|body| crate::osm_green::parse(&body)).unwrap_or_else(|e| {
@@ -488,9 +542,14 @@ impl OsmUi {
                     let w = |v: &Vec<(f64, f64)>| v.iter().map(|p| g.world(p.0, p.1)).collect::<Vec<DVec2>>();
                     (wa.areas.iter().map(w).collect(), wa.islands.iter().map(w).collect(), d)
                 });
-                let lines = crate::geo::fetch::overpass(&crate::osm_lines::query(b)).and_then(|body| crate::osm_lines::parse(&body)).unwrap_or_default();
-                let lines = lines.into_iter().map(|r| (r.number, r.name, r.stops.iter().map(|p| g.world(p.0, p.1)).collect())).collect();
-                self.build = Some(Build { roads: roads.into_iter().filter(|r| wanted.iter().any(|w| w.0 == r.class)).collect(), types: wanted, stops, stop_type: stop.clone(), oneway_type: oneway.clone(), lines, trees, mix: tree.iter().cloned().collect(), buildings, pool, water });
+                let lines = crate::geo::fetch::overpass(&crate::osm_lines::query(b)).and_then(|body| crate::osm_lines::parse(&body)).unwrap_or_else(|e| {
+                    log::warn!("osm routes: {e}");
+                    Vec::new()
+                });
+                log::info!("osm: {} routes ({} of other modes than the bus)", lines.len(), lines.iter().filter(|r| r.mode != Mode::Bus).count());
+                let transit = lines.iter().filter(|r| r.mode != Mode::Bus && map_modes.contains(r.mode)).map(|r| crate::transit::osm::OsmRoute { mode: r.mode, number: r.number.clone(), name: r.name.clone(), stops: r.stops.iter().map(|p| g.world(p.0, p.1)).collect(), interval: r.interval }).collect();
+                let lines = lines.into_iter().filter(|r| r.mode == Mode::Bus).map(|r| (r.number, r.name, r.stops.iter().map(|p| g.world(p.0, p.1)).collect())).collect();
+                self.build = Some(Build { roads: roads.into_iter().filter(|r| wanted.iter().any(|w| w.0 == r.class)).collect(), types: wanted, stops, stop_type: stop.clone(), oneway_type: oneway.clone(), lines, stations, transit, trees, mix: tree.iter().cloned().collect(), buildings, pool, water });
                 self.ways = Some(w);
             }
             Err(e) => log::warn!("osm: {e}"),

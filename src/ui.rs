@@ -9,7 +9,7 @@ use std::path::PathBuf;
 use egui::{Align, Color32, CornerRadius, Frame, Id, Layout, Margin, RichText, Sense, Stroke, Vec2};
 
 use crate::doc::Sel;
-use crate::editor::{Editor, LogicMode, TerrainMode, Tool};
+use crate::editor::{Editor, LogicMode, TerrainMode, Tool, WaterShape};
 use crate::i18n::{self, tr, Lang};
 use crate::icons::{self, Icon};
 use crate::install::{MapEntry, Prefs};
@@ -163,6 +163,10 @@ pub enum Action {
     SetGroundTexture(usize, bool, String),
     /// Open or close the Lines window.
     Timetable,
+    /// Open or close the Transit network window (Modern maps).
+    Transit,
+    /// Make openMapper's transit kit in the content folder (again).
+    TransitKit,
     /// Put the map's folder back as it was before the save kept in this backup (and the
     /// later ones), then open it again.
     RestoreBackup(PathBuf),
@@ -209,6 +213,8 @@ pub struct UiState {
     pub bake: crate::ui_mesh::BakeChoice,
     pub keep_cutters: bool,
     pub uv_open: bool,
+    /// The pictures of an edited object's materials.
+    pub mesh_pics: crate::ui_tex::TexCache,
     pub uv: crate::ui_uv::UvEditor,
     pub signal_lamps: Vec<crate::editable::Lamp>,
     pub makers: crate::makers::Settings,
@@ -292,6 +298,7 @@ impl Default for UiState {
             bake: Default::default(),
             keep_cutters: false,
             uv_open: false,
+            mesh_pics: Default::default(),
             uv: Default::default(),
             signal_lamps: vec![crate::editable::Lamp::Red, crate::editable::Lamp::Yellow, crate::editable::Lamp::Green],
             makers: Default::default(),
@@ -799,7 +806,7 @@ pub fn editor(root: &mut egui::Ui, st: &mut UiState, u: EditorUi, actions: &mut 
         });
     });
     let favourites = st.favourites.clone();
-    st.assets.panel(root, ed, lib, thumbs, wanted, &favourites, actions);
+    st.assets.panel(root, ed, lib, thumbs, wanted, &favourites, texture_files, swatches, wanted_swatches, actions);
     let mut view = (egui::Rect::NOTHING, false);
     egui::CentralPanel::default().frame(Frame::NONE).show(root, |ui| {
         let rect = ui.max_rect();
@@ -1127,6 +1134,9 @@ fn menu_bar(root: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, can_undo: bo
                 if menu_item(ui, Some(Icon::Bus), tr("Lines and timetable…", "Линии и расписание…"), "L", true) {
                     actions.push(Action::Timetable);
                 }
+                if menu_item(ui, Some(Icon::Tram), tr("Transit network…", "Транспортная сеть…"), "", true) {
+                    actions.push(Action::Transit);
+                }
                 if menu_item(ui, Some(Icon::Traffic), tr("Traffic and AI…", "Трафик и ИИ…"), "T", true) {
                     actions.push(Action::Traffic);
                 }
@@ -1404,7 +1414,7 @@ fn tool_panel(
 ) {
     if ed.mesh.as_ref().map(|m| m.editing).unwrap_or(false) {
         section(ui, tr("Edit mesh", "Редактирование меша"));
-        Frame::new().inner_margin(Margin::same(8)).show(ui, |ui| crate::ui_mesh::edit_panel(ui, ed, &mut st.uv_open, actions));
+        Frame::new().inner_margin(Margin::same(8)).show(ui, |ui| crate::ui_mesh::edit_panel(ui, ed, &mut st.uv_open, &mut st.mesh_pics, actions));
         return;
     }
     section(ui, ed.tool.label());
@@ -1854,12 +1864,43 @@ fn terrain_panel(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, actions: 
             }
         });
     }
+    let water_by_hand = ed.terrain_mode == TerrainMode::Water && ed.water_shape != WaterShape::Brush;
     if ed.terrain_mode == TerrainMode::Water {
+        ui.horizontal(|ui| {
+            for (shape, label) in [(WaterShape::Lake, tr("Lake", "Озеро")), (WaterShape::River, tr("River", "Река")), (WaterShape::Brush, tr("Brush", "Кисть"))] {
+                if ui.selectable_label(ed.water_shape == shape, label).clicked() {
+                    ed.water_shape = shape;
+                    ed.water_pts.clear();
+                }
+            }
+        });
         ui.horizontal(|ui| {
             ui.label(tr("Depth", "Глубина"));
             ui.add(egui::DragValue::new(&mut ed.water_depth).speed(0.05).range(0.2..=20.0).fixed_decimals(1).suffix(" m"));
         });
-        ui.label(RichText::new(tr("The water's level is set where a stroke starts: start at the bank.", "Уровень воды берётся там, где начат мазок: начинайте у берега.")).small().color(TEXT_DIM));
+        if ed.water_shape != WaterShape::Brush {
+            if ed.water_shape == WaterShape::River {
+                ui.horizontal(|ui| {
+                    ui.label(tr("Width", "Ширина"));
+                    ui.add(egui::DragValue::new(&mut ed.river_width).speed(0.2).range(2.0..=200.0).fixed_decimals(0).suffix(" m"));
+                });
+            }
+            ui.horizontal(|ui| {
+                ui.label(tr("Banks", "Берега"));
+                ui.add(egui::DragValue::new(&mut ed.water_bank).speed(0.2).range(1.0..=60.0).fixed_decimals(0).suffix(" m"));
+            });
+            let hint = if ed.water_shape == WaterShape::Lake {
+                tr("Click the shore round and close it on the first point (Enter closes too, right-click takes a point back). The ground inside is dug to a bed and the banks slope to the shore.", "Кликайте по берегу и замкните на первой точке (Enter тоже замыкает, правый клик убирает точку). Земля внутри копается до дна, берега скошены к воде.")
+            } else {
+                tr("Click the river's middle line from its source on and finish on the last point (or Enter). Water in OMSI lies at one level for a tile: a river runs level.", "Кликайте по осевой реки от истока и завершите на последней точке (или Enter). Вода в OMSI на одном уровне для тайла: река течёт ровно.")
+            };
+            ui.label(RichText::new(hint).small().color(TEXT_DIM));
+        } else {
+            ui.label(RichText::new(tr("The water's level is set where a stroke starts: start at the bank.", "Уровень воды берётся там, где начат мазок: начинайте у берега.")).small().color(TEXT_DIM));
+        }
+    }
+    if water_by_hand {
+        return st.heightmap.panel(ui, ed);
     }
     ui.add_space(6.0);
     ui.label(RichText::new(tr("Brush", "Кисть")).strong());
@@ -2616,6 +2657,7 @@ fn properties(ui: &mut egui::Ui, st: &mut UiState, ed: &mut Editor, lib: &Librar
             crate::ui_edit::rules_section(ui, ed, sel);
             crate::ui_edit::rows_section(ui, ed, lib);
             crate::ui_edit::paint_along_section(ui, ed, lib);
+            crate::ui_edit::dig_section(ui, ed, lib);
             crate::ui_profile::profile_section(ui, ed, actions);
             let Some(doc) = ed.doc.as_mut() else { return };
             if let Some((file, mirror)) = spline_change {

@@ -442,6 +442,12 @@ fn guest_doc(roots: &Roots, w: &Welcome) -> Result<Document, String> {
             }
         }
     }
+    // (a Modern map's network: its modes and transport folder)
+    if let Some(b) = w.states.iter().find(|s| s.part == Part::Transit).and_then(|s| s.data.as_deref()) {
+        if !codec::apply_transit(&mut doc, b) {
+            log::warn!("multiplayer: the transit network could not be read");
+        }
+    }
     doc.global_dirty = true;
     Ok(doc)
 }
@@ -461,6 +467,7 @@ fn placeholder() -> Document {
         traffic: Default::default(),
         descriptions: Default::default(),
         groups: Vec::new(),
+        transit: Default::default(),
     }
 }
 

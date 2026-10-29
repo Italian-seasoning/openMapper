@@ -68,6 +68,7 @@ pub fn save(doc: &mut Document) -> anyhow::Result<()> {
     ops.extend(crate::timetable::plan(&mut doc.timetable, &dir, &order));
     ops.extend(crate::traffic::plan(&doc.traffic, &dir));
     ops.extend(doc.descriptions.plan(&dir));
+    ops.extend(doc.transit.plan(&dir));
     // (the depot files taken away, as they were: their copies for openOMSI go too)
     let gone: Vec<(String, Vec<u8>)> = ops
         .iter()
@@ -95,6 +96,7 @@ pub fn save(doc: &mut Document) -> anyhow::Result<()> {
     crate::timetable::saved(&mut doc.timetable);
     crate::traffic::saved(&mut doc.traffic);
     doc.descriptions.saved();
+    doc.transit.saved();
     Ok(())
 }
 
@@ -211,6 +213,10 @@ pub(crate) fn global_text_known(doc: &Document, has_tile: &dyn Fn(&TileKey) -> b
     }
     if g.left_hand_traffic {
         kw(&mut s, "LHT", &[]);
+    }
+    // a Modern map's transport modes (openOMSI's keywords; OMSI 2 skips them)
+    for k in doc.transit.keywords() {
+        kw(&mut s, &k, &[]);
     }
     if g.background_image.len() == 5 {
         // (OMSI's editor reads six lines here, openOMSI's reader keeps five: without the sixth

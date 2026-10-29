@@ -24,21 +24,24 @@ pub enum Class {
     Tram,
     /// Railway tracks.
     Rail,
+    /// Metro tracks (`railway=subway`), in tunnels too.
+    Metro,
 }
 
 impl Class {
-    pub const ALL: [Class; 5] = [Class::Main, Class::Street, Class::Service, Class::Tram, Class::Rail];
+    pub const ALL: [Class; 6] = [Class::Main, Class::Street, Class::Service, Class::Tram, Class::Rail, Class::Metro];
 
     /// Tracks: no junctions with what they meet (crossings stay level); a branch gets a
     /// switch with Auto-Switch on.
     pub fn is_track(self) -> bool {
-        matches!(self, Class::Tram | Class::Rail)
+        matches!(self, Class::Tram | Class::Rail | Class::Metro)
     }
 
     pub fn of_railway(railway: &str) -> Option<Class> {
         match railway {
             "tram" | "light_rail" => Some(Class::Tram),
             "rail" => Some(Class::Rail),
+            "subway" => Some(Class::Metro),
             _ => None,
         }
     }
@@ -61,6 +64,7 @@ impl Class {
             Class::Service => tr("Service roads", "Служебные проезды"),
             Class::Tram => tr("Tram tracks", "Трамвайные пути"),
             Class::Rail => tr("Railway tracks", "Железнодорожные пути"),
+            Class::Metro => tr("Metro tracks", "Пути метро"),
         }
     }
 
@@ -72,6 +76,7 @@ impl Class {
             Class::Service => tr("yards, car parks, depots", "дворы, стоянки, депо"),
             Class::Tram => tr("each track on its own; branches are joined with switches by hand", "каждый путь отдельно; ответвления соединяются стрелками вручную"),
             Class::Rail => tr("main lines without sidings; branches are joined with switches by hand", "магистрали без подъездных; ответвления соединяются стрелками вручную"),
+            Class::Metro => tr("in tunnels too: build them with the kit's metro tunnel and cut the ground away (a Modern map)", "и в тоннелях: стройте их тоннелем метро из набора и вырежьте землю (современная карта)"),
         }
     }
 
@@ -83,6 +88,7 @@ impl Class {
             Class::Service => 10.0,
             Class::Tram => 25.0,
             Class::Rail => 300.0,
+            Class::Metro => 150.0,
         }
     }
 }
@@ -94,6 +100,8 @@ pub struct Way {
     /// Traffic one way only (`oneway`, a roundabout, a motorway): one carriageway of a
     /// dual road, a one-way street.
     pub oneway: bool,
+    /// In a tunnel (`tunnel=yes`).
+    pub tunnel: bool,
     pub nodes: Vec<i64>,
     pub geometry: Vec<(f64, f64)>,
 }
@@ -101,14 +109,39 @@ pub struct Way {
 /// The Overpass query for the roads and bus stops within a box (south, west, north, east).
 pub fn query(bbox: [f64; 4]) -> String {
     let b = format!("{:.6},{:.6},{:.6},{:.6}", bbox[0], bbox[1], bbox[2], bbox[3]);
-    format!("[out:json][timeout:90];(way[\"railway\"~\"^(tram|light_rail|rail)$\"][\"service\"!~\"^(yard|siding|spur)$\"]({b});way[\"highway\"~\"^(motorway|trunk|primary|secondary|tertiary|unclassified|residential|living_street|service)(_link)?$\"][\"area\"!=\"yes\"]({b});node[\"highway\"=\"bus_stop\"]({b}););out geom;")
+    format!("[out:json][timeout:90];(way[\"railway\"~\"^(tram|light_rail|rail|subway)$\"][\"service\"!~\"^(yard|siding|spur)$\"]({b});way[\"highway\"~\"^(motorway|trunk|primary|secondary|tertiary|unclassified|residential|living_street|service)(_link)?$\"][\"area\"!=\"yes\"]({b});node[\"highway\"=\"bus_stop\"]({b});node[\"railway\"~\"^(tram_stop|station|halt)$\"]({b}););out geom;")
 }
 
-/// A bus stop of OpenStreetMap: where (latitude, longitude) and its name.
+/// A stop of OpenStreetMap: where (latitude, longitude), its name and what it serves (a bus
+/// stop buses, and trolleybuses where it says so; a tram stop trams; a station the metro,
+/// trams or trains as it says).
 #[derive(Clone, Debug)]
 pub struct Stop {
     pub at: (f64, f64),
     pub name: String,
+    pub modes: crate::transit::Modes,
+}
+
+/// What an OSM stop serves, from its tags.
+pub fn stop_modes(tag: &dyn Fn(&str) -> String) -> crate::transit::Modes {
+    use crate::transit::{Mode, Modes};
+    let yes = |k: &str| tag(k) == "yes";
+    match tag("railway").as_str() {
+        "tram_stop" => Modes::of(&[Mode::Tram]),
+        "station" | "halt" => {
+            let station = tag("station");
+            let mut m = Modes::default();
+            m.set(Mode::Metro, station == "subway" || yes("subway"));
+            m.set(Mode::Tram, station == "light_rail" || yes("light_rail") || yes("tram"));
+            m.set(Mode::Railway, (station.is_empty() || station == "train") && !yes("subway") || yes("train"));
+            if m.is_empty() { Modes::of(&[Mode::Railway]) } else { m }
+        }
+        _ => {
+            let mut m = Modes::of(&[Mode::Bus]);
+            m.set(Mode::Trolleybus, yes("trolleybus"));
+            m
+        }
+    }
 }
 
 /// The bus stops of an Overpass answer.
@@ -120,8 +153,8 @@ pub fn parse_stops(body: &str) -> Result<Vec<Stop>, String> {
         .flatten()
         .filter(|e| e.get("type").and_then(|t| t.as_str()) == Some("node"))
         .filter_map(|e| {
-            let name = e.get("tags").and_then(|t| t.get("name")).and_then(|n| n.as_str()).unwrap_or("").to_string();
-            Some(Stop { at: (e.get("lat")?.as_f64()?, e.get("lon")?.as_f64()?), name })
+            let tag = |k: &str| e.get("tags").and_then(|t| t.get(k)).and_then(|n| n.as_str()).unwrap_or("").to_string();
+            Some(Stop { at: (e.get("lat")?.as_f64()?, e.get("lon")?.as_f64()?), name: tag("name"), modes: stop_modes(&tag) })
         })
         .collect())
 }
@@ -136,8 +169,9 @@ pub fn parse(body: &str) -> Result<Vec<Way>, String> {
         }
         let tag = |k: &str| e.get("tags").and_then(|t| t.get(k)).and_then(|v| v.as_str()).unwrap_or("");
         let Some(class) = Class::of(tag("highway")).or_else(|| Class::of_railway(tag("railway"))) else { continue };
-        // (a tunnel runs under the ground the map has: not built on it)
-        if tag("tunnel") == "yes" {
+        // (a tunnel runs under the ground the map has: not built on it; a metro's is, in the
+        // kit's tunnel)
+        if tag("tunnel") == "yes" && class != Class::Metro {
             continue;
         }
         let oneway = matches!(tag("oneway"), "yes" | "1" | "true") || tag("junction") == "roundabout" || tag("highway") == "motorway";
@@ -146,7 +180,7 @@ pub fn parse(body: &str) -> Result<Vec<Way>, String> {
         if nodes.len() < 2 || nodes.len() != geometry.len() {
             continue;
         }
-        out.push(Way { class, oneway, nodes, geometry });
+        out.push(Way { class, oneway, tunnel: tag("tunnel") == "yes", nodes, geometry });
     }
     Ok(out)
 }
@@ -156,6 +190,8 @@ pub fn parse(body: &str) -> Result<Vec<Way>, String> {
 pub struct Road {
     pub class: Class,
     pub oneway: bool,
+    /// In a tunnel (a metro's; other tunnels are left out).
+    pub tunnel: bool,
     pub points: Vec<DVec2>,
 }
 
@@ -188,7 +224,7 @@ pub fn roads(ways: &[Way], to_world: impl Fn(f64, f64) -> DVec2, inside: impl Fn
         id
     };
     for w in ways {
-        let kind = Kind { class: w.class, oneway: w.oneway };
+        let kind = Kind { class: w.class, oneway: w.oneway, tunnel: w.tunnel };
         let mut run: Vec<i64> = Vec::new();
         for (i, n) in w.nodes.iter().enumerate() {
             let p = at[n];
@@ -221,6 +257,7 @@ pub fn roads(ways: &[Way], to_world: impl Fn(f64, f64) -> DVec2, inside: impl Fn
 struct Kind {
     class: Class,
     oneway: bool,
+    tunnel: bool,
 }
 
 /// The heading (degrees) from `a` to `b`.
@@ -332,7 +369,7 @@ fn order(parts: Vec<(Kind, Vec<i64>)>, at: &HashMap<i64, DVec2>) -> Vec<Road> {
     out.into_iter()
         .map(|i| {
             let (kind, nodes) = &parts[i];
-            Road { class: kind.class, oneway: kind.oneway, points: nodes.iter().map(|n| at[n]).collect() }
+            Road { class: kind.class, oneway: kind.oneway, tunnel: kind.tunnel, points: nodes.iter().map(|n| at[n]).collect() }
         })
         .collect()
 }
@@ -441,7 +478,7 @@ mod tests {
 
     fn way(class: Class, nodes: &[i64], pts: &[(f64, f64)]) -> Way {
         // (the "latitude and longitude" here are world metres: the test's to_world is plain)
-        Way { class, oneway: false, nodes: nodes.to_vec(), geometry: pts.to_vec() }
+        Way { class, oneway: false, tunnel: false, nodes: nodes.to_vec(), geometry: pts.to_vec() }
     }
 
     #[test]

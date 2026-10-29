@@ -2438,3 +2438,350 @@ Could not copy the photos	तस्वीरें कॉपी नहीं ह
 Copying the photos	तस्वीरें कॉपी हो रही हैं
 Hold only the photos of the tiles near the camera	कैमरे के पास वाले टाइलों की तस्वीरें ही रखें
 The others keep their photo in the map's folder, and are put up again when you go back to them.	बाकी अपनी तस्वीर मानचित्र के फ़ोल्डर में रखते हैं और जब आप वहाँ लौटते हैं तो फिर आ जाते हैं।
+A tram loop with two stations and its wire: save, then drive it in openOMSI with a tram of your own.	दो स्टेशन और ओवरहेड तार वाला ट्राम लूप: सेव करें, फिर openOMSI में अपनी ट्राम से चलाएँ।
+Transit kit made, files:	ट्रांज़िट किट बना, फ़ाइलें:
+The transit kit could not be made	ट्रांज़िट किट नहीं बन सका
+Transit network problems	ट्रांज़िट नेटवर्क की समस्याएँ
+Stations without their mode's lanes	अपने मोड की लेन के बिना स्टेशन
+Stations without their stop	बिना स्टॉप के स्टेशन
+openOMSI's own reader finds this in the map's transport folder (stations, routes, wires, switches, depots, signals): a service it names is skipped, a section or a block left out. Open Map > Transit network to change it.	openOMSI का अपना रीडर इसे मैप के transport फ़ोल्डर (स्टेशन, रूट, तार, स्विच, डिपो, सिग्नल) में पाता है: जिस सर्विस का यह नाम लेता है वह छोड़ दी जाती है, सेक्शन या ब्लॉक हटा दिया जाता है। बदलने के लिए मैप > ट्रांज़िट नेटवर्क खोलें।
+openOMSI routes a service over the lanes of its mode within 25 m of each station (rails for trams, metro and trains, streets for buses and trolleybuses). This station has none of its modes' near, so its services cannot run. Move the stop next to the track or road, or lay one there.	openOMSI हर स्टेशन से 25 m के भीतर अपने मोड की लेन पर सर्विस का रास्ता बनाता है (ट्राम, मेट्रो और ट्रेनों के लिए रेल, बसों और ट्रॉलीबसों के लिए सड़कें)। इस स्टेशन के पास इसके मोड की कोई लेन नहीं है, इसलिए इसकी सर्विस नहीं चल सकती। स्टॉप को ट्रैक या सड़क के पास ले जाएँ, या वहाँ ट्रैक या सड़क बिछाएँ।
+A station is found by the game among the map's stops: by its stop object, else by its name. This one's object is no stop on the map and no stop has its name, so the services through it are skipped. Pick its stop again in Map > Transit network, Stations.	गेम स्टेशन को मैप के स्टॉप में ढूँढता है: उसके स्टॉप ऑब्जेक्ट से, नहीं तो उसके नाम से। इसका ऑब्जेक्ट मैप पर कोई स्टॉप नहीं है और इस नाम का कोई स्टॉप भी नहीं है, इसलिए इससे गुज़रने वाली सर्विस छोड़ दी जाती हैं। मैप > ट्रांज़िट नेटवर्क, स्टेशन में इसका स्टॉप फिर से चुनें।
+station	स्टेशन
+Transit network…	ट्रांज़िट नेटवर्क…
+The transport folder stays: openOMSI still reads its stations, routes and wires.	transport फ़ोल्डर बना रहता है: openOMSI अब भी इसके स्टेशन, रूट और तार पढ़ता है।
+Remove it too	इसे भी हटाएँ
+Start with a tram line: a loop of track under its wire, two stations and a route	ट्राम लाइन से शुरू करें: तार के नीचे ट्रैक का लूप, दो स्टेशन और एक रूट
+Classic	क्लासिक
+Runs in OMSI 2 and in openOMSI. Buses, and trams and trains as OMSI 2 has them.	OMSI 2 और openOMSI में चलता है। बसें, और ट्राम व ट्रेनें वैसी जैसी OMSI 2 में हैं।
+Modern	मॉडर्न
+openOMSI only. Real transit: stations, routes, overhead wire, third rail, depots and signal blocks.	सिर्फ़ openOMSI। असली ट्रांज़िट: स्टेशन, रूट, ओवरहेड तार, थर्ड रेल, डिपो और सिग्नल ब्लॉक।
+Made for (one or more):	किसके लिए (एक या अधिक):
+Choose at least one	कम से कम एक चुनें
+OMSI 2 cannot run a Modern map's routes, wires or blocks, and openOMSI runs only vehicles of its modes on it. openMapper's transit kit (tracks, wires, platforms, masts) is made in the content folder.	OMSI 2 मॉडर्न मैप के रूट, तार या ब्लॉक नहीं चला सकता, और openOMSI इस पर सिर्फ़ इसके मोड के वाहन चलाता है। openMapper का ट्रांज़िट किट (ट्रैक, तार, प्लेटफ़ॉर्म, खंभे) कंटेंट फ़ोल्डर में बनता है।
+Overview	अवलोकन
+Stations	स्टेशन
+Depots	डिपो
+Power	बिजली
+Switches and signals	स्विच और सिग्नल
+Set it (else the game's default)	सेट करें (नहीं तो गेम का डिफ़ॉल्ट)
+(not set)	(सेट नहीं)
+Take it out	हटाएँ
+Transit network	ट्रांज़िट नेटवर्क
+This is a Classic map.	यह क्लासिक मैप है।
+Stations, routes without tours, the overhead wire, the third rail, depots and signal blocks are openOMSI's (0.3.42 and later): make the map Modern in Map settings to give it a transit network. OMSI 2 cannot run them.	स्टेशन, बिना टूर के रूट, ओवरहेड तार, थर्ड रेल, डिपो और सिग्नल ब्लॉक openOMSI (0.3.42 और बाद के) के हैं: मैप को ट्रांज़िट नेटवर्क देने के लिए मैप सेटिंग्स में उसे मॉडर्न बनाएँ। OMSI 2 इन्हें नहीं चला सकता।
+No stop there: click a stop object (a bus stop, or the kit's station stop)	वहाँ कोई स्टॉप नहीं: किसी स्टॉप ऑब्जेक्ट पर क्लिक करें (बस स्टॉप, या किट का स्टेशन स्टॉप)
+Now click where the block ends	अब वहाँ क्लिक करें जहाँ ब्लॉक ख़त्म होता है
+Click the signal object itself	सिग्नल ऑब्जेक्ट पर ही क्लिक करें
+Then click in the view	फिर व्यू में क्लिक करें
+Modern map for	मॉडर्न मैप, इनके लिए
+openOMSI runs only vehicles of these modes here; OMSI 2 cannot run the network. The modes are changed in Map settings.	openOMSI यहाँ सिर्फ़ इन मोड के वाहन चलाता है; OMSI 2 यह नेटवर्क नहीं चला सकता। मोड मैप सेटिंग्स में बदले जाते हैं।
+Services	सर्विस
+Track rules	ट्रैक नियम
+Overhead wire spans	ओवरहेड तार स्पैन
+Third rail spans	थर्ड रेल स्पैन
+Trolleybus wire spans	ट्रॉलीबस तार स्पैन
+Switches	स्विच
+Signals and blocks	सिग्नल और ब्लॉक
+Problems	समस्याएँ
+None: openOMSI reads the network as it is.	कोई नहीं: openOMSI नेटवर्क को जैसा है वैसा पढ़ता है।
+error	त्रुटि
+warning	चेतावनी
+Found by openOMSI's own reader of the transport folder, the texts as it writes them in its log.	openOMSI के अपने transport फ़ोल्डर रीडर ने पाया; टेक्स्ट वैसे ही हैं जैसे वह अपने लॉग में लिखता है।
+openMapper's transit kit	openMapper का ट्रांज़िट किट
+Tracks, platforms, wires and objects made by openMapper for Modern maps (OMSI 2 ships no metro, third rail or trolleybus wire). They are in the catalogue under openMapper; click one to place it.	मॉडर्न मैप के लिए openMapper के बनाए ट्रैक, प्लेटफ़ॉर्म, तार और ऑब्जेक्ट (OMSI 2 में मेट्रो, थर्ड रेल या ट्रॉलीबस तार नहीं हैं)। ये कैटलॉग में openMapper के नीचे हैं; रखने के लिए किसी पर क्लिक करें।
+Make the kit	किट बनाएँ
+A station is a stop object of the map (a bus stop, or the kit's station stop beside a track) with its platforms. openOMSI routes a service over the lanes of its mode within 25 m of each station.	स्टेशन मैप का एक स्टॉप ऑब्जेक्ट है (बस स्टॉप, या ट्रैक के पास किट का स्टेशन स्टॉप) अपने प्लेटफ़ॉर्म के साथ। openOMSI हर स्टेशन से 25 m के भीतर अपने मोड की लेन पर सर्विस का रास्ता बनाता है।
+A station for every stop of the map	मैप के हर स्टॉप के लिए स्टेशन
+Stops not yet a station become one, named as the stop, its modes from the tracks and roads beside it	जो स्टॉप अभी स्टेशन नहीं हैं वे स्टेशन बन जाते हैं, स्टॉप के नाम से, और उनके मोड पास के ट्रैक और सड़कों से
+New station	नया स्टेशन
+Stations added:	जोड़े गए स्टेशन:
+Choose a station	एक स्टेशन चुनें
+Id	ID
+Modes	मोड
+Stop object	स्टॉप ऑब्जेक्ट
+Pick	चुनें
+Place	जगह
+Change to	इंटरचेंज
+Platforms	प्लेटफ़ॉर्म
+Side	तरफ़
+island	आइलैंड
+both	दोनों
+platform screen doors	प्लेटफ़ॉर्म स्क्रीन डोर
+Delete the station	स्टेशन हटाएँ
+A route is segments from station to station (the stops between them in order) and services over them: a branch, a short working or an express is another segment or service. openOMSI makes the timetable's tours from them and finds the way over the tracks itself.	रूट स्टेशन से स्टेशन तक के सेगमेंट (बीच के स्टॉप क्रम से) और उन पर चलने वाली सर्विस से बनता है: ब्रांच, छोटा फेरा या एक्सप्रेस एक और सेगमेंट या सर्विस है। openOMSI इनसे टाइमटेबल के टूर बनाता है और ट्रैक पर रास्ता ख़ुद ढूँढता है।
+Add two stations or more first (Stations)	पहले दो या अधिक स्टेशन जोड़ें (स्टेशन)
+New route	नया रूट
+Segment	सेगमेंट
+Stops between	बीच के स्टॉप
+Passed without stopping	बिना रुके गुज़रता है
+Standing at a stop	स्टॉप पर रुकना
+Speed	गति
+Way back	वापसी का रास्ता
+over the same segment	उसी सेगमेंट से
+another segment	दूसरा सेगमेंट
+Service	सर्विस
+Segments in order	क्रम से सेगमेंट
+From – to	से – तक
+Days	दिन
+every day	हर दिन
+weekends	सप्ताहांत
+Saturdays	शनिवार
+Sundays	रविवार
+turns back	वापस मुड़ती है
+goes round a loop	लूप घूमती है
+goes to depot	डिपो जाती है
+Cars in a train	ट्रेन में डिब्बे
+Every 10 minutes from 05:30 to 23:30 over all the route's segments	05:30 से 23:30 तक हर 10 मिनट, रूट के सभी सेगमेंट पर
+Departures of their own	अपने डिपार्चर
+For a service without a headway: its departures, as 06:00 06:12 06:30.	बिना हेडवे वाली सर्विस के लिए: उसके डिपार्चर, जैसे 06:00 06:12 06:30।
+Departures	डिपार्चर
+A service's depot sends out its vehicles: its AI group (Traffic and AI) supplies them, and the first departure of the day leaves by its gate along the rails to the first station.	सर्विस का डिपो उसके वाहन भेजता है: उसका AI ग्रुप (ट्रैफ़िक और AI) उन्हें देता है, और दिन का पहला डिपार्चर उसके गेट से रेल के साथ पहले स्टेशन तक जाता है।
+AI group	AI ग्रुप
+Capacity	क्षमता
+Its stop	इसका स्टॉप
+Gates	गेट
+Add a gate	गेट जोड़ें
+has a turning loop	टर्निंग लूप है
+Delete the depot	डिपो हटाएँ
+A gate needs a rail within 25 m and a way to the first station, or the trip starts at its station (the game's log says so).	गेट को 25 m के भीतर रेल और पहले स्टेशन तक रास्ता चाहिए, नहीं तो ट्रिप उसके स्टेशन से शुरू होती है (गेम का लॉग यही बताता है)।
+Which tracks serve which mode and how they are powered: a rule matches a track type (a file pattern, * for any letters), a tile or one piece; later rules win. Without a rule openOMSI guesses from the type's name.	कौन-से ट्रैक किस मोड के लिए हैं और उन्हें बिजली कैसे मिलती है: नियम किसी ट्रैक प्रकार (फ़ाइल पैटर्न, * मतलब कोई भी अक्षर), टाइल या एक टुकड़े से मेल खाता है; बाद के नियम जीतते हैं। नियम के बिना openOMSI प्रकार के नाम से अनुमान लगाता है।
+A rule for the selected track's type	चुने ट्रैक के प्रकार के लिए नियम
+Empty rule	खाली नियम
+(select a track in the view to make a rule for its type)	(उसके प्रकार का नियम बनाने के लिए व्यू में ट्रैक चुनें)
+Track type	ट्रैक प्रकार
+Only on tile / piece	सिर्फ़ टाइल / टुकड़ा
+id	ID
+in the street	सड़क में
+railway	अलग रेलवे
+overhead wire	ओवरहेड तार
+third rail	थर्ड रेल
+diesel	डीज़ल
+Tunnel	सुरंग
+yes	हाँ
+no	नहीं
+Gauge	गेज
+A map for buses alone has no line to power.	सिर्फ़ बसों वाले मैप में बिजली देने के लिए कोई लाइन नहीं है।
+Third rail	थर्ड रेल
+Trolleybus wire	ट्रॉलीबस तार
+Where the wire is, the player's tram or electric train needs a live section of it over its pantograph (dead sections and breaks stop the drive). Without spans openOMSI takes the current for granted. Spans are laid along the selected tracks.	जहाँ तार है, वहाँ खिलाड़ी की ट्राम या इलेक्ट्रिक ट्रेन के पैंटोग्राफ़ के ऊपर उसका चालू सेक्शन चाहिए (बंद सेक्शन और गैप से ड्राइव रुक जाती है)। स्पैन के बिना openOMSI मान लेता है कि करंट है। स्पैन चुने ट्रैक के साथ बिछाए जाते हैं।
+The player's metro train needs a live section of third rail beside its shoe. The kit's metro tracks carry the rail itself; spans say where it is fed. Spans are laid along the selected tracks.	खिलाड़ी की मेट्रो ट्रेन को उसके शू के पास थर्ड रेल का चालू सेक्शन चाहिए। किट के मेट्रो ट्रैक में रेल ख़ुद होती है; स्पैन बताते हैं कि उसे बिजली कहाँ मिलती है। स्पैन चुने ट्रैक के साथ बिछाए जाते हैं।
+openOMSI's trolleybuses run on this wire (trolley.txt beside global.cfg): a pole is powered only on a pair fed by a substation. Spans are laid over each way's lane of the selected roads, with the wire splines that show them.	openOMSI की ट्रॉलीबसें इसी तार पर चलती हैं (global.cfg के पास trolley.txt): पोल को बिजली सिर्फ़ उस जोड़ी पर मिलती है जिसे सबस्टेशन से बिजली मिलती है। स्पैन चुनी सड़कों की हर दिशा की लेन के ऊपर बिछाए जाते हैं, उन्हें दिखाने वाले तार स्प्लाइन के साथ।
+The line	लाइन
+Voltage	वोल्टेज
+Current	करंट
+direct	डायरेक्ट
+alternating	अल्टरनेटिंग
+Wire height	तार की ऊँचाई
+Wire spacing	तारों की दूरी
+Sections (each fed by a substation)	सेक्शन (हर एक को सबस्टेशन से बिजली)
+name	नाम
+live	चालू
+feeder Ω	फ़ीडर Ω
+Section	सेक्शन
+Spans	स्पैन
+one pair over the middle	बीच के ऊपर एक जोड़ी
+a pair over each 3.0 m lane	हर 3.0 m लेन के ऊपर एक जोड़ी
+a pair over each 3.5 m lane	हर 3.5 m लेन के ऊपर एक जोड़ी
+lay the wire splines too	तार स्प्लाइन भी बिछाएँ
+Wire the selected roads	चुनी सड़कों पर तार लगाएँ
+Electrify the selected tracks	चुने ट्रैक का विद्युतीकरण करें
+Take their spans off	उनके स्पैन हटाएँ
+(select roads in the view)	(व्यू में सड़कें चुनें)
+(select tracks in the view)	(व्यू में ट्रैक चुनें)
+Their spans are taken off	उनके स्पैन हटा दिए गए
+Spans laid:	बिछाए गए स्पैन:
+Gaps	गैप
+Insulators	इंसुलेटर
+Gap	गैप
+Insulator	इंसुलेटर
+Frogs (wire switches)	फ्रॉग (तार स्विच)
+Where three spans meet: the contact plate before it sets it by the current the bus draws (power) or by its indicator.	जहाँ तीन स्पैन मिलते हैं: उससे पहले की कॉन्टैक्ट प्लेट बस के लिए गए करंट (पावर) या उसके इंडिकेटर से उसे बदलती है।
+by current	करंट से
+by indicator	इंडिकेटर से
+Frog	फ्रॉग
+A switch listed here holds while a train stands on it, goes back to its rest position, and can be thrown by hand only or locked by a signal. Switches not listed work as before.	यहाँ दिया गया स्विच ट्रेन के उस पर खड़े रहते नहीं बदलता, अपनी सामान्य स्थिति में लौटता है, और सिर्फ़ हाथ से बदला जा सकता है या सिग्नल से लॉक हो सकता है। जो स्विच यहाँ नहीं हैं वे पहले की तरह काम करते हैं।
+The selected switch objects	चुने स्विच ऑब्जेक्ट
+simple	साधारण
+crossover	क्रॉसओवर
+double slip	डबल स्लिप
+diamond	डायमंड
+scissors	सिज़र्स
+rests straight	सामान्य: सीधा
+rests diverging	सामान्य: मोड़
+thrown by the route	रूट से बदले
+by hand only	सिर्फ़ हाथ से
+interlocked	इंटरलॉक्ड
+diverging	मोड़
+locked by	लॉक करने वाला
+Blocks	ब्लॉक
+A stretch of track that holds one AI train at a time, given by where it begins and ends on the rails; its signals show whether it is free. Blocks need the timetable's trains (the AI) to hold.	ट्रैक का एक हिस्सा जिसमें एक समय में एक ही AI ट्रेन रह सकती है, रेल पर उसकी शुरुआत और अंत से तय होता है; उसके सिग्नल दिखाते हैं कि वह ख़ाली है या नहीं। ब्लॉक सिर्फ़ टाइमटेबल की ट्रेनों (AI) पर लागू होते हैं।
+Ends	सिरे
+Block	ब्लॉक
+Click where the block begins	वहाँ क्लिक करें जहाँ ब्लॉक शुरू होता है
+Signals	सिग्नल
+A signal of the map tied to a block shows stop while the block is in use and go while it is free.	ब्लॉक से जुड़ा मैप का सिग्नल ब्लॉक के उपयोग में रहते "रुकें" और ख़ाली होने पर "चलें" दिखाता है।
+main	मुख्य
+distant	डिस्टेंट
+block	ब्लॉक
+shunting	शंटिंग
+speed	स्पीड
+tram	ट्राम
+Tram street track	सड़क में ट्राम ट्रैक
+Tram track on grass	घास पर ट्राम ट्रैक
+Railway track	रेलवे ट्रैक
+Metro track	मेट्रो ट्रैक
+Metro tunnel	मेट्रो सुरंग
+Tram platform	ट्राम प्लेटफ़ॉर्म
+Metro side platform	मेट्रो साइड प्लेटफ़ॉर्म
+Metro island platform	मेट्रो आइलैंड प्लेटफ़ॉर्म
+Railway side platform	रेलवे साइड प्लेटफ़ॉर्म
+Railway island platform	रेलवे आइलैंड प्लेटफ़ॉर्म
+Trolleybus wires (one pair)	ट्रॉलीबस तार (एक जोड़ी)
+Trolleybus wires, 3.0 m lanes	ट्रॉलीबस तार, 3.0 m लेन
+Trolleybus wires, 3.5 m lanes	ट्रॉलीबस तार, 3.5 m लेन
+Catenary mast (arm right)	कैटेनरी खंभा (भुजा दाएँ)
+Catenary mast (arm left)	कैटेनरी खंभा (भुजा बाएँ)
+Trolleybus pole (arm right)	ट्रॉलीबस खंभा (भुजा दाएँ)
+Trolleybus pole (arm left)	ट्रॉलीबस खंभा (भुजा बाएँ)
+Metro sign	मेट्रो साइन
+Platform shelter	प्लेटफ़ॉर्म शेल्टर
+Buffer stop	बफ़र स्टॉप
+Station stop	स्टेशन स्टॉप
+Bus	बस
+Tram	ट्राम
+Railway	रेलवे
+Metro	मेट्रो
+Trolleybus	ट्रॉलीबस
+buses on the streets, stops at the kerb	सड़कों पर बसें, किनारे पर स्टॉप
+street track under a contact wire, low platforms	संपर्क तार के नीचे सड़क में ट्रैक, निचले प्लेटफ़ॉर्म
+mainline track, stations with platforms, signals and blocks	मेनलाइन ट्रैक, प्लेटफ़ॉर्म वाले स्टेशन, सिग्नल और ब्लॉक
+track with a third rail, tunnels, high platforms	थर्ड रेल वाला ट्रैक, सुरंगें, ऊँचे प्लेटफ़ॉर्म
+buses under a pair of wires, frogs at junctions	तारों की जोड़ी के नीचे बसें, जंक्शन पर फ्रॉग
+Depot Square	डिपो चौक
+Park Gate	पार्क गेट
+Tram start	ट्राम स्टार्ट
+Loop line	लूप लाइन
+A trolleybus junction under its wires with three stations: save, then drive it in openOMSI with a trolleybus of your own.	तारों के नीचे तीन स्टेशनों वाला ट्रॉलीबस जंक्शन: सेव करें, फिर openOMSI में अपनी ट्रॉलीबस से चलाएँ।
+station stops:	स्टेशन स्टॉप:
+stations:	स्टेशन:
+routes:	रूट:
+Vehicles of other modes	दूसरे मोड के वाहन
+Services without a vehicle of their mode	अपने मोड के वाहन के बिना सर्विस
+openOMSI runs only vehicles of a Modern map's modes on it. This vehicle of the AI lists is made for another mode (its file says so, or it is a depot's vehicle and its shape says so), so the game leaves it out. Change it in Map > Traffic and AI, or add its mode to the map in Map settings.	openOMSI मॉडर्न मैप पर सिर्फ़ उसके मोड के वाहन चलाता है। AI सूचियों का यह वाहन दूसरे मोड के लिए बना है (इसकी फ़ाइल यह बताती है, या यह डिपो का वाहन है और इसकी बनावट यह बताती है), इसलिए गेम इसे नहीं चलाता। इसे मैप > ट्रैफ़िक और AI में बदलें, या मैप सेटिंग्स में इसका मोड मैप में जोड़ें।
+A service of the transit network takes its vehicles from its depot's AI group (or names one vehicle file). That group has no vehicle of the route's mode, so nothing runs it. Give the depot an AI group with such vehicles (Map > Traffic and AI), or choose another depot.	ट्रांज़िट नेटवर्क की सर्विस अपने वाहन अपने डिपो के AI ग्रुप से लेती है (या एक वाहन फ़ाइल बताती है)। उस ग्रुप में रूट के मोड का कोई वाहन नहीं है, इसलिए उस पर कुछ नहीं चलता। डिपो को ऐसे वाहनों वाला AI ग्रुप दें (ट्रैफ़िक और AI), या दूसरा डिपो चुनें।
+group	ग्रुप
+route	रूट
+its depot names no AI group	इसका डिपो कोई AI ग्रुप नहीं बताता
+no vehicle of the mode in	इस मोड का कोई वाहन नहीं, ग्रुप:
+Stations from OpenStreetMap	OpenStreetMap से स्टेशन
+Metro tracks	मेट्रो ट्रैक
+in tunnels too: build them with the kit's metro tunnel and cut the ground away (a Modern map)	सुरंगों में भी: इन्हें किट की मेट्रो सुरंग से बनाएँ और ज़मीन काट दें (मॉडर्न मैप)
+Start with a trolleybus line: a junction under its wires with frogs, three stations and two routes	ट्रॉलीबस लाइन से शुरू करें: फ्रॉग के साथ तारों के नीचे जंक्शन, तीन स्टेशन और दो रूट
+Stations (tram, metro, railway)	स्टेशन (ट्राम, मेट्रो, रेलवे)
+Each tram stop and station of the map's rail modes put with the kit's station stop beside the nearest track (within 25 m); every stop of the map then becomes a station of its transport folder	मैप के रेल मोड का हर ट्राम स्टॉप और स्टेशन सबसे पास के ट्रैक के बगल में (25 m के भीतर) किट के स्टेशन स्टॉप से रखा जाता है; फिर मैप का हर स्टॉप उसके transport फ़ोल्डर का स्टेशन बन जाता है
+Routes (tram, trolleybus, metro, railway)	रूट (ट्राम, ट्रॉलीबस, मेट्रो, रेलवे)
+Each route of the map's modes through two or more of its stations a segment of its line, the line's service as often as OpenStreetMap says (else every 10 minutes), from 05:30 to 23:30; openOMSI finds the way over the tracks	मैप के मोड का हर रूट जो उसके दो या अधिक स्टेशनों से गुज़रता है, अपनी लाइन का एक सेगमेंट बनता है, और लाइन की सर्विस उतनी बार चलती है जितना OpenStreetMap बताता है (नहीं तो हर 10 मिनट), 05:30 से 23:30 तक; ट्रैक पर रास्ता openOMSI ढूँढता है
+no vehicle of it is installed	इसका कोई वाहन इंस्टॉल नहीं है
+Its vehicles:	इसके वाहन:
+(select roads in the view, and the junctions between them)	(व्यू में सड़कें चुनें, और उनके बीच के जंक्शन)
+(select tracks in the view, and their switches)	(व्यू में ट्रैक चुनें, और उनके स्विच)
+A pair of wires over each way's kerb lane; through a selected junction only the lanes that join wired roads. Frogs are put where three wires meet.	हर दिशा की किनारे वाली लेन के ऊपर तारों की एक जोड़ी; चुने जंक्शन से सिर्फ़ वे लेन जो तार वाली सड़कों को जोड़ती हैं। जहाँ तीन तार मिलते हैं वहाँ फ्रॉग लगाए जाते हैं।
+The map's files are still being read	मैप की फ़ाइलें अभी पढ़ी जा रही हैं
+West Gate	पश्चिम गेट
+East Market	पूर्व बाज़ार
+North Park	उत्तर पार्क
+Market line	बाज़ार लाइन
+Park line	पार्क लाइन
+Trolleybus start	ट्रॉलीबस स्टार्ट
+frogs:	फ्रॉग:
+places where more than three wires meet get no frog: wire fewer turns there	जगहों पर तीन से ज़्यादा तार मिलते हैं, वहाँ फ्रॉग नहीं लगा: वहाँ कम मोड़ों पर तार लगाएँ
+Track ends that do not meet	ट्रैक के सिरे जो नहीं मिलते
+Two tracks run on into one another but their ends lie apart: the game joins rails only where their ends lie within 1.5 m, so no train or tram gets across (a route through there finds no way). "Fix" moves one end onto the other, arriving in line with it, and joins them.	दो ट्रैक एक-दूसरे में आगे बढ़ते हैं पर उनके सिरे अलग पड़े हैं: गेम रेलें तभी जोड़ता है जब सिरे 1.5 m के भीतर हों, इसलिए कोई ट्रेन या ट्राम यहाँ से पार नहीं जाती (वहाँ से गुज़रने वाला रूट रास्ता नहीं पाता)। "ठीक करें" एक सिरे को दूसरे पर, उसकी सीध में, ले जाता है और दोनों को जोड़ देता है।
+tracks	ट्रैक
+Select the roads or tracks to build into the ground	ज़मीन में उतारने के लिए सड़कें या ट्रैक चुनें
+Cutting	कटिंग
+Cut and cover tunnel	कट-एंड-कवर सुरंग
+Nothing to build into the ground	ज़मीन में उतारने को कुछ नहीं
+Build into the ground	ज़मीन में उतारें
+The chain of the selected pieces lowered, with ramps at its ends. Cut: an open cutting with sloped banks. Cover: open ramps down to the portals and a tunnel under the ground between them (a shell of walls and roof, a portal at each mouth).	चुने टुकड़ों की शृंखला नीचे उतारी जाती है, सिरों पर रैंप के साथ। कट: ढलानदार किनारों वाली खुली कटिंग। कवर: पोर्टल तक नीचे जाते खुले रैंप और उनके बीच ज़मीन के नीचे सुरंग (दीवारों और छत का ढाँचा, हर मुहाने पर पोर्टल)।
+Cover (tunnel)	कवर (सुरंग)
+Ramp gradient	रैंप की ढलान
+Banks	किनारे की ढलानें
+ m out per metre up	 m बाहर प्रति मीटर ऊँचाई
+Ramps	रैंप
+at the start	शुरू में
+at the end	अंत में
+A tunnel needs a depth of 6 m or more: shallower it stays an open cutting	सुरंग के लिए 6 m या उससे ज़्यादा गहराई चाहिए: उससे उथली होने पर वह खुली कटिंग ही रहती है
+Each ramp is about	हर रैंप लगभग
+Pieces lowered:	नीचे उतारे टुकड़े:
+tunnel pieces:	सुरंग के टुकड़े:
+portals:	पोर्टल:
+their overhead taken off: wire them again (Transit network, Power)	उनका ओवरहेड तार हटा दिया गया: फिर से तार लगाएँ (ट्रांज़िट नेटवर्क, बिजली)
+Platforms at the stations	स्टेशनों पर प्लेटफ़ॉर्म
+The kit's platform of each rail station's mode beside its track, on the side its stop stands, as long as its platform says	हर रेल स्टेशन के मोड का किट वाला प्लेटफ़ॉर्म उसके ट्रैक के पास, उस तरफ़ जहाँ उसका स्टॉप है, उतना लंबा जितना उसका प्लेटफ़ॉर्म बताता है
+Platforms laid:	बिछाए गए प्लेटफ़ॉर्म:
+lay the wires, masts, poles and frogs too	तार, मास्ट, खंभे और फ्रॉग भी लगाएँ
+Catenary mast	कैटेनरी मास्ट
+Trolleybus pole	ट्रॉलीबस खंभा
+Trolleybus frog	ट्रॉलीबस फ्रॉग
+Section insulator	सेक्शन इंसुलेटर
+Lake	झील
+River	नदी
+Water level:	जल स्तर:
+Click the shore round and close it on the first point (Enter closes too, right-click takes a point back). The ground inside is dug to a bed and the banks slope to the shore.	किनारे के चारों ओर क्लिक करें और पहले बिंदु पर बंद करें (Enter से भी बंद होता है, राइट-क्लिक एक बिंदु वापस लेता है)। अंदर की ज़मीन तल तक खोदी जाती है और किनारे की ढलानें तट की ओर उतरती हैं।
+Click the river's middle line from its source on and finish on the last point (or Enter). Water in OMSI lies at one level for a tile: a river runs level.	नदी की मध्य रेखा पर उसके उद्गम से क्लिक करना शुरू करें और अंतिम बिंदु पर समाप्त करें (या Enter)। OMSI में पानी एक टाइल पर एक ही स्तर पर रहता है: नदी समतल बहती है।
+Add as a ground texture	भू-टेक्सचर के रूप में जोड़ें
+A junction was not made: its roads are too short or too close together. Lengthen them or move the junctions apart.	जंक्शन नहीं बना: इसकी सड़कें बहुत छोटी हैं या बहुत पास-पास हैं। उन्हें लंबा करें या जंक्शनों को दूर ले जाएँ।
+Display	प्रदर्शन
+X-ray (Alt+Z): see and pick through the mesh	एक्स-रे (Alt+Z): मेश के आर-पार देखें और चुनें
+Show the textures	टेक्सचर दिखाएँ
+The object's own pictures under the editing shading	संपादन शेडिंग के नीचे ऑब्जेक्ट की अपनी तस्वीरें
+Shading opacity	शेडिंग की अपारदर्शिता
+0 %: the textures as they are; 100 %: the plain shading. The picture is renewed a moment after each change.	0 %: टेक्सचर जैसे हैं वैसे; 100 %: सादी शेडिंग। हर बदलाव के कुछ क्षण बाद तस्वीर नई हो जाती है।
+Give this material to the selected faces	यह मटेरियल चुने हुए फलकों को दें
+Select faces to give them a material.	फलकों को मटेरियल देने के लिए उन्हें चुनें।
+Road markings	सड़क मार्किंग
+Paint my own markings	अपनी खुद की मार्किंग बनाएँ
+The maker paints the lines onto the roadway texture: pick a plain asphalt texture, or its own lines show too	मेकर सड़क की बनावट (टेक्सचर) पर रेखाएँ बनाता है: सादा डामर टेक्सचर चुनें, वरना उसकी अपनी रेखाएँ भी दिखेंगी
+Standard for these lanes	इन लेन के लिए मानक
+Add a line	रेखा जोड़ें
+Across the roadway from its middle (right of the road's way is plus)	सड़क के आर-पार, उसके बीच से (सड़क की दिशा के दाएँ ओर धन है)
+Solid	अखंड
+Dashed	खंडित
+Double solid	दोहरी अखंड
+Solid and dashed	अखंड और खंडित
+The line's width	रेखा की चौड़ाई
+Dash length	डैश की लंबाई
+Gap between dashes	डैश के बीच अंतर
+Draw road markings	सड़क के निशान बनाएँ
+Pen	कलम
+Straight line	सीधी रेखा
+Dashed line	बिंदीदार रेखा
+Rectangle	आयत
+Arrow	तीर
+Eraser	रबर
+Pointing back	पीछे की ओर इशारा
+Snap to 5 cm	5 सेमी पर स्नैप करें
+Drag to draw. The picture is the roadway as the texture lies on it, up is the way of the road; it repeats along, so what leaves at the top comes in at the bottom.	खींचकर बनाएँ। चित्र वह कैरिजवे है जैसी उस पर टेक्सचर बिछी है, ऊपर सड़क की दिशा है; यह लंबाई में दोहराता है, इसलिए जो ऊपर से निकलता है वह नीचे से आता है।
+Pick a roadway texture first	पहले कैरिजवे की टेक्सचर चुनें
+Draw by hand…	हाथ से बनाएँ…
+A drawing board with a pen, lines, arrows and an eraser: what you draw goes onto the roadway	कलम, रेखाओं, तीरों और रबर वाला ड्रॉइंग बोर्ड: आप जो बनाते हैं वह कैरिजवे पर जाता है
+a drawing is on the road	सड़क पर एक चित्र है
+Painted line	रंगी रेखा
+Stop line	स्टॉप लाइन
+A wide solid line across a lane: draw it across the road	लेन के आर-पार चौड़ी ठोस रेखा: इसे सड़क के आर-पार खींचें
+Crossing	क्रॉसिंग
+Zebra bars: draw it across the road, the bars lie along it	ज़ेबरा: सड़क के आर-पार खींचें, पट्टियाँ सड़क के साथ-साथ रहती हैं
+Centre line	मध्य रेखा
+A double yellow line	दोहरी पीली रेखा
+Lane line	लेन रेखा
+A white dashed line	सफ़ेद टूटी रेखा
+Double	दोहरी
+Crossing (bars)	क्रॉसिंग (पट्टियाँ)
+A line's width (each line of a double one); a crossing's reach along the road	रेखा की चौड़ाई (दोहरी में हर एक की); क्रॉसिंग की सड़क के साथ गहराई
+Bar	पट्टी
+Dash	डैश
+Draw with this line	इस रेखा से बनाएँ
+It is made as a spline type of the content folder (Splines\\openMapper\\marks) and chosen: draw it with Line, Arc or Curve, over the asphalt	कंटेंट फ़ोल्डर (Splines\\openMapper\\marks) में स्प्लाइन प्रकार के रूप में बनती है और चुनी जाती है: इसे लाइन, आर्क या कर्व से डामर के ऊपर बनाएँ
+Painted line made: draw with it in the junction editor	रंगी रेखा बन गई: चौराहा संपादक में इससे बनाएँ

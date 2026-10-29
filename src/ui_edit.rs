@@ -411,6 +411,7 @@ pub fn group_properties(ui: &mut egui::Ui, ed: &mut Editor, lib: &Library, actio
         }
         crate::ui_profile::profile_section(ui, ed, actions);
         paint_along_section(ui, ed, lib);
+        dig_section(ui, ed, lib);
         if splines > 0 && !ed.editing_paths() {
             ui.add_space(4.0);
             if ui.button(icons::labelled(Icon::Route, tr("Edit its AI lanes", "Править полосы ИИ"))).on_hover_text(tr("Its lanes become AI paths of their own (the same lines, the same way) that the Logic tool's Edit existing bends, moves and deletes. The road keeps its look.", "Полосы становятся отдельными путями ИИ (те же линии, то же направление): их можно двигать, гнуть и удалять в Логике > Пути ИИ > Править готовые. Вид дороги не меняется.")).clicked() {
@@ -727,6 +728,58 @@ fn parallel_inner(ui: &mut egui::Ui, ed: &mut Editor, lib: &Library, k: TileKey,
         }
     });
     ui.data_mut(|d| d.insert_temp(wkey, chosen));
+}
+
+/// The selected roads or tracks built into the ground: an open cutting, or cut and cover.
+pub fn dig_section(ui: &mut egui::Ui, ed: &mut Editor, lib: &Library) {
+    if !ed.selection().iter().any(|s| matches!(s, Sel::Spline(..))) || ed.editing_paths() {
+        return;
+    }
+    egui::CollapsingHeader::new(RichText::new(tr("Build into the ground", "Опустить в землю")).strong()).id_salt("dig").show(ui, |ui| {
+        let key = egui::Id::new("dig options");
+        let mut o: crate::dig::Options = ui.data_mut(|d| d.get_temp(key)).unwrap_or_default();
+        ui.label(RichText::new(tr("The chain of the selected pieces lowered, with ramps at its ends. Cut: an open cutting with sloped banks. Cover: open ramps down to the portals and a tunnel under the ground between them (a shell of walls and roof, a portal at each mouth).", "Цепочка выбранных кусков опускается, на концах — пандусы. Выемка: открытая, со склонами. Тоннель: открытые пандусы к порталам, а между ними тоннель под землёй (стены и свод, портал у каждого въезда).")).small().color(TEXT_DIM));
+        ui.horizontal(|ui| {
+            ui.selectable_value(&mut o.kind, crate::dig::Kind::Cut, tr("Cutting", "Выемка"));
+            ui.selectable_value(&mut o.kind, crate::dig::Kind::Cover, tr("Cover (tunnel)", "Тоннель (закрытый)"));
+        });
+        egui::Grid::new("dig grid").num_columns(2).spacing(Vec2::new(8.0, 4.0)).show(ui, |ui| {
+            ui.label(RichText::new(tr("Depth", "Глубина")).color(TEXT_DIM));
+            ui.add(egui::DragValue::new(&mut o.depth).range(1.0..=30.0).speed(0.1).suffix(" m"));
+            ui.end_row();
+            ui.label(RichText::new(tr("Ramp gradient", "Уклон пандуса")).color(TEXT_DIM));
+            ui.add(egui::DragValue::new(&mut o.grade).range(1.0..=12.0).speed(0.1).suffix(" %"));
+            ui.end_row();
+            ui.label(RichText::new(tr("Banks", "Склоны")).color(TEXT_DIM));
+            ui.add(egui::DragValue::new(&mut o.bank).range(0.3..=4.0).speed(0.05).suffix(tr(" m out per metre up", " м в сторону на метр вверх")));
+            ui.end_row();
+            ui.label(RichText::new(tr("Ramps", "Пандусы")).color(TEXT_DIM));
+            ui.horizontal(|ui| {
+                ui.checkbox(&mut o.ramp_start, tr("at the start", "в начале"));
+                ui.checkbox(&mut o.ramp_end, tr("at the end", "в конце"));
+            });
+            ui.end_row();
+        });
+        if o.kind == crate::dig::Kind::Cover && o.depth < crate::dig::CLEAR + 0.8 {
+            ui.label(RichText::new(tr("A tunnel needs a depth of 6 m or more: shallower it stays an open cutting", "Тоннелю нужна глубина от 6 м: мельче остаётся открытая выемка")).small().color(Color32::from_rgb(230, 160, 60)));
+        }
+        let ramp = o.depth / (o.grade / 100.0) * 1.5;
+        ui.label(RichText::new(format!("{} {:.0} m", tr("Each ramp is about", "Каждый пандус примерно"), ramp)).small().color(TEXT_DIM));
+        if ui.button(icons::labelled(Icon::Lower, tr("Build into the ground", "Опустить в землю"))).clicked() {
+            match crate::dig::into_ground(ed, lib, o) {
+                Ok(d) => {
+                    let mut text = format!("{} {} · {} {} · {} {}", tr("Pieces lowered:", "Кусков опущено:"), d.pieces, tr("tunnel pieces:", "кусков тоннеля:"), d.tunnels, tr("portals:", "порталов:"), d.portals);
+                    if d.unwired > 0 {
+                        text += &format!(" · {}", tr("their overhead taken off: wire them again (Transit network, Power)", "их контактная сеть снята: проложите её заново (Транспортная сеть, Питание)"));
+                    }
+                    ed.toast(text);
+                }
+                Err(e) if !e.is_empty() => ed.toast(e),
+                Err(_) => {}
+            }
+        }
+        ui.data_mut(|d| d.insert_temp(key, o));
+    });
 }
 
 /// The ground painted along the selected roads: a layer under them or beside them.

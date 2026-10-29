@@ -40,6 +40,8 @@ pub type End = (TileKey, i64, bool);
 pub enum Fix {
     /// Join two free road ends that lie on one another.
     Link(End, End),
+    /// Move the first track end onto the second, in line with it, and join them.
+    CloseGap(End, End),
     /// Forget a link to a spline that is not there.
     Unlink(End),
     /// Give new objects IDCodes above every one in use.
@@ -119,6 +121,12 @@ pub enum Kind {
     LinkLost,
     HeadUnlinked,
     DepotFile,
+    TransitFile,
+    StationNoLane,
+    StationStopGone,
+    VehicleMode,
+    ServiceNoVehicle,
+    TrackGap,
 }
 
 impl Kind {
@@ -151,6 +159,12 @@ impl Kind {
             Kind::LinkLost => tr("Objects linked to one that is gone", "Объекты, связанные с исчезнувшим"),
             Kind::HeadUnlinked => tr("Signal heads linked to no crossing", "Светофоры без перекрёстка"),
             Kind::DepotFile => tr("Depot files (destinations)", "Файлы депо (конечные)"),
+            Kind::TransitFile => tr("Transit network problems", "Проблемы транспортной сети"),
+            Kind::StationNoLane => tr("Stations without their mode's lanes", "Станции без полос своего вида"),
+            Kind::StationStopGone => tr("Stations without their stop", "Станции без остановки"),
+            Kind::VehicleMode => tr("Vehicles of other modes", "Транспорт других видов"),
+            Kind::ServiceNoVehicle => tr("Services without a vehicle of their mode", "Режимы движения без транспорта своего вида"),
+            Kind::TrackGap => tr("Track ends that do not meet", "Концы путей, которые не сходятся"),
         }
     }
 
@@ -183,6 +197,12 @@ impl Kind {
             Kind::LinkLost => tr("An object takes its state ([varparent]) from an object no longer on the map: a signal head stays dark, a display blank. Link it to another in its properties (Linked objects), or \"Fix\" forgets the link.", "Объект берёт состояние ([varparent]) от объекта, которого больше нет на карте: светофор не горит, табло пустое. Свяжите его с другим в свойствах («Связанные объекты») или «Исправить» уберёт связь."),
             Kind::HeadUnlinked => tr("A traffic light's signal head takes its light from a crossing's program ([varparent]); this one is linked to none while others like it are, so it stays dark in the game. Select it and link it in its properties (Linked objects).", "Головка светофора берёт сигнал из программы перекрёстка ([varparent]); эта ни с чем не связана, хотя такие же связаны, и в игре она не горит. Выберите её и свяжите в свойствах («Связанные объекты»)."),
             Kind::DepotFile => tr("A depot file (.hof) gives the buses their destinations, the stop names on their displays and the routes their IBIS knows. Without one the signs stay empty and the IBIS knows no line. \"Fix\" makes it from the map's lines, or adds what the lines need to the map's own (Map > Depot files to see and change it).", "Файл депо (.hof) даёт автобусам конечные, имена остановок на табло и маршруты, которые знает IBIS. Без него указатели пусты, а IBIS не знает ни одной линии. «Исправить» создаст его по линиям карты или добавит в собственный файл карты то, чего не хватает линиям (Карта > Файлы депо, чтобы посмотреть и изменить)."),
+            Kind::TransitFile => tr("openOMSI's own reader finds this in the map's transport folder (stations, routes, wires, switches, depots, signals): a service it names is skipped, a section or a block left out. Open Map > Transit network to change it.", "Это находит в папке transport карты (станции, маршруты, провода, стрелки, депо, сигналы) собственный модуль openOMSI: режим движения с ошибкой пропускается, секция или блок-участок не учитываются. Откройте Карта > Транспортная сеть, чтобы исправить."),
+            Kind::StationNoLane => tr("openOMSI routes a service over the lanes of its mode within 25 m of each station (rails for trams, metro and trains, streets for buses and trolleybuses). This station has none of its modes' near, so its services cannot run. Move the stop next to the track or road, or lay one there.", "openOMSI прокладывает режим движения по полосам своего вида в пределах 25 м от каждой станции (рельсы для трамвая, метро и поездов, улицы для автобусов и троллейбусов). У этой станции рядом нет полос её видов, её рейсы не пойдут. Передвиньте остановку к пути или дороге или проложите их там."),
+            Kind::StationStopGone => tr("A station is found by the game among the map's stops: by its stop object, else by its name. This one's object is no stop on the map and no stop has its name, so the services through it are skipped. Pick its stop again in Map > Transit network, Stations.", "Игра ищет станцию среди остановок карты: по объекту остановки, иначе по имени. Объект этой — не остановка на карте, и остановки с её именем нет, поэтому режимы через неё пропускаются. Выберите её остановку заново в Карта > Транспортная сеть, Станции."),
+            Kind::TrackGap => tr("Two tracks run on into one another but their ends lie apart: the game joins rails only where their ends lie within 1.5 m, so no train or tram gets across (a route through there finds no way). \"Fix\" moves one end onto the other, arriving in line with it, and joins them.", "Два пути продолжают друг друга, но их концы разошлись: игра соединяет рельсы, только если концы ближе 1,5 м, и ни поезд, ни трамвай здесь не проедет (маршрут через это место не найдёт пути). «Исправить» передвинет один конец на другой, в линию с ним, и соединит их."),
+            Kind::VehicleMode => tr("openOMSI runs only vehicles of a Modern map's modes on it. This vehicle of the AI lists is made for another mode (its file says so, or it is a depot's vehicle and its shape says so), so the game leaves it out. Change it in Map > Traffic and AI, or add its mode to the map in Map settings.", "openOMSI пускает на современную карту только транспорт её видов. Этот транспорт из списков ИИ сделан для другого вида (так сказано в его файле, или это транспорт депо и так видно по его устройству), и игра его не выпустит. Замените его в Карта > Трафик и ИИ или добавьте его вид карте в настройках карты."),
+            Kind::ServiceNoVehicle => tr("A service of the transit network takes its vehicles from its depot's AI group (or names one vehicle file). That group has no vehicle of the route's mode, so nothing runs it. Give the depot an AI group with such vehicles (Map > Traffic and AI), or choose another depot.", "Режим движения транспортной сети берёт транспорт из группы ИИ своего депо (или указывает один файл транспорта). В этой группе нет транспорта вида маршрута, и по нему никто не поедет. Дайте депо группу ИИ с таким транспортом («Трафик и ИИ») или выберите другое депо."),
             Kind::SignalRouteBroken => tr("A signal route names a signal or track pieces no longer on the map: the signal may never clear. Open Map > Signal routes and take the track again, or delete the route.", "Маршрут сигнала указывает сигнал или участки пути, которых больше нет на карте: сигнал может так и не открыться. Откройте Карта > Маршруты сигналов и возьмите пути заново или удалите маршрут."),
         }
     }
@@ -215,6 +235,8 @@ struct Snapshot {
     tt_doc: Option<Document>,
     /// The bus stops, with the tile each is on.
     stops: Vec<(TileKey, crate::stops::Found)>,
+    /// A Modern map's transit network checked (see `transit_issues`).
+    transit: Vec<Issue>,
 }
 
 /// What the catalogue says of a file.
@@ -322,7 +344,96 @@ fn snapshot(doc: &Document, lib: &Library) -> Snapshot {
         object_ids: doc.tiles.values().flat_map(|t| t.tile.objects.iter().chain(&t.tile.attach_objects).map(|o| o.id).chain(t.tile.spline_attachments.iter().map(|a| a.id)).chain(t.chrono.iter().flat_map(|c| c.objects.iter().chain(&c.attach_objects).map(|o| o.id)))).collect(),
         stops: doc.tiles.iter().flat_map(|(k, t)| t.tile.objects.iter().filter(|o| o.flag == 7 && o.extra.len() >= 4).map(move |o| (*k, crate::stops::Found { id: o.id, name: o.extra[0].clone(), at: tile_origin(*k) + DVec2::new(o.pos[0], o.pos[1]) }))).collect(),
         tt_doc: (!doc.timetable.lines.is_empty() || !doc.timetable.trips.is_empty() || !doc.traffic.veh_groups.is_empty()).then(|| doc.for_reading()),
+        transit: transit_issues(doc, lib),
     }
+}
+
+/// A Modern map's transit network: what openOMSI's own reader finds in its files, stations
+/// whose stop is gone, stations without a lane of their modes within 25 m.
+fn transit_issues(doc: &Document, lib: &Library) -> Vec<Issue> {
+    let t = &doc.transit;
+    if !t.is_modern() && !t.has_any_file() {
+        return Vec::new();
+    }
+    let mut out: Vec<Issue> = t
+        .problems()
+        .into_iter()
+        .map(|p| Issue { severity: if p.error { Severity::Error } else { Severity::Warning }, kind: Kind::TransitFile, title: p.file, detail: p.message, at: None, sel: None, fix: None })
+        .collect();
+    let stops = crate::stops::all(doc);
+    let kinds = |file: &str| lib.find(file).and_then(|a| match a.category {
+        Category::Tracks => Some(true),
+        Category::Roads => Some(false),
+        _ => None,
+    });
+    let st = t.file(crate::transit::File::Stations);
+    for i in st.of("station") {
+        let b = &st.blocks[i];
+        let modes = crate::transit::Modes::parse(&b.str("modes"));
+        let object = b.get("object").and_then(|o| o.trim().parse::<i64>().ok());
+        let stop = object.and_then(|o| stops.iter().find(|s| s.id == o)).or_else(|| stops.iter().find(|s| s.name.trim().eq_ignore_ascii_case(b.str("name").trim()) || s.name.trim().eq_ignore_ascii_case(b.id().trim())));
+        let at = b.vec3("pos").map(|p| DVec2::new(p[0], p[1])).or(stop.map(|s| s.at));
+        let title = format!("{} {}", tr("station", "станция"), b.id());
+        if stop.is_none() {
+            out.push(Issue { severity: Severity::Error, kind: Kind::StationStopGone, title: title.clone(), detail: b.str("name"), at, sel: None, fix: None });
+        }
+        if let (Some(p), false) = (at, modes.is_empty()) {
+            let near = crate::transit::lay::modes_near(doc, p, modes, &kinds);
+            if near.is_empty() {
+                out.push(Issue { severity: Severity::Error, kind: Kind::StationNoLane, title, detail: modes.labels(), at: Some(p), sel: stop.and_then(|s| doc.tiles.iter().find(|(_, tl)| tl.tile.objects.iter().any(|o| o.id == s.id)).map(|(k, _)| Sel::Object(*k, s.id))), fix: None });
+            }
+        }
+    }
+    out.extend(vehicle_issues(doc));
+    out
+}
+
+/// The vehicles of a Modern map: those the AI lists name that openOMSI leaves out (a mode the
+/// map does not have; a car of no mode stays, as the game keeps it), and the services of the
+/// transit network that have no vehicle of their route's mode.
+fn vehicle_issues(doc: &Document) -> Vec<Issue> {
+    use crate::transit::vehicles::{group_files, Known};
+    let map = doc.transit.modes;
+    if map.is_empty() {
+        return Vec::new();
+    }
+    let mut known = Known::default();
+    let mut out = Vec::new();
+    let mut seen = HashSet::new();
+    for g in &doc.traffic.groups {
+        for f in group_files(g) {
+            let Some(v) = known.get(&f) else { continue };
+            // (a depot's buses are judged by their shape too: they run the timetable)
+            if (v.declared || g.is_depot) && !v.fits(map) && seen.insert(f.to_lowercase()) {
+                out.push(Issue { severity: Severity::Warning, kind: Kind::VehicleMode, title: short(&f), detail: format!("{} {}: {}", tr("group", "группа"), g.name, v.modes.labels()), at: None, sel: None, fix: None });
+            }
+        }
+    }
+    let rt = doc.transit.file(crate::transit::File::Routes);
+    let dp = doc.transit.file(crate::transit::File::Depots);
+    for r in rt.of("route") {
+        let Some(mode) = crate::transit::Mode::from_name(&rt.blocks[r].str("mode")) else { continue };
+        for j in rt.children(r, crate::transit::ROUTE_CHILDREN).filter(|j| rt.blocks[*j].name == "service") {
+            let sv = &rt.blocks[j];
+            let title = format!("{} {} / {}", tr("route", "маршрут"), rt.blocks[r].id(), sv.id());
+            let vehicle = sv.str("vehicle");
+            if !vehicle.trim().is_empty() {
+                if let Some(v) = known.get(&vehicle) {
+                    if !v.modes.contains(mode) {
+                        out.push(Issue { severity: Severity::Error, kind: Kind::ServiceNoVehicle, title: title.clone(), detail: format!("{}: {}", short(&vehicle), v.modes.labels()), at: None, sel: None, fix: None });
+                    }
+                }
+                continue;
+            }
+            let group = dp.find("depot", &sv.str("depot")).map(|d| dp.blocks[d].str("ai_group")).unwrap_or_default();
+            let files = doc.traffic.groups.iter().find(|g| g.name.eq_ignore_ascii_case(group.trim())).map(group_files).unwrap_or_default();
+            if !files.iter().any(|f| known.get(f).is_some_and(|v| v.modes.contains(mode))) {
+                let why = if group.trim().is_empty() { tr("its depot names no AI group", "его депо не указывает группу ИИ").to_string() } else { format!("{} {}", tr("no vehicle of the mode in", "нет транспорта этого вида в"), group) };
+                out.push(Issue { severity: Severity::Warning, kind: Kind::ServiceNoVehicle, title, detail: format!("{}: {why}", mode.label()), at: None, sel: None, fix: None });
+            }
+        }
+    }
+    out
 }
 
 /// A content file (relative to the roots) that is there.
@@ -437,7 +548,7 @@ impl Grid {
 const LIST: usize = 300;
 
 fn run(s: Snapshot, roots: Vec<PathBuf>) -> Vec<Issue> {
-    let mut out: Vec<Issue> = Vec::new();
+    let mut out: Vec<Issue> = s.transit.clone();
     let issue = |severity, kind, title: String, detail: String, at: Option<DVec2>, sel: Option<Sel>, fix: Option<Fix>| Issue { severity, kind, title, detail, at, sel, fix };
 
     // files: each missing one once, with how often and where it is first used
@@ -547,6 +658,48 @@ fn run(s: Snapshot, roots: Vec<PathBuf>) -> Vec<Issue> {
         for (e, link) in [(0, sp.prev), (1, sp.next)] {
             if link != 0 && !by_id.contains_key(&link) {
                 out.push(issue(Severity::Warning, Kind::BrokenLink, format!("{} {}", tr("spline", "сплайн"), sp.id), format!("{} {link}", tr("goes on into", "продолжается в")), Some(sp.ends[e].0.truncate()), Some(Sel::Spline(sp.tile, sp.id)), Some(Fix::Unlink((sp.tile, sp.id, e == 1)))));
+            }
+        }
+    }
+
+    // track ends a little apart that run on into one another: the game joins rails only
+    // within 1.5 m
+    let mut ends = Grid::new(4.0);
+    for (i, sp) in s.splines.iter().enumerate().filter(|(_, sp)| s.kinds.get(&sp.file.to_lowercase()).map(|k| k.cat == Category::Tracks).unwrap_or(false)) {
+        for (e, free) in [(0, sp.prev == 0), (1, sp.next == 0)] {
+            if free {
+                ends.add(sp.ends[e].0.truncate(), i * 2 + e);
+            }
+        }
+    }
+    let mut gap_seen: HashSet<(usize, usize)> = HashSet::new();
+    for (i, sp) in s.splines.iter().enumerate() {
+        for e in 0..2 {
+            let me = i * 2 + e;
+            if (e == 0 && sp.prev != 0) || (e == 1 && sp.next != 0) || !s.kinds.get(&sp.file.to_lowercase()).map(|k| k.cat == Category::Tracks).unwrap_or(false) {
+                continue;
+            }
+            let (p, h) = sp.ends[e];
+            for j in ends.near(p.truncate()) {
+                let (oi, oe) = (j / 2, j % 2);
+                if oi == i || !gap_seen.insert((j.min(me), j.max(me))) {
+                    continue;
+                }
+                let o = &s.splines[oi];
+                let (q, g) = o.ends[oe];
+                let d = (p - q).truncate().length();
+                let turn = ((h - g - 180.0).rem_euclid(360.0) + 180.0).rem_euclid(360.0) - 180.0;
+                if (0.5..=4.0).contains(&d) && (p.z - q.z).abs() < 1.0 && turn.abs() < 25.0 {
+                    out.push(issue(
+                        Severity::Warning,
+                        Kind::TrackGap,
+                        format!("{} {} / {}", tr("tracks", "пути"), sp.id, o.id),
+                        format!("{:.2} m {}", d, tr("apart", "между ними")),
+                        Some(p.truncate()),
+                        Some(Sel::Spline(sp.tile, sp.id)),
+                        Some(Fix::CloseGap((sp.tile, sp.id, e == 1), (o.tile, o.id, oe == 1))),
+                    ));
+                }
             }
         }
     }
@@ -870,7 +1023,9 @@ fn timetable_issues(d: &Document, roots: &[PathBuf], out: &mut Vec<Issue>) {
     for (name, n) in by_scenario {
         out.push(Issue { severity: Severity::Info, kind: Kind::ChronoUnmatched, title: name, detail: format!("{n} {}", tr("changes of nothing", "изменений впустую")), at: None, sel: None, fix: None });
     }
-    let used: HashSet<i64> = tt.trips.iter().flat_map(|t| t.stations.iter().copied()).collect();
+    // (a Modern map's stations are called at by the trips the game makes from its routes)
+    let st = d.transit.file(crate::transit::File::Stations);
+    let used: HashSet<i64> = tt.trips.iter().flat_map(|t| t.stations.iter().copied()).chain(st.of("station").filter_map(|i| st.blocks[i].get("object").and_then(|o| o.trim().parse().ok()))).collect();
     for st in tt.stops.iter().filter(|st| !used.contains(&st.object_id)) {
         let (at, sel) = place(&mut files, st.object_id);
         out.push(Issue { severity: Severity::Info, kind: Kind::StopUnused, title: st.name.clone(), detail: String::new(), at, sel, fix: None });
@@ -895,6 +1050,31 @@ pub fn apply(ed: &mut Editor, fix: &Fix) -> bool {
     let Some(doc) = ed.doc.as_mut() else { return false };
     ed.history.begin(tr("Fix from the map check", "Исправление из проверки карты"));
     let done = match fix {
+        Fix::CloseGap(a, b) => {
+            // the first end onto the second, arriving the way the second runs on, then joined
+            let Some(other) = doc.spline(b.0, b.1) else { return false };
+            let c = omsi_geometry::SplineCurve::from_map(other, tile_origin(b.0));
+            let (q, out) = if b.2 { (c.end_point(), c.heading_at(other.length)) } else { (c.point_at(0.0), c.heading_at(0.0) + 180.0) };
+            let ground = |p: DVec2| doc.ground(p);
+            let Ok(plan) = crate::reshape::drag_end_aligned(doc, a.0, a.1, a.2, q.truncate(), crate::roads::norm_deg(out + 180.0), &ground, &|_| false) else { return false };
+            for k in crate::reshape::tiles_of(doc, &plan) {
+                ed.history.touch_tile(doc, k);
+            }
+            crate::reshape::apply(doc, &plan);
+            for (me, them) in [(a, b), (b, a)] {
+                ed.history.touch_tile(doc, me.0);
+                let t = doc.tiles.get_mut(&me.0).unwrap();
+                if let Some(s) = t.tile.splines.iter_mut().find(|s| s.id == me.1 && !s.deleted) {
+                    if me.2 {
+                        s.next_id = them.1;
+                    } else {
+                        s.prev_id = them.1;
+                    }
+                }
+                t.touch_content();
+            }
+            true
+        }
         Fix::Link(a, b) => {
             // (still both free: the map may have changed since the check)
             let free = |doc: &Document, e: &End| doc.spline(e.0, e.1).map(|s| if e.2 { s.next_id == 0 } else { s.prev_id == 0 }).unwrap_or(false);
@@ -1354,7 +1534,7 @@ mod tests {
     fn snap(splines: Vec<SplineRec>) -> Snapshot {
         let mut kinds = HashMap::new();
         kinds.insert("splines\\road.sli".to_string(), KindRec { cat: Category::Roads, half_width: 4.0, bus_stop: false, lanes: true, abs_height: false, lamp: false, light_head: false });
-        Snapshot { objects: Vec::new(), splines, chrono_lanes: Vec::new(), kinds, entries: Vec::new(), next_id: 100, listed_missing: Vec::new(), no_terrain: Vec::new(), unlit: HashSet::new(), ground: Vec::new(), map_dir: PathBuf::new(), tiles: HashSet::new(), parents: HashSet::new(), var_links: Vec::new(), object_ids: HashSet::new(), tt_doc: None, stops: Vec::new() }
+        Snapshot { objects: Vec::new(), splines, chrono_lanes: Vec::new(), kinds, entries: Vec::new(), next_id: 100, listed_missing: Vec::new(), no_terrain: Vec::new(), unlit: HashSet::new(), ground: Vec::new(), map_dir: PathBuf::new(), tiles: HashSet::new(), parents: HashSet::new(), var_links: Vec::new(), object_ids: HashSet::new(), tt_doc: None, stops: Vec::new(), transit: Vec::new() }
     }
 
     #[test]
@@ -1383,6 +1563,7 @@ mod tests {
             traffic: Default::default(),
             descriptions: Default::default(),
             groups: Vec::new(),
+            transit: Default::default(),
         };
         for k in tiles {
             doc.tiles.insert(*k, crate::doc::TileDoc::new_flat(0.0));
@@ -1626,5 +1807,43 @@ mod tests {
         assert!(issues.iter().any(|i| i.kind == Kind::NoEntry));
         // a missing spline file (no roots to find it in)
         assert!(issues.iter().any(|i| i.kind == Kind::MissingSpline));
+    }
+}
+
+#[cfg(test)]
+mod transit_tests {
+    use super::*;
+
+    /// A Modern tram map: the bus of a depot group is left out, a car of no mode is not; a
+    /// tram service whose depot's group has only that bus has no vehicle, one with a tram has.
+    #[test]
+    fn vehicles_are_judged_by_the_maps_modes() {
+        let root = std::env::temp_dir().join(format!("om-veh-{}", std::process::id()));
+        let _ = std::fs::remove_dir_all(&root);
+        for (f, text) in [("Vehicles/B/bus.bus", "[mass]\n12\n"), ("Vehicles/T/tram.bus", "[mass]\n20\n[boogies]\n1\n[tram_transport]\n"), ("Vehicles/C/car.ovh", "[mass]\n1\n")] {
+            let p = root.join(f);
+            std::fs::create_dir_all(p.parent().unwrap()).unwrap();
+            std::fs::write(p, text).unwrap();
+        }
+        omsi_cfg::add_content_root(root.clone());
+        let mut doc = crate::selection::tests::flat_map(1);
+        doc.transit.modes = crate::transit::Modes::of(&[crate::transit::Mode::Tram]);
+        let entry = |f: &str| omsi_map::ailists::AiVehicleEntry { file: f.into(), weight: 1.0, number: None, registration: None };
+        doc.traffic.groups.push(omsi_map::AiGroup { name: "Cars".into(), vehicles: vec![entry("Vehicles\\C\\car.ovh")], ..Default::default() });
+        doc.traffic.groups.push(omsi_map::AiGroup { name: "Buses".into(), is_depot: true, vehicles: vec![entry("Vehicles\\B\\bus.bus")], ..Default::default() });
+        doc.traffic.groups.push(omsi_map::AiGroup { name: "Trams".into(), is_depot: true, vehicles: vec![entry("Vehicles\\T\\tram.bus")], ..Default::default() });
+        let d = doc.transit.file_mut(crate::transit::File::Depots);
+        d.blocks.push(crate::transit::Block::with("depot", &[("id", "D1"), ("ai_group", "Buses")]));
+        d.blocks.push(crate::transit::Block::with("depot", &[("id", "D2"), ("ai_group", "Trams")]));
+        let r = doc.transit.file_mut(crate::transit::File::Routes);
+        r.blocks.push(crate::transit::Block::with("route", &[("id", "T1"), ("mode", "tram")]));
+        r.blocks.push(crate::transit::Block::with("service", &[("id", "a"), ("depot", "D1")]));
+        r.blocks.push(crate::transit::Block::with("service", &[("id", "b"), ("depot", "D2")]));
+        let out = vehicle_issues(&doc);
+        omsi_cfg::remove_content_root(&root);
+        let _ = std::fs::remove_dir_all(&root);
+        let of = |k: Kind| out.iter().filter(|i| i.kind == k).map(|i| i.title.clone()).collect::<Vec<_>>();
+        assert_eq!(of(Kind::VehicleMode), vec!["bus.bus".to_string()], "{out:?}");
+        assert_eq!(of(Kind::ServiceNoVehicle), vec![format!("{} T1 / a", tr("route", "маршрут"))], "{out:?}");
     }
 }

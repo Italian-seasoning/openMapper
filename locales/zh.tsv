@@ -2438,3 +2438,350 @@ Could not copy the photos	无法复制照片
 Copying the photos	正在复制照片
 Hold only the photos of the tiles near the camera	只保留相机附近图块的照片
 The others keep their photo in the map's folder, and are put up again when you go back to them.	其余图块把照片留在这张地图的文件夹中，回到那里时会再出现。
+A tram loop with two stations and its wire: save, then drive it in openOMSI with a tram of your own.	带两个车站和架空线的有轨电车环线：保存后，在 openOMSI 中驾驶你自己的有轨电车跑一圈。
+Transit kit made, files:	交通套件已创建，文件数：
+The transit kit could not be made	无法创建交通套件
+Transit network problems	公共交通网络问题
+Stations without their mode's lanes	缺少本交通方式车道的车站
+Stations without their stop	没有站点的车站
+openOMSI's own reader finds this in the map's transport folder (stations, routes, wires, switches, depots, signals): a service it names is skipped, a section or a block left out. Open Map > Transit network to change it.	openOMSI 自带的读取器在地图的 transport 文件夹（车站、路线、架空线、道岔、车场、信号）中发现了此问题：它所指的运营模式会被跳过，供电分区或闭塞分区会被忽略。打开 地图 > 公共交通网络 进行修改。
+openOMSI routes a service over the lanes of its mode within 25 m of each station (rails for trams, metro and trains, streets for buses and trolleybuses). This station has none of its modes' near, so its services cannot run. Move the stop next to the track or road, or lay one there.	openOMSI 会让运营模式沿每个车站 25 m 范围内本交通方式的车道行驶（有轨电车、地铁和火车走轨道，公交车和无轨电车走街道）。此车站附近没有其交通方式的车道，因此其班次无法运行。请把站点移到轨道或道路旁，或在那里铺设轨道或道路。
+A station is found by the game among the map's stops: by its stop object, else by its name. This one's object is no stop on the map and no stop has its name, so the services through it are skipped. Pick its stop again in Map > Transit network, Stations.	游戏在地图的站点中查找车站：先按站点物体，否则按名称。此车站的物体不是地图上的站点，也没有同名站点，因此经过它的运营模式会被跳过。请在 地图 > 公共交通网络 的“车站”中重新选择其站点。
+station	车站
+Transit network…	公共交通网络…
+The transport folder stays: openOMSI still reads its stations, routes and wires.	transport 文件夹会保留：openOMSI 仍会读取其中的车站、路线和架空线。
+Remove it too	也一并删除
+Start with a tram line: a loop of track under its wire, two stations and a route	从一条有轨电车线路开始：架空线下的环形轨道、两个车站和一条路线
+Classic	经典
+Runs in OMSI 2 and in openOMSI. Buses, and trams and trains as OMSI 2 has them.	可在 OMSI 2 和 openOMSI 中运行。公交车，以及 OMSI 2 原有形式的有轨电车和火车。
+Modern	现代
+openOMSI only. Real transit: stations, routes, overhead wire, third rail, depots and signal blocks.	仅限 openOMSI。真正的公共交通：车站、路线、架空线、第三轨、车场和闭塞分区。
+Made for (one or more):	适用于（一个或多个）：
+Choose at least one	请至少选择一个
+OMSI 2 cannot run a Modern map's routes, wires or blocks, and openOMSI runs only vehicles of its modes on it. openMapper's transit kit (tracks, wires, platforms, masts) is made in the content folder.	OMSI 2 无法运行现代地图的路线、架空线或闭塞分区，openOMSI 也只会在其上运行其交通方式的车辆。openMapper 的交通套件（轨道、架空线、站台、支柱）会创建在内容文件夹中。
+Overview	概览
+Stations	车站
+Depots	车场
+Power	供电
+Switches and signals	道岔与信号
+Set it (else the game's default)	设置（否则使用游戏默认值）
+(not set)	（未设置）
+Take it out	移除
+Transit network	公共交通网络
+This is a Classic map.	这是一张经典地图。
+Stations, routes without tours, the overhead wire, the third rail, depots and signal blocks are openOMSI's (0.3.42 and later): make the map Modern in Map settings to give it a transit network. OMSI 2 cannot run them.	车站、不含车次的路线、架空线、第三轨、车场和闭塞分区属于 openOMSI（0.3.42 及以上）：在地图设置中把地图设为现代，即可为其设置公共交通网络。OMSI 2 无法运行它们。
+No stop there: click a stop object (a bus stop, or the kit's station stop)	那里没有站点：请点击一个站点物体（公交站，或套件中的车站站点）
+Now click where the block ends	现在点击闭塞分区的终点
+Click the signal object itself	请点击信号物体本身
+Then click in the view	然后在视图中点击
+Modern map for	现代地图，适用于
+openOMSI runs only vehicles of these modes here; OMSI 2 cannot run the network. The modes are changed in Map settings.	openOMSI 在此只运行这些交通方式的车辆；OMSI 2 无法运行该网络。交通方式在地图设置中更改。
+Services	运营模式
+Track rules	轨道规则
+Overhead wire spans	架空线区段
+Third rail spans	第三轨区段
+Trolleybus wire spans	无轨电车线网区段
+Switches	道岔
+Signals and blocks	信号与闭塞分区
+Problems	问题
+None: openOMSI reads the network as it is.	无：openOMSI 按原样读取网络。
+error	错误
+warning	警告
+Found by openOMSI's own reader of the transport folder, the texts as it writes them in its log.	由 openOMSI 自带的 transport 文件夹读取器发现，文字与其日志中写的一致。
+openMapper's transit kit	openMapper 交通套件
+Tracks, platforms, wires and objects made by openMapper for Modern maps (OMSI 2 ships no metro, third rail or trolleybus wire). They are in the catalogue under openMapper; click one to place it.	openMapper 为现代地图制作的轨道、站台、架空线和物体（OMSI 2 不含地铁、第三轨和无轨电车线网）。它们位于目录的 openMapper 下；点击即可放置。
+Make the kit	创建套件
+A station is a stop object of the map (a bus stop, or the kit's station stop beside a track) with its platforms. openOMSI routes a service over the lanes of its mode within 25 m of each station.	车站是地图上的一个站点物体（公交站，或轨道旁套件中的车站站点）及其站台。openOMSI 会让运营模式沿每个车站 25 m 范围内本交通方式的车道行驶。
+A station for every stop of the map	为地图的每个站点创建车站
+Stops not yet a station become one, named as the stop, its modes from the tracks and roads beside it	尚未成为车站的站点将成为车站，名称与站点相同，交通方式取自旁边的轨道和道路
+New station	新建车站
+Stations added:	已添加车站：
+Choose a station	请选择一个车站
+Id	ID
+Modes	交通方式
+Stop object	站点物体
+Pick	选取
+Place	位置
+Change to	换乘
+Platforms	站台
+Side	侧
+island	岛式
+both	两侧
+platform screen doors	站台门
+Delete the station	删除车站
+A route is segments from station to station (the stops between them in order) and services over them: a branch, a short working or an express is another segment or service. openOMSI makes the timetable's tours from them and finds the way over the tracks itself.	路线由车站到车站的区间（按顺序列出其间的站点）和在其上运行的运营模式组成：支线、区间车或快车就是另一个区间或运营模式。openOMSI 会据此生成时刻表的车次，并自行在轨道上寻路。
+Add two stations or more first (Stations)	请先添加至少两个车站（“车站”）
+New route	新建路线
+Segment	区间
+Stops between	中间站点
+Passed without stopping	通过不停
+Standing at a stop	停站时间
+Speed	速度
+Way back	返程
+over the same segment	走同一区间
+another segment	走另一区间
+Service	运营模式
+Segments in order	区间顺序
+From – to	起 – 止
+Days	运行日
+every day	每天
+weekends	周末
+Saturdays	周六
+Sundays	周日
+turns back	折返
+goes round a loop	绕环线
+goes to depot	回车场
+Cars in a train	编组节数
+Every 10 minutes from 05:30 to 23:30 over all the route's segments	05:30 至 23:30 每 10 分钟一班，覆盖路线的所有区间
+Departures of their own	单独发车
+For a service without a headway: its departures, as 06:00 06:12 06:30.	用于没有发车间隔的运营模式：其发车时间，如 06:00 06:12 06:30。
+Departures	发车
+A service's depot sends out its vehicles: its AI group (Traffic and AI) supplies them, and the first departure of the day leaves by its gate along the rails to the first station.	运营模式的车场负责派出车辆：其 AI 组（交通与 AI）提供车辆，当天首班车从出入口沿轨道驶往第一个车站。
+AI group	AI 组
+Capacity	容量
+Its stop	其站点
+Gates	出入口
+Add a gate	添加出入口
+has a turning loop	有回车环线
+Delete the depot	删除车场
+A gate needs a rail within 25 m and a way to the first station, or the trip starts at its station (the game's log says so).	出入口需要 25 m 内有铁轨，并有通往第一个车站的路径，否则班次从其车站开始（游戏日志会注明）。
+Which tracks serve which mode and how they are powered: a rule matches a track type (a file pattern, * for any letters), a tile or one piece; later rules win. Without a rule openOMSI guesses from the type's name.	哪些轨道服务于哪种交通方式、如何供电：规则匹配一种轨道类型（文件名模式，* 代表任意字符）、一个图块或一个轨道段；后面的规则优先。没有规则时，openOMSI 会根据类型名称推测。
+A rule for the selected track's type	为所选轨道的类型建规则
+Empty rule	空规则
+(select a track in the view to make a rule for its type)	（在视图中选中轨道，为其类型创建规则）
+Track type	轨道类型
+Only on tile / piece	仅限图块 / 轨道段
+id	ID
+in the street	街道路面
+railway	独立路权
+overhead wire	架空线
+third rail	第三轨
+diesel	内燃
+Tunnel	隧道
+yes	是
+no	否
+Gauge	轨距
+A map for buses alone has no line to power.	只有公交车的地图没有需要供电的线路。
+Third rail	第三轨
+Trolleybus wire	无轨电车线网
+Where the wire is, the player's tram or electric train needs a live section of it over its pantograph (dead sections and breaks stop the drive). Without spans openOMSI takes the current for granted. Spans are laid along the selected tracks.	有架空线的地方，玩家的有轨电车或电力列车需要受电弓上方有一段带电的供电分区（无电区和断口会使车辆失去牵引）。没有区段时，openOMSI 视为处处有电。区段沿所选轨道铺设。
+The player's metro train needs a live section of third rail beside its shoe. The kit's metro tracks carry the rail itself; spans say where it is fed. Spans are laid along the selected tracks.	玩家的地铁列车需要集电靴旁有一段带电的第三轨供电分区。套件中的地铁轨道自带第三轨；区段表示在哪里供电。区段沿所选轨道铺设。
+openOMSI's trolleybuses run on this wire (trolley.txt beside global.cfg): a pole is powered only on a pair fed by a substation. Spans are laid over each way's lane of the selected roads, with the wire splines that show them.	openOMSI 的无轨电车在这张线网上运行（global.cfg 旁的 trolley.txt）：集电杆只有在由变电所供电的一对导线上才带电。区段铺设在所选道路每个方向车道的上方，并附带显示它们的导线样条线。
+The line	供电线路
+Voltage	电压
+Current	电流
+direct	直流
+alternating	交流
+Wire height	导线高度
+Wire spacing	导线间距
+Sections (each fed by a substation)	供电分区（各由一个变电所供电）
+name	名称
+live	带电
+feeder Ω	馈线 Ω
+Section	供电分区
+Spans	区段
+one pair over the middle	中间一对
+a pair over each 3.0 m lane	每条 3.0 m 车道上方一对
+a pair over each 3.5 m lane	每条 3.5 m 车道上方一对
+lay the wire splines too	同时铺设导线样条线
+Wire the selected roads	为所选道路架设线网
+Electrify the selected tracks	为所选轨道电气化
+Take their spans off	移除其区段
+(select roads in the view)	（在视图中选择道路）
+(select tracks in the view)	（在视图中选择轨道）
+Their spans are taken off	已移除其区段
+Spans laid:	已铺设区段：
+Gaps	断口
+Insulators	绝缘器
+Gap	断口
+Insulator	绝缘器
+Frogs (wire switches)	线岔（线网道岔）
+Where three spans meet: the contact plate before it sets it by the current the bus draws (power) or by its indicator.	三个区段交汇处：其前方的接触板根据车辆取用的电流（牵引）或转向灯来扳动它。
+by current	按电流
+by indicator	按转向灯
+Frog	线岔
+A switch listed here holds while a train stands on it, goes back to its rest position, and can be thrown by hand only or locked by a signal. Switches not listed work as before.	此处列出的道岔在列车停在其上时不会转换，会回到定位，并可设为仅手动或由信号锁闭。未列出的道岔照常工作。
+The selected switch objects	所选道岔物体
+simple	单开
+crossover	渡线
+double slip	复式交分
+diamond	菱形交叉
+scissors	交叉渡线
+rests straight	定位直股
+rests diverging	定位侧股
+thrown by the route	随进路转换
+by hand only	仅手动
+interlocked	联锁
+diverging	侧股
+locked by	锁闭信号
+Blocks	闭塞分区
+A stretch of track that holds one AI train at a time, given by where it begins and ends on the rails; its signals show whether it is free. Blocks need the timetable's trains (the AI) to hold.	一段同时只容许一列 AI 列车占用的轨道，由其在铁轨上的起点和终点确定；其信号显示是否空闲。闭塞分区只对时刻表列车（AI）起作用。
+Ends	两端
+Block	闭塞分区
+Click where the block begins	点击闭塞分区的起点
+Signals	信号
+A signal of the map tied to a block shows stop while the block is in use and go while it is free.	关联到闭塞分区的地图信号，在分区占用时显示停车，空闲时显示通行。
+main	主信号
+distant	预告信号
+block	通过信号
+shunting	调车信号
+speed	速度信号
+tram	有轨电车信号
+Tram street track	有轨电车街道轨道
+Tram track on grass	有轨电车草坪轨道
+Railway track	铁路轨道
+Metro track	地铁轨道
+Metro tunnel	地铁隧道
+Tram platform	有轨电车站台
+Metro side platform	地铁侧式站台
+Metro island platform	地铁岛式站台
+Railway side platform	铁路侧式站台
+Railway island platform	铁路岛式站台
+Trolleybus wires (one pair)	无轨电车导线（一对）
+Trolleybus wires, 3.0 m lanes	无轨电车导线，3.0 m 车道
+Trolleybus wires, 3.5 m lanes	无轨电车导线，3.5 m 车道
+Catenary mast (arm right)	接触网支柱（腕臂向右）
+Catenary mast (arm left)	接触网支柱（腕臂向左）
+Trolleybus pole (arm right)	无轨电车线杆（横臂向右）
+Trolleybus pole (arm left)	无轨电车线杆（横臂向左）
+Metro sign	地铁标志
+Platform shelter	站台雨棚
+Buffer stop	车挡
+Station stop	车站站点
+Bus	公交车
+Tram	有轨电车
+Railway	铁路
+Metro	地铁
+Trolleybus	无轨电车
+buses on the streets, stops at the kerb	公交车在街道上行驶，站点设在路缘
+street track under a contact wire, low platforms	架空线下的街道轨道，低站台
+mainline track, stations with platforms, signals and blocks	干线轨道，带站台的车站，信号和闭塞分区
+track with a third rail, tunnels, high platforms	带第三轨的轨道，隧道，高站台
+buses under a pair of wires, frogs at junctions	公交车在一对导线下行驶，路口设线岔
+Depot Square	车场广场
+Park Gate	公园门
+Tram start	有轨电车起点
+Loop line	环线
+A trolleybus junction under its wires with three stations: save, then drive it in openOMSI with a trolleybus of your own.	架空线下有三个车站的无轨电车路口：保存后，在 openOMSI 中驾驶你自己的无轨电车跑一跑。
+station stops:	车站站点：
+stations:	车站：
+routes:	路线：
+Vehicles of other modes	其他交通方式的车辆
+Services without a vehicle of their mode	缺少本交通方式车辆的运营模式
+openOMSI runs only vehicles of a Modern map's modes on it. This vehicle of the AI lists is made for another mode (its file says so, or it is a depot's vehicle and its shape says so), so the game leaves it out. Change it in Map > Traffic and AI, or add its mode to the map in Map settings.	openOMSI 在现代地图上只运行其交通方式的车辆。AI 列表中的这辆车是为其他交通方式制作的（其文件如此注明，或它是车场车辆且其外形表明如此），因此游戏不会让它出车。请在 地图 > 交通与 AI 中更换它，或在地图设置中为地图添加其交通方式。
+A service of the transit network takes its vehicles from its depot's AI group (or names one vehicle file). That group has no vehicle of the route's mode, so nothing runs it. Give the depot an AI group with such vehicles (Map > Traffic and AI), or choose another depot.	公共交通网络的运营模式从其车场的 AI 组取车（或指定一个车辆文件）。该组没有路线所属交通方式的车辆，因此没有车运行它。请给车场一个有此类车辆的 AI 组（交通与 AI），或选择其他车场。
+group	组
+route	路线
+its depot names no AI group	其车场未指定 AI 组
+no vehicle of the mode in	以下组中没有该交通方式的车辆：
+Stations from OpenStreetMap	来自 OpenStreetMap 的车站
+Metro tracks	地铁轨道
+in tunnels too: build them with the kit's metro tunnel and cut the ground away (a Modern map)	也包括隧道中的：用套件中的地铁隧道建造，并挖去地面（现代地图）
+Start with a trolleybus line: a junction under its wires with frogs, three stations and two routes	从一条无轨电车线路开始：架空线下设线岔的路口、三个车站和两条路线
+Stations (tram, metro, railway)	车站（有轨电车、地铁、铁路）
+Each tram stop and station of the map's rail modes put with the kit's station stop beside the nearest track (within 25 m); every stop of the map then becomes a station of its transport folder	地图各轨道交通方式的每个有轨电车站和车站，都以套件中的车站站点放在最近的轨道旁（25 m 以内）；随后地图的每个站点都成为其 transport 文件夹中的车站
+Routes (tram, trolleybus, metro, railway)	路线（有轨电车、无轨电车、地铁、铁路）
+Each route of the map's modes through two or more of its stations a segment of its line, the line's service as often as OpenStreetMap says (else every 10 minutes), from 05:30 to 23:30; openOMSI finds the way over the tracks	地图交通方式中每条经过其两个或更多车站的路线成为其线路的一个区间，线路的运营模式按 OpenStreetMap 给出的间隔（否则每 10 分钟）从 05:30 运行到 23:30；openOMSI 自行在轨道上寻路
+no vehicle of it is installed	未安装其任何车辆
+Its vehicles:	其车辆：
+(select roads in the view, and the junctions between them)	（在视图中选择道路及其间的路口）
+(select tracks in the view, and their switches)	（在视图中选择轨道及其道岔）
+A pair of wires over each way's kerb lane; through a selected junction only the lanes that join wired roads. Frogs are put where three wires meet.	每个方向最外侧车道上方一对导线；在所选路口只连接已架线道路的车道。三条导线交汇处设线岔。
+The map's files are still being read	地图文件仍在读取中
+West Gate	西门
+East Market	东市场
+North Park	北公园
+Market line	市场线
+Park line	公园线
+Trolleybus start	无轨电车起点
+frogs:	线岔：
+places where more than three wires meet get no frog: wire fewer turns there	处有超过三条导线交汇，未设线岔：请在那里少架设几个转弯
+Track ends that do not meet	未接上的轨道端点
+Two tracks run on into one another but their ends lie apart: the game joins rails only where their ends lie within 1.5 m, so no train or tram gets across (a route through there finds no way). "Fix" moves one end onto the other, arriving in line with it, and joins them.	两条轨道前后相接，但端点相距太远：游戏只会连接端点相距 1.5 m 以内的钢轨，因此火车和有轨电车都无法通过（经过此处的路线找不到路径）。“修复”会把一个端点移到另一个端点上，与之对齐，并将它们连接起来。
+tracks	轨道
+Select the roads or tracks to build into the ground	选择要下沉到地下的道路或轨道
+Cutting	路堑
+Cut and cover tunnel	明挖隧道
+Nothing to build into the ground	没有可下沉到地下的对象
+Build into the ground	下沉到地下
+The chain of the selected pieces lowered, with ramps at its ends. Cut: an open cutting with sloped banks. Cover: open ramps down to the portals and a tunnel under the ground between them (a shell of walls and roof, a portal at each mouth).	所选路段链整体下沉，两端设坡道。路堑：带边坡的敞开式路堑。隧道：敞开的坡道下到洞口，洞口之间为地下隧道（由墙体和顶板构成，每个出入口设洞门）。
+Cover (tunnel)	覆盖（隧道）
+Ramp gradient	坡道坡度
+Banks	边坡
+ m out per metre up	 m（每升高 1 m 的水平距离）
+Ramps	坡道
+at the start	起点处
+at the end	终点处
+A tunnel needs a depth of 6 m or more: shallower it stays an open cutting	隧道需要 6 m 或以上的深度：更浅则保持为敞开路堑
+Each ramp is about	每条坡道约
+Pieces lowered:	已下沉路段：
+tunnel pieces:	隧道路段：
+portals:	洞门：
+their overhead taken off: wire them again (Transit network, Power)	其架空线已移除：请重新架设（公共交通网络，供电）
+Platforms at the stations	车站站台
+The kit's platform of each rail station's mode beside its track, on the side its stop stands, as long as its platform says	在每个轨道车站的轨道旁，按其交通方式放置套件中的站台，位于站点所在的一侧，长度按其站台设定
+Platforms laid:	已铺设站台：
+lay the wires, masts, poles and frogs too	同时铺设导线、支柱、电杆和线岔
+Catenary mast	接触网支柱
+Trolleybus pole	无轨电车线网电杆
+Trolleybus frog	无轨电车线岔
+Section insulator	分段绝缘器
+Lake	湖
+River	河流
+Water level:	水位：
+Click the shore round and close it on the first point (Enter closes too, right-click takes a point back). The ground inside is dug to a bed and the banks slope to the shore.	沿岸边依次点击，并在第一个点上闭合（按 Enter 也可闭合，右键可退回一个点）。内侧的地面会被挖成湖底，岸坡向岸边倾斜。
+Click the river's middle line from its source on and finish on the last point (or Enter). Water in OMSI lies at one level for a tile: a river runs level.	从河流源头起依次点击河的中线，并在最后一个点结束（或按 Enter）。OMSI 中每个地块的水面只有一个高度：河流是水平流动的。
+Add as a ground texture	添加为地面纹理
+A junction was not made: its roads are too short or too close together. Lengthen them or move the junctions apart.	未创建路口：道路太短或彼此太近。请延长道路或将路口分开。
+Display	显示
+X-ray (Alt+Z): see and pick through the mesh	透视 (Alt+Z)：穿透网格查看和选取
+Show the textures	显示纹理
+The object's own pictures under the editing shading	对象自身的图片，位于编辑着色之下
+Shading opacity	着色不透明度
+0 %: the textures as they are; 100 %: the plain shading. The picture is renewed a moment after each change.	0 %：按原样显示纹理；100 %：纯着色。每次更改后，画面会稍等片刻再刷新。
+Give this material to the selected faces	将此材质指定给所选的面
+Select faces to give them a material.	请选择面以指定材质。
+Road markings	道路标线
+Paint my own markings	自行绘制标线
+The maker paints the lines onto the roadway texture: pick a plain asphalt texture, or its own lines show too	生成器将线条绘制在行车道贴图上：请选用纯色沥青贴图，否则其自带的线条也会显示
+Standard for these lanes	这些车道的默认值
+Add a line	添加线条
+Across the roadway from its middle (right of the road's way is plus)	从中线起横跨行车道（沿道路方向的右侧为正）
+Solid	实线
+Dashed	虚线
+Double solid	双实线
+Solid and dashed	实线加虚线
+The line's width	线宽
+Dash length	虚线长度
+Gap between dashes	虚线间距
+Draw road markings	绘制道路标线
+Pen	画笔
+Straight line	直线
+Dashed line	虚线
+Rectangle	矩形
+Arrow	箭头
+Eraser	橡皮擦
+Pointing back	反向
+Snap to 5 cm	吸附到 5 cm
+Drag to draw. The picture is the roadway as the texture lies on it, up is the way of the road; it repeats along, so what leaves at the top comes in at the bottom.	拖动以绘制。图像就是路面贴上纹理后的样子，上方是道路的行进方向；它沿道路重复，因此从顶部离开的内容会从底部进入。
+Pick a roadway texture first	请先选择路面纹理
+Draw by hand…	手绘…
+A drawing board with a pen, lines, arrows and an eraser: what you draw goes onto the roadway	带有画笔、线条、箭头和橡皮擦的绘图板：您所画的内容会落在路面上
+a drawing is on the road	路上有一幅绘图
+Painted line	涂装线
+Stop line	停止线
+A wide solid line across a lane: draw it across the road	横跨车道的宽实线：请横穿道路绘制
+Crossing	人行横道
+Zebra bars: draw it across the road, the bars lie along it	斑马线：请横穿道路绘制，条纹沿道路排列
+Centre line	中心线
+A double yellow line	黄色双线
+Lane line	车道线
+A white dashed line	白色虚线
+Double	双线
+Crossing (bars)	人行横道（条纹）
+A line's width (each line of a double one); a crossing's reach along the road	线的宽度（双线为每条线）；人行横道沿道路方向的深度
+Bar	条纹
+Dash	线段
+Draw with this line	用此线绘制
+It is made as a spline type of the content folder (Splines\\openMapper\\marks) and chosen: draw it with Line, Arc or Curve, over the asphalt	作为样条类型创建在内容文件夹（Splines\\openMapper\\marks）中并被选中：用直线、圆弧或曲线在沥青上绘制
+Painted line made: draw with it in the junction editor	涂装线已创建：在路口编辑器中用它绘制

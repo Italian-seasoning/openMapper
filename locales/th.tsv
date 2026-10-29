@@ -2438,3 +2438,350 @@ Could not copy the photos	คัดลอกภาพไม่สำเร็จ
 Copying the photos	กำลังคัดลอกภาพ
 Hold only the photos of the tiles near the camera	เก็บเฉพาะภาพของไทล์ใกล้กล้อง
 The others keep their photo in the map's folder, and are put up again when you go back to them.	ไทล์อื่นเก็บภาพไว้ในโฟลเดอร์ของแผนที่ และจะกลับมาเมื่อคุณกลับไปที่นั่น
+A tram loop with two stations and its wire: save, then drive it in openOMSI with a tram of your own.	วงรอบรถรางที่มีสองสถานีและสายไฟ: บันทึก แล้วขับด้วยรถรางของคุณเองใน openOMSI
+Transit kit made, files:	สร้างชุดขนส่งสาธารณะแล้ว ไฟล์:
+The transit kit could not be made	สร้างชุดขนส่งสาธารณะไม่ได้
+Transit network problems	ปัญหาเครือข่ายขนส่งสาธารณะ
+Stations without their mode's lanes	สถานีที่ไม่มีเลนของประเภทรถตัวเอง
+Stations without their stop	สถานีที่ไม่มีป้าย
+openOMSI's own reader finds this in the map's transport folder (stations, routes, wires, switches, depots, signals): a service it names is skipped, a section or a block left out. Open Map > Transit network to change it.	ตัวอ่านของ openOMSI เองพบสิ่งนี้ในโฟลเดอร์ transport ของแผนที่ (สถานี เส้นทาง สายไฟ ประแจสลับ ดีโป สัญญาณ): รูปแบบการเดินรถที่อ้างถึงจะถูกข้าม เซกชันหรือบล็อกจะถูกตัดออก เปิด แผนที่ > เครือข่ายขนส่งสาธารณะ เพื่อแก้ไข
+openOMSI routes a service over the lanes of its mode within 25 m of each station (rails for trams, metro and trains, streets for buses and trolleybuses). This station has none of its modes' near, so its services cannot run. Move the stop next to the track or road, or lay one there.	openOMSI กำหนดเส้นทางของรูปแบบการเดินรถไปตามเลนของประเภทรถนั้นภายใน 25 m จากแต่ละสถานี (รางสำหรับรถราง รถไฟใต้ดิน และรถไฟ ถนนสำหรับรถบัสและรถโทรลลีย์บัส) สถานีนี้ไม่มีเลนของประเภทรถของมันอยู่ใกล้ ๆ จึงเดินรถไม่ได้ ย้ายป้ายไปข้างรางหรือถนน หรือวางรางหรือถนนที่นั่น
+A station is found by the game among the map's stops: by its stop object, else by its name. This one's object is no stop on the map and no stop has its name, so the services through it are skipped. Pick its stop again in Map > Transit network, Stations.	เกมหาสถานีจากป้ายของแผนที่: จากวัตถุป้าย ไม่เช่นนั้นจากชื่อ วัตถุของสถานีนี้ไม่ใช่ป้ายบนแผนที่ และไม่มีป้ายที่มีชื่อนี้ รูปแบบการเดินรถที่ผ่านสถานีนี้จึงถูกข้าม เลือกป้ายของสถานีใหม่ใน แผนที่ > เครือข่ายขนส่งสาธารณะ แท็บสถานี
+station	สถานี
+Transit network…	เครือข่ายขนส่งสาธารณะ…
+The transport folder stays: openOMSI still reads its stations, routes and wires.	โฟลเดอร์ transport ยังอยู่: openOMSI ยังอ่านสถานี เส้นทาง และสายไฟในนั้น
+Remove it too	ลบด้วย
+Start with a tram line: a loop of track under its wire, two stations and a route	เริ่มด้วยสายรถราง: รางวงรอบใต้สายไฟ สองสถานี และหนึ่งเส้นทาง
+Classic	คลาสสิก
+Runs in OMSI 2 and in openOMSI. Buses, and trams and trains as OMSI 2 has them.	ใช้ได้ใน OMSI 2 และ openOMSI รถบัส รวมถึงรถรางและรถไฟแบบที่ OMSI 2 มี
+Modern	โมเดิร์น
+openOMSI only. Real transit: stations, routes, overhead wire, third rail, depots and signal blocks.	เฉพาะ openOMSI ขนส่งสาธารณะเต็มรูปแบบ: สถานี เส้นทาง สายไฟเหนือหัว รางที่สาม ดีโป และบล็อกสัญญาณ
+Made for (one or more):	สำหรับ (อย่างน้อยหนึ่ง):
+Choose at least one	เลือกอย่างน้อยหนึ่งอย่าง
+OMSI 2 cannot run a Modern map's routes, wires or blocks, and openOMSI runs only vehicles of its modes on it. openMapper's transit kit (tracks, wires, platforms, masts) is made in the content folder.	OMSI 2 เดินรถตามเส้นทาง สายไฟ หรือบล็อกของแผนที่โมเดิร์นไม่ได้ และ openOMSI จะเดินรถเฉพาะประเภทรถของแผนที่นั้น ชุดขนส่งสาธารณะของ openMapper (ราง สายไฟ ชานชาลา เสา) จะถูกสร้างในโฟลเดอร์เนื้อหา
+Overview	ภาพรวม
+Stations	สถานี
+Depots	ดีโป
+Power	ไฟฟ้า
+Switches and signals	ประแจสลับและสัญญาณ
+Set it (else the game's default)	ตั้งค่า (ไม่เช่นนั้นใช้ค่าเริ่มต้นของเกม)
+(not set)	(ไม่ได้ตั้งค่า)
+Take it out	เอาออก
+Transit network	เครือข่ายขนส่งสาธารณะ
+This is a Classic map.	นี่คือแผนที่คลาสสิก
+Stations, routes without tours, the overhead wire, the third rail, depots and signal blocks are openOMSI's (0.3.42 and later): make the map Modern in Map settings to give it a transit network. OMSI 2 cannot run them.	สถานี เส้นทางที่ไม่มีทัวร์ สายไฟเหนือหัว รางที่สาม ดีโป และบล็อกสัญญาณ เป็นความสามารถของ openOMSI (0.3.42 ขึ้นไป): ทำให้แผนที่เป็นโมเดิร์นในการตั้งค่าแผนที่เพื่อให้มีเครือข่ายขนส่งสาธารณะ OMSI 2 ใช้สิ่งเหล่านี้ไม่ได้
+No stop there: click a stop object (a bus stop, or the kit's station stop)	ไม่มีป้ายตรงนั้น: คลิกวัตถุป้าย (ป้ายรถบัส หรือป้ายสถานีของชุด)
+Now click where the block ends	ตอนนี้คลิกจุดที่บล็อกสิ้นสุด
+Click the signal object itself	คลิกที่วัตถุสัญญาณโดยตรง
+Then click in the view	แล้วคลิกในมุมมอง
+Modern map for	แผนที่โมเดิร์นสำหรับ
+openOMSI runs only vehicles of these modes here; OMSI 2 cannot run the network. The modes are changed in Map settings.	openOMSI เดินรถเฉพาะประเภทเหล่านี้ที่นี่; OMSI 2 ใช้เครือข่ายนี้ไม่ได้ เปลี่ยนประเภทรถได้ในการตั้งค่าแผนที่
+Services	รูปแบบการเดินรถ
+Track rules	กฎของราง
+Overhead wire spans	ช่วงสายไฟเหนือหัว
+Third rail spans	ช่วงรางที่สาม
+Trolleybus wire spans	ช่วงสายรถโทรลลีย์บัส
+Switches	ประแจสลับ
+Signals and blocks	สัญญาณและบล็อก
+Problems	ปัญหา
+None: openOMSI reads the network as it is.	ไม่มี: openOMSI อ่านเครือข่ายได้ตามที่เป็นอยู่
+error	ข้อผิดพลาด
+warning	คำเตือน
+Found by openOMSI's own reader of the transport folder, the texts as it writes them in its log.	พบโดยตัวอ่านโฟลเดอร์ transport ของ openOMSI เอง ข้อความเป็นไปตามที่มันเขียนในล็อก
+openMapper's transit kit	ชุดขนส่งสาธารณะของ openMapper
+Tracks, platforms, wires and objects made by openMapper for Modern maps (OMSI 2 ships no metro, third rail or trolleybus wire). They are in the catalogue under openMapper; click one to place it.	ราง ชานชาลา สายไฟ และวัตถุที่ openMapper สร้างสำหรับแผนที่โมเดิร์น (OMSI 2 ไม่มีรถไฟใต้ดิน รางที่สาม หรือสายรถโทรลลีย์บัส) อยู่ในแค็ตตาล็อกใต้ openMapper คลิกเพื่อวาง
+Make the kit	สร้างชุด
+A station is a stop object of the map (a bus stop, or the kit's station stop beside a track) with its platforms. openOMSI routes a service over the lanes of its mode within 25 m of each station.	สถานีคือวัตถุป้ายของแผนที่ (ป้ายรถบัส หรือป้ายสถานีของชุดข้างราง) พร้อมชานชาลา openOMSI กำหนดเส้นทางของรูปแบบการเดินรถไปตามเลนของประเภทรถนั้นภายใน 25 m จากแต่ละสถานี
+A station for every stop of the map	สถานีสำหรับทุกป้ายของแผนที่
+Stops not yet a station become one, named as the stop, its modes from the tracks and roads beside it	ป้ายที่ยังไม่เป็นสถานีจะกลายเป็นสถานี ชื่อตามป้าย ประเภทรถตามรางและถนนข้าง ๆ
+New station	สถานีใหม่
+Stations added:	สถานีที่เพิ่ม:
+Choose a station	เลือกสถานี
+Id	ID
+Modes	ประเภทรถ
+Stop object	วัตถุป้าย
+Pick	เลือก
+Place	ตำแหน่ง
+Change to	เปลี่ยนไปยัง
+Platforms	ชานชาลา
+Side	ด้าน
+island	แบบเกาะกลาง
+both	ทั้งสองด้าน
+platform screen doors	ประตูกั้นชานชาลา
+Delete the station	ลบสถานี
+A route is segments from station to station (the stops between them in order) and services over them: a branch, a short working or an express is another segment or service. openOMSI makes the timetable's tours from them and finds the way over the tracks itself.	เส้นทางประกอบด้วยช่วงจากสถานีถึงสถานี (ป้ายระหว่างทางตามลำดับ) และรูปแบบการเดินรถบนช่วงเหล่านั้น: สายแยก เที่ยวระยะสั้น หรือด่วน คือช่วงหรือรูปแบบการเดินรถอีกอันหนึ่ง openOMSI สร้างทัวร์ของตารางเวลาจากสิ่งเหล่านี้และหาทางบนรางเอง
+Add two stations or more first (Stations)	เพิ่มสถานีอย่างน้อยสองแห่งก่อน (สถานี)
+New route	เส้นทางใหม่
+Segment	ช่วง
+Stops between	ป้ายระหว่างทาง
+Passed without stopping	ผ่านโดยไม่จอด
+Standing at a stop	เวลาจอดที่ป้าย
+Speed	ความเร็ว
+Way back	ขากลับ
+over the same segment	ผ่านช่วงเดิม
+another segment	ผ่านช่วงอื่น
+Service	รูปแบบการเดินรถ
+Segments in order	ช่วงตามลำดับ
+From – to	จาก – ถึง
+Days	วัน
+every day	ทุกวัน
+weekends	วันหยุดสุดสัปดาห์
+Saturdays	วันเสาร์
+Sundays	วันอาทิตย์
+turns back	กลับรถ
+goes round a loop	วิ่งวนรอบ
+goes to depot	เข้าดีโป
+Cars in a train	จำนวนตู้ต่อขบวน
+Every 10 minutes from 05:30 to 23:30 over all the route's segments	ทุก 10 นาที ตั้งแต่ 05:30 ถึง 23:30 ผ่านทุกช่วงของเส้นทาง
+Departures of their own	เที่ยวออกเฉพาะ
+For a service without a headway: its departures, as 06:00 06:12 06:30.	สำหรับรูปแบบการเดินรถที่ไม่มีความถี่: เวลาออก เช่น 06:00 06:12 06:30
+Departures	เที่ยวออก
+A service's depot sends out its vehicles: its AI group (Traffic and AI) supplies them, and the first departure of the day leaves by its gate along the rails to the first station.	ดีโปของรูปแบบการเดินรถเป็นผู้ปล่อยรถ: กลุ่ม AI ของมัน (การจราจรและ AI) จัดหารถ และเที่ยวแรกของวันออกจากประตูไปตามรางถึงสถานีแรก
+AI group	กลุ่ม AI
+Capacity	ความจุ
+Its stop	ป้ายของมัน
+Gates	ประตู
+Add a gate	เพิ่มประตู
+has a turning loop	มีวงกลับรถ
+Delete the depot	ลบดีโป
+A gate needs a rail within 25 m and a way to the first station, or the trip starts at its station (the game's log says so).	ประตูต้องมีรางภายใน 25 m และทางไปสถานีแรก มิฉะนั้นเที่ยวจะเริ่มที่สถานีของมัน (ล็อกของเกมจะบอกไว้)
+Which tracks serve which mode and how they are powered: a rule matches a track type (a file pattern, * for any letters), a tile or one piece; later rules win. Without a rule openOMSI guesses from the type's name.	รางไหนใช้กับประเภทรถใดและจ่ายไฟอย่างไร: กฎตรงกับชนิดราง (รูปแบบชื่อไฟล์ * แทนตัวอักษรใดก็ได้) ไทล์ หรือชิ้นเดียว; กฎที่อยู่หลังมีผลเหนือกว่า ถ้าไม่มีกฎ openOMSI จะเดาจากชื่อชนิด
+A rule for the selected track's type	กฎสำหรับชนิดของรางที่เลือก
+Empty rule	กฎว่าง
+(select a track in the view to make a rule for its type)	(เลือกรางในมุมมองเพื่อสร้างกฎสำหรับชนิดของมัน)
+Track type	ชนิดราง
+Only on tile / piece	เฉพาะไทล์ / ชิ้น
+id	ID
+in the street	บนถนน
+railway	ทางเฉพาะ
+overhead wire	สายไฟเหนือหัว
+third rail	รางที่สาม
+diesel	ดีเซล
+Tunnel	อุโมงค์
+yes	ใช่
+no	ไม่
+Gauge	ขนาดราง
+A map for buses alone has no line to power.	แผนที่สำหรับรถบัสอย่างเดียวไม่มีสายที่ต้องจ่ายไฟ
+Third rail	รางที่สาม
+Trolleybus wire	สายรถโทรลลีย์บัส
+Where the wire is, the player's tram or electric train needs a live section of it over its pantograph (dead sections and breaks stop the drive). Without spans openOMSI takes the current for granted. Spans are laid along the selected tracks.	ในที่ที่มีสายไฟ รถรางหรือรถไฟฟ้าของผู้เล่นต้องมีเซกชันที่มีไฟอยู่เหนือแพนโทกราฟ (เซกชันไม่มีไฟและช่วงขาดทำให้หยุดขับเคลื่อน) ถ้าไม่มีช่วงสาย openOMSI จะถือว่ามีไฟเสมอ ช่วงสายจะวางตามรางที่เลือก
+The player's metro train needs a live section of third rail beside its shoe. The kit's metro tracks carry the rail itself; spans say where it is fed. Spans are laid along the selected tracks.	รถไฟใต้ดินของผู้เล่นต้องมีเซกชันรางที่สามที่มีไฟอยู่ข้างแท่งรับไฟ รางรถไฟใต้ดินของชุดมีรางที่สามในตัว ช่วงสายบอกว่าจ่ายไฟที่ใด ช่วงสายจะวางตามรางที่เลือก
+openOMSI's trolleybuses run on this wire (trolley.txt beside global.cfg): a pole is powered only on a pair fed by a substation. Spans are laid over each way's lane of the selected roads, with the wire splines that show them.	รถโทรลลีย์บัสของ openOMSI วิ่งบนสายนี้ (trolley.txt ข้าง global.cfg): เสารับไฟจะมีไฟเฉพาะบนคู่สายที่สถานีไฟฟ้าย่อยจ่ายไฟเท่านั้น ช่วงสายจะวางเหนือเลนของแต่ละทิศทางของถนนที่เลือก พร้อมสไปลน์สายไฟที่แสดงช่วงสายนั้น
+The line	ระบบจ่ายไฟ
+Voltage	แรงดันไฟฟ้า
+Current	กระแสไฟ
+direct	กระแสตรง
+alternating	กระแสสลับ
+Wire height	ความสูงสายไฟ
+Wire spacing	ระยะห่างสายไฟ
+Sections (each fed by a substation)	เซกชัน (แต่ละอันรับไฟจากสถานีไฟฟ้าย่อย)
+name	ชื่อ
+live	มีไฟ
+feeder Ω	ฟีดเดอร์ Ω
+Section	เซกชัน
+Spans	ช่วงสาย
+one pair over the middle	หนึ่งคู่ตรงกลาง
+a pair over each 3.0 m lane	หนึ่งคู่เหนือทุกเลน 3.0 m
+a pair over each 3.5 m lane	หนึ่งคู่เหนือทุกเลน 3.5 m
+lay the wire splines too	วางสไปลน์สายไฟด้วย
+Wire the selected roads	เดินสายไฟให้ถนนที่เลือก
+Electrify the selected tracks	ติดตั้งระบบไฟฟ้าให้รางที่เลือก
+Take their spans off	เอาช่วงสายของมันออก
+(select roads in the view)	(เลือกถนนในมุมมอง)
+(select tracks in the view)	(เลือกรางในมุมมอง)
+Their spans are taken off	เอาช่วงสายออกแล้ว
+Spans laid:	วางช่วงสายแล้ว:
+Gaps	ช่วงขาด
+Insulators	ฉนวน
+Gap	ช่วงขาด
+Insulator	ฉนวน
+Frogs (wire switches)	ประแจสายไฟ (ทางแยกของสาย)
+Where three spans meet: the contact plate before it sets it by the current the bus draws (power) or by its indicator.	จุดที่ช่วงสายสามช่วงมาบรรจบ: แผ่นสัมผัสก่อนถึงจะสับประแจตามกระแสที่รถดึง (เร่ง) หรือตามไฟเลี้ยว
+by current	ตามกระแส
+by indicator	ตามไฟเลี้ยว
+Frog	ประแจสายไฟ
+A switch listed here holds while a train stands on it, goes back to its rest position, and can be thrown by hand only or locked by a signal. Switches not listed work as before.	ประแจสลับในรายการนี้จะไม่สับขณะมีรถไฟอยู่บนมัน จะกลับสู่ตำแหน่งปกติ และกำหนดให้สับด้วยมือเท่านั้นหรือให้สัญญาณล็อกได้ ประแจที่ไม่อยู่ในรายการทำงานเหมือนเดิม
+The selected switch objects	วัตถุประแจสลับที่เลือก
+simple	ธรรมดา
+crossover	ทางข้ามสับหลีก
+double slip	ดับเบิลสลิป
+diamond	ทางตัดข้ามแบบเพชร
+scissors	ทางข้ามแบบกรรไกร
+rests straight	ปกติทางตรง
+rests diverging	ปกติทางแยก
+thrown by the route	สับตามเส้นทาง
+by hand only	ด้วยมือเท่านั้น
+interlocked	อินเตอร์ล็อก
+diverging	ทางแยก
+locked by	ล็อกโดย
+Blocks	บล็อก
+A stretch of track that holds one AI train at a time, given by where it begins and ends on the rails; its signals show whether it is free. Blocks need the timetable's trains (the AI) to hold.	ช่วงรางที่รับรถไฟ AI ได้ทีละขบวน กำหนดด้วยจุดเริ่มและจุดสิ้นสุดบนราง สัญญาณของมันแสดงว่าว่างหรือไม่ บล็อกมีผลกับรถไฟตามตารางเวลา (AI) เท่านั้น
+Ends	ปลาย
+Block	บล็อก
+Click where the block begins	คลิกจุดที่บล็อกเริ่มต้น
+Signals	สัญญาณ
+A signal of the map tied to a block shows stop while the block is in use and go while it is free.	สัญญาณบนแผนที่ที่ผูกกับบล็อกจะแสดงหยุดขณะบล็อกมีรถอยู่ และแสดงไปได้เมื่อบล็อกว่าง
+main	หลัก
+distant	ล่วงหน้า
+block	บล็อก
+shunting	สับเปลี่ยน
+speed	ความเร็ว
+tram	รถราง
+Tram street track	รางรถรางบนถนน
+Tram track on grass	รางรถรางบนหญ้า
+Railway track	รางรถไฟ
+Metro track	รางรถไฟใต้ดิน
+Metro tunnel	อุโมงค์รถไฟใต้ดิน
+Tram platform	ชานชาลารถราง
+Metro side platform	ชานชาลาข้างรถไฟใต้ดิน
+Metro island platform	ชานชาลาเกาะกลางรถไฟใต้ดิน
+Railway side platform	ชานชาลาข้างรถไฟ
+Railway island platform	ชานชาลาเกาะกลางรถไฟ
+Trolleybus wires (one pair)	สายรถโทรลลีย์บัส (หนึ่งคู่)
+Trolleybus wires, 3.0 m lanes	สายรถโทรลลีย์บัส เลน 3.0 m
+Trolleybus wires, 3.5 m lanes	สายรถโทรลลีย์บัส เลน 3.5 m
+Catenary mast (arm right)	เสาสายไฟเหนือหัว (แขนขวา)
+Catenary mast (arm left)	เสาสายไฟเหนือหัว (แขนซ้าย)
+Trolleybus pole (arm right)	เสารถโทรลลีย์บัส (แขนขวา)
+Trolleybus pole (arm left)	เสารถโทรลลีย์บัส (แขนซ้าย)
+Metro sign	ป้ายรถไฟใต้ดิน
+Platform shelter	หลังคาชานชาลา
+Buffer stop	กันชนปลายราง
+Station stop	ป้ายสถานี
+Bus	รถบัส
+Tram	รถราง
+Railway	รถไฟ
+Metro	รถไฟใต้ดิน
+Trolleybus	รถโทรลลีย์บัส
+buses on the streets, stops at the kerb	รถบัสบนถนน ป้ายริมขอบทาง
+street track under a contact wire, low platforms	รางบนถนนใต้สายไฟ ชานชาลาต่ำ
+mainline track, stations with platforms, signals and blocks	รางสายหลัก สถานีพร้อมชานชาลา สัญญาณและบล็อก
+track with a third rail, tunnels, high platforms	รางที่มีรางที่สาม อุโมงค์ ชานชาลาสูง
+buses under a pair of wires, frogs at junctions	รถบัสใต้สายไฟคู่ ประแจสายไฟที่ทางแยก
+Depot Square	จัตุรัสดีโป
+Park Gate	ประตูสวน
+Tram start	จุดเริ่มรถราง
+Loop line	สายวงแหวน
+A trolleybus junction under its wires with three stations: save, then drive it in openOMSI with a trolleybus of your own.	ทางแยกรถโทรลลีย์บัสใต้สายไฟพร้อมสามสถานี: บันทึก แล้วขับด้วยรถโทรลลีย์บัสของคุณเองใน openOMSI
+station stops:	ป้ายสถานี:
+stations:	สถานี:
+routes:	เส้นทาง:
+Vehicles of other modes	รถของประเภทอื่น
+Services without a vehicle of their mode	รูปแบบการเดินรถที่ไม่มีรถประเภทของตัวเอง
+openOMSI runs only vehicles of a Modern map's modes on it. This vehicle of the AI lists is made for another mode (its file says so, or it is a depot's vehicle and its shape says so), so the game leaves it out. Change it in Map > Traffic and AI, or add its mode to the map in Map settings.	openOMSI เดินรถเฉพาะประเภทรถของแผนที่โมเดิร์นบนแผนที่นั้น รถคันนี้ในรายการ AI ถูกสร้างสำหรับประเภทอื่น (ไฟล์ของมันระบุไว้ หรือเป็นรถของดีโปและรูปทรงของมันบ่งบอก) เกมจึงไม่ปล่อยรถคันนี้ เปลี่ยนใน แผนที่ > การจราจรและ AI หรือเพิ่มประเภทของมันให้แผนที่ในการตั้งค่าแผนที่
+A service of the transit network takes its vehicles from its depot's AI group (or names one vehicle file). That group has no vehicle of the route's mode, so nothing runs it. Give the depot an AI group with such vehicles (Map > Traffic and AI), or choose another depot.	รูปแบบการเดินรถของเครือข่ายขนส่งสาธารณะนำรถจากกลุ่ม AI ของดีโปของมัน (หรือระบุไฟล์รถหนึ่งไฟล์) กลุ่มนั้นไม่มีรถประเภทของเส้นทาง จึงไม่มีรถวิ่ง ให้ดีโปมีกลุ่ม AI ที่มีรถแบบนั้น (การจราจรและ AI) หรือเลือกดีโปอื่น
+group	กลุ่ม
+route	เส้นทาง
+its depot names no AI group	ดีโปของมันไม่ได้ระบุกลุ่ม AI
+no vehicle of the mode in	ไม่มีรถประเภทนี้ใน
+Stations from OpenStreetMap	สถานีจาก OpenStreetMap
+Metro tracks	รางรถไฟใต้ดิน
+in tunnels too: build them with the kit's metro tunnel and cut the ground away (a Modern map)	ในอุโมงค์ด้วย: สร้างด้วยอุโมงค์รถไฟใต้ดินของชุด และขุดพื้นดินออก (แผนที่โมเดิร์น)
+Start with a trolleybus line: a junction under its wires with frogs, three stations and two routes	เริ่มด้วยสายรถโทรลลีย์บัส: ทางแยกใต้สายไฟพร้อมประแจสายไฟ สามสถานี และสองเส้นทาง
+Stations (tram, metro, railway)	สถานี (รถราง รถไฟใต้ดิน รถไฟ)
+Each tram stop and station of the map's rail modes put with the kit's station stop beside the nearest track (within 25 m); every stop of the map then becomes a station of its transport folder	ป้ายรถรางและสถานีแต่ละแห่งของประเภทรถระบบรางของแผนที่ วางด้วยป้ายสถานีของชุดข้างรางที่ใกล้ที่สุด (ภายใน 25 m) จากนั้นทุกป้ายของแผนที่จะกลายเป็นสถานีในโฟลเดอร์ transport
+Routes (tram, trolleybus, metro, railway)	เส้นทาง (รถราง รถโทรลลีย์บัส รถไฟใต้ดิน รถไฟ)
+Each route of the map's modes through two or more of its stations a segment of its line, the line's service as often as OpenStreetMap says (else every 10 minutes), from 05:30 to 23:30; openOMSI finds the way over the tracks	ทุกเส้นทางของประเภทรถของแผนที่ที่ผ่านสถานีสองแห่งขึ้นไปเป็นช่วงหนึ่งของสายนั้น รูปแบบการเดินรถของสายมีความถี่ตามที่ OpenStreetMap ระบุ (ไม่เช่นนั้นทุก 10 นาที) ตั้งแต่ 05:30 ถึง 23:30; openOMSI หาทางบนรางเอง
+no vehicle of it is installed	ไม่ได้ติดตั้งรถของกลุ่มนี้เลย
+Its vehicles:	รถของกลุ่ม:
+(select roads in the view, and the junctions between them)	(เลือกถนนในมุมมอง และทางแยกระหว่างถนนเหล่านั้น)
+(select tracks in the view, and their switches)	(เลือกรางในมุมมอง และประแจสลับของราง)
+A pair of wires over each way's kerb lane; through a selected junction only the lanes that join wired roads. Frogs are put where three wires meet.	สายไฟคู่หนึ่งเหนือเลนริมขอบทางของแต่ละทิศทาง; ที่ทางแยกที่เลือกจะมีเฉพาะเลนที่เชื่อมถนนที่เดินสายไฟแล้ว ประแจสายไฟจะวางตรงที่สายไฟสามเส้นมาบรรจบกัน
+The map's files are still being read	ยังอ่านไฟล์ของแผนที่อยู่
+West Gate	ประตูตะวันตก
+East Market	ตลาดตะวันออก
+North Park	สวนเหนือ
+Market line	สายตลาด
+Park line	สายสวน
+Trolleybus start	จุดเริ่มรถโทรลลีย์บัส
+frogs:	ประแจสายไฟ:
+places where more than three wires meet get no frog: wire fewer turns there	จุดที่สายไฟมาบรรจบกันมากกว่าสามเส้นไม่ได้วางประแจสายไฟ: เดินสายไฟให้ทางเลี้ยวที่นั่นน้อยลง
+Track ends that do not meet	ปลายรางที่ไม่บรรจบกัน
+Two tracks run on into one another but their ends lie apart: the game joins rails only where their ends lie within 1.5 m, so no train or tram gets across (a route through there finds no way). "Fix" moves one end onto the other, arriving in line with it, and joins them.	รางสองเส้นต่อเนื่องกัน แต่ปลายอยู่ห่างกัน: เกมจะเชื่อมรางเฉพาะเมื่อปลายอยู่ห่างกันไม่เกิน 1.5 m จึงไม่มีรถไฟหรือรถรางผ่านไปได้ (เส้นทางที่ผ่านตรงนั้นจะหาทางไม่เจอ) "แก้ไข" จะย้ายปลายหนึ่งไปที่อีกปลาย ให้อยู่แนวเดียวกัน แล้วเชื่อมเข้าด้วยกัน
+tracks	ราง
+Select the roads or tracks to build into the ground	เลือกถนนหรือรางที่จะสร้างลงในพื้นดิน
+Cutting	ทางตัด
+Cut and cover tunnel	อุโมงค์แบบขุดเปิดแล้วกลบ
+Nothing to build into the ground	ไม่มีอะไรให้สร้างลงในพื้นดิน
+Build into the ground	สร้างลงในพื้นดิน
+The chain of the selected pieces lowered, with ramps at its ends. Cut: an open cutting with sloped banks. Cover: open ramps down to the portals and a tunnel under the ground between them (a shell of walls and roof, a portal at each mouth).	ชิ้นส่วนที่เลือกทั้งแนวจะถูกลดระดับลง โดยมีทางลาดที่ปลาย ทางตัด: ร่องเปิดที่มีลาดตลิ่ง อุโมงค์: ทางลาดเปิดลงไปถึงปากอุโมงค์ และมีอุโมงค์ใต้ดินระหว่างนั้น (โครงผนังและหลังคา มีปากอุโมงค์ที่แต่ละทางเข้า)
+Cover (tunnel)	ปิดคลุม (อุโมงค์)
+Ramp gradient	ความลาดของทางลาด
+Banks	ลาดตลิ่ง
+ m out per metre up	 m ออกด้านข้างต่อความสูง 1 เมตร
+Ramps	ทางลาด
+at the start	ที่จุดเริ่ม
+at the end	ที่จุดสิ้นสุด
+A tunnel needs a depth of 6 m or more: shallower it stays an open cutting	อุโมงค์ต้องลึก 6 m ขึ้นไป: ถ้าตื้นกว่านั้นจะยังเป็นทางตัดเปิด
+Each ramp is about	ทางลาดแต่ละด้านยาวประมาณ
+Pieces lowered:	ชิ้นส่วนที่ลดระดับ:
+tunnel pieces:	ชิ้นส่วนอุโมงค์:
+portals:	ปากอุโมงค์:
+their overhead taken off: wire them again (Transit network, Power)	สายไฟเหนือหัวถูกถอดออก: เดินสายใหม่ (เครือข่ายขนส่งสาธารณะ, ไฟฟ้า)
+Platforms at the stations	ชานชาลาที่สถานี
+The kit's platform of each rail station's mode beside its track, on the side its stop stands, as long as its platform says	ชานชาลาจากชุดตามประเภทของแต่ละสถานีราง วางข้างรางของสถานี ด้านที่ป้ายตั้งอยู่ ยาวตามที่ชานชาลาของสถานีกำหนด
+Platforms laid:	ชานชาลาที่วาง:
+lay the wires, masts, poles and frogs too	วางสายไฟ เสา และประแจสายไฟด้วย
+Catenary mast	เสาสายไฟเหนือหัว
+Trolleybus pole	เสาสายรถโทรลลีย์บัส
+Trolleybus frog	ประแจสายรถโทรลลีย์บัส
+Section insulator	ฉนวนแบ่งช่วง
+Lake	ทะเลสาบ
+River	แม่น้ำ
+Water level:	ระดับน้ำ:
+Click the shore round and close it on the first point (Enter closes too, right-click takes a point back). The ground inside is dug to a bed and the banks slope to the shore.	คลิกรอบชายฝั่งแล้วปิดที่จุดแรก (กด Enter เพื่อปิดก็ได้ คลิกขวาเพื่อย้อนจุดกลับ) พื้นดินด้านในจะถูกขุดเป็นท้องน้ำ และตลิ่งจะลาดลงสู่ชายฝั่ง
+Click the river's middle line from its source on and finish on the last point (or Enter). Water in OMSI lies at one level for a tile: a river runs level.	คลิกเส้นกลางของแม่น้ำจากต้นน้ำเรื่อยไปและจบที่จุดสุดท้าย (หรือกด Enter) น้ำใน OMSI อยู่ที่ระดับเดียวต่อหนึ่งไทล์ ดังนั้นแม่น้ำจึงไหลอยู่ในระดับเดียวกัน
+Add as a ground texture	เพิ่มเป็นเท็กซ์เจอร์พื้นดิน
+A junction was not made: its roads are too short or too close together. Lengthen them or move the junctions apart.	ไม่ได้สร้างทางแยก: ถนนสั้นเกินไปหรืออยู่ใกล้กันเกินไป ให้ต่อถนนให้ยาวขึ้นหรือย้ายทางแยกให้ห่างกัน
+Display	การแสดงผล
+X-ray (Alt+Z): see and pick through the mesh	เอกซเรย์ (Alt+Z): มองและเลือกทะลุเมช
+Show the textures	แสดงเท็กซ์เจอร์
+The object's own pictures under the editing shading	รูปภาพของวัตถุเองใต้สีแก้ไข
+Shading opacity	ความทึบของสีแก้ไข
+0 %: the textures as they are; 100 %: the plain shading. The picture is renewed a moment after each change.	0 %: เท็กซ์เจอร์ตามจริง 100 %: สีแก้ไขล้วน ภาพจะอัปเดตหลังการเปลี่ยนแปลงแต่ละครั้งสักครู่
+Give this material to the selected faces	ใช้วัสดุนี้กับหน้าที่เลือก
+Select faces to give them a material.	เลือกหน้าเพื่อกำหนดวัสดุให้
+Road markings	เส้นจราจร
+Paint my own markings	ทาเส้นเอง
+The maker paints the lines onto the roadway texture: pick a plain asphalt texture, or its own lines show too	ตัวสร้างทาเส้นลงบนพื้นผิวผิวถนน: เลือกพื้นผิวแอสฟัลต์เรียบ ไม่เช่นนั้นเส้นในตัวมันจะโชว์ด้วย
+Standard for these lanes	ค่ามาตรฐานสำหรับเลนเหล่านี้
+Add a line	เพิ่มเส้น
+Across the roadway from its middle (right of the road's way is plus)	ข้ามผิวถนนจากตรงกลาง (ขวาของทิศทางถนนเป็นบวก)
+Solid	เส้นทึบ
+Dashed	เส้นประ
+Double solid	เส้นทึบคู่
+Solid and dashed	เส้นทึบและเส้นประ
+The line's width	ความกว้างของเส้น
+Dash length	ความยาวช่วงประ
+Gap between dashes	ช่องว่างระหว่างช่วงประ
+Draw road markings	วาดเครื่องหมายบนถนน
+Pen	พู่กัน
+Straight line	เส้นตรง
+Dashed line	เส้นประ
+Rectangle	สี่เหลี่ยมผืนผ้า
+Arrow	ลูกศร
+Eraser	ยางลบ
+Pointing back	ชี้ย้อนกลับ
+Snap to 5 cm	จัดชิดทุก 5 cm
+Drag to draw. The picture is the roadway as the texture lies on it, up is the way of the road; it repeats along, so what leaves at the top comes in at the bottom.	ลากเพื่อวาด ภาพคือผิวถนนตามที่พื้นผิววางอยู่บนนั้น ด้านบนคือทิศทางของถนน ภาพจะซ้ำไปตามความยาวถนน สิ่งที่ออกไปทางด้านบนจะเข้ามาทางด้านล่าง
+Pick a roadway texture first	เลือกพื้นผิวถนนก่อน
+Draw by hand…	วาดด้วยมือ…
+A drawing board with a pen, lines, arrows and an eraser: what you draw goes onto the roadway	กระดานวาดภาพพร้อมพู่กัน เส้น ลูกศร และยางลบ: สิ่งที่คุณวาดจะไปอยู่บนผิวถนน
+a drawing is on the road	มีภาพวาดอยู่บนถนน
+Painted line	เส้นสี
+Stop line	เส้นหยุด
+A wide solid line across a lane: draw it across the road	เส้นทึบกว้างขวางช่องจราจร: วาดขวางถนน
+Crossing	ทางม้าลาย
+Zebra bars: draw it across the road, the bars lie along it	ทางข้าม: วาดขวางถนน แถบจะวางไปตามถนน
+Centre line	เส้นกลางถนน
+A double yellow line	เส้นเหลืองคู่
+Lane line	เส้นแบ่งเลน
+A white dashed line	เส้นประสีขาว
+Double	คู่
+Crossing (bars)	ทางม้าลาย (แถบ)
+A line's width (each line of a double one); a crossing's reach along the road	ความกว้างของเส้น (แต่ละเส้นในเส้นคู่); ความลึกของทางข้ามตามแนวถนน
+Bar	แถบ
+Dash	ขีด
+Draw with this line	วาดด้วยเส้นนี้
+It is made as a spline type of the content folder (Splines\\openMapper\\marks) and chosen: draw it with Line, Arc or Curve, over the asphalt	สร้างเป็นชนิดสไปลน์ในโฟลเดอร์เนื้อหา (Splines\\openMapper\\marks) และเลือกไว้: วาดด้วยเส้น ส่วนโค้ง หรือเส้นโค้งบนยางมะตอย
+Painted line made: draw with it in the junction editor	สร้างเส้นสีแล้ว: วาดด้วยเส้นนี้ในตัวแก้ไขสี่แยก

@@ -2438,3 +2438,350 @@ Could not copy the photos	写真をコピーできませんでした
 Copying the photos	写真をコピー中
 Hold only the photos of the tiles near the camera	カメラの近くのタイルの写真だけを保持
 The others keep their photo in the map's folder, and are put up again when you go back to them.	それ以外は写真をマップのフォルダーに残し、戻ったときに再び表示されます。
+A tram loop with two stations and its wire: save, then drive it in openOMSI with a tram of your own.	2つの駅と架線のある路面電車のループ線：保存してから、openOMSIで自分の路面電車で走らせてください。
+Transit kit made, files:	交通キットを作成しました。ファイル数：
+The transit kit could not be made	交通キットを作成できませんでした
+Transit network problems	交通ネットワークの問題
+Stations without their mode's lanes	自分の交通機関の車線がない駅
+Stations without their stop	停留所のない駅
+openOMSI's own reader finds this in the map's transport folder (stations, routes, wires, switches, depots, signals): a service it names is skipped, a section or a block left out. Open Map > Transit network to change it.	openOMSI自身の読み込み機能が、マップのtransportフォルダ（駅、路線、架線、ポイント、車庫、信号）でこれを見つけました：指定された運行パターンはスキップされ、セクションや閉そく区間は除外されます。変更するには マップ > 交通ネットワーク を開いてください。
+openOMSI routes a service over the lanes of its mode within 25 m of each station (rails for trams, metro and trains, streets for buses and trolleybuses). This station has none of its modes' near, so its services cannot run. Move the stop next to the track or road, or lay one there.	openOMSIは各駅から25 m以内にある、その交通機関の車線（路面電車・地下鉄・鉄道は線路、バス・トロリーバスは道路）に沿って運行パターンの経路を決めます。この駅の近くにはその交通機関の車線がないため、運行できません。停留所を線路や道路の横に移すか、そこに線路や道路を敷いてください。
+A station is found by the game among the map's stops: by its stop object, else by its name. This one's object is no stop on the map and no stop has its name, so the services through it are skipped. Pick its stop again in Map > Transit network, Stations.	ゲームは駅をマップの停留所の中から探します：停留所オブジェクトで、なければ名前で。この駅のオブジェクトはマップ上の停留所ではなく、同じ名前の停留所もないため、この駅を通る運行パターンはスキップされます。マップ > 交通ネットワーク の「駅」で停留所を選び直してください。
+station	駅
+Transit network…	交通ネットワーク…
+The transport folder stays: openOMSI still reads its stations, routes and wires.	transportフォルダは残ります：openOMSIは引き続きその駅、路線、架線を読み込みます。
+Remove it too	これも削除
+Start with a tram line: a loop of track under its wire, two stations and a route	路面電車の系統から始める：架線の下のループ線路、2つの駅と1つの路線
+Classic	クラシック
+Runs in OMSI 2 and in openOMSI. Buses, and trams and trains as OMSI 2 has them.	OMSI 2とopenOMSIで動作します。バスと、OMSI 2と同じ形の路面電車・鉄道。
+Modern	モダン
+openOMSI only. Real transit: stations, routes, overhead wire, third rail, depots and signal blocks.	openOMSI専用。本格的な公共交通：駅、路線、架線、第三軌条、車庫、閉そく区間。
+Made for (one or more):	対象（1つ以上）：
+Choose at least one	1つ以上選んでください
+OMSI 2 cannot run a Modern map's routes, wires or blocks, and openOMSI runs only vehicles of its modes on it. openMapper's transit kit (tracks, wires, platforms, masts) is made in the content folder.	OMSI 2ではモダンマップの路線、架線、閉そく区間は動かず、openOMSIではその交通機関の車両しか走りません。openMapperの交通キット（線路、架線、ホーム、架線柱）はコンテンツフォルダに作成されます。
+Overview	概要
+Stations	駅
+Depots	車庫
+Power	電力
+Switches and signals	ポイントと信号
+Set it (else the game's default)	設定する（しなければゲームの既定値）
+(not set)	（未設定）
+Take it out	外す
+Transit network	交通ネットワーク
+This is a Classic map.	これはクラシックマップです。
+Stations, routes without tours, the overhead wire, the third rail, depots and signal blocks are openOMSI's (0.3.42 and later): make the map Modern in Map settings to give it a transit network. OMSI 2 cannot run them.	駅、行路のない路線、架線、第三軌条、車庫、閉そく区間はopenOMSI（0.3.42以降）の機能です：交通ネットワークを設定するには、マップ設定でマップをモダンにしてください。OMSI 2では動きません。
+No stop there: click a stop object (a bus stop, or the kit's station stop)	そこに停留所はありません：停留所オブジェクト（バス停、またはキットの駅停留所）をクリックしてください
+Now click where the block ends	次に閉そく区間の終わりをクリック
+Click the signal object itself	信号オブジェクトそのものをクリックしてください
+Then click in the view	次にビューでクリック
+Modern map for	モダンマップの対象
+openOMSI runs only vehicles of these modes here; OMSI 2 cannot run the network. The modes are changed in Map settings.	ここではopenOMSIはこれらの交通機関の車両しか走らせず、OMSI 2ではこのネットワークは動きません。交通機関はマップ設定で変更します。
+Services	運行パターン
+Track rules	線路ルール
+Overhead wire spans	架線スパン
+Third rail spans	第三軌条スパン
+Trolleybus wire spans	トロリー線スパン
+Switches	ポイント
+Signals and blocks	信号と閉そく区間
+Problems	問題
+None: openOMSI reads the network as it is.	なし：openOMSIはネットワークをそのまま読み込みます。
+error	エラー
+warning	警告
+Found by openOMSI's own reader of the transport folder, the texts as it writes them in its log.	openOMSI自身のtransportフォルダ読み込み機能が検出したもので、文はそのログに書かれるとおりです。
+openMapper's transit kit	openMapperの交通キット
+Tracks, platforms, wires and objects made by openMapper for Modern maps (OMSI 2 ships no metro, third rail or trolleybus wire). They are in the catalogue under openMapper; click one to place it.	openMapperがモダンマップ用に作成した線路、ホーム、架線、オブジェクト（OMSI 2には地下鉄、第三軌条、トロリー線がありません）。カタログのopenMapperの下にあり、クリックすると配置できます。
+Make the kit	キットを作成
+A station is a stop object of the map (a bus stop, or the kit's station stop beside a track) with its platforms. openOMSI routes a service over the lanes of its mode within 25 m of each station.	駅とは、マップの停留所オブジェクト（バス停、または線路脇のキットの駅停留所）とそのホームです。openOMSIは各駅から25 m以内にある、その交通機関の車線に沿って運行パターンの経路を決めます。
+A station for every stop of the map	マップのすべての停留所に駅を
+Stops not yet a station become one, named as the stop, its modes from the tracks and roads beside it	まだ駅でない停留所が駅になります。名前は停留所と同じ、交通機関は隣の線路や道路から決まります
+New station	新しい駅
+Stations added:	追加した駅：
+Choose a station	駅を選んでください
+Id	ID
+Modes	交通機関
+Stop object	停留所オブジェクト
+Pick	選択
+Place	位置
+Change to	乗り換え先
+Platforms	ホーム
+Side	側
+island	島式
+both	両側
+platform screen doors	ホームドア
+Delete the station	駅を削除
+A route is segments from station to station (the stops between them in order) and services over them: a branch, a short working or an express is another segment or service. openOMSI makes the timetable's tours from them and finds the way over the tracks itself.	路線は、駅から駅への区間（その間の停留所を順に）と、そこを走る運行パターンでできています：支線、区間運転、急行は、別の区間または運行パターンです。openOMSIはそこから時刻表の行路を作り、線路上の経路も自分で見つけます。
+Add two stations or more first (Stations)	先に駅を2つ以上追加してください（「駅」）
+New route	新しい路線
+Segment	区間
+Stops between	間の停留所
+Passed without stopping	通過
+Standing at a stop	停車時間
+Speed	速度
+Way back	帰路
+over the same segment	同じ区間を通る
+another segment	別の区間
+Service	運行パターン
+Segments in order	区間（順番）
+From – to	始点 – 終点
+Days	運行日
+every day	毎日
+weekends	週末
+Saturdays	土曜
+Sundays	日曜
+turns back	折り返す
+goes round a loop	ループを回る
+goes to depot	入庫する
+Cars in a train	編成両数
+Every 10 minutes from 05:30 to 23:30 over all the route's segments	05:30から23:30まで10分ごと、路線の全区間
+Departures of their own	個別の発車時刻
+For a service without a headway: its departures, as 06:00 06:12 06:30.	運行間隔のない運行パターン用：その発車時刻。例：06:00 06:12 06:30。
+Departures	発車時刻
+A service's depot sends out its vehicles: its AI group (Traffic and AI) supplies them, and the first departure of the day leaves by its gate along the rails to the first station.	運行パターンの車庫が車両を送り出します：そのAIグループ（交通とAI）が車両を供給し、その日の最初の便は出入口から線路を通って最初の駅へ向かいます。
+AI group	AIグループ
+Capacity	収容数
+Its stop	停留所
+Gates	出入口
+Add a gate	出入口を追加
+has a turning loop	折り返しループあり
+Delete the depot	車庫を削除
+A gate needs a rail within 25 m and a way to the first station, or the trip starts at its station (the game's log says so).	出入口には25 m以内のレールと最初の駅までの経路が必要です。ない場合、便はその駅から始まります（ゲームのログに記録されます）。
+Which tracks serve which mode and how they are powered: a rule matches a track type (a file pattern, * for any letters), a tile or one piece; later rules win. Without a rule openOMSI guesses from the type's name.	どの線路がどの交通機関に使われ、どう給電されるか：ルールは線路タイプ（ファイル名パターン、* は任意の文字）、タイル、または1つの部分に当てはまり、後のルールが優先されます。ルールがない場合、openOMSIはタイプ名から推測します。
+A rule for the selected track's type	選択した線路のタイプのルール
+Empty rule	空のルール
+(select a track in the view to make a rule for its type)	（ビューで線路を選択すると、そのタイプのルールを作成できます）
+Track type	線路タイプ
+Only on tile / piece	タイル / 部分のみ
+id	ID
+in the street	併用軌道
+railway	専用軌道
+overhead wire	架線
+third rail	第三軌条
+diesel	ディーゼル
+Tunnel	トンネル
+yes	はい
+no	いいえ
+Gauge	軌間
+A map for buses alone has no line to power.	バス専用のマップには給電する路線がありません。
+Third rail	第三軌条
+Trolleybus wire	トロリー線
+Where the wire is, the player's tram or electric train needs a live section of it over its pantograph (dead sections and breaks stop the drive). Without spans openOMSI takes the current for granted. Spans are laid along the selected tracks.	架線がある所では、プレイヤーの路面電車や電車のパンタグラフの上に通電したセクションが必要です（無電区間や切れ目では力行できません）。スパンがなければ、openOMSIは電気が常にあるものとみなします。スパンは選択した線路に沿って敷かれます。
+The player's metro train needs a live section of third rail beside its shoe. The kit's metro tracks carry the rail itself; spans say where it is fed. Spans are laid along the selected tracks.	プレイヤーの地下鉄車両には、集電靴の横に通電した第三軌条のセクションが必要です。キットの地下鉄線路は軌条そのものを持ち、スパンはどこに給電されるかを示します。スパンは選択した線路に沿って敷かれます。
+openOMSI's trolleybuses run on this wire (trolley.txt beside global.cfg): a pole is powered only on a pair fed by a substation. Spans are laid over each way's lane of the selected roads, with the wire splines that show them.	openOMSIのトロリーバスはこの架線を走ります（global.cfgの隣のtrolley.txt）：トロリーポールは変電所から給電された架線の対の上でのみ通電します。スパンは選択した道路の方向ごとの車線の上に、それを表す架線スプラインと共に敷かれます。
+The line	給電系統
+Voltage	電圧
+Current	電流
+direct	直流
+alternating	交流
+Wire height	架線の高さ
+Wire spacing	架線の間隔
+Sections (each fed by a substation)	セクション（それぞれ変電所から給電）
+name	名前
+live	通電
+feeder Ω	き電 Ω
+Section	セクション
+Spans	スパン
+one pair over the middle	中央に1対
+a pair over each 3.0 m lane	3.0 mの車線ごとに1対
+a pair over each 3.5 m lane	3.5 mの車線ごとに1対
+lay the wire splines too	架線スプラインも敷く
+Wire the selected roads	選択した道路に架線を張る
+Electrify the selected tracks	選択した線路を電化
+Take their spans off	スパンを外す
+(select roads in the view)	（ビューで道路を選択）
+(select tracks in the view)	（ビューで線路を選択）
+Their spans are taken off	スパンを外しました
+Spans laid:	敷いたスパン：
+Gaps	ギャップ
+Insulators	インシュレータ
+Gap	ギャップ
+Insulator	インシュレータ
+Frogs (wire switches)	架線分岐器（トロリー線のポイント）
+Where three spans meet: the contact plate before it sets it by the current the bus draws (power) or by its indicator.	3つのスパンが合う所：その手前の接触板が、バスが流す電流（力行）か方向指示器によって切り替えます。
+by current	電流で
+by indicator	方向指示器で
+Frog	架線分岐器
+A switch listed here holds while a train stands on it, goes back to its rest position, and can be thrown by hand only or locked by a signal. Switches not listed work as before.	ここに挙げたポイントは、列車が上にいる間は転換せず、定位に戻り、手動専用にしたり信号で鎖錠したりできます。挙げていないポイントは従来どおり動作します。
+The selected switch objects	選択したポイントオブジェクト
+simple	普通
+crossover	渡り線
+double slip	ダブルスリップ
+diamond	ダイヤモンドクロッシング
+scissors	シーサスクロッシング
+rests straight	定位：直進
+rests diverging	定位：分岐
+thrown by the route	進路で転換
+by hand only	手動のみ
+interlocked	連動
+diverging	分岐
+locked by	鎖錠する信号
+Blocks	閉そく区間
+A stretch of track that holds one AI train at a time, given by where it begins and ends on the rails; its signals show whether it is free. Blocks need the timetable's trains (the AI) to hold.	一度に1本のAI列車しか入れない線路の区間で、レール上の始点と終点で指定します。その信号が空いているかどうかを示します。閉そく区間が効くのは時刻表の列車（AI）に対してです。
+Ends	両端
+Block	閉そく区間
+Click where the block begins	閉そく区間の始まりをクリック
+Signals	信号
+A signal of the map tied to a block shows stop while the block is in use and go while it is free.	閉そく区間に結び付けたマップの信号は、区間が使用中なら停止を、空いていれば進行を示します。
+main	主信号
+distant	予告信号
+block	閉そく信号
+shunting	入換信号
+speed	速度信号
+tram	路面電車用
+Tram street track	路面電車の併用軌道
+Tram track on grass	路面電車の芝生軌道
+Railway track	鉄道線路
+Metro track	地下鉄線路
+Metro tunnel	地下鉄トンネル
+Tram platform	路面電車のホーム
+Metro side platform	地下鉄の相対式ホーム
+Metro island platform	地下鉄の島式ホーム
+Railway side platform	鉄道の相対式ホーム
+Railway island platform	鉄道の島式ホーム
+Trolleybus wires (one pair)	トロリー線（1対）
+Trolleybus wires, 3.0 m lanes	トロリー線、3.0 m車線
+Trolleybus wires, 3.5 m lanes	トロリー線、3.5 m車線
+Catenary mast (arm right)	架線柱（腕は右）
+Catenary mast (arm left)	架線柱（腕は左）
+Trolleybus pole (arm right)	トロリーバス架線柱（腕は右）
+Trolleybus pole (arm left)	トロリーバス架線柱（腕は左）
+Metro sign	地下鉄の標識
+Platform shelter	ホームの上屋
+Buffer stop	車止め
+Station stop	駅停留所
+Bus	バス
+Tram	路面電車
+Railway	鉄道
+Metro	地下鉄
+Trolleybus	トロリーバス
+buses on the streets, stops at the kerb	道路を走るバス、縁石沿いの停留所
+street track under a contact wire, low platforms	架線の下の併用軌道、低いホーム
+mainline track, stations with platforms, signals and blocks	本線の線路、ホームのある駅、信号と閉そく区間
+track with a third rail, tunnels, high platforms	第三軌条の線路、トンネル、高いホーム
+buses under a pair of wires, frogs at junctions	2本の架線の下を走るバス、分岐点の架線分岐器
+Depot Square	車庫前広場
+Park Gate	公園口
+Tram start	路面電車の起点
+Loop line	環状線
+A trolleybus junction under its wires with three stations: save, then drive it in openOMSI with a trolleybus of your own.	架線の下のトロリーバスの交差点と3つの駅：保存してから、openOMSIで自分のトロリーバスで走らせてください。
+station stops:	駅停留所：
+stations:	駅：
+routes:	路線：
+Vehicles of other modes	他の交通機関の車両
+Services without a vehicle of their mode	その交通機関の車両がない運行パターン
+openOMSI runs only vehicles of a Modern map's modes on it. This vehicle of the AI lists is made for another mode (its file says so, or it is a depot's vehicle and its shape says so), so the game leaves it out. Change it in Map > Traffic and AI, or add its mode to the map in Map settings.	openOMSIはモダンマップではその交通機関の車両しか走らせません。AIリストのこの車両は別の交通機関用です（ファイルにそう書かれているか、車庫の車両で形状からそう判断されます）。そのためゲームはこの車両を出しません。マップ > 交通とAI で変更するか、マップ設定でその交通機関をマップに追加してください。
+A service of the transit network takes its vehicles from its depot's AI group (or names one vehicle file). That group has no vehicle of the route's mode, so nothing runs it. Give the depot an AI group with such vehicles (Map > Traffic and AI), or choose another depot.	交通ネットワークの運行パターンは、車庫のAIグループから車両を取ります（または車両ファイルを1つ指定します）。そのグループには路線の交通機関の車両がないため、何も運行しません。車庫にそのような車両のあるAIグループを指定するか（交通とAI）、別の車庫を選んでください。
+group	グループ
+route	路線
+its depot names no AI group	車庫がAIグループを指定していません
+no vehicle of the mode in	この交通機関の車両なし：
+Stations from OpenStreetMap	OpenStreetMapの駅
+Metro tracks	地下鉄の線路
+in tunnels too: build them with the kit's metro tunnel and cut the ground away (a Modern map)	トンネル内も：キットの地下鉄トンネルで作り、地面をくり抜いてください（モダンマップ）
+Start with a trolleybus line: a junction under its wires with frogs, three stations and two routes	トロリーバスの系統から始める：架線分岐器のある架線下の交差点、3つの駅と2つの路線
+Stations (tram, metro, railway)	駅（路面電車、地下鉄、鉄道）
+Each tram stop and station of the map's rail modes put with the kit's station stop beside the nearest track (within 25 m); every stop of the map then becomes a station of its transport folder	マップの軌道系交通機関の各路面電車停留所と駅を、最寄りの線路の脇（25 m以内）にキットの駅停留所で置きます。その後、マップのすべての停留所がtransportフォルダの駅になります
+Routes (tram, trolleybus, metro, railway)	路線（路面電車、トロリーバス、地下鉄、鉄道）
+Each route of the map's modes through two or more of its stations a segment of its line, the line's service as often as OpenStreetMap says (else every 10 minutes), from 05:30 to 23:30; openOMSI finds the way over the tracks	マップの交通機関の各路線のうち、その駅を2つ以上通るものは系統の区間になり、系統の運行パターンはOpenStreetMapの間隔（なければ10分ごと）で05:30から23:30まで運行します。線路上の経路はopenOMSIが見つけます
+no vehicle of it is installed	インストールされた車両がありません
+Its vehicles:	車両：
+(select roads in the view, and the junctions between them)	（ビューで道路と、その間の交差点を選択）
+(select tracks in the view, and their switches)	（ビューで線路と、そのポイントを選択）
+A pair of wires over each way's kerb lane; through a selected junction only the lanes that join wired roads. Frogs are put where three wires meet.	各方向の歩道側の車線の上に架線を1対。選択した交差点では、架線のある道路をつなぐ車線だけ。3本の架線が交わる所に架線分岐器が置かれます。
+The map's files are still being read	マップのファイルをまだ読み込み中です
+West Gate	西門
+East Market	東市場
+North Park	北公園
+Market line	市場線
+Park line	公園線
+Trolleybus start	トロリーバスの起点
+frogs:	架線分岐器：
+places where more than three wires meet get no frog: wire fewer turns there	か所では3本を超える架線が交わるため架線分岐器を置けませんでした：そこでは架線を張る曲がり角を減らしてください
+Track ends that do not meet	つながっていない線路端
+Two tracks run on into one another but their ends lie apart: the game joins rails only where their ends lie within 1.5 m, so no train or tram gets across (a route through there finds no way). "Fix" moves one end onto the other, arriving in line with it, and joins them.	2本の線路が互いに続いていますが、端が離れています：ゲームは端同士が1.5 m以内のときだけレールをつなぐため、列車も路面電車もここを通れません（ここを通る路線は経路が見つかりません）。「修正」で一方の端をもう一方の端へ向きをそろえて移動し、接続します。
+tracks	線路
+Select the roads or tracks to build into the ground	地中に下げる道路または線路を選択してください
+Cutting	掘割
+Cut and cover tunnel	開削トンネル
+Nothing to build into the ground	地中に下げるものがありません
+Build into the ground	地中に下げる
+The chain of the selected pieces lowered, with ramps at its ends. Cut: an open cutting with sloped banks. Cover: open ramps down to the portals and a tunnel under the ground between them (a shell of walls and roof, a portal at each mouth).	選択した部分のつながりを下げ、両端にスロープを付けます。掘割：法面のある開いた掘割。トンネル：坑口まで下る開いたスロープと、その間の地下トンネル（壁と天井の躯体、出入口ごとに坑口）。
+Cover (tunnel)	覆い（トンネル）
+Ramp gradient	スロープの勾配
+Banks	法面
+ m out per metre up	 m（高さ1 mあたりの水平距離）
+Ramps	スロープ
+at the start	始点
+at the end	終点
+A tunnel needs a depth of 6 m or more: shallower it stays an open cutting	トンネルには6 m以上の深さが必要です：それより浅いと開いた掘割のままです
+Each ramp is about	各スロープは約
+Pieces lowered:	下げた部分：
+tunnel pieces:	トンネル部分：
+portals:	坑口：
+their overhead taken off: wire them again (Transit network, Power)	架線は撤去されました：もう一度架線を張ってください（交通ネットワーク、電力）
+Platforms at the stations	駅のホーム
+The kit's platform of each rail station's mode beside its track, on the side its stop stands, as long as its platform says	各鉄道駅の交通機関に応じたキットのホームを、線路の脇の停留所がある側に、そのホームが指定する長さで敷きます
+Platforms laid:	敷いたホーム：
+lay the wires, masts, poles and frogs too	架線、架線柱、トロリー線柱、架線分岐器も敷く
+Catenary mast	架線柱
+Trolleybus pole	トロリー線柱
+Trolleybus frog	トロリー線の架線分岐器
+Section insulator	セクションインシュレータ
+Lake	湖
+River	川
+Water level:	水位：
+Click the shore round and close it on the first point (Enter closes too, right-click takes a point back). The ground inside is dug to a bed and the banks slope to the shore.	岸に沿ってクリックし、最初の点でクリックして閉じます（Enterでも閉じます。右クリックで点を1つ戻します）。内側の地面は湖底まで掘られ、岸に向かって斜面になります。
+Click the river's middle line from its source on and finish on the last point (or Enter). Water in OMSI lies at one level for a tile: a river runs level.	川の中心線を水源からクリックしていき、最後の点で終了します（またはEnter）。OMSIの水は1タイルにつき1つの水位にあります。川は水平に流れます。
+Add as a ground texture	地面テクスチャとして追加
+A junction was not made: its roads are too short or too close together. Lengthen them or move the junctions apart.	交差点が作成されませんでした。道路が短すぎるか、互いに近すぎます。道路を長くするか、交差点を離してください。
+Display	表示
+X-ray (Alt+Z): see and pick through the mesh	X線表示（Alt+Z）：メッシュを透かして見たり選択したりします
+Show the textures	テクスチャを表示
+The object's own pictures under the editing shading	編集用シェーディングの下にオブジェクト本来の画像を表示
+Shading opacity	シェーディングの不透明度
+0 %: the textures as they are; 100 %: the plain shading. The picture is renewed a moment after each change.	0 %：テクスチャそのまま、100 %：単色のシェーディング。画像は変更のたびに少し遅れて更新されます。
+Give this material to the selected faces	このマテリアルを選択した面に割り当てる
+Select faces to give them a material.	面を選択するとマテリアルを割り当てられます。
+Road markings	道路標示
+Paint my own markings	独自の道路標示を描く
+The maker paints the lines onto the roadway texture: pick a plain asphalt texture, or its own lines show too	メーカーは車道テクスチャに線を描き込みます。無地のアスファルトテクスチャを選んでください。そうでないとテクスチャ自体の線も表示されます
+Standard for these lanes	これらの車線の標準
+Add a line	線を追加
+Across the roadway from its middle (right of the road's way is plus)	車道を横切る位置（中央から、道路の進行方向の右がプラス）
+Solid	実線
+Dashed	破線
+Double solid	二重実線
+Solid and dashed	実線と破線
+The line's width	線の幅
+Dash length	破線の長さ
+Gap between dashes	破線の間隔
+Draw road markings	路面標示を描く
+Pen	ペン
+Straight line	直線
+Dashed line	破線
+Rectangle	長方形
+Arrow	矢印
+Eraser	消しゴム
+Pointing back	後ろ向き
+Snap to 5 cm	5 cm にスナップ
+Drag to draw. The picture is the roadway as the texture lies on it, up is the way of the road; it repeats along, so what leaves at the top comes in at the bottom.	ドラッグして描きます。画像はテクスチャが貼られた車道そのもので、上が道路の進行方向です。進行方向に繰り返されるため、上から出たものは下から入ってきます。
+Pick a roadway texture first	先に車道テクスチャを選んでください
+Draw by hand…	手描き…
+A drawing board with a pen, lines, arrows and an eraser: what you draw goes onto the roadway	ペン、線、矢印、消しゴムのある描画ボード：描いたものが車道に反映されます
+a drawing is on the road	図柄が道路上にあります
+Painted line	塗装ライン
+Stop line	停止線
+A wide solid line across a lane: draw it across the road	車線を横切る太い実線：道路を横切るように描きます
+Crossing	横断歩道
+Zebra bars: draw it across the road, the bars lie along it	ゼブラ：道路を横切るように描くと、縞は道路に沿って並びます
+Centre line	中央線
+A double yellow line	黄色の二重線
+Lane line	車線境界線
+A white dashed line	白の破線
+Double	二重
+Crossing (bars)	横断歩道（縞）
+A line's width (each line of a double one); a crossing's reach along the road	線の幅（二重線では各線）。横断歩道の道路に沿った奥行き
+Bar	縞
+Dash	破線の長さ
+Draw with this line	この線で描く
+It is made as a spline type of the content folder (Splines\\openMapper\\marks) and chosen: draw it with Line, Arc or Curve, over the asphalt	コンテンツフォルダ（Splines\\openMapper\\marks）にスプライン種別として作られ、選択されます。線・円弧・曲線でアスファルトの上に描きます
+Painted line made: draw with it in the junction editor	塗装ラインを作成しました：交差点エディターでこれを使って描きます

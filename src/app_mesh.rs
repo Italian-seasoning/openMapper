@@ -232,6 +232,7 @@ impl App {
                 return true;
             }
             KeyCode::Enter | KeyCode::NumpadEnter if m.modal_active() => m.confirm(),
+            KeyCode::KeyZ if alt && !ctrl => m.xray = !m.xray,
             KeyCode::KeyZ if ctrl && shift => m.redo(),
             KeyCode::KeyZ if ctrl => m.undo(),
             KeyCode::KeyY if ctrl => m.redo(),

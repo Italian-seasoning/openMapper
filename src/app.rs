@@ -131,6 +131,7 @@ pub struct App {
     recover: Option<crate::doc::autosave::Meta>,
     /// The Lines window.
     tt: crate::ui_timetable::TimetableUi,
+    transit: crate::ui_transit::TransitUi,
     /// The Traffic and AI window.
     traffic: crate::ui_traffic::TrafficUi,
     pbr: crate::ui_pbr::PbrWindow,
@@ -197,6 +198,7 @@ impl App {
             view: egui::Rect::NOTHING,
             frames: 0,
             tt: crate::ui_timetable::TimetableUi::new(),
+            transit: Default::default(),
             traffic: Default::default(),
             pbr: Default::default(),
             road_types: Default::default(),
@@ -532,6 +534,25 @@ impl App {
         if let Some(v) = std::env::var("OPENMAPPER_CUT").ok().map(|c| c.split(',').filter_map(|x| x.trim().parse::<f64>().ok()).collect::<Vec<_>>()).filter(|v| v.len() == 2) {
             self.ed.cut_road_at(DVec2::new(v[0], v[1]));
         }
+        // OPENMAPPER_DIG=cut|cover,<depth>[,<grade>]: what OPENMAPPER_SELECT selected (and the
+        // splines linked to it) built into the ground
+        if let Ok(a) = std::env::var("OPENMAPPER_DIG") {
+            let v: Vec<&str> = a.split(',').collect();
+            while self.lib.scanning {
+                self.lib.poll();
+                std::thread::sleep(std::time::Duration::from_millis(20));
+            }
+            let kind = if v.first() == Some(&"cover") { crate::dig::Kind::Cover } else { crate::dig::Kind::Cut };
+            let o = crate::dig::Options { kind, depth: v.get(1).and_then(|x| x.parse().ok()).unwrap_or(5.0), grade: v.get(2).and_then(|x| x.parse().ok()).unwrap_or(5.0), ..Default::default() };
+            // (the whole chain of the selected piece)
+            if let Some(crate::doc::Sel::Spline(k, id)) = self.ed.selection().first().copied() {
+                self.ed.select_chain(k, id);
+            }
+            match crate::dig::into_ground(&mut self.ed, &self.lib, o) {
+                Ok(d) => log::info!("dig: {d:?}"),
+                Err(e) => log::warn!("dig: {e}"),
+            }
+        }
         // OPENMAPPER_PAINT_ALONG=<layer>,<width>[,under]: that layer painted along what
         // OPENMAPPER_SELECT selected
         if let Ok(a) = std::env::var("OPENMAPPER_PAINT_ALONG") {
@@ -615,11 +636,20 @@ impl App {
             self.cj.open = true;
             // OPENMAPPER_CJ_LANES=1: with the lanes drawn
             self.cj.show_lanes(std::env::var_os("OPENMAPPER_CJ_LANES").is_some());
+            // OPENMAPPER_CJ_PREVIEW=1: on the Preview tab
+            self.cj.show_preview(std::env::var_os("OPENMAPPER_CJ_PREVIEW").is_some());
         }
         // OPENMAPPER_MAKER=1: the Road types window open on a new road type in the road maker
         // (`pocket`: with a bus pocket)
         if let Ok(m) = std::env::var("OPENMAPPER_MAKER") {
             self.road_types.open_maker(m == "pocket");
+            if m == "marked" {
+                self.road_types.mark_maker();
+            }
+            if m == "canvas" {
+                self.road_types.mark_maker();
+                self.road_types.mark_canvas_sample();
+            }
         }
         // OPENMAPPER_PALETTE=<text>: the command search open with that typed
         if let Ok(q) = std::env::var("OPENMAPPER_PALETTE") {
@@ -710,6 +740,10 @@ impl App {
         if std::env::var_os("OPENMAPPER_SCRIPTS").is_some() {
             self.scripts.open = true;
         }
+        // OPENMAPPER_TRANSIT=<tab>: the Transit network window open on a tab (checks without a person at the screen)
+        if let Ok(t) = std::env::var("OPENMAPPER_TRANSIT") {
+            self.transit.open_at(&t);
+        }
         // OPENMAPPER_TIMETABLE=<line>: the Lines window open on that line (checks without a person at the screen)
         if let Ok(l) = std::env::var("OPENMAPPER_TIMETABLE") {
             self.tt.open_at(&l);
@@ -717,6 +751,15 @@ impl App {
         // OPENMAPPER_GUIDE: Getting started open
         if std::env::var_os("OPENMAPPER_GUIDE").is_some() {
             self.guide.open = true;
+        }
+        // OPENMAPPER_MODERN=<modes>: the map made Modern for these modes (tram,metro,…), as Map
+        // settings makes it: the kit, the track rules and the lines' networks
+        if let (Ok(m), Some(roots), Some(doc)) = (std::env::var("OPENMAPPER_MODERN"), self.roots.clone(), self.ed.doc.as_mut()) {
+            let modes = crate::transit::Modes::parse(&m);
+            if !modes.is_empty() {
+                crate::transit::kit::start_modern(doc, &roots, modes);
+                self.reload_content();
+            }
         }
         // OPENMAPPER_GROW=<n>: n rings of new tiles round the map (checks of bigger maps)
         if let Some(n) = std::env::var("OPENMAPPER_GROW").ok().and_then(|n| n.parse::<usize>().ok()) {
@@ -880,8 +923,20 @@ impl App {
                 t.touch_terrain();
             }
         }
+        let kit_new = !options.modes.is_empty() && !crate::transit::kit::installed(&roots.content);
+        if !options.modes.is_empty() {
+            crate::transit::kit::start_modern(&mut doc, roots, options.modes);
+        }
         self.after_open(doc);
+        if kit_new {
+            // (the kit's tracks, wires and objects into the catalogue)
+            self.reload_content();
+        }
         self.ed.set_tool(Tool::Roads);
+        if options.tram_sample || options.trolley_sample {
+            self.transit_sample(options.trolley_sample);
+            return;
+        }
         if options.real_place {
             self.osm.open = true;
             self.ed.toast(tr("Find the place in the window and build from it", "Найдите место в окне и постройте карту по нему"));
@@ -934,6 +989,36 @@ impl App {
         }
     }
 
+    /// The tram sample (a loop line under its wire) or the trolleybus sample (a junction under
+    /// its wires) on the new Modern map (`crate::transit::sample`).
+    fn transit_sample(&mut self, trolley: bool) {
+        while self.lib.scanning {
+            self.lib.poll();
+            std::thread::sleep(std::time::Duration::from_millis(20));
+        }
+        let Some(assets) = self.assets.as_mut() else { return };
+        let centre = self.ed.doc.as_ref().map(|d| {
+            let n = d.tiles.len().max(1) as f64;
+            d.tiles.keys().fold(DVec2::ZERO, |a, k| a + tile_origin(*k) + DVec2::splat(tile_size() * 0.5)) / n
+        });
+        let Some(centre) = centre else { return };
+        let made = if trolley { crate::transit::sample::build_trolley(&mut self.ed, assets, &self.lib, centre) } else { crate::transit::sample::build_tram(&mut self.ed, assets, &self.lib, centre) };
+        match made {
+            Ok(()) => {
+                self.ed.history.clear();
+                self.cam.jump_to(DVec3::new(centre.x, centre.y, 0.0), 340.0);
+                self.cam.yaw = 0.0;
+                self.cam.pitch = 50.0;
+                if trolley {
+                    self.ed.toast(tr("A trolleybus junction under its wires with three stations: save, then drive it in openOMSI with a trolleybus of your own.", "Троллейбусный перекрёсток под проводами с тремя станциями: сохраните и проедьте его в openOMSI на своём троллейбусе."));
+                } else {
+                    self.ed.toast(tr("A tram loop with two stations and its wire: save, then drive it in openOMSI with a tram of your own.", "Трамвайное кольцо с двумя станциями и проводом: сохраните и проедьте его в openOMSI на своём трамвае."));
+                }
+            }
+            Err(e) => self.ed.error(format!("{}: {e}", tr("The sample could not be made", "Пример не получился"))),
+        }
+    }
+
     /// `OPENMAPPER_POCKET`: a bus pocket laid on the sample's ring (a check of the bay tool).
     fn demo_pocket(&mut self, at: &str) {
         let v: Vec<f64> = at.split(',').filter_map(|x| x.trim().parse().ok()).collect();
@@ -978,6 +1063,7 @@ impl App {
         let Some(doc) = self.ed.doc.as_mut() else { return false };
         self.ed.history.commit();
         crate::editor::sync_entry_points(doc);
+        crate::transit::sync_station_stops(doc);
         self.tt.before_save(doc, self.roots.as_ref());
         // (the signal routes' pieces counted again among their tiles' paths: tiles change)
         if let Some(r) = &self.roots {
@@ -1654,6 +1740,19 @@ impl App {
                 }
             }
             Action::Timetable => self.tt.open = !self.tt.open,
+            Action::Transit => self.transit.open = !self.transit.open,
+            Action::TransitKit => {
+                if let Some(roots) = &self.roots {
+                    let _ = std::fs::remove_file(omsi_cfg::resolve_path(&roots.content, "Splines\\openMapper\\Transit\\kit_version.txt"));
+                    match crate::transit::kit::install(roots) {
+                        Ok(n) => {
+                            self.ed.toast(format!("{} {n}", tr("Transit kit made, files:", "Транспортный набор создан, файлов:")));
+                            self.reload_content();
+                        }
+                        Err(e) => self.ed.toast(format!("{}: {e}", tr("The transit kit could not be made", "Не удалось создать транспортный набор"))),
+                    }
+                }
+            }
             Action::Traffic => self.traffic.open = !self.traffic.open,
             Action::Geo => self.geo.open = !self.geo.open,
             Action::Osm => self.osm.open = !self.osm.open,
@@ -2187,12 +2286,18 @@ impl App {
                 }
                 self.tt.window(&ctx, &mut self.ed, self.roots.as_ref(), &mut actions);
                 self.traffic.window(&ctx, &mut self.ed, self.roots.as_ref());
+                self.transit.window(&ctx, &mut self.ed, &self.lib, self.assets.as_mut(), self.roots.as_ref(), &mut actions);
                 self.pbr.window(&ctx, self.roots.as_ref(), &mut actions);
                 self.road_types.window(&ctx, &mut self.ed, &self.lib, self.roots.as_ref(), &mut actions);
                 self.cj.window(&ctx, &mut self.ed, &self.lib, self.roots.as_ref().map(|r| &r.content), self.assets.as_mut(), &mut actions);
                 let folder = self.map_folder();
                 self.scripts.window(&ctx, &mut self.ed, self.roots.as_ref(), &folder, &mut actions);
+                // (a map made Modern there makes the transit kit: into the catalogue with it)
+                let kit_before = self.map_settings.open && self.roots.as_ref().map(|r| crate::transit::kit::installed(&r.content)).unwrap_or(true);
                 self.map_settings.window(&ctx, &mut self.ed, self.roots.as_ref());
+                if self.map_settings.open && !kit_before && self.roots.as_ref().map(|r| crate::transit::kit::installed(&r.content)).unwrap_or(false) {
+                    self.reload_content();
+                }
                 self.calendar.window(&ctx, &mut self.ed);
                 self.chrono.window(&ctx, &mut self.ed, &self.lib, self.roots.as_ref(), &mut actions);
                 self.signals.window(&ctx, &mut self.ed, &self.lib, self.roots.as_ref(), &mut actions);
@@ -2258,7 +2363,7 @@ impl App {
                     runs.push(Vec::new());
                 }
             }
-            let roads: Vec<crate::osm::Road> = runs.into_iter().filter(|r| r.len() >= 2).map(|r| crate::osm::Road { class: crate::osm::Class::Street, oneway: false, points: crate::osm::simplify(&r) }).collect();
+            let roads: Vec<crate::osm::Road> = runs.into_iter().filter(|r| r.len() >= 2).map(|r| crate::osm::Road { class: crate::osm::Class::Street, oneway: false, tunnel: false, points: crate::osm::simplify(&r) }).collect();
             if roads.is_empty() {
                 self.ed.error(tr("The track does not run over the map's tiles", "Трек не проходит по тайлам карты"));
             } else {
@@ -2270,12 +2375,61 @@ impl App {
         }
         if let (Some(b), Some(assets)) = (self.osm.build.take(), self.assets.as_mut()) {
             let mark = self.ed.history.mark();
+            let had: std::collections::HashSet<i64> = self.ed.doc.as_ref().map(|d| d.tiles.values().flat_map(|t| t.tile.splines.iter().map(|s| s.id)).collect()).unwrap_or_default();
             let (roads, junctions) = self.ed.build_osm(assets, &b.roads, &b.types, b.oneway_type.as_deref());
+            // a metro's tunnels under the ground: the new metro track along them, covered 12 m
+            // down (as a whole: no ramps, the line runs on below the map's edge)
+            let tunnels: Vec<&crate::osm::Road> = b.roads.iter().filter(|r| r.tunnel && r.class == crate::osm::Class::Metro).collect();
+            if let (false, Some(doc)) = (tunnels.is_empty(), self.ed.doc.as_ref()) {
+                let along = |p: glam::DVec2| tunnels.iter().any(|r| r.points.windows(2).any(|w| {
+                    let (a, z) = (w[0], w[1]);
+                    let t = ((p - a).dot(z - a) / (z - a).length_squared().max(1e-9)).clamp(0.0, 1.0);
+                    (a + (z - a) * t - p).length() < 4.0
+                }));
+                let under: Vec<crate::doc::Sel> = doc
+                    .tiles
+                    .iter()
+                    .flat_map(|(k, t)| t.tile.splines.iter().filter(|s| !s.deleted && !had.contains(&s.id)).map(move |s| (*k, s)))
+                    .filter(|(k, s)| {
+                        let c = omsi_geometry::SplineCurve::from_map(s, tile_origin(*k));
+                        along(c.point_at(s.length * 0.5).truncate())
+                    })
+                    .map(|(k, s)| crate::doc::Sel::Spline(k, s.id))
+                    .collect();
+                if !under.is_empty() {
+                    self.ed.set_selection(under);
+                    let o = crate::dig::Options { kind: crate::dig::Kind::Cover, depth: 12.0, ramp_start: false, ramp_end: false, ..Default::default() };
+                    if let Ok(d) = crate::dig::into_ground(&mut self.ed, &self.lib, o) {
+                        log::info!("osm: metro tunnels: {d:?}");
+                    }
+                    self.ed.set_selection(Vec::new());
+                }
+            }
             if let (Some((areas, islands, depth)), Some(doc)) = (&b.water, self.ed.doc.as_mut()) {
                 crate::osm_water::apply(doc, &mut self.ed.history, areas, islands, *depth);
             }
             let stops = b.stop_type.map(|t| self.ed.place_osm_stops(assets, &b.stops, &t)).unwrap_or(0);
             let mut text = format!("{} {roads} · {} {junctions} · {} {stops}", tr("Roads built:", "Дорог построено:"), tr("junctions:", "перекрёстков:"), tr("stops:", "остановок:"));
+            // a Modern map's stations beside the rails, every stop a station, and the routes of
+            // its other modes
+            if self.ed.doc.as_ref().is_some_and(|d| d.transit.is_modern()) && (!b.stations.is_empty() || !b.transit.is_empty()) {
+                let placed = if b.stations.is_empty() { 0 } else { self.ed.place_osm_stations(assets, &b.stations, &crate::transit::kit::object_rel("om_station_stop")) };
+                if let Some(doc) = self.ed.doc.as_mut() {
+                    let before = crate::history::Snapshot { transit: Some(doc.transit.clone()), timetable: Some(doc.timetable.clone()), ..Default::default() };
+                    let lib = &self.lib;
+                    let kinds = |file: &str| lib.find(file).and_then(|a| match a.category {
+                        crate::library::Category::Tracks => Some(true),
+                        crate::library::Category::Roads => Some(false),
+                        _ => None,
+                    });
+                    let n = crate::transit::osm::stations_for_stops(doc, &kinds);
+                    let made = crate::transit::osm::add_routes(doc, &b.transit);
+                    if n > 0 || made.routes > 0 {
+                        self.ed.history.push_snapshot(tr("Transit network", "Транспортная сеть"), before);
+                    }
+                    text += &format!(" · {} {placed} · {} {n} · {} {}", tr("station stops:", "станционных остановок:"), tr("stations:", "станций:"), tr("routes:", "маршрутов:"), made.routes);
+                }
+            }
             if let (false, Some(doc), Some(roots)) = (b.lines.is_empty(), self.ed.doc.as_mut(), &self.roots) {
                 let before = crate::history::Snapshot { timetable: Some(doc.timetable.clone()), traffic: Some(doc.traffic.clone()), ..Default::default() };
                 let added = crate::osm_lines::add(doc, vec![roots.content.clone(), roots.omsi.clone()], &b.lines);
@@ -2343,6 +2497,7 @@ impl App {
                 let t_x = Instant::now();
                 let mut extras = self.ed.extras(&self.cam, assets);
                 self.tt.overlay(&self.ed, &self.cam, &mut extras);
+                self.transit.overlay(&self.ed, &self.cam, &mut extras);
                 g.renderer.profile.add("extras", crate::render::profile::ms(t_x));
                 self.geo.feed(&mut g.renderer.imagery, &g.gpu, &self.ed, DVec2::new(self.cam.target.x, self.cam.target.y));
                 g.renderer.daytime = self.ui.daytime.map(|h| crate::render::daylight::at_map(h, &doc.traffic.timezone));
@@ -2431,6 +2586,46 @@ impl App {
                         // the map's middle (a bay of 3 m or the width)
                         if let Ok(p) = std::env::var("OPENMAPPER_POCKET") {
                             self.demo_pocket(&p);
+                        }
+                        self.save();
+                    } else if d.starts_with("TRAM:") {
+                        // OPENMAPPER_DEMO=TRAM:<name>: a new Modern map with the tram sample, saved
+                        let name = d.trim_start_matches("TRAM:").to_string();
+                        while self.lib.scanning {
+                            self.lib.poll();
+                            std::thread::sleep(std::time::Duration::from_millis(20));
+                        }
+                        let modes = crate::transit::Modes::of(&[crate::transit::Mode::Tram, crate::transit::Mode::Bus]);
+                        self.new_map(&name, &name, 3, &crate::ui_newmap::NewMapOptions { seasons: crate::ui_newmap::Seasons::Summer, modes, tram_sample: true, ..Default::default() });
+                        self.save();
+                    } else if d.starts_with("TROLLEY:") {
+                        // OPENMAPPER_DEMO=TROLLEY:<name>: a new Modern map with the trolleybus sample, saved
+                        let name = d.trim_start_matches("TROLLEY:").to_string();
+                        while self.lib.scanning {
+                            self.lib.poll();
+                            std::thread::sleep(std::time::Duration::from_millis(20));
+                        }
+                        let modes = crate::transit::Modes::of(&[crate::transit::Mode::Trolleybus, crate::transit::Mode::Bus]);
+                        self.new_map(&name, &name, 3, &crate::ui_newmap::NewMapOptions { seasons: crate::ui_newmap::Seasons::Summer, modes, trolley_sample: true, ..Default::default() });
+                        self.save();
+                    } else if d.starts_with("KIT:") {
+                        // OPENMAPPER_DEMO=KIT:<name>: a new Modern map with every piece of the transit kit, saved
+                        let name = d.trim_start_matches("KIT:").to_string();
+                        while self.lib.scanning {
+                            self.lib.poll();
+                            std::thread::sleep(std::time::Duration::from_millis(20));
+                        }
+                        let modes = crate::transit::Modes::of(&crate::transit::Mode::ALL);
+                        self.new_map(&name, &name, 3, &crate::ui_newmap::NewMapOptions { seasons: crate::ui_newmap::Seasons::Summer, modes, ..Default::default() });
+                        while self.lib.scanning {
+                            self.lib.poll();
+                            std::thread::sleep(std::time::Duration::from_millis(20));
+                        }
+                        let centre = DVec2::splat(150.0);
+                        if let Some(assets) = self.assets.as_mut() {
+                            if let Err(e) = crate::transit::sample::build_showcase(&mut self.ed, assets, &self.lib, centre) {
+                                log::warn!("kit showcase: {e}");
+                            }
                         }
                         self.save();
                     } else if d == "RING" {

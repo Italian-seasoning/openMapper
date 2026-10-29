@@ -92,6 +92,8 @@ pub struct ComplexJunctions {
     /// The pieces' textures as the canvas shows them.
     pics: TexCache,
     /// The drawing's junctions as drawn: the pieces and build they were made for, the pieces cut back, the plates' triangles.
+    /// Junctions the drawing has room for none of (see `Resolved::skipped`).
+    skipped: usize,
     plate: Option<(Vec<Piece>, crate::cjunction::AutoBuild, Vec<Piece>, Vec<([DVec2; 3], bool)>, Vec<(Seg, i32, i32)>)>,
     /// Steps back and forward; the drawing as it was last frame, and whether it is being
     /// changed (a drag changes it every frame: one step).
@@ -103,12 +105,17 @@ pub struct ComplexJunctions {
     fit: bool,
     /// The size of the canvas last frame (for fitting).
     canvas: Vec2,
+    /// The painted line being set up, and the content folder it is written into (the window
+    /// is given it each frame); `reload` asks for the catalogue to be read again.
+    paint: crate::mark_spline::Paint,
+    content: Option<PathBuf>,
+    reload: Option<String>,
 }
 
 impl Default for ComplexJunctions {
     fn default() -> Self {
         let layout = fresh();
-        ComplexJunctions { open: false, seen: layout.clone(), layout, tool: Tool::Line, file: None, cat: Some(Category::Roads), search: String::new(), pending: Vec::new(), pick: None, centre: DVec2::ZERO, scale: 12.0, snap: true, auto_align: true, auto_adapt: true, auto_arms: true, obj_file: None, obj_search: String::new(), obj_turn: 0.0, obj_step: 20.0, obj_offset: 4.0, preview: false, lanes: false, turn: 0.0, saved: None, moving: None, handle: None, message: None, pics: TexCache::default(), plate: None, undo: Vec::new(), redo: Vec::new(), changing: false, fit: true, canvas: Vec2::new(800.0, 500.0) }
+        ComplexJunctions { open: false, seen: layout.clone(), layout, tool: Tool::Line, file: None, cat: Some(Category::Roads), search: String::new(), pending: Vec::new(), pick: None, centre: DVec2::ZERO, scale: 12.0, snap: true, auto_align: true, auto_adapt: true, auto_arms: true, obj_file: None, obj_search: String::new(), obj_turn: 0.0, obj_step: 20.0, obj_offset: 4.0, preview: false, lanes: false, turn: 0.0, saved: None, moving: None, handle: None, message: None, pics: TexCache::default(), skipped: 0, plate: None, undo: Vec::new(), redo: Vec::new(), changing: false, fit: true, canvas: Vec2::new(800.0, 500.0), paint: crate::mark_spline::Paint::default(), content: None, reload: None }
     }
 }
 
@@ -172,6 +179,10 @@ impl ComplexJunctions {
         self.lanes = on;
     }
 
+    pub fn show_preview(&mut self, on: bool) {
+        self.preview = on;
+    }
+
     pub fn window(&mut self, ctx: &egui::Context, ed: &mut Editor, lib: &Library, content: Option<&PathBuf>, assets: Option<&mut Assets>, actions: &mut Vec<Action>) {
         if !self.open {
             return;
@@ -180,6 +191,7 @@ impl ComplexJunctions {
             self.saved = Some(content.map(|c| Layout::load_all(c)).unwrap_or_default());
         }
         let mut open = self.open;
+        self.content = content.cloned();
         let mut assets = assets;
         let screen = ctx.content_rect().size();
         let size = Vec2::new((screen.x * 0.9).clamp(900.0, 1700.0), (screen.y * 0.88).clamp(600.0, 1100.0));
@@ -201,6 +213,9 @@ impl ComplexJunctions {
             });
         });
         self.open = open;
+        if let Some(m) = self.reload.take() {
+            actions.push(Action::ReloadContent(m));
+        }
         self.track_changes(lib);
     }
 
@@ -463,6 +478,7 @@ impl ComplexJunctions {
                 ui.add(egui::DragValue::new(&mut self.obj_step).speed(0.5).range(2.0..=200.0).suffix(" m"));
             });
         } else {
+            self.paint_section(ui);
             ui.label(RichText::new(tr("Spline type", "Тип сплайна")).strong());
             egui::ComboBox::from_id_salt("cj cat").selected_text(self.cat.map(|c| c.label()).unwrap_or(tr("Everything", "Всё"))).width(ui.available_width()).show_ui(ui, |ui| {
                 ui.selectable_value(&mut self.cat, None, tr("Everything", "Всё"));
@@ -582,6 +598,72 @@ impl ComplexJunctions {
                 self.pending.clear();
             }
         });
+    }
+
+    /// Painted lines: the line's look is set here, written as a spline type of its own and
+    /// chosen to draw with; it is laid with the Line, Arc and Curve tools like any other.
+    fn paint_section(&mut self, ui: &mut egui::Ui) {
+        use crate::mark_spline::{Paint, PaintStyle};
+        egui::CollapsingHeader::new(RichText::new(tr("Painted line", "Нарисованная линия")).strong()).id_salt("cj paint").default_open(false).show(ui, |ui| {
+            ui.horizontal_wrapped(|ui| {
+                for (label, hint, preset) in [
+                    (tr("Stop line", "Стоп-линия"), tr("A wide solid line across a lane: draw it across the road", "Широкая сплошная линия поперёк полосы: рисуйте её поперёк дороги"), Paint::stop_line()),
+                    (tr("Crossing", "Переход"), tr("Zebra bars: draw it across the road, the bars lie along it", "Зебра: рисуйте поперёк дороги, полосы лежат вдоль неё"), Paint::crossing()),
+                    (tr("Centre line", "Осевая"), tr("A double yellow line", "Двойная жёлтая"), Paint { style: PaintStyle::Double, ..Paint::default().yellow() }),
+                    (tr("Lane line", "Между полос"), tr("A white dashed line", "Белый пунктир"), Paint { style: PaintStyle::Dashed, ..Default::default() }),
+                ] {
+                    if ui.small_button(label).on_hover_text(hint).clicked() {
+                        self.paint = preset;
+                    }
+                }
+            });
+            let p = &mut self.paint;
+            egui::ComboBox::from_id_salt("cj paint style").selected_text(match p.style {
+                PaintStyle::Solid => tr("Solid", "Сплошная"),
+                PaintStyle::Dashed => tr("Dashed", "Пунктир"),
+                PaintStyle::Double => tr("Double", "Двойная"),
+                PaintStyle::SolidDashed => tr("Solid and dashed", "Сплошная и пунктир"),
+                PaintStyle::Zebra => tr("Crossing (bars)", "Переход (зебра)"),
+            }).width(ui.available_width()).show_ui(ui, |ui| {
+                for (s, label) in [(PaintStyle::Solid, tr("Solid", "Сплошная")), (PaintStyle::Dashed, tr("Dashed", "Пунктир")), (PaintStyle::Double, tr("Double", "Двойная")), (PaintStyle::SolidDashed, tr("Solid and dashed", "Сплошная и пунктир")), (PaintStyle::Zebra, tr("Crossing (bars)", "Переход (зебра)"))] {
+                    ui.selectable_value(&mut p.style, s, label);
+                }
+            });
+            let zebra = p.style == PaintStyle::Zebra;
+            let dashes = matches!(p.style, PaintStyle::Dashed | PaintStyle::SolidDashed | PaintStyle::Zebra);
+            ui.horizontal(|ui| {
+                ui.label(if zebra { tr("Reaches", "Глубина") } else { tr("Width", "Ширина") });
+                ui.add(egui::DragValue::new(&mut p.width).speed(0.01).range(0.05..=6.0).suffix(" m")).on_hover_text(tr("A line's width (each line of a double one); a crossing's reach along the road", "Ширина линии (каждой у двойной); у перехода — как далеко он тянется вдоль дороги"));
+                ui.label(tr("Colour", "Цвет"));
+                ui.color_edit_button_srgb(&mut p.color);
+            });
+            if dashes {
+                ui.horizontal(|ui| {
+                    ui.label(if zebra { tr("Bar", "Полоса") } else { tr("Dash", "Штрих") });
+                    ui.add(egui::DragValue::new(&mut p.dash).speed(0.05).range(0.1..=20.0).suffix(" m"));
+                    ui.label(tr("Gap", "Промежуток"));
+                    ui.add(egui::DragValue::new(&mut p.gap).speed(0.05).range(0.1..=30.0).suffix(" m"));
+                });
+            }
+            let paint = *p;
+            if ui.add_enabled(self.content.is_some(), egui::Button::new(tr("Draw with this line", "Рисовать этой линией"))).on_hover_text(tr("It is made as a spline type of the content folder (Splines\\openMapper\\marks) and chosen: draw it with Line, Arc or Curve, over the asphalt", "Создаётся как тип сплайна в папке контента (Splines\\openMapper\\marks) и выбирается: рисуйте им Линией, Дугой или Кривой поверх асфальта")).clicked() {
+                if let Some(c) = self.content.clone() {
+                    match paint.write(&c) {
+                        Ok(rel) => {
+                            self.file = Some(rel);
+                            self.cat = Some(Category::Decoration);
+                            if self.tool == Tool::Select || self.tool == Tool::Object || self.tool == Tool::Arm {
+                                self.tool = Tool::Line;
+                            }
+                            self.reload = Some(tr("Painted line made: draw with it in the junction editor", "Линия создана: рисуйте ею в редакторе перекрёстков").to_string());
+                            self.message = None;
+                        }
+                        Err(e) => self.message = Some((e.to_string(), true)),
+                    }
+                }
+            }
+        });
+        ui.add_space(4.0);
     }
 
     /// The layers: every piece (the topmost first), the arms and the objects, to pick, hide
@@ -861,6 +943,7 @@ impl ComplexJunctions {
         let stale = self.plate.as_ref().map(|p| p.0 != self.layout.pieces || p.1 != self.layout.build).unwrap_or(true);
         if stale {
             let resolved = self.layout.resolve(&|f| is_road(lib, f), &|f| half_of(lib, f));
+            self.skipped = resolved.skipped;
             let plates: Option<Vec<_>> = resolved.plates.iter().map(|arms| assets.as_deref_mut().and_then(|a| crate::junction::layout_plate(a, arms, None, None)).map(|p| (p.flat(), p.lanes))).collect();
             // (a road type not loaded yet: made again next frame)
             self.plate = plates.map(|pl| {
@@ -1240,6 +1323,9 @@ impl ComplexJunctions {
                 }
             }
         });
+        if self.skipped > 0 {
+            ui.label(RichText::new(tr("A junction was not made: its roads are too short or too close together. Lengthen them or move the junctions apart.", "Перекрёсток не построен: дороги слишком короткие или стоят слишком близко. Удлините их или раздвиньте перекрёстки.")).small().color(Color32::from_rgb(235, 150, 80)));
+        }
         ui.label(RichText::new(tr("A custom junction is cut back to its arms where roads meet it; draw the roads' own types at the arms so they join cleanly.", "Свой перекрёсток обрезает дороги по въездам; рисуйте у въездов те типы дорог, что подойдут.")).small().color(TEXT_DIM));
     }
 

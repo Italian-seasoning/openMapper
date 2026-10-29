@@ -948,11 +948,12 @@ pub fn many_panel(ui: &mut egui::Ui, keep: &mut bool, objects: usize, splines: u
 }
 
 /// The edit mode's tools (the left panel while it is on).
-pub fn edit_panel(ui: &mut egui::Ui, ed: &mut Editor, uv_open: &mut bool, actions: &mut Vec<Action>) {
+pub fn edit_panel(ui: &mut egui::Ui, ed: &mut Editor, uv_open: &mut bool, pics: &mut crate::ui_tex::TexCache, actions: &mut Vec<Action>) {
     let Some(m) = ed.mesh.as_mut().filter(|m| m.editing) else { return };
     ui.horizontal(|ui| {
+        let w = (ui.available_width() - 2.0 * ui.spacing().item_spacing.x) / 3.0;
         for (mode, label, key) in [(SelectMode::Vertex, tr("Vertices", "Вершины"), "1"), (SelectMode::Edge, tr("Edges", "Рёбра"), "2"), (SelectMode::Face, tr("Faces", "Грани"), "3")] {
-            if ui.selectable_label(m.mode == mode, label).on_hover_text(key).clicked() {
+            if ui.add_sized([w, 24.0], egui::Button::new(label).selected(m.mode == mode)).on_hover_text(key).clicked() {
                 m.set_mode(mode);
             }
         }
@@ -975,11 +976,24 @@ pub fn edit_panel(ui: &mut egui::Ui, ed: &mut Editor, uv_open: &mut bool, action
     let mesh = m.mesh();
     ui.label(RichText::new(format!("{} {} · {} {} · {} {}", mesh.positions.len(), tr("vertices", "вершин"), mesh.edges().len(), tr("edges", "рёбер"), mesh.faces.len(), tr("faces", "граней"))).small().color(DIM));
     ui.label(RichText::new(format!("{}: {} / {} / {}", tr("Selected", "Выделено"), m.sel.verts.len(), m.sel.edges.len(), m.sel.faces.len())).small().color(DIM));
-    ui.checkbox(&mut m.xray, tr("X-ray: pick through the mesh", "Рентген: выбирать сквозь меш"));
+    egui::CollapsingHeader::new(RichText::new(tr("Display", "Показ")).strong().color(Color32::WHITE)).id_salt("tab display").default_open(true).show(ui, |ui| {
+        ui.checkbox(&mut m.xray, tr("X-ray (Alt+Z): see and pick through the mesh", "Рентген (Alt+Z): видеть и выбирать сквозь меш"));
+        ui.checkbox(&mut m.tex_preview, tr("Show the textures", "Показывать текстуры")).on_hover_text(tr("The object's own pictures under the editing shading", "Картинки самого объекта под рабочей заливкой"));
+        if m.tex_preview {
+            ui.horizontal(|ui| {
+                ui.label(RichText::new(tr("Shading opacity", "Непрозрачность заливки")).color(DIM));
+                let mut pct = m.shade * 100.0;
+                if ui.add(egui::Slider::new(&mut pct, 0.0..=100.0).suffix(" %").integer()).changed() {
+                    m.shade = pct / 100.0;
+                }
+            });
+            ui.label(RichText::new(tr("0 %: the textures as they are; 100 %: the plain shading. The picture is renewed a moment after each change.", "0 %: текстуры как есть; 100 %: простая заливка. Картинка обновляется через мгновение после правки.")).small().color(DIM));
+        }
+    });
 
     let view = ed.gizmo_view();
     let Some(m) = ed.mesh.as_mut() else { return };
-    heading(ui, tr("Select", "Выделение"));
+    egui::CollapsingHeader::new(RichText::new(tr("Select", "Выделение")).strong().color(Color32::WHITE)).id_salt("tab select").default_open(true).show(ui, |ui| {
     ui.horizontal_wrapped(|ui| {
         if ui.button(tr("All (A)", "Всё (A)")).clicked() {
             m.sel = edit::Selection::all(m.mesh());
@@ -1001,8 +1015,9 @@ pub fn edit_panel(ui: &mut egui::Ui, ed: &mut Editor, uv_open: &mut bool, action
         }
     });
     ui.label(RichText::new(tr("Click, Shift + click to add, drag on nothing for a box, a second click or Alt + click for a loop", "Клик, Shift + клик — добавить, протяжка по пустому — рамка, второй клик или Alt + клик — петля")).small().color(DIM));
+    });
 
-    heading(ui, tr("Change", "Изменить"));
+    egui::CollapsingHeader::new(RichText::new(tr("Change", "Изменить")).strong().color(Color32::WHITE)).id_salt("tab change").default_open(true).show(ui, |ui| {
     let start = |m: &mut Session, k: Sizing| {
         if let Some(v) = &view {
             m.start(k, v);
@@ -1160,6 +1175,7 @@ pub fn edit_panel(ui: &mut egui::Ui, ed: &mut Editor, uv_open: &mut bool, action
             }
         });
     });
+    });
 
     // the last sized operation, to change after
     if let Some(l) = m.last.clone() {
@@ -1185,7 +1201,7 @@ pub fn edit_panel(ui: &mut egui::Ui, ed: &mut Editor, uv_open: &mut bool, action
         }
     }
 
-    heading(ui, tr("UV map", "UV-развёртка"));
+    egui::CollapsingHeader::new(RichText::new(tr("UV map", "UV-развёртка")).strong().color(Color32::WHITE)).id_salt("tab uv").default_open(false).show(ui, |ui| {
     ui.horizontal_wrapped(|ui| {
         use openmapper_mesh::uv::Unwrap;
         let faces: Vec<usize> = m.sel.faces.iter().copied().collect();
@@ -1218,18 +1234,46 @@ pub fn edit_panel(ui: &mut egui::Ui, ed: &mut Editor, uv_open: &mut bool, action
         }
     });
     ui.label(RichText::new(tr("Faces of the selection (all, with none selected); mark seams on edges first for an unwrap by seams", "Грани выделения (все, если ничего не выделено); для развёртки по швам сначала пометьте швы на рёбрах")).small().color(DIM));
+    });
 
-    if !m.src.model.materials.is_empty() && !m.sel.faces.is_empty() {
-        heading(ui, tr("Material of the selected faces", "Материал выделенных граней"));
-        let names: Vec<String> = m.src.model.materials.iter().map(|x| x.name.clone()).collect();
-        ui.horizontal_wrapped(|ui| {
-            for (i, n) in names.iter().enumerate() {
-                if ui.button(n).clicked() {
-                    m.apply(|mesh, s, _| {
-                        edit::set_material(mesh, s, i as u32);
-                        None
-                    });
+    if !m.src.model.materials.is_empty() {
+        egui::CollapsingHeader::new(RichText::new(tr("Materials", "Материалы")).strong().color(Color32::WHITE)).id_salt("tab materials").default_open(true).show(ui, |ui| {
+            // how many of the selected faces each material has
+            let mut used = vec![0usize; m.src.model.materials.len()];
+            for &f in &m.sel.faces {
+                if let Some(face) = m.mesh().faces.get(f) {
+                    if let Some(u) = used.get_mut(face.material as usize) {
+                        *u += 1;
+                    }
                 }
+            }
+            let any = !m.sel.faces.is_empty();
+            let mats: Vec<(String, Option<String>, [f32; 4])> = m.src.model.materials.iter().map(|x| (x.name.clone(), x.texture.clone(), x.color)).collect();
+            for (i, (name, tex, color)) in mats.iter().enumerate() {
+                ui.horizontal(|ui| {
+                    let (rect, _) = ui.allocate_exact_size(egui::Vec2::splat(30.0), egui::Sense::hover());
+                    match tex.as_ref().and_then(|t| pics.get(ui.ctx(), &m.tex_dir.join(t))) {
+                        Some(id) => {
+                            egui::Image::new((id, rect.size())).paint_at(ui, rect);
+                        }
+                        None => {
+                            let c = |v: f32| (v.clamp(0.0, 1.0) * 255.0) as u8;
+                            ui.painter().rect_filled(rect, egui::CornerRadius::same(3), Color32::from_rgb(c(color[0]), c(color[1]), c(color[2])));
+                        }
+                    }
+                    ui.painter().rect_stroke(rect, egui::CornerRadius::same(3), egui::Stroke::new(1.0, Color32::from_gray(90)), egui::StrokeKind::Inside);
+                    let label = if used[i] > 0 { format!("{name}  ({})", used[i]) } else { name.clone() };
+                    let r = ui.add_enabled(any, egui::Button::new(label).selected(used[i] > 0 && used[i] == m.sel.faces.len()));
+                    if r.on_hover_text(tr("Give this material to the selected faces", "Назначить этот материал выделенным граням")).clicked() {
+                        m.apply(|mesh, s, _| {
+                            edit::set_material(mesh, s, i as u32);
+                            None
+                        });
+                    }
+                });
+            }
+            if !any {
+                ui.label(RichText::new(tr("Select faces to give them a material.", "Выделите грани, чтобы назначить им материал.")).small().color(DIM));
             }
         });
     }

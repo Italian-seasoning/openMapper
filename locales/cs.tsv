@@ -2438,3 +2438,350 @@ Could not copy the photos	Snímky se nepodařilo zkopírovat
 Copying the photos	Kopírování snímků
 Hold only the photos of the tiles near the camera	Ponechat jen snímky dlaždic blízko kamery
 The others keep their photo in the map's folder, and are put up again when you go back to them.	Ostatní mají snímek dál ve složce mapy a objeví se znovu, až se k nim vrátíte.
+A tram loop with two stations and its wire: save, then drive it in openOMSI with a tram of your own.	Tramvajová smyčka se dvěma stanicemi a trolejí: uložte ji a projeďte v openOMSI vlastní tramvají.
+Transit kit made, files:	Dopravní sada vytvořena, souborů:
+The transit kit could not be made	Dopravní sadu se nepodařilo vytvořit
+Transit network problems	Problémy dopravní sítě
+Stations without their mode's lanes	Stanice bez pruhů svého druhu dopravy
+Stations without their stop	Stanice bez své zastávky
+openOMSI's own reader finds this in the map's transport folder (stations, routes, wires, switches, depots, signals): a service it names is skipped, a section or a block left out. Open Map > Transit network to change it.	Toto najde vlastní čtecí modul openOMSI ve složce transport mapy (stanice, trasy, vedení, výhybky, vozovny, návěstidla): uvedená varianta provozu se vynechá, sekce nebo oddíl se nezapočítá. Změníte to v Mapa > Dopravní síť.
+openOMSI routes a service over the lanes of its mode within 25 m of each station (rails for trams, metro and trains, streets for buses and trolleybuses). This station has none of its modes' near, so its services cannot run. Move the stop next to the track or road, or lay one there.	openOMSI vede variantu provozu po pruzích svého druhu dopravy do 25 m od každé stanice (koleje pro tramvaje, metro a vlaky, ulice pro autobusy a trolejbusy). U této stanice nejsou pruhy žádného z jejích druhů, takže její varianty provozu nemohou jezdit. Přesuňte zastávku ke koleji nebo silnici, nebo kolej či silnici položte tam.
+A station is found by the game among the map's stops: by its stop object, else by its name. This one's object is no stop on the map and no stop has its name, so the services through it are skipped. Pick its stop again in Map > Transit network, Stations.	Hra hledá stanici mezi zastávkami mapy: podle objektu zastávky, jinak podle názvu. Objekt této stanice není na mapě zastávkou a žádná zastávka nemá její název, takže varianty provozu přes ni se vynechají. Vyberte její zastávku znovu v Mapa > Dopravní síť, Stanice.
+station	stanice
+Transit network…	Dopravní síť…
+The transport folder stays: openOMSI still reads its stations, routes and wires.	Složka transport zůstává: openOMSI z ní dál čte stanice, trasy a vedení.
+Remove it too	Odstranit i ji
+Start with a tram line: a loop of track under its wire, two stations and a route	Začít tramvajovou linkou: smyčka koleje pod trolejí, dvě stanice a trasa
+Classic	Klasická
+Runs in OMSI 2 and in openOMSI. Buses, and trams and trains as OMSI 2 has them.	Funguje v OMSI 2 i v openOMSI. Autobusy, a tramvaje a vlaky tak, jak je má OMSI 2.
+Modern	Moderní
+openOMSI only. Real transit: stations, routes, overhead wire, third rail, depots and signal blocks.	Jen openOMSI. Skutečná doprava: stanice, trasy, trolejové vedení, třetí kolejnice, vozovny a traťové oddíly.
+Made for (one or more):	Určeno pro (jeden či více):
+Choose at least one	Vyberte alespoň jeden
+OMSI 2 cannot run a Modern map's routes, wires or blocks, and openOMSI runs only vehicles of its modes on it. openMapper's transit kit (tracks, wires, platforms, masts) is made in the content folder.	OMSI 2 neumí spustit trasy, vedení ani oddíly moderní mapy a openOMSI na ní provozuje jen vozidla jejích druhů dopravy. Dopravní sada openMapper (koleje, vedení, nástupiště, stožáry) se vytvoří ve složce obsahu.
+Overview	Přehled
+Stations	Stanice
+Depots	Vozovny
+Power	Napájení
+Switches and signals	Výhybky a návěstidla
+Set it (else the game's default)	Nastavit (jinak výchozí hodnota hry)
+(not set)	(nenastaveno)
+Take it out	Odebrat
+Transit network	Dopravní síť
+This is a Classic map.	Toto je klasická mapa.
+Stations, routes without tours, the overhead wire, the third rail, depots and signal blocks are openOMSI's (0.3.42 and later): make the map Modern in Map settings to give it a transit network. OMSI 2 cannot run them.	Stanice, trasy bez turnusů, trolejové vedení, třetí kolejnice, vozovny a traťové oddíly patří openOMSI (0.3.42 a novější): v Nastavení mapy z ní udělejte moderní mapu, aby měla dopravní síť. OMSI 2 je spustit neumí.
+No stop there: click a stop object (a bus stop, or the kit's station stop)	Tady není zastávka: klikněte na objekt zastávky (autobusovou zastávku nebo staniční zastávku ze sady)
+Now click where the block ends	Teď klikněte, kde oddíl končí
+Click the signal object itself	Klikněte přímo na objekt návěstidla
+Then click in the view	Pak klikněte v pohledu
+Modern map for	Moderní mapa pro
+openOMSI runs only vehicles of these modes here; OMSI 2 cannot run the network. The modes are changed in Map settings.	openOMSI tu provozuje jen vozidla těchto druhů; OMSI 2 síť spustit neumí. Druhy se mění v Nastavení mapy.
+Services	Varianty provozu
+Track rules	Pravidla kolejí
+Overhead wire spans	Rozpětí trolejového vedení
+Third rail spans	Úseky třetí kolejnice
+Trolleybus wire spans	Rozpětí trolejbusového vedení
+Switches	Výhybky
+Signals and blocks	Návěstidla a oddíly
+Problems	Problémy
+None: openOMSI reads the network as it is.	Žádné: openOMSI čte síť tak, jak je.
+error	chyba
+warning	varování
+Found by openOMSI's own reader of the transport folder, the texts as it writes them in its log.	Nalezeno vlastním modulem openOMSI, který čte složku transport; texty tak, jak je zapisuje do svého logu.
+openMapper's transit kit	Dopravní sada openMapper
+Tracks, platforms, wires and objects made by openMapper for Modern maps (OMSI 2 ships no metro, third rail or trolleybus wire). They are in the catalogue under openMapper; click one to place it.	Koleje, nástupiště, vedení a objekty, které openMapper vytváří pro moderní mapy (OMSI 2 nemá metro, třetí kolejnici ani trolejbusové vedení). Najdete je v katalogu pod openMapper; kliknutím je umístíte.
+Make the kit	Vytvořit sadu
+A station is a stop object of the map (a bus stop, or the kit's station stop beside a track) with its platforms. openOMSI routes a service over the lanes of its mode within 25 m of each station.	Stanice je objekt zastávky na mapě (autobusová zastávka nebo staniční zastávka ze sady u koleje) s jejími nástupišti. openOMSI vede variantu provozu po pruzích svého druhu do 25 m od každé stanice.
+A station for every stop of the map	Stanice pro každou zastávku mapy
+Stops not yet a station become one, named as the stop, its modes from the tracks and roads beside it	Zastávky, které ještě nejsou stanicí, se jí stanou: název podle zastávky, druhy podle kolejí a silnic vedle ní
+New station	Nová stanice
+Stations added:	Přidáno stanic:
+Choose a station	Vyberte stanici
+Id	Id
+Modes	Druhy
+Stop object	Objekt zastávky
+Pick	Vybrat
+Place	Místo
+Change to	Přestup na
+Platforms	Nástupiště
+Side	Strana
+island	ostrovní
+both	po obou stranách
+platform screen doors	nástupištní dveře
+Delete the station	Smazat stanici
+A route is segments from station to station (the stops between them in order) and services over them: a branch, a short working or an express is another segment or service. openOMSI makes the timetable's tours from them and finds the way over the tracks itself.	Trasa jsou úseky od stanice ke stanici (s mezilehlými zastávkami v pořadí) a varianty provozu po nich: odbočka, zkrácený spoj nebo expres je další úsek nebo varianta. openOMSI z nich sám sestaví turnusy jízdního řádu a sám najde cestu po kolejích.
+Add two stations or more first (Stations)	Nejprve přidejte alespoň dvě stanice (karta „Stanice“)
+New route	Nová trasa
+Segment	Úsek
+Stops between	Mezilehlé zastávky
+Passed without stopping	Projíždí bez zastavení
+Standing at a stop	Stání v zastávce
+Speed	Rychlost
+Way back	Zpáteční cesta
+over the same segment	po stejném úseku
+another segment	po jiném úseku
+Service	Varianta provozu
+Segments in order	Úseky v pořadí
+From – to	Od – do
+Days	Dny
+every day	denně
+weekends	o víkendech
+Saturdays	v sobotu
+Sundays	v neděli
+turns back	otáčí se
+goes round a loop	objíždí smyčku
+goes to depot	jede do vozovny
+Cars in a train	Vozů v soupravě
+Every 10 minutes from 05:30 to 23:30 over all the route's segments	Každých 10 minut od 05:30 do 23:30 po všech úsecích trasy
+Departures of their own	Vlastní odjezdy
+For a service without a headway: its departures, as 06:00 06:12 06:30.	Pro variantu bez intervalu: její odjezdy, např. 06:00 06:12 06:30.
+Departures	Odjezdy
+A service's depot sends out its vehicles: its AI group (Traffic and AI) supplies them, and the first departure of the day leaves by its gate along the rails to the first station.	Vozovna varianty vypravuje její vozidla: dodává je její skupina AI („Provoz a AI“) a první odjezd dne vyjíždí jejími vraty po kolejích k první stanici.
+AI group	Skupina AI
+Capacity	Kapacita
+Its stop	Její zastávka
+Gates	Vrata
+Add a gate	Přidat vrata
+has a turning loop	má obratovou smyčku
+Delete the depot	Smazat vozovnu
+A gate needs a rail within 25 m and a way to the first station, or the trip starts at its station (the game's log says so).	Vrata potřebují kolej do 25 m a cestu k první stanici, jinak spoj začíná ve své stanici (hra to zapíše do logu).
+Which tracks serve which mode and how they are powered: a rule matches a track type (a file pattern, * for any letters), a tile or one piece; later rules win. Without a rule openOMSI guesses from the type's name.	Které koleje slouží kterému druhu dopravy a jak jsou napájeny: pravidlo odpovídá typu koleje (vzor souboru, * pro libovolná písmena), dlaždici nebo jednomu kusu; pozdější pravidla mají přednost. Bez pravidla openOMSI hádá podle názvu typu.
+A rule for the selected track's type	Pravidlo pro typ vybrané koleje
+Empty rule	Prázdné pravidlo
+(select a track in the view to make a rule for its type)	(vyberte kolej v pohledu a vytvořte pravidlo pro její typ)
+Track type	Typ koleje
+Only on tile / piece	Jen na dlaždici / kusu
+id	id
+in the street	v ulici
+railway	samostatný
+overhead wire	trolejové vedení
+third rail	třetí kolejnice
+diesel	diesel
+Tunnel	Tunel
+yes	ano
+no	ne
+Gauge	Rozchod
+A map for buses alone has no line to power.	Mapa jen pro autobusy nemá žádné vedení k napájení.
+Third rail	Třetí kolejnice
+Trolleybus wire	Trolejbusové vedení
+Where the wire is, the player's tram or electric train needs a live section of it over its pantograph (dead sections and breaks stop the drive). Without spans openOMSI takes the current for granted. Spans are laid along the selected tracks.	Kde je vedení, potřebuje hráčova tramvaj nebo elektrický vlak nad sběračem sekci pod napětím (sekce bez napětí a přerušení zastaví pohon). Bez rozpětí openOMSI bere proud jako samozřejmost. Rozpětí se kladou podél vybraných kolejí.
+The player's metro train needs a live section of third rail beside its shoe. The kit's metro tracks carry the rail itself; spans say where it is fed. Spans are laid along the selected tracks.	Hráčův vlak metra potřebuje vedle svého sběrače sekci třetí kolejnice pod napětím. Koleje metra ze sady samotnou kolejnici už nesou; úseky říkají, kde je napájena. Úseky se kladou podél vybraných kolejí.
+openOMSI's trolleybuses run on this wire (trolley.txt beside global.cfg): a pole is powered only on a pair fed by a substation. Spans are laid over each way's lane of the selected roads, with the wire splines that show them.	Trolejbusy openOMSI jezdí pod tímto vedením (trolley.txt vedle global.cfg): sběrač má proud jen na páru vodičů napájeném z měnírny. Rozpětí se kladou nad pruh každého směru vybraných silnic spolu se spliny vedení, které je zobrazují.
+The line	Vedení
+Voltage	Napětí
+Current	Proud
+direct	stejnosměrný
+alternating	střídavý
+Wire height	Výška vedení
+Wire spacing	Rozteč vodičů
+Sections (each fed by a substation)	Sekce (každá napájená z měnírny)
+name	název
+live	pod napětím
+feeder Ω	napáječ Ω
+Section	Sekce
+Spans	Rozpětí
+one pair over the middle	jeden pár nad středem
+a pair over each 3.0 m lane	pár nad každým pruhem 3,0 m
+a pair over each 3.5 m lane	pár nad každým pruhem 3,5 m
+lay the wire splines too	položit i spliny vedení
+Wire the selected roads	Elektrifikovat vybrané silnice
+Electrify the selected tracks	Elektrifikovat vybrané koleje
+Take their spans off	Odebrat jejich rozpětí
+(select roads in the view)	(vyberte silnice v pohledu)
+(select tracks in the view)	(vyberte koleje v pohledu)
+Their spans are taken off	Jejich rozpětí odebrána
+Spans laid:	Položeno rozpětí:
+Gaps	Přerušení
+Insulators	Izolátory
+Gap	Přerušení
+Insulator	Izolátor
+Frogs (wire switches)	Výhybky vedení
+Where three spans meet: the contact plate before it sets it by the current the bus draws (power) or by its indicator.	Kde se stýkají tři rozpětí: kontakt před výhybkou ji přestaví podle proudu, který trolejbus odebírá (jízda pod proudem), nebo podle směrovky.
+by current	podle proudu
+by indicator	podle směrovky
+Frog	Výhybka
+A switch listed here holds while a train stands on it, goes back to its rest position, and can be thrown by hand only or locked by a signal. Switches not listed work as before.	Výhybka z tohoto seznamu se nepřestaví, dokud na ní stojí vlak, vrací se do základní polohy a může být jen ruční nebo zamčená návěstidlem. Výhybky mimo seznam fungují jako dřív.
+The selected switch objects	Vybrané objekty výhybek
+simple	jednoduchá
+crossover	kolejová spojka
+double slip	anglická výhybka
+diamond	křížení
+scissors	křížová spojka
+rests straight	základní poloha rovně
+rests diverging	základní poloha do odbočky
+thrown by the route	podle trasy
+by hand only	jen ručně
+interlocked	zabezpečená
+diverging	do odbočky
+locked by	zamčena návěstidlem
+Blocks	Oddíly
+A stretch of track that holds one AI train at a time, given by where it begins and ends on the rails; its signals show whether it is free. Blocks need the timetable's trains (the AI) to hold.	Úsek koleje, na kterém může být najednou jen jeden vlak AI, daný svým začátkem a koncem na kolejích; jeho návěstidla ukazují, zda je volný. Oddíly platí jen pro vlaky jízdního řádu (AI).
+Ends	Konce
+Block	Oddíl
+Click where the block begins	Klikněte, kde oddíl začíná
+Signals	Návěstidla
+A signal of the map tied to a block shows stop while the block is in use and go while it is free.	Návěstidlo na mapě přiřazené k oddílu ukazuje „stůj“, dokud je oddíl obsazený, a „volno“, když je volný.
+main	hlavní
+distant	předvěst
+block	oddílové
+shunting	seřaďovací
+speed	rychlostní
+tram	tramvajové
+Tram street track	Tramvajová kolej v dlažbě
+Tram track on grass	Tramvajová kolej v trávě
+Railway track	Železniční kolej
+Metro track	Kolej metra
+Metro tunnel	Tunel metra
+Tram platform	Tramvajové nástupiště
+Metro side platform	Boční nástupiště metra
+Metro island platform	Ostrovní nástupiště metra
+Railway side platform	Boční železniční nástupiště
+Railway island platform	Ostrovní železniční nástupiště
+Trolleybus wires (one pair)	Trolejbusové vodiče (jeden pár)
+Trolleybus wires, 3.0 m lanes	Trolejbusové vodiče, pruhy 3,0 m
+Trolleybus wires, 3.5 m lanes	Trolejbusové vodiče, pruhy 3,5 m
+Catenary mast (arm right)	Stožár trolejového vedení (výložník vpravo)
+Catenary mast (arm left)	Stožár trolejového vedení (výložník vlevo)
+Trolleybus pole (arm right)	Stožár trolejbusového vedení (výložník vpravo)
+Trolleybus pole (arm left)	Stožár trolejbusového vedení (výložník vlevo)
+Metro sign	Znak metra
+Platform shelter	Přístřešek na nástupišti
+Buffer stop	Zarážedlo
+Station stop	Staniční zastávka
+Bus	Autobus
+Tram	Tramvaj
+Railway	Železnice
+Metro	Metro
+Trolleybus	Trolejbus
+buses on the streets, stops at the kerb	autobusy v ulicích, zastávky u obrubníku
+street track under a contact wire, low platforms	koleje v ulici pod trolejí, nízká nástupiště
+mainline track, stations with platforms, signals and blocks	hlavní tratě, stanice s nástupišti, návěstidla a oddíly
+track with a third rail, tunnels, high platforms	koleje s třetí kolejnicí, tunely, vysoká nástupiště
+buses under a pair of wires, frogs at junctions	autobusy pod párem vodičů, výhybky na rozbočeních
+Depot Square	Náměstí U Vozovny
+Park Gate	Brána parku
+Tram start	Start tramvaje
+Loop line	Okružní linka
+A trolleybus junction under its wires with three stations: save, then drive it in openOMSI with a trolleybus of your own.	Trolejbusová křižovatka pod vedením se třemi stanicemi: uložte ji a projeďte v openOMSI vlastním trolejbusem.
+station stops:	staničních zastávek:
+stations:	stanic:
+routes:	tras:
+Vehicles of other modes	Vozidla jiných druhů
+Services without a vehicle of their mode	Varianty provozu bez vozidla svého druhu
+openOMSI runs only vehicles of a Modern map's modes on it. This vehicle of the AI lists is made for another mode (its file says so, or it is a depot's vehicle and its shape says so), so the game leaves it out. Change it in Map > Traffic and AI, or add its mode to the map in Map settings.	openOMSI provozuje na moderní mapě jen vozidla jejích druhů. Toto vozidlo ze seznamů AI je určeno pro jiný druh (říká to jeho soubor, nebo je to vozidlo vozovny a říká to jeho stavba), takže ho hra vynechá. Změňte ho v Mapa > Provoz a AI, nebo přidejte jeho druh do mapy v Nastavení mapy.
+A service of the transit network takes its vehicles from its depot's AI group (or names one vehicle file). That group has no vehicle of the route's mode, so nothing runs it. Give the depot an AI group with such vehicles (Map > Traffic and AI), or choose another depot.	Varianta provozu dopravní sítě bere vozidla ze skupiny AI své vozovny (nebo uvádí jeden soubor vozidla). V této skupině není žádné vozidlo druhu trasy, takže ji nikdo nejezdí. Dejte vozovně skupinu AI s takovými vozidly (Mapa > Provoz a AI), nebo zvolte jinou vozovnu.
+group	skupina
+route	trasa
+its depot names no AI group	její vozovna neuvádí skupinu AI
+no vehicle of the mode in	žádné vozidlo daného druhu v
+Stations from OpenStreetMap	Stanice z OpenStreetMap
+Metro tracks	Koleje metra
+in tunnels too: build them with the kit's metro tunnel and cut the ground away (a Modern map)	i v tunelech: postavte je tunelem metra ze sady a vyřízněte terén (moderní mapa)
+Start with a trolleybus line: a junction under its wires with frogs, three stations and two routes	Začít trolejbusovou linkou: křižovatka pod vedením s výhybkami, tři stanice a dvě trasy
+Stations (tram, metro, railway)	Stanice (tramvaj, metro, železnice)
+Each tram stop and station of the map's rail modes put with the kit's station stop beside the nearest track (within 25 m); every stop of the map then becomes a station of its transport folder	Každá tramvajová zastávka a stanice kolejových druhů mapy se umístí jako staniční zastávka ze sady u nejbližší koleje (do 25 m); pak se každá zastávka mapy stane stanicí její složky transport
+Routes (tram, trolleybus, metro, railway)	Trasy (tramvaj, trolejbus, metro, železnice)
+Each route of the map's modes through two or more of its stations a segment of its line, the line's service as often as OpenStreetMap says (else every 10 minutes), from 05:30 to 23:30; openOMSI finds the way over the tracks	Každá trasa druhů mapy přes dvě nebo více jejích stanic se stane úsekem své linky, s variantou provozu linky tak častou, jak uvádí OpenStreetMap (jinak každých 10 minut), od 05:30 do 23:30; cestu po kolejích najde openOMSI sám
+no vehicle of it is installed	není nainstalováno žádné její vozidlo
+Its vehicles:	Její vozidla:
+(select roads in the view, and the junctions between them)	(vyberte silnice v pohledu a křižovatky mezi nimi)
+(select tracks in the view, and their switches)	(vyberte koleje v pohledu a jejich výhybky)
+A pair of wires over each way's kerb lane; through a selected junction only the lanes that join wired roads. Frogs are put where three wires meet.	Pár vodičů nad pruhem u obrubníku v každém směru; přes vybranou křižovatku jen pruhy spojující elektrifikované silnice. Kde se stýkají tři vodiče, umístí se výhybky vedení.
+The map's files are still being read	Soubory mapy se ještě načítají
+West Gate	Západní brána
+East Market	Východní tržnice
+North Park	Severní park
+Market line	Tržní linka
+Park line	Parková linka
+Trolleybus start	Start trolejbusu
+frogs:	výhybek:
+places where more than three wires meet get no frog: wire fewer turns there	míst, kde se stýkají více než tři vodiče, zůstalo bez výhybky: elektrifikujte tam méně odboček
+Track ends that do not meet	Konce kolejí, které se nesetkávají
+Two tracks run on into one another but their ends lie apart: the game joins rails only where their ends lie within 1.5 m, so no train or tram gets across (a route through there finds no way). "Fix" moves one end onto the other, arriving in line with it, and joins them.	Dvě koleje na sebe navazují, ale jejich konce leží od sebe: hra spojuje kolejnice jen tam, kde jsou konce do 1,5 m od sebe, takže tudy žádný vlak ani tramvaj neprojede (trasa tímto místem nenajde cestu). „Opravit“ posune jeden konec na druhý, v jedné linii s ním, a spojí je.
+tracks	koleje
+Select the roads or tracks to build into the ground	Vyberte silnice nebo koleje, které se mají zahloubit do země
+Cutting	Zářez
+Cut and cover tunnel	Hloubený tunel
+Nothing to build into the ground	Není co zahloubit do země
+Build into the ground	Zahloubit do země
+The chain of the selected pieces lowered, with ramps at its ends. Cut: an open cutting with sloped banks. Cover: open ramps down to the portals and a tunnel under the ground between them (a shell of walls and roof, a portal at each mouth).	Řetězec vybraných úseků se sníží, na koncích s rampami. Zářez: otevřený, se svahy. Tunel: otevřené rampy dolů k portálům a mezi nimi tunel pod zemí (skořepina ze stěn a stropu, portál u každého vjezdu).
+Cover (tunnel)	Zakrytý (tunel)
+Ramp gradient	Sklon ramp
+Banks	Svahy
+ m out per metre up	 m do strany na metr výšky
+Ramps	Rampy
+at the start	na začátku
+at the end	na konci
+A tunnel needs a depth of 6 m or more: shallower it stays an open cutting	Tunel potřebuje hloubku 6 m nebo více: mělčí zůstane otevřeným zářezem
+Each ramp is about	Každá rampa má asi
+Pieces lowered:	Sníženo úseků:
+tunnel pieces:	úseků tunelu:
+portals:	portálů:
+their overhead taken off: wire them again (Transit network, Power)	jejich trolejové vedení bylo odebráno: položte ho znovu (Dopravní síť, Napájení)
+Platforms at the stations	Nástupiště u stanic
+The kit's platform of each rail station's mode beside its track, on the side its stop stands, as long as its platform says	Nástupiště ze sady pro režim každé kolejové stanice vedle její koleje, na straně její zastávky, tak dlouhé, jak udává její nástupiště
+Platforms laid:	Položeno nástupišť:
+lay the wires, masts, poles and frogs too	položit i vodiče, stožáry a výhybky
+Catenary mast	Stožár trolejového vedení
+Trolleybus pole	Stožár trolejbusového vedení
+Trolleybus frog	Trolejbusová výhybka
+Section insulator	Úsekový dělič
+Lake	Jezero
+River	Řeka
+Water level:	Hladina vody:
+Click the shore round and close it on the first point (Enter closes too, right-click takes a point back). The ground inside is dug to a bed and the banks slope to the shore.	Klikejte kolem břehu dokola a uzavřete na prvním bodě (uzavře i Enter, pravé tlačítko vrátí bod). Terén uvnitř se vykope na dno a svahy klesají ke břehu.
+Click the river's middle line from its source on and finish on the last point (or Enter). Water in OMSI lies at one level for a tile: a river runs level.	Klikejte na střední čáru řeky od pramene a skončete na posledním bodě (nebo Enter). Voda v OMSI leží na jedné úrovni pro dlaždici: řeka tedy teče vodorovně.
+Add as a ground texture	Přidat jako texturu terénu
+A junction was not made: its roads are too short or too close together. Lengthen them or move the junctions apart.	Křižovatka nevznikla: její silnice jsou příliš krátké nebo příliš blízko u sebe. Prodlužte je nebo křižovatky oddalte.
+Display	Zobrazení
+X-ray (Alt+Z): see and pick through the mesh	Rentgen (Alt+Z): vidět a vybírat skrz mesh
+Show the textures	Zobrazit textury
+The object's own pictures under the editing shading	Vlastní obrázky objektu pod editačním stínováním
+Shading opacity	Průhlednost stínování
+0 %: the textures as they are; 100 %: the plain shading. The picture is renewed a moment after each change.	0 %: textury tak, jak jsou; 100 %: čisté stínování. Obraz se po každé změně krátce poté obnoví.
+Give this material to the selected faces	Přiřadit tento materiál vybraným plochám
+Select faces to give them a material.	Vyberte plochy, kterým chcete přiřadit materiál.
+Road markings	Vodorovné dopravní značení
+Paint my own markings	Nakreslit vlastní značení
+The maker paints the lines onto the roadway texture: pick a plain asphalt texture, or its own lines show too	Tvůrce kreslí čáry na texturu vozovky: zvolte čistou texturu asfaltu, jinak se zobrazí i její vlastní čáry
+Standard for these lanes	Standard pro tyto pruhy
+Add a line	Přidat čáru
+Across the roadway from its middle (right of the road's way is plus)	Přes vozovku od jejího středu (vpravo ve směru silnice je plus)
+Solid	Souvislá
+Dashed	Přerušovaná
+Double solid	Dvojitá souvislá
+Solid and dashed	Souvislá a přerušovaná
+The line's width	Šířka čáry
+Dash length	Délka čárky
+Gap between dashes	Mezera mezi čárkami
+Draw road markings	Kreslit značení vozovky
+Pen	Pero
+Straight line	Přímá čára
+Dashed line	Čárkovaná čára
+Rectangle	Obdélník
+Arrow	Šipka
+Eraser	Guma
+Pointing back	Šipka zpět
+Snap to 5 cm	Přichytávat na 5 cm
+Drag to draw. The picture is the roadway as the texture lies on it, up is the way of the road; it repeats along, so what leaves at the top comes in at the bottom.	Tažením kreslete. Obrázek je vozovka tak, jak na ní leží textura, nahoře je směr silnice; opakuje se podél, takže co vyjde nahoře, vstoupí dole.
+Pick a roadway texture first	Nejprve vyberte texturu vozovky
+Draw by hand…	Kreslit od ruky…
+A drawing board with a pen, lines, arrows and an eraser: what you draw goes onto the roadway	Rýsovací prkno s perem, čarami, šipkami a gumou: co nakreslíte, přijde na vozovku
+a drawing is on the road	na silnici je kresba
+Painted line	Natřená čára
+Stop line	Zastavovací čára
+A wide solid line across a lane: draw it across the road	Široká souvislá čára napříč pruhem: kreslete ji napříč silnicí
+Crossing	Přechod
+Zebra bars: draw it across the road, the bars lie along it	Zebra: kreslete napříč silnicí, pruhy leží podél silnice
+Centre line	Středová čára
+A double yellow line	Dvojitá žlutá čára
+Lane line	Čára jízdního pruhu
+A white dashed line	Bílá přerušovaná čára
+Double	Dvojitá
+Crossing (bars)	Přechod (pruhy)
+A line's width (each line of a double one); a crossing's reach along the road	Šířka čáry (každé u dvojité); hloubka přechodu podél silnice
+Bar	Pruh
+Dash	Čárka
+Draw with this line	Kreslit touto čárou
+It is made as a spline type of the content folder (Splines\\openMapper\\marks) and chosen: draw it with Line, Arc or Curve, over the asphalt	Vytvoří se jako typ splinu ve složce obsahu (Splines\\openMapper\\marks) a vybere se: kreslete jí Čárou, Obloukem nebo Křivkou po asfaltu
+Painted line made: draw with it in the junction editor	Natřená čára vytvořena: kreslete jí v editoru křižovatek

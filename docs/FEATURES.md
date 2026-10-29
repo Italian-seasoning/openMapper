@@ -28,7 +28,7 @@ The complete list. A short overview is in the [README](../README.md).
 | Lining up | 3 | buildings face the nearest road with their front at a set distance from its edge (Shift: put freely); junction and crossing pieces (spline helpers) click onto the road ends near them |
 | AI paths | 4 | Game logic > AI paths > "Edit existing": pick a path, drag its ends and middle, Ctrl+click on it adds a point, Del deletes it; lanes are drawn thin with small arrows |
 | Bus Pocket Tool | - | Roads tool: tick "Bus Pocket Tool", pick the road type of the pocket (a road type made with a Bus pocket lane in the road maker, or any other that is wider on the right) and how long the bay is at full width, then press on a road: that stretch (the bay and a taper at each end) is cut out and takes the pocket's type, moved sideways so the through lanes stay where they were, and the width adapter lays a tapering plate (1:6) with its lanes joined at each end. One undo step each; the tool stays on, pocket after pocket, until the box is unticked |
-| Complex junction editor | - | Tools > Complex junction editor…: a top view to draw a junction out of small splines (asphalt, road markings, footways, kerbs, any type of the catalogue) with Line and Arc (three points) tools, snapping to a grid and to other pieces' ends; pieces picked, moved, given a lift above the asphalt, put under one another. "Put on the map" lays the drawing as ordinary linked-per-piece splines at the middle of the view, turned as chosen: not automatic in any way, so it can be changed spline by spline afterwards. Drawings are saved in the content folder (`openMapper\junctions\<name>.json`) and can be opened again |
+| Complex junction editor | - | Tools > Complex junction editor…: a top view to draw a junction out of small splines (asphalt, road markings, footways, kerbs, any type of the catalogue) with Line and Arc (three points) tools, snapping to a grid and to other pieces' ends; pieces picked, moved, given a lift above the asphalt, put under one another. "Put on the map" lays the drawing as ordinary linked-per-piece splines at the middle of the view, turned as chosen: not automatic in any way, so it can be changed spline by spline afterwards. Painted lines (solid, dashed, double, a crossing's bars; colour, width, dash and gap) are made in the editor itself as splines with a transparent ground (`Splines\openMapper\marks`) and laid like any piece. Drawings are saved in the content folder (`openMapper\junctions\<name>.json`) and can be opened again |
 | Custom junctions | - | a drawing with its arms marked (Arm tool: where a road comes in, then a point out along it; with the road type it takes) saved as a junction piece: a scenery object (`Sceneryobjects\openMapper\Junctions\…`) whose mesh is swept from the drawing's splines, with `[splinehelper]`s at the arms and a `[path]` along every lane of its pieces, so the AI drives through it. It is in the catalogue under Junctions like any junction piece (roads snap to it, it moves with its roads), and where "Use in automatic junctions" is on, the Roads tool's automatic junctions use it instead of their own plate when the roads meet as its arms do: the same number of roads, each facing within 30° of an arm once the piece is turned to fit, of the same type (or about as wide); the roads are cut back to its arms and bent onto them |
 | Road types | - | Roads tool > "Road types and junctions…": a road maker (lanes each way, a bus pocket lane, a top view and a side view of the road made, lane width, middle strip, footways, kerb, textures) writing an ordinary OMSI spline, and per road type how its junctions are made (corners, lights, zebras, or no junction at all) and which junction piece it is joined with; the maker starts from ready-made roads and has a middle strip (textured, raised or level) and different footways each side. A road's free end takes a junction piece with its place for that road type meeting the end (Junction on an end in its properties). Tracks branch off one another as switches and cross roads on the level |
 | PBR maker | - | an object's "Create PBR" (or Tools > PBR maps for a picture): normal, roughness, metal and occlusion maps made from a texture with a live preview, written as openOMSI reads them (`_nn`, `_orm`); then "Configure PBR" to tune them again or delete them |
@@ -349,6 +349,71 @@ The complete list. A short overview is in the [README](../README.md).
     `maps/<folder>_multiplayer`, saved once they leave. Everybody needs the same objects and
     splines installed. On the LAN the connection is not encrypted (the tunnel is), and
     everybody who joins can change the whole map.
+
+## Modern maps (openOMSI's transport modes)
+
+Everything in detail is in [TRANSIT.md](TRANSIT.md).
+
+* **Classic or Modern** (New map, Map > Map settings): a Classic map runs in OMSI 2 and
+  openOMSI; a Modern map is made for one or more of bus, tram, trolleybus, metro and railway
+  and runs in openOMSI 0.3.42 and later only (its `[…_transport]` keywords in `global.cfg`:
+  openOMSI runs only vehicles of those modes on it). Making a map Modern makes the transit kit,
+  a track rule for each kit track of its modes, the lines' networks with a live section each,
+  and turns real rail on.
+* **Transit network** (Map menu, a Modern map): the map's `transport` folder and `trolley.txt`:
+  * Overview: the modes, how much there is, the problems openOMSI's own reader finds, and the
+    kit's tracks, platforms, wires and objects to place with a click;
+  * Stations: a station for every stop of the map at once (named as the stop, its modes from the
+    tracks and roads within 25 m), or one by one; its stop picked in the view, platforms (side,
+    length, height, screen doors), the stations to change to;
+  * Routes: segments from station to station with the stops between, the ones an express passes,
+    standing time, speed and the way back; services over them in order with headway, hours,
+    days, loop or turning back or a depot at the end, cars in a train, vehicle and depot;
+    departures of their own; the route drawn in its colour;
+  * Depots: AI group, modes, capacity, gates picked on the rails, its stop;
+  * Tracks: rules by track type (a file pattern), tile or piece: modes, street or railway,
+    power, tunnel, speed, gauge; a rule made from the selected track's type;
+  * Power: the overhead wire, the third rail and the trolleybus wire: the line (voltage, current,
+    wire height, side, spacing), sections fed by substations, spans laid along the selected
+    tracks' rail lanes (with the wire splines, a wire over each track of a double track) or a
+    pair over each way's kerb lane of the selected roads, through selected junction plates and
+    switches along their own lanes (for the trolleybus the turns between wired roads), frogs put
+    where three trolleybus wires meet; insulators and gaps between sections; spans laid again
+    replace those of the same piece;
+  * Switches and signals: the selected switch objects with their rest position, drive,
+    diverging speed and locking signal; blocks given by where they begin and end on the rails,
+    the blocks after them, and the signals that show them.
+* **Map > Check** of a Modern map: the network's problems as openOMSI reads it (the trolleybus
+  wire as its trolleybuses read it: frogs on no joint of three spans, spans in no section),
+  stations whose stop is gone, stations without a lane of their modes within 25 m.
+* **The transit kit**: tram street track, tram track on grass, railway track, metro track with a
+  third rail, metro tunnel; tram, metro and railway platforms; overhead contact wire, trolleybus
+  wire pairs; catenary masts, trolleybus poles, metro sign, platform shelter, buffer stop,
+  station stop. Made by openMapper itself.
+* **Vehicles**: the Depots tab shows a depot's AI group's vehicles by mode; Map > Check names
+  the vehicles openOMSI leaves out on the map and the services with no vehicle of their mode
+  (a vehicle's modes read as the game reads them).
+* **From OpenStreetMap** on a Modern map: metro tracks, tram stops and stations (the kit's
+  station stop beside the track), every stop a station, and the tram, trolleybus, metro and
+  train routes as routes with their services; tram branches cut where they meet, no railway
+  turnout.
+* **Editing together** passes the transit network on (protocol 2).
+* **The overhead made properly**: round copper wires, the contact wire on droppers from its
+  messenger, textured catenary masts with their cantilever, trolleybus poles with insulated
+  hangers, frogs and section insulators; masts and poles made to the reach each place needs
+  and put in when wiring (masts every 40 m at the street's kerb, poles every 30 m), a frog object
+  at each frog.
+* **Build into the ground** (a road's or a selection's properties): Cut, an open cutting with
+  sloped banks; Cover, a cut and cover tunnel (shell, portals) with open ramps; depth, ramp
+  gradient, banks, ramps at either end.
+* **Platforms at the stations** (Transit network, Stations): the kit's platform beside each rail
+  station's track, on its stop's side.
+* **Map > Check**: track ends that run on into one another but lie 0.5-4 m apart (the game joins
+  rails within 1.5 m only); "Fix" moves one onto the other and joins them.
+* **Start with a trolleybus line** (New map, Modern with Trolleybus): a road with a junction
+  under its wires with frogs, three stations and two routes.
+* **Start with a tram line** (New map, Modern with Tram): a loop line under its wire, two
+  stations, a service every 10 minutes, ready for openOMSI.
 
 ## Controls
 

@@ -2478,3 +2478,350 @@ Could not copy the photos	Bilderna kunde inte kopieras
 Copying the photos	Kopierar bilderna
 Hold only the photos of the tiles near the camera	Behåll bara bilderna för rutorna nära kameran
 The others keep their photo in the map's folder, and are put up again when you go back to them.	De övriga har kvar sin bild i kartans mapp och kommer tillbaka när du går dit igen.
+A tram loop with two stations and its wire: save, then drive it in openOMSI with a tram of your own.	En spårvagnsslinga med två stationer och kontaktledning: spara och kör den sedan i openOMSI med en egen spårvagn.
+Transit kit made, files:	Kollektivtrafiksatsen skapad, filer:
+The transit kit could not be made	Kollektivtrafiksatsen kunde inte skapas
+Transit network problems	Problem i kollektivtrafiknätet
+Stations without their mode's lanes	Stationer utan körvägar för sitt trafikslag
+Stations without their stop	Stationer utan sin hållplats
+openOMSI's own reader finds this in the map's transport folder (stations, routes, wires, switches, depots, signals): a service it names is skipped, a section or a block left out. Open Map > Transit network to change it.	openOMSI:s egen läsare hittar detta i kartans mapp transport (stationer, rutter, ledningar, växlar, depåer, signaler): en nämnd trafikering hoppas över, en sektion eller blocksträcka utelämnas. Öppna Karta > Kollektivtrafiknät för att ändra det.
+openOMSI routes a service over the lanes of its mode within 25 m of each station (rails for trams, metro and trains, streets for buses and trolleybuses). This station has none of its modes' near, so its services cannot run. Move the stop next to the track or road, or lay one there.	openOMSI leder en trafikering över körvägarna för dess trafikslag inom 25 m från varje station (räls för spårvagn, tunnelbana och tåg, gator för buss och trådbuss). Den här stationen har inget av sina trafikslag i närheten, så dess trafikering kan inte gå. Flytta hållplatsen intill spåret eller vägen, eller lägg ett där.
+A station is found by the game among the map's stops: by its stop object, else by its name. This one's object is no stop on the map and no stop has its name, so the services through it are skipped. Pick its stop again in Map > Transit network, Stations.	Spelet hittar en station bland kartans hållplatser: via dess hållplatsobjekt, annars via dess namn. Den här stationens objekt är ingen hållplats på kartan och ingen hållplats har dess namn, så trafikeringen genom den hoppas över. Välj dess hållplats igen i Karta > Kollektivtrafiknät, Stationer.
+station	station
+Transit network…	Kollektivtrafiknät…
+The transport folder stays: openOMSI still reads its stations, routes and wires.	Mappen transport blir kvar: openOMSI läser fortfarande dess stationer, rutter och ledningar.
+Remove it too	Ta bort den också
+Start with a tram line: a loop of track under its wire, two stations and a route	Börja med en spårvagnslinje: en spårslinga under kontaktledning, två stationer och en rutt
+Classic	Klassisk
+Runs in OMSI 2 and in openOMSI. Buses, and trams and trains as OMSI 2 has them.	Fungerar i OMSI 2 och i openOMSI. Bussar, och spårvagnar och tåg så som OMSI 2 har dem.
+Modern	Modern
+openOMSI only. Real transit: stations, routes, overhead wire, third rail, depots and signal blocks.	Bara openOMSI. Riktig kollektivtrafik: stationer, rutter, kontaktledning, strömskena, depåer och blocksträckor.
+Made for (one or more):	Gjord för (ett eller flera):
+Choose at least one	Välj minst ett
+OMSI 2 cannot run a Modern map's routes, wires or blocks, and openOMSI runs only vehicles of its modes on it. openMapper's transit kit (tracks, wires, platforms, masts) is made in the content folder.	OMSI 2 kan inte köra en modern kartas rutter, ledningar eller blocksträckor, och openOMSI kör bara fordon av dess trafikslag på den. openMappers kollektivtrafiksats (spår, ledningar, plattformar, stolpar) skapas i innehållsmappen.
+Overview	Översikt
+Stations	Stationer
+Depots	Depåer
+Power	Strömförsörjning
+Switches and signals	Växlar och signaler
+Set it (else the game's default)	Ange (annars spelets standard)
+(not set)	(inte angivet)
+Take it out	Ta bort
+Transit network	Kollektivtrafiknät
+This is a Classic map.	Det här är en klassisk karta.
+Stations, routes without tours, the overhead wire, the third rail, depots and signal blocks are openOMSI's (0.3.42 and later): make the map Modern in Map settings to give it a transit network. OMSI 2 cannot run them.	Stationer, rutter utan omlopp, kontaktledningen, strömskenan, depåer och blocksträckor hör till openOMSI (0.3.42 och senare): gör kartan modern i Kartinställningar för att ge den ett kollektivtrafiknät. OMSI 2 kan inte köra dem.
+No stop there: click a stop object (a bus stop, or the kit's station stop)	Ingen hållplats där: klicka på ett hållplatsobjekt (en busshållplats eller satsens stationshållplats)
+Now click where the block ends	Klicka nu där blocksträckan slutar
+Click the signal object itself	Klicka på själva signalobjektet
+Then click in the view	Klicka sedan i vyn
+Modern map for	Modern karta för
+openOMSI runs only vehicles of these modes here; OMSI 2 cannot run the network. The modes are changed in Map settings.	openOMSI kör bara fordon av de här trafikslagen här; OMSI 2 kan inte köra nätet. Trafikslagen ändras i Kartinställningar.
+Services	Trafikering
+Track rules	Spårregler
+Overhead wire spans	Kontaktledningsspann
+Third rail spans	Strömskenespann
+Trolleybus wire spans	Trådbussledningsspann
+Switches	Växlar
+Signals and blocks	Signaler och blocksträckor
+Problems	Problem
+None: openOMSI reads the network as it is.	Inga: openOMSI läser nätet som det är.
+error	fel
+warning	varning
+Found by openOMSI's own reader of the transport folder, the texts as it writes them in its log.	Hittat av openOMSI:s egen läsare av mappen transport, texterna som den skriver dem i sin logg.
+openMapper's transit kit	openMappers kollektivtrafiksats
+Tracks, platforms, wires and objects made by openMapper for Modern maps (OMSI 2 ships no metro, third rail or trolleybus wire). They are in the catalogue under openMapper; click one to place it.	Spår, plattformar, ledningar och objekt som openMapper gjort för moderna kartor (OMSI 2 har ingen tunnelbana, strömskena eller trådbussledning). De finns i katalogen under openMapper; klicka på ett för att placera det.
+Make the kit	Skapa satsen
+A station is a stop object of the map (a bus stop, or the kit's station stop beside a track) with its platforms. openOMSI routes a service over the lanes of its mode within 25 m of each station.	En station är ett hållplatsobjekt på kartan (en busshållplats eller satsens stationshållplats intill ett spår) med sina plattformar. openOMSI leder en trafikering över körvägarna för dess trafikslag inom 25 m från varje station.
+A station for every stop of the map	En station för varje hållplats på kartan
+Stops not yet a station become one, named as the stop, its modes from the tracks and roads beside it	Hållplatser som ännu inte är en station blir en, med hållplatsens namn och trafikslag efter spåren och vägarna bredvid
+New station	Ny station
+Stations added:	Stationer tillagda:
+Choose a station	Välj en station
+Id	Id
+Modes	Trafikslag
+Stop object	Hållplatsobjekt
+Pick	Välj
+Place	Plats
+Change to	Byte till
+Platforms	Plattformar
+Side	Sida
+island	mittplattform
+both	båda sidor
+platform screen doors	plattformsdörrar
+Delete the station	Ta bort stationen
+A route is segments from station to station (the stops between them in order) and services over them: a branch, a short working or an express is another segment or service. openOMSI makes the timetable's tours from them and finds the way over the tracks itself.	En rutt består av segment från station till station (med hållplatserna emellan i ordning) och trafikering över dem: en gren, en kortvändning eller en expresstur är ett annat segment eller en annan trafikering. openOMSI gör tidtabellens omlopp av dem och hittar själv vägen över spåren.
+Add two stations or more first (Stations)	Lägg först till två eller fler stationer (Stationer)
+New route	Ny rutt
+Segment	Segment
+Stops between	Hållplatser emellan
+Passed without stopping	Passeras utan uppehåll
+Standing at a stop	Uppehåll vid hållplats
+Speed	Hastighet
+Way back	Tillbakaväg
+over the same segment	över samma segment
+another segment	ett annat segment
+Service	Trafikering
+Segments in order	Segment i ordning
+From – to	Från – till
+Days	Dagar
+every day	varje dag
+weekends	helger
+Saturdays	lördagar
+Sundays	söndagar
+turns back	vänder
+goes round a loop	kör runt en slinga
+goes to depot	går till depån
+Cars in a train	Vagnar i tåget
+Every 10 minutes from 05:30 to 23:30 over all the route's segments	Var 10:e minut från 05:30 till 23:30 över alla ruttens segment
+Departures of their own	Egna avgångar
+For a service without a headway: its departures, as 06:00 06:12 06:30.	För en trafikering utan turintervall: dess avgångar, t.ex. 06:00 06:12 06:30.
+Departures	Avgångar
+A service's depot sends out its vehicles: its AI group (Traffic and AI) supplies them, and the first departure of the day leaves by its gate along the rails to the first station.	En trafikerings depå skickar ut dess fordon: dess AI-grupp (Trafik och AI) levererar dem, och dagens första avgång lämnar via porten längs rälsen till första stationen.
+AI group	AI-grupp
+Capacity	Kapacitet
+Its stop	Dess hållplats
+Gates	Portar
+Add a gate	Lägg till en port
+has a turning loop	har en vändslinga
+Delete the depot	Ta bort depån
+A gate needs a rail within 25 m and a way to the first station, or the trip starts at its station (the game's log says so).	En port behöver en räl inom 25 m och en väg till första stationen, annars börjar turen vid dess station (spelets logg säger det).
+Which tracks serve which mode and how they are powered: a rule matches a track type (a file pattern, * for any letters), a tile or one piece; later rules win. Without a rule openOMSI guesses from the type's name.	Vilka spår som betjänar vilket trafikslag och hur de strömförsörjs: en regel gäller en spårtyp (ett filmönster, * för vilka bokstäver som helst), en kartruta eller en enda del; senare regler vinner. Utan regel gissar openOMSI utifrån typens namn.
+A rule for the selected track's type	En regel för det markerade spårets typ
+Empty rule	Tom regel
+(select a track in the view to make a rule for its type)	(markera ett spår i vyn för att göra en regel för dess typ)
+Track type	Spårtyp
+Only on tile / piece	Bara på kartruta / del
+id	id
+in the street	i gatan
+railway	järnväg
+overhead wire	kontaktledning
+third rail	strömskena
+diesel	diesel
+Tunnel	Tunnel
+yes	ja
+no	nej
+Gauge	Spårvidd
+A map for buses alone has no line to power.	En karta enbart för bussar har ingen ledning att strömförsörja.
+Third rail	Strömskena
+Trolleybus wire	Trådbussledning
+Where the wire is, the player's tram or electric train needs a live section of it over its pantograph (dead sections and breaks stop the drive). Without spans openOMSI takes the current for granted. Spans are laid along the selected tracks.	Där ledningen finns behöver spelarens spårvagn eller eltåg en strömförande sektion av den över strömavtagaren (strömlösa sektioner och avbrott stoppar drivningen). Utan spann tar openOMSI strömmen för given. Spann läggs längs de markerade spåren.
+The player's metro train needs a live section of third rail beside its shoe. The kit's metro tracks carry the rail itself; spans say where it is fed. Spans are laid along the selected tracks.	Spelarens tunnelbanetåg behöver en strömförande sektion av strömskenan bredvid sin strömavtagarsko. Satsens tunnelbanespår har själva skenan; spann anger var den matas. Spann läggs längs de markerade spåren.
+openOMSI's trolleybuses run on this wire (trolley.txt beside global.cfg): a pole is powered only on a pair fed by a substation. Spans are laid over each way's lane of the selected roads, with the wire splines that show them.	openOMSI:s trådbussar går på den här ledningen (trolley.txt bredvid global.cfg): en strömavtagare har bara ström på ett par som matas av en likriktarstation. Spann läggs över körfältet i varje riktning på de markerade vägarna, med ledningssplines som visar dem.
+The line	Ledningen
+Voltage	Spänning
+Current	Ström
+direct	likström
+alternating	växelström
+Wire height	Ledningshöjd
+Wire spacing	Avstånd mellan ledningarna
+Sections (each fed by a substation)	Sektioner (var och en matad av en likriktarstation)
+name	namn
+live	strömförande
+feeder Ω	matning Ω
+Section	Sektion
+Spans	Spann
+one pair over the middle	ett par över mitten
+a pair over each 3.0 m lane	ett par över varje körfält på 3,0 m
+a pair over each 3.5 m lane	ett par över varje körfält på 3,5 m
+lay the wire splines too	lägg även ledningssplines
+Wire the selected roads	Förse de markerade vägarna med ledning
+Electrify the selected tracks	Elektrifiera de markerade spåren
+Take their spans off	Ta bort deras spann
+(select roads in the view)	(markera vägar i vyn)
+(select tracks in the view)	(markera spår i vyn)
+Their spans are taken off	Deras spann är borttagna
+Spans laid:	Spann lagda:
+Gaps	Avbrott
+Insulators	Isolatorer
+Gap	Avbrott
+Insulator	Isolator
+Frogs (wire switches)	Luftväxlar
+Where three spans meet: the contact plate before it sets it by the current the bus draws (power) or by its indicator.	Där tre spann möts: kontaktplattan före den lägger om den efter strömmen bussen drar (drivström) eller efter dess körriktningsvisare.
+by current	via ström
+by indicator	via körriktningsvisare
+Frog	Luftväxel
+A switch listed here holds while a train stands on it, goes back to its rest position, and can be thrown by hand only or locked by a signal. Switches not listed work as before.	En växel i listan ligger kvar medan ett tåg står på den, går tillbaka till sitt viloläge och kan läggas om bara för hand eller låsas av en signal. Växlar som inte står i listan fungerar som förut.
+The selected switch objects	De markerade växelobjekten
+simple	enkel
+crossover	spårväxling
+double slip	dubbel korsningsväxel
+diamond	korsning
+scissors	saxväxel
+rests straight	viloläge rakt
+rests diverging	viloläge avvikande
+thrown by the route	läggs om av rutten
+by hand only	bara för hand
+interlocked	förreglad
+diverging	avvikande
+locked by	låst av
+Blocks	Blocksträckor
+A stretch of track that holds one AI train at a time, given by where it begins and ends on the rails; its signals show whether it is free. Blocks need the timetable's trains (the AI) to hold.	En spårsträcka som rymmer ett AI-tåg åt gången, angiven av var den börjar och slutar på rälsen; dess signaler visar om den är fri. Blocksträckor håller bara tidtabellens tåg (AI:n).
+Ends	Ändar
+Block	Blocksträcka
+Click where the block begins	Klicka där blocksträckan börjar
+Signals	Signaler
+A signal of the map tied to a block shows stop while the block is in use and go while it is free.	En signal på kartan som är knuten till en blocksträcka visar stopp medan sträckan är upptagen och kör när den är fri.
+main	huvudsignal
+distant	försignal
+block	blocksignal
+shunting	växlingssignal
+speed	hastighetssignal
+tram	spårvägssignal
+Tram street track	Spårvägsspår i gatan
+Tram track on grass	Spårvägsspår i gräs
+Railway track	Järnvägsspår
+Metro track	Tunnelbanespår
+Metro tunnel	Tunnelbanetunnel
+Tram platform	Spårvagnsplattform
+Metro side platform	Tunnelbanans sidoplattform
+Metro island platform	Tunnelbanans mittplattform
+Railway side platform	Järnvägens sidoplattform
+Railway island platform	Järnvägens mittplattform
+Trolleybus wires (one pair)	Trådbussledning (ett par)
+Trolleybus wires, 3.0 m lanes	Trådbussledning, körfält på 3,0 m
+Trolleybus wires, 3.5 m lanes	Trådbussledning, körfält på 3,5 m
+Catenary mast (arm right)	Kontaktledningsstolpe (bärarm höger)
+Catenary mast (arm left)	Kontaktledningsstolpe (bärarm vänster)
+Trolleybus pole (arm right)	Trådbusstolpe (arm höger)
+Trolleybus pole (arm left)	Trådbusstolpe (arm vänster)
+Metro sign	Tunnelbaneskylt
+Platform shelter	Plattformstak
+Buffer stop	Stoppbock
+Station stop	Stationshållplats
+Bus	Buss
+Tram	Spårvagn
+Railway	Järnväg
+Metro	Tunnelbana
+Trolleybus	Trådbuss
+buses on the streets, stops at the kerb	bussar på gatorna, hållplatser vid trottoarkanten
+street track under a contact wire, low platforms	gatuspår under en kontaktledning, låga plattformar
+mainline track, stations with platforms, signals and blocks	stambanespår, stationer med plattformar, signaler och blocksträckor
+track with a third rail, tunnels, high platforms	spår med strömskena, tunnlar, höga plattformar
+buses under a pair of wires, frogs at junctions	bussar under ett ledningspar, luftväxlar vid förgreningar
+Depot Square	Depåtorget
+Park Gate	Parkporten
+Tram start	Spårvagnsstart
+Loop line	Ringlinje
+A trolleybus junction under its wires with three stations: save, then drive it in openOMSI with a trolleybus of your own.	En trådbusskorsning under ledning med tre stationer: spara och kör den sedan i openOMSI med en egen trådbuss.
+station stops:	stationshållplatser:
+stations:	stationer:
+routes:	rutter:
+Vehicles of other modes	Fordon av andra trafikslag
+Services without a vehicle of their mode	Trafikering utan fordon av sitt trafikslag
+openOMSI runs only vehicles of a Modern map's modes on it. This vehicle of the AI lists is made for another mode (its file says so, or it is a depot's vehicle and its shape says so), so the game leaves it out. Change it in Map > Traffic and AI, or add its mode to the map in Map settings.	openOMSI kör bara fordon av en modern kartas trafikslag på den. Det här fordonet i AI-listorna är gjort för ett annat trafikslag (dess fil säger det, eller så är det ett depåfordon och dess form säger det), så spelet utelämnar det. Ändra det i Karta > Trafik och AI, eller lägg till dess trafikslag på kartan i Kartinställningar.
+A service of the transit network takes its vehicles from its depot's AI group (or names one vehicle file). That group has no vehicle of the route's mode, so nothing runs it. Give the depot an AI group with such vehicles (Map > Traffic and AI), or choose another depot.	En trafikering i kollektivtrafiknätet tar sina fordon från sin depås AI-grupp (eller anger en fordonsfil). Den gruppen har inget fordon av ruttens trafikslag, så ingen kör den. Ge depån en AI-grupp med sådana fordon (Karta > Trafik och AI), eller välj en annan depå.
+group	grupp
+route	rutt
+its depot names no AI group	dess depå anger ingen AI-grupp
+no vehicle of the mode in	inget fordon av trafikslaget i
+Stations from OpenStreetMap	Stationer från OpenStreetMap
+Metro tracks	Tunnelbanespår
+in tunnels too: build them with the kit's metro tunnel and cut the ground away (a Modern map)	även i tunnlar: bygg dem med satsens tunnelbanetunnel och skär bort marken (en modern karta)
+Start with a trolleybus line: a junction under its wires with frogs, three stations and two routes	Börja med en trådbusslinje: en korsning under ledning med luftväxlar, tre stationer och två rutter
+Stations (tram, metro, railway)	Stationer (spårvagn, tunnelbana, järnväg)
+Each tram stop and station of the map's rail modes put with the kit's station stop beside the nearest track (within 25 m); every stop of the map then becomes a station of its transport folder	Varje spårvagnshållplats och station av kartans spårtrafikslag placeras med satsens stationshållplats bredvid närmaste spår (inom 25 m); sedan blir varje hållplats på kartan en station i dess mapp transport
+Routes (tram, trolleybus, metro, railway)	Rutter (spårvagn, trådbuss, tunnelbana, järnväg)
+Each route of the map's modes through two or more of its stations a segment of its line, the line's service as often as OpenStreetMap says (else every 10 minutes), from 05:30 to 23:30; openOMSI finds the way over the tracks	Varje rutt av kartans trafikslag genom två eller fler av dess stationer blir ett segment av sin linje, med linjens trafikering så ofta som OpenStreetMap anger (annars var 10:e minut), från 05:30 till 23:30; openOMSI hittar själv vägen över spåren
+no vehicle of it is installed	inget av dess fordon är installerat
+Its vehicles:	Dess fordon:
+(select roads in the view, and the junctions between them)	(markera vägar i vyn, och korsningarna mellan dem)
+(select tracks in the view, and their switches)	(markera spår i vyn, och deras växlar)
+A pair of wires over each way's kerb lane; through a selected junction only the lanes that join wired roads. Frogs are put where three wires meet.	Ett ledningspar över körfältet närmast trottoarkanten i varje riktning; genom en markerad korsning bara de körfält som förbinder vägar med ledning. Luftväxlar placeras där tre ledningar möts.
+The map's files are still being read	Kartans filer läses fortfarande in
+West Gate	Västra porten
+East Market	Östra marknaden
+North Park	Norra parken
+Market line	Marknadslinjen
+Park line	Parklinjen
+Trolleybus start	Trådbusstart
+frogs:	luftväxlar:
+places where more than three wires meet get no frog: wire fewer turns there	platser där fler än tre ledningar möts får ingen luftväxel: dra ledning för färre svängar där
+Track ends that do not meet	Spårändar som inte möts
+Two tracks run on into one another but their ends lie apart: the game joins rails only where their ends lie within 1.5 m, so no train or tram gets across (a route through there finds no way). "Fix" moves one end onto the other, arriving in line with it, and joins them.	Två spår fortsätter i varandra men deras ändar ligger isär: spelet kopplar ihop räls bara där ändarna ligger inom 1,5 m från varandra, så inget tåg eller spårvagn kommer över (en linje genom platsen hittar ingen väg). ”Åtgärda” flyttar den ena änden till den andra, i linje med den, och sammanfogar dem.
+tracks	spår
+Select the roads or tracks to build into the ground	Markera vägarna eller spåren som ska byggas ner i marken
+Cutting	Skärning
+Cut and cover tunnel	Tunnel byggd i öppet schakt
+Nothing to build into the ground	Inget att bygga ner i marken
+Build into the ground	Bygg ner i marken
+The chain of the selected pieces lowered, with ramps at its ends. Cut: an open cutting with sloped banks. Cover: open ramps down to the portals and a tunnel under the ground between them (a shell of walls and roof, a portal at each mouth).	Kedjan av valda delar sänks, med ramper i ändarna. Skärning: öppen, med sluttande slänter. Tunnel: öppna ramper ner till portalerna och mellan dem en tunnel under marken (ett skal av väggar och tak, en portal vid varje mynning).
+Cover (tunnel)	Täckt (tunnel)
+Ramp gradient	Rampens lutning
+Banks	Slänter
+ m out per metre up	 m ut per meter upp
+Ramps	Ramper
+at the start	i början
+at the end	i slutet
+A tunnel needs a depth of 6 m or more: shallower it stays an open cutting	En tunnel behöver ett djup på 6 m eller mer: grundare förblir den en öppen skärning
+Each ramp is about	Varje ramp är ungefär
+Pieces lowered:	Sänkta delar:
+tunnel pieces:	tunneldelar:
+portals:	portaler:
+their overhead taken off: wire them again (Transit network, Power)	deras kontaktledning togs bort: dra den igen (Kollektivtrafiknät, Strömförsörjning)
+Platforms at the stations	Plattformar vid stationerna
+The kit's platform of each rail station's mode beside its track, on the side its stop stands, as long as its platform says	Satsens plattform för varje spårstations läge bredvid dess spår, på den sida där dess hållplats står, så lång som dess plattform anger
+Platforms laid:	Plattformar lagda:
+lay the wires, masts, poles and frogs too	lägg även ledningar, stolpar och luftväxlar
+Catenary mast	Kontaktledningsstolpe
+Trolleybus pole	Trådbusstolpe
+Trolleybus frog	Trådbussluftväxel
+Section insulator	Sektionsisolator
+Lake	Sjö
+River	Å
+Water level:	Vattennivå:
+Click the shore round and close it on the first point (Enter closes too, right-click takes a point back). The ground inside is dug to a bed and the banks slope to the shore.	Klicka runt stranden och sluta på första punkten (Enter sluter också, högerklick tar tillbaka en punkt). Marken innanför grävs till en botten och sluttningarna lutar ner mot stranden.
+Click the river's middle line from its source on and finish on the last point (or Enter). Water in OMSI lies at one level for a tile: a river runs level.	Klicka på flodens mittlinje från källan och avsluta på sista punkten (eller Enter). Vatten i OMSI ligger på en nivå per ruta: en å rinner jämnt.
+Add as a ground texture	Lägg till som marktextur
+A junction was not made: its roads are too short or too close together. Lengthen them or move the junctions apart.	En korsning skapades inte: vägarna är för korta eller för nära varandra. Förläng dem eller flytta korsningarna längre från varandra.
+Display	Visning
+X-ray (Alt+Z): see and pick through the mesh	Röntgen (Alt+Z): se och markera genom meshen
+Show the textures	Visa texturerna
+The object's own pictures under the editing shading	Objektets egna bilder under redigeringsfärgen
+Shading opacity	Färgens opacitet
+0 %: the textures as they are; 100 %: the plain shading. The picture is renewed a moment after each change.	0 %: texturerna som de är; 100 %: den enkla färgen. Bilden förnyas en stund efter varje ändring.
+Give this material to the selected faces	Ge det här materialet till de markerade ytorna
+Select faces to give them a material.	Markera ytor för att ge dem ett material.
+Road markings	Vägmarkeringar
+Paint my own markings	Måla egna markeringar
+The maker paints the lines onto the roadway texture: pick a plain asphalt texture, or its own lines show too	Generatorn målar linjerna på vägbanans textur: välj en slät asfalttextur, annars syns dess egna linjer också
+Standard for these lanes	Standard för dessa körfält
+Add a line	Lägg till en linje
+Across the roadway from its middle (right of the road's way is plus)	Tvärs över vägbanan från mitten (höger om vägens riktning är plus)
+Solid	Heldragen
+Dashed	Streckad
+Double solid	Dubbel heldragen
+Solid and dashed	Heldragen och streckad
+The line's width	Linjens bredd
+Dash length	Streckets längd
+Gap between dashes	Mellanrum mellan streck
+Draw road markings	Rita vägmarkeringar
+Pen	Penna
+Straight line	Rak linje
+Dashed line	Streckad linje
+Rectangle	Rektangel
+Arrow	Pil
+Eraser	Suddgummi
+Pointing back	Pekar bakåt
+Snap to 5 cm	Fäst vid 5 cm
+Drag to draw. The picture is the roadway as the texture lies on it, up is the way of the road; it repeats along, so what leaves at the top comes in at the bottom.	Dra för att rita. Bilden är vägbanan så som texturen ligger på den, uppåt är vägens riktning; den upprepas längs vägen, så det som lämnar överkanten kommer in i nederkanten.
+Pick a roadway texture first	Välj först en vägbanetextur
+Draw by hand…	Rita för hand…
+A drawing board with a pen, lines, arrows and an eraser: what you draw goes onto the roadway	En ritbräda med penna, linjer, pilar och suddgummi: det du ritar hamnar på vägbanan
+a drawing is on the road	en teckning ligger på vägen
+Painted line	Målad linje
+Stop line	Stopplinje
+A wide solid line across a lane: draw it across the road	En bred heldragen linje tvärs över ett körfält: rita den tvärs över vägen
+Crossing	Övergångsställe
+Zebra bars: draw it across the road, the bars lie along it	Zebra: rita den tvärs över vägen, ränderna ligger längs vägen
+Centre line	Mittlinje
+A double yellow line	En dubbel gul linje
+Lane line	Körfältslinje
+A white dashed line	En vit streckad linje
+Double	Dubbel
+Crossing (bars)	Övergångsställe (ränder)
+A line's width (each line of a double one); a crossing's reach along the road	Linjens bredd (varje linje i en dubbel); övergångsställets djup längs vägen
+Bar	Rand
+Dash	Streck
+Draw with this line	Rita med den här linjen
+It is made as a spline type of the content folder (Splines\\openMapper\\marks) and chosen: draw it with Line, Arc or Curve, over the asphalt	Skapas som en splinetyp i innehållsmappen (Splines\\openMapper\\marks) och väljs: rita med Linje, Båge eller Kurva över asfalten
+Painted line made: draw with it in the junction editor	Målad linje skapad: rita med den i korsningsredigeraren

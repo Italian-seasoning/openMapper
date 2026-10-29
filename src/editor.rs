@@ -86,6 +86,17 @@ pub enum TerrainMode {
     Water,
 }
 
+/// How a lake or a river is drawn (the Lake / river mode).
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum WaterShape {
+    /// Click the shore round, close it on the first point: the ground inside is dug to a bed.
+    Lake,
+    /// Click the river's middle line from its source on, finish on the last point (or Enter).
+    River,
+    /// The brush: dig by hand.
+    Brush,
+}
+
 impl TerrainMode {
     pub const ALL: [TerrainMode; 7] = [TerrainMode::Raise, TerrainMode::Lower, TerrainMode::Smooth, TerrainMode::Flatten, TerrainMode::Roughen, TerrainMode::Ramp, TerrainMode::Water];
     pub fn label(self) -> &'static str {
@@ -390,6 +401,12 @@ pub struct Editor {
     pub lane_detach_request: Option<(Vec<(TileKey, i64)>, DVec2)>,
     path_point: Option<((TileKey, i64), Handle)>,
     pub water_depth: f32,
+    pub water_shape: WaterShape,
+    /// A river's width and the banks' reach out from the shore (m).
+    pub river_width: f32,
+    pub water_bank: f32,
+    /// The shore or the middle line clicked so far.
+    pub water_pts: Vec<DVec3>,
     /// Flatten to this height rather than to where the drag starts.
     pub flatten_fixed: Option<f32>,
     // paint
@@ -587,6 +604,10 @@ impl Default for Editor {
             lane_detach_request: None,
             path_point: None,
             water_depth: 1.5,
+            water_shape: WaterShape::Lake,
+            river_width: 14.0,
+            water_bank: 8.0,
+            water_pts: Vec::new(),
             flatten_fixed: None,
             paint_layer: 1,
             paint_erase: false,
@@ -827,6 +848,7 @@ impl Editor {
         self.ring_centre = None;
         self.plant_outline.clear();
         self.ramp_start = None;
+        self.water_pts.clear();
         self.link_pick = None;
         self.cutting = false;
         if let Some(doc) = &mut self.doc {
@@ -1415,6 +1437,19 @@ impl Editor {
                     }
                 }
             }
+            Tool::Terrain if self.tool == Tool::Terrain && self.terrain_mode == TerrainMode::Water && self.water_shape != WaterShape::Brush => {
+                let Some(c) = self.cursor else { return };
+                let near = |p: Option<&DVec3>| p.map(|p| (p.truncate() - c.truncate()).length() < self.close_radius()).unwrap_or(false);
+                let done = match self.water_shape {
+                    WaterShape::Lake => self.water_pts.len() >= 3 && near(self.water_pts.first()),
+                    _ => self.water_pts.len() >= 2 && near(self.water_pts.last()),
+                };
+                if done {
+                    self.make_water();
+                } else {
+                    self.water_pts.push(c);
+                }
+            }
             Tool::Terrain | Tool::Paint => {
                 self.history.begin(if self.tool == Tool::Terrain { tr("Shape terrain", "Рельеф") } else { tr("Paint ground", "Покраска") });
                 self.flatten_to = self.flatten_fixed.or(self.cursor.map(|c| c.z as f32));
@@ -1490,6 +1525,9 @@ impl Editor {
             }
             Tool::Terrain if self.ramp_start.is_some() => {
                 self.ramp_start = None;
+            }
+            Tool::Terrain if !self.water_pts.is_empty() => {
+                self.water_pts.pop();
             }
             Tool::Objects if !self.plant_outline.is_empty() => {
                 self.plant_outline.pop();
@@ -2195,6 +2233,51 @@ impl Editor {
         n
     }
 
+    /// Stations from OpenStreetMap: each with the stop object `rel` beside the nearest rail lane
+    /// (within 25 m), on its right as it runs, unless a stop stands within 10 m. How many.
+    pub fn place_osm_stations(&mut self, assets: &mut Assets, stations: &[(DVec2, String)], rel: &str) -> usize {
+        let Some(doc) = self.doc.as_ref() else { return 0 };
+        let mut stood: Vec<DVec2> = doc.tiles.iter().flat_map(|(k, t)| t.tile.objects.iter().filter(|o| o.flag == 7).map(move |o| tile_origin(*k) + DVec2::new(o.pos[0], o.pos[1]))).collect();
+        self.history.begin(tr("Stations from OpenStreetMap", "Станции из OpenStreetMap"));
+        let mut n = 0;
+        for (p, name) in stations {
+            let Some(doc) = self.doc.as_ref() else { break };
+            let (lanes, _) = crate::lanes::near(doc, assets, *p, 25.0);
+            let best = lanes.iter().filter(|l| l.kind == 2).filter_map(|l| l.nearest(*p).map(|q| (q, l.direction))).filter(|(q, _)| q.2 < 25.0).min_by(|a, b| a.0 .2.total_cmp(&b.0 .2));
+            let Some(((q, h, _, _), dir)) = best else { continue };
+            let flow = if dir == 1 { roads::norm_deg(h + 180.0) } else { h };
+            // (on the side of the track the OSM station lies, a platform's width off it)
+            let right = roads::right(flow);
+            let side = if (*p - q.truncate()).dot(right) >= 0.0 { 1.0 } else { -1.0 };
+            let at = q.truncate() + right * side * 3.2;
+            if stood.iter().any(|s| (*s - at).length() < 10.0) {
+                continue;
+            }
+            let k = tile_of(at);
+            let Some(doc) = self.doc.as_mut() else { break };
+            if !doc.tiles.contains_key(&k) {
+                continue;
+            }
+            self.history.touch_tile(doc, k);
+            let id = doc.new_id();
+            let org = tile_origin(k);
+            let label = if name.trim().is_empty() { tr("Station", "Станция").to_string() } else { name.trim().to_string() };
+            let o = MapObject { file: rel.to_string(), id, pos: [at.x - org.x, at.y - org.y, 0.0], rot: [flow, 0.0, 0.0], extra: crate::stops::StopSettings::new_strings(&label, Default::default()), flag: 7, ..Default::default() };
+            let t = doc.tiles.get_mut(&k).unwrap();
+            t.tile.objects.push(o);
+            t.touch_content();
+            stood.push(at);
+            n += 1;
+        }
+        if n == 0 {
+            self.history.cancel();
+        } else {
+            self.history.touch_global(self.doc.as_ref().unwrap());
+            self.history.commit();
+        }
+        n
+    }
+
     /// A car park click with rows on: the first click starts a row, the second fills it to
     /// there with car parks every `parking_step` metres, standing along it.
     fn parking_click(&mut self, assets: &mut Assets, lib: &Library) {
@@ -2397,6 +2480,12 @@ impl Editor {
             return None;
         }
         let track = self.road_type.as_deref()?;
+        // (a Modern map's tram tracks branch without OMSI 2's railway turnouts, 27 m long and
+        // of 190 m radius, far too wide for a tram's junction: the track is cut there, and
+        // openOMSI takes the branch a route names or the driver's indicator points to)
+        if self.doc.as_ref().is_some_and(|d| d.transit.is_modern()) && track.to_lowercase().contains("tram") {
+            return None;
+        }
         let rel = self.best_switch(assets, track, left);
         let model = assets.object(&rel)?;
         let shape = crate::switches::Shape::of(&model)?;
@@ -3524,6 +3613,99 @@ impl Editor {
         }
     }
 
+    /// The lake or river clicked out (`water_pts`) dug into the ground: a bed `water_depth` under the water's
+    /// level with banks that ease out over `water_bank` metres, and water laid on the tiles it
+    /// dug into. The level is a little under the lowest point clicked (or the water the tile has).
+    /// One undo step.
+    pub fn make_water(&mut self) -> bool {
+        let pts = std::mem::take(&mut self.water_pts);
+        let lake = self.water_shape == WaterShape::Lake;
+        if pts.len() < if lake { 3 } else { 2 } {
+            return false;
+        }
+        let (depth, bank, half) = (self.water_depth as f64, (self.water_bank as f64).max(1.0), self.river_width as f64 / 2.0);
+        let Some(doc) = self.doc.as_mut() else { return false };
+        let poly: Vec<DVec2> = pts.iter().map(|p| p.truncate()).collect();
+        let existing = doc.tiles.get(&tile_of(poly[0])).and_then(|t| t.water).map(|w| w.iter().sum::<f32>() / 4.0);
+        let level = existing.map(|l| l as f64).unwrap_or_else(|| pts.iter().map(|p| p.z).fold(f64::MAX, f64::min) - 0.3);
+        let edges = if lake { poly.len() } else { poly.len() - 1 };
+        let dist = |p: DVec2| -> f64 {
+            (0..edges)
+                .map(|i| {
+                    let (a, b) = (poly[i], poly[(i + 1) % poly.len()]);
+                    let ab = b - a;
+                    let t = ((p - a).dot(ab) / ab.length_squared().max(1e-9)).clamp(0.0, 1.0);
+                    (p - (a + ab * t)).length()
+                })
+                .fold(f64::MAX, f64::min)
+        };
+        // (negative inside the water)
+        let signed = |p: DVec2| -> f64 {
+            if !lake {
+                return dist(p) - half;
+            }
+            let mut inside = false;
+            for i in 0..poly.len() {
+                let (a, b) = (poly[i], poly[(i + 1) % poly.len()]);
+                if (a.y > p.y) != (b.y > p.y) && p.x < (b.x - a.x) * (p.y - a.y) / (b.y - a.y) + a.x {
+                    inside = !inside;
+                }
+            }
+            if inside { -dist(p) } else { dist(p) }
+        };
+        let ease = |x: f64| {
+            let x = x.clamp(0.0, 1.0);
+            x * x * (3.0 - 2.0 * x)
+        };
+        let edge = if lake { bank } else { bank.min(half.max(1.0)) };
+        let cell = tile_size() / (TERRAIN_SAMPLES - 1) as f64;
+        let n = (TERRAIN_SAMPLES - 1) as i64;
+        let reach = if lake { 0.0 } else { half } + bank + cell;
+        let lo = poly.iter().fold(DVec2::splat(f64::MAX), |a, p| a.min(*p)) - DVec2::splat(reach);
+        let hi = poly.iter().fold(DVec2::splat(f64::MIN), |a, p| a.max(*p)) + DVec2::splat(reach);
+        self.history.begin(if lake { tr("Lake", "Озеро") } else { tr("River", "Река") });
+        let mut changes: Vec<(i64, i64, f32)> = Vec::new();
+        let mut wet = std::collections::BTreeSet::new();
+        for gy in (lo.y / cell).floor() as i64..=(hi.y / cell).ceil() as i64 {
+            for gx in (lo.x / cell).floor() as i64..=(hi.x / cell).ceil() as i64 {
+                let p = DVec2::new(gx as f64 * cell, gy as f64 * cell);
+                let sd = signed(p);
+                if sd > bank {
+                    continue;
+                }
+                let Some(h) = world_sample(doc, gx, gy, n) else { continue };
+                let h = h as f64;
+                // (ground is only taken down: a bed under the water, a bank sloping to the shore)
+                let target = if sd <= 0.0 {
+                    wet.insert(tile_of(p));
+                    level - depth * ease(-sd / edge)
+                } else if h > level {
+                    level + (h - level) * ease(sd / bank)
+                } else {
+                    h
+                };
+                if target < h {
+                    changes.push((gx, gy, target as f32));
+                }
+            }
+        }
+        for (gx, gy, h) in changes {
+            set_world_sample(doc, &mut self.history, gx, gy, n, h);
+        }
+        for k in wet {
+            if doc.tiles.get(&k).map(|t| t.water.is_none()).unwrap_or(false) {
+                self.history.touch_tile(doc, k);
+                if let Some(t) = doc.tiles.get_mut(&k) {
+                    t.water = Some([level as f32; 4]);
+                    t.touch_content();
+                }
+            }
+        }
+        self.history.commit();
+        self.toast(format!("{} {:.1} m", tr("Water level:", "Уровень воды:"), level));
+        true
+    }
+
     /// The ground from `a` to `b` made one even slope from the height at `a` to that at
     /// `b`, as wide as the brush (fully within 60 % of its radius, easing out to its rim);
     /// one undo step. Its gradient (%).
@@ -3929,6 +4111,32 @@ impl Editor {
                 }
             }
         }
+        // a lake's shore or a river's middle line clicked so far, on to the cursor
+        if self.tool == Tool::Terrain && self.terrain_mode == TerrainMode::Water && self.water_shape != WaterShape::Brush && !self.water_pts.is_empty() {
+            let blue = [0.35, 0.65, 1.0, 1.0];
+            let lift = DVec3::Z * 0.4;
+            let mut pts: Vec<DVec3> = self.water_pts.clone();
+            if let (Some(c), true) = (self.cursor, self.cursor_in_view) {
+                pts.push(c);
+            }
+            for p in pts.windows(2) {
+                line(&mut x.overlay, cam, p[0] + lift, p[1] + lift, w, blue);
+                if self.water_shape == WaterShape::River {
+                    let d = (p[1] - p[0]).truncate();
+                    let side = DVec2::new(-d.y, d.x).normalize_or_zero() * self.river_width as f64 * 0.5;
+                    let o = DVec3::new(side.x, side.y, 0.0);
+                    for s in [o, -o] {
+                        line(&mut x.overlay, cam, p[0] + s + lift, p[1] + s + lift, w * 0.5, [1.0, 1.0, 1.0, 0.6]);
+                    }
+                }
+            }
+            if self.water_shape == WaterShape::Lake && pts.len() >= 3 {
+                line(&mut x.overlay, cam, pts[pts.len() - 1] + lift, pts[0] + lift, w * 0.5, [0.35, 0.65, 1.0, 0.5]);
+            }
+            for p in &self.water_pts {
+                disc(&mut x.overlay, cam, *p + lift, dw * 3.0, blue);
+            }
+        }
         // a ramp being laid out: its middle and its edges, from its start to the cursor
         if let (Some(a), Some(c), true) = (self.ramp_start, self.cursor, self.tool == Tool::Terrain && self.terrain_mode == TerrainMode::Ramp) {
             let d = (c - a).truncate();
@@ -4121,7 +4329,9 @@ impl Editor {
         x.resized = self.scale_preview.clone();
         if let (Some(m), Some(view)) = (self.mesh.as_ref().filter(|m| m.editing), self.gizmo_view.as_ref()) {
             m.extras(view, &mut x);
-            x.resized.push((m.inst, DVec3::ZERO));
+            if !m.tex_preview || m.xray {
+                x.resized.push((m.inst, DVec3::ZERO));
+            }
             x.hover = None;
         }
         self.gizmo_extras(&mut x);
@@ -6333,6 +6543,10 @@ impl Editor {
             self.finish_plant_outline(assets);
             return;
         }
+        if self.tool == Tool::Terrain && !self.water_pts.is_empty() {
+            self.make_water();
+            return;
+        }
         if self.acts_as() == Tool::Roads && self.road_start.is_some() {
             self.plan_road(assets);
             self.road_click(assets, lib);
@@ -6860,7 +7074,7 @@ fn owners(g: i64, n: i64) -> Vec<i64> {
 }
 
 /// A terrain sample on the map-wide grid.
-fn world_sample(doc: &Document, gx: i64, gy: i64, n: i64) -> Option<f32> {
+pub(crate) fn world_sample(doc: &Document, gx: i64, gy: i64, n: i64) -> Option<f32> {
     for tx in owners(gx, n) {
         for ty in owners(gy, n) {
             if let Some(t) = doc.tiles.get(&(tx as i32, ty as i32)) {
@@ -6902,7 +7116,7 @@ fn level_ground(doc: &mut Document, hist: &mut History, centre: DVec2, heading: 
 }
 
 /// Set a sample of the map-wide grid in every tile that has it (edges are shared).
-fn set_world_sample(doc: &mut Document, hist: &mut History, gx: i64, gy: i64, n: i64, h: f32) {
+pub(crate) fn set_world_sample(doc: &mut Document, hist: &mut History, gx: i64, gy: i64, n: i64, h: f32) {
     let txs = owners(gx, n);
     let tys = owners(gy, n);
     for &tx in &txs {
@@ -8279,6 +8493,35 @@ mod tests {
         // (beyond the brush the ground is as it was)
         assert!(doc.ground(DVec2::new(130.0, 100.0)).abs() < 1e-3);
         assert_eq!(doc.tiles[&(0, 0)].water, Some([-0.3; 4]));
+    }
+
+    #[test]
+    fn a_lake_clicked_round_is_dug_with_sloping_banks_and_a_river_along_its_line() {
+        let mut ed = editor();
+        ed.set_tool(Tool::Terrain);
+        ed.terrain_mode = TerrainMode::Water;
+        ed.water_depth = 2.0;
+        ed.water_bank = 10.0;
+        ed.water_shape = WaterShape::Lake;
+        ed.water_pts = vec![DVec3::new(60.0, 60.0, 0.0), DVec3::new(140.0, 60.0, 0.0), DVec3::new(140.0, 140.0, 0.0), DVec3::new(60.0, 140.0, 0.0)];
+        assert!(ed.make_water());
+        let doc = ed.doc.as_ref().unwrap();
+        // the middle is the bed under the level (0 - 0.3), the shore is at the level, far out is as it was
+        assert!((doc.ground(DVec2::new(100.0, 100.0)) - -2.3).abs() < 0.2, "{}", doc.ground(DVec2::new(100.0, 100.0)));
+        assert!(doc.ground(DVec2::new(200.0, 100.0)).abs() < 1e-3);
+        assert_eq!(doc.tiles[&(0, 0)].water, Some([-0.3; 4]));
+        // a river: dug along its line, not beside it
+        ed.water_shape = WaterShape::River;
+        ed.river_width = 12.0;
+        ed.water_pts = vec![DVec3::new(20.0, 220.0, 0.0), DVec3::new(280.0, 220.0, 0.0)];
+        assert!(ed.make_water());
+        let doc = ed.doc.as_ref().unwrap();
+        assert!(doc.ground(DVec2::new(150.0, 220.0)) < -1.5);
+        assert!(doc.ground(DVec2::new(150.0, 260.0)).abs() < 1e-3);
+        // one undo takes the river away
+        let d = ed.doc.as_mut().unwrap();
+        ed.history.undo(d);
+        assert!(ed.doc.as_ref().unwrap().ground(DVec2::new(150.0, 220.0)).abs() < 1e-3);
     }
 
     #[test]

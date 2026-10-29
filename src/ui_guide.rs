@@ -93,9 +93,15 @@ impl Guide {
                 }
             }
         }
+        let st = doc.transit.file(crate::transit::File::Stations);
+        let stations: Vec<i64> = st.of("station").filter_map(|i| st.blocks[i].get("object").and_then(|o| o.trim().parse().ok())).collect();
         for (k, t) in &doc.tiles {
             for o in &t.tile.objects {
                 if !lib.find(&o.file).map(|a| a.is_bus_stop).unwrap_or(o.flag == 7) {
+                    continue;
+                }
+                // (a station of a Modern map's rails is no bus stop to put at a kerb)
+                if o.file.to_lowercase().contains("om_station_stop") || stations.contains(&o.id) {
                     continue;
                 }
                 s.stops += 1;

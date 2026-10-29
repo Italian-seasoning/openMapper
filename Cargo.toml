@@ -21,6 +21,11 @@ omsi-texture = { git = "https://github.com/openOMSI-org/openOMSI", rev = "c4738e
 omsi-timetable = { git = "https://github.com/openOMSI-org/openOMSI", rev = "c4738ed6f43f11b4c06ead299af7ac74280d5c5b" }
 omsi-content = { git = "https://github.com/openOMSI-org/openOMSI", rev = "c4738ed6f43f11b4c06ead299af7ac74280d5c5b" }
 omsi-script = { git = "https://github.com/openOMSI-org/openOMSI", rev = "c4738ed6f43f11b4c06ead299af7ac74280d5c5b" }
+# the transport folder of Modern maps, read and checked by the game's own reader (newer than the
+# crates above: transport modes came with openOMSI 0.3.42)
+omsi-transit = { git = "https://github.com/openOMSI-org/openOMSI", rev = "906e6e638f786ed5efd8a6d2a5ad38ed0ba7a7f0" }
+omsi-trolley = { git = "https://github.com/openOMSI-org/openOMSI", rev = "906e6e638f786ed5efd8a6d2a5ad38ed0ba7a7f0" }
+omsi-cfg-transit = { package = "omsi-cfg", git = "https://github.com/openOMSI-org/openOMSI", rev = "906e6e638f786ed5efd8a6d2a5ad38ed0ba7a7f0" }
 
 wgpu = { version = "29", default-features = false, features = ["std", "parking_lot", "metal", "vulkan", "dx12", "gles", "wgsl"] }
 winit = "0.30"
@@ -44,7 +49,7 @@ serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 sha2 = "0.11"
 zip = { version = "9.0", default-features = false, features = ["deflate"] }
-image = { version = "0.25", default-features = false, features = ["png", "jpeg", "tiff", "bmp", "webp"] }
+image = { version = "0.25", default-features = false, features = ["png", "jpeg", "tiff", "bmp", "webp", "tga"] }
 # model import: glTF / GLB, FBX (ufbx: a small C library, built with the crate)
 gltf = "1.4"
 ufbx = "0.11"

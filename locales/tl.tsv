@@ -2438,3 +2438,350 @@ Could not copy the photos	Hindi makopya ang mga photo
 Copying the photos	Kinokopya ang mga photo
 Hold only the photos of the tiles near the camera	Itago lamang ang mga photo ng tile malapit sa camera
 The others keep their photo in the map's folder, and are put up again when you go back to them.	Ang iba ay itinatago ang photo sa folder ng mapa at bumabalik kapag bumalik ka roon.
+A tram loop with two stations and its wire: save, then drive it in openOMSI with a tram of your own.	Isang tram loop na may dalawang istasyon at ang wire nito: i-save, saka imaneho ito sa openOMSI gamit ang sarili mong tram.
+Transit kit made, files:	Nagawa ang transit kit, mga file:
+The transit kit could not be made	Hindi magawa ang transit kit
+Transit network problems	Mga problema sa transit network
+Stations without their mode's lanes	Mga istasyong walang lane ng mode nila
+Stations without their stop	Mga istasyong walang hintuan
+openOMSI's own reader finds this in the map's transport folder (stations, routes, wires, switches, depots, signals): a service it names is skipped, a section or a block left out. Open Map > Transit network to change it.	Nakikita ito ng sariling reader ng openOMSI sa transport folder ng mapa (mga istasyon, ruta, wire, switch, depot, signal): nilalaktawan ang serbisyong binabanggit nito, hindi isinasama ang section o block. Buksan ang Mapa > Transit network para baguhin ito.
+openOMSI routes a service over the lanes of its mode within 25 m of each station (rails for trams, metro and trains, streets for buses and trolleybuses). This station has none of its modes' near, so its services cannot run. Move the stop next to the track or road, or lay one there.	Pinapadaan ng openOMSI ang isang serbisyo sa mga lane ng mode nito sa loob ng 25 m mula sa bawat istasyon (riles para sa tram, metro at tren, kalye para sa bus at trolleybus). Walang lane ng alinman sa mga mode nito malapit sa istasyong ito, kaya hindi makakatakbo ang mga serbisyo nito. Ilipat ang hintuan sa tabi ng track o kalsada, o maglatag ng isa roon.
+A station is found by the game among the map's stops: by its stop object, else by its name. This one's object is no stop on the map and no stop has its name, so the services through it are skipped. Pick its stop again in Map > Transit network, Stations.	Hinahanap ng laro ang istasyon sa mga hintuan ng mapa: sa stop object nito, o kung wala, sa pangalan nito. Hindi hintuan sa mapa ang object nito at walang hintuang may pangalan nito, kaya nilalaktawan ang mga serbisyong dumadaan dito. Piliin muli ang hintuan nito sa Mapa > Transit network, Mga istasyon.
+station	istasyon
+Transit network…	Transit network…
+The transport folder stays: openOMSI still reads its stations, routes and wires.	Mananatili ang transport folder: binabasa pa rin ng openOMSI ang mga istasyon, ruta at wire nito.
+Remove it too	Alisin din ito
+Start with a tram line: a loop of track under its wire, two stations and a route	Magsimula sa isang linya ng tram: loop ng track sa ilalim ng wire nito, dalawang istasyon at isang ruta
+Classic	Klasiko
+Runs in OMSI 2 and in openOMSI. Buses, and trams and trains as OMSI 2 has them.	Tumatakbo sa OMSI 2 at sa openOMSI. Mga bus, at mga tram at tren gaya ng nasa OMSI 2.
+Modern	Moderno
+openOMSI only. Real transit: stations, routes, overhead wire, third rail, depots and signal blocks.	openOMSI lang. Totoong transit: mga istasyon, ruta, overhead wire, third rail, depot at signal block.
+Made for (one or more):	Ginawa para sa (isa o higit pa):
+Choose at least one	Pumili ng kahit isa
+OMSI 2 cannot run a Modern map's routes, wires or blocks, and openOMSI runs only vehicles of its modes on it. openMapper's transit kit (tracks, wires, platforms, masts) is made in the content folder.	Hindi kayang patakbuhin ng OMSI 2 ang mga ruta, wire o block ng Modernong mapa, at mga sasakyan lang ng mga mode nito ang pinapatakbo ng openOMSI dito. Ginagawa ang transit kit ng openMapper (mga track, wire, platform, poste) sa content folder.
+Overview	Overview
+Stations	Mga istasyon
+Depots	Mga depot
+Power	Kuryente
+Switches and signals	Mga switch at signal
+Set it (else the game's default)	Itakda (kung hindi, default ng laro)
+(not set)	(hindi nakatakda)
+Take it out	Alisin
+Transit network	Transit network
+This is a Classic map.	Klasikong mapa ito.
+Stations, routes without tours, the overhead wire, the third rail, depots and signal blocks are openOMSI's (0.3.42 and later): make the map Modern in Map settings to give it a transit network. OMSI 2 cannot run them.	Ang mga istasyon, rutang walang tour, overhead wire, third rail, depot at signal block ay sa openOMSI (0.3.42 at mas bago): gawing Moderno ang mapa sa Mga setting ng mapa para bigyan ito ng transit network. Hindi kayang patakbuhin ng OMSI 2 ang mga ito.
+No stop there: click a stop object (a bus stop, or the kit's station stop)	Walang hintuan diyan: i-click ang isang stop object (bus stop, o ang station stop ng kit)
+Now click where the block ends	Ngayon i-click kung saan nagtatapos ang block
+Click the signal object itself	I-click ang mismong signal object
+Then click in the view	Saka i-click sa view
+Modern map for	Modernong mapa para sa
+openOMSI runs only vehicles of these modes here; OMSI 2 cannot run the network. The modes are changed in Map settings.	Mga sasakyan lang ng mga mode na ito ang pinapatakbo ng openOMSI dito; hindi kayang patakbuhin ng OMSI 2 ang network. Binabago ang mga mode sa Mga setting ng mapa.
+Services	Mga serbisyo
+Track rules	Mga patakaran ng track
+Overhead wire spans	Mga span ng overhead wire
+Third rail spans	Mga span ng third rail
+Trolleybus wire spans	Mga span ng trolleybus wire
+Switches	Mga switch
+Signals and blocks	Mga signal at block
+Problems	Mga problema
+None: openOMSI reads the network as it is.	Wala: binabasa ng openOMSI ang network nang ganito.
+error	error
+warning	babala
+Found by openOMSI's own reader of the transport folder, the texts as it writes them in its log.	Natagpuan ng sariling reader ng openOMSI ng transport folder, ang mga teksto gaya ng pagkakasulat nito sa log nito.
+openMapper's transit kit	Transit kit ng openMapper
+Tracks, platforms, wires and objects made by openMapper for Modern maps (OMSI 2 ships no metro, third rail or trolleybus wire). They are in the catalogue under openMapper; click one to place it.	Mga track, platform, wire at object na ginawa ng openMapper para sa mga Modernong mapa (walang metro, third rail o trolleybus wire ang OMSI 2). Nasa catalogue sila sa ilalim ng openMapper; i-click ang isa para ilagay ito.
+Make the kit	Gawin ang kit
+A station is a stop object of the map (a bus stop, or the kit's station stop beside a track) with its platforms. openOMSI routes a service over the lanes of its mode within 25 m of each station.	Ang istasyon ay isang stop object ng mapa (bus stop, o ang station stop ng kit sa tabi ng track) kasama ang mga platform nito. Pinapadaan ng openOMSI ang isang serbisyo sa mga lane ng mode nito sa loob ng 25 m mula sa bawat istasyon.
+A station for every stop of the map	Istasyon para sa bawat hintuan ng mapa
+Stops not yet a station become one, named as the stop, its modes from the tracks and roads beside it	Nagiging istasyon ang mga hintuang hindi pa istasyon, kapangalan ng hintuan, at ang mga mode nila ay mula sa mga track at kalsada sa tabi nila
+New station	Bagong istasyon
+Stations added:	Mga istasyong naidagdag:
+Choose a station	Pumili ng istasyon
+Id	ID
+Modes	Mga mode
+Stop object	Stop object
+Pick	Pumili
+Place	Lugar
+Change to	Lipat sa
+Platforms	Mga platform
+Side	Gilid
+island	island
+both	pareho
+platform screen doors	platform screen doors
+Delete the station	Burahin ang istasyon
+A route is segments from station to station (the stops between them in order) and services over them: a branch, a short working or an express is another segment or service. openOMSI makes the timetable's tours from them and finds the way over the tracks itself.	Ang ruta ay mga segment mula istasyon hanggang istasyon (ang mga hintuan sa pagitan nila nang sunod-sunod) at mga serbisyo sa mga ito: ang sanga, maikling biyahe o express ay isa pang segment o serbisyo. Ginagawa ng openOMSI mula sa mga ito ang mga tour ng timetable at ito mismo ang naghahanap ng daan sa mga track.
+Add two stations or more first (Stations)	Magdagdag muna ng dalawa o higit pang istasyon (Mga istasyon)
+New route	Bagong ruta
+Segment	Segment
+Stops between	Mga hintuan sa pagitan
+Passed without stopping	Dinadaanan nang hindi humihinto
+Standing at a stop	Tagal ng paghinto sa hintuan
+Speed	Bilis
+Way back	Pabalik
+over the same segment	sa parehong segment
+another segment	ibang segment
+Service	Serbisyo
+Segments in order	Mga segment nang sunod-sunod
+From – to	Mula – hanggang
+Days	Mga araw
+every day	araw-araw
+weekends	tuwing weekend
+Saturdays	tuwing Sabado
+Sundays	tuwing Linggo
+turns back	bumabalik
+goes round a loop	umiikot sa loop
+goes to depot	pumupunta sa depot
+Cars in a train	Mga bagon sa tren
+Every 10 minutes from 05:30 to 23:30 over all the route's segments	Bawat 10 minuto mula 05:30 hanggang 23:30 sa lahat ng segment ng ruta
+Departures of their own	Sariling mga departure
+For a service without a headway: its departures, as 06:00 06:12 06:30.	Para sa serbisyong walang headway: ang mga departure nito, gaya ng 06:00 06:12 06:30.
+Departures	Mga departure
+A service's depot sends out its vehicles: its AI group (Traffic and AI) supplies them, and the first departure of the day leaves by its gate along the rails to the first station.	Ang depot ng serbisyo ang nagpapalabas ng mga sasakyan nito: ang AI group nito (Trapiko at AI) ang nagbibigay sa mga ito, at ang unang departure ng araw ay lumalabas sa gate nito sa kahabaan ng riles papunta sa unang istasyon.
+AI group	AI group
+Capacity	Kapasidad
+Its stop	Hintuan nito
+Gates	Mga gate
+Add a gate	Magdagdag ng gate
+has a turning loop	may turning loop
+Delete the depot	Burahin ang depot
+A gate needs a rail within 25 m and a way to the first station, or the trip starts at its station (the game's log says so).	Kailangan ng gate ng riles sa loob ng 25 m at daan papunta sa unang istasyon, kung hindi ay magsisimula ang biyahe sa istasyon nito (sinasabi ito ng log ng laro).
+Which tracks serve which mode and how they are powered: a rule matches a track type (a file pattern, * for any letters), a tile or one piece; later rules win. Without a rule openOMSI guesses from the type's name.	Aling mga track ang para sa aling mode at paano sila pinapagana ng kuryente: tumutugma ang patakaran sa isang track type (file pattern, * para sa anumang letra), isang tile o isang piraso; nananaig ang mga huling patakaran. Kung walang patakaran, hinuhulaan ng openOMSI mula sa pangalan ng type.
+A rule for the selected track's type	Patakaran para sa type ng napiling track
+Empty rule	Walang lamang patakaran
+(select a track in the view to make a rule for its type)	(pumili ng track sa view para gumawa ng patakaran para sa type nito)
+Track type	Track type
+Only on tile / piece	Sa tile / piraso lang
+id	id
+in the street	sa kalye
+railway	sariling daanan
+overhead wire	overhead wire
+third rail	third rail
+diesel	diesel
+Tunnel	Tunnel
+yes	oo
+no	hindi
+Gauge	Gauge
+A map for buses alone has no line to power.	Walang linyang papaganahin ng kuryente sa mapang para sa bus lang.
+Third rail	Third rail
+Trolleybus wire	Trolleybus wire
+Where the wire is, the player's tram or electric train needs a live section of it over its pantograph (dead sections and breaks stop the drive). Without spans openOMSI takes the current for granted. Spans are laid along the selected tracks.	Kung saan may wire, kailangan ng tram o electric train ng player ng live na section nito sa ibabaw ng pantograph (pinapahinto ng mga patay na section at putol ang pagmamaneho). Kung walang span, ipinapalagay ng openOMSI na laging may kuryente. Inilalatag ang mga span sa kahabaan ng mga napiling track.
+The player's metro train needs a live section of third rail beside its shoe. The kit's metro tracks carry the rail itself; spans say where it is fed. Spans are laid along the selected tracks.	Kailangan ng metro train ng player ng live na section ng third rail sa tabi ng shoe nito. Dala na ng mga metro track ng kit ang rail mismo; sinasabi ng mga span kung saan ito pinapakain ng kuryente. Inilalatag ang mga span sa kahabaan ng mga napiling track.
+openOMSI's trolleybuses run on this wire (trolley.txt beside global.cfg): a pole is powered only on a pair fed by a substation. Spans are laid over each way's lane of the selected roads, with the wire splines that show them.	Tumatakbo ang mga trolleybus ng openOMSI sa wire na ito (trolley.txt sa tabi ng global.cfg): may kuryente lang ang pole sa pares na pinapakain ng substation. Inilalatag ang mga span sa ibabaw ng lane ng bawat direksyon ng mga napiling kalsada, kasama ang mga wire spline na nagpapakita sa kanila.
+The line	Ang linya
+Voltage	Boltahe
+Current	Uri ng kuryente
+direct	direct
+alternating	alternating
+Wire height	Taas ng wire
+Wire spacing	Pagitan ng mga wire
+Sections (each fed by a substation)	Mga section (bawat isa ay pinapakain ng substation)
+name	pangalan
+live	live
+feeder Ω	feeder Ω
+Section	Section
+Spans	Mga span
+one pair over the middle	isang pares sa gitna
+a pair over each 3.0 m lane	isang pares sa ibabaw ng bawat 3.0 m na lane
+a pair over each 3.5 m lane	isang pares sa ibabaw ng bawat 3.5 m na lane
+lay the wire splines too	ilatag din ang mga wire spline
+Wire the selected roads	Lagyan ng wire ang mga napiling kalsada
+Electrify the selected tracks	I-electrify ang mga napiling track
+Take their spans off	Alisin ang mga span nila
+(select roads in the view)	(pumili ng mga kalsada sa view)
+(select tracks in the view)	(pumili ng mga track sa view)
+Their spans are taken off	Naalis ang mga span nila
+Spans laid:	Mga span na nailatag:
+Gaps	Mga gap
+Insulators	Mga insulator
+Gap	Gap
+Insulator	Insulator
+Frogs (wire switches)	Mga frog (wire switch)
+Where three spans meet: the contact plate before it sets it by the current the bus draws (power) or by its indicator.	Kung saan nagtatagpo ang tatlong span: itinatakda ito ng contact plate bago nito ayon sa kuryenteng hinihila ng bus (power) o ayon sa indicator nito.
+by current	ayon sa kuryente
+by indicator	ayon sa indicator
+Frog	Frog
+A switch listed here holds while a train stands on it, goes back to its rest position, and can be thrown by hand only or locked by a signal. Switches not listed work as before.	Hindi gumagalaw ang switch na nakalista rito habang may tren na nakatigil dito, bumabalik ito sa rest position nito, at maaaring ilipat nang mano-mano lang o i-lock ng signal. Gumagana gaya ng dati ang mga switch na hindi nakalista.
+The selected switch objects	Ang mga napiling switch object
+simple	simple
+crossover	crossover
+double slip	double slip
+diamond	diamond
+scissors	scissors
+rests straight	rest: tuwid
+rests diverging	rest: liko
+thrown by the route	inililipat ng ruta
+by hand only	mano-mano lang
+interlocked	interlocked
+diverging	liko
+locked by	naka-lock ng
+Blocks	Mga block
+A stretch of track that holds one AI train at a time, given by where it begins and ends on the rails; its signals show whether it is free. Blocks need the timetable's trains (the AI) to hold.	Isang bahagi ng track na may isang AI train lang sa bawat pagkakataon, itinatakda ng simula at dulo nito sa riles; ipinapakita ng mga signal nito kung bakante ito. Kailangan ng mga block ang mga tren ng timetable (ang AI) para gumana.
+Ends	Mga dulo
+Block	Block
+Click where the block begins	I-click kung saan nagsisimula ang block
+Signals	Mga signal
+A signal of the map tied to a block shows stop while the block is in use and go while it is free.	Ang signal ng mapa na nakakabit sa isang block ay nagpapakita ng stop habang ginagamit ang block at go habang bakante ito.
+main	pangunahin
+distant	distant
+block	block
+shunting	shunting
+speed	bilis
+tram	tram
+Tram street track	Tram track sa kalye
+Tram track on grass	Tram track sa damuhan
+Railway track	Riles ng tren
+Metro track	Metro track
+Metro tunnel	Metro tunnel
+Tram platform	Platform ng tram
+Metro side platform	Side platform ng metro
+Metro island platform	Island platform ng metro
+Railway side platform	Side platform ng tren
+Railway island platform	Island platform ng tren
+Trolleybus wires (one pair)	Trolleybus wire (isang pares)
+Trolleybus wires, 3.0 m lanes	Trolleybus wire, 3.0 m na lane
+Trolleybus wires, 3.5 m lanes	Trolleybus wire, 3.5 m na lane
+Catenary mast (arm right)	Catenary mast (braso pakanan)
+Catenary mast (arm left)	Catenary mast (braso pakaliwa)
+Trolleybus pole (arm right)	Trolleybus pole (braso pakanan)
+Trolleybus pole (arm left)	Trolleybus pole (braso pakaliwa)
+Metro sign	Karatula ng metro
+Platform shelter	Silungan sa platform
+Buffer stop	Buffer stop
+Station stop	Station stop
+Bus	Bus
+Tram	Tram
+Railway	Tren
+Metro	Metro
+Trolleybus	Trolleybus
+buses on the streets, stops at the kerb	mga bus sa kalye, hintuan sa kerb
+street track under a contact wire, low platforms	track sa kalye sa ilalim ng contact wire, mababang platform
+mainline track, stations with platforms, signals and blocks	mainline track, mga istasyong may platform, signal at block
+track with a third rail, tunnels, high platforms	track na may third rail, tunnel, matataas na platform
+buses under a pair of wires, frogs at junctions	mga bus sa ilalim ng pares ng wire, frog sa mga junction
+Depot Square	Plaza ng Depot
+Park Gate	Tarangkahan ng Parke
+Tram start	Simula ng tram
+Loop line	Loop line
+A trolleybus junction under its wires with three stations: save, then drive it in openOMSI with a trolleybus of your own.	Isang trolleybus junction sa ilalim ng mga wire nito na may tatlong istasyon: i-save, saka imaneho ito sa openOMSI gamit ang sarili mong trolleybus.
+station stops:	mga station stop:
+stations:	mga istasyon:
+routes:	mga ruta:
+Vehicles of other modes	Mga sasakyan ng ibang mode
+Services without a vehicle of their mode	Mga serbisyong walang sasakyan ng mode nila
+openOMSI runs only vehicles of a Modern map's modes on it. This vehicle of the AI lists is made for another mode (its file says so, or it is a depot's vehicle and its shape says so), so the game leaves it out. Change it in Map > Traffic and AI, or add its mode to the map in Map settings.	Mga sasakyan lang ng mga mode ng Modernong mapa ang pinapatakbo ng openOMSI dito. Ginawa ang sasakyang ito ng AI list para sa ibang mode (sinasabi ito ng file nito, o sasakyan ito ng depot at ipinapakita ito ng hugis nito), kaya hindi ito isasama ng laro. Palitan ito sa Mapa > Trapiko at AI, o idagdag ang mode nito sa mapa sa Mga setting ng mapa.
+A service of the transit network takes its vehicles from its depot's AI group (or names one vehicle file). That group has no vehicle of the route's mode, so nothing runs it. Give the depot an AI group with such vehicles (Map > Traffic and AI), or choose another depot.	Kinukuha ng isang serbisyo ng transit network ang mga sasakyan nito mula sa AI group ng depot nito (o binabanggit nito ang isang vehicle file). Walang sasakyan ng mode ng ruta ang group na iyon, kaya walang tatakbo rito. Bigyan ang depot ng AI group na may ganoong mga sasakyan (Trapiko at AI), o pumili ng ibang depot.
+group	group
+route	ruta
+its depot names no AI group	walang binabanggit na AI group ang depot nito
+no vehicle of the mode in	walang sasakyan ng mode na ito sa
+Stations from OpenStreetMap	Mga istasyon mula sa OpenStreetMap
+Metro tracks	Mga metro track
+in tunnels too: build them with the kit's metro tunnel and cut the ground away (a Modern map)	pati sa mga tunnel: itayo ang mga ito gamit ang metro tunnel ng kit at tabasin ang lupa (Modernong mapa)
+Start with a trolleybus line: a junction under its wires with frogs, three stations and two routes	Magsimula sa isang linya ng trolleybus: junction sa ilalim ng mga wire nito na may mga frog, tatlong istasyon at dalawang ruta
+Stations (tram, metro, railway)	Mga istasyon (tram, metro, tren)
+Each tram stop and station of the map's rail modes put with the kit's station stop beside the nearest track (within 25 m); every stop of the map then becomes a station of its transport folder	Bawat hintuan ng tram at istasyon ng mga rail mode ng mapa ay inilalagay gamit ang station stop ng kit sa tabi ng pinakamalapit na track (sa loob ng 25 m); saka nagiging istasyon ng transport folder nito ang bawat hintuan ng mapa
+Routes (tram, trolleybus, metro, railway)	Mga ruta (tram, trolleybus, metro, tren)
+Each route of the map's modes through two or more of its stations a segment of its line, the line's service as often as OpenStreetMap says (else every 10 minutes), from 05:30 to 23:30; openOMSI finds the way over the tracks	Bawat ruta ng mga mode ng mapa na dumadaan sa dalawa o higit pa sa mga istasyon nito ay segment ng linya nito, at ang serbisyo ng linya ay kasindalas ng sinasabi ng OpenStreetMap (kung wala, bawat 10 minuto), mula 05:30 hanggang 23:30; ang openOMSI ang naghahanap ng daan sa mga track
+no vehicle of it is installed	walang naka-install na sasakyan nito
+Its vehicles:	Mga sasakyan nito:
+(select roads in the view, and the junctions between them)	(pumili ng mga kalsada sa view, at ng mga junction sa pagitan nila)
+(select tracks in the view, and their switches)	(pumili ng mga track sa view, at ng mga switch nila)
+A pair of wires over each way's kerb lane; through a selected junction only the lanes that join wired roads. Frogs are put where three wires meet.	Isang pares ng wire sa ibabaw ng lane sa gilid ng bawat direksyon; sa napiling junction, ang mga lane lang na nagdudugtong sa mga kalsadang may wire. Inilalagay ang mga frog kung saan nagtatagpo ang tatlong wire.
+The map's files are still being read	Binabasa pa ang mga file ng mapa
+West Gate	Kanlurang Tarangkahan
+East Market	Silangang Palengke
+North Park	Hilagang Parke
+Market line	Linya ng Palengke
+Park line	Linya ng Parke
+Trolleybus start	Simula ng trolleybus
+frogs:	mga frog:
+places where more than three wires meet get no frog: wire fewer turns there	lugar na nagtatagpuan ng higit sa tatlong wire ang walang frog: maglagay ng wire sa mas kaunting liko roon
+Track ends that do not meet	Mga dulo ng track na hindi nagtatagpo
+Two tracks run on into one another but their ends lie apart: the game joins rails only where their ends lie within 1.5 m, so no train or tram gets across (a route through there finds no way). "Fix" moves one end onto the other, arriving in line with it, and joins them.	Magkasunod ang dalawang track pero magkalayo ang mga dulo nila: pinagdudugtong lang ng laro ang mga riles kapag nasa loob ng 1.5 m ang mga dulo, kaya walang tren o tram na makakatawid (walang madadaanan ang rutang dumaraan doon). Inililipat ng "Ayusin" ang isang dulo papunta sa isa pa, nakahanay rito, at pinagdudugtong sila.
+tracks	mga track
+Select the roads or tracks to build into the ground	Piliin ang mga kalsada o track na ibababa sa lupa
+Cutting	Cutting
+Cut and cover tunnel	Cut-and-cover na tunnel
+Nothing to build into the ground	Walang maibababa sa lupa
+Build into the ground	Ibaba sa lupa
+The chain of the selected pieces lowered, with ramps at its ends. Cut: an open cutting with sloped banks. Cover: open ramps down to the portals and a tunnel under the ground between them (a shell of walls and roof, a portal at each mouth).	Ibinababa ang kadena ng mga napiling piraso, may ramp sa mga dulo nito. Cut: bukas na cutting na may pahilig na gilid. Cover: bukas na ramp pababa sa mga portal at tunnel sa ilalim ng lupa sa pagitan nila (shell ng mga pader at bubong, may portal sa bawat bunganga).
+Cover (tunnel)	Cover (tunnel)
+Ramp gradient	Gradient ng ramp
+Banks	Mga dalisdis
+ m out per metre up	 m palabas bawat metrong taas
+Ramps	Mga ramp
+at the start	sa simula
+at the end	sa dulo
+A tunnel needs a depth of 6 m or more: shallower it stays an open cutting	Kailangan ng tunnel ang lalim na 6 m o higit pa: kapag mas mababaw, nananatili itong bukas na cutting
+Each ramp is about	Ang bawat ramp ay mga
+Pieces lowered:	Mga pirasong naibaba:
+tunnel pieces:	mga piraso ng tunnel:
+portals:	mga portal:
+their overhead taken off: wire them again (Transit network, Power)	tinanggal ang overhead wire nila: lagyan ulit ng wire (Transit network, Kuryente)
+Platforms at the stations	Mga platform sa mga istasyon
+The kit's platform of each rail station's mode beside its track, on the side its stop stands, as long as its platform says	Ang platform ng kit para sa mode ng bawat istasyon ng riles sa tabi ng track nito, sa gilid kung saan nakatayo ang hintuan nito, kasinghaba ng sinasabi ng platform nito
+Platforms laid:	Mga platform na nailatag:
+lay the wires, masts, poles and frogs too	ilatag din ang mga wire, mast, poste at frog
+Catenary mast	Catenary mast
+Trolleybus pole	Poste ng trolleybus wire
+Trolleybus frog	Trolleybus frog
+Section insulator	Section insulator
+Lake	Lawa
+River	Ilog
+Water level:	Antas ng tubig:
+Click the shore round and close it on the first point (Enter closes too, right-click takes a point back). The ground inside is dug to a bed and the banks slope to the shore.	I-click ang paligid ng baybayin at isara sa unang punto (nagsasara rin ang Enter, ang right-click ay nag-aalis ng isang punto). Ang lupa sa loob ay hinuhukay bilang sahig at ang mga pampang ay dumudulas patungo sa baybayin.
+Click the river's middle line from its source on and finish on the last point (or Enter). Water in OMSI lies at one level for a tile: a river runs level.	I-click ang gitnang linya ng ilog mula sa pinagmulan nito at tapusin sa huling punto (o Enter). Ang tubig sa OMSI ay nasa iisang antas kada tile: ang ilog ay patag ang daloy.
+Add as a ground texture	Idagdag bilang texture ng lupa
+A junction was not made: its roads are too short or too close together. Lengthen them or move the junctions apart.	Hindi nagawa ang isang junction: masyadong maikli o masyadong magkalapit ang mga kalsada nito. Habaan ang mga ito o ilayo ang mga junction sa isa't isa.
+Display	Display
+X-ray (Alt+Z): see and pick through the mesh	X-ray (Alt+Z): tumingin at pumili sa kabila ng mesh
+Show the textures	Ipakita ang mga texture
+The object's own pictures under the editing shading	Ang sariling mga larawan ng bagay sa ilalim ng shading ng pag-edit
+Shading opacity	Opacity ng shading
+0 %: the textures as they are; 100 %: the plain shading. The picture is renewed a moment after each change.	0 %: ang mga texture kung ano sila; 100 %: ang payak na shading. Ina-update ang larawan sandali pagkatapos ng bawat pagbabago.
+Give this material to the selected faces	Ibigay ang material na ito sa mga napiling face
+Select faces to give them a material.	Pumili ng mga face para bigyan sila ng material.
+Road markings	Mga marka sa kalsada
+Paint my own markings	Magpinta ng sarili kong marka
+The maker paints the lines onto the roadway texture: pick a plain asphalt texture, or its own lines show too	Ipinipinta ng maker ang mga linya sa texture ng daanan: pumili ng simpleng aspalto, kung hindi ay lalabas din ang sarili nitong mga linya
+Standard for these lanes	Standard para sa mga lane na ito
+Add a line	Magdagdag ng linya
+Across the roadway from its middle (right of the road's way is plus)	Sa kabila ng daanan mula sa gitna nito (ang kanan ng direksyon ng kalsada ay plus)
+Solid	Tuloy-tuloy
+Dashed	Putol-putol
+Double solid	Dobleng tuloy-tuloy
+Solid and dashed	Tuloy-tuloy at putol-putol
+The line's width	Lapad ng linya
+Dash length	Haba ng putol
+Gap between dashes	Pagitan ng mga putol
+Draw road markings	Gumuhit ng marka sa kalsada
+Pen	Brotsa
+Straight line	Tuwid na linya
+Dashed line	Putol-putol na linya
+Rectangle	Parihaba
+Arrow	Palaso
+Eraser	Pambura
+Pointing back	Nakaturo pabalik
+Snap to 5 cm	Mag-snap sa 5 cm
+Drag to draw. The picture is the roadway as the texture lies on it, up is the way of the road; it repeats along, so what leaves at the top comes in at the bottom.	I-drag para gumuhit. Ang larawan ay ang daanan ng sasakyan gaya ng pagkakalatag ng texture dito, ang itaas ay ang direksyon ng kalsada; umuulit ito pahaba, kaya ang lumalabas sa itaas ay pumapasok sa ibaba.
+Pick a roadway texture first	Pumili muna ng texture ng daanan
+Draw by hand…	Gumuhit nang mano-mano…
+A drawing board with a pen, lines, arrows and an eraser: what you draw goes onto the roadway	Isang drawing board na may brotsa, mga linya, palaso at pambura: ang iginuhit mo ay mapupunta sa daanan
+a drawing is on the road	may drowing sa kalsada
+Painted line	Pinturang linya
+Stop line	Linya ng paghinto
+A wide solid line across a lane: draw it across the road	Malapad na tuloy-tuloy na linya sa kabila ng lane: iguhit ito nang pahalang sa kalsada
+Crossing	Tawiran
+Zebra bars: draw it across the road, the bars lie along it	Zebra: iguhit nang pahalang sa kalsada, ang mga guhit ay nakahanay sa kalsada
+Centre line	Gitnang linya
+A double yellow line	Dobleng dilaw na linya
+Lane line	Linya ng lane
+A white dashed line	Puting putol-putol na linya
+Double	Doble
+Crossing (bars)	Tawiran (mga guhit)
+A line's width (each line of a double one); a crossing's reach along the road	Lapad ng linya (bawat isa sa doble); lalim ng tawiran sa kahabaan ng kalsada
+Bar	Guhit
+Dash	Putol
+Draw with this line	Gumuhit gamit ang linyang ito
+It is made as a spline type of the content folder (Splines\\openMapper\\marks) and chosen: draw it with Line, Arc or Curve, over the asphalt	Ginagawa bilang uri ng spline sa folder ng nilalaman (Splines\\openMapper\\marks) at pinipili: iguhit gamit ang Linya, Arko o Kurba sa ibabaw ng aspalto
+Painted line made: draw with it in the junction editor	Nagawa ang pinturang linya: gumuhit gamit ito sa editor ng sangandaan

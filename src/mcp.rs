@@ -485,6 +485,7 @@ mod tests {
             traffic: Default::default(),
             descriptions: Default::default(),
             groups: Vec::new(),
+            transit: Default::default(),
         };
         doc.add_tile((0, 0));
         let mut s = Server { roots, cfg: PathBuf::new(), doc, lib: Library::default(), allow_edit: false };

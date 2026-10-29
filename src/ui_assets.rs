@@ -20,6 +20,38 @@ enum Show {
     All,
     Objects,
     Splines,
+    Textures,
+}
+
+/// What the panel works out from the library, the search and the folder, kept until one of
+/// them changes (the library is thousands of assets: not to be sorted again every frame).
+struct Cache {
+    key: u64,
+    /// Per kind: its folders, each with its asset count and its subfolders.
+    tree: Vec<(Kind, Vec<(String, usize, Vec<(String, usize)>)>)>,
+    /// The folders of the textures, the same way.
+    tex_tree: Vec<(String, usize, Vec<(String, usize)>)>,
+    /// The assets shown (indices into the library), or the textures shown (into the files).
+    items: Vec<usize>,
+}
+
+/// A folder path as (its top folder, the rest).
+fn split_folder(d: &str) -> (String, String) {
+    d.split_once('\\').map(|(t, r)| (t.to_string(), r.to_string())).unwrap_or((d.to_string(), String::new()))
+}
+
+fn tree_of<'a>(dirs: impl Iterator<Item = &'a str>) -> Vec<(String, usize, Vec<(String, usize)>)> {
+    let mut tree: BTreeMap<String, BTreeMap<String, usize>> = BTreeMap::new();
+    for d in dirs {
+        let (top, rest) = split_folder(d);
+        *tree.entry(top).or_default().entry(rest).or_default() += 1;
+    }
+    tree.into_iter().map(|(t, subs)| (t, subs.values().sum(), subs.into_iter().filter(|(s, _)| !s.is_empty()).collect())).collect()
+}
+
+/// The folder a texture file lies in.
+fn tex_dir(rel: &str) -> &str {
+    rel.rsplit_once('\\').map(|r| r.0).unwrap_or("")
 }
 
 pub struct AssetBrowser {
@@ -34,11 +66,15 @@ pub struct AssetBrowser {
     /// A picture being dragged towards the view.
     pub dragging: Option<String>,
     confirm_delete: Option<String>,
+    /// The texture folder shown (None: all) and the texture picked.
+    tex_folder: Option<String>,
+    tex_picked: Option<String>,
+    cache: Option<Cache>,
 }
 
 impl Default for AssetBrowser {
     fn default() -> Self {
-        AssetBrowser { open: false, search: String::new(), show: Show::All, folder: None, size: 88.0, picked: None, dragging: None, confirm_delete: None }
+        AssetBrowser { open: false, search: String::new(), show: Show::All, folder: None, size: 88.0, picked: None, dragging: None, confirm_delete: None, tex_folder: None, tex_picked: None, cache: None }
     }
 }
 
@@ -49,19 +85,33 @@ fn folder_of(a: &Asset) -> &str {
 
 impl AssetBrowser {
     /// The panel; `view`: the 3D view's rectangle (a picture dropped there is placed).
-    pub fn panel(&mut self, root: &mut egui::Ui, ed: &mut Editor, lib: &Library, thumbs: &HashMap<String, Option<Thumb>>, wanted: &mut Vec<(String, bool)>, favourites: &[String], actions: &mut Vec<Action>) {
+    #[allow(clippy::too_many_arguments)]
+    pub fn panel(&mut self, root: &mut egui::Ui, ed: &mut Editor, lib: &Library, thumbs: &HashMap<String, Option<Thumb>>, wanted: &mut Vec<(String, bool)>, favourites: &[String], textures: &[String], swatches: &HashMap<String, egui::TextureHandle>, wanted_swatches: &mut Vec<String>, actions: &mut Vec<Action>) {
         if !self.open {
             return;
         }
+        // (worked out again only when the library, the search, the kind or the folder changed)
+        let key = {
+            use std::hash::{Hash, Hasher};
+            let mut h = std::collections::hash_map::DefaultHasher::new();
+            (lib.assets.len(), textures.len(), self.search.trim().to_lowercase(), self.show as u8, &self.folder, &self.tex_folder, favourites).hash(&mut h);
+            h.finish()
+        };
+        let cache = match self.cache.take() {
+            Some(c) if c.key == key => c,
+            _ => self.build_cache(key, lib, favourites, textures),
+        };
+        let on_textures = self.show == Show::Textures;
         egui::Panel::bottom("assets").resizable(true).default_size(260.0).size_range(140.0..=600.0).frame(egui::Frame::new().fill(Color32::from_rgb(33, 34, 38)).inner_margin(egui::Margin::same(6))).show(root, |ui| {
             // the bar: search, kind, size, import
             ui.horizontal(|ui| {
                 ui.label(icons::labelled(Icon::Objects, tr("Assets", "Ассеты")));
                 ui.add(egui::TextEdit::singleline(&mut self.search).hint_text(tr("Search", "Поиск")).desired_width(200.0));
-                for (s, label) in [(Show::All, tr("All", "Все")), (Show::Objects, tr("Objects", "Объекты")), (Show::Splines, tr("Roads and splines", "Дороги и сплайны"))] {
+                for (s, label) in [(Show::All, tr("All", "Все")), (Show::Objects, tr("Objects", "Объекты")), (Show::Splines, tr("Roads and splines", "Дороги и сплайны")), (Show::Textures, tr("Textures", "Текстуры"))] {
                     if ui.selectable_label(self.show == s, label).clicked() {
                         self.show = s;
                         self.folder = None;
+                        self.tex_folder = None;
                     }
                 }
                 ui.separator();
@@ -81,6 +131,7 @@ impl AssetBrowser {
                 Show::All => &[Kind::Object, Kind::Spline],
                 Show::Objects => &[Kind::Object],
                 Show::Splines => &[Kind::Spline],
+                Show::Textures => &[],
             };
             let height = ui.available_height();
             ui.horizontal_top(|ui| {
@@ -88,27 +139,40 @@ impl AssetBrowser {
                 ui.vertical(|ui| {
                     ui.set_width(220.0);
                     egui::ScrollArea::vertical().id_salt("asset folders").max_height(height).auto_shrink([false, false]).show(ui, |ui| {
-                        if ui.selectable_label(self.folder.is_none(), RichText::new(tr("Everything", "Всё")).strong()).clicked() {
+                        let none = if on_textures { self.tex_folder.is_none() } else { self.folder.is_none() };
+                        if ui.selectable_label(none, RichText::new(tr("Everything", "Всё")).strong()).clicked() {
                             self.folder = None;
+                            self.tex_folder = None;
+                        }
+                        if on_textures {
+                            for (top, n, subs) in &cache.tex_tree {
+                                let on = self.tex_folder.as_deref() == Some(top.as_str());
+                                let text = RichText::new(format!("{top} ({n})"));
+                                let r = egui::CollapsingHeader::new(if on { text.color(Color32::from_rgb(232, 150, 80)) } else { text }).id_salt(("tex top", top)).show(ui, |ui| {
+                                    for (sub, n) in subs {
+                                        let path = format!("{top}\\{sub}");
+                                        if ui.selectable_label(self.tex_folder.as_deref() == Some(path.as_str()), format!("{sub} ({n})")).clicked() {
+                                            self.tex_folder = Some(path);
+                                        }
+                                    }
+                                });
+                                if r.header_response.clicked() {
+                                    self.tex_folder = Some(top.clone());
+                                }
+                            }
+                            return;
                         }
                         if !favourites.is_empty() && ui.selectable_label(self.folder.as_ref().map(|f| f.1 == "\u{2605}").unwrap_or(false), icons::labelled(Icon::Star, tr("Favourites", "Избранное"))).clicked() {
                             self.folder = Some((Kind::Object, "\u{2605}".into()));
                         }
-                        for kind in kinds {
-                            let mut tree: BTreeMap<String, BTreeMap<String, usize>> = BTreeMap::new();
-                            for a in lib.assets.iter().filter(|a| a.kind == *kind) {
-                                let d = folder_of(a);
-                                let (top, rest) = d.split_once('\\').map(|(t, r)| (t.to_string(), r.to_string())).unwrap_or((d.to_string(), String::new()));
-                                *tree.entry(top).or_default().entry(rest).or_default() += 1;
-                            }
+                        for (kind, tops) in cache.tree.iter().filter(|(k, _)| kinds.contains(k)) {
                             let title = if *kind == Kind::Object { tr("Scenery objects", "Объекты") } else { tr("Splines (roads, tracks…)", "Сплайны (дороги, рельсы…)") };
                             egui::CollapsingHeader::new(RichText::new(title).strong()).id_salt(("asset kind", *kind == Kind::Spline)).default_open(true).show(ui, |ui| {
-                                for (top, subs) in &tree {
-                                    let n: usize = subs.values().sum();
+                                for (top, n, subs) in tops {
                                     let on = self.folder.as_ref().map(|f| f.0 == *kind && f.1 == *top).unwrap_or(false);
                                     let text = RichText::new(format!("{top} ({n})"));
                                     let r = egui::CollapsingHeader::new(if on { text.color(Color32::from_rgb(232, 150, 80)) } else { text }).id_salt(("asset top", *kind == Kind::Spline, top)).show(ui, |ui| {
-                                        for (sub, n) in subs.iter().filter(|(s, _)| !s.is_empty()) {
+                                        for (sub, n) in subs {
                                             let path = format!("{top}\\{sub}");
                                             let on = self.folder.as_ref().map(|f| f.0 == *kind && f.1 == path).unwrap_or(false);
                                             if ui.selectable_label(on, format!("{sub} ({n})")).clicked() {
@@ -127,39 +191,39 @@ impl AssetBrowser {
                 ui.separator();
                 // the pictures
                 ui.vertical(|ui| {
-                    let q = self.search.trim().to_lowercase();
-                    let fav = self.folder.as_ref().map(|f| f.1 == "\u{2605}").unwrap_or(false);
-                    let items: Vec<&Asset> = lib
-                        .assets
-                        .iter()
-                        .filter(|a| kinds.contains(&a.kind))
-                        .filter(|a| q.is_empty() || a.haystack.contains(&q))
-                        .filter(|a| match &self.folder {
-                            None => true,
-                            Some(_) if fav => favourites.iter().any(|f| f.eq_ignore_ascii_case(&a.rel)),
-                            Some((k, f)) => a.kind == *k && (folder_of(a) == f || folder_of(a).starts_with(&format!("{f}\\"))),
-                        })
-                        .take(2000)
-                        .collect();
-                    let detail_w = if self.picked.is_some() { 240.0 } else { 0.0 };
+                    let picked = if on_textures { self.tex_picked.is_some() } else { self.picked.is_some() };
+                    let detail_w = if picked { 240.0 } else { 0.0 };
                     ui.horizontal_top(|ui| {
                         let grid_w = (ui.available_width() - detail_w - 8.0).max(120.0);
                         ui.vertical(|ui| {
                             ui.set_width(grid_w);
-                            ui.label(RichText::new(format!("{} {}", items.len(), tr("items", "шт."))).small().color(Color32::from_gray(140)));
-                            egui::ScrollArea::vertical().id_salt("asset grid").max_height(height - 20.0).auto_shrink([false, false]).show(ui, |ui| {
-                                let cell = Vec2::new(self.size + 8.0, self.size + 30.0);
-                                let per_row = ((grid_w / cell.x).floor() as usize).max(1);
-                                for row in items.chunks(per_row) {
+                            ui.label(RichText::new(format!("{} {}", cache.items.len(), tr("items", "шт."))).small().color(Color32::from_gray(140)));
+                            let cell = Vec2::new(self.size + 8.0, self.size + 30.0);
+                            let per_row = ((grid_w / cell.x).floor() as usize).max(1);
+                            // (only the rows in view are drawn, and only those ask for pictures)
+                            egui::ScrollArea::vertical().id_salt(("asset grid", on_textures)).max_height(height - 20.0).auto_shrink([false, false]).show_rows(ui, cell.y, cache.items.len().div_ceil(per_row), |ui, rows| {
+                                for r in rows {
                                     ui.horizontal(|ui| {
-                                        for a in row {
-                                            self.cell(ui, a, cell, ed, thumbs, wanted, actions);
+                                        for &i in cache.items.iter().skip(r * per_row).take(per_row) {
+                                            if on_textures {
+                                                self.texture_cell(ui, &textures[i], cell, swatches, wanted_swatches);
+                                            } else {
+                                                self.cell(ui, &lib.assets[i], cell, ed, thumbs, wanted, actions);
+                                            }
                                         }
                                     });
                                 }
                             });
                         });
-                        if let Some(rel) = self.picked.clone() {
+                        if on_textures {
+                            if let Some(rel) = self.tex_picked.clone() {
+                                ui.separator();
+                                ui.vertical(|ui| {
+                                    ui.set_width(detail_w);
+                                    self.texture_details(ui, &rel, swatches, actions);
+                                });
+                            }
+                        } else if let Some(rel) = self.picked.clone() {
                             if let Some(a) = lib.find(&rel) {
                                 ui.separator();
                                 ui.vertical(|ui| {
@@ -172,6 +236,7 @@ impl AssetBrowser {
                 });
             });
         });
+        self.cache = Some(cache);
         // a picture let go over the view: placed there
         if let Some(rel) = self.dragging.clone() {
             if !root.ctx().input(|i| i.pointer.any_down()) {
@@ -187,6 +252,74 @@ impl AssetBrowser {
             }
         }
         self.confirm(root.ctx(), lib, actions);
+    }
+
+    fn build_cache(&self, key: u64, lib: &Library, favourites: &[String], textures: &[String]) -> Cache {
+        let q = self.search.trim().to_lowercase();
+        let tree = [Kind::Object, Kind::Spline].into_iter().map(|k| (k, tree_of(lib.assets.iter().filter(|a| a.kind == k).map(folder_of)))).collect();
+        let tex_tree = tree_of(textures.iter().map(|t| tex_dir(t)));
+        let items: Vec<usize> = if self.show == Show::Textures {
+            let f = self.tex_folder.clone();
+            textures
+                .iter()
+                .enumerate()
+                .filter(|(_, t)| q.is_empty() || t.to_lowercase().contains(&q))
+                .filter(|(_, t)| f.as_ref().map(|f| tex_dir(t) == f || tex_dir(t).starts_with(&format!("{f}\\"))).unwrap_or(true))
+                .map(|(i, _)| i)
+                .collect()
+        } else {
+            let kinds: &[Kind] = if self.show == Show::Objects { &[Kind::Object] } else if self.show == Show::Splines { &[Kind::Spline] } else { &[Kind::Object, Kind::Spline] };
+            let fav = self.folder.as_ref().map(|f| f.1 == "\u{2605}").unwrap_or(false);
+            lib.assets
+                .iter()
+                .enumerate()
+                .filter(|(_, a)| kinds.contains(&a.kind))
+                .filter(|(_, a)| q.is_empty() || a.haystack.contains(&q))
+                .filter(|(_, a)| match &self.folder {
+                    None => true,
+                    Some(_) if fav => favourites.iter().any(|f| f.eq_ignore_ascii_case(&a.rel)),
+                    Some((k, f)) => a.kind == *k && (folder_of(a) == f || folder_of(a).starts_with(&format!("{f}\\"))),
+                })
+                .map(|(i, _)| i)
+                .collect()
+        };
+        Cache { key, tree, tex_tree, items }
+    }
+
+    fn texture_cell(&mut self, ui: &mut egui::Ui, rel: &str, cell: Vec2, swatches: &HashMap<String, egui::TextureHandle>, wanted: &mut Vec<String>) {
+        let (rect, resp) = ui.allocate_exact_size(cell, Sense::click());
+        let on = self.tex_picked.as_deref() == Some(rel);
+        let bg = if on { Color32::from_rgb(64, 86, 122) } else if resp.hovered() { Color32::from_gray(48) } else { Color32::from_rgb(40, 41, 45) };
+        ui.painter().rect_filled(rect.shrink(2.0), CornerRadius::same(4), bg);
+        let img = Rect::from_min_size(rect.min + Vec2::new(4.0, 4.0), Vec2::splat(self.size));
+        match swatches.get(&rel.to_lowercase()) {
+            Some(h) => {
+                egui::Image::new((h.id(), img.size())).paint_at(ui, img);
+            }
+            None => {
+                wanted.push(rel.to_string());
+                ui.painter().rect_filled(img.shrink(self.size * 0.3), CornerRadius::same(3), Color32::from_gray(55));
+            }
+        }
+        let name = rel.rsplit('\\').next().unwrap_or(rel);
+        let text_rect = Rect::from_min_max(Pos2::new(rect.left() + 4.0, img.bottom() + 2.0), rect.right_bottom() - Vec2::new(4.0, 2.0));
+        let galley = ui.painter().layout(name.to_string(), egui::FontId::proportional(11.0), Color32::from_gray(220), text_rect.width());
+        ui.painter().with_clip_rect(text_rect).galley(text_rect.min, galley, Color32::WHITE);
+        if resp.on_hover_text(rel).clicked() {
+            self.tex_picked = Some(rel.to_string());
+        }
+    }
+
+    fn texture_details(&mut self, ui: &mut egui::Ui, rel: &str, swatches: &HashMap<String, egui::TextureHandle>, actions: &mut Vec<Action>) {
+        if let Some(h) = swatches.get(&rel.to_lowercase()) {
+            ui.add(egui::Image::new((h.id(), Vec2::splat(150.0))));
+        }
+        ui.label(RichText::new(rel.rsplit('\\').next().unwrap_or(rel)).strong().color(Color32::WHITE));
+        ui.label(RichText::new(rel).small().color(Color32::from_gray(140)));
+        ui.add_space(4.0);
+        if ui.button(icons::labelled(Icon::Paint, tr("Add as a ground texture", "Добавить как текстуру земли"))).clicked() {
+            actions.push(Action::AddGroundTexture(rel.to_string()));
+        }
     }
 
     #[allow(clippy::too_many_arguments)]

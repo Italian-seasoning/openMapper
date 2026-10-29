@@ -4,6 +4,35 @@ Releases are tagged `v<version>`; the downloads are on the
 [Releases](https://github.com/openOMSI-org/openMapper/releases) page, each with the notes of its
 version from this file.
 
+## Unreleased
+
+### Added
+- **Classic and Modern maps**: New map and Map settings choose between a Classic map (OMSI 2 and openOMSI) and a Modern one (openOMSI 0.3.42 and later only) made for one or more of bus, tram, trolleybus, metro and railway. A Modern map names its modes in `global.cfg` (`[tram_transport]`…), so openOMSI runs only vehicles of those modes on it. See [docs/TRANSIT.md](docs/TRANSIT.md).
+- **Transit network** (Map menu): openOMSI's `transport` folder edited in one window: stations on the map's stops with their platforms, routes of segments and services without tours (headway, hours, days, loops and turning back, cars in a train, depot), depots with their AI group and gates, track rules (mode, street or railway, power, tunnel, speed, gauge), the overhead wire, the third rail and the trolleybus wire with sections, spans laid along the selected tracks or over each way's lane of the selected roads, insulators, gaps and frogs, switches, signal blocks and their signals. Stations, routes, spans, blocks and gates are drawn in the view while it is open; things are picked with a click. Problems are found by openOMSI's own reader of these files and shown on the Overview tab and in Map > Check, with two checks of openMapper's (a station whose stop is gone, a station with no lane of its modes within 25 m).
+- **The transit kit**: tracks (tram street track, tram track on grass, railway, metro with a third rail, metro tunnel), platforms (tram, metro side and island, railway side and island), the overhead contact wire, trolleybus wire pairs, catenary masts and trolleybus poles, a metro sign, a platform shelter, a buffer stop and a station stop, all made by openMapper (no file of the installation copied), so they go with any map.
+- **Wiring through junctions**: Power lays the wire over the lanes the selected tracks and roads really have (a wire over each track of a double track; a trolleybus pair over each way's kerb lane), through selected junction plates and switches along their own lanes (for the trolleybus the turns between wired roads), with a wire spline over each, and puts a frog where three trolleybus wires meet.
+- **Vehicles checked against the map's modes**: the Depots tab shows a depot's vehicles by mode; Map > Check names the vehicles openOMSI leaves out on a Modern map and the services with no vehicle of their mode, reading a vehicle's modes as the game does. The trolleybus wire is checked as openOMSI's trolleybuses read it (frogs on no joint of three spans, spans in no section; a trolleybus section's id is a number).
+- **OpenStreetMap on a Modern map**: metro tracks, tram stops and railway and metro stations (the kit's station stop beside the track), every stop a station, and the tram, trolleybus, metro and train routes as routes of the transport folder with their services; tram branches are cut where they meet instead of getting OMSI 2's 190 m railway turnouts.
+- **The overhead made properly**: the contact wire is a round copper conductor hanging on droppers (every 8 m) from its messenger, trolleybus wires are round copper conductors, and the kit's objects are textured (galvanized and painted steel, copper, porcelain, cast iron, concrete): catenary masts with a real cantilever (bracket, stay, registration and steady arm, insulators), trolleybus poles with an insulated hanger over each pair, frogs and section insulators. Wiring puts the hardware in by itself: masts every 40 m at the kerb of the street a track runs in, poles every 30 m at a road's kerb, each made to the reach the place needs, a frog object at each frog.
+- **Build into the ground** (a road's properties): **Cut**, an open cutting with sloped banks, or **Cover**, a cut and cover tunnel with open ramps, a shell of walls, roof and floor and a portal at each mouth; depth, ramp gradient, banks and ramps at either end; a wire on the lowered pieces is taken off to be laid again.
+- **Platforms at the stations** (Transit network, Stations), and the tram sample's stations have theirs.
+- **OpenStreetMap's metro tunnels** are built 12 m under the ground as covered tunnels.
+- **Map > Check: track ends that do not meet** (0.5-4 m apart, the game joins rails within 1.5 m only), with a fix that joins them.
+- **Editing together passes the transit network on** (protocol 2: editors of an older version cannot join).
+- **Start with a trolleybus line**: a road with a junction under its wires with frogs, three stations and two routes, which openOMSI routes both ways.
+- **Start with a tram line**: a Modern tram map can start as a loop of street track under its wire with masts, two stations and a route with a service every 10 minutes, which openOMSI routes and runs as it is.
+- **Painted lines in the complex junction editor**: a Painted line section makes a spline type of its own with a transparent ground: solid, dashed, double, solid and dashed, or a crossing's bars, of any colour, width, dash and gap, with presets for a stop line, a crossing, a centre line and a lane line. It is written into `Splines\openMapper\marks` and chosen to draw with, so it is laid with Line, Arc and Curve over the asphalt like any piece, saved with the drawing, put on the map and written into custom junctions and objects.
+- **Road markings in the road maker**: a road type can be marked (edge lines, the middle, dashed lines between lanes, standard for its lanes or each line added by hand: style, colour, width, dash and gap), painted into the roadway's texture, and **drawn by hand** on a board that wraps along the road (pen, straight line, dashed line, rectangle, arrow, eraser, colours, widths, undo); the drawing is kept beside the road (`<name>.marks.png`).
+- **Lake and River** redone: a lake is drawn as an outline of points (click, Enter to close), a river as a line with a width, with banks, depth and level set in the panel and a preview while drawing.
+- **The Tab panel** (mesh edit) reorganised into sections with a display group, a materials list with thumbnails, a working X-ray, and a texture preview with an opacity percentage that keeps the object visible.
+- **Asset manager** opens at once on a big installation (rows are drawn only when seen, pictures loaded a few a frame) and has a Textures tab.
+- Hooks for checks: `OPENMAPPER_TRANSIT=<tab>`, `OPENMAPPER_MODERN=<modes>`, `OPENMAPPER_DEMO=TRAM:<name>`, `TROLLEY:<name>` and `KIT:<name>`.
+
+### Fixed
+- **A bus pocket's texture** is no longer stretched across the bay: it is laid at the roadway's own scale.
+- **Complex junction editor, Auto-Junction**: a junction whose roads are too short or too close is skipped with a warning instead of drawn crooked, and corners are shrunk to the room there is.
+- **A map's mode keywords survive a save**: `global.cfg` was written again without the `[…_transport]` lines a map made for openOMSI's transport modes had.
+
 ## 0.1.15 - 2026-10-27
 
 ### Added

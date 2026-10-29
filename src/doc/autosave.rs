@@ -38,6 +38,9 @@ pub struct Meta {
     /// The descriptions in other languages, kept whole.
     #[serde(default)]
     pub descriptions: bool,
+    /// The transport folder kept whole.
+    #[serde(default)]
+    pub transit: bool,
     /// Seconds since 1970.
     pub time: u64,
 }
@@ -102,6 +105,8 @@ pub fn snapshot(doc: &Document) -> Snapshot {
         traffic: if doc.traffic.dirty { doc.traffic.clone() } else { Default::default() },
         descriptions: if doc.descriptions.dirty { doc.descriptions.clone() } else { Default::default() },
         groups: Vec::new(),
+        // (the modes go into global.cfg)
+        transit: doc.transit.clone(),
     };
     Snapshot { doc: copy, tiles: doc.tiles.keys().copied().collect(), epoch: *EPOCH.lock().unwrap_or_else(|e| e.into_inner()) }
 }
@@ -142,6 +147,11 @@ fn prepare_from(doc: &Document, known: &std::collections::HashSet<TileKey>, epoc
         d.restored(&Default::default());
         ops.extend(d.plan(&fresh_dir).into_iter().filter(|o| matches!(o, super::safe::Op::Write(..))));
     }
+    if doc.transit.dirty {
+        let mut t = doc.transit.clone();
+        t.mark_all();
+        ops.extend(t.plan(&fresh_dir).into_iter().filter(|o| matches!(o, super::safe::Op::Write(..))));
+    }
     let meta = Meta {
         name: doc.display_name().to_string(),
         dir: doc.dir.clone(),
@@ -151,6 +161,7 @@ fn prepare_from(doc: &Document, known: &std::collections::HashSet<TileKey>, epoc
         timetable: doc.timetable.dirty,
         traffic: doc.traffic.dirty,
         descriptions: doc.descriptions.dirty,
+        transit: doc.transit.dirty,
         time: std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).map(|d| d.as_secs()).unwrap_or(0),
     };
     Job {
@@ -246,6 +257,15 @@ pub fn restore(roots: &crate::install::Roots, meta: &Meta) -> anyhow::Result<Doc
         d.restored(&doc.descriptions);
         doc.descriptions = d;
     }
+    if meta.transit {
+        let mut t = crate::transit::Transit::load(&saved);
+        t.restored(&doc.transit);
+        t.mark_all();
+        doc.transit = t;
+    } else {
+        // (the modes the autosave's global.cfg names)
+        doc.transit.modes = crate::transit::Transit::load(&saved).modes;
+    }
     Ok(doc)
 }
 
@@ -338,6 +358,7 @@ mod tests {
             traffic: Default::default(),
             descriptions: Default::default(),
             groups: Vec::new(),
+            transit: Default::default(),
         };
         doc.global.name = "M".into();
         for k in [(0, 0), (1, 0)] {
