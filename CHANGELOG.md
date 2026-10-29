@@ -4,6 +4,10 @@ Releases are tagged `v<version>`; the downloads are on the
 [Releases](https://github.com/openOMSI-org/openMapper/releases) page, each with the notes of its
 version from this file.
 
+## 0.1.18 - 2026-10-29
+
+URGENT UPDATE: IMPORTANT FIXES
+
 ## 0.1.17 - 2026-10-29
 
 URGENT UPDATE: IMPORTANT FIXES
