@@ -381,6 +381,8 @@ pub struct GeoUi {
     mini_pending: Vec<(TileKey, egui::ColorImage)>,
     /// Unloaded tiles beside loaded heights (their shared edge steps).
     edges: Vec<TileKey>,
+    /// The edge the pictures on the GPU were put up at (0: none up yet).
+    shown_side: u32,
     /// OMSI's own aerial photos for this map: the folder found beside it and how many tiles
     /// it has photos for (None: the map has none).
     aerial: Option<(PathBuf, usize)>,
@@ -389,6 +391,11 @@ pub struct GeoUi {
     aerial_job: Option<AerialJob>,
     /// The tiles whose photos are held, with the place and count they were worked out for.
     near: Option<(HashSet<TileKey>, DVec2, usize)>,
+    /// What each tile's picture is, and when it was written: looked at on the disk now and then
+    /// rather than in every frame (a map of hundreds of tiles meant a thousand calls a second).
+    pictures: HashMap<TileKey, (Option<PathBuf>, Option<std::time::SystemTime>)>,
+    /// When the disk was last looked at for them.
+    pictures_at: Option<Instant>,
 }
 
 impl Default for GeoUi {
@@ -443,9 +450,12 @@ impl Default for GeoUi {
             mini: HashMap::new(),
             mini_pending: Vec::new(),
             edges: Vec::new(),
+            shown_side: 0,
             aerial: None,
             aerial_job: None,
             near: None,
+            pictures: HashMap::new(),
+            pictures_at: None,
         }
     }
 }
@@ -482,6 +492,8 @@ impl GeoUi {
         // not recorded on this map's tiles)
         self.aerial_job = None;
         self.near = None;
+        self.pictures.clear();
+        self.pictures_at = None;
         self.dir = dir.clone();
         self.file = dir.as_deref().map(GeoFile::load).unwrap_or_default();
         self.known = ed.doc.as_ref().map(|d| d.tiles.keys().copied().collect()).unwrap_or_default();
@@ -528,6 +540,9 @@ impl GeoUi {
                     log::error!("geo.json: {e}");
                 }
             }
+            // (which tiles have a picture may have changed)
+            self.pictures.clear();
+            self.pictures_at = None;
         }
     }
 
@@ -634,6 +649,21 @@ impl GeoUi {
             return Some(g::own_path(dir, k)).filter(|p| p.is_file());
         }
         t.imagery.as_ref().filter(|m| m.kept).map(|_| g::imagery_path(dir, k)).filter(|p| p.is_file())
+    }
+
+    /// [`picture_of`](Self::picture_of) and when the file was written, remembered (the disk is
+    /// asked once, not in every frame).
+    fn picture_cached(&mut self, dir: &Path, k: TileKey) -> Option<(PathBuf, Option<std::time::SystemTime>)> {
+        if let Some((p, t)) = self.pictures.get(&k) {
+            return p.clone().map(|p| (p, *t));
+        }
+        let found = self.picture_of(dir, k).map(|p| {
+            let t = std::fs::metadata(&p).and_then(|m| m.modified()).ok();
+            (p, t)
+        });
+        let entry = (found.as_ref().map(|f| f.0.clone()), found.as_ref().and_then(|f| f.1));
+        self.pictures.insert(k, entry);
+        found
     }
 
     // -------------------------------------------------------------- the main interface
@@ -976,6 +1006,8 @@ impl GeoUi {
                 g::aerial::note(&mut self.file, &done, job.stamp);
                 // (the files are there now: read them again on the next frame)
                 self.shown.clear();
+                self.pictures.clear();
+                self.pictures_at = None;
                 // (a folder chosen by hand becomes the one the panel offers, as the map's own)
                 match &mut self.aerial {
                     Some(a) => a.0 = job.folder,
@@ -1056,7 +1088,7 @@ impl GeoUi {
         let keys: Vec<TileKey> = pic.tiles().filter(|k| self.file.tile(*k).own.as_deref() == Some(id)).collect();
         let (tx, rx) = channel();
         let t = ts();
-        let max = self.gpu_side();
+        let max = self.gpu_side(keys.len());
         std::thread::spawn(move || {
             let n = if full { pic.piece_size(t, img.width()) } else { 384 };
             for k in keys {
@@ -1082,6 +1114,7 @@ impl GeoUi {
                         if b.full {
                             // (the file is new: the next look at it reads it again)
                             self.shown.remove(&k);
+                            self.pictures.remove(&k);
                         }
                         self.uploads.push((k, m));
                     }
@@ -1109,10 +1142,12 @@ impl GeoUi {
 
     // -------------------------------------------------------------- the overlay
 
-    /// Edge of the textures on the GPU: the more tiles have pictures, the smaller.
-    fn gpu_side(&self) -> u32 {
-        let n = self.file.tiles.values().filter(|t| t.imagery.is_some() || t.own.is_some()).count();
-        match n {
+    /// Edge of the textures on the GPU: the more of them are held at once, the smaller. What
+    /// counts is what is up on the card now, not how many tiles the map has: a map's own aerial
+    /// photos are 1024 or 2048 a side, and 485 of those kept at their own size would be 43 GB,
+    /// while a window of sixteen round the camera is a quarter of a gigabyte.
+    fn gpu_side(&self, held: usize) -> u32 {
+        match held {
             0..=4 => 4096,
             5..=16 => 2048,
             17..=64 => 1024,
@@ -1174,9 +1209,23 @@ impl GeoUi {
             imagery.upload(gpu, k, &m, 0.0);
             self.mini_pending.push((k, mini_of(&m)));
         }
-        let max = self.gpu_side();
+        // (the disk is looked at now and then, not in every frame; a change of the map's own
+        // settings clears it at once, through `flush`)
+        if self.pictures_at.map(|t| t.elapsed().as_secs_f32() > 1.0).unwrap_or(true) {
+            self.pictures_at = Some(Instant::now());
+            self.pictures.clear();
+        }
         // (the photos of the tiles round the camera, when the map asks for a window of them)
         let near = self.near_set(doc, at);
+        // (the edge of the textures: what is held at once, not what the map has - a window of a
+        // few tiles can keep its photos near their own size, the whole map cannot)
+        let held = near.as_ref().map(|s| s.len()).unwrap_or_else(|| self.file.tiles.values().filter(|t| t.imagery.is_some() || t.own.is_some()).count());
+        let max = self.gpu_side(held);
+        // (a different edge from the one the pictures went up at: they go up again)
+        if self.shown_side != max {
+            self.shown_side = max;
+            self.shown.clear();
+        }
         for k in doc.tiles.keys() {
             let t = self.file.tile(*k);
             if let Some(set) = &near {
@@ -1190,7 +1239,7 @@ impl GeoUi {
                     continue;
                 }
             }
-            let want = self.picture_of(&dir, *k);
+            let want = self.picture_cached(&dir, *k);
             if let (Some(m), true) = (self.memory.get(k), t.own.is_none()) {
                 // (held in memory only: put up once)
                 let now = (PathBuf::new(), None);
@@ -1202,10 +1251,10 @@ impl GeoUi {
                 }
             } else {
                 match want {
-                    Some(p) => {
-                        let time = std::fs::metadata(&p).and_then(|m| m.modified()).ok();
-                        let now = (p.clone(), time);
+                    Some((p, time)) => {
+                        let now = (p, time);
                         if self.shown.get(k) != Some(&now) && !self.loading.contains(k) {
+                            let p = now.0.clone();
                             self.shown.insert(*k, now);
                             self.loading.insert(*k);
                             let _ = self.load_tx.send((dir.clone(), *k, p, max));

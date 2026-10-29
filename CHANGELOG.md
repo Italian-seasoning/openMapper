@@ -4,7 +4,7 @@ Releases are tagged `v<version>`; the downloads are on the
 [Releases](https://github.com/openOMSI-org/openMapper/releases) page, each with the notes of its
 version from this file.
 
-## Unreleased
+## 0.1.17 - 2026-10-28
 
 ### Added
 - **Classic and Modern maps**: New map and Map settings choose between a Classic map (OMSI 2 and openOMSI) and a Modern one (openOMSI 0.3.42 and later only) made for one or more of bus, tram, trolleybus, metro and railway. A Modern map names its modes in `global.cfg` (`[tram_transport]`…), so openOMSI runs only vehicles of those modes on it. See [docs/TRANSIT.md](docs/TRANSIT.md).
@@ -32,6 +32,15 @@ version from this file.
 - **A bus pocket's texture** is no longer stretched across the bay: it is laid at the roadway's own scale.
 - **Complex junction editor, Auto-Junction**: a junction whose roads are too short or too close is skipped with a warning instead of drawn crooked, and corners are shrunk to the room there is.
 - **A map's mode keywords survive a save**: `global.cfg` was written again without the `[…_transport]` lines a map made for openOMSI's transport modes had.
+
+## 0.1.16 - 2026-10-28
+
+### Changed
+- **A map's own aerial photos at their own size**: the size a photo is put up at on the graphics card comes from how many are held at once (the window round the camera), not from how many the map has, so a map with hundreds of photos shows the ones near the camera at 1024 or 2048 instead of 512 a side.
+- **Faster on big maps**: the overview map's roads are drawn once into a picture instead of being laid out again in every frame, the scene's materials are no longer collected anew in every frame, and which picture a tile shows is looked up on the disk once a second rather than every frame (a map of 66,000 splines went from about 10 to 45 frames a second).
+
+### Fixed
+- **Start-up on old GL drivers** ([#48](https://github.com/openOMSI-org/openMapper/issues/48)): a driver without surface view formats (such as a GeForce GTX 550 Ti on driver 391.35) no longer ends start-up with "Downlevel flags SURFACE_VIEW_FORMATS are required"; the frame is made sRGB itself and the interface draws into it.
 
 ## 0.1.15 - 2026-10-27
 

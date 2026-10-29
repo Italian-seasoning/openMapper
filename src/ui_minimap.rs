@@ -36,6 +36,10 @@ pub struct Minimap {
     /// (`ui_geo::GeoUi::minimap_tiles`).
     pub imagery: Vec<(DVec2, egui::TextureId, f32)>,
     lines: Vec<(Line, Vec<DVec2>)>,
+    /// The lines drawn into a small picture, once (the whole map is tens of thousands of
+    /// splines: as shapes they were tessellated again in every frame) and the key it was made
+    /// for.
+    raster: Option<(u64, egui::TextureHandle)>,
     min: DVec2,
     max: DVec2,
 }
@@ -48,6 +52,41 @@ fn kind_of(lib: &Library, file: &str) -> Option<Line> {
         // AI-only splines and helpers would only clutter it
         Some(Category::Technical) => None,
         _ => Some(Line::Other),
+    }
+}
+
+/// A dot of the lines' width, at a place in the picture (clipped: a line off the map's edge
+/// costs nothing).
+fn dot(img: &mut egui::ColorImage, x: f32, y: f32, r: f32, c: Color32) {
+    let (w, h) = (img.size[0] as i32, img.size[1] as i32);
+    let (cx, cy) = (x.round() as i32, y.round() as i32);
+    let ri = r.ceil() as i32;
+    for dy in -ri..=ri {
+        let py = cy + dy;
+        if py < 0 || py >= h {
+            continue;
+        }
+        for dx in -ri..=ri {
+            let pxi = cx + dx;
+            if pxi < 0 || pxi >= w {
+                continue;
+            }
+            if ((dx * dx + dy * dy) as f32) > r * r + 0.25 {
+                continue;
+            }
+            img.pixels[py as usize * img.size[0] + pxi as usize] = c;
+        }
+    }
+}
+
+/// A line between two places in the picture, a dot each pixel of it (a stroke's own way, without
+/// the tessellator's): the later lines lie over the earlier ones, as the shapes did.
+fn line_into(img: &mut egui::ColorImage, x0: f32, y0: f32, x1: f32, y1: f32, r: f32, c: Color32) {
+    let (dx, dy) = (x1 - x0, y1 - y0);
+    let steps = dx.abs().max(dy.abs()).ceil().max(1.0) as i32;
+    for i in 0..=steps {
+        let t = i as f32 / steps as f32;
+        dot(img, x0 + dx * t, y0 + dy * t, r, c);
     }
 }
 
@@ -128,6 +167,46 @@ impl Minimap {
         self.max = max;
     }
 
+    /// What the lines' picture was made for: the map as built, where the map lies on the
+    /// screen (a resized window, the larger map) and the screen's pixels a point.
+    fn raster_key(&self, rect: Rect, ppp: f32) -> u64 {
+        let mut h = self.key;
+        for v in [rect.min.x, rect.min.y, rect.width(), rect.height(), ppp * 100.0] {
+            h = h.rotate_left(7) ^ (v as i32 as u32 as u64).wrapping_mul(0x9E37_79B9_7F4A_7C15);
+        }
+        h
+    }
+
+    /// The lines into a picture of the map's rect, each as its own colour and width, a pixel of
+    /// the picture a pixel of the screen (a point is two of them on a sharp screen).
+    fn raster_lines(&self, rect: Rect, ppp: f32, to_screen: &impl Fn(DVec2) -> Pos2) -> egui::ColorImage {
+        let w = ((rect.width() * ppp).ceil() as usize).clamp(1, 1024);
+        let h = ((rect.height() * ppp).ceil() as usize).clamp(1, 1024);
+        let sx = w as f32 / rect.width().max(1.0);
+        let sy = h as f32 / rect.height().max(1.0);
+        // (a pixel of the picture, from a place on the screen)
+        let px = |p: Pos2| ((p.x - rect.min.x) * sx, (p.y - rect.min.y) * sy);
+        let mut img = egui::ColorImage { size: [w, h], pixels: vec![Color32::TRANSPARENT; w * h], source_size: egui::Vec2::new(w as f32, h as f32) };
+        for (kind, pts) in &self.lines {
+            let (width, c): (f32, Color32) = match kind {
+                Line::Road => (1.6, Color32::from_rgb(205, 205, 210)),
+                Line::Track => (1.0, Color32::from_rgb(170, 130, 90)),
+                Line::Path => (0.8, Color32::from_rgb(120, 125, 120)),
+                Line::Other => (0.6, Color32::from_rgb(90, 95, 90)),
+            };
+            let r = (width * 0.5 * sx.min(sy)).max(0.5);
+            let mut prev: Option<(f32, f32)> = None;
+            for &p in pts {
+                let (x, y) = px(to_screen(p));
+                if let Some((x0, y0)) = prev {
+                    line_into(&mut img, x0, y0, x, y, r, c);
+                }
+                prev = Some((x, y));
+            }
+        }
+        img
+    }
+
     /// Draws it in the view's corner; returns where to move the camera to.
     pub fn show(&mut self, ui: &mut egui::Ui, view: Rect, doc: &Document, lib: &Library, cam: CamView) -> Option<DVec2> {
         if !self.open || doc.tiles.is_empty() {
@@ -155,14 +234,16 @@ impl Minimap {
             let r = Rect::from_two_pos(to_screen(o), to_screen(o + DVec2::splat(ts)));
             painter.image(tex, r.shrink(0.5), Rect::from_min_max(Pos2::ZERO, Pos2::new(1.0, 1.0)), Color32::from_white_alpha((a * 255.0) as u8));
         }
-        for (kind, pts) in &self.lines {
-            let (w, c) = match kind {
-                Line::Road => (1.6, Color32::from_rgb(205, 205, 210)),
-                Line::Track => (1.0, Color32::from_rgb(170, 130, 90)),
-                Line::Path => (0.8, Color32::from_rgb(120, 125, 120)),
-                Line::Other => (0.6, Color32::from_rgb(90, 95, 90)),
-            };
-            painter.add(Shape::line(pts.iter().map(|&p| to_screen(p)).collect(), Stroke::new(w, c)));
+        // (the whole map's roads, drawn into a small picture once: tens of thousands of
+        // splines laid out as shapes are tessellated again in every frame)
+        let ppp = ui.ctx().pixels_per_point();
+        let raster_key = self.raster_key(rect, ppp);
+        if self.raster.as_ref().map(|(k, _)| *k) != Some(raster_key) {
+            let img = self.raster_lines(rect, ppp, &to_screen);
+            self.raster = Some((raster_key, ui.ctx().load_texture("minimap lines", img, egui::TextureOptions::LINEAR)));
+        }
+        if let Some((_, tex)) = &self.raster {
+            painter.image(tex.id(), rect, Rect::from_min_max(Pos2::ZERO, Pos2::new(1.0, 1.0)), Color32::WHITE);
         }
         // the camera: where the eye is and which way it looks, the cone as long as the view
         // reaches (it grows with the height)
