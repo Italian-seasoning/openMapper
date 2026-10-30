@@ -838,4 +838,171 @@ mod tests {
         assert!(!m.light_head, "it runs a program of its own");
         let _ = std::fs::remove_dir_all(&dir);
     }
+
+    #[test]
+    fn object_and_spline_waits_follow_the_active_map_alias_scope_and_drop_stale_responses() {
+        fn source_object(root: &Path, content: &Path, width: f32) -> (Vec<u8>, Vec<u8>, Vec<u8>) {
+            std::fs::create_dir_all(root).unwrap();
+            let input = root.join("triangle.obj");
+            let source = format!("v 0 0 0\nv {width} 0 0\nv 0 {width} 0\nf 1 2 3\n");
+            std::fs::write(&input, source.as_bytes()).unwrap();
+            std::fs::create_dir_all(content).unwrap();
+            let imported = crate::import::import(&input, content).unwrap();
+            let roots = crate::install::Roots {
+                omsi: Default::default(),
+                content: content.to_path_buf(),
+            };
+            let (object, _) = crate::editable::folder_of(&roots, &imported.objects[0]);
+            let sco = std::fs::read_dir(&object)
+                .unwrap()
+                .map(|entry| entry.unwrap().path())
+                .find(|path| path.extension().is_some_and(|ext| ext.eq_ignore_ascii_case("sco")))
+                .unwrap();
+            let mesh = std::fs::read_dir(object.join("model"))
+                .unwrap()
+                .map(|entry| entry.unwrap().path())
+                .find(|path| path.extension().is_some_and(|ext| ext.eq_ignore_ascii_case("x")))
+                .unwrap();
+            (
+                source.as_bytes().to_vec(),
+                std::fs::read(sco).unwrap(),
+                std::fs::read(mesh).unwrap(),
+            )
+        }
+
+        fn pack(
+            content: &Path,
+            signer: &omsi_pack::SigningKey,
+            pack_id: &str,
+            source: &[u8],
+            sco: &[u8],
+            mesh: &[u8],
+            length: u32,
+        ) -> omsi_pack::Dependency {
+            let dependency = omsi_pack::Dependency {
+                publisher_id: "owned-map-scope-publisher".into(),
+                pack_id: pack_id.into(),
+                version: "1.0.0".into(),
+            };
+            let spline = format!("[length]\n{length}\n[texture]\nmissing.png\n[profile]\n0\n[profilepnt]\n-2 0 0 1\n[profilepnt]\n2 0 1 1\n");
+            omsi_pack::create_pack(
+                &content.join("Packs").join(format!("{pack_id}.oopp")),
+                omsi_pack::PackMetadata {
+                    publisher_id: dependency.publisher_id.clone(),
+                    author: "Owned map-scope fixture".into(),
+                    pack_id: dependency.pack_id.clone(),
+                    version: dependency.version.clone(),
+                    license: "CC0-1.0".into(),
+                    redistribution: false,
+                    key_id: None,
+                    dependencies: Vec::new(),
+                },
+                &[
+                    omsi_pack::AssetInput {
+                        id: "object".into(),
+                        path: "Sceneryobjects/Fixture/Objects.sco".into(),
+                        source_sha256: omsi_pack::sha256_hex(source),
+                        bytes: sco.to_vec(),
+                    },
+                    omsi_pack::AssetInput {
+                        id: "mesh".into(),
+                        path: "Sceneryobjects/Fixture/model/triangle.x".into(),
+                        source_sha256: omsi_pack::sha256_hex(source),
+                        bytes: mesh.to_vec(),
+                    },
+                    omsi_pack::AssetInput {
+                        id: "spline".into(),
+                        path: "Splines/Fixture/Road.sli".into(),
+                        source_sha256: omsi_pack::sha256_hex(spline.as_bytes()),
+                        bytes: spline.into_bytes(),
+                    },
+                ],
+                signer,
+                None,
+                &std::sync::atomic::AtomicBool::new(false),
+            )
+            .unwrap();
+            dependency
+        }
+
+        fn references(map: &Path, dependency: &omsi_pack::Dependency) {
+            std::fs::create_dir_all(map).unwrap();
+            let refs = crate::publisher::MapReferences {
+                format_version: 1,
+                dependencies: vec![dependency.clone()],
+                assets: vec![
+                    crate::publisher::AssetReference {
+                        path: "Sceneryobjects/Fixture/Objects.sco".into(),
+                        dependency: dependency.clone(),
+                        asset_id: "object".into(),
+                    },
+                    crate::publisher::AssetReference {
+                        path: "Splines/Fixture/Road.sli".into(),
+                        dependency: dependency.clone(),
+                        asset_id: "spline".into(),
+                    },
+                ],
+            };
+            std::fs::write(map.join("dependencies.json"), serde_json::to_vec(&refs).unwrap()).unwrap();
+        }
+
+        let root = std::env::temp_dir().join(format!("openmapper-map-scope-{}", std::process::id()));
+        let _ = std::fs::remove_dir_all(&root);
+        std::fs::create_dir_all(&root).unwrap();
+        let content = root.join("content");
+        std::fs::create_dir_all(content.join("Packs")).unwrap();
+        let signer = omsi_pack::SigningKey::generate(&ring::rand::SystemRandom::new()).unwrap();
+        let mut trust = omsi_pack::TrustedPublishers::default();
+        trust.insert("owned-map-scope-publisher", signer.key_id(), signer.public_key());
+        trust.save_file(&content.join("Publishers.json")).unwrap();
+
+        let source_a = root.join("source-a");
+        let import_a = root.join("import-a");
+        let (original_a, sco_a, mesh_a) = source_object(&source_a, &import_a, 1.0);
+        let source_b = root.join("source-b");
+        let import_b = root.join("import-b");
+        let (original_b, sco_b, mesh_b) = source_object(&source_b, &import_b, 4.0);
+        let a = pack(&content, &signer, "map-a-pack", &original_a, &sco_a, &mesh_a, 10);
+        let b = pack(&content, &signer, "map-b-pack", &original_b, &sco_b, &mesh_b, 20);
+        let map_a = root.join("maps/map-a");
+        let map_b = root.join("maps/map-b");
+        references(&map_a, &a);
+        references(&map_b, &b);
+        omsi_cfg::add_content_root(content.clone());
+
+        // The two maps declare identical aliases with distinct signed bytes.
+        let _scope_a = crate::publisher::validate_map(&map_a).unwrap();
+        let _scope_b = crate::publisher::validate_map(&map_b).unwrap();
+        let mut assets = Assets::new(PathBuf::new(), content.clone());
+        let object_alias = "Sceneryobjects/Fixture/Objects.sco";
+        let spline_alias = "Splines/Fixture/Road.sli";
+
+        assets.set_map_scope(&map_a);
+        assert!(assets.object(object_alias).is_none());
+        assert!(assets.spline(spline_alias).is_none());
+        // Switch before either queued response is consumed; neither old result may enter the
+        // active map's cache even if the worker finishes it first.
+        assets.set_map_scope(&map_b);
+        let object_b = assets.object_wait(object_alias, 10_000).expect("map B object loads");
+        let spline_b = assets.spline_wait(spline_alias, 10_000).expect("map B spline loads");
+        let deadline = std::time::Instant::now() + std::time::Duration::from_secs(10);
+        while assets.pending > 0 && std::time::Instant::now() < deadline {
+            assets.poll();
+            std::thread::sleep(std::time::Duration::from_millis(2));
+        }
+        assert_eq!(assets.pending, 0, "stale worker requests finish");
+        assert!(assets.object_wait(object_alias, 100).unwrap().radius() > object_b.radius() * 0.99);
+        assert_eq!(spline_b.def.length, 20.0);
+        assert_eq!(assets.spline_wait(spline_alias, 100).unwrap().def.length, 20.0);
+
+        assets.set_map_scope(&map_a);
+        let object_a = assets.object_wait(object_alias, 10_000).expect("map A object loads");
+        let spline_a = assets.spline_wait(spline_alias, 10_000).expect("map A spline loads");
+        assert!(object_a.radius() < object_b.radius() * 0.5);
+        assert_eq!(spline_a.def.length, 10.0);
+        drop(assets);
+        drop((_scope_a, _scope_b));
+        omsi_cfg::remove_content_root(&content);
+        std::fs::remove_dir_all(root).unwrap();
+    }
 }
