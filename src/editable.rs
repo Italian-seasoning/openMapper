@@ -693,6 +693,7 @@ mod tests {
         (dir.clone(), Roots { omsi: dir.join("omsi"), content: dir.join("content") })
     }
 
+
     #[test]
     fn a_primitive_is_written_as_an_object_openomsi_reads_and_read_back() {
         let (dir, roots) = roots("prim");
@@ -722,6 +723,55 @@ mod tests {
         let vol: f32 = t.indices.chunks(3).map(|c| t.positions[c[0] as usize].dot(t.positions[c[1] as usize].cross(t.positions[c[2] as usize]))).sum::<f32>() / 6.0;
         assert!((vol - 6.0).abs() < 1e-3, "{vol}");
         let _ = std::fs::remove_dir_all(&dir);
+    }
+
+    #[test]
+    fn protected_virtual_mesh_cannot_be_copied_by_editing_or_overwritten_by_save() {
+        use std::sync::Arc;
+
+        let (dir, roots) = roots("protected-source");
+        let package = dir.join("publisher-fixture");
+        std::fs::create_dir_all(&package).unwrap();
+        let object = omsi_cfg::encode_text("[friendlyname]\r\nOwned fixture\r\n[mesh]\r\nmodel/sign.x\r\n");
+        let cube = openmapper_mesh::primitives::Primitive::Cube { size: Vec3::ONE }.build();
+        let mesh = openmapper_mesh::export::to_x(&cube, &[Material::default()]).0.into_bytes();
+        let key = Arc::new(omsi_cfg::vfs::SealKey::new(&omsi_cfg::vfs::random_key().unwrap()));
+        let files = [
+            ("Sceneryobjects/Protected/sign.sco", object.clone()),
+            ("Sceneryobjects/Fixture/model/sign.x", mesh),
+        ].into_iter().enumerate().map(|(i, (rel, plain))| {
+            let aad = format!("fixture asset {i}").into_bytes();
+            let blob = package.join(format!("{i}.sealed"));
+            std::fs::write(&blob, omsi_cfg::vfs::seal(&key, &aad, &plain).unwrap()).unwrap();
+            omsi_cfg::vfs::SealedFile { rel: rel.into(), blob, aad, size: plain.len() as u64 }
+        }).collect();
+        let mount = roots.content.join("Packs/fixture.oopp/.mount");
+        omsi_cfg::vfs::mount_sealed(&mount, key, files);
+        omsi_cfg::add_content_root(roots.content.clone());
+        omsi_cfg::add_content_root(mount.clone());
+
+        let ordinary = "Sceneryobjects\\Fixture\\sign.sco";
+        let ordinary_file = roots.content.join(ordinary.replace('\\', "/"));
+        std::fs::create_dir_all(ordinary_file.parent().unwrap()).unwrap();
+        std::fs::write(&ordinary_file, &object).unwrap();
+        let mesh_path = omsi_cfg::resolve_path(&ordinary_file.parent().unwrap().join("model"), "sign.x");
+        assert!(omsi_cfg::vfs::is_sealed(&mesh_path));
+        assert!(omsi_o3d::load_mesh(&mesh_path).is_ok());
+
+        let output = dir.join("converted");
+        let source_refused = source_of(&roots, ordinary, &output).is_err();
+        let copied_to_edit_folder = output.exists();
+        let protected = "Sceneryobjects\\Protected\\sign.sco";
+        let save_refused = save(&roots, protected, &Source::default()).is_err();
+        let wrote_into_pack_folder = mount.join("Sceneryobjects/Protected/sign.openmapper.json").exists();
+        omsi_cfg::vfs::unmount_sealed(&mount);
+        omsi_cfg::remove_content_root(&mount);
+        omsi_cfg::remove_content_root(&roots.content);
+        std::fs::remove_dir_all(dir).unwrap();
+        assert!(source_refused, "the editor copied a mesh from a protected pack");
+        assert!(!copied_to_edit_folder, "the editor left a copy of a protected object on disk");
+        assert!(save_refused, "the editor overwrote an object in a protected pack");
+        assert!(!wrote_into_pack_folder, "the editor wrote plaintext into the protected package directory");
     }
 
     #[test]

@@ -10,18 +10,18 @@ homepage = "https://openomsi.org/"
 default-run = "openmapper"
 
 [dependencies]
-omsi-pack = { git = "https://github.com/Italian-seasoning/openOMSI", rev = "6246442e5774cbce7b5d2f6c5813010e6d60a06c" }
+omsi-pack = { git = "https://github.com/Italian-seasoning/openOMSI", rev = "61513c049147fdba0b4274a510dfa6b080f79456" }
 # openOMSI's own readers and geometry: the editor reads and builds exactly what the game does
-omsi-cfg = { git = "https://github.com/Italian-seasoning/openOMSI", rev = "6246442e5774cbce7b5d2f6c5813010e6d60a06c" }
-omsi-map = { git = "https://github.com/Italian-seasoning/openOMSI", rev = "6246442e5774cbce7b5d2f6c5813010e6d60a06c" }
-omsi-scenery = { git = "https://github.com/Italian-seasoning/openOMSI", rev = "6246442e5774cbce7b5d2f6c5813010e6d60a06c" }
-omsi-model = { git = "https://github.com/Italian-seasoning/openOMSI", rev = "6246442e5774cbce7b5d2f6c5813010e6d60a06c" }
-omsi-o3d = { git = "https://github.com/Italian-seasoning/openOMSI", rev = "6246442e5774cbce7b5d2f6c5813010e6d60a06c" }
-omsi-geometry = { git = "https://github.com/Italian-seasoning/openOMSI", rev = "6246442e5774cbce7b5d2f6c5813010e6d60a06c" }
-omsi-texture = { git = "https://github.com/Italian-seasoning/openOMSI", rev = "6246442e5774cbce7b5d2f6c5813010e6d60a06c" }
-omsi-timetable = { git = "https://github.com/Italian-seasoning/openOMSI", rev = "6246442e5774cbce7b5d2f6c5813010e6d60a06c" }
-omsi-content = { git = "https://github.com/Italian-seasoning/openOMSI", rev = "6246442e5774cbce7b5d2f6c5813010e6d60a06c" }
-omsi-script = { git = "https://github.com/Italian-seasoning/openOMSI", rev = "6246442e5774cbce7b5d2f6c5813010e6d60a06c" }
+omsi-cfg = { git = "https://github.com/Italian-seasoning/openOMSI", rev = "61513c049147fdba0b4274a510dfa6b080f79456" }
+omsi-map = { git = "https://github.com/Italian-seasoning/openOMSI", rev = "61513c049147fdba0b4274a510dfa6b080f79456" }
+omsi-scenery = { git = "https://github.com/Italian-seasoning/openOMSI", rev = "61513c049147fdba0b4274a510dfa6b080f79456" }
+omsi-model = { git = "https://github.com/Italian-seasoning/openOMSI", rev = "61513c049147fdba0b4274a510dfa6b080f79456" }
+omsi-o3d = { git = "https://github.com/Italian-seasoning/openOMSI", rev = "61513c049147fdba0b4274a510dfa6b080f79456" }
+omsi-geometry = { git = "https://github.com/Italian-seasoning/openOMSI", rev = "61513c049147fdba0b4274a510dfa6b080f79456" }
+omsi-texture = { git = "https://github.com/Italian-seasoning/openOMSI", rev = "61513c049147fdba0b4274a510dfa6b080f79456" }
+omsi-timetable = { git = "https://github.com/Italian-seasoning/openOMSI", rev = "61513c049147fdba0b4274a510dfa6b080f79456" }
+omsi-content = { git = "https://github.com/Italian-seasoning/openOMSI", rev = "61513c049147fdba0b4274a510dfa6b080f79456" }
+omsi-script = { git = "https://github.com/Italian-seasoning/openOMSI", rev = "61513c049147fdba0b4274a510dfa6b080f79456" }
 
 wgpu = { version = "29", default-features = false, features = ["std", "parking_lot", "metal", "vulkan", "dx12", "gles", "wgsl"] }
 winit = "0.30"
@@ -34,7 +34,7 @@ glam = "0.30"
 openmapper-mesh = { path = "crates/mesh" }
 # editing one map together (src/collab): the connection, and openOMSI's own Cloudflare tunnel
 openmapper-collab = { path = "crates/collab" }
-omsi-net = { git = "https://github.com/Italian-seasoning/openOMSI", rev = "6246442e5774cbce7b5d2f6c5813010e6d60a06c" }
+omsi-net = { git = "https://github.com/Italian-seasoning/openOMSI", rev = "61513c049147fdba0b4274a510dfa6b080f79456" }
 bytemuck = { version = "1", features = ["derive"] }
 pollster = "1.0"
 anyhow = "1"
