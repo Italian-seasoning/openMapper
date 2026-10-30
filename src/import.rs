@@ -24,6 +24,115 @@ pub struct Report {
 
 const CONTENT_FOLDERS: [&str; 6] = ["sceneryobjects", "splines", "texture", "maps", "vehicles", "fonts"];
 
+fn gltf_uri_path(base: &Path, uri: &str) -> anyhow::Result<Option<PathBuf>> {
+    if uri.starts_with("data:") {
+        return Ok(None);
+    }
+    if let Some(path) = uri.strip_prefix("file://").or_else(|| uri.strip_prefix("file:")) {
+        return Ok(Some(PathBuf::from(path)));
+    }
+    if uri.contains(':') {
+        return Ok(None);
+    }
+    let uri = uri.as_bytes();
+    let mut path = Vec::with_capacity(uri.len());
+    let mut i = 0;
+    while i < uri.len() {
+        if uri[i] == b'%' {
+            let hex = |b: u8| match b {
+                b'0'..=b'9' => Some(b - b'0'),
+                b'a'..=b'f' => Some(b - b'a' + 10),
+                b'A'..=b'F' => Some(b - b'A' + 10),
+                _ => None,
+            };
+            let hi = uri.get(i + 1).and_then(|b| hex(*b));
+            let lo = uri.get(i + 2).and_then(|b| hex(*b));
+            let (Some(hi), Some(lo)) = (hi, lo) else {
+                anyhow::bail!("glTF contains an invalid percent-encoded path");
+            };
+            path.push((hi << 4) | lo);
+            i += 3;
+        } else {
+            path.push(uri[i]);
+            i += 1;
+        }
+    }
+    let path = String::from_utf8(path)?;
+    Ok(Some(base.join(path)))
+}
+
+fn include_gltf_sources(path: &Path, provenance: &mut crate::provenance::Source) -> anyhow::Result<()> {
+    let gltf = gltf::Gltf::open(path)?;
+    let base = path.parent().unwrap_or(Path::new("."));
+    for buffer in gltf.document.buffers() {
+        if let gltf::buffer::Source::Uri(uri) = buffer.source() {
+            if let Some(source) = gltf_uri_path(base, uri)? {
+                provenance.include(&source)?;
+            }
+        }
+    }
+    for image in gltf.document.images() {
+        if let gltf::image::Source::Uri { uri, .. } = image.source() {
+            if let Some(source) = gltf_uri_path(base, uri)? {
+                provenance.include(&source)?;
+            }
+        }
+    }
+    Ok(())
+}
+
+fn include_fbx_sources(path: &Path, provenance: &mut crate::provenance::Source) -> anyhow::Result<()> {
+    let scene = ufbx::load_file(
+        &path.to_string_lossy(),
+        ufbx::LoadOpts { load_external_files: false, ..Default::default() },
+    )
+    .map_err(|e| anyhow::anyhow!("FBX: {}", e.description.as_ref() as &str))?;
+    let dir = path.parent().unwrap_or(Path::new("."));
+    let mut used = std::collections::HashSet::new();
+    for node in scene.nodes.iter() {
+        let Some(mesh) = node.mesh.as_ref() else { continue };
+        for (index, _) in mesh.faces.iter().enumerate() {
+            let material = mesh.face_material.get(index).copied().unwrap_or(0) as usize;
+            if let Some(material) = node.materials.get(material).or_else(|| mesh.materials.get(material)) {
+                used.insert((**material).element.element_id);
+            }
+        }
+    }
+    for material in scene.materials.iter().filter(|material| used.contains(&material.element.element_id)) {
+        for texture in [
+            &material.pbr.base_color.texture,
+            &material.pbr.normal_map.texture,
+            &material.pbr.roughness.texture,
+            &material.pbr.metalness.texture,
+            &material.pbr.ambient_occlusion.texture,
+            &material.fbx.diffuse_color.texture,
+            &material.fbx.normal_map.texture,
+        ]
+        .into_iter()
+        .flatten()
+        {
+            if !texture.content.is_empty() && image::load_from_memory(&texture.content).is_ok() {
+                continue;
+            }
+            let files = [
+                texture.absolute_filename.as_ref() as &str,
+                texture.filename.as_ref(),
+                texture.relative_filename.as_ref(),
+            ];
+            let file = files
+                .iter()
+                .filter(|f| !f.is_empty())
+                .map(|f| Path::new(&f.replace('\\', "/")).to_path_buf())
+                .flat_map(|p| [p.clone(), dir.join(&p), dir.join(p.file_name().unwrap_or_default())])
+                .find(|p| p.is_file());
+            if let Some(file) = file {
+                provenance.include(&file)?;
+            }
+        }
+    }
+    Ok(())
+}
+
 /// Import whatever `path` is into the content folder.
 pub fn import(path: &Path, content: &Path) -> anyhow::Result<Report> {
     let ext = path.extension().map(|e| e.to_string_lossy().to_lowercase()).unwrap_or_default();
@@ -248,6 +357,11 @@ fn import_model(path: &Path, content: &Path) -> anyhow::Result<Report> {
     let mut src = crate::editable::Source { name: stem.clone(), ..Default::default() };
     let mut copied = 1;
     if matches!(ext.as_str(), "obj" | "gltf" | "glb" | "fbx") {
+        if ext == "fbx" {
+            include_fbx_sources(path, &mut provenance)?;
+        } else if ext == "gltf" || ext == "glb" {
+            include_gltf_sources(path, &mut provenance)?;
+        }
         let (mut m, mut tex_names) = if ext == "obj" {
             obj_to_model(path)?
         } else {
@@ -276,7 +390,7 @@ fn import_model(path: &Path, content: &Path) -> anyhow::Result<Report> {
                 *t = name.clone();
                 textures.push(name);
             }
-            copy_textures(&textures, src_dir, &tex_dir, &mut copied)?;
+            copy_textures(&textures, src_dir, &tex_dir, &mut copied, &mut provenance)?;
             for (mat, name) in m.mats.iter_mut().zip(&tex_names) {
                 if let (0, Some(n)) = (mat.alpha, name) {
                     mat.alpha = crate::models::picture(None, Some(&tex_dir.join(n))).map(|i| crate::models::alpha_of(&i)).unwrap_or(0);
@@ -308,7 +422,7 @@ fn import_model(path: &Path, content: &Path) -> anyhow::Result<Report> {
     } else {
         let m = omsi_o3d::load_mesh(path)?;
         let tex: Vec<String> = m.materials.iter().map(|m| m.texture.clone()).filter(|t| !t.is_empty()).collect();
-        copy_textures(&tex, src_dir, &tex_dir, &mut copied)?;
+        copy_textures(&tex, src_dir, &tex_dir, &mut copied, &mut provenance)?;
         src.model.materials = m
             .materials
             .iter()
@@ -408,7 +522,13 @@ pub fn set_alpha(sco: &Path, mesh: usize, texture: &str, index: i32, alpha: u8) 
 
 /// The textures a model names, from beside it or a texture folder next to it, with their
 /// PBR maps, into the object's own texture folder.
-fn copy_textures(names: &[String], src_dir: &Path, tex_dir: &Path, copied: &mut usize) -> anyhow::Result<()> {
+fn copy_textures(
+    names: &[String],
+    src_dir: &Path,
+    tex_dir: &Path,
+    copied: &mut usize,
+    provenance: &mut crate::provenance::Source,
+) -> anyhow::Result<()> {
     let mut seen = std::collections::HashSet::new();
     for t in names {
         let name = Path::new(&t.replace('\\', "/")).file_name().map(|f| f.to_string_lossy().to_string()).unwrap_or_default();
@@ -417,9 +537,11 @@ fn copy_textures(names: &[String], src_dir: &Path, tex_dir: &Path, copied: &mut 
         }
         let cands = [src_dir.join(t.replace('\\', "/")), src_dir.join(&name), src_dir.join("texture").join(&name), src_dir.join("textures").join(&name), src_dir.join("Texture").join(&name)];
         if let Some(src) = cands.iter().find(|p| p.is_file()) {
+            provenance.include(src)?;
             std::fs::copy(src, tex_dir.join(&name))?;
             *copied += 1;
             for p in pbr_siblings(src) {
+                provenance.include(&p)?;
                 std::fs::copy(&p, tex_dir.join(p.file_name().unwrap()))?;
                 *copied += 1;
             }

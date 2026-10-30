@@ -326,21 +326,30 @@ pub struct MapEntry {
 /// Every map of both roots (a map in the content folder hides the installation's copy).
 pub fn list_maps(roots: &Roots) -> Vec<MapEntry> {
     let mut out: Vec<MapEntry> = Vec::new();
-    for (i, root) in roots.all().iter().enumerate() {
-        let dir = root.join("maps");
-        let Ok(rd) = std::fs::read_dir(&dir) else { continue };
-        for e in rd.flatten() {
-            let p = e.path();
+    let content_maps = roots.content.join("maps");
+    let install_maps = roots.omsi.join("maps");
+    let extra = omsi_cfg::content_dirs("maps");
+    let mut dirs = vec![content_maps.clone()];
+    dirs.extend(extra.iter().filter(|p| p.starts_with(&roots.content) && **p != content_maps && **p != install_maps).cloned());
+    dirs.push(install_maps.clone());
+    dirs.extend(extra.into_iter().filter(|p| !p.starts_with(&roots.content) && *p != install_maps));
+    let mut seen_dirs = std::collections::HashSet::new();
+    for dir in dirs {
+        if !seen_dirs.insert(dir.clone()) { continue; }
+        let Some(entries) = omsi_cfg::vfs::list_dir(&dir) else { continue };
+        for (folder, is_dir) in entries {
+            if !is_dir { continue; }
+            let p = dir.join(folder);
             let cfg = p.join("global.cfg");
-            if !cfg.is_file() {
+            if !omsi_cfg::vfs::is_file(&cfg) {
                 continue;
             }
-            let folder = e.file_name().to_string_lossy().to_string();
+            let folder = p.file_name().map(|f| f.to_string_lossy().to_string()).unwrap_or_default();
             if out.iter().any(|m| m.cfg.parent().and_then(|d| d.file_name()).map(|f| f.to_string_lossy().eq_ignore_ascii_case(&folder)).unwrap_or(false)) {
                 continue;
             }
             let name = friendly_name(&cfg).unwrap_or_else(|| folder.clone());
-            out.push(MapEntry { name, cfg, in_content: i == 0 });
+            out.push(MapEntry { name, cfg, in_content: dir.starts_with(&roots.content) });
         }
     }
     out.sort_by_key(|m| m.name.to_lowercase());
