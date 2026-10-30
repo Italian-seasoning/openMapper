@@ -104,6 +104,54 @@ fn a_map_saved_reads_back_the_same() {
 }
 
 #[test]
+fn a_map_keeps_signed_asset_aliases_while_its_document_and_read_snapshot_live() {
+    let _map = one_map();
+    let roots = scratch("publisher-map-scope");
+    let content = &roots.content;
+    std::fs::create_dir_all(content.join("Packs")).unwrap();
+    omsi_cfg::add_content_root(content.clone());
+    let signer = omsi_pack::SigningKey::generate(&ring::rand::SystemRandom::new()).unwrap();
+    let mut trusted = omsi_pack::TrustedPublishers::default();
+    trusted.insert("fixture", signer.key_id(), signer.public_key());
+    trusted.save_file(&content.join("Publishers.json")).unwrap();
+    let pack = content.join("Packs/scenery.oopp");
+    omsi_pack::create_pack(
+        &pack,
+        omsi_pack::PackMetadata {
+            publisher_id: "fixture".into(), author: "Fixture".into(), pack_id: "scenery".into(),
+            version: "1.0.0".into(), license: "CC0-1.0".into(), redistribution: false,
+            key_id: None, dependencies: Vec::new(),
+        },
+        &[omsi_pack::AssetInput {
+            id: "sign".into(), path: "Sceneryobjects/Fixture/sign.sco".into(),
+            source_sha256: "12".repeat(32), bytes: b"[friendlyname]\nProtected fixture\n".to_vec(),
+        }],
+        &signer, None, &std::sync::atomic::AtomicBool::new(false),
+    ).unwrap();
+
+    let mut doc = sample_map(&roots);
+    doc.tiles.get_mut(&(0, 0)).unwrap().tile.objects[0].file = "Sceneryobjects\\Fixture\\sign.sco".into();
+    save(&mut doc).unwrap();
+    let map_dir = doc.dir.clone();
+    let refs = serde_json::json!({"format_version":1,"dependencies":[{"publisher_id":"fixture","pack_id":"scenery","version":"1.0.0"}],"assets":[{"path":"Sceneryobjects/Fixture/sign.sco","dependency":{"publisher_id":"fixture","pack_id":"scenery","version":"1.0.0"},"asset_id":"sign"}]});
+    std::fs::write(map_dir.join("dependencies.json"), refs.to_string()).unwrap();
+    drop(doc);
+
+    let cfg = map_dir.join("global.cfg");
+    let loaded = Document::load(&roots, &cfg, |_| {}).unwrap();
+    let snapshot = loaded.for_reading();
+    let object = omsi_cfg::resolve_path(&map_dir, "Sceneryobjects/Fixture/sign.sco");
+    assert_eq!(omsi_cfg::CfgFile::read(&object).unwrap().lines[1], "Protected fixture");
+    drop(loaded);
+    assert_eq!(omsi_cfg::CfgFile::read(&object).unwrap().lines[1], "Protected fixture");
+    drop(snapshot);
+    assert!(omsi_cfg::CfgFile::read(&object).is_err());
+
+    omsi_cfg::remove_content_root(content);
+    std::fs::remove_dir_all(content).unwrap();
+}
+
+#[test]
 fn a_save_keeps_what_it_replaced() {
     let _map = one_map();
     let roots = scratch("keep");

@@ -39,6 +39,7 @@ mod icons;
 mod import;
 mod import_image;
 mod provenance;
+mod publisher;
 mod install;
 mod junction;
 mod lanes;
