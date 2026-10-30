@@ -21,6 +21,7 @@ mod doc;
 mod drive;
 mod draw;
 mod export;
+mod export_policy;
 mod gamecheck;
 mod icon;
 mod geo;

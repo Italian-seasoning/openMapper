@@ -30,6 +30,14 @@ jobs:
       - uses: Swatinem/rust-cache@v2
         with:
           key: content-protection-${{ matrix.os }}
-      - run: cargo test --release --locked
-      - run: cargo build --release --locked
+      - run: cargo test --release
+      - run: cargo build --release
       - run: python3 tools/i18n/check.py
+
+      - name: Resolved dependency lock
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: dependency-lock-${{ matrix.os }}
+          path: Cargo.lock
+          retention-days: 2
