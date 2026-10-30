@@ -206,6 +206,10 @@ pub fn save(roots: &Roots, rel: &str, src: &Source) -> anyhow::Result<()> {
 /// [`save`], the modifiers that follow the ground given the ground under it where it stands
 /// (its height under a point of its frame, 0 under its origin).
 pub fn save_on(roots: &Roots, rel: &str, src: &Source, ground: Option<&dyn Fn(glam::Vec2) -> f32>) -> anyhow::Result<()> {
+    let target = omsi_cfg::resolve_path(&roots.content, rel);
+    if omsi_cfg::vfs::is_sealed(&target) {
+        anyhow::bail!("publisher-protected objects cannot be edited or overwritten");
+    }
     let (dir, stem) = folder_of(roots, rel);
     std::fs::create_dir_all(dir.join("model"))?;
     std::fs::create_dir_all(dir.join("texture"))?;
@@ -444,13 +448,16 @@ pub fn sco_path(roots: &Roots, rel: &str) -> Option<PathBuf> {
 /// their materials, and the rest of its `.sco` kept as it was. The files it uses (textures,
 /// scripts) are copied into `dir`, where the new object will be.
 pub fn source_of(roots: &Roots, rel: &str, dir: &Path) -> anyhow::Result<Source> {
+    let path = sco_path(roots, rel).ok_or_else(|| anyhow::anyhow!("{rel}: {}", tr("file not found", "файл не найден")))?;
+    if omsi_cfg::vfs::is_sealed(&path) {
+        anyhow::bail!("publisher-protected objects cannot be copied for editing");
+    }
     if let Some(src) = load(roots, rel) {
         let (from, _) = folder_of(roots, rel);
         copy_tree_missing(&from.join("texture"), &dir.join("texture"));
         copy_tree_missing(&from.join("script"), &dir.join("script"));
         return Ok(src);
     }
-    let path = sco_path(roots, rel).ok_or_else(|| anyhow::anyhow!("{rel}: {}", tr("file not found", "файл не найден")))?;
     let sco = omsi_scenery::sco::SceneryObject::load(&path).map_err(|e| anyhow::anyhow!("{e}"))?;
     if sco.model_file.is_some() {
         anyhow::bail!("{}", tr("this object takes its model from a model file and cannot be edited here", "модель этого объекта лежит в отдельном файле модели: её нельзя редактировать здесь"));
@@ -460,17 +467,23 @@ pub fn source_of(roots: &Roots, rel: &str, dir: &Path) -> anyhow::Result<Source>
     let defs: Vec<&omsi_model::MeshDef> = if model.lods.is_empty() { model.meshes.iter().collect() } else { model.lod_meshes(0).iter().collect() };
     let tex_dirs = crate::assets::texture_dirs(&roots.omsi, &roots.content, &sco_dir);
     let refs: Vec<&Path> = tex_dirs.iter().map(PathBuf::as_path).collect();
-    std::fs::create_dir_all(dir.join("texture"))?;
     let name = if sco.friendly_name.trim().is_empty() { path.file_stem().map(|s| s.to_string_lossy().to_string()).unwrap_or_default() } else { sco.friendly_name.trim().to_string() };
     let mut out = Source { name, abs_height: sco.absolute_height(), ..Default::default() };
+    let mut textures = Vec::new();
     for md in defs {
         let in_model = omsi_cfg::resolve_path(&omsi_cfg::resolve_path(&sco_dir, "model"), &md.file);
         let mesh_path = if omsi_cfg::vfs::is_file(&in_model) { in_model } else { omsi_cfg::resolve_path(&sco_dir, &md.file) };
+        if omsi_cfg::vfs::is_sealed(&mesh_path) {
+            anyhow::bail!("publisher-protected model files cannot be copied for editing");
+        }
         let Ok(m) = omsi_o3d::load_mesh(&mesh_path) else { continue };
         let mats = materials_of(&m, &md.materials);
         for mat in &mats {
             for t in [&mat.texture, &mat.night_map, &mat.light_map].into_iter().flatten() {
-                copy_texture(t, &refs, &dir.join("texture"));
+                if omsi_texture::find_texture(t, &refs).is_some_and(|p| omsi_cfg::vfs::is_sealed(&p)) {
+                    anyhow::bail!("publisher-protected textures cannot be copied for editing");
+                }
+                textures.push(t.clone());
             }
         }
         let offset = out.model.materials.len() as u32;
@@ -496,6 +509,12 @@ pub fn source_of(roots: &Roots, rel: &str, dir: &Path) -> anyhow::Result<Source>
     out.extra = kept_lines(&omsi_cfg::decode_text(&std::fs::read(&path)?), &sco_dir, dir);
     if out.model.parts.is_empty() {
         anyhow::bail!("{}", tr("the object has no mesh to edit", "у объекта нет меша для редактирования"));
+    }
+    if !textures.is_empty() {
+        std::fs::create_dir_all(dir.join("texture"))?;
+        for texture in &textures {
+            copy_texture(texture, &refs, &dir.join("texture"));
+        }
     }
     merge_materials(&mut out.model);
     Ok(out)

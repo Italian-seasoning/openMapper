@@ -146,6 +146,13 @@ fn main() {
     logging::init("info,wgpu_core=warn,wgpu_hal=warn,naga=warn");
     // `openmapper --check path/to/global.cfg` checks a map and prints what it found
     let args: Vec<std::ffi::OsString> = std::env::args_os().collect();
+    if args.get(1).is_some_and(|a| a == "--publish-pack") {
+        let (Some(spec), Some(out), Some(signing)) = (args.get(2), args.get(3), args.get(4)) else {
+            eprintln!("openmapper --publish-pack spec.json out.oopp signing.pk8 [new-content-key.bin]");
+            std::process::exit(2);
+        };
+        std::process::exit(publisher::cli(std::path::Path::new(spec), std::path::Path::new(out), std::path::Path::new(signing), args.get(5).map(std::path::Path::new)));
+    }
     if args.get(1).map(|a| a == "--check").unwrap_or(false) {
         let Some(cfg) = args.get(2) else {
             eprintln!("openmapper --check path/to/global.cfg");

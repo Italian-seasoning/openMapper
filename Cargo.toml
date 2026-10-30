@@ -10,6 +10,7 @@ homepage = "https://openomsi.org/"
 default-run = "openmapper"
 
 [dependencies]
+zeroize = "1"
 omsi-pack = { git = "https://github.com/Italian-seasoning/openOMSI", rev = "2377a5cf5b58f6ac5392ba4c0f474f388ab261f9" }
 # openOMSI's own readers and geometry: the editor reads and builds exactly what the game does
 omsi-cfg = { git = "https://github.com/Italian-seasoning/openOMSI", rev = "2377a5cf5b58f6ac5392ba4c0f474f388ab261f9" }
