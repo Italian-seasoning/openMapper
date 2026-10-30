@@ -9,7 +9,7 @@
 //!   turned into a DirectX `.x` that OMSI 2 and openOMSI both read.
 
 use std::collections::HashMap;
-use std::io::Read;
+use std::io::{BufRead, BufReader, Read};
 use std::path::{Path, PathBuf};
 
 use crate::i18n::tr;
@@ -74,6 +74,21 @@ fn include_gltf_sources(path: &Path, provenance: &mut crate::provenance::Source)
     for image in gltf.document.images() {
         if let gltf::image::Source::Uri { uri, .. } = image.source() {
             if let Some(source) = gltf_uri_path(base, uri)? {
+                provenance.include(&source)?;
+            }
+        }
+    }
+    Ok(())
+}
+
+fn include_obj_sources(path: &Path, provenance: &mut crate::provenance::Source) -> anyhow::Result<()> {
+    let dir = path.parent().unwrap_or(Path::new("."));
+    for line in BufReader::new(std::fs::File::open(path)?).lines() {
+        let line = line?;
+        let line = line.trim_start();
+        if line.split_whitespace().next() == Some("mtllib") {
+            let source = dir.join(line[6..].trim());
+            if source.is_file() {
                 provenance.include(&source)?;
             }
         }
@@ -357,7 +372,9 @@ fn import_model(path: &Path, content: &Path) -> anyhow::Result<Report> {
     let mut src = crate::editable::Source { name: stem.clone(), ..Default::default() };
     let mut copied = 1;
     if matches!(ext.as_str(), "obj" | "gltf" | "glb" | "fbx") {
-        if ext == "fbx" {
+        if ext == "obj" {
+            include_obj_sources(path, &mut provenance)?;
+        } else if ext == "fbx" {
             include_fbx_sources(path, &mut provenance)?;
         } else if ext == "gltf" || ext == "glb" {
             include_gltf_sources(path, &mut provenance)?;
@@ -922,8 +939,10 @@ mod tests {
         let report = super::import(&dir.join("wall.obj"), &content).unwrap();
 
         let sibling_hash = crate::provenance::file_hash(&dir.join("wall_nn.png")).unwrap();
+        let material_hash = crate::provenance::file_hash(&dir.join("wall.mtl")).unwrap();
         let history = crate::provenance::History::load(&content).unwrap();
         assert!(history.entries.values().any(|sources| sources.contains(&sibling_hash)));
+        assert!(history.entries.values().any(|sources| sources.contains(&material_hash)));
         assert!(!report.objects.is_empty());
         let _ = std::fs::remove_dir_all(&dir);
     }

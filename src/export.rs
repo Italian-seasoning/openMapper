@@ -284,19 +284,27 @@ pub fn readme(doc: &Document, plan: &Plan) -> String {
 
 /// Write the zip: the planned files and the readme.
 pub fn write_zip(plan: &Plan, readme: &str, out: &Path) -> anyhow::Result<u64> {
-    let tmp = out.with_extension("zip.openmapper-new");
-    let f = std::fs::File::create(&tmp)?;
-    let mut z = zip::ZipWriter::new(f);
-    let opts = zip::write::SimpleFileOptions::default().compression_method(zip::CompressionMethod::Deflated);
-    z.start_file("readme.txt", opts)?;
-    z.write_all(readme.as_bytes())?;
-    for (rel, p) in &plan.files {
-        z.start_file(rel.as_str(), opts)?;
-        z.write_all(&std::fs::read(p)?)?;
+    for (relative, path) in &plan.files {
+        anyhow::ensure!(!omsi_cfg::vfs::is_sealed(path), "protected playback assets cannot be exported: {relative}");
+        anyhow::ensure!(std::fs::symlink_metadata(path)?.is_file(), "export input must be a regular file: {relative}");
     }
-    z.finish()?;
-    std::fs::rename(&tmp, out)?;
-    Ok(std::fs::metadata(out).map(|m| m.len()).unwrap_or(0))
+    let tmp = out.with_extension("zip.openmapper-new");
+    let f = std::fs::OpenOptions::new().write(true).create_new(true).open(&tmp)?;
+    let result = (|| {
+        let mut z = zip::ZipWriter::new(f);
+        let opts = zip::write::SimpleFileOptions::default().compression_method(zip::CompressionMethod::Deflated);
+        z.start_file("readme.txt", opts)?;
+        z.write_all(readme.as_bytes())?;
+        for (rel, p) in &plan.files {
+            z.start_file(rel.as_str(), opts)?;
+            std::io::copy(&mut std::fs::File::open(p)?, &mut z)?;
+        }
+        z.finish()?;
+        std::fs::rename(&tmp, out)?;
+        Ok(std::fs::metadata(out).map(|m| m.len()).unwrap_or(0))
+    })();
+    if result.is_err() { let _ = std::fs::remove_file(&tmp); }
+    result
 }
 
 /// Put the planned files into an OMSI 2 folder (`maps\<folder>`, the objects, roads and

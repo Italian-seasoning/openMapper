@@ -76,7 +76,7 @@ pub fn filter(
         if matches.iter().all(|a| a.redistribution && !a.protected) {
             continue;
         }
-        if rights {
+        if rights && matches.iter().all(|claim| !claim.protected) {
             policy.warnings.push(format!(
                 "{relative}: included under the exporter's explicit rights declaration"
             ));

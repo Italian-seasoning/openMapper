@@ -134,3 +134,21 @@ impl Source {
         result
     }
 }
+
+
+#[cfg(test)]
+mod tests {
+    #[test]
+    fn changed_originals_cannot_be_recorded_as_the_preconversion_bytes() {
+        let root = std::env::temp_dir().join(format!("om-source-change-{}", std::process::id()));
+        std::fs::create_dir_all(root.join("output")).unwrap();
+        let source = root.join("source.obj");
+        std::fs::write(&source, b"owned original").unwrap();
+        let provenance = super::Source::capture(&source).unwrap();
+        std::fs::write(&source, b"changed during conversion").unwrap();
+        std::fs::write(root.join("output/mesh.x"), b"converted bytes").unwrap();
+        assert!(provenance.record(&root, &root.join("output")).is_err());
+        assert!(!root.join(super::INDEX).exists());
+        std::fs::remove_dir_all(root).unwrap();
+    }
+}
