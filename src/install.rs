@@ -292,6 +292,9 @@ impl Roots {
         let content = content_dir();
         let _ = omsi_cfg::ensure_content_layout(&content);
         omsi_cfg::add_content_root(content.clone());
+        if let Err(e) = omsi_cfg::publisher::mount_packs(&content) {
+            log::warn!("publisher packs: {e}");
+        }
         omsi_cfg::add_content_root(omsi.clone());
         Roots { omsi, content }
     }
@@ -356,4 +359,43 @@ fn friendly_name(cfg: &Path) -> Option<String> {
         }
     }
     name
+}
+
+#[cfg(test)]
+mod publisher_maps {
+    use super::*;
+
+    #[test]
+    fn protected_publisher_maps_appear_in_the_map_picker() {
+        let root = std::env::temp_dir().join(format!("openmapper-publisher-picker-{}", std::process::id()));
+        let content = root.join("content");
+        let omsi = root.join("omsi");
+        std::fs::create_dir_all(content.join("Packs")).unwrap();
+        std::fs::create_dir_all(&omsi).unwrap();
+        let signer = omsi_pack::SigningKey::generate(&ring::rand::SystemRandom::new()).unwrap();
+        let mut trust = omsi_pack::TrustedPublishers::default();
+        trust.insert("fixture", signer.key_id(), signer.public_key());
+        trust.save_file(&content.join("Publishers.json")).unwrap();
+        let pack = content.join("Packs/protected-map.oopp");
+        omsi_pack::create_pack(
+            &pack,
+            omsi_pack::PackMetadata {
+                publisher_id: "fixture".into(), author: "Fixture".into(), pack_id: "map".into(),
+                version: "1.0.0".into(), license: "CC0-1.0".into(), redistribution: false,
+                key_id: None, dependencies: Vec::new(),
+            },
+            &[omsi_pack::AssetInput {
+                id: "global".into(), path: "maps/Protected/global.cfg".into(),
+                source_sha256: "12".repeat(32), bytes: b"[name]\r\nProtected\r\n[friendlyname]\r\nProtected Map\r\n".to_vec(),
+            }],
+            &signer, None, &std::sync::atomic::AtomicBool::new(false),
+        ).unwrap();
+        omsi_cfg::add_content_root(content.clone());
+        let mounts = omsi_cfg::publisher::mount_packs(&content).unwrap();
+        let found = list_maps(&Roots { omsi, content: content.clone() });
+        assert!(found.iter().any(|m| m.name == "Protected Map" && m.in_content && omsi_cfg::vfs::is_file(&m.cfg)));
+        for mount in mounts { omsi_cfg::vfs::unmount_sealed(&mount); omsi_cfg::remove_content_root(&mount); }
+        omsi_cfg::remove_content_root(&content);
+        std::fs::remove_dir_all(root).unwrap();
+    }
 }
