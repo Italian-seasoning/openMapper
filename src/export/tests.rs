@@ -59,3 +59,60 @@ fn an_exported_map_imports_whole() {
     }
     let _ = std::fs::remove_dir_all(&base);
 }
+
+
+#[test]
+fn restricted_export_round_trips_as_a_dependency_without_copying_publisher_bytes() {
+    let _map = crate::doc::one_map();
+    let base = std::env::temp_dir().join(format!("openmapper-reference-export-{}", std::process::id()));
+    let (first, second) = (base.join("first"), base.join("second"));
+    for root in [&first, &second] { std::fs::create_dir_all(root.join("Packs")).unwrap(); }
+    let signer = omsi_pack::SigningKey::generate(&ring::rand::SystemRandom::new()).unwrap();
+    let mut trust = omsi_pack::TrustedPublishers::default();
+    trust.insert("export-fixture", signer.key_id(), signer.public_key());
+    let bytes = b"[friendlyname]\nOwned export fixture\n";
+    let relative = "Sceneryobjects/ReferenceFixture/renamed.sco";
+    for root in [&first, &second] {
+        trust.save_file(&root.join("Publishers.json")).unwrap();
+        omsi_pack::create_pack(&root.join("Packs/objects.oopp"), omsi_pack::PackMetadata {
+            publisher_id: "export-fixture".into(), author: "Fixture".into(), pack_id: "objects".into(),
+            version: "1.0.0".into(), license: "LicenseRef-Owned-Fixture".into(), redistribution: false,
+            key_id: None, dependencies: vec![],
+        }, &[omsi_pack::AssetInput { id: "object".into(), path: "Sceneryobjects/ReferenceFixture/original.sco".into(),
+            source_sha256: omsi_pack::sha256_hex(b"original owned source"), bytes: bytes.to_vec() }],
+            &signer, None, &std::sync::atomic::AtomicBool::new(false)).unwrap();
+    }
+    let owned = first.join(relative);
+    std::fs::create_dir_all(owned.parent().unwrap()).unwrap();
+    std::fs::write(&owned, bytes).unwrap();
+    let roots = Roots { omsi: base.join("stock"), content: first.clone() };
+    let mut doc = Document::new_map(&roots, "References", "References", 1);
+    doc.tiles.get_mut(&(0, 0)).unwrap().tile.objects.push(omsi_map::MapObject {
+        file: relative.replace('/', "\\"), id: 1, pos: [100.0, 100.0, 0.0], ..Default::default()
+    });
+    crate::doc::save(&mut doc).unwrap();
+    let zip = base.join("references.zip");
+    let (planned, _) = export(&doc, &roots, &zip).unwrap();
+    assert!(!planned.files.contains_key(relative), "restricted source was copied by the actual exporter");
+    let mut archive = zip::ZipArchive::new(std::fs::File::open(&zip).unwrap()).unwrap();
+    assert!(archive.by_name(relative).is_err());
+    assert!(archive.by_name("maps/References/dependencies.json").is_ok());
+    drop(archive);
+    crate::import::import(&zip, &second).unwrap();
+    assert!(!second.join(relative).exists());
+    omsi_cfg::add_content_root(second.clone());
+    let roots2 = Roots { omsi: roots.omsi.clone(), content: second.clone() };
+    let back = Document::load(&roots2, &second.join("maps/References/global.cfg"), |_| {}).unwrap();
+    let alias = omsi_cfg::resolve_path(&back.dir, relative);
+    assert!(omsi_scenery::SceneryObject::load(&alias).is_ok());
+    assert_eq!(omsi_cfg::vfs::read(&alias).unwrap(), bytes);
+    // Re-export an owned overlay without losing the references it already carries.
+    let second_zip = base.join("again.zip");
+    export(&back, &roots2, &second_zip).unwrap();
+    let mut archive = zip::ZipArchive::new(std::fs::File::open(second_zip).unwrap()).unwrap();
+    assert!(archive.by_name("maps/References/dependencies.json").is_ok());
+    drop(archive);
+    drop(back);
+    omsi_cfg::remove_content_root(&second);
+    std::fs::remove_dir_all(base).unwrap();
+}
