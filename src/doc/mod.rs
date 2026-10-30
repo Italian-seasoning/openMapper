@@ -11,7 +11,7 @@ pub mod dds;
 
 use std::collections::{BTreeMap, HashMap};
 use std::path::{Path, PathBuf};
-use std::sync::{Arc, atomic::{AtomicU64, Ordering}};
+use std::sync::{atomic::{AtomicU64, Ordering}, Arc};
 
 use glam::{DVec2, DVec3};
 use omsi_map::{GlobalCfg, GroundTex, MapObject, MapSpline, Terrain, Tile, TERRAIN_SAMPLES};

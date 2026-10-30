@@ -978,6 +978,10 @@ impl App {
     }
 
     fn save(&mut self) -> bool {
+        if self.ed.doc.as_ref().is_some_and(|doc| doc._publisher_protected_source) {
+            self.ed.error(format!("{}: protected publisher maps support playback only", tr("Could not save (the changes are still here, nothing is lost)", "Не удалось сохранить (изменения остались здесь, ничего не потеряно)")));
+            return false;
+        }
         if self.collab.is_guest() {
             self.ed.error(tr("In multiplayer the host saves the map. Leave the session to save this as a copy of your own.", "В совместной правке карту сохраняет хост. Выйдите из сессии, чтобы сохранить копию для себя."));
             return false;
