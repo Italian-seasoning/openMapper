@@ -838,3 +838,26 @@ mod probe {
         }
     }
 }
+
+#[cfg(test)]
+mod provenance_tests {
+    use sha2::{Digest, Sha256};
+    #[test]
+    fn original_source_hash_is_retained_after_real_model_conversion() {
+        let root = std::env::temp_dir().join(format!("om-source-provenance-{}", std::process::id()));
+        std::fs::create_dir_all(&root).unwrap();
+        let content = root.join("content");
+        std::fs::create_dir_all(&content).unwrap();
+        let source = b"v 0 0 0\nv 1 0 0\nv 0 1 0\nf 1 2 3\n";
+        let file = root.join("owned.obj");
+        std::fs::write(&file, source).unwrap();
+        let hash: String = Sha256::digest(source).iter().map(|b| format!("{b:02x}")).collect();
+        let report = super::import(&file, &content).unwrap();
+        assert_eq!(report.objects.len(), 1);
+        let history: serde_json::Value = serde_json::from_slice(&std::fs::read(content.join(".openmapper-provenance.json")).unwrap()).unwrap();
+        assert_eq!(history["format_version"], 1);
+        assert!(history["entries"].as_object().unwrap().values().any(|v| v.as_array().unwrap().iter().any(|s| s == &hash)));
+        assert_eq!(std::fs::read(file).unwrap(), source);
+        std::fs::remove_dir_all(root).unwrap();
+    }
+}
