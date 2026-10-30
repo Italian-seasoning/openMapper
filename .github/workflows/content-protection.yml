@@ -32,8 +32,8 @@ jobs:
           key: content-protection-${{ matrix.os }}
           cache-on-failure: true
           cache-workspace-crates: true
-      - run: cargo test --release
-      - run: cargo build --release
+      - run: cargo test --locked --release
+      - run: cargo build --locked --release
       - run: python3 tools/i18n/check.py
       - run: python3 tools/test_fingerprint.py
 
