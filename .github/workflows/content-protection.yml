@@ -1,0 +1,40 @@
+name: Content protection
+
+on:
+  push:
+    branches: [feat/content-protection]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: content-protection-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  fingerprints:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - run: python3 tools/test_fingerprint.py
+  native:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 60
+    env:
+      CARGO_BUILD_JOBS: 4
+      CARGO_TERM_COLOR: always
+    steps:
+      - uses: actions/checkout@v7
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+        with:
+          key: content-protection-${{ matrix.os }}
+      - run: cargo build --release --locked
+      - run: cargo test --release --locked
+      - run: python3 tools/i18n/check.py
