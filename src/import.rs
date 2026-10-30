@@ -807,6 +807,43 @@ mod tests {
     }
 
     #[test]
+    fn importing_a_gltf_records_its_external_buffer_and_texture_bytes() {
+        let dir = std::env::temp_dir().join(format!("om-provenance-gltf-{}", std::process::id()));
+        let content = dir.join("content");
+        std::fs::create_dir_all(&content).unwrap();
+        let positions: [f32; 9] = [0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0];
+        let uvs: [f32; 6] = [0.0, 0.0, 1.0, 0.0, 0.0, 1.0];
+        let mut buffer: Vec<u8> = positions.iter().chain(uvs.iter()).flat_map(|f| f.to_le_bytes()).collect();
+        buffer.extend([0u16, 1, 2].iter().flat_map(|i| i.to_le_bytes()));
+        let buffer_path = dir.join("mesh data.bin");
+        std::fs::write(&buffer_path, buffer).unwrap();
+        let texture_path = dir.join("external.png");
+        image::RgbaImage::from_pixel(2, 2, image::Rgba([80, 120, 160, 255])).save(&texture_path).unwrap();
+        let source = dir.join("external.gltf");
+        std::fs::write(
+            &source,
+            r#"{"asset":{"version":"2.0"},"scene":0,"scenes":[{"nodes":[0]}],
+            "nodes":[{"mesh":0}],
+            "meshes":[{"primitives":[{"attributes":{"POSITION":0,"TEXCOORD_0":1},"indices":2,"material":0}]}],
+            "materials":[{"pbrMetallicRoughness":{"baseColorTexture":{"index":0}}}],
+            "textures":[{"source":0}],"images":[{"uri":"external.png"}],
+            "buffers":[{"byteLength":66,"uri":"mesh%20data.bin"}],
+            "bufferViews":[{"buffer":0,"byteOffset":0,"byteLength":36},{"buffer":0,"byteOffset":36,"byteLength":24},{"buffer":0,"byteOffset":60,"byteLength":6}],
+            "accessors":[{"bufferView":0,"componentType":5126,"count":3,"type":"VEC3","min":[0,0,0],"max":[1,1,0]},{"bufferView":1,"componentType":5126,"count":3,"type":"VEC2"},{"bufferView":2,"componentType":5123,"count":3,"type":"SCALAR"}]}"#,
+        )
+        .unwrap();
+
+        super::import(&source, &content).unwrap();
+
+        let buffer_hash = crate::provenance::file_hash(&buffer_path).unwrap();
+        let texture_hash = crate::provenance::file_hash(&texture_path).unwrap();
+        let history = crate::provenance::History::load(&content).unwrap();
+        assert!(history.entries.values().any(|sources| sources.contains(&buffer_hash)));
+        assert!(history.entries.values().any(|sources| sources.contains(&texture_hash)));
+        let _ = std::fs::remove_dir_all(&dir);
+    }
+
+    #[test]
     fn a_materials_alpha_is_set_and_taken_away_in_the_sco() {
         let dir = std::env::temp_dir().join(format!("om-alpha-{}", std::process::id()));
         std::fs::create_dir_all(&dir).unwrap();
