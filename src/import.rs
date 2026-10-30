@@ -235,6 +235,7 @@ fn pbr_siblings(tex: &Path) -> Vec<PathBuf> {
 /// colours, textures and transparency. It stands on the ground: a model whose origin is in its
 /// middle would otherwise sink half into it.
 fn import_model(path: &Path, content: &Path) -> anyhow::Result<Report> {
+    let mut provenance = crate::provenance::Source::capture(path)?;
     let stem = path.file_stem().map(|s| s.to_string_lossy().to_string()).unwrap_or_else(|| "model".into());
     let safe = crate::editable::safe_name(&stem);
     let roots = crate::install::Roots { omsi: PathBuf::new(), content: content.to_path_buf() };
@@ -263,6 +264,7 @@ fn import_model(path: &Path, content: &Path) -> anyhow::Result<Report> {
                 let name = Path::new(&t.replace('\\', "/")).file_name().map(|f| f.to_string_lossy().to_string()).unwrap_or_default();
                 let e = Path::new(&name).extension().map(|e| e.to_string_lossy().to_lowercase()).unwrap_or_default();
                 let found = [src_dir.join(t.replace('\\', "/")), src_dir.join(&name)].into_iter().find(|p| p.is_file());
+                if let Some(p) = &found { provenance.include(p)?; }
                 if !name.is_empty() && !omsi_texture::EXTENSIONS.contains(&e.as_str()) {
                     if let Some(img) = crate::models::picture(None, found.as_deref()) {
                         let png = format!("{}.png", Path::new(&name).file_stem().unwrap().to_string_lossy());
@@ -326,6 +328,7 @@ fn import_model(path: &Path, content: &Path) -> anyhow::Result<Report> {
     stand_on_ground(&mut src.model);
     crate::editable::merge_materials(&mut src.model);
     crate::editable::save(&roots, &rel, &src)?;
+    provenance.record(content, &dir)?;
     Ok(Report { copied, objects: vec![rel], message: format!("{} {stem}", tr("Model imported:", "Модель импортирована:")) })
 }
 

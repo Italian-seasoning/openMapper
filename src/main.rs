@@ -37,6 +37,7 @@ mod i18n;
 mod icons;
 mod import;
 mod import_image;
+mod provenance;
 mod install;
 mod junction;
 mod lanes;
