@@ -116,7 +116,12 @@ pub fn filter(
             // An authored object wrapper is an overlay of mesh references, not the mesh itself.
             omitted.pop();
         } else {
-            policy.unresolved.push(format!("{relative}: no byte-identical playable output in the trusted publisher pack; obtain its converted asset or declare your redistribution rights"));
+            let remedy = if matches.iter().any(|claim| claim.protected) {
+                "obtain the publisher's playable asset; protected content has no plaintext export override"
+            } else {
+                "obtain its converted asset or declare your redistribution rights"
+            };
+            policy.unresolved.push(format!("{relative}: no byte-identical playable output in the trusted publisher pack; {remedy}"));
         }
     }
     for relative in omitted {

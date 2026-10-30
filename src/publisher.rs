@@ -201,6 +201,10 @@ mod tests {
         std::fs::create_dir_all(&root).unwrap();
         let original = b"v 0 0 0\nv 1 0 0\nv 0 1 0\nf 1 2 3\n";
         std::fs::write(root.join("source.obj"), original).unwrap();
+        let texel = [23, 97, 181, 255];
+        image::RgbaImage::from_pixel(16, 16, image::Rgba(texel))
+            .save(root.join("wall.png"))
+            .unwrap();
         let content = root.join("content");
         std::fs::create_dir_all(&content).unwrap();
         let imported = crate::import::import(&root.join("source.obj"), &content).unwrap();
@@ -226,7 +230,10 @@ mod tests {
         std::fs::write(&spec, serde_json::to_vec(&serde_json::json!({
             "protected": true,
             "metadata": {"publisher_id":"owned-fixture","author":"Fixture","pack_id":"mesh","version":"1.0.0","license":"LicenseRef-Owned-Fixture","redistribution":false,"key_id":null,"dependencies":[]},
-            "assets":[{"id":"mesh","path":"Sceneryobjects/Fixture/model/triangle.x","file":converted,"source":"source.obj"}]
+            "assets":[
+                {"id":"mesh","path":"Sceneryobjects/Fixture/model/triangle.x","file":converted,"source":"source.obj"},
+                {"id":"texture","path":"Sceneryobjects/Fixture/texture/wall.png","file":"wall.png","source":"wall.png"}
+            ]
         })).unwrap()).unwrap();
         let out = root.join("mesh.oopp");
         let key_path = root.join("content-key.bin");
@@ -251,6 +258,27 @@ mod tests {
         let decoded = omsi_o3d::load_mesh(&mesh_path).unwrap();
         assert_eq!(decoded.triangles.len(), 1);
         assert!(!mesh_path.exists(), "protected asset was extracted to disk");
+        let texture_path = mount.join("Sceneryobjects/Fixture/texture/wall.png");
+        let decoded_texture = omsi_texture::decode_file(&texture_path).unwrap();
+        assert_eq!((decoded_texture.width, decoded_texture.height), (16, 16));
+        assert_eq!(&decoded_texture.rgba[..4], &texel[..]);
+        let cache_dir = root.join("texture-cache");
+        let cache = omsi_texture::disk_cache::DiskCache::new(cache_dir.clone(), 1024 * 1024);
+        let bytes = omsi_cfg::vfs::read(&texture_path).unwrap();
+        let options = omsi_texture::gpu::GpuOptions {
+            bc: true,
+            compress: true,
+        };
+        let _ = omsi_texture::gpu::load_gpu_cached(&bytes, &texture_path, options, Some(&cache))
+            .unwrap();
+        assert!(
+            !cache_dir.exists(),
+            "a protected texture was written to the official disk cache"
+        );
+        assert!(
+            !texture_path.exists(),
+            "a protected texture was extracted to disk"
+        );
         let second = super::publish(
             &spec,
             &root.join("second.oopp"),
