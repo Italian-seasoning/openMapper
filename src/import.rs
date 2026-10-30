@@ -784,6 +784,29 @@ mod tests {
     }
 
     #[test]
+    fn importing_a_model_records_its_external_pbr_sibling_bytes() {
+        let dir = std::env::temp_dir().join(format!("om-provenance-pbr-{}", std::process::id()));
+        let content = dir.join("content");
+        std::fs::create_dir_all(&content).unwrap();
+        image::RgbaImage::from_pixel(2, 2, image::Rgba([80, 120, 160, 255])).save(dir.join("wall.png")).unwrap();
+        image::RgbaImage::from_pixel(2, 2, image::Rgba([128, 128, 255, 255])).save(dir.join("wall_nn.png")).unwrap();
+        std::fs::write(dir.join("wall.mtl"), "newmtl wall\nmap_Kd wall.png\n").unwrap();
+        std::fs::write(
+            dir.join("wall.obj"),
+            "mtllib wall.mtl\nv 0 0 0\nv 1 0 0\nv 0 1 0\nvt 0 0\nvt 1 0\nvt 0 1\nusemtl wall\nf 1/1 2/2 3/3\n",
+        )
+        .unwrap();
+
+        let report = super::import(&dir.join("wall.obj"), &content).unwrap();
+
+        let sibling_hash = crate::provenance::file_hash(&dir.join("wall_nn.png")).unwrap();
+        let history = crate::provenance::History::load(&content).unwrap();
+        assert!(history.entries.values().any(|sources| sources.contains(&sibling_hash)));
+        assert!(!report.objects.is_empty());
+        let _ = std::fs::remove_dir_all(&dir);
+    }
+
+    #[test]
     fn a_materials_alpha_is_set_and_taken_away_in_the_sco() {
         let dir = std::env::temp_dir().join(format!("om-alpha-{}", std::process::id()));
         std::fs::create_dir_all(&dir).unwrap();
