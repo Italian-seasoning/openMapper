@@ -9,7 +9,7 @@ python3 tools/fingerprint.py embed --kind ppm --id 7e8d4f01 owned.ppm marked.ppm
 python3 tools/fingerprint.py inspect --kind ppm --id 7e8d4f01 marked.ppm
 ```
 
-The identifier is reduced to a domain-separated 64-bit SHA-256 value. OBJ marks use the parity of a five-decimal grid for the first 64 vertex X coordinates; an edited coordinate changes by at most 0.000015 model units. PPM marks use the low bit of the red channel for the first 64 pixels; each changed channel differs by at most one level. The output is created as a new file and never replaces an existing file.
+The identifier is reduced to a domain-separated 64-bit SHA-256 value. OBJ marks use the parity of a five-decimal grid for the first 64 vertex X coordinates; an edited coordinate changes by at most 0.000015 model units. To keep the grid exactly representable, OBJ coordinates must be within 2^51 grid units (about 22.5 billion model units). PPM marks use the low bit of the red channel for the first 64 pixels; each changed channel differs by at most one level. The output is created as a new file and never replaces an existing file.
 
 The current checks demonstrate detection after OBJ comments/material references change and after a PPM header comment is added, while pixel order is preserved. They also check an unmarked sample and reject a wrong identifier. They do not measure a broad corpus or a buyer-scale false-positive rate. For uniformly random 64-bit samples the chance of a single accidental match is 1 in 2^64; deliberate edits and large populations have different risks.
 

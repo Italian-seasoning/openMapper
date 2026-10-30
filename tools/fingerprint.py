@@ -3,19 +3,21 @@
 
 import argparse
 import hashlib
-import math
+import io
 import os
 from pathlib import Path
 import re
 import stat
 import tempfile
+from decimal import Decimal, InvalidOperation, ROUND_HALF_EVEN
 
 
 MAX_FILE_BYTES = 64 * 1024 * 1024
 MAX_OBJ_VERTICES = 1_000_000
 MAX_PPM_DIMENSION = 8192
 MARK_BITS = 64
-GRID = 0.00001
+GRID_DECIMAL = Decimal("0.00001")
+MAX_COORDINATE_UNITS = 2**51
 ID_DOMAIN = b"openMapper content fingerprint v1\0"
 _TOKEN = re.compile(r"\S+")
 _PPM_SPACE = b" \t\r\n\v\f"
@@ -36,40 +38,57 @@ def _read(path: Path) -> bytes:
     return data
 
 
-def _obj_vertices(text: str):
-    vertices = []
-    for line_number, line in enumerate(text.splitlines(keepends=True)):
-        tokens = list(_TOKEN.finditer(line))
-        if not tokens or tokens[0].group() != "v":
-            continue
-        if len(tokens) < 4:
-            raise ValueError(f"OBJ vertex on line {line_number + 1} has fewer than three coordinates")
-        try:
-            x = float(tokens[1].group())
-        except ValueError as error:
-            raise ValueError(f"invalid OBJ x coordinate on line {line_number + 1}") from error
-        if not math.isfinite(x):
-            raise ValueError(f"non-finite OBJ x coordinate on line {line_number + 1}")
-        vertices.append((line_number, tokens[1].start(), tokens[1].end(), x))
-        if len(vertices) > MAX_OBJ_VERTICES:
-            raise ValueError(f"OBJ exceeds {MAX_OBJ_VERTICES} vertices")
-    if len(vertices) < MARK_BITS:
-        raise ValueError(f"OBJ needs at least {MARK_BITS} vertices")
-    return vertices
-
-
-def _embed_obj(data: bytes, bits: tuple[int, ...]) -> bytes:
+def _obj_vertex(line: str, line_number: int, *, marked: bool = False):
+    token = _TOKEN.search(line)
+    if token is None or token.group() != "v":
+        return None
+    coordinate = _TOKEN.search(line, token.end())
+    if coordinate is None:
+        raise ValueError(f"OBJ vertex on line {line_number} has fewer than three coordinates")
     try:
-        text = data.decode("utf-8")
-    except UnicodeDecodeError as error:
-        raise ValueError("OBJ must be UTF-8 text") from error
-    lines = text.splitlines(keepends=True)
-    vertices = _obj_vertices(text)
-    for bit, (line_number, start, end, x) in zip(bits, vertices):
-        quantized = round(x / GRID)
-        marked = (quantized & ~1) | bit
-        lines[line_number] = lines[line_number][:start] + f"{marked * GRID:.5f}" + lines[line_number][end:]
-    return "".join(lines).encode("utf-8")
+        x = Decimal(coordinate.group())
+    except InvalidOperation as error:
+        raise ValueError(f"invalid OBJ x coordinate on line {line_number}") from error
+    if not x.is_finite():
+        raise ValueError(f"non-finite OBJ x coordinate on line {line_number}")
+    limit = MAX_COORDINATE_UNITS if marked else MAX_COORDINATE_UNITS - 1
+    if abs(x) > GRID_DECIMAL * limit:
+        raise ValueError(f"OBJ x coordinate on line {line_number} exceeds the fingerprint precision range")
+    units = int((x / GRID_DECIMAL).to_integral_value(rounding=ROUND_HALF_EVEN))
+    if abs(units) > limit:
+        raise ValueError(f"OBJ x coordinate on line {line_number} exceeds the fingerprint precision range")
+    y = _TOKEN.search(line, coordinate.end())
+    z = _TOKEN.search(line, y.end()) if y else None
+    if y is None or z is None:
+        raise ValueError(f"OBJ vertex on line {line_number} has fewer than three coordinates")
+    return coordinate.start(), coordinate.end(), units
+
+
+def _write_obj(source: Path, output, bits: tuple[int, ...]) -> None:
+    count = 0
+    size = 0
+    with source.open("rb") as original:
+        for line_number, raw_line in enumerate(original, start=1):
+            size += len(raw_line)
+            if size > MAX_FILE_BYTES:
+                raise ValueError(f"input exceeds {MAX_FILE_BYTES} bytes")
+            try:
+                line = raw_line.decode("utf-8")
+            except UnicodeDecodeError as error:
+                raise ValueError("OBJ must be UTF-8 text") from error
+            vertex = _obj_vertex(line, line_number)
+            if vertex is not None:
+                if count >= MAX_OBJ_VERTICES:
+                    raise ValueError(f"OBJ exceeds {MAX_OBJ_VERTICES} vertices")
+                if count < MARK_BITS:
+                    start, end, quantized = vertex
+                    marked = (quantized & ~1) | bits[count]
+                    coordinate = format(Decimal(marked) * GRID_DECIMAL, ".5f")
+                    line = line[:start] + coordinate + line[end:]
+                count += 1
+            output.write(line.encode("utf-8"))
+    if count < MARK_BITS:
+        raise ValueError(f"OBJ needs at least {MARK_BITS} vertices")
 
 
 def _obj_matches(data: bytes, bits: tuple[int, ...]) -> bool:
@@ -77,9 +96,21 @@ def _obj_matches(data: bytes, bits: tuple[int, ...]) -> bool:
         text = data.decode("utf-8")
     except UnicodeDecodeError as error:
         raise ValueError("OBJ must be UTF-8 text") from error
-    vertices = _obj_vertices(text)
-    observed = tuple(round(x / GRID) & 1 for _, _, _, x in vertices[:MARK_BITS])
-    return observed == bits
+    observed = []
+    count = 0
+    for line_number, line in enumerate(io.StringIO(text, newline=""), start=1):
+        vertex = _obj_vertex(line, line_number, marked=True)
+        if vertex is None:
+            continue
+        _, _, units = vertex
+        if count >= MAX_OBJ_VERTICES:
+            raise ValueError(f"OBJ exceeds {MAX_OBJ_VERTICES} vertices")
+        if count < MARK_BITS:
+            observed.append(units & 1)
+        count += 1
+    if count < MARK_BITS:
+        raise ValueError(f"OBJ needs at least {MARK_BITS} vertices")
+    return tuple(observed) == bits
 
 
 def _ppm_header(data: bytes) -> tuple[int, int, int]:
@@ -138,7 +169,7 @@ def _ppm_matches(data: bytes, bits: tuple[int, ...]) -> bool:
     return observed == bits
 
 
-def _atomic_new_file(path: Path, data: bytes, source_mode: int) -> None:
+def _atomic_new_file(path: Path, data, source_mode: int) -> None:
     if path.exists():
         raise FileExistsError(path)
     if not path.parent.is_dir():
@@ -146,14 +177,14 @@ def _atomic_new_file(path: Path, data: bytes, source_mode: int) -> None:
     descriptor, temporary = tempfile.mkstemp(prefix=".fingerprint-", dir=path.parent)
     temp_path = Path(temporary)
     try:
-        if hasattr(os, "fchmod"):
-            os.fchmod(descriptor, stat.S_IMODE(source_mode))
-        else:
-            os.chmod(temp_path, stat.S_IMODE(source_mode))
         with os.fdopen(descriptor, "wb") as output:
-            output.write(data)
+            data(output) if callable(data) else output.write(data)
             output.flush()
             os.fsync(output.fileno())
+            if hasattr(os, "fchmod"):
+                os.fchmod(output.fileno(), stat.S_IMODE(source_mode) & ~0o022)
+        if not hasattr(os, "fchmod"):
+            os.chmod(temp_path, stat.S_IMODE(source_mode) & ~0o022)
         # link() creates the destination atomically and refuses to replace an existing file.
         os.link(temp_path, path)
     finally:
@@ -168,16 +199,16 @@ def embed(source: Path, destination: Path, identifier: str, kind: str) -> None:
         raise ValueError("source and destination must be different files")
     if destination.exists():
         raise FileExistsError(destination)
-    original = _read(source)
     bits = _fingerprint(identifier)
     match kind:
         case "obj":
-            result = _embed_obj(original, bits)
+            _atomic_new_file(destination, lambda output: _write_obj(source, output, bits), source.stat().st_mode)
         case "ppm":
+            original = _read(source)
             result = _embed_ppm(original, bits)
+            _atomic_new_file(destination, result, source.stat().st_mode)
         case _:
             raise ValueError("kind must be obj or ppm")
-    _atomic_new_file(destination, result, source.stat().st_mode)
 
 
 def matches(source: Path, identifier: str, kind: str) -> bool:

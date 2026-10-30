@@ -86,6 +86,12 @@ class FingerprintTests(unittest.TestCase):
             embed(source, output, self.identifier, "obj")
         self.assertFalse(output.exists())
 
+        long_token = "0." + "0" * 70
+        source.write_text(f"v {long_token} 0 0\n" + "".join(f"v {i} 0 0\n" for i in range(63)), encoding="utf-8")
+        with self.assertRaisesRegex(ValueError, "coordinate"):
+            embed(source, output, self.identifier, "obj")
+        self.assertFalse(output.exists())
+
     def test_dense_obj_line_does_not_build_a_token_list(self):
         source = self.root / "dense.obj"
         output = self.root / "dense-marked.obj"
