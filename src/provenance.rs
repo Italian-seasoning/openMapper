@@ -3,7 +3,7 @@ use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
 use std::collections::{BTreeMap, BTreeSet};
 use std::io::{self, Read, Write};
-use std::path::Path;
+use std::path::{Path, PathBuf};
 use std::sync::Mutex;
 
 const INDEX: &str = ".openmapper-provenance.json";
@@ -60,6 +60,7 @@ impl History {
 
 pub struct Source {
     hashes: BTreeSet<String>,
+    inputs: BTreeMap<PathBuf, String>,
 }
 
 impl Source {
@@ -70,9 +71,9 @@ impl Source {
                 "protected playback assets cannot be imported for editing",
             ));
         }
-        Ok(Self {
-            hashes: BTreeSet::from([file_hash(path)?]),
-        })
+        let mut source = Self { hashes: BTreeSet::new(), inputs: BTreeMap::new() };
+        source.include(path)?;
+        Ok(source)
     }
 
     pub fn include(&mut self, path: &Path) -> io::Result<()> {
@@ -81,11 +82,22 @@ impl Source {
                 "protected playback assets cannot be converted",
             ));
         }
-        self.hashes.insert(file_hash(path)?);
+        let path = std::path::absolute(path)?;
+        let hash = file_hash(&path)?;
+        if self.inputs.get(&path).is_some_and(|previous| previous != &hash) {
+            return Err(io::Error::other("source changed during conversion"));
+        }
+        self.inputs.insert(path, hash.clone());
+        self.hashes.insert(hash);
         Ok(())
     }
 
     pub fn record(&self, content: &Path, output: &Path) -> io::Result<()> {
+        for (path, hash) in &self.inputs {
+            if file_hash(path)? != *hash {
+                return Err(io::Error::other("source changed during conversion; provenance was not recorded"));
+            }
+        }
         let _writer = WRITER
             .lock()
             .map_err(|_| io::Error::other("provenance index is busy"))?;

@@ -9,6 +9,7 @@ pub struct Policy {
     pub references: MapReferences,
     pub warnings: Vec<String>,
     pub unresolved: Vec<String>,
+    pub rights_available: bool,
 }
 
 /// A rights declaration changes ordinary redistribution policy, never protected playback.
@@ -76,6 +77,7 @@ pub fn filter(
         if matches.iter().all(|a| a.redistribution && !a.protected) {
             continue;
         }
+        policy.rights_available |= matches.iter().all(|claim| !claim.protected);
         if rights && matches.iter().all(|claim| !claim.protected) {
             policy.warnings.push(format!(
                 "{relative}: included under the exporter's explicit rights declaration"
@@ -91,7 +93,8 @@ pub fn filter(
                 a.asset_id.clone(),
             )
         });
-        let exact = matches.iter().find(|a| a.output_sha256 == hash);
+        let exact = matches.iter().find(|a| a.output_sha256 == hash
+            && omsi_cfg::publisher::validate_asset_alias(relative, &a.path).is_ok());
         omitted.push(relative.clone());
         if let Some(asset) = exact {
             if !policy.references.dependencies.contains(&asset.dependency) {
@@ -171,6 +174,7 @@ mod tests {
         assert_eq!(policy.references.assets[0].path, alias);
         assert_eq!(policy.references.assets[0].asset_id, "sign");
         assert!(!policy.warnings.is_empty());
+        assert!(policy.rights_available);
 
         // Retaining the trusted index still recognizes a renamed copy without its manifest.
         std::fs::remove_file(pack.join("manifest.json")).unwrap();
@@ -213,6 +217,7 @@ mod tests {
         let declared = super::filter(&mut files, &root, true).unwrap();
         assert!(files.is_empty(), "ordinary rights declaration bypassed protected-pack policy");
         assert_eq!(declared.references.assets[0].asset_id, "mesh");
+        assert!(!declared.rights_available);
         std::fs::remove_dir_all(root).unwrap();
     }
 
