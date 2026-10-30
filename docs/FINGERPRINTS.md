@@ -15,4 +15,4 @@ The current checks demonstrate detection after OBJ comments/material references 
 
 Detection depends on the marked coordinate or pixel order surviving. Vertex reordering, decimation, coordinate transforms, lossy image conversion, resizing, cropping, or edits to marked coordinates/pixels can remove the mark. This is a bounded inspection aid, not durable watermarking or proof of ownership.
 
-Inputs are limited to UTF-8 Wavefront OBJ files with at least 64 and at most 1,000,000 vertices, and binary P6 PPM images with 8-bit RGB pixels and at least 64 pixels. Each input is limited to 64 MiB; other model and image formats are unsupported.
+Inputs are limited to UTF-8 Wavefront OBJ files with at least 64 and at most 1,000,000 vertices. An OBJ X coordinate token can contain at most 64 bytes and its rounded grid coordinate must fit in 2^51 units. PPM images must be binary P6 with 8-bit RGB pixels and at least 64 pixels. Each input is limited to 64 MiB; other model and image formats are unsupported.

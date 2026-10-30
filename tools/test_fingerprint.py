@@ -86,6 +86,10 @@ class FingerprintTests(unittest.TestCase):
             embed(source, output, self.identifier, "obj")
         self.assertFalse(output.exists())
 
+
+    def test_overlong_coordinate_token_is_rejected(self):
+        source = self.root / "long-token.obj"
+        output = self.root / "long-token-marked.obj"
         long_token = "0." + "0" * 70
         source.write_text(f"v {long_token} 0 0\n" + "".join(f"v {i} 0 0\n" for i in range(63)), encoding="utf-8")
         with self.assertRaisesRegex(ValueError, "coordinate"):

@@ -9,7 +9,7 @@ from pathlib import Path
 import re
 import stat
 import tempfile
-from decimal import Decimal, InvalidOperation, ROUND_HALF_EVEN
+from decimal import Decimal, InvalidOperation, ROUND_HALF_EVEN, localcontext
 
 
 MAX_FILE_BYTES = 64 * 1024 * 1024
@@ -45,8 +45,10 @@ def _obj_vertex(line: str, line_number: int, *, marked: bool = False):
     coordinate = _TOKEN.search(line, token.end())
     if coordinate is None:
         raise ValueError(f"OBJ vertex on line {line_number} has fewer than three coordinates")
+    if coordinate.end() - coordinate.start() > 64:
+        raise ValueError(f"OBJ x coordinate on line {line_number} exceeds the supported token length")
     try:
-        x = Decimal(coordinate.group())
+        x = Decimal(line[coordinate.start():coordinate.end()])
     except InvalidOperation as error:
         raise ValueError(f"invalid OBJ x coordinate on line {line_number}") from error
     if not x.is_finite():
@@ -54,7 +56,9 @@ def _obj_vertex(line: str, line_number: int, *, marked: bool = False):
     limit = MAX_COORDINATE_UNITS if marked else MAX_COORDINATE_UNITS - 1
     if abs(x) > GRID_DECIMAL * limit:
         raise ValueError(f"OBJ x coordinate on line {line_number} exceeds the fingerprint precision range")
-    units = int((x / GRID_DECIMAL).to_integral_value(rounding=ROUND_HALF_EVEN))
+    with localcontext() as context:
+        context.prec = 80
+        units = int((x / GRID_DECIMAL).to_integral_value(rounding=ROUND_HALF_EVEN))
     if abs(units) > limit:
         raise ValueError(f"OBJ x coordinate on line {line_number} exceeds the fingerprint precision range")
     y = _TOKEN.search(line, coordinate.end())
