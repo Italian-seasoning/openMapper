@@ -116,3 +116,18 @@ fn restricted_export_round_trips_as_a_dependency_without_copying_publisher_bytes
     omsi_cfg::remove_content_root(&second);
     std::fs::remove_dir_all(base).unwrap();
 }
+
+
+#[test]
+fn a_failed_export_leaves_no_partial_archive() {
+    let root = std::env::temp_dir().join(format!("openmapper-export-cleanup-{}", std::process::id()));
+    std::fs::create_dir_all(&root).unwrap();
+    let out = root.join("output.zip");
+    std::fs::write(&out, b"existing user archive").unwrap();
+    let mut plan = Plan::default();
+    plan.files.insert("Sceneryobjects/missing.sco".into(), root.join("missing.sco"));
+    assert!(write_zip(&plan, "owned fixture", &out).is_err());
+    assert_eq!(std::fs::read(&out).unwrap(), b"existing user archive");
+    assert!(!out.with_extension("zip.openmapper-new").exists());
+    std::fs::remove_dir_all(root).unwrap();
+}

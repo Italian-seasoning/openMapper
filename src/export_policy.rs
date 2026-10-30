@@ -198,6 +198,21 @@ mod tests {
                 .is_empty()
         );
         assert_eq!(changed.len(), 1);
+        let key = omsi_pack::random_content_key().unwrap();
+        let protected = b"owned protected playable bytes";
+        omsi_pack::create_pack(&root.join("Packs/protected.oopp"), PackMetadata {
+            publisher_id: "owned-fixture".into(), author: "Fixture".into(), pack_id: "protected".into(),
+            version: "1.0.0".into(), license: "LicenseRef-Owned-Fixture".into(), redistribution: false,
+            key_id: Some(omsi_pack::sha256_hex(&key)), dependencies: vec![],
+        }, &[AssetInput { id: "mesh".into(), path: "Sceneryobjects/Fixture/model/mesh.x".into(),
+            source_sha256: omsi_pack::sha256_hex(protected), bytes: protected.to_vec() }],
+            &signer, Some(&key), &AtomicBool::new(false)).unwrap();
+        let physical = root.join("owned-clear.x");
+        std::fs::write(&physical, protected).unwrap();
+        let mut files = BTreeMap::from([("Sceneryobjects/Fixture/model/owned.x".into(), physical)]);
+        let declared = super::filter(&mut files, &root, true).unwrap();
+        assert!(files.is_empty(), "ordinary rights declaration bypassed protected-pack policy");
+        assert_eq!(declared.references.assets[0].asset_id, "mesh");
         std::fs::remove_dir_all(root).unwrap();
     }
 
