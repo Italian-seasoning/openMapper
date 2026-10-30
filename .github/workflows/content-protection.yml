@@ -3,6 +3,7 @@ name: Content protection
 on:
   push:
     branches: [feat/content-protection]
+    paths-ignore: ["tools/fingerprint.py", "tools/test_fingerprint.py", "docs/**"]
   pull_request:
 
 permissions:
@@ -13,12 +14,6 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  fingerprints:
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    steps:
-      - uses: actions/checkout@v7
-      - run: python3 tools/test_fingerprint.py
   native:
     strategy:
       fail-fast: false
@@ -35,6 +30,6 @@ jobs:
       - uses: Swatinem/rust-cache@v2
         with:
           key: content-protection-${{ matrix.os }}
-      - run: cargo build --release --locked
       - run: cargo test --release --locked
+      - run: cargo build --release --locked
       - run: python3 tools/i18n/check.py

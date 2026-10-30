@@ -1,5 +1,6 @@
 import sys
 import tempfile
+import tracemalloc
 import unittest
 from pathlib import Path
 
@@ -76,6 +77,41 @@ class FingerprintTests(unittest.TestCase):
         with self.assertRaises(FileExistsError):
             embed(source, existing, self.identifier, "obj")
         self.assertEqual(existing.read_text(encoding="utf-8"), "keep")
+
+    def test_large_finite_coordinates_fail_with_a_user_facing_value_error(self):
+        source = self.root / "huge.obj"
+        output = self.root / "huge-marked.obj"
+        source.write_text("v 1e308 0 0\n" + "".join(f"v {i} 0 0\n" for i in range(63)), encoding="utf-8")
+        with self.assertRaisesRegex(ValueError, "coordinate"):
+            embed(source, output, self.identifier, "obj")
+        self.assertFalse(output.exists())
+
+    def test_dense_obj_line_does_not_build_a_token_list(self):
+        source = self.root / "dense.obj"
+        output = self.root / "dense-marked.obj"
+        dense_line = "v 0 0 0 " + " ".join("0" for _ in range(180_000)) + "\n"
+        source.write_text(dense_line + "".join(f"v {i} 0 0\n" for i in range(64)), encoding="utf-8")
+
+        tracemalloc.start()
+        try:
+            embed(source, output, self.identifier, "obj")
+            _, peak = tracemalloc.get_traced_memory()
+        finally:
+            tracemalloc.stop()
+
+        self.assertLess(peak, 8 * 1024 * 1024)
+        self.assertTrue(matches(output, self.identifier, "obj"))
+
+    @unittest.skipUnless(__import__("os").name == "posix", "POSIX file permission bits")
+    def test_created_asset_does_not_grant_group_or_world_write_access(self):
+        source = self.root / "permissions.obj"
+        output = self.root / "permissions-marked.obj"
+        source.write_text("".join(f"v {i} 0 0\n" for i in range(64)), encoding="utf-8")
+        source.chmod(0o666)
+
+        embed(source, output, self.identifier, "obj")
+
+        self.assertEqual(output.stat().st_mode & 0o022, 0)
 
 
 if __name__ == "__main__":
