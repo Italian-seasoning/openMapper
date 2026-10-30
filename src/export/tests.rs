@@ -87,6 +87,8 @@ fn restricted_export_round_trips_as_a_dependency_without_copying_publisher_bytes
     std::fs::write(&owned, bytes).unwrap();
     let roots = Roots { omsi: base.join("stock"), content: first.clone() };
     let mut doc = Document::new_map(&roots, "References", "References", 1);
+    // This owned fixture has no installation template to copy.
+    doc.source = None;
     doc.tiles.get_mut(&(0, 0)).unwrap().tile.objects.push(omsi_map::MapObject {
         file: relative.replace('/', "\\"), id: 1, pos: [100.0, 100.0, 0.0], ..Default::default()
     });
