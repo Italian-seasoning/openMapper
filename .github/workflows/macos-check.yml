@@ -1,0 +1,28 @@
+name: macOS check
+on:
+  push:
+    branches: [ci/macos-check]
+permissions:
+  contents: read
+jobs:
+  native:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-15-intel, macos-15]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 90
+    env:
+      CARGO_BUILD_JOBS: 4
+      CARGO_TERM_COLOR: always
+    steps:
+      - uses: actions/checkout@v7
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+        with:
+          key: macos-check-${{ matrix.os }}
+      - run: cargo test --locked --release
+      - run: cargo build --locked --release
+      - run: python3 tools/i18n/check.py
+      - run: python3 tools/test_fingerprint.py
+      - run: python3 tools/test_placement_watermark.py
